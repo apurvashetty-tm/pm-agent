@@ -3,7 +3,7 @@
 **Purpose:** Captures all decisions, agreements, and pending work so a new Claude session on any machine can pick up exactly where things left off.
 
 **Last updated:** 2026-06-09
-**Session status:** Section 2 rebuild COMPLETE. Section 3 additions agreed, pending build.
+**Session status:** Section 2 COMPLETE. Section 3 COMPLETE. Section 4 COMPLETE.
 
 ---
 
@@ -15,7 +15,9 @@ The current `index.html` is a working V2 prototype with all Section 2 structural
 - All 5 mock scenarios switchable via side panel (desktop) — demo bar hidden on desktop via `@media (min-width: 800px)`
 - Valid-call gate at 50 seconds [LOCKED, working]
 - CTA routing matrix [LOCKED, working] — Confirm Order / Confirm & Transfer / Confirm & Forward
-- HA banner [LOCKED, working] — Pilot + HA required + not skipped only
+- HA attention banner (amber) — REMOVED post-call (always hidden). Pre-call briefing strip replaces it.
+- Pre-call briefing strip `#pre-call-brief` [working] — shows for Pilot + HA required only; two variants: value meds (↗️ Live HA Transfer) and non-value meds (📋 HA Follow-up Call); quoted italic script copy; hidden for HA skipped + Cat4
+- Skip HA Call — de-weighted to small muted text link [working]
 - Skip HA Call logic [LOCKED, working]
 - Rx overlay with dummy prescription, zoom/rotate/pan/pinch [working]
 - Desktop side panel with scenario switcher [working]
@@ -112,7 +114,51 @@ These were agreed after the Section 2 build, based on a brainstorm comparing the
 
 ---
 
-## 4. Decisions made — not to be re-debated
+## 4. Section 4 — Pre-call briefing strip (COMPLETE)
+
+### 4.1 Pre-call briefing strip — replaces HA attention banner
+
+**Problem with current design:**
+- Heavy amber banner appears POST-call — too late. Doctor is already on the call without knowing they need to stay for transfer or inform the customer.
+- Banner tone was "warning" (amber). This is informational ("here's what to tell the customer"), not a warning.
+- Skip HA Call was same visual weight as Confirm & Transfer — wrong hierarchy.
+
+**Agreed solution:**
+
+#### Pre-call briefing strip (new element `#pre-call-brief`)
+- **Placement:** Inside `#az-phase1`, directly ABOVE `#call-initiate-btn` (Call Patient button)
+- **Visible states:** `assigned`, `calling`, `connected`, `nopickup`, `hold` — i.e. all pre-gate states
+- **Hidden when:** `gate_passed`, `completed` (phase1 hides entirely, so strip also hides)
+- **Trigger:** Only for Pilot + HA required cases (`case_type === 'pilot' && ha_status === 'required'`)
+- **Visual style:** Left border accent (3px solid `--primary`), `--primary-light` background, border-radius on right side. Blue not amber — informational not alarming.
+- **Micro-label:** `BEFORE CALLING` (11px, uppercase, muted)
+- **Copy per scenario:**
+  - Value meds: `"Tell customer: stay on the line after this call — you'll transfer them to our Health Advisor"`
+  - Non-value meds: `"Tell customer: our Health Advisor will call them after this consultation"`
+
+#### Post-call HA banner — hidden
+- `#ha-attention-banner` is now always hidden (`classList.add('hidden')` in `renderPostCall()`)
+- Pre-call strip handled the communication. No repeat needed post-call.
+- **This is an authorized change to the previously locked HA banner visibility.** The visibility logic is now: always hidden post-call. The pre-call strip is the new communication surface.
+
+#### Skip HA Call — de-weighted
+- `#skip-ha-btn` visual style changed to a small text link (no border, muted color, underlined)
+- Position: Below `#main-cta-btn` in post-call section
+- Logic unchanged: still calls `openSheet('sheet-skip-ha')`, still gated by `haSkipApplicable()`
+- Rationale: Skip HA is an edge case (customer is adamant). SOP and training handle when to use it. UI should not promote it.
+
+### What stays LOCKED (unchanged)
+
+- `resolveCTA()` — CTA routing matrix: untouched
+- `haSkipApplicable()` — eligibility logic: untouched
+- `openSheet('sheet-skip-ha')` and skip-ha sheet content: untouched
+- Valid-call gate (50s): untouched
+- All 5 scenario IDs and their field values: untouched
+- All other sections of the page: untouched
+
+---
+
+## 5. Decisions made — not to be re-debated
 
 | Decision | Rationale |
 |---|---|
@@ -202,6 +248,5 @@ None formally answered yet. All use safe placeholders.
 
 ## 10. What is still NOT built
 
-- Section 3 additions (patient block order expand, sticky order value, medicine selling price, profile sheet)
 - Any multi-scenario state persistence
 - Any backend integration (intentionally out of scope for V1)

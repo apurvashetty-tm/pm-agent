@@ -1111,6 +1111,54 @@
     .hidden { display: none !important; }
 
     /* ============================================================
+       PRE-CALL BRIEFING STRIP
+    ============================================================ */
+    #pre-call-brief {
+      display: none;
+      border-left: 3px solid var(--primary);
+      background: var(--primary-light);
+      border-radius: 0 8px 8px 0;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+    #pre-call-brief.visible { display: block; }
+    .pcb-label {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--primary);
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .pcb-text {
+      font-size: 13px;
+      color: var(--text-primary);
+      line-height: 1.45;
+      font-style: italic;
+    }
+
+    /* Skip HA Call — de-weighted to text link (overrides earlier rule) */
+    #skip-ha-btn {
+      width: 100%;
+      height: auto;
+      border-radius: 0;
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 12px;
+      font-weight: 500;
+      text-decoration: underline;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      padding: 10px 0 2px;
+      margin-bottom: 0;
+    }
+    #skip-ha-btn.visible { display: flex; }
+    #skip-ha-btn:active { color: var(--text-secondary); }
+
+    /* ============================================================
        PORTAL HEADER — sticky, always visible
     ============================================================ */
     #portal-header {
@@ -1468,6 +1516,13 @@
 
         <!-- Phase 1: Call control (hidden when gate passes) -->
         <div id="az-phase1">
+
+          <!-- Pre-call briefing strip — Pilot + HA required only -->
+          <div id="pre-call-brief">
+            <div class="pcb-label" id="pcb-label">—</div>
+            <div class="pcb-text" id="pcb-text">—</div>
+          </div>
+
           <button id="call-initiate-btn" onclick="handleCallAction()">
             <span id="call-btn-icon">📞</span>
             <span id="call-btn-label">Call Patient</span>
@@ -2134,6 +2189,22 @@ function renderCallPhase() {
   const statusLbl   = document.getElementById('az-status-label');
   const phase1      = document.getElementById('az-phase1');
 
+  // Pre-call briefing strip — Pilot + HA required only
+  const brief = document.getElementById('pre-call-brief');
+  const pcbText = document.getElementById('pcb-text');
+  const c = DOCTOR_STATE.currentCase;
+  const showBrief = c && c.case_type === 'pilot' && c.ha_status === 'required';
+  brief.classList.toggle('visible', !!showBrief);
+  if (showBrief) {
+    const isValue = c.meds_type === 'value';
+    document.getElementById('pcb-label').textContent = isValue
+      ? '↗️ Live HA Transfer'
+      : '📋 HA Follow-up Call';
+    pcbText.textContent = isValue
+      ? '"Please stay on the line — I\'ll connect you to our Health Advisor"'
+      : '"Our Health Advisor will call you shortly after this consultation"';
+  }
+
   // Reset
   callBtn.style.display = 'flex';
   callBtn.disabled = false;
@@ -2209,8 +2280,8 @@ function renderPostCall() {
   const c = DOCTOR_STATE.currentCase;
   const haSkipped = DOCTOR_STATE.haSkippedInSession || c.ha_status === 'skipped_customer' || c.ha_status === 'skipped_system';
 
-  // HA banner — only Pilot + HA required + not skipped [LOCKED]
-  haBanner.classList.toggle('hidden', !(c.case_type === 'pilot' && c.ha_status === 'required' && !DOCTOR_STATE.haSkippedInSession));
+  // HA banner — hidden post-call. Pre-call briefing strip handles communication. [UPDATED — was LOCKED]
+  haBanner.classList.add('hidden');
   // Skip HA — only Pilot + HA required + not yet skipped [LOCKED]
   skipBtn.classList.toggle('visible', haSkipApplicable(c) && !DOCTOR_STATE.haSkippedInSession);
 

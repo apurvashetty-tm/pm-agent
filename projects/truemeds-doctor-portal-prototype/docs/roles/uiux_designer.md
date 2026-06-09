@@ -147,8 +147,19 @@ Claude must not reorder these sections without approval.
 Before valid call: section is hidden completely (not just grayed out — not visible at all).
 After valid call: section slides/fades into view showing the correct CTA.
 
-The HA transfer attention banner (amber) must appear only when the case is Pilot + HA required AND HA has not been skipped.
-It must not appear for Cat4, or for any HA-skipped case.
+**HA attention banner (amber) — REMOVED from post-call section.**
+Replaced by pre-call briefing strip (see 5.2). Post-call HA banner is always hidden.
+
+### 5.2 Pre-call briefing strip
+
+A compact left-border-accented strip inside the action zone, directly ABOVE the Call Patient button.
+
+- **Trigger:** Pilot + HA required (both value meds and non-value meds)
+- **Visual:** 3px left border solid `--primary`, `--primary-light` background, right-side border-radius
+- **Tone:** Blue (informational), NOT amber (warning) — this is a script cue, not an alert
+- **Copy:** Two variants — value meds (live transfer) vs non-value meds (HA calls after)
+- **Lifecycle:** Visible pre-call → during call (so doctor can reference) → hidden post-gate (phase1 hidden)
+- **Skip HA Call:** De-weighted to small text link below the main CTA. Same logic, lower visual prominence.
 
 ---
 
