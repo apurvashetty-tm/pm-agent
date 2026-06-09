@@ -1,0 +1,2318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Truemeds Doctor Portal</title>
+  <style>
+
+    /* ============================================================
+       DESIGN TOKENS — Light theme, Truemeds brand-inspired
+       Primary: #1B69DE (truemeds.in brand blue)
+       Background: #f5f7fa (soft off-white)
+       Source: uiux_designer.md + truemeds.in visual language
+    ============================================================ */
+    :root {
+      --bg:               #f0f4f8;
+      --surface:          #ffffff;
+      --surface-elevated: #f8fafc;
+      --surface-hover:    #f1f5f9;
+      --divider:          rgba(0,0,0,0.08);
+      --divider-strong:   rgba(0,0,0,0.14);
+      --primary:          #1B69DE;
+      --primary-hover:    #155fcc;
+      --primary-light:    #eef4fd;
+      --primary-border:   rgba(27,105,222,0.25);
+      --success:          #16a34a;
+      --success-bg:       #f0fdf4;
+      --success-border:   rgba(22,163,74,0.25);
+      --warning:          #d97706;
+      --warning-bg:       #fffbeb;
+      --warning-border:   rgba(217,119,6,0.3);
+      --danger:           #dc2626;
+      --danger-bg:        #fef2f2;
+      --danger-border:    rgba(220,38,38,0.25);
+      --text-primary:     #111827;
+      --text-secondary:   #6b7280;
+      --text-muted:       #9ca3af;
+      --shadow-sm:        0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.05);
+      --shadow-md:        0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.05);
+      --radius-card:      12px;
+      --radius-btn:       10px;
+      --radius-input:     8px;
+      --radius-badge:     6px;
+      --font:             -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+    }
+
+    /* ============================================================
+       RESET + BASE
+    ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; }
+    body {
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text-primary);
+      min-height: 100vh;
+    }
+    button {
+      font-family: var(--font);
+      cursor: pointer;
+      border: none;
+      outline: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    textarea, input {
+      font-family: var(--font);
+      outline: none;
+    }
+
+    /* ============================================================
+       LAYOUT WRAPPER — mobile column + desktop side panel
+    ============================================================ */
+    #layout-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    /* Mobile column — always max 430px */
+    #mobile-column {
+      width: 100%;
+      max-width: 430px;
+      min-height: 100vh;
+      background: var(--bg);
+      position: relative;
+      flex-shrink: 0;
+      /* Subtle left/right border on desktop to define the mobile frame */
+      box-shadow: 0 0 0 1px rgba(0,0,0,0.06);
+    }
+
+    /* Desktop side panel — visible only on wide screens */
+    #desktop-side-panel {
+      display: none;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      width: 280px;
+      flex-shrink: 0;
+      margin-left: 20px;
+      padding: 20px 0;
+      align-self: flex-start;
+    }
+
+    /* Show side panel only when there is enough room */
+    @media (min-width: 800px) {
+      #desktop-side-panel { display: block; }
+    }
+
+    .side-panel-card {
+      background: var(--surface);
+      border-radius: var(--radius-card);
+      border: 1px solid var(--divider-strong);
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 12px;
+      overflow: hidden;
+    }
+    .side-panel-header {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--divider);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .side-panel-body { padding: 14px; }
+    #side-patient-name {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+    #side-order-id {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-bottom: 10px;
+    }
+    #side-badge-row { display: flex; gap: 6px; flex-wrap: wrap; }
+
+    #side-state-display {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      background: var(--surface-elevated);
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+    #side-state-icon { font-size: 18px; }
+    #side-state-text { font-size: 13px; font-weight: 600; color: var(--text-primary); }
+    #side-timer-text { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+
+    /* Side CTA section — mirrors post-call actions */
+    #side-cta-section { display: none; }
+    #side-cta-section.visible { display: block; }
+    #side-ha-banner {
+      display: none;
+      background: var(--warning-bg);
+      border: 1px solid var(--warning-border);
+      border-radius: 8px;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+      font-size: 12px;
+      color: var(--warning);
+      font-weight: 600;
+    }
+    #side-ha-banner.visible { display: block; }
+    #side-skip-ha-btn {
+      width: 100%;
+      height: 40px;
+      border-radius: 8px;
+      background: transparent;
+      color: var(--warning);
+      border: 1px solid var(--warning-border);
+      font-size: 13px;
+      font-weight: 600;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+    #side-skip-ha-btn.visible { display: flex; }
+    #side-main-cta {
+      width: 100%;
+      height: 52px;
+      border-radius: var(--radius-btn);
+      background: var(--primary);
+      color: #fff;
+      font-size: 15px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      box-shadow: 0 3px 12px rgba(27,105,222,0.25);
+    }
+    #side-main-cta:active { background: var(--primary-hover); }
+
+    /* Side demo controls */
+    .side-scenario-btn {
+      display: block;
+      width: 100%;
+      text-align: left;
+      padding: 8px 10px;
+      border-radius: 7px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      background: var(--surface-elevated);
+      border: 1px solid var(--divider);
+      margin-bottom: 6px;
+      transition: all 0.12s;
+    }
+    .side-scenario-btn:last-child { margin-bottom: 0; }
+    .side-scenario-btn.active {
+      background: var(--primary-light);
+      color: var(--primary);
+      border-color: var(--primary-border);
+    }
+    #side-ff-btn {
+      width: 100%;
+      height: 38px;
+      border-radius: 8px;
+      background: var(--surface-elevated);
+      color: var(--primary);
+      border: 1px solid var(--primary-border);
+      font-size: 12px;
+      font-weight: 700;
+      margin-top: 10px;
+    }
+
+    /* ============================================================
+       DEMO BAR — visible on mobile only (hidden on desktop where side panel takes over)
+    ============================================================ */
+    #demo-bar {
+      background: #1e293b;
+      border-bottom: 2px solid #f59e0b;
+      padding: 8px 12px;
+      position: sticky;
+      top: 0;
+      z-index: 200;
+    }
+    @media (min-width: 800px) {
+      /* Keep demo bar on mobile column even on desktop */
+    }
+    #demo-bar-label {
+      font-size: 10px;
+      font-weight: 700;
+      color: #f59e0b;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    #demo-bar-scenarios {
+      display: flex;
+      gap: 5px;
+      flex-wrap: wrap;
+    }
+    .scenario-btn {
+      font-size: 10px;
+      font-weight: 600;
+      padding: 4px 8px;
+      border-radius: 5px;
+      background: rgba(255,255,255,0.07);
+      color: rgba(255,255,255,0.55);
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: all 0.12s;
+    }
+    .scenario-btn.active {
+      background: #f59e0b;
+      color: #1e293b;
+      border-color: #f59e0b;
+    }
+    #demo-ff-btn-mobile {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 5px;
+      background: rgba(27,105,222,0.2);
+      color: #93c5fd;
+      border: 1px solid rgba(27,105,222,0.3);
+    }
+    #demo-bar-row2 {
+      display: flex;
+      align-items: center;
+      margin-top: 6px;
+      gap: 8px;
+    }
+    #demo-state-label {
+      font-size: 10px;
+      color: rgba(255,255,255,0.35);
+      flex: 1;
+    }
+
+    /* ============================================================
+       STICKY PATIENT HEADER
+    ============================================================ */
+    #patient-header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--divider-strong);
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      position: sticky;
+      top: 57px;
+      z-index: 100;
+      box-shadow: var(--shadow-sm);
+    }
+    #patient-header-info { flex: 1; min-width: 0; }
+    #patient-name-header {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-primary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #patient-meta-header {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-top: 1px;
+    }
+    #view-rx-btn {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--primary);
+      background: var(--primary-light);
+      border: 1px solid var(--primary-border);
+      border-radius: 6px;
+      padding: 6px 11px;
+      white-space: nowrap;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    #view-rx-btn.hidden { display: none; }
+
+    /* ============================================================
+       MAIN SCROLL CONTENT
+    ============================================================ */
+    #main-scroll {
+      padding: 16px 16px 160px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    /* ============================================================
+       SECTION LABEL
+    ============================================================ */
+    .section-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    /* ============================================================
+       PATIENT + ORDER CONTEXT CARD
+    ============================================================ */
+    #order-context-card {
+      background: var(--surface);
+      border-radius: var(--radius-card);
+      padding: 14px 16px;
+      border: 1px solid var(--divider);
+      box-shadow: var(--shadow-sm);
+    }
+    #patient-full-name {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+    #patient-details-row {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-top: 3px;
+    }
+    #badge-row {
+      display: flex;
+      gap: 6px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .badge {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: var(--radius-badge);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+    .badge-cat4    { background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; }
+    .badge-pilot   { background: var(--warning-bg); color: var(--warning); border: 1px solid var(--warning-border); }
+    .badge-ha-req  { background: var(--warning-bg); color: var(--warning); border: 1px solid var(--warning-border); }
+    .badge-ha-skip { background: var(--success-bg); color: var(--success); border: 1px solid var(--success-border); }
+    .badge-value   { background: var(--primary-light); color: var(--primary); border: 1px solid var(--primary-border); }
+    .badge-nonvalue{ background: #faf5ff; color: #7c3aed; border: 1px solid rgba(124,58,237,0.25); }
+
+    #order-id-row {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 10px;
+      display: flex;
+      gap: 12px;
+      padding-top: 10px;
+      border-top: 1px solid var(--divider);
+    }
+    #order-id-row span { color: var(--text-secondary); font-weight: 500; }
+
+    /* ============================================================
+       PRESCRIPTION CARD  (no View Rx button here — Decision A)
+    ============================================================ */
+    #prescription-section { display: none; }
+    #prescription-section.visible { display: block; }
+
+    #prescription-card {
+      background: var(--surface);
+      border-radius: var(--radius-card);
+      padding: 14px 16px;
+      border: 1px solid var(--divider);
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    #rx-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: var(--primary-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 20px;
+    }
+    #rx-info { flex: 1; min-width: 0; }
+    #rx-title { font-size: 14px; font-weight: 600; color: var(--text-primary); }
+    #rx-subtitle { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+    #rx-attached-note {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--success);
+      background: var(--success-bg);
+      border: 1px solid var(--success-border);
+      border-radius: 5px;
+      padding: 3px 8px;
+      flex-shrink: 0;
+    }
+
+    /* ============================================================
+       RX FULL-SCREEN OVERLAY
+    ============================================================ */
+    #rx-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: #1a1d26;
+      z-index: 300;
+      flex-direction: column;
+      max-width: 430px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    #rx-overlay.open { display: flex; }
+    #rx-overlay-header {
+      background: #21252f;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    #rx-overlay-close {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      background: rgba(255,255,255,0.08);
+      color: rgba(255,255,255,0.85);
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    #rx-overlay-title { font-size: 15px; font-weight: 600; color: rgba(255,255,255,0.92); flex: 1; }
+
+    /* Zoom + rotate controls */
+    #rx-controls {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+      margin-left: auto;
+    }
+    .rx-ctrl-btn {
+      width: 34px;
+      height: 34px;
+      border-radius: 7px;
+      background: rgba(255,255,255,0.08);
+      color: rgba(255,255,255,0.75);
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(255,255,255,0.1);
+      transition: background 0.12s;
+      flex-shrink: 0;
+    }
+    .rx-ctrl-btn:active { background: rgba(255,255,255,0.15); }
+    #rx-zoom-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.5);
+      min-width: 32px;
+      text-align: center;
+    }
+
+    /* Viewer body */
+    #rx-overlay-body {
+      flex: 1;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      background: #0f1117;
+      touch-action: none;
+    }
+
+    /* Prescription document container */
+    #rx-doc-wrapper {
+      position: relative;
+      transform-origin: center center;
+      transition: transform 0.15s ease;
+      cursor: grab;
+      user-select: none;
+    }
+    #rx-doc-wrapper:active { cursor: grabbing; }
+
+    /* Dummy prescription — inline HTML/CSS
+       [MOCK ASSUMPTION] Fictional doctor and patient details for prototype only */
+    #rx-doc {
+      width: 320px;
+      background: #fff;
+      border-radius: 4px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+      overflow: hidden;
+      font-family: 'Georgia', serif;
+      color: #1a1a1a;
+    }
+    .rx-letterhead {
+      background: linear-gradient(135deg, #1B69DE 0%, #1558c0 100%);
+      padding: 16px 18px 14px;
+      color: #fff;
+    }
+    .rx-clinic-name {
+      font-size: 16px;
+      font-weight: 700;
+      font-family: var(--font);
+      letter-spacing: 0.02em;
+    }
+    .rx-doctor-name {
+      font-size: 13px;
+      font-weight: 600;
+      font-family: var(--font);
+      margin-top: 2px;
+      opacity: 0.92;
+    }
+    .rx-doctor-quals {
+      font-size: 11px;
+      font-family: var(--font);
+      opacity: 0.7;
+      margin-top: 1px;
+    }
+    .rx-clinic-address {
+      font-size: 10px;
+      font-family: var(--font);
+      opacity: 0.65;
+      margin-top: 6px;
+      line-height: 1.5;
+    }
+    .rx-body { padding: 14px 18px; }
+    .rx-patient-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 12px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #e5e7eb;
+      gap: 8px;
+    }
+    .rx-patient-info { flex: 1; }
+    .rx-patient-label { font-size: 10px; color: #6b7280; font-family: var(--font); text-transform: uppercase; letter-spacing: 0.05em; }
+    .rx-patient-value { font-size: 12px; font-weight: 600; font-family: var(--font); color: #1a1a1a; margin-top: 1px; }
+    .rx-symbol {
+      font-size: 28px;
+      font-weight: 700;
+      color: #1B69DE;
+      line-height: 1;
+      font-family: 'Georgia', serif;
+      flex-shrink: 0;
+    }
+    .rx-medicines { margin-bottom: 14px; }
+    .rx-med-item {
+      padding: 10px 0;
+      border-bottom: 1px dashed #e5e7eb;
+    }
+    .rx-med-item:last-child { border-bottom: none; }
+    .rx-med-number {
+      font-size: 11px;
+      font-weight: 700;
+      color: #1B69DE;
+      font-family: var(--font);
+      margin-bottom: 2px;
+    }
+    .rx-med-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: #111827;
+      font-family: var(--font);
+    }
+    .rx-med-details {
+      font-size: 11px;
+      color: #374151;
+      font-family: var(--font);
+      margin-top: 2px;
+    }
+    .rx-med-note {
+      font-size: 10px;
+      color: #6b7280;
+      font-family: var(--font);
+      margin-top: 2px;
+      font-style: italic;
+    }
+    .rx-footer {
+      border-top: 1px solid #e5e7eb;
+      padding-top: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+    .rx-advice { flex: 1; }
+    .rx-advice-label { font-size: 10px; color: #6b7280; font-family: var(--font); font-weight: 600; margin-bottom: 3px; }
+    .rx-advice-text  { font-size: 10px; color: #374151; font-family: var(--font); line-height: 1.5; }
+    .rx-signature { text-align: right; }
+    .rx-sig-line { width: 90px; border-bottom: 1px solid #374151; margin-bottom: 4px; margin-left: auto; }
+    .rx-sig-name { font-size: 10px; font-weight: 600; color: #374151; font-family: var(--font); }
+    .rx-sig-reg  { font-size: 9px; color: #9ca3af; font-family: var(--font); }
+    .rx-stamp {
+      margin-top: 8px;
+      padding: 6px 10px;
+      border: 2px solid #1B69DE;
+      border-radius: 4px;
+      text-align: center;
+      display: inline-block;
+    }
+    .rx-stamp-text { font-size: 9px; font-weight: 700; color: #1B69DE; font-family: var(--font); letter-spacing: 0.05em; }
+
+    /* Hint text at bottom of viewer */
+    #rx-hint {
+      position: absolute;
+      bottom: 12px;
+      left: 0; right: 0;
+      text-align: center;
+      font-size: 11px;
+      color: rgba(255,255,255,0.3);
+      pointer-events: none;
+    }
+
+    /* ============================================================
+       MEDICINES SECTION
+    ============================================================ */
+    #medicines-section {
+      background: var(--surface);
+      border-radius: var(--radius-card);
+      border: 1px solid var(--divider);
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+    }
+    #medicines-header {
+      padding: 12px 16px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    #medicines-count {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+    #add-medicine-btn {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--primary);
+      background: none;
+      padding: 4px 0;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    #medicines-list {
+      padding: 10px 16px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .medicine-item {
+      background: var(--surface-elevated);
+      border-radius: 10px;
+      padding: 11px 13px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border: 1px solid var(--divider);
+    }
+    .med-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      background: var(--primary-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+    .med-info { flex: 1; min-width: 0; }
+    .med-name { font-size: 13px; font-weight: 600; color: var(--text-primary); }
+    .med-detail { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+    .med-status-badge {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 3px 7px;
+      border-radius: 5px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      flex-shrink: 0;
+    }
+    .med-status-pending   { background: var(--warning-bg); color: var(--warning); border: 1px solid var(--warning-border); }
+    .med-status-validated { background: var(--success-bg); color: var(--success); border: 1px solid var(--success-border); }
+    .med-status-flagged   { background: var(--danger-bg);  color: var(--danger);  border: 1px solid var(--danger-border); }
+    .med-edit-btn {
+      width: 30px;
+      height: 30px;
+      border-radius: 7px;
+      background: #f1f5f9;
+      color: var(--text-secondary);
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      border: 1px solid var(--divider);
+    }
+    #medicines-empty {
+      padding: 20px 16px;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 13px;
+      display: none;
+    }
+
+    /* ============================================================
+       CALL SECTION
+    ============================================================ */
+    #call-section {
+      background: var(--surface);
+      border-radius: var(--radius-card);
+      border: 1px solid var(--divider);
+      box-shadow: var(--shadow-sm);
+      padding: 16px;
+    }
+    #assignment-strip {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--divider);
+    }
+    #assignment-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--success);
+      flex-shrink: 0;
+    }
+    #assignment-text { font-size: 13px; color: var(--text-secondary); flex: 1; }
+    #assignment-text strong { color: var(--text-primary); font-weight: 600; }
+
+    #call-patient-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+    #call-patient-name { font-size: 15px; font-weight: 700; color: var(--text-primary); }
+    #call-patient-phone { font-size: 13px; color: var(--text-secondary); margin-top: 2px; }
+
+    #call-status-display {
+      background: var(--surface-elevated);
+      border-radius: 10px;
+      padding: 13px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+      border: 1px solid var(--divider);
+    }
+    #call-status-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+    .cs-idle      { background: var(--primary-light); }
+    .cs-calling   { background: var(--warning-bg); }
+    .cs-connected { background: var(--success-bg); }
+    .cs-done      { background: var(--success-bg); }
+    .cs-nopickup  { background: var(--danger-bg); }
+    .cs-failed    { background: var(--danger-bg); }
+
+    #call-status-text { flex: 1; }
+    #call-status-main { font-size: 14px; font-weight: 600; color: var(--text-primary); }
+    #call-status-sub  { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+
+    #call-timer-display {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text-muted);
+      font-variant-numeric: tabular-nums;
+      letter-spacing: 0.02em;
+      transition: color 0.3s;
+    }
+    #call-timer-display.gate-passed { color: var(--success); }
+
+    #call-actions { display: flex; flex-direction: column; gap: 10px; }
+
+    #call-initiate-btn {
+      width: 100%;
+      height: 52px;
+      border-radius: var(--radius-btn);
+      background: var(--primary);
+      color: #fff;
+      font-size: 16px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: background 0.15s, opacity 0.15s;
+      box-shadow: 0 3px 10px rgba(27,105,222,0.25);
+    }
+    #call-initiate-btn:active { background: var(--primary-hover); }
+    #call-initiate-btn:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: none; }
+
+    #call-secondary-actions { display: flex; gap: 10px; }
+    .call-sec-btn {
+      flex: 1;
+      height: 44px;
+      border-radius: var(--radius-btn);
+      background: var(--surface-elevated);
+      color: var(--text-secondary);
+      font-size: 13px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      border: 1px solid var(--divider-strong);
+    }
+    .call-sec-btn.danger  { color: var(--danger);  background: var(--danger-bg);  border-color: var(--danger-border); }
+    .call-sec-btn.warning { color: var(--warning); background: var(--warning-bg); border-color: var(--warning-border); }
+
+    @keyframes pulse-ring {
+      0%   { box-shadow: 0 0 0 0 rgba(27,105,222,0.3); }
+      70%  { box-shadow: 0 0 0 10px rgba(27,105,222,0); }
+      100% { box-shadow: 0 0 0 0 rgba(27,105,222,0); }
+    }
+    .pulsing { animation: pulse-ring 1.4s ease-out infinite; }
+
+    /* ============================================================
+       NOTES SECTION
+    ============================================================ */
+    #notes-section {
+      background: var(--surface);
+      border-radius: var(--radius-card);
+      border: 1px solid var(--divider);
+      box-shadow: var(--shadow-sm);
+      padding: 14px 16px;
+    }
+    .notes-field-group { margin-bottom: 14px; }
+    .notes-field-group:last-child { margin-bottom: 0; }
+    .notes-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 6px;
+      display: block;
+    }
+    .notes-textarea {
+      width: 100%;
+      background: var(--surface-elevated);
+      border: 1px solid var(--divider-strong);
+      border-radius: var(--radius-input);
+      color: var(--text-primary);
+      font-size: 14px;
+      line-height: 1.5;
+      padding: 10px 12px;
+      resize: none;
+      min-height: 72px;
+      transition: border-color 0.15s;
+    }
+    .notes-textarea:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(27,105,222,0.1); }
+    .notes-textarea::placeholder { color: var(--text-muted); }
+
+    /* ============================================================
+       POST-CALL ACTION SECTION
+    ============================================================ */
+    #postcall-section {
+      display: none;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.25s ease, transform 0.25s ease;
+    }
+    #postcall-section.visible { display: block; }
+    #postcall-section.revealed { opacity: 1; transform: translateY(0); }
+
+    #ha-attention-banner {
+      background: var(--warning-bg);
+      border: 1px solid var(--warning-border);
+      border-radius: var(--radius-card);
+      padding: 12px 14px;
+      margin-bottom: 12px;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+    #ha-attention-banner .ha-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+    #ha-banner-title { font-size: 13px; font-weight: 700; color: var(--warning); }
+    #ha-banner-desc  { font-size: 12px; color: var(--text-secondary); margin-top: 3px; line-height: 1.5; }
+    #ha-attention-banner.hidden { display: none; }
+
+    #postcall-cta-card {
+      background: var(--surface);
+      border-radius: var(--radius-card);
+      border: 1px solid var(--divider);
+      box-shadow: var(--shadow-md);
+      padding: 16px;
+    }
+    #postcall-cta-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    #skip-ha-btn {
+      width: 100%;
+      height: 44px;
+      border-radius: var(--radius-btn);
+      background: transparent;
+      color: var(--warning);
+      border: 1px solid var(--warning-border);
+      font-size: 14px;
+      font-weight: 600;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+    #skip-ha-btn.visible { display: flex; }
+
+    #main-cta-btn {
+      width: 100%;
+      height: 56px;
+      border-radius: var(--radius-btn);
+      background: var(--primary);
+      color: #fff;
+      font-size: 17px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 4px 16px rgba(27,105,222,0.3);
+      transition: background 0.15s;
+    }
+    #main-cta-btn:active { background: var(--primary-hover); }
+    #main-cta-btn.success-state { background: var(--success); box-shadow: 0 4px 16px rgba(22,163,74,0.25); cursor: default; }
+
+    /* ============================================================
+       BOTTOM SHEETS
+    ============================================================ */
+    #sheet-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+      z-index: 400;
+      align-items: flex-end;
+      justify-content: center;
+    }
+    #sheet-overlay.open { display: flex; }
+
+    .bottom-sheet {
+      display: none;
+      width: 100%;
+      max-width: 430px;
+      background: var(--surface);
+      border-radius: 20px 20px 0 0;
+      padding: 0 0 32px;
+      transform: translateY(100%);
+      transition: transform 0.28s cubic-bezier(0.32,0.72,0,1);
+      border: 1px solid var(--divider-strong);
+      border-bottom: none;
+    }
+    .bottom-sheet.open { display: block; transform: translateY(0); }
+
+    .sheet-handle {
+      width: 36px; height: 4px;
+      background: var(--divider-strong);
+      border-radius: 2px;
+      margin: 12px auto 0;
+    }
+    .sheet-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-primary);
+      padding: 14px 20px 12px;
+      border-bottom: 1px solid var(--divider);
+    }
+    .sheet-body { padding: 14px 20px; }
+    .sheet-option-btn {
+      width: 100%;
+      background: var(--surface-elevated);
+      border: 1px solid var(--divider);
+      border-radius: 10px;
+      padding: 13px 14px;
+      text-align: left;
+      margin-bottom: 8px;
+      transition: background 0.12s;
+    }
+    .sheet-option-btn:last-child { margin-bottom: 0; }
+    .sheet-option-btn:active { background: var(--surface-hover); }
+    .sheet-option-title { font-size: 14px; font-weight: 600; color: var(--text-primary); }
+    .sheet-option-desc  { font-size: 12px; color: var(--text-secondary); margin-top: 3px; }
+
+    .sheet-confirm-btn {
+      width: 100%;
+      height: 50px;
+      border-radius: var(--radius-btn);
+      background: var(--primary);
+      color: #fff;
+      font-size: 15px;
+      font-weight: 700;
+    }
+    .sheet-confirm-btn.danger-btn  { background: var(--danger); }
+    .sheet-confirm-btn.warning-btn { background: var(--warning); }
+
+    .sheet-input-row { margin-bottom: 12px; }
+    .sheet-input-label { font-size: 12px; font-weight: 600; color: var(--text-secondary); margin-bottom: 5px; display: block; }
+    .sheet-input {
+      width: 100%;
+      background: var(--surface-elevated);
+      border: 1px solid var(--divider-strong);
+      border-radius: var(--radius-input);
+      color: var(--text-primary);
+      font-size: 14px;
+      padding: 10px 12px;
+    }
+    .sheet-input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(27,105,222,0.1); }
+    #sheet-med-name { font-size: 15px; font-weight: 600; margin-bottom: 14px; color: var(--text-primary); }
+
+    /* ============================================================
+       TOAST
+    ============================================================ */
+    #toast {
+      position: fixed;
+      bottom: 90px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: #1e293b;
+      color: rgba(255,255,255,0.9);
+      font-size: 13px;
+      font-weight: 500;
+      padding: 10px 18px;
+      border-radius: 20px;
+      opacity: 0;
+      transition: all 0.25s;
+      pointer-events: none;
+      white-space: nowrap;
+      z-index: 500;
+      max-width: 320px;
+      text-align: center;
+    }
+    #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    /* ============================================================
+       COMPLETED OVERLAY
+    ============================================================ */
+    #completed-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(255,255,255,0.96);
+      z-index: 350;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 32px;
+      text-align: center;
+      max-width: 430px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    #completed-overlay.open { display: flex; }
+    #completed-icon {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      background: var(--success-bg);
+      border: 2px solid var(--success-border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 34px;
+      margin-bottom: 20px;
+    }
+    #completed-title { font-size: 22px; font-weight: 700; color: var(--text-primary); margin-bottom: 8px; }
+    #completed-desc  { font-size: 14px; color: var(--text-secondary); line-height: 1.6; }
+    #completed-reset-btn {
+      margin-top: 32px;
+      padding: 12px 28px;
+      border-radius: var(--radius-btn);
+      background: var(--primary-light);
+      color: var(--primary);
+      font-size: 14px;
+      font-weight: 600;
+      border: 1px solid var(--primary-border);
+    }
+
+    .hidden { display: none !important; }
+
+  </style>
+</head>
+<body>
+
+<div id="layout-wrapper">
+
+  <!-- ============================================================
+       MOBILE COLUMN
+  ============================================================ -->
+  <div id="mobile-column">
+
+    <!-- DEMO BAR — [MOCK ASSUMPTION] dev-only -->
+    <div id="demo-bar">
+      <div id="demo-bar-label">⚡ Demo Controls</div>
+      <div id="demo-bar-scenarios">
+        <button class="scenario-btn active" data-scenario="cat4">Cat4</button>
+        <button class="scenario-btn" data-scenario="pilot_value_meds_ha">Pilot + Value + HA</button>
+        <button class="scenario-btn" data-scenario="pilot_nonvalue_meds_ha">Pilot + Non-Value + HA</button>
+        <button class="scenario-btn" data-scenario="pilot_ha_skipped_customer">HA Skipped (Cust)</button>
+        <button class="scenario-btn" data-scenario="pilot_ha_skipped_system">HA Skipped (Sys)</button>
+      </div>
+      <div id="demo-bar-row2">
+        <span id="demo-state-label">State: assigned</span>
+        <button id="demo-ff-btn-mobile">⏩ Fast-forward 50s</button>
+      </div>
+    </div>
+
+    <!-- STICKY PATIENT HEADER -->
+    <div id="patient-header">
+      <div id="patient-header-info">
+        <div id="patient-name-header">—</div>
+        <div id="patient-meta-header">—</div>
+      </div>
+      <!-- View Rx only here — Decision A: removed from card body -->
+      <button id="view-rx-btn" class="hidden" onclick="openRxOverlay()">📋 View Rx</button>
+    </div>
+
+    <!-- MAIN SCROLL -->
+    <div id="main-scroll">
+
+      <!-- Patient + Order Context -->
+      <div id="order-context-card">
+        <div>
+          <div id="patient-full-name">—</div>
+          <div id="patient-details-row">—</div>
+        </div>
+        <div id="badge-row">
+          <span id="badge-case-type" class="badge">—</span>
+          <span id="badge-ha"        class="badge hidden">—</span>
+          <span id="badge-meds"      class="badge hidden">—</span>
+        </div>
+        <div id="order-id-row">
+          Order&nbsp;<span id="display-order-id">—</span>
+          &nbsp;·&nbsp;
+          Case&nbsp;<span id="display-case-id">—</span>
+        </div>
+      </div>
+
+      <!-- Prescription Card (no View Rx button here — Decision A) -->
+      <div id="prescription-section">
+        <div class="section-label">Prescription</div>
+        <div id="prescription-card">
+          <div id="rx-icon">📄</div>
+          <div id="rx-info">
+            <div id="rx-title">Prescription attached</div>
+            <div id="rx-subtitle">Tap "View Rx" in the header to open</div>
+          </div>
+          <span id="rx-attached-note">✓ Attached</span>
+        </div>
+      </div>
+
+      <!-- Medicines to Validate -->
+      <div id="medicines-section">
+        <div id="medicines-header">
+          <span class="section-label" style="margin-bottom:0">Medicines to Validate</span>
+          <span id="medicines-count">0 medicines</span>
+        </div>
+        <div id="medicines-empty">No medicines on this order.</div>
+        <div id="medicines-list"></div>
+      </div>
+
+      <!-- Call Section -->
+      <div id="call-section">
+        <div class="section-label">Consultation Call</div>
+        <div id="assignment-strip">
+          <div id="assignment-dot"></div>
+          <div id="assignment-text">Assigned to <strong id="assigned-doctor-name">—</strong></div>
+        </div>
+        <div id="call-patient-row">
+          <div>
+            <div id="call-patient-name">—</div>
+            <div id="call-patient-phone">—</div>
+          </div>
+        </div>
+        <div id="call-status-display">
+          <div id="call-status-icon" class="cs-idle">📞</div>
+          <div id="call-status-text">
+            <div id="call-status-main">Ready to call</div>
+            <div id="call-status-sub">Patient not contacted yet</div>
+          </div>
+          <div id="call-timer-display" style="display:none">0:00</div>
+        </div>
+        <div id="call-actions">
+          <button id="call-initiate-btn" onclick="handleCallAction()">
+            <span id="call-btn-icon">📞</span>
+            <span id="call-btn-label">Call Patient</span>
+          </button>
+          <div id="call-secondary-actions" style="display:none">
+            <button class="call-sec-btn warning" onclick="openSheet('sheet-hold')">⏸ Hold</button>
+            <button class="call-sec-btn danger"  onclick="openSheet('sheet-nopickup')">📵 No Pickup</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Notes + Symptoms — [OPEN DECISION] OQ-006: pre-call notes allowed per safe placeholder -->
+      <div id="notes-section">
+        <div class="section-label">Notes &amp; Symptoms</div>
+        <div class="notes-field-group">
+          <label class="notes-label" for="symptoms-input">Chief Complaints / Symptoms</label>
+          <textarea id="symptoms-input" class="notes-textarea" placeholder="e.g., Fever since 2 days, sore throat, mild cough…" rows="3"></textarea>
+        </div>
+        <div class="notes-field-group">
+          <label class="notes-label" for="doctor-notes-input">Doctor Notes</label>
+          <textarea id="doctor-notes-input" class="notes-textarea" placeholder="Clinical observations, instructions, internal notes…" rows="3"></textarea>
+        </div>
+      </div>
+
+      <!-- Post-Call Action — HIDDEN until valid-call gate passes [LOCKED] -->
+      <div id="postcall-section">
+        <div id="ha-attention-banner" class="hidden">
+          <div class="ha-icon">⚠️</div>
+          <div>
+            <div id="ha-banner-title">Health Advisor call required</div>
+            <div id="ha-banner-desc">This Pilot order requires an HA call before the order can be confirmed. You may skip the HA call if clinically appropriate.</div>
+          </div>
+        </div>
+        <div id="postcall-cta-card">
+          <div id="postcall-cta-label">Post-Call Action</div>
+          <button id="skip-ha-btn" onclick="openSheet('sheet-skip-ha')">⏭ Skip HA Call</button>
+          <button id="main-cta-btn" onclick="handleMainCTA()">
+            <span id="main-cta-icon">✅</span>
+            <span id="main-cta-label">Confirm Order</span>
+          </button>
+        </div>
+      </div>
+
+    </div><!-- /main-scroll -->
+
+  </div><!-- /mobile-column -->
+
+
+  <!-- ============================================================
+       DESKTOP SIDE PANEL — visible on wide screens only
+       Decision E: demo helper, mirrors CTA + shows state
+  ============================================================ -->
+  <div id="desktop-side-panel">
+
+    <!-- Case Overview -->
+    <div class="side-panel-card">
+      <div class="side-panel-header">Current Case</div>
+      <div class="side-panel-body">
+        <div id="side-patient-name">—</div>
+        <div id="side-order-id">—</div>
+        <div id="side-badge-row"></div>
+      </div>
+    </div>
+
+    <!-- Call State -->
+    <div class="side-panel-card">
+      <div class="side-panel-header">Call Status</div>
+      <div class="side-panel-body">
+        <div id="side-state-display">
+          <div id="side-state-icon">📞</div>
+          <div>
+            <div id="side-state-text">—</div>
+            <div id="side-timer-text">—</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Post-call CTA (mirrors main scroll) -->
+    <div class="side-panel-card">
+      <div class="side-panel-header">Post-Call Action</div>
+      <div class="side-panel-body">
+        <div id="side-cta-section">
+          <div id="side-ha-banner">⚠️ HA call required before confirming</div>
+          <button id="side-skip-ha-btn" onclick="openSheet('sheet-skip-ha')">⏭ Skip HA Call</button>
+          <button id="side-main-cta" onclick="handleMainCTA()">
+            <span id="side-cta-icon">✅</span>
+            <span id="side-cta-label">Confirm Order</span>
+          </button>
+        </div>
+        <div id="side-cta-locked" style="font-size:12px;color:var(--text-muted);text-align:center;padding:8px 0;">
+          Waiting for valid call (50s)
+        </div>
+      </div>
+    </div>
+
+    <!-- Demo Controls (scenario + fast-forward) -->
+    <div class="side-panel-card">
+      <div class="side-panel-header">⚡ Demo Scenarios</div>
+      <div class="side-panel-body" id="side-scenario-btns">
+        <button class="side-scenario-btn active" data-scenario="cat4">Cat4</button>
+        <button class="side-scenario-btn" data-scenario="pilot_value_meds_ha">Pilot + Value Meds + HA</button>
+        <button class="side-scenario-btn" data-scenario="pilot_nonvalue_meds_ha">Pilot + Non-Value Meds + HA</button>
+        <button class="side-scenario-btn" data-scenario="pilot_ha_skipped_customer">Pilot · HA Skipped (Customer)</button>
+        <button class="side-scenario-btn" data-scenario="pilot_ha_skipped_system">Pilot · HA Skipped (System)</button>
+        <button id="side-ff-btn">⏩ Fast-forward to 50s</button>
+      </div>
+    </div>
+
+  </div><!-- /desktop-side-panel -->
+
+</div><!-- /layout-wrapper -->
+
+
+<!-- ============================================================
+     RX FULL-SCREEN OVERLAY (dark viewer — intentional for doc readability)
+============================================================ -->
+<div id="rx-overlay">
+  <div id="rx-overlay-header">
+    <button id="rx-overlay-close" onclick="closeRxOverlay()">✕</button>
+    <div id="rx-overlay-title">Prescription</div>
+    <div id="rx-controls">
+      <button class="rx-ctrl-btn" onclick="rxZoomOut()" title="Zoom out">−</button>
+      <span id="rx-zoom-label">100%</span>
+      <button class="rx-ctrl-btn" onclick="rxZoomIn()" title="Zoom in">+</button>
+      <button class="rx-ctrl-btn" onclick="rxRotate()" title="Rotate">↻</button>
+      <button class="rx-ctrl-btn" onclick="rxReset()" title="Reset">⊡</button>
+    </div>
+  </div>
+  <div id="rx-overlay-body">
+    <div id="rx-doc-wrapper">
+
+      <!-- DUMMY PRESCRIPTION — [MOCK ASSUMPTION] All details fictional -->
+      <div id="rx-doc">
+
+        <!-- Letterhead -->
+        <div class="rx-letterhead">
+          <div class="rx-clinic-name">Sunrise Medical Centre</div>
+          <div class="rx-doctor-name">Dr. Meenakshi Iyer</div>
+          <div class="rx-doctor-quals">MBBS, MD (General Medicine) · Reg. No. MH-12847</div>
+          <div class="rx-clinic-address">
+            402, Lotus Tower, Andheri West, Mumbai – 400053<br>
+            Mon–Sat: 10am–1pm, 5pm–8pm · Tel: 022-4567-8901
+          </div>
+        </div>
+
+        <!-- Body -->
+        <div class="rx-body">
+
+          <!-- Patient info -->
+          <div class="rx-patient-row">
+            <div class="rx-patient-info">
+              <div class="rx-patient-label">Patient</div>
+              <div id="rx-patient-name-display" class="rx-patient-value">—</div>
+              <div class="rx-patient-label" style="margin-top:6px">Date</div>
+              <div class="rx-patient-value" id="rx-date-display">—</div>
+            </div>
+            <div>
+              <div class="rx-patient-info" style="text-align:right;margin-bottom:8px">
+                <div class="rx-patient-label">Age / Gender</div>
+                <div id="rx-age-display" class="rx-patient-value">—</div>
+              </div>
+              <div class="rx-symbol">℞</div>
+            </div>
+          </div>
+
+          <!-- Medicines -->
+          <div class="rx-medicines" id="rx-medicines-list">
+            <!-- Populated by JS from scenario data -->
+          </div>
+
+          <!-- Footer -->
+          <div class="rx-footer">
+            <div class="rx-advice">
+              <div class="rx-advice-label">General Advice</div>
+              <div class="rx-advice-text">
+                Take medicines as prescribed.<br>
+                Drink plenty of water. Follow-up in 2 weeks.
+              </div>
+              <div class="rx-stamp" style="margin-top:10px">
+                <div class="rx-stamp-text">TRUEMEDS VERIFIED</div>
+              </div>
+            </div>
+            <div class="rx-signature">
+              <div class="rx-sig-line"></div>
+              <div class="rx-sig-name">Dr. Meenakshi Iyer</div>
+              <div class="rx-sig-reg">MH-12847</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <!-- /rx-doc -->
+
+    </div><!-- /rx-doc-wrapper -->
+    <div id="rx-hint">Double-tap to zoom · Pinch to zoom · Drag to pan</div>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     BOTTOM SHEETS
+============================================================ -->
+<div id="sheet-overlay" onclick="handleSheetOverlayClick(event)">
+
+  <!-- Hold Sheet -->
+  <div id="sheet-hold" class="bottom-sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-title">Put Case on Hold</div>
+    <div class="sheet-body">
+      <button class="sheet-option-btn" onclick="confirmHold('Patient requested callback')">
+        <div class="sheet-option-title">Patient requested callback</div>
+        <div class="sheet-option-desc">Patient is busy and asked to be called later</div>
+      </button>
+      <button class="sheet-option-btn" onclick="confirmHold('Awaiting prescription')">
+        <div class="sheet-option-title">Awaiting prescription</div>
+        <div class="sheet-option-desc">Prescription not yet uploaded or unclear</div>
+      </button>
+      <button class="sheet-option-btn" onclick="confirmHold('Doctor unavailable momentarily')">
+        <div class="sheet-option-title">Doctor unavailable momentarily</div>
+        <div class="sheet-option-desc">Doctor needs to step away briefly</div>
+      </button>
+      <button class="sheet-option-btn" onclick="openCustomHoldInput()">
+        <div class="sheet-option-title">Other reason…</div>
+        <div class="sheet-option-desc">Enter a custom hold reason</div>
+      </button>
+    </div>
+  </div>
+
+  <!-- No Pickup Sheet -->
+  <div id="sheet-nopickup" class="bottom-sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-title">Mark No Pickup</div>
+    <div class="sheet-body">
+      <button class="sheet-option-btn" onclick="confirmNoPickup('No answer')">
+        <div class="sheet-option-title">No answer</div>
+        <div class="sheet-option-desc">Phone rang but patient did not answer</div>
+      </button>
+      <button class="sheet-option-btn" onclick="confirmNoPickup('Phone switched off')">
+        <div class="sheet-option-title">Phone switched off</div>
+        <div class="sheet-option-desc">Call went to voicemail or was unreachable</div>
+      </button>
+      <button class="sheet-option-btn" onclick="confirmNoPickup('Wrong number / invalid')">
+        <div class="sheet-option-title">Wrong number / invalid</div>
+        <div class="sheet-option-desc">Number appears incorrect or disconnected</div>
+      </button>
+    </div>
+  </div>
+
+  <!-- Skip HA Sheet -->
+  <div id="sheet-skip-ha" class="bottom-sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-title">Skip HA Call</div>
+    <div class="sheet-body">
+      <!-- [OPEN DECISION] OQ-008: skip eligibility TBD -->
+      <button class="sheet-option-btn" onclick="confirmSkipHA('Patient declined HA call')">
+        <div class="sheet-option-title">Patient declined HA call</div>
+        <div class="sheet-option-desc">Patient explicitly did not want an HA call</div>
+      </button>
+      <button class="sheet-option-btn" onclick="confirmSkipHA('Clinically not required')">
+        <div class="sheet-option-title">Clinically not required</div>
+        <div class="sheet-option-desc">Doctor assessed HA counselling is not needed</div>
+      </button>
+      <button class="sheet-option-btn" onclick="confirmSkipHA('Repeat patient — familiar with medicines')">
+        <div class="sheet-option-title">Repeat patient — familiar with medicines</div>
+        <div class="sheet-option-desc">Patient was counselled in a prior order</div>
+      </button>
+    </div>
+  </div>
+
+  <!-- Edit Medicine Sheet -->
+  <!-- [OPEN DECISION] OQ-004: doctor edit authority TBD — dosage/frequency only in V1 -->
+  <div id="sheet-edit-med" class="bottom-sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-title">Edit Medicine</div>
+    <div class="sheet-body">
+      <div id="sheet-med-name">—</div>
+      <div class="sheet-input-row">
+        <label class="sheet-input-label" for="sheet-dosage-input">Dosage</label>
+        <input id="sheet-dosage-input" class="sheet-input" type="text" placeholder="e.g. 500mg" />
+      </div>
+      <div class="sheet-input-row">
+        <label class="sheet-input-label" for="sheet-freq-input">Frequency</label>
+        <input id="sheet-freq-input" class="sheet-input" type="text" placeholder="e.g. Twice daily" />
+      </div>
+      <button class="sheet-confirm-btn" onclick="confirmMedEdit()" style="margin-top:4px">Save Changes</button>
+    </div>
+  </div>
+
+</div><!-- /sheet-overlay -->
+
+<!-- TOAST -->
+<div id="toast"></div>
+
+<!-- COMPLETED OVERLAY -->
+<div id="completed-overlay">
+  <div id="completed-icon">✅</div>
+  <div id="completed-title">Order Confirmed</div>
+  <div id="completed-desc">This consultation has been completed and the order action has been submitted.</div>
+  <button id="completed-reset-btn" onclick="resetToDemo()">← Back to Demo</button>
+</div>
+
+
+<!-- ============================================================
+     JAVASCRIPT
+============================================================ -->
+<script>
+
+// ================================================================
+// MOCK SCENARIO DATA
+// [MOCK ASSUMPTION] All patient data and order IDs are fictional.
+// prescription_attached is MOCK_ONLY — set true for all scenarios
+// so the Rx viewer is testable across all cases.
+// In production, this is an independent order-level field.
+// ================================================================
+
+const SCENARIOS = {
+
+  cat4: {
+    case_type: 'cat4', ha_status: 'not_applicable', meds_type: 'not_applicable',
+    doctor_name: 'Dr. Priya Sharma',
+    patient_name: 'Ramesh Gupta', patient_age: 54, patient_gender: 'Male',
+    patient_phone: '+91 98765 XXXXX',
+    order_id: 'TM-ORD-20240812', case_id: 'C-CAT4-00431',
+    assignment_status: 'assigned',
+    prescription_attached: true,  // [MOCK ASSUMPTION] — independent of case type
+    medicines: [
+      { id:1, name:'Metformin 500mg',    dosage:'500mg', frequency:'Twice daily',        validation_status:'validated' },
+      { id:2, name:'Amlodipine 5mg',     dosage:'5mg',   frequency:'Once daily',          validation_status:'pending'   },
+      { id:3, name:'Atorvastatin 10mg',  dosage:'10mg',  frequency:'Once at bedtime',     validation_status:'pending'   },
+    ]
+  },
+
+  pilot_value_meds_ha: {
+    case_type: 'pilot', ha_status: 'required', meds_type: 'value',
+    doctor_name: 'Dr. Priya Sharma',
+    patient_name: 'Sunita Patel', patient_age: 38, patient_gender: 'Female',
+    patient_phone: '+91 77654 XXXXX',
+    order_id: 'TM-ORD-20240891', case_id: 'C-PLT-00874',
+    assignment_status: 'assigned',
+    prescription_attached: true,
+    medicines: [
+      { id:1, name:'Levothyroxine 50mcg', dosage:'50mcg', frequency:'Once daily (fasting)',      validation_status:'pending'   },
+      { id:2, name:'Calcium + Vit D3',    dosage:'500mg', frequency:'Twice daily with meals',    validation_status:'validated' },
+    ]
+  },
+
+  pilot_nonvalue_meds_ha: {
+    case_type: 'pilot', ha_status: 'required', meds_type: 'non_value',
+    doctor_name: 'Dr. Priya Sharma',
+    patient_name: 'Vikram Nair', patient_age: 62, patient_gender: 'Male',
+    patient_phone: '+91 90321 XXXXX',
+    order_id: 'TM-ORD-20240953', case_id: 'C-PLT-00912',
+    assignment_status: 'assigned',
+    prescription_attached: true,  // [MOCK ASSUMPTION] — was false before, corrected
+    medicines: [
+      { id:1, name:'Losartan 50mg',              dosage:'50mg',   frequency:'Once daily',                validation_status:'flagged'   },
+      { id:2, name:'Hydrochlorothiazide 12.5mg', dosage:'12.5mg', frequency:'Once daily morning',        validation_status:'pending'   },
+      { id:3, name:'Aspirin 75mg',               dosage:'75mg',   frequency:'Once daily after meals',    validation_status:'validated' },
+    ]
+  },
+
+  pilot_ha_skipped_customer: {
+    case_type: 'pilot', ha_status: 'skipped_customer', meds_type: 'value',
+    doctor_name: 'Dr. Priya Sharma',
+    patient_name: 'Ananya Krishnan', patient_age: 29, patient_gender: 'Female',
+    patient_phone: '+91 81234 XXXXX',
+    order_id: 'TM-ORD-20241034', case_id: 'C-PLT-01021',
+    assignment_status: 'assigned',
+    prescription_attached: true,
+    medicines: [
+      { id:1, name:'Ferrous Sulphate 200mg', dosage:'200mg', frequency:'Once daily',  validation_status:'validated' },
+      { id:2, name:'Folic Acid 5mg',         dosage:'5mg',   frequency:'Once daily',  validation_status:'validated' },
+    ]
+  },
+
+  pilot_ha_skipped_system: {
+    case_type: 'pilot', ha_status: 'skipped_system', meds_type: 'value',
+    doctor_name: 'Dr. Priya Sharma',
+    patient_name: 'Mohan Reddy', patient_age: 47, patient_gender: 'Male',
+    patient_phone: '+91 98001 XXXXX',
+    order_id: 'TM-ORD-20241112', case_id: 'C-PLT-01088',
+    assignment_status: 'assigned',
+    prescription_attached: true,  // [MOCK ASSUMPTION] — was false before, corrected
+    medicines: [
+      { id:1, name:'Pantoprazole 40mg', dosage:'40mg', frequency:'Once daily before breakfast', validation_status:'validated' },
+    ]
+  }
+};
+
+// ================================================================
+// DOCTOR STATE
+// ================================================================
+const DOCTOR_STATE = {
+  activeScenario:    'cat4',
+  consultationState: 'assigned',
+  callTimer:         0,
+  gatePassedAt:      null,
+  currentCase:       null,
+  timerInterval:     null,
+  haSkippedInSession:false,
+  holdReason:        null,
+  noPickupReason:    null,
+  editingMedId:      null,
+};
+
+// ================================================================
+// CTA ROUTING — [LOCKED] project_truth.md Section 5
+// ================================================================
+function resolveCTA(scenario) {
+  const { case_type, ha_status, meds_type } = scenario;
+  if (case_type === 'cat4') return { label:'Confirm Order',       icon:'✅', type:'confirm_order'    };
+  if (ha_status === 'skipped_customer' || ha_status === 'skipped_system')
+                           return { label:'Confirm Order',       icon:'✅', type:'confirm_order'    };
+  if (ha_status === 'required') {
+    if (meds_type === 'value')     return { label:'Confirm & Transfer', icon:'↗️', type:'confirm_transfer' };
+    if (meds_type === 'non_value') return { label:'Confirm & Forward',  icon:'⏩', type:'confirm_forward'  };
+  }
+  return { label:'Confirm Order', icon:'✅', type:'confirm_order' };
+}
+
+function haSkipApplicable(scenario) {
+  return scenario.case_type === 'pilot' && scenario.ha_status === 'required';
+}
+
+// ================================================================
+// RENDER — drives all UI from DOCTOR_STATE
+// ================================================================
+function render() {
+  const c = DOCTOR_STATE.currentCase;
+  if (!c) return;
+
+  // --- Patient header ---
+  document.getElementById('patient-name-header').textContent = c.patient_name;
+  document.getElementById('patient-meta-header').textContent =
+    `${c.patient_age}y · ${c.patient_gender} · ${c.order_id}`;
+  document.getElementById('view-rx-btn').classList.toggle('hidden', !c.prescription_attached);
+
+  // --- Order context ---
+  document.getElementById('patient-full-name').textContent = c.patient_name;
+  document.getElementById('patient-details-row').textContent = `${c.patient_age} years · ${c.patient_gender}`;
+
+  const ctBadge = document.getElementById('badge-case-type');
+  ctBadge.textContent = c.case_type === 'cat4' ? 'Cat4' : 'Pilot';
+  ctBadge.className   = `badge ${c.case_type === 'cat4' ? 'badge-cat4' : 'badge-pilot'}`;
+
+  const haBadge = document.getElementById('badge-ha');
+  if (c.case_type === 'cat4') {
+    haBadge.classList.add('hidden');
+  } else {
+    haBadge.classList.remove('hidden');
+    const hs = DOCTOR_STATE.haSkippedInSession ? 'skipped_session' : c.ha_status;
+    const haMap = {
+      required:         ['HA Required',             'badge-ha-req'],
+      skipped_customer: ['HA Skipped (Customer)',   'badge-ha-skip'],
+      skipped_system:   ['HA Skipped (System)',     'badge-ha-skip'],
+      skipped_session:  ['HA Skipped',              'badge-ha-skip'],
+    };
+    const [text, cls] = haMap[hs] || ['—',''];
+    haBadge.textContent = text;
+    haBadge.className = `badge ${cls}`;
+  }
+
+  const medsBadge = document.getElementById('badge-meds');
+  if (c.case_type === 'cat4' || c.meds_type === 'not_applicable') {
+    medsBadge.classList.add('hidden');
+  } else {
+    medsBadge.classList.remove('hidden');
+    medsBadge.textContent = c.meds_type === 'value' ? 'Value Meds' : 'Non-Value Meds';
+    medsBadge.className   = `badge ${c.meds_type === 'value' ? 'badge-value' : 'badge-nonvalue'}`;
+  }
+
+  document.getElementById('display-order-id').textContent = c.order_id;
+  document.getElementById('display-case-id').textContent  = c.case_id;
+
+  // --- Prescription ---
+  document.getElementById('prescription-section').classList.toggle('visible', c.prescription_attached);
+
+  // --- Populate Rx doc with patient data ---
+  document.getElementById('rx-patient-name-display').textContent = c.patient_name;
+  document.getElementById('rx-age-display').textContent = `${c.patient_age} / ${c.patient_gender}`;
+  document.getElementById('rx-date-display').textContent = formatDate(new Date());
+  renderRxMedicines(c.medicines);
+
+  // --- Medicines list ---
+  renderMedicines(c.medicines);
+
+  // --- Assignment ---
+  document.getElementById('assigned-doctor-name').textContent = c.doctor_name;
+
+  // --- Call info ---
+  document.getElementById('call-patient-name').textContent  = c.patient_name;
+  document.getElementById('call-patient-phone').textContent = c.patient_phone;
+
+  renderCallPhase();
+  renderPostCall();
+  renderSidePanel();
+
+  document.getElementById('demo-state-label').textContent =
+    `State: ${DOCTOR_STATE.consultationState} | ${formatTimer(DOCTOR_STATE.callTimer)}`;
+}
+
+function renderRxMedicines(meds) {
+  const list = document.getElementById('rx-medicines-list');
+  list.innerHTML = '';
+  if (!meds || meds.length === 0) {
+    list.innerHTML = '<p style="font-size:12px;color:#6b7280;padding:8px 0">No medicines listed</p>';
+    return;
+  }
+  meds.forEach((med, i) => {
+    const div = document.createElement('div');
+    div.className = 'rx-med-item';
+    div.innerHTML = `
+      <div class="rx-med-number">Medicine ${i + 1}</div>
+      <div class="rx-med-name">${med.name}</div>
+      <div class="rx-med-details">${med.dosage} — ${med.frequency}</div>
+      <div class="rx-med-note">As directed. Complete full course.</div>
+    `;
+    list.appendChild(div);
+  });
+}
+
+function renderMedicines(meds) {
+  const list  = document.getElementById('medicines-list');
+  const empty = document.getElementById('medicines-empty');
+  const count = document.getElementById('medicines-count');
+  list.innerHTML = '';
+  if (!meds || meds.length === 0) {
+    empty.style.display = 'block';
+    count.textContent = '0 medicines';
+    return;
+  }
+  empty.style.display = 'none';
+  count.textContent = `${meds.length} medicine${meds.length !== 1 ? 's' : ''}`;
+  meds.forEach(med => {
+    const sc = { pending:'med-status-pending', validated:'med-status-validated', flagged:'med-status-flagged' }[med.validation_status] || 'med-status-pending';
+    const sl = { pending:'Pending', validated:'Validated', flagged:'Flagged' }[med.validation_status] || 'Pending';
+    const el = document.createElement('div');
+    el.className = 'medicine-item';
+    el.innerHTML = `
+      <div class="med-icon">💊</div>
+      <div class="med-info">
+        <div class="med-name">${med.name}</div>
+        <div class="med-detail">${med.dosage} · ${med.frequency}</div>
+      </div>
+      <span class="med-status-badge ${sc}">${sl}</span>
+      <button class="med-edit-btn" onclick="openMedEdit(${med.id})" aria-label="Edit ${med.name}">✏️</button>
+    `;
+    list.appendChild(el);
+  });
+}
+
+function renderCallPhase() {
+  const state       = DOCTOR_STATE.consultationState;
+  const icon        = document.getElementById('call-status-icon');
+  const main        = document.getElementById('call-status-main');
+  const sub         = document.getElementById('call-status-sub');
+  const timer       = document.getElementById('call-timer-display');
+  const callBtn     = document.getElementById('call-initiate-btn');
+  const callBtnIcon = document.getElementById('call-btn-icon');
+  const callBtnLbl  = document.getElementById('call-btn-label');
+  const secActions  = document.getElementById('call-secondary-actions');
+
+  timer.style.display  = 'none';
+  secActions.style.display = 'none';
+  callBtn.style.display = 'flex';
+  callBtn.disabled = false;
+  callBtn.classList.remove('pulsing');
+  callBtn.style.background = 'var(--primary)';
+  callBtn.style.boxShadow  = '0 3px 10px rgba(27,105,222,0.25)';
+
+  const phases = {
+    assigned:  ['cs-idle',    '📞', 'Ready to call',      'Patient has not been contacted yet',          '📞','Call Patient', false],
+    calling:   ['cs-calling', '📡', 'Calling…',           'Dialling patient — please wait',               '⏳','Connecting…', true ],
+    connected: ['cs-connected','🔴','In call · live',     DOCTOR_STATE.callTimer < 50
+                                                            ? 'Continue consultation to unlock next action'
+                                                            : 'Valid call threshold reached',              '🔴','End Call',    false],
+    gate_passed:['cs-done',   '✅', `Call complete · ${formatTimer(DOCTOR_STATE.callTimer)}`, 'Valid consultation call completed', null, null, false],
+    nopickup:  ['cs-nopickup','📵', 'No pickup',          DOCTOR_STATE.noPickupReason||'Patient did not answer','🔄','Retry Call',  false],
+    hold:      ['cs-nopickup','⏸', 'Case on hold',       DOCTOR_STATE.holdReason||'Case placed on hold', '📞','Call Patient', false],
+    failed:    ['cs-failed',  '❌', 'Call failed',        'Could not connect — tap to retry',              '🔄','Retry Call',   false],
+  };
+
+  const [cs, ic, ma, su, bi, bl, dis] = phases[state] || phases.assigned;
+  icon.className = `call-status-icon ${cs}`;
+  icon.textContent = ic;
+  main.textContent = ma;
+  sub.textContent  = su;
+
+  if (state === 'gate_passed') {
+    callBtn.style.display = 'none';
+    secActions.style.display = 'none';
+    timer.style.display = 'block';
+    timer.classList.add('gate-passed');
+    timer.textContent = formatTimer(DOCTOR_STATE.callTimer);
+    return;
+  }
+
+  if (bi) { callBtnIcon.textContent = bi; callBtnLbl.textContent = bl; }
+  if (dis) {
+    callBtn.disabled = true;
+    callBtn.style.background = '#92400e';
+    callBtn.style.boxShadow  = 'none';
+    callBtn.classList.add('pulsing');
+    secActions.style.display = 'flex';
+    timer.style.display = 'block';
+    timer.classList.remove('gate-passed');
+    timer.textContent = formatTimer(DOCTOR_STATE.callTimer);
+  }
+
+  if (state === 'connected') {
+    callBtn.style.background = 'var(--danger)';
+    callBtn.style.boxShadow  = 'none';
+    secActions.style.display = 'flex';
+    timer.style.display = 'block';
+    timer.classList.toggle('gate-passed', DOCTOR_STATE.callTimer >= 50);
+    timer.textContent = formatTimer(DOCTOR_STATE.callTimer);
+  }
+}
+
+function renderPostCall() {
+  const pc       = document.getElementById('postcall-section');
+  const haBanner = document.getElementById('ha-attention-banner');
+  const skipBtn  = document.getElementById('skip-ha-btn');
+  const ctaBtn   = document.getElementById('main-cta-btn');
+  const ctaIcon  = document.getElementById('main-cta-icon');
+  const ctaLbl   = document.getElementById('main-cta-label');
+
+  const gateOpen = DOCTOR_STATE.consultationState === 'gate_passed' || DOCTOR_STATE.consultationState === 'completed';
+
+  if (!gateOpen) {
+    pc.classList.remove('visible','revealed');
+    return;
+  }
+
+  pc.classList.add('visible');
+  requestAnimationFrame(() => requestAnimationFrame(() => pc.classList.add('revealed')));
+
+  const c = DOCTOR_STATE.currentCase;
+  const haSkipped = DOCTOR_STATE.haSkippedInSession || c.ha_status === 'skipped_customer' || c.ha_status === 'skipped_system';
+
+  // HA banner — only Pilot + HA required + not skipped [LOCKED]
+  haBanner.classList.toggle('hidden', !(c.case_type === 'pilot' && c.ha_status === 'required' && !DOCTOR_STATE.haSkippedInSession));
+  // Skip HA — only Pilot + HA required + not yet skipped [LOCKED]
+  skipBtn.classList.toggle('visible', haSkipApplicable(c) && !DOCTOR_STATE.haSkippedInSession);
+
+  const effectiveScenario = DOCTOR_STATE.haSkippedInSession
+    ? Object.assign({}, c, { ha_status:'skipped_customer' }) : c;
+  const cta = resolveCTA(effectiveScenario);
+  ctaIcon.textContent = cta.icon;
+  ctaLbl.textContent  = cta.label;
+
+  console.log(`[MOCK] cta-routing | scenario=${DOCTOR_STATE.activeScenario} | ha_skip_session=${DOCTOR_STATE.haSkippedInSession} | resolved=${cta.type}`);
+}
+
+function renderSidePanel() {
+  const c = DOCTOR_STATE.currentCase;
+  if (!c) return;
+
+  document.getElementById('side-patient-name').textContent = c.patient_name;
+  document.getElementById('side-order-id').textContent = `${c.order_id} · ${c.case_id}`;
+
+  // Side badges
+  const sideRow = document.getElementById('side-badge-row');
+  sideRow.innerHTML = '';
+  const addSideBadge = (text, cls) => {
+    const b = document.createElement('span');
+    b.className = `badge ${cls}`;
+    b.textContent = text;
+    b.style.fontSize = '10px';
+    sideRow.appendChild(b);
+  };
+  addSideBadge(c.case_type === 'cat4' ? 'Cat4' : 'Pilot', c.case_type === 'cat4' ? 'badge-cat4' : 'badge-pilot');
+  if (c.case_type !== 'cat4') {
+    const hs = DOCTOR_STATE.haSkippedInSession ? 'skipped_session' : c.ha_status;
+    const haMap = { required:['HA Required','badge-ha-req'], skipped_customer:['HA Skipped','badge-ha-skip'], skipped_system:['HA Skipped (Sys)','badge-ha-skip'], skipped_session:['HA Skipped','badge-ha-skip'] };
+    if (haMap[hs]) addSideBadge(haMap[hs][0], haMap[hs][1]);
+  }
+
+  // Side state
+  const stateIcons = { assigned:'📞', calling:'📡', connected:'🔴', gate_passed:'✅', nopickup:'📵', hold:'⏸', failed:'❌', completed:'✅' };
+  const stateLabels = { assigned:'Ready to call', calling:'Calling…', connected:'In call — live', gate_passed:'Call complete', nopickup:'No pickup', hold:'On hold', failed:'Call failed', completed:'Completed' };
+  document.getElementById('side-state-icon').textContent = stateIcons[DOCTOR_STATE.consultationState] || '📞';
+  document.getElementById('side-state-text').textContent = stateLabels[DOCTOR_STATE.consultationState] || '—';
+  document.getElementById('side-timer-text').textContent = DOCTOR_STATE.callTimer > 0
+    ? `Timer: ${formatTimer(DOCTOR_STATE.callTimer)}` : 'Timer not started';
+
+  // Side CTA
+  const gateOpen = DOCTOR_STATE.consultationState === 'gate_passed' || DOCTOR_STATE.consultationState === 'completed';
+  document.getElementById('side-cta-section').classList.toggle('visible', gateOpen);
+  document.getElementById('side-cta-locked').style.display = gateOpen ? 'none' : 'block';
+
+  if (gateOpen) {
+    const haSkipped = DOCTOR_STATE.haSkippedInSession || c.ha_status === 'skipped_customer' || c.ha_status === 'skipped_system';
+    document.getElementById('side-ha-banner').classList.toggle('visible', c.case_type === 'pilot' && c.ha_status === 'required' && !DOCTOR_STATE.haSkippedInSession);
+    document.getElementById('side-skip-ha-btn').classList.toggle('visible', haSkipApplicable(c) && !DOCTOR_STATE.haSkippedInSession);
+    const effectiveScenario = DOCTOR_STATE.haSkippedInSession ? Object.assign({}, c, { ha_status:'skipped_customer' }) : c;
+    const cta = resolveCTA(effectiveScenario);
+    document.getElementById('side-cta-icon').textContent  = cta.icon;
+    document.getElementById('side-cta-label').textContent = cta.label;
+  }
+
+  // Side scenario buttons sync
+  document.querySelectorAll('.side-scenario-btn[data-scenario]').forEach(b => {
+    b.classList.toggle('active', b.dataset.scenario === DOCTOR_STATE.activeScenario);
+  });
+}
+
+// ================================================================
+// CALL FLOW
+// ================================================================
+function handleCallAction() {
+  const s = DOCTOR_STATE.consultationState;
+  if (['assigned','nopickup','hold','failed'].includes(s)) { initiateCall(); }
+  else if (s === 'connected') {
+    clearInterval(DOCTOR_STATE.timerInterval);
+    DOCTOR_STATE.timerInterval = null;
+    DOCTOR_STATE.consultationState = 'assigned';
+    DOCTOR_STATE.callTimer = 0;
+    showToast('Call ended before 50s — gate not passed');
+    render();
+    console.log(`[MOCK] call-service.callEnded | gate=NOT_PASSED`);
+  }
+}
+
+function initiateCall() {
+  DOCTOR_STATE.consultationState = 'calling';
+  DOCTOR_STATE.callTimer = 0;
+  render();
+  console.log(`[MOCK] call-service.initiateCall | scenario=${DOCTOR_STATE.activeScenario} | delay=2000ms`);
+  setTimeout(() => {
+    DOCTOR_STATE.consultationState = 'connected';
+    render();
+    console.log(`[MOCK] call-service.callConnected | scenario=${DOCTOR_STATE.activeScenario}`);
+    startCallTimer();
+  }, 2000);
+}
+
+function startCallTimer() {
+  if (DOCTOR_STATE.timerInterval) clearInterval(DOCTOR_STATE.timerInterval);
+  DOCTOR_STATE.timerInterval = setInterval(() => {
+    DOCTOR_STATE.callTimer++;
+    const timerEl = document.getElementById('call-timer-display');
+    timerEl.textContent = formatTimer(DOCTOR_STATE.callTimer);
+    if (DOCTOR_STATE.callTimer === 50) timerEl.classList.add('gate-passed');
+    if (DOCTOR_STATE.callTimer >= 50 && DOCTOR_STATE.consultationState !== 'gate_passed') {
+      clearInterval(DOCTOR_STATE.timerInterval);
+      DOCTOR_STATE.timerInterval = null;
+      DOCTOR_STATE.consultationState = 'gate_passed';
+      DOCTOR_STATE.gatePassedAt = Date.now();
+      render();
+      console.log(`[MOCK] call-timer.gateCheck | elapsed=50s | gate=PASSED | cta=${resolveCTA(DOCTOR_STATE.currentCase).type}`);
+      showToast('✅ Valid call complete — post-call action unlocked');
+      setTimeout(() => document.getElementById('postcall-section').scrollIntoView({ behavior:'smooth', block:'start' }), 300);
+    }
+    // Sync sub-text during connected state
+    if (DOCTOR_STATE.consultationState === 'connected') {
+      document.getElementById('call-status-sub').textContent = DOCTOR_STATE.callTimer < 50
+        ? 'Continue consultation to unlock next action'
+        : 'Valid call threshold reached';
+    }
+    document.getElementById('demo-state-label').textContent =
+      `State: ${DOCTOR_STATE.consultationState} | ${formatTimer(DOCTOR_STATE.callTimer)}`;
+    renderSidePanel();
+  }, 1000);
+}
+
+// Fast-forward — demo controls
+function doFastForward() {
+  const s = DOCTOR_STATE.consultationState;
+  if (s === 'connected') {
+    clearInterval(DOCTOR_STATE.timerInterval);
+    DOCTOR_STATE.timerInterval = null;
+    DOCTOR_STATE.callTimer = 50;
+    DOCTOR_STATE.consultationState = 'gate_passed';
+    DOCTOR_STATE.gatePassedAt = Date.now();
+    render();
+    showToast('⏩ Fast-forwarded to 50s — gate passed');
+    setTimeout(() => document.getElementById('postcall-section').scrollIntoView({ behavior:'smooth', block:'start' }), 300);
+  } else if (['assigned','nopickup','hold'].includes(s)) {
+    DOCTOR_STATE.consultationState = 'calling';
+    render();
+    setTimeout(() => {
+      DOCTOR_STATE.callTimer = 50;
+      DOCTOR_STATE.consultationState = 'gate_passed';
+      DOCTOR_STATE.gatePassedAt = Date.now();
+      render();
+      showToast('⏩ Fast-forwarded — gate passed');
+      setTimeout(() => document.getElementById('postcall-section').scrollIntoView({ behavior:'smooth', block:'start' }), 300);
+    }, 300);
+  } else {
+    showToast('Fast-forward only works before gate is passed');
+  }
+}
+
+document.getElementById('demo-ff-btn-mobile').addEventListener('click', doFastForward);
+document.getElementById('side-ff-btn').addEventListener('click', doFastForward);
+
+// ================================================================
+// POST-CALL CTA
+// ================================================================
+function handleMainCTA() {
+  if (DOCTOR_STATE.consultationState !== 'gate_passed') return;
+  const btn = document.getElementById('main-cta-btn');
+  btn.disabled = true;
+  btn.innerHTML = '⏳ Submitting…';
+  console.log(`[MOCK] cta-action.submit | scenario=${DOCTOR_STATE.activeScenario} | delay=800ms`);
+  setTimeout(() => {
+    DOCTOR_STATE.consultationState = 'completed';
+    const effectiveScenario = DOCTOR_STATE.haSkippedInSession
+      ? Object.assign({}, DOCTOR_STATE.currentCase, { ha_status:'skipped_customer' }) : DOCTOR_STATE.currentCase;
+    const cta = resolveCTA(effectiveScenario);
+    const titles = { confirm_order:'Order Confirmed', confirm_transfer:'Transferred to HA', confirm_forward:'Forwarded for Review' };
+    document.getElementById('completed-title').textContent = titles[cta.type] || 'Done';
+    document.getElementById('completed-desc').textContent =
+      `Consultation completed for ${DOCTOR_STATE.currentCase.patient_name}. Action "${cta.label}" has been submitted.`;
+    document.getElementById('completed-overlay').classList.add('open');
+    console.log(`[MOCK] cta-action.success | cta=${cta.type}`);
+  }, 800);
+}
+
+// ================================================================
+// SHEET HANDLERS
+// ================================================================
+let activeSheet = null;
+
+function openSheet(sheetId) {
+  const overlay = document.getElementById('sheet-overlay');
+  if (activeSheet) document.getElementById(activeSheet)?.classList.remove('open');
+  overlay.classList.add('open');
+  document.getElementById(sheetId)?.classList.add('open');
+  activeSheet = sheetId;
+}
+
+function closeSheet() {
+  if (activeSheet) document.getElementById(activeSheet)?.classList.remove('open');
+  document.getElementById('sheet-overlay').classList.remove('open');
+  activeSheet = null;
+}
+
+function handleSheetOverlayClick(e) {
+  if (e.target === document.getElementById('sheet-overlay')) closeSheet();
+}
+
+function confirmHold(reason) {
+  clearInterval(DOCTOR_STATE.timerInterval);
+  DOCTOR_STATE.timerInterval = null;
+  DOCTOR_STATE.consultationState = 'hold';
+  DOCTOR_STATE.holdReason = reason;
+  closeSheet(); render();
+  showToast(`Case on hold: ${reason}`);
+  console.log(`[MOCK] case.hold | reason="${reason}"`);
+}
+
+function openCustomHoldInput() {
+  closeSheet();
+  setTimeout(() => { const r = prompt('Enter hold reason:'); if (r?.trim()) confirmHold(r.trim()); }, 200);
+}
+
+function confirmNoPickup(reason) {
+  clearInterval(DOCTOR_STATE.timerInterval);
+  DOCTOR_STATE.timerInterval = null;
+  DOCTOR_STATE.consultationState = 'nopickup';
+  DOCTOR_STATE.noPickupReason = reason;
+  closeSheet(); render();
+  showToast(`No pickup: ${reason}`);
+  console.log(`[MOCK] case.noPickup | reason="${reason}"`);
+}
+
+function confirmSkipHA(reason) {
+  DOCTOR_STATE.haSkippedInSession = true;
+  closeSheet(); render();
+  showToast(`HA skipped: ${reason} → CTA updated to Confirm Order`);
+  console.log(`[MOCK] ha.skip | reason="${reason}" | new_cta=confirm_order`);
+}
+
+function openMedEdit(medId) {
+  const med = DOCTOR_STATE.currentCase.medicines.find(m => m.id === medId);
+  if (!med) return;
+  DOCTOR_STATE.editingMedId = medId;
+  document.getElementById('sheet-med-name').textContent  = med.name;
+  document.getElementById('sheet-dosage-input').value    = med.dosage;
+  document.getElementById('sheet-freq-input').value      = med.frequency;
+  openSheet('sheet-edit-med');
+}
+
+function confirmMedEdit() {
+  const med = DOCTOR_STATE.currentCase.medicines.find(m => m.id === DOCTOR_STATE.editingMedId);
+  if (!med) return;
+  med.dosage    = document.getElementById('sheet-dosage-input').value || med.dosage;
+  med.frequency = document.getElementById('sheet-freq-input').value  || med.frequency;
+  closeSheet(); render();
+  showToast('Medicine updated (mock — not persisted)');
+}
+
+// ================================================================
+// RX VIEWER — Zoom, Rotate, Pan, Pinch
+// ================================================================
+let rxState = { zoom:1, rotation:0, panX:0, panY:0 };
+let rxPinchDist = null;
+let rxDragStart = null;
+
+function applyRxTransform() {
+  const wrapper = document.getElementById('rx-doc-wrapper');
+  wrapper.style.transform =
+    `translate(${rxState.panX}px, ${rxState.panY}px) rotate(${rxState.rotation}deg) scale(${rxState.zoom})`;
+  document.getElementById('rx-zoom-label').textContent = Math.round(rxState.zoom * 100) + '%';
+}
+
+function rxZoomIn()  { rxState.zoom = Math.min(rxState.zoom + 0.25, 4); applyRxTransform(); }
+function rxZoomOut() { rxState.zoom = Math.max(rxState.zoom - 0.25, 0.5); applyRxTransform(); }
+function rxRotate()  { rxState.rotation = (rxState.rotation + 90) % 360; applyRxTransform(); }
+function rxReset()   { rxState = {zoom:1,rotation:0,panX:0,panY:0}; applyRxTransform(); }
+
+function openRxOverlay() {
+  rxReset();
+  document.getElementById('rx-overlay').classList.add('open');
+}
+function closeRxOverlay() { document.getElementById('rx-overlay').classList.remove('open'); }
+
+// Double-tap to zoom
+let lastTap = 0;
+document.getElementById('rx-overlay-body').addEventListener('click', (e) => {
+  const now = Date.now();
+  if (now - lastTap < 320) {
+    rxState.zoom = rxState.zoom > 1.2 ? 1 : 2;
+    applyRxTransform();
+  }
+  lastTap = now;
+});
+
+// Pinch to zoom (touch)
+document.getElementById('rx-overlay-body').addEventListener('touchstart', (e) => {
+  if (e.touches.length === 2) {
+    rxPinchDist = Math.hypot(
+      e.touches[0].clientX - e.touches[1].clientX,
+      e.touches[0].clientY - e.touches[1].clientY
+    );
+  } else if (e.touches.length === 1) {
+    rxDragStart = { x: e.touches[0].clientX - rxState.panX, y: e.touches[0].clientY - rxState.panY };
+  }
+}, { passive:true });
+
+document.getElementById('rx-overlay-body').addEventListener('touchmove', (e) => {
+  if (e.touches.length === 2 && rxPinchDist !== null) {
+    const dist = Math.hypot(
+      e.touches[0].clientX - e.touches[1].clientX,
+      e.touches[0].clientY - e.touches[1].clientY
+    );
+    rxState.zoom = Math.min(Math.max(rxState.zoom * (dist / rxPinchDist), 0.5), 4);
+    rxPinchDist = dist;
+    applyRxTransform();
+  } else if (e.touches.length === 1 && rxDragStart) {
+    rxState.panX = e.touches[0].clientX - rxDragStart.x;
+    rxState.panY = e.touches[0].clientY - rxDragStart.y;
+    applyRxTransform();
+  }
+  e.preventDefault();
+}, { passive:false });
+
+document.getElementById('rx-overlay-body').addEventListener('touchend', () => {
+  rxPinchDist = null;
+  rxDragStart = null;
+}, { passive:true });
+
+// Mouse drag (desktop)
+let mouseDragStart = null;
+document.getElementById('rx-overlay-body').addEventListener('mousedown', (e) => {
+  mouseDragStart = { x: e.clientX - rxState.panX, y: e.clientY - rxState.panY };
+});
+document.addEventListener('mousemove', (e) => {
+  if (!mouseDragStart) return;
+  rxState.panX = e.clientX - mouseDragStart.x;
+  rxState.panY = e.clientY - mouseDragStart.y;
+  applyRxTransform();
+});
+document.addEventListener('mouseup', () => { mouseDragStart = null; });
+
+// Mouse wheel zoom
+document.getElementById('rx-overlay-body').addEventListener('wheel', (e) => {
+  e.preventDefault();
+  const delta = e.deltaY > 0 ? -0.1 : 0.1;
+  rxState.zoom = Math.min(Math.max(rxState.zoom + delta, 0.5), 4);
+  applyRxTransform();
+}, { passive:false });
+
+// ================================================================
+// SCENARIO SWITCHING
+// ================================================================
+function switchScenario(scenarioId) {
+  clearInterval(DOCTOR_STATE.timerInterval);
+  DOCTOR_STATE.timerInterval     = null;
+  DOCTOR_STATE.activeScenario    = scenarioId;
+  DOCTOR_STATE.consultationState = 'assigned';
+  DOCTOR_STATE.callTimer         = 0;
+  DOCTOR_STATE.gatePassedAt      = null;
+  DOCTOR_STATE.haSkippedInSession= false;
+  DOCTOR_STATE.holdReason        = null;
+  DOCTOR_STATE.noPickupReason    = null;
+  DOCTOR_STATE.editingMedId      = null;
+  DOCTOR_STATE.currentCase = JSON.parse(JSON.stringify(SCENARIOS[scenarioId]));
+
+  const pc = document.getElementById('postcall-section');
+  pc.classList.remove('visible','revealed');
+
+  document.getElementById('symptoms-input').value      = '';
+  document.getElementById('doctor-notes-input').value  = '';
+
+  // Sync both scenario button sets
+  document.querySelectorAll('.scenario-btn[data-scenario], .side-scenario-btn[data-scenario]').forEach(b => {
+    b.classList.toggle('active', b.dataset.scenario === scenarioId);
+  });
+
+  render();
+  console.log(`[MOCK] scenario.switch | active=${scenarioId} | case_type=${SCENARIOS[scenarioId].case_type} | ha_status=${SCENARIOS[scenarioId].ha_status}`);
+}
+
+// Wire up all scenario buttons (both bars)
+document.querySelectorAll('[data-scenario]').forEach(btn => {
+  btn.addEventListener('click', () => switchScenario(btn.dataset.scenario));
+});
+
+function resetToDemo() {
+  document.getElementById('completed-overlay').classList.remove('open');
+  switchScenario(DOCTOR_STATE.activeScenario);
+}
+
+// ================================================================
+// TOAST
+// ================================================================
+let toastTimer = null;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  if (toastTimer) clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+// ================================================================
+// HELPERS
+// ================================================================
+function formatTimer(s) {
+  return `${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`;
+}
+
+function formatDate(d) {
+  return d.toLocaleDateString('en-IN', { day:'2-digit', month:'short', year:'numeric' });
+}
+
+// ================================================================
+// INIT
+// ================================================================
+switchScenario('cat4');
+
+</script>
+</body>
+</html>
