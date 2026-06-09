@@ -877,14 +877,11 @@
       position: fixed;
       top: 0;
       bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 100%;
-      max-width: 430px;
       background: rgba(0,0,0,0.45);
       z-index: 400;
       align-items: flex-end;
       justify-content: center;
+      /* left/width set by JS in openSheet() to match mobile column */
     }
     #sheet-overlay.open { display: flex; }
 
@@ -2083,6 +2080,10 @@ let activeSheet = null;
 
 function openSheet(sheetId) {
   const overlay = document.getElementById('sheet-overlay');
+  const col = document.getElementById('mobile-column');
+  const rect = col.getBoundingClientRect();
+  overlay.style.left  = rect.left + 'px';
+  overlay.style.width = rect.width + 'px';
   if (activeSheet) document.getElementById(activeSheet)?.classList.remove('open');
   overlay.classList.add('open');
   document.getElementById(sheetId)?.classList.add('open');
