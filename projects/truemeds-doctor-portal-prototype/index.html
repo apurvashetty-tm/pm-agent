@@ -9,8 +9,7 @@
     /* ============================================================
        DESIGN TOKENS — Light theme, Truemeds brand-inspired
        Primary: #1B69DE (truemeds.in brand blue)
-       Background: #f5f7fa (soft off-white)
-       Source: uiux_designer.md + truemeds.in visual language
+       Background: #f0f4f8
     ============================================================ */
     :root {
       --bg:               #f0f4f8;
@@ -86,7 +85,6 @@
       background: var(--bg);
       position: relative;
       flex-shrink: 0;
-      /* Subtle left/right border on desktop to define the mobile frame */
       box-shadow: 0 0 0 1px rgba(0,0,0,0.06);
     }
 
@@ -104,7 +102,6 @@
       align-self: flex-start;
     }
 
-    /* Show side panel only when there is enough room */
     @media (min-width: 800px) {
       #desktop-side-panel { display: block; }
     }
@@ -153,7 +150,6 @@
     #side-state-text { font-size: 13px; font-weight: 600; color: var(--text-primary); }
     #side-timer-text { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
 
-    /* Side CTA section — mirrors post-call actions */
     #side-cta-section { display: none; }
     #side-cta-section.visible { display: block; }
     #side-ha-banner {
@@ -200,7 +196,6 @@
     }
     #side-main-cta:active { background: var(--primary-hover); }
 
-    /* Side demo controls */
     .side-scenario-btn {
       display: block;
       width: 100%;
@@ -234,18 +229,21 @@
     }
 
     /* ============================================================
-       DEMO BAR — visible on mobile only (hidden on desktop where side panel takes over)
+       STICKY TOP WRAPPER — demo bar + compact strip
+    ============================================================ */
+    #sticky-top-wrapper {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+    }
+
+    /* ============================================================
+       DEMO BAR
     ============================================================ */
     #demo-bar {
       background: #1e293b;
       border-bottom: 2px solid #f59e0b;
       padding: 8px 12px;
-      position: sticky;
-      top: 0;
-      z-index: 200;
-    }
-    @media (min-width: 800px) {
-      /* Keep demo bar on mobile column even on desktop */
     }
     #demo-bar-label {
       font-size: 10px;
@@ -297,35 +295,44 @@
     }
 
     /* ============================================================
-       STICKY PATIENT HEADER
+       COMPACT STRIP — hidden until patient block scrolls out
     ============================================================ */
-    #patient-header {
+    #compact-strip {
       background: var(--surface);
       border-bottom: 1px solid var(--divider-strong);
-      padding: 10px 16px;
-      display: flex;
+      padding: 8px 16px;
+      display: none;
       align-items: center;
       gap: 10px;
-      position: sticky;
-      top: 57px;
-      z-index: 100;
       box-shadow: var(--shadow-sm);
     }
-    #patient-header-info { flex: 1; min-width: 0; }
-    #patient-name-header {
-      font-size: 15px;
+    #compact-strip.visible { display: flex; }
+    #cs-patient-info { flex: 1; min-width: 0; }
+    #cs-patient-name {
+      font-size: 14px;
       font-weight: 700;
       color: var(--text-primary);
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
-    #patient-meta-header {
-      font-size: 12px;
+    #cs-patient-meta {
+      font-size: 11px;
       color: var(--text-secondary);
       margin-top: 1px;
     }
-    #view-rx-btn {
+    #cs-timer-badge {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--success);
+      background: var(--success-bg);
+      border: 1px solid var(--success-border);
+      border-radius: 6px;
+      padding: 4px 8px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    #cs-view-rx-btn {
       font-size: 12px;
       font-weight: 600;
       color: var(--primary);
@@ -339,7 +346,6 @@
       align-items: center;
       gap: 4px;
     }
-    #view-rx-btn.hidden { display: none; }
 
     /* ============================================================
        MAIN SCROLL CONTENT
@@ -364,14 +370,20 @@
     }
 
     /* ============================================================
-       PATIENT + ORDER CONTEXT CARD
+       PATIENT DETAIL BLOCK — non-sticky, no badge row
     ============================================================ */
-    #order-context-card {
+    #patient-detail-block {
       background: var(--surface);
       border-radius: var(--radius-card);
       padding: 14px 16px;
       border: 1px solid var(--divider);
       box-shadow: var(--shadow-sm);
+    }
+    #pdb-top-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
     }
     #patient-full-name {
       font-size: 18px;
@@ -383,13 +395,35 @@
       color: var(--text-secondary);
       margin-top: 3px;
     }
-    #badge-row {
+    #pdb-view-rx-btn {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--primary);
+      background: var(--primary-light);
+      border: 1px solid var(--primary-border);
+      border-radius: 6px;
+      padding: 6px 11px;
+      white-space: nowrap;
+      flex-shrink: 0;
       display: flex;
-      gap: 6px;
-      margin-top: 10px;
-      flex-wrap: wrap;
       align-items: center;
+      gap: 4px;
     }
+    #pdb-view-rx-btn.hidden { display: none; }
+    #order-id-row {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 10px;
+      display: flex;
+      gap: 12px;
+      padding-top: 10px;
+      border-top: 1px solid var(--divider);
+    }
+    #order-id-row span { color: var(--text-secondary); font-weight: 500; }
+
+    /* ============================================================
+       BADGE STYLES — still used in side panel
+    ============================================================ */
     .badge {
       font-size: 11px;
       font-weight: 700;
@@ -404,58 +438,6 @@
     .badge-ha-skip { background: var(--success-bg); color: var(--success); border: 1px solid var(--success-border); }
     .badge-value   { background: var(--primary-light); color: var(--primary); border: 1px solid var(--primary-border); }
     .badge-nonvalue{ background: #faf5ff; color: #7c3aed; border: 1px solid rgba(124,58,237,0.25); }
-
-    #order-id-row {
-      font-size: 12px;
-      color: var(--text-muted);
-      margin-top: 10px;
-      display: flex;
-      gap: 12px;
-      padding-top: 10px;
-      border-top: 1px solid var(--divider);
-    }
-    #order-id-row span { color: var(--text-secondary); font-weight: 500; }
-
-    /* ============================================================
-       PRESCRIPTION CARD  (no View Rx button here — Decision A)
-    ============================================================ */
-    #prescription-section { display: none; }
-    #prescription-section.visible { display: block; }
-
-    #prescription-card {
-      background: var(--surface);
-      border-radius: var(--radius-card);
-      padding: 14px 16px;
-      border: 1px solid var(--divider);
-      box-shadow: var(--shadow-sm);
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    #rx-icon {
-      width: 40px;
-      height: 40px;
-      border-radius: 10px;
-      background: var(--primary-light);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      font-size: 20px;
-    }
-    #rx-info { flex: 1; min-width: 0; }
-    #rx-title { font-size: 14px; font-weight: 600; color: var(--text-primary); }
-    #rx-subtitle { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
-    #rx-attached-note {
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--success);
-      background: var(--success-bg);
-      border: 1px solid var(--success-border);
-      border-radius: 5px;
-      padding: 3px 8px;
-      flex-shrink: 0;
-    }
 
     /* ============================================================
        RX FULL-SCREEN OVERLAY
@@ -495,7 +477,6 @@
     }
     #rx-overlay-title { font-size: 15px; font-weight: 600; color: rgba(255,255,255,0.92); flex: 1; }
 
-    /* Zoom + rotate controls */
     #rx-controls {
       display: flex;
       gap: 6px;
@@ -525,7 +506,6 @@
       text-align: center;
     }
 
-    /* Viewer body */
     #rx-overlay-body {
       flex: 1;
       overflow: hidden;
@@ -537,7 +517,6 @@
       touch-action: none;
     }
 
-    /* Prescription document container */
     #rx-doc-wrapper {
       position: relative;
       transform-origin: center center;
@@ -547,8 +526,7 @@
     }
     #rx-doc-wrapper:active { cursor: grabbing; }
 
-    /* Dummy prescription — inline HTML/CSS
-       [MOCK ASSUMPTION] Fictional doctor and patient details for prototype only */
+    /* Dummy prescription — [MOCK ASSUMPTION] Fictional details for prototype only */
     #rx-doc {
       width: 320px;
       background: #fff;
@@ -563,32 +541,10 @@
       padding: 16px 18px 14px;
       color: #fff;
     }
-    .rx-clinic-name {
-      font-size: 16px;
-      font-weight: 700;
-      font-family: var(--font);
-      letter-spacing: 0.02em;
-    }
-    .rx-doctor-name {
-      font-size: 13px;
-      font-weight: 600;
-      font-family: var(--font);
-      margin-top: 2px;
-      opacity: 0.92;
-    }
-    .rx-doctor-quals {
-      font-size: 11px;
-      font-family: var(--font);
-      opacity: 0.7;
-      margin-top: 1px;
-    }
-    .rx-clinic-address {
-      font-size: 10px;
-      font-family: var(--font);
-      opacity: 0.65;
-      margin-top: 6px;
-      line-height: 1.5;
-    }
+    .rx-clinic-name { font-size: 16px; font-weight: 700; font-family: var(--font); letter-spacing: 0.02em; }
+    .rx-doctor-name { font-size: 13px; font-weight: 600; font-family: var(--font); margin-top: 2px; opacity: 0.92; }
+    .rx-doctor-quals { font-size: 11px; font-family: var(--font); opacity: 0.7; margin-top: 1px; }
+    .rx-clinic-address { font-size: 10px; font-family: var(--font); opacity: 0.65; margin-top: 6px; line-height: 1.5; }
     .rx-body { padding: 14px 18px; }
     .rx-patient-row {
       display: flex;
@@ -602,46 +558,14 @@
     .rx-patient-info { flex: 1; }
     .rx-patient-label { font-size: 10px; color: #6b7280; font-family: var(--font); text-transform: uppercase; letter-spacing: 0.05em; }
     .rx-patient-value { font-size: 12px; font-weight: 600; font-family: var(--font); color: #1a1a1a; margin-top: 1px; }
-    .rx-symbol {
-      font-size: 28px;
-      font-weight: 700;
-      color: #1B69DE;
-      line-height: 1;
-      font-family: 'Georgia', serif;
-      flex-shrink: 0;
-    }
+    .rx-symbol { font-size: 28px; font-weight: 700; color: #1B69DE; line-height: 1; font-family: 'Georgia', serif; flex-shrink: 0; }
     .rx-medicines { margin-bottom: 14px; }
-    .rx-med-item {
-      padding: 10px 0;
-      border-bottom: 1px dashed #e5e7eb;
-    }
+    .rx-med-item { padding: 10px 0; border-bottom: 1px dashed #e5e7eb; }
     .rx-med-item:last-child { border-bottom: none; }
-    .rx-med-number {
-      font-size: 11px;
-      font-weight: 700;
-      color: #1B69DE;
-      font-family: var(--font);
-      margin-bottom: 2px;
-    }
-    .rx-med-name {
-      font-size: 13px;
-      font-weight: 700;
-      color: #111827;
-      font-family: var(--font);
-    }
-    .rx-med-details {
-      font-size: 11px;
-      color: #374151;
-      font-family: var(--font);
-      margin-top: 2px;
-    }
-    .rx-med-note {
-      font-size: 10px;
-      color: #6b7280;
-      font-family: var(--font);
-      margin-top: 2px;
-      font-style: italic;
-    }
+    .rx-med-number { font-size: 11px; font-weight: 700; color: #1B69DE; font-family: var(--font); margin-bottom: 2px; }
+    .rx-med-name { font-size: 13px; font-weight: 700; color: #111827; font-family: var(--font); }
+    .rx-med-details { font-size: 11px; color: #374151; font-family: var(--font); margin-top: 2px; }
+    .rx-med-note { font-size: 10px; color: #6b7280; font-family: var(--font); margin-top: 2px; font-style: italic; }
     .rx-footer {
       border-top: 1px solid #e5e7eb;
       padding-top: 12px;
@@ -656,17 +580,9 @@
     .rx-sig-line { width: 90px; border-bottom: 1px solid #374151; margin-bottom: 4px; margin-left: auto; }
     .rx-sig-name { font-size: 10px; font-weight: 600; color: #374151; font-family: var(--font); }
     .rx-sig-reg  { font-size: 9px; color: #9ca3af; font-family: var(--font); }
-    .rx-stamp {
-      margin-top: 8px;
-      padding: 6px 10px;
-      border: 2px solid #1B69DE;
-      border-radius: 4px;
-      text-align: center;
-      display: inline-block;
-    }
+    .rx-stamp { margin-top: 8px; padding: 6px 10px; border: 2px solid #1B69DE; border-radius: 4px; text-align: center; display: inline-block; }
     .rx-stamp-text { font-size: 9px; font-weight: 700; color: #1B69DE; font-family: var(--font); letter-spacing: 0.05em; }
 
-    /* Hint text at bottom of viewer */
     #rx-hint {
       position: absolute;
       bottom: 12px;
@@ -722,7 +638,10 @@
       align-items: center;
       gap: 10px;
       border: 1px solid var(--divider);
+      transition: opacity 0.2s;
     }
+    .medicine-item.disabled { opacity: 0.5; }
+    .medicine-item.disabled .med-name { text-decoration: line-through; color: var(--text-secondary); }
     .med-icon {
       width: 34px;
       height: 34px;
@@ -734,6 +653,7 @@
       font-size: 15px;
       flex-shrink: 0;
     }
+    .medicine-item.disabled .med-icon { background: var(--surface-hover); }
     .med-info { flex: 1; min-width: 0; }
     .med-name { font-size: 13px; font-weight: 600; color: var(--text-primary); }
     .med-detail { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
@@ -746,9 +666,10 @@
       letter-spacing: 0.04em;
       flex-shrink: 0;
     }
-    .med-status-pending   { background: var(--warning-bg); color: var(--warning); border: 1px solid var(--warning-border); }
-    .med-status-validated { background: var(--success-bg); color: var(--success); border: 1px solid var(--success-border); }
-    .med-status-flagged   { background: var(--danger-bg);  color: var(--danger);  border: 1px solid var(--danger-border); }
+    .med-status-pending   { background: var(--warning-bg);  color: var(--warning); border: 1px solid var(--warning-border); }
+    .med-status-validated { background: var(--success-bg);  color: var(--success); border: 1px solid var(--success-border); }
+    .med-status-flagged   { background: var(--danger-bg);   color: var(--danger);  border: 1px solid var(--danger-border); }
+    .med-status-disabled  { background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; }
     .med-edit-btn {
       width: 30px;
       height: 30px;
@@ -769,129 +690,6 @@
       font-size: 13px;
       display: none;
     }
-
-    /* ============================================================
-       CALL SECTION
-    ============================================================ */
-    #call-section {
-      background: var(--surface);
-      border-radius: var(--radius-card);
-      border: 1px solid var(--divider);
-      box-shadow: var(--shadow-sm);
-      padding: 16px;
-    }
-    #assignment-strip {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 14px;
-      padding-bottom: 14px;
-      border-bottom: 1px solid var(--divider);
-    }
-    #assignment-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--success);
-      flex-shrink: 0;
-    }
-    #assignment-text { font-size: 13px; color: var(--text-secondary); flex: 1; }
-    #assignment-text strong { color: var(--text-primary); font-weight: 600; }
-
-    #call-patient-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 14px;
-    }
-    #call-patient-name { font-size: 15px; font-weight: 700; color: var(--text-primary); }
-    #call-patient-phone { font-size: 13px; color: var(--text-secondary); margin-top: 2px; }
-
-    #call-status-display {
-      background: var(--surface-elevated);
-      border-radius: 10px;
-      padding: 13px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 14px;
-      border: 1px solid var(--divider);
-    }
-    #call-status-icon {
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 20px;
-      flex-shrink: 0;
-    }
-    .cs-idle      { background: var(--primary-light); }
-    .cs-calling   { background: var(--warning-bg); }
-    .cs-connected { background: var(--success-bg); }
-    .cs-done      { background: var(--success-bg); }
-    .cs-nopickup  { background: var(--danger-bg); }
-    .cs-failed    { background: var(--danger-bg); }
-
-    #call-status-text { flex: 1; }
-    #call-status-main { font-size: 14px; font-weight: 600; color: var(--text-primary); }
-    #call-status-sub  { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
-
-    #call-timer-display {
-      font-size: 22px;
-      font-weight: 700;
-      color: var(--text-muted);
-      font-variant-numeric: tabular-nums;
-      letter-spacing: 0.02em;
-      transition: color 0.3s;
-    }
-    #call-timer-display.gate-passed { color: var(--success); }
-
-    #call-actions { display: flex; flex-direction: column; gap: 10px; }
-
-    #call-initiate-btn {
-      width: 100%;
-      height: 52px;
-      border-radius: var(--radius-btn);
-      background: var(--primary);
-      color: #fff;
-      font-size: 16px;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      transition: background 0.15s, opacity 0.15s;
-      box-shadow: 0 3px 10px rgba(27,105,222,0.25);
-    }
-    #call-initiate-btn:active { background: var(--primary-hover); }
-    #call-initiate-btn:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: none; }
-
-    #call-secondary-actions { display: flex; gap: 10px; }
-    .call-sec-btn {
-      flex: 1;
-      height: 44px;
-      border-radius: var(--radius-btn);
-      background: var(--surface-elevated);
-      color: var(--text-secondary);
-      font-size: 13px;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      border: 1px solid var(--divider-strong);
-    }
-    .call-sec-btn.danger  { color: var(--danger);  background: var(--danger-bg);  border-color: var(--danger-border); }
-    .call-sec-btn.warning { color: var(--warning); background: var(--warning-bg); border-color: var(--warning-border); }
-
-    @keyframes pulse-ring {
-      0%   { box-shadow: 0 0 0 0 rgba(27,105,222,0.3); }
-      70%  { box-shadow: 0 0 0 10px rgba(27,105,222,0); }
-      100% { box-shadow: 0 0 0 0 rgba(27,105,222,0); }
-    }
-    .pulsing { animation: pulse-ring 1.4s ease-out infinite; }
 
     /* ============================================================
        NOTES SECTION
@@ -929,16 +727,84 @@
     .notes-textarea::placeholder { color: var(--text-muted); }
 
     /* ============================================================
-       POST-CALL ACTION SECTION
+       ACTION ZONE — merged call + post-call
     ============================================================ */
-    #postcall-section {
+    #action-zone {
+      background: var(--surface);
+      border-radius: var(--radius-card);
+      border: 1px solid var(--divider);
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+    }
+
+    /* Phase 1: Call control */
+    #az-phase1 {
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    #call-initiate-btn {
+      width: 100%;
+      height: 52px;
+      border-radius: var(--radius-btn);
+      background: var(--primary);
+      color: #fff;
+      font-size: 16px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: background 0.15s, opacity 0.15s;
+      box-shadow: 0 3px 10px rgba(27,105,222,0.25);
+    }
+    #call-initiate-btn:active { background: var(--primary-hover); }
+    #call-initiate-btn:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: none; }
+
+    #az-secondary-btns { display: flex; gap: 10px; }
+    .call-sec-btn {
+      flex: 1;
+      height: 44px;
+      border-radius: var(--radius-btn);
+      background: var(--surface-elevated);
+      color: var(--text-secondary);
+      font-size: 13px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      border: 1px solid var(--divider-strong);
+    }
+    .call-sec-btn.danger  { color: var(--danger);  background: var(--danger-bg);  border-color: var(--danger-border); }
+    .call-sec-btn.warning { color: var(--warning); background: var(--warning-bg); border-color: var(--warning-border); }
+
+    #az-status-label {
+      font-size: 12px;
+      color: var(--text-secondary);
+      text-align: center;
+      padding: 2px 0;
+    }
+
+    @keyframes pulse-ring {
+      0%   { box-shadow: 0 0 0 0 rgba(27,105,222,0.3); }
+      70%  { box-shadow: 0 0 0 10px rgba(27,105,222,0); }
+      100% { box-shadow: 0 0 0 0 rgba(27,105,222,0); }
+    }
+    .pulsing { animation: pulse-ring 1.4s ease-out infinite; }
+
+    /* Phase 2: Post-call — hidden until gate passes */
+    #az-phase2 {
       display: none;
       opacity: 0;
       transform: translateY(8px);
       transition: opacity 0.25s ease, transform 0.25s ease;
+      padding: 16px;
     }
-    #postcall-section.visible { display: block; }
-    #postcall-section.revealed { opacity: 1; transform: translateY(0); }
+    #az-phase2.visible { display: block; }
+    #az-phase2.revealed { opacity: 1; transform: translateY(0); }
 
     #ha-attention-banner {
       background: var(--warning-bg);
@@ -955,13 +821,7 @@
     #ha-banner-desc  { font-size: 12px; color: var(--text-secondary); margin-top: 3px; line-height: 1.5; }
     #ha-attention-banner.hidden { display: none; }
 
-    #postcall-cta-card {
-      background: var(--surface);
-      border-radius: var(--radius-card);
-      border: 1px solid var(--divider);
-      box-shadow: var(--shadow-md);
-      padding: 16px;
-    }
+    #postcall-cta-card { padding: 0; }
     #postcall-cta-label {
       font-size: 11px;
       font-weight: 700;
@@ -1023,6 +883,7 @@
       display: none;
       width: 100%;
       max-width: 430px;
+      max-height: 85vh;
       background: var(--surface);
       border-radius: 20px 20px 0 0;
       padding: 0 0 32px;
@@ -1046,7 +907,11 @@
       padding: 14px 20px 12px;
       border-bottom: 1px solid var(--divider);
     }
-    .sheet-body { padding: 14px 20px; }
+    .sheet-body {
+      padding: 14px 20px;
+      overflow-y: auto;
+      max-height: calc(85vh - 90px);
+    }
     .sheet-option-btn {
       width: 100%;
       background: var(--surface-elevated);
@@ -1074,7 +939,7 @@
     .sheet-confirm-btn.danger-btn  { background: var(--danger); }
     .sheet-confirm-btn.warning-btn { background: var(--warning); }
 
-    .sheet-input-row { margin-bottom: 12px; }
+    .sheet-input-row { margin-bottom: 14px; }
     .sheet-input-label { font-size: 12px; font-weight: 600; color: var(--text-secondary); margin-bottom: 5px; display: block; }
     .sheet-input {
       width: 100%;
@@ -1087,6 +952,90 @@
     }
     .sheet-input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(27,105,222,0.1); }
     #sheet-med-name { font-size: 15px; font-weight: 600; margin-bottom: 14px; color: var(--text-primary); }
+
+    /* Qty stepper */
+    .qty-stepper {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      background: var(--surface-elevated);
+      border: 1px solid var(--divider-strong);
+      border-radius: var(--radius-input);
+      overflow: hidden;
+    }
+    .qty-btn {
+      width: 44px;
+      height: 44px;
+      background: var(--surface-hover);
+      border: none;
+      color: var(--text-primary);
+      font-size: 20px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: background 0.1s;
+    }
+    .qty-btn:active { background: var(--divider-strong); }
+    #sheet-qty-display {
+      flex: 1;
+      text-align: center;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-primary);
+      padding: 10px 0;
+    }
+
+    /* M-A-N picker */
+    .man-picker { display: flex; flex-direction: column; gap: 10px; }
+    .man-row { display: flex; align-items: center; gap: 10px; }
+    .man-label {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-secondary);
+      width: 16px;
+      flex-shrink: 0;
+      text-align: center;
+    }
+    .man-btns { display: flex; gap: 6px; flex: 1; }
+    .man-btn {
+      flex: 1;
+      height: 40px;
+      border-radius: 8px;
+      background: var(--surface-elevated);
+      border: 1px solid var(--divider-strong);
+      color: var(--text-secondary);
+      font-size: 14px;
+      font-weight: 600;
+      transition: all 0.12s;
+    }
+    .man-btn:active { background: var(--surface-hover); }
+    .man-btn.active {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+    }
+
+    /* Disable medicine button */
+    #sheet-disable-med-btn {
+      width: 100%;
+      height: 44px;
+      border-radius: var(--radius-btn);
+      background: transparent;
+      color: var(--danger);
+      border: 1px solid var(--danger-border);
+      font-size: 14px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 8px;
+    }
+    #sheet-disable-med-btn.enable-mode {
+      color: var(--success);
+      border-color: var(--success-border);
+    }
 
     /* ============================================================
        TOAST
@@ -1166,45 +1115,48 @@
   ============================================================ -->
   <div id="mobile-column">
 
-    <!-- DEMO BAR — [MOCK ASSUMPTION] dev-only -->
-    <div id="demo-bar">
-      <div id="demo-bar-label">⚡ Demo Controls</div>
-      <div id="demo-bar-scenarios">
-        <button class="scenario-btn active" data-scenario="cat4">Cat4</button>
-        <button class="scenario-btn" data-scenario="pilot_value_meds_ha">Pilot + Value + HA</button>
-        <button class="scenario-btn" data-scenario="pilot_nonvalue_meds_ha">Pilot + Non-Value + HA</button>
-        <button class="scenario-btn" data-scenario="pilot_ha_skipped_customer">HA Skipped (Cust)</button>
-        <button class="scenario-btn" data-scenario="pilot_ha_skipped_system">HA Skipped (Sys)</button>
-      </div>
-      <div id="demo-bar-row2">
-        <span id="demo-state-label">State: assigned</span>
-        <button id="demo-ff-btn-mobile">⏩ Fast-forward 50s</button>
-      </div>
-    </div>
+    <!-- STICKY TOP WRAPPER — demo bar + compact strip -->
+    <div id="sticky-top-wrapper">
 
-    <!-- STICKY PATIENT HEADER -->
-    <div id="patient-header">
-      <div id="patient-header-info">
-        <div id="patient-name-header">—</div>
-        <div id="patient-meta-header">—</div>
+      <!-- DEMO BAR — [MOCK ASSUMPTION] dev-only -->
+      <div id="demo-bar">
+        <div id="demo-bar-label">⚡ Demo Controls</div>
+        <div id="demo-bar-scenarios">
+          <button class="scenario-btn active" data-scenario="cat4">Cat4</button>
+          <button class="scenario-btn" data-scenario="pilot_value_meds_ha">Pilot + Value + HA</button>
+          <button class="scenario-btn" data-scenario="pilot_nonvalue_meds_ha">Pilot + Non-Value + HA</button>
+          <button class="scenario-btn" data-scenario="pilot_ha_skipped_customer">HA Skipped (Cust)</button>
+          <button class="scenario-btn" data-scenario="pilot_ha_skipped_system">HA Skipped (Sys)</button>
+        </div>
+        <div id="demo-bar-row2">
+          <span id="demo-state-label">State: assigned</span>
+          <button id="demo-ff-btn-mobile">⏩ Fast-forward 50s</button>
+        </div>
       </div>
-      <!-- View Rx only here — Decision A: removed from card body -->
-      <button id="view-rx-btn" class="hidden" onclick="openRxOverlay()">📋 View Rx</button>
-    </div>
+
+      <!-- COMPACT STRIP — hidden until patient block scrolls out of view -->
+      <div id="compact-strip">
+        <div id="cs-patient-info">
+          <div id="cs-patient-name">—</div>
+          <div id="cs-patient-meta">—</div>
+        </div>
+        <span id="cs-timer-badge" class="hidden">📞 0:00</span>
+        <button id="cs-view-rx-btn" class="hidden" onclick="openRxOverlay()">📋 View Rx</button>
+      </div>
+
+    </div><!-- /sticky-top-wrapper -->
 
     <!-- MAIN SCROLL -->
     <div id="main-scroll">
 
-      <!-- Patient + Order Context -->
-      <div id="order-context-card">
-        <div>
-          <div id="patient-full-name">—</div>
-          <div id="patient-details-row">—</div>
-        </div>
-        <div id="badge-row">
-          <span id="badge-case-type" class="badge">—</span>
-          <span id="badge-ha"        class="badge hidden">—</span>
-          <span id="badge-meds"      class="badge hidden">—</span>
+      <!-- 1. Patient Detail Block — non-sticky, no badge row -->
+      <div id="patient-detail-block">
+        <div id="pdb-top-row">
+          <div>
+            <div id="patient-full-name">—</div>
+            <div id="patient-details-row">—</div>
+          </div>
+          <button id="pdb-view-rx-btn" class="hidden" onclick="openRxOverlay()">📋 View Rx</button>
         </div>
         <div id="order-id-row">
           Order&nbsp;<span id="display-order-id">—</span>
@@ -1213,20 +1165,7 @@
         </div>
       </div>
 
-      <!-- Prescription Card (no View Rx button here — Decision A) -->
-      <div id="prescription-section">
-        <div class="section-label">Prescription</div>
-        <div id="prescription-card">
-          <div id="rx-icon">📄</div>
-          <div id="rx-info">
-            <div id="rx-title">Prescription attached</div>
-            <div id="rx-subtitle">Tap "View Rx" in the header to open</div>
-          </div>
-          <span id="rx-attached-note">✓ Attached</span>
-        </div>
-      </div>
-
-      <!-- Medicines to Validate -->
+      <!-- 2. Medicines to Validate -->
       <div id="medicines-section">
         <div id="medicines-header">
           <span class="section-label" style="margin-bottom:0">Medicines to Validate</span>
@@ -1234,42 +1173,12 @@
         </div>
         <div id="medicines-empty">No medicines on this order.</div>
         <div id="medicines-list"></div>
-      </div>
-
-      <!-- Call Section -->
-      <div id="call-section">
-        <div class="section-label">Consultation Call</div>
-        <div id="assignment-strip">
-          <div id="assignment-dot"></div>
-          <div id="assignment-text">Assigned to <strong id="assigned-doctor-name">—</strong></div>
-        </div>
-        <div id="call-patient-row">
-          <div>
-            <div id="call-patient-name">—</div>
-            <div id="call-patient-phone">—</div>
-          </div>
-        </div>
-        <div id="call-status-display">
-          <div id="call-status-icon" class="cs-idle">📞</div>
-          <div id="call-status-text">
-            <div id="call-status-main">Ready to call</div>
-            <div id="call-status-sub">Patient not contacted yet</div>
-          </div>
-          <div id="call-timer-display" style="display:none">0:00</div>
-        </div>
-        <div id="call-actions">
-          <button id="call-initiate-btn" onclick="handleCallAction()">
-            <span id="call-btn-icon">📞</span>
-            <span id="call-btn-label">Call Patient</span>
-          </button>
-          <div id="call-secondary-actions" style="display:none">
-            <button class="call-sec-btn warning" onclick="openSheet('sheet-hold')">⏸ Hold</button>
-            <button class="call-sec-btn danger"  onclick="openSheet('sheet-nopickup')">📵 No Pickup</button>
-          </div>
+        <div style="padding: 0 16px 12px; display:flex; justify-content:flex-end;">
+          <button id="add-medicine-btn">＋ Add Medicine</button>
         </div>
       </div>
 
-      <!-- Notes + Symptoms — [OPEN DECISION] OQ-006: pre-call notes allowed per safe placeholder -->
+      <!-- 3. Notes + Symptoms — [OPEN DECISION] OQ-006 -->
       <div id="notes-section">
         <div class="section-label">Notes &amp; Symptoms</div>
         <div class="notes-field-group">
@@ -1282,24 +1191,43 @@
         </div>
       </div>
 
-      <!-- Post-Call Action — HIDDEN until valid-call gate passes [LOCKED] -->
-      <div id="postcall-section">
-        <div id="ha-attention-banner" class="hidden">
-          <div class="ha-icon">⚠️</div>
-          <div>
-            <div id="ha-banner-title">Health Advisor call required</div>
-            <div id="ha-banner-desc">This Pilot order requires an HA call before the order can be confirmed. You may skip the HA call if clinically appropriate.</div>
+      <!-- 4. Action Zone — merged call + post-call -->
+      <div id="action-zone">
+
+        <!-- Phase 1: Call control (hidden when gate passes) -->
+        <div id="az-phase1">
+          <button id="call-initiate-btn" onclick="handleCallAction()">
+            <span id="call-btn-icon">📞</span>
+            <span id="call-btn-label">Call Patient</span>
+          </button>
+          <div id="az-secondary-btns" style="display:none">
+            <button class="call-sec-btn warning" onclick="openSheet('sheet-hold')">⏸ Hold</button>
+            <button class="call-sec-btn danger"  onclick="openSheet('sheet-nopickup')">📵 No Pickup</button>
+          </div>
+          <div id="az-status-label" class="hidden"></div>
+        </div>
+
+        <!-- Phase 2: Post-call (hidden until valid-call gate passes [LOCKED]) -->
+        <div id="az-phase2">
+          <!-- HA banner — sibling of postcall-cta-card, NOT inside it [LOCKED] -->
+          <div id="ha-attention-banner" class="hidden">
+            <div class="ha-icon">⚠️</div>
+            <div>
+              <div id="ha-banner-title">Health Advisor call required</div>
+              <div id="ha-banner-desc">This Pilot order requires an HA call before the order can be confirmed. You may skip the HA call if clinically appropriate.</div>
+            </div>
+          </div>
+          <div id="postcall-cta-card">
+            <div id="postcall-cta-label">Post-Call Action</div>
+            <button id="skip-ha-btn" onclick="openSheet('sheet-skip-ha')">⏭ Skip HA Call</button>
+            <button id="main-cta-btn" onclick="handleMainCTA()">
+              <span id="main-cta-icon">✅</span>
+              <span id="main-cta-label">Confirm Order</span>
+            </button>
           </div>
         </div>
-        <div id="postcall-cta-card">
-          <div id="postcall-cta-label">Post-Call Action</div>
-          <button id="skip-ha-btn" onclick="openSheet('sheet-skip-ha')">⏭ Skip HA Call</button>
-          <button id="main-cta-btn" onclick="handleMainCTA()">
-            <span id="main-cta-icon">✅</span>
-            <span id="main-cta-label">Confirm Order</span>
-          </button>
-        </div>
-      </div>
+
+      </div><!-- /action-zone -->
 
     </div><!-- /main-scroll -->
 
@@ -1308,7 +1236,6 @@
 
   <!-- ============================================================
        DESKTOP SIDE PANEL — visible on wide screens only
-       Decision E: demo helper, mirrors CTA + shows state
   ============================================================ -->
   <div id="desktop-side-panel">
 
@@ -1354,7 +1281,7 @@
       </div>
     </div>
 
-    <!-- Demo Controls (scenario + fast-forward) -->
+    <!-- Demo Controls -->
     <div class="side-panel-card">
       <div class="side-panel-header">⚡ Demo Scenarios</div>
       <div class="side-panel-body" id="side-scenario-btns">
@@ -1393,7 +1320,6 @@
       <!-- DUMMY PRESCRIPTION — [MOCK ASSUMPTION] All details fictional -->
       <div id="rx-doc">
 
-        <!-- Letterhead -->
         <div class="rx-letterhead">
           <div class="rx-clinic-name">Sunrise Medical Centre</div>
           <div class="rx-doctor-name">Dr. Meenakshi Iyer</div>
@@ -1404,10 +1330,7 @@
           </div>
         </div>
 
-        <!-- Body -->
         <div class="rx-body">
-
-          <!-- Patient info -->
           <div class="rx-patient-row">
             <div class="rx-patient-info">
               <div class="rx-patient-label">Patient</div>
@@ -1424,12 +1347,10 @@
             </div>
           </div>
 
-          <!-- Medicines -->
           <div class="rx-medicines" id="rx-medicines-list">
-            <!-- Populated by JS from scenario data -->
+            <!-- Populated by JS -->
           </div>
 
-          <!-- Footer -->
           <div class="rx-footer">
             <div class="rx-advice">
               <div class="rx-advice-label">General Advice</div>
@@ -1447,10 +1368,8 @@
               <div class="rx-sig-reg">MH-12847</div>
             </div>
           </div>
-
         </div>
       </div>
-      <!-- /rx-doc -->
 
     </div><!-- /rx-doc-wrapper -->
     <div id="rx-hint">Double-tap to zoom · Pinch to zoom · Drag to pan</div>
@@ -1528,22 +1447,83 @@
     </div>
   </div>
 
-  <!-- Edit Medicine Sheet -->
-  <!-- [OPEN DECISION] OQ-004: doctor edit authority TBD — dosage/frequency only in V1 -->
+  <!-- Edit Medicine Sheet — [OPEN DECISION] OQ-004 -->
   <div id="sheet-edit-med" class="bottom-sheet">
     <div class="sheet-handle"></div>
     <div class="sheet-title">Edit Medicine</div>
     <div class="sheet-body">
       <div id="sheet-med-name">—</div>
+
+      <!-- Strength -->
       <div class="sheet-input-row">
-        <label class="sheet-input-label" for="sheet-dosage-input">Dosage</label>
-        <input id="sheet-dosage-input" class="sheet-input" type="text" placeholder="e.g. 500mg" />
+        <label class="sheet-input-label" for="sheet-strength-input">Strength</label>
+        <input id="sheet-strength-input" class="sheet-input" type="text" placeholder="e.g. 500mg" />
       </div>
+
+      <!-- Qty stepper -->
       <div class="sheet-input-row">
-        <label class="sheet-input-label" for="sheet-freq-input">Frequency</label>
-        <input id="sheet-freq-input" class="sheet-input" type="text" placeholder="e.g. Twice daily" />
+        <label class="sheet-input-label">Qty (ordered by customer)</label>
+        <div class="qty-stepper">
+          <button class="qty-btn" onclick="adjustQty(-1)">−</button>
+          <span id="sheet-qty-display">30</span>
+          <button class="qty-btn" onclick="adjustQty(1)">+</button>
+        </div>
       </div>
+
+      <!-- M-A-N picker -->
+      <div class="sheet-input-row">
+        <label class="sheet-input-label">Dose Timing (M / A / N)</label>
+        <div class="man-picker">
+          <div class="man-row">
+            <span class="man-label">M</span>
+            <div class="man-btns" data-man="m">
+              <button class="man-btn" data-val="0" onclick="selectMAN('m',0)">0</button>
+              <button class="man-btn" data-val="0.5" onclick="selectMAN('m',0.5)">½</button>
+              <button class="man-btn" data-val="1" onclick="selectMAN('m',1)">1</button>
+              <button class="man-btn" data-val="2" onclick="selectMAN('m',2)">2</button>
+            </div>
+          </div>
+          <div class="man-row">
+            <span class="man-label">A</span>
+            <div class="man-btns" data-man="a">
+              <button class="man-btn" data-val="0" onclick="selectMAN('a',0)">0</button>
+              <button class="man-btn" data-val="0.5" onclick="selectMAN('a',0.5)">½</button>
+              <button class="man-btn" data-val="1" onclick="selectMAN('a',1)">1</button>
+              <button class="man-btn" data-val="2" onclick="selectMAN('a',2)">2</button>
+            </div>
+          </div>
+          <div class="man-row">
+            <span class="man-label">N</span>
+            <div class="man-btns" data-man="n">
+              <button class="man-btn" data-val="0" onclick="selectMAN('n',0)">0</button>
+              <button class="man-btn" data-val="0.5" onclick="selectMAN('n',0.5)">½</button>
+              <button class="man-btn" data-val="1" onclick="selectMAN('n',1)">1</button>
+              <button class="man-btn" data-val="2" onclick="selectMAN('n',2)">2</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <button class="sheet-confirm-btn" onclick="confirmMedEdit()" style="margin-top:4px">Save Changes</button>
+      <button id="sheet-disable-med-btn" onclick="toggleMedDisable()">Disable Medicine</button>
+    </div>
+  </div>
+
+  <!-- Add Medicine Sheet — [MOCK ASSUMPTION] OQ-004 -->
+  <div id="sheet-add-med" class="bottom-sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-title">Add Medicine</div>
+    <div class="sheet-body">
+      <div class="sheet-input-row">
+        <label class="sheet-input-label" for="sheet-add-med-name">Medicine Name</label>
+        <input id="sheet-add-med-name" class="sheet-input" type="text" placeholder="e.g. Metformin" />
+      </div>
+      <div class="sheet-input-row">
+        <label class="sheet-input-label" for="sheet-add-med-strength">Strength</label>
+        <input id="sheet-add-med-strength" class="sheet-input" type="text" placeholder="e.g. 500mg" />
+      </div>
+      <button class="sheet-confirm-btn" onclick="confirmAddMedicine()" style="margin-top:4px">Add Medicine</button>
+      <p style="font-size:11px;color:var(--text-muted);margin-top:10px;text-align:center;">[MOCK ASSUMPTION] Not persisted to backend</p>
     </div>
   </div>
 
@@ -1567,11 +1547,9 @@
 <script>
 
 // ================================================================
-// MOCK SCENARIO DATA
+// MOCK SCENARIO DATA — new medicine format per session_handoff Section 2.4
 // [MOCK ASSUMPTION] All patient data and order IDs are fictional.
-// prescription_attached is MOCK_ONLY — set true for all scenarios
-// so the Rx viewer is testable across all cases.
-// In production, this is an independent order-level field.
+// prescription_attached is MOCK_ONLY — set true for all scenarios.
 // ================================================================
 
 const SCENARIOS = {
@@ -1583,11 +1561,11 @@ const SCENARIOS = {
     patient_phone: '+91 98765 XXXXX',
     order_id: 'TM-ORD-20240812', case_id: 'C-CAT4-00431',
     assignment_status: 'assigned',
-    prescription_attached: true,  // [MOCK ASSUMPTION] — independent of case type
+    prescription_attached: true,
     medicines: [
-      { id:1, name:'Metformin 500mg',    dosage:'500mg', frequency:'Twice daily',        validation_status:'validated' },
-      { id:2, name:'Amlodipine 5mg',     dosage:'5mg',   frequency:'Once daily',          validation_status:'pending'   },
-      { id:3, name:'Atorvastatin 10mg',  dosage:'10mg',  frequency:'Once at bedtime',     validation_status:'pending'   },
+      { id:1, name:'Metformin',   strength:'500mg', m:1, a:0, n:1, qty:60, validation_status:'validated', disabled:false },
+      { id:2, name:'Amlodipine',  strength:'5mg',   m:1, a:0, n:0, qty:30, validation_status:'pending',   disabled:false },
+      { id:3, name:'Atorvastatin',strength:'10mg',  m:0, a:0, n:1, qty:30, validation_status:'pending',   disabled:false },
     ]
   },
 
@@ -1600,8 +1578,8 @@ const SCENARIOS = {
     assignment_status: 'assigned',
     prescription_attached: true,
     medicines: [
-      { id:1, name:'Levothyroxine 50mcg', dosage:'50mcg', frequency:'Once daily (fasting)',      validation_status:'pending'   },
-      { id:2, name:'Calcium + Vit D3',    dosage:'500mg', frequency:'Twice daily with meals',    validation_status:'validated' },
+      { id:1, name:'Levothyroxine',   strength:'50mcg', m:1, a:0, n:0, qty:30, validation_status:'pending',   disabled:false },
+      { id:2, name:'Calcium + Vit D3',strength:'500mg', m:1, a:0, n:1, qty:60, validation_status:'validated', disabled:false },
     ]
   },
 
@@ -1612,11 +1590,11 @@ const SCENARIOS = {
     patient_phone: '+91 90321 XXXXX',
     order_id: 'TM-ORD-20240953', case_id: 'C-PLT-00912',
     assignment_status: 'assigned',
-    prescription_attached: true,  // [MOCK ASSUMPTION] — was false before, corrected
+    prescription_attached: true,
     medicines: [
-      { id:1, name:'Losartan 50mg',              dosage:'50mg',   frequency:'Once daily',                validation_status:'flagged'   },
-      { id:2, name:'Hydrochlorothiazide 12.5mg', dosage:'12.5mg', frequency:'Once daily morning',        validation_status:'pending'   },
-      { id:3, name:'Aspirin 75mg',               dosage:'75mg',   frequency:'Once daily after meals',    validation_status:'validated' },
+      { id:1, name:'Losartan',            strength:'50mg',   m:1, a:0, n:0, qty:30, validation_status:'flagged',   disabled:false },
+      { id:2, name:'Hydrochlorothiazide', strength:'12.5mg', m:1, a:0, n:0, qty:30, validation_status:'pending',   disabled:false },
+      { id:3, name:'Aspirin',             strength:'75mg',   m:0, a:0, n:1, qty:30, validation_status:'validated', disabled:false },
     ]
   },
 
@@ -1629,8 +1607,8 @@ const SCENARIOS = {
     assignment_status: 'assigned',
     prescription_attached: true,
     medicines: [
-      { id:1, name:'Ferrous Sulphate 200mg', dosage:'200mg', frequency:'Once daily',  validation_status:'validated' },
-      { id:2, name:'Folic Acid 5mg',         dosage:'5mg',   frequency:'Once daily',  validation_status:'validated' },
+      { id:1, name:'Ferrous Sulphate', strength:'200mg', m:0, a:0, n:1, qty:30, validation_status:'validated', disabled:false },
+      { id:2, name:'Folic Acid',       strength:'5mg',   m:1, a:0, n:0, qty:30, validation_status:'validated', disabled:false },
     ]
   },
 
@@ -1641,9 +1619,9 @@ const SCENARIOS = {
     patient_phone: '+91 98001 XXXXX',
     order_id: 'TM-ORD-20241112', case_id: 'C-PLT-01088',
     assignment_status: 'assigned',
-    prescription_attached: true,  // [MOCK ASSUMPTION] — was false before, corrected
+    prescription_attached: true,
     medicines: [
-      { id:1, name:'Pantoprazole 40mg', dosage:'40mg', frequency:'Once daily before breakfast', validation_status:'validated' },
+      { id:1, name:'Pantoprazole', strength:'40mg', m:1, a:0, n:0, qty:30, validation_status:'validated', disabled:false },
     ]
   }
 };
@@ -1665,6 +1643,11 @@ const DOCTOR_STATE = {
 };
 
 // ================================================================
+// EDIT STATE — for medicine edit sheet
+// ================================================================
+const EDIT_STATE = { medId: null, strength: '', m: 1, a: 0, n: 1, qty: 30 };
+
+// ================================================================
 // CTA ROUTING — [LOCKED] project_truth.md Section 5
 // ================================================================
 function resolveCTA(scenario) {
@@ -1684,57 +1667,38 @@ function haSkipApplicable(scenario) {
 }
 
 // ================================================================
+// FORMAT HELPERS
+// ================================================================
+function formatMAN(m, a, n) {
+  const f = v => v === 0.5 ? '½' : String(v);
+  return `${f(m)}-${f(a)}-${f(n)}`;
+}
+
+function formatTimer(s) {
+  return `${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`;
+}
+
+function formatDate(d) {
+  return d.toLocaleDateString('en-IN', { day:'2-digit', month:'short', year:'numeric' });
+}
+
+// ================================================================
 // RENDER — drives all UI from DOCTOR_STATE
 // ================================================================
 function render() {
   const c = DOCTOR_STATE.currentCase;
   if (!c) return;
 
-  // --- Patient header ---
-  document.getElementById('patient-name-header').textContent = c.patient_name;
-  document.getElementById('patient-meta-header').textContent =
-    `${c.patient_age}y · ${c.patient_gender} · ${c.order_id}`;
-  document.getElementById('view-rx-btn').classList.toggle('hidden', !c.prescription_attached);
-
-  // --- Order context ---
+  // --- Patient detail block ---
   document.getElementById('patient-full-name').textContent = c.patient_name;
   document.getElementById('patient-details-row').textContent = `${c.patient_age} years · ${c.patient_gender}`;
-
-  const ctBadge = document.getElementById('badge-case-type');
-  ctBadge.textContent = c.case_type === 'cat4' ? 'Cat4' : 'Pilot';
-  ctBadge.className   = `badge ${c.case_type === 'cat4' ? 'badge-cat4' : 'badge-pilot'}`;
-
-  const haBadge = document.getElementById('badge-ha');
-  if (c.case_type === 'cat4') {
-    haBadge.classList.add('hidden');
-  } else {
-    haBadge.classList.remove('hidden');
-    const hs = DOCTOR_STATE.haSkippedInSession ? 'skipped_session' : c.ha_status;
-    const haMap = {
-      required:         ['HA Required',             'badge-ha-req'],
-      skipped_customer: ['HA Skipped (Customer)',   'badge-ha-skip'],
-      skipped_system:   ['HA Skipped (System)',     'badge-ha-skip'],
-      skipped_session:  ['HA Skipped',              'badge-ha-skip'],
-    };
-    const [text, cls] = haMap[hs] || ['—',''];
-    haBadge.textContent = text;
-    haBadge.className = `badge ${cls}`;
-  }
-
-  const medsBadge = document.getElementById('badge-meds');
-  if (c.case_type === 'cat4' || c.meds_type === 'not_applicable') {
-    medsBadge.classList.add('hidden');
-  } else {
-    medsBadge.classList.remove('hidden');
-    medsBadge.textContent = c.meds_type === 'value' ? 'Value Meds' : 'Non-Value Meds';
-    medsBadge.className   = `badge ${c.meds_type === 'value' ? 'badge-value' : 'badge-nonvalue'}`;
-  }
+  document.getElementById('pdb-view-rx-btn').classList.toggle('hidden', !c.prescription_attached);
 
   document.getElementById('display-order-id').textContent = c.order_id;
   document.getElementById('display-case-id').textContent  = c.case_id;
 
-  // --- Prescription ---
-  document.getElementById('prescription-section').classList.toggle('visible', c.prescription_attached);
+  // --- Compact strip content ---
+  updateCompactStrip();
 
   // --- Populate Rx doc with patient data ---
   document.getElementById('rx-patient-name-display').textContent = c.patient_name;
@@ -1745,19 +1709,27 @@ function render() {
   // --- Medicines list ---
   renderMedicines(c.medicines);
 
-  // --- Assignment ---
-  document.getElementById('assigned-doctor-name').textContent = c.doctor_name;
-
-  // --- Call info ---
-  document.getElementById('call-patient-name').textContent  = c.patient_name;
-  document.getElementById('call-patient-phone').textContent = c.patient_phone;
-
   renderCallPhase();
   renderPostCall();
   renderSidePanel();
 
   document.getElementById('demo-state-label').textContent =
     `State: ${DOCTOR_STATE.consultationState} | ${formatTimer(DOCTOR_STATE.callTimer)}`;
+}
+
+function updateCompactStrip() {
+  const c = DOCTOR_STATE.currentCase;
+  if (!c) return;
+  document.getElementById('cs-patient-name').textContent = c.patient_name;
+  document.getElementById('cs-patient-meta').textContent =
+    `${c.patient_age}y · ${c.patient_gender} · ${c.order_id}`;
+  document.getElementById('cs-view-rx-btn').classList.toggle('hidden', !c.prescription_attached);
+
+  const state = DOCTOR_STATE.consultationState;
+  const showTimer = state === 'connected' || state === 'gate_passed';
+  const timerBadge = document.getElementById('cs-timer-badge');
+  timerBadge.classList.toggle('hidden', !showTimer);
+  if (showTimer) timerBadge.textContent = `📞 ${formatTimer(DOCTOR_STATE.callTimer)}`;
 }
 
 function renderRxMedicines(meds) {
@@ -1772,8 +1744,8 @@ function renderRxMedicines(meds) {
     div.className = 'rx-med-item';
     div.innerHTML = `
       <div class="rx-med-number">Medicine ${i + 1}</div>
-      <div class="rx-med-name">${med.name}</div>
-      <div class="rx-med-details">${med.dosage} — ${med.frequency}</div>
+      <div class="rx-med-name">${med.name} ${med.strength}</div>
+      <div class="rx-med-details">${formatMAN(med.m, med.a, med.n)} · Qty ${med.qty}</div>
       <div class="rx-med-note">As directed. Complete full course.</div>
     `;
     list.appendChild(div);
@@ -1793,15 +1765,20 @@ function renderMedicines(meds) {
   empty.style.display = 'none';
   count.textContent = `${meds.length} medicine${meds.length !== 1 ? 's' : ''}`;
   meds.forEach(med => {
-    const sc = { pending:'med-status-pending', validated:'med-status-validated', flagged:'med-status-flagged' }[med.validation_status] || 'med-status-pending';
-    const sl = { pending:'Pending', validated:'Validated', flagged:'Flagged' }[med.validation_status] || 'Pending';
+    const isDisabled = !!med.disabled;
+    const sc = isDisabled
+      ? 'med-status-disabled'
+      : ({ pending:'med-status-pending', validated:'med-status-validated', flagged:'med-status-flagged' }[med.validation_status] || 'med-status-pending');
+    const sl = isDisabled
+      ? 'DISABLED'
+      : ({ pending:'Pending', validated:'Validated', flagged:'Flagged' }[med.validation_status] || 'Pending');
     const el = document.createElement('div');
-    el.className = 'medicine-item';
+    el.className = `medicine-item${isDisabled ? ' disabled' : ''}`;
     el.innerHTML = `
       <div class="med-icon">💊</div>
       <div class="med-info">
-        <div class="med-name">${med.name}</div>
-        <div class="med-detail">${med.dosage} · ${med.frequency}</div>
+        <div class="med-name">${med.name} ${med.strength}</div>
+        <div class="med-detail">${formatMAN(med.m, med.a, med.n)} · Qty ${med.qty}</div>
       </div>
       <span class="med-status-badge ${sc}">${sl}</span>
       <button class="med-edit-btn" onclick="openMedEdit(${med.id})" aria-label="Edit ${med.name}">✏️</button>
@@ -1812,74 +1789,69 @@ function renderMedicines(meds) {
 
 function renderCallPhase() {
   const state       = DOCTOR_STATE.consultationState;
-  const icon        = document.getElementById('call-status-icon');
-  const main        = document.getElementById('call-status-main');
-  const sub         = document.getElementById('call-status-sub');
-  const timer       = document.getElementById('call-timer-display');
   const callBtn     = document.getElementById('call-initiate-btn');
   const callBtnIcon = document.getElementById('call-btn-icon');
   const callBtnLbl  = document.getElementById('call-btn-label');
-  const secActions  = document.getElementById('call-secondary-actions');
+  const secBtns     = document.getElementById('az-secondary-btns');
+  const statusLbl   = document.getElementById('az-status-label');
+  const phase1      = document.getElementById('az-phase1');
 
-  timer.style.display  = 'none';
-  secActions.style.display = 'none';
+  // Reset
   callBtn.style.display = 'flex';
   callBtn.disabled = false;
   callBtn.classList.remove('pulsing');
   callBtn.style.background = 'var(--primary)';
   callBtn.style.boxShadow  = '0 3px 10px rgba(27,105,222,0.25)';
+  secBtns.style.display = 'none';
+  statusLbl.classList.add('hidden');
+  statusLbl.textContent = '';
 
-  const phases = {
-    assigned:  ['cs-idle',    '📞', 'Ready to call',      'Patient has not been contacted yet',          '📞','Call Patient', false],
-    calling:   ['cs-calling', '📡', 'Calling…',           'Dialling patient — please wait',               '⏳','Connecting…', true ],
-    connected: ['cs-connected','🔴','In call · live',     DOCTOR_STATE.callTimer < 50
-                                                            ? 'Continue consultation to unlock next action'
-                                                            : 'Valid call threshold reached',              '🔴','End Call',    false],
-    gate_passed:['cs-done',   '✅', `Call complete · ${formatTimer(DOCTOR_STATE.callTimer)}`, 'Valid consultation call completed', null, null, false],
-    nopickup:  ['cs-nopickup','📵', 'No pickup',          DOCTOR_STATE.noPickupReason||'Patient did not answer','🔄','Retry Call',  false],
-    hold:      ['cs-nopickup','⏸', 'Case on hold',       DOCTOR_STATE.holdReason||'Case placed on hold', '📞','Call Patient', false],
-    failed:    ['cs-failed',  '❌', 'Call failed',        'Could not connect — tap to retry',              '🔄','Retry Call',   false],
-  };
-
-  const [cs, ic, ma, su, bi, bl, dis] = phases[state] || phases.assigned;
-  icon.className = `call-status-icon ${cs}`;
-  icon.textContent = ic;
-  main.textContent = ma;
-  sub.textContent  = su;
-
-  if (state === 'gate_passed') {
-    callBtn.style.display = 'none';
-    secActions.style.display = 'none';
-    timer.style.display = 'block';
-    timer.classList.add('gate-passed');
-    timer.textContent = formatTimer(DOCTOR_STATE.callTimer);
+  // Gate passed — hide phase 1 entirely
+  if (state === 'gate_passed' || state === 'completed') {
+    phase1.style.display = 'none';
     return;
   }
+  phase1.style.display = 'flex';
 
-  if (bi) { callBtnIcon.textContent = bi; callBtnLbl.textContent = bl; }
-  if (dis) {
+  const stateConfig = {
+    assigned:  { btnIcon:'📞', btnLabel:'Call Patient', disabled:false },
+    calling:   { btnIcon:'⏳', btnLabel:'Connecting…',  disabled:true  },
+    connected: { btnIcon:'🔴', btnLabel:'End Call',      disabled:false, btnBg:'var(--danger)', btnShadow:'none', showSec:true },
+    nopickup:  { btnIcon:'🔄', btnLabel:'Retry Call',    disabled:false, statusText: null },
+    hold:      { btnIcon:'📞', btnLabel:'Call Patient',  disabled:false, statusText: null },
+    failed:    { btnIcon:'🔄', btnLabel:'Retry Call',    disabled:false, statusText:'Could not connect — tap to retry' },
+  };
+
+  const cfg = stateConfig[state] || stateConfig.assigned;
+
+  // Resolve status text for nopickup and hold
+  if (state === 'nopickup') cfg.statusText = DOCTOR_STATE.noPickupReason || 'Patient did not answer';
+  if (state === 'hold')     cfg.statusText = DOCTOR_STATE.holdReason     || 'Case placed on hold';
+
+  callBtnIcon.textContent = cfg.btnIcon;
+  callBtnLbl.textContent  = cfg.btnLabel;
+
+  if (cfg.disabled) {
     callBtn.disabled = true;
     callBtn.style.background = '#92400e';
     callBtn.style.boxShadow  = 'none';
     callBtn.classList.add('pulsing');
-    secActions.style.display = 'flex';
-    timer.style.display = 'block';
-    timer.classList.remove('gate-passed');
-    timer.textContent = formatTimer(DOCTOR_STATE.callTimer);
   }
-
-  if (state === 'connected') {
-    callBtn.style.background = 'var(--danger)';
-    callBtn.style.boxShadow  = 'none';
-    secActions.style.display = 'flex';
-    timer.style.display = 'block';
-    timer.classList.toggle('gate-passed', DOCTOR_STATE.callTimer >= 50);
-    timer.textContent = formatTimer(DOCTOR_STATE.callTimer);
+  if (cfg.btnBg) {
+    callBtn.style.background = cfg.btnBg;
+    callBtn.style.boxShadow  = cfg.btnShadow || 'none';
+  }
+  if (cfg.showSec) {
+    secBtns.style.display = 'flex';
+  }
+  if (cfg.statusText) {
+    statusLbl.textContent = cfg.statusText;
+    statusLbl.classList.remove('hidden');
   }
 }
 
 function renderPostCall() {
-  const pc       = document.getElementById('postcall-section');
+  const pc       = document.getElementById('az-phase2');
   const haBanner = document.getElementById('ha-attention-banner');
   const skipBtn  = document.getElementById('skip-ha-btn');
   const ctaBtn   = document.getElementById('main-cta-btn');
@@ -1933,12 +1905,17 @@ function renderSidePanel() {
   addSideBadge(c.case_type === 'cat4' ? 'Cat4' : 'Pilot', c.case_type === 'cat4' ? 'badge-cat4' : 'badge-pilot');
   if (c.case_type !== 'cat4') {
     const hs = DOCTOR_STATE.haSkippedInSession ? 'skipped_session' : c.ha_status;
-    const haMap = { required:['HA Required','badge-ha-req'], skipped_customer:['HA Skipped','badge-ha-skip'], skipped_system:['HA Skipped (Sys)','badge-ha-skip'], skipped_session:['HA Skipped','badge-ha-skip'] };
+    const haMap = {
+      required:         ['HA Required',         'badge-ha-req'],
+      skipped_customer: ['HA Skipped',           'badge-ha-skip'],
+      skipped_system:   ['HA Skipped (Sys)',      'badge-ha-skip'],
+      skipped_session:  ['HA Skipped',            'badge-ha-skip'],
+    };
     if (haMap[hs]) addSideBadge(haMap[hs][0], haMap[hs][1]);
   }
 
   // Side state
-  const stateIcons = { assigned:'📞', calling:'📡', connected:'🔴', gate_passed:'✅', nopickup:'📵', hold:'⏸', failed:'❌', completed:'✅' };
+  const stateIcons  = { assigned:'📞', calling:'📡', connected:'🔴', gate_passed:'✅', nopickup:'📵', hold:'⏸', failed:'❌', completed:'✅' };
   const stateLabels = { assigned:'Ready to call', calling:'Calling…', connected:'In call — live', gate_passed:'Call complete', nopickup:'No pickup', hold:'On hold', failed:'Call failed', completed:'Completed' };
   document.getElementById('side-state-icon').textContent = stateIcons[DOCTOR_STATE.consultationState] || '📞';
   document.getElementById('side-state-text').textContent = stateLabels[DOCTOR_STATE.consultationState] || '—';
@@ -1951,7 +1928,6 @@ function renderSidePanel() {
   document.getElementById('side-cta-locked').style.display = gateOpen ? 'none' : 'block';
 
   if (gateOpen) {
-    const haSkipped = DOCTOR_STATE.haSkippedInSession || c.ha_status === 'skipped_customer' || c.ha_status === 'skipped_system';
     document.getElementById('side-ha-banner').classList.toggle('visible', c.case_type === 'pilot' && c.ha_status === 'required' && !DOCTOR_STATE.haSkippedInSession);
     document.getElementById('side-skip-ha-btn').classList.toggle('visible', haSkipApplicable(c) && !DOCTOR_STATE.haSkippedInSession);
     const effectiveScenario = DOCTOR_STATE.haSkippedInSession ? Object.assign({}, c, { ha_status:'skipped_customer' }) : c;
@@ -1965,6 +1941,20 @@ function renderSidePanel() {
     b.classList.toggle('active', b.dataset.scenario === DOCTOR_STATE.activeScenario);
   });
 }
+
+// ================================================================
+// COMPACT STRIP — scroll-based visibility
+// ================================================================
+function updateCompactStripVisibility() {
+  const wrapper = document.getElementById('sticky-top-wrapper');
+  const pdb     = document.getElementById('patient-detail-block');
+  const strip   = document.getElementById('compact-strip');
+  if (!wrapper || !pdb || !strip) return;
+  const wrapperBottom = wrapper.getBoundingClientRect().bottom;
+  const pdbBottom     = pdb.getBoundingClientRect().bottom;
+  strip.classList.toggle('visible', pdbBottom <= wrapperBottom);
+}
+window.addEventListener('scroll', updateCompactStripVisibility, { passive: true });
 
 // ================================================================
 // CALL FLOW
@@ -2000,9 +1990,12 @@ function startCallTimer() {
   if (DOCTOR_STATE.timerInterval) clearInterval(DOCTOR_STATE.timerInterval);
   DOCTOR_STATE.timerInterval = setInterval(() => {
     DOCTOR_STATE.callTimer++;
-    const timerEl = document.getElementById('call-timer-display');
-    timerEl.textContent = formatTimer(DOCTOR_STATE.callTimer);
-    if (DOCTOR_STATE.callTimer === 50) timerEl.classList.add('gate-passed');
+
+    // Update compact strip timer badge
+    const timerBadge = document.getElementById('cs-timer-badge');
+    timerBadge.classList.remove('hidden');
+    timerBadge.textContent = `📞 ${formatTimer(DOCTOR_STATE.callTimer)}`;
+
     if (DOCTOR_STATE.callTimer >= 50 && DOCTOR_STATE.consultationState !== 'gate_passed') {
       clearInterval(DOCTOR_STATE.timerInterval);
       DOCTOR_STATE.timerInterval = null;
@@ -2011,21 +2004,16 @@ function startCallTimer() {
       render();
       console.log(`[MOCK] call-timer.gateCheck | elapsed=50s | gate=PASSED | cta=${resolveCTA(DOCTOR_STATE.currentCase).type}`);
       showToast('✅ Valid call complete — post-call action unlocked');
-      setTimeout(() => document.getElementById('postcall-section').scrollIntoView({ behavior:'smooth', block:'start' }), 300);
+      setTimeout(() => document.getElementById('action-zone').scrollIntoView({ behavior:'smooth', block:'start' }), 300);
     }
-    // Sync sub-text during connected state
-    if (DOCTOR_STATE.consultationState === 'connected') {
-      document.getElementById('call-status-sub').textContent = DOCTOR_STATE.callTimer < 50
-        ? 'Continue consultation to unlock next action'
-        : 'Valid call threshold reached';
-    }
+
     document.getElementById('demo-state-label').textContent =
       `State: ${DOCTOR_STATE.consultationState} | ${formatTimer(DOCTOR_STATE.callTimer)}`;
     renderSidePanel();
   }, 1000);
 }
 
-// Fast-forward — demo controls
+// Fast-forward — demo controls [LOCKED]
 function doFastForward() {
   const s = DOCTOR_STATE.consultationState;
   if (s === 'connected') {
@@ -2036,7 +2024,7 @@ function doFastForward() {
     DOCTOR_STATE.gatePassedAt = Date.now();
     render();
     showToast('⏩ Fast-forwarded to 50s — gate passed');
-    setTimeout(() => document.getElementById('postcall-section').scrollIntoView({ behavior:'smooth', block:'start' }), 300);
+    setTimeout(() => document.getElementById('action-zone').scrollIntoView({ behavior:'smooth', block:'start' }), 300);
   } else if (['assigned','nopickup','hold'].includes(s)) {
     DOCTOR_STATE.consultationState = 'calling';
     render();
@@ -2046,7 +2034,7 @@ function doFastForward() {
       DOCTOR_STATE.gatePassedAt = Date.now();
       render();
       showToast('⏩ Fast-forwarded — gate passed');
-      setTimeout(() => document.getElementById('postcall-section').scrollIntoView({ behavior:'smooth', block:'start' }), 300);
+      setTimeout(() => document.getElementById('action-zone').scrollIntoView({ behavior:'smooth', block:'start' }), 300);
     }, 300);
   } else {
     showToast('Fast-forward only works before gate is passed');
@@ -2134,27 +2122,107 @@ function confirmSkipHA(reason) {
   console.log(`[MOCK] ha.skip | reason="${reason}" | new_cta=confirm_order`);
 }
 
+// ================================================================
+// MEDICINE EDIT
+// ================================================================
+function selectMAN(row, val) {
+  EDIT_STATE[row] = val;
+  document.querySelectorAll(`.man-btns[data-man="${row}"] .man-btn`).forEach(btn => {
+    btn.classList.toggle('active', parseFloat(btn.dataset.val) === val);
+  });
+}
+
+function adjustQty(delta) {
+  EDIT_STATE.qty = Math.max(1, EDIT_STATE.qty + delta);
+  document.getElementById('sheet-qty-display').textContent = EDIT_STATE.qty;
+}
+
 function openMedEdit(medId) {
   const med = DOCTOR_STATE.currentCase.medicines.find(m => m.id === medId);
   if (!med) return;
-  DOCTOR_STATE.editingMedId = medId;
-  document.getElementById('sheet-med-name').textContent  = med.name;
-  document.getElementById('sheet-dosage-input').value    = med.dosage;
-  document.getElementById('sheet-freq-input').value      = med.frequency;
+  EDIT_STATE.medId    = medId;
+  EDIT_STATE.strength = med.strength;
+  EDIT_STATE.m        = med.m;
+  EDIT_STATE.a        = med.a;
+  EDIT_STATE.n        = med.n;
+  EDIT_STATE.qty      = med.qty;
+
+  document.getElementById('sheet-med-name').textContent = `${med.name} ${med.strength}`;
+  document.getElementById('sheet-strength-input').value = med.strength;
+  document.getElementById('sheet-qty-display').textContent = med.qty;
+
+  // Sync M-A-N buttons
+  ['m','a','n'].forEach(row => {
+    document.querySelectorAll(`.man-btns[data-man="${row}"] .man-btn`).forEach(btn => {
+      btn.classList.toggle('active', parseFloat(btn.dataset.val) === med[row]);
+    });
+  });
+
+  // Disable/enable button label
+  const disBtn = document.getElementById('sheet-disable-med-btn');
+  if (med.disabled) {
+    disBtn.textContent = 'Enable Medicine';
+    disBtn.classList.add('enable-mode');
+  } else {
+    disBtn.textContent = 'Disable Medicine';
+    disBtn.classList.remove('enable-mode');
+  }
+
   openSheet('sheet-edit-med');
 }
 
 function confirmMedEdit() {
-  const med = DOCTOR_STATE.currentCase.medicines.find(m => m.id === DOCTOR_STATE.editingMedId);
+  const med = DOCTOR_STATE.currentCase.medicines.find(m => m.id === EDIT_STATE.medId);
   if (!med) return;
-  med.dosage    = document.getElementById('sheet-dosage-input').value || med.dosage;
-  med.frequency = document.getElementById('sheet-freq-input').value  || med.frequency;
+  const strengthVal = document.getElementById('sheet-strength-input').value.trim();
+  if (strengthVal) med.strength = strengthVal;
+  med.m   = EDIT_STATE.m;
+  med.a   = EDIT_STATE.a;
+  med.n   = EDIT_STATE.n;
+  med.qty = EDIT_STATE.qty;
   closeSheet(); render();
   showToast('Medicine updated (mock — not persisted)');
 }
 
+function toggleMedDisable() {
+  const med = DOCTOR_STATE.currentCase.medicines.find(m => m.id === EDIT_STATE.medId);
+  if (!med) return;
+  med.disabled = !med.disabled;
+  closeSheet(); render();
+  showToast(med.disabled ? 'Medicine disabled (mock)' : 'Medicine enabled (mock)');
+  console.log(`[MOCK] medicine.${med.disabled ? 'disable' : 'enable'} | id=${med.id} | name=${med.name}`);
+}
+
 // ================================================================
-// RX VIEWER — Zoom, Rotate, Pan, Pinch
+// ADD MEDICINE
+// ================================================================
+document.getElementById('add-medicine-btn').addEventListener('click', () => {
+  document.getElementById('sheet-add-med-name').value     = '';
+  document.getElementById('sheet-add-med-strength').value = '';
+  openSheet('sheet-add-med');
+});
+
+function confirmAddMedicine() {
+  const name     = document.getElementById('sheet-add-med-name').value.trim();
+  const strength = document.getElementById('sheet-add-med-strength').value.trim();
+  if (!name) { showToast('Enter medicine name'); return; }
+  const newMed = {
+    id: Date.now(),
+    name,
+    strength: strength || '',
+    m: 1, a: 0, n: 1,
+    qty: 30,
+    validation_status: 'pending',
+    disabled: false,
+  };
+  DOCTOR_STATE.currentCase.medicines.push(newMed);
+  closeSheet(); render();
+  showToast('[MOCK ASSUMPTION] Medicine added — not persisted to backend');
+  console.log(`[MOCK] medicine.add | name=${name} | strength=${strength}`);
+}
+
+// ================================================================
+// RX VIEWER — Zoom, Rotate, Pan, Pinch [LOCKED]
 // ================================================================
 let rxState = { zoom:1, rotation:0, panX:0, panY:0 };
 let rxPinchDist = null;
@@ -2245,7 +2313,7 @@ document.getElementById('rx-overlay-body').addEventListener('wheel', (e) => {
 }, { passive:false });
 
 // ================================================================
-// SCENARIO SWITCHING
+// SCENARIO SWITCHING [LOCKED structure]
 // ================================================================
 function switchScenario(scenarioId) {
   clearInterval(DOCTOR_STATE.timerInterval);
@@ -2260,8 +2328,8 @@ function switchScenario(scenarioId) {
   DOCTOR_STATE.editingMedId      = null;
   DOCTOR_STATE.currentCase = JSON.parse(JSON.stringify(SCENARIOS[scenarioId]));
 
-  const pc = document.getElementById('postcall-section');
-  pc.classList.remove('visible','revealed');
+  const phase2 = document.getElementById('az-phase2');
+  phase2.classList.remove('visible','revealed');
 
   document.getElementById('symptoms-input').value      = '';
   document.getElementById('doctor-notes-input').value  = '';
@@ -2286,7 +2354,7 @@ function resetToDemo() {
 }
 
 // ================================================================
-// TOAST
+// TOAST [LOCKED]
 // ================================================================
 let toastTimer = null;
 function showToast(msg) {
@@ -2295,17 +2363,6 @@ function showToast(msg) {
   t.classList.add('show');
   if (toastTimer) clearTimeout(toastTimer);
   toastTimer = setTimeout(() => t.classList.remove('show'), 2800);
-}
-
-// ================================================================
-// HELPERS
-// ================================================================
-function formatTimer(s) {
-  return `${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`;
-}
-
-function formatDate(d) {
-  return d.toLocaleDateString('en-IN', { day:'2-digit', month:'short', year:'numeric' });
 }
 
 // ================================================================
