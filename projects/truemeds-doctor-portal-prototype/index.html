@@ -245,6 +245,10 @@
       border-bottom: 2px solid #f59e0b;
       padding: 8px 12px;
     }
+    /* Hide demo bar on desktop — side panel has scenario controls */
+    @media (min-width: 800px) {
+      #demo-bar { display: none; }
+    }
     #demo-bar-label {
       font-size: 10px;
       font-weight: 700;
@@ -871,7 +875,12 @@
     #sheet-overlay {
       display: none;
       position: fixed;
-      inset: 0;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 430px;
       background: rgba(0,0,0,0.45);
       z-index: 400;
       align-items: flex-end;
@@ -1161,7 +1170,7 @@
         <div id="order-id-row">
           Order&nbsp;<span id="display-order-id">—</span>
           &nbsp;·&nbsp;
-          Case&nbsp;<span id="display-case-id">—</span>
+          Order Value&nbsp;<span id="display-order-value">—</span>
         </div>
       </div>
 
@@ -1559,7 +1568,7 @@ const SCENARIOS = {
     doctor_name: 'Dr. Priya Sharma',
     patient_name: 'Ramesh Gupta', patient_age: 54, patient_gender: 'Male',
     patient_phone: '+91 98765 XXXXX',
-    order_id: 'TM-ORD-20240812', case_id: 'C-CAT4-00431',
+    order_id: 'TM-ORD-20240812', case_id: 'C-CAT4-00431', order_value: 1240,
     assignment_status: 'assigned',
     prescription_attached: true,
     medicines: [
@@ -1574,7 +1583,7 @@ const SCENARIOS = {
     doctor_name: 'Dr. Priya Sharma',
     patient_name: 'Sunita Patel', patient_age: 38, patient_gender: 'Female',
     patient_phone: '+91 77654 XXXXX',
-    order_id: 'TM-ORD-20240891', case_id: 'C-PLT-00874',
+    order_id: 'TM-ORD-20240891', case_id: 'C-PLT-00874', order_value: 890,
     assignment_status: 'assigned',
     prescription_attached: true,
     medicines: [
@@ -1588,7 +1597,7 @@ const SCENARIOS = {
     doctor_name: 'Dr. Priya Sharma',
     patient_name: 'Vikram Nair', patient_age: 62, patient_gender: 'Male',
     patient_phone: '+91 90321 XXXXX',
-    order_id: 'TM-ORD-20240953', case_id: 'C-PLT-00912',
+    order_id: 'TM-ORD-20240953', case_id: 'C-PLT-00912', order_value: 560,
     assignment_status: 'assigned',
     prescription_attached: true,
     medicines: [
@@ -1603,7 +1612,7 @@ const SCENARIOS = {
     doctor_name: 'Dr. Priya Sharma',
     patient_name: 'Ananya Krishnan', patient_age: 29, patient_gender: 'Female',
     patient_phone: '+91 81234 XXXXX',
-    order_id: 'TM-ORD-20241034', case_id: 'C-PLT-01021',
+    order_id: 'TM-ORD-20241034', case_id: 'C-PLT-01021', order_value: 430,
     assignment_status: 'assigned',
     prescription_attached: true,
     medicines: [
@@ -1617,7 +1626,7 @@ const SCENARIOS = {
     doctor_name: 'Dr. Priya Sharma',
     patient_name: 'Mohan Reddy', patient_age: 47, patient_gender: 'Male',
     patient_phone: '+91 98001 XXXXX',
-    order_id: 'TM-ORD-20241112', case_id: 'C-PLT-01088',
+    order_id: 'TM-ORD-20241112', case_id: 'C-PLT-01088', order_value: 310,
     assignment_status: 'assigned',
     prescription_attached: true,
     medicines: [
@@ -1694,8 +1703,8 @@ function render() {
   document.getElementById('patient-details-row').textContent = `${c.patient_age} years · ${c.patient_gender}`;
   document.getElementById('pdb-view-rx-btn').classList.toggle('hidden', !c.prescription_attached);
 
-  document.getElementById('display-order-id').textContent = c.order_id;
-  document.getElementById('display-case-id').textContent  = c.case_id;
+  document.getElementById('display-order-id').textContent    = c.order_id;
+  document.getElementById('display-order-value').textContent = `₹${c.order_value.toLocaleString('en-IN')}`;
 
   // --- Compact strip content ---
   updateCompactStrip();
