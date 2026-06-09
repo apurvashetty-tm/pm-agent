@@ -1110,6 +1110,242 @@
 
     .hidden { display: none !important; }
 
+    /* ============================================================
+       PORTAL HEADER — sticky, always visible
+    ============================================================ */
+    #portal-header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--divider);
+      padding: 0 16px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+    #portal-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    #portal-logo { font-size: 18px; line-height: 1; }
+    #portal-name {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: -0.01em;
+    }
+    #profile-btn {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: var(--primary);
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    #profile-initials {
+      font-size: 12px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 0.03em;
+    }
+
+    /* ============================================================
+       PATIENT BLOCK — info button + order expand
+    ============================================================ */
+    #pdb-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+    #pdb-info-btn {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--surface-elevated);
+      border: 1px solid var(--divider-strong);
+      color: var(--text-muted);
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all 0.12s;
+    }
+    #pdb-info-btn.active {
+      background: var(--primary-light);
+      color: var(--primary);
+      border-color: var(--primary-border);
+    }
+    #pdb-order-expand {
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid var(--divider);
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+    .pdb-expand-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .pdb-expand-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+    .pdb-expand-value {
+      font-size: 12px;
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    /* ============================================================
+       COMPACT STRIP — order value
+    ============================================================ */
+    #cs-order-value {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--primary);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    /* ============================================================
+       MEDICINE CARD — selling price
+    ============================================================ */
+    .med-detail {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-top: 2px;
+    }
+    .med-price {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-secondary);
+      flex-shrink: 0;
+      margin-left: 8px;
+    }
+
+    /* ============================================================
+       PROFILE SHEET
+    ============================================================ */
+    #profile-identity {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 4px 0 16px;
+      border-bottom: 1px solid var(--divider);
+      margin-bottom: 16px;
+    }
+    #profile-avatar-large {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      font-weight: 700;
+      color: #fff;
+      flex-shrink: 0;
+      letter-spacing: 0.02em;
+    }
+    #profile-doctor-name {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+    #profile-doctor-role {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-top: 2px;
+    }
+    #profile-earnings-card {
+      background: var(--surface-elevated);
+      border: 1px solid var(--divider);
+      border-radius: 10px;
+      padding: 12px 14px;
+      margin-bottom: 12px;
+    }
+    .profile-section-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    #profile-earnings-row {
+      display: flex;
+      align-items: center;
+    }
+    .profile-earnings-item {
+      flex: 1;
+      text-align: center;
+    }
+    .profile-earnings-label {
+      font-size: 11px;
+      color: var(--text-secondary);
+      margin-bottom: 3px;
+    }
+    .profile-earnings-value {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+    .profile-earnings-divider {
+      width: 1px;
+      height: 36px;
+      background: var(--divider-strong);
+      flex-shrink: 0;
+      margin: 0 4px;
+    }
+    .profile-menu-btn {
+      width: 100%;
+      background: var(--surface-elevated);
+      border: 1px solid var(--divider);
+      border-radius: 10px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+      text-align: left;
+      transition: background 0.12s;
+    }
+    .profile-menu-btn:active { background: var(--surface-hover); }
+    .profile-menu-arrow { font-size: 18px; color: var(--text-muted); }
+    #profile-logout-btn {
+      width: 100%;
+      height: 48px;
+      border-radius: var(--radius-btn);
+      background: transparent;
+      color: var(--danger);
+      border: 1px solid var(--danger-border);
+      font-size: 14px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 4px;
+      transition: background 0.12s;
+    }
+    #profile-logout-btn:active { background: var(--danger-bg); }
+
   </style>
 </head>
 <body>
@@ -1121,8 +1357,19 @@
   ============================================================ -->
   <div id="mobile-column">
 
-    <!-- STICKY TOP WRAPPER — demo bar + compact strip -->
+    <!-- STICKY TOP WRAPPER — portal header + demo bar + compact strip -->
     <div id="sticky-top-wrapper">
+
+      <!-- PORTAL HEADER — always visible -->
+      <div id="portal-header">
+        <div id="portal-title">
+          <span id="portal-logo">💊</span>
+          <span id="portal-name">Truemeds Doctor Portal</span>
+        </div>
+        <button id="profile-btn" onclick="openSheet('sheet-profile')" aria-label="Profile">
+          <span id="profile-initials">AS</span>
+        </button>
+      </div>
 
       <!-- DEMO BAR — [MOCK ASSUMPTION] dev-only -->
       <div id="demo-bar">
@@ -1146,6 +1393,7 @@
           <div id="cs-patient-name">—</div>
           <div id="cs-patient-meta">—</div>
         </div>
+        <span id="cs-order-value"></span>
         <span id="cs-timer-badge" class="hidden">📞 0:00</span>
         <button id="cs-view-rx-btn" class="hidden" onclick="openRxOverlay()">📋 View Rx</button>
       </div>
@@ -1162,12 +1410,30 @@
             <div id="patient-full-name">—</div>
             <div id="patient-details-row">—</div>
           </div>
-          <button id="pdb-view-rx-btn" class="hidden" onclick="openRxOverlay()">📋 View Rx</button>
+          <div id="pdb-actions">
+            <button id="pdb-info-btn" onclick="toggleOrderExpand()" title="Order details">ⓘ</button>
+            <button id="pdb-view-rx-btn" class="hidden" onclick="openRxOverlay()">📋 View Rx</button>
+          </div>
         </div>
         <div id="order-id-row">
           Order&nbsp;<span id="display-order-id">—</span>
           &nbsp;·&nbsp;
-          Order Value&nbsp;<span id="display-order-value">—</span>
+          <span id="display-order-value">—</span>
+        </div>
+        <!-- Expandable order details — hidden by default -->
+        <div id="pdb-order-expand" class="hidden">
+          <div class="pdb-expand-item">
+            <span class="pdb-expand-label">Order Created</span>
+            <span class="pdb-expand-value" id="display-order-created">—</span>
+          </div>
+          <div class="pdb-expand-item">
+            <span class="pdb-expand-label">Expected Delivery</span>
+            <span class="pdb-expand-value" id="display-order-delivery">—</span>
+          </div>
+          <div class="pdb-expand-item">
+            <span class="pdb-expand-label">Payment</span>
+            <span class="pdb-expand-value" id="display-payment-mode">—</span>
+          </div>
         </div>
       </div>
 
@@ -1533,6 +1799,46 @@
     </div>
   </div>
 
+  <!-- Profile Sheet -->
+  <div id="sheet-profile" class="bottom-sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-title">Profile</div>
+    <div class="sheet-body">
+      <!-- Doctor identity -->
+      <div id="profile-identity">
+        <div id="profile-avatar-large">AS</div>
+        <div>
+          <div id="profile-doctor-name">Dr. Apurva Shetty</div>
+          <div id="profile-doctor-role">General Physician</div>
+        </div>
+      </div>
+      <!-- Earnings -->
+      <div id="profile-earnings-card">
+        <div class="profile-section-label">Today's Earnings</div>
+        <div id="profile-earnings-row">
+          <div class="profile-earnings-item">
+            <div class="profile-earnings-label">Earned</div>
+            <div class="profile-earnings-value" id="profile-earned">₹0.00</div>
+          </div>
+          <div class="profile-earnings-divider"></div>
+          <div class="profile-earnings-item">
+            <div class="profile-earnings-label">Incentive</div>
+            <div class="profile-earnings-value" id="profile-incentive">₹0.00</div>
+          </div>
+        </div>
+      </div>
+      <!-- User Manual -->
+      <button class="profile-menu-btn" onclick="showToast('[MOCK] User Manual — not yet linked'); closeSheet();">
+        <span>📖 User Manual</span>
+        <span class="profile-menu-arrow">›</span>
+      </button>
+      <!-- Logout -->
+      <button id="profile-logout-btn" onclick="handleLogout()">
+        🚪 Logout
+      </button>
+    </div>
+  </div>
+
 </div><!-- /sheet-overlay -->
 
 <!-- TOAST -->
@@ -1553,6 +1859,17 @@
 <script>
 
 // ================================================================
+// DOCTOR PROFILE — [MOCK ASSUMPTION] Logged-in doctor details
+// ================================================================
+const DOCTOR_PROFILE = {
+  name:            'Dr. Apurva Shetty',
+  role:            'General Physician',
+  initials:        'AS',
+  earnings_today:  0.00,
+  incentive_today: 0.00,
+};
+
+// ================================================================
 // MOCK SCENARIO DATA — new medicine format per session_handoff Section 2.4
 // [MOCK ASSUMPTION] All patient data and order IDs are fictional.
 // prescription_attached is MOCK_ONLY — set true for all scenarios.
@@ -1566,12 +1883,13 @@ const SCENARIOS = {
     patient_name: 'Ramesh Gupta', patient_age: 54, patient_gender: 'Male',
     patient_phone: '+91 98765 XXXXX',
     order_id: 'TM-ORD-20240812', case_id: 'C-CAT4-00431', order_value: 1240,
+    order_created: '12 Aug 2024', order_delivery: '16 Aug 2024', payment_mode: 'Online',
     assignment_status: 'assigned',
     prescription_attached: true,
     medicines: [
-      { id:1, name:'Metformin',   strength:'500mg', m:1, a:0, n:1, qty:60, validation_status:'validated', disabled:false },
-      { id:2, name:'Amlodipine',  strength:'5mg',   m:1, a:0, n:0, qty:30, validation_status:'pending',   disabled:false },
-      { id:3, name:'Atorvastatin',strength:'10mg',  m:0, a:0, n:1, qty:30, validation_status:'pending',   disabled:false },
+      { id:1, name:'Metformin',   strength:'500mg', m:1, a:0, n:1, qty:60, price:28,  validation_status:'validated', disabled:false },
+      { id:2, name:'Amlodipine',  strength:'5mg',   m:1, a:0, n:0, qty:30, price:52,  validation_status:'pending',   disabled:false },
+      { id:3, name:'Atorvastatin',strength:'10mg',  m:0, a:0, n:1, qty:30, price:45,  validation_status:'pending',   disabled:false },
     ]
   },
 
@@ -1581,11 +1899,12 @@ const SCENARIOS = {
     patient_name: 'Sunita Patel', patient_age: 38, patient_gender: 'Female',
     patient_phone: '+91 77654 XXXXX',
     order_id: 'TM-ORD-20240891', case_id: 'C-PLT-00874', order_value: 890,
+    order_created: '21 Aug 2024', order_delivery: '25 Aug 2024', payment_mode: 'Online',
     assignment_status: 'assigned',
     prescription_attached: true,
     medicines: [
-      { id:1, name:'Levothyroxine',   strength:'50mcg', m:1, a:0, n:0, qty:30, validation_status:'pending',   disabled:false },
-      { id:2, name:'Calcium + Vit D3',strength:'500mg', m:1, a:0, n:1, qty:60, validation_status:'validated', disabled:false },
+      { id:1, name:'Levothyroxine',   strength:'50mcg', m:1, a:0, n:0, qty:30, price:38,  validation_status:'pending',   disabled:false },
+      { id:2, name:'Calcium + Vit D3',strength:'500mg', m:1, a:0, n:1, qty:60, price:65,  validation_status:'validated', disabled:false },
     ]
   },
 
@@ -1595,12 +1914,13 @@ const SCENARIOS = {
     patient_name: 'Vikram Nair', patient_age: 62, patient_gender: 'Male',
     patient_phone: '+91 90321 XXXXX',
     order_id: 'TM-ORD-20240953', case_id: 'C-PLT-00912', order_value: 560,
+    order_created: '03 Sep 2024', order_delivery: '07 Sep 2024', payment_mode: 'COD',
     assignment_status: 'assigned',
     prescription_attached: true,
     medicines: [
-      { id:1, name:'Losartan',            strength:'50mg',   m:1, a:0, n:0, qty:30, validation_status:'flagged',   disabled:false },
-      { id:2, name:'Hydrochlorothiazide', strength:'12.5mg', m:1, a:0, n:0, qty:30, validation_status:'pending',   disabled:false },
-      { id:3, name:'Aspirin',             strength:'75mg',   m:0, a:0, n:1, qty:30, validation_status:'validated', disabled:false },
+      { id:1, name:'Losartan',            strength:'50mg',   m:1, a:0, n:0, qty:30, price:42,  validation_status:'flagged',   disabled:false },
+      { id:2, name:'Hydrochlorothiazide', strength:'12.5mg', m:1, a:0, n:0, qty:30, price:18,  validation_status:'pending',   disabled:false },
+      { id:3, name:'Aspirin',             strength:'75mg',   m:0, a:0, n:1, qty:30, price:12,  validation_status:'validated', disabled:false },
     ]
   },
 
@@ -1610,11 +1930,12 @@ const SCENARIOS = {
     patient_name: 'Ananya Krishnan', patient_age: 29, patient_gender: 'Female',
     patient_phone: '+91 81234 XXXXX',
     order_id: 'TM-ORD-20241034', case_id: 'C-PLT-01021', order_value: 430,
+    order_created: '14 Sep 2024', order_delivery: '18 Sep 2024', payment_mode: 'Online',
     assignment_status: 'assigned',
     prescription_attached: true,
     medicines: [
-      { id:1, name:'Ferrous Sulphate', strength:'200mg', m:0, a:0, n:1, qty:30, validation_status:'validated', disabled:false },
-      { id:2, name:'Folic Acid',       strength:'5mg',   m:1, a:0, n:0, qty:30, validation_status:'validated', disabled:false },
+      { id:1, name:'Ferrous Sulphate', strength:'200mg', m:0, a:0, n:1, qty:30, price:35,  validation_status:'validated', disabled:false },
+      { id:2, name:'Folic Acid',       strength:'5mg',   m:1, a:0, n:0, qty:30, price:22,  validation_status:'validated', disabled:false },
     ]
   },
 
@@ -1624,10 +1945,11 @@ const SCENARIOS = {
     patient_name: 'Mohan Reddy', patient_age: 47, patient_gender: 'Male',
     patient_phone: '+91 98001 XXXXX',
     order_id: 'TM-ORD-20241112', case_id: 'C-PLT-01088', order_value: 310,
+    order_created: '22 Sep 2024', order_delivery: '26 Sep 2024', payment_mode: 'Online',
     assignment_status: 'assigned',
     prescription_attached: true,
     medicines: [
-      { id:1, name:'Pantoprazole', strength:'40mg', m:1, a:0, n:0, qty:30, validation_status:'validated', disabled:false },
+      { id:1, name:'Pantoprazole', strength:'40mg', m:1, a:0, n:0, qty:30, price:44,  validation_status:'validated', disabled:false },
     ]
   }
 };
@@ -1703,6 +2025,11 @@ function render() {
   document.getElementById('display-order-id').textContent    = c.order_id;
   document.getElementById('display-order-value').textContent = `₹${c.order_value.toLocaleString('en-IN')}`;
 
+  // Order expand fields
+  document.getElementById('display-order-created').textContent  = c.order_created  || '—';
+  document.getElementById('display-order-delivery').textContent = c.order_delivery || '—';
+  document.getElementById('display-payment-mode').textContent   = c.payment_mode   || '—';
+
   // --- Compact strip content ---
   updateCompactStrip();
 
@@ -1729,6 +2056,7 @@ function updateCompactStrip() {
   document.getElementById('cs-patient-name').textContent = c.patient_name;
   document.getElementById('cs-patient-meta').textContent =
     `${c.patient_age}y · ${c.patient_gender} · ${c.order_id}`;
+  document.getElementById('cs-order-value').textContent = `₹${c.order_value.toLocaleString('en-IN')}`;
   document.getElementById('cs-view-rx-btn').classList.toggle('hidden', !c.prescription_attached);
 
   const state = DOCTOR_STATE.consultationState;
@@ -1780,11 +2108,15 @@ function renderMedicines(meds) {
       : ({ pending:'Pending', validated:'Validated', flagged:'Flagged' }[med.validation_status] || 'Pending');
     const el = document.createElement('div');
     el.className = `medicine-item${isDisabled ? ' disabled' : ''}`;
+    const priceHtml = med.price != null ? `<span class="med-price">₹${med.price}</span>` : '';
     el.innerHTML = `
       <div class="med-icon">💊</div>
       <div class="med-info">
         <div class="med-name">${med.name} ${med.strength}</div>
-        <div class="med-detail">${formatMAN(med.m, med.a, med.n)} · Qty ${med.qty}</div>
+        <div class="med-detail">
+          <span>${formatMAN(med.m, med.a, med.n)} · Qty ${med.qty}</span>
+          ${priceHtml}
+        </div>
       </div>
       <span class="med-status-badge ${sc}">${sl}</span>
       <button class="med-edit-btn" onclick="openMedEdit(${med.id})" aria-label="Edit ${med.name}">✏️</button>
@@ -1961,6 +2293,26 @@ function updateCompactStripVisibility() {
   strip.classList.toggle('visible', pdbBottom <= wrapperBottom);
 }
 window.addEventListener('scroll', updateCompactStripVisibility, { passive: true });
+
+// ================================================================
+// ORDER EXPAND TOGGLE
+// ================================================================
+function toggleOrderExpand() {
+  const expand = document.getElementById('pdb-order-expand');
+  const btn    = document.getElementById('pdb-info-btn');
+  const isOpen = !expand.classList.contains('hidden');
+  expand.classList.toggle('hidden', isOpen);
+  btn.classList.toggle('active', !isOpen);
+}
+
+// ================================================================
+// PROFILE / LOGOUT
+// ================================================================
+function handleLogout() {
+  closeSheet();
+  showToast('[MOCK] Logout — not implemented in prototype');
+  console.log('[MOCK] auth.logout | user=' + DOCTOR_PROFILE.name);
+}
 
 // ================================================================
 // CALL FLOW
@@ -2340,6 +2692,10 @@ function switchScenario(scenarioId) {
 
   const phase2 = document.getElementById('az-phase2');
   phase2.classList.remove('visible','revealed');
+
+  // Reset order expand
+  document.getElementById('pdb-order-expand').classList.add('hidden');
+  document.getElementById('pdb-info-btn').classList.remove('active');
 
   document.getElementById('symptoms-input').value      = '';
   document.getElementById('doctor-notes-input').value  = '';

@@ -23,6 +23,8 @@ It does not cover admin, pharmacy operations, order management, customer-facing 
 
 The doctor's context:
 - Works from a phone, not a desktop
+- Each doctor logs in on their own personal device — this is NOT a shared-device or clinic setup
+- There is no carry-forward from IRIS, BA app, or any shared-device model
 - Reviews one case at a time
 - Needs to call the patient, validate medicines, and take a post-call action
 - Must complete a valid connected call before final action CTAs appear

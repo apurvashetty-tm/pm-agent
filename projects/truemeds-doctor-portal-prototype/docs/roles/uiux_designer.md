@@ -77,22 +77,24 @@ The doctor is doing clinical work. The UI should get out of the way.
 
 ### 4.2 Color direction
 
-Primary palette (CSS custom properties to be defined in `index.html`):
+**[LIGHT THEME — confirmed by user. Dark theme direction below is superseded and must not be used.]**
 
-- **Background:** `#0f1117` — near-black, focused and clinical
-- **Surface / Card:** `#1a1d26` — slightly elevated surface
-- **Elevated Surface:** `#21252f` — cards and panels
-- **Dividers:** `rgba(255,255,255,0.08)` — subtle, not loud
-- **Primary Action (CTA):** `#1a6fff` — strong trust blue, not consumer purple
-- **Success / Confirm:** `#22c55e` — green for confirmed/complete states
-- **Warning / Attention:** `#f59e0b` — amber for HA-required banners and warnings
-- **Danger / Alert:** `#ef4444` — red for errors or critical flags
-- **Muted Text:** `rgba(255,255,255,0.45)` — secondary labels, metadata
-- **Primary Text:** `rgba(255,255,255,0.92)` — main readable content
+Confirmed CSS custom properties (in `index.html`):
+
+- **Background:** `#f0f4f8`
+- **Surface / Card:** `#ffffff`
+- **Elevated Surface:** `#f8fafc`
+- **Primary Action (CTA):** `#1B69DE` — Truemeds brand blue
+- **Success / Confirm:** `#16a34a`
+- **Warning / Attention:** `#d97706` — amber for HA banners
+- **Danger / Alert:** `#dc2626`
+- **Text Primary:** `#111827`
+- **Text Secondary:** `#6b7280`
+- **Text Muted:** `#9ca3af`
 
 Token rigidity rule:
 - Do not replace locked tokens with nearby alternatives
-- Do not shift the interface toward consumer-style bright colors
+- Do not revert to dark theme
 - Do not introduce a new color without flagging it first
 
 ### 4.3 Typography direction
@@ -122,17 +124,21 @@ Token rigidity rule:
 
 ---
 
-## 5. Locked screen structure — V1 single scroll
+## 5. Locked screen structure — V2 single scroll
+
+**[Updated after Section 2 rebuild. This is the current locked structure.]**
 
 The screen follows this locked top-to-bottom layout:
 
-1. **Header strip** — portal name, doctor name, case ID
-2. **Patient and order context block** — patient name, case type badge, order flags
-3. **Prescription viewer** (collapsed by default if no prescription, expandable if attached)
-4. **Medicines list section** — medicines for validation, read-only in V1
-5. **Call section** — assignment status, call button, call timer, no-pickup/hold actions
-6. **Notes section** — notes input, available before and after call
-7. **Post-call action section** — hidden before valid call; reveals after valid call gate
+1. **`#sticky-top-wrapper`** (sticky, top: 0)
+   - `#demo-bar` — scenario switcher, hidden on desktop (`@media min-width: 800px`)
+   - `#compact-strip` — hidden until patient block scrolls out of view; shows patient name, age/gender, order value, timer badge, View Rx
+2. **`#patient-detail-block`** (non-sticky) — patient name, age, gender, order value, `ⓘ` expand for order dates + payment, View Rx button (if prescription attached). No badge row.
+3. **`#medicines-section`** — medicines with name/strength, M-A-N + qty, selling price, validation badge, edit button
+4. **`#notes-section`** — notes input, available before and after call
+5. **`#action-zone`** — two phases:
+   - Phase 1 (call control): call button, hold/no-pickup secondary buttons, status label
+   - Phase 2 (post-call CTA): HA banner (sibling of CTA card), skip HA button (if applicable), main CTA
 
 Claude must not reorder these sections without approval.
 

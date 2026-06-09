@@ -56,9 +56,9 @@ Every entry must include:
 
 **Why it matters:** Determines whether the medicines section is read-only + validation, or editable.
 
-**Safe placeholder:** Medicines list is read-only in V1. Doctor can flag/validate but not add or remove. `[MOCK ASSUMPTION]`
+**Safe placeholder:** Doctor can edit M-A-N dosing, strength, qty, disable/enable medicines, and add new medicines. All changes are mock-only and not persisted. `[MOCK ASSUMPTION]`
 
-**Status:** Open
+**Status:** Partially answered — prototype supports edit/add/disable. Actual backend write authority and business rules (min/max qty constraints, whether disable = order cancellation) remain open. See also OQ-011.
 
 ---
 
