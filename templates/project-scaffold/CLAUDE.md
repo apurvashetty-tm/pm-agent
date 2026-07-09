@@ -8,6 +8,17 @@ It is not a throwaway demo, and it is not the production system unless stated.
 
 ---
 
+## Workspace memory
+
+Before project-specific work, also read:
+- `../../AGENTS.md`
+- `../../context/Claude.md`
+- relevant files in `../../knowledge/context/`
+
+Use project-local files for project truth and handoff. Use root knowledge files only for reusable company/system context.
+
+---
+
 ## Read these files before making any decision
 1. `docs/context/project_truth.md`
 2. `docs/context/session_handoff.md`

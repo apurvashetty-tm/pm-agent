@@ -1,6 +1,15 @@
 # Context primer — ACOM 2.0 × Ring AI
 
-*Scoped `CLAUDE.md` for this project folder (repo has no root `CLAUDE.md`; this follows the same per-project convention as `projects/truemeds-doctor-portal-prototype/CLAUDE.md`). Fast onboarding for any agent working on this project: current state, the rules of the road, and where the detail lives.*
+*Scoped `CLAUDE.md` for this project folder. Fast onboarding for any agent working on this project: current state, the rules of the road, and where the detail lives.*
+
+## Workspace memory
+
+Before project-specific work, also read:
+- `../../AGENTS.md`
+- `../../context/Claude.md`
+- relevant files in `../../knowledge/context/`
+
+Use project-local files for project truth and handoff. Use root knowledge files only for reusable company/system context.
 
 ## What this is
 Truemeds is adding **AI voice pre-qualification** to dropped-cart (incomplete-order) recovery, with **Ring AI** as the first vendor. There are two layers of work:

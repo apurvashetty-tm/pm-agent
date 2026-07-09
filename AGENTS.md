@@ -5,6 +5,13 @@ This workspace contains multiple projects under `projects/`.
 Use project-local files as the source of truth. Do not rely on chat history when
 the same information should live in the project folder.
 
+If instructions conflict, follow this order:
+1. Latest user instruction
+2. Active project's `docs/context/project_truth.md`
+3. Active project's `CLAUDE.md`
+4. This file
+5. Reusable knowledge files
+
 ## Before working on a project
 
 1. Identify the active project folder under `projects/`.
