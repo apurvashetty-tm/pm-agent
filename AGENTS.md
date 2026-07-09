@@ -8,15 +8,29 @@ the same information should live in the project folder.
 ## Before working on a project
 
 1. Identify the active project folder under `projects/`.
-2. Read that project's `CLAUDE.md`.
-3. Read `docs/context/project_truth.md`.
-4. Read `docs/context/session_handoff.md` if it exists.
-5. Read `docs/context/open_questions.md`.
-6. Read any role file relevant to the task, such as `docs/roles/frontend_engineer.md`.
-7. Continue from `session_handoff.md` unless the user gives newer instructions.
+2. Read `context/Claude.md` for global Truemeds context.
+3. Read relevant files in `knowledge/context/` when the task touches reusable
+   company, system, metric, or role knowledge.
+4. Read that project's `CLAUDE.md`.
+5. Read `docs/context/project_truth.md`.
+6. Read `docs/context/session_handoff.md` if it exists.
+7. Read `docs/context/open_questions.md`.
+8. Read any role file relevant to the task, such as `docs/roles/frontend_engineer.md`.
+9. Continue from `session_handoff.md` unless the user gives newer instructions.
 
 If a project does not have these files, use `templates/project-scaffold/` as the
 model for creating them.
+
+## Knowledgebase
+
+- `context/Claude.md` holds short global Truemeds/team context.
+- `knowledge/context/` holds reusable company, system, metric, glossary, and
+  user-role knowledge.
+- `knowledge/decisions/` holds durable dated decisions.
+- `knowledge/learnings/` holds retrospectives, patterns, and reusable learnings.
+- Do not bury reusable company/system knowledge only inside a project handoff.
+- Do not move project-specific resume state into `knowledge/`; keep it in the
+  active project's `docs/context/session_handoff.md`.
 
 ## During work
 
@@ -37,9 +51,11 @@ model for creating them.
    - known gaps
    - next exact step
 2. Update `docs/context/open_questions.md` if new unresolved decisions appeared.
-3. Do not modify `docs/context/project_truth.md` unless the user explicitly locks
+3. Update `knowledge/context/`, `knowledge/decisions/`, or
+   `knowledge/learnings/` if the session created reusable company knowledge.
+4. Do not modify `docs/context/project_truth.md` unless the user explicitly locks
    a new truth.
-4. Report files changed, what changed, assumptions, placeholders, and test plan.
+5. Report files changed, what changed, assumptions, placeholders, and test plan.
 
 ## Git safety
 
