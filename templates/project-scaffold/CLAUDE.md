@@ -10,20 +10,22 @@ It is not a throwaway demo, and it is not the production system unless stated.
 
 ## Read these files before making any decision
 1. `docs/context/project_truth.md`
-2. `docs/roles/product_manager.md`
-3. `docs/roles/frontend_engineer.md`
-4. `docs/roles/uiux_designer.md`
-5. `docs/roles/backend_engineer.md`
-6. `docs/context/open_questions.md`
+2. `docs/context/session_handoff.md`
+3. `docs/roles/product_manager.md`
+4. `docs/roles/frontend_engineer.md`
+5. `docs/roles/uiux_designer.md`
+6. `docs/roles/backend_engineer.md`
+7. `docs/context/open_questions.md`
 
 ---
 
 ## Priority order
 1. **Latest user instruction** — always wins
 2. **`docs/context/project_truth.md`** — locked product truth, cannot be invented around
-3. **`docs/roles/*`** — role-specific working rules
-4. **`docs/context/open_questions.md`** — unresolved decisions that must not be silently answered
-5. **`[MOCK ASSUMPTION]`** — temporary build unblockers, small and local only, clearly labeled
+3. **`docs/context/session_handoff.md`** — current resume point and latest implementation state
+4. **`docs/roles/*`** — role-specific working rules
+5. **`docs/context/open_questions.md`** — unresolved decisions that must not be silently answered
+6. **`[MOCK ASSUMPTION]`** — temporary build unblockers, small and local only, clearly labeled
 
 If two sources conflict, follow the higher-priority source and surface the conflict rather than silently blending.
 
@@ -33,6 +35,8 @@ If two sources conflict, follow the higher-priority source and surface the confl
 - Use mock data and fake backend behavior freely where real backend is not ready
 - Do not rewrite existing working screens/modules unless explicitly asked
 - Work one file or one small focused module at a time
+- Before coding, continue from `docs/context/session_handoff.md` unless the user overrides it
+- After coding, update `docs/context/session_handoff.md` before the final report
 - Do not invent product logic if it is unclear
 - If logic is missing, use a clearly marked `[MOCK ASSUMPTION]` and add it to `docs/context/open_questions.md`
 - Respect the locked flow — do not add steps or CTAs that are not part of it
@@ -75,6 +79,9 @@ After each coding task, output a short structured report:
 6. **Manual test plan** — 3 short steps: what to do, what to expect, edge case to check
 
 This report must be short and easy for a non-coder to read.
+
+Before this report, update `docs/context/session_handoff.md` with the current
+status, files changed, validation done, known gaps, and next exact step.
 
 ---
 
