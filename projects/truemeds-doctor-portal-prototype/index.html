@@ -4,1397 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Truemeds Doctor Portal</title>
-  <style>
-
-    /* ============================================================
-       DESIGN TOKENS — Light theme, Truemeds brand-inspired
-       Primary: #1B69DE (truemeds.in brand blue)
-       Background: #f0f4f8
-    ============================================================ */
-    :root {
-      --bg:               #f0f4f8;
-      --surface:          #ffffff;
-      --surface-elevated: #f8fafc;
-      --surface-hover:    #f1f5f9;
-      --divider:          rgba(0,0,0,0.08);
-      --divider-strong:   rgba(0,0,0,0.14);
-      --primary:          #1B69DE;
-      --primary-hover:    #155fcc;
-      --primary-light:    #eef4fd;
-      --primary-border:   rgba(27,105,222,0.25);
-      --success:          #16a34a;
-      --success-bg:       #f0fdf4;
-      --success-border:   rgba(22,163,74,0.25);
-      --warning:          #d97706;
-      --warning-bg:       #fffbeb;
-      --warning-border:   rgba(217,119,6,0.3);
-      --danger:           #dc2626;
-      --danger-bg:        #fef2f2;
-      --danger-border:    rgba(220,38,38,0.25);
-      --text-primary:     #111827;
-      --text-secondary:   #6b7280;
-      --text-muted:       #9ca3af;
-      --shadow-sm:        0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.05);
-      --shadow-md:        0 4px 12px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.05);
-      --radius-card:      12px;
-      --radius-btn:       10px;
-      --radius-input:     8px;
-      --radius-badge:     6px;
-      --font:             -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
-    }
-
-    /* ============================================================
-       RESET + BASE
-    ============================================================ */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { font-size: 16px; }
-    body {
-      font-family: var(--font);
-      background: var(--bg);
-      color: var(--text-primary);
-      min-height: 100vh;
-    }
-    button {
-      font-family: var(--font);
-      cursor: pointer;
-      border: none;
-      outline: none;
-      -webkit-tap-highlight-color: transparent;
-    }
-    textarea, input {
-      font-family: var(--font);
-      outline: none;
-    }
-
-    /* ============================================================
-       LAYOUT WRAPPER — mobile column + desktop side panel
-    ============================================================ */
-    #layout-wrapper {
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      min-height: 100vh;
-      position: relative;
-    }
-
-    /* Mobile column — always max 430px */
-    #mobile-column {
-      width: 100%;
-      max-width: 430px;
-      min-height: 100vh;
-      background: var(--bg);
-      position: relative;
-      flex-shrink: 0;
-      box-shadow: 0 0 0 1px rgba(0,0,0,0.06);
-    }
-
-    /* Desktop side panel — visible only on wide screens */
-    #desktop-side-panel {
-      display: none;
-      position: sticky;
-      top: 0;
-      height: 100vh;
-      overflow-y: auto;
-      width: 280px;
-      flex-shrink: 0;
-      margin-left: 20px;
-      padding: 20px 0;
-      align-self: flex-start;
-    }
-
-    @media (min-width: 800px) {
-      #desktop-side-panel { display: block; }
-    }
-
-    .side-panel-card {
-      background: var(--surface);
-      border-radius: var(--radius-card);
-      border: 1px solid var(--divider-strong);
-      box-shadow: var(--shadow-sm);
-      margin-bottom: 12px;
-      overflow: hidden;
-    }
-    .side-panel-header {
-      padding: 12px 14px;
-      border-bottom: 1px solid var(--divider);
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.07em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-    }
-    .side-panel-body { padding: 14px; }
-    #side-patient-name {
-      font-size: 15px;
-      font-weight: 700;
-      color: var(--text-primary);
-      margin-bottom: 4px;
-    }
-    #side-order-id {
-      font-size: 12px;
-      color: var(--text-secondary);
-      margin-bottom: 10px;
-    }
-    #side-badge-row { display: flex; gap: 6px; flex-wrap: wrap; }
-
-    #side-state-display {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 10px 12px;
-      background: var(--surface-elevated);
-      border-radius: 8px;
-      margin-bottom: 10px;
-    }
-    #side-state-icon { font-size: 18px; }
-    #side-state-text { font-size: 13px; font-weight: 600; color: var(--text-primary); }
-    #side-timer-text { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
-
-    #side-cta-section { display: none; }
-    #side-cta-section.visible { display: block; }
-    #side-ha-banner {
-      display: none;
-      background: var(--warning-bg);
-      border: 1px solid var(--warning-border);
-      border-radius: 8px;
-      padding: 10px 12px;
-      margin-bottom: 10px;
-      font-size: 12px;
-      color: var(--warning);
-      font-weight: 600;
-    }
-    #side-ha-banner.visible { display: block; }
-    #side-skip-ha-btn {
-      width: 100%;
-      height: 40px;
-      border-radius: 8px;
-      background: transparent;
-      color: var(--warning);
-      border: 1px solid var(--warning-border);
-      font-size: 13px;
-      font-weight: 600;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      margin-bottom: 8px;
-    }
-    #side-skip-ha-btn.visible { display: flex; }
-    #side-main-cta {
-      width: 100%;
-      height: 52px;
-      border-radius: var(--radius-btn);
-      background: var(--primary);
-      color: #fff;
-      font-size: 15px;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 7px;
-      box-shadow: 0 3px 12px rgba(27,105,222,0.25);
-    }
-    #side-main-cta:active { background: var(--primary-hover); }
-
-    .side-scenario-btn {
-      display: block;
-      width: 100%;
-      text-align: left;
-      padding: 8px 10px;
-      border-radius: 7px;
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--text-secondary);
-      background: var(--surface-elevated);
-      border: 1px solid var(--divider);
-      margin-bottom: 6px;
-      transition: all 0.12s;
-    }
-    .side-scenario-btn:last-child { margin-bottom: 0; }
-    .side-scenario-btn.active {
-      background: var(--primary-light);
-      color: var(--primary);
-      border-color: var(--primary-border);
-    }
-    #side-ff-btn {
-      width: 100%;
-      height: 38px;
-      border-radius: 8px;
-      background: var(--surface-elevated);
-      color: var(--primary);
-      border: 1px solid var(--primary-border);
-      font-size: 12px;
-      font-weight: 700;
-      margin-top: 10px;
-    }
-
-    /* ============================================================
-       STICKY TOP WRAPPER — demo bar + compact strip
-    ============================================================ */
-    #sticky-top-wrapper {
-      position: sticky;
-      top: 0;
-      z-index: 200;
-    }
-
-    /* ============================================================
-       DEMO BAR
-    ============================================================ */
-    #demo-bar {
-      background: #1e293b;
-      border-bottom: 2px solid #f59e0b;
-      padding: 8px 12px;
-    }
-    /* Hide demo bar on desktop — side panel has scenario controls */
-    @media (min-width: 800px) {
-      #demo-bar { display: none; }
-    }
-    #demo-bar-label {
-      font-size: 10px;
-      font-weight: 700;
-      color: #f59e0b;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      margin-bottom: 6px;
-    }
-    #demo-bar-scenarios {
-      display: flex;
-      gap: 5px;
-      flex-wrap: wrap;
-    }
-    .scenario-btn {
-      font-size: 10px;
-      font-weight: 600;
-      padding: 4px 8px;
-      border-radius: 5px;
-      background: rgba(255,255,255,0.07);
-      color: rgba(255,255,255,0.55);
-      border: 1px solid rgba(255,255,255,0.1);
-      transition: all 0.12s;
-    }
-    .scenario-btn.active {
-      background: #f59e0b;
-      color: #1e293b;
-      border-color: #f59e0b;
-    }
-    #demo-ff-btn-mobile {
-      font-size: 10px;
-      font-weight: 700;
-      padding: 4px 10px;
-      border-radius: 5px;
-      background: rgba(27,105,222,0.2);
-      color: #93c5fd;
-      border: 1px solid rgba(27,105,222,0.3);
-    }
-    #demo-bar-row2 {
-      display: flex;
-      align-items: center;
-      margin-top: 6px;
-      gap: 8px;
-    }
-    #demo-state-label {
-      font-size: 10px;
-      color: rgba(255,255,255,0.35);
-      flex: 1;
-    }
-
-    /* ============================================================
-       COMPACT STRIP — hidden until patient block scrolls out
-    ============================================================ */
-    #compact-strip {
-      background: var(--surface);
-      border-bottom: 1px solid var(--divider-strong);
-      padding: 8px 16px;
-      display: none;
-      align-items: center;
-      gap: 10px;
-      box-shadow: var(--shadow-sm);
-    }
-    #compact-strip.visible { display: flex; }
-    #cs-patient-info { flex: 1; min-width: 0; }
-    #cs-patient-name {
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--text-primary);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    #cs-patient-meta {
-      font-size: 11px;
-      color: var(--text-secondary);
-      margin-top: 1px;
-    }
-    #cs-timer-badge {
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--success);
-      background: var(--success-bg);
-      border: 1px solid var(--success-border);
-      border-radius: 6px;
-      padding: 4px 8px;
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-    #cs-view-rx-btn {
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--primary);
-      background: var(--primary-light);
-      border: 1px solid var(--primary-border);
-      border-radius: 6px;
-      padding: 6px 11px;
-      white-space: nowrap;
-      flex-shrink: 0;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-
-    /* ============================================================
-       MAIN SCROLL CONTENT
-    ============================================================ */
-    #main-scroll {
-      padding: 16px 16px 160px;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-
-    /* ============================================================
-       SECTION LABEL
-    ============================================================ */
-    .section-label {
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--text-muted);
-      letter-spacing: 0.07em;
-      text-transform: uppercase;
-      margin-bottom: 8px;
-    }
-
-    /* ============================================================
-       PATIENT DETAIL BLOCK — non-sticky, no badge row
-    ============================================================ */
-    #patient-detail-block {
-      background: var(--surface);
-      border-radius: var(--radius-card);
-      padding: 14px 16px;
-      border: 1px solid var(--divider);
-      box-shadow: var(--shadow-sm);
-    }
-    #pdb-top-row {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 10px;
-    }
-    #patient-full-name {
-      font-size: 18px;
-      font-weight: 700;
-      color: var(--text-primary);
-    }
-    #patient-details-row {
-      font-size: 13px;
-      color: var(--text-secondary);
-      margin-top: 3px;
-    }
-    #pdb-view-rx-btn {
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--primary);
-      background: var(--primary-light);
-      border: 1px solid var(--primary-border);
-      border-radius: 6px;
-      padding: 6px 11px;
-      white-space: nowrap;
-      flex-shrink: 0;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-    #pdb-view-rx-btn.hidden { display: none; }
-    #order-id-row {
-      font-size: 12px;
-      color: var(--text-muted);
-      margin-top: 10px;
-      display: flex;
-      gap: 12px;
-      padding-top: 10px;
-      border-top: 1px solid var(--divider);
-    }
-    #order-id-row span { color: var(--text-secondary); font-weight: 500; }
-
-    /* ============================================================
-       BADGE STYLES — still used in side panel
-    ============================================================ */
-    .badge {
-      font-size: 11px;
-      font-weight: 700;
-      padding: 3px 8px;
-      border-radius: var(--radius-badge);
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-    }
-    .badge-cat4    { background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; }
-    .badge-pilot   { background: var(--warning-bg); color: var(--warning); border: 1px solid var(--warning-border); }
-    .badge-ha-req  { background: var(--warning-bg); color: var(--warning); border: 1px solid var(--warning-border); }
-    .badge-ha-skip { background: var(--success-bg); color: var(--success); border: 1px solid var(--success-border); }
-    .badge-value   { background: var(--primary-light); color: var(--primary); border: 1px solid var(--primary-border); }
-    .badge-nonvalue{ background: #faf5ff; color: #7c3aed; border: 1px solid rgba(124,58,237,0.25); }
-
-    /* ============================================================
-       RX FULL-SCREEN OVERLAY
-    ============================================================ */
-    #rx-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: #1a1d26;
-      z-index: 300;
-      flex-direction: column;
-      max-width: 430px;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-    #rx-overlay.open { display: flex; }
-    #rx-overlay-header {
-      background: #21252f;
-      padding: 12px 16px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      flex-shrink: 0;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-    }
-    #rx-overlay-close {
-      width: 36px;
-      height: 36px;
-      border-radius: 8px;
-      background: rgba(255,255,255,0.08);
-      color: rgba(255,255,255,0.85);
-      font-size: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-    #rx-overlay-title { font-size: 15px; font-weight: 600; color: rgba(255,255,255,0.92); flex: 1; }
-
-    #rx-controls {
-      display: flex;
-      gap: 6px;
-      align-items: center;
-      margin-left: auto;
-    }
-    .rx-ctrl-btn {
-      width: 34px;
-      height: 34px;
-      border-radius: 7px;
-      background: rgba(255,255,255,0.08);
-      color: rgba(255,255,255,0.75);
-      font-size: 15px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: 1px solid rgba(255,255,255,0.1);
-      transition: background 0.12s;
-      flex-shrink: 0;
-    }
-    .rx-ctrl-btn:active { background: rgba(255,255,255,0.15); }
-    #rx-zoom-label {
-      font-size: 11px;
-      font-weight: 600;
-      color: rgba(255,255,255,0.5);
-      min-width: 32px;
-      text-align: center;
-    }
-
-    #rx-overlay-body {
-      flex: 1;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      background: #0f1117;
-      touch-action: none;
-    }
-
-    #rx-doc-wrapper {
-      position: relative;
-      transform-origin: center center;
-      transition: transform 0.15s ease;
-      cursor: grab;
-      user-select: none;
-    }
-    #rx-doc-wrapper:active { cursor: grabbing; }
-
-    /* Dummy prescription — [MOCK ASSUMPTION] Fictional details for prototype only */
-    #rx-doc {
-      width: 320px;
-      background: #fff;
-      border-radius: 4px;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
-      overflow: hidden;
-      font-family: 'Georgia', serif;
-      color: #1a1a1a;
-    }
-    .rx-letterhead {
-      background: linear-gradient(135deg, #1B69DE 0%, #1558c0 100%);
-      padding: 16px 18px 14px;
-      color: #fff;
-    }
-    .rx-clinic-name { font-size: 16px; font-weight: 700; font-family: var(--font); letter-spacing: 0.02em; }
-    .rx-doctor-name { font-size: 13px; font-weight: 600; font-family: var(--font); margin-top: 2px; opacity: 0.92; }
-    .rx-doctor-quals { font-size: 11px; font-family: var(--font); opacity: 0.7; margin-top: 1px; }
-    .rx-clinic-address { font-size: 10px; font-family: var(--font); opacity: 0.65; margin-top: 6px; line-height: 1.5; }
-    .rx-body { padding: 14px 18px; }
-    .rx-patient-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 12px;
-      padding-bottom: 10px;
-      border-bottom: 1px solid #e5e7eb;
-      gap: 8px;
-    }
-    .rx-patient-info { flex: 1; }
-    .rx-patient-label { font-size: 10px; color: #6b7280; font-family: var(--font); text-transform: uppercase; letter-spacing: 0.05em; }
-    .rx-patient-value { font-size: 12px; font-weight: 600; font-family: var(--font); color: #1a1a1a; margin-top: 1px; }
-    .rx-symbol { font-size: 28px; font-weight: 700; color: #1B69DE; line-height: 1; font-family: 'Georgia', serif; flex-shrink: 0; }
-    .rx-medicines { margin-bottom: 14px; }
-    .rx-med-item { padding: 10px 0; border-bottom: 1px dashed #e5e7eb; }
-    .rx-med-item:last-child { border-bottom: none; }
-    .rx-med-number { font-size: 11px; font-weight: 700; color: #1B69DE; font-family: var(--font); margin-bottom: 2px; }
-    .rx-med-name { font-size: 13px; font-weight: 700; color: #111827; font-family: var(--font); }
-    .rx-med-details { font-size: 11px; color: #374151; font-family: var(--font); margin-top: 2px; }
-    .rx-med-note { font-size: 10px; color: #6b7280; font-family: var(--font); margin-top: 2px; font-style: italic; }
-    .rx-footer {
-      border-top: 1px solid #e5e7eb;
-      padding-top: 12px;
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-    }
-    .rx-advice { flex: 1; }
-    .rx-advice-label { font-size: 10px; color: #6b7280; font-family: var(--font); font-weight: 600; margin-bottom: 3px; }
-    .rx-advice-text  { font-size: 10px; color: #374151; font-family: var(--font); line-height: 1.5; }
-    .rx-signature { text-align: right; }
-    .rx-sig-line { width: 90px; border-bottom: 1px solid #374151; margin-bottom: 4px; margin-left: auto; }
-    .rx-sig-name { font-size: 10px; font-weight: 600; color: #374151; font-family: var(--font); }
-    .rx-sig-reg  { font-size: 9px; color: #9ca3af; font-family: var(--font); }
-    .rx-stamp { margin-top: 8px; padding: 6px 10px; border: 2px solid #1B69DE; border-radius: 4px; text-align: center; display: inline-block; }
-    .rx-stamp-text { font-size: 9px; font-weight: 700; color: #1B69DE; font-family: var(--font); letter-spacing: 0.05em; }
-
-    #rx-hint {
-      position: absolute;
-      bottom: 12px;
-      left: 0; right: 0;
-      text-align: center;
-      font-size: 11px;
-      color: rgba(255,255,255,0.3);
-      pointer-events: none;
-    }
-
-    /* ============================================================
-       MEDICINES SECTION
-    ============================================================ */
-    #medicines-section {
-      background: var(--surface);
-      border-radius: var(--radius-card);
-      border: 1px solid var(--divider);
-      box-shadow: var(--shadow-sm);
-      overflow: hidden;
-    }
-    #medicines-header {
-      padding: 12px 16px 0;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    #medicines-count {
-      font-size: 11px;
-      color: var(--text-muted);
-      font-weight: 600;
-    }
-    #add-medicine-btn {
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--primary);
-      background: none;
-      padding: 4px 0;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-    #medicines-list {
-      padding: 10px 16px 14px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    .medicine-item {
-      background: var(--surface-elevated);
-      border-radius: 10px;
-      padding: 11px 13px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      border: 1px solid var(--divider);
-      transition: opacity 0.2s;
-    }
-    .medicine-item.disabled { opacity: 0.5; }
-    .medicine-item.disabled .med-name { text-decoration: line-through; color: var(--text-secondary); }
-    .med-icon {
-      width: 34px;
-      height: 34px;
-      border-radius: 8px;
-      background: var(--primary-light);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 15px;
-      flex-shrink: 0;
-    }
-    .medicine-item.disabled .med-icon { background: var(--surface-hover); }
-    .med-info { flex: 1; min-width: 0; }
-    .med-name { font-size: 13px; font-weight: 600; color: var(--text-primary); }
-    .med-detail { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
-    .med-status-badge {
-      font-size: 10px;
-      font-weight: 700;
-      padding: 3px 7px;
-      border-radius: 5px;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      flex-shrink: 0;
-    }
-    .med-status-pending   { background: var(--warning-bg);  color: var(--warning); border: 1px solid var(--warning-border); }
-    .med-status-validated { background: var(--success-bg);  color: var(--success); border: 1px solid var(--success-border); }
-    .med-status-flagged   { background: var(--danger-bg);   color: var(--danger);  border: 1px solid var(--danger-border); }
-    .med-status-disabled  { background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; }
-    .med-edit-btn {
-      width: 30px;
-      height: 30px;
-      border-radius: 7px;
-      background: #f1f5f9;
-      color: var(--text-secondary);
-      font-size: 13px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      border: 1px solid var(--divider);
-    }
-    #medicines-empty {
-      padding: 20px 16px;
-      text-align: center;
-      color: var(--text-muted);
-      font-size: 13px;
-      display: none;
-    }
-
-    /* ============================================================
-       NOTES SECTION
-    ============================================================ */
-    #notes-section {
-      background: var(--surface);
-      border-radius: var(--radius-card);
-      border: 1px solid var(--divider);
-      box-shadow: var(--shadow-sm);
-      padding: 14px 16px;
-    }
-    .notes-field-group { margin-bottom: 14px; }
-    .notes-field-group:last-child { margin-bottom: 0; }
-    .notes-label {
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--text-secondary);
-      margin-bottom: 6px;
-      display: block;
-    }
-    .notes-textarea {
-      width: 100%;
-      background: var(--surface-elevated);
-      border: 1px solid var(--divider-strong);
-      border-radius: var(--radius-input);
-      color: var(--text-primary);
-      font-size: 14px;
-      line-height: 1.5;
-      padding: 10px 12px;
-      resize: none;
-      min-height: 72px;
-      transition: border-color 0.15s;
-    }
-    .notes-textarea:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(27,105,222,0.1); }
-    .notes-textarea::placeholder { color: var(--text-muted); }
-
-    /* ============================================================
-       ACTION ZONE — merged call + post-call
-    ============================================================ */
-    #action-zone {
-      background: var(--surface);
-      border-radius: var(--radius-card);
-      border: 1px solid var(--divider);
-      box-shadow: var(--shadow-sm);
-      overflow: hidden;
-    }
-
-    /* Phase 1: Call control */
-    #az-phase1 {
-      padding: 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    #call-initiate-btn {
-      width: 100%;
-      height: 52px;
-      border-radius: var(--radius-btn);
-      background: var(--primary);
-      color: #fff;
-      font-size: 16px;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      transition: background 0.15s, opacity 0.15s;
-      box-shadow: 0 3px 10px rgba(27,105,222,0.25);
-    }
-    #call-initiate-btn:active { background: var(--primary-hover); }
-    #call-initiate-btn:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: none; }
-
-    #az-secondary-btns { display: flex; gap: 10px; }
-    .call-sec-btn {
-      flex: 1;
-      height: 44px;
-      border-radius: var(--radius-btn);
-      background: var(--surface-elevated);
-      color: var(--text-secondary);
-      font-size: 13px;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      border: 1px solid var(--divider-strong);
-    }
-    .call-sec-btn.danger  { color: var(--danger);  background: var(--danger-bg);  border-color: var(--danger-border); }
-    .call-sec-btn.warning { color: var(--warning); background: var(--warning-bg); border-color: var(--warning-border); }
-
-    #az-status-label {
-      font-size: 12px;
-      color: var(--text-secondary);
-      text-align: center;
-      padding: 2px 0;
-    }
-
-    @keyframes pulse-ring {
-      0%   { box-shadow: 0 0 0 0 rgba(27,105,222,0.3); }
-      70%  { box-shadow: 0 0 0 10px rgba(27,105,222,0); }
-      100% { box-shadow: 0 0 0 0 rgba(27,105,222,0); }
-    }
-    .pulsing { animation: pulse-ring 1.4s ease-out infinite; }
-
-    /* Phase 2: Post-call — hidden until gate passes */
-    #az-phase2 {
-      display: none;
-      opacity: 0;
-      transform: translateY(8px);
-      transition: opacity 0.25s ease, transform 0.25s ease;
-      padding: 16px;
-    }
-    #az-phase2.visible { display: block; }
-    #az-phase2.revealed { opacity: 1; transform: translateY(0); }
-
-    #ha-attention-banner {
-      background: var(--warning-bg);
-      border: 1px solid var(--warning-border);
-      border-radius: var(--radius-card);
-      padding: 12px 14px;
-      margin-bottom: 12px;
-      display: flex;
-      gap: 10px;
-      align-items: flex-start;
-    }
-    #ha-attention-banner .ha-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
-    #ha-banner-title { font-size: 13px; font-weight: 700; color: var(--warning); }
-    #ha-banner-desc  { font-size: 12px; color: var(--text-secondary); margin-top: 3px; line-height: 1.5; }
-    #ha-attention-banner.hidden { display: none; }
-
-    #postcall-cta-card { padding: 0; }
-    #postcall-cta-label {
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--text-muted);
-      letter-spacing: 0.07em;
-      text-transform: uppercase;
-      margin-bottom: 12px;
-    }
-    #skip-ha-btn {
-      width: 100%;
-      height: 44px;
-      border-radius: var(--radius-btn);
-      background: transparent;
-      color: var(--warning);
-      border: 1px solid var(--warning-border);
-      font-size: 14px;
-      font-weight: 600;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      margin-bottom: 10px;
-    }
-    #skip-ha-btn.visible { display: flex; }
-
-    #main-cta-btn {
-      width: 100%;
-      height: 56px;
-      border-radius: var(--radius-btn);
-      background: var(--primary);
-      color: #fff;
-      font-size: 17px;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      box-shadow: 0 4px 16px rgba(27,105,222,0.3);
-      transition: background 0.15s;
-    }
-    #main-cta-btn:active { background: var(--primary-hover); }
-    #main-cta-btn.success-state { background: var(--success); box-shadow: 0 4px 16px rgba(22,163,74,0.25); cursor: default; }
-
-    /* ============================================================
-       BOTTOM SHEETS
-    ============================================================ */
-    #sheet-overlay {
-      display: none;
-      position: fixed;
-      top: 0;
-      bottom: 0;
-      background: rgba(0,0,0,0.45);
-      z-index: 400;
-      align-items: flex-end;
-      justify-content: center;
-      /* left/width set by JS in openSheet() to match mobile column */
-    }
-    #sheet-overlay.open { display: flex; }
-
-    .bottom-sheet {
-      display: none;
-      width: 100%;
-      max-width: 430px;
-      max-height: 85vh;
-      background: var(--surface);
-      border-radius: 20px 20px 0 0;
-      padding: 0 0 32px;
-      transform: translateY(100%);
-      transition: transform 0.28s cubic-bezier(0.32,0.72,0,1);
-      border: 1px solid var(--divider-strong);
-      border-bottom: none;
-    }
-    .bottom-sheet.open { display: block; transform: translateY(0); }
-
-    .sheet-handle {
-      width: 36px; height: 4px;
-      background: var(--divider-strong);
-      border-radius: 2px;
-      margin: 12px auto 0;
-    }
-    .sheet-title {
-      font-size: 16px;
-      font-weight: 700;
-      color: var(--text-primary);
-      padding: 14px 20px 12px;
-      border-bottom: 1px solid var(--divider);
-    }
-    .sheet-body {
-      padding: 14px 20px;
-      overflow-y: auto;
-      max-height: calc(85vh - 90px);
-    }
-    .sheet-option-btn {
-      width: 100%;
-      background: var(--surface-elevated);
-      border: 1px solid var(--divider);
-      border-radius: 10px;
-      padding: 13px 14px;
-      text-align: left;
-      margin-bottom: 8px;
-      transition: background 0.12s;
-    }
-    .sheet-option-btn:last-child { margin-bottom: 0; }
-    .sheet-option-btn:active { background: var(--surface-hover); }
-    .sheet-option-title { font-size: 14px; font-weight: 600; color: var(--text-primary); }
-    .sheet-option-desc  { font-size: 12px; color: var(--text-secondary); margin-top: 3px; }
-
-    .sheet-confirm-btn {
-      width: 100%;
-      height: 50px;
-      border-radius: var(--radius-btn);
-      background: var(--primary);
-      color: #fff;
-      font-size: 15px;
-      font-weight: 700;
-    }
-    .sheet-confirm-btn.danger-btn  { background: var(--danger); }
-    .sheet-confirm-btn.warning-btn { background: var(--warning); }
-
-    .sheet-input-row { margin-bottom: 14px; }
-    .sheet-input-label { font-size: 12px; font-weight: 600; color: var(--text-secondary); margin-bottom: 5px; display: block; }
-    .sheet-input {
-      width: 100%;
-      background: var(--surface-elevated);
-      border: 1px solid var(--divider-strong);
-      border-radius: var(--radius-input);
-      color: var(--text-primary);
-      font-size: 14px;
-      padding: 10px 12px;
-    }
-    .sheet-input:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(27,105,222,0.1); }
-    #sheet-med-name { font-size: 15px; font-weight: 600; margin-bottom: 14px; color: var(--text-primary); }
-
-    /* Qty stepper */
-    .qty-stepper {
-      display: flex;
-      align-items: center;
-      gap: 0;
-      background: var(--surface-elevated);
-      border: 1px solid var(--divider-strong);
-      border-radius: var(--radius-input);
-      overflow: hidden;
-    }
-    .qty-btn {
-      width: 44px;
-      height: 44px;
-      background: var(--surface-hover);
-      border: none;
-      color: var(--text-primary);
-      font-size: 20px;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      transition: background 0.1s;
-    }
-    .qty-btn:active { background: var(--divider-strong); }
-    #sheet-qty-display {
-      flex: 1;
-      text-align: center;
-      font-size: 16px;
-      font-weight: 700;
-      color: var(--text-primary);
-      padding: 10px 0;
-    }
-
-    /* M-A-N picker */
-    .man-picker { display: flex; flex-direction: column; gap: 10px; }
-    .man-row { display: flex; align-items: center; gap: 10px; }
-    .man-label {
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--text-secondary);
-      width: 16px;
-      flex-shrink: 0;
-      text-align: center;
-    }
-    .man-btns { display: flex; gap: 6px; flex: 1; }
-    .man-btn {
-      flex: 1;
-      height: 40px;
-      border-radius: 8px;
-      background: var(--surface-elevated);
-      border: 1px solid var(--divider-strong);
-      color: var(--text-secondary);
-      font-size: 14px;
-      font-weight: 600;
-      transition: all 0.12s;
-    }
-    .man-btn:active { background: var(--surface-hover); }
-    .man-btn.active {
-      background: var(--primary);
-      color: #fff;
-      border-color: var(--primary);
-    }
-
-    /* Disable medicine button */
-    #sheet-disable-med-btn {
-      width: 100%;
-      height: 44px;
-      border-radius: var(--radius-btn);
-      background: transparent;
-      color: var(--danger);
-      border: 1px solid var(--danger-border);
-      font-size: 14px;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-top: 8px;
-    }
-    #sheet-disable-med-btn.enable-mode {
-      color: var(--success);
-      border-color: var(--success-border);
-    }
-
-    /* ============================================================
-       TOAST
-    ============================================================ */
-    #toast {
-      position: fixed;
-      bottom: 90px;
-      left: 50%;
-      transform: translateX(-50%) translateY(20px);
-      background: #1e293b;
-      color: rgba(255,255,255,0.9);
-      font-size: 13px;
-      font-weight: 500;
-      padding: 10px 18px;
-      border-radius: 20px;
-      opacity: 0;
-      transition: all 0.25s;
-      pointer-events: none;
-      white-space: nowrap;
-      z-index: 500;
-      max-width: 320px;
-      text-align: center;
-    }
-    #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-
-    /* ============================================================
-       COMPLETED OVERLAY
-    ============================================================ */
-    #completed-overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(255,255,255,0.96);
-      z-index: 350;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 32px;
-      text-align: center;
-      max-width: 430px;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-    #completed-overlay.open { display: flex; }
-    #completed-icon {
-      width: 72px; height: 72px;
-      border-radius: 50%;
-      background: var(--success-bg);
-      border: 2px solid var(--success-border);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 34px;
-      margin-bottom: 20px;
-    }
-    #completed-title { font-size: 22px; font-weight: 700; color: var(--text-primary); margin-bottom: 8px; }
-    #completed-desc  { font-size: 14px; color: var(--text-secondary); line-height: 1.6; }
-    #completed-reset-btn {
-      margin-top: 32px;
-      padding: 12px 28px;
-      border-radius: var(--radius-btn);
-      background: var(--primary-light);
-      color: var(--primary);
-      font-size: 14px;
-      font-weight: 600;
-      border: 1px solid var(--primary-border);
-    }
-
-    .hidden { display: none !important; }
-
-    /* ============================================================
-       PRE-CALL BRIEFING STRIP
-    ============================================================ */
-    #pre-call-brief {
-      display: none;
-      border-left: 3px solid var(--primary);
-      background: var(--primary-light);
-      border-radius: 0 8px 8px 0;
-      padding: 10px 12px;
-      margin-bottom: 10px;
-    }
-    #pre-call-brief.visible { display: block; }
-    .pcb-label {
-      font-size: 10px;
-      font-weight: 700;
-      color: var(--primary);
-      letter-spacing: 0.07em;
-      text-transform: uppercase;
-      margin-bottom: 4px;
-    }
-    .pcb-text {
-      font-size: 13px;
-      color: var(--text-primary);
-      line-height: 1.45;
-      font-style: italic;
-    }
-
-    /* Skip HA Call — de-weighted to text link (overrides earlier rule) */
-    #skip-ha-btn {
-      width: 100%;
-      height: auto;
-      border-radius: 0;
-      background: transparent;
-      border: none;
-      color: var(--text-muted);
-      font-size: 12px;
-      font-weight: 500;
-      text-decoration: underline;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      gap: 4px;
-      padding: 10px 0 2px;
-      margin-bottom: 0;
-    }
-    #skip-ha-btn.visible { display: flex; }
-    #skip-ha-btn:active { color: var(--text-secondary); }
-
-    /* ============================================================
-       PORTAL HEADER — sticky, always visible
-    ============================================================ */
-    #portal-header {
-      background: var(--surface);
-      border-bottom: 1px solid var(--divider);
-      padding: 0 16px;
-      height: 48px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-shrink: 0;
-    }
-    #portal-title {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    #portal-logo { font-size: 18px; line-height: 1; }
-    #portal-name {
-      font-size: 15px;
-      font-weight: 700;
-      color: var(--text-primary);
-      letter-spacing: -0.01em;
-    }
-    #profile-btn {
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      background: var(--primary);
-      border: none;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-    #profile-initials {
-      font-size: 12px;
-      font-weight: 700;
-      color: #fff;
-      letter-spacing: 0.03em;
-    }
-
-    /* ============================================================
-       PATIENT BLOCK — info button + order expand
-    ============================================================ */
-    #pdb-actions {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      flex-shrink: 0;
-    }
-    #pdb-info-btn {
-      width: 28px;
-      height: 28px;
-      border-radius: 50%;
-      background: var(--surface-elevated);
-      border: 1px solid var(--divider-strong);
-      color: var(--text-muted);
-      font-size: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      transition: all 0.12s;
-    }
-    #pdb-info-btn.active {
-      background: var(--primary-light);
-      color: var(--primary);
-      border-color: var(--primary-border);
-    }
-    #pdb-order-expand {
-      margin-top: 10px;
-      padding-top: 10px;
-      border-top: 1px solid var(--divider);
-      display: flex;
-      flex-direction: column;
-      gap: 7px;
-    }
-    .pdb-expand-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .pdb-expand-label {
-      font-size: 12px;
-      color: var(--text-muted);
-      font-weight: 500;
-    }
-    .pdb-expand-value {
-      font-size: 12px;
-      color: var(--text-primary);
-      font-weight: 600;
-    }
-
-    /* ============================================================
-       COMPACT STRIP — order value
-    ============================================================ */
-    #cs-order-value {
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--primary);
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-
-    /* ============================================================
-       MEDICINE CARD — selling price
-    ============================================================ */
-    .med-detail {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 12px;
-      color: var(--text-secondary);
-      margin-top: 2px;
-    }
-    .med-price {
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--text-secondary);
-      flex-shrink: 0;
-      margin-left: 8px;
-    }
-
-    /* ============================================================
-       PROFILE SHEET
-    ============================================================ */
-    #profile-identity {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      padding: 4px 0 16px;
-      border-bottom: 1px solid var(--divider);
-      margin-bottom: 16px;
-    }
-    #profile-avatar-large {
-      width: 52px;
-      height: 52px;
-      border-radius: 50%;
-      background: var(--primary);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
-      font-weight: 700;
-      color: #fff;
-      flex-shrink: 0;
-      letter-spacing: 0.02em;
-    }
-    #profile-doctor-name {
-      font-size: 16px;
-      font-weight: 700;
-      color: var(--text-primary);
-    }
-    #profile-doctor-role {
-      font-size: 13px;
-      color: var(--text-secondary);
-      margin-top: 2px;
-    }
-    #profile-earnings-card {
-      background: var(--surface-elevated);
-      border: 1px solid var(--divider);
-      border-radius: 10px;
-      padding: 12px 14px;
-      margin-bottom: 12px;
-    }
-    .profile-section-label {
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--text-muted);
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      margin-bottom: 10px;
-    }
-    #profile-earnings-row {
-      display: flex;
-      align-items: center;
-    }
-    .profile-earnings-item {
-      flex: 1;
-      text-align: center;
-    }
-    .profile-earnings-label {
-      font-size: 11px;
-      color: var(--text-secondary);
-      margin-bottom: 3px;
-    }
-    .profile-earnings-value {
-      font-size: 20px;
-      font-weight: 700;
-      color: var(--text-primary);
-    }
-    .profile-earnings-divider {
-      width: 1px;
-      height: 36px;
-      background: var(--divider-strong);
-      flex-shrink: 0;
-      margin: 0 4px;
-    }
-    .profile-menu-btn {
-      width: 100%;
-      background: var(--surface-elevated);
-      border: 1px solid var(--divider);
-      border-radius: 10px;
-      padding: 14px 16px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--text-primary);
-      margin-bottom: 8px;
-      text-align: left;
-      transition: background 0.12s;
-    }
-    .profile-menu-btn:active { background: var(--surface-hover); }
-    .profile-menu-arrow { font-size: 18px; color: var(--text-muted); }
-    #profile-logout-btn {
-      width: 100%;
-      height: 48px;
-      border-radius: var(--radius-btn);
-      background: transparent;
-      color: var(--danger);
-      border: 1px solid var(--danger-border);
-      font-size: 14px;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      margin-top: 4px;
-      transition: background 0.12s;
-    }
-    #profile-logout-btn:active { background: var(--danger-bg); }
-
-  </style>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
@@ -1411,7 +21,15 @@
       <!-- PORTAL HEADER — always visible -->
       <div id="portal-header">
         <div id="portal-title">
-          <span id="portal-logo">💊</span>
+          <span id="portal-logo"><svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block">
+            <circle cx="15" cy="15" r="15" fill="#fff"/>
+            <rect x="13.5" y="3.5" width="2.5" height="23" rx="1.25" fill="#1B69DE"/>
+            <path d="M14.75,6 C11,4.2 6.5,5.5 6,8.5 C5.5,11.5 10,12 14.75,11" fill="#1B69DE" opacity="0.65"/>
+            <path d="M14.75,6 C18.5,4.2 23,5.5 23.5,8.5 C24,11.5 19.5,12 14.75,11" fill="#1B69DE" opacity="0.65"/>
+            <path d="M14.75,9 C9,11.5 8.5,15 12,17 C15.5,19 15.5,21.5 12,23.5 C9.5,25 9.5,27 12,27.5" stroke="#1B69DE" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+            <path d="M14.75,9 C20.5,11.5 21,15 17.5,17 C14,19 14,21.5 17.5,23.5 C20,25 20,27 17.5,27.5" stroke="#16a34a" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+            <circle cx="14.75" cy="3.5" r="2.2" fill="#1B69DE"/>
+          </svg></span>
           <span id="portal-name">Truemeds Doctor Portal</span>
         </div>
         <button id="profile-btn" onclick="openSheet('sheet-profile')" aria-label="Profile">
@@ -1428,6 +46,21 @@
           <button class="scenario-btn" data-scenario="pilot_nonvalue_meds_ha">Pilot + Non-Value + HA</button>
           <button class="scenario-btn" data-scenario="pilot_ha_skipped_customer">HA Skipped (Cust)</button>
           <button class="scenario-btn" data-scenario="pilot_ha_skipped_system">HA Skipped (Sys)</button>
+        </div>
+        <!-- Webhook simulator — visible when state=calling [MOCK ASSUMPTION] -->
+        <div id="demo-call-sim" style="display:none">
+          <div id="demo-sim-calling">
+            <span class="demo-sim-label">Simulate:</span>
+            <button class="demo-sim-btn demo-sim-connected" onclick="simCallConnected()">✓ Connected</button>
+            <button class="demo-sim-btn demo-sim-failed" onclick="simShowWebhookOptions()">✗ No Connect</button>
+          </div>
+          <div id="demo-sim-webhook" style="display:none">
+            <span class="demo-sim-label">Webhook:</span>
+            <button class="demo-sim-btn demo-sim-wh" onclick="simWebhook('no_answer')">📵 No Answer</button>
+            <button class="demo-sim-btn demo-sim-wh" onclick="simWebhook('switched_off')">🔇 Switched Off</button>
+            <button class="demo-sim-btn demo-sim-wh" onclick="simWebhook('wrong_number')">❌ Wrong No.</button>
+            <button class="demo-sim-btn demo-sim-wh demo-sim-timeout" onclick="simWebhook('timeout')">⏱ Timeout</button>
+          </div>
         </div>
         <div id="demo-bar-row2">
           <span id="demo-state-label">State: assigned</span>
@@ -1488,7 +121,7 @@
       <!-- 2. Medicines to Validate -->
       <div id="medicines-section">
         <div id="medicines-header">
-          <span class="section-label" style="margin-bottom:0">Medicines to Validate</span>
+          <span class="section-label" style="margin-bottom:0">Medicines to Prescribe</span>
           <span id="medicines-count">0 medicines</span>
         </div>
         <div id="medicines-empty">No medicines on this order.</div>
@@ -1514,43 +147,47 @@
       <!-- 4. Action Zone — merged call + post-call -->
       <div id="action-zone">
 
+        <!-- Briefing strip — all scenarios, persists above both phases -->
+        <div id="pre-call-brief">
+          <div class="pcb-label" id="pcb-label">—</div>
+          <div class="pcb-script-prefix">End of call script:</div>
+          <div class="pcb-text" id="pcb-text">—</div>
+        </div>
+
         <!-- Phase 1: Call control (hidden when gate passes) -->
         <div id="az-phase1">
 
-          <!-- Pre-call briefing strip — Pilot + HA required only -->
-          <div id="pre-call-brief">
-            <div class="pcb-label" id="pcb-label">—</div>
-            <div class="pcb-text" id="pcb-text">—</div>
-          </div>
-
-          <button id="call-initiate-btn" onclick="handleCallAction()">
-            <span id="call-btn-icon">📞</span>
+          <button id="call-initiate-btn" class="btn btn-lg btn-primary" onclick="handleCallAction()">
+            <span id="call-btn-icon" data-icon="phone"></span>
             <span id="call-btn-label">Call Patient</span>
           </button>
-          <div id="az-secondary-btns" style="display:none">
-            <button class="call-sec-btn warning" onclick="openSheet('sheet-hold')">⏸ Hold</button>
-            <button class="call-sec-btn danger"  onclick="openSheet('sheet-nopickup')">📵 No Pickup</button>
-          </div>
+
+          <!-- Pre-gate schedule callback — btn-text during call, btn-ghost after early end (JS swaps) -->
+          <button id="pre-gate-callback-btn" class="btn btn-sm btn-text hidden" onclick="openSheet('sheet-callback')">
+            <span data-icon="calendar"></span>Schedule Callback
+          </button>
+
           <div id="az-status-label" class="hidden"></div>
         </div>
 
         <!-- Phase 2: Post-call (hidden until valid-call gate passes [LOCKED]) -->
         <div id="az-phase2">
-          <!-- HA banner — sibling of postcall-cta-card, NOT inside it [LOCKED] -->
-          <div id="ha-attention-banner" class="hidden">
-            <div class="ha-icon">⚠️</div>
-            <div>
-              <div id="ha-banner-title">Health Advisor call required</div>
-              <div id="ha-banner-desc">This Pilot order requires an HA call before the order can be confirmed. You may skip the HA call if clinically appropriate.</div>
-            </div>
-          </div>
           <div id="postcall-cta-card">
             <div id="postcall-cta-label">Post-Call Action</div>
-            <button id="skip-ha-btn" onclick="openSheet('sheet-skip-ha')">⏭ Skip HA Call</button>
-            <button id="main-cta-btn" onclick="handleMainCTA()">
-              <span id="main-cta-icon">✅</span>
+            <button id="main-cta-btn" class="btn btn-lg btn-primary" onclick="handleMainCTA()">
+              <span id="main-cta-icon"></span>
               <span id="main-cta-label">Confirm Order</span>
             </button>
+            <!-- Secondary actions — compact chip row below primary -->
+            <div id="postcall-secondary-row">
+              <button id="schedule-callback-btn" class="btn btn-sm btn-ghost" onclick="openSheet('sheet-callback')">
+                <span data-icon="calendar"></span>
+                <span id="schedule-callback-label">Schedule Callback</span>
+              </button>
+              <button id="skip-ha-btn" class="btn btn-sm btn-ghost" onclick="openSheet('sheet-skip-ha')">
+                Skip HA Call <span class="chip-chevron">›</span>
+              </button>
+            </div>
           </div>
         </div>
 
@@ -1596,9 +233,9 @@
       <div class="side-panel-body">
         <div id="side-cta-section">
           <div id="side-ha-banner">⚠️ HA call required before confirming</div>
-          <button id="side-skip-ha-btn" onclick="openSheet('sheet-skip-ha')">⏭ Skip HA Call</button>
-          <button id="side-main-cta" onclick="handleMainCTA()">
-            <span id="side-cta-icon">✅</span>
+          <button id="side-skip-ha-btn" class="btn btn-sm btn-ghost" onclick="openSheet('sheet-skip-ha')">Skip HA Call</button>
+          <button id="side-main-cta" class="btn btn-md btn-primary" onclick="handleMainCTA()">
+            <span id="side-cta-icon"></span>
             <span id="side-cta-label">Confirm Order</span>
           </button>
         </div>
@@ -1617,6 +254,22 @@
         <button class="side-scenario-btn" data-scenario="pilot_nonvalue_meds_ha">Pilot + Non-Value Meds + HA</button>
         <button class="side-scenario-btn" data-scenario="pilot_ha_skipped_customer">Pilot · HA Skipped (Customer)</button>
         <button class="side-scenario-btn" data-scenario="pilot_ha_skipped_system">Pilot · HA Skipped (System)</button>
+        <!-- Desktop webhook simulator — visible when state=calling -->
+        <div id="side-demo-call-sim" style="display:none; flex-direction:column; gap:8px; margin-top:8px; padding-top:10px; border-top:1px solid #e5e7eb;">
+          <div id="side-sim-calling" style="display:flex; gap:6px; flex-wrap:wrap;">
+            <button class="side-sim-btn side-sim-connected" onclick="simCallConnected()">✓ Connected</button>
+            <button class="side-sim-btn side-sim-failed" onclick="simShowWebhookOptions()">✗ No Connect</button>
+          </div>
+          <div id="side-sim-webhook" style="display:none; flex-direction:column; gap:6px;">
+            <div style="font-size:11px; font-weight:600; color:#6b7280; text-transform:uppercase; letter-spacing:0.4px;">Webhook reason:</div>
+            <div style="display:flex; gap:6px; flex-wrap:wrap;">
+              <button class="side-sim-btn side-sim-wh" onclick="simWebhook('no_answer')">📵 No Answer</button>
+              <button class="side-sim-btn side-sim-wh" onclick="simWebhook('switched_off')">🔇 Switched Off</button>
+              <button class="side-sim-btn side-sim-wh" onclick="simWebhook('wrong_number')">❌ Wrong No.</button>
+              <button class="side-sim-btn side-sim-timeout" onclick="simWebhook('timeout')">⏱ Timeout</button>
+            </div>
+          </div>
+        </div>
         <button id="side-ff-btn">⏩ Fast-forward to 50s</button>
       </div>
     </div>
@@ -1710,48 +363,34 @@
 <div id="sheet-overlay" onclick="handleSheetOverlayClick(event)">
 
   <!-- Hold Sheet -->
-  <div id="sheet-hold" class="bottom-sheet">
+  <div id="sheet-callback" class="bottom-sheet">
     <div class="sheet-handle"></div>
-    <div class="sheet-title">Put Case on Hold</div>
+    <div class="sheet-title">Schedule Callback</div>
     <div class="sheet-body">
-      <button class="sheet-option-btn" onclick="confirmHold('Patient requested callback')">
-        <div class="sheet-option-title">Patient requested callback</div>
-        <div class="sheet-option-desc">Patient is busy and asked to be called later</div>
-      </button>
-      <button class="sheet-option-btn" onclick="confirmHold('Awaiting prescription')">
-        <div class="sheet-option-title">Awaiting prescription</div>
-        <div class="sheet-option-desc">Prescription not yet uploaded or unclear</div>
-      </button>
-      <button class="sheet-option-btn" onclick="confirmHold('Doctor unavailable momentarily')">
-        <div class="sheet-option-title">Doctor unavailable momentarily</div>
-        <div class="sheet-option-desc">Doctor needs to step away briefly</div>
-      </button>
-      <button class="sheet-option-btn" onclick="openCustomHoldInput()">
-        <div class="sheet-option-title">Other reason…</div>
-        <div class="sheet-option-desc">Enter a custom hold reason</div>
-      </button>
+      <div class="sheet-section-label">DATE</div>
+      <div class="chip-row chip-row-wrap" id="callback-day-chips">
+        <button class="chip" data-day="today" onclick="selectCallbackDay('today')">Today</button>
+        <button class="chip" data-day="tomorrow" onclick="selectCallbackDay('tomorrow')">Tomorrow</button>
+      </div>
+      <div class="sheet-section-label" style="margin-top:16px">TIME</div>
+      <div class="chip-row chip-row-wrap" id="callback-time-chips">
+        <button class="chip" data-time="09:00" onclick="selectCallbackTime('09:00')">9:00 AM</button>
+        <button class="chip" data-time="09:30" onclick="selectCallbackTime('09:30')">9:30 AM</button>
+        <button class="chip" data-time="10:00" onclick="selectCallbackTime('10:00')">10:00 AM</button>
+        <button class="chip" data-time="10:30" onclick="selectCallbackTime('10:30')">10:30 AM</button>
+        <button class="chip" data-time="11:00" onclick="selectCallbackTime('11:00')">11:00 AM</button>
+        <button class="chip" data-time="11:30" onclick="selectCallbackTime('11:30')">11:30 AM</button>
+        <button class="chip" data-time="12:00" onclick="selectCallbackTime('12:00')">12:00 PM</button>
+        <button class="chip" data-time="14:00" onclick="selectCallbackTime('14:00')">2:00 PM</button>
+        <button class="chip" data-time="15:00" onclick="selectCallbackTime('15:00')">3:00 PM</button>
+        <button class="chip" data-time="16:00" onclick="selectCallbackTime('16:00')">4:00 PM</button>
+        <button class="chip" data-time="17:00" onclick="selectCallbackTime('17:00')">5:00 PM</button>
+        <button class="chip" data-time="18:00" onclick="selectCallbackTime('18:00')">6:00 PM</button>
+      </div>
+      <button class="btn btn-md btn-success sheet-cta-margin" onclick="confirmScheduleCallback()">Confirm Callback</button>
     </div>
   </div>
 
-  <!-- No Pickup Sheet -->
-  <div id="sheet-nopickup" class="bottom-sheet">
-    <div class="sheet-handle"></div>
-    <div class="sheet-title">Mark No Pickup</div>
-    <div class="sheet-body">
-      <button class="sheet-option-btn" onclick="confirmNoPickup('No answer')">
-        <div class="sheet-option-title">No answer</div>
-        <div class="sheet-option-desc">Phone rang but patient did not answer</div>
-      </button>
-      <button class="sheet-option-btn" onclick="confirmNoPickup('Phone switched off')">
-        <div class="sheet-option-title">Phone switched off</div>
-        <div class="sheet-option-desc">Call went to voicemail or was unreachable</div>
-      </button>
-      <button class="sheet-option-btn" onclick="confirmNoPickup('Wrong number / invalid')">
-        <div class="sheet-option-title">Wrong number / invalid</div>
-        <div class="sheet-option-desc">Number appears incorrect or disconnected</div>
-      </button>
-    </div>
-  </div>
 
   <!-- Skip HA Sheet -->
   <div id="sheet-skip-ha" class="bottom-sheet">
@@ -1774,65 +413,105 @@
     </div>
   </div>
 
-  <!-- Edit Medicine Sheet — [OPEN DECISION] OQ-004 -->
+  <!-- Edit Medicine Sheet -->
   <div id="sheet-edit-med" class="bottom-sheet">
     <div class="sheet-handle"></div>
-    <div class="sheet-title">Edit Medicine</div>
+    <div class="sheet-title">Prescribe Medicine</div>
     <div class="sheet-body">
-      <div id="sheet-med-name">—</div>
+      <div id="sheet-med-name" class="sheet-med-name-header">—</div>
 
-      <!-- Strength -->
-      <div class="sheet-input-row">
-        <label class="sheet-input-label" for="sheet-strength-input">Strength</label>
-        <input id="sheet-strength-input" class="sheet-input" type="text" placeholder="e.g. 500mg" />
-      </div>
-
-      <!-- Qty stepper -->
-      <div class="sheet-input-row">
-        <label class="sheet-input-label">Qty (ordered by customer)</label>
-        <div class="qty-stepper">
-          <button class="qty-btn" onclick="adjustQty(-1)">−</button>
-          <span id="sheet-qty-display">30</span>
-          <button class="qty-btn" onclick="adjustQty(1)">+</button>
-        </div>
+      <!-- INTERVAL -->
+      <div class="sheet-section-label">INTERVAL</div>
+      <div class="chip-row chip-row-wrap" id="interval-chips">
+        <button class="chip" data-interval="daily"    onclick="selectInterval('daily')">Daily</button>
+        <button class="chip" data-interval="alt_days" onclick="selectInterval('alt_days')">Alt days</button>
+        <button class="chip" data-interval="weekly"   onclick="selectInterval('weekly')">Weekly</button>
+        <button class="chip" data-interval="monthly"  onclick="selectInterval('monthly')">Monthly</button>
+        <button class="chip" data-interval="sos"      onclick="selectInterval('sos')">SOS</button>
       </div>
 
       <!-- M-A-N picker -->
-      <div class="sheet-input-row">
-        <label class="sheet-input-label">Dose Timing (M / A / N)</label>
+      <div id="man-picker-group">
+        <div class="sheet-section-label">MORNING · AFTERNOON · NIGHT</div>
         <div class="man-picker">
           <div class="man-row">
             <span class="man-label">M</span>
             <div class="man-btns" data-man="m">
-              <button class="man-btn" data-val="0" onclick="selectMAN('m',0)">0</button>
+              <button class="man-btn" data-val="0"   onclick="selectMAN('m',0)">0</button>
               <button class="man-btn" data-val="0.5" onclick="selectMAN('m',0.5)">½</button>
-              <button class="man-btn" data-val="1" onclick="selectMAN('m',1)">1</button>
-              <button class="man-btn" data-val="2" onclick="selectMAN('m',2)">2</button>
+              <button class="man-btn" data-val="1"   onclick="selectMAN('m',1)">1</button>
+              <button class="man-btn" data-val="2"   onclick="selectMAN('m',2)">2</button>
             </div>
           </div>
           <div class="man-row">
             <span class="man-label">A</span>
             <div class="man-btns" data-man="a">
-              <button class="man-btn" data-val="0" onclick="selectMAN('a',0)">0</button>
+              <button class="man-btn" data-val="0"   onclick="selectMAN('a',0)">0</button>
               <button class="man-btn" data-val="0.5" onclick="selectMAN('a',0.5)">½</button>
-              <button class="man-btn" data-val="1" onclick="selectMAN('a',1)">1</button>
-              <button class="man-btn" data-val="2" onclick="selectMAN('a',2)">2</button>
+              <button class="man-btn" data-val="1"   onclick="selectMAN('a',1)">1</button>
+              <button class="man-btn" data-val="2"   onclick="selectMAN('a',2)">2</button>
             </div>
           </div>
           <div class="man-row">
             <span class="man-label">N</span>
             <div class="man-btns" data-man="n">
-              <button class="man-btn" data-val="0" onclick="selectMAN('n',0)">0</button>
+              <button class="man-btn" data-val="0"   onclick="selectMAN('n',0)">0</button>
               <button class="man-btn" data-val="0.5" onclick="selectMAN('n',0.5)">½</button>
-              <button class="man-btn" data-val="1" onclick="selectMAN('n',1)">1</button>
-              <button class="man-btn" data-val="2" onclick="selectMAN('n',2)">2</button>
+              <button class="man-btn" data-val="1"   onclick="selectMAN('n',1)">1</button>
+              <button class="man-btn" data-val="2"   onclick="selectMAN('n',2)">2</button>
             </div>
           </div>
         </div>
       </div>
 
-      <button class="sheet-confirm-btn" onclick="confirmMedEdit()" style="margin-top:4px">Save Changes</button>
-      <button id="sheet-disable-med-btn" onclick="toggleMedDisable()">Disable Medicine</button>
+      <!-- DURATION -->
+      <div class="sheet-section-label">DURATION</div>
+      <div class="chip-row chip-row-wrap" id="duration-chips">
+        <button class="chip" data-dur="3d"      onclick="selectDuration('3d')">3 days</button>
+        <button class="chip" data-dur="7d"      onclick="selectDuration('7d')">7 days</button>
+        <button class="chip" data-dur="2w"      onclick="selectDuration('2w')">2 weeks</button>
+        <button class="chip" data-dur="1m"      onclick="selectDuration('1m')">1 month</button>
+        <button class="chip" data-dur="3m"      onclick="selectDuration('3m')">3 months</button>
+        <button class="chip" data-dur="ongoing" onclick="selectDuration('ongoing')">Ongoing</button>
+      </div>
+
+      <!-- QTY -->
+      <div class="sheet-section-label">QUANTITY</div>
+      <div class="qty-stepper">
+        <button class="qty-btn" onclick="adjustQty(-10)">−</button>
+        <span id="sheet-qty-display">30</span>
+        <button class="qty-btn" onclick="adjustQty(10)">+</button>
+      </div>
+
+      <!-- ADVICE -->
+      <div class="sheet-section-label">ADVICE TO PATIENT</div>
+      <div class="chip-row chip-row-wrap" id="advice-chips">
+        <button class="chip" data-advice="after_food"     onclick="toggleAdvice('after_food')">After food</button>
+        <button class="chip" data-advice="before_food"    onclick="toggleAdvice('before_food')">Before food</button>
+        <button class="chip" data-advice="empty_stomach"  onclick="toggleAdvice('empty_stomach')">Empty stomach</button>
+        <button class="chip" data-advice="with_water"     onclick="toggleAdvice('with_water')">With water</button>
+        <button class="chip" data-advice="before_sleep"   onclick="toggleAdvice('before_sleep')">Before sleep</button>
+        <button class="chip" data-advice="with_milk"      onclick="toggleAdvice('with_milk')">With milk</button>
+      </div>
+
+      <button class="btn btn-md btn-success sheet-cta-margin" onclick="confirmMedEdit()">Prescribe</button>
+      <button class="btn btn-sm btn-text-danger sheet-link-margin" onclick="openDisableSheet()">Disable this medicine</button>
+    </div>
+  </div>
+
+  <!-- Disable Medicine Reason Sheet -->
+  <div id="sheet-disable-reason" class="bottom-sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-title">Disable Medicine</div>
+    <div class="sheet-body">
+      <div class="sheet-subtitle" id="sheet-disable-med-label">Select reason</div>
+      <div class="reason-list">
+        <button class="reason-btn" onclick="confirmDisable('Cannot prescribe remotely')">Cannot prescribe remotely<span class="reason-hint">Requires in-person consultation</span></button>
+        <button class="reason-btn" onclick="confirmDisable('Contraindicated for patient')">Contraindicated for patient<span class="reason-hint">Allergy or known reaction</span></button>
+        <button class="reason-btn" onclick="confirmDisable('Duplicate medication')">Duplicate medication<span class="reason-hint">Already on equivalent drug</span></button>
+        <button class="reason-btn" onclick="confirmDisable('Patient declined')">Patient declined<span class="reason-hint">Patient refused this medicine</span></button>
+        <button class="reason-btn" onclick="confirmDisable('Wrong strength — will re-prescribe')">Wrong strength<span class="reason-hint">Will disable and add correct one</span></button>
+      </div>
     </div>
   </div>
 
@@ -1849,7 +528,7 @@
         <label class="sheet-input-label" for="sheet-add-med-strength">Strength</label>
         <input id="sheet-add-med-strength" class="sheet-input" type="text" placeholder="e.g. 500mg" />
       </div>
-      <button class="sheet-confirm-btn" onclick="confirmAddMedicine()" style="margin-top:4px">Add Medicine</button>
+      <button class="btn btn-md btn-primary" onclick="confirmAddMedicine()" style="margin-top:4px">Add Medicine</button>
       <p style="font-size:11px;color:var(--text-muted);margin-top:10px;text-align:center;">[MOCK ASSUMPTION] Not persisted to backend</p>
     </div>
   </div>
@@ -1894,919 +573,48 @@
     </div>
   </div>
 
+  <!-- Retry Sheet — no_answer / timeout paths -->
+  <div id="sheet-retry" class="bottom-sheet">
+    <div class="sheet-handle"></div>
+    <div id="sheet-retry-title" class="sheet-title">Patient didn't pick up</div>
+    <div class="sheet-body">
+      <button class="btn btn-md btn-success sheet-cta-margin" onclick="retryCall()">Retry Call</button>
+      <button class="btn btn-sm btn-text-danger" style="margin-top:10px" onclick="markCustomerUnavailable()">Mark as Unavailable</button>
+    </div>
+  </div>
+
+  <!-- Customer Unavailable Sheet -->
+  <div id="sheet-unavailable" class="bottom-sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-body" style="text-align:center; padding-top:8px">
+      <div style="font-size:40px; margin-bottom:12px">📵</div>
+      <div style="font-size:18px; font-weight:700; color:var(--text-primary); margin-bottom:8px">Customer Unavailable</div>
+      <div id="unavail-desc" style="font-size:14px; color:var(--text-secondary); line-height:1.6; margin-bottom:24px">Patient could not be reached. Case will be reassigned to the queue.</div>
+      <button class="btn btn-md btn-success sheet-cta-margin" onclick="resetToDemo()">Next Order →</button>
+    </div>
+  </div>
+
 </div><!-- /sheet-overlay -->
 
 <!-- TOAST -->
 <div id="toast"></div>
 
 <!-- COMPLETED OVERLAY -->
-<div id="completed-overlay">
-  <div id="completed-icon">✅</div>
-  <div id="completed-title">Order Confirmed</div>
-  <div id="completed-desc">This consultation has been completed and the order action has been submitted.</div>
-  <button id="completed-reset-btn" onclick="resetToDemo()">← Back to Demo</button>
+<!-- Success toast — non-blocking completion confirmation with Next Order fallback -->
+<div id="success-toast">
+  <div id="success-toast-icon">✓</div>
+  <div id="success-toast-body">
+    <div id="success-toast-title">Order Confirmed</div>
+    <div id="success-toast-desc">—</div>
+  </div>
+  <button id="success-toast-next" class="btn btn-sm btn-primary" onclick="resetToDemo()">Next Order →</button>
+</div>
 </div>
 
 
 <!-- ============================================================
      JAVASCRIPT
 ============================================================ -->
-<script>
-
-// ================================================================
-// DOCTOR PROFILE — [MOCK ASSUMPTION] Logged-in doctor details
-// ================================================================
-const DOCTOR_PROFILE = {
-  name:            'Dr. Apurva Shetty',
-  role:            'General Physician',
-  initials:        'AS',
-  earnings_today:  0.00,
-  incentive_today: 0.00,
-};
-
-// ================================================================
-// MOCK SCENARIO DATA — new medicine format per session_handoff Section 2.4
-// [MOCK ASSUMPTION] All patient data and order IDs are fictional.
-// prescription_attached is MOCK_ONLY — set true for all scenarios.
-// ================================================================
-
-const SCENARIOS = {
-
-  cat4: {
-    case_type: 'cat4', ha_status: 'not_applicable', meds_type: 'not_applicable',
-    doctor_name: 'Dr. Priya Sharma',
-    patient_name: 'Ramesh Gupta', patient_age: 54, patient_gender: 'Male',
-    patient_phone: '+91 98765 XXXXX',
-    order_id: 'TM-ORD-20240812', case_id: 'C-CAT4-00431', order_value: 1240,
-    order_created: '12 Aug 2024', order_delivery: '16 Aug 2024', payment_mode: 'Online',
-    assignment_status: 'assigned',
-    prescription_attached: true,
-    medicines: [
-      { id:1, name:'Metformin',   strength:'500mg', m:1, a:0, n:1, qty:60, price:28,  validation_status:'validated', disabled:false },
-      { id:2, name:'Amlodipine',  strength:'5mg',   m:1, a:0, n:0, qty:30, price:52,  validation_status:'pending',   disabled:false },
-      { id:3, name:'Atorvastatin',strength:'10mg',  m:0, a:0, n:1, qty:30, price:45,  validation_status:'pending',   disabled:false },
-    ]
-  },
-
-  pilot_value_meds_ha: {
-    case_type: 'pilot', ha_status: 'required', meds_type: 'value',
-    doctor_name: 'Dr. Priya Sharma',
-    patient_name: 'Sunita Patel', patient_age: 38, patient_gender: 'Female',
-    patient_phone: '+91 77654 XXXXX',
-    order_id: 'TM-ORD-20240891', case_id: 'C-PLT-00874', order_value: 890,
-    order_created: '21 Aug 2024', order_delivery: '25 Aug 2024', payment_mode: 'Online',
-    assignment_status: 'assigned',
-    prescription_attached: true,
-    medicines: [
-      { id:1, name:'Levothyroxine',   strength:'50mcg', m:1, a:0, n:0, qty:30, price:38,  validation_status:'pending',   disabled:false },
-      { id:2, name:'Calcium + Vit D3',strength:'500mg', m:1, a:0, n:1, qty:60, price:65,  validation_status:'validated', disabled:false },
-    ]
-  },
-
-  pilot_nonvalue_meds_ha: {
-    case_type: 'pilot', ha_status: 'required', meds_type: 'non_value',
-    doctor_name: 'Dr. Priya Sharma',
-    patient_name: 'Vikram Nair', patient_age: 62, patient_gender: 'Male',
-    patient_phone: '+91 90321 XXXXX',
-    order_id: 'TM-ORD-20240953', case_id: 'C-PLT-00912', order_value: 560,
-    order_created: '03 Sep 2024', order_delivery: '07 Sep 2024', payment_mode: 'COD',
-    assignment_status: 'assigned',
-    prescription_attached: true,
-    medicines: [
-      { id:1, name:'Losartan',            strength:'50mg',   m:1, a:0, n:0, qty:30, price:42,  validation_status:'flagged',   disabled:false },
-      { id:2, name:'Hydrochlorothiazide', strength:'12.5mg', m:1, a:0, n:0, qty:30, price:18,  validation_status:'pending',   disabled:false },
-      { id:3, name:'Aspirin',             strength:'75mg',   m:0, a:0, n:1, qty:30, price:12,  validation_status:'validated', disabled:false },
-    ]
-  },
-
-  pilot_ha_skipped_customer: {
-    case_type: 'pilot', ha_status: 'skipped_customer', meds_type: 'value',
-    doctor_name: 'Dr. Priya Sharma',
-    patient_name: 'Ananya Krishnan', patient_age: 29, patient_gender: 'Female',
-    patient_phone: '+91 81234 XXXXX',
-    order_id: 'TM-ORD-20241034', case_id: 'C-PLT-01021', order_value: 430,
-    order_created: '14 Sep 2024', order_delivery: '18 Sep 2024', payment_mode: 'Online',
-    assignment_status: 'assigned',
-    prescription_attached: true,
-    medicines: [
-      { id:1, name:'Ferrous Sulphate', strength:'200mg', m:0, a:0, n:1, qty:30, price:35,  validation_status:'validated', disabled:false },
-      { id:2, name:'Folic Acid',       strength:'5mg',   m:1, a:0, n:0, qty:30, price:22,  validation_status:'validated', disabled:false },
-    ]
-  },
-
-  pilot_ha_skipped_system: {
-    case_type: 'pilot', ha_status: 'skipped_system', meds_type: 'value',
-    doctor_name: 'Dr. Priya Sharma',
-    patient_name: 'Mohan Reddy', patient_age: 47, patient_gender: 'Male',
-    patient_phone: '+91 98001 XXXXX',
-    order_id: 'TM-ORD-20241112', case_id: 'C-PLT-01088', order_value: 310,
-    order_created: '22 Sep 2024', order_delivery: '26 Sep 2024', payment_mode: 'Online',
-    assignment_status: 'assigned',
-    prescription_attached: true,
-    medicines: [
-      { id:1, name:'Pantoprazole', strength:'40mg', m:1, a:0, n:0, qty:30, price:44,  validation_status:'validated', disabled:false },
-    ]
-  }
-};
-
-// ================================================================
-// DOCTOR STATE
-// ================================================================
-const DOCTOR_STATE = {
-  activeScenario:    'cat4',
-  consultationState: 'assigned',
-  callTimer:         0,
-  gatePassedAt:      null,
-  currentCase:       null,
-  timerInterval:     null,
-  haSkippedInSession:false,
-  holdReason:        null,
-  noPickupReason:    null,
-  editingMedId:      null,
-};
-
-// ================================================================
-// EDIT STATE — for medicine edit sheet
-// ================================================================
-const EDIT_STATE = { medId: null, strength: '', m: 1, a: 0, n: 1, qty: 30 };
-
-// ================================================================
-// CTA ROUTING — [LOCKED] project_truth.md Section 5
-// ================================================================
-function resolveCTA(scenario) {
-  const { case_type, ha_status, meds_type } = scenario;
-  if (case_type === 'cat4') return { label:'Confirm Order',       icon:'✅', type:'confirm_order'    };
-  if (ha_status === 'skipped_customer' || ha_status === 'skipped_system')
-                           return { label:'Confirm Order',       icon:'✅', type:'confirm_order'    };
-  if (ha_status === 'required') {
-    if (meds_type === 'value')     return { label:'Confirm & Transfer', icon:'↗️', type:'confirm_transfer' };
-    if (meds_type === 'non_value') return { label:'Confirm & Forward',  icon:'⏩', type:'confirm_forward'  };
-  }
-  return { label:'Confirm Order', icon:'✅', type:'confirm_order' };
-}
-
-function haSkipApplicable(scenario) {
-  return scenario.case_type === 'pilot' && scenario.ha_status === 'required';
-}
-
-// ================================================================
-// FORMAT HELPERS
-// ================================================================
-function formatMAN(m, a, n) {
-  const f = v => v === 0.5 ? '½' : String(v);
-  return `${f(m)}-${f(a)}-${f(n)}`;
-}
-
-function formatTimer(s) {
-  return `${Math.floor(s/60)}:${String(s%60).padStart(2,'0')}`;
-}
-
-function formatDate(d) {
-  return d.toLocaleDateString('en-IN', { day:'2-digit', month:'short', year:'numeric' });
-}
-
-// ================================================================
-// RENDER — drives all UI from DOCTOR_STATE
-// ================================================================
-function render() {
-  const c = DOCTOR_STATE.currentCase;
-  if (!c) return;
-
-  // --- Patient detail block ---
-  document.getElementById('patient-full-name').textContent = c.patient_name;
-  document.getElementById('patient-details-row').textContent = `${c.patient_age} years · ${c.patient_gender}`;
-  document.getElementById('pdb-view-rx-btn').classList.toggle('hidden', !c.prescription_attached);
-
-  document.getElementById('display-order-id').textContent    = c.order_id;
-  document.getElementById('display-order-value').textContent = `₹${c.order_value.toLocaleString('en-IN')}`;
-
-  // Order expand fields
-  document.getElementById('display-order-created').textContent  = c.order_created  || '—';
-  document.getElementById('display-order-delivery').textContent = c.order_delivery || '—';
-  document.getElementById('display-payment-mode').textContent   = c.payment_mode   || '—';
-
-  // --- Compact strip content ---
-  updateCompactStrip();
-
-  // --- Populate Rx doc with patient data ---
-  document.getElementById('rx-patient-name-display').textContent = c.patient_name;
-  document.getElementById('rx-age-display').textContent = `${c.patient_age} / ${c.patient_gender}`;
-  document.getElementById('rx-date-display').textContent = formatDate(new Date());
-  renderRxMedicines(c.medicines);
-
-  // --- Medicines list ---
-  renderMedicines(c.medicines);
-
-  renderCallPhase();
-  renderPostCall();
-  renderSidePanel();
-
-  document.getElementById('demo-state-label').textContent =
-    `State: ${DOCTOR_STATE.consultationState} | ${formatTimer(DOCTOR_STATE.callTimer)}`;
-}
-
-function updateCompactStrip() {
-  const c = DOCTOR_STATE.currentCase;
-  if (!c) return;
-  document.getElementById('cs-patient-name').textContent = c.patient_name;
-  document.getElementById('cs-patient-meta').textContent =
-    `${c.patient_age}y · ${c.patient_gender} · ${c.order_id}`;
-  document.getElementById('cs-order-value').textContent = `₹${c.order_value.toLocaleString('en-IN')}`;
-  document.getElementById('cs-view-rx-btn').classList.toggle('hidden', !c.prescription_attached);
-
-  const state = DOCTOR_STATE.consultationState;
-  const showTimer = state === 'connected' || state === 'gate_passed';
-  const timerBadge = document.getElementById('cs-timer-badge');
-  timerBadge.classList.toggle('hidden', !showTimer);
-  if (showTimer) timerBadge.textContent = `📞 ${formatTimer(DOCTOR_STATE.callTimer)}`;
-}
-
-function renderRxMedicines(meds) {
-  const list = document.getElementById('rx-medicines-list');
-  list.innerHTML = '';
-  if (!meds || meds.length === 0) {
-    list.innerHTML = '<p style="font-size:12px;color:#6b7280;padding:8px 0">No medicines listed</p>';
-    return;
-  }
-  meds.forEach((med, i) => {
-    const div = document.createElement('div');
-    div.className = 'rx-med-item';
-    div.innerHTML = `
-      <div class="rx-med-number">Medicine ${i + 1}</div>
-      <div class="rx-med-name">${med.name} ${med.strength}</div>
-      <div class="rx-med-details">${formatMAN(med.m, med.a, med.n)} · Qty ${med.qty}</div>
-      <div class="rx-med-note">As directed. Complete full course.</div>
-    `;
-    list.appendChild(div);
-  });
-}
-
-function renderMedicines(meds) {
-  const list  = document.getElementById('medicines-list');
-  const empty = document.getElementById('medicines-empty');
-  const count = document.getElementById('medicines-count');
-  list.innerHTML = '';
-  if (!meds || meds.length === 0) {
-    empty.style.display = 'block';
-    count.textContent = '0 medicines';
-    return;
-  }
-  empty.style.display = 'none';
-  count.textContent = `${meds.length} medicine${meds.length !== 1 ? 's' : ''}`;
-  meds.forEach(med => {
-    const isDisabled = !!med.disabled;
-    const sc = isDisabled
-      ? 'med-status-disabled'
-      : ({ pending:'med-status-pending', validated:'med-status-validated', flagged:'med-status-flagged' }[med.validation_status] || 'med-status-pending');
-    const sl = isDisabled
-      ? 'DISABLED'
-      : ({ pending:'Pending', validated:'Validated', flagged:'Flagged' }[med.validation_status] || 'Pending');
-    const el = document.createElement('div');
-    el.className = `medicine-item${isDisabled ? ' disabled' : ''}`;
-    const priceHtml = med.price != null ? `<span class="med-price">₹${med.price}</span>` : '';
-    el.innerHTML = `
-      <div class="med-icon">💊</div>
-      <div class="med-info">
-        <div class="med-name">${med.name} ${med.strength}</div>
-        <div class="med-detail">
-          <span>${formatMAN(med.m, med.a, med.n)} · Qty ${med.qty}</span>
-          ${priceHtml}
-        </div>
-      </div>
-      <span class="med-status-badge ${sc}">${sl}</span>
-      <button class="med-edit-btn" onclick="openMedEdit(${med.id})" aria-label="Edit ${med.name}">✏️</button>
-    `;
-    list.appendChild(el);
-  });
-}
-
-function renderCallPhase() {
-  const state       = DOCTOR_STATE.consultationState;
-  const callBtn     = document.getElementById('call-initiate-btn');
-  const callBtnIcon = document.getElementById('call-btn-icon');
-  const callBtnLbl  = document.getElementById('call-btn-label');
-  const secBtns     = document.getElementById('az-secondary-btns');
-  const statusLbl   = document.getElementById('az-status-label');
-  const phase1      = document.getElementById('az-phase1');
-
-  // Pre-call briefing strip — Pilot + HA required only
-  const brief = document.getElementById('pre-call-brief');
-  const pcbText = document.getElementById('pcb-text');
-  const c = DOCTOR_STATE.currentCase;
-  const showBrief = c && c.case_type === 'pilot' && c.ha_status === 'required';
-  brief.classList.toggle('visible', !!showBrief);
-  if (showBrief) {
-    const isValue = c.meds_type === 'value';
-    document.getElementById('pcb-label').textContent = isValue
-      ? '↗️ Live HA Transfer'
-      : '📋 HA Follow-up Call';
-    pcbText.textContent = isValue
-      ? '"Please stay on the line — I\'ll connect you to our Health Advisor"'
-      : '"Our Health Advisor will call you shortly after this consultation"';
-  }
-
-  // Reset
-  callBtn.style.display = 'flex';
-  callBtn.disabled = false;
-  callBtn.classList.remove('pulsing');
-  callBtn.style.background = 'var(--primary)';
-  callBtn.style.boxShadow  = '0 3px 10px rgba(27,105,222,0.25)';
-  secBtns.style.display = 'none';
-  statusLbl.classList.add('hidden');
-  statusLbl.textContent = '';
-
-  // Gate passed — hide phase 1 entirely
-  if (state === 'gate_passed' || state === 'completed') {
-    phase1.style.display = 'none';
-    return;
-  }
-  phase1.style.display = 'flex';
-
-  const stateConfig = {
-    assigned:  { btnIcon:'📞', btnLabel:'Call Patient', disabled:false },
-    calling:   { btnIcon:'⏳', btnLabel:'Connecting…',  disabled:true  },
-    connected: { btnIcon:'🔴', btnLabel:'End Call',      disabled:false, btnBg:'var(--danger)', btnShadow:'none', showSec:true },
-    nopickup:  { btnIcon:'🔄', btnLabel:'Retry Call',    disabled:false, statusText: null },
-    hold:      { btnIcon:'📞', btnLabel:'Call Patient',  disabled:false, statusText: null },
-    failed:    { btnIcon:'🔄', btnLabel:'Retry Call',    disabled:false, statusText:'Could not connect — tap to retry' },
-  };
-
-  const cfg = stateConfig[state] || stateConfig.assigned;
-
-  // Resolve status text for nopickup and hold
-  if (state === 'nopickup') cfg.statusText = DOCTOR_STATE.noPickupReason || 'Patient did not answer';
-  if (state === 'hold')     cfg.statusText = DOCTOR_STATE.holdReason     || 'Case placed on hold';
-
-  callBtnIcon.textContent = cfg.btnIcon;
-  callBtnLbl.textContent  = cfg.btnLabel;
-
-  if (cfg.disabled) {
-    callBtn.disabled = true;
-    callBtn.style.background = '#92400e';
-    callBtn.style.boxShadow  = 'none';
-    callBtn.classList.add('pulsing');
-  }
-  if (cfg.btnBg) {
-    callBtn.style.background = cfg.btnBg;
-    callBtn.style.boxShadow  = cfg.btnShadow || 'none';
-  }
-  if (cfg.showSec) {
-    secBtns.style.display = 'flex';
-  }
-  if (cfg.statusText) {
-    statusLbl.textContent = cfg.statusText;
-    statusLbl.classList.remove('hidden');
-  }
-}
-
-function renderPostCall() {
-  const pc       = document.getElementById('az-phase2');
-  const haBanner = document.getElementById('ha-attention-banner');
-  const skipBtn  = document.getElementById('skip-ha-btn');
-  const ctaBtn   = document.getElementById('main-cta-btn');
-  const ctaIcon  = document.getElementById('main-cta-icon');
-  const ctaLbl   = document.getElementById('main-cta-label');
-
-  const gateOpen = DOCTOR_STATE.consultationState === 'gate_passed' || DOCTOR_STATE.consultationState === 'completed';
-
-  if (!gateOpen) {
-    pc.classList.remove('visible','revealed');
-    return;
-  }
-
-  pc.classList.add('visible');
-  requestAnimationFrame(() => requestAnimationFrame(() => pc.classList.add('revealed')));
-
-  const c = DOCTOR_STATE.currentCase;
-  const haSkipped = DOCTOR_STATE.haSkippedInSession || c.ha_status === 'skipped_customer' || c.ha_status === 'skipped_system';
-
-  // HA banner — hidden post-call. Pre-call briefing strip handles communication. [UPDATED — was LOCKED]
-  haBanner.classList.add('hidden');
-  // Skip HA — only Pilot + HA required + not yet skipped [LOCKED]
-  skipBtn.classList.toggle('visible', haSkipApplicable(c) && !DOCTOR_STATE.haSkippedInSession);
-
-  const effectiveScenario = DOCTOR_STATE.haSkippedInSession
-    ? Object.assign({}, c, { ha_status:'skipped_customer' }) : c;
-  const cta = resolveCTA(effectiveScenario);
-  ctaIcon.textContent = cta.icon;
-  ctaLbl.textContent  = cta.label;
-
-  console.log(`[MOCK] cta-routing | scenario=${DOCTOR_STATE.activeScenario} | ha_skip_session=${DOCTOR_STATE.haSkippedInSession} | resolved=${cta.type}`);
-}
-
-function renderSidePanel() {
-  const c = DOCTOR_STATE.currentCase;
-  if (!c) return;
-
-  document.getElementById('side-patient-name').textContent = c.patient_name;
-  document.getElementById('side-order-id').textContent = `${c.order_id} · ${c.case_id}`;
-
-  // Side badges
-  const sideRow = document.getElementById('side-badge-row');
-  sideRow.innerHTML = '';
-  const addSideBadge = (text, cls) => {
-    const b = document.createElement('span');
-    b.className = `badge ${cls}`;
-    b.textContent = text;
-    b.style.fontSize = '10px';
-    sideRow.appendChild(b);
-  };
-  addSideBadge(c.case_type === 'cat4' ? 'Cat4' : 'Pilot', c.case_type === 'cat4' ? 'badge-cat4' : 'badge-pilot');
-  if (c.case_type !== 'cat4') {
-    const hs = DOCTOR_STATE.haSkippedInSession ? 'skipped_session' : c.ha_status;
-    const haMap = {
-      required:         ['HA Required',         'badge-ha-req'],
-      skipped_customer: ['HA Skipped',           'badge-ha-skip'],
-      skipped_system:   ['HA Skipped (Sys)',      'badge-ha-skip'],
-      skipped_session:  ['HA Skipped',            'badge-ha-skip'],
-    };
-    if (haMap[hs]) addSideBadge(haMap[hs][0], haMap[hs][1]);
-  }
-
-  // Side state
-  const stateIcons  = { assigned:'📞', calling:'📡', connected:'🔴', gate_passed:'✅', nopickup:'📵', hold:'⏸', failed:'❌', completed:'✅' };
-  const stateLabels = { assigned:'Ready to call', calling:'Calling…', connected:'In call — live', gate_passed:'Call complete', nopickup:'No pickup', hold:'On hold', failed:'Call failed', completed:'Completed' };
-  document.getElementById('side-state-icon').textContent = stateIcons[DOCTOR_STATE.consultationState] || '📞';
-  document.getElementById('side-state-text').textContent = stateLabels[DOCTOR_STATE.consultationState] || '—';
-  document.getElementById('side-timer-text').textContent = DOCTOR_STATE.callTimer > 0
-    ? `Timer: ${formatTimer(DOCTOR_STATE.callTimer)}` : 'Timer not started';
-
-  // Side CTA
-  const gateOpen = DOCTOR_STATE.consultationState === 'gate_passed' || DOCTOR_STATE.consultationState === 'completed';
-  document.getElementById('side-cta-section').classList.toggle('visible', gateOpen);
-  document.getElementById('side-cta-locked').style.display = gateOpen ? 'none' : 'block';
-
-  if (gateOpen) {
-    document.getElementById('side-ha-banner').classList.toggle('visible', c.case_type === 'pilot' && c.ha_status === 'required' && !DOCTOR_STATE.haSkippedInSession);
-    document.getElementById('side-skip-ha-btn').classList.toggle('visible', haSkipApplicable(c) && !DOCTOR_STATE.haSkippedInSession);
-    const effectiveScenario = DOCTOR_STATE.haSkippedInSession ? Object.assign({}, c, { ha_status:'skipped_customer' }) : c;
-    const cta = resolveCTA(effectiveScenario);
-    document.getElementById('side-cta-icon').textContent  = cta.icon;
-    document.getElementById('side-cta-label').textContent = cta.label;
-  }
-
-  // Side scenario buttons sync
-  document.querySelectorAll('.side-scenario-btn[data-scenario]').forEach(b => {
-    b.classList.toggle('active', b.dataset.scenario === DOCTOR_STATE.activeScenario);
-  });
-}
-
-// ================================================================
-// COMPACT STRIP — scroll-based visibility
-// ================================================================
-function updateCompactStripVisibility() {
-  const wrapper = document.getElementById('sticky-top-wrapper');
-  const pdb     = document.getElementById('patient-detail-block');
-  const strip   = document.getElementById('compact-strip');
-  if (!wrapper || !pdb || !strip) return;
-  const wrapperBottom = wrapper.getBoundingClientRect().bottom;
-  const pdbBottom     = pdb.getBoundingClientRect().bottom;
-  strip.classList.toggle('visible', pdbBottom <= wrapperBottom);
-}
-window.addEventListener('scroll', updateCompactStripVisibility, { passive: true });
-
-// ================================================================
-// ORDER EXPAND TOGGLE
-// ================================================================
-function toggleOrderExpand() {
-  const expand = document.getElementById('pdb-order-expand');
-  const btn    = document.getElementById('pdb-info-btn');
-  const isOpen = !expand.classList.contains('hidden');
-  expand.classList.toggle('hidden', isOpen);
-  btn.classList.toggle('active', !isOpen);
-}
-
-// ================================================================
-// PROFILE / LOGOUT
-// ================================================================
-function handleLogout() {
-  closeSheet();
-  showToast('[MOCK] Logout — not implemented in prototype');
-  console.log('[MOCK] auth.logout | user=' + DOCTOR_PROFILE.name);
-}
-
-// ================================================================
-// CALL FLOW
-// ================================================================
-function handleCallAction() {
-  const s = DOCTOR_STATE.consultationState;
-  if (['assigned','nopickup','hold','failed'].includes(s)) { initiateCall(); }
-  else if (s === 'connected') {
-    clearInterval(DOCTOR_STATE.timerInterval);
-    DOCTOR_STATE.timerInterval = null;
-    DOCTOR_STATE.consultationState = 'assigned';
-    DOCTOR_STATE.callTimer = 0;
-    showToast('Call ended before 50s — gate not passed');
-    render();
-    console.log(`[MOCK] call-service.callEnded | gate=NOT_PASSED`);
-  }
-}
-
-function initiateCall() {
-  DOCTOR_STATE.consultationState = 'calling';
-  DOCTOR_STATE.callTimer = 0;
-  render();
-  console.log(`[MOCK] call-service.initiateCall | scenario=${DOCTOR_STATE.activeScenario} | delay=2000ms`);
-  setTimeout(() => {
-    DOCTOR_STATE.consultationState = 'connected';
-    render();
-    console.log(`[MOCK] call-service.callConnected | scenario=${DOCTOR_STATE.activeScenario}`);
-    startCallTimer();
-  }, 2000);
-}
-
-function startCallTimer() {
-  if (DOCTOR_STATE.timerInterval) clearInterval(DOCTOR_STATE.timerInterval);
-  DOCTOR_STATE.timerInterval = setInterval(() => {
-    DOCTOR_STATE.callTimer++;
-
-    // Update compact strip timer badge
-    const timerBadge = document.getElementById('cs-timer-badge');
-    timerBadge.classList.remove('hidden');
-    timerBadge.textContent = `📞 ${formatTimer(DOCTOR_STATE.callTimer)}`;
-
-    if (DOCTOR_STATE.callTimer >= 50 && DOCTOR_STATE.consultationState !== 'gate_passed') {
-      clearInterval(DOCTOR_STATE.timerInterval);
-      DOCTOR_STATE.timerInterval = null;
-      DOCTOR_STATE.consultationState = 'gate_passed';
-      DOCTOR_STATE.gatePassedAt = Date.now();
-      render();
-      console.log(`[MOCK] call-timer.gateCheck | elapsed=50s | gate=PASSED | cta=${resolveCTA(DOCTOR_STATE.currentCase).type}`);
-      showToast('✅ Valid call complete — post-call action unlocked');
-      setTimeout(() => document.getElementById('action-zone').scrollIntoView({ behavior:'smooth', block:'start' }), 300);
-    }
-
-    document.getElementById('demo-state-label').textContent =
-      `State: ${DOCTOR_STATE.consultationState} | ${formatTimer(DOCTOR_STATE.callTimer)}`;
-    renderSidePanel();
-  }, 1000);
-}
-
-// Fast-forward — demo controls [LOCKED]
-function doFastForward() {
-  const s = DOCTOR_STATE.consultationState;
-  if (s === 'connected') {
-    clearInterval(DOCTOR_STATE.timerInterval);
-    DOCTOR_STATE.timerInterval = null;
-    DOCTOR_STATE.callTimer = 50;
-    DOCTOR_STATE.consultationState = 'gate_passed';
-    DOCTOR_STATE.gatePassedAt = Date.now();
-    render();
-    showToast('⏩ Fast-forwarded to 50s — gate passed');
-    setTimeout(() => document.getElementById('action-zone').scrollIntoView({ behavior:'smooth', block:'start' }), 300);
-  } else if (['assigned','nopickup','hold'].includes(s)) {
-    DOCTOR_STATE.consultationState = 'calling';
-    render();
-    setTimeout(() => {
-      DOCTOR_STATE.callTimer = 50;
-      DOCTOR_STATE.consultationState = 'gate_passed';
-      DOCTOR_STATE.gatePassedAt = Date.now();
-      render();
-      showToast('⏩ Fast-forwarded — gate passed');
-      setTimeout(() => document.getElementById('action-zone').scrollIntoView({ behavior:'smooth', block:'start' }), 300);
-    }, 300);
-  } else {
-    showToast('Fast-forward only works before gate is passed');
-  }
-}
-
-document.getElementById('demo-ff-btn-mobile').addEventListener('click', doFastForward);
-document.getElementById('side-ff-btn').addEventListener('click', doFastForward);
-
-// ================================================================
-// POST-CALL CTA
-// ================================================================
-function handleMainCTA() {
-  if (DOCTOR_STATE.consultationState !== 'gate_passed') return;
-  const btn = document.getElementById('main-cta-btn');
-  btn.disabled = true;
-  btn.innerHTML = '⏳ Submitting…';
-  console.log(`[MOCK] cta-action.submit | scenario=${DOCTOR_STATE.activeScenario} | delay=800ms`);
-  setTimeout(() => {
-    DOCTOR_STATE.consultationState = 'completed';
-    const effectiveScenario = DOCTOR_STATE.haSkippedInSession
-      ? Object.assign({}, DOCTOR_STATE.currentCase, { ha_status:'skipped_customer' }) : DOCTOR_STATE.currentCase;
-    const cta = resolveCTA(effectiveScenario);
-    const titles = { confirm_order:'Order Confirmed', confirm_transfer:'Transferred to HA', confirm_forward:'Forwarded for Review' };
-    document.getElementById('completed-title').textContent = titles[cta.type] || 'Done';
-    document.getElementById('completed-desc').textContent =
-      `Consultation completed for ${DOCTOR_STATE.currentCase.patient_name}. Action "${cta.label}" has been submitted.`;
-    document.getElementById('completed-overlay').classList.add('open');
-    console.log(`[MOCK] cta-action.success | cta=${cta.type}`);
-  }, 800);
-}
-
-// ================================================================
-// SHEET HANDLERS
-// ================================================================
-let activeSheet = null;
-
-function openSheet(sheetId) {
-  const overlay = document.getElementById('sheet-overlay');
-  const col = document.getElementById('mobile-column');
-  const rect = col.getBoundingClientRect();
-  overlay.style.left  = rect.left + 'px';
-  overlay.style.width = rect.width + 'px';
-  if (activeSheet) document.getElementById(activeSheet)?.classList.remove('open');
-  overlay.classList.add('open');
-  document.getElementById(sheetId)?.classList.add('open');
-  activeSheet = sheetId;
-}
-
-function closeSheet() {
-  if (activeSheet) document.getElementById(activeSheet)?.classList.remove('open');
-  document.getElementById('sheet-overlay').classList.remove('open');
-  activeSheet = null;
-}
-
-function handleSheetOverlayClick(e) {
-  if (e.target === document.getElementById('sheet-overlay')) closeSheet();
-}
-
-function confirmHold(reason) {
-  clearInterval(DOCTOR_STATE.timerInterval);
-  DOCTOR_STATE.timerInterval = null;
-  DOCTOR_STATE.consultationState = 'hold';
-  DOCTOR_STATE.holdReason = reason;
-  closeSheet(); render();
-  showToast(`Case on hold: ${reason}`);
-  console.log(`[MOCK] case.hold | reason="${reason}"`);
-}
-
-function openCustomHoldInput() {
-  closeSheet();
-  setTimeout(() => { const r = prompt('Enter hold reason:'); if (r?.trim()) confirmHold(r.trim()); }, 200);
-}
-
-function confirmNoPickup(reason) {
-  clearInterval(DOCTOR_STATE.timerInterval);
-  DOCTOR_STATE.timerInterval = null;
-  DOCTOR_STATE.consultationState = 'nopickup';
-  DOCTOR_STATE.noPickupReason = reason;
-  closeSheet(); render();
-  showToast(`No pickup: ${reason}`);
-  console.log(`[MOCK] case.noPickup | reason="${reason}"`);
-}
-
-function confirmSkipHA(reason) {
-  DOCTOR_STATE.haSkippedInSession = true;
-  closeSheet(); render();
-  showToast(`HA skipped: ${reason} → CTA updated to Confirm Order`);
-  console.log(`[MOCK] ha.skip | reason="${reason}" | new_cta=confirm_order`);
-}
-
-// ================================================================
-// MEDICINE EDIT
-// ================================================================
-function selectMAN(row, val) {
-  EDIT_STATE[row] = val;
-  document.querySelectorAll(`.man-btns[data-man="${row}"] .man-btn`).forEach(btn => {
-    btn.classList.toggle('active', parseFloat(btn.dataset.val) === val);
-  });
-}
-
-function adjustQty(delta) {
-  EDIT_STATE.qty = Math.max(1, EDIT_STATE.qty + delta);
-  document.getElementById('sheet-qty-display').textContent = EDIT_STATE.qty;
-}
-
-function openMedEdit(medId) {
-  const med = DOCTOR_STATE.currentCase.medicines.find(m => m.id === medId);
-  if (!med) return;
-  EDIT_STATE.medId    = medId;
-  EDIT_STATE.strength = med.strength;
-  EDIT_STATE.m        = med.m;
-  EDIT_STATE.a        = med.a;
-  EDIT_STATE.n        = med.n;
-  EDIT_STATE.qty      = med.qty;
-
-  document.getElementById('sheet-med-name').textContent = `${med.name} ${med.strength}`;
-  document.getElementById('sheet-strength-input').value = med.strength;
-  document.getElementById('sheet-qty-display').textContent = med.qty;
-
-  // Sync M-A-N buttons
-  ['m','a','n'].forEach(row => {
-    document.querySelectorAll(`.man-btns[data-man="${row}"] .man-btn`).forEach(btn => {
-      btn.classList.toggle('active', parseFloat(btn.dataset.val) === med[row]);
-    });
-  });
-
-  // Disable/enable button label
-  const disBtn = document.getElementById('sheet-disable-med-btn');
-  if (med.disabled) {
-    disBtn.textContent = 'Enable Medicine';
-    disBtn.classList.add('enable-mode');
-  } else {
-    disBtn.textContent = 'Disable Medicine';
-    disBtn.classList.remove('enable-mode');
-  }
-
-  openSheet('sheet-edit-med');
-}
-
-function confirmMedEdit() {
-  const med = DOCTOR_STATE.currentCase.medicines.find(m => m.id === EDIT_STATE.medId);
-  if (!med) return;
-  const strengthVal = document.getElementById('sheet-strength-input').value.trim();
-  if (strengthVal) med.strength = strengthVal;
-  med.m   = EDIT_STATE.m;
-  med.a   = EDIT_STATE.a;
-  med.n   = EDIT_STATE.n;
-  med.qty = EDIT_STATE.qty;
-  closeSheet(); render();
-  showToast('Medicine updated (mock — not persisted)');
-}
-
-function toggleMedDisable() {
-  const med = DOCTOR_STATE.currentCase.medicines.find(m => m.id === EDIT_STATE.medId);
-  if (!med) return;
-  med.disabled = !med.disabled;
-  closeSheet(); render();
-  showToast(med.disabled ? 'Medicine disabled (mock)' : 'Medicine enabled (mock)');
-  console.log(`[MOCK] medicine.${med.disabled ? 'disable' : 'enable'} | id=${med.id} | name=${med.name}`);
-}
-
-// ================================================================
-// ADD MEDICINE
-// ================================================================
-document.getElementById('add-medicine-btn').addEventListener('click', () => {
-  document.getElementById('sheet-add-med-name').value     = '';
-  document.getElementById('sheet-add-med-strength').value = '';
-  openSheet('sheet-add-med');
-});
-
-function confirmAddMedicine() {
-  const name     = document.getElementById('sheet-add-med-name').value.trim();
-  const strength = document.getElementById('sheet-add-med-strength').value.trim();
-  if (!name) { showToast('Enter medicine name'); return; }
-  const newMed = {
-    id: Date.now(),
-    name,
-    strength: strength || '',
-    m: 1, a: 0, n: 1,
-    qty: 30,
-    validation_status: 'pending',
-    disabled: false,
-  };
-  DOCTOR_STATE.currentCase.medicines.push(newMed);
-  closeSheet(); render();
-  showToast('[MOCK ASSUMPTION] Medicine added — not persisted to backend');
-  console.log(`[MOCK] medicine.add | name=${name} | strength=${strength}`);
-}
-
-// ================================================================
-// RX VIEWER — Zoom, Rotate, Pan, Pinch [LOCKED]
-// ================================================================
-let rxState = { zoom:1, rotation:0, panX:0, panY:0 };
-let rxPinchDist = null;
-let rxDragStart = null;
-
-function applyRxTransform() {
-  const wrapper = document.getElementById('rx-doc-wrapper');
-  wrapper.style.transform =
-    `translate(${rxState.panX}px, ${rxState.panY}px) rotate(${rxState.rotation}deg) scale(${rxState.zoom})`;
-  document.getElementById('rx-zoom-label').textContent = Math.round(rxState.zoom * 100) + '%';
-}
-
-function rxZoomIn()  { rxState.zoom = Math.min(rxState.zoom + 0.25, 4); applyRxTransform(); }
-function rxZoomOut() { rxState.zoom = Math.max(rxState.zoom - 0.25, 0.5); applyRxTransform(); }
-function rxRotate()  { rxState.rotation = (rxState.rotation + 90) % 360; applyRxTransform(); }
-function rxReset()   { rxState = {zoom:1,rotation:0,panX:0,panY:0}; applyRxTransform(); }
-
-function openRxOverlay() {
-  rxReset();
-  document.getElementById('rx-overlay').classList.add('open');
-}
-function closeRxOverlay() { document.getElementById('rx-overlay').classList.remove('open'); }
-
-// Double-tap to zoom
-let lastTap = 0;
-document.getElementById('rx-overlay-body').addEventListener('click', (e) => {
-  const now = Date.now();
-  if (now - lastTap < 320) {
-    rxState.zoom = rxState.zoom > 1.2 ? 1 : 2;
-    applyRxTransform();
-  }
-  lastTap = now;
-});
-
-// Pinch to zoom (touch)
-document.getElementById('rx-overlay-body').addEventListener('touchstart', (e) => {
-  if (e.touches.length === 2) {
-    rxPinchDist = Math.hypot(
-      e.touches[0].clientX - e.touches[1].clientX,
-      e.touches[0].clientY - e.touches[1].clientY
-    );
-  } else if (e.touches.length === 1) {
-    rxDragStart = { x: e.touches[0].clientX - rxState.panX, y: e.touches[0].clientY - rxState.panY };
-  }
-}, { passive:true });
-
-document.getElementById('rx-overlay-body').addEventListener('touchmove', (e) => {
-  if (e.touches.length === 2 && rxPinchDist !== null) {
-    const dist = Math.hypot(
-      e.touches[0].clientX - e.touches[1].clientX,
-      e.touches[0].clientY - e.touches[1].clientY
-    );
-    rxState.zoom = Math.min(Math.max(rxState.zoom * (dist / rxPinchDist), 0.5), 4);
-    rxPinchDist = dist;
-    applyRxTransform();
-  } else if (e.touches.length === 1 && rxDragStart) {
-    rxState.panX = e.touches[0].clientX - rxDragStart.x;
-    rxState.panY = e.touches[0].clientY - rxDragStart.y;
-    applyRxTransform();
-  }
-  e.preventDefault();
-}, { passive:false });
-
-document.getElementById('rx-overlay-body').addEventListener('touchend', () => {
-  rxPinchDist = null;
-  rxDragStart = null;
-}, { passive:true });
-
-// Mouse drag (desktop)
-let mouseDragStart = null;
-document.getElementById('rx-overlay-body').addEventListener('mousedown', (e) => {
-  mouseDragStart = { x: e.clientX - rxState.panX, y: e.clientY - rxState.panY };
-});
-document.addEventListener('mousemove', (e) => {
-  if (!mouseDragStart) return;
-  rxState.panX = e.clientX - mouseDragStart.x;
-  rxState.panY = e.clientY - mouseDragStart.y;
-  applyRxTransform();
-});
-document.addEventListener('mouseup', () => { mouseDragStart = null; });
-
-// Mouse wheel zoom
-document.getElementById('rx-overlay-body').addEventListener('wheel', (e) => {
-  e.preventDefault();
-  const delta = e.deltaY > 0 ? -0.1 : 0.1;
-  rxState.zoom = Math.min(Math.max(rxState.zoom + delta, 0.5), 4);
-  applyRxTransform();
-}, { passive:false });
-
-// ================================================================
-// SCENARIO SWITCHING [LOCKED structure]
-// ================================================================
-function switchScenario(scenarioId) {
-  clearInterval(DOCTOR_STATE.timerInterval);
-  DOCTOR_STATE.timerInterval     = null;
-  DOCTOR_STATE.activeScenario    = scenarioId;
-  DOCTOR_STATE.consultationState = 'assigned';
-  DOCTOR_STATE.callTimer         = 0;
-  DOCTOR_STATE.gatePassedAt      = null;
-  DOCTOR_STATE.haSkippedInSession= false;
-  DOCTOR_STATE.holdReason        = null;
-  DOCTOR_STATE.noPickupReason    = null;
-  DOCTOR_STATE.editingMedId      = null;
-  DOCTOR_STATE.currentCase = JSON.parse(JSON.stringify(SCENARIOS[scenarioId]));
-
-  const phase2 = document.getElementById('az-phase2');
-  phase2.classList.remove('visible','revealed');
-
-  // Reset order expand
-  document.getElementById('pdb-order-expand').classList.add('hidden');
-  document.getElementById('pdb-info-btn').classList.remove('active');
-
-  document.getElementById('symptoms-input').value      = '';
-  document.getElementById('doctor-notes-input').value  = '';
-
-  // Sync both scenario button sets
-  document.querySelectorAll('.scenario-btn[data-scenario], .side-scenario-btn[data-scenario]').forEach(b => {
-    b.classList.toggle('active', b.dataset.scenario === scenarioId);
-  });
-
-  render();
-  console.log(`[MOCK] scenario.switch | active=${scenarioId} | case_type=${SCENARIOS[scenarioId].case_type} | ha_status=${SCENARIOS[scenarioId].ha_status}`);
-}
-
-// Wire up all scenario buttons (both bars)
-document.querySelectorAll('[data-scenario]').forEach(btn => {
-  btn.addEventListener('click', () => switchScenario(btn.dataset.scenario));
-});
-
-function resetToDemo() {
-  document.getElementById('completed-overlay').classList.remove('open');
-  switchScenario(DOCTOR_STATE.activeScenario);
-}
-
-// ================================================================
-// TOAST [LOCKED]
-// ================================================================
-let toastTimer = null;
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  if (toastTimer) clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => t.classList.remove('show'), 2800);
-}
-
-// ================================================================
-// INIT
-// ================================================================
-switchScenario('cat4');
-
-</script>
+<script src="app.js"></script>
 </body>
 </html>

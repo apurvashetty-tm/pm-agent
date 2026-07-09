@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "truemeds-portal",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["serve", "-p", "4321", "projects/truemeds-doctor-portal-prototype"],
+      "port": 4321
+    }
+  ]
+}
