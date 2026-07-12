@@ -148,6 +148,30 @@ Every entry must include:
 
 ---
 
+### OQ-012 — Callback scheduling terminal behavior
+
+**Question:** When a doctor schedules a callback (from the pre-gate escape hatch, the early-call-end recovery path, or the post-gate chip), the prototype treats this as terminal — it ends the doctor's session for that order, marks `consultationState = 'completed'`, and shows a success toast saying the order "moved to callback queue." Is this actually correct? Should the order really leave the doctor's queue, or should the doctor stay on the case? Does a "callback queue" exist as a real downstream concept?
+
+**Why it matters:** If scheduling a callback should NOT remove the case from the doctor's queue, or if there's no real "callback queue" system to route to, the current terminal-completion behavior misrepresents what happens to the order after the doctor taps "Confirm Callback."
+
+**Safe placeholder:** Scheduling a callback ends the session (`consultationState = 'completed'`), shows success toast "Callback Scheduled ... Order moved to callback queue," doctor proceeds via Next Order. `[MOCK ASSUMPTION]` — not confirmed backend truth.
+
+**Status:** Open
+
+---
+
+### OQ-013 — Early call-end retry limit
+
+**Question:** When a doctor ends a call before the 50-second valid-call gate, the prototype now shows "Call Again" with no cap on retries. Should there be a maximum number of early-end attempts before the case escalates or behaves differently (similar in spirit to the no-pickup attempt question in OQ-002)? Does an early hangup count toward the same attempt counter as a no-pickup?
+
+**Why it matters:** Without a limit, a doctor could end and restart a call indefinitely in the real product. If there's a real operational cap, the prototype should reflect it rather than silently allowing infinite retries.
+
+**Safe placeholder:** "Call Again" has no retry limit in the prototype. Each early end-call simply resets to the pre-call state with the recovery UI (Call Again + Schedule Callback ghost button) shown. `[MOCK ASSUMPTION]`
+
+**Status:** Open
+
+---
+
 ## Answered Questions
 
 *(None yet)*

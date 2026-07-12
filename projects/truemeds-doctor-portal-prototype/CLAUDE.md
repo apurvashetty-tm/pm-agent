@@ -56,7 +56,7 @@ If two sources conflict, follow the higher-priority source and surface the confl
 - Do not invent product logic if it is unclear
 - If logic is missing, use a clearly marked `[MOCK ASSUMPTION]` and add it to `docs/context/open_questions.md`
 - Respect the locked consultation flow — do not add CTAs or steps that are not part of the locked workflow
-- V1 is one file: `index.html` with embedded CSS and JS — do not modularize unless explicitly asked
+- **[UPDATED 2026-07-13, `[USER-PROVIDED]`]** V1 is now three files: `index.html` (structure), `styles.css` (all cosmetics), `app.js` (all logic) — split from the original single-file rule at explicit user request, to fix CTA-styling drift across a single large file. Do not split further (e.g. per-component files) unless explicitly asked. All cosmetic changes belong in `styles.css` through the shared `.btn` button system — see `docs/design_system.md` before adding any new CTA.
 
 ---
 

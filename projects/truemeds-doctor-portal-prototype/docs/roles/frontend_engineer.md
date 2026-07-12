@@ -56,17 +56,18 @@ Claude should keep changes:
 
 ## 4. V1 architecture rule
 
-**[LOCKED for V1]**
+**[UPDATED 2026-07-13, `[USER-PROVIDED]`]**
 
-V1 is a single file: `index.html` with embedded CSS and JavaScript.
+V1 is now **three files**: `index.html` (structure), `styles.css` (all cosmetics/tokens/button system), `app.js` (all logic, including the `ICONS` map). This supersedes the original single-file rule — the user explicitly requested the split to fix CTA styling drift that kept happening inside one large file (same Schedule Callback button ended up with three different fonts/colors/icons across three call sites before the split).
 
 Claude must not:
-- split into separate `.js` or `.css` files without explicit instruction
+- split further than these three files (e.g. per-component files, per-section JS modules) without explicit instruction
 - add a build step or bundler
 - add an npm project or `package.json`
 - add a framework (React, Vue, Svelte, etc.)
+- reintroduce per-button/per-element bespoke cosmetic CSS — all button cosmetics go through the shared `.btn` system in `styles.css`; see `docs/design_system.md` before adding any new CTA
 
-If modularization is needed later, the user will ask explicitly.
+If further modularization is needed later, the user will ask explicitly.
 
 ---
 
