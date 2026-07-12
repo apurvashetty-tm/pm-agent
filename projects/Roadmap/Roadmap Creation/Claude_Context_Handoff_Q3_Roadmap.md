@@ -1,3 +1,5 @@
+> **Superseded in part — 2026-07-11.** This doc's narrative is kept as historical background only. For current locked facts (quarter naming corrected to Q2, real team capacity, roadmap structure, format decisions), read `docs/context/project_truth.md`. For current state and next step, read `docs/context/session_handoff.md`. Nothing below has been rewritten — read it as the original source material, not current truth.
+
 # Truemeds — Claude Context Handoff
 ## Q3 Product Roadmap, Metric Architecture, Initiative Inventory, and Operating Context
 

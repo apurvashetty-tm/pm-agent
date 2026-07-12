@@ -1,12 +1,12 @@
 #!/bin/bash
 # Commit and push to GitHub with a message
-# Usage: ~/pm-agent/scripts/commit-and-push.sh "Your commit message"
+# Usage: scripts/commit-and-push.sh "Your commit message"
 
-cd ~/pm-agent
+cd "$(dirname "$0")/.."
 
 if [ -z "$1" ]; then
   echo "❌ Error: Please provide a commit message"
-  echo "Usage: ~/pm-agent/scripts/commit-and-push.sh 'Your commit message'"
+  echo "Usage: scripts/commit-and-push.sh 'Your commit message'"
   exit 1
 fi
 

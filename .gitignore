@@ -4,3 +4,11 @@
 .DS_Store
 .vscode/
 .idea/
+# Added by code-review-graph
+.code-review-graph/
+
+# Local Claude/MCP/memory state
+.mcp.json
+.memsearch/
+.claude/settings*.json
+.claude/skills/
