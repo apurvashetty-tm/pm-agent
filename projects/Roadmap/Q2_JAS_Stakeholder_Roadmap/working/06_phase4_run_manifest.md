@@ -1,11 +1,11 @@
 # Phase 4 Freeze and Phase 5 Run Manifest
 
-**Status:** PREPARED - PAGE 11 SOURCE UPDATE PENDING; NOT LAUNCHED
+**Status:** PREPARED - PAGE 11 SOURCE PINNED; NOT LAUNCHED
 **Run ID:** `jas-q2-20260714-blind-v1`  
 **Prepared:** 2026-07-14  
 **Coordinator / truth steward:** Apurva  
 **Canonical structure freeze SHA:** `ad2722067d22f0b3841018d892a9af56f6571e62`
-**Phase 5 provider source SHA:** `TO BE RECORDED AFTER PAGE 11 SOURCE COMMIT`
+**Phase 5 provider source SHA:** `bca3838f5b74db0bf50957ce1e19abc4547fa4b7`
 **Freeze commit:** `docs(roadmap): freeze JAS Q2 operating-plan structure`
 
 This manifest records Phase 4 setup plus the Page 11 source-update gate. It does not authorize page drafting.
@@ -23,8 +23,8 @@ This manifest records Phase 4 setup plus the Page 11 source-update gate. It does
 
 | Provider | Branch | Worktree | Starting SHA | Reserved output root | Blind |
 |---|---|---|---|---|---|
-| Codex | `jas-q2-phase5-codex-pass1` | `/Users/mac/src/pm-agent-worktrees/jas-q2-codex-pass1` | `TO BE RECORDED AFTER PAGE 11 SOURCE COMMIT` | `runs/jas-q2-20260714-blind-v1/codex/` | Yes |
-| Claude | `jas-q2-phase5-claude-pass1` | `/Users/mac/src/pm-agent-worktrees/jas-q2-claude-pass1` | `TO BE RECORDED AFTER PAGE 11 SOURCE COMMIT` | `runs/jas-q2-20260714-blind-v1/claude/` | Yes |
+| Codex | `jas-q2-phase5-codex-pass1` | `/Users/mac/src/pm-agent-worktrees/jas-q2-codex-pass1` | `bca3838f5b74db0bf50957ce1e19abc4547fa4b7` | `runs/jas-q2-20260714-blind-v1/codex/` | Yes |
+| Claude | `jas-q2-phase5-claude-pass1` | `/Users/mac/src/pm-agent-worktrees/jas-q2-claude-pass1` | `bca3838f5b74db0bf50957ce1e19abc4547fa4b7` | `runs/jas-q2-20260714-blind-v1/claude/` | Yes |
 
 Provider paths and branches are unique. Neither provider may read peer output before Pass 1 closes.
 
@@ -99,8 +99,8 @@ Exact commands must be recorded immediately before Phase 5 launch.
 
 - [x] `DEC-01` resolved.
 - [x] Original structure-freeze SHA recorded.
-- [ ] Updated Page 11 source SHA recorded.
-- [ ] Codex and Claude worktrees retargeted to the same updated Page 11 source SHA.
+- [x] Updated Page 11 source SHA recorded.
+- [x] Codex and Claude worktrees retargeted to the same updated Page 11 source SHA.
 - [x] Provider branches and output roots do not collide.
 - [x] Creative proposal channel preserved.
 - [ ] Pass 1 release scope explicitly approved.
@@ -111,4 +111,4 @@ Exact commands must be recorded immediately before Phase 5 launch.
 
 ## 9. Current stop point
 
-Commit the Page 11 source update, retarget both clean provider worktrees to that same SHA, record the SHA here, and rerun the worktree audit. Stop before page drafting.
+Page 11 source is committed and both provider worktrees are pinned to `bca3838f5b74db0bf50957ce1e19abc4547fa4b7`. Phase 5 is still not launched. Next: record exact provider commands, prompts, and released pages; then stop for explicit launch approval before page drafting.

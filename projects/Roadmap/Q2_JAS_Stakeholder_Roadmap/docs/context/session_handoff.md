@@ -1,7 +1,7 @@
 # Session Handoff - JAS Q2 Operating Plan
 
 **Updated:** 2026-07-14  
-**Current phase:** Page 11 working lifecycle and capacity inputs are now canonical in staging. Updated source commit and provider-worktree retarget remain pending; Phase 5 has not launched. No page prose and no Claude drafting.
+**Current phase:** Page 11 working lifecycle and capacity inputs are committed; both provider worktrees are pinned to the same source SHA. Phase 5 has not launched. No page prose and no Claude drafting.
 
 State report only. Canonical files override this handoff.
 
@@ -60,12 +60,13 @@ State report only. Canonical files override this handoff.
 ## Phase 4 run setup complete
 
 - Frozen source SHA: `ad2722067d22f0b3841018d892a9af56f6571e62`.
+- Phase 5 provider source SHA with Page 11 working plan: `bca3838f5b74db0bf50957ce1e19abc4547fa4b7`.
 - Codex: branch `jas-q2-phase5-codex-pass1`; worktree `/Users/mac/src/pm-agent-worktrees/jas-q2-codex-pass1`.
 - Claude: branch `jas-q2-phase5-claude-pass1`; worktree `/Users/mac/src/pm-agent-worktrees/jas-q2-claude-pass1`.
 - Provider output roots and proposal paths are isolated in `working/06_phase4_run_manifest.md`.
 - Cross-review remains closed.
 
-The provider worktrees above are still pinned to the original structure-freeze SHA. A new Page 11 source commit must be created and both clean worktrees fast-forwarded to the same new SHA before Phase 5 launch.
+Both provider worktrees are clean and pinned to `bca3838f5b74db0bf50957ce1e19abc4547fa4b7`. The coordinator manifest records this source; cross-review remains closed.
 
 ## Page 11 working plan received
 
@@ -82,4 +83,4 @@ Open `DR-*`/`EVD-*` items do not block qualitative structure; they block quantif
 
 ## Drafting warning
 
-Do not launch Codex or Claude until the updated Page 11 source SHA is committed, both provider worktrees are retargeted to it, and Phase 5 release scope plus exact commands are recorded. Page 12 remains excluded.
+Do not launch Codex or Claude until Phase 5 release scope plus exact commands and prompt records are approved. Page 12 remains excluded.

@@ -4,7 +4,7 @@ Project builds July-September JAS operating plan for CEO review.
 
 ## Current phase
 
-Page 11 working lifecycle and capacity inputs are now populated in canonical staging. Updated source commit and provider-worktree retarget remain pending. Phase 5 has not launched; no page prose, Claude drafting, or final deck production has begun.
+Page 11 working lifecycle and capacity inputs are committed at provider source SHA `bca3838f5b74db0bf50957ce1e19abc4547fa4b7`; both Codex and Claude worktrees are pinned to it. Phase 5 has not launched; no page prose, Claude drafting, or final deck production has begun.
 
 ## Canonical read order
 

@@ -217,6 +217,7 @@ Rewrite Page 12 after Pages 1-11 synthesis. Final version must name decision, ow
 - [x] Known, supplied, derived, hypothesis, unknown, and conflicted statuses are defined.
 - [x] Truth steward records freeze status.
 - [x] Post-freeze source SHA `ad2722067d22f0b3841018d892a9af56f6571e62` is committed and recorded in Phase 4 run manifest.
+- [x] Page 11 working-plan source SHA `bca3838f5b74db0bf50957ce1e19abc4547fa4b7` is committed; both provider worktrees are pinned to it.
 - [x] Page packets exist for all 12 pages; Page 12 remains provisional and excluded from Pass 1.
 
 ### H2. Required before final synthesis/artifact
