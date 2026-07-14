@@ -1,7 +1,7 @@
 # Session Handoff - JAS Q2 Operating Plan
 
 **Updated:** 2026-07-14  
-**Current phase:** Phase 4 structure baseline frozen under `DEC-01`; post-freeze source commit, run manifest, and provider worktrees are being prepared. No page prose and no Claude drafting.
+**Current phase:** Phase 4 complete. Frozen source SHA and isolated provider worktrees recorded; Phase 5 not launched. No page prose and no Claude drafting.
 
 State report only. Canonical files override this handoff.
 
@@ -57,15 +57,16 @@ State report only. Canonical files override this handoff.
 - Expression remains open: headlines, prose, visual metaphor, hierarchy, density, evidence emphasis, and within-page block order.
 - Structural changes remain allowed only through explicit provider proposal; never silent mutation.
 
-## Remaining Phase 4 run setup
+## Phase 4 run setup complete
 
-1. Commit frozen canonical snapshot and record source SHA.
-2. Create run manifest that references that SHA.
-3. Create separate Codex and Claude worktrees/branches/output paths.
-4. Keep cross-review closed until both blind drafts finish.
+- Frozen source SHA: `ad2722067d22f0b3841018d892a9af56f6571e62`.
+- Codex: branch `jas-q2-phase5-codex-pass1`; worktree `/Users/mac/src/pm-agent-worktrees/jas-q2-codex-pass1`.
+- Claude: branch `jas-q2-phase5-claude-pass1`; worktree `/Users/mac/src/pm-agent-worktrees/jas-q2-claude-pass1`.
+- Provider output roots and proposal paths are isolated in `working/06_phase4_run_manifest.md`.
+- Cross-review remains closed.
 
 Open `DR-*`/`EVD-*` items do not block qualitative structure; they block quantified/final claims. Page 11 is exception: do not create substantive timeline until capacity/execution inputs resolve. If unresolved, user must explicitly approve Pages 1-10-only Pass 1.
 
 ## Drafting warning
 
-Do not launch Codex or Claude yet. Claude first enters in Phase 5. Both providers must use same recorded Phase 4 source SHA and separate write paths/worktrees.
+Do not launch Codex or Claude until Phase 5 release scope and exact commands are recorded. Page 11 needs execution inputs or explicit Pages 1-10-only Pass 1 approval. Page 12 remains excluded.

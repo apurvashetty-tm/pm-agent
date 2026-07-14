@@ -4,7 +4,7 @@ Project builds July-September JAS operating plan for CEO review.
 
 ## Current phase
 
-Phase 4 structure baseline approved under `DEC-01`: Pages 1-11 sequence/jobs/takeaways and Page 12 purpose are frozen. Post-freeze source commit, run manifest, and provider worktrees are next. No page prose, Claude drafting, or final deck production yet.
+Phase 4 complete: structure baseline frozen under `DEC-01`, canonical source SHA recorded, and isolated Codex/Claude worktrees prepared. Phase 5 has not launched. No page prose, Claude drafting, or final deck production yet.
 
 ## Canonical read order
 
@@ -15,9 +15,10 @@ Phase 4 structure baseline approved under `DEC-01`: Pages 1-11 sequence/jobs/tak
 5. `working/04_analytics_request_pack.md` - assignable DR-01 to DR-15 measurement contract.
 6. `working/page_packets/README.md` then `page_01.md` to `page_12.md` - bounded inputs for future page authors.
 7. `working/05_phase3_review_pack.md` - evidence posture, page readiness, decision recommendations, kill-assumptions, and Phase 4 gate.
-8. `docs/context/creative_brief.md` - narrative and visual freedom.
-9. `docs/process/agent_runbook.md` - independent drafting, review, synthesis, Terminal workflow.
-10. `docs/context/session_handoff.md` - current state only.
+8. `working/06_phase4_run_manifest.md` - frozen source SHA, provider isolation, release scope, and launch gates.
+9. `docs/context/creative_brief.md` - narrative and visual freedom.
+10. `docs/process/agent_runbook.md` - independent drafting, review, synthesis, Terminal workflow.
+11. `docs/context/session_handoff.md` - current state only.
 
 Original chat is provenance, not dependency. New decisions must enter canonical files before agent runs.
 

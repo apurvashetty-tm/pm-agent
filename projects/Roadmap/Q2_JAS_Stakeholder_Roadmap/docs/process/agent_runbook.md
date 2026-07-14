@@ -1,6 +1,6 @@
 # Independent Draft, Review, and Synthesis Runbook
 
-**Status:** CANONICAL PROCESS v1.2  
+**Status:** CANONICAL PROCESS v1.3  
 **Last updated:** 2026-07-14
 
 Purpose: let Codex, Claude, or another capable agent draft and review CEO operating plan without depending on original chat window.
@@ -18,6 +18,7 @@ Phase boundary: Claude does not participate in Phases 1-4. Blind Claude drafting
 | Voice, visuals, and creative freedom | `docs/context/creative_brief.md` |
 | Assigned page objective, evidence subset, unknowns, and failure modes | `working/page_packets/page_XX.md` after Phase 2; never overrides canonical inputs |
 | Phase 3 page readiness, claim posture, kill-assumptions, and gate status | `working/05_phase3_review_pack.md`; recommendations never override unresolved canonical decisions |
+| Phase 4 freeze SHA, provider isolation, release scope, and launch state | `working/06_phase4_run_manifest.md` |
 | Raw sources | `inputs/` |
 | Workflow and file ownership | This runbook |
 

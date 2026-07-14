@@ -211,7 +211,7 @@ Rewrite Page 12 after Pages 1-11 synthesis. Final version must name decision, ow
 - [x] Initiative mapping contains no duplicates.
 - [x] Known, supplied, derived, hypothesis, unknown, and conflicted statuses are defined.
 - [x] Truth steward records freeze status.
-- [ ] Post-freeze source SHA is committed and recorded in Phase 4 run manifest.
+- [x] Post-freeze source SHA `ad2722067d22f0b3841018d892a9af56f6571e62` is committed and recorded in Phase 4 run manifest.
 - [x] Page packets exist for all 12 pages; Page 12 remains provisional and excluded from Pass 1.
 
 ### H2. Required before final synthesis/artifact
