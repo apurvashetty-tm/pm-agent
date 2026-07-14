@@ -44,11 +44,11 @@ Every packet contains:
 - No invented metric, owner, date, estimate, status, or attribution.
 - CONFLICTED evidence stays excluded.
 - One initiative, one primary home.
-- Page 11 contains no committed timing until execution inputs resolve.
+- Page 11 may contain user-supplied working lifecycle phases, but no committed timing until remaining execution inputs resolve.
 - Page 12 packet is provisional and not released for Pass 1 with Pages 1-11.
 - Evidence IDs remain visible in working drafts.
 - Page packets may narrow source material but never override project truth, evidence register, open questions, blueprint, or creative brief.
 
 ## Freeze state
 
-`DEC-01` is resolved. Blind drafting still begins only from recorded post-freeze source SHA through Phase 5 launch manifest. Page 11 substantive timing remains blocked by execution inputs; Page 12 remains excluded from Pass 1.
+`DEC-01` is resolved. Blind drafting still begins only from recorded post-freeze source SHA through Phase 5 launch manifest. Page 11 may be drafted as a visibly provisional working plan; Page 12 remains excluded from Pass 1.

@@ -1,6 +1,6 @@
 # Evidence Register - JAS Q2 Operating Plan
 
-**Status:** CANONICAL v1.0  
+**Status:** CANONICAL v1.1
 **Owner:** Apurva / assigned truth steward  
 **Last updated:** 2026-07-14
 
@@ -80,10 +80,12 @@ Method note: PDF says incidents were manually hand-tagged; replies are rough pro
 | BASE-12 | Returns & Refunds | ~1,500 inbound + ~400 outbound calls | Period, unique cases, repeat rate, team size, and cost unknown | USER-SUPPLIED | SRC-CHAT | Trust/friction signal; no rate or CPO claim yet. |
 | BASE-13 | Portal | ~50% of portal bandwidth spent on debugging/clutter | Period and capacity method unknown | USER-SUPPLIED | SRC-CHAT | User estimate; do not present as verified baseline. |
 | BASE-14 | HA Substitution | HA currently sees one substitute option | Current product constraint | USER-SUPPLIED | SRC-CHAT | Validate current variants before final wording. |
-| CAP-01 | Engineering | 6 active engineers | Working planning count | USER-SUPPLIED | SRC-CHAT, supported directionally by SRC-WB-3 | Whiteboard shows one additional blank/unallocated row; validate roster. |
-| CAP-02 | Engineering mix | 2 Payment + 4 Portal/Platform | Working planning representation | USER-SUPPLIED | SRC-CHAT, SRC-WB-3 | Names removed from CEO view; role mapping needs confirmation. |
-| CAP-03 | Product | 1 SPM; 0 execution PM/APM | Current operating model | USER-SUPPLIED | SRC-CHAT | Basis for capacity discussion; validate approved headcount/status. |
+| CAP-01 | Engineering | 6 active delivery engineers | Q2 planning count confirmed by user | USER-SUPPLIED | SRC-CHAT, supported directionally by SRC-WB-3 | Engineering lead is not seventh delivery capacity. Do not present as independently verified roster. |
+| CAP-02 | Engineering mix | 2 Payment + 4 Portal/Platform | Q2 planning split confirmed by user | USER-SUPPLIED | SRC-CHAT, SRC-WB-3 | Names and engineer lanes stay off CEO page. |
+| CAP-03 | Product | 1 SPM; 0 execution PM/APM | Current operating model confirmed by user | USER-SUPPLIED | SRC-CHAT | Basis for execution-support discussion; does not prove approved hiring need. |
 | CAP-04 | Engineering grade mix | 4 SDE2 + 2 SDE1 | Working team composition | USER-SUPPLIED | SRC-CHAT | Preserve for internal capacity context; validate roster before CEO use. |
+| CAP-05 | Engineering leadership | 1 engineering lead for oversight and solutioning | Q2 operating support confirmed by user | USER-SUPPLIED | SRC-CHAT | Not delivery-engineer capacity; never count as seventh engineer. |
+| CAP-06 | Analytics/Operations | 1 SBA + 1 BA available | Working support capacity confirmed by user | USER-SUPPLIED | SRC-CHAT | Allocation, dedicated availability, queue, and named ownership remain unresolved. |
 
 ## 6. Data-request register
 

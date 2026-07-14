@@ -1,13 +1,14 @@
 # Phase 4 Freeze and Phase 5 Run Manifest
 
-**Status:** PREPARED - NOT LAUNCHED  
+**Status:** PREPARED - PAGE 11 SOURCE UPDATE PENDING; NOT LAUNCHED
 **Run ID:** `jas-q2-20260714-blind-v1`  
 **Prepared:** 2026-07-14  
 **Coordinator / truth steward:** Apurva  
-**Canonical freeze SHA:** `ad2722067d22f0b3841018d892a9af56f6571e62`  
+**Canonical structure freeze SHA:** `ad2722067d22f0b3841018d892a9af56f6571e62`
+**Phase 5 provider source SHA:** `TO BE RECORDED AFTER PAGE 11 SOURCE COMMIT`
 **Freeze commit:** `docs(roadmap): freeze JAS Q2 operating-plan structure`
 
-This manifest records Phase 4 setup. It does not authorize page drafting.
+This manifest records Phase 4 setup plus the Page 11 source-update gate. It does not authorize page drafting.
 
 ## 1. Frozen comparison baseline
 
@@ -16,13 +17,14 @@ This manifest records Phase 4 setup. It does not authorize page drafting.
 - Outcome tree, 11 initiative homes, evidence posture, prohibited claims, Page 11 lifecycle form, and Page 12-last rule remain canonical constraints.
 - Headlines, prose, visual metaphor, hierarchy, density, evidence emphasis, and within-page block order remain creative choices.
 - Page merge/split/removal/reorder remains allowed only through explicit provider proposal; never silent mutation.
+- Page 11 working lifecycle is post-freeze canonical input. It must be committed and both provider worktrees retargeted to the same new source SHA before Phase 5 launch.
 
 ## 2. Provider isolation
 
 | Provider | Branch | Worktree | Starting SHA | Reserved output root | Blind |
 |---|---|---|---|---|---|
-| Codex | `jas-q2-phase5-codex-pass1` | `/Users/mac/src/pm-agent-worktrees/jas-q2-codex-pass1` | `ad2722067d22f0b3841018d892a9af56f6571e62` | `runs/jas-q2-20260714-blind-v1/codex/` | Yes |
-| Claude | `jas-q2-phase5-claude-pass1` | `/Users/mac/src/pm-agent-worktrees/jas-q2-claude-pass1` | `ad2722067d22f0b3841018d892a9af56f6571e62` | `runs/jas-q2-20260714-blind-v1/claude/` | Yes |
+| Codex | `jas-q2-phase5-codex-pass1` | `/Users/mac/src/pm-agent-worktrees/jas-q2-codex-pass1` | `TO BE RECORDED AFTER PAGE 11 SOURCE COMMIT` | `runs/jas-q2-20260714-blind-v1/codex/` | Yes |
+| Claude | `jas-q2-phase5-claude-pass1` | `/Users/mac/src/pm-agent-worktrees/jas-q2-claude-pass1` | `TO BE RECORDED AFTER PAGE 11 SOURCE COMMIT` | `runs/jas-q2-20260714-blind-v1/claude/` | Yes |
 
 Provider paths and branches are unique. Neither provider may read peer output before Pass 1 closes.
 
@@ -31,7 +33,7 @@ Provider paths and branches are unique. Neither provider may read peer output be
 | Scope | Phase 5 release state | Rule |
 |---|---|---|
 | Pages 1-10 | Structurally eligible; **not launched** | May draft with visible unknowns after explicit Phase 5 launch. |
-| Page 11 | **Not released for substantive drafting** | Populate `EVD-04`, `DEC-05`, and `EXE-01` to `EXE-06`, or obtain explicit user approval for Pages 1-10-only Pass 1. Never invent timeline bars. |
+| Page 11 | **Structurally eligible for working-plan draft; not launched** | Use only the canonical `USER-SUPPLIED WORKING PLAN`; preserve unresolved gates and never present lifecycle phases as delivery commitments. |
 | Page 12 | **Excluded from Pass 1** | Author after Pages 1-11 synthesis and decision resolution. |
 
 No provider command may run until release scope is explicitly recorded here.
@@ -65,7 +67,7 @@ One writer owns each provider-specific file. No shared-file appends.
 
 Both providers must:
 
-1. Start from canonical freeze SHA above.
+1. Start from the Phase 5 provider source SHA injected and recorded by the coordinator after the Page 11 source commit. The placeholder in older worktree copies is not source authority.
 2. Read sources in order defined by `README.md` and `docs/process/agent_runbook.md`.
 3. Draft independently without peer visibility.
 4. Preserve frozen semantic takeaway while choosing their own expression.
@@ -77,7 +79,7 @@ Both providers must:
 ## 6. Open gates carried into Phase 5
 
 - Analytics/Finance: `DR-01` to `DR-15` remain unassigned. P0 needs owner, approver, source/access owner, feasibility, and first-cut/acceptance date or explicit blocker plus escalation owner.
-- Execution: `EVD-04`, `DEC-05`, and `EXE-01` to `EXE-06` block substantive Page 11 timing/capacity.
+- Execution: `EVD-04` and `DEC-05` are partially resolved. `EXE-02`, `EXE-04`, `EXE-05`, and `EXE-06` are partial; `EXE-01` and `EXE-03` remain open. Page 11 may show the working lifecycle, but none of these phases are commitment-ready.
 - Trust: `DEC-04` / `DR-15` may remain visible during blind drafts but must resolve before final synthesis.
 - Final medium: `DEC-03` remains open.
 - Page 12: `DEC-02`, `DEC-05`, and `DEC-06` remain open.
@@ -96,8 +98,9 @@ Exact commands must be recorded immediately before Phase 5 launch.
 ## 8. Launch checklist
 
 - [x] `DEC-01` resolved.
-- [x] Frozen source SHA recorded.
-- [x] Codex and Claude worktrees created from same SHA.
+- [x] Original structure-freeze SHA recorded.
+- [ ] Updated Page 11 source SHA recorded.
+- [ ] Codex and Claude worktrees retargeted to the same updated Page 11 source SHA.
 - [x] Provider branches and output roots do not collide.
 - [x] Creative proposal channel preserved.
 - [ ] Pass 1 release scope explicitly approved.
@@ -108,4 +111,4 @@ Exact commands must be recorded immediately before Phase 5 launch.
 
 ## 9. Current stop point
 
-Phase 4 complete when this manifest is committed and worktree/SHA audit passes. Stop before page drafting.
+Commit the Page 11 source update, retarget both clean provider worktrees to that same SHA, record the SHA here, and rerun the worktree audit. Stop before page drafting.

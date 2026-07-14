@@ -1,6 +1,6 @@
 # JAS Q2 Operating Plan Blueprint
 
-**Status:** FROZEN BASELINE v3.0 - `DEC-01` approved 2026-07-14  
+**Status:** FROZEN BASELINE v3.1 - `DEC-01` approved 2026-07-14
 **Audience:** CEO  
 **Scope:** Structure, page intent, evidence availability, and execution visual only. No final page prose.  
 **Special status:** Only Page 12 purpose is frozen. Wireframe and exact asks remain PROVISIONAL and must be rewritten after Pages 1-11 are populated.
@@ -16,7 +16,7 @@ Frozen for independent-draft comparison:
 Not frozen:
 
 - Headlines, page prose, visual metaphor, hierarchy, density, evidence emphasis, or block order within a page.
-- Page 11 dates, lifecycle bars, owners, estimates, dependencies, or trade-offs; these require `EVD-04` and `EXE-01` to `EXE-06`.
+- Page 11 lifecycle is now a **user-supplied working plan**, not a delivery commitment. Exact owners, current in-flight work, allocation, dependency clearance, and displaced work remain open under `EVD-04` and `EXE-01` to `EXE-06`.
 - Page 12 wireframe, exact asks, wording, owners, commitments, and consequences; these are authored last.
 
 Any proposed page merge, split, removal, or reorder belongs in provider-specific structural proposal. Never mutate frozen baseline silently.
@@ -95,7 +95,7 @@ Page 2 may use Q1-12: 15 initiatives = 3 numeric signals, 2 delivery/rollout sta
 | Reconnection demand | BASE-11, DER-02 | ~250 customers reportedly making repeated callback-related contacts; daily period inferred; uniqueness/order linkage unresolved. ~0.89% ratio remains directional only. | Page 6 demand signal only. |
 | R&R demand | BASE-12 | ~1,500 inbound + ~400 outbound; period/unique cases unknown | Page 8 working signal. |
 | Portal capacity drain | BASE-13 | User estimate ~50% | Page 3/9 only if visibly labelled estimate. |
-| Team capacity | CAP-01 to CAP-04 | Working model: 6 engineers (4 SDE2 + 2 SDE1); 1 SPM; 0 execution PM/APM | Page 11 footer after roster validation. |
+| Team capacity | CAP-01 to CAP-06 | Confirmed working model: 6 delivery engineers (2 Payment + 4 Portal/Platform); 1 engineering lead for oversight/solutioning, not delivery capacity; 1 SBA + 1 BA; 1 SPM; 0 execution PM/APM. Grade mix remains unverified. | Page 11 footer as `USER-SUPPLIED WORKING MODEL`; allocation remains open. |
 
 ### D2. Analytics and Finance contract
 
@@ -133,50 +133,55 @@ Page 2 may use Q1-12: 15 initiatives = 3 numeric signals, 2 delivery/rollout sta
 | INIT-10 | Foundations | Customer Friction Intelligence & CRM | DR-05 | Enables all customer-facing initiatives | Foundation |
 | INIT-11 | Foundations | Core Configuration & Controls | DR-14 | Capacity and incident reduction | Foundation |
 
-Q2 role column is planning hypothesis, not commitment. Timing and scope require `EXE-01` to `EXE-06`.
+Q2 role column and Page 11 lifecycle are planning hypotheses, not commitments. Final scope and allocation still require the open portions of `EXE-01` to `EXE-06`.
 
 ## F. Execution page design
 
 ### F1. CEO timeline wireframe
 
-Show initiative rows grouped by primary home. Draw lifecycle bars only after execution inputs resolve.
+Show initiative rows grouped by primary home. The lifecycle below is a **USER-SUPPLIED WORKING PLAN** refined into evidence gates. It is not a delivery commitment and is not yet reconciled against current work or named allocation.
 
-| Primary home / initiative | July | August | September | September decision |
-|---|---|---|---|---|
-| **Improve Order Completion** |  |  |  |  |
-| INIT-01 Ring AI Cart Recovery | Uncommitted | Uncommitted | Uncommitted | Scale / iterate / stop |
-| INIT-02 Checkout & Payment Journey | Uncommitted | Uncommitted | Uncommitted | Next milestone |
-| INIT-03 High-Intent Reconnection | Uncommitted | Uncommitted | Uncommitted | Scale / iterate / stop |
-| INIT-04 Discard Intelligence | Uncommitted | Uncommitted | Uncommitted | Prioritised lever pipeline |
-| INIT-05 Personalised HA Substitution | Uncommitted | Uncommitted | Uncommitted | Scale / iterate / stop |
-| **Reduce Cost to Serve** |  |  |  |  |
-| INIT-06 CSR Voicebot Phase 2 | Uncommitted | Uncommitted | Uncommitted | CPO proof / iterate |
-| **Build Customer Trust** |  |  |  |  |
-| INIT-07 TM Wallet Trust Revamp | Uncommitted | Uncommitted | Uncommitted | Correctness/adoption gate |
-| INIT-08 Returns & Refunds | Uncommitted | Uncommitted | Uncommitted | Next automation milestone |
-| **Platform & Product Foundations** |  |  |  |  |
-| INIT-09 Doctor Experience Platform | Uncommitted | Uncommitted | Uncommitted | Quality/effort readout |
-| INIT-10 Customer Friction Intelligence & CRM | Uncommitted | Uncommitted | Uncommitted | Coverage/workflow gate |
-| INIT-11 Core Configuration & Controls | Uncommitted | Uncommitted | Uncommitted | Self-service/control gate |
+| Primary home / initiative | Priority / size | July | August | September | September gate |
+|---|---|---|---|---|---|
+| **Improve Order Completion** |  |  |  |  |  |
+| INIT-01 Ring AI Cart Recovery | P0 / M | Build, gated by external-vendor readiness | Controlled pilot | Measure production cohort | Scale / iterate / stop versus POC |
+| INIT-02 Checkout & Payment Journey | P0 / XL | Discovery, architecture, baseline definition | Build, gated by Payment + Frontend capacity | Controlled pilot and readout | Confirm next rollout or iterate |
+| INIT-03 High-Intent Reconnection | P1 / L | Discovery | Gated MVP build/pilot | Measure reconnect-to-delivery | Scale / iterate / defer |
+| INIT-04 Discard Intelligence | P0 / TBD | Lock taxonomy and attribution MVP | Diagnostic cuts and lever sizing | Prioritised lever pipeline / first fix candidate | Accept attribution and prioritise controllable lever |
+| INIT-05 Personalised HA Substitution | P1 / M | No active phase | Discovery | Gated MVP build | Pilot-ready / carry forward |
+| **Reduce Cost to Serve** |  |  |  |  |  |
+| INIT-06 CSR Voicebot Phase 2 | P0 / M | Build | Controlled pilot and enhancement | Measure CPO bridge and quality | Scale / iterate |
+| **Build Customer Trust** |  |  |  |  |  |
+| INIT-07 TM Wallet Trust Revamp | P1 / L | No active phase | Discovery/readiness after High-Intent | Gated MVP build/pilot if Payment capacity clears | Correctness / adoption / continue |
+| INIT-08 Returns & Refunds | P0 / XXL | Journey/funnel discovery and bounded Phase 1 scope | Gated build/pilot of one bounded milestone | Controlled pilot / next milestone | Decide next automation milestone |
+| **Platform & Product Foundations** |  |  |  |  |  |
+| INIT-09 Doctor Experience Platform | P0 / XL | Discovery | Build first workflow slice | Controlled pilot | Effort / quality / compliance readout |
+| INIT-10 Customer Friction Intelligence & CRM | P1 / XXL | No active phase | Workflow and vendor discovery | Implementation readiness or narrow pilot | Vendor / scope decision |
+| INIT-11 Core Configuration & Controls | P0 / L | Build first controls | Pilot / expand if stable | Measure and decide next control set | Continue / expand |
 
-Lifecycle labels may be Discover, Design, Build, Pilot, Measure, and Scale. Blank space later means deliberate sequencing or capacity trade-off, not missing work.
+Legend: `P0/P1 = priority, not commitment`; sizes are uncalibrated planning labels; `Gated` means the phase starts only if the named capacity/dependency clears; `No active phase` is deliberate sequencing; September is a proof/decision point, not automatic scale.
 
-Proposed footer after `EVD-04`: `6 engineers (2 Payment + 4 Portal/Platform) | 1 SPM | 0 execution PM/APM | Analytics/Ops capacity unconfirmed`.
+Portfolio cut-line callouts:
+
+- **Payment:** Two delivery engineers allow Checkout and one bounded R&R Phase 1 milestone to begin in parallel. TM Wallet follows when Payment capacity clears; it is not a third concurrent build.
+- **Priority:** Doctor Experience is P0. High-Intent precedes TM Wallet in the product discovery sequence; other P1 work crosses the cut line only when capacity and dependencies clear.
+- **Measurement:** One SBA + one BA are available, but allocation across Discard Intelligence and the wider proof queue remains open.
+
+Capacity footer: `6 delivery engineers (2 Payment + 4 Portal/Platform) + 1 engineering lead (oversight/solutioning; not delivery capacity) | 1 SBA + 1 BA | 1 SPM | 0 execution PM/APM | USER-SUPPLIED WORKING MODEL`.
 
 ### F2. Internal execution evidence matrix - not CEO core page
 
-Complete before adding bars:
+Use a stream-level reconciliation matrix before treating the working lifecycle as commitment. Do not invent engineer-to-initiative assignments.
 
-| Working lane | Current in-flight work | Proposed initiative/phase | Estimate | Dependencies | What pauses | Evidence status |
-|---|---|---|---|---|---|---|
-| P1 | TBD | TBD | TBD | TBD | TBD | EVD-04 / EXE-01 to EXE-03 |
-| P2 | TBD | TBD | TBD | TBD | TBD | EVD-04 / EXE-01 to EXE-03 |
-| PO1 | TBD | TBD | TBD | TBD | TBD | EVD-04 / EXE-01 to EXE-03 |
-| PO2 | TBD | TBD | TBD | TBD | TBD | EVD-04 / EXE-01 to EXE-03 |
-| PO3 | TBD | TBD | TBD | TBD | TBD | EVD-04 / EXE-01 to EXE-03 |
-| PO4 | TBD | TBD | TBD | TBD | TBD | EVD-04 / EXE-01 to EXE-03 |
+| Stream / role | Confirmed working capacity | Working sequence or demand | Still unresolved |
+|---|---|---|---|
+| Payment | 2 delivery engineers | Checkout and bounded R&R Phase 1 may begin in parallel; TM Wallet follows when one lane clears. | Current work, named allocation, Frontend readiness, and exact R&R cut line. |
+| Portal/Platform | 4 delivery engineers | P0 demand includes Ring AI, Voicebot Phase 2, Doctor Experience, and Core Configuration; High-Intent, HA Substitution, and CRM remain gated. | Current work, named allocation, initiative concurrency, and displaced work. |
+| Engineering lead | Oversight and solutioning only | Supports architecture and execution across streams. | Availability by milestone; never count as seventh delivery engineer. |
+| Analytics/Ops | 1 SBA + 1 BA | Discard Intelligence plus initiative proof and operating baselines. | Named allocation, queue order, sources, dates, and Ops participation. |
+| Product | 1 SPM; 0 execution PM/APM | Discovery, metric design, prioritisation, and cross-stream coordination. | Sustainable discovery WIP and execution-support decision. |
 
-Trust timing must reserve/acknowledge Payment dependencies for Wallet and R&R (`EXE-05`).
+This matrix is internal evidence, not the CEO core visual. T-shirt sizes remain provisional until calibrated against throughput.
 
 ### F3. Commitment gate
 
@@ -188,7 +193,7 @@ No initiative phase becomes committed delivery until it has:
 4. Engineering estimate and allocation.
 5. Dependency owner.
 6. September decision criterion.
-7. Explicit trade-off: what pauses if this starts.
+7. Explicit portfolio cut-line: what is displaced or deferred if this starts.
 
 ## G. Page 12 - provisional decision structure
 

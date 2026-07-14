@@ -1,6 +1,6 @@
 # Project Truth - JAS Q2 Operating Plan
 
-**Status:** CANONICAL v3.2  
+**Status:** CANONICAL v3.3
 **Owner:** Apurva  
 **Last updated:** 2026-07-14  
 **Change authority:** User; canonical edits made only by assigned truth steward
@@ -108,11 +108,15 @@ Rules:
 
 ## 7. Capacity and execution truth
 
-- Working planning model: 6 active engineers, represented as 2 Payment and 4 Portal/Platform; 1 SPM; 0 execution PM/APM (`CAP-01` to `CAP-03`).
-- Whiteboard includes one additional blank/unallocated row. It is not committed capacity.
-- User-supplied grade mix is 4 SDE2 + 2 SDE1 (`CAP-04`). Six-engineer count, role mix, and grade mix require validation before being presented as independently verified.
+- User-confirmed planning model: 6 active delivery engineers, split as 2 Payment and 4 Portal/Platform; 1 SPM; 0 execution PM/APM (`CAP-01` to `CAP-03`).
+- One engineering lead supports oversight and solutioning but is not seventh delivery capacity (`CAP-05`).
+- One SBA and one BA are available as working Analytics/Operations support; exact allocation, dedicated availability, and queue remain unresolved (`CAP-06`).
+- User-supplied grade mix is 4 SDE2 + 2 SDE1 (`CAP-04`). Keep grade mix internal until roster validation.
+- Payment working sequence: Checkout and a bounded R&R Phase 1 may start in parallel across the two Payment engineers; TM Wallet follows when capacity clears.
+- Doctor Experience is P0. High-Intent Reconnection precedes TM Wallet in the remaining priority sequence.
+- P0/P1 and M/L/XL/XXL are user-supplied planning labels, not committed delivery or calibrated throughput proof.
 - CEO execution page uses initiative lifecycle rows across July/August/September. It does not use engineer swimlanes.
-- Timings stay uncommitted until current in-flight work, estimates, dependencies, allocation, and explicit trade-offs are reconciled.
+- User-supplied lifecycle phases may appear as a visibly labelled working plan. Timings stay uncommitted until current in-flight work, ownership, dependencies, allocation, and explicit portfolio cut-lines are reconciled.
 - Internal engineer/stream matrix may support planning or appendix; it must not replace portfolio timeline.
 - SPM bandwidth is portfolio constraint across discovery, measurement, prioritisation, delivery coordination, and stakeholder alignment. Leadership ask must describe throughput impact, not personal workload.
 

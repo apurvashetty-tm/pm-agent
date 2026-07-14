@@ -4,7 +4,7 @@ Project builds July-September JAS operating plan for CEO review.
 
 ## Current phase
 
-Phase 4 complete: structure baseline frozen under `DEC-01`, canonical source SHA recorded, and isolated Codex/Claude worktrees prepared. Phase 5 has not launched. No page prose, Claude drafting, or final deck production yet.
+Page 11 working lifecycle and capacity inputs are now populated in canonical staging. Updated source commit and provider-worktree retarget remain pending. Phase 5 has not launched; no page prose, Claude drafting, or final deck production has begun.
 
 ## Canonical read order
 
@@ -42,6 +42,7 @@ Future `runs/<run_id>/` folders are created only when independent drafts begin.
 - Numeric claims require evidence-register IDs.
 - CONFLICTED claims never enter CEO narrative.
 - Page 11 uses initiative lifecycle, not engineer lanes.
+- Page 11 lifecycle is a `USER-SUPPLIED WORKING PLAN`, not delivery commitment; the engineering lead is not counted among six delivery engineers.
 - Page 12 is written last.
 - Claude first enters in Phase 5, after Phase 4 freeze and post-freeze commit.
 - Codex and Claude use same committed source SHA and separate output paths.

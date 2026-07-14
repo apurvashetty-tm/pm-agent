@@ -1,11 +1,11 @@
 # CEO Operating Plan - Creative Brief
 
-**Status:** CANONICAL v1.1  
+**Status:** CANONICAL v1.2
 **Audience:** CEO  
 **Artifact:** Proposed 12-page JAS Q2 operating plan plus appendix; final medium pending  
-**Truth version:** `project_truth.md` v3.2  
-**Evidence version:** `evidence_register.md` v1.0  
-**Blueprint status/version:** `03_operating_plan_blueprint.md` v3.0 FROZEN BASELINE; `DEC-01` resolved
+**Truth version:** `project_truth.md` v3.3
+**Evidence version:** `evidence_register.md` v1.1
+**Blueprint status/version:** `03_operating_plan_blueprint.md` v3.1 FROZEN BASELINE; `DEC-01` resolved
 
 This brief governs expression. It protects creative freedom while keeping facts and strategy stable.
 
@@ -181,8 +181,11 @@ Each page must pass:
 ### Page 11 - execution
 
 - Use initiative lifecycle bars and September decision gates.
-- Do not populate timing until `EXE-01` to `EXE-06` resolve.
-- Capacity footer may show working model only with evidence label.
+- Working lifecycle inputs may populate, but must be labelled `USER-SUPPLIED WORKING PLAN`, not committed delivery.
+- P0/P1 indicate priority, not commitment. P1 work remains visibly gated where capacity is unresolved.
+- Replace generic September `Scale` with evidence gate: scale, iterate, defer, stop, or next milestone.
+- Capacity footer may show six delivery engineers, lead oversight, 1 SBA + 1 BA, and product model only with evidence label.
+- Keep unresolved current work, allocation, and trade-offs visible; do not imply seven delivery engineers.
 
 ### Page 12 - decisions
 

@@ -1,6 +1,6 @@
 # Open Questions - JAS Q2 Operating Plan
 
-**Status:** CANONICAL v2.2  
+**Status:** CANONICAL v2.3
 **Last updated:** 2026-07-14
 
 Only unresolved items capable of changing claim use, page structure, execution commitments, or leadership ask belong here. `Owner` and `delivery date` remain `TBD` until assigned; never infer them.
@@ -13,7 +13,7 @@ Only unresolved items capable of changing claim use, page structure, execution c
 | DEC-02 | Rewrite and approve exact Page 12 leadership asks after Pages 1-11 are populated. | Apurva / CEO discussion owner | After Pages 1-11 drafts; before final synthesis | Page 12 | Provisional placeholder only. |
 | DEC-03 | Confirm final medium: landscape PPTX + PDF, document, or both. | Apurva | Before artifact production | Final output | Open; PPTX + PDF recommended. |
 | DEC-04 | Decide whether Trust needs one headline metric or remains represented through Wallet and R&R proof. | Apurva + Analytics | Before final synthesis; blind drafts may carry visible unknown or propose both treatments | Final Trust treatment on Pages 4, 8, 10 | Open; data request DR-15. Recommended default if no reliable headline metric exists: use Wallet/R&R initiative proofs. |
-| DEC-05 | Confirm Q2 priority order and explicit trade-off rule when six-engineer capacity fills. | Apurva + leadership | Before Page 11 timing | Pages 5, 11, 12 | Open. |
+| DEC-05 | Confirm Q2 priority order and explicit trade-off rule when six-engineer capacity fills. | Apurva + leadership | Before Page 11 commitment/finalisation | Pages 5, 11, 12 | **Partial:** Doctor Experience moved to P0; Checkout + bounded R&R Phase 1 may start in parallel; Wallet follows; High-Intent precedes Wallet. Remaining Portal/Analytics cut-line and displacement rule stay open. |
 | DEC-06 | Choose execution-support model: PM/APM, program support, or another named owner model. | Leadership | After capacity case is populated; before Page 12 finalisation | Page 12 | Open; do not pre-state approved headcount. |
 
 ## 2. Analytics and Finance requests
@@ -45,18 +45,18 @@ User intent: take requests to Analytics on 2026-07-15. Delivery owners and dates
 | EVD-01 | Reconcile incident PDF headline (~255 pings/~1,350 replies) with row sums (188/1,495). | Source owner | Before incident-volume claim | Pages 3, 9; appendix | Open; use only 21 defects and 20/1 status meanwhile. |
 | EVD-02 | Reconcile NFS reported Rs1.4 Cr/month Phase 1 total with listed historical peaks totaling Rs124 L/month excluding ED. | NFS/business owner | Before precise opportunity claim | Page 2; appendix | Open; Rs50 L current run-rate remains source-reported. |
 | EVD-03 | Define Skip HA 9.2% comparison window, denominator, and whether value is percentage or percentage points. | Analytics / feature owner | Before quantified outcome wording | Page 2 | Open; call numeric adoption signal meanwhile. |
-| EVD-04 | Confirm active engineering roster, 2 Payment + 4 Portal/Platform split, grades, and blank whiteboard row status. | Engineering manager | Before capacity claim | Pages 11, 12 | Open; working model only. |
+| EVD-04 | Independently validate active engineering roster, stream split, and grade mix. | Engineering manager | Before independently verified capacity claim | Pages 11, 12 | **Partial:** user confirms six delivery engineers and 2+4 split; whiteboard extra row is engineering lead for oversight/solutioning, not delivery capacity. Grade mix remains unverified. |
 
 ## 4. Execution inputs
 
 | ID | Input required | Owner | Needed by | Blocks | Status |
 |---|---|---|---|---|---|
-| EXE-01 | Current in-flight work and completion state for all six active engineers/streams. | Engineering leads | Before Page 11 population | Page 11 | Open. |
-| EXE-02 | Estimate, dependency, accountable owner, and September decision criterion for every initiative phase. | Product + Engineering | Before Page 11 population | Page 11 | Open. |
-| EXE-03 | Explicit sequence and trade-off: what pauses when each initiative starts. | Product + leadership | Before timing commitment | Pages 5, 11, 12 | Open. |
-| EXE-04 | Named Analytics and Operations capacity for instrumentation, dashboards, and workflow changes. | Functional leaders | Before execution commitment | Pages 10, 11, 12 | Open. |
-| EXE-05 | Payment-platform dependencies and reserved capacity for Wallet and R&R refund automation. | Payment lead | Before Trust timing | Pages 8, 11 | Open. |
-| EXE-06 | Vendor/commercial dependencies for Juspay/PG orchestration and Kapture/equivalent CRM. | Business/technology owners | Before related milestones | Pages 6, 9, 11 | Open. |
+| EXE-01 | Current in-flight work and completion state for all six active engineers/streams. | Engineering leads | Before Page 11 commitment | Page 11 | Open; working-plan lifecycle may appear with explicit non-commitment label. |
+| EXE-02 | Estimate, dependency, accountable owner, and September decision criterion for every initiative phase. | Product + Engineering | Before committed Page 11 timing | Page 11 | **Partial:** working priorities, phases, and most relative sizes supplied; accountable owners, calibrated estimates, several dependencies, and some decision criteria remain open. |
+| EXE-03 | Explicit sequence and trade-off: what pauses when each initiative starts. | Product + leadership | Before timing commitment | Pages 5, 11, 12 | **Partial:** Payment sequence and Doctor/High-Intent/Wallet priority order supplied; Portal/Analytics displacement rule and current-work trade-offs remain open. |
+| EXE-04 | Named Analytics and Operations capacity for instrumentation, dashboards, and workflow changes. | Functional leaders | Before execution commitment | Pages 10, 11, 12 | **Partial:** 1 SBA + 1 BA identified; allocation, dedicated availability, queue, and named ownership remain open. |
+| EXE-05 | Payment-platform dependencies and reserved capacity for Wallet and R&R refund automation. | Payment lead | Before Trust timing | Pages 8, 11 | **Partial:** Checkout and bounded R&R Phase 1 may start in parallel; Wallet follows. Exact engineer allocation, checkout capacity need, and refund-automation dependency remain open. |
+| EXE-06 | Vendor/commercial dependencies for Juspay/PG orchestration and Kapture/equivalent CRM. | Business/technology owners | Before related milestones | Pages 6, 9, 11 | **Partial:** Ring AI external-vendor and Checkout Frontend dependencies identified; Juspay/PG and CRM vendor/commercial readiness remain open. |
 
 ## 5. Resolved decisions - do not reopen without new user direction
 
