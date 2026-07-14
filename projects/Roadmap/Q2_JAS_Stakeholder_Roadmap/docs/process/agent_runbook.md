@@ -1,6 +1,6 @@
 # Independent Draft, Review, and Synthesis Runbook
 
-**Status:** CANONICAL PROCESS v1.3  
+**Status:** CANONICAL PROCESS v1.4
 **Last updated:** 2026-07-14
 
 Purpose: let Codex, Claude, or another capable agent draft and review CEO operating plan without depending on original chat window.
@@ -105,8 +105,8 @@ Released for cross-review: yes/no
 |---|---|---|
 | Truth steward | Capture approved fact/strategy changes | `project_truth.md`, `evidence_register.md`, `open_questions.md` |
 | Run coordinator | Assign work, maintain run state | `manifest.md`, `session_handoff.md` |
-| Codex writer | Blind page draft | Assigned Codex page files only |
-| Claude writer | Blind page draft | Assigned Claude page files only |
+| Codex writer | Blind provider-wide Pass 1 draft | Assigned Codex output root: page files, structure proposal, and run report |
+| Claude writer | Blind provider-wide Pass 1 draft | Assigned Claude output root: page files, structure proposal, and run report |
 | Cross-reviewer | Review peer output without editing it | Assigned review files only |
 | Synthesis editor | Select strongest treatment and resolve page draft | `synthesis/pages/`, `synthesis_log.md` |
 | Deck editor | Fix full-deck flow and expression | `deck_edit.md` and approved artifact source |
@@ -121,7 +121,7 @@ Codex and Claude:
 1. Start from same committed SHA.
 2. Read canonical inputs in order listed in Section 1.
 3. Do not read peer draft.
-4. Write only assigned provider/pass/page path.
+4. Write only assigned provider output root, including assigned page files, provider proposal, and run report.
 5. Cite claim IDs and unresolved IDs in working draft.
 6. Preserve one primary home per initiative.
 7. Put structural challenges in provider-specific proposal file.
@@ -131,9 +131,11 @@ Each assigned `working/page_packets/page_XX.md` compiles page objective, CEO tak
 
 Creativity remains open within `creative_brief.md`. Pass 1 begins only from post-`DEC-01` freeze commit. Structural challenges remain allowed through provider-specific proposal files, but agents draft against frozen spine until coordinator accepts a new user-approved source commit.
 
-## 7. Codex multi-agent waves
+## 7. Writer shape and optional multi-agent fallback
 
-Current Codex environment supports four concurrent agents including coordinator. Recommended pattern:
+Current JAS Phase 5 Pass 1 uses one coherent writer per provider. Reason: canonical context is read once per provider, deck voice stays consistent, and Codex/Claude still run concurrently in isolated worktrees.
+
+If a provider-wide run fails or later revision needs specialist treatment, Codex supports four concurrent agents including coordinator. Fallback pattern:
 
 - Coordinator remains one slot.
 - Up to three page agents run per wave.
@@ -145,17 +147,18 @@ Current Codex environment supports four concurrent agents including coordinator.
   - Page 12 waits until Pages 1-11 synthesis.
 - Global deck editor reviews all pages after synthesis.
 
-One-agent-per-page is allowed, but no page becomes final without cross-review and deck-level edit.
+One-agent-per-page is allowed only as fallback; no page becomes final without cross-review and deck-level edit.
 
 ## 8. Collect Pass 1 outputs
 
 Before cross-review:
 
-1. Each provider commits only provider-specific Pass 1 files.
-2. Coordinator records result commit SHAs.
-3. Coordinator cherry-picks both provider commits into orchestration branch/worktree.
-4. Verify paths do not collide and source SHA remains identical.
-5. Release peer drafts to reviewers only after both blind drafts are collected.
+1. Each provider finishes its provider-specific Pass 1 files and stops without committing.
+2. Coordinator validates that each worktree changed only its assigned provider output root.
+3. Coordinator stages and commits each provider output on its isolated provider branch, then records result commit SHAs.
+4. Coordinator cherry-picks both provider commits into orchestration branch/worktree.
+5. Verify paths do not collide and source SHA remains identical.
+6. Release peer drafts to reviewers only after both blind drafts are collected.
 
 ## 9. Cross-review
 
@@ -245,7 +248,7 @@ Before anything enters `outputs/`:
 - Never launch both providers against same writable draft file.
 - Reviewers receive peer draft only after Pass 1 completes.
 - Synthesis uses one exclusive writer.
-- Provider commits are collected into one orchestration branch before cross-review.
+- Coordinator-created provider commits are collected into one orchestration branch before cross-review.
 - Exact provider commands belong in run manifest because installed CLI flags may change; do not hardcode stale commands here.
 
 ## 15. Handoff rule

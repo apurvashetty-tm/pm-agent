@@ -1,7 +1,7 @@
 # Session Handoff - JAS Q2 Operating Plan
 
 **Updated:** 2026-07-14  
-**Current phase:** Page 11 working lifecycle and capacity inputs are committed; both provider worktrees are pinned to the same source SHA. Phase 5 has not launched. No page prose and no Claude drafting.
+**Current phase:** Page 11 working lifecycle and capacity inputs are committed; both provider worktrees are pinned to the same source SHA. Quality-first Terminal prompts are drafted in coordinator source. Phase 5 has not launched. No page prose and no Claude drafting.
 
 State report only. Canonical files override this handoff.
 
@@ -83,4 +83,4 @@ Open `DR-*`/`EVD-*` items do not block qualitative structure; they block quantif
 
 ## Drafting warning
 
-Do not launch Codex or Claude until Phase 5 release scope plus exact commands and prompt records are approved. Page 12 remains excluded.
+Do not launch Codex or Claude until Phase 5 release scope plus exact commands and prompt records are approved. Proposed commands live in `working/phase5_prompts/README.md`. Page 12 remains excluded.

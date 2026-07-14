@@ -4,7 +4,7 @@ Project builds July-September JAS operating plan for CEO review.
 
 ## Current phase
 
-Page 11 working lifecycle and capacity inputs are committed at provider source SHA `bca3838f5b74db0bf50957ce1e19abc4547fa4b7`; both Codex and Claude worktrees are pinned to it. Phase 5 has not launched; no page prose, Claude drafting, or final deck production has begun.
+Page 11 working lifecycle and capacity inputs are committed at provider source SHA `bca3838f5b74db0bf50957ce1e19abc4547fa4b7`; both Codex and Claude worktrees are pinned to it. Phase 5 Terminal prompts and launch guide are prepared but not approved or launched. No page prose, Claude drafting, or final deck production has begun.
 
 ## Canonical read order
 
@@ -13,12 +13,13 @@ Page 11 working lifecycle and capacity inputs are committed at provider source S
 3. `docs/context/open_questions.md` - unresolved decisions, data, owners, dates, blockers.
 4. `working/03_operating_plan_blueprint.md` - frozen Pages 1-11 spine plus provisional Page 12 treatment.
 5. `working/04_analytics_request_pack.md` - assignable DR-01 to DR-15 measurement contract.
-6. `working/page_packets/README.md` then `page_01.md` to `page_12.md` - bounded inputs for future page authors.
+6. `working/page_packets/README.md` then assigned page packets - bounded inputs for future page authors. Phase 5 Pass 1 reads `page_01.md` to `page_11.md` only; `page_12.md` remains coordinator-only until synthesis.
 7. `working/05_phase3_review_pack.md` - evidence posture, page readiness, decision recommendations, kill-assumptions, and Phase 4 gate.
 8. `working/06_phase4_run_manifest.md` - frozen source SHA, provider isolation, release scope, and launch gates.
-9. `docs/context/creative_brief.md` - narrative and visual freedom.
-10. `docs/process/agent_runbook.md` - independent drafting, review, synthesis, Terminal workflow.
-11. `docs/context/session_handoff.md` - current state only.
+9. `working/phase5_prompts/README.md` - proposed quality-first models, exact Terminal commands, output paths, and review rule; not launch authorization.
+10. `docs/context/creative_brief.md` - narrative and visual freedom.
+11. `docs/process/agent_runbook.md` - independent drafting, review, synthesis, Terminal workflow.
+12. `docs/context/session_handoff.md` - current state only.
 
 Original chat is provenance, not dependency. New decisions must enter canonical files before agent runs.
 
@@ -29,7 +30,7 @@ docs/context/   canonical strategy, evidence, decisions, creative brief, handoff
 docs/process/   agent workflow and file ownership
 docs/roles/     PM working posture
 inputs/         immutable evidence and whiteboards
-working/        frozen blueprint, Analytics request pack, page packets, and review/run records
+working/        frozen blueprint, Analytics request pack, page packets, review/run records, and Phase 5 prompt templates
 references/     archived/superseded context only
 outputs/        approved stakeholder artifacts only
 ```

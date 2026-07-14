@@ -1,6 +1,6 @@
 # Phase 4 Freeze and Phase 5 Run Manifest
 
-**Status:** PREPARED - PAGE 11 SOURCE PINNED; NOT LAUNCHED
+**Status:** PREPARED - PROMPTS DRAFTED; NOT LAUNCHED
 **Run ID:** `jas-q2-20260714-blind-v1`  
 **Prepared:** 2026-07-14  
 **Coordinator / truth steward:** Apurva  
@@ -88,12 +88,49 @@ Both providers must:
 
 ## 7. Commands and completion record
 
-Exact commands must be recorded immediately before Phase 5 launch.
+Exact commands and immutable prompt fingerprints are prepared below. They must be re-verified immediately before Phase 5 launch.
+
+Self-contained prompt templates are orchestration artifacts outside provider source SHA and will be passed through stdin. Preparation does not approve release or launch.
+
+| Provider | Prompt | SHA-256 | Model / effort |
+|---|---|---|---|
+| Codex | `working/phase5_prompts/codex_pass1.md` | `2d493d1aea90856ff09ac30eb1711883cb205b53f1da0316c468b38a1dcb8c94` | `gpt-5.6-sol` / `high` |
+| Claude | `working/phase5_prompts/claude_pass1.md` | `dbafd9422a695e205aed07ab20c4474d92d0d78583ab80752b7a8119ebb3770c` | `claude-opus-4-8` / `high` |
+
+Prepared Codex command:
+
+```bash
+cd /Users/mac/src/pm-agent-worktrees/jas-q2-codex-pass1
+
+codex -a never exec \
+  --model gpt-5.6-sol \
+  -c 'model_reasoning_effort="high"' \
+  --sandbox workspace-write \
+  --ignore-user-config \
+  --strict-config \
+  -C /Users/mac/src/pm-agent-worktrees/jas-q2-codex-pass1 \
+  - < /Users/mac/src/pm-agent/projects/Roadmap/Q2_JAS_Stakeholder_Roadmap/working/phase5_prompts/codex_pass1.md
+```
+
+Prepared Claude command:
+
+```bash
+cd /Users/mac/src/pm-agent-worktrees/jas-q2-claude-pass1
+
+claude --print \
+  --safe-mode \
+  --model claude-opus-4-8 \
+  --effort high \
+  --permission-mode acceptEdits \
+  --allowedTools "Read,Glob,Grep,Write,Edit,Bash(git rev-parse *),Bash(git status *),Bash(git diff *),Bash(mkdir -p *)" \
+  --output-format text \
+  < /Users/mac/src/pm-agent/projects/Roadmap/Q2_JAS_Stakeholder_Roadmap/working/phase5_prompts/claude_pass1.md
+```
 
 | Provider | Exact command | Released pages | Result SHA | Collected | Cross-review released |
 |---|---|---|---|---|---|
-| Codex | TBD - Phase 5 launch | None | TBD | No | No |
-| Claude | TBD - Phase 5 launch | None | TBD | No | No |
+| Codex | Prepared above; not executed | None | TBD | No | No |
+| Claude | Prepared above; not executed | None | TBD | No | No |
 
 ## 8. Launch checklist
 
@@ -104,11 +141,11 @@ Exact commands must be recorded immediately before Phase 5 launch.
 - [x] Provider branches and output roots do not collide.
 - [x] Creative proposal channel preserved.
 - [ ] Pass 1 release scope explicitly approved.
-- [ ] Exact Codex command and prompt paths recorded.
-- [ ] Exact Claude command and prompt paths recorded.
-- [ ] Page assignments/waves recorded.
+- [x] Exact Codex command and prompt paths recorded.
+- [x] Exact Claude command and prompt paths recorded.
+- [x] Page assignments/waves recorded: one coherent writer per provider, Pages 1-11.
 - [ ] Cross-review remains closed until both Pass 1 runs complete.
 
 ## 9. Current stop point
 
-Page 11 source is committed and both provider worktrees are pinned to `bca3838f5b74db0bf50957ce1e19abc4547fa4b7`. Phase 5 is still not launched. Next: record exact provider commands, prompts, and released pages; then stop for explicit launch approval before page drafting.
+Page 11 source is committed and both provider worktrees are pinned to `bca3838f5b74db0bf50957ce1e19abc4547fa4b7`. Quality-first Terminal prompts, exact commands, and prompt fingerprints are recorded. Phase 5 is still not launched. Next: approve or revise the model/run shape and explicitly release Pages 1-11; then re-verify fingerprints and execute both providers concurrently.
