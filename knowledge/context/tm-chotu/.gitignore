@@ -1,0 +1,13 @@
+.DS_Store
+*.swp
+.env
+.env.local
+__pycache__/
+*.pyc
+
+# Plugin state — per-user, not source-controlled
+.state.json
+
+# Skill requests are local drafts; team-approved ones flow through PR
+SKILL_REQUESTS/*.md
+!SKILL_REQUESTS/.gitkeep

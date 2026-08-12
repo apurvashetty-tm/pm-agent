@@ -2,6 +2,9 @@
 
 GitHub-backed PM workflow system for Truemeds. Load org context from Google Drive → create PRDs → review → anticipate objections → push to GitHub. Automatically versioned.
 
+Local TrueMeds reference package: `knowledge/context/tm-chotu/`. Read
+`knowledge/context/tm-chotu-integration.md` before TrueMeds-specific work.
+
 ## How to Use
 
 **In Claude Code:**

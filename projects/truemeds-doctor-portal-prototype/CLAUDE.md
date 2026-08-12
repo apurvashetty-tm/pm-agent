@@ -105,6 +105,12 @@ Use these labels consistently:
 
 ---
 
+## Confluence
+
+Markdown in `docs/` is the source of truth; the Confluence page ([PROD space, "Truemeds Doctor Portal — PRD"](https://truemeds.atlassian.net/wiki/spaces/PROD/pages/1891303437/Truemeds+Doctor+Portal+PRD), top-level, no parent) is generated from it for stakeholder review/commenting. Never sync to Confluence unless explicitly told "sync" — edits made directly on Confluence during a review round are not automatically pulled back into this repo.
+
+---
+
 ## Reporting rule after every coding task
 
 After each coding task, Claude must output a short structured report:

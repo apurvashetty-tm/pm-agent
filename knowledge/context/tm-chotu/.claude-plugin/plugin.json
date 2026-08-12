@@ -1,0 +1,34 @@
+{
+  "name": "tm-chotu",
+  "version": "0.1.20",
+  "description": "Truemeds chotu — Claude Code plugin packaging full Truemeds knowledge (business, customer, data, definitions) for every Truemeds employee. Caveman default. Soft onboarding wizard. Hard-stop query rigor.",
+  "author": {
+    "name": "Truemeds Analytics",
+    "url": "https://gitlab.com/tm-exp/tm-chotu"
+  },
+  "homepage": "https://gitlab.com/tm-exp/tm-chotu",
+  "repository": "https://gitlab.com/tm-exp/tm-chotu",
+  "license": "UNLICENSED",
+  "keywords": [
+    "truemeds",
+    "internal",
+    "metabase",
+    "mixpanel",
+    "analytics",
+    "knowledge"
+  ],
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo '{\"continue\":true,\"suppressOutput\":true,\"systemMessage\":\"tm-chotu loaded. Caveman full. Run /tm-chotu-onboard if first session.\"}'",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "tm-chotu",
+  "description": "Truemeds chotu — company knowledge plugin for every Truemeds employee. Caveman default. Soft onboard wizard. Hard-stop query rigor. Substitution algo, customer cohorts, lifecycle flows, 53 DB routing.",
+  "owner": {
+    "name": "Truemeds Analytics",
+    "url": "https://gitlab.com/tm-exp/tm-chotu"
+  },
+  "plugins": [
+    {
+      "name": "tm-chotu",
+      "description": "Internal Truemeds knowledge plugin. All business + customer + data context for every employee. Requires Metabase MCP + Mixpanel MCP. Companion plugin: superpowers.",
+      "source": "./",
+      "category": "internal"
+    }
+  ]
+}

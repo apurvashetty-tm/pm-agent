@@ -6,6 +6,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Read `AGENTS.md` first. It is the canonical workspace protocol for all agents (read order, priority order, git safety rules). This file adds architecture/commands context on top of it — it does not replace it.
 
+For TrueMeds-specific work, also read `knowledge/context/tm-chotu-integration.md`.
+Load `knowledge/context/tm-chotu/skills/using-tm-chotu/SKILL.md` and only
+relevant domain skills before drafting or analyzing. The local package is
+reference context; live metrics still require authorized data access.
+
 ## What this repo is
 
 Truemeds PM workflow system, two kinds of content live side by side:

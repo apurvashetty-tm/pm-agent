@@ -1,5 +1,10 @@
 # Truemeds PM Agent Context
 
+Detailed reusable TrueMeds context is stored in `knowledge/context/tm-chotu/`.
+Use `knowledge/context/tm-chotu-integration.md` for read order, truth labels,
+freshness rules, and cross-tool handoff. This short file remains a lightweight
+orientation layer.
+
 ## Organization
 
 ### Team Structure
@@ -46,4 +51,3 @@
 
 ## Key Metrics
 [Add your key metrics]
-

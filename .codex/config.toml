@@ -4,3 +4,28 @@ args = [
     "-y",
     "caveman-shrink",
 ]
+
+[mcp_servers.claude-context]
+command = "npx"
+args = ["@zilliz/claude-context-mcp@latest"]
+
+[mcp_servers.claude-context.env]
+EMBEDDING_PROVIDER = "Ollama"
+OLLAMA_HOST = "http://127.0.0.1:11434"
+OLLAMA_MODEL = "nomic-embed-text"
+MILVUS_ADDRESS = "127.0.0.1:19530"
+
+[mcp_servers.code-review-graph]
+command = "/Users/mac/.local/pipx/venvs/code-review-graph/bin/python"
+args = [
+    "-m",
+    "code_review_graph",
+    "serve",
+]
+
+[mcp_servers.token-savior]
+command = "/Users/mac/.local/token-savior-venv/bin/token-savior"
+
+[mcp_servers.token-savior.env]
+WORKSPACE_ROOTS = "/Users/mac/src/pm-agent"
+TOKEN_SAVIOR_CLIENT = "claude-code"
