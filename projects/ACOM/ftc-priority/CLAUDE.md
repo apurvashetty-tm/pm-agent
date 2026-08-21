@@ -61,7 +61,7 @@ volume, bucket-level conversion model, `final_score` composition, Metabase cards
 
 ## Pointers
 - Spec (source of truth) → `docs/ftc-priority-prd.md`
-- Confluence: *ACOM — FTC Priority One-Pager* (page 1981251599, space PROD) —
+- Confluence: *ACOM — FTC Priority* (page 1981251599, space PROD) —
   generated from the markdown; markdown wins on conflict
 - Current-process reference (read-only) → `../ring-ai/CLAUDE.md`
 - ACOM umbrella → `../CLAUDE.md`

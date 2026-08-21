@@ -26,4 +26,4 @@ Sub-initiatives may target the same underlying data (`incomplete_order_details`,
 - Ring AI (current, active) → `ring-ai/CLAUDE.md`
 - FTC Priority (spec complete, in review) → `ftc-priority/CLAUDE.md`
 - Confluence: *ACOM 2.0 — Ring AI Rapid Pilot PRD* (page 1850114059, space PROD) — Ring-specific, not the umbrella
-- Confluence: *ACOM — FTC Priority One-Pager* (page 1981251599, space PROD) — FTC-specific, not the umbrella
+- Confluence: *ACOM — FTC Priority* (page 1981251599, space PROD) — FTC-specific, not the umbrella
