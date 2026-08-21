@@ -13,34 +13,55 @@ Before project-specific work, also read:
 Use project-local files for project truth and handoff. Use root knowledge files only for reusable company/system context.
 
 ## What this is
-Quick-win, immediate fix to the **current BAU cart-recovery process** —
-independent of `ring-ai/`, ships **before** it. Not a new vendor, not a new
-build track: an addition to the existing lead-selection query.
+Quick-win change to the **current BAU cart-recovery process** — independent of
+`ring-ai/`, ships **before** it. Not a new vendor, not a new build track: one
+extra lead-selection query in front of the existing "Assign Order" query, so
+FTC carts are served before the BAU queue.
 
-Status: **brainstorming stage** — scaffolding only, no query/logic decided yet.
+Status: **spec complete, in review.** Canonical spec: **`docs/ftc-priority-prd.md`**
+(also on Confluence — see Pointers).
 
-## Why
-Reduce CAC by converting more new customers. Cart-recovery outreach today
-treats all incomplete orders alike; this adds an FTC-priority pass so
-new-customer carts get worked ahead of the BAU queue.
+## Locked decisions
+- **FTC signal = `iod.is_ftc`.** Derived from `order_details` with additional
+  run-time computation; derivation undocumented and unvalidated against the
+  canonical FTC definition (first *delivered* order). **Accepted as-is** with a
+  written call-out. Supersedes the earlier working definition (zero delivered
+  orders in `order_details`) — we are not computing FTC ourselves.
+- **Threshold = `order_value > 700`, hardcoded.** Changing it requires a
+  deployment. Deliberate, to keep the build to one release.
+- **Two queries.** Query 1 (FTC priority) → 0 rows → Query 2 (BAU, unchanged).
+- **All agents get FTC-first.** No dedicated FTC agent pool, no agent categorisation.
+- **The threshold is the only throttle.** No cap, no ratio, no counter.
+- **Re-attempts:** existing hold-order behaviour, inherited. Nothing built.
+- **Manual Google Sheet calling stops once live** — portal verified first, so
+  there is no coverage gap on cutover.
 
-## Working definition (locked by user, this session)
-FTC = customer with **zero delivered orders** in `order_details`.
-- Ignore returns, partial returns — they don't count against/for this.
-- `[OPEN DECISION]` Reconcile against org-wide FTC definition (tm-chotu) before
-  this ships — may already differ (delivered vs. placed, time window, etc).
+## Why ₹700
+Two independent legs, both in PRD §3: the **delivery-fee floor** (no delivery fee
+above ₹550; ₹700 leaves buffer for cart shrinkage) and **agent capacity**
+(~2,300 carts/day ≈ 23% of dials, morning backlog cleared in ~1.5–2 hrs instead
+of ~7). Treated as a **starting point** — Analytics to re-derive it from
+bucket-level conversion probability across the full AOV range.
 
-## Relationship to ring-ai/
-No dependency. `../ring-ai/CLAUDE.md` is read-only reference for understanding
-today's process/query (`incomplete_order_details`, `assigned_to`, BAU query
-shape) — nothing here waits on or feeds into Ring AI.
+## Guardrails — do NOT do these (settled)
+- **Don't modify the BAU query** — it is the unchanged Step-2 fallback.
+- **Don't add a cap, ratio or counter** — the threshold does the throttling.
+- **Don't build retry/re-attempt logic** — hold-order already covers it.
+- **Don't make the threshold configurable in this phase** — that is Phase 2, a
+  separate Jira raised after Phase 1 ships.
+- **Don't bring Ring AI into this project's docs** — decided in review; the two
+  initiatives are kept separate for now.
+- **Don't attribute claims to a team** in the PRD ("Engineering has confirmed…") —
+  state the fact, or list it as an open question.
+- **Never sync to Confluence/Atlassian unless explicitly told "sync."**
 
 ## Open questions
-- Exact insertion point: new query *in addition to* BAU (as stated) — does it
-  run first, or interleave? What breaks the tie among multiple FTC carts?
-- Priority mechanism: separate query tier, or a sort/weight added to BAU output?
-- Any cap/throttle, or unlimited FTC-first?
+Tracked in PRD §8 — NFTC "starved" threshold, live confirmation of the ~2,300/day
+volume, bucket-level conversion model, `final_score` composition, Metabase cards.
 
 ## Pointers
+- Spec (source of truth) → `docs/ftc-priority-prd.md`
+- Confluence: *ACOM — FTC Priority One-Pager* (page 1981251599, space PROD) —
+  generated from the markdown; markdown wins on conflict
 - Current-process reference (read-only) → `../ring-ai/CLAUDE.md`
 - ACOM umbrella → `../CLAUDE.md`

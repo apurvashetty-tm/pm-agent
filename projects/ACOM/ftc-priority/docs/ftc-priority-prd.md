@@ -1,4 +1,4 @@
-# FTC Priority in Assisted Commerce — One-Pager
+# FTC Priority in Assisted Commerce
 
 **Owner:** Apurva Shetty · **Date:** 21 Aug 2026 · **Status:** For review
 **Stakeholders:** Anbu Dhileepan, Abhishek Rao, Mandar Bondarde, Akshat Nayyar, Engineering, Analytics
