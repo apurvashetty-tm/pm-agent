@@ -5,14 +5,15 @@
 ## Workspace memory
 
 Before project-specific work, also read:
-- `../../AGENTS.md`
-- `../../context/Claude.md`
-- relevant files in `../../knowledge/context/`
+- `../../../AGENTS.md`
+- `../../../context/Claude.md`
+- relevant files in `../../../knowledge/context/`
+- `../CLAUDE.md` (ACOM umbrella — the cart-recovery problem this initiative serves, and its sibling initiatives)
 
 Use project-local files for project truth and handoff. Use root knowledge files only for reusable company/system context.
 
 ## What this is
-Truemeds is adding **AI voice pre-qualification** to dropped-cart (incomplete-order) recovery, with **Ring AI** as the first vendor. There are two layers of work:
+This is one initiative under **ACOM** (`../CLAUDE.md`): AI voice pre-qualification for dropped-cart (incomplete-order) recovery, with **Ring AI** as the first vendor. There are two layers of work:
 - **Rapid Pilot** — the **current build target**. A thin, reversible bolt-on to today's ACOM "Assign Order" flow. Canonical spec: **`docs/rapid-pilot-prd.md`** (also on Confluence, page 1850114059).
 - **Future-state** — the full vendor-agnostic voice-bot layer: `docs/voicebot-cart-recovery-prd.md` + `docs/mvp-engineering-walkthrough.md`. Context, not the immediate build.
 

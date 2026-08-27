@@ -67,7 +67,7 @@ Every workspace under `projects/[name]/` follows `templates/project-scaffold/CLA
 - Prototypes lean on `[MOCK ASSUMPTION]` for backend/data gaps rather than inventing product logic; ambiguous business-critical logic gets flagged to `open_questions.md`, not guessed.
 - After any coding task in a project: update that project's `session_handoff.md` (status, files changed, validation done, gaps, next step) before reporting back — this is what the next session resumes from.
 
-Example active projects: `projects/truemeds-doctor-portal-prototype/` (mobile-web prototype split across `index.html`, `app.js`, and `styles.css`), `projects/acom-ring-ai/` (PRD/spec-only, no code — source of truth is markdown, Confluence is generated from it, never sync to Confluence unless explicitly told).
+Example active projects: `projects/truemeds-doctor-portal-prototype/` (mobile-web prototype split across `index.html`, `app.js`, and `styles.css`), `projects/ACOM/` (umbrella for cart-recovery/cart-dropout initiatives; `projects/ACOM/ring-ai/` is the current one — PRD/spec-only, no code — source of truth is markdown, Confluence is generated from it, never sync to Confluence unless explicitly told).
 
 ## Memory updates
 
