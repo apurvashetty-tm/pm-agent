@@ -1,0 +1,14 @@
+# Netlify configuration — Truemeds Price Lock prototype
+# Static site, no build step. Netlify serves the prototype folder as the site root,
+# so index.html loads with its sibling styles.css and app.js (relative paths).
+# Any change pushed to this branch (branch: price-lock-proto) redeploys automatically.
+
+[build]
+  publish   = "projects/truemeds-price-lock/prototype/price-lock"
+  command   = ""
+
+# Belt-and-suspenders: send bare "/" to the modular entry point.
+[[redirects]]
+  from   = "/"
+  to     = "/index.html"
+  status = 200
