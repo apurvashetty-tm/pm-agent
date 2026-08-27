@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Price Lock: Move the Lever</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  --bg:#eef2f7;--ink:#15203a;--muted:#5f6b83;--faint:#8b97ad;
+  --line:#e2e8f1;--line2:#d3dce8;--surface:#ffffff;--wash:#f6f9fd;
+  --blue:#2463e0;--blue-ink:#1a49aa;--blue-soft:#eaf1ff;--blue-line:#b9cdf6;
+  --green:#0f9d63;--green-soft:#e6f7ef;--green-line:#bfe6d3;
+  --clay:#c06a1f;--clay-soft:#fbefdd;--clay-line:#eccfa0;
+  --violet:#6b3fd0;--violet-soft:#f0eaff;--violet-line:#d8c9f6;
+  --red:#c8443f;--red-soft:#fdeceb;--red-line:#f0c9c7;--grey-soft:#eef1f6;
+  --radius:16px;--shadow:0 1px 2px rgba(21,32,58,.05),0 10px 30px rgba(21,32,58,.07);--shadow-sm:0 1px 2px rgba(21,32,58,.06);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Manrope",system-ui,-apple-system,sans-serif;font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums}
+.wrap{max-width:1080px;margin:0 auto;padding:0 22px}
+h1,h2,h3{margin:0;letter-spacing:-.02em;line-height:1.12;font-weight:800}
+p{margin:0}
+button{font:inherit;cursor:pointer}
+.eyebrow{font-size:.7rem;font-weight:800;letter-spacing:.13em;text-transform:uppercase;color:var(--blue)}
+.secnum{font-family:"IBM Plex Mono",monospace;color:var(--blue);font-size:.78rem;font-weight:600}
+
+.top{position:sticky;top:0;z-index:20;background:rgba(238,242,247,.9);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;height:54px}
+.brand{display:flex;align-items:center;gap:9px;font-weight:800;font-size:.95rem}
+.brand .m{width:26px;height:26px;border-radius:8px;background:var(--blue);color:#fff;display:grid;place-items:center}
+.brand small{color:var(--faint);font-weight:600}
+.top .step{font-size:.78rem;color:var(--muted);font-weight:600}
+
+.hero{padding:42px 0 8px}
+.hero h1{font-size:clamp(1.9rem,4.5vw,2.9rem)}
+.hero h1 .b{color:var(--blue)}
+.hero .sub{margin-top:13px;color:var(--muted);font-size:1.06rem;max-width:58ch}
+
+.block{padding:30px 0}
+.block+.block{border-top:1px solid var(--line)}
+.block-head{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+.block-head h2{font-size:clamp(1.35rem,2.6vw,1.7rem)}
+.block-head .hint{color:var(--muted);font-size:.9rem}
+
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+.pill{width:40px;height:40px;flex:0 0 40px;border-radius:10px;background:var(--wash);border:1px solid var(--line);display:grid;place-items:center;font-weight:800;color:var(--blue-ink)}
+.ci-name{font-weight:800;font-size:1rem}
+.ci-sub{color:var(--faint);font-size:.74rem;margin-top:1px}
+.ci-unit{color:var(--muted);font-size:.72rem;font-weight:700;margin-top:3px}
+
+.pc{display:flex;align-items:center;gap:26px;flex-wrap:wrap;padding:18px 20px}
+.pc-id{display:flex;align-items:center;gap:12px;min-width:180px}
+.pc-stat .k{font-size:.62rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.pc-stat .v{font-weight:800;font-size:1.1rem;margin-top:2px}
+.pc-stat .v .ks{color:var(--faint);font-size:.7rem;font-weight:600}
+.pc-stat.fsp .v{color:var(--blue)}
+.cbtn{display:flex;align-items:center;justify-content:space-between;gap:10px;border:1px dashed var(--blue-line);background:var(--blue-soft);color:var(--blue-ink);border-radius:12px;padding:10px 13px;font-weight:800;font-size:.84rem;min-width:210px}
+.cbtn.on{background:var(--green-soft);border-style:solid;border-color:var(--green-line);color:#0a7a4d}
+.cbtn .tick{width:18px;height:18px;border-radius:50%;display:grid;place-items:center;background:var(--green);color:#fff;font-size:11px}
+.cbtn small{display:block;font-weight:600;font-size:.72rem;opacity:.85}
+.pc .cbtn{margin-left:auto}
+.cart-grid{display:grid;grid-template-columns:1fr 300px;gap:20px;align-items:start}
+.panel-head{padding:13px 18px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:10px}
+.panel-head .t{font-weight:800;font-size:.92rem}
+.badge{font-size:.64rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:4px 9px;border-radius:999px;background:var(--blue-soft);color:var(--blue-ink)}
+.cart-item{display:flex;gap:12px;padding:13px 18px;border-bottom:1px solid var(--line)}
+.cart-item:last-child{border-bottom:0}
+.ci-body{flex:1;min-width:0}
+.ci-price{margin-top:4px;display:flex;align-items:baseline;gap:7px;flex-wrap:wrap}
+.ci-price .now{font-weight:800;font-size:.9rem}
+.ci-price .mrp{color:var(--faint);text-decoration:line-through;font-size:.76rem}
+.ci-price .off{color:var(--green);font-weight:800;font-size:.7rem}
+.ci-qty{align-self:center;font-size:.76rem;color:var(--muted);font-weight:700;border:1px solid var(--line2);border-radius:8px;padding:3px 8px}
+.cart-item.focus{background:var(--blue-soft)}
+.cart-item.focus .pill{background:#fff;border-color:var(--blue)}
+.coupon{padding:14px 16px;border-bottom:1px solid var(--line)}
+.coupon .cbtn{width:100%}
+.bill{padding:14px 16px}
+.bill-hd{font-weight:800;font-size:.85rem;margin-bottom:6px}
+.bill-row{display:flex;justify-content:space-between;font-size:.84rem;padding:5px 0;color:var(--muted)}
+.bill-row .g{color:var(--green);font-weight:700}
+.bill-row.tot{border-top:1px dashed var(--line2);margin-top:6px;padding-top:9px;color:var(--ink);font-weight:800;font-size:.94rem}
+.fsp-tag{margin:0 16px 16px;background:var(--blue-soft);border-radius:11px;padding:11px 13px;font-size:.78rem;color:var(--blue-ink);font-weight:600}
+.fsp-tag b{font-weight:800}
+@media (max-width:820px){.cart-grid{grid-template-columns:1fr}}
+
+.controls{padding:18px 20px}
+.fx-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.fx-label{font-size:.72rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.seg{display:inline-flex;border:1px solid var(--line2);border-radius:10px;overflow:hidden}
+.seg button{border:0;background:#fff;padding:8px 16px;font-weight:800;color:var(--blue-ink);border-right:1px solid var(--line2)}
+.seg button:last-child{border-right:0}
+.seg button.on{background:var(--blue);color:#fff}
+.seg button:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.batch-row{display:flex;align-items:center;gap:14px;padding:11px 14px;border:1px solid var(--line);border-radius:12px;background:var(--wash);margin-top:10px;flex-wrap:wrap}
+.batch-row .bx{font-weight:800;font-size:.84rem;min-width:70px}
+.batch-row .fld{display:flex;align-items:center;gap:7px;font-size:.76rem;color:var(--muted);font-weight:700}
+.batch-row .fld b{color:var(--ink)}
+.mrpsel{border:1px solid var(--line2);border-radius:9px;padding:8px 11px;font:inherit;font-weight:700;font-size:.83rem;background:#fff;color:var(--ink);cursor:pointer}
+.ctx{margin-top:13px;font-size:.75rem;color:var(--faint)}
+.ctx b{color:var(--muted)}
+
+/* INVOICE DOCS */
+.inv{margin-top:16px;border-radius:var(--radius);border:1px solid var(--line);overflow:hidden;background:#fff;box-shadow:var(--shadow-sm)}
+.inv.today{border-color:var(--clay-line)}
+.inv.tom{border-color:var(--green-line)}
+.inv-head{padding:11px 16px;display:flex;align-items:center;justify-content:space-between;gap:8px;border-bottom:1px solid var(--line)}
+.inv.today .inv-head{background:var(--clay-soft)}
+.inv.tom .inv-head{background:var(--green-soft)}
+.inv-head .h{font-weight:800;font-size:.9rem}
+.inv-head .h small{font-weight:600;color:var(--muted);font-size:.74rem}
+.tg{font-size:.6rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:999px}
+.inv.today .tg{background:#f3dcc0;color:var(--clay)}
+.inv.tom .tg{background:#c7edd8;color:#0a7a4d}
+.tbl-scroll{overflow-x:auto}
+table.inv-tbl{border-collapse:collapse;width:100%;font-size:.76rem;min-width:900px}
+.inv-tbl th,.inv-tbl td{padding:7px 9px;text-align:right;border:1px solid var(--line2);white-space:nowrap;vertical-align:top}
+.inv-tbl th.l,.inv-tbl td.l{text-align:left}
+.inv-tbl thead th{font-size:.62rem;text-transform:uppercase;letter-spacing:.01em;color:var(--muted);font-weight:700;background:#eef2f8}
+.inv-tbl tbody td{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums;color:var(--ink)}
+.inv-tbl td.item,.inv-tbl td.mfr{font-family:"Manrope",sans-serif;white-space:normal;max-width:150px}
+.inv-tbl .iname{font-weight:700;font-size:.8rem}
+.inv-tbl td.mfr{color:var(--muted);font-size:.72rem}
+.inv-tbl td.dash{color:var(--faint);text-align:center}
+.inv-tbl tr.hot td{background:var(--blue-soft)}
+.inv-tbl tr.exc td{background:var(--red-soft)}
+.inv-tbl td.chg,.inv-tbl th.chg{background:var(--violet-soft)}
+.inv-tbl td.chg{font-weight:800;color:var(--violet-ink)}
+.delta{display:inline-block;vertical-align:-1px;margin-right:2px;line-height:0}
+.delta svg{display:block}
+.delta.up{color:var(--violet)}
+.delta.down{color:var(--red)}
+/* hero spine — Total column carries the eye top to bottom */
+.inv-tbl td.tot-col,.inv-tbl th.tot-col{background:var(--wash);font-weight:800;color:var(--ink);font-size:.82rem;border-left:2px solid var(--line2)}
+.inv-tbl th.tot-col{color:var(--ink);font-size:.64rem}
+.inv-tbl tr.hot td.tot-col{background:#dfe9fb}
+.inv-tbl td.tot-col.chg{background:var(--violet-soft);color:var(--violet-ink)}
+.inv-tbl tr.exc td.tot-col{background:var(--red-soft)}
+/* demoted — tax mechanics, not the decision */
+.inv-tbl td.mut,.inv-tbl th.mut{color:var(--faint);font-weight:500;font-size:.68rem}
+.inv-legend{display:flex;gap:16px;flex-wrap:wrap;padding:8px 16px;background:var(--wash);border-top:1px solid var(--line);font-size:.7rem;color:var(--muted)}
+.inv-legend .lg{display:flex;align-items:center;gap:6px}
+.inv-legend .dot{width:8px;height:8px;border-radius:2px;display:inline-block}
+.inv-legend .dot.chg{background:var(--violet)}
+.inv-legend .dot.drop{background:var(--red)}
+.inv-legend .dot.hold{background:var(--green)}
+/* tfoot — line totals locked to the same column grid as the body, so nothing dangles */
+.inv-tbl tfoot td{border-top:2px solid var(--line2);background:var(--wash);font-weight:800;color:var(--ink);font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums}
+.inv-tbl tfoot td.l{font-family:"Manrope",sans-serif;color:var(--muted);font-weight:700;font-size:.72rem;text-transform:uppercase;letter-spacing:.04em}
+.inv-tbl tfoot td.tot-col{font-size:.9rem}
+.rtag{display:inline-block;margin-top:3px;font-size:.58rem;font-weight:800;letter-spacing:.03em;text-transform:uppercase;padding:2px 6px;border-radius:999px}
+.rtag.none{background:var(--grey-soft);color:var(--muted)}
+.rtag.absorb{background:var(--violet-soft);color:var(--violet)}
+.rtag.held{background:var(--green-soft);color:#0a7a4d}
+.rtag.exc{background:var(--red-soft);color:var(--red)}
+.inv-foot{padding:9px 16px;background:var(--wash);border-top:1px solid var(--line);font-size:.78rem}
+.inv-foot .k{color:var(--muted);font-weight:700}
+
+/* scenario explainer */
+.scenario{margin-top:16px;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);box-shadow:var(--shadow-sm);overflow:hidden}
+.scenario.exc{border-color:var(--red-line)}
+.sc-head{padding:12px 18px;border-bottom:1px solid var(--line);font-weight:800;font-size:.95rem;background:var(--wash)}
+.sc-head span{color:var(--blue)}
+.scenario.exc .sc-head span{color:var(--red)}
+.sc-grid{display:grid;grid-template-columns:1fr 1fr}
+.sc-side{padding:15px 18px}
+.sc-side.today{background:linear-gradient(180deg,var(--clay-soft),transparent 62%);border-right:1px solid var(--line)}
+.sc-side.tom{background:linear-gradient(180deg,var(--green-soft),transparent 62%)}
+.sc-side .tag2{display:inline-flex;align-items:center;gap:6px;font-size:.66rem;font-weight:800;letter-spacing:.07em;text-transform:uppercase;padding:4px 9px;border-radius:999px}
+.sc-side.today .tag2{color:var(--clay);background:var(--clay-soft);border:1px solid var(--clay-line)}
+.sc-side.tom .tag2{color:#0a7a4d;background:var(--green-soft);border:1px solid var(--green-line)}
+.sc-side .tag2 .d{width:6px;height:6px;border-radius:50%;background:currentColor}
+.sc-side p{margin-top:8px;font-size:.86rem;color:var(--muted)}
+.sc-side p b{color:var(--ink)}
+.sc-stats{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line)}
+.sc-stats .st{padding:12px 18px;border-right:1px solid var(--line)}
+.sc-stats .st:last-child{border-right:0}
+.sc-stats .k{font-size:.62rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.sc-stats .v{font-size:1.15rem;font-weight:800;margin-top:3px;font-family:"IBM Plex Mono",monospace}
+.sc-stats .v.violet{color:var(--violet)} .sc-stats .v.green{color:var(--green)}
+@media (max-width:820px){.sc-grid,.sc-stats{grid-template-columns:1fr}.sc-side.today{border-right:0;border-bottom:1px solid var(--line)}.sc-stats .st{border-right:0;border-bottom:1px solid var(--line)}}
+
+.bcards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.bcard{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 18px;box-shadow:var(--shadow-sm)}
+.bcard .bt{font-weight:800;font-size:.92rem;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.bcard .bt .x{font-size:.62rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;padding:2px 7px;border-radius:999px;background:var(--red-soft);color:var(--red)}
+.bcard .bt .x.stage{background:var(--blue-soft);color:var(--blue-ink)}
+.bcard .bt .x.ok{background:var(--green-soft);color:#0a7a4d}
+.bcard p{color:var(--muted);font-size:.85rem;margin-top:7px}
+
+.tt{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:var(--shadow-sm)}
+.card.today{border-color:var(--clay-line);background:linear-gradient(180deg,var(--clay-soft),var(--surface) 46%)}
+.card.tom{border-color:var(--green-line);background:linear-gradient(180deg,var(--green-soft),var(--surface) 46%)}
+.tag2{display:inline-flex;align-items:center;gap:6px;font-size:.66rem;font-weight:800;letter-spacing:.07em;text-transform:uppercase;padding:4px 9px;border-radius:999px}
+.tag2.today{color:var(--clay);background:var(--clay-soft);border:1px solid var(--clay-line)}
+.tag2.tom{color:#0a7a4d;background:var(--green-soft);border:1px solid var(--green-line)}
+.tag2 .d{width:6px;height:6px;border-radius:50%;background:currentColor}
+.card ul{margin:11px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px}
+.card li{position:relative;padding-left:18px;color:var(--muted);font-size:.9rem}
+.card li::before{content:"";position:absolute;left:2px;top:.55em;width:6px;height:6px;border-radius:2px;background:var(--line2)}
+.card.today li::before{background:var(--clay-line)}
+.card.tom li::before{background:var(--green)}
+.card li b{color:var(--ink);font-weight:700}
+.lead{color:var(--muted);font-size:.98rem;max-width:64ch;margin-bottom:16px}
+.callout{margin-top:14px;border-left:3px solid var(--blue);background:var(--wash);border-radius:0 12px 12px 0;padding:13px 16px;color:var(--muted);font-size:.9rem}
+.callout.warn{border-left-color:var(--clay)}
+.callout b{color:var(--ink)}
+.callout .h{font-weight:800;color:var(--ink);display:block;margin-bottom:3px;font-size:.9rem}
+.loud{border:2px solid var(--clay);background:var(--clay-soft);border-radius:14px;padding:16px 18px;margin-bottom:16px}
+.loud-badge{display:inline-block;font-size:.68rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;background:var(--clay);color:#fff;padding:4px 11px;border-radius:999px;margin-bottom:9px}
+.loud p{color:#824f18;font-size:.96rem}
+.loud b{color:var(--ink)} .loud em{font-style:normal;font-weight:800;color:var(--clay)}
+.ps-title{margin-top:18px;font-weight:800;font-size:.88rem}
+.ps-flow{margin-top:10px;display:flex;align-items:center;gap:9px;flex-wrap:wrap;background:var(--red-soft);border:1px solid var(--red-line);border-radius:12px;padding:13px 15px;font-size:.82rem}
+.ps-flow .node{background:#fff;border:1px solid var(--red-line);border-radius:8px;padding:6px 10px;color:var(--ink);font-weight:700}
+.ps-flow .ar{color:var(--red);font-weight:800}
+
+.foot{padding:30px 0 64px;border-top:1px solid var(--line)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.chips .c{font-size:.74rem;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:6px 11px;color:var(--muted)}
+.chips .c b{color:var(--ink);font-weight:700}
+.note{margin-top:16px;font-size:.75rem;color:var(--faint);max-width:80ch}
+
+@media (max-width:820px){.tt,.bcards{grid-template-columns:1fr}.pc .cbtn{margin-left:0}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* MCP section (upstream fix) */
+.mcp-tbl{border-collapse:collapse;width:100%;margin-top:12px;font-size:.82rem}
+.mcp-tbl th,.mcp-tbl td{border:1px solid var(--line2);padding:7px 10px;text-align:right;font-family:"IBM Plex Mono",monospace}
+.mcp-tbl th:first-child,.mcp-tbl td:first-child{text-align:left;font-family:"Manrope",sans-serif;font-weight:700}
+.mcp-tbl thead th{background:#eef2f8;color:var(--muted);font-weight:700;font-size:.66rem;text-transform:uppercase;letter-spacing:.03em}
+.mcp-out{margin-top:12px;background:var(--green-soft);border:1px solid var(--green-line);border-radius:10px;padding:10px 13px;font-size:.86rem;color:#0a6c46;font-weight:600}
+.mcp-out b{color:var(--ink)}
+.mcp-flow{margin-top:6px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.mcp-flow .node{background:var(--wash);border:1px solid var(--line2);border-radius:9px;padding:7px 10px;font-size:.78rem;font-weight:700;color:var(--ink)}
+.mcp-flow .ar{color:var(--blue);font-weight:800}
+</style>
+</head>
+<body>
+<div class="top">
+  <div class="wrap">
+    <div class="brand"><span class="m">T</span><span>Price Lock <small>· interactive</small></span></div>
+    <span class="step">Pre-PRD · engineering walkthrough</span>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">One example line · a real order</div>
+    <h1>Fulfil <span class="b">Cardvas 10</span>.<br>Watch the price hold.</h1>
+    <p class="sub">A full invoice of several items. Most lines don't change between order and fulfilment — we follow just one, <b>Cardvas 10</b>. Choose how many batches it's picked from and each batch's MRP, then compare the invoice today vs the target.</p>
+  </div>
+</header>
+
+<main>
+
+<!-- A -->
+<section class="block">
+  <div class="wrap">
+    <div class="block-head"><span class="secnum">A</span><h2>The cart — what we quoted</h2><span class="hint">All items &amp; bill details; we follow Cardvas 10.</span></div>
+    <div class="cart-grid">
+      <div class="panel">
+        <div class="panel-head"><span class="t">Cart · the promise</span><span class="badge">3 items</span></div>
+        <div class="cart-item focus">
+          <div class="pill">C</div>
+          <div class="ci-body"><div class="ci-name">Cardvas 10 <span style="color:var(--blue);font-size:.7rem;font-weight:800">◀ we follow this one</span></div><div class="ci-sub">Sun Pharma · Strip of 10</div><div class="ci-unit">3 × ₹100.00 MRP each</div><div class="ci-price"><span class="now mono" id="ct_card">₹240.00</span><span class="mrp mono">₹300.00</span><span class="off" id="off_card">20% OFF</span></div></div>
+          <div class="ci-qty">×3</div>
+        </div>
+        <div class="cart-item">
+          <div class="pill">G</div>
+          <div class="ci-body"><div class="ci-name">Glyco 500</div><div class="ci-sub">USV · Strip of 15</div><div class="ci-price"><span class="now mono" id="ct_gly">₹80.00</span><span class="mrp mono">₹100.00</span><span class="off" id="off_gly">20% OFF</span></div></div>
+          <div class="ci-qty">×2</div>
+        </div>
+        <div class="cart-item">
+          <div class="pill">T</div>
+          <div class="ci-body"><div class="ci-name">Telma 40</div><div class="ci-sub">Glenmark · Strip of 30</div><div class="ci-price"><span class="now mono" id="ct_tel">₹96.00</span><span class="mrp mono">₹120.00</span><span class="off" id="off_tel">20% OFF</span></div></div>
+          <div class="ci-qty">×1</div>
+        </div>
+      </div>
+      <div>
+        <div class="panel">
+          <div class="coupon"><button class="cbtn" id="coupon" aria-pressed="false"><span id="coupon_l"><span>Apply coupon FIRST23</span><small>Flat 23% off MRP · whole order</small></span><span id="coupon_r">›</span></button></div>
+          <div class="bill">
+            <div class="bill-hd">Bill Details</div>
+            <div class="bill-row"><span>MRP</span><span class="mono">₹520.00</span></div>
+            <div class="bill-row"><span id="disc_l">Discount · 20%</span><span class="g mono" id="disc_v">−₹104.00</span></div>
+            <div class="bill-row tot"><span>Payable</span><span class="mono" id="pay_v">₹416.00</span></div>
+          </div>
+          <div class="fsp-tag">Cardvas locked <b id="fsp_tag">FSP ₹80.00/unit</b>. Tomorrow's invoice must land back on the promised <b id="promise">₹416.00</b>.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- B -->
+<section class="block">
+  <div class="wrap">
+    <div class="block-head"><span class="secnum">B</span><h2>How the warehouse fulfils it</h2><span class="hint">Batches split the ordered qty of 3.</span></div>
+    <div class="panel controls">
+      <div class="fx-row">
+        <span class="fx-label">Cardvas batches picked</span>
+        <div class="seg" id="batchseg"><button data-n="1">1</button><button data-n="2">2</button><button data-n="3">3</button></div>
+        <span class="ctx" style="margin:0">Qty 3 splits as 3 · 2+1 · 1+1+1. Other items don't change.</span>
+      </div>
+      <div id="batchlist"></div>
+      <div class="ctx">Guardrails (illustrative): absorb up to <b>+20%</b> above quoted (cap ₹120) · hold down to <b>−15%</b> below quoted (floor ₹85). Beyond either = exception → Problem Solver.</div>
+    </div>
+
+    <!-- TODAY -->
+    <div class="inv today">
+      <div class="inv-head"><span class="h">Today · price mutates <small>· cost absorption</small></span><span class="tg">Current</span></div>
+      <div class="tbl-scroll">
+        <table class="inv-tbl">
+          <thead><tr><th>Sr</th><th class="l">Item</th><th class="l">Manufacturer</th><th>HSN</th><th>Batch No.</th><th>Exp.</th><th>Old MRP*</th><th>Revised MRP*</th><th>Qty</th><th>MRP Total</th><th>Discount</th><th class="mut">Taxable</th><th class="mut">GST%</th><th class="mut">GST Amt</th><th class="tot-col">Total</th></tr></thead>
+          <tbody id="today_body"></tbody>
+          <tfoot><tr class="tfoot-row"><td colspan="9" class="l">Line totals</td><td id="t_mrp">—</td><td id="t_disc">—</td><td class="mut">—</td><td class="mut">—</td><td class="mut">—</td><td class="tot-col" id="today_total">—</td></tr></tfoot>
+        </table>
+      </div>
+      <div class="inv-legend"><span class="lg"><span class="dot chg"></span>MRP moved from quoted</span><span class="lg"><span class="dot drop"></span>▼ price dropped below promise</span></div>
+      <div class="inv-foot"><span class="k">Two MRP columns · discount re-applies to each picked batch, so the price moves with it.</span></div>
+    </div>
+
+    <!-- TOMORROW -->
+    <div class="inv tom">
+      <div class="inv-head"><span class="h">Tomorrow · price holds <small>· target</small></span><span class="tg">Target</span></div>
+      <div class="tbl-scroll">
+        <table class="inv-tbl">
+          <thead><tr><th>Sr</th><th class="l">Item</th><th class="l">Manufacturer</th><th>HSN</th><th>Batch No.</th><th>Exp.</th><th>MRP</th><th>Qty</th><th>MRP Total</th><th>Discount</th><th class="mut">Taxable</th><th class="mut">GST%</th><th class="mut">GST Amt</th><th class="tot-col">Total</th></tr></thead>
+          <tbody id="tom_body"></tbody>
+          <tfoot><tr class="tfoot-row"><td colspan="8" class="l">Line totals</td><td id="m_mrp">—</td><td id="m_disc">—</td><td class="mut">—</td><td class="mut">—</td><td class="mut">—</td><td class="tot-col" id="tom_total">—</td></tr></tfoot>
+        </table>
+      </div>
+      <div class="inv-legend"><span class="lg"><span class="dot chg"></span>MRP moved from quoted</span><span class="lg"><span class="dot hold"></span>▲/▼ vs today's total — held here</span></div>
+      <div class="inv-foot"><span class="k"><b style="color:var(--ink)">Old MRP dropped</b> · one MRP (the batch billed) · one blended Discount. Same columns as today, minus Old MRP.</span></div>
+    </div>
+
+    <!-- scenario explainer -->
+    <div class="scenario" id="scenario">
+      <div class="sc-head">What happens in this scenario · <span id="sc_name">—</span></div>
+      <div class="sc-grid">
+        <div class="sc-side today"><span class="tag2"><span class="d"></span>Today · cost absorption</span><p id="sc_today">—</p></div>
+        <div class="sc-side tom"><span class="tag2"><span class="d"></span>Tomorrow · hold FSP</span><p id="sc_tom">—</p></div>
+      </div>
+      <div class="sc-stats">
+        <div class="st"><div class="k">Price Lock discount (absorbed)</div><div class="v violet" id="pl_absorb">₹0.00</div></div>
+        <div class="st"><div class="k">Retained on lower batches</div><div class="v green" id="pl_retain">₹0.00</div></div>
+        <div class="st"><div class="k">Cardvas · today → tomorrow</div><div class="v" id="pl_totals">—</div></div>
+      </div>
+    </div>
+    <p class="ctx" style="margin-top:12px">Glyco 500 and Telma 40 are unchanged dummy lines — same in both invoices — to show that only the varied line differs between order and fulfilment.</p>
+  </div>
+</section>
+
+<!-- BOUNDARY -->
+<section class="block">
+  <div class="wrap">
+    <div class="block-head"><span class="secnum">C</span><h2>Where Price Lock does not act</h2><span class="hint">Boundaries, not levers.</span></div>
+    <div class="bcards">
+      <div class="bcard"><div class="bt">Replace with OG <span class="x">no absorb</span></div><p>Substitute unavailable, original given instead. Higher price is <b>not</b> absorbed — Ops removes the item or takes consent.</p></div>
+      <div class="bcard"><div class="bt">New product added <span class="x">no absorb</span></div><p>A product added at fulfilment isn't a variance on a promised line. No price lock applies.</p></div>
+      <div class="bcard"><div class="bt">Quantity reduced <span class="x">refund</span></div><p>Fewer units fulfilled → refund for the missing units. Per-unit FSP unchanged; refund is the payment service's job.</p></div>
+      <div class="bcard"><div class="bt">Pack-size change <span class="x ok">absorbed</span></div><p>Different pack size of the same medicine — price difference is absorbed, exactly as today. In scope.</p></div>
+      <div class="bcard"><div class="bt">Substitute B→C <span class="x ok">absorbed</span></div><p>A different generic substitute picked — treated like a batch change and absorbed. In scope.</p></div>
+      <div class="bcard"><div class="bt">Doctor / HA / CSR edit <span class="x stage">re-lock</span></div><p>A change on these calls re-locks the FSP for that item at that stage. The lock is per-item, not a single order-placement value.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- WRITE-UP -->
+<section class="block">
+  <div class="wrap">
+    <div class="block-head"><span class="secnum">01</span><h2>The one idea</h2></div>
+    <p class="lead">Prices move between order and fulfilment — a different batch, a pack-size swap, a substitute. Today the customer's price can shift; tomorrow it can't.</p>
+    <div class="tt">
+      <div class="card today"><span class="tag2 today"><span class="d"></span>Today</span><ul><li>The discount re-applies to whatever batch is picked.</li><li>So the <b>price floats</b> — protected on a spike, dropped on a dip.</li></ul></div>
+      <div class="card tom"><span class="tag2 tom"><span class="d"></span>Tomorrow</span><ul><li>We lock the <b>FSP</b> the customer agreed to.</li><li>The discount is just <span class="mono">Batch MRP − FSP</span>. The price is the fixed point.</li></ul></div>
+    </div>
+    <p class="lead" style="margin-top:14px">The two sides only differ on a <b>lower</b> batch — that gap is the whole decision. The interactive above walks each case (higher batches land the same either way); this write-up covers the parts it can't show.</p>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap">
+    <div class="block-head"><span class="secnum">02</span><h2>The promise</h2></div>
+    <p class="lead">The quoted price is the promise. Each line's price is its locked FSP; a coupon sits on top (whole order) and the bill shows <b>one blended discount</b>. Tomorrow's invoice lands back on that promised total.</p>
+    <div class="callout"><span class="h">Coupon is on MRP, and independent of the lock</span>FIRST23 is a <b>flat 23% off MRP</b> — not stacked on the base discount. It lowers every FSP; the batch-variance logic doesn't touch it. They compose cleanly.</div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap">
+    <div class="block-head"><span class="secnum">03</span><h2>Guardrails &amp; exceptions</h2></div>
+    <div class="loud">
+      <div class="loud-badge">⚠ This does not exist today</div>
+      <p>Today there is <b>no cap and no floor</b>. Cost absorption absorbs <em>any</em> increase (the threshold is switched off) and passes down <em>any</em> decrease — an unusually mispriced batch is eaten silently. Tomorrow adds two guardrails, and a breach of either becomes an <b>exception</b>, never a silent adjustment.</p>
+    </div>
+    <div class="tt">
+      <div class="card tom"><span class="tag2 tom"><span class="d"></span>Higher-MRP absorption cap</span><ul><li>The most Price Lock will absorb before it's flagged.</li><li>Over it → exception, not silent absorption.</li></ul></div>
+      <div class="card tom"><span class="tag2 tom"><span class="d"></span>Lower-MRP threshold</span><ul><li>How far the batch MRP may fall below quoted before it's flagged.</li><li>The trigger is the <b>threshold</b>; FSP is only the legal floor beneath it.</li></ul></div>
+    </div>
+    <div class="ps-title">How Problem Solver gets involved</div>
+    <div class="ps-flow">
+      <span class="node">Guardrail breached</span><span class="ar">→</span>
+      <span class="node">Post-order flags the line</span><span class="ar">→</span>
+      <span class="node">Problem Solver</span><span class="ar">→</span>
+      <span class="node">alternate batch · operational review · customer decision · cancel</span>
+    </div>
+    <div class="callout warn"><span class="h">Scope &amp; open number</span>Price Lock only <b>routes</b> to Problem Solver. Problem Solver's resolution SOP and alternate-batch selection are separate scope. Both threshold values are new product knobs — set deliberately, then confirm with finance.</div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap">
+    <div class="block-head"><span class="secnum">04</span><h2>The contract</h2></div>
+    <div class="tt">
+      <div class="card today"><span class="tag2 today"><span class="d"></span>Today</span><ul><li>Discount context travels forward and is re-derived against the picked batch.</li></ul></div>
+      <div class="card tom"><span class="tag2 tom"><span class="d"></span>Tomorrow</span><ul><li><b>Two live fields:</b> locked FSP + quoted MRP.</li><li>Base/coupon/tax = <b>frozen metadata</b>, never recomputed post-order.</li><li><b>Re-lock:</b> a Doctor / HA / CSR edit re-locks that item at that stage.</li></ul></div>
+    </div>
+    <div class="callout"><span class="h">Warehouse edits stay as they are today</span>Any warehouse-side edit — order edit, bulk update, quantity change — behaves exactly as it does now; Price Lock doesn't change it. But because those edits change what's actually fulfilled, <b>tax and charges must be re-validated after any such edit</b>, before the invoice is finalised.</div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap">
+    <div class="block-head"><span class="secnum">05</span><h2>The invoice</h2></div>
+    <p class="lead">Compare the two documents above. Minimal change: <b>drop Old MRP</b> (the legacy GST-transition column, usually blank), keep one MRP (the batch billed), keep <b>one blended Discount</b>. No separate Price Lock line — that call-out lives in the scenario panel, not on the customer's invoice.</p>
+    <div class="callout"><span class="h">The absorption story moves, it doesn't disappear</span>"We covered ₹X for you" lives on the app's Price Lock page, not the tax invoice. <b>"Selling Price" / FSP is an internal name — not an invoice column.</b></div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap">
+    <div class="block-head"><span class="secnum">06</span><h2>Customer-facing surfaces</h2></div>
+    <div class="tt">
+      <div class="card today"><span class="tag2 today"><span class="d"></span>Today</span><ul><li>Higher MRP → "extra cost avoided" delight.</li><li>Lower MRP → "your bill reduced" delight + refund.</li></ul></div>
+      <div class="card tom"><span class="tag2 tom"><span class="d"></span>Tomorrow</span><ul><li>Higher MRP → "protected by Price Lock" stays.</li><li>Lower MRP → no post-order drop. The pre-order "Your savings" is untouched.</li></ul></div>
+    </div>
+    <div class="callout warn"><span class="h">The real fix lives upstream</span>A cheaper batch should mean the customer was <b>quoted</b> the cheaper price — an MCP / correct-batch-picking job, not an invoice-time refund.</div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap">
+    <div class="block-head"><span class="secnum">07</span><h2>Ownership &amp; scope</h2></div>
+    <div class="tt">
+      <div class="card tom"><span class="tag2 tom"><span class="d"></span>In scope</span><ul><li>Lock FSP + carry quoted MRP.</li><li>Derived discount, the two guardrails, exception flagging.</li><li>Invoice simplification, batch rows, refund snapshot.</li></ul></div>
+      <div class="card today"><span class="tag2 today"><span class="d"></span>Out of scope</span><ul><li><b>Variance correction at source</b> — MCP / picking. The real fix, currently unowned.</li><li>Returns, pack-size orchestration, coupon/tax redesign — continue as-is.</li></ul></div>
+    </div>
+    <div class="callout warn"><span class="h">The dependency to name in the PRD</span>Price Lock makes upstream pricing accuracy more urgent and more measurable — yet no one owns it today. Needs an explicit owner.</div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap">
+    <div class="block-head"><span class="secnum">08</span><h2>The upstream fix — MCP</h2><span class="hint">How the right price gets quoted in the first place.</span></div>
+    <p class="lead">Price Lock holds the promise; it doesn't shrink the variance. The variance shrinks <b>upstream</b> — by quoting the right price at order time. That's the job of <b>MCP (Most Common Price)</b>, and it becomes more important the moment Price Lock stops papering over it.</p>
+    <div class="tt">
+      <div class="card">
+        <span class="tag2 tom"><span class="d"></span>How MCP picks the price</span>
+        <ul><li>Not picking logic — MCP just returns the <b>MRP of the batch with the most quantity</b> in pickable zones.</li><li>Pickable = <b>JIT · Urgent · Excess</b>. <b>Bulk is excluded</b> (non-pickable).</li></ul>
+        <table class="mcp-tbl">
+          <thead><tr><th>Batch</th><th>Pickable qty</th><th>MRP</th></tr></thead>
+          <tbody>
+            <tr><td>A</td><td>30</td><td>₹100</td></tr>
+            <tr><td>B</td><td>20</td><td>₹120</td></tr>
+            <tr><td>C</td><td>10</td><td>₹80</td></tr>
+          </tbody>
+        </table>
+        <div class="mcp-out">Highest pickable qty = 30 → <b>MCP MRP = ₹100</b></div>
+      </div>
+      <div class="card">
+        <span class="tag2 tom"><span class="d"></span>Then what happens</span>
+        <div class="mcp-flow">
+          <span class="node">MCP quotes ₹100</span><span class="ar">→</span>
+          <span class="node">Picking is MRP-blind today</span><span class="ar">→</span>
+          <span class="node">Post-order sees the picked MRP</span>
+        </div>
+        <ul style="margin-top:14px"><li>If MCP + correct-batch picking are accurate, the quoted price already <b>matches</b> the fulfilled batch — little to nothing to absorb.</li><li>Every rupee Price Lock absorbs is a rupee MCP or picking got wrong. Absorption becomes the <b>measure</b> of upstream inaccuracy.</li></ul>
+      </div>
+    </div>
+    <div class="callout warn"><span class="h">Why this closes the loop</span>Today absorption hides the miss; tomorrow it's a capped, counted cost. That visibility is the case for giving MCP / correct-batch picking an explicit owner — the real fix for variance.</div>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="eyebrow">Open before the PRD</div>
+    <div class="chips">
+      <span class="c"><b>Lower-MRP threshold</b> · value + basis</span>
+      <span class="c"><b>Higher-MRP cap</b> · value + owner</span>
+      <span class="c"><b>Absorbed amount</b> · confirm taxable-value discount (finance)</span>
+      <span class="c"><b>Upstream variance</b> · MCP / picking owner</span>
+      <span class="c"><b>Re-lock</b> · Doctor / HA / CSR detail</span>
+    </div>
+    <p class="note">Illustrative order — Cardvas 10 (quoted ₹100/unit, ordered ×3) is the varied line; Glyco 500 and Telma 40 are unchanged dummies. Invoice columns follow the real Truemeds tax invoice. All figures illustrative; guardrail values are placeholders for open decisions.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var GST=0.05, CAP_RATIO=1.20, FLOOR_RATIO=0.85;
+  var coupon=false, count=1;
+  var MRPOPTS=[{v:100,l:'Same · ₹100'},{v:115,l:'Higher · ₹115'},{v:140,l:'Over cap · ₹140'},{v:90,l:'Lower · ₹90'},{v:78,l:'Under threshold · ₹78'}];
+  var batchMRP=[90,115,78];                 // per-batch MRP, persists
+  var DIST={1:[3],2:[2,1],3:[1,1,1]};       // qty split of ordered 3
+  var CARD={name:'Cardvas 10', mfr:'Sun Pharma Laboratories Ltd.', hsn:'30049099', exp:'06/28', quoted:100};
+  var DUMMIES=[
+    {name:'Glyco 500', mfr:'USV Private Ltd.', hsn:'30049099', exp:'10/27', quoted:50, qty:2, batch:'GLY2207'},
+    {name:'Telma 40', mfr:'Glenmark Pharma Ltd.', hsn:'30049099', exp:'08/28', quoted:120, qty:1, batch:'TLM5140'}
+  ];
+  var r2=function(x){return Math.round((x+Number.EPSILON)*100)/100;};
+  var inr=function(x){return "₹"+x.toLocaleString('en-IN',{minimumFractionDigits:2,maximumFractionDigits:2});};
+  var $=function(id){return document.getElementById(id);};
+  function rate(){return coupon?0.23:0.20;}
+  function fspU(q){return r2(q*(1-rate()));}
+
+  function calc(quoted, mrp, qty){
+    var rt=rate(), FSPu=fspU(quoted), FSPl=r2(FSPu*qty), mrpL=r2(mrp*qty);
+    var box=r2(mrpL*(1-rt)), today=Math.min(box,FSPl);
+    var cap=quoted*CAP_RATIO, floor=quoted*FLOOR_RATIO;
+    var higher=mrp>cap+1e-9, lower=mrp<floor-1e-9, exc=higher||lower;
+    return {mrp:mrp,quoted:quoted,qty:qty,FSPl:FSPl,mrpL:mrpL,today:today,higher:higher,lower:lower,exc:exc,
+      pl:r2(Math.max(0,box-FSPl)), ret:r2(Math.max(0,FSPl-today)),
+      tDisc:r2(mrpL-today), tTax:r2(today/(1+GST)), tGst:r2(today-r2(today/(1+GST))),
+      mDisc:r2(mrpL-FSPl), mTax:r2(FSPl/(1+GST)), mGst:r2(FSPl-r2(FSPl/(1+GST)))};
+  }
+  var ARROW_UP='<svg viewBox="0 0 12 12" width="11" height="11"><path d="M6 10V2M3 5L6 2L9 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  var ARROW_DOWN='<svg viewBox="0 0 12 12" width="11" height="11"><path d="M6 2V10M3 7L6 10L9 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  function arrow(delta){
+    if(Math.abs(delta)<0.005) return '';
+    return '<span class="delta '+(delta>0?'up':'down')+'">'+(delta>0?ARROW_UP:ARROW_DOWN)+'</span> ';
+  }
+  function tag(c){
+    if(!c.higher&&!c.lower) return {t:'no change',cls:'none'};
+    if(c.higher&&!c.exc) return {t:'higher · absorbed',cls:'absorb'};
+    if(c.higher&&c.exc) return {t:'higher · over cap',cls:'exc'};
+    if(c.lower&&!c.exc) return {t:'lower · held',cls:'held'};
+    return {t:'lower · under threshold',cls:'exc'};
+  }
+
+  function renderControls(){
+    Array.prototype.forEach.call(document.querySelectorAll('#batchseg button'),function(b){b.classList.toggle('on',+b.dataset.n===count);});
+    var qtys=DIST[count], html='';
+    for(var i=0;i<count;i++){
+      var opts='';
+      MRPOPTS.forEach(function(o){ opts+='<option value="'+o.v+'"'+(batchMRP[i]===o.v?' selected':'')+'>'+o.l+'</option>'; });
+      html+='<div class="batch-row"><span class="bx">Batch '+(i+1)+'</span>'
+        +'<div class="fld">MRP <select class="mrpsel" data-i="'+i+'">'+opts+'</select></div>'
+        +'<div class="fld">Qty <b class="mono">'+qtys[i]+'</b></div></div>';
+    }
+    $('batchlist').innerHTML=html;
+    Array.prototype.forEach.call(document.querySelectorAll('.mrpsel'),function(s){ s.addEventListener('change',function(){ batchMRP[+s.dataset.i]=+s.value; render(); }); });
+  }
+
+  function renderCart(){
+    var rt=rate();
+    $('ct_card').textContent=inr(r2(300*(1-rt)));
+    $('ct_gly').textContent=inr(r2(100*(1-rt)));
+    $('ct_tel').textContent=inr(r2(120*(1-rt)));
+    var off=coupon?'23% OFF':'20% OFF'; $('off_card').textContent=off; $('off_gly').textContent=off; $('off_tel').textContent=off;
+    var disc=r2(520*rt), pay=r2(520-disc);
+    $('disc_l').textContent='Discount · '+(coupon?'23%':'20%'); $('disc_v').textContent='−'+inr(disc); $('pay_v').textContent=inr(pay);
+    $('fsp_tag').textContent='FSP '+inr(fspU(100))+'/unit'; $('promise').textContent=inr(pay);
+    var b=$('coupon');
+    if(coupon){ b.classList.add('on'); b.setAttribute('aria-pressed','true'); $('coupon_l').innerHTML='<span>Coupon FIRST23 applied</span><small>Flat 23% off MRP · whole order</small>'; $('coupon_r').innerHTML='<span class="tick">✓</span>'; }
+    else{ b.classList.remove('on'); b.setAttribute('aria-pressed','false'); $('coupon_l').innerHTML='<span>Apply coupon FIRST23</span><small>Flat 23% off MRP · whole order</small>'; $('coupon_r').innerHTML='›'; }
+  }
+
+  function todayRow(sr,it,batch,c,hot,tagObj){
+    var name='<div class="iname">'+it.name+'</div>'+(tagObj?'<span class="rtag '+tagObj.cls+'">'+tagObj.t+'</span>':'');
+    var mrpChg=Math.abs(c.mrp-c.quoted)>=0.005, retChg=c.ret>=0.005;
+    var mrpCell='<td'+(mrpChg?' class="chg"':'')+'>'+(mrpChg?arrow(c.mrp-c.quoted):'')+inr(c.mrp)+'</td>';
+    var discCell='<td'+(mrpChg?' class="chg"':'')+'>−'+inr(c.tDisc)+'</td>';
+    var totCell='<td class="tot-col'+(retChg?' chg':'')+'">'+(retChg?arrow(-c.ret):'')+inr(c.today)+'</td>';
+    return '<tr'+(hot?' class="hot"':'')+'><td>'+sr+'</td><td class="item l">'+name+'</td><td class="mfr l">'+it.mfr+'</td><td>'+it.hsn+'</td><td>'+batch+'</td><td>'+it.exp+'</td>'
+      +'<td class="dash">-</td>'+mrpCell+'<td>'+c.qty+'</td><td>'+inr(c.mrpL)+'</td>'+discCell+'<td class="mut">'+inr(c.tTax)+'</td><td class="mut">5%</td><td class="mut">'+inr(c.tGst)+'</td>'+totCell+'</tr>';
+  }
+  function tomRow(sr,it,batch,c,hot,tagObj){
+    var name='<div class="iname">'+it.name+'</div>'+(tagObj?'<span class="rtag '+tagObj.cls+'">'+tagObj.t+'</span>':'');
+    var mrpChg=Math.abs(c.mrp-c.quoted)>=0.005;
+    var mrpCell='<td'+(mrpChg?' class="chg"':'')+'>'+(mrpChg?arrow(c.mrp-c.quoted):'')+inr(c.mrp)+'</td>';
+    if(c.exc){
+      return '<tr class="exc"><td>'+sr+'</td><td class="item l">'+name+'</td><td class="mfr l">'+it.mfr+'</td><td>'+it.hsn+'</td><td>'+batch+'</td><td>'+it.exp+'</td>'
+        +mrpCell+'<td>'+c.qty+'</td><td>'+inr(c.mrpL)+'</td><td>—</td><td class="mut">—</td><td class="mut">5%</td><td class="mut">—</td><td class="tot-col" style="color:var(--red);font-weight:800">exception</td></tr>';
+    }
+    var totChg=Math.abs(c.FSPl-c.today)>=0.005;
+    var discCell='<td'+(mrpChg?' class="chg"':'')+'>−'+inr(c.mDisc)+'</td>';
+    var totCell='<td class="tot-col'+(totChg?' chg':'')+'">'+(totChg?arrow(c.FSPl-c.today):'')+inr(c.FSPl)+'</td>';
+    return '<tr'+(hot?' class="hot"':'')+'><td>'+sr+'</td><td class="item l">'+name+'</td><td class="mfr l">'+it.mfr+'</td><td>'+it.hsn+'</td><td>'+batch+'</td><td>'+it.exp+'</td>'
+      +mrpCell+'<td>'+c.qty+'</td><td>'+inr(c.mrpL)+'</td>'+discCell+'<td class="mut">'+inr(c.mTax)+'</td><td class="mut">5%</td><td class="mut">'+inr(c.mGst)+'</td>'+totCell+'</tr>';
+  }
+
+  function render(){
+    renderCart(); renderControls();
+    var qtys=DIST[count], tBody='', mBody='', sr=1;
+    var cardCells=[], cats={held:0,absorb:0,none:0,exc:0};
+    var tMrpSum=0,tDiscSum=0,tTot=0, mMrpSum=0,mDiscSum=0,mTot=0, cardTodayTot=0, cardTomTot=0, absorbSum=0, retainSum=0, excCount=0;
+
+    // Cardvas rows
+    for(var i=0;i<count;i++){
+      var c=calc(CARD.quoted, batchMRP[i], qtys[i]); cardCells.push(c);
+      var ti=tag(c); cats[ti.cls]++;
+      var batch='CVS-'+(101+i);
+      tBody+=todayRow(sr,CARD,batch,c,true,ti);
+      mBody+=tomRow(sr,CARD,batch,c,true,ti);
+      tMrpSum+=c.mrpL; tDiscSum+=c.tDisc; tTot+=c.today;
+      mMrpSum+=c.mrpL; cardTodayTot+=c.today;
+      if(!c.exc){ mDiscSum+=c.mDisc; mTot+=c.FSPl; cardTomTot+=c.FSPl; retainSum+=c.ret; } else excCount++;
+      absorbSum+=c.pl;
+      sr++;
+    }
+    // dummy rows (no variance: batch mrp = quoted)
+    DUMMIES.forEach(function(d){
+      var c=calc(d.quoted, d.quoted, d.qty);
+      tBody+=todayRow(sr,d,d.batch,c,false,null);
+      mBody+=tomRow(sr,d,d.batch,c,false,null);
+      tMrpSum+=c.mrpL; tDiscSum+=c.tDisc; tTot+=c.today;
+      mMrpSum+=c.mrpL; mDiscSum+=c.mDisc; mTot+=c.FSPl;
+      sr++;
+    });
+
+    $('today_body').innerHTML=tBody; $('tom_body').innerHTML=mBody;
+    $('t_mrp').textContent=inr(r2(tMrpSum)); $('t_disc').textContent='−'+inr(r2(tDiscSum)); $('today_total').textContent=inr(r2(tTot));
+    $('m_mrp').textContent=inr(r2(mMrpSum)); $('m_disc').textContent='−'+inr(r2(mDiscSum)); $('tom_total').textContent=(excCount>0?inr(r2(mTot))+' + review':inr(r2(mTot)));
+
+    absorbSum=r2(absorbSum); retainSum=r2(retainSum);
+    $('pl_absorb').textContent=(absorbSum>0?'+':'')+inr(absorbSum);
+    $('pl_retain').textContent=inr(retainSum);
+    $('pl_totals').textContent=inr(r2(cardTodayTot))+' → '+inr(r2(cardTomTot))+(excCount>0?' + review':'');
+
+    // narration for Cardvas
+    var sc=$('scenario'), name, td, tm, F=fspU(100);
+    if(count===1){
+      var c0=cardCells[0], Fl=c0.FSPl;
+      if(!c0.higher&&!c0.lower){ name='No variance — batch MRP = quoted';
+        td='Fulfilled Batch MRP equals the Quoted MRP ('+inr(c0.mrp)+'). Cardvas bills the <b>FSP '+inr(Fl)+'</b>.';
+        tm='<b>FSP held</b> at '+inr(Fl)+'. No Price Lock discount — nothing to absorb or retain.'; }
+      else if(c0.higher&&!c0.exc){ name='Higher batch — within the absorption cap';
+        td='<b>Cost absorption</b> protects the customer: a <b>Price Lock discount of '+inr(c0.pl)+'</b> holds the price at the FSP '+inr(Fl)+'.';
+        tm='<b>FSP held.</b> The Price Lock discount (+'+inr(c0.pl)+') is within the higher-MRP absorption cap — same price, one blended discount.'; }
+      else if(c0.higher&&c0.exc){ name='Higher batch — over the absorption cap';
+        td='<b>Cost absorption</b> still absorbs the full increase (the threshold is switched off today), so the customer pays the FSP.';
+        tm='<b>Exception.</b> The Price Lock discount needed is over the cap → routed to <b>Problem Solver</b>, not silently absorbed.'; }
+      else if(c0.lower&&!c0.exc){ name='Lower batch — within the threshold';
+        td='<b>Cost absorption</b> re-applies the discount to the lower Fulfilled Batch MRP: the selling price mutates down to <b>'+inr(c0.today)+'</b>, and the difference is refunded.';
+        tm='<b>FSP held</b> at '+inr(Fl)+'. The <b>'+inr(c0.ret)+' is retained</b>, not passed down — lower-price delight is delivered upstream (MCP / correct-batch picking), not here.'; }
+      else { name='Lower batch — under the lower-MRP threshold';
+        td='<b>Cost absorption</b> drops the selling price to '+inr(c0.today)+' (no floor today).';
+        tm='<b>Exception.</b> Batch MRP is more than 15% below Quoted MRP → routed to <b>Problem Solver</b>.'; }
+      sc.className='scenario'+(c0.exc?' exc':'');
+    } else {
+      name='Cardvas fulfilled from '+count+' batches (qty '+DIST[count].join('+')+')';
+      var parts=[]; if(cats.absorb)parts.push(cats.absorb+' absorbed'); if(cats.held)parts.push(cats.held+' held'); if(cats.none)parts.push(cats.none+' no-change'); if(cats.exc)parts.push(cats.exc+' exception');
+      td='<b>Cost absorption</b> treats each batch on its own MRP — higher batches are absorbed to the FSP, lower batches drop and refund. Rows: '+parts.join(', ')+'.';
+      tm='<b>FSP held</b> for every batch at '+inr(F)+'/unit'+(cats.exc? ' — except the '+cats.exc+' over/under a guardrail, which route to <b>Problem Solver</b>.' : '. Same price on every row, whatever the batch.');
+      sc.className='scenario'+(cats.exc?' exc':'');
+    }
+    $('sc_name').textContent=name; $('sc_today').innerHTML=td; $('sc_tom').innerHTML=tm;
+  }
+
+  $('coupon').addEventListener('click',function(){ coupon=!coupon; render(); });
+  Array.prototype.forEach.call(document.querySelectorAll('#batchseg button'),function(b){ b.addEventListener('click',function(){ count=+b.dataset.n; render(); }); });
+  render();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Price Lock: Move the Lever</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="top">
+  <div class="wrap">
+    <div class="brand"><span class="m">T</span><span>Price Lock <small>· interactive</small></span></div>
+    <span class="step">Pre-PRD · engineering walkthrough</span>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">One example line · a real order</div>
+    <h1>Fulfil <span class="b">Cardvas 10</span>.<br>Watch the price hold.</h1>
+    <p class="sub">A full invoice of several items. Most lines don't change between order and fulfilment — we follow just one, <b>Cardvas 10</b>. Choose how many batches it's picked from and each batch's MRP, then compare the invoice today vs the target.</p>
+  </div>
+</header>
+
+<main>
+
+<!-- A -->
+<section class="block">
+  <div class="wrap">
+    <div class="block-head"><span class="secnum">A</span><h2>The cart — what we quoted</h2><span class="hint">All items &amp; bill details; we follow Cardvas 10.</span></div>
+    <div class="cart-grid">
+      <div class="panel">
+        <div class="panel-head"><span class="t">Cart · the promise</span><span class="badge">3 items</span></div>
+        <div class="cart-item focus">
+          <div class="pill">C</div>
+          <div class="ci-body"><div class="ci-name">Cardvas 10 <span style="color:var(--blue);font-size:.7rem;font-weight:800">◀ we follow this one</span></div><div class="ci-sub">Sun Pharma · Strip of 10</div><div class="ci-unit">3 × ₹100.00 MRP each</div><div class="ci-price"><span class="now mono" id="ct_card">₹240.00</span><span class="mrp mono">₹300.00</span><span class="off" id="off_card">20% OFF</span></div></div>
+          <div class="ci-qty">×3</div>
+        </div>
+        <div class="cart-item">
+          <div class="pill">G</div>
+          <div class="ci-body"><div class="ci-name">Glyco 500</div><div class="ci-sub">USV · Strip of 15</div><div class="ci-price"><span class="now mono" id="ct_gly">₹80.00</span><span class="mrp mono">₹100.00</span><span class="off" id="off_gly">20% OFF</span></div></div>
+          <div class="ci-qty">×2</div>
+        </div>
+        <div class="cart-item">
+          <div class="pill">T</div>
+          <div class="ci-body"><div class="ci-name">Telma 40</div><div class="ci-sub">Glenmark · Strip of 30</div><div class="ci-price"><span class="now mono" id="ct_tel">₹96.00</span><span class="mrp mono">₹120.00</span><span class="off" id="off_tel">20% OFF</span></div></div>
+          <div class="ci-qty">×1</div>
+        </div>
+      </div>
+      <div>
+        <div class="panel">
+          <div class="coupon"><button class="cbtn" id="coupon" aria-pressed="false"><span id="coupon_l"><span>Apply coupon FIRST23</span><small>Flat 23% off MRP · whole order</small></span><span id="coupon_r">›</span></button></div>
+          <div class="bill">
+            <div class="bill-hd">Bill Details</div>
+            <div class="bill-row"><span>MRP</span><span class="mono">₹520.00</span></div>
+            <div class="bill-row"><span id="disc_l">Discount · 20%</span><span class="g mono" id="disc_v">−₹104.00</span></div>
+            <div class="bill-row tot"><span>Payable</span><span class="mono" id="pay_v">₹416.00</span></div>
+          </div>
+          <div class="fsp-tag">Cardvas locked <b id="fsp_tag">FSP ₹80.00/unit</b>. Tomorrow's invoice must land back on the promised <b id="promise">₹416.00</b>.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- B -->
+<section class="block">
+  <div class="wrap">
+    <div class="block-head"><span class="secnum">B</span><h2>How the warehouse fulfils it</h2><span class="hint">Batches split the ordered qty of 3.</span></div>
+    <div class="panel controls">
+      <div class="fx-row">
+        <span class="fx-label">Cardvas batches picked</span>
+        <div class="seg" id="batchseg"><button data-n="1">1</button><button data-n="2">2</button><button data-n="3">3</button></div>
+        <span class="ctx" style="margin:0">Qty 3 splits as 3 · 2+1 · 1+1+1. Other items don't change.</span>
+      </div>
+      <div id="batchlist"></div>
+      <div class="ctx">Guardrails (illustrative): absorb up to <b>+20%</b> above quoted (cap ₹120) · hold down to <b>−15%</b> below quoted (floor ₹85). Beyond either = exception → Problem Solver.</div>
+    </div>
+
+    <!-- TODAY -->
+    <div class="inv today">
+      <div class="inv-head"><span class="h">Today · price mutates <small>· cost absorption</small></span><span class="tg">Current</span></div>
+      <div class="tbl-scroll">
+        <table class="inv-tbl">
+          <thead><tr><th>Sr</th><th class="l">Item</th><th class="l">Manufacturer</th><th>HSN</th><th>Batch No.</th><th>Exp.</th><th>Old MRP*</th><th>Revised MRP*</th><th>Qty</th><th>MRP Total</th><th>Discount</th><th class="mut">Taxable</th><th class="mut">GST%</th><th class="mut">GST Amt</th><th class="tot-col">Total</th></tr></thead>
+          <tbody id="today_body"></tbody>
+          <tfoot><tr class="tfoot-row"><td colspan="9" class="l">Line totals</td><td id="t_mrp">—</td><td id="t_disc">—</td><td class="mut">—</td><td class="mut">—</td><td class="mut">—</td><td class="tot-col" id="today_total">—</td></tr></tfoot>
+        </table>
+      </div>
+      <div class="inv-legend"><span class="lg"><span class="dot chg"></span>MRP moved from quoted</span><span class="lg"><span class="dot drop"></span>▼ price dropped below promise</span></div>
+      <div class="inv-foot"><span class="k">Two MRP columns · discount re-applies to each picked batch, so the price moves with it.</span></div>
+    </div>
+
+    <!-- TOMORROW -->
+    <div class="inv tom">
+      <div class="inv-head"><span class="h">Tomorrow · price holds <small>· target</small></span><span class="tg">Target</span></div>
+      <div class="tbl-scroll">
+        <table class="inv-tbl">
+          <thead><tr><th>Sr</th><th class="l">Item</th><th class="l">Manufacturer</th><th>HSN</th><th>Batch No.</th><th>Exp.</th><th>MRP</th><th>Qty</th><th>MRP Total</th><th>Discount</th><th class="mut">Taxable</th><th class="mut">GST%</th><th class="mut">GST Amt</th><th class="tot-col">Total</th></tr></thead>
+          <tbody id="tom_body"></tbody>
+          <tfoot><tr class="tfoot-row"><td colspan="8" class="l">Line totals</td><td id="m_mrp">—</td><td id="m_disc">—</td><td class="mut">—</td><td class="mut">—</td><td class="mut">—</td><td class="tot-col" id="tom_total">—</td></tr></tfoot>
+        </table>
+      </div>
+      <div class="inv-legend"><span class="lg"><span class="dot chg"></span>MRP moved from quoted</span><span class="lg"><span class="dot hold"></span>▲/▼ vs today's total — held here</span></div>
+      <div class="inv-foot"><span class="k"><b style="color:var(--ink)">Old MRP dropped</b> · one MRP (the batch billed) · one blended Discount. Same columns as today, minus Old MRP.</span></div>
+    </div>
+
+    <!-- scenario explainer -->
+    <div class="scenario" id="scenario">
+      <div class="sc-head">What happens in this scenario · <span id="sc_name">—</span></div>
+      <div class="sc-grid">
+        <div class="sc-side today"><span class="tag2"><span class="d"></span>Today · cost absorption</span><p id="sc_today">—</p></div>
+        <div class="sc-side tom"><span class="tag2"><span class="d"></span>Tomorrow · hold FSP</span><p id="sc_tom">—</p></div>
+      </div>
+      <div class="sc-stats">
+        <div class="st"><div class="k">Price Lock discount (absorbed)</div><div class="v violet" id="pl_absorb">₹0.00</div></div>
+        <div class="st"><div class="k">Retained on lower batches</div><div class="v green" id="pl_retain">₹0.00</div></div>
+        <div class="st"><div class="k">Cardvas · today → tomorrow</div><div class="v" id="pl_totals">—</div></div>
+      </div>
+    </div>
+    <p class="ctx" style="margin-top:12px">Glyco 500 and Telma 40 are unchanged dummy lines — same in both invoices — to show that only the varied line differs between order and fulfilment.</p>
+  </div>
+</section>
+
+<!-- BOUNDARY -->
+<section class="block">
+  <div class="wrap">
+    <div class="block-head"><span class="secnum">C</span><h2>Where Price Lock does not act</h2><span class="hint">Boundaries, not levers.</span></div>
+    <div class="bcards">
+      <div class="bcard"><div class="bt">Replace with OG <span class="x">no absorb</span></div><p>Substitute unavailable, original given instead. Higher price is <b>not</b> absorbed — Ops removes the item or takes consent.</p></div>
+      <div class="bcard"><div class="bt">New product added <span class="x">no absorb</span></div><p>A product added at fulfilment isn't a variance on a promised line. No price lock applies.</p></div>
+      <div class="bcard"><div class="bt">Quantity reduced <span class="x">refund</span></div><p>Fewer units fulfilled → refund for the missing units. Per-unit FSP unchanged; refund is the payment service's job.</p></div>
+      <div class="bcard"><div class="bt">Pack-size change <span class="x ok">absorbed</span></div><p>Different pack size of the same medicine — price difference is absorbed, exactly as today. In scope.</p></div>
+      <div class="bcard"><div class="bt">Substitute B→C <span class="x ok">absorbed</span></div><p>A different generic substitute picked — treated like a batch change and absorbed. In scope.</p></div>
+      <div class="bcard"><div class="bt">Doctor / HA / CSR edit <span class="x stage">re-lock</span></div><p>A change on these calls re-locks the FSP for that item at that stage. The lock is per-item, not a single order-placement value.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- WRITE-UP -->
+<section class="block">
+  <div class="wrap">
+    <div class="block-head"><span class="secnum">01</span><h2>The one idea</h2></div>
+    <p class="lead">Prices move between order and fulfilment — a different batch, a pack-size swap, a substitute. Today the customer's price can shift; tomorrow it can't.</p>
+    <div class="tt">
+      <div class="card today"><span class="tag2 today"><span class="d"></span>Today</span><ul><li>The discount re-applies to whatever batch is picked.</li><li>So the <b>price floats</b> — protected on a spike, dropped on a dip.</li></ul></div>
+      <div class="card tom"><span class="tag2 tom"><span class="d"></span>Tomorrow</span><ul><li>We lock the <b>FSP</b> the customer agreed to.</li><li>The discount is just <span class="mono">Batch MRP − FSP</span>. The price is the fixed point.</li></ul></div>
+    </div>
+    <p class="lead" style="margin-top:14px">The two sides only differ on a <b>lower</b> batch — that gap is the whole decision. The interactive above walks each case (higher batches land the same either way); this write-up covers the parts it can't show.</p>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap">
+    <div class="block-head"><span class="secnum">02</span><h2>The promise</h2></div>
+    <p class="lead">The quoted price is the promise. Each line's price is its locked FSP; a coupon sits on top (whole order) and the bill shows <b>one blended discount</b>. Tomorrow's invoice lands back on that promised total.</p>
+    <div class="callout"><span class="h">Coupon is on MRP, and independent of the lock</span>FIRST23 is a <b>flat 23% off MRP</b> — not stacked on the base discount. It lowers every FSP; the batch-variance logic doesn't touch it. They compose cleanly.</div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap">
+    <div class="block-head"><span class="secnum">03</span><h2>Guardrails &amp; exceptions</h2></div>
+    <div class="loud">
+      <div class="loud-badge">⚠ This does not exist today</div>
+      <p>Today there is <b>no cap and no floor</b>. Cost absorption absorbs <em>any</em> increase (the threshold is switched off) and passes down <em>any</em> decrease — an unusually mispriced batch is eaten silently. Tomorrow adds two guardrails, and a breach of either becomes an <b>exception</b>, never a silent adjustment.</p>
+    </div>
+    <div class="tt">
+      <div class="card tom"><span class="tag2 tom"><span class="d"></span>Higher-MRP absorption cap</span><ul><li>The most Price Lock will absorb before it's flagged.</li><li>Over it → exception, not silent absorption.</li></ul></div>
+      <div class="card tom"><span class="tag2 tom"><span class="d"></span>Lower-MRP threshold</span><ul><li>How far the batch MRP may fall below quoted before it's flagged.</li><li>The trigger is the <b>threshold</b>; FSP is only the legal floor beneath it.</li></ul></div>
+    </div>
+    <div class="ps-title">How Problem Solver gets involved</div>
+    <div class="ps-flow">
+      <span class="node">Guardrail breached</span><span class="ar">→</span>
+      <span class="node">Post-order flags the line</span><span class="ar">→</span>
+      <span class="node">Problem Solver</span><span class="ar">→</span>
+      <span class="node">alternate batch · operational review · customer decision · cancel</span>
+    </div>
+    <div class="callout warn"><span class="h">Scope &amp; open number</span>Price Lock only <b>routes</b> to Problem Solver. Problem Solver's resolution SOP and alternate-batch selection are separate scope. Both threshold values are new product knobs — set deliberately, then confirm with finance.</div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap">
+    <div class="block-head"><span class="secnum">04</span><h2>The contract</h2></div>
+    <div class="tt">
+      <div class="card today"><span class="tag2 today"><span class="d"></span>Today</span><ul><li>Discount context travels forward and is re-derived against the picked batch.</li></ul></div>
+      <div class="card tom"><span class="tag2 tom"><span class="d"></span>Tomorrow</span><ul><li><b>Two live fields:</b> locked FSP + quoted MRP.</li><li>Base/coupon/tax = <b>frozen metadata</b>, never recomputed post-order.</li><li><b>Re-lock:</b> a Doctor / HA / CSR edit re-locks that item at that stage.</li></ul></div>
+    </div>
+    <div class="callout"><span class="h">Warehouse edits stay as they are today</span>Any warehouse-side edit — order edit, bulk update, quantity change — behaves exactly as it does now; Price Lock doesn't change it. But because those edits change what's actually fulfilled, <b>tax and charges must be re-validated after any such edit</b>, before the invoice is finalised.</div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap">
+    <div class="block-head"><span class="secnum">05</span><h2>The invoice</h2></div>
+    <p class="lead">Compare the two documents above. Minimal change: <b>drop Old MRP</b> (the legacy GST-transition column, usually blank), keep one MRP (the batch billed), keep <b>one blended Discount</b>. No separate Price Lock line — that call-out lives in the scenario panel, not on the customer's invoice.</p>
+    <div class="callout"><span class="h">The absorption story moves, it doesn't disappear</span>"We covered ₹X for you" lives on the app's Price Lock page, not the tax invoice. <b>"Selling Price" / FSP is an internal name — not an invoice column.</b></div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap">
+    <div class="block-head"><span class="secnum">06</span><h2>Customer-facing surfaces</h2></div>
+    <div class="tt">
+      <div class="card today"><span class="tag2 today"><span class="d"></span>Today</span><ul><li>Higher MRP → "extra cost avoided" delight.</li><li>Lower MRP → "your bill reduced" delight + refund.</li></ul></div>
+      <div class="card tom"><span class="tag2 tom"><span class="d"></span>Tomorrow</span><ul><li>Higher MRP → "protected by Price Lock" stays.</li><li>Lower MRP → no post-order drop. The pre-order "Your savings" is untouched.</li></ul></div>
+    </div>
+    <div class="callout warn"><span class="h">The real fix lives upstream</span>A cheaper batch should mean the customer was <b>quoted</b> the cheaper price — an MCP / correct-batch-picking job, not an invoice-time refund.</div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap">
+    <div class="block-head"><span class="secnum">07</span><h2>Ownership &amp; scope</h2></div>
+    <div class="tt">
+      <div class="card tom"><span class="tag2 tom"><span class="d"></span>In scope</span><ul><li>Lock FSP + carry quoted MRP.</li><li>Derived discount, the two guardrails, exception flagging.</li><li>Invoice simplification, batch rows, refund snapshot.</li></ul></div>
+      <div class="card today"><span class="tag2 today"><span class="d"></span>Out of scope</span><ul><li><b>Variance correction at source</b> — MCP / picking. The real fix, currently unowned.</li><li>Returns, pack-size orchestration, coupon/tax redesign — continue as-is.</li></ul></div>
+    </div>
+    <div class="callout warn"><span class="h">The dependency to name in the PRD</span>Price Lock makes upstream pricing accuracy more urgent and more measurable — yet no one owns it today. Needs an explicit owner.</div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="wrap">
+    <div class="block-head"><span class="secnum">08</span><h2>The upstream fix — MCP</h2><span class="hint">How the right price gets quoted in the first place.</span></div>
+    <p class="lead">Price Lock holds the promise; it doesn't shrink the variance. The variance shrinks <b>upstream</b> — by quoting the right price at order time. That's the job of <b>MCP (Most Common Price)</b>, and it becomes more important the moment Price Lock stops papering over it.</p>
+    <div class="tt">
+      <div class="card">
+        <span class="tag2 tom"><span class="d"></span>How MCP picks the price</span>
+        <ul><li>Not picking logic — MCP just returns the <b>MRP of the batch with the most quantity</b> in pickable zones.</li><li>Pickable = <b>JIT · Urgent · Excess</b>. <b>Bulk is excluded</b> (non-pickable).</li></ul>
+        <table class="mcp-tbl">
+          <thead><tr><th>Batch</th><th>Pickable qty</th><th>MRP</th></tr></thead>
+          <tbody>
+            <tr><td>A</td><td>30</td><td>₹100</td></tr>
+            <tr><td>B</td><td>20</td><td>₹120</td></tr>
+            <tr><td>C</td><td>10</td><td>₹80</td></tr>
+          </tbody>
+        </table>
+        <div class="mcp-out">Highest pickable qty = 30 → <b>MCP MRP = ₹100</b></div>
+      </div>
+      <div class="card">
+        <span class="tag2 tom"><span class="d"></span>Then what happens</span>
+        <div class="mcp-flow">
+          <span class="node">MCP quotes ₹100</span><span class="ar">→</span>
+          <span class="node">Picking is MRP-blind today</span><span class="ar">→</span>
+          <span class="node">Post-order sees the picked MRP</span>
+        </div>
+        <ul style="margin-top:14px"><li>If MCP + correct-batch picking are accurate, the quoted price already <b>matches</b> the fulfilled batch — little to nothing to absorb.</li><li>Every rupee Price Lock absorbs is a rupee MCP or picking got wrong. Absorption becomes the <b>measure</b> of upstream inaccuracy.</li></ul>
+      </div>
+    </div>
+    <div class="callout warn"><span class="h">Why this closes the loop</span>Today absorption hides the miss; tomorrow it's a capped, counted cost. That visibility is the case for giving MCP / correct-batch picking an explicit owner — the real fix for variance.</div>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div class="eyebrow">Open before the PRD</div>
+    <div class="chips">
+      <span class="c"><b>Lower-MRP threshold</b> · value + basis</span>
+      <span class="c"><b>Higher-MRP cap</b> · value + owner</span>
+      <span class="c"><b>Absorbed amount</b> · confirm taxable-value discount (finance)</span>
+      <span class="c"><b>Upstream variance</b> · MCP / picking owner</span>
+      <span class="c"><b>Re-lock</b> · Doctor / HA / CSR detail</span>
+    </div>
+    <p class="note">Illustrative order — Cardvas 10 (quoted ₹100/unit, ordered ×3) is the varied line; Glyco 500 and Telma 40 are unchanged dummies. Invoice columns follow the real Truemeds tax invoice. All figures illustrative; guardrail values are placeholders for open decisions.</p>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
