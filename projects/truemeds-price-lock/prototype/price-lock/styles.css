@@ -125,11 +125,13 @@ table.inv-tbl{border-collapse:collapse;width:100%;font-size:.76rem;min-width:900
 .delta svg{display:block}
 .delta.up{color:var(--violet)}
 .delta.down{color:var(--red)}
+.delta.held{color:#0a7a4d}
 /* hero spine — Total column carries the eye top to bottom */
 .inv-tbl td.tot-col,.inv-tbl th.tot-col{background:var(--wash);font-weight:800;color:var(--ink);font-size:.82rem;border-left:2px solid var(--line2)}
 .inv-tbl th.tot-col{color:var(--ink);font-size:.64rem}
 .inv-tbl tr.hot td.tot-col{background:#dfe9fb}
 .inv-tbl td.tot-col.chg{background:var(--violet-soft);color:var(--violet-ink)}
+.inv-tbl td.tot-col.held{background:var(--green-soft);color:#0a7a4d}
 .inv-tbl tr.exc td.tot-col{background:var(--red-soft)}
 /* demoted — tax mechanics, not the decision */
 .inv-tbl td.mut,.inv-tbl th.mut{color:var(--faint);font-weight:500;font-size:.68rem}

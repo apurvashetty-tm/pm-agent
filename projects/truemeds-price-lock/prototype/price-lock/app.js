@@ -27,9 +27,13 @@
   }
   var ARROW_UP='<svg viewBox="0 0 12 12" width="11" height="11"><path d="M6 10V2M3 5L6 2L9 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   var ARROW_DOWN='<svg viewBox="0 0 12 12" width="11" height="11"><path d="M6 2V10M3 7L6 10L9 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  var ARROW_FLAT='<svg viewBox="0 0 12 12" width="11" height="11"><path d="M2 6H10" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>';
   function arrow(delta){
     if(Math.abs(delta)<0.005) return '';
     return '<span class="delta '+(delta>0?'up':'down')+'">'+(delta>0?ARROW_UP:ARROW_DOWN)+'</span> ';
+  }
+  function heldMark(){
+    return '<span class="delta held">'+ARROW_FLAT+'</span> ';
   }
   function tag(c){
     if(!c.higher&&!c.lower) return {t:'no change',cls:'none'};
@@ -84,9 +88,8 @@
       return '<tr class="exc"><td>'+sr+'</td><td class="item l">'+name+'</td><td class="mfr l">'+it.mfr+'</td><td>'+it.hsn+'</td><td>'+batch+'</td><td>'+it.exp+'</td>'
         +mrpCell+'<td>'+c.qty+'</td><td>'+inr(c.mrpL)+'</td><td>—</td><td class="mut">—</td><td class="mut">5%</td><td class="mut">—</td><td class="tot-col" style="color:var(--red);font-weight:800">exception</td></tr>';
     }
-    var totChg=Math.abs(c.FSPl-c.today)>=0.005;
     var discCell='<td'+(mrpChg?' class="chg"':'')+'>−'+inr(c.mDisc)+'</td>';
-    var totCell='<td class="tot-col'+(totChg?' chg':'')+'">'+(totChg?arrow(c.FSPl-c.today):'')+inr(c.FSPl)+'</td>';
+    var totCell='<td class="tot-col'+(mrpChg?' held':'')+'">'+(mrpChg?heldMark():'')+inr(c.FSPl)+'</td>';
     return '<tr'+(hot?' class="hot"':'')+'><td>'+sr+'</td><td class="item l">'+name+'</td><td class="mfr l">'+it.mfr+'</td><td>'+it.hsn+'</td><td>'+batch+'</td><td>'+it.exp+'</td>'
       +mrpCell+'<td>'+c.qty+'</td><td>'+inr(c.mrpL)+'</td>'+discCell+'<td class="mut">'+inr(c.mTax)+'</td><td class="mut">5%</td><td class="mut">'+inr(c.mGst)+'</td>'+totCell+'</tr>';
   }

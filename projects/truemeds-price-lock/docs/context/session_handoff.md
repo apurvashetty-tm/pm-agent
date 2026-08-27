@@ -61,6 +61,14 @@ User flagged: arrow after the number broke right-alignment (digits didn't line u
 - Files: `app.js` (arrow() returns prefix span; cell builders reordered), `index.html` (tfoot markup added, old `.tot` spans removed from `.inv-foot`), `styles.css` (`.delta.up/.down`, `tfoot` rules, `.inv-foot` simplified). Rebuilt bundle via `build.py`.
 - Follow-up: unicode ▲/▼ triangles swapped for inline-SVG stemmed arrows (line + arrowhead, `stroke:currentColor`) — renders consistently across browsers/fonts, unlike glyph triangles. `ARROW_UP`/`ARROW_DOWN` constants in `app.js`.
 
+## 3d. Baseline fixed to Quoted, not Today-vs-Tomorrow (2026-08-27)
+
+User: comparisons should anchor to Quoted (the promise) throughout, not compare Tomorrow's total against Today's. Reasoning: Tomorrow's Total is *always* exactly the quoted-derived FSP by definition — it can never have an up/down delta, only "held" or not.
+- Tomorrow's Total column: removed the `FSPl vs today` delta/arrow entirely. Now shows a flat-line "held" mark (green, `ARROW_FLAT`, `.tot-col.held`) whenever batch MRP deviated from quoted — signals "this would have moved, Target held it at the promise" — and shows nothing when MRP = quoted (true no-change, no mark on either table).
+- Today's Total was already quoted-anchored (▼ red only when price dropped below the quoted-derived promise) — left unchanged.
+- Net: every cell in both tables now compares only to Quoted MRP/FSP, never table-to-table. No-change rows carry no mark anywhere.
+- Files: `app.js` (`ARROW_FLAT`/`heldMark()`, `tomRow` totCell rewritten off `mrpChg` instead of `totChg`), `styles.css` (`.delta.held`, `.tot-col.held`), `index.html` (Tomorrow legend line updated). Rebuilt via `build.py`.
+
 ## 4. Next exact step
 
 Prototype is review-ready. Collect eng/CXO feedback, then use `project_truth.md` + the walkthrough to draft the PRD. Remaining open items (`open_questions.md`): lower-MRP threshold value/basis, higher-MRP absorption cap value + owner, tax treatment of the absorbed amount (finance), MCP/correct-batch-picking owner, and rounding.
