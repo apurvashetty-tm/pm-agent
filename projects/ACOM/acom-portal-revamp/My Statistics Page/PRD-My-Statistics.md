@@ -1,7 +1,7 @@
 # PRD: My Statistics — Unified Agent Performance View
 
-**Status:** Draft for Product, Design, Engineering, and Operations review  
-**Owner:** Product — TBD
+**Owner:** Apurva Shetty · **Date:** 8 Sep 2026 · **Status:** Draft for review  
+**Reviewers:** Product, Design, Engineering, Operations
 
 ## 1. Context
 
@@ -126,3 +126,10 @@ Validate the design with representative agents before implementation and monitor
 - Last loaded time reflects the most recent successful statistics request.
 - Loading, zero-activity, error, and responsive states are covered.
 - Initial load does not issue per-card requests or calculate statistics from raw transactions.
+
+## 11. Artifacts
+
+- **Live prototype:** https://acom-mystats-redesign.netlify.app — design reference only, not production code. States reachable via URL params: `?state=loading`, `?state=empty`, `?state=error`, `?view=week`, `?view=month`, `?view=month&open=fulfilment`, `?view=month&open=otc`.
+- **Design handoff bundle** (markup, `styles.css`, `app.js` derived-metric formulas, `data.sample.json` API shape, `tokens.json`, visual-QA screenshots, handoff README): https://drive.google.com/drive/folders/16eqVgYWcsvk3j-tue1DdT8PxVIaaVXKy
+- **Source branch:** `github.com/apurvashetty-tm/pm-agent` @ `acom-portal-revamp` — `projects/ACOM/acom-portal-revamp/My Statistics Page/`
+- **Confluence:** https://truemeds.atlassian.net/wiki/spaces/PROD/pages/2019459073/ACOM+My+Statistics+Redesign
