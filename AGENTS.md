@@ -118,3 +118,11 @@ automatically, so apply them manually here:
 - Before syncing with GitHub, check `git status --short --branch`.
 - Pull with fast-forward only when bringing down remote changes.
 - Keep local project files and handoff files committed together when possible.
+
+## Pushing to GitHub (credentials)
+
+- `origin` is already configured with a stored credential inside `.git/config`. That file is **local only and never committed**, so the secret is not part of the repo and never reaches GitHub.
+- Any tool — Codex, Claude Code, Cowork, or a terminal — pushes by running `git push origin <branch-name>` from inside this repo. Git reads the stored credential automatically; **no token needs to live in any tracked file, and none should.**
+- **Never** put the token in a tracked file (README, CLAUDE.md, AGENTS.md, a commit, etc.) or paste it into chat. GitHub secret-scanning auto-revokes any token it finds committed, and it would expose the credential in history.
+- If a push fails with a `403` / auth error, the fine-grained token has expired or lost write access. Fix it: regenerate the token at GitHub -> Settings -> Developer settings -> Personal access tokens -> Fine-grained tokens (repo `pm-agent`, permission **Contents: Read and write**), then re-point the remote (run this in a terminal, not in chat, so the token stays private):
+  `git remote set-url origin https://apurvashetty-tm:<NEW_TOKEN>@github.com/apurvashetty-tm/pm-agent.git`

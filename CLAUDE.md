@@ -37,6 +37,8 @@ python scripts/weekly_synthesis.py
 
 No install step; scripts are standalone bash/node/python with no dependency manifest.
 
+Pushing to GitHub authenticates via a credential stored in local `.git/config` (never committed) — see **AGENTS.md -> "Pushing to GitHub (credentials)"** for the push command and how to rotate the token. Never commit a token to a tracked file.
+
 ## Architecture: PM workflow system
 
 **Entry point is always `workflows/supporting/recall-and-route.md`** — every PM task (PRD, review, objections, exec brief, experiment) is routed through it, never invoked directly:
