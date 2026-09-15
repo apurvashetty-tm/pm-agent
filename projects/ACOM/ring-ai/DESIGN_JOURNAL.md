@@ -8,10 +8,12 @@
 
 ## 0. Where we are now (TL;DR)
 
+> **Current doc:** `docs/ai-led-lead-qualification-prd.md` ("AI-led Lead Qualification", Confluence PROD 2023260174), with its call architecture **locked 11 Sep** (Phase 4). The two deliverables described just below are **historical** — kept for the reasoning trail.
+
 Two related but distinct deliverables exist:
 
 1. **Future-state design** — *Voice-Bot Cart Recovery PRD* + *MVP Engineering Walkthrough* (`docs/`). The full vendor-agnostic voice-bot layer for dropped-cart recovery (Ring AI as first vendor): signal-aware integration, normalized outcomes, lead lifecycle/state machine, telephony considerations, milestones M1–M4. Synced to Confluence.
-2. **Rapid Pilot PRD** (`docs/rapid-pilot-prd.md`) — the **current active build target**. A deliberately minimal, reversible change to *today's* ACOM queue that proves one thing: *Ring AI pre-qualifies a controlled slice of incomplete-order leads; Hot/Warm customers return to the existing human "Assign Order" flow with priority; Ring and humans never call the same order at once.* Pull model, `max_in_flight` throttle, never-null ownership lock, two-step agent CTA, `call_details` retention, patient-id eligibility filter. Synced to Confluence (page 1850114059).
+2. **Rapid Pilot PRD** (`docs/rapid-pilot-prd.md`) — the earlier build target (now historical — see Phase 3). A deliberately minimal, reversible change to *today's* ACOM queue that proves one thing: *Ring AI pre-qualifies a controlled slice of incomplete-order leads; Hot/Warm customers return to the existing human "Assign Order" flow with priority; Ring and humans never call the same order at once.* Pull model, `max_in_flight` throttle, never-null ownership lock, two-step agent CTA, `call_details` retention, patient-id eligibility filter. Synced to Confluence (page 1850114059).
 
 The Rapid Pilot is **not** a slice of the future-state architecture — it's a thin bolt-on to prove value fast, with the big architecture deferred.
 
@@ -45,6 +47,35 @@ The BYOT reversal (own telephony → Ring-native for MVP) is detailed in §3 bel
 
 ### Phase 2 — Rapid Pilot pivot (the current doc) + iteration
 A decision to prove value in **days**, not on the full architecture. A new, standalone *Rapid Pilot PRD* was written from scratch — explicitly **not** a redesign of the future architecture, but a minimal table+query change reusing the existing ACOM assignment flow. This doc then went through a long, high-signal review cycle (below) that repeatedly tightened the design. It is the current source of truth for what gets built first.
+
+---
+
+### Phase 3 — Scope change -> fresh, PM-led platform PRD (the current doc)
+
+A material scope change reset the direction, and a brand-new product-focused PRD was written from scratch: **`docs/ai-led-lead-qualification-prd.md`** ("AI-led Lead Qualification", Confluence PROD 2023260174). It is now the current active doc; the Rapid Pilot and future-state docs are historical.
+
+What changed:
+- **Ring will not integrate Truemeds' APIs — Truemeds integrates Ring.** And **no PII** (phone, maybe address) may be sent to Ring.
+- Because Ring can't hold PII or dial, **Truemeds owns the whole call via Knowlarity** — dialling, retries, calling window, hangup. Ring becomes the conversation + the post-call verdict, never the caller. (Two Knowlarity docs landed: the Notifications/Streaming API and the Hangup Causes / Q.850 cause codes — the latter drives our retry policy.)
+- **Media bridge:** Ring returns a per-lead media stream URL; Knowlarity dials the customer and bridges that stream. (Feasibility is an open question to both vendors.)
+- **Generic `uuid`, not `order_id`**, as the correlation key — so the platform extends to non-cart drop-offs.
+- **Eligibility + Ring dial-order are configurable and ours; the manual queue's prioritisation score is not touched** (Hot/Warm ride as a tier in front). Richer scoring for no-cart use cases is parked as an analytics annexure.
+- Full **lead journey** owned: retries off the telephony disposition (3 buckets), one unified Hold/Schedule "come back at T" state carrying who resumes it, closed-never-re-enter, DNC scope (our two channels firm; cross-portal via a shared list = a dependency), a per-customer frequency cap, throttle + kill-switch.
+- Deliberately **async callback**; live transfer is future-state.
+
+Working-style note: the PRD is written **product-first** (state the what/why + constraints; leave the "how" to engineering as open questions), lean, and human — captured as a reusable method in `../../../templates/lean-prd-guide.md`.
+
+### Phase 4 — Call architecture locked (11 Sep call with Ring)
+
+The 11 Sep call with Ring settled *how a call actually flows*, replacing the media-bridge idea carried in Phase 3. Confirmed and locked:
+- **WebSocket, not a media bridge.** Truemeds pre-loads the lead into Ring (reference id / uuid + cart/custom vars + workspace id; the customer **name** is the one PII field — no phone, no address). Knowlarity dials and opens a **WebSocket** to Ring carrying the reference id; a "customer answered" event starts the bot; the conversation runs over the socket. There is no per-lead media-stream URL to bridge.
+- **Verdict by webhook on the reference id.** Ring records its own side and returns Hot/Warm/Cold (a possible 4th don't-call state is an open question to Ring), keyed on the reference id.
+- **Truemeds keeps its OWN recording + event log for RCA** — its own copy, not sent to Ring. It is forensic proof for debugging, **not** a fix for telephony reliability; if Knowlarity connect quality is the issue, the lever is the Knowlarity SLA + reconciliation, not the recording.
+- **Cold = lowest priority, not set aside;** only a genuine don't-call state is pulled out. DNC is captured two ways — the AI's post-call input, or a human via a CTA — permanent across our channels.
+- **Vendor-agnostic by design, not plug-and-play:** the *shape* (reference id in, verdict webhook out, our telephony, our journey) does not depend on Ring internals, but swapping the voice vendor is still a re-integration.
+- Retries stay ours off the Knowlarity disposition; **Ring does no retries.**
+
+Reflected in the PRD by striking the old assumptions and writing the new ones (§4 flow + reworked ASCII diagram, §8 verdict loop + retain recording/events + vendor-agnostic-by-design, §9 resolved questions + PII-on-event + effort-gate, §12 edge cases incl. "forensics is not a reliability fix"), and captured as a **running MoM with Ring** in new §13. Decision record: `../../../knowledge/decisions/2026-09-11-ring-ai-call-architecture.md`.
 
 ---
 
@@ -125,4 +156,4 @@ Legend: **→** marks a reversal/evolution of an earlier position.
 
 ---
 
-*This journal is the "why." For the "what/how," read `docs/rapid-pilot-prd.md` (current build) and the future-state docs. For a fast agent onboarding, read `claude.md`.*
+*This journal is the "why." For the "what/how," read `docs/ai-led-lead-qualification-prd.md` (current build, Confluence PROD 2023260174); `docs/rapid-pilot-prd.md` and the future-state docs are historical. For a fast agent onboarding, read `CLAUDE.md`.*

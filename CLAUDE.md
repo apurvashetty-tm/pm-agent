@@ -84,3 +84,7 @@ Do not modify `project_truth.md` unless the user explicitly locks new truth.
 ## MCP Tools: code-review-graph
 
 `code-review-graph` MCP server is installed and available. This repo is mostly markdown workflows, not a codebase — use the graph tools (`query_graph`, `semantic_search_nodes`, `detect_changes`, etc.) only when working inside a code-bearing subtree like `projects/truemeds-doctor-portal-prototype/`; otherwise Grep/Glob/Read are fine.
+
+## PRD authoring
+
+For new PRDs, prefer the lean, product-focused method in `templates/lean-prd-guide.md` — state the what/why and the non-negotiable constraints, and leave the *how* to Engineering as Open Questions / Dependencies. The heavier `workflows/core/create-prd` flow remains for when a full, workflow-driven PRD run is explicitly wanted.

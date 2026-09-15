@@ -1,65 +1,55 @@
-# Context primer — ACOM 2.0 × Ring AI
+# Context primer — ACOM × Ring AI (AI-led Lead Qualification)
 
-*Scoped `CLAUDE.md` for this project folder. Fast onboarding for any agent working on this project: current state, the rules of the road, and where the detail lives.*
+*Scoped `CLAUDE.md` for this project folder. Fast onboarding: current state, the rules of the road, and where the detail lives.*
 
 ## Workspace memory
-
 Before project-specific work, also read:
 - `../../../AGENTS.md`
 - `../../../context/Claude.md`
 - relevant files in `../../../knowledge/context/`
-- `../CLAUDE.md` (ACOM umbrella — the cart-recovery problem this initiative serves, and its sibling initiatives)
+- `../CLAUDE.md` (ACOM umbrella)
 
-Use project-local files for project truth and handoff. Use root knowledge files only for reusable company/system context.
+Use project-local files for project truth/handoff; root knowledge files for reusable company/system context.
 
 ## What this is
-This is one initiative under **ACOM** (`../CLAUDE.md`): AI voice pre-qualification for dropped-cart (incomplete-order) recovery, with **Ring AI** as the first vendor. There are two layers of work:
-- **Rapid Pilot** — the **current build target**. A thin, reversible bolt-on to today's ACOM "Assign Order" flow. Canonical spec: **`docs/rapid-pilot-prd.md`** (also on Confluence, page 1850114059).
-- **Future-state** — the full vendor-agnostic voice-bot layer: `docs/voicebot-cart-recovery-prd.md` + `docs/mvp-engineering-walkthrough.md`. Context, not the immediate build.
+AI voice pre-qualification for top-of-funnel recovery (dropped carts first), with **Ring AI** as the voice-AI vendor and **Knowlarity** as the telephony provider. One initiative under **ACOM** (`../CLAUDE.md`).
 
-Read **`DESIGN_JOURNAL.md`** for *why* things are the way they are (and what we tried and dropped).
+**Current active doc: `docs/ai-led-lead-qualification-prd.md`** — a fresh, PM-led, lean, product-focused PRD (also on Confluence, PROD page 2023260174). It supersedes the earlier framing. The earlier docs are **historical context**, not the current plan:
+- `docs/rapid-pilot-prd.md` — the earlier "thin bolt-on to today's ACOM queue" pilot (Confluence page 1850114059).
+- `docs/voicebot-cart-recovery-prd.md` + `docs/mvp-engineering-walkthrough.md` — the earlier future-state / vendor-agnostic design.
+- `DESIGN_JOURNAL.md` — *why* things changed (Phase 3 = the pivot to the current doc; Phase 4 = the locked 11-Sep call architecture).
 
-## Rapid Pilot in one screen
-- **Pull model.** Ring calls a Truemeds API for work; we hand back reserved, enriched leads up to a cap.
-- **`max_in_flight`** caps how many leads Ring may hold un-resolved at once. It's the rollout lever *and* the throttle. `max_in_flight = 0` = kill switch.
-- **Ownership lock, never nulled by Ring.** A lead handed to Ring is stamped `assigned_to = RING_BOT_USER_ID` (atomic compare-and-set on `assigned_to IS NULL`) and **keeps** that until a human is assigned. So today's BAU query (`assigned_to IS NULL`) ignores Ring-touched leads and stays **unchanged**.
-- **Outcome** is written to a new `ring_outcome` column (`HOT|WARM|COLD|DECLINED|CALLBACK|RING_NO_RESPONSE`) via a **config mapping table** (Ring label → our value); the lock is **kept**, not released.
-- **Two-step agent CTA:** (1) `HOT` then `WARM`, FIFO on `modified_on`; (2) fallback = today's BAU query, unchanged.
-- **Listing-only (not self-serve):** `RING_NO_RESPONSE`, `COLD`, `DECLINED`, `CALLBACK`. TLs filter by `ring_outcome` and may hand-pick.
-- **Retention** in existing `call_details` (Ring row = `agent_names = "Ring AI"`), recording → S3, transcript → S3 (`transcript_s3_uri`, pending eng confirm). Two rows per `order_id` in the happy path (Ring + human).
-- **Safety:** a **reaper** stamps stuck-in-Ring leads `RING_NO_RESPONSE`; the kill switch halts hand-outs instantly.
-- **Three lead-selection queries:** Ring candidate (BAU eligibility **+** patient `EXISTS`), prioritisation (Hot/Warm), and human BAU (unchanged).
+## The current model in one screen
+- **Truemeds integrates Ring; Ring does not integrate us.** The only PII sent to Ring is the customer **name** (needed to open the call); phone and address are never sent.
+- **Truemeds owns the whole call via Knowlarity** — dial, connect, retries, calling window, hangup. Ring is the conversation + the verdict, never the caller.
+- **Flow (locked 11 Sep):** pre-load lead + cart/custom vars + our own reference id / `uuid` (not `order_id`) + workspace id to Ring -> Knowlarity dials and opens a **WebSocket** to Ring carrying the reference id (no separate media-stream bridge) -> a "customer answered" event starts the bot -> Ring runs the conversation over the socket and records its own side -> Ring returns Hot/Warm/Cold (a possible 4th don't-call state is an open question to Ring) by **webhook keyed on the reference id** -> Truemeds stores its **own** recording + event log for RCA, **not** sent to Ring (forensics, not a reliability fix). Cold = lowest priority (not set aside). Async callback is the model; live transfer is future-state.
+- **Two "what happened" signals:** connect / hangup-cause = Knowlarity; conversation verdict = Ring (connected calls only). Retries and give-up are ours, driven by the telephony disposition.
+- **Which leads & order:** configurable eligibility (today patient + address) + configurable Ring dial-order (FTC-first) — the manual queue's prioritisation score is **not touched**; Hot/Warm ride as a tier in front of it.
+- **Journey:** one "come back at time T" waiting state (Hold / Schedule CTAs) carrying who resumes it; closed leads never re-enter; DNC permanent across our two channels (cross-portal = a shared-list dependency); a per-customer frequency cap; throttle + instant kill-switch; the manual flow always runs underneath as the fallback.
 
 ## Data model you need
-- `incomplete_order_details` (`iod`) — abandoned-cart table. Key cols: `order_id`, `customer_id`, `order_value`, `final_score`, `assigned_to`, `orderstatus`, `is_active`, `eligible_for_ranking`, `rank_again_after`, `created_on`, `modified_on`, `cx_modified_on`. New col added by the pilot: `ring_outcome`. **One open incomplete order per customer.**
-- `order_details` — authoritative order/status table (source-of-truth guard for `orderstatus=49`).
-- `sub_order_details` — has `patient_id` per `order_id` (one order → many sub-orders; one patient per cart). The Ring eligibility filter is `EXISTS (… patient_id IS NOT NULL)`.
-- `call_details` — existing telephony log; multiple rows per `order_id`; `recording_url`/`s3bucket_recording_url`, `disposition`, `on_hold_reason`, `is_status_call_back_hold`, `agent_names`, `agent_status`. **No `agent_id` column, no transcript column.**
-- Enrichment sourcing: `callee_name` = the patient's name (from `sub_order_details.patient_id`); `mobile_number` = the **customer** account number (no patient-level number).
+`incomplete_order_details` (`iod`), `order_details`, `sub_order_details` (holds `patient_id`), `call_details` (telephony log; `recording_url` / `s3bucket_recording_url`, `disposition`, `on_hold_reason`, `is_status_call_back_hold`, `agent_names`, `agent_status`; no transcript column). The current PRD is product-level and leaves schema to engineering — the earlier detailed data model lives in `docs/rapid-pilot-prd.md` §12.
 
-## Guardrails — do NOT do these (settled)
-- **Don't add a `MOD`/cohort throttle** or a **holdout/incrementality experiment** to the pilot.
-- **Don't release the lock to `NULL`** on a Ring result — keep `assigned_to = RING_BOT_USER_ID`.
-- **Don't put RING_NO_RESPONSE (or COLD/DECLINED/CALLBACK) into self-serve** — listing-only.
-- **Don't filter on `created_on`** — use `cx_modified_on` (activity), 30 min–1 day.
-- **Don't create a new artifacts table** — retention goes in `call_details`.
-- **Don't modify the BAU query** — it's the unchanged Step-2 fallback.
-- **Don't invent Ring API fields** — verify from docs.ringg.ai or mark pending; the webhook contract is assume-and-build behind the mapping table.
-
-## Open items to close (PRD §11)
-O1 RING_NO_RESPONSE placement · O2 send-failure rollback · O3 CALLBACK scheduling · O4 `ring_lead_ttl` · O5 transcript storage. Plus: Ring webhook contract, `reaper_minutes`/`max_in_flight`/`ring_lead_ttl` starting values, economics targets, listing-page assignment mechanism.
+## Vendor reference docs
+- Knowlarity **Notifications / Streaming API** — SSE call events (ORIGINATE -> HANGUP) + recording URL at HANGUP / CDR.
+- Knowlarity **Hangup Causes** — Q.850 / SIP cause codes; ships retry-case sets (drives our retry policy).
+- Ring AI API — docs.ringg.ai.
 
 ## How to work here (stakeholder norms)
-- **Markdown is the source of truth**; Confluence/HTML are generated from it.
-- **Present → debate → agree → then edit.** Don't edit during brainstorming; surface changes for review.
-- **Never sync to Confluence/Atlassian unless explicitly told "sync."**
-- Concise, external-reader prose; no meta-scaffolding or filler; don't over-flag or over-engineer.
-- The PRD is **two-layer**: §1–§11 = required Product behaviour (binding); §12 = Engineering Implementation Contract (implementation may change, guarantees must hold).
+- **Markdown is the source of truth**; Confluence is generated from it. Never sync unless told "sync".
+- **Present -> debate -> agree -> then edit.** Don't edit during brainstorming.
+- Product-focused PRDs, not tech specs — leave the "how" to engineering as open questions. Method: `../../../templates/lean-prd-guide.md`.
+- Concise external-reader prose; vendor named once then generic in the body (real names kept in the vendor-directed open questions).
 
 ## Pointers
-- Current build spec → `docs/rapid-pilot-prd.md`
-- Why/history → `DESIGN_JOURNAL.md`
-- Future-state → `docs/voicebot-cart-recovery-prd.md`, `docs/mvp-engineering-walkthrough.md`
-- Open questions → `docs/open-questions-tracker.md`
-- Schema samples → `reference/schema-samples/`
-- Confluence: *ACOM 2.0 — Ring AI Rapid Pilot PRD* (page 1850114059, space PROD)
+- Current build spec -> `docs/ai-led-lead-qualification-prd.md` (Confluence PROD 2023260174)
+- Why / history -> `DESIGN_JOURNAL.md`
+- Earlier docs (historical) -> `docs/rapid-pilot-prd.md`, `docs/voicebot-cart-recovery-prd.md`, `docs/mvp-engineering-walkthrough.md`
+- Locked project truth -> `docs/context/project_truth.md` (only the stakeholder edits it)
+- Resume state / handoff -> `docs/context/session_handoff.md`
+- Open decisions -> `docs/context/open_questions.md` (mirrors current PRD §9)
+- Call architecture, the "why" -> `../../../knowledge/decisions/2026-09-11-ring-ai-call-architecture.md`; running MoM with Ring -> current PRD §13
+- Open questions -> live in the current PRD §9; `docs/open-questions-tracker.md` covers the earlier future-state design
+- Data-model detail -> `docs/rapid-pilot-prd.md` §12
+- PRD method -> `../../../templates/lean-prd-guide.md`
+- Schema samples -> `reference/schema-samples/`
