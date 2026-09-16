@@ -10,6 +10,7 @@ Latest decisions (2026-08-24, CEO/business aligned):
 - Price Lock is not a variance-correction engine; variance (up or down) is an upstream MCP/picking problem — currently unowned, flagged as dependency.
 - New: `docs/context/surface_inventory.md` maps every bill/savings surface Today vs Tomorrow (v0.1 scaffold; needs Figma snapshots + current-live confirmations).
 - CAB grounding: real invoice `docs/context/ORDER_INVOICE_48188241_Paid.pdf` (Order 48188241) confirms batch-level rows + single consolidated discount line already exist today. Use this PDF directly for any invoice-layout question — not a paraphrase of it.
+- Source control & hosting (2026-09-16): committed and pushed to GitHub on branch `price-lock-proto`; the prototype is hosted on Netlify with continuous deploy off that branch. See §3e.
 
 ## 2. Latest completed work
 
@@ -40,6 +41,7 @@ Latest decisions (2026-08-24, CEO/business aligned):
 - `prototype/price-lock/` — the interactive walkthrough (modular; see §6).
 - `reference/CAB/` — copied historical documents.
 - `reference/figma-links.md` — design references.
+- `netlify.toml` (repo root) — Netlify continuous-deploy config for the prototype.
 
 ## 3b. Latest UI pass (2026-08-26)
 
@@ -69,9 +71,25 @@ User: comparisons should anchor to Quoted (the promise) throughout, not compare 
 - Net: every cell in both tables now compares only to Quoted MRP/FSP, never table-to-table. No-change rows carry no mark anywhere.
 - Files: `app.js` (`ARROW_FLAT`/`heldMark()`, `tomRow` totCell rewritten off `mrpChg` instead of `totChg`), `styles.css` (`.delta.held`, `.tot-col.held`), `index.html` (Tomorrow legend line updated). Rebuilt via `build.py`.
 
+## 3e. Source control & hosting (2026-09-16)
+
+The project is now version-controlled and the prototype auto-deploys on every push.
+
+Source control (repo: github.com/apurvashetty-tm/pm-agent, currently **public**):
+- All Price Lock work — model, context docs, and the interactive walkthrough — lives on its own branch `price-lock-proto`, cut from `main`. Nothing Price-Lock sits on any other branch.
+- The unrelated ACOM work lives on its own branch `acom-portal-revamp` (it absorbed the earlier `ftc-priority-prd` branch, now retired). The two efforts share no commits.
+- `price-lock-proto` and `acom-portal-revamp` are on origin with upstream tracking. `.DS_Store` is gitignored.
+
+Hosting (Netlify, continuous deploy):
+- `netlify.toml` at the repo root publishes `projects/truemeds-price-lock/prototype/price-lock` as the site root, with no build step, so `index.html` loads with its sibling `styles.css` / `app.js`.
+- Any push to `price-lock-proto` auto-redeploys. Update-the-live-site workflow: edit `index.html` / `styles.css` / `app.js` → `python3 build.py` → commit → push.
+- Netlify now defaults new projects to private (team-login only); site visibility is still to be decided (see below).
+
+Open item — prototype visibility (free plan): keep it **private** (team-login only, effectively single-seat), make the URL **public** (free, available after the first deploy — and the repo is already public, so the source is openly viewable either way), or move to **Netlify Pro** for password-protected sharing. Undecided.
+
 ## 4. Next exact step
 
-Prototype is review-ready. Collect eng/CXO feedback, then use `project_truth.md` + the walkthrough to draft the PRD. Remaining open items (`open_questions.md`): lower-MRP threshold value/basis, higher-MRP absorption cap value + owner, tax treatment of the absorbed amount (finance), MCP/correct-batch-picking owner, and rounding.
+Prototype is review-ready and hosted on Netlify (see §3e). Collect eng/CXO feedback, then use `project_truth.md` + the walkthrough to draft the PRD. Remaining open items (`open_questions.md`): lower-MRP threshold value/basis, higher-MRP absorption cap value + owner, tax treatment of the absorbed amount (finance), MCP/correct-batch-picking owner, and rounding.
 
 ## 5. Do not change without explicit approval
 
