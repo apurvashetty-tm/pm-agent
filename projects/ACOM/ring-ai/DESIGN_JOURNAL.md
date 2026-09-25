@@ -142,6 +142,7 @@ Legend: **→** marks a reversal/evolution of an earlier position.
 - Write for **external readers** — no meta-scaffolding, no "this is the plain-language layer," no narrating the process into the doc; cut filler.
 - **Be concise and direct.** Don't over-flag/over-engineer; distinguish a real blocker from a nit.
 - Don't invent vendor (Ring) API details — verify from official docs or mark clearly as pending.
+- **Whenever a stated fact changes (e.g. a threshold or number), scan the whole document for every occurrence of it before treating the edit as done** — adopted 25 Sep after a retry-threshold update (3→4) was missed in one of three places it appeared.
 
 ## 7. Key source facts (as verified during the work)
 
@@ -153,6 +154,19 @@ Legend: **→** marks a reversal/evolution of an earlier position.
 - Today's eligibility/BAU query: `orderstatus=49`, `order_value>900`, `is_active`, `cx_modified_on` in [NOW−1day, NOW−30min], `eligible_for_ranking`, `assigned_to IS NULL`, `rank_again_after` ok; `ORDER BY final_score DESC, order_value DESC LIMIT 1`.
 
 **Ring AI (verified from docs.ringg.ai; anything not confirmed is marked pending in the PRD):** outbound "Initiate Individual Call"; `custom_args_values` echoes on every webhook event; consolidated terminal event carries status/classification/transcript/`recording_url`; **`recording_url` valid ~24h**; webhook auth is a shared-secret/bearer header (**no HMAC**); Ring manages call retries via `call_retry_config`. The exact pilot webhook contract is **assume-and-build behind a mapping table** until confirmed.
+
+---
+
+## 8. Log — 25 Sep 2026 (Confluence review cycle, 23–25 Sep)
+
+- **Recovered the Confluence PRD from an accidental corruption** (a bad full-body update) back to a known-good state, verified against zero dangling (orphaned-anchor) comments both before and after.
+- Resolved a further batch of reviewer comments: ACOM team strength (#34) and POC design/criteria (#35) answered by business; SKU-level pricing dropped from the doc; `discount_amount`/`discount_percent` fields resolved; callee-name question resolved to "patient name, customer name as fallback."
+- **Retry threshold confirmed at 4 attempts** (was a "~3" placeholder) — caught a gap where a first edit pass updated 2 of the 3 places this number appeared in the doc; the missed one was the "when we stop" prose paragraph. Fixed, and adopted the whole-document-scan practice now in §6 above.
+- **Two new locked product rules added** (both tagged 🆕 Added 25 Sep in the live PRD, both stating the bare requirement with no implementation mechanism named, per §6's product-not-tech norm):
+  - A human-assigned lead is never assigned to the bot (PRD §9) — this took two drafting passes: the first framed it as an open Engineering question ("how do we know a lead was human-called?") when the existing "Assigned to a human agent" disposition already answers that; the second still over-specified by naming that field as the mechanism. Final version states only the requirement.
+  - A retry-exhausted closure is permanent for that lead (PRD §6) — only a new cart/order (fresh reference id) re-enters; nothing resurrects a closed lead.
+- Full write-up: `knowledge/decisions/2026-09-25-ring-ai-prd-clarifications.md`.
+- Synced the whole local knowledgebase to match the live Confluence state: this journal, the PRD markdown, `open_questions.md`, `project_truth.md`, `session_handoff.md`, `reference/prd-review-comments-snapshot.md` (status/delta update, not a full line-by-line rebuild — flagged there as the remaining larger lift if wanted), the new decision-log entry above, and the memory export.
 
 ---
 

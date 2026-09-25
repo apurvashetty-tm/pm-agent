@@ -1,8 +1,10 @@
 # PRD review snapshot — full document + inline comments + replies
 
-*Diff-check baseline for **AI-led Lead Qualification — PRD** (Confluence PROD page 2023260174). Captures the **entire document body** plus every inline comment, reply, and our resolution status — so a diff catches both body drift and comment drift. Re-pulled 2026-09-09 ~17:00 IST; last updated 2026-09-10 after Batch 1 edits (page v6).*
+*Diff-check baseline for **AI-led Lead Qualification — PRD** (Confluence PROD page 2023260174). Originally captured the entire document body plus every inline comment, reply, and our resolution status. Re-pulled 2026-09-09 ~17:00 IST; Batch-1-through-5 state last updated 2026-09-10 (page v6).*
 
-**Counts:** 38 inline comments (36 + 2 more from Reviewer B, 10 Sep). · **36 of 38 answered.** · Batches 1–5 + singles + Ring-call pass done. · **Open (business to answer): #34, #35.** · Prior reply: Abhishek on ₹250.
+**⚠️ Status note (25 Sep 2026):** PART A/C below (the 9–10 Sep comment tracker) is kept as the historical record of that review pass and is still accurate for the comments it covers. It has **not** been re-transcribed line-by-line for the 23–25 Sep pass — see **PART A.1 (new)** just below for what changed since, and **PART A.2 (new)** for what's still open. **PART B (full document body) is now stale** — the current full body lives in `docs/ai-led-lead-qualification-prd.md`, kept in sync with the live Confluence page; that file is the diff-check reference going forward, not the PART B snapshot below.
+
+**Counts (as of 25 Sep 2026):** 52 root-level inline comments · 47 with at least one reply · 5 without a reply yet (4 already answered by current doc content, 1 genuinely new — see PART A.2) · 0 dangling (orphaned-anchor) comments on the live page.
 **Reviewers:**
 - **Reviewer A** = accountId `712020:94030b36-191a-4c44-9ecf-8833cc5cb028` — the senior stakeholder, comments 1–33 (left 06:42–07:27).
 - **Reviewer B** = accountId `712020:993a2710-7eb3-4202-9945-338a85f6377a` — second stakeholder, comments 34–36 (left ~12:43–12:46).
@@ -12,7 +14,39 @@
 
 ---
 
+## PART A.1 — Resolved since the 9–10 Sep pull (23–25 Sep 2026)
+
+This session recovered the Confluence page from an accidental corruption back to a known-good
+state (verified 0 dangling comments before and after), then resolved a further round of review
+comments and locked two new product rules, working comment-by-comment with the reviewing team.
+
+| What | Resolution |
+|---|---|
+| #34 — ACOM team strength (anchor "10,000") | Answered by business on Confluence. |
+| #35 — POC design / Hot-only? / criteria / BRD (anchor "20%...qualified and passed on") | Answered by business on Confluence. |
+| SKU-level pricing in the vendor payload | Dropped from the doc per reviewer feedback — not something the PRD needed to specify at this level. |
+| `discount_amount` + `discount_percent` fields | Resolved with the reviewer. |
+| Callee name vs patient name (comment 2056454193, "Contract only has callee name in Ringg...") | §9 now states: we send the patient name; where not available, the customer name. Replaces the earlier open question about the vendor "pivoting" mid-call to the account holder. |
+| Retry threshold | Confirmed at **4 attempts** (was a "~3, business to finalise" working placeholder), within TRAI/DND limits — 30/60/60 min gaps across the 4 attempts. Corrected in all three places it appeared in the doc (a first pass missed one occurrence — now the practice is to scan the whole document for every occurrence of a changed fact before calling an edit done). |
+| **🆕 New locked rule** — human-assigned lead never goes to the bot | Added to PRD §9 (Decided): "Once a human agent is assigned to a lead, that lead is never assigned to the bot. Scoped to that lead — a new cart or order creates a fresh lead (§12) and is evaluated fresh." See `knowledge/decisions/2026-09-25-ring-ai-prd-clarifications.md`. |
+| **🆕 New locked rule** — retry-exhausted closure is permanent | Added to PRD §6: "This closure is permanent for that lead. Retries exhausted means done — we don't reopen it or recheck it later. The only way this customer re-enters is a new cart or order creating a fresh lead with its own reference ID; nothing resurrects a closed one." See the same decision-log entry. |
+
+## PART A.2 — Still open (as of 25 Sep 2026)
+
+**Genuinely new, unanswered comment:**
+- **2063761413** (created 25 Sep, anchor "A call that connects but") — "SIP instead of websocket in the design." PRD §13 already documents why WebSocket was chosen over SIP (Knowlarity has no SIP connectivity; audio is a live two-way stream) — needs a reply pointing there, or a fuller answer if the reviewer wants more.
+
+**Answered in the doc, but no closing reply posted yet** (comment-level housekeeping, not a content gap):
+- **2056454193** — callee/patient name — see PART A.1 above.
+- **2056945670** — "telephony confirmed a connected call, Ring never returned a verdict" — covered by the §12 two-signal (Knowlarity/Ring) table.
+- **2056552483** — bot-leg failure after the customer answered — covered by the §12 bot-leg-failure table; the exact Knowlarity error code is still open for Engineering to confirm before go-live.
+- **2060779523** — "How is this different than Retry threshold?" (on Frequency cap) — the §6 settings table row for Frequency cap now states the distinction explicitly.
+
+---
+
 ## PART A — Resolution tracker (all 36)
+
+*(Historical — 9–10 Sep pull; comments 1–36 only. See PART A.1/A.2 above for everything since.)*
 
 ### Addressed so far
 | # | id | anchor | comment | our resolution |
