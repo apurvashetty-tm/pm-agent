@@ -12,7 +12,7 @@ aliases: [acom, acom 2.0, ring ai, voicebot cart recovery, ai-led lead qualifica
 
 ## Where things live
 - Repo (user's Mac): ~/src/pm-agent/projects/ACOM/ring-ai/ ; PRD at docs/ai-led-lead-qualification-prd.md (markdown = source of truth); review baseline at reference/prd-review-comments-snapshot.md.
-- Confluence: PROD space, page 2023260174 "AI-led Lead Qualification — PRD"; cloudId eac9a727-a2bf-4cba-8fff-a0cca0724f83, spaceId 215613444. LIVE version is v19 (as of 13 Sep 2026). Rapid Pilot PRD = separate page 1850114059 (left intact).
+- Confluence: PROD space, page 2023260174 "AI-led Lead Qualification — PRD"; cloudId eac9a727-a2bf-4cba-8fff-a0cca0724f83, spaceId 215613444. LIVE version is v18 (as of 13 Sep 2026). Rapid Pilot PRD = separate page 1850114059 (left intact).
 
 ## The working model (how it works) — UPDATED per the Ring call, 11 Sep 2026
 - [stated] Ring does NOT integrate Truemeds' APIs — Truemeds integrates Ring. No contact PII (phone/address) to Ring; the customer NAME is sent (bot needs it to address them).
@@ -39,9 +39,9 @@ aliases: [acom, acom 2.0, ring ai, voicebot cart recovery, ai-led lead qualifica
 ## PRD structure (current)
 - Sections: 1 Exec summary · 2 Problem · 3 What we're building · 4 How it works (+ reworked fork diagram; old diagram kept in §13) · 5 Which leads & order · 6 Lead's journey (+ retry table, settings table, dispositions table) · 7 User stories · 8 Scope in/out (incl. "Vendor-agnostic by design" in-scope; full plug-and-play platform out) · 9 Decided vs open · 10 Metrics · 11 Annexure to business · 12 Edge cases (curated: webhook missing/late/wrong; cart-changes) · 13 Vendor integration — running MoM (Ring entry dated 11 Sep; grows as vendor talks continue) · Future-state note (live transfer).
 
-## Confluence comment review — state as of 13 Sep 2026 (v19)
+## Confluence comment review — state as of 13 Sep 2026 (v18)
 - [stated] 38 inline comments total (senior stakeholder Reviewer A #1–33; Reviewer B added #34–36 + two more on 10 Sep). 36 of 38 answered. Open (deliberately, business to answer): #34 (ACOM team strength) and #35 (POC design / BRD). #16 reply is posted but user may still swap in a sharpened "human-agent routing rule" version by hand.
-- COMMENT-SAFE EDIT METHOD (proven at scale, v6→v19, zero dangling): full markdown re-push DANGLES all inline comments; instead edit the page as HTML — each inline comment is <span class="annotation" data-annotation-id="..." data-annotation-type="inlineComment">anchored text</span>; keep the span + its text, edit around it (strike old with <s> inside/around the span, add new after), full-body updateConfluencePage contentFormat=html, then re-read resolutionStatus=dangling to confirm zero. Replies via createConfluenceInlineComment (parentCommentId only). Confluence has NO edit-comment API — to change a reply already posted, user edits it by hand (give them paste text + location).
+- COMMENT-SAFE EDIT METHOD (proven at scale, v6→v18, zero dangling): full markdown re-push DANGLES all inline comments; instead edit the page as HTML — each inline comment is <span class="annotation" data-annotation-id="..." data-annotation-type="inlineComment">anchored text</span>; keep the span + its text, edit around it (strike old with <s> inside/around the span, add new after), full-body updateConfluencePage contentFormat=html, then re-read resolutionStatus=dangling to confirm zero. Replies via createConfluenceInlineComment (parentCommentId only). Confluence has NO edit-comment API — to change a reply already posted, user edits it by hand (give them paste text + location).
 - Every doc change strikes rather than deletes old assumptions (user preference). After each live edit, mirror into docs/*.md AND reference/prd-review-comments-snapshot.md (Part A tracker / Part B body / Part C replies).
 
 ## Reusable repo facts (Truemeds)

@@ -2,7 +2,7 @@
 ---
 name: pm-agent-multi-tool-handoff
 description: "Apurva works across multiple AI tools (Cowork, Claude Code, Codex) on the same pm-agent projects and relies on a proven file-based scaffold for continuity, not chat history"
-metadata:
+metadata: 
   node_type: memory
   type: user
   originSessionId: f01cf15a-c205-4194-ba93-5faa25d2daaa

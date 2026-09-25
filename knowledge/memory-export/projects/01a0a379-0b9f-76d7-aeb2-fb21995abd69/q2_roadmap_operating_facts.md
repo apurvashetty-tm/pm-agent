@@ -2,7 +2,7 @@
 ---
 name: q2-roadmap-operating-facts
 description: "Confirmed Q2 (Jul-Sep) roadmap operating facts for Apurva's Portals & Payments charters at Truemeds - quarter naming, team capacity, format decisions"
-metadata:
+metadata: 
   node_type: memory
   type: project
   originSessionId: f01cf15a-c205-4194-ba93-5faa25d2daaa

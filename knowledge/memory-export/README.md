@@ -4,7 +4,7 @@ A point-in-time copy of Apurva's Claude **persistent memory** (the per-user stor
 across Claude surfaces), mirrored into this git repo for durability and cross-tool
 continuity. Each file below mirrors one memory entry at its memory path.
 
-- **Exported:** 2026-09-15 (by a Claude Code session).
+- **Exported:** 2026-09-25 (by a Claude Code session).
 - **Why:** so the memory can't be lost, and so any tool/agent reading this repo (Cowork,
   Claude Code, Codex) can pick up the same context.
 - **This is a snapshot, not a live mirror.** Memory keeps changing; refresh to update.

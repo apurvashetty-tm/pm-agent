@@ -2,7 +2,7 @@
 ---
 name: roadmap-working-style
 description: "How Apurva likes to work through roadmap/strategy drafts with Claude - brainstorm and critique first, edit only when told, stay at roadmap altitude"
-metadata:
+metadata: 
   node_type: memory
   type: feedback
   originSessionId: f01cf15a-c205-4194-ba93-5faa25d2daaa
