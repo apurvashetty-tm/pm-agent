@@ -1,6 +1,4 @@
-# Temporary repository ownership before transfer to a GitHub organization.
-# After transfer, replace this account with the product-leads team, for example:
-# * @your-organization/product-leads
+# Add trusted product-team reviewers here after their GitHub usernames are known.
+# Example: * @apurvashetty-tm @teammate-one @teammate-two
 
 * @apurvashetty-tm
-

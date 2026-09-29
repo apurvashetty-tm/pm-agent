@@ -56,12 +56,13 @@ Every pull request should explain:
 Prefer small pull requests. Keep source material, resulting product artifact, and
 relevant context updates together when they form one decision trail.
 
-## Permissions
+## Access
 
-- Product-team members: `Write`
-- Product leads: `Maintain`
-- Repository owners: `Admin`
-- Stakeholders who only review: `Triage` or `Read`
+This repository currently uses direct collaborators under `apurvashetty-tm`:
+
+- Repository owner: manages access and settings.
+- Product-team collaborators: create branches, push work, review pull requests,
+  and merge approved changes.
 
 Use personal GitHub accounts. Do not share passwords or personal access tokens.
-
+Keep `main` protected; normal work belongs on short-lived branches.
