@@ -73,8 +73,10 @@ Contact PII           = phone number, address — never sent to the vendor (the 
   discount percent, total savings) · delivery ETA · patient name (else customer name).
   **No phone number, no address, no SKU-level pricing** (business agreed the bot has no
   use for it).
-- **Dial + connect:** on the same call Knowlarity opens a **WebSocket** to Ring carrying the
-  reference id; Ring warms up the bot; a **"customer answered" event** starts it.
+- **Dial + connect:** on the same call Knowlarity bridges to Ring over a **SIP trunk** carrying
+  the reference id; Ring warms up the bot; a **"customer answered" event** starts it; the bot
+  speaks on that SIP call. *(Engineering correction, 30 Sep — was a WebSocket. PRD §4 diagram
+  updated; §6 and §13 still describe the WebSocket path and are to be aligned.)*
 - **Verdict:** Ring records the bot–customer leg on its own side and returns
   Hot / Warm / Cold by webhook on the reference id.
 - **Recording & events, our side:** Truemeds stores its own recording (from Knowlarity) +

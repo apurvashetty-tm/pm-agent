@@ -25,8 +25,8 @@ Last updated: 2026-09-30
   Knowlarity + Ring]**
 
 ## Open — integration pending (not in PRD §9)
-- [OPEN] **Telephony specifics with Knowlarity** — WebSocket contract, "customer answered" event,
-  reference-id pass-through. **[Knowlarity + Engineering]**
+- [OPEN] **Telephony specifics with Knowlarity** — SIP-trunk bridge to Ring, "customer answered"
+  event, reference-id pass-through. **[Knowlarity + Engineering]**
 - [OPEN] **Bot-leg failure error code** — exact Knowlarity error and handling for "customer
   connects, bot leg fails" (PRD §12). **[Engineering]**
 - [OPEN] **Analytics baselines** — today's AOV of converted ACOM orders and ACOM sales/day, needed
@@ -39,6 +39,12 @@ Last updated: 2026-09-30
   **[Engineering + Business + Ring]**
 
 ## Confluence housekeeping (as of 30 Sep)
+**Content still to align (SIP-trunk correction, 30 Sep):** Engineering corrected the AI leg to a
+SIP trunk and the §4 diagram was updated (two lines; the correction comment sits on the §4
+heading). Still describing the old WebSocket path: §6 "Telephony stays as-is" bullet ("separate
+from the AI's Knowlarity streaming path") and §13 (Chosen path, "Why a WebSocket (not SIP…)",
+the audio-bridge alternative, Dev split). **[Product]**
+
 58 unresolved threads on the page, 0 dangling. Many already have replies but aren't resolved.
 Threads answered by the current doc that still need a closing reply and resolve:
 - The §4 "what we send" thread: data points listed; SKU pricing dropped; discount_percent added;
@@ -48,7 +54,8 @@ Threads answered by the current doc that still need a closing reply and resolve:
 - "Set to 48 hours" on the hold-time (29 Sep): Product keeps **24 h** — reply with that.
 - "+ order_value 500" on the eligibility row (29 Sep): done.
 - "These are togglable, finalise at go-live" (24 Sep): values set; config, tunable at go-live.
-- SIP vs WebSocket (25 Sep): PRD §13 explains — Knowlarity has no SIP; the audio is a live stream.
+- SIP vs WebSocket (25 Sep): the reviewer was right — the AI leg is a SIP trunk (Engineering
+  correction, 30 Sep; §4 diagram updated). Reply + resolve.
 - Older answered-in-doc threads: output the AI returns, verdict turnaround (now the SLA item),
   dispositions/tracking (§6 table), "more calls per customer / handover" (frequency cap + live
   transfer), frequency cap vs retry threshold, "telephony connected, no verdict" (§12 table).

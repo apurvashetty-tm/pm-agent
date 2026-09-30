@@ -2,7 +2,7 @@
 
 **Author:** Apurva Shetty (Product) · **Status:** Draft v3, for review · **Owner team:** ACOM
 **Source of truth:** kept in sync with the live Confluence page (PROD · 2023260174). Edits this cycle were made on Confluence and backfilled here — check Confluence first for anything newer than this file's last sync.
-**Last synced with Confluence:** 30 Sep 2026 (published Draft v3), 0 dangling comments at time of sync.
+**Last synced with Confluence:** 30 Sep 2026 (published Draft v3; §4 diagram corrected the same day — AI leg is a SIP trunk, not a WebSocket), 0 dangling comments at time of sync.
 
 ---
 
@@ -74,13 +74,13 @@ No SKU-level pricing . Business agreed the bot has no use for it.
           connected                                 not connected
                  │                                        │
                  ▼                                        ▼
-  telephony opens a WebSocket to the vendor       telephony tells us why
+  telephony bridges to the vendor (SIP trunk)       telephony tells us why
   (carries our reference id) → bot warms up       (busy / no-answer / switched
                  │                                  off / bad number) → §6:
   customer picks up → "answered" event             retry, wait, or stop
                  │
                  ▼
-  AI conversation (bot streams on that WebSocket)
+  AI conversation (bot speaks on that SIP call)
                  │
   call ends → telephony gives us the recording (we store it + the event log)
                  │

@@ -21,9 +21,9 @@ aliases: [acom, acom 2.0, ring ai, voicebot cart recovery, ai-led lead qualifica
 - [stated] Correlation key = a Truemeds generic reference id (uuid, NOT the order number); rides in the "remark" field.
 - [stated] One lead at a time, per attempt: for each attempt we send the lead to Ring, then dial via Knowlarity; every retry is sent to Ring as a fresh request; retries are ours (Ring does none). (Replaced the earlier "pre-load in batch", 30 Sep.)
 - [stated] Sent to Ring per attempt: reference id, cart items + quantities (in Ring's variable format), order-level pricing (MRP, selling price, discount amount + discount percent, total savings), delivery ETA, patient name (else customer name). NOT sent: phone, address, SKU-level pricing.
-- [stated] Knowlarity opens a WebSocket to Ring carrying the reference id; Ring warms up the bot; a "customer answered" event starts it. Ring records its own side and returns Hot/Warm/Cold by webhook on the reference id. Async callback; live transfer is future-state.
+- [stated] Knowlarity bridges the call to Ring over a SIP trunk (Engineering correction, 30 Sep; was a WebSocket) carrying the reference id; Ring warms up the bot; a "customer answered" event starts it; the bot speaks on that SIP call. Ring records its own side and returns Hot/Warm/Cold by webhook on the reference id. Async callback; live transfer is future-state.
 - [stated] We do NOT send a recording to Ring. Truemeds stores its own recording + event log for audit & RCA (forensics, not a reliability fix).
-- [stated] Why WebSocket: Knowlarity has no SIP; audio is a live stream; Ring already runs this path with Knowlarity. A reviewer asked "SIP instead of WebSocket" (25 Sep) — answered by PRD §13, reply pending.
+- [stated] PRD §4 diagram updated to SIP trunk on Confluence (30 Sep; correction comment on the §4 heading) and synced to the repo. §6 ("separate from the AI's Knowlarity streaming path") and §13 (WebSocket rationale) still to align. The 25 Sep reviewer comment "SIP instead of WebSocket" was right — reply + resolve pending.
 - [stated] Single vendor + single telephony provider; a swap = re-integration, not a rebuild. "Vendor-agnostic by design" struck from scope (30 Sep).
 - [stated] PII on the "customer answered" event: carries the number today; must be stripped — now an InfoSec call-out.
 

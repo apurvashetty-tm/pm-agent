@@ -13,6 +13,10 @@ Last updated: 2026-09-30
 - **Review state:** 58 unresolved threads, 0 dangling. Many are answered by the doc and just need
   a closing reply + resolve (list in `open_questions.md`). On 30 Sep Apurva tagged Kartik A and
   Jatin Khatri for review of the new sections.
+- **Later on 30 Sep — AI leg is a SIP trunk, not a WebSocket** (Engineering correction). Apurva
+  updated the §4 diagram on Confluence (two lines) and left the correction as a comment on the §4
+  heading; mirrored here. §6 ("separate from the AI's Knowlarity streaming path") and §13 (the
+  WebSocket rationale) still describe the old path — align in the next edit pass.
 
 ## What changed this cycle (29–30 Sep)
 - **Reframed around reach, not AOV:** ~12,500 eligible leads/day at ₹900, agents attempt ~40%

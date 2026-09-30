@@ -5,7 +5,7 @@ metadata:
   type: decision
   domain: acom
   status: locked
-  supersedes: 2026-09-11-ring-ai-call-architecture (batch pre-load → per-attempt send); 2026-09-09-ring-ai-fresh-platform-prd (throttle; vendor-agnostic in scope; FTC-first as a separate dial rule)
+  supersedes: 2026-09-11-ring-ai-call-architecture (batch pre-load → per-attempt send; WebSocket leg → SIP trunk); 2026-09-09-ring-ai-fresh-platform-prd (throttle; vendor-agnostic in scope; FTC-first as a separate dial rule)
 ---
 
 # ACOM × Ring AI — PRD v3: reach, ₹500 floor, pause rule, GTM (30 Sep 2026)
@@ -54,6 +54,9 @@ Published on Confluence as Draft v3 (PROD 2023260174) on 30 Sep.
     is a re-integration. The "how far to build the vendor layer" question is closed.
 13. **§9 regrouped** — none of the open items blocks the build (go-live checks, InfoSec call-out,
     later).
+14. **AI leg is a SIP trunk, not a WebSocket** (Engineering correction, late 30 Sep). §4 diagram
+    now reads "telephony bridges to the vendor (SIP trunk)" and "bot speaks on that SIP call".
+    Replaces the 11 Sep WebSocket choice; §6 and §13 of the PRD still to be aligned.
 
 ## Not decided here
 See `projects/ACOM/ring-ai/docs/context/open_questions.md`.
