@@ -10,6 +10,8 @@ metadata:
 
 # ACOM × Ring AI — call architecture locked (11 Sep call with Ring)
 
+> **Partly superseded 30 Sep → `2026-09-30-ring-ai-v3-reach-gtm-controls.md`:** the batch pre-load is now a per-attempt send (one lead at a time; every retry sent fresh), and vendor-agnostic design is out of scope. The WebSocket / answered-event / verdict-webhook flow below still stands.
+
 **Decision.** The end-to-end call mechanic is locked. It replaces the earlier "media stream URL / bridge" idea from the 9-Sep scope note. The 9-Sep scope change itself (Truemeds integrates Ring, Truemeds owns telephony + retries, generic `uuid`/reference-id correlation, configurable eligibility + dial-order, full lead journey owned, async callback) still stands — only the *how the audio and verdict move* part changed.
 
 **The flow (locked):**

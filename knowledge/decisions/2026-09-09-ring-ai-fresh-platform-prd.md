@@ -9,6 +9,8 @@ metadata:
 
 # ACOM × Ring AI — fresh platform PRD + integration scope change
 
+> **Further superseded 30 Sep → `2026-09-30-ring-ai-v3-reach-gtm-controls.md`:** the throttle is replaced by a pause rule + customer-ID GTM split; FTC-first is no longer a separate dial rule (today's `final_score` logic as is); vendor-agnostic design is out of scope.
+
 > **Superseded in part → `2026-09-11-ring-ai-call-architecture.md`.** The scope change below still holds (Truemeds integrates Ring, no phone/address PII, Truemeds owns telephony + retries). But the **media-bridge** mechanic recorded here ("Ring returns a per-lead media stream URL; Knowlarity bridges that stream", and "we send the recording to Ring") was replaced on 11 Sep by a **WebSocket** model: Knowlarity opens a WebSocket to Ring carrying the reference id, the bot starts on a "customer answered" event, Ring records its own side and returns the verdict by webhook, and Truemeds keeps its **own** recording + event log for RCA (not sent to Ring). The **name** is sent to Ring (the one field), not "no PII". Read the 11-Sep decision for the current flow.
 
 **Decision.** Replace the earlier ACOM × Ring AI framing (the Rapid Pilot bolt-on and the future-state voicebot design) with a single fresh, product-focused **platform** PRD — "AI-led Lead Qualification" (`projects/Acom/ring-ai/docs/ai-led-lead-qualification-prd.md`; Confluence PROD page 2023260174). Written PM-first: lean, product-focused, not a technical spec.

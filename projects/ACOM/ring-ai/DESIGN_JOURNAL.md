@@ -143,6 +143,7 @@ Legend: **→** marks a reversal/evolution of an earlier position.
 - **Be concise and direct.** Don't over-flag/over-engineer; distinguish a real blocker from a nit.
 - Don't invent vendor (Ring) API details — verify from official docs or mark clearly as pending.
 - **Whenever a stated fact changes (e.g. a threshold or number), scan the whole document for every occurrence of it before treating the edit as done** — adopted 25 Sep after a retry-threshold update (3→4) was missed in one of three places it appeared.
+- **GTM plans stay lean** (phase, one line, interval); **batch review comments** and apply them in one pass; use **Truemeds funnel terms** (attempted / connected); show many changes as a **full marked review copy**; when Apurva applies suggestions on Confluence herself, anything left out is rejected — **the published page is the base** (adopted 29–30 Sep).
 
 ## 7. Key source facts (as verified during the work)
 
@@ -167,6 +168,20 @@ Legend: **→** marks a reversal/evolution of an earlier position.
   - A retry-exhausted closure is permanent for that lead (PRD §6) — only a new cart/order (fresh reference id) re-enters; nothing resurrects a closed lead.
 - Full write-up: `knowledge/decisions/2026-09-25-ring-ai-prd-clarifications.md`.
 - Synced the whole local knowledgebase to match the live Confluence state: this journal, the PRD markdown, `open_questions.md`, `project_truth.md`, `session_handoff.md`, `reference/prd-review-comments-snapshot.md` (status/delta update, not a full line-by-line rebuild — flagged there as the remaining larger lift if wanted), the new decision-log entry above, and the memory export.
+
+---
+
+## 9. Log — 29–30 Sep 2026 (PRD Draft v3: reach, ₹500, pause rule, GTM)
+
+- **Trigger.** Engineering flagged that a ₹500–899 lead marked Cold by the AI had no route to a human (manual queue floor ₹900). Business separately aligned on lowering the floor. Working it through showed the real problem is **reach, not AOV**: Analytics says ~12,500 eligible leads/day at ₹900, agents attempt only ~40% (the BRD's "~60% reached" was anecdotal and is replaced).
+- **One floor, not two.** Minimum AOV ₹500 for both the AI and the manual queue — simpler, and it closes the Cold-orphan gap. The FTC question was settled by the existing queue logic: `final_score` weights FTC so heavily that FTC already comes first, so no separate FTC rule or threshold.
+- **POC honesty.** Laid the POC out as a funnel. The PRD's "converted about 20%" was 18% of *attempted* leads — 42% of qualified leads went stale first, so only 10.5% of all qualified converted. As run, the POC was roughly level with today per eligible lead; almost all the upside depends on agents attempting Hot/Warm in time. That made **stale** a first-class metric and gate.
+- **Throttle → pause rule + GTM split (the longest thread).** Started as a % throttle; Engineering had missed it as a feature. Tried: % of cron runs (wrong unit — split by lead), the Rapid Pilot in-flight counter (limits concurrency, not stale), a waiting-lead count (needs a number someone must calculate). Landed on: **before each run, if the oldest Hot/Warm lead has waited >2 h, send the AI nothing** — it measures the thing that fails, needs no calculation, and self-adjusts. "Any Hot/Warm waiting → pause" was rejected because at scale there's always one waiting. A proposed "return AI-assigned leads after 4 h" rule was dropped once it was clear a lead is only assigned when the cron actually sends it. Ramp control became a **split by customer ID ending** (customer, not order, because future leads may have no order id; IDs are sequential so it's random-equivalent).
+- **Gates.** First draft used absolute targets and an impossible "every call returns an outcome" gate (the edge cases exist precisely because some don't). Rebuilt around comparison with the control group: Hot/Warm conversion ≥2× human, a 5% Cold sample (Ops-run, outside allocation) to catch the AI marking buyers Cold, stale ≤10%, sales per 100 customers AI ≥ agent, and an SLA (set in vendor contracts) for the tech pilot. Orders count within 24 h (matches the queue window). Apurva added the missing business number: **ACOM sales = converted orders × AOV**.
+- **Hot/Warm 24 h hold.** Found that a lead qualified late in its 24-hour window could vanish before any agent reached it; Hot/Warm now stay 24 h from the verdict. A reviewer later asked for 48 h; Apurva kept 24 h.
+- **Other locks:** one lead at a time per attempt, every retry sent fresh (replaces batch pre-load); data sent listed in §4 (no address, no SKU pricing); firm setting values (2 min, 15 s, 3 connected / 7 days, 24 h, 2 h); kill switch global now; vendor-agnostic dropped from scope; §9 regrouped (none blocks the build); new §14 GTM & Rollout.
+- **Working norms adopted this cycle:** GTM plans stay lean (phase, one line, interval); review comments are batched and applied in one pass; use Truemeds funnel terms (attempted/connected); show many changes as a full marked review copy; when Apurva applies suggestions herself, what she leaves out is rejected — the published page is the base; the Confluence API only returns the published version (ask to publish before a proofread); resolve comments before deleting their anchor text.
+- Full write-up: `knowledge/decisions/2026-09-30-ring-ai-v3-reach-gtm-controls.md`; reusable lessons: `knowledge/learnings/rollout-gates-and-control-signals.md`.
 
 ---
 

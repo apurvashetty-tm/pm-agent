@@ -15,8 +15,9 @@ first, then the relevant sub-initiative below.
 - **Ring AI (AI-led Lead Qualification)** — `projects/ACOM/ring-ai/` — an AI voice
   agent (vendor: Ring AI, telephony: Knowlarity) calls dropped-cart customers first, so
   human agents spend their time only on the customers it qualifies as genuinely
-  interested. PRD in review on Confluence (PROD 2023260174), kept in sync with
-  `docs/ai-led-lead-qualification-prd.md`. Most actively worked project as of Sep 2026.
+  interested. PRD Draft v3 in review on Confluence (PROD 2023260174), kept in sync with
+  `docs/ai-led-lead-qualification-prd.md` — ₹500 minimum AOV, pause rule, GTM split by
+  customer ID with gates (30 Sep). Most actively worked project as of Sep 2026.
 - **FTC Priority** — `projects/ACOM/ftc-priority/` — a sibling PRD on prioritising
   first-time-customer (FTC) leads within ACOM's existing manual queue. Written, not
   implemented.

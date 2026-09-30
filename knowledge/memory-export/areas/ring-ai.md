@@ -1,4 +1,4 @@
-<!-- memory path: /areas/ring-ai.md · last updated in memory: 2026-09-25 -->
+<!-- memory path: /areas/ring-ai.md · last updated in memory: 2026-09-30 -->
 ---
 name: ring-ai
 description: ACOM × Ring AI — AI-led lead-qualification platform PRD at Truemeds. Current state, working model, decisions, open questions, file locations, norms. Read when working on this PRD/project.
@@ -9,47 +9,60 @@ aliases: [acom, acom 2.0, ring ai, voicebot cart recovery, ai-led lead qualifica
 ## What this is
 - [stated] AI voice pre-qualification for top-of-funnel recovery at Truemeds; Ring AI is the voice-AI vendor, Knowlarity the telephony provider. Under the ACOM (Assisted Commerce / cart-recovery) umbrella. Dropped cart is use case #1; built to extend to other drop-offs (Rx-uploaded-not-ordered, registered-no-browse, browsed-no-ATC, refills, win-back).
 - [stated] The ACTIVE doc is a lean, PM-led, product-focused PRD: "AI-led Lead Qualification". Prior docs are historical context.
+- [stated] Core problem is REACH, not AOV: ~12,500 eligible leads/day at ₹900+, agents attempt only ~40% (Analytics numbers; replace the earlier BRD "~60% reached").
 
 ## Where things live
-- Repo (user's Mac): ~/src/pm-agent/projects/ACOM/ring-ai/ ; PRD at docs/ai-led-lead-qualification-prd.md; review baseline at reference/prd-review-comments-snapshot.md. Practice this cycle (25 Sep): edits are made directly on Confluence with the review team, then backfilled to markdown — markdown is kept in sync, not edited first.
-- Confluence: PROD space, page 2023260174 "AI-led Lead Qualification — PRD"; cloudId eac9a727-a2bf-4cba-8fff-a0cca0724f83, spaceId 215613444. As of 25 Sep 2026: 0 dangling (orphaned-anchor) comments; 52 root-level review comments, 47 with at least one reply. Rapid Pilot PRD = separate page 1850114059 (left intact).
+- Repo (user's Mac): ~/src/pm-agent/projects/ACOM/ring-ai/ ; PRD at docs/ai-led-lead-qualification-prd.md (word-for-word mirror of Confluence); project_truth / open_questions / session_handoff in docs/context/; review baseline at reference/prd-review-comments-snapshot.md. Decision logs in knowledge/decisions/ (latest 2026-09-30-ring-ai-v3-reach-gtm-controls.md).
+- Confluence: PROD space, page 2023260174 "AI-led Lead Qualification — PRD"; cloudId eac9a727-a2bf-4cba-8fff-a0cca0724f83, spaceId 215613444. Published Draft v3 on 30 Sep 2026; repo synced the same day. 0 dangling comments; 58 unresolved threads (many already answered in the doc, need a closing reply + resolve). Rapid Pilot PRD = separate page 1850114059 (left intact).
+- Practice: Apurva edits Confluence herself; the published page is the base, markdown is backfilled to match.
 
-## The working model (how it works) — per the Ring call, 11 Sep 2026
-- [stated] Ring does NOT integrate Truemeds' APIs — Truemeds integrates Ring. No contact PII (phone/address) to Ring; the customer NAME is sent (bot needs it to address them; patient name preferred, customer name as fallback where no patient name is on file).
-- [stated] Truemeds owns the whole call via Knowlarity: dial, connect, retries, calling window, hangup.
-- [stated] Correlation key = a Truemeds generic reference id (a uuid, NOT the order number) so the platform is reusable; rides in the "remark" field.
-- [stated] Current flow: (1) pre-load lead in batch to Ring — reference id + cart/custom vars + workspace id, no PII; Ring stores it. (2) We dial the customer via Knowlarity (mobile + reference id). (3) On the same call Knowlarity opens a WebSocket to Ring carrying the reference id; Ring warms up the bot (no talking yet). (4) On a "customer answered" event the bot starts talking; the bot streams over that WebSocket. (5) Ring records the bot–customer leg ON ITS OWN SIDE and returns Hot/Warm/Cold by webhook on the reference id. Async callback; live transfer is future-state.
-- [stated] We do NOT send a recording to Ring. Truemeds stores its OWN copy of the recording (from Knowlarity) + an event log (dialled/answered/hung-up/verdict) for audit & RCA. This is forensics — it does NOT fix Knowlarity webhook/event reliability (that needs a provider SLA + reconciliation).
-- [stated] Why WebSocket: Knowlarity has no SIP connectivity + audio is a live 2-way stream; Ring already runs this WS path with Knowlarity in prod (inbound). The Truemeds-owns-the-audio-bridge alternative is possible but Ring discourages it (two WS per call, relay at Ring's tuned packet size, cost + failure point) — parked. A newer reviewer comment (25 Sep, unanswered) asks about SIP instead of WebSocket — still open.
-- [stated] No true platform-agnosticism: a telephony swap always needs custom dev both sides → re-integration, not a rebuild. Ring charges for connected calls only; a telephony swap = one-time integration cost.
-- [stated] PII on the "customer answered" event: it carries the customer number today; Knowlarity must strip it so only reference id + workspace id reach Ring (security-tested our side).
+## The working model (how it works)
+- [stated] Ring does NOT integrate Truemeds' APIs — Truemeds integrates Ring. Truemeds owns the whole call via Knowlarity: dial, connect, retries, calling window, hangup.
+- [stated] Correlation key = a Truemeds generic reference id (uuid, NOT the order number); rides in the "remark" field.
+- [stated] One lead at a time, per attempt: for each attempt we send the lead to Ring, then dial via Knowlarity; every retry is sent to Ring as a fresh request; retries are ours (Ring does none). (Replaced the earlier "pre-load in batch", 30 Sep.)
+- [stated] Sent to Ring per attempt: reference id, cart items + quantities (in Ring's variable format), order-level pricing (MRP, selling price, discount amount + discount percent, total savings), delivery ETA, patient name (else customer name). NOT sent: phone, address, SKU-level pricing.
+- [stated] Knowlarity opens a WebSocket to Ring carrying the reference id; Ring warms up the bot; a "customer answered" event starts it. Ring records its own side and returns Hot/Warm/Cold by webhook on the reference id. Async callback; live transfer is future-state.
+- [stated] We do NOT send a recording to Ring. Truemeds stores its own recording + event log for audit & RCA (forensics, not a reliability fix).
+- [stated] Why WebSocket: Knowlarity has no SIP; audio is a live stream; Ring already runs this path with Knowlarity. A reviewer asked "SIP instead of WebSocket" (25 Sep) — answered by PRD §13, reply pending.
+- [stated] Single vendor + single telephony provider; a swap = re-integration, not a rebuild. "Vendor-agnostic by design" struck from scope (30 Sep).
+- [stated] PII on the "customer answered" event: carries the number today; must be stripped — now an InfoSec call-out.
 
-## Which leads, and in what order (3 separate things)
-- [stated] Eligibility = what a lead needs before the AI calls it. Today: patient name + address on file. Configurable set. Requiring an address to EXIST ≠ SENDING it.
-- [stated] Dial-order (within eligible pool) = FTC first, then NFTC (an ordering, not exclusion). Configurable. Ours.
-- [stated] We do NOT touch the manual queue's prioritisation score. Priority order in §5: Hot FTC > Hot NFTC > Warm FTC > Warm NFTC > normal manual queue > Cold (lowest, still callable). Only DNC + invalid excluded.
-- [stated] Open tension: strict patient+address gate excludes most FTC — the segment we may most want.
+## Which leads, and in what order
+- [stated] Eligibility: minimum AOV ₹500 — the same for the AI and the manual queue (was ₹900) — + patient + address on file. ~17,000 leads/day at ₹500; FTC share 20.2% → 25% (38% within ₹500–900).
+- [stated] Dial order = today's queue logic as is (existing filters + final_score). The score's FTC weighting already puts FTC first; no separate FTC rule or threshold.
+- [stated] Manual queue score untouched. Priority after the verdict (locked): Hot FTC > Hot NFTC > Warm FTC > Warm NFTC > manual queue > Cold (lowest, still callable). Only DNC + invalid excluded.
+- [stated] Hot/Warm stay in the agents' queue 24 h from the AI's verdict, even past the normal 24-hour window; not attempted by then = stale, leaves the queue. Cold keeps the normal window. A reviewer asked for 48 h; Apurva kept 24 h.
+- [stated] Later (not V1): relaxing the patient + address gate (it excludes many FTC).
 
 ## Lead journey / controls
-- [stated] Retries are OURS, off the telephony disposition (AI can't hear a non-connect). Single retry rule/one gap; **retry threshold confirmed at 4 attempts** (within TRAI/DND limits — no TRAI-mandated cap; 30/60/60 min gaps across the 4 attempts). Closed lead leaves every queue, never re-enters.
-- [stated] **Retry-exhausted closure is permanent for that lead** (locked 25 Sep) — never reopened or rechecked once retries are exhausted; the only way the customer re-enters is a NEW cart/order creating a fresh lead with its own reference id.
-- [stated] **A human-assigned lead is never assigned to the bot** (locked 25 Sep) — once a human agent is assigned to a lead, that lead stays with the human; scoped to that lead only — a new cart/order creates a fresh lead, evaluated fresh.
-- [stated] Waiting = one "come back at time T" state; each carries who resumes (AI/human; named-time callback default same agent else queue, Ops-configurable). Old manual Hold button retired (frontend change).
-- [stated] DNC: two capture paths — AI call (Ring returns opt-out on post-call read) + human call (agent one-click CTA). Applied from next call onward. Cross-portal (HA etc.) needs a shared suppression list = open dependency. Open ask to Ring: return DNC as an explicit label alongside Hot/Warm/Cold.
-- [stated] Frequency cap = connected-call cap across AI+human, distinct from retry threshold (Ops setting; enforceable only our side). Throttle = rollout dial. Kill-switch = global + per use-case. Manual flow runs underneath as fallback.
+- [stated] Retries ours, off the telephony disposition; 4 attempts (30/60/60 min; 2 min after a short drop). Closed lead never re-enters; retry-exhausted closure is permanent for that lead.
+- [stated] A human-assigned lead is never assigned to the bot (scoped to that lead).
+- [stated] One waiting state ("come back at time T") carrying who resumes it; old manual Hold button retired.
+- [stated] DNC: AI post-call read (to be confirmed with Ring; DNC as its own label is an open ask) + agent one-click CTA. Cross-portal needs a shared list (later).
+- [stated] Frequency cap: 3 connected calls per customer in a rolling 7 days (AI + human); minimum connect 15 s; calling window 09:00–21:00.
+- [stated] Throttle REMOVED. Pause rule instead: before sending new leads to the AI, if the oldest Hot/Warm lead has waited >2 h for an agent, send none; due retries still go out; self-adjusting.
+- [stated] Kill switch: global master stop now; per-use-case stop later.
+- [stated] Setting values final (config, tunable at go-live).
 
-## PRD structure (current)
-- Sections: 1 Exec summary · 2 Problem · 3 What we're building · 4 How it works (+ reworked fork diagram; old diagram kept in §13) · 5 Which leads & order · 6 Lead's journey (+ retry table, settings table, dispositions table) · 7 User stories · 8 Scope in/out (incl. "Vendor-agnostic by design" in-scope; full plug-and-play platform out) · 9 Decided vs open · 10 Metrics · 11 Annexure to business · 12 Edge cases (curated: webhook missing/late/wrong — now a two-signal Knowlarity/Ring table; bot-leg failure table; cart-changes) · 13 Vendor integration — running MoM (Ring entry dated 11 Sep) · Future-state note (live transfer).
+## GTM & metrics (PRD §10, §14)
+- [stated] GTM split by customer ID last two digits (customer ID, not order ID — future leads may have no order): tech pilot 00–04 (5%, 3–4 days) → 00–24 (1 wk) → 00–49 (1 wk) → all (2 wks) on ₹900+; then ₹500 at 00–74 (1 wk) → all (1 wk).
+- [stated] Gates: 0 customers called by AI + agent at once; outcome + verdict within contract SLA (tech pilot); stale ≤10%; Hot/Warm conversion ≥2× human; 5% Cold sample (Ops calls outside allocation) converts clearly lower; sales per 100 customers AI ≥ agent. From 100%: vs today's baselines (human conversion ~5%). ₹500 step judged on sales, not AOV. Missed gate = hold + RCA; safety breach = kill switch.
+- [stated] Final business number: ACOM sales (₹/day) = converted orders × AOV. Orders count within 24 h. POC funnel: 1,313 attempted → 1,033 connected → 266 Hot/Warm → 112 stale → 154 attempted by agents → 91 connected → 28 orders (18% of attempted, 10.5% of all Hot/Warm; manual 5%).
 
-## Confluence comment review — state as of 25 Sep 2026
-- [stated] 52 root-level review comments, 47 with at least one reply. 5 without a reply yet: 4 of those are already answered by the current doc content but haven't had a closing reply posted (callee/patient name, telephony-confirmed-but-no-verdict edge case, bot-leg failure handling, frequency-cap-vs-retry-threshold distinction); 1 is a genuinely new, unanswered comment (25 Sep) asking why SIP wasn't used instead of WebSocket.
-- [stated] This session recovered the page from an accidental corruption (bad update) back to a known-good state, then resolved a further round of comments (SKU pricing dropped from the doc per reviewer ask, discount_amount + discount_percent fields, callee/patient name fallback) and added two new locked rules (see above) after "present → debate → agree → then edit" — including two drafting corrections: don't name a solution mechanism (e.g. a specific internal field) when only the requirement should be stated; PRDs state the requirement, engineering owns the "how".
-- COMMENT-SAFE EDIT METHOD (proven at scale, zero dangling): full markdown re-push DANGLES all inline comments; instead edit the page as HTML — each inline comment is <span class="annotation" data-annotation-id="..." data-annotation-type="inlineComment">anchored text</span>; keep the span + its text, edit around it (strike old with <s> inside/around the span, add new after), full-body updateConfluencePage contentFormat=html, then re-read resolutionStatus=dangling to confirm zero. Replies via createConfluenceInlineComment (parentCommentId only). Confluence has NO edit-comment API — to change a reply already posted, user edits it by hand (give them paste text + location). Always do a fresh pull before any live edit to catch manual changes since the last known state, and diff-check to avoid clobbering them.
-- New additions to the doc are flagged inline with a plain bold "🆕 Added <date>" tag prefix on the paragraph/bullet — NOT a colored callout/panel box (also a hard constraint: Confluence ADF disallows panels nested inside list items).
+## Open (PRD §9 — none blocks the build)
+- Go-live: verdict + call-outcome SLA (Business sets in Ring/Knowlarity contracts); languages; DNC as a Ring label; simultaneous-call limits. InfoSec: spoken PII + stripping the number from the "answered" event. Later: leads without patient + address; cross-portal DNC. Also pending: Knowlarity telephony specifics, bot-leg failure error code, Analytics baselines for AOV + sales.
+
+## PRD structure (Draft v3)
+- 1 Exec summary · 2 Problem (incl. ₹500 + POC funnel) · 3 What we're building · 4 How it works (what we send + diagram) · 5 Which leads & order (+ Hot/Warm 24 h rule) · 6 Lead's journey (retry table, pause rule, settings table, dispositions incl. Stale) · 7 User stories · 8 Scope · 9 Decided vs open · 10 Metrics table · 11 Annexure · 12 Edge cases · 13 Ring MoM · 14 GTM & Rollout · Future state (live transfer).
+
+## Confluence editing know-how
+- COMMENT-SAFE EDIT METHOD (proven at scale, zero dangling): full markdown re-push DANGLES all inline comments; instead edit the page as HTML — each inline comment is <span class="annotation" data-annotation-id="..." data-annotation-type="inlineComment">anchored text</span>; keep the span + its text, edit around it, full-body updateConfluencePage contentFormat=html, then re-read resolutionStatus=dangling to confirm zero. Replies via createConfluenceInlineComment (parentCommentId only). No edit-comment API. Always fresh-pull before any live edit.
+- Deleting text that carries an open inline comment loses the comment's anchor — reply + resolve first, then edit.
+- The API returns only the PUBLISHED version — unpublished Confluence drafts aren't visible; ask Apurva to publish before a proofread.
 
 ## Reusable repo facts (Truemeds)
-- ACOM umbrella; sibling FTC-Priority PRD written but NOT implemented — priority is a composite score (final_score) with Ops-tuned weights. Oration AI = separate INBOUND support voicebot. "Rank-Up" = existing push-to-top-of-live-pool (~5-min callback); kept out. Existing human re-attempt = hold → cool-off → re-enter, agent decides, no cap.
+- ACOM umbrella; FTC-Priority PRD written but not implemented — priority is final_score with Ops-tuned weights (FTC weight dominates). Oration AI = separate INBOUND voicebot.
 
-## Working norms (also in /preferences.md)
-- Markdown is source of truth; never sync to Confluence unless told "sync"/"go". Present → debate → agree → then edit; don't draft until told. Product-focused PRDs, not tech specs — leave "how" to engineering as open questions (state the bare requirement, don't name or suggest an implementation mechanism). Concise external-reader prose; vendor named once then generic in body, real names kept in vendor-directed open questions. When reviewing inline comments, quote the full sentence around the anchored word (bold the anchor) — user often reviews on mobile without the doc open.
-- **Whenever a stated fact changes (e.g. a threshold or number), scan the WHOLE document for every occurrence of it before treating the edit as done** — adopted 25 Sep after a retry-threshold update (3→4) was missed in one of three places it appeared in the doc.
+## Working norms
+- See /preferences.md (product-focused PRDs, present → debate → agree → edit, never sync unless told, lean GTM, batch review comments, Truemeds funnel terms, marked review copies, omitted suggestions = rejected).
+- Whenever a stated fact changes, scan the WHOLE document for every occurrence before treating the edit as done.

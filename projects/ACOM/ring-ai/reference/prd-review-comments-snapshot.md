@@ -2,7 +2,11 @@
 
 *Diff-check baseline for **AI-led Lead Qualification — PRD** (Confluence PROD page 2023260174). Originally captured the entire document body plus every inline comment, reply, and our resolution status. Re-pulled 2026-09-09 ~17:00 IST; Batch-1-through-5 state last updated 2026-09-10 (page v6).*
 
-**⚠️ Status note (25 Sep 2026):** PART A/C below (the 9–10 Sep comment tracker) is kept as the historical record of that review pass and is still accurate for the comments it covers. It has **not** been re-transcribed line-by-line for the 23–25 Sep pass — see **PART A.1 (new)** just below for what changed since, and **PART A.2 (new)** for what's still open. **PART B (full document body) is now stale** — the current full body lives in `docs/ai-led-lead-qualification-prd.md`, kept in sync with the live Confluence page; that file is the diff-check reference going forward, not the PART B snapshot below.
+**⚠️ Status note (30 Sep 2026):** Draft v3 was published on 30 Sep — see **PART A.3 (new)** for the 29–30 Sep delta and the current reply/resolve list. The notes below still hold for earlier passes.
+
+**Earlier status note (25 Sep 2026):** PART A/C below (the 9–10 Sep comment tracker) is kept as the historical record of that review pass and is still accurate for the comments it covers. It has **not** been re-transcribed line-by-line for the 23–25 Sep pass — see **PART A.1 (new)** just below for what changed since, and **PART A.2 (new)** for what's still open. **PART B (full document body) is now stale** — the current full body lives in `docs/ai-led-lead-qualification-prd.md`, kept in sync with the live Confluence page; that file is the diff-check reference going forward, not the PART B snapshot below.
+
+**Counts (as of 30 Sep 2026):** 58 unresolved root threads (many already replied to, not yet resolved) · 0 dangling. New since 25 Sep: "Set to 48 hours" and "+ order_value 500" (29 Sep, reviewer f61f764e…); Apurva's 30 Sep review tags to Kartik A and Jatin Khatri.
 
 **Counts (as of 25 Sep 2026):** 52 root-level inline comments · 47 with at least one reply · 5 without a reply yet (4 already answered by current doc content, 1 genuinely new — see PART A.2) · 0 dangling (orphaned-anchor) comments on the live page.
 **Reviewers:**
@@ -41,6 +45,28 @@ comments and locked two new product rules, working comment-by-comment with the r
 - **2056945670** — "telephony confirmed a connected call, Ring never returned a verdict" — covered by the §12 two-signal (Knowlarity/Ring) table.
 - **2056552483** — bot-leg failure after the customer answered — covered by the §12 bot-leg-failure table; the exact Knowlarity error code is still open for Engineering to confirm before go-live.
 - **2060779523** — "How is this different than Retry threshold?" (on Frequency cap) — the §6 settings table row for Frequency cap now states the distinction explicitly.
+
+---
+
+## PART A.3 — 29–30 Sep 2026 (Draft v3)
+
+**Answered in the doc — reply + resolve pending:**
+
+| Thread (anchor) | Answer now in the doc |
+|---|---|
+| "cart details and that ID" / "items + quantities" / "SKU-level pricing" / "discount amount," / "patient name … customer name" | §4 lists what's sent: reference id, items + quantities (Ring's variable format), order-level pricing incl. discount %, delivery ETA, patient-else-customer name. No SKU pricing. |
+| "address" — "we should be sending address" | Decided: **no address** to the vendor (§4, §9). |
+| "24h" — "Set to 48 hours" | Kept at **24 h** (§5, §6). |
+| "minimum AOV ₹500 … + patient + address" — "+ order_value 500" | Done (₹500 minimum AOV, §5/§6). |
+| "business to finalise" — "togglable, finalise at go-live" | Values set in §6; config, tunable at go-live. |
+| "A call that connects but" — "SIP instead of websocket" | §13: Knowlarity has no SIP; audio is a live stream. |
+| "gauges interes" / "minutes" / "verdict turnaround…" / "set aside" | Verdict Hot/Warm/Cold (+ objection/summary); frequency cap + live-transfer note; SLA item in §9; §6 dispositions table. |
+| "Frequency cap" — "different from retry threshold?" | §6 settings table states the difference. |
+| "Kill switch" — "use-case level?" | Global now; per-use-case later (§6). |
+| "Hot/Warm" — reviewer's ordering | Final order locked (§5, §9). |
+| "platform" — "accommodate future vendor change" | Single vendor + single telephony; a swap is a re-integration (§8, §13). |
+
+**Awaiting reviewers:** Apurva's 30 Sep tags — @Kartik A (§5 Hot/Warm 24 h, FTC share, §6 closure, pause rule, §14 GTM); @Jatin Khatri (§10 metrics, pause rule).
 
 ---
 
