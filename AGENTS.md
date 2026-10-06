@@ -118,3 +118,13 @@ automatically, so apply them manually here:
 - Before syncing with GitHub, check `git status --short --branch`.
 - Pull with fast-forward only when bringing down remote changes.
 - Keep local project files and handoff files committed together when possible.
+
+## Pushing to GitHub (credentials)
+
+- This checkout uses `https://github.com/apurvashetty-tm/pm-agent.git` with a repository-local credential helper. Direct HTTPS pushing from Cowork's `device_bash` against the attached folder was verified on 2026-10-06. Other checkouts need their own authentication setup.
+- Never embed a token in a remote URL, commit credentials, or read, display, copy, or upload private keys. A local-only configuration file can still expose a credential through logs or shared filesystem access.
+- Before publishing, inspect the current branch, pending commits, and working tree. Commit only task-related changes. Use a feature branch and pull request; do not force-push or bypass branch protection.
+- In Cowork, attach this local folder and use `device_bash` at its mounted path for normal Git commits and pushes. The cloud shell is a separate environment. The GitHub connector and Computer Use Terminal are not required for this workflow.
+- Let Git invoke the configured helper; never print credential files, run `git credential fill`, enable credential tracing, or copy secrets into tracked files. The helper resolves its credential file from the current checkout's Git directory so mounted path changes do not require reconfiguration. Credentials persist with this checkout, subject to token expiry or revocation and folder permissions.
+- When the current environment has authorized GitHub access, use `git push --dry-run origin <branch-name>`, then `git push origin <branch-name>`. Verify the remote branch hash matches the intended local commit with `git ls-remote origin refs/heads/<branch-name>`.
+- Diagnose network, filesystem, authentication, and branch-protection failures separately. Do not assume every failed push means a missing or expired token.
