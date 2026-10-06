@@ -4,6 +4,8 @@
 
 **Update (late 30 Sep 2026):** §4 diagram corrected — the AI leg is a SIP trunk, not a WebSocket (Engineering); correction comment on the §4 heading. Comment 2063761413 "SIP instead of websocket" is now accepted.
 
+**Update (6 Oct 2026):** §6 and §13 rewritten with Engineering's suggested SIP-trunk text (comments 2073526291, 2073165864, 2071953482, 2073624610, 2073329690, 2063761413). "Changed." replies posted; all six still to be resolved in the UI.
+
 **⚠️ Status note (30 Sep 2026):** Draft v3 was published on 30 Sep — see **PART A.3 (new)** for the 29–30 Sep delta and the current reply/resolve list. The notes below still hold for earlier passes.
 
 **Earlier status note (25 Sep 2026):** PART A/C below (the 9–10 Sep comment tracker) is kept as the historical record of that review pass and is still accurate for the comments it covers. It has **not** been re-transcribed line-by-line for the 23–25 Sep pass — see **PART A.1 (new)** just below for what changed since, and **PART A.2 (new)** for what's still open. **PART B (full document body) is now stale** — the current full body lives in `docs/ai-led-lead-qualification-prd.md`, kept in sync with the live Confluence page; that file is the diff-check reference going forward, not the PART B snapshot below.
@@ -61,7 +63,7 @@ comments and locked two new product rules, working comment-by-comment with the r
 | "24h" — "Set to 48 hours" | Kept at **24 h** (§5, §6). |
 | "minimum AOV ₹500 … + patient + address" — "+ order_value 500" | Done (₹500 minimum AOV, §5/§6). |
 | "business to finalise" — "togglable, finalise at go-live" | Values set in §6; config, tunable at go-live. |
-| "A call that connects but" — "SIP instead of websocket" | **Accepted (30 Sep):** Engineering corrected the AI leg to a SIP trunk; §4 diagram updated; §6/§13 still to align. |
+| "A call that connects but" — "SIP instead of websocket" | **Accepted:** AI leg is a SIP trunk — §4 diagram (30 Sep), §6 + §13 (6 Oct); replied "Changed." |
 | "gauges interes" / "minutes" / "verdict turnaround…" / "set aside" | Verdict Hot/Warm/Cold (+ objection/summary); frequency cap + live-transfer note; SLA item in §9; §6 dispositions table. |
 | "Frequency cap" — "different from retry threshold?" | §6 settings table states the difference. |
 | "Kill switch" — "use-case level?" | Global now; per-use-case later (§6). |

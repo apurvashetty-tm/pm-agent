@@ -1,7 +1,7 @@
 # ACOM × Ring AI — Session Handoff
 
 Living resume point. Continue from here unless the user gives newer instructions.
-Last updated: 2026-09-30
+Last updated: 2026-10-06
 
 ## Current status
 - **PRD Draft v3 is published on Confluence** (PROD page 2023260174) and mirrored word-for-word
@@ -15,8 +15,11 @@ Last updated: 2026-09-30
   Jatin Khatri for review of the new sections.
 - **Later on 30 Sep — AI leg is a SIP trunk, not a WebSocket** (Engineering correction). Apurva
   updated the §4 diagram on Confluence (two lines) and left the correction as a comment on the §4
-  heading; mirrored here. §6 ("separate from the AI's Knowlarity streaming path") and §13 (the
-  WebSocket rationale) still describe the old path — align in the next edit pass.
+  heading; mirrored here.
+- **6 Oct — SIP-trunk correction finished.** §6 and §13 now use Engineering's suggested text (§6:
+  "separate from the AI's Knowlarity SIP-trunk call to Ring"; §13: Chosen path, "Call leg: SIP
+  trunk." with the reason, Dev split; the audio-bridge alternative kept with a note). "Changed."
+  replies posted on the six SIP threads — Apurva to resolve them in the Confluence UI. Repo synced.
 
 ## What changed this cycle (29–30 Sep)
 - **Reframed around reach, not AOV:** ~12,500 eligible leads/day at ₹900, agents attempt ~40%

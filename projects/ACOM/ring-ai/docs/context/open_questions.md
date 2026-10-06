@@ -2,7 +2,7 @@
 
 Running register of unresolved decisions. Additive — don't silently resolve; move an item to
 "Resolved" with a date when it's closed. Mirrors PRD §9 plus integration/pending items.
-Last updated: 2026-09-30
+Last updated: 2026-10-06
 
 **None of the open items blocks the build** (PRD §9, 30 Sep).
 
@@ -39,11 +39,11 @@ Last updated: 2026-09-30
   **[Engineering + Business + Ring]**
 
 ## Confluence housekeeping (as of 30 Sep)
-**Content still to align (SIP-trunk correction, 30 Sep):** Engineering corrected the AI leg to a
-SIP trunk and the §4 diagram was updated (two lines; the correction comment sits on the §4
-heading). Still describing the old WebSocket path: §6 "Telephony stays as-is" bullet ("separate
-from the AI's Knowlarity streaming path") and §13 (Chosen path, "Why a WebSocket (not SIP…)",
-the audio-bridge alternative, Dev split). **[Product]**
+**SIP-trunk correction (6 Oct):** PRD §4, §6 and §13 now describe the SIP-trunk call, using
+Engineering's suggested text. Replies ("Changed.") posted on all six SIP threads; they still need
+resolving in the Confluence UI (the API can't resolve): the §4 heading correction, §6 "Knowlarity
+streaming path", §13 "Chosen path", §13 "Why a WebSocket", §13 "Dev split", and the 25 Sep
+"SIP instead of websocket" thread.
 
 58 unresolved threads on the page, 0 dangling. Many already have replies but aren't resolved.
 Threads answered by the current doc that still need a closing reply and resolve:
@@ -54,13 +54,18 @@ Threads answered by the current doc that still need a closing reply and resolve:
 - "Set to 48 hours" on the hold-time (29 Sep): Product keeps **24 h** — reply with that.
 - "+ order_value 500" on the eligibility row (29 Sep): done.
 - "These are togglable, finalise at go-live" (24 Sep): values set; config, tunable at go-live.
-- SIP vs WebSocket (25 Sep): the reviewer was right — the AI leg is a SIP trunk (Engineering
-  correction, 30 Sep; §4 diagram updated). Reply + resolve.
+- SIP vs WebSocket (25 Sep): the reviewer was right — the AI leg is a SIP trunk. Replied 6 Oct;
+  resolve (see the SIP-trunk note above).
 - Older answered-in-doc threads: output the AI returns, verdict turnaround (now the SLA item),
   dispositions/tracking (§6 table), "more calls per customer / handover" (frequency cap + live
   transfer), frequency cap vs retry threshold, "telephony connected, no verdict" (§12 table).
 - 30 Sep review requests (@Kartik A: §5 Hot/Warm 24 h rule, FTC share, §6 closure, pause rule,
   §14 GTM; @Jatin Khatri: §10 metrics, pause rule) — awaiting their review.
+
+## Resolved (6 Oct 2026)
+- **AI call leg** — SIP trunk, not a WebSocket (Engineering correction). Reason: Ring has already
+  built this integration with Knowlarity for another client and it works. The manual flow keeps
+  its own SIP-trunk setup (PRD §6, Engineering's wording).
 
 ## Resolved (30 Sep 2026)
 - **FTC targeting** — the AI uses today's queue logic as is (`final_score`), which already

@@ -56,7 +56,10 @@ Published on Confluence as Draft v3 (PROD 2023260174) on 30 Sep.
     later).
 14. **AI leg is a SIP trunk, not a WebSocket** (Engineering correction, late 30 Sep). §4 diagram
     now reads "telephony bridges to the vendor (SIP trunk)" and "bot speaks on that SIP call".
-    Replaces the 11 Sep WebSocket choice; §6 and §13 of the PRD still to be aligned.
+    Replaces the 11 Sep WebSocket choice. §6 and §13 aligned on 6 Oct with Engineering's text;
+    the manual flow keeps its own SIP-trunk setup, separate from the AI's SIP-trunk call to Ring.
+    Why SIP: Ring has already built this integration with Knowlarity for another client and it
+    works — the low-risk option.
 
 ## Not decided here
 See `projects/ACOM/ring-ai/docs/context/open_questions.md`.

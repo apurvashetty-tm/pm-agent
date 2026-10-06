@@ -1,4 +1,4 @@
-<!-- memory path: /areas/ring-ai.md · last updated in memory: 2026-09-30 -->
+<!-- memory path: /areas/ring-ai.md · last updated in memory: 2026-10-06 -->
 ---
 name: ring-ai
 description: ACOM × Ring AI — AI-led lead-qualification platform PRD at Truemeds. Current state, working model, decisions, open questions, file locations, norms. Read when working on this PRD/project.
@@ -23,7 +23,7 @@ aliases: [acom, acom 2.0, ring ai, voicebot cart recovery, ai-led lead qualifica
 - [stated] Sent to Ring per attempt: reference id, cart items + quantities (in Ring's variable format), order-level pricing (MRP, selling price, discount amount + discount percent, total savings), delivery ETA, patient name (else customer name). NOT sent: phone, address, SKU-level pricing.
 - [stated] Knowlarity bridges the call to Ring over a SIP trunk (Engineering correction, 30 Sep; was a WebSocket) carrying the reference id; Ring warms up the bot; a "customer answered" event starts it; the bot speaks on that SIP call. Ring records its own side and returns Hot/Warm/Cold by webhook on the reference id. Async callback; live transfer is future-state.
 - [stated] We do NOT send a recording to Ring. Truemeds stores its own recording + event log for audit & RCA (forensics, not a reliability fix).
-- [stated] PRD §4 diagram updated to SIP trunk on Confluence (30 Sep; correction comment on the §4 heading) and synced to the repo. §6 ("separate from the AI's Knowlarity streaming path") and §13 (WebSocket rationale) still to align. The 25 Sep reviewer comment "SIP instead of WebSocket" was right — reply + resolve pending.
+- [stated] SIP correction done on Confluence: §4 diagram (30 Sep), §6 + §13 (6 Oct) with Engineering's suggested text. Why SIP: Ring has already built this integration with Knowlarity for another client and it works. Manual flow keeps its own SIP-trunk setup, separate from the AI's SIP-trunk call to Ring (§6, Engineering's wording). Six SIP threads replied "Changed."; resolving is manual in the UI.
 - [stated] Single vendor + single telephony provider; a swap = re-integration, not a rebuild. "Vendor-agnostic by design" struck from scope (30 Sep).
 - [stated] PII on the "customer answered" event: carries the number today; must be stripped — now an InfoSec call-out.
 
@@ -58,6 +58,7 @@ aliases: [acom, acom 2.0, ring ai, voicebot cart recovery, ai-led lead qualifica
 ## Confluence editing know-how
 - COMMENT-SAFE EDIT METHOD (proven at scale, zero dangling): full markdown re-push DANGLES all inline comments; instead edit the page as HTML — each inline comment is <span class="annotation" data-annotation-id="..." data-annotation-type="inlineComment">anchored text</span>; keep the span + its text, edit around it, full-body updateConfluencePage contentFormat=html, then re-read resolutionStatus=dangling to confirm zero. Replies via createConfluenceInlineComment (parentCommentId only). No edit-comment API. Always fresh-pull before any live edit.
 - Deleting text that carries an open inline comment loses the comment's anchor — reply + resolve first, then edit.
+- GOTCHA (6 Oct): a full-body HTML write turned grey highlights (background-color #dcdfe4) into highlight + grey text colour (unreadable). Fixed by re-writing as ADF with the stray textColor marks removed. After any HTML write on a page with highlights, check textColor marks — or edit in ADF.
 - The API returns only the PUBLISHED version — unpublished Confluence drafts aren't visible; ask Apurva to publish before a proofread.
 
 ## Reusable repo facts (Truemeds)

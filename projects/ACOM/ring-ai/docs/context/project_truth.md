@@ -1,7 +1,7 @@
 # ACOM × Ring AI — Project Truth
 
 Status: Working product truth. Not a PRD.
-Last updated: 2026-09-30
+Last updated: 2026-10-06
 
 The durable, locked layer for the AI-led Lead Qualification build. The full spec is
 `docs/ai-led-lead-qualification-prd.md` (Confluence PROD page 2023260174, published
@@ -75,8 +75,10 @@ Contact PII           = phone number, address — never sent to the vendor (the 
   use for it).
 - **Dial + connect:** on the same call Knowlarity bridges to Ring over a **SIP trunk** carrying
   the reference id; Ring warms up the bot; a **"customer answered" event** starts it; the bot
-  speaks on that SIP call. *(Engineering correction, 30 Sep — was a WebSocket. PRD §4 diagram
-  updated; §6 and §13 still describe the WebSocket path and are to be aligned.)*
+  speaks on that SIP call. *(Engineering correction, 30 Sep — was a WebSocket; PRD §4, §6 and
+  §13 aligned 6 Oct.)* Why SIP: Ring has already built this same integration with Knowlarity for another client, and it is working well —
+  the low-risk option. The manual flow keeps its own two-leg SIP-trunk setup, separate from the
+  AI's SIP-trunk call to Ring (PRD §6).
 - **Verdict:** Ring records the bot–customer leg on its own side and returns
   Hot / Warm / Cold by webhook on the reference id.
 - **Recording & events, our side:** Truemeds stores its own recording (from Knowlarity) +
