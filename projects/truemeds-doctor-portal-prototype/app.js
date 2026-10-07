@@ -28,11 +28,11 @@ const SCENARIOS = {
     assignment_status: 'assigned',
     prescription_attached: true,
     medicines: [
-      { id:1, name:'Metformin',          strength:'500mg',   m:1, a:0, n:1, qty:60, price:28,  form:'tablet',    interval:'daily',   duration:'ongoing', advice:['after_food'],   validation_status:'prescribed',     disabled:false },
-      { id:2, name:'Amlodipine',         strength:'5mg',     m:1, a:0, n:0, qty:30, price:52,  form:'tablet',    interval:'daily',   duration:'ongoing', advice:['after_food'],   validation_status:'not_prescribed', disabled:false },
-      { id:3, name:'Atorvastatin',       strength:'10mg',    m:0, a:0, n:1, qty:30, price:45,  form:'capsule',   interval:'daily',   duration:'ongoing', advice:['after_food'],   validation_status:'not_prescribed', disabled:false },
-      { id:4, name:'Vitamin B12',        strength:'1000mcg', m:0, a:0, n:0, qty:4,  price:120, form:'injection', interval:'monthly', duration:'3m',      advice:[],               validation_status:'not_prescribed', disabled:false },
-      { id:5, name:'Antacid Suspension', strength:'10ml',    m:0, a:1, n:1, qty:1,  price:85,  form:'syrup',     interval:'daily',   duration:'7d',      advice:['after_food'],   validation_status:'not_prescribed', disabled:false },
+      { id:1, name:'Metformin',          strength:'500mg',   m:1, a:0, n:1, qty:60, price:28,  form:'tablet',    interval:'daily',   duration:'ongoing', food:null,            validation_status:'prescribed',     disabled:false },
+      { id:2, name:'Amlodipine',         strength:'5mg',     m:1, a:0, n:0, qty:30, price:52,  form:'tablet',    interval:'daily',   duration:'ongoing', food:null,            validation_status:'not_prescribed', disabled:false },
+      { id:3, name:'Atorvastatin',       strength:'10mg',    m:0, a:0, n:1, qty:30, price:45,  form:'capsule',   interval:'daily',   duration:'ongoing', food:null,            validation_status:'not_prescribed', disabled:false },
+      { id:4, name:'Vitamin B12',        strength:'1000mcg', m:0, a:0, n:0, qty:4,  price:120, form:'injection', interval:'monthly', duration:'3m',      dose:1,      food:null,               validation_status:'not_prescribed', disabled:false },
+      { id:5, name:'Antacid Suspension', strength:'10ml',    m:0, a:10, n:10, qty:1, price:85, form:'syrup',     interval:'daily',   duration:'7d',      rx_line:'0-1-1 · Qty 1',      food:null,            validation_status:'not_prescribed', disabled:false },
     ]
   },
 
@@ -46,9 +46,9 @@ const SCENARIOS = {
     assignment_status: 'assigned',
     prescription_attached: true,
     medicines: [
-      { id:1, name:'Levothyroxine',            strength:'50mcg', m:1, a:0, n:0, qty:30, price:38, form:'tablet',  interval:'daily', duration:'ongoing', advice:['empty_stomach'], validation_status:'not_prescribed', disabled:false },
-      { id:2, name:'Calcium + Vit D3',         strength:'500mg', m:1, a:0, n:1, qty:60, price:65, form:'capsule', interval:'daily', duration:'ongoing', advice:['after_food'],    validation_status:'prescribed',     disabled:false },
-      { id:3, name:'Sodium Chloride Eye Drops', strength:'0.9%', m:0, a:1, n:1, qty:1,  price:55, form:'drops',   interval:'daily', duration:'7d',      advice:[],                validation_status:'not_prescribed', disabled:false },
+      { id:1, name:'Levothyroxine',            strength:'50mcg', m:1, a:0, n:0, qty:30, price:38, form:'tablet',  interval:'daily', duration:'ongoing', food:null,           validation_status:'not_prescribed', disabled:false },
+      { id:2, name:'Calcium + Vit D3',         strength:'500mg', m:1, a:0, n:1, qty:60, price:65, form:'capsule', interval:'daily', duration:'ongoing', food:null,             validation_status:'prescribed',     disabled:false },
+      { id:3, name:'Sodium Chloride Eye Drops', strength:'0.9%', m:0, a:1, n:1, qty:1,  price:55, form:'drops',   interval:'daily', duration:'7d',      food:null,                validation_status:'not_prescribed', disabled:false },
     ]
   },
 
@@ -62,10 +62,10 @@ const SCENARIOS = {
     assignment_status: 'assigned',
     prescription_attached: true,
     medicines: [
-      { id:1, name:'Losartan',            strength:'50mg',   m:1, a:0, n:0, qty:30, price:42, form:'tablet', interval:'daily', duration:'ongoing', advice:['after_food'],  validation_status:'not_prescribed', disabled:false },
-      { id:2, name:'Hydrochlorothiazide', strength:'12.5mg', m:1, a:0, n:0, qty:30, price:18, form:'tablet', interval:'daily', duration:'ongoing', advice:['after_food'],  validation_status:'not_prescribed', disabled:false },
-      { id:3, name:'Aspirin',             strength:'75mg',   m:0, a:0, n:1, qty:30, price:12, form:'tablet', interval:'daily', duration:'ongoing', advice:['after_food'],  validation_status:'prescribed',     disabled:false },
-      { id:4, name:'Betamethasone Cream', strength:'0.1%',   m:0, a:1, n:1, qty:1,  price:95, form:'cream',  interval:'daily', duration:'7d',      advice:[],              validation_status:'not_prescribed', disabled:false },
+      { id:1, name:'Losartan',            strength:'50mg',   m:1, a:0, n:0, qty:30, price:42, form:'tablet', interval:'daily', duration:'ongoing', food:null,           validation_status:'not_prescribed', disabled:false },
+      { id:2, name:'Hydrochlorothiazide', strength:'12.5mg', m:1, a:0, n:0, qty:30, price:18, form:'tablet', interval:'daily', duration:'ongoing', food:null,           validation_status:'not_prescribed', disabled:false },
+      { id:3, name:'Aspirin',             strength:'75mg',   m:0, a:0, n:1, qty:30, price:12, form:'tablet', interval:'daily', duration:'ongoing', food:null,           validation_status:'prescribed',     disabled:false },
+      { id:4, name:'Betamethasone Cream', strength:'0.1%',   m:0, a:1, n:1, qty:1,  price:95, form:'cream',  interval:'daily', duration:'7d',      food:null,              validation_status:'not_prescribed', disabled:false },
     ]
   },
 
@@ -79,9 +79,9 @@ const SCENARIOS = {
     assignment_status: 'assigned',
     prescription_attached: true,
     medicines: [
-      { id:1, name:'Ferrous Sulphate',   strength:'200mg',  m:0, a:0, n:1, qty:30, price:35,  form:'tablet',  interval:'daily', duration:'3m', advice:['after_food'],  validation_status:'prescribed',     disabled:false },
-      { id:2, name:'Folic Acid',         strength:'5mg',    m:1, a:0, n:0, qty:30, price:22,  form:'tablet',  interval:'daily', duration:'3m', advice:['after_food'],  validation_status:'prescribed',     disabled:false },
-      { id:3, name:'Salbutamol Inhaler', strength:'100mcg', m:0, a:0, n:0, qty:1,  price:185, form:'inhaler', interval:'sos',   duration:null, advice:[],              validation_status:'not_prescribed', disabled:false },
+      { id:1, name:'Ferrous Sulphate',   strength:'200mg',  m:0, a:0, n:1, qty:30, price:35,  form:'tablet',  interval:'daily', duration:'3m', food:null,           validation_status:'prescribed',     disabled:false },
+      { id:2, name:'Folic Acid',         strength:'5mg',    m:1, a:0, n:0, qty:30, price:22,  form:'tablet',  interval:'daily', duration:'3m', food:null,           validation_status:'prescribed',     disabled:false },
+      { id:3, name:'Salbutamol Inhaler', strength:'100mcg', m:0, a:0, n:0, qty:1,  price:185, form:'inhaler', interval:'sos',   duration:'ongoing', dose:2, sosMax:4, food:null,              validation_status:'not_prescribed', disabled:false },
     ]
   },
 
@@ -95,7 +95,7 @@ const SCENARIOS = {
     assignment_status: 'assigned',
     prescription_attached: true,
     medicines: [
-      { id:1, name:'Pantoprazole', strength:'40mg', m:1, a:0, n:0, qty:30, price:44, form:'capsule', interval:'daily', duration:'1m', advice:['empty_stomach'], validation_status:'prescribed', disabled:false },
+      { id:1, name:'Pantoprazole', strength:'40mg', m:1, a:0, n:0, qty:30, price:44, form:'capsule', interval:'daily', duration:'1m', food:null,           validation_status:'prescribed', disabled:false },
     ]
   }
 };
@@ -132,18 +132,79 @@ const iconEl = (name, size) =>                                  // ready-made si
 function initIcons() { TMIcons.render(); }
 
 // ================================================================
-// EDIT STATE — for medicine edit sheet
+// PRESCRIBE SCREEN — model + text (agreed 2026-10-07, see docs/context/session_handoff.md)
 // ================================================================
-const EDIT_STATE = {
-  medId:    null,
-  m: 1, a: 0, n: 1,
-  interval: 'daily',
-  duration: null,
-  advice:   [],
-};
+// Customer Rx (View Rx) is source material: freeze each medicine's Rx line before any doctor edit can touch it.
+Object.values(SCENARIOS).forEach(sc => sc.medicines.forEach(med => {
+  if (!med.rx_line) med.rx_line = `${formatMAN(med.m, med.a, med.n)} · Qty ${med.qty}`;
+}));
 
-const DURATION_LABELS = { '3d':'3 days', '7d':'7 days', '2w':'2 weeks', '1m':'1 month', '3m':'3 months', 'ongoing':'Ongoing' };
-const INTERVAL_LABELS = { 'daily':'Daily', 'alt_days':'Alt days', 'weekly':'Weekly', 'monthly':'Monthly', 'sos':'SOS' };
+const EDIT_STATE = {};   // filled by openMedEdit()
+
+const INTERVALS = [
+  ['daily', 'Daily'], ['every_x_hours', 'Every X hours'], ['alt_days', 'Alt days'],
+  ['weekly', 'Weekly'], ['monthly', 'Monthly'], ['sos', 'SOS only'],
+];
+const HOURS = [4, 6, 8, 12];
+const SOS_MAX = [1, 2, 3, 4];
+const DUR_NUMBERS = [1, 2, 3, 4, 5, 6, 7, 10, 14, 15];
+const DUR_UNITS = [['d', 'Days'], ['w', 'Weeks'], ['m', 'Months']];
+const FOODS = [['after_food', 'After food'], ['before_food', 'Before food'], ['empty_stomach', 'Empty stomach']];
+const ONGOING_DEFAULT = '6 months';   // backend default for Ongoing [MOCK ASSUMPTION — configured in backend]
+
+// Dose choices and units follow the medicine's form. `other` = the "Other" number entry (unit shown beside it).
+const FORM_DOSE = {
+  tablet:    { one: 'tablet',  many: 'tablets',  slot: [0, 0.5, 1, 2], each: [0.5, 1, 2] },
+  capsule:   { one: 'capsule', many: 'capsules', slot: [0, 0.5, 1, 2], each: [0.5, 1, 2] },
+  syrup:     { one: 'ml',      many: 'ml',       slot: [0, 2.5, 5, 10], each: [2.5, 5, 10], other: 'ml' },
+  drops:     { one: 'drop',    many: 'drops',    slot: [0, 1, 2, 3],   each: [1, 2, 3] },
+  inhaler:   { one: 'puff',    many: 'puffs',    slot: [0, 1, 2],      each: [1, 2] },
+  injection: { one: 'dose',    many: 'doses',    slot: [0, 1],         each: [1], other: 'units' },
+  cream:     { one: 'apply',   many: 'apply',    slot: [0, 1],         each: [1], apply: true },
+};
+const formDose = f => FORM_DOSE[f] || FORM_DOSE.tablet;
+const FORM_LABEL = { tablet:'Tablet', capsule:'Capsule', syrup:'Syrup', drops:'Drops', inhaler:'Inhaler', injection:'Injection', cream:'Cream' };
+
+const numLabel = v => v === 0.5 ? '½' : String(v);
+function chipLabel(form, v) { return formDose(form).apply && v === 1 ? 'Apply' : numLabel(v); }
+function doseText(form, v, isOther) {
+  const fd = formDose(form);
+  if (fd.apply) return 'Apply';
+  if (isOther) return `${v} ${fd.other}`;
+  if (fd.one === 'ml') return `${numLabel(v)} ml`;
+  return `${numLabel(v)} ${v > 1 ? fd.many : fd.one}`;
+}
+function durationText(code) {
+  if (!code) return '';
+  if (code === 'ongoing') return 'Ongoing';
+  const n = parseInt(code, 10), u = code.slice(-1);
+  const word = { d: 'day', w: 'week', m: 'month' }[u];
+  return `${n} ${word}${n === 1 ? '' : 's'}`;
+}
+// Schedule part of the printed line, e.g. "1-0-1 + SOS (max 2/day)", "5 ml every 8 hours", "2 puffs as needed (max 4/day)".
+function scheduleText(x) {
+  const fd = formDose(x.form);
+  let t;
+  switch (x.interval) {
+    case 'daily': {
+      const man = formatMAN(x.m, x.a, x.n);
+      t = fd.apply ? `Apply ${man}` : (['tablet', 'capsule'].includes(x.form) ? man : `${man} ${fd.many}`);
+      break;
+    }
+    case 'every_x_hours': t = `${doseText(x.form, x.dose, x.doseOther)} every ${x.hours} hours`; break;
+    case 'alt_days':      t = `${doseText(x.form, x.dose, x.doseOther)} on alternate days`; break;
+    case 'weekly':        t = `${doseText(x.form, x.dose, x.doseOther)} once a week`; break;
+    case 'monthly':       t = `${doseText(x.form, x.dose, x.doseOther)} once a month`; break;
+    case 'sos':           return `${doseText(x.form, x.dose, x.doseOther)} as needed (max ${x.sosMax}/day)`;
+    default:              t = '';
+  }
+  return x.sos ? `${t} + SOS (max ${x.sosMax}/day)` : t;
+}
+// Full printed line: schedule · duration · food (only if chosen) · note (only if written)
+function printLine(x) {
+  const food = FOODS.find(f => f[0] === x.food);
+  return [scheduleText(x), durationText(x.duration), food ? food[1] : '', (x.note || '').trim()].filter(Boolean).join(' · ');
+}
 
 // ================================================================
 // CTA ROUTING — [LOCKED] project_truth.md Section 5
@@ -260,7 +321,7 @@ function renderRxMedicines(meds) {
     div.innerHTML = `
       <div class="rx-med-number">Medicine ${i + 1}</div>
       <div class="rx-med-name">${med.name} ${med.strength}</div>
-      <div class="rx-med-details">${formatMAN(med.m, med.a, med.n)} · Qty ${med.qty}</div>
+      <div class="rx-med-details">${med.rx_line}</div>
       <div class="rx-med-note">As directed. Complete full course.</div>
     `;
     list.appendChild(div);
@@ -290,9 +351,7 @@ function renderMedicines(meds) {
     const { cls: sc, label: sl } = statusMap[st] || statusMap.not_prescribed;
 
     // Dosage detail line
-    const isDaily = !med.interval || med.interval === 'daily';
-    const dosage  = isDaily ? formatMAN(med.m, med.a, med.n) : (INTERVAL_LABELS[med.interval] || med.interval);
-    const dur     = med.duration ? ` · ${DURATION_LABELS[med.duration] || med.duration}` : '';
+    const sched   = [scheduleText(med), durationText(med.duration)].filter(Boolean).join(' · ');
 
     const el = document.createElement('div');
     el.className = `tm-row medicine-item${isDisabled ? ' disabled' : ''}`;
@@ -306,7 +365,7 @@ function renderMedicines(meds) {
       <div class="tm-row__main med-info">
         <div class="tm-row__title med-name">${med.name} ${med.strength}</div>
         <div class="tm-row__meta med-detail">
-          <span>${dosage}${dur}</span><span>Qty ${med.qty}</span>
+          <span>${sched}</span><span>Qty ${med.qty}</span>
         </div>
       </div>
       <span class="tm-tag tm-tag--md ${sc}">${sl}</span>
@@ -830,112 +889,215 @@ function confirmSkipHA(reason) {
 }
 
 // ================================================================
-// MEDICINE EDIT
+// MEDICINE EDIT — full-screen Prescribe view (#prescribe-screen)
 // ================================================================
-function selectMAN(row, val) {
-  EDIT_STATE[row] = val;
-  document.querySelectorAll(`.man-btns[data-man="${row}"] .man-btn`).forEach(btn => {
-    btn.setAttribute('aria-pressed', parseFloat(btn.dataset.val) === val);
-  });
-}
-
-function selectInterval(val) {
-  EDIT_STATE.interval = val;
-  document.querySelectorAll('#interval-chips .tm-chip').forEach(b => {
-    b.setAttribute('aria-pressed', b.dataset.interval === val);
-  });
-  // Grey out M-A-N for non-daily intervals
-  const manGroup = document.getElementById('man-picker-group');
-  const nonDaily = ['weekly','monthly','sos'].includes(val);
-  manGroup.classList.toggle('man-disabled', nonDaily);
-}
-
-function selectDuration(val) {
-  // Toggle off if already selected
-  if (EDIT_STATE.duration === val) {
-    EDIT_STATE.duration = null;
-    document.querySelectorAll('#duration-chips .tm-chip').forEach(b => b.setAttribute('aria-pressed', false));
-  } else {
-    EDIT_STATE.duration = val;
-    document.querySelectorAll('#duration-chips .tm-chip').forEach(b => {
-      b.setAttribute('aria-pressed', b.dataset.dur === val);
-    });
-  }
-}
-
-function toggleAdvice(val) {
-  const idx = EDIT_STATE.advice.indexOf(val);
-  if (idx > -1) {
-    EDIT_STATE.advice.splice(idx, 1);
-  } else {
-    EDIT_STATE.advice.push(val);
-  }
-  document.querySelectorAll('#advice-chips .tm-chip').forEach(b => {
-    b.setAttribute('aria-pressed', EDIT_STATE.advice.includes(b.dataset.advice));
-  });
-}
+let psReturnFocus = null;
 
 function openMedEdit(medId) {
   const med = DOCTOR_STATE.currentCase.medicines.find(m => m.id === medId);
   if (!med) return;
-
-  EDIT_STATE.medId    = medId;
-  EDIT_STATE.m        = med.m;
-  EDIT_STATE.a        = med.a;
-  EDIT_STATE.n        = med.n;
-  EDIT_STATE.interval = med.interval || 'daily';
-  EDIT_STATE.duration = med.duration || null;
-  EDIT_STATE.advice   = Array.isArray(med.advice) ? [...med.advice] : [];
-
-  document.getElementById('sheet-med-name').textContent = `${med.name} ${med.strength}`;
-
-  // Sync interval chips
-  document.querySelectorAll('#interval-chips .tm-chip').forEach(b => {
-    b.setAttribute('aria-pressed', b.dataset.interval === EDIT_STATE.interval);
+  if (med.default_duration === undefined) med.default_duration = med.duration || 'ongoing';   // backend default, kept for "Changed from default"
+  const fd = formDose(med.form);
+  const dur = med.duration || 'ongoing';
+  const dose = med.dose ?? fd.each[Math.min(1, fd.each.length - 1)];
+  Object.assign(EDIT_STATE, {
+    medId, form: med.form || 'tablet',
+    interval: med.interval || 'daily',
+    m: med.m ?? 0, a: med.a ?? 0, n: med.n ?? 0,
+    hours: med.hours || 8,
+    dose, doseOther: !!med.doseOther, doseOtherVal: med.doseOther ? String(med.dose) : '',
+    sos: !!med.sos, sosMax: med.sosMax || 1,
+    durOngoing: dur === 'ongoing', durN: dur === 'ongoing' ? 1 : parseInt(dur, 10), durU: dur === 'ongoing' ? 'd' : dur.slice(-1),
+    durOpen: false, defaultDuration: med.default_duration,
+    food: med.food || null, note: med.note || '', err: null,
   });
-  // Sync M-A-N
-  ['m','a','n'].forEach(row => {
-    document.querySelectorAll(`.man-btns[data-man="${row}"] .man-btn`).forEach(btn => {
-      btn.setAttribute('aria-pressed', parseFloat(btn.dataset.val) === med[row]);
-    });
-  });
-  // Sync M-A-N disabled state
-  const nonDaily = ['weekly','monthly','sos'].includes(EDIT_STATE.interval);
-  document.getElementById('man-picker-group').classList.toggle('man-disabled', nonDaily);
-  // Sync duration chips
-  document.querySelectorAll('#duration-chips .tm-chip').forEach(b => {
-    b.setAttribute('aria-pressed', b.dataset.dur === EDIT_STATE.duration);
-  });
-  // Sync advice chips
-  document.querySelectorAll('#advice-chips .tm-chip').forEach(b => {
-    b.setAttribute('aria-pressed', EDIT_STATE.advice.includes(b.dataset.advice));
-  });
+  document.getElementById('ps-title').textContent = `${med.name} ${med.strength}`;
+  document.getElementById('ps-form').textContent = `${FORM_LABEL[EDIT_STATE.form] || 'Medicine'} · Prescribe`;
+  document.getElementById('ps-note').value = EDIT_STATE.note;
+  renderPrescribe();
+  const scr = document.getElementById('prescribe-screen');
+  psReturnFocus = document.activeElement;
+  scr.classList.add('open');
+  scr.setAttribute('aria-hidden', 'false');
+  document.getElementById('ps-body').scrollTop = 0;
+  scr.focus({ preventScroll: true });
+}
 
-  openSheet('sheet-edit-med');
+function closePrescribe() {
+  const scr = document.getElementById('prescribe-screen');
+  scr.classList.remove('open');
+  scr.setAttribute('aria-hidden', 'true');
+  if (psReturnFocus && document.contains(psReturnFocus)) psReturnFocus.focus({ preventScroll: true });
+  psReturnFocus = null;
+}
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && !activeSheet && document.getElementById('prescribe-screen').classList.contains('open')) closePrescribe();
+}, { capture: true });   // capture: runs before the sheet handler, so Escape on a sheet closes only the sheet
+
+const durationCode = () => EDIT_STATE.durOngoing ? 'ongoing' : `${EDIT_STATE.durN}${EDIT_STATE.durU}`;
+function currentDose() {
+  if (!EDIT_STATE.doseOther) return EDIT_STATE.dose;
+  const v = parseFloat(EDIT_STATE.doseOtherVal);
+  return isFinite(v) ? v : '—';
+}
+const editModel = () => ({ ...EDIT_STATE, dose: currentDose(), duration: durationCode() });
+
+function chip(key, label, pressed, extra = '') {
+  return `<button type="button" class="tm-chip tm-chip--lg" data-k="${key}" aria-pressed="${pressed}" ${extra}>${label}</button>`;
+}
+function chipGroup(label, inner, cls = 'ps-chips', hint = '') {
+  return `<div class="ps-section"><div class="ps-label">${label}${hint ? ` <span class="tm-muted">${hint}</span>` : ''}</div><div class="${cls}">${inner}</div></div>`;
+}
+
+// Re-renders everything between "Prints as" and the note. The note field is never re-rendered (keeps typing focus).
+function renderPrescribe() {
+  const x = EDIT_STATE, fd = formDose(x.form);
+  const focusKey = document.activeElement?.dataset?.k;
+  let h = '';
+  h += chipGroup('How often', INTERVALS.map(([v, l]) => chip(`int:${v}`, l, x.interval === v)).join(''));
+
+  if (x.interval === 'daily') {
+    const unitHint = fd.apply ? '' : `(${fd.many})`;
+    const rows = [['m', 'M'], ['a', 'A'], ['n', 'N']].map(([k, key]) =>
+      `<div class="ps-slot"><span class="ps-slot-key">${key}</span><div class="ps-grid" style="--cols:${fd.slot.length}">${
+        fd.slot.map(v => chip(`slot:${k}:${v}`, chipLabel(x.form, v), x[k] === v)).join('')}</div></div>`).join('');
+    h += `<div class="ps-section" id="ps-dose-section"><div class="ps-label">Morning · Afternoon · Night <span class="tm-muted">${unitHint}</span></div><div class="ps-slots">${rows}</div>${
+      x.err === 'dose' ? `<div class="tm-notice tm-notice--error ps-gap" role="alert"><span class="tm-icon" data-icon="alert-circle"></span><span>Choose a dose for at least one time of day.</span></div>` : ''}</div>`;
+  } else {
+    if (x.interval === 'every_x_hours') {
+      h += `<div class="ps-section"><div class="ps-label">Every</div><div class="ps-grid" style="--cols:4">${HOURS.map(v => chip(`hrs:${v}`, `${v} h`, x.hours === v)).join('')}</div>
+            <div class="ps-helper">${24 / x.hours} times a day, round the clock</div></div>`;
+    }
+    const opts = fd.each.map(v => chip(`dose:${v}`, chipLabel(x.form, v), !x.doseOther && x.dose === v));
+    if (fd.other) opts.push(chip('dose:other', 'Other', x.doseOther));
+    const unitHint = fd.apply ? '' : `(${fd.other && x.doseOther ? fd.other : fd.many})`;
+    h += `<div class="ps-section" id="ps-dose-section"><div class="ps-label">Dose each time <span class="tm-muted">${unitHint}</span></div><div class="ps-grid" style="--cols:${opts.length}">${opts.join('')}</div>${
+      x.doseOther ? `<div class="tm-field ps-gap${x.err === 'other' ? ' tm-field--error' : ''}" id="ps-other-field"><label class="tm-field__label" for="ps-other">Dose in ${fd.other}</label>
+        <div class="tm-field__control"><input id="ps-other" type="text" inputmode="decimal" placeholder="e.g. 7.5" value="${x.doseOtherVal}"><span class="ps-unit">${fd.other}</span></div>
+        ${x.err === 'other' ? `<div class="tm-field__helper" role="alert">Enter the dose in ${fd.other}.</div>` : ''}</div>` : ''}</div>`;
+    if (x.interval === 'sos') {
+      h += `<div class="ps-section"><div class="ps-inline"><div class="ps-label">Max per day</div><div class="ps-chips">${SOS_MAX.map(v => chip(`max:${v}`, v, x.sosMax === v)).join('')}</div></div></div>`;
+    }
+  }
+
+  if (x.interval !== 'sos') {
+    h += `<div class="ps-section"><label class="tm-check"><input type="checkbox" class="tm-toggle" id="ps-sos" ${x.sos ? 'checked' : ''}> Also as needed (SOS)</label>${
+      x.sos ? `<div class="ps-inline ps-gap"><div class="ps-label">Max per day</div><div class="ps-chips">${SOS_MAX.map(v => chip(`max:${v}`, v, x.sosMax === v)).join('')}</div></div>` : ''}</div>`;
+  }
+
+  const code = durationCode();
+  if (!x.durOpen) {
+    const changed = code !== x.defaultDuration;
+    const sub = changed ? 'Changed from default' : (x.durOngoing ? `Default · ${ONGOING_DEFAULT}` : 'Default');
+    h += `<div class="ps-section"><div class="ps-label">Duration</div><div class="tm-card tm-card--flat"><div class="ps-dur-row">
+          <div class="ps-dur-val">${durationText(code)}<span>${sub}</span></div>
+          <button type="button" class="tm-btn tm-btn--link" data-k="dur:open">Change</button></div></div></div>`;
+  } else {
+    h += `<div class="ps-section"><div class="ps-label">Duration</div><div class="tm-card tm-card--flat">
+          <div class="ps-grid" style="--cols:5">${DUR_NUMBERS.map(v => chip(`durn:${v}`, v, !x.durOngoing && x.durN === v)).join('')}</div>
+          <div class="ps-grid ps-gap" style="--cols:4">${DUR_UNITS.map(([u, l]) => chip(`duru:${u}`, l, !x.durOngoing && x.durU === u)).join('')}${chip('dur:ongoing', 'Ongoing', x.durOngoing)}</div>
+          <div class="ps-dur-row ps-gap"><span class="ps-dur-val">${durationText(code)}</span><button type="button" class="tm-btn tm-btn--link" data-k="dur:done">Done</button></div>
+        </div></div>`;
+  }
+
+  h += chipGroup('Food', FOODS.map(([v, l]) => chip(`food:${v}`, l, x.food === v)).join(''), 'ps-chips ps-chips-fill', '(optional, pick one)');
+
+  const dyn = document.getElementById('ps-dynamic');
+  dyn.innerHTML = h;
+  initIcons();
+  document.getElementById('ps-prints-text').textContent = printLine(editModel());
+  if (focusKey) dyn.querySelector(`[data-k="${CSS.escape(focusKey)}"]`)?.focus({ preventScroll: true });
+}
+
+// One delegated handler for every chip / link in the screen.
+document.getElementById('ps-dynamic').addEventListener('click', (e) => {
+  const b = e.target.closest('[data-k]');
+  if (!b) return;
+  const [kind, p1, p2] = b.dataset.k.split(':');
+  const x = EDIT_STATE, fd = formDose(x.form);
+  switch (kind) {
+    case 'int':
+      x.interval = p1;
+      if (p1 === 'sos') x.sos = false;
+      if (p1 !== 'daily' && x.err === 'dose') x.err = null;
+      break;
+    case 'slot': x[p1] = parseFloat(p2); if (x.err === 'dose') x.err = null; break;
+    case 'hrs':  x.hours = parseInt(p1, 10); break;
+    case 'dose':
+      if (p1 === 'other') { x.doseOther = true; }
+      else { x.doseOther = false; x.dose = parseFloat(p1); if (x.err === 'other') x.err = null; }
+      break;
+    case 'max':  x.sosMax = parseInt(p1, 10); break;
+    case 'durn': x.durN = parseInt(p1, 10); x.durOngoing = false; break;
+    case 'duru': x.durU = p1; x.durOngoing = false; break;
+    case 'dur':
+      if (p1 === 'open') x.durOpen = true;
+      else if (p1 === 'done') x.durOpen = false;
+      else if (p1 === 'ongoing') x.durOngoing = true;
+      break;
+    case 'food': x.food = x.food === p1 ? null : p1; break;   // optional: tap again to clear
+    default: return;
+  }
+  renderPrescribe();
+  if (b.dataset.k === 'dose:other') document.getElementById('ps-other')?.focus();
+});
+document.getElementById('ps-dynamic').addEventListener('change', (e) => {
+  if (e.target.id === 'ps-sos') { EDIT_STATE.sos = e.target.checked; renderPrescribe(); document.getElementById('ps-sos')?.focus(); }
+});
+document.getElementById('ps-dynamic').addEventListener('input', (e) => {
+  if (e.target.id !== 'ps-other') return;
+  EDIT_STATE.doseOtherVal = e.target.value;
+  if (EDIT_STATE.err === 'other' && isFinite(parseFloat(e.target.value)) && parseFloat(e.target.value) > 0) {
+    EDIT_STATE.err = null;
+    const f = document.getElementById('ps-other-field');
+    f.classList.remove('tm-field--error'); f.querySelector('.tm-field__helper')?.remove();
+  }
+  document.getElementById('ps-prints-text').textContent = printLine(editModel());
+});
+document.getElementById('ps-note').addEventListener('input', (e) => {
+  EDIT_STATE.note = e.target.value;
+  document.getElementById('ps-prints-text').textContent = printLine(editModel());
+});
+
+// Only two invalid states can exist (every required choice always keeps a value): no dose at all on a daily
+// schedule, and "Other" picked with no valid number. Show the error in place, scroll to it, save nothing.
+function validatePrescribe() {
+  const x = EDIT_STATE;
+  if (x.interval === 'daily' && x.m + x.a + x.n === 0) return 'dose';
+  if (x.interval !== 'daily' && x.doseOther && !(parseFloat(x.doseOtherVal) > 0)) return 'other';
+  return null;
 }
 
 function confirmMedEdit() {
   const med = DOCTOR_STATE.currentCase.medicines.find(m => m.id === EDIT_STATE.medId);
   if (!med) return;
-  med.m        = EDIT_STATE.m;
-  med.a        = EDIT_STATE.a;
-  med.n        = EDIT_STATE.n;
-  med.interval = EDIT_STATE.interval;
-  med.duration = EDIT_STATE.duration;
-  med.advice   = [...EDIT_STATE.advice];
-  med.validation_status = 'prescribed';
-  med.disabled = false;
-  closeSheet(); render();
+  const err = validatePrescribe();
+  if (err) {
+    EDIT_STATE.err = err;
+    renderPrescribe();
+    const target = document.getElementById(err === 'dose' ? 'ps-dose-section' : 'ps-other-field');
+    target?.scrollIntoView({ block: 'center' });
+    if (err === 'other') document.getElementById('ps-other')?.focus({ preventScroll: true });
+    console.log(`[MOCK] medicine.prescribe.blocked | id=${med.id} | reason=${err}`);
+    return;
+  }
+  const x = editModel();
+  Object.assign(med, {
+    interval: x.interval, m: x.m, a: x.a, n: x.n, hours: x.hours,
+    dose: x.dose, doseOther: x.doseOther, sos: x.interval === 'sos' ? false : x.sos, sosMax: x.sosMax,
+    duration: x.duration, food: x.food, note: x.note.trim(),
+    validation_status: 'prescribed', disabled: false,
+  });
+  closePrescribe(); render();
   showToast(`${med.name} prescribed`);
-  console.log(`[MOCK] medicine.prescribe | id=${med.id} | name=${med.name} | interval=${med.interval} | duration=${med.duration}`);
+  console.log(`[MOCK] medicine.prescribe | id=${med.id} | name=${med.name} | prints="${printLine(med)}"`);
 }
 
 function openDisableSheet() {
   const med = DOCTOR_STATE.currentCase.medicines.find(m => m.id === EDIT_STATE.medId);
   if (!med) return;
   document.getElementById('sheet-disable-med-label').textContent = `Disable: ${med.name} ${med.strength}`;
-  closeSheet();
-  setTimeout(() => openSheet('sheet-disable-reason'), 150);
+  openSheet('sheet-disable-reason');   // opens over the Prescribe screen; cancelling returns to it
 }
 
 function confirmDisable(reason) {
@@ -944,7 +1106,7 @@ function confirmDisable(reason) {
   med.disabled = true;
   med.validation_status = 'disabled';
   med.disable_reason = reason;
-  closeSheet(); render();
+  closeSheet(); closePrescribe(); render();
   showToast(`Medicine disabled: ${reason}`);
   console.log(`[MOCK] medicine.disable | id=${med.id} | name=${med.name} | reason="${reason}"`);
 }
@@ -1059,6 +1221,8 @@ function switchScenario(scenarioId) {
   CALLBACK_STATE.day  = null;
   CALLBACK_STATE.time = null;
   hideSuccessToast();
+  const ps = document.getElementById('prescribe-screen');   // a scenario switch discards an open Prescribe screen
+  ps.classList.remove('open'); ps.setAttribute('aria-hidden', 'true');
   // Reset demo call sim panel
   const simDiv = document.getElementById('demo-call-sim');
   if (simDiv) {

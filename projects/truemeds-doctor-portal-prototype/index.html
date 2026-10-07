@@ -341,6 +341,29 @@
   </div>
 </div>
 
+<!-- ============================================================
+     PRESCRIBE SCREEN — full-screen view over the case (like the Rx viewer), inside the phone frame.
+     Agreed 2026-10-07: every section open with backend defaults; Prescribe at the end of the content (not pinned);
+     Disable is a small action in the app bar. Sections between "Prints as" and the note are rendered by app.js.
+============================================================ -->
+<div id="prescribe-screen" role="dialog" aria-modal="true" aria-labelledby="ps-title" aria-hidden="true" tabindex="-1">
+  <div id="ps-bar" class="tm-appbar">
+    <button class="tm-btn tm-btn--ghost tm-btn--icon" onclick="closePrescribe()" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button>
+    <div id="ps-heading"><span id="ps-title" class="tm-appbar__title">—</span><span id="ps-form">—</span></div>
+    <button class="tm-btn tm-btn--destructive tm-btn--xs" onclick="openDisableSheet()">Disable</button>
+  </div>
+  <div id="ps-body">
+    <div id="ps-prints" class="tm-card tm-card--tint"><div class="ps-label">Prints as</div><div id="ps-prints-text" aria-live="polite">—</div></div>
+    <div id="ps-dynamic"></div>
+    <div class="tm-field ps-section">
+      <label class="tm-field__label" for="ps-note">Additional instructions</label>
+      <div class="tm-field__control"><textarea id="ps-note" rows="3" placeholder="e.g. Stop if rash appears"></textarea></div>
+      <div class="tm-field__helper">Optional. Printed on the prescription.</div>
+    </div>
+    <button id="ps-prescribe" class="tm-btn tm-btn--primary tm-btn--block" onclick="confirmMedEdit()">Prescribe</button>
+  </div>
+</div>
+
 
 <!-- ============================================================
      BOTTOM SHEETS
@@ -395,84 +418,6 @@
         <div class="sheet-option-title">Repeat patient — familiar with medicines</div>
         <div class="sheet-option-desc">Patient was counselled in a prior order</div>
       </button>
-    </div>
-  </div>
-
-  <!-- Edit Medicine Sheet -->
-  <div id="sheet-edit-med" class="bottom-sheet">
-    <div class="sheet-handle"></div>
-    <div class="sheet-title">Prescribe Medicine</div>
-    <div class="sheet-body">
-      <div id="sheet-med-name" class="sheet-med-name-header">—</div>
-
-      <!-- INTERVAL -->
-      <div class="sheet-section-label">Interval</div>
-      <div class="chip-row chip-row-wrap" id="interval-chips">
-        <button class="tm-chip" aria-pressed="false" data-interval="daily"    onclick="selectInterval('daily')">Daily</button>
-        <button class="tm-chip" aria-pressed="false" data-interval="alt_days" onclick="selectInterval('alt_days')">Alt days</button>
-        <button class="tm-chip" aria-pressed="false" data-interval="weekly"   onclick="selectInterval('weekly')">Weekly</button>
-        <button class="tm-chip" aria-pressed="false" data-interval="monthly"  onclick="selectInterval('monthly')">Monthly</button>
-        <button class="tm-chip" aria-pressed="false" data-interval="sos"      onclick="selectInterval('sos')">SOS</button>
-      </div>
-
-      <!-- M-A-N picker -->
-      <div id="man-picker-group">
-        <div class="sheet-section-label">Morning · Afternoon · Night</div>
-        <div class="man-picker">
-          <div class="man-row">
-            <span class="man-label">M</span>
-            <div class="man-btns" data-man="m">
-              <button class="tm-chip man-btn" aria-pressed="false" data-val="0"   onclick="selectMAN('m',0)">0</button>
-              <button class="tm-chip man-btn" aria-pressed="false" data-val="0.5" onclick="selectMAN('m',0.5)">½</button>
-              <button class="tm-chip man-btn" aria-pressed="false" data-val="1"   onclick="selectMAN('m',1)">1</button>
-              <button class="tm-chip man-btn" aria-pressed="false" data-val="2"   onclick="selectMAN('m',2)">2</button>
-            </div>
-          </div>
-          <div class="man-row">
-            <span class="man-label">A</span>
-            <div class="man-btns" data-man="a">
-              <button class="tm-chip man-btn" aria-pressed="false" data-val="0"   onclick="selectMAN('a',0)">0</button>
-              <button class="tm-chip man-btn" aria-pressed="false" data-val="0.5" onclick="selectMAN('a',0.5)">½</button>
-              <button class="tm-chip man-btn" aria-pressed="false" data-val="1"   onclick="selectMAN('a',1)">1</button>
-              <button class="tm-chip man-btn" aria-pressed="false" data-val="2"   onclick="selectMAN('a',2)">2</button>
-            </div>
-          </div>
-          <div class="man-row">
-            <span class="man-label">N</span>
-            <div class="man-btns" data-man="n">
-              <button class="tm-chip man-btn" aria-pressed="false" data-val="0"   onclick="selectMAN('n',0)">0</button>
-              <button class="tm-chip man-btn" aria-pressed="false" data-val="0.5" onclick="selectMAN('n',0.5)">½</button>
-              <button class="tm-chip man-btn" aria-pressed="false" data-val="1"   onclick="selectMAN('n',1)">1</button>
-              <button class="tm-chip man-btn" aria-pressed="false" data-val="2"   onclick="selectMAN('n',2)">2</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- DURATION -->
-      <div class="sheet-section-label">Duration</div>
-      <div class="chip-row chip-row-wrap" id="duration-chips">
-        <button class="tm-chip" aria-pressed="false" data-dur="3d"      onclick="selectDuration('3d')">3 days</button>
-        <button class="tm-chip" aria-pressed="false" data-dur="7d"      onclick="selectDuration('7d')">7 days</button>
-        <button class="tm-chip" aria-pressed="false" data-dur="2w"      onclick="selectDuration('2w')">2 weeks</button>
-        <button class="tm-chip" aria-pressed="false" data-dur="1m"      onclick="selectDuration('1m')">1 month</button>
-        <button class="tm-chip" aria-pressed="false" data-dur="3m"      onclick="selectDuration('3m')">3 months</button>
-        <button class="tm-chip" aria-pressed="false" data-dur="ongoing" onclick="selectDuration('ongoing')">Ongoing</button>
-      </div>
-
-      <!-- ADVICE -->
-      <div class="sheet-section-label">Advice to patient</div>
-      <div class="chip-row chip-row-wrap" id="advice-chips">
-        <button class="tm-chip" aria-pressed="false" data-advice="after_food"     onclick="toggleAdvice('after_food')">After food</button>
-        <button class="tm-chip" aria-pressed="false" data-advice="before_food"    onclick="toggleAdvice('before_food')">Before food</button>
-        <button class="tm-chip" aria-pressed="false" data-advice="empty_stomach"  onclick="toggleAdvice('empty_stomach')">Empty stomach</button>
-        <button class="tm-chip" aria-pressed="false" data-advice="with_water"     onclick="toggleAdvice('with_water')">With water</button>
-        <button class="tm-chip" aria-pressed="false" data-advice="before_sleep"   onclick="toggleAdvice('before_sleep')">Before sleep</button>
-        <button class="tm-chip" aria-pressed="false" data-advice="with_milk"      onclick="toggleAdvice('with_milk')">With milk</button>
-      </div>
-
-      <button class="tm-btn tm-btn--primary tm-btn--block sheet-cta-margin" onclick="confirmMedEdit()">Prescribe</button>
-      <button class="tm-btn tm-btn--destructive tm-btn--block sheet-link-margin" onclick="openDisableSheet()">Disable this medicine</button>
     </div>
   </div>
 

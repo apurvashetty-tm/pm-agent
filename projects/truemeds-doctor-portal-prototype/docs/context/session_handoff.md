@@ -7,7 +7,7 @@
 
 ---
 
-> **2026-10-07 — Prescription changes, part 2: Prescribe screen redesign — AGREED WITH APURVA, NOT BUILT YET.**
+> **2026-10-07 — Prescription changes, part 2: Prescribe screen redesign — AGREED WITH APURVA, BUILT 2026-10-08.**
 > Concept render: `docs/concepts/2026-10-07-prescribe-screen.png` (tablet, syrup, inhaler, plus the two error states).
 > FULL-SCREEN VIEW, not a bottom sheet (opens over the case like the Rx viewer, inside the phone frame). Every section
 > open with backend defaults, so the doctor scrolls past everything before Prescribe. No collapsed summary.
@@ -33,6 +33,15 @@
 > inline when Prescribe is tapped (scroll to it, nothing saved, no toast): 0-0-0 → `.tm-notice--error` under the grid
 > "Choose a dose for at least one time of day."; syrup "Other" empty → `.tm-field--error` "Enter the dose in ml."
 > Chips use `.tm-chip--lg` (design system [PROPOSED], added 2026-10-07) instead of the project's sheet override.
+> Built as specified: `#prescribe-screen` in index.html, styles under "PRESCRIBE SCREEN" in styles.css, logic under
+> "PRESCRIBE SCREEN — model + text" and "MEDICINE EDIT" in app.js (the old `#sheet-edit-med` bottom sheet is gone).
+> Disable opens the existing reason sheet over the screen; cancelling returns to the screen. Escape closes the screen
+> without saving. Build choices: "SOS only" also asks Max per day (keeps quantity calculable); syrup "Other" exists only
+> in "Dose each time" (daily slots are 0 · 2.5 · 5 · 10 ml); injection "Other" = units; cream shows "Apply".
+> Demo data: no food preselected anywhere; Antacid daily slots now in ml (0-10-10); Salbutamol = SOS only, 2 puffs, max
+> 4/day, Ongoing; B12 = 1 dose monthly. View Rx shows each medicine's frozen `rx_line` (customer's Rx), so doctor edits
+> never change it. `docs/layout_check.py` now checks the Prescribe screen (fills frame, scrolls, Prescribe reachable) and
+> a bottom sheet (profile) at the frame bottom.
 > Still open: OQ-014 (pack vs dose units for quantity, non-tablet forms).
 
 ---

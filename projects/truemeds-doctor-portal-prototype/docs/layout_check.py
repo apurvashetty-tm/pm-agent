@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Layout regression check for the Truemeds Doctor prototype (phone frame rule, design-system/RULES.md §7).
 Run from anywhere:  python3 docs/layout_check.py            (needs: pip install playwright; a Chromium)
-Fails (exit 1) if desktop is not a 9:16 phone frame, wheel scrolling is lost, or sheets / Rx viewer / toast escape the frame.
+Fails (exit 1) if desktop is not a 9:16 phone frame, wheel scrolling is lost, or sheets / the Prescribe screen / Rx viewer escape the frame.
 """
 import os, sys
 from pathlib import Path
@@ -40,20 +40,28 @@ with sync_playwright() as p:
             pg.mouse.move(w / 2, h / 2); pg.mouse.wheel(0, 400); pg.wait_for_timeout(400)
             check(f"{tag} mobile: window scrolls", pg.evaluate("scrollY") > 100)
             pg.evaluate("scrollTo(0,0)")
-        pg.locator("#medicines-list > *").first.scroll_into_view_if_needed(); pg.locator("#medicines-list > *").first.click(); pg.wait_for_timeout(500)
+        ref = f if desktop else {"l": 0, "r": w, "t": 0, "b": h}
+        # Prescribe screen (full-screen view): fills the frame/screen, scrolls inside, Prescribe reachable at the end
+        pg.locator("#medicines-list > *").first.scroll_into_view_if_needed(); pg.locator("#medicines-list > *").first.click(); pg.wait_for_timeout(400)
+        ps = pg.evaluate("(()=>{const q=document.getElementById('prescribe-screen').getBoundingClientRect();return {l:q.left,r:q.right,t:q.top,b:q.bottom}})()")
+        check(f"{tag} Prescribe screen fills the {'frame' if desktop else 'screen'}", all(abs(ps[k] - ref[k]) <= 2 for k in "lrtb"), str({k: round(ps[k]) for k in ps}))
+        if desktop:
+            pg.mouse.move((f["l"] + f["r"]) / 2, (f["t"] + f["b"]) / 2); pg.mouse.wheel(0, 400); pg.wait_for_timeout(400)
+            check(f"{tag} wheel scrolls the Prescribe screen", pg.evaluate("document.getElementById('ps-body').scrollTop") > 100)
+        pg.evaluate("document.getElementById('ps-body').scrollTop=99999"); pg.wait_for_timeout(200)
+        bb = pg.locator("#ps-prescribe").bounding_box()
+        check(f"{tag} Prescribe button reachable", bool(bb) and bb["y"] >= ref["t"] and bb["y"] + bb["height"] <= ref["b"])
+        pg.keyboard.press("Escape"); pg.wait_for_timeout(200)
+        # bottom sheets still anchor to the frame/screen bottom
+        pg.evaluate("openSheet('sheet-profile')"); pg.wait_for_timeout(500)
         s = pg.evaluate("(()=>{const q=document.querySelector('.bottom-sheet.open').getBoundingClientRect();return {l:q.left,r:q.right,b:q.bottom,t:q.top}})()")
         if desktop:
             check(f"{tag} sheet sits at the FRAME bottom", abs(f["b"] - s["b"]) <= 2 and s["l"] >= f["l"] - 1 and s["r"] <= f["r"] + 1, f"gap={f['b']-s['b']:.1f}")
         else:
             check(f"{tag} sheet sits at the SCREEN bottom", abs(h - s["b"]) <= 2)
-        pg.evaluate("document.querySelector('.bottom-sheet.open .sheet-body').scrollTop=99999"); pg.wait_for_timeout(200)
-        bb = pg.locator(".bottom-sheet.open .tm-btn--primary").last.bounding_box()
-        top, bot = (f["t"], f["b"]) if desktop else (0, h)
-        check(f"{tag} edit sheet Save button reachable", bool(bb) and bb["y"] >= top and bb["y"] + bb["height"] <= bot)
         pg.keyboard.press("Escape"); pg.wait_for_timeout(200)
         pg.evaluate("openRxOverlay()"); pg.wait_for_timeout(300)
         rx = pg.evaluate("(()=>{const q=document.getElementById('rx-overlay').getBoundingClientRect();return {l:q.left,r:q.right,t:q.top,b:q.bottom}})()")
-        ref = f if desktop else {"l": 0, "r": w, "t": 0, "b": h}
         check(f"{tag} Rx viewer fills the {'frame' if desktop else 'screen'}", all(abs(rx[k] - ref[k]) <= 2 for k in "lrtb"))
         pg.evaluate("closeRxOverlay()")
         check(f"{tag} no page errors", not errs, "; ".join(errs))
