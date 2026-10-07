@@ -42,13 +42,13 @@
 > `design-system/src/components.css` `design-system/truemeds.css` `design-system/preview.html`
 > `design-system/icons/icons.txt` `design-system/icons/icons.js`
 >
-> **Files created by the restyle:** none.
+> **Files created by the restyle:** `projects/truemeds-doctor-portal-prototype/truemeds-logo.svg` (official brand asset; rollback deletes it with delete permission).
 >
 > `[PROPOSED]` central design-system additions (flag to design owner): `.tm-btn--busy`, `.tm-tag--md` (12px), `.tm-snackbar`, `.tm-section-title` 16/24, 16 new Tabler icons.
 >
 > **Layout correction (2026-10-07, D1 superseded):** desktop >=768px is a natural page-scroll consultation page (720px column);
 > demo side panel >=1100px is plain page content (not sticky, not scrollable); sheets are centred dialogs >=768px, bottom sheets below.
-> **Logo pending:** official SVG (assets.truemeds.in .../logo/truemedslogonav.svg) could not be downloaded (network policy); text wordmark stays until the file is saved locally.
+> **Logo:** official Truemeds nav SVG, vendored unmodified as `projects/truemeds-doctor-portal-prototype/truemeds-logo.svg` (sha256 starts 1953a94b) and used in the header via `<img>`.
 >
 > Docs (this handoff, audit, CLAUDE.md) are intentionally NOT rolled back.
 

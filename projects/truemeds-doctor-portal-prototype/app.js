@@ -757,8 +757,9 @@ function showSuccessToast(title, desc) {
   const st  = document.getElementById('success-toast');
   const col = document.getElementById('mobile-column');
   const r   = col.getBoundingClientRect();
-  st.style.left  = (r.left + 16) + 'px';
-  st.style.width = (r.width - 32) + 'px';
+  const w = Math.min(r.width - 32, 480);
+  st.style.left  = (r.left + (r.width - w) / 2) + 'px';
+  st.style.width = w + 'px';
   document.getElementById('success-toast-title').textContent = title;
   document.getElementById('success-toast-desc').textContent  = desc;
   st.classList.add('show');
@@ -781,14 +782,40 @@ function openSheet(sheetId) {
   overlay.style.width = rect.width + 'px';
   if (activeSheet) document.getElementById(activeSheet)?.classList.remove('open');
   overlay.classList.add('open');
-  document.getElementById(sheetId)?.classList.add('open');
+  const sheetEl = document.getElementById(sheetId);
+  sheetEl?.classList.add('open');
+  if (!activeSheet) sheetReturnFocus = document.activeElement;
   activeSheet = sheetId;
+  // Accessibility: dialog semantics + focus management (visual/a11y only)
+  if (sheetEl) {
+    const title = sheetEl.querySelector('.sheet-title');
+    if (title && !title.id) title.id = sheetId + '-title';
+    sheetEl.setAttribute('role', 'dialog');
+    sheetEl.setAttribute('aria-modal', 'true');
+    if (title) sheetEl.setAttribute('aria-labelledby', title.id);
+    sheetEl.setAttribute('tabindex', '-1');
+    sheetEl.focus({ preventScroll: true });
+  }
 }
+let sheetReturnFocus = null;
+document.addEventListener('keydown', (e) => {
+  if (!activeSheet) return;
+  if (e.key === 'Escape') { closeSheet(); return; }
+  if (e.key !== 'Tab') return;
+  const sheetEl = document.getElementById(activeSheet);
+  const f = [...sheetEl.querySelectorAll('button, input, textarea, [tabindex]:not([tabindex="-1"])')].filter(el => !el.disabled && el.offsetParent !== null);
+  if (!f.length) return;
+  const first = f[0], last = f[f.length - 1];
+  if (e.shiftKey && (document.activeElement === first || document.activeElement === sheetEl)) { e.preventDefault(); last.focus(); }
+  else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+});
 
 function closeSheet() {
   if (activeSheet) document.getElementById(activeSheet)?.classList.remove('open');
   document.getElementById('sheet-overlay').classList.remove('open');
   activeSheet = null;
+  if (sheetReturnFocus && document.contains(sheetReturnFocus)) sheetReturnFocus.focus({ preventScroll: true });
+  sheetReturnFocus = null;
 }
 
 function handleSheetOverlayClick(e) {

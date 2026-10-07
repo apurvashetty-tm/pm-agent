@@ -25,21 +25,24 @@
     .hidden { display: none !important; }
 
     /* ============================================================
-       LAYOUT WRAPPER — mobile column + desktop side panel
+       LAYOUT WRAPPER — mobile column (<768px) / consultation page (>=768px) + demo side panel (>=1100px)
+       The PAGE scrolls (window scroll) at every width. The side panel is plain page content:
+       it is never its own scroll container, so wheel/trackpad scrolling can never be captured by it.
     ============================================================ */
     #layout-wrapper { display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; position: relative; }
     #mobile-column { width: 100%; max-width: 430px; min-height: 100vh; background: var(--tm-surface-secondary); position: relative; flex-shrink: 0; }
 
-    /* Desktop side panel — visible only on wide screens */
+    /* Demo side panel — wide screens only; scrolls with the page (not sticky, not scrollable) */
     #desktop-side-panel {
-      display: none; position: sticky; top: 0; height: 100vh; overflow-y: auto;
-      width: 280px; flex-shrink: 0; margin-left: var(--tm-space-xl);
+      display: none; width: 280px; flex-shrink: 0; margin-left: var(--tm-space-xl);
       padding: var(--tm-space-xl) 0; align-self: flex-start;
     }
-    @media (min-width: 800px) {
-      #desktop-side-panel { display: block; }
-      #mobile-column { border-left: 1px solid var(--tm-border-subtle); border-right: 1px solid var(--tm-border-subtle); }
+    @media (min-width: 768px) {
+      html { scrollbar-gutter: stable; }   /* no layout shift when a modal locks page scroll */
+      #mobile-column { max-width: 720px; border-left: 1px solid var(--tm-border-subtle); border-right: 1px solid var(--tm-border-subtle); }
+      #main-scroll { padding-left: var(--tm-space-xl); padding-right: var(--tm-space-xl); }
     }
+    @media (min-width: 1100px) { #desktop-side-panel { display: block; } }
     .side-panel-card { padding: 0; overflow: hidden; margin-bottom: var(--tm-space-md); }
     .side-panel-header {
       display: flex; align-items: center; gap: var(--tm-space-sm);
@@ -88,7 +91,7 @@
        DEMO BAR — [MOCK ASSUMPTION] dev-only, neutral treatment (not product UI)
     ============================================================ */
     #demo-bar { background: var(--tm-surface-tertiary); border-bottom: 1px solid var(--tm-border-default); padding: var(--tm-space-sm) var(--tm-space-lg); }
-    @media (min-width: 800px) { #demo-bar { display: none; } }   /* side panel carries the controls on desktop */
+    @media (min-width: 1100px) { #demo-bar { display: none; } }   /* side panel carries the controls on wide desktop */
     #demo-bar-label {
       display: flex; align-items: center; gap: var(--tm-space-xs); margin-bottom: var(--tm-space-sm);
       font-size: var(--tm-font-size-body-xs); line-height: var(--tm-font-lineheight-xs);
@@ -119,11 +122,11 @@
     #cs-timer-badge, #cs-view-rx-btn { flex-shrink: 0; }
 
     /* ============================================================
-       PORTAL HEADER — .tm-appbar (text wordmark: no official logo file yet)
+       PORTAL HEADER — .tm-appbar with the official Truemeds logo (local copy)
     ============================================================ */
     #portal-header { justify-content: space-between; }
-    #portal-title { display: flex; align-items: baseline; gap: var(--tm-space-xs); }
-    .portal-wordmark { font-size: var(--tm-font-size-body-xl); line-height: var(--tm-font-lineheight-md); font-weight: var(--tm-font-weight-bold); color: var(--tm-content-brand); }
+    #portal-title { display: flex; align-items: center; gap: var(--tm-space-md); }
+    .portal-logo { display: block; width: 130px; height: 31px; flex-shrink: 0; }   /* official asset, unmodified (truemeds-logo.svg) */
     #portal-name { font-size: var(--tm-font-size-body-lg); line-height: var(--tm-font-lineheight-md); font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-primary); }
     #profile-btn {
       width: calc(var(--tm-space-2xl) + var(--tm-space-sm)); height: calc(var(--tm-space-2xl) + var(--tm-space-sm));
@@ -363,6 +366,20 @@
       transition: transform 0.28s cubic-bezier(0.32,0.72,0,1);
     }
     .bottom-sheet.open { display: block; transform: translateY(0); }
+    .sheet-body { overscroll-behavior: contain; }
+    body:has(#sheet-overlay.open), body:has(#rx-overlay.open) { overflow: hidden; }   /* page behind a modal does not scroll */
+
+    /* Desktop (>=768px): sheets become centred dialogs; mobile keeps the bottom sheet */
+    @media (min-width: 768px) {
+      #sheet-overlay { left: 0 !important; width: 100% !important; align-items: center; padding: var(--tm-space-lg); }
+      .bottom-sheet { max-width: 560px; max-height: min(85vh, 720px); border-radius: var(--tm-radius-2xl); transform: translateY(var(--tm-space-md)); }
+      .bottom-sheet.open { display: flex; flex-direction: column; transform: none; }
+      .bottom-sheet .sheet-handle { display: none; }
+      .bottom-sheet .sheet-title { flex-shrink: 0; border-radius: var(--tm-radius-2xl) var(--tm-radius-2xl) 0 0; }
+      .bottom-sheet .sheet-body { flex: 1; min-height: 0; max-height: none; }
+      #rx-overlay { top: var(--tm-space-lg); bottom: var(--tm-space-lg); max-width: 880px; border-radius: var(--tm-radius-2xl); overflow: hidden;
+        box-shadow: 0 0 0 100vmax rgb(0 0 0 / calc(var(--tm-overlay-default) * 1%)); }
+    }
 
     .sheet-handle {
       width: var(--tm-space-2xl); height: var(--tm-space-xs);
