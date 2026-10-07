@@ -123,6 +123,9 @@
 }
 .tm-chip[aria-pressed="true"], .tm-chip--selected { background: var(--tm-surface-brand-subtle); border-color: var(--tm-border-selected); color: var(--tm-content-brand); }
 .tm-chip:disabled { color: var(--tm-content-disabled); border-color: var(--tm-border-disabled); cursor: not-allowed; }
+/* [PROPOSED] Size lg — touch-size chip (about 46px tall, 14px label) for pick-one choices people tap during a call or on the move
+   (dose, interval, duration). SALT's chip is a compact filter chip, too small as a primary tap target. */
+.tm-chip--lg { padding: var(--tm-space-md) var(--tm-space-lg); font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); justify-content: center; }
 
 /* ---------- Tag / status label [SALT: Chips › Labels & Text] ---------- */
 .tm-tag {
@@ -208,7 +211,7 @@
 .tm-check input { width: 18px; height: 18px; margin: 0; accent-color: var(--tm-surface-brand-default); }
 .tm-toggle, .tm-check input.tm-toggle { appearance: none; width: 36px; height: 20px; border-radius: var(--tm-radius-full); background: var(--tm-border-default); position: relative; cursor: pointer; transition: background-color 150ms ease; margin: 0; }
 .tm-toggle::after { content: ""; position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; border-radius: var(--tm-radius-full); background: var(--tm-surface-primary); box-shadow: var(--tm-shadow-tertiary); transition: transform 150ms ease; }
-.tm-toggle:checked { background: var(--tm-surface-brand-default); }
+.tm-toggle:checked, .tm-check input.tm-toggle:checked { background: var(--tm-surface-brand-default); }   /* second selector: inside .tm-check the base rule out-ranks plain :checked */
 .tm-toggle:checked::after { transform: translateX(16px); }
 
 /* ---------- App bar / header [SALT: header + tm_core_shadow_header] ---------- */

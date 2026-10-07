@@ -7,27 +7,32 @@
 
 ---
 
-> **2026-10-07 — Prescription changes, part 2: Prescribe sheet redesign — AGREED WITH APURVA, NOT BUILT YET.**
-> Concept render: `docs/concepts/2026-10-07-prescribe-sheet.png` (tablet, syrup, inhaler; Food row
-> shown on all three with nothing selected, matching the agreed no-default rule). Full detail view stays: every section open with backend defaults,
-> so the doctor scrolls past everything before Prescribe. No collapsed summary. Order, top to bottom:
-> 1. Header: medicine name + form tag, then a "Prints as" line showing exactly what will print (kept).
-> 2. How often: Daily · Every X hours · Alt days · Weekly · Monthly · SOS only.
-> 3. Dose, by choice above; units follow the form. Daily = Morning · Afternoon · Night (3 slots; NO evening slot —
+> **2026-10-07 — Prescription changes, part 2: Prescribe screen redesign — AGREED WITH APURVA, NOT BUILT YET.**
+> Concept render: `docs/concepts/2026-10-07-prescribe-screen.png` (tablet, syrup, inhaler, plus the two error states).
+> FULL-SCREEN VIEW, not a bottom sheet (opens over the case like the Rx viewer, inside the phone frame). Every section
+> open with backend defaults, so the doctor scrolls past everything before Prescribe. No collapsed summary.
+> 1. App bar: close (x) · medicine name with "<Form> · Prescribe" in grey under it (no coloured form tag) · small red
+>    "Disable" button (destructive, xs). Disable is NOT a full-width button next to Prescribe.
+> 2. "Prints as" line (tinted card) showing exactly what will print (kept).
+> 3. How often: Daily · Every X hours · Alt days · Weekly · Monthly · SOS only.
+> 4. Dose, by choice above; units follow the form. Daily = Morning · Afternoon · Night (3 slots; NO evening slot —
 >    more than 3 a day uses Every X hours; uneven 4-dose schedules go in the note). Every X hours = 4 · 6 · 8 · 12 h,
 >    round the clock, plus dose each time. Alt days / Weekly / Monthly / SOS only = dose each time.
->    Dose choices: tablet/capsule 0 ½ 1 2; syrup 2.5 · 5 · 10 ml · Other (number entry in ml, not free text);
+>    Dose choices: tablet/capsule 0 ½ 1 2; syrup 2.5 · 5 · 10 ml · Other (number field in ml, not free text);
 >    inhaler 0 1 2 puffs; drops 1 2 3; injection 1 dose or units (number); cream "Apply".
-> 4. Also as needed (SOS) toggle, under the regular schedule; when on, Max per day 1–4 (keeps quantity calculable).
-> 5. Duration: collapsed row "value · Change" (default Ongoing = 6 months, backend). Change opens a picker:
->    numbers 1 2 3 4 5 6 7 10 14 15 + Days · Weeks · Months · Ongoing. No custom entry, no "until next review".
-> 6. Food: After food · Before food · Empty stomach. Always shown for every form (no form-based hide rule — e.g. insulin
->    needs it), optional, single-select (tap again to clear), NO default, printed only if selected. All other advice
->    chips are removed.
-> 7. Additional instructions: optional free text, printed. Holds tapers, varying doses and anything else ("stop if
->    rash", "shake well", "rinse mouth"); the structured fields still drive quantity (tapers fall back to the backend
->    default quantity).
-> 8. Prescribe · Disable this medicine.
+> 5. Also as needed (SOS): `.tm-check` + `.tm-toggle` under the regular schedule; when on, Max per day 1–4.
+> 6. Duration: flat card "value · Change" (default Ongoing = 6 months, backend). Change opens the picker in place:
+>    numbers 1 2 3 4 5 6 7 10 14 15 + Days · Weeks · Months · Ongoing · Done. Always has a value (cannot be cleared).
+> 7. Food: After food · Before food · Empty stomach, on ONE row (chips share the width; wraps only below ~330px).
+>    Always shown for every form, optional, single-select (tap again to clear), NO default, printed only if selected.
+>    All other advice chips are removed.
+> 8. Additional instructions: `.tm-field` textarea, helper "Optional. Printed on the prescription." Holds tapers,
+>    varying doses, "shake well", "rinse mouth" etc.; structured fields still drive quantity.
+> 9. Prescribe (primary, full width) at the END of the content — not pinned.
+> Validation: required pick-one groups always keep one choice (cannot be cleared), so only two errors exist, shown
+> inline when Prescribe is tapped (scroll to it, nothing saved, no toast): 0-0-0 → `.tm-notice--error` under the grid
+> "Choose a dose for at least one time of day."; syrup "Other" empty → `.tm-field--error` "Enter the dose in ml."
+> Chips use `.tm-chip--lg` (design system [PROPOSED], added 2026-10-07) instead of the project's sheet override.
 > Still open: OQ-014 (pack vs dose units for quantity, non-tablet forms).
 
 ---
