@@ -77,6 +77,12 @@ The doctor is doing clinical work. The UI should get out of the way.
 
 ### 4.2 Color direction
 
+> **[UPDATED 2026-10-07]** Colours, type, icons, radius and spacing now come from the
+> central design system — `../../design-system/RULES.md`. The token list below is
+> superseded (e.g. brand blue is `--tm-surface-brand-default` #266CE1, not #1B69DE;
+> font is Plus Jakarta Sans, not the system stack). Layout and workflow rules in
+> this file (sections 5–13) still apply.
+
 **[LIGHT THEME — confirmed by user. Dark theme direction below is superseded and must not be used.]**
 
 Confirmed CSS custom properties (in `index.html`):

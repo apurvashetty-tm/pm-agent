@@ -19,6 +19,16 @@ Use project-local files for project truth and handoff. Use root knowledge files 
 
 ---
 
+## Design system (any UI work)
+
+This project uses the central Truemeds design system — it does not have its own.
+- Read `../../design-system/RULES.md` before any UI work.
+- Link `../../design-system/truemeds.css` and `../../design-system/icons/icons.js`.
+- No hex codes, other fonts, emoji or other icon sets in project code.
+- Run the design review checklist (`RULES.md` §5) before reporting UI work done.
+
+---
+
 ## Read these files before making any decision
 1. `docs/context/project_truth.md`
 2. `docs/context/session_handoff.md`
@@ -88,6 +98,7 @@ After each coding task, output a short structured report:
 4. **Assumptions made** — any `[MOCK ASSUMPTION]` used, clearly labeled
 5. **Still mocked / placeholder** — what is fake and needs real data or logic later
 6. **Manual test plan** — 3 short steps: what to do, what to expect, edge case to check
+7. **Design review** (UI tasks only) — `design-system/RULES.md` §5 checklist passed, or what failed
 
 This report must be short and easy for a non-coder to read.
 

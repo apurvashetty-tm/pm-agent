@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Truemeds Design System — Preview</title>
+<!-- GENERATED from src/preview.template.html by scripts/build.py (2026-10-06) -->
+<link rel="stylesheet" href="truemeds.css">
+<script src="icons/icons.js"></script>
+<style>
+  /* preview-page chrome only — uses tokens like everything else */
+  body { margin: 0; }
+  .pv-nav { position: sticky; top: 0; z-index: 20; background: var(--tm-surface-primary); box-shadow: var(--tm-shadow-header); }
+  .pv-nav .tm-page { padding-top: var(--tm-space-md); padding-bottom: var(--tm-space-md); display: flex; gap: var(--tm-space-lg); align-items: center; flex-wrap: wrap; }
+  .pv-nav a { color: var(--tm-content-secondary); text-decoration: none; font-weight: var(--tm-font-weight-semibold); font-size: var(--tm-font-size-body-sm); }
+  .pv-nav a:hover { color: var(--tm-content-brand); }
+  section { padding-top: var(--tm-space-2xl); }
+  h2.pv { margin: 0 0 var(--tm-space-xs); }
+  p.pv { margin: 0 0 var(--tm-space-lg); color: var(--tm-content-secondary); }
+  h3.pv { margin: var(--tm-space-xl) 0 var(--tm-space-md); font-size: var(--tm-font-size-body-lg); line-height: var(--tm-font-lineheight-md); }
+  code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: var(--tm-font-size-body-3xs); color: var(--tm-content-secondary); word-break: break-all; }
+  .grid-sw { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: var(--tm-space-md); }
+  .sw { display: flex; gap: var(--tm-space-sm); align-items: center; }
+  .sw span { width: 36px; height: 36px; flex: none; border-radius: var(--tm-radius-sm); border: 1px solid var(--tm-border-subtle); }
+  .sp, .rd, .sh, .ty { display: flex; gap: var(--tm-space-md); align-items: center; margin-bottom: var(--tm-space-sm); }
+  .sp span { height: 12px; background: var(--tm-surface-brand-muted); border-radius: var(--tm-radius-2xs); }
+  .rd span { width: 48px; height: 48px; background: var(--tm-surface-brand-subtle); border: 1px solid var(--tm-border-brand-subtle); }
+  .sh span { width: 96px; height: 56px; background: var(--tm-surface-primary); border-radius: var(--tm-radius-md); }
+  .shwrap { background: var(--tm-surface-secondary); padding: var(--tm-space-lg); border-radius: var(--tm-radius-lg); }
+  .ty span { min-width: 340px; }
+  .icons { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: var(--tm-space-sm); }
+  .icons div { display: flex; flex-direction: column; align-items: center; gap: var(--tm-space-xs); padding: var(--tm-space-sm); color: var(--tm-content-secondary); }
+  .demo-row { display: flex; gap: var(--tm-space-md); flex-wrap: wrap; align-items: center; margin-bottom: var(--tm-space-md); }
+  .demo-label { width: 110px; flex: none; font-size: var(--tm-font-size-body-xs); color: var(--tm-content-tertiary); }
+  .static { position: static !important; transform: none !important; }
+  .phone { width: 375px; border-radius: var(--tm-radius-2xl); overflow: hidden; box-shadow: var(--tm-shadow-primary); background: var(--tm-surface-secondary); position: relative; }
+  .desk { display: flex; border-radius: var(--tm-radius-lg); overflow: hidden; box-shadow: var(--tm-shadow-primary); background: var(--tm-surface-secondary); min-height: 420px; }
+  .two { display: flex; gap: var(--tm-space-2xl); flex-wrap: wrap; align-items: flex-start; }
+</style>
+</head>
+<body class="tm">
+
+<nav class="pv-nav"><div class="tm-page">
+  <strong class="tm-text-body-lg-strong">Truemeds Design System</strong>
+  <a href="#colour">Colour</a><a href="#type">Type</a><a href="#scale">Spacing &amp; shape</a><a href="#icons">Icons</a>
+  <a href="#buttons">Buttons</a><a href="#forms">Forms</a><a href="#labels">Chips &amp; tags</a><a href="#containers">Containers</a>
+  <a href="#internal">Internal tools</a><a href="#examples">Examples</a>
+</div></nav>
+
+<main class="tm-page">
+
+<section>
+  <h1 class="tm-text-h1-web" style="margin:0">Truemeds Design System</h1>
+  <p class="pv">Code copy of SALT (TRUEMEDS Design Library, App). Every project links <code>truemeds.css</code> + <code>icons/icons.js</code>. Rules: <code>RULES.md</code>. Built 2026-10-06.</p>
+</section>
+
+<section id="colour">
+  <h2 class="pv tm-text-h2-web">Colour</h2>
+  <p class="pv">Semantic tokens only. Brand = action and selection. Green / amber / red = status. Everything else neutral.</p>
+  <h3 class="pv">Content (text &amp; icons)</h3><div class="grid-sw"><div class="sw"><span style="background:var(--tm-content-primary)"></span><code>--tm-content-primary</code></div>
+<div class="sw"><span style="background:var(--tm-content-secondary)"></span><code>--tm-content-secondary</code></div>
+<div class="sw"><span style="background:var(--tm-content-tertiary)"></span><code>--tm-content-tertiary</code></div>
+<div class="sw"><span style="background:var(--tm-content-inverse)"></span><code>--tm-content-inverse</code></div>
+<div class="sw"><span style="background:var(--tm-content-disabled)"></span><code>--tm-content-disabled</code></div>
+<div class="sw"><span style="background:var(--tm-content-brand)"></span><code>--tm-content-brand</code></div>
+<div class="sw"><span style="background:var(--tm-content-success)"></span><code>--tm-content-success</code></div>
+<div class="sw"><span style="background:var(--tm-content-warning)"></span><code>--tm-content-warning</code></div>
+<div class="sw"><span style="background:var(--tm-content-error)"></span><code>--tm-content-error</code></div>
+<div class="sw"><span style="background:var(--tm-content-accent)"></span><code>--tm-content-accent</code></div></div>
+  <h3 class="pv">Surface (backgrounds)</h3><div class="grid-sw"><div class="sw"><span style="background:var(--tm-surface-primary)"></span><code>--tm-surface-primary</code></div>
+<div class="sw"><span style="background:var(--tm-surface-secondary)"></span><code>--tm-surface-secondary</code></div>
+<div class="sw"><span style="background:var(--tm-surface-tertiary)"></span><code>--tm-surface-tertiary</code></div>
+<div class="sw"><span style="background:var(--tm-surface-inverse)"></span><code>--tm-surface-inverse</code></div>
+<div class="sw"><span style="background:var(--tm-surface-brand-subtle)"></span><code>--tm-surface-brand-subtle</code></div>
+<div class="sw"><span style="background:var(--tm-surface-brand-muted)"></span><code>--tm-surface-brand-muted</code></div>
+<div class="sw"><span style="background:var(--tm-surface-brand-default)"></span><code>--tm-surface-brand-default</code></div>
+<div class="sw"><span style="background:var(--tm-surface-brand-alternate)"></span><code>--tm-surface-brand-alternate</code></div>
+<div class="sw"><span style="background:var(--tm-surface-brand-strong)"></span><code>--tm-surface-brand-strong</code></div>
+<div class="sw"><span style="background:var(--tm-surface-brand-dark)"></span><code>--tm-surface-brand-dark</code></div>
+<div class="sw"><span style="background:var(--tm-surface-interactive-hover)"></span><code>--tm-surface-interactive-hover</code></div>
+<div class="sw"><span style="background:var(--tm-surface-interactive-pressed)"></span><code>--tm-surface-interactive-pressed</code></div>
+<div class="sw"><span style="background:var(--tm-surface-interactive-selected)"></span><code>--tm-surface-interactive-selected</code></div>
+<div class="sw"><span style="background:var(--tm-surface-interactive-disabled)"></span><code>--tm-surface-interactive-disabled</code></div>
+<div class="sw"><span style="background:var(--tm-surface-accent-subtle)"></span><code>--tm-surface-accent-subtle</code></div>
+<div class="sw"><span style="background:var(--tm-surface-accent-muted)"></span><code>--tm-surface-accent-muted</code></div>
+<div class="sw"><span style="background:var(--tm-surface-accent-medium)"></span><code>--tm-surface-accent-medium</code></div>
+<div class="sw"><span style="background:var(--tm-surface-accent-strong)"></span><code>--tm-surface-accent-strong</code></div>
+<div class="sw"><span style="background:var(--tm-surface-success-subtle)"></span><code>--tm-surface-success-subtle</code></div>
+<div class="sw"><span style="background:var(--tm-surface-success-muted)"></span><code>--tm-surface-success-muted</code></div>
+<div class="sw"><span style="background:var(--tm-surface-success-medium)"></span><code>--tm-surface-success-medium</code></div>
+<div class="sw"><span style="background:var(--tm-surface-success-strong)"></span><code>--tm-surface-success-strong</code></div>
+<div class="sw"><span style="background:var(--tm-surface-warning-subtle)"></span><code>--tm-surface-warning-subtle</code></div>
+<div class="sw"><span style="background:var(--tm-surface-warning-muted)"></span><code>--tm-surface-warning-muted</code></div>
+<div class="sw"><span style="background:var(--tm-surface-warning-medium)"></span><code>--tm-surface-warning-medium</code></div>
+<div class="sw"><span style="background:var(--tm-surface-warning-strong)"></span><code>--tm-surface-warning-strong</code></div>
+<div class="sw"><span style="background:var(--tm-surface-error-subtle)"></span><code>--tm-surface-error-subtle</code></div>
+<div class="sw"><span style="background:var(--tm-surface-error-muted)"></span><code>--tm-surface-error-muted</code></div>
+<div class="sw"><span style="background:var(--tm-surface-error-medium)"></span><code>--tm-surface-error-medium</code></div>
+<div class="sw"><span style="background:var(--tm-surface-error-strong)"></span><code>--tm-surface-error-strong</code></div>
+<div class="sw"><span style="background:var(--tm-surface-info-subtle)"></span><code>--tm-surface-info-subtle</code></div>
+<div class="sw"><span style="background:var(--tm-surface-info-muted)"></span><code>--tm-surface-info-muted</code></div>
+<div class="sw"><span style="background:var(--tm-surface-info-medium)"></span><code>--tm-surface-info-medium</code></div>
+<div class="sw"><span style="background:var(--tm-surface-info-strong)"></span><code>--tm-surface-info-strong</code></div></div>
+  <h3 class="pv">Border &amp; feedback</h3><div class="grid-sw"><div class="sw"><span style="background:var(--tm-border-subtle)"></span><code>--tm-border-subtle</code></div>
+<div class="sw"><span style="background:var(--tm-border-default)"></span><code>--tm-border-default</code></div>
+<div class="sw"><span style="background:var(--tm-border-strong)"></span><code>--tm-border-strong</code></div>
+<div class="sw"><span style="background:var(--tm-border-disabled)"></span><code>--tm-border-disabled</code></div>
+<div class="sw"><span style="background:var(--tm-border-selected)"></span><code>--tm-border-selected</code></div>
+<div class="sw"><span style="background:var(--tm-border-focus)"></span><code>--tm-border-focus</code></div>
+<div class="sw"><span style="background:var(--tm-border-brand-subtle)"></span><code>--tm-border-brand-subtle</code></div>
+<div class="sw"><span style="background:var(--tm-border-brand-strong)"></span><code>--tm-border-brand-strong</code></div>
+<div class="sw"><span style="background:var(--tm-border-accent-subtle)"></span><code>--tm-border-accent-subtle</code></div>
+<div class="sw"><span style="background:var(--tm-border-accent-strong)"></span><code>--tm-border-accent-strong</code></div>
+<div class="sw"><span style="background:var(--tm-border-success-subtle)"></span><code>--tm-border-success-subtle</code></div>
+<div class="sw"><span style="background:var(--tm-border-success-strong)"></span><code>--tm-border-success-strong</code></div>
+<div class="sw"><span style="background:var(--tm-border-warning-subtle)"></span><code>--tm-border-warning-subtle</code></div>
+<div class="sw"><span style="background:var(--tm-border-warning-strong)"></span><code>--tm-border-warning-strong</code></div>
+<div class="sw"><span style="background:var(--tm-border-error-subtle)"></span><code>--tm-border-error-subtle</code></div>
+<div class="sw"><span style="background:var(--tm-border-error-strong)"></span><code>--tm-border-error-strong</code></div>
+<div class="sw"><span style="background:var(--tm-border-info-subtle)"></span><code>--tm-border-info-subtle</code></div>
+<div class="sw"><span style="background:var(--tm-border-info-strong)"></span><code>--tm-border-info-strong</code></div>
+<div class="sw"><span style="background:var(--tm-feedback-error-content)"></span><code>--tm-feedback-error-content</code></div>
+<div class="sw"><span style="background:var(--tm-feedback-error-surface)"></span><code>--tm-feedback-error-surface</code></div>
+<div class="sw"><span style="background:var(--tm-feedback-error-border)"></span><code>--tm-feedback-error-border</code></div>
+<div class="sw"><span style="background:var(--tm-feedback-warning-content)"></span><code>--tm-feedback-warning-content</code></div>
+<div class="sw"><span style="background:var(--tm-feedback-warning-surface)"></span><code>--tm-feedback-warning-surface</code></div>
+<div class="sw"><span style="background:var(--tm-feedback-warning-border)"></span><code>--tm-feedback-warning-border</code></div>
+<div class="sw"><span style="background:var(--tm-feedback-success-content)"></span><code>--tm-feedback-success-content</code></div>
+<div class="sw"><span style="background:var(--tm-feedback-success-surface)"></span><code>--tm-feedback-success-surface</code></div>
+<div class="sw"><span style="background:var(--tm-feedback-success-border)"></span><code>--tm-feedback-success-border</code></div>
+<div class="sw"><span style="background:var(--tm-feedback-info-content)"></span><code>--tm-feedback-info-content</code></div>
+<div class="sw"><span style="background:var(--tm-feedback-info-surface)"></span><code>--tm-feedback-info-surface</code></div>
+<div class="sw"><span style="background:var(--tm-feedback-info-border)"></span><code>--tm-feedback-info-border</code></div></div>
+</section>
+
+<section id="type">
+  <h2 class="pv tm-text-h2-web">Type — Plus Jakarta Sans</h2>
+  <p class="pv">Mobile headings <code>h1–h3</code>; desktop/portal headings <code>h1-web–h3-web</code>.</p>
+  <div class="ty"><span class="tm-text-display-d1">Paracetamol 650 mg</span><code>.tm-text-display-d1 · 64/88 · 500</code></div>
+<div class="ty"><span class="tm-text-display-d2">Paracetamol 650 mg</span><code>.tm-text-display-d2 · 56/64 · 500</code></div>
+<div class="ty"><span class="tm-text-h1">Paracetamol 650 mg</span><code>.tm-text-h1 · 20/28 · 600</code></div>
+<div class="ty"><span class="tm-text-h2">Paracetamol 650 mg</span><code>.tm-text-h2 · 18/24 · 600</code></div>
+<div class="ty"><span class="tm-text-h3">Paracetamol 650 mg</span><code>.tm-text-h3 · 16/24 · 600</code></div>
+<div class="ty"><span class="tm-text-h1-web">Paracetamol 650 mg</span><code>.tm-text-h1-web · 36/48 · 600</code></div>
+<div class="ty"><span class="tm-text-h2-web">Paracetamol 650 mg</span><code>.tm-text-h2-web · 32/40 · 600</code></div>
+<div class="ty"><span class="tm-text-h3-web">Paracetamol 650 mg</span><code>.tm-text-h3-web · 20/28 · 600</code></div>
+<div class="ty"><span class="tm-text-body-xl">Paracetamol 650 mg</span><code>.tm-text-body-xl · 18/24 · 400</code></div>
+<div class="ty"><span class="tm-text-body-xl-strong">Paracetamol 650 mg</span><code>.tm-text-body-xl-strong · 18/24 · 600</code></div>
+<div class="ty"><span class="tm-text-body-lg">Paracetamol 650 mg</span><code>.tm-text-body-lg · 16/20 · 400</code></div>
+<div class="ty"><span class="tm-text-body-lg-strong">Paracetamol 650 mg</span><code>.tm-text-body-lg-strong · 16/20 · 600</code></div>
+<div class="ty"><span class="tm-text-body-md">Paracetamol 650 mg</span><code>.tm-text-body-md · 14/20 · 400</code></div>
+<div class="ty"><span class="tm-text-body-md-strong">Paracetamol 650 mg</span><code>.tm-text-body-md-strong · 14/20 · 600</code></div>
+<div class="ty"><span class="tm-text-body-sm">Paracetamol 650 mg</span><code>.tm-text-body-sm · 12/16 · 400</code></div>
+<div class="ty"><span class="tm-text-body-sm-strong">Paracetamol 650 mg</span><code>.tm-text-body-sm-strong · 12/16 · 600</code></div>
+<div class="ty"><span class="tm-text-body-xs">Paracetamol 650 mg</span><code>.tm-text-body-xs · 10/14 · 400</code></div>
+<div class="ty"><span class="tm-text-body-xs-strong">Paracetamol 650 mg</span><code>.tm-text-body-xs-strong · 10/14 · 600</code></div>
+<div class="ty"><span class="tm-text-button-lg">Paracetamol 650 mg</span><code>.tm-text-button-lg · 18/24 · 600</code></div>
+<div class="ty"><span class="tm-text-button-md">Paracetamol 650 mg</span><code>.tm-text-button-md · 16/24 · 600</code></div>
+<div class="ty"><span class="tm-text-button-sm">Paracetamol 650 mg</span><code>.tm-text-button-sm · 14/16 · 600</code></div>
+<div class="ty"><span class="tm-text-button-xs">Paracetamol 650 mg</span><code>.tm-text-button-xs · 12/16 · 600</code></div>
+</section>
+
+<section id="scale">
+  <h2 class="pv tm-text-h2-web">Spacing, radius, shadow</h2>
+  <div class="two">
+    <div><h3 class="pv">Spacing</h3><div class="sp"><span style="width:var(--tm-space-2xs)"></span><code>--tm-space-2xs</code></div>
+<div class="sp"><span style="width:var(--tm-space-xs)"></span><code>--tm-space-xs</code></div>
+<div class="sp"><span style="width:var(--tm-space-sm)"></span><code>--tm-space-sm</code></div>
+<div class="sp"><span style="width:var(--tm-space-md)"></span><code>--tm-space-md</code></div>
+<div class="sp"><span style="width:var(--tm-space-lg)"></span><code>--tm-space-lg</code></div>
+<div class="sp"><span style="width:var(--tm-space-xl)"></span><code>--tm-space-xl</code></div>
+<div class="sp"><span style="width:var(--tm-space-2xl)"></span><code>--tm-space-2xl</code></div>
+<div class="sp"><span style="width:var(--tm-space-3xl)"></span><code>--tm-space-3xl</code></div></div>
+    <div><h3 class="pv">Radius</h3><div class="rd"><span style="border-radius:var(--tm-radius-none)"></span><code>--tm-radius-none</code></div>
+<div class="rd"><span style="border-radius:var(--tm-radius-2xs)"></span><code>--tm-radius-2xs</code></div>
+<div class="rd"><span style="border-radius:var(--tm-radius-xs)"></span><code>--tm-radius-xs</code></div>
+<div class="rd"><span style="border-radius:var(--tm-radius-sm)"></span><code>--tm-radius-sm</code></div>
+<div class="rd"><span style="border-radius:var(--tm-radius-md)"></span><code>--tm-radius-md</code></div>
+<div class="rd"><span style="border-radius:var(--tm-radius-lg)"></span><code>--tm-radius-lg</code></div>
+<div class="rd"><span style="border-radius:var(--tm-radius-xl)"></span><code>--tm-radius-xl</code></div>
+<div class="rd"><span style="border-radius:var(--tm-radius-2xl)"></span><code>--tm-radius-2xl</code></div>
+<div class="rd"><span style="border-radius:var(--tm-radius-3xl)"></span><code>--tm-radius-3xl</code></div>
+<div class="rd"><span style="border-radius:var(--tm-radius-full)"></span><code>--tm-radius-full</code></div></div>
+    <div class="shwrap"><h3 class="pv" style="margin-top:0">Shadow</h3><div class="sh"><span style="box-shadow:var(--tm-shadow-primary)"></span><code>--tm-shadow-primary</code></div>
+<div class="sh"><span style="box-shadow:var(--tm-shadow-secondary)"></span><code>--tm-shadow-secondary</code></div>
+<div class="sh"><span style="box-shadow:var(--tm-shadow-tertiary)"></span><code>--tm-shadow-tertiary</code></div>
+<div class="sh"><span style="box-shadow:var(--tm-shadow-card)"></span><code>--tm-shadow-card</code></div>
+<div class="sh"><span style="box-shadow:var(--tm-shadow-header)"></span><code>--tm-shadow-header</code></div>
+<div class="sh"><span style="box-shadow:var(--tm-shadow-button-secondary)"></span><code>--tm-shadow-button-secondary</code></div></div>
+  </div>
+</section>
+
+<section id="icons">
+  <h2 class="pv tm-text-h2-web">Icons — Tabler outline</h2>
+  <p class="pv">Monochrome, inherit text colour. <code>&lt;span class="tm-icon" data-icon="phone"&gt;&lt;/span&gt;</code>. Add more via <code>icons/icons.txt</code>.</p>
+  <div class="icons" id="icon-grid"></div>
+</section>
+
+<section id="buttons">
+  <h2 class="pv tm-text-h2-web">Buttons</h2>
+  <p class="pv">One primary per context. Sizes: <code>--lg</code> 56 · default 48 · <code>--sm</code> 40 · <code>--xs</code> 32.</p>
+  <div class="demo-row"><span class="demo-label">Types</span>
+    <button class="tm-btn tm-btn--primary">Primary</button>
+    <button class="tm-btn tm-btn--secondary">Secondary</button>
+    <button class="tm-btn tm-btn--tertiary">Tertiary</button>
+    <button class="tm-btn tm-btn--ghost">Ghost</button>
+    <button class="tm-btn tm-btn--destructive">Destructive</button>
+    <button class="tm-btn tm-btn--link">Link</button>
+  </div>
+  <div class="demo-row"><span class="demo-label">Sizes</span>
+    <button class="tm-btn tm-btn--primary tm-btn--lg">Large</button>
+    <button class="tm-btn tm-btn--primary">Medium</button>
+    <button class="tm-btn tm-btn--primary tm-btn--sm">Small</button>
+    <button class="tm-btn tm-btn--primary tm-btn--xs">X-Small</button>
+  </div>
+  <div class="demo-row"><span class="demo-label">With icon</span>
+    <button class="tm-btn tm-btn--primary"><span class="tm-icon" data-icon="phone"></span>Call patient</button>
+    <button class="tm-btn tm-btn--secondary"><span class="tm-icon" data-icon="calendar"></span>Schedule</button>
+    <button class="tm-btn tm-btn--destructive"><span class="tm-icon" data-icon="phone-off"></span>End call</button>
+    <button class="tm-btn tm-btn--tertiary tm-btn--icon" aria-label="More"><span class="tm-icon" data-icon="dots-vertical"></span></button>
+  </div>
+  <div class="demo-row"><span class="demo-label">Disabled</span>
+    <button class="tm-btn tm-btn--primary" disabled>Primary</button>
+    <button class="tm-btn tm-btn--secondary" disabled>Secondary</button>
+    <button class="tm-btn tm-btn--ghost" disabled>Ghost</button>
+  </div>
+</section>
+
+<section id="forms">
+  <h2 class="pv tm-text-h2-web">Forms</h2>
+  <div class="tm-grid">
+    <div class="tm-field" style="grid-column: span 4">
+      <label class="tm-field__label" for="f1">Chief complaint</label>
+      <div class="tm-field__control"><input id="f1" placeholder="e.g. Fever since 2 days"></div>
+      <span class="tm-field__helper">Visible to the pharmacist</span>
+    </div>
+    <div class="tm-field tm-field--error" style="grid-column: span 4">
+      <label class="tm-field__label" for="f2">Mobile number</label>
+      <div class="tm-field__control"><input id="f2" value="98201"><span class="tm-icon tm-icon--16" data-icon="alert-circle" style="color:var(--tm-content-error)"></span></div>
+      <span class="tm-field__helper">Enter a 10-digit number</span>
+    </div>
+    <div class="tm-field tm-field--disabled" style="grid-column: span 4">
+      <label class="tm-field__label" for="f3">Order ID</label>
+      <div class="tm-field__control"><input id="f3" value="TM-ORD-20240812" disabled></div>
+    </div>
+    <div class="tm-field" style="grid-column: span 6">
+      <label class="tm-field__label" for="f4">Doctor notes</label>
+      <div class="tm-field__control"><textarea id="f4" rows="3" placeholder="Clinical observations, instructions…"></textarea></div>
+    </div>
+    <div class="tm-stack tm-stack--sm" style="grid-column: span 6">
+      <label class="tm-check"><input type="checkbox" checked> Patient name is same as receiver</label>
+      <label class="tm-check"><input type="radio" name="r" checked> Me</label>
+      <label class="tm-check"><input type="radio" name="r"> Someone else</label>
+      <label class="tm-check"><input type="checkbox" class="tm-toggle" checked> Notify on delivery</label>
+    </div>
+  </div>
+</section>
+
+<section id="labels">
+  <h2 class="pv tm-text-h2-web">Chips &amp; tags</h2>
+  <div class="demo-row"><span class="demo-label">Filter chips</span>
+    <button class="tm-chip" aria-pressed="true">All</button>
+    <button class="tm-chip" aria-pressed="false">Pending</button>
+    <button class="tm-chip" aria-pressed="false"><span class="tm-icon tm-icon--16" data-icon="plus"></span>Add filter</button>
+    <button class="tm-chip" disabled>Disabled</button>
+  </div>
+  <div class="demo-row"><span class="demo-label">Status tags</span>
+    <span class="tm-tag">Default</span>
+    <span class="tm-tag tm-tag--info">Cat4</span>
+    <span class="tm-tag tm-tag--success">Prescribed</span>
+    <span class="tm-tag tm-tag--warning">Pending</span>
+    <span class="tm-tag tm-tag--critical">Rejected</span>
+    <span class="tm-tag tm-tag--dark">HA skipped</span>
+  </div>
+</section>
+
+<section id="containers">
+  <h2 class="pv tm-text-h2-web">Containers &amp; feedback</h2>
+  <div class="tm-grid">
+    <div class="tm-card" style="grid-column: span 4"><div class="tm-section-title">Card</div><span class="tm-muted">Default. White, 16 radius, card shadow.</span></div>
+    <div class="tm-card tm-card--flat" style="grid-column: span 4"><div class="tm-section-title">Card — flat</div><span class="tm-muted">For dense internal-tool layouts.</span></div>
+    <div class="tm-card tm-card--tint" style="grid-column: span 4"><div class="tm-section-title">Card — tint</div><span class="tm-muted">Highlighted info, no shadow.</span></div>
+    <div class="tm-stack tm-stack--sm" style="grid-column: span 6">
+      <div class="tm-notice"><span class="tm-icon" data-icon="info-circle"></span><span>Closing script: confirm the order and mention tracking in the app.</span></div>
+      <div class="tm-notice tm-notice--warning"><span class="tm-icon" data-icon="alert-triangle"></span><span>Health advisor call pending for this order.</span></div>
+      <div class="tm-notice tm-notice--error"><span class="tm-icon" data-icon="alert-circle"></span><span>Call failed. Try again or schedule a callback.</span></div>
+    </div>
+    <div style="grid-column: span 6; display:flex; align-items:center; justify-content:center">
+      <span class="tm-toast static">Recommended substitute added</span>
+    </div>
+  </div>
+</section>
+
+<section id="internal">
+  <h2 class="pv tm-text-h2-web">Internal tools layer <span class="tm-tag tm-tag--warning">Proposed</span></h2>
+  <p class="pv">Not in SALT yet. Built from SALT tokens for portals and desktop screens.</p>
+  <div class="desk">
+    <nav class="tm-sidenav">
+      <a class="tm-sidenav__item" href="#internal" aria-current="page"><span class="tm-icon" data-icon="layout-dashboard"></span>Dashboard</a>
+      <a class="tm-sidenav__item" href="#internal"><span class="tm-icon" data-icon="clipboard-list"></span>My cases</a>
+      <a class="tm-sidenav__item" href="#internal"><span class="tm-icon" data-icon="chart-bar"></span>My statistics</a>
+      <a class="tm-sidenav__item" href="#internal"><span class="tm-icon" data-icon="settings"></span>Settings</a>
+    </nav>
+    <div class="tm-stack" style="flex:1; padding: var(--tm-space-xl)">
+      <div class="tm-text-h3-web">Today</div>
+      <div class="tm-grid">
+        <div class="tm-stat" style="grid-column: span 4"><div class="tm-stat__label">Cases attempted</div><div class="tm-stat__value">48</div></div>
+        <div class="tm-stat" style="grid-column: span 4"><div class="tm-stat__label">Cases connected</div><div class="tm-stat__value">36</div></div>
+        <div class="tm-stat" style="grid-column: span 4"><div class="tm-stat__label">Prescribed</div><div class="tm-stat__value">29</div></div>
+      </div>
+      <div class="tm-card tm-card--flat" style="padding:0; overflow:hidden">
+        <table class="tm-table">
+          <thead><tr><th>Order</th><th>Patient</th><th>Case</th><th>Status</th><th class="tm-num">Value</th></tr></thead>
+          <tbody>
+            <tr><td>TM-ORD-20240812</td><td>Ramesh Gupta</td><td><span class="tm-tag tm-tag--info">Cat4</span></td><td><span class="tm-tag tm-tag--success">Prescribed</span></td><td class="tm-num">₹1,240</td></tr>
+            <tr><td>TM-ORD-20240813</td><td>Anita Desai</td><td><span class="tm-tag">Pilot</span></td><td><span class="tm-tag tm-tag--warning">Pending</span></td><td class="tm-num">₹860</td></tr>
+            <tr><td>TM-ORD-20240814</td><td>Vikram Rao</td><td><span class="tm-tag">Pilot</span></td><td><span class="tm-tag tm-tag--critical">No pickup</span></td><td class="tm-num">₹2,115</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="examples" style="padding-bottom: var(--tm-space-3xl)">
+  <h2 class="pv tm-text-h2-web">Example — mobile screen</h2>
+  <p class="pv">Same building blocks, one primary action, colour only for status.</p>
+  <div class="phone">
+    <div class="tm-appbar"><span class="tm-icon" data-icon="arrow-left"></span><span class="tm-appbar__title">Consultation</span><span class="tm-tag tm-tag--info">Cat4</span></div>
+    <div class="tm-stack" style="padding: var(--tm-space-lg)">
+      <div class="tm-card">
+        <div class="tm-inline" style="justify-content:space-between">
+          <div><div class="tm-text-h2">Ramesh Gupta</div><div class="tm-muted">54 yrs · Male</div></div>
+          <button class="tm-btn tm-btn--secondary tm-btn--sm"><span class="tm-icon tm-icon--16" data-icon="prescription"></span>View Rx</button>
+        </div>
+        <hr class="tm-divider">
+        <div class="tm-inline tm-muted tm-text-body-sm">TM-ORD-20240812 · ₹1,240</div>
+      </div>
+      <div class="tm-card">
+        <div class="tm-section-title">Medicines · 3</div>
+        <div class="tm-row"><div class="tm-thumb"></div><div class="tm-row__main"><div class="tm-row__title">Metformin 500mg</div><div class="tm-row__meta">1-0-1 · Ongoing · Qty 60 · ₹28</div></div><span class="tm-tag tm-tag--success">Prescribed</span></div>
+        <div class="tm-row"><div class="tm-thumb"></div><div class="tm-row__main"><div class="tm-row__title">Amlodipine 5mg</div><div class="tm-row__meta">1-0-0 · Ongoing · Qty 30 · ₹52</div></div><span class="tm-tag tm-tag--warning">Pending</span></div>
+        <div class="tm-row"><div class="tm-thumb"></div><div class="tm-row__main"><div class="tm-row__title">Atorvastatin 10mg</div><div class="tm-row__meta">0-0-1 · Ongoing · Qty 30 · ₹45</div></div><span class="tm-tag tm-tag--warning">Pending</span></div>
+      </div>
+    </div>
+    <div class="tm-actionbar"><button class="tm-btn tm-btn--primary tm-btn--lg tm-btn--block"><span class="tm-icon" data-icon="phone"></span>Call patient</button></div>
+  </div>
+</section>
+
+</main>
+<script>
+  document.getElementById("icon-grid").innerHTML = TMIcons.names.map(function (n) {
+    return '<div><span class="tm-icon tm-icon--24">' + TMIcons.svg(n) + '</span><code>' + n + '</code></div>';
+  }).join("");
+</script>
+</body>
+</html>

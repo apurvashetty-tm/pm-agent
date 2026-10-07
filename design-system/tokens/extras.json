@@ -1,0 +1,43 @@
+{
+  "_about": "Values SALT documents on its Figma pages but does not include in the variable export. Copied verbatim on 2026-10-07. If SALT changes these, update here and rerun scripts/build.py.",
+
+  "shadow": {
+    "_source": "SALT › ✅ Shadow page (node 1032:10573), tokens tm_core_shadow_*",
+    "primary":   "0px 4px 17px 0px rgba(46, 119, 229, 0.10)",
+    "secondary": "0px 4px 8px 0px rgba(46, 119, 229, 0.10)",
+    "tertiary":  "0px 1px 1px 0px rgba(46, 119, 229, 0.16)",
+    "card":      "0px 1px 17px 0px rgba(0, 0, 0, 0.05)",
+    "header":    "0px 1px 17px 0px rgba(0, 0, 0, 0.05)",
+    "button-secondary": "0px 2px 2px 0px rgba(0, 0, 0, 0.08)"
+  },
+
+  "text": {
+    "_source": "SALT › ✅ Font page (node 974:54683), Styles section. Format: [size, line-height, weight]. Typeface is Plus Jakarta Sans (the Font page table still says SF Pro Display; the variables, components and truemeds.in all use Plus Jakarta Sans).",
+    "display-d1": [64, 88, 500],
+    "display-d2": [56, 64, 500],
+
+    "h1": [20, 28, 600],
+    "h2": [18, 24, 600],
+    "h3": [16, 24, 600],
+
+    "h1-web": [36, 48, 600],
+    "h2-web": [32, 40, 600],
+    "h3-web": [20, 28, 600],
+
+    "body-xl": [18, 24, 400],
+    "body-xl-strong": [18, 24, 600],
+    "body-lg": [16, 20, 400],
+    "body-lg-strong": [16, 20, 600],
+    "body-md": [14, 20, 400],
+    "body-md-strong": [14, 20, 600],
+    "body-sm": [12, 16, 400],
+    "body-sm-strong": [12, 16, 600],
+    "body-xs": [10, 14, 400],
+    "body-xs-strong": [10, 14, 600],
+
+    "button-lg": [18, 24, 600],
+    "button-md": [16, 24, 600],
+    "button-sm": [14, 16, 600],
+    "button-xs": [12, 16, 600]
+  }
+}

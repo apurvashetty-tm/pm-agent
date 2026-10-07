@@ -7,6 +7,16 @@
 
 ---
 
+> **2026-10-07 — design system change.** The prototype's local design system is
+> superseded by the central Truemeds design system (`../../design-system/`, from SALT).
+> Nothing in `index.html` / `styles.css` / `app.js` has been restyled yet.
+> **Next exact UI step:** restyle onto `truemeds.css` + `icons.js` — replace the
+> local tokens, system font, emoji and illustrated medicine icons; pin Call Patient in
+> a bottom action bar; keep the locked flow, valid-call gate and CTA routing unchanged.
+> Then run the design review checklist (`design-system/RULES.md` §5).
+
+---
+
 ## 1. What has been built (current state)
 
 **Architecture:** the prototype is now **three files**, not one — `index.html` (structure), `styles.css` (all cosmetics), `app.js` (all logic). This is a deliberate `[USER-PROVIDED]` change from the original single-file V1 rule; see `docs/design_system.md` for why (button-style drift across the single file was the trigger). `CLAUDE.md` and `frontend_engineer.md` have been updated to match — see their diffs from this same pass.

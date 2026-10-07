@@ -87,6 +87,19 @@ automatically, so apply them manually here:
 - Do not move project-specific resume state into `knowledge/`; keep it in the
   active project's `docs/context/session_handoff.md`.
 
+## Building any UI (design system)
+
+Every frontend project — prototypes, portals, internal tools, mockups — uses the
+central Truemeds design system in `design-system/` (a code copy of SALT, the
+Truemeds Figma library).
+
+- Before writing or changing any UI, read `design-system/RULES.md`.
+- Link `design-system/truemeds.css` and `design-system/icons/icons.js`; never
+  copy values out of them, never add hex codes, fonts, or icon sets in a project.
+- Missing a component? Add it to `design-system/src/components.css` marked
+  `[PROPOSED]` and rebuild — don't invent it inside the project.
+- Run the design review checklist (`RULES.md` §5) before calling UI work done.
+
 ## During work
 
 - Follow latest user instruction first.
