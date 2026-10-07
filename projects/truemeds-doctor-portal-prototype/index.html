@@ -196,9 +196,6 @@
         </div>
         <div id="medicines-empty">No medicines on this order.</div>
         <div id="medicines-list"></div>
-        <div class="medicines-footer">
-          <button id="add-medicine-btn" class="tm-btn tm-btn--ghost tm-btn--sm"><span class="tm-icon tm-icon--16" data-icon="plus"></span>Add medicine</button>
-        </div>
       </div>
 
       <!-- 3. Notes + Symptoms — [OPEN DECISION] OQ-006 -->
@@ -463,14 +460,6 @@
         <button class="tm-chip" aria-pressed="false" data-dur="ongoing" onclick="selectDuration('ongoing')">Ongoing</button>
       </div>
 
-      <!-- QTY -->
-      <div class="sheet-section-label">Quantity</div>
-      <div class="qty-stepper">
-        <button class="tm-btn tm-btn--secondary tm-btn--icon" onclick="adjustQty(-10)" aria-label="Decrease quantity"><span class="tm-icon" data-icon="minus"></span></button>
-        <span id="sheet-qty-display" class="tm-text-h3">30</span>
-        <button class="tm-btn tm-btn--secondary tm-btn--icon" onclick="adjustQty(10)" aria-label="Increase quantity"><span class="tm-icon" data-icon="plus"></span></button>
-      </div>
-
       <!-- ADVICE -->
       <div class="sheet-section-label">Advice to patient</div>
       <div class="chip-row chip-row-wrap" id="advice-chips">
@@ -500,24 +489,6 @@
         <button class="choice-row reason-btn" onclick="confirmDisable('Patient declined')">Patient declined<span class="reason-hint">Patient refused this medicine</span></button>
         <button class="choice-row reason-btn" onclick="confirmDisable('Wrong strength — will re-prescribe')">Wrong strength<span class="reason-hint">Will disable and add correct one</span></button>
       </div>
-    </div>
-  </div>
-
-  <!-- Add Medicine Sheet — [MOCK ASSUMPTION] OQ-004 -->
-  <div id="sheet-add-med" class="bottom-sheet">
-    <div class="sheet-handle"></div>
-    <div class="sheet-title">Add Medicine</div>
-    <div class="sheet-body">
-      <div class="tm-field">
-        <label class="tm-field__label" for="sheet-add-med-name">Medicine name</label>
-        <div class="tm-field__control"><input id="sheet-add-med-name" type="text" placeholder="e.g. Metformin" /></div>
-      </div>
-      <div class="tm-field">
-        <label class="tm-field__label" for="sheet-add-med-strength">Strength</label>
-        <div class="tm-field__control"><input id="sheet-add-med-strength" type="text" placeholder="e.g. 500mg" /></div>
-      </div>
-      <button class="tm-btn tm-btn--primary tm-btn--block" onclick="confirmAddMedicine()">Add medicine</button>
-      <p class="sheet-note">[MOCK ASSUMPTION] Not persisted to backend</p>
     </div>
   </div>
 

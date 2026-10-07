@@ -312,7 +312,6 @@
       font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-secondary);
     }
     #medicines-list { display: flex; flex-direction: column; }
-    .medicines-footer { display: flex; justify-content: flex-end; margin-top: var(--tm-space-sm); }
     .medicine-item { cursor: pointer; user-select: none; transition: opacity 150ms ease; }
     .medicine-item:active { background: var(--tm-surface-secondary); }
     .medicine-item:focus-visible { outline: 2px solid var(--tm-border-focus); outline-offset: 2px; border-radius: var(--tm-radius-sm); }
@@ -322,7 +321,6 @@
     .med-detail { display: flex; flex-wrap: wrap; column-gap: var(--tm-space-sm); }
     .med-detail > span:first-child { flex-basis: 100%; }          /* dosage · duration on its own line */
     .med-detail > span:nth-child(n+3)::before { content: "·"; margin-right: var(--tm-space-sm); }
-    .med-price { font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-primary); }
     .medicine-item > .tm-icon:last-child { color: var(--tm-content-tertiary); }
     #medicines-empty {
       padding: var(--tm-space-lg); text-align: center; display: none;
@@ -388,7 +386,6 @@
     .sheet-cta-margin { margin-top: var(--tm-space-xl); }
     .sheet-link-margin { margin-top: var(--tm-space-sm); }
     .sheet-subtitle { font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); color: var(--tm-content-secondary); margin-bottom: var(--tm-space-md); }
-    .sheet-note { font-size: var(--tm-font-size-body-xs); line-height: var(--tm-font-lineheight-xs); color: var(--tm-content-secondary); text-align: center; margin-top: var(--tm-space-md); }
 
     /* Section labels inside sheets */
     .sheet-section-label {
@@ -450,10 +447,6 @@
     }
     .man-btns { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--tm-space-sm); flex: 1; }
     .bottom-sheet .man-btn { justify-content: center; padding-left: 0; padding-right: 0; }
-
-    /* Quantity stepper */
-    .qty-stepper { display: flex; align-items: center; gap: var(--tm-space-lg); }
-    #sheet-qty-display { flex: 1; text-align: center; }
 
     /* ============================================================
        TOAST — .tm-toast (SALT: one line, bottom centre). Prototype messages can be longer,

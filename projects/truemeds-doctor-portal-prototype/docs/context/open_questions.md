@@ -56,9 +56,9 @@ Every entry must include:
 
 **Why it matters:** Determines whether the medicines section is read-only + validation, or editable.
 
-**Safe placeholder:** Doctor can edit M-A-N dosing, strength, qty, disable/enable medicines, and add new medicines. All changes are mock-only and not persisted. `[MOCK ASSUMPTION]`
+**Answer (Apurva, 2026-10-07):** The doctor cannot add medicines; Add medicine is removed from the prototype. The doctor can edit frequency, duration and advice, and can disable a medicine.
 
-**Status:** Partially answered — prototype supports edit/add/disable. Actual backend write authority and business rules (min/max qty constraints, whether disable = order cancellation) remain open. See also OQ-011.
+**Status:** Partially answered — add is answered (no). Whether disable = order cancellation, and where a disable writes, remain open. See also OQ-011.
 
 ---
 
@@ -142,9 +142,9 @@ Every entry must include:
 
 **Why it matters:** Doctor can now edit qty and disable medicines in the prototype. If there are business rules (e.g., doctor cannot increase qty beyond what was ordered, or disabling a medicine cancels it from the order), those rules are not yet defined.
 
-**Safe placeholder:** Doctor can adjust qty freely (min 1) and disable any medicine. Changes are mock-only and not persisted. `[MOCK ASSUMPTION]`
+**Answer on qty (Apurva, 2026-10-07):** The doctor never sees or edits quantity on the edit sheet. Two quantities exist: (1) the customer's cart quantity, shown read-only on the medicine row and unchanged by any doctor edit; (2) the prescription quantity, owned by the backend. The backend preselects frequency and duration for the maximum configured period (6 months; Ongoing preselected) and stores the quantity; if the doctor changes frequency or duration, the backend recalculates the quantity and prints it on the prescription, replacing the default.
 
-**Status:** Open
+**Status:** Qty part answered. Disable scope (does disabling cancel the item from the order; where it writes) still open.
 
 ---
 
@@ -180,4 +180,10 @@ Every entry must include:
 
 ## Deferred Questions
 
-*(None yet)*
+### OQ-014 — Prescription quantity units for non-tablet forms
+**Question:** For syrups, injections, creams, drops and inhalers, does the backend's prescription quantity count whole packs (bottles, tubes, vials) or doses? Cart quantity today is whole units.
+**Status:** Deferred — Apurva to brainstorm separately.
+
+### OQ-015 — Per-medicine detail view (price, image)
+**Question:** Line-item price was removed from the medicine row (2026-10-07). Apurva's direction: a row-level icon (e.g. eye) opens a per-medicine view showing price, product image and similar reference details, for when a customer asks. Order value stays visible as is.
+**Status:** Deferred — not designed or built yet.

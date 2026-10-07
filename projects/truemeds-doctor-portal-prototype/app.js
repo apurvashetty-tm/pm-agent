@@ -137,7 +137,6 @@ function initIcons() { TMIcons.render(); }
 const EDIT_STATE = {
   medId:    null,
   m: 1, a: 0, n: 1,
-  qty:      30,
   interval: 'daily',
   duration: null,
   advice:   [],
@@ -294,7 +293,6 @@ function renderMedicines(meds) {
     const isDaily = !med.interval || med.interval === 'daily';
     const dosage  = isDaily ? formatMAN(med.m, med.a, med.n) : (INTERVAL_LABELS[med.interval] || med.interval);
     const dur     = med.duration ? ` · ${DURATION_LABELS[med.duration] || med.duration}` : '';
-    const priceHtml = med.price != null ? `<span class="med-price">₹${med.price}</span>` : '';
 
     const el = document.createElement('div');
     el.className = `tm-row medicine-item${isDisabled ? ' disabled' : ''}`;
@@ -308,7 +306,7 @@ function renderMedicines(meds) {
       <div class="tm-row__main med-info">
         <div class="tm-row__title med-name">${med.name} ${med.strength}</div>
         <div class="tm-row__meta med-detail">
-          <span>${dosage}${dur}</span><span>Qty ${med.qty}</span>${priceHtml}
+          <span>${dosage}${dur}</span><span>Qty ${med.qty}</span>
         </div>
       </div>
       <span class="tm-tag tm-tag--md ${sc}">${sl}</span>
@@ -841,11 +839,6 @@ function selectMAN(row, val) {
   });
 }
 
-function adjustQty(delta) {
-  EDIT_STATE.qty = Math.max(1, EDIT_STATE.qty + delta);
-  document.getElementById('sheet-qty-display').textContent = EDIT_STATE.qty;
-}
-
 function selectInterval(val) {
   EDIT_STATE.interval = val;
   document.querySelectorAll('#interval-chips .tm-chip').forEach(b => {
@@ -890,13 +883,11 @@ function openMedEdit(medId) {
   EDIT_STATE.m        = med.m;
   EDIT_STATE.a        = med.a;
   EDIT_STATE.n        = med.n;
-  EDIT_STATE.qty      = med.qty;
   EDIT_STATE.interval = med.interval || 'daily';
   EDIT_STATE.duration = med.duration || null;
   EDIT_STATE.advice   = Array.isArray(med.advice) ? [...med.advice] : [];
 
   document.getElementById('sheet-med-name').textContent = `${med.name} ${med.strength}`;
-  document.getElementById('sheet-qty-display').textContent = med.qty;
 
   // Sync interval chips
   document.querySelectorAll('#interval-chips .tm-chip').forEach(b => {
@@ -929,7 +920,6 @@ function confirmMedEdit() {
   med.m        = EDIT_STATE.m;
   med.a        = EDIT_STATE.a;
   med.n        = EDIT_STATE.n;
-  med.qty      = EDIT_STATE.qty;
   med.interval = EDIT_STATE.interval;
   med.duration = EDIT_STATE.duration;
   med.advice   = [...EDIT_STATE.advice];
@@ -957,34 +947,6 @@ function confirmDisable(reason) {
   closeSheet(); render();
   showToast(`Medicine disabled: ${reason}`);
   console.log(`[MOCK] medicine.disable | id=${med.id} | name=${med.name} | reason="${reason}"`);
-}
-
-// ================================================================
-// ADD MEDICINE
-// ================================================================
-document.getElementById('add-medicine-btn').addEventListener('click', () => {
-  document.getElementById('sheet-add-med-name').value     = '';
-  document.getElementById('sheet-add-med-strength').value = '';
-  openSheet('sheet-add-med');
-});
-
-function confirmAddMedicine() {
-  const name     = document.getElementById('sheet-add-med-name').value.trim();
-  const strength = document.getElementById('sheet-add-med-strength').value.trim();
-  if (!name) { showToast('Enter medicine name'); return; }
-  const newMed = {
-    id: Date.now(),
-    name,
-    strength: strength || '',
-    m: 1, a: 0, n: 1,
-    qty: 30,
-    validation_status: 'pending',
-    disabled: false,
-  };
-  DOCTOR_STATE.currentCase.medicines.push(newMed);
-  closeSheet(); render();
-  showToast('[MOCK ASSUMPTION] Medicine added — not persisted to backend');
-  console.log(`[MOCK] medicine.add | name=${name} | strength=${strength}`);
 }
 
 // ================================================================
