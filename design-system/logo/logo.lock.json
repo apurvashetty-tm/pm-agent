@@ -3,15 +3,8 @@
     "#1B69DE",
     "#22B573"
   ],
-  "extra_colours": {
-    "truemeds-for-doctors.svg": [
-      "#5B616E"
-    ]
-  },
   "sha256": {
-    "truemeds-for-doctors.svg": "51981c1265893173ceb380b6d70e19ae36e6284953264c8dac977cc1bc811c8d",
     "truemeds-icon.svg": "d378662e59eae7ce44855ec6f4a46b1d5b2084e7dd631f22f1c4b9867a73a6f4",
-    "truemeds-logo.svg": "1953a94bd34c46a7349e5f90667d024b9bac5af951a2202dc1611c7301ec46e5",
-    "truemeds-for-doctors.png": "143b26d00bc9d99c951c73fc83c22fab154c9389cb9816e804f8dadb211ec5c8"
+    "truemeds-logo.svg": "1953a94bd34c46a7349e5f90667d024b9bac5af951a2202dc1611c7301ec46e5"
   }
 }

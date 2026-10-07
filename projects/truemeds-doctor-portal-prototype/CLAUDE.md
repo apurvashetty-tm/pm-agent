@@ -153,3 +153,6 @@ Stop and ask where the decision belongs to the user.
 ## Layout rule (do not change without Apurva)
 
 Desktop = centred 9:16 phone frame, one scroll area, sheets/Rx/toasts inside the frame; mobile = full screen. Full rule: `design-system/RULES.md` §7. Run `python3 docs/layout_check.py` before committing any layout/CSS change. Never turn bottom sheets into desktop dialogs and never make the demo panel a scroll container.
+
+## Logo (do not change without Apurva)
+The header logo is the approved "truemeds for doctors" lockup in `brand/truemeds-for-doctors.svg` (project level, not in the design system). It embeds the canonical logo unchanged. Never redraw or recolour it. `python3 brand/check_lockup.py` must pass before any commit that touches `brand/`.
