@@ -470,7 +470,7 @@
 .tm-divider { border: 0; border-top: 1px solid var(--tm-border-subtle); margin: var(--tm-space-lg) 0; }
 
 /* ---------- Section label ---------- */
-.tm-section-title { font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-primary); margin: 0 0 var(--tm-space-md); }
+.tm-section-title { font-size: var(--tm-font-size-body-lg); line-height: var(--tm-font-lineheight-md); font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-primary); margin: 0 0 var(--tm-space-md); }
 
 /* ---------- Notice / inline feedback [SALT: Feedback tokens, Sticky notifications] ---------- */
 .tm-notice {
@@ -493,6 +493,19 @@
   padding: var(--tm-space-xs) var(--tm-space-sm); border-radius: var(--tm-radius-xs);
   white-space: nowrap; z-index: 1000;
 }
+
+/* [PROPOSED] Snackbar — message + one action (e.g. "Order confirmed · Next order"). SALT's toast is one line with
+   no action; this is the minimal compliant surface for a confirmation that carries a next step. Pending design-team review. */
+.tm-snackbar {
+  position: fixed; left: var(--tm-space-lg); right: var(--tm-space-lg); bottom: var(--tm-space-lg); z-index: 950;
+  display: flex; align-items: center; gap: var(--tm-space-md);
+  padding: var(--tm-space-md) var(--tm-space-lg);
+  background: var(--tm-surface-primary); border-radius: var(--tm-radius-lg); box-shadow: var(--tm-shadow-primary);
+}
+.tm-snackbar__icon { flex: none; display: flex; color: var(--tm-content-success); }
+.tm-snackbar__body { flex: 1; min-width: 0; }
+.tm-snackbar__title { font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); font-weight: var(--tm-font-weight-semibold); }
+.tm-snackbar__text  { font-size: var(--tm-font-size-body-xs); line-height: var(--tm-font-lineheight-xs); color: var(--tm-content-secondary); }
 
 /* ---------- Checkbox / radio / toggle [SALT: Checkboxes, Radio Buttons, Toggles] ---------- */
 .tm-check { display: inline-flex; align-items: center; gap: var(--tm-space-sm); cursor: pointer; font-size: var(--tm-font-size-body-md); }

@@ -20,18 +20,10 @@
     <div id="sticky-top-wrapper">
 
       <!-- PORTAL HEADER — always visible -->
-      <div id="portal-header">
+      <div id="portal-header" class="tm-appbar">
         <div id="portal-title">
-          <span id="portal-logo"><svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg" style="display:block">
-            <circle cx="15" cy="15" r="15" fill="#fff"/>
-            <rect x="13.5" y="3.5" width="2.5" height="23" rx="1.25" fill="#1B69DE"/>
-            <path d="M14.75,6 C11,4.2 6.5,5.5 6,8.5 C5.5,11.5 10,12 14.75,11" fill="#1B69DE" opacity="0.65"/>
-            <path d="M14.75,6 C18.5,4.2 23,5.5 23.5,8.5 C24,11.5 19.5,12 14.75,11" fill="#1B69DE" opacity="0.65"/>
-            <path d="M14.75,9 C9,11.5 8.5,15 12,17 C15.5,19 15.5,21.5 12,23.5 C9.5,25 9.5,27 12,27.5" stroke="#1B69DE" stroke-width="1.8" fill="none" stroke-linecap="round"/>
-            <path d="M14.75,9 C20.5,11.5 21,15 17.5,17 C14,19 14,21.5 17.5,23.5 C20,25 20,27 17.5,27.5" stroke="#16a34a" stroke-width="1.8" fill="none" stroke-linecap="round"/>
-            <circle cx="14.75" cy="3.5" r="2.2" fill="#1B69DE"/>
-          </svg></span>
-          <span id="portal-name">Truemeds Doctor Portal</span>
+          <span class="portal-wordmark">Truemeds</span>
+          <span id="portal-name">Doctor Portal</span>
         </div>
         <button id="profile-btn" onclick="openSheet('sheet-profile')" aria-label="Profile">
           <span id="profile-initials">AS</span>
@@ -42,30 +34,30 @@
       <div id="demo-bar">
         <div id="demo-bar-label"><span class="tm-icon tm-icon--16" data-icon="bolt"></span>Demo controls</div>
         <div id="demo-bar-scenarios">
-          <button class="scenario-btn active" data-scenario="cat4">Cat4</button>
-          <button class="scenario-btn" data-scenario="pilot_value_meds_ha">Pilot + Value + HA</button>
-          <button class="scenario-btn" data-scenario="pilot_nonvalue_meds_ha">Pilot + Non-Value + HA</button>
-          <button class="scenario-btn" data-scenario="pilot_ha_skipped_customer">HA Skipped (Cust)</button>
-          <button class="scenario-btn" data-scenario="pilot_ha_skipped_system">HA Skipped (Sys)</button>
+          <button class="tm-chip scenario-btn" aria-pressed="true" data-scenario="cat4">Cat4</button>
+          <button class="tm-chip scenario-btn" aria-pressed="false" data-scenario="pilot_value_meds_ha">Pilot + Value + HA</button>
+          <button class="tm-chip scenario-btn" aria-pressed="false" data-scenario="pilot_nonvalue_meds_ha">Pilot + Non-Value + HA</button>
+          <button class="tm-chip scenario-btn" aria-pressed="false" data-scenario="pilot_ha_skipped_customer">HA Skipped (Cust)</button>
+          <button class="tm-chip scenario-btn" aria-pressed="false" data-scenario="pilot_ha_skipped_system">HA Skipped (Sys)</button>
         </div>
         <!-- Webhook simulator — visible when state=calling [MOCK ASSUMPTION] -->
         <div id="demo-call-sim" style="display:none">
           <div id="demo-sim-calling">
             <span class="demo-sim-label">Simulate:</span>
-            <button class="demo-sim-btn demo-sim-connected" onclick="simCallConnected()"><span class="tm-icon tm-icon--16" data-icon="check"></span>Connected</button>
-            <button class="demo-sim-btn demo-sim-failed" onclick="simShowWebhookOptions()"><span class="tm-icon tm-icon--16" data-icon="x"></span>No connect</button>
+            <button class="tm-btn tm-btn--secondary tm-btn--xs demo-sim-btn" onclick="simCallConnected()"><span class="tm-icon tm-icon--16" data-icon="check"></span>Connected</button>
+            <button class="tm-btn tm-btn--tertiary tm-btn--xs demo-sim-btn" onclick="simShowWebhookOptions()"><span class="tm-icon tm-icon--16" data-icon="x"></span>No connect</button>
           </div>
           <div id="demo-sim-webhook" style="display:none">
             <span class="demo-sim-label">Webhook:</span>
-            <button class="demo-sim-btn demo-sim-wh" onclick="simWebhook('no_answer')"><span class="tm-icon tm-icon--16" data-icon="phone-off"></span>No answer</button>
-            <button class="demo-sim-btn demo-sim-wh" onclick="simWebhook('switched_off')"><span class="tm-icon tm-icon--16" data-icon="volume-off"></span>Switched off</button>
-            <button class="demo-sim-btn demo-sim-wh" onclick="simWebhook('wrong_number')"><span class="tm-icon tm-icon--16" data-icon="circle-x"></span>Wrong no.</button>
-            <button class="demo-sim-btn demo-sim-wh demo-sim-timeout" onclick="simWebhook('timeout')"><span class="tm-icon tm-icon--16" data-icon="clock"></span>Timeout</button>
+            <button class="tm-btn tm-btn--tertiary tm-btn--xs demo-sim-btn" onclick="simWebhook('no_answer')"><span class="tm-icon tm-icon--16" data-icon="phone-off"></span>No answer</button>
+            <button class="tm-btn tm-btn--tertiary tm-btn--xs demo-sim-btn" onclick="simWebhook('switched_off')"><span class="tm-icon tm-icon--16" data-icon="volume-off"></span>Switched off</button>
+            <button class="tm-btn tm-btn--tertiary tm-btn--xs demo-sim-btn" onclick="simWebhook('wrong_number')"><span class="tm-icon tm-icon--16" data-icon="circle-x"></span>Wrong no.</button>
+            <button class="tm-btn tm-btn--tertiary tm-btn--xs demo-sim-btn" onclick="simWebhook('timeout')"><span class="tm-icon tm-icon--16" data-icon="clock"></span>Timeout</button>
           </div>
         </div>
         <div id="demo-bar-row2">
           <span id="demo-state-label">State: assigned</span>
-          <button id="demo-ff-btn-mobile"><span class="tm-icon tm-icon--16" data-icon="player-track-next"></span>Fast-forward 50s</button>
+          <button id="demo-ff-btn-mobile" class="tm-btn tm-btn--tertiary tm-btn--xs"><span class="tm-icon tm-icon--16" data-icon="player-track-next"></span>Fast-forward 50s</button>
         </div>
       </div>
 
@@ -76,8 +68,8 @@
           <div id="cs-patient-meta">—</div>
         </div>
         <span id="cs-order-value"></span>
-        <span id="cs-timer-badge" class="hidden"><span class="tm-icon tm-icon--16" data-icon="phone-call"></span><span id="cs-timer-text">0:00</span></span>
-        <button id="cs-view-rx-btn" class="hidden" onclick="openRxOverlay()"><span class="tm-icon tm-icon--16" data-icon="clipboard-text"></span>View Rx</button>
+        <span id="cs-timer-badge" class="tm-tag tm-tag--md tm-tag--info hidden"><span class="tm-icon tm-icon--16" data-icon="phone-call"></span><span id="cs-timer-text">0:00</span></span>
+        <button id="cs-view-rx-btn" class="tm-btn tm-btn--secondary tm-btn--xs hidden" onclick="openRxOverlay()"><span class="tm-icon tm-icon--16" data-icon="clipboard-text"></span>View Rx</button>
       </div>
 
     </div><!-- /sticky-top-wrapper -->
@@ -86,15 +78,15 @@
     <div id="main-scroll">
 
       <!-- 1. Patient Detail Block — non-sticky, no badge row -->
-      <div id="patient-detail-block">
+      <div id="patient-detail-block" class="tm-card">
         <div id="pdb-top-row">
           <div>
-            <div id="patient-full-name">—</div>
+            <div id="patient-full-name" class="tm-text-h2">—</div>
             <div id="patient-details-row">—</div>
           </div>
           <div id="pdb-actions">
-            <button id="pdb-info-btn" onclick="toggleOrderExpand()" title="Order details" aria-label="Order details"><span class="tm-icon" data-icon="info-circle"></span></button>
-            <button id="pdb-view-rx-btn" class="hidden" onclick="openRxOverlay()"><span class="tm-icon tm-icon--16" data-icon="clipboard-text"></span>View Rx</button>
+            <button id="pdb-info-btn" class="tm-btn tm-btn--ghost tm-btn--icon" aria-expanded="false" onclick="toggleOrderExpand()" title="Order details" aria-label="Order details"><span class="tm-icon" data-icon="info-circle"></span></button>
+            <button id="pdb-view-rx-btn" class="tm-btn tm-btn--secondary tm-btn--sm hidden" onclick="openRxOverlay()"><span class="tm-icon tm-icon--16" data-icon="clipboard-text"></span>View Rx</button>
           </div>
         </div>
         <div id="order-id-row">
@@ -146,13 +138,15 @@
       </div>
 
       <!-- 4. Action Zone — merged call + post-call -->
-      <div id="action-zone">
+      <div id="action-zone" class="tm-card">
 
         <!-- Briefing strip — all scenarios, persists above both phases -->
-        <div id="pre-call-brief">
-          <div class="pcb-label" id="pcb-label">—</div>
-          <div class="pcb-script-prefix">End of call script:</div>
-          <div class="pcb-text" id="pcb-text">—</div>
+        <div id="pre-call-brief" class="tm-notice">
+          <div class="pcb-body">
+            <div class="pcb-label" id="pcb-label">—</div>
+            <div class="pcb-script-prefix">End of call script:</div>
+            <div class="pcb-text" id="pcb-text">—</div>
+          </div>
         </div>
 
         <!-- Phase 1: Call control (hidden when gate passes) -->
@@ -174,7 +168,7 @@
         <!-- Phase 2: Post-call (hidden until valid-call gate passes [LOCKED]) -->
         <div id="az-phase2">
           <div id="postcall-cta-card">
-            <div id="postcall-cta-label">Post-Call Action</div>
+            <div id="postcall-cta-label">Post-call action</div>
             <button id="main-cta-btn" class="tm-btn tm-btn--lg tm-btn--primary tm-btn--block" onclick="handleMainCTA()">
               <span id="main-cta-icon"></span>
               <span id="main-cta-label">Confirm Order</span>
@@ -205,7 +199,7 @@
   <div id="desktop-side-panel">
 
     <!-- Case Overview -->
-    <div class="side-panel-card">
+    <div class="side-panel-card tm-card">
       <div class="side-panel-header">Current Case</div>
       <div class="side-panel-body">
         <div id="side-patient-name">—</div>
@@ -215,7 +209,7 @@
     </div>
 
     <!-- Call State -->
-    <div class="side-panel-card">
+    <div class="side-panel-card tm-card">
       <div class="side-panel-header">Call Status</div>
       <div class="side-panel-body">
         <div id="side-state-display">
@@ -229,7 +223,7 @@
     </div>
 
     <!-- Post-call CTA (mirrors main scroll) -->
-    <div class="side-panel-card">
+    <div class="side-panel-card tm-card">
       <div class="side-panel-header">Post-Call Action</div>
       <div class="side-panel-body">
         <div id="side-cta-section">
@@ -240,38 +234,38 @@
             <span id="side-cta-label">Confirm Order</span>
           </button>
         </div>
-        <div id="side-cta-locked" style="font-size:12px;color:var(--text-muted);text-align:center;padding:8px 0;">
+        <div id="side-cta-locked">
           Waiting for valid call (50s)
         </div>
       </div>
     </div>
 
     <!-- Demo Controls -->
-    <div class="side-panel-card">
+    <div class="side-panel-card tm-card">
       <div class="side-panel-header"><span class="tm-icon tm-icon--16" data-icon="bolt"></span>Demo scenarios</div>
       <div class="side-panel-body" id="side-scenario-btns">
-        <button class="side-scenario-btn active" data-scenario="cat4">Cat4</button>
-        <button class="side-scenario-btn" data-scenario="pilot_value_meds_ha">Pilot + Value Meds + HA</button>
-        <button class="side-scenario-btn" data-scenario="pilot_nonvalue_meds_ha">Pilot + Non-Value Meds + HA</button>
-        <button class="side-scenario-btn" data-scenario="pilot_ha_skipped_customer">Pilot · HA Skipped (Customer)</button>
-        <button class="side-scenario-btn" data-scenario="pilot_ha_skipped_system">Pilot · HA Skipped (System)</button>
+        <button class="tm-btn tm-btn--tertiary tm-btn--sm tm-btn--block side-scenario-btn" aria-pressed="true" data-scenario="cat4">Cat4</button>
+        <button class="tm-btn tm-btn--tertiary tm-btn--sm tm-btn--block side-scenario-btn" aria-pressed="false" data-scenario="pilot_value_meds_ha">Pilot + Value Meds + HA</button>
+        <button class="tm-btn tm-btn--tertiary tm-btn--sm tm-btn--block side-scenario-btn" aria-pressed="false" data-scenario="pilot_nonvalue_meds_ha">Pilot + Non-Value Meds + HA</button>
+        <button class="tm-btn tm-btn--tertiary tm-btn--sm tm-btn--block side-scenario-btn" aria-pressed="false" data-scenario="pilot_ha_skipped_customer">Pilot · HA Skipped (Customer)</button>
+        <button class="tm-btn tm-btn--tertiary tm-btn--sm tm-btn--block side-scenario-btn" aria-pressed="false" data-scenario="pilot_ha_skipped_system">Pilot · HA Skipped (System)</button>
         <!-- Desktop webhook simulator — visible when state=calling -->
-        <div id="side-demo-call-sim" style="display:none; flex-direction:column; gap:8px; margin-top:8px; padding-top:10px; border-top:1px solid #e5e7eb;">
-          <div id="side-sim-calling" style="display:flex; gap:6px; flex-wrap:wrap;">
-            <button class="side-sim-btn side-sim-connected" onclick="simCallConnected()"><span class="tm-icon tm-icon--16" data-icon="check"></span>Connected</button>
-            <button class="side-sim-btn side-sim-failed" onclick="simShowWebhookOptions()"><span class="tm-icon tm-icon--16" data-icon="x"></span>No connect</button>
+        <div id="side-demo-call-sim" style="display:none">
+          <div id="side-sim-calling" class="side-sim-row">
+            <button class="tm-btn tm-btn--secondary tm-btn--xs side-sim-btn" onclick="simCallConnected()"><span class="tm-icon tm-icon--16" data-icon="check"></span>Connected</button>
+            <button class="tm-btn tm-btn--tertiary tm-btn--xs side-sim-btn" onclick="simShowWebhookOptions()"><span class="tm-icon tm-icon--16" data-icon="x"></span>No connect</button>
           </div>
-          <div id="side-sim-webhook" style="display:none; flex-direction:column; gap:6px;">
-            <div style="font-size:11px; font-weight:600; color:#6b7280; text-transform:uppercase; letter-spacing:0.4px;">Webhook reason:</div>
-            <div style="display:flex; gap:6px; flex-wrap:wrap;">
-              <button class="side-sim-btn side-sim-wh" onclick="simWebhook('no_answer')"><span class="tm-icon tm-icon--16" data-icon="phone-off"></span>No answer</button>
-              <button class="side-sim-btn side-sim-wh" onclick="simWebhook('switched_off')"><span class="tm-icon tm-icon--16" data-icon="volume-off"></span>Switched off</button>
-              <button class="side-sim-btn side-sim-wh" onclick="simWebhook('wrong_number')"><span class="tm-icon tm-icon--16" data-icon="circle-x"></span>Wrong no.</button>
-              <button class="side-sim-btn side-sim-timeout" onclick="simWebhook('timeout')"><span class="tm-icon tm-icon--16" data-icon="clock"></span>Timeout</button>
+          <div id="side-sim-webhook" style="display:none">
+            <div class="side-sim-label">Webhook reason</div>
+            <div class="side-sim-row">
+              <button class="tm-btn tm-btn--tertiary tm-btn--xs side-sim-btn" onclick="simWebhook('no_answer')"><span class="tm-icon tm-icon--16" data-icon="phone-off"></span>No answer</button>
+              <button class="tm-btn tm-btn--tertiary tm-btn--xs side-sim-btn" onclick="simWebhook('switched_off')"><span class="tm-icon tm-icon--16" data-icon="volume-off"></span>Switched off</button>
+              <button class="tm-btn tm-btn--tertiary tm-btn--xs side-sim-btn" onclick="simWebhook('wrong_number')"><span class="tm-icon tm-icon--16" data-icon="circle-x"></span>Wrong no.</button>
+              <button class="tm-btn tm-btn--tertiary tm-btn--xs side-sim-btn" onclick="simWebhook('timeout')"><span class="tm-icon tm-icon--16" data-icon="clock"></span>Timeout</button>
             </div>
           </div>
         </div>
-        <button id="side-ff-btn"><span class="tm-icon tm-icon--16" data-icon="player-track-next"></span>Fast-forward to 50s</button>
+        <button id="side-ff-btn" class="tm-btn tm-btn--tertiary tm-btn--sm tm-btn--block"><span class="tm-icon tm-icon--16" data-icon="player-track-next"></span>Fast-forward to 50s</button>
       </div>
     </div>
 
@@ -285,14 +279,14 @@
 ============================================================ -->
 <div id="rx-overlay">
   <div id="rx-overlay-header">
-    <button id="rx-overlay-close" onclick="closeRxOverlay()" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button>
+    <button id="rx-overlay-close" class="tm-btn tm-btn--tertiary tm-btn--xs tm-btn--icon" onclick="closeRxOverlay()" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button>
     <div id="rx-overlay-title">Prescription</div>
     <div id="rx-controls">
-      <button class="rx-ctrl-btn" onclick="rxZoomOut()" title="Zoom out" aria-label="Zoom out"><span class="tm-icon tm-icon--16" data-icon="minus"></span></button>
+      <button class="tm-btn tm-btn--tertiary tm-btn--xs tm-btn--icon rx-ctrl-btn" onclick="rxZoomOut()" title="Zoom out" aria-label="Zoom out"><span class="tm-icon tm-icon--16" data-icon="minus"></span></button>
       <span id="rx-zoom-label">100%</span>
-      <button class="rx-ctrl-btn" onclick="rxZoomIn()" title="Zoom in" aria-label="Zoom in"><span class="tm-icon tm-icon--16" data-icon="plus"></span></button>
-      <button class="rx-ctrl-btn" onclick="rxRotate()" title="Rotate" aria-label="Rotate"><span class="tm-icon tm-icon--16" data-icon="rotate-clockwise"></span></button>
-      <button class="rx-ctrl-btn" onclick="rxReset()" title="Reset" aria-label="Reset view"><span class="tm-icon tm-icon--16" data-icon="arrows-minimize"></span></button>
+      <button class="tm-btn tm-btn--tertiary tm-btn--xs tm-btn--icon rx-ctrl-btn" onclick="rxZoomIn()" title="Zoom in" aria-label="Zoom in"><span class="tm-icon tm-icon--16" data-icon="plus"></span></button>
+      <button class="tm-btn tm-btn--tertiary tm-btn--xs tm-btn--icon rx-ctrl-btn" onclick="rxRotate()" title="Rotate" aria-label="Rotate"><span class="tm-icon tm-icon--16" data-icon="rotate-clockwise"></span></button>
+      <button class="tm-btn tm-btn--tertiary tm-btn--xs tm-btn--icon rx-ctrl-btn" onclick="rxReset()" title="Reset" aria-label="Reset view"><span class="tm-icon tm-icon--16" data-icon="arrows-minimize"></span></button>
     </div>
   </div>
   <div id="rx-overlay-body">
@@ -316,11 +310,11 @@
             <div class="rx-patient-info">
               <div class="rx-patient-label">Patient</div>
               <div id="rx-patient-name-display" class="rx-patient-value">—</div>
-              <div class="rx-patient-label" style="margin-top:6px">Date</div>
+              <div class="rx-patient-label rx-label-gap">Date</div>
               <div class="rx-patient-value" id="rx-date-display">—</div>
             </div>
             <div>
-              <div class="rx-patient-info" style="text-align:right;margin-bottom:8px">
+              <div class="rx-patient-info rx-align-right">
                 <div class="rx-patient-label">Age / Gender</div>
                 <div id="rx-age-display" class="rx-patient-value">—</div>
               </div>
@@ -339,7 +333,7 @@
                 Take medicines as prescribed.<br>
                 Drink plenty of water. Follow-up in 2 weeks.
               </div>
-              <div class="rx-stamp" style="margin-top:10px">
+              <div class="rx-stamp rx-stamp-gap">
                 <div class="rx-stamp-text">TRUEMEDS VERIFIED</div>
               </div>
             </div>
@@ -548,7 +542,7 @@
         </div>
       </div>
       <!-- Earnings -->
-      <div id="profile-earnings-card">
+      <div id="profile-earnings-card" class="tm-card tm-card--flat">
         <div class="profile-section-label">Today's Earnings</div>
         <div id="profile-earnings-row">
           <div class="profile-earnings-item">
@@ -587,10 +581,10 @@
   <!-- Customer Unavailable Sheet -->
   <div id="sheet-unavailable" class="bottom-sheet">
     <div class="sheet-handle"></div>
-    <div class="sheet-body" style="text-align:center; padding-top:8px">
+    <div class="sheet-body unavail-body">
       <div class="state-icon"><span class="tm-icon tm-icon--24" data-icon="phone-off"></span></div>
-      <div style="font-size:18px; font-weight:700; color:var(--text-primary); margin-bottom:8px">Customer Unavailable</div>
-      <div id="unavail-desc" style="font-size:14px; color:var(--text-secondary); line-height:1.6; margin-bottom:24px">Patient could not be reached. Case will be reassigned to the queue.</div>
+      <div class="unavail-title tm-text-h2">Customer unavailable</div>
+      <div id="unavail-desc" class="unavail-desc">Patient could not be reached. Case will be reassigned to the queue.</div>
       <button class="tm-btn tm-btn--primary tm-btn--block sheet-cta-margin" onclick="resetToDemo()">Next Order <span class="tm-icon" data-icon="arrow-right"></span></button>
     </div>
   </div>
@@ -598,15 +592,15 @@
 </div><!-- /sheet-overlay -->
 
 <!-- TOAST -->
-<div id="toast"></div>
+<div id="toast" class="tm-toast"></div>
 
 <!-- COMPLETED OVERLAY -->
 <!-- Success toast — non-blocking completion confirmation with Next Order fallback -->
-<div id="success-toast">
-  <div id="success-toast-icon"><span class="tm-icon tm-icon--24" data-icon="circle-check"></span></div>
-  <div id="success-toast-body">
-    <div id="success-toast-title">Order Confirmed</div>
-    <div id="success-toast-desc">—</div>
+<div id="success-toast" class="tm-snackbar">
+  <div id="success-toast-icon" class="tm-snackbar__icon"><span class="tm-icon tm-icon--24" data-icon="circle-check"></span></div>
+  <div id="success-toast-body" class="tm-snackbar__body">
+    <div id="success-toast-title" class="tm-snackbar__title">Order Confirmed</div>
+    <div id="success-toast-desc" class="tm-snackbar__text">—</div>
   </div>
   <button id="success-toast-next" class="tm-btn tm-btn--sm tm-btn--primary" onclick="resetToDemo()">Next Order <span class="tm-icon tm-icon--16" data-icon="arrow-right"></span></button>
 </div>

@@ -28,8 +28,10 @@ The visual system for this prototype is now the central Truemeds design system:
 - `docs/design_system.md` is **superseded** — kept only as history. Its colours
   (`#1B69DE`, system font, `#111827` text) and its emoji/illustration icons do not
   match Truemeds and must not be extended.
-- The restyle onto `truemeds.css` + `icons.js` has **not happened yet** — it is the
-  next UI step, and must not change the locked flow or CTA routing.
+- The restyle onto `truemeds.css` + `icons.js` is **done** (branch `doctor-portal-restyle`);
+  the locked flow, valid-call gate and CTA routing are unchanged. Use only `--tm-*` semantic
+  tokens and `.tm-*` components; do not reintroduce local tokens, emoji or hex colours
+  (the mock Rx paper is the only exempt block).
 
 ---
 

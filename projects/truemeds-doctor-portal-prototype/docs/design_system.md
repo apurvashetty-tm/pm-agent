@@ -1,4 +1,6 @@
 > **SUPERSEDED 2026-10-07.** This prototype now follows the central Truemeds design
+
+> RESTYLE DONE (2026-10-07): the portal now uses the central design system; this file is history only.
 > system: `../../design-system/RULES.md`. This file is kept as history only — do not
 > add to it. The button *rules* below (one primary per context, state via class swaps)
 > still hold; the colours, font and icons do not.

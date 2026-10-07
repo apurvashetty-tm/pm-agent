@@ -9,18 +9,16 @@
 
 > **2026-10-07 — design system change.** The prototype's local design system is
 > superseded by the central Truemeds design system (`../../design-system/`, from SALT).
-> Nothing in `index.html` / `styles.css` / `app.js` has been restyled yet.
-> **Next exact UI step:** restyle onto `truemeds.css` + `icons.js` — replace the
-> local tokens, system font, emoji and illustrated medicine icons; pin Call Patient in
-> a bottom action bar; keep the locked flow, valid-call gate and CTA routing unchanged.
-> Then run the design review checklist (`design-system/RULES.md` §5).
+> **Update (restyle done):** `index.html` / `styles.css` / `app.js` are now on `truemeds.css` + `icons.js`
+> (see RESTYLE note below). Call Patient was NOT pinned (decision D4). Remaining UI work is functional
+> and awaits product answers: login + working hours, end-of-session extend/logout, Prescription changes.
 
 ---
 
-> **2026-10-07 — RESTYLE IN PROGRESS (visual migration only).** Scope authorised by Apurva:
+> **2026-10-07 — RESTYLE VISUALLY COMPLETE (visual migration only).** Scope authorised by Apurva:
 > design-system restyle only; every behaviour, the five scenarios, the 50s gate, CTA routing,
 > callback, medicine edits, notes, Rx viewer and demo controls are unchanged.
-> Branch `doctor-portal-restyle`. Decisions D1–D12 recorded in `docs/reviews/2026-10-07-restyle-audit.md`.
+> Branch `doctor-portal-restyle`. Verified: 212 checks x 390px/1280px, 0 page errors, static token/font/emoji audit clean. Decisions D1–D12 recorded in `docs/reviews/2026-10-07-restyle-audit.md`.
 >
 > ### ROLLBACK — say: "revert doctor portal restyle"
 > Checkpoint tag: `checkpoint/doctor-portal-pre-restyle` = commit `3fa1fc8` (pushed to origin).
@@ -44,7 +42,9 @@
 > `design-system/src/components.css` `design-system/truemeds.css` `design-system/preview.html`
 > `design-system/icons/icons.txt` `design-system/icons/icons.js`
 >
-> **Files created by the restyle:** none yet.
+> **Files created by the restyle:** none.
+>
+> `[PROPOSED]` central design-system additions (flag to design owner): `.tm-btn--busy`, `.tm-tag--md` (12px), `.tm-snackbar`, `.tm-section-title` 16/24, 16 new Tabler icons.
 >
 > Docs (this handoff, audit, CLAUDE.md) are intentionally NOT rolled back.
 

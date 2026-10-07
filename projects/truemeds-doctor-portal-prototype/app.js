@@ -170,7 +170,7 @@ function haSkipApplicable(scenario) {
 // ================================================================
 function getMedIcon(form) {
   // Tabler outline, monochrome — one glyph per dosage form
-  const byForm = { tablet:'pill', capsule:'capsule', injection:'vaccine', syrup:'medicine-syrup',
+  const byForm = { tablet:'pill', capsule:'capsule-horizontal', injection:'vaccine', syrup:'medicine-syrup',
                    drops:'droplet', cream:'test-pipe', inhaler:'wind' };
   return iconEl(byForm[form] || 'pill', 24);
 }
@@ -252,7 +252,7 @@ function renderRxMedicines(meds) {
   const list = document.getElementById('rx-medicines-list');
   list.innerHTML = '';
   if (!meds || meds.length === 0) {
-    list.innerHTML = '<p style="font-size:12px;color:#6b7280;padding:8px 0">No medicines listed</p>';
+    list.innerHTML = '<p class="rx-empty">No medicines listed</p>';
     return;
   }
   meds.forEach((med, i) => {
@@ -501,6 +501,7 @@ function renderSidePanel() {
   // Side scenario buttons sync
   document.querySelectorAll('.side-scenario-btn[data-scenario]').forEach(b => {
     b.classList.toggle('active', b.dataset.scenario === DOCTOR_STATE.activeScenario);
+    b.setAttribute('aria-pressed', b.dataset.scenario === DOCTOR_STATE.activeScenario);
   });
 }
 
@@ -1096,6 +1097,7 @@ function switchScenario(scenarioId) {
   // Sync both scenario button sets
   document.querySelectorAll('.scenario-btn[data-scenario], .side-scenario-btn[data-scenario]').forEach(b => {
     b.classList.toggle('active', b.dataset.scenario === scenarioId);
+    b.setAttribute('aria-pressed', b.dataset.scenario === scenarioId);
   });
 
   render();
