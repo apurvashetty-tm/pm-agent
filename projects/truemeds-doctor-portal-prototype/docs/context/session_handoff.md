@@ -51,7 +51,7 @@
 > `design-system/src/components.css` `design-system/truemeds.css` `design-system/preview.html`
 > `design-system/icons/icons.txt` `design-system/icons/icons.js` `design-system/RULES.md`
 >
-> **Files created by the restyle:** `projects/truemeds-doctor-portal-prototype/docs/layout_check.py` (layout regression check), `projects/truemeds-doctor-portal-prototype/truemeds-logo.svg` (official brand asset; rollback deletes it with delete permission). Also `design-system/logo/truemeds-logo.svg` (same official file), `design-system/logo/truemeds-icon.svg` (icon-only, from Figma), `design-system/logo/logo.lock.json` + `design-system/scripts/check_logo.py` (logo lock: blue #1B69DE, green #22B573) and the logo rule 8 added to `design-system/RULES.md` (add RULES.md to the restore list).
+> **Files created by the restyle:** `projects/truemeds-doctor-portal-prototype/docs/layout_check.py` (layout regression check), `projects/truemeds-doctor-portal-prototype/truemeds-logo.svg` (official brand asset; rollback deletes it with delete permission). Also `design-system/logo/truemeds-logo.svg` (same official file), `design-system/logo/truemeds-icon.svg` (icon-only, from Figma), `design-system/logo/truemeds-for-doctors.{svg,png}` + `-preview.png` and `projects/truemeds-doctor-portal-prototype/truemeds-for-doctors.svg` (approved "truemeds for doctors" lockup, developed with Codex), `design-system/logo/logo.lock.json` + `design-system/scripts/check_logo.py` (logo lock: blue #1B69DE, green #22B573) and the logo rule 8 added to `design-system/RULES.md` (add RULES.md to the restore list).
 >
 > `[PROPOSED]` central design-system additions (flag to design owner): `.tm-btn--busy`, `.tm-tag--md` (12px), `.tm-snackbar`, `.tm-section-title` 16/24, 16 new Tabler icons.
 >
@@ -61,7 +61,7 @@
 > containing block), so they anchor to the frame bottom, never the browser window. The demo panel (>=1100px) floats beside the frame.
 > Rule: `design-system/RULES.md` §7. Regression check: `python3 projects/truemeds-doctor-portal-prototype/docs/layout_check.py`.
 > Earlier wordings ("720px consultation page", "centred dialogs", "430px column with window scroll") are WRONG and removed.
-> **Logo:** official Truemeds nav SVG, vendored unmodified as `projects/truemeds-doctor-portal-prototype/truemeds-logo.svg` (sha256 starts 1953a94b) and used in the header via `<img>`.
+> **Logo:** the header uses the approved "truemeds for doctors" lockup, `projects/truemeds-doctor-portal-prototype/truemeds-for-doctors.svg` (identical to `design-system/logo/truemeds-for-doctors.svg`, sha256 starts 51981c12), via `<img>` at 147x36. It embeds the official Truemeds logo unchanged. The plain `truemeds-logo.svg` (sha256 starts 1953a94b) stays alongside as the canonical asset but the header no longer shows the separate "Doctor Portal" text; the browser tab title is "Truemeds for Doctors".
 >
 > Docs (this handoff, audit, CLAUDE.md) are intentionally NOT rolled back.
 

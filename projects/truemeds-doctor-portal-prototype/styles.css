@@ -122,12 +122,11 @@
     #cs-timer-badge, #cs-view-rx-btn { flex-shrink: 0; }
 
     /* ============================================================
-       PORTAL HEADER — .tm-appbar with the official Truemeds logo (local copy)
+       PORTAL HEADER — .tm-appbar with the approved "truemeds for doctors" logo (local copy)
     ============================================================ */
     #portal-header { justify-content: space-between; }
     #portal-title { display: flex; align-items: center; gap: var(--tm-space-md); }
-    .portal-logo { display: block; width: 130px; height: 31px; flex-shrink: 0; }   /* official asset, unmodified (truemeds-logo.svg) */
-    #portal-name { font-size: var(--tm-font-size-body-lg); line-height: var(--tm-font-lineheight-md); font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-primary); }
+    .portal-logo { display: block; width: 147px; height: 36px; flex-shrink: 0; }   /* approved "truemeds for doctors" lockup, unmodified (truemeds-for-doctors.svg) */
     #profile-btn {
       width: calc(var(--tm-space-2xl) + var(--tm-space-sm)); height: calc(var(--tm-space-2xl) + var(--tm-space-sm));
       border-radius: var(--tm-radius-full); flex-shrink: 0;
