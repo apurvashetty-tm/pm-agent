@@ -122,24 +122,14 @@ const DOCTOR_STATE = {
 const CALLBACK_STATE = { day: null, time: null };
 
 // ================================================================
-// ICONS — single source for every CTA icon (see docs/design_system.md)
-// Markup: <span data-icon="name"></span> populated at init.
-// JS state changes reference ICONS.name — never inline SVG elsewhere.
+// ICONS — Tabler outline via the central design system (icons.js → TMIcons).
+// Markup: <span class="tm-icon" data-icon="name"></span> (rendered by icons.js).
+// State changes in JS call icon('name'). Never inline SVG in this file.
 // ================================================================
-const ICONS = {
-  phone:    '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>',
-  phoneEnd: '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><g transform="rotate(135 12 12)"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></g></svg>',
-  calendar: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="3" x2="8" y2="7"/><line x1="16" y1="3" x2="16" y2="7"/></svg>',
-};
-
-// Populate every <span data-icon="…"> from the ICONS map
-function initIcons() {
-  document.querySelectorAll('[data-icon]').forEach(el => {
-    el.innerHTML = ICONS[el.dataset.icon] || '';
-    el.style.display = 'inline-flex';
-    el.style.alignItems = 'center';
-  });
-}
+const icon = (name) => TMIcons.svg(name);                       // bare <svg> (put inside a .tm-icon span)
+const iconEl = (name, size) =>                                  // ready-made sized icon element
+  `<span class="tm-icon${size ? ' tm-icon--' + size : ''}">${TMIcons.svg(name)}</span>`;
+function initIcons() { TMIcons.render(); }
 
 // ================================================================
 // EDIT STATE — for medicine edit sheet
@@ -176,93 +166,13 @@ function haSkipApplicable(scenario) {
 }
 
 // ================================================================
-// MEDICINE FORM ICONS — multicolour SVG per dosage form
+// MEDICINE FORM ICONS — Tabler outline per dosage form
 // ================================================================
 function getMedIcon(form) {
-  const icons = {
-
-    tablet: `<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect width="40" height="40" fill="#eef2ff"/>
-      <path d="M7,20 A13,13 0 0,1 33,20 Z" fill="#c7d2fe"/>
-      <path d="M7,20 A13,13 0 0,0 33,20 Z" fill="#a5b4fc"/>
-      <line x1="7" y1="20" x2="33" y2="20" stroke="#818cf8" stroke-width="1.5"/>
-      <ellipse cx="15" cy="14" rx="3.5" ry="2" fill="#fff" opacity="0.45" transform="rotate(-20,15,14)"/>
-      <circle cx="20" cy="20" r="13" fill="none" stroke="#a5b4fc" stroke-width="1.5"/>
-    </svg>`,
-
-    capsule: `<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect width="40" height="40" fill="#fffbeb"/>
-      <path d="M20,13 C20,13 7,13 7,20 C7,27 20,27 20,27 Z" fill="#ef4444"/>
-      <path d="M20,13 C20,13 33,13 33,20 C33,27 20,27 20,27 Z" fill="#fbbf24"/>
-      <ellipse cx="13" cy="17" rx="3" ry="1.8" fill="#fff" opacity="0.3" transform="rotate(-15,13,17)"/>
-      <ellipse cx="27" cy="17" rx="3" ry="1.8" fill="#fff" opacity="0.2" transform="rotate(-15,27,17)"/>
-      <line x1="20" y1="13" x2="20" y2="27" stroke="#00000015" stroke-width="1"/>
-      <rect x="7" y="13" width="26" height="14" rx="7" fill="none" stroke="#d97706" stroke-width="1.4"/>
-    </svg>`,
-
-    injection: `<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect width="40" height="40" fill="#e0f2fe"/>
-      <g transform="rotate(-35,20,20)">
-        <rect x="13" y="14" width="18" height="9" rx="2.5" fill="#bae6fd" stroke="#38bdf8" stroke-width="1.3"/>
-        <rect x="13" y="15" width="8" height="7" rx="1.5" fill="#7dd3fc"/>
-        <rect x="30" y="15.5" width="3" height="6" rx="1" fill="#38bdf8"/>
-        <rect x="32.5" y="16" width="4" height="5" rx="1" fill="#0ea5e9"/>
-        <rect x="7" y="16.5" width="7" height="4" rx="1" fill="#94a3b8"/>
-        <line x1="4" y1="18" x2="8" y2="18" stroke="#64748b" stroke-width="1.5" stroke-linecap="round"/>
-        <line x1="17" y1="14" x2="17" y2="17" stroke="#7dd3fc" stroke-width="1"/>
-        <line x1="21" y1="14" x2="21" y2="17" stroke="#7dd3fc" stroke-width="1"/>
-        <ellipse cx="18" cy="16" rx="3" ry="1.2" fill="#fff" opacity="0.35"/>
-      </g>
-    </svg>`,
-
-    syrup: `<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect width="40" height="40" fill="#fefce8"/>
-      <rect x="13" y="19" width="14" height="17" rx="3" fill="#fef3c7" stroke="#f59e0b" stroke-width="1.3"/>
-      <rect x="13" y="29" width="14" height="7" rx="0 0 2 2" fill="#fbbf24"/>
-      <line x1="13" y1="29" x2="27" y2="29" stroke="#f59e0b" stroke-width="0.9"/>
-      <rect x="15" y="24" width="10" height="4" rx="1.5" fill="#fff" opacity="0.5"/>
-      <rect x="15" y="12" width="10" height="9" rx="2" fill="#fef3c7" stroke="#f59e0b" stroke-width="1.3"/>
-      <rect x="14" y="7" width="12" height="7" rx="3" fill="#f59e0b"/>
-      <rect x="15" y="8" width="10" height="5" rx="2" fill="#fbbf24"/>
-      <ellipse cx="17" cy="22" rx="2" ry="3.5" fill="#fff" opacity="0.22"/>
-    </svg>`,
-
-    drops: `<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect width="40" height="40" fill="#ecfeff"/>
-      <rect x="14" y="18" width="12" height="18" rx="4" fill="#e0f2fe" stroke="#22d3ee" stroke-width="1.3"/>
-      <rect x="15" y="28" width="10" height="8" rx="0 0 3 3" fill="#67e8f9"/>
-      <line x1="14" y1="28" x2="26" y2="28" stroke="#22d3ee" stroke-width="0.9"/>
-      <rect x="16" y="11" width="8" height="9" rx="2" fill="#e0f2fe" stroke="#22d3ee" stroke-width="1.3"/>
-      <rect x="17.5" y="7" width="5" height="6" rx="2.5" fill="#cffafe" stroke="#22d3ee" stroke-width="1.2"/>
-      <path d="M20,3.5 Q20,1 18,2.5 Q16,4 18,6 Q20,7 20,3.5 Z" fill="#0891b2"/>
-      <ellipse cx="17" cy="22" rx="1.8" ry="3.5" fill="#fff" opacity="0.3"/>
-    </svg>`,
-
-    cream: `<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect width="40" height="40" fill="#fdf4ff"/>
-      <g transform="rotate(-10,20,25)">
-        <rect x="7" y="19" width="24" height="13" rx="4" fill="#fae8ff" stroke="#e879f9" stroke-width="1.3"/>
-        <rect x="7" y="23" width="24" height="4" fill="#f0abfc"/>
-        <ellipse cx="9" cy="25.5" rx="3.5" ry="5" fill="#fae8ff" stroke="#e879f9" stroke-width="1.3"/>
-        <rect x="26" y="18" width="8" height="13" rx="3.5" fill="#d946ef"/>
-        <ellipse cx="29" cy="21" rx="1.8" ry="3.5" fill="#fff" opacity="0.25"/>
-        <ellipse cx="14" cy="22" rx="4" ry="2" fill="#fff" opacity="0.2"/>
-      </g>
-      <path d="M32,16 Q36,13 35,10 Q38,8 36,6" stroke="#e879f9" stroke-width="2" fill="none" stroke-linecap="round"/>
-    </svg>`,
-
-    inhaler: `<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect width="40" height="40" fill="#f0fdf4"/>
-      <rect x="16" y="8" width="11" height="19" rx="4" fill="#bbf7d0" stroke="#4ade80" stroke-width="1.3"/>
-      <rect x="17.5" y="10" width="8" height="13" rx="3" fill="#86efac" stroke="#22c55e" stroke-width="1.2"/>
-      <rect x="17.5" y="13" width="8" height="5" rx="1.5" fill="#fff" opacity="0.45"/>
-      <rect x="14" y="25" width="15" height="7" rx="3.5" fill="#bbf7d0" stroke="#4ade80" stroke-width="1.3"/>
-      <path d="M29,28 Q33,26 33,23" stroke="#4ade80" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.8"/>
-      <path d="M29,30 Q35,28 35,24" stroke="#4ade80" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.45"/>
-      <ellipse cx="20" cy="12" rx="2" ry="3" fill="#fff" opacity="0.3"/>
-    </svg>`,
-  };
-  return icons[form] || icons.tablet;
+  // Tabler outline, monochrome — one glyph per dosage form
+  const byForm = { tablet:'pill', capsule:'capsule', injection:'vaccine', syrup:'medicine-syrup',
+                   drops:'droplet', cream:'test-pipe', inhaler:'wind' };
+  return iconEl(byForm[form] || 'pill', 24);
 }
 
 // ================================================================
@@ -335,7 +245,7 @@ function updateCompactStrip() {
   const showTimer = state === 'connected' || state === 'gate_passed';
   const timerBadge = document.getElementById('cs-timer-badge');
   timerBadge.classList.toggle('hidden', !showTimer);
-  if (showTimer) timerBadge.textContent = `📞 ${formatTimer(DOCTOR_STATE.callTimer)}`;
+  if (showTimer) document.getElementById('cs-timer-text').textContent = formatTimer(DOCTOR_STATE.callTimer);
 }
 
 function renderRxMedicines(meds) {
@@ -373,9 +283,9 @@ function renderMedicines(meds) {
   meds.forEach(med => {
     const isDisabled = !!med.disabled;
     const statusMap = {
-      not_prescribed: { cls:'med-status-pending',   label:'Pending'    },
-      prescribed:     { cls:'med-status-validated',  label:'Prescribed' },
-      disabled:       { cls:'med-status-disabled',   label:'Disabled'   },
+      not_prescribed: { cls:'tm-tag--warning', label:'Pending'    },
+      prescribed:     { cls:'tm-tag--success', label:'Prescribed' },
+      disabled:       { cls:'',                label:'Disabled'   },
     };
     const st = isDisabled ? 'disabled' : (med.validation_status || 'not_prescribed');
     const { cls: sc, label: sl } = statusMap[st] || statusMap.not_prescribed;
@@ -387,22 +297,22 @@ function renderMedicines(meds) {
     const priceHtml = med.price != null ? `<span class="med-price">₹${med.price}</span>` : '';
 
     const el = document.createElement('div');
-    el.className = `medicine-item${isDisabled ? ' disabled' : ''}`;
+    el.className = `tm-row medicine-item${isDisabled ? ' disabled' : ''}`;
     el.setAttribute('role', 'button');
     el.setAttribute('tabindex', '0');
     el.setAttribute('aria-label', `Edit ${med.name}`);
     el.onclick = () => openMedEdit(med.id);
     el.onkeydown = (e) => { if (e.key === 'Enter' || e.key === ' ') openMedEdit(med.id); };
     el.innerHTML = `
-      <div class="med-icon">${getMedIcon(med.form || 'tablet')}</div>
-      <div class="med-info">
-        <div class="med-name">${med.name} ${med.strength}</div>
-        <div class="med-detail">
+      <div class="tm-thumb med-icon">${getMedIcon(med.form || 'tablet')}</div>
+      <div class="tm-row__main med-info">
+        <div class="tm-row__title med-name">${med.name} ${med.strength}</div>
+        <div class="tm-row__meta med-detail">
           <span>${dosage}${dur}</span><span>Qty ${med.qty}</span>${priceHtml}
         </div>
       </div>
-      <span class="med-status-badge ${sc}">${sl}</span>
-      <span class="med-edit-chevron">›</span>
+      <span class="tm-tag tm-tag--md ${sc}">${sl}</span>
+      ${iconEl('chevron-right', 16)}
     `;
     list.appendChild(el);
   });
@@ -428,13 +338,13 @@ function renderCallPhase() {
     const isValue = c.meds_type === 'value';
     brief.classList.add('visible');
     if (isHA && isValue) {
-      pcbLabel.textContent = '↗️ Live HA Transfer';
+      pcbLabel.innerHTML = iconEl('arrow-up-right', 16) + '<span>Live HA Transfer</span>';
       pcbText.textContent  = '"Please stay on the line — I\'ll connect you to our Health Advisor"';
     } else if (isHA && !isValue) {
-      pcbLabel.textContent = '📋 HA Follow-up';
+      pcbLabel.innerHTML = iconEl('clipboard-text', 16) + '<span>HA Follow-up</span>';
       pcbText.textContent  = '"Our Health Advisor will call you shortly after this consultation"';
     } else {
-      pcbLabel.textContent = '📦 Closing Script';
+      pcbLabel.innerHTML = iconEl('package', 16) + '<span>Closing Script</span>';
       pcbText.textContent  = '"I\'m confirming your order now — you can track delivery and updates on the Truemeds app"';
     }
   } else {
@@ -452,39 +362,39 @@ function renderCallPhase() {
   phase1.style.display = gateOpen ? 'none' : 'flex';
   if (gateOpen) return;
 
-  // ── Reset button defaults — all cosmetics via .btn system classes ──
+  // ── Reset button defaults — all cosmetics via design-system .tm-btn classes ──
   callBtn.disabled  = false;
-  callBtn.className = 'btn btn-lg btn-primary';
+  callBtn.className = 'tm-btn tm-btn--lg tm-btn--primary tm-btn--block';
   statusLbl.classList.add('hidden');
   statusLbl.textContent = '';
 
   if (state === 'calling') {
     const name = c ? c.patient_name.split(' ')[0] : 'Patient';
-    callBtnIcon.innerHTML  = ICONS.phone;
+    callBtnIcon.innerHTML  = icon('phone');
     callBtnLbl.textContent = `Calling ${name}…`;
     callBtn.disabled       = true;
-    callBtn.className      = 'btn btn-lg btn-calling pulsing';
+    callBtn.className      = 'tm-btn tm-btn--lg tm-btn--primary tm-btn--block tm-btn--busy pulsing';
     return;
   }
   const preGateCb = document.getElementById('pre-gate-callback-btn');
   if (state === 'connected') {
-    callBtnIcon.innerHTML  = ICONS.phoneEnd;
+    callBtnIcon.innerHTML  = icon('phone-x');
     callBtnLbl.textContent = 'End Call';
-    callBtn.className      = 'btn btn-lg btn-danger';
+    callBtn.className      = 'tm-btn tm-btn--lg tm-btn--destructive tm-btn--block';
     // Pre-gate schedule callback as quiet escape hatch during live call
-    if (preGateCb) preGateCb.className = 'btn btn-sm btn-text';
+    if (preGateCb) preGateCb.className = 'tm-btn tm-btn--sm tm-btn--ghost tm-btn--block';
     return;
   }
   // assigned / no_answer / hold — show Call Patient
   if (DOCTOR_STATE.endedEarly) {
     // Early hang-up: escape routes = retry OR schedule callback (ghost button)
-    callBtnIcon.innerHTML  = ICONS.phone;
+    callBtnIcon.innerHTML  = icon('phone');
     callBtnLbl.textContent = 'Call Again';
-    if (preGateCb) preGateCb.className = 'btn btn-md btn-ghost';
+    if (preGateCb) preGateCb.className = 'tm-btn tm-btn--secondary tm-btn--block';
     return;
   }
-  if (preGateCb) preGateCb.className = 'btn btn-sm btn-text hidden';
-  callBtnIcon.innerHTML  = ICONS.phone;
+  if (preGateCb) preGateCb.className = 'tm-btn tm-btn--sm tm-btn--ghost tm-btn--block hidden';
+  callBtnIcon.innerHTML  = icon('phone');
   callBtnLbl.textContent = 'Call Patient';
 }
 
@@ -545,29 +455,28 @@ function renderSidePanel() {
   // Side badges
   const sideRow = document.getElementById('side-badge-row');
   sideRow.innerHTML = '';
-  const addSideBadge = (text, cls) => {
+  const addSideBadge = (text) => {
     const b = document.createElement('span');
-    b.className = `badge ${cls}`;
+    b.className = 'tm-tag tm-tag--md';
     b.textContent = text;
-    b.style.fontSize = '10px';
     sideRow.appendChild(b);
   };
-  addSideBadge(c.case_type === 'cat4' ? 'Cat4' : 'Pilot', c.case_type === 'cat4' ? 'badge-cat4' : 'badge-pilot');
+  addSideBadge(c.case_type === 'cat4' ? 'Cat4' : 'Pilot');
   if (c.case_type !== 'cat4') {
     const hs = DOCTOR_STATE.haSkippedInSession ? 'skipped_session' : c.ha_status;
     const haMap = {
-      required:         ['HA Required',         'badge-ha-req'],
-      skipped_customer: ['HA Skipped',           'badge-ha-skip'],
-      skipped_system:   ['HA Skipped (Sys)',      'badge-ha-skip'],
-      skipped_session:  ['HA Skipped',            'badge-ha-skip'],
+      required:         ['HA Required'],
+      skipped_customer: ['HA Skipped'],
+      skipped_system:   ['HA Skipped (Sys)'],
+      skipped_session:  ['HA Skipped'],
     };
-    if (haMap[hs]) addSideBadge(haMap[hs][0], haMap[hs][1]);
+    if (haMap[hs]) addSideBadge(haMap[hs][0]);
   }
 
   // Side state
-  const stateIcons  = { assigned:'📞', calling:'📡', connected:'🔴', gate_passed:'✅', no_answer:'📵', hold:'⏸', unavailable:'🚫', completed:'✅' };
+  const stateIcons  = { assigned:'phone', calling:'phone-call', connected:'phone-call', gate_passed:'circle-check', no_answer:'phone-off', hold:'phone-pause', unavailable:'circle-x', completed:'circle-check' };
   const stateLabels = { assigned:'Ready to call', calling:'Dialling…', connected:'In call — live', gate_passed:'Call complete', no_answer:'No answer', hold:'On hold (timeout)', unavailable:'Customer unavailable', completed:'Completed' };
-  document.getElementById('side-state-icon').textContent = stateIcons[DOCTOR_STATE.consultationState] || '📞';
+  document.getElementById('side-state-icon').innerHTML = icon(stateIcons[DOCTOR_STATE.consultationState] || 'phone');
   document.getElementById('side-state-text').textContent = stateLabels[DOCTOR_STATE.consultationState] || '—';
   document.getElementById('side-timer-text').textContent = DOCTOR_STATE.callTimer > 0
     ? `Timer: ${formatTimer(DOCTOR_STATE.callTimer)}` : 'Timer not started';
@@ -618,6 +527,7 @@ function toggleOrderExpand() {
   const isOpen = !expand.classList.contains('hidden');
   expand.classList.toggle('hidden', isOpen);
   btn.classList.toggle('active', !isOpen);
+  btn.setAttribute('aria-expanded', !isOpen);
 }
 
 // ================================================================
@@ -724,15 +634,15 @@ function markCustomerUnavailable() {
 // ── Schedule Callback (post-gate) ────────────────────────────────
 function selectCallbackDay(day) {
   CALLBACK_STATE.day = day;
-  document.querySelectorAll('#callback-day-chips .chip').forEach(b => {
-    b.classList.toggle('chip-active', b.dataset.day === day);
+  document.querySelectorAll('#callback-day-chips .tm-chip').forEach(b => {
+    b.setAttribute('aria-pressed', b.dataset.day === day);
   });
 }
 
 function selectCallbackTime(time) {
   CALLBACK_STATE.time = time;
-  document.querySelectorAll('#callback-time-chips .chip').forEach(b => {
-    b.classList.toggle('chip-active', b.dataset.time === time);
+  document.querySelectorAll('#callback-time-chips .tm-chip').forEach(b => {
+    b.setAttribute('aria-pressed', b.dataset.time === time);
   });
 }
 
@@ -766,7 +676,7 @@ function startCallTimer() {
     // Update compact strip timer badge
     const timerBadge = document.getElementById('cs-timer-badge');
     timerBadge.classList.remove('hidden');
-    timerBadge.textContent = `📞 ${formatTimer(DOCTOR_STATE.callTimer)}`;
+    document.getElementById('cs-timer-text').textContent = formatTimer(DOCTOR_STATE.callTimer);
 
     if (DOCTOR_STATE.callTimer >= 50 && DOCTOR_STATE.consultationState !== 'gate_passed') {
       clearInterval(DOCTOR_STATE.timerInterval);
@@ -795,7 +705,7 @@ function doFastForward() {
     DOCTOR_STATE.consultationState = 'gate_passed';
     DOCTOR_STATE.gatePassedAt = Date.now();
     render();
-    showToast('⏩ Fast-forwarded to 50s — gate passed');
+    showToast('Fast-forwarded to 50s — gate passed');
     setTimeout(() => document.getElementById('action-zone').scrollIntoView({ behavior:'smooth', block:'start' }), 300);
   } else if (['assigned', 'hold', 'no_answer', 'calling'].includes(s)) {
     // Hide sim panel if showing
@@ -806,7 +716,7 @@ function doFastForward() {
     DOCTOR_STATE.consultationState = 'gate_passed';
     DOCTOR_STATE.gatePassedAt = Date.now();
     render();
-    showToast('⏩ Fast-forwarded — gate passed');
+    showToast('Fast-forwarded — gate passed');
     setTimeout(() => document.getElementById('action-zone').scrollIntoView({ behavior:'smooth', block:'start' }), 300);
   } else {
     showToast('Fast-forward only works before gate is passed');
@@ -887,7 +797,7 @@ function handleSheetOverlayClick(e) {
 function confirmSkipHA(reason) {
   DOCTOR_STATE.haSkippedInSession = true;
   closeSheet(); render();
-  showToast(`HA skipped: ${reason} → CTA updated to Confirm Order`);
+  showToast(`HA skipped: ${reason}. CTA updated to Confirm Order`);
   console.log(`[MOCK] ha.skip | reason="${reason}" | new_cta=confirm_order`);
 }
 
@@ -897,7 +807,7 @@ function confirmSkipHA(reason) {
 function selectMAN(row, val) {
   EDIT_STATE[row] = val;
   document.querySelectorAll(`.man-btns[data-man="${row}"] .man-btn`).forEach(btn => {
-    btn.classList.toggle('active', parseFloat(btn.dataset.val) === val);
+    btn.setAttribute('aria-pressed', parseFloat(btn.dataset.val) === val);
   });
 }
 
@@ -908,8 +818,8 @@ function adjustQty(delta) {
 
 function selectInterval(val) {
   EDIT_STATE.interval = val;
-  document.querySelectorAll('#interval-chips .chip').forEach(b => {
-    b.classList.toggle('chip-active', b.dataset.interval === val);
+  document.querySelectorAll('#interval-chips .tm-chip').forEach(b => {
+    b.setAttribute('aria-pressed', b.dataset.interval === val);
   });
   // Grey out M-A-N for non-daily intervals
   const manGroup = document.getElementById('man-picker-group');
@@ -921,11 +831,11 @@ function selectDuration(val) {
   // Toggle off if already selected
   if (EDIT_STATE.duration === val) {
     EDIT_STATE.duration = null;
-    document.querySelectorAll('#duration-chips .chip').forEach(b => b.classList.remove('chip-active'));
+    document.querySelectorAll('#duration-chips .tm-chip').forEach(b => b.setAttribute('aria-pressed', false));
   } else {
     EDIT_STATE.duration = val;
-    document.querySelectorAll('#duration-chips .chip').forEach(b => {
-      b.classList.toggle('chip-active', b.dataset.dur === val);
+    document.querySelectorAll('#duration-chips .tm-chip').forEach(b => {
+      b.setAttribute('aria-pressed', b.dataset.dur === val);
     });
   }
 }
@@ -937,8 +847,8 @@ function toggleAdvice(val) {
   } else {
     EDIT_STATE.advice.push(val);
   }
-  document.querySelectorAll('#advice-chips .chip').forEach(b => {
-    b.classList.toggle('chip-active', EDIT_STATE.advice.includes(b.dataset.advice));
+  document.querySelectorAll('#advice-chips .tm-chip').forEach(b => {
+    b.setAttribute('aria-pressed', EDIT_STATE.advice.includes(b.dataset.advice));
   });
 }
 
@@ -959,25 +869,25 @@ function openMedEdit(medId) {
   document.getElementById('sheet-qty-display').textContent = med.qty;
 
   // Sync interval chips
-  document.querySelectorAll('#interval-chips .chip').forEach(b => {
-    b.classList.toggle('chip-active', b.dataset.interval === EDIT_STATE.interval);
+  document.querySelectorAll('#interval-chips .tm-chip').forEach(b => {
+    b.setAttribute('aria-pressed', b.dataset.interval === EDIT_STATE.interval);
   });
   // Sync M-A-N
   ['m','a','n'].forEach(row => {
     document.querySelectorAll(`.man-btns[data-man="${row}"] .man-btn`).forEach(btn => {
-      btn.classList.toggle('active', parseFloat(btn.dataset.val) === med[row]);
+      btn.setAttribute('aria-pressed', parseFloat(btn.dataset.val) === med[row]);
     });
   });
   // Sync M-A-N disabled state
   const nonDaily = ['weekly','monthly','sos'].includes(EDIT_STATE.interval);
   document.getElementById('man-picker-group').classList.toggle('man-disabled', nonDaily);
   // Sync duration chips
-  document.querySelectorAll('#duration-chips .chip').forEach(b => {
-    b.classList.toggle('chip-active', b.dataset.dur === EDIT_STATE.duration);
+  document.querySelectorAll('#duration-chips .tm-chip').forEach(b => {
+    b.setAttribute('aria-pressed', b.dataset.dur === EDIT_STATE.duration);
   });
   // Sync advice chips
-  document.querySelectorAll('#advice-chips .chip').forEach(b => {
-    b.classList.toggle('chip-active', EDIT_STATE.advice.includes(b.dataset.advice));
+  document.querySelectorAll('#advice-chips .tm-chip').forEach(b => {
+    b.setAttribute('aria-pressed', EDIT_STATE.advice.includes(b.dataset.advice));
   });
 
   openSheet('sheet-edit-med');

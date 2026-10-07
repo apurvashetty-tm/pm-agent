@@ -87,3 +87,20 @@ chart-bar
 table
 list-details
 star
+# Added for doctor-portal restyle (2026-10-07)
+phone-call
+volume-off
+bolt
+player-track-next
+clipboard-text
+book
+rotate-clockwise
+arrows-minimize
+user-circle
+arrow-up-right
+vaccine
+medicine-syrup
+droplet
+wind
+test-pipe
+

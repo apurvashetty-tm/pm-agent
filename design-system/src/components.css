@@ -79,6 +79,16 @@
 .tm-btn--ghost:disabled, .tm-btn--link:disabled { background: transparent; }
 .tm-btn:focus-visible { outline: 2px solid var(--tm-border-focus); outline-offset: 2px; }
 
+/* [PROPOSED] Busy state — action in progress (e.g. "Calling…"). Keeps the primary look at full
+   strength (a disabled grey would read as unavailable). Not in SALT; pending design-team review. */
+.tm-btn--busy, .tm-btn--busy:disabled { background: var(--tm-surface-brand-default); color: var(--tm-content-inverse); cursor: default; }
+@keyframes tm-pulse-ring {
+  0%   { box-shadow: 0 0 0 0 var(--tm-surface-brand-muted); }
+  70%  { box-shadow: 0 0 0 var(--tm-space-md) transparent; }
+  100% { box-shadow: 0 0 0 0 transparent; }
+}
+.tm-btn--busy.tm-pulsing { animation: tm-pulse-ring 1.2s ease-out infinite; }
+
 /* ---------- Input field [SALT: Input Fields] ---------- */
 .tm-field { display: flex; flex-direction: column; gap: var(--tm-space-xs); }
 .tm-field__label { font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-primary); }
@@ -123,6 +133,8 @@
   font-weight: var(--tm-font-weight-semibold);
   background: var(--tm-surface-tertiary); color: var(--tm-content-secondary);
 }
+/* [PROPOSED] Size md — 12px label for dense, doctor-facing screens where SALT's 10px tag is too small to read. */
+.tm-tag--md { padding: var(--tm-space-2xs) var(--tm-space-sm); font-size: var(--tm-font-size-body-xs); line-height: var(--tm-font-lineheight-xs); }
 .tm-tag--info     { background: var(--tm-surface-brand-subtle);   color: var(--tm-content-brand); }
 .tm-tag--success  { background: var(--tm-surface-success-subtle); color: var(--tm-content-success); }
 .tm-tag--warning  { background: var(--tm-surface-warning-subtle); color: var(--tm-content-warning); }

@@ -4,9 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Truemeds Doctor Portal</title>
+  <link rel="stylesheet" href="../../design-system/truemeds.css" />
   <link rel="stylesheet" href="styles.css" />
 </head>
-<body>
+<body class="tm">
 
 <div id="layout-wrapper">
 
@@ -39,7 +40,7 @@
 
       <!-- DEMO BAR — [MOCK ASSUMPTION] dev-only -->
       <div id="demo-bar">
-        <div id="demo-bar-label">⚡ Demo Controls</div>
+        <div id="demo-bar-label"><span class="tm-icon tm-icon--16" data-icon="bolt"></span>Demo controls</div>
         <div id="demo-bar-scenarios">
           <button class="scenario-btn active" data-scenario="cat4">Cat4</button>
           <button class="scenario-btn" data-scenario="pilot_value_meds_ha">Pilot + Value + HA</button>
@@ -51,20 +52,20 @@
         <div id="demo-call-sim" style="display:none">
           <div id="demo-sim-calling">
             <span class="demo-sim-label">Simulate:</span>
-            <button class="demo-sim-btn demo-sim-connected" onclick="simCallConnected()">✓ Connected</button>
-            <button class="demo-sim-btn demo-sim-failed" onclick="simShowWebhookOptions()">✗ No Connect</button>
+            <button class="demo-sim-btn demo-sim-connected" onclick="simCallConnected()"><span class="tm-icon tm-icon--16" data-icon="check"></span>Connected</button>
+            <button class="demo-sim-btn demo-sim-failed" onclick="simShowWebhookOptions()"><span class="tm-icon tm-icon--16" data-icon="x"></span>No connect</button>
           </div>
           <div id="demo-sim-webhook" style="display:none">
             <span class="demo-sim-label">Webhook:</span>
-            <button class="demo-sim-btn demo-sim-wh" onclick="simWebhook('no_answer')">📵 No Answer</button>
-            <button class="demo-sim-btn demo-sim-wh" onclick="simWebhook('switched_off')">🔇 Switched Off</button>
-            <button class="demo-sim-btn demo-sim-wh" onclick="simWebhook('wrong_number')">❌ Wrong No.</button>
-            <button class="demo-sim-btn demo-sim-wh demo-sim-timeout" onclick="simWebhook('timeout')">⏱ Timeout</button>
+            <button class="demo-sim-btn demo-sim-wh" onclick="simWebhook('no_answer')"><span class="tm-icon tm-icon--16" data-icon="phone-off"></span>No answer</button>
+            <button class="demo-sim-btn demo-sim-wh" onclick="simWebhook('switched_off')"><span class="tm-icon tm-icon--16" data-icon="volume-off"></span>Switched off</button>
+            <button class="demo-sim-btn demo-sim-wh" onclick="simWebhook('wrong_number')"><span class="tm-icon tm-icon--16" data-icon="circle-x"></span>Wrong no.</button>
+            <button class="demo-sim-btn demo-sim-wh demo-sim-timeout" onclick="simWebhook('timeout')"><span class="tm-icon tm-icon--16" data-icon="clock"></span>Timeout</button>
           </div>
         </div>
         <div id="demo-bar-row2">
           <span id="demo-state-label">State: assigned</span>
-          <button id="demo-ff-btn-mobile">⏩ Fast-forward 50s</button>
+          <button id="demo-ff-btn-mobile"><span class="tm-icon tm-icon--16" data-icon="player-track-next"></span>Fast-forward 50s</button>
         </div>
       </div>
 
@@ -75,8 +76,8 @@
           <div id="cs-patient-meta">—</div>
         </div>
         <span id="cs-order-value"></span>
-        <span id="cs-timer-badge" class="hidden">📞 0:00</span>
-        <button id="cs-view-rx-btn" class="hidden" onclick="openRxOverlay()">📋 View Rx</button>
+        <span id="cs-timer-badge" class="hidden"><span class="tm-icon tm-icon--16" data-icon="phone-call"></span><span id="cs-timer-text">0:00</span></span>
+        <button id="cs-view-rx-btn" class="hidden" onclick="openRxOverlay()"><span class="tm-icon tm-icon--16" data-icon="clipboard-text"></span>View Rx</button>
       </div>
 
     </div><!-- /sticky-top-wrapper -->
@@ -92,8 +93,8 @@
             <div id="patient-details-row">—</div>
           </div>
           <div id="pdb-actions">
-            <button id="pdb-info-btn" onclick="toggleOrderExpand()" title="Order details">ⓘ</button>
-            <button id="pdb-view-rx-btn" class="hidden" onclick="openRxOverlay()">📋 View Rx</button>
+            <button id="pdb-info-btn" onclick="toggleOrderExpand()" title="Order details" aria-label="Order details"><span class="tm-icon" data-icon="info-circle"></span></button>
+            <button id="pdb-view-rx-btn" class="hidden" onclick="openRxOverlay()"><span class="tm-icon tm-icon--16" data-icon="clipboard-text"></span>View Rx</button>
           </div>
         </div>
         <div id="order-id-row">
@@ -121,26 +122,26 @@
       <!-- 2. Medicines to Validate -->
       <div id="medicines-section">
         <div id="medicines-header">
-          <span class="section-label" style="margin-bottom:0">Medicines to Prescribe</span>
+          <h2 class="tm-section-title section-title--inline">Medicines to prescribe</h2>
           <span id="medicines-count">0 medicines</span>
         </div>
         <div id="medicines-empty">No medicines on this order.</div>
         <div id="medicines-list"></div>
-        <div style="padding: 0 16px 12px; display:flex; justify-content:flex-end;">
-          <button id="add-medicine-btn">＋ Add Medicine</button>
+        <div class="medicines-footer">
+          <button id="add-medicine-btn" class="tm-btn tm-btn--ghost tm-btn--sm"><span class="tm-icon tm-icon--16" data-icon="plus"></span>Add medicine</button>
         </div>
       </div>
 
       <!-- 3. Notes + Symptoms — [OPEN DECISION] OQ-006 -->
       <div id="notes-section">
-        <div class="section-label">Notes &amp; Symptoms</div>
-        <div class="notes-field-group">
-          <label class="notes-label" for="symptoms-input">Chief Complaints / Symptoms</label>
-          <textarea id="symptoms-input" class="notes-textarea" placeholder="e.g., Fever since 2 days, sore throat, mild cough…" rows="3"></textarea>
+        <h2 class="tm-section-title">Notes &amp; symptoms</h2>
+        <div class="tm-field">
+          <label class="tm-field__label" for="symptoms-input">Chief complaints / symptoms</label>
+          <div class="tm-field__control"><textarea id="symptoms-input" placeholder="e.g., Fever since 2 days, sore throat, mild cough…" rows="3"></textarea></div>
         </div>
-        <div class="notes-field-group">
-          <label class="notes-label" for="doctor-notes-input">Doctor Notes</label>
-          <textarea id="doctor-notes-input" class="notes-textarea" placeholder="Clinical observations, instructions, internal notes…" rows="3"></textarea>
+        <div class="tm-field">
+          <label class="tm-field__label" for="doctor-notes-input">Doctor notes</label>
+          <div class="tm-field__control"><textarea id="doctor-notes-input" placeholder="Clinical observations, instructions, internal notes…" rows="3"></textarea></div>
         </div>
       </div>
 
@@ -157,14 +158,14 @@
         <!-- Phase 1: Call control (hidden when gate passes) -->
         <div id="az-phase1">
 
-          <button id="call-initiate-btn" class="btn btn-lg btn-primary" onclick="handleCallAction()">
-            <span id="call-btn-icon" data-icon="phone"></span>
+          <button id="call-initiate-btn" class="tm-btn tm-btn--lg tm-btn--primary tm-btn--block" onclick="handleCallAction()">
+            <span id="call-btn-icon" class="tm-icon" data-icon="phone"></span>
             <span id="call-btn-label">Call Patient</span>
           </button>
 
           <!-- Pre-gate schedule callback — btn-text during call, btn-ghost after early end (JS swaps) -->
-          <button id="pre-gate-callback-btn" class="btn btn-sm btn-text hidden" onclick="openSheet('sheet-callback')">
-            <span data-icon="calendar"></span>Schedule Callback
+          <button id="pre-gate-callback-btn" class="tm-btn tm-btn--sm tm-btn--ghost tm-btn--block hidden" onclick="openSheet('sheet-callback')">
+            <span class="tm-icon tm-icon--16" data-icon="calendar"></span>Schedule Callback
           </button>
 
           <div id="az-status-label" class="hidden"></div>
@@ -174,18 +175,18 @@
         <div id="az-phase2">
           <div id="postcall-cta-card">
             <div id="postcall-cta-label">Post-Call Action</div>
-            <button id="main-cta-btn" class="btn btn-lg btn-primary" onclick="handleMainCTA()">
+            <button id="main-cta-btn" class="tm-btn tm-btn--lg tm-btn--primary tm-btn--block" onclick="handleMainCTA()">
               <span id="main-cta-icon"></span>
               <span id="main-cta-label">Confirm Order</span>
             </button>
             <!-- Secondary actions — compact chip row below primary -->
             <div id="postcall-secondary-row">
-              <button id="schedule-callback-btn" class="btn btn-sm btn-ghost" onclick="openSheet('sheet-callback')">
-                <span data-icon="calendar"></span>
+              <button id="schedule-callback-btn" class="tm-btn tm-btn--sm tm-btn--secondary" onclick="openSheet('sheet-callback')">
+                <span class="tm-icon tm-icon--16" data-icon="calendar"></span>
                 <span id="schedule-callback-label">Schedule Callback</span>
               </button>
-              <button id="skip-ha-btn" class="btn btn-sm btn-ghost" onclick="openSheet('sheet-skip-ha')">
-                Skip HA Call <span class="chip-chevron">›</span>
+              <button id="skip-ha-btn" class="tm-btn tm-btn--sm tm-btn--secondary" onclick="openSheet('sheet-skip-ha')">
+                Skip HA Call <span class="tm-icon tm-icon--16" data-icon="chevron-right"></span>
               </button>
             </div>
           </div>
@@ -218,7 +219,7 @@
       <div class="side-panel-header">Call Status</div>
       <div class="side-panel-body">
         <div id="side-state-display">
-          <div id="side-state-icon">📞</div>
+          <div id="side-state-icon"><span class="tm-icon tm-icon--24" data-icon="phone"></span></div>
           <div>
             <div id="side-state-text">—</div>
             <div id="side-timer-text">—</div>
@@ -232,9 +233,9 @@
       <div class="side-panel-header">Post-Call Action</div>
       <div class="side-panel-body">
         <div id="side-cta-section">
-          <div id="side-ha-banner">⚠️ HA call required before confirming</div>
-          <button id="side-skip-ha-btn" class="btn btn-sm btn-ghost" onclick="openSheet('sheet-skip-ha')">Skip HA Call</button>
-          <button id="side-main-cta" class="btn btn-md btn-primary" onclick="handleMainCTA()">
+          <div id="side-ha-banner" class="tm-notice tm-notice--warning"><span class="tm-icon tm-icon--16" data-icon="alert-triangle"></span><span>HA call required before confirming</span></div>
+          <button id="side-skip-ha-btn" class="tm-btn tm-btn--sm tm-btn--secondary tm-btn--block" onclick="openSheet('sheet-skip-ha')">Skip HA Call</button>
+          <button id="side-main-cta" class="tm-btn tm-btn--primary tm-btn--block" onclick="handleMainCTA()">
             <span id="side-cta-icon"></span>
             <span id="side-cta-label">Confirm Order</span>
           </button>
@@ -247,7 +248,7 @@
 
     <!-- Demo Controls -->
     <div class="side-panel-card">
-      <div class="side-panel-header">⚡ Demo Scenarios</div>
+      <div class="side-panel-header"><span class="tm-icon tm-icon--16" data-icon="bolt"></span>Demo scenarios</div>
       <div class="side-panel-body" id="side-scenario-btns">
         <button class="side-scenario-btn active" data-scenario="cat4">Cat4</button>
         <button class="side-scenario-btn" data-scenario="pilot_value_meds_ha">Pilot + Value Meds + HA</button>
@@ -257,20 +258,20 @@
         <!-- Desktop webhook simulator — visible when state=calling -->
         <div id="side-demo-call-sim" style="display:none; flex-direction:column; gap:8px; margin-top:8px; padding-top:10px; border-top:1px solid #e5e7eb;">
           <div id="side-sim-calling" style="display:flex; gap:6px; flex-wrap:wrap;">
-            <button class="side-sim-btn side-sim-connected" onclick="simCallConnected()">✓ Connected</button>
-            <button class="side-sim-btn side-sim-failed" onclick="simShowWebhookOptions()">✗ No Connect</button>
+            <button class="side-sim-btn side-sim-connected" onclick="simCallConnected()"><span class="tm-icon tm-icon--16" data-icon="check"></span>Connected</button>
+            <button class="side-sim-btn side-sim-failed" onclick="simShowWebhookOptions()"><span class="tm-icon tm-icon--16" data-icon="x"></span>No connect</button>
           </div>
           <div id="side-sim-webhook" style="display:none; flex-direction:column; gap:6px;">
             <div style="font-size:11px; font-weight:600; color:#6b7280; text-transform:uppercase; letter-spacing:0.4px;">Webhook reason:</div>
             <div style="display:flex; gap:6px; flex-wrap:wrap;">
-              <button class="side-sim-btn side-sim-wh" onclick="simWebhook('no_answer')">📵 No Answer</button>
-              <button class="side-sim-btn side-sim-wh" onclick="simWebhook('switched_off')">🔇 Switched Off</button>
-              <button class="side-sim-btn side-sim-wh" onclick="simWebhook('wrong_number')">❌ Wrong No.</button>
-              <button class="side-sim-btn side-sim-timeout" onclick="simWebhook('timeout')">⏱ Timeout</button>
+              <button class="side-sim-btn side-sim-wh" onclick="simWebhook('no_answer')"><span class="tm-icon tm-icon--16" data-icon="phone-off"></span>No answer</button>
+              <button class="side-sim-btn side-sim-wh" onclick="simWebhook('switched_off')"><span class="tm-icon tm-icon--16" data-icon="volume-off"></span>Switched off</button>
+              <button class="side-sim-btn side-sim-wh" onclick="simWebhook('wrong_number')"><span class="tm-icon tm-icon--16" data-icon="circle-x"></span>Wrong no.</button>
+              <button class="side-sim-btn side-sim-timeout" onclick="simWebhook('timeout')"><span class="tm-icon tm-icon--16" data-icon="clock"></span>Timeout</button>
             </div>
           </div>
         </div>
-        <button id="side-ff-btn">⏩ Fast-forward to 50s</button>
+        <button id="side-ff-btn"><span class="tm-icon tm-icon--16" data-icon="player-track-next"></span>Fast-forward to 50s</button>
       </div>
     </div>
 
@@ -284,14 +285,14 @@
 ============================================================ -->
 <div id="rx-overlay">
   <div id="rx-overlay-header">
-    <button id="rx-overlay-close" onclick="closeRxOverlay()">✕</button>
+    <button id="rx-overlay-close" onclick="closeRxOverlay()" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button>
     <div id="rx-overlay-title">Prescription</div>
     <div id="rx-controls">
-      <button class="rx-ctrl-btn" onclick="rxZoomOut()" title="Zoom out">−</button>
+      <button class="rx-ctrl-btn" onclick="rxZoomOut()" title="Zoom out" aria-label="Zoom out"><span class="tm-icon tm-icon--16" data-icon="minus"></span></button>
       <span id="rx-zoom-label">100%</span>
-      <button class="rx-ctrl-btn" onclick="rxZoomIn()" title="Zoom in">+</button>
-      <button class="rx-ctrl-btn" onclick="rxRotate()" title="Rotate">↻</button>
-      <button class="rx-ctrl-btn" onclick="rxReset()" title="Reset">⊡</button>
+      <button class="rx-ctrl-btn" onclick="rxZoomIn()" title="Zoom in" aria-label="Zoom in"><span class="tm-icon tm-icon--16" data-icon="plus"></span></button>
+      <button class="rx-ctrl-btn" onclick="rxRotate()" title="Rotate" aria-label="Rotate"><span class="tm-icon tm-icon--16" data-icon="rotate-clockwise"></span></button>
+      <button class="rx-ctrl-btn" onclick="rxReset()" title="Reset" aria-label="Reset view"><span class="tm-icon tm-icon--16" data-icon="arrows-minimize"></span></button>
     </div>
   </div>
   <div id="rx-overlay-body">
@@ -367,27 +368,27 @@
     <div class="sheet-handle"></div>
     <div class="sheet-title">Schedule Callback</div>
     <div class="sheet-body">
-      <div class="sheet-section-label">DATE</div>
+      <div class="sheet-section-label">Date</div>
       <div class="chip-row chip-row-wrap" id="callback-day-chips">
-        <button class="chip" data-day="today" onclick="selectCallbackDay('today')">Today</button>
-        <button class="chip" data-day="tomorrow" onclick="selectCallbackDay('tomorrow')">Tomorrow</button>
+        <button class="tm-chip" aria-pressed="false" data-day="today" onclick="selectCallbackDay('today')">Today</button>
+        <button class="tm-chip" aria-pressed="false" data-day="tomorrow" onclick="selectCallbackDay('tomorrow')">Tomorrow</button>
       </div>
-      <div class="sheet-section-label" style="margin-top:16px">TIME</div>
+      <div class="sheet-section-label">Time</div>
       <div class="chip-row chip-row-wrap" id="callback-time-chips">
-        <button class="chip" data-time="09:00" onclick="selectCallbackTime('09:00')">9:00 AM</button>
-        <button class="chip" data-time="09:30" onclick="selectCallbackTime('09:30')">9:30 AM</button>
-        <button class="chip" data-time="10:00" onclick="selectCallbackTime('10:00')">10:00 AM</button>
-        <button class="chip" data-time="10:30" onclick="selectCallbackTime('10:30')">10:30 AM</button>
-        <button class="chip" data-time="11:00" onclick="selectCallbackTime('11:00')">11:00 AM</button>
-        <button class="chip" data-time="11:30" onclick="selectCallbackTime('11:30')">11:30 AM</button>
-        <button class="chip" data-time="12:00" onclick="selectCallbackTime('12:00')">12:00 PM</button>
-        <button class="chip" data-time="14:00" onclick="selectCallbackTime('14:00')">2:00 PM</button>
-        <button class="chip" data-time="15:00" onclick="selectCallbackTime('15:00')">3:00 PM</button>
-        <button class="chip" data-time="16:00" onclick="selectCallbackTime('16:00')">4:00 PM</button>
-        <button class="chip" data-time="17:00" onclick="selectCallbackTime('17:00')">5:00 PM</button>
-        <button class="chip" data-time="18:00" onclick="selectCallbackTime('18:00')">6:00 PM</button>
+        <button class="tm-chip" aria-pressed="false" data-time="09:00" onclick="selectCallbackTime('09:00')">9:00 AM</button>
+        <button class="tm-chip" aria-pressed="false" data-time="09:30" onclick="selectCallbackTime('09:30')">9:30 AM</button>
+        <button class="tm-chip" aria-pressed="false" data-time="10:00" onclick="selectCallbackTime('10:00')">10:00 AM</button>
+        <button class="tm-chip" aria-pressed="false" data-time="10:30" onclick="selectCallbackTime('10:30')">10:30 AM</button>
+        <button class="tm-chip" aria-pressed="false" data-time="11:00" onclick="selectCallbackTime('11:00')">11:00 AM</button>
+        <button class="tm-chip" aria-pressed="false" data-time="11:30" onclick="selectCallbackTime('11:30')">11:30 AM</button>
+        <button class="tm-chip" aria-pressed="false" data-time="12:00" onclick="selectCallbackTime('12:00')">12:00 PM</button>
+        <button class="tm-chip" aria-pressed="false" data-time="14:00" onclick="selectCallbackTime('14:00')">2:00 PM</button>
+        <button class="tm-chip" aria-pressed="false" data-time="15:00" onclick="selectCallbackTime('15:00')">3:00 PM</button>
+        <button class="tm-chip" aria-pressed="false" data-time="16:00" onclick="selectCallbackTime('16:00')">4:00 PM</button>
+        <button class="tm-chip" aria-pressed="false" data-time="17:00" onclick="selectCallbackTime('17:00')">5:00 PM</button>
+        <button class="tm-chip" aria-pressed="false" data-time="18:00" onclick="selectCallbackTime('18:00')">6:00 PM</button>
       </div>
-      <button class="btn btn-md btn-success sheet-cta-margin" onclick="confirmScheduleCallback()">Confirm Callback</button>
+      <button class="tm-btn tm-btn--primary tm-btn--block sheet-cta-margin" onclick="confirmScheduleCallback()">Confirm Callback</button>
     </div>
   </div>
 
@@ -398,15 +399,15 @@
     <div class="sheet-title">Skip HA Call</div>
     <div class="sheet-body">
       <!-- [OPEN DECISION] OQ-008: skip eligibility TBD -->
-      <button class="sheet-option-btn" onclick="confirmSkipHA('Patient declined HA call')">
+      <button class="choice-row sheet-option-btn" onclick="confirmSkipHA('Patient declined HA call')">
         <div class="sheet-option-title">Patient declined HA call</div>
         <div class="sheet-option-desc">Patient explicitly did not want an HA call</div>
       </button>
-      <button class="sheet-option-btn" onclick="confirmSkipHA('Clinically not required')">
+      <button class="choice-row sheet-option-btn" onclick="confirmSkipHA('Clinically not required')">
         <div class="sheet-option-title">Clinically not required</div>
         <div class="sheet-option-desc">Doctor assessed HA counselling is not needed</div>
       </button>
-      <button class="sheet-option-btn" onclick="confirmSkipHA('Repeat patient — familiar with medicines')">
+      <button class="choice-row sheet-option-btn" onclick="confirmSkipHA('Repeat patient — familiar with medicines')">
         <div class="sheet-option-title">Repeat patient — familiar with medicines</div>
         <div class="sheet-option-desc">Patient was counselled in a prior order</div>
       </button>
@@ -421,81 +422,81 @@
       <div id="sheet-med-name" class="sheet-med-name-header">—</div>
 
       <!-- INTERVAL -->
-      <div class="sheet-section-label">INTERVAL</div>
+      <div class="sheet-section-label">Interval</div>
       <div class="chip-row chip-row-wrap" id="interval-chips">
-        <button class="chip" data-interval="daily"    onclick="selectInterval('daily')">Daily</button>
-        <button class="chip" data-interval="alt_days" onclick="selectInterval('alt_days')">Alt days</button>
-        <button class="chip" data-interval="weekly"   onclick="selectInterval('weekly')">Weekly</button>
-        <button class="chip" data-interval="monthly"  onclick="selectInterval('monthly')">Monthly</button>
-        <button class="chip" data-interval="sos"      onclick="selectInterval('sos')">SOS</button>
+        <button class="tm-chip" aria-pressed="false" data-interval="daily"    onclick="selectInterval('daily')">Daily</button>
+        <button class="tm-chip" aria-pressed="false" data-interval="alt_days" onclick="selectInterval('alt_days')">Alt days</button>
+        <button class="tm-chip" aria-pressed="false" data-interval="weekly"   onclick="selectInterval('weekly')">Weekly</button>
+        <button class="tm-chip" aria-pressed="false" data-interval="monthly"  onclick="selectInterval('monthly')">Monthly</button>
+        <button class="tm-chip" aria-pressed="false" data-interval="sos"      onclick="selectInterval('sos')">SOS</button>
       </div>
 
       <!-- M-A-N picker -->
       <div id="man-picker-group">
-        <div class="sheet-section-label">MORNING · AFTERNOON · NIGHT</div>
+        <div class="sheet-section-label">Morning · Afternoon · Night</div>
         <div class="man-picker">
           <div class="man-row">
             <span class="man-label">M</span>
             <div class="man-btns" data-man="m">
-              <button class="man-btn" data-val="0"   onclick="selectMAN('m',0)">0</button>
-              <button class="man-btn" data-val="0.5" onclick="selectMAN('m',0.5)">½</button>
-              <button class="man-btn" data-val="1"   onclick="selectMAN('m',1)">1</button>
-              <button class="man-btn" data-val="2"   onclick="selectMAN('m',2)">2</button>
+              <button class="tm-chip man-btn" aria-pressed="false" data-val="0"   onclick="selectMAN('m',0)">0</button>
+              <button class="tm-chip man-btn" aria-pressed="false" data-val="0.5" onclick="selectMAN('m',0.5)">½</button>
+              <button class="tm-chip man-btn" aria-pressed="false" data-val="1"   onclick="selectMAN('m',1)">1</button>
+              <button class="tm-chip man-btn" aria-pressed="false" data-val="2"   onclick="selectMAN('m',2)">2</button>
             </div>
           </div>
           <div class="man-row">
             <span class="man-label">A</span>
             <div class="man-btns" data-man="a">
-              <button class="man-btn" data-val="0"   onclick="selectMAN('a',0)">0</button>
-              <button class="man-btn" data-val="0.5" onclick="selectMAN('a',0.5)">½</button>
-              <button class="man-btn" data-val="1"   onclick="selectMAN('a',1)">1</button>
-              <button class="man-btn" data-val="2"   onclick="selectMAN('a',2)">2</button>
+              <button class="tm-chip man-btn" aria-pressed="false" data-val="0"   onclick="selectMAN('a',0)">0</button>
+              <button class="tm-chip man-btn" aria-pressed="false" data-val="0.5" onclick="selectMAN('a',0.5)">½</button>
+              <button class="tm-chip man-btn" aria-pressed="false" data-val="1"   onclick="selectMAN('a',1)">1</button>
+              <button class="tm-chip man-btn" aria-pressed="false" data-val="2"   onclick="selectMAN('a',2)">2</button>
             </div>
           </div>
           <div class="man-row">
             <span class="man-label">N</span>
             <div class="man-btns" data-man="n">
-              <button class="man-btn" data-val="0"   onclick="selectMAN('n',0)">0</button>
-              <button class="man-btn" data-val="0.5" onclick="selectMAN('n',0.5)">½</button>
-              <button class="man-btn" data-val="1"   onclick="selectMAN('n',1)">1</button>
-              <button class="man-btn" data-val="2"   onclick="selectMAN('n',2)">2</button>
+              <button class="tm-chip man-btn" aria-pressed="false" data-val="0"   onclick="selectMAN('n',0)">0</button>
+              <button class="tm-chip man-btn" aria-pressed="false" data-val="0.5" onclick="selectMAN('n',0.5)">½</button>
+              <button class="tm-chip man-btn" aria-pressed="false" data-val="1"   onclick="selectMAN('n',1)">1</button>
+              <button class="tm-chip man-btn" aria-pressed="false" data-val="2"   onclick="selectMAN('n',2)">2</button>
             </div>
           </div>
         </div>
       </div>
 
       <!-- DURATION -->
-      <div class="sheet-section-label">DURATION</div>
+      <div class="sheet-section-label">Duration</div>
       <div class="chip-row chip-row-wrap" id="duration-chips">
-        <button class="chip" data-dur="3d"      onclick="selectDuration('3d')">3 days</button>
-        <button class="chip" data-dur="7d"      onclick="selectDuration('7d')">7 days</button>
-        <button class="chip" data-dur="2w"      onclick="selectDuration('2w')">2 weeks</button>
-        <button class="chip" data-dur="1m"      onclick="selectDuration('1m')">1 month</button>
-        <button class="chip" data-dur="3m"      onclick="selectDuration('3m')">3 months</button>
-        <button class="chip" data-dur="ongoing" onclick="selectDuration('ongoing')">Ongoing</button>
+        <button class="tm-chip" aria-pressed="false" data-dur="3d"      onclick="selectDuration('3d')">3 days</button>
+        <button class="tm-chip" aria-pressed="false" data-dur="7d"      onclick="selectDuration('7d')">7 days</button>
+        <button class="tm-chip" aria-pressed="false" data-dur="2w"      onclick="selectDuration('2w')">2 weeks</button>
+        <button class="tm-chip" aria-pressed="false" data-dur="1m"      onclick="selectDuration('1m')">1 month</button>
+        <button class="tm-chip" aria-pressed="false" data-dur="3m"      onclick="selectDuration('3m')">3 months</button>
+        <button class="tm-chip" aria-pressed="false" data-dur="ongoing" onclick="selectDuration('ongoing')">Ongoing</button>
       </div>
 
       <!-- QTY -->
-      <div class="sheet-section-label">QUANTITY</div>
+      <div class="sheet-section-label">Quantity</div>
       <div class="qty-stepper">
-        <button class="qty-btn" onclick="adjustQty(-10)">−</button>
-        <span id="sheet-qty-display">30</span>
-        <button class="qty-btn" onclick="adjustQty(10)">+</button>
+        <button class="tm-btn tm-btn--secondary tm-btn--icon" onclick="adjustQty(-10)" aria-label="Decrease quantity"><span class="tm-icon" data-icon="minus"></span></button>
+        <span id="sheet-qty-display" class="tm-text-h3">30</span>
+        <button class="tm-btn tm-btn--secondary tm-btn--icon" onclick="adjustQty(10)" aria-label="Increase quantity"><span class="tm-icon" data-icon="plus"></span></button>
       </div>
 
       <!-- ADVICE -->
-      <div class="sheet-section-label">ADVICE TO PATIENT</div>
+      <div class="sheet-section-label">Advice to patient</div>
       <div class="chip-row chip-row-wrap" id="advice-chips">
-        <button class="chip" data-advice="after_food"     onclick="toggleAdvice('after_food')">After food</button>
-        <button class="chip" data-advice="before_food"    onclick="toggleAdvice('before_food')">Before food</button>
-        <button class="chip" data-advice="empty_stomach"  onclick="toggleAdvice('empty_stomach')">Empty stomach</button>
-        <button class="chip" data-advice="with_water"     onclick="toggleAdvice('with_water')">With water</button>
-        <button class="chip" data-advice="before_sleep"   onclick="toggleAdvice('before_sleep')">Before sleep</button>
-        <button class="chip" data-advice="with_milk"      onclick="toggleAdvice('with_milk')">With milk</button>
+        <button class="tm-chip" aria-pressed="false" data-advice="after_food"     onclick="toggleAdvice('after_food')">After food</button>
+        <button class="tm-chip" aria-pressed="false" data-advice="before_food"    onclick="toggleAdvice('before_food')">Before food</button>
+        <button class="tm-chip" aria-pressed="false" data-advice="empty_stomach"  onclick="toggleAdvice('empty_stomach')">Empty stomach</button>
+        <button class="tm-chip" aria-pressed="false" data-advice="with_water"     onclick="toggleAdvice('with_water')">With water</button>
+        <button class="tm-chip" aria-pressed="false" data-advice="before_sleep"   onclick="toggleAdvice('before_sleep')">Before sleep</button>
+        <button class="tm-chip" aria-pressed="false" data-advice="with_milk"      onclick="toggleAdvice('with_milk')">With milk</button>
       </div>
 
-      <button class="btn btn-md btn-success sheet-cta-margin" onclick="confirmMedEdit()">Prescribe</button>
-      <button class="btn btn-sm btn-text-danger sheet-link-margin" onclick="openDisableSheet()">Disable this medicine</button>
+      <button class="tm-btn tm-btn--primary tm-btn--block sheet-cta-margin" onclick="confirmMedEdit()">Prescribe</button>
+      <button class="tm-btn tm-btn--destructive tm-btn--block sheet-link-margin" onclick="openDisableSheet()">Disable this medicine</button>
     </div>
   </div>
 
@@ -506,11 +507,11 @@
     <div class="sheet-body">
       <div class="sheet-subtitle" id="sheet-disable-med-label">Select reason</div>
       <div class="reason-list">
-        <button class="reason-btn" onclick="confirmDisable('Cannot prescribe remotely')">Cannot prescribe remotely<span class="reason-hint">Requires in-person consultation</span></button>
-        <button class="reason-btn" onclick="confirmDisable('Contraindicated for patient')">Contraindicated for patient<span class="reason-hint">Allergy or known reaction</span></button>
-        <button class="reason-btn" onclick="confirmDisable('Duplicate medication')">Duplicate medication<span class="reason-hint">Already on equivalent drug</span></button>
-        <button class="reason-btn" onclick="confirmDisable('Patient declined')">Patient declined<span class="reason-hint">Patient refused this medicine</span></button>
-        <button class="reason-btn" onclick="confirmDisable('Wrong strength — will re-prescribe')">Wrong strength<span class="reason-hint">Will disable and add correct one</span></button>
+        <button class="choice-row reason-btn" onclick="confirmDisable('Cannot prescribe remotely')">Cannot prescribe remotely<span class="reason-hint">Requires in-person consultation</span></button>
+        <button class="choice-row reason-btn" onclick="confirmDisable('Contraindicated for patient')">Contraindicated for patient<span class="reason-hint">Allergy or known reaction</span></button>
+        <button class="choice-row reason-btn" onclick="confirmDisable('Duplicate medication')">Duplicate medication<span class="reason-hint">Already on equivalent drug</span></button>
+        <button class="choice-row reason-btn" onclick="confirmDisable('Patient declined')">Patient declined<span class="reason-hint">Patient refused this medicine</span></button>
+        <button class="choice-row reason-btn" onclick="confirmDisable('Wrong strength — will re-prescribe')">Wrong strength<span class="reason-hint">Will disable and add correct one</span></button>
       </div>
     </div>
   </div>
@@ -520,16 +521,16 @@
     <div class="sheet-handle"></div>
     <div class="sheet-title">Add Medicine</div>
     <div class="sheet-body">
-      <div class="sheet-input-row">
-        <label class="sheet-input-label" for="sheet-add-med-name">Medicine Name</label>
-        <input id="sheet-add-med-name" class="sheet-input" type="text" placeholder="e.g. Metformin" />
+      <div class="tm-field">
+        <label class="tm-field__label" for="sheet-add-med-name">Medicine name</label>
+        <div class="tm-field__control"><input id="sheet-add-med-name" type="text" placeholder="e.g. Metformin" /></div>
       </div>
-      <div class="sheet-input-row">
-        <label class="sheet-input-label" for="sheet-add-med-strength">Strength</label>
-        <input id="sheet-add-med-strength" class="sheet-input" type="text" placeholder="e.g. 500mg" />
+      <div class="tm-field">
+        <label class="tm-field__label" for="sheet-add-med-strength">Strength</label>
+        <div class="tm-field__control"><input id="sheet-add-med-strength" type="text" placeholder="e.g. 500mg" /></div>
       </div>
-      <button class="btn btn-md btn-primary" onclick="confirmAddMedicine()" style="margin-top:4px">Add Medicine</button>
-      <p style="font-size:11px;color:var(--text-muted);margin-top:10px;text-align:center;">[MOCK ASSUMPTION] Not persisted to backend</p>
+      <button class="tm-btn tm-btn--primary tm-btn--block" onclick="confirmAddMedicine()">Add medicine</button>
+      <p class="sheet-note">[MOCK ASSUMPTION] Not persisted to backend</p>
     </div>
   </div>
 
@@ -563,12 +564,12 @@
       </div>
       <!-- User Manual -->
       <button class="profile-menu-btn" onclick="showToast('[MOCK] User Manual — not yet linked'); closeSheet();">
-        <span>📖 User Manual</span>
-        <span class="profile-menu-arrow">›</span>
+        <span class="profile-menu-label"><span class="tm-icon" data-icon="book"></span>User manual</span>
+        <span class="tm-icon tm-icon--16" data-icon="chevron-right"></span>
       </button>
       <!-- Logout -->
-      <button id="profile-logout-btn" onclick="handleLogout()">
-        🚪 Logout
+      <button id="profile-logout-btn" class="tm-btn tm-btn--destructive tm-btn--block" onclick="handleLogout()">
+        <span class="tm-icon" data-icon="logout"></span>Logout
       </button>
     </div>
   </div>
@@ -578,8 +579,8 @@
     <div class="sheet-handle"></div>
     <div id="sheet-retry-title" class="sheet-title">Patient didn't pick up</div>
     <div class="sheet-body">
-      <button class="btn btn-md btn-success sheet-cta-margin" onclick="retryCall()">Retry Call</button>
-      <button class="btn btn-sm btn-text-danger" style="margin-top:10px" onclick="markCustomerUnavailable()">Mark as Unavailable</button>
+      <button class="tm-btn tm-btn--primary tm-btn--block sheet-cta-margin" onclick="retryCall()">Retry Call</button>
+      <button class="tm-btn tm-btn--destructive tm-btn--block sheet-link-margin" onclick="markCustomerUnavailable()">Mark as Unavailable</button>
     </div>
   </div>
 
@@ -587,10 +588,10 @@
   <div id="sheet-unavailable" class="bottom-sheet">
     <div class="sheet-handle"></div>
     <div class="sheet-body" style="text-align:center; padding-top:8px">
-      <div style="font-size:40px; margin-bottom:12px">📵</div>
+      <div class="state-icon"><span class="tm-icon tm-icon--24" data-icon="phone-off"></span></div>
       <div style="font-size:18px; font-weight:700; color:var(--text-primary); margin-bottom:8px">Customer Unavailable</div>
       <div id="unavail-desc" style="font-size:14px; color:var(--text-secondary); line-height:1.6; margin-bottom:24px">Patient could not be reached. Case will be reassigned to the queue.</div>
-      <button class="btn btn-md btn-success sheet-cta-margin" onclick="resetToDemo()">Next Order →</button>
+      <button class="tm-btn tm-btn--primary tm-btn--block sheet-cta-margin" onclick="resetToDemo()">Next Order <span class="tm-icon" data-icon="arrow-right"></span></button>
     </div>
   </div>
 
@@ -602,12 +603,12 @@
 <!-- COMPLETED OVERLAY -->
 <!-- Success toast — non-blocking completion confirmation with Next Order fallback -->
 <div id="success-toast">
-  <div id="success-toast-icon">✓</div>
+  <div id="success-toast-icon"><span class="tm-icon tm-icon--24" data-icon="circle-check"></span></div>
   <div id="success-toast-body">
     <div id="success-toast-title">Order Confirmed</div>
     <div id="success-toast-desc">—</div>
   </div>
-  <button id="success-toast-next" class="btn btn-sm btn-primary" onclick="resetToDemo()">Next Order →</button>
+  <button id="success-toast-next" class="tm-btn tm-btn--sm tm-btn--primary" onclick="resetToDemo()">Next Order <span class="tm-icon tm-icon--16" data-icon="arrow-right"></span></button>
 </div>
 </div>
 
@@ -615,6 +616,7 @@
 <!-- ============================================================
      JAVASCRIPT
 ============================================================ -->
+<script src="../../design-system/icons/icons.js"></script>
 <script src="app.js"></script>
 </body>
 </html>
