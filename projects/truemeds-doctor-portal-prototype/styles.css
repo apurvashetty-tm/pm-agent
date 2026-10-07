@@ -25,22 +25,22 @@
     .hidden { display: none !important; }
 
     /* ============================================================
-       LAYOUT WRAPPER — mobile column (<768px) / consultation page (>=768px) + demo side panel (>=1100px)
-       The PAGE scrolls (window scroll) at every width. The side panel is plain page content:
-       it is never its own scroll container, so wheel/trackpad scrolling can never be captured by it.
+       LAYOUT — PHONE FRAME (RULE: see design-system/RULES.md §7)
+       <768px  : the app IS the screen (window scrolls, overlays are viewport-fixed).
+       >=768px : the app is a 9:16 PHONE FRAME centred on the page. Exactly ONE scroll
+                 area inside it (#main-scroll). Header stays on top. Bottom sheets, the Rx viewer
+                 and toasts live INSIDE the frame (DOM + transform containing block), so they
+                 anchor to the frame's bottom, never to the browser window.
+                 The demo panel floats beside the frame and never affects its size or centring.
     ============================================================ */
+    :root { --phone-h: clamp(640px, calc(100vh - 2 * var(--tm-space-lg)), 800px); --phone-w: calc(var(--phone-h) * 9 / 16); }
     #layout-wrapper { display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; position: relative; }
     #mobile-column { width: 100%; max-width: 430px; min-height: 100vh; background: var(--tm-surface-secondary); position: relative; flex-shrink: 0; }
 
-    /* Demo side panel — wide screens only; scrolls with the page (not sticky, not scrollable) */
+    /* Demo side panel — wide screens only; positioned beside the frame, not part of its layout */
     #desktop-side-panel {
-      display: none; width: 280px; flex-shrink: 0; margin-left: var(--tm-space-xl);
-      padding: var(--tm-space-xl) 0; align-self: flex-start;
-    }
-    @media (min-width: 768px) {
-      html { scrollbar-gutter: stable; }   /* no layout shift when a modal locks page scroll */
-      #mobile-column { max-width: 720px; border-left: 1px solid var(--tm-border-subtle); border-right: 1px solid var(--tm-border-subtle); }
-      #main-scroll { padding-left: var(--tm-space-xl); padding-right: var(--tm-space-xl); }
+      display: none; position: absolute; top: var(--tm-space-lg); left: calc(50% + var(--phone-w) / 2 + var(--tm-space-xl));
+      width: 280px;
     }
     @media (min-width: 1100px) { #desktop-side-panel { display: block; } }
     .side-panel-card { padding: 0; overflow: hidden; margin-bottom: var(--tm-space-md); }
@@ -367,19 +367,7 @@
     }
     .bottom-sheet.open { display: block; transform: translateY(0); }
     .sheet-body { overscroll-behavior: contain; }
-    body:has(#sheet-overlay.open), body:has(#rx-overlay.open) { overflow: hidden; }   /* page behind a modal does not scroll */
-
-    /* Desktop (>=768px): sheets become centred dialogs; mobile keeps the bottom sheet */
-    @media (min-width: 768px) {
-      #sheet-overlay { left: 0 !important; width: 100% !important; align-items: center; padding: var(--tm-space-lg); }
-      .bottom-sheet { max-width: 560px; max-height: min(85vh, 720px); border-radius: var(--tm-radius-2xl); transform: translateY(var(--tm-space-md)); }
-      .bottom-sheet.open { display: flex; flex-direction: column; transform: none; }
-      .bottom-sheet .sheet-handle { display: none; }
-      .bottom-sheet .sheet-title { flex-shrink: 0; border-radius: var(--tm-radius-2xl) var(--tm-radius-2xl) 0 0; }
-      .bottom-sheet .sheet-body { flex: 1; min-height: 0; max-height: none; }
-      #rx-overlay { top: var(--tm-space-lg); bottom: var(--tm-space-lg); max-width: 880px; border-radius: var(--tm-radius-2xl); overflow: hidden;
-        box-shadow: 0 0 0 100vmax rgb(0 0 0 / calc(var(--tm-overlay-default) * 1%)); }
-    }
+    @media (max-width: 767px) { body:has(#sheet-overlay.open), body:has(#rx-overlay.open) { overflow: hidden; } }   /* mobile: page behind a modal does not scroll */
 
     .sheet-handle {
       width: var(--tm-space-2xl); height: var(--tm-space-xs);
@@ -529,3 +517,30 @@
     }
     .unavail-title { margin-bottom: var(--tm-space-sm); }
     .unavail-desc { font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); color: var(--tm-content-secondary); margin-bottom: var(--tm-space-xl); }
+
+    /* ============================================================
+       DESKTOP PHONE FRAME (>=768px) — must stay LAST so it overrides the mobile rules above
+       (see LAYOUT — PHONE FRAME at the top, and design-system/RULES.md §7)
+    ============================================================ */
+    @media (min-width: 768px) {
+      html { scrollbar-gutter: stable both-edges; }
+      #layout-wrapper { padding: var(--tm-space-lg) 0; }
+      #mobile-column {
+        width: var(--phone-w); height: var(--phone-h); min-height: 0; max-width: none;
+        display: flex; flex-direction: column; overflow: hidden;
+        border: 1px solid var(--tm-border-default); border-radius: var(--tm-radius-2xl);
+        box-shadow: var(--tm-shadow-header);
+        transform: translateZ(0);   /* makes position:fixed overlays inside it anchor to the frame */
+      }
+      #sticky-top-wrapper { position: relative; flex-shrink: 0; }
+      #main-scroll { flex: 1; min-height: 0; overflow-y: auto; }
+      /* overlays: fill the frame, not the window (override the JS-set left/width used on mobile) */
+      #sheet-overlay { left: 0 !important; width: 100% !important; }
+      #rx-overlay { left: 0; width: 100%; max-width: none; transform: none; }
+      #toast { left: 50% !important; }
+      #success-toast { left: var(--tm-space-lg) !important; width: calc(100% - 2 * var(--tm-space-lg)) !important; }
+      .bottom-sheet { max-width: none; max-height: 85%; }
+      .bottom-sheet.open { display: flex; flex-direction: column; }
+      .bottom-sheet .sheet-title { flex-shrink: 0; }
+      .bottom-sheet .sheet-body { flex: 1; min-height: 0; max-height: none; }
+    }

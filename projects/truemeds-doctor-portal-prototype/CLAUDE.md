@@ -149,3 +149,7 @@ Build like a real product shell, not a static wireframe.
 Preserve the locked consultation workflow and locked valid-call gate.
 Move fast where it is safe to move fast.
 Stop and ask where the decision belongs to the user.
+
+## Layout rule (do not change without Apurva)
+
+Desktop = centred 9:16 phone frame, one scroll area, sheets/Rx/toasts inside the frame; mobile = full screen. Full rule: `design-system/RULES.md` §7. Run `python3 docs/layout_check.py` before committing any layout/CSS change. Never turn bottom sheets into desktop dialogs and never make the demo panel a scroll container.

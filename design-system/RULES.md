@@ -90,3 +90,15 @@ Run before calling any UI task done. Every answer must be "yes".
 - SALT's Font page lists "SF Pro Display" as the typeface; variables, components and truemeds.in all use Plus Jakarta Sans. We use Plus Jakarta Sans.
 - "Heading XL" on the Font page is 32px on a 28px line height — looks like a typo, so it is left out.
 - No web/desktop library yet; the internal-tools layer above fills the gap until one exists.
+
+## 7. Phone-frame prototypes (layout rule — do not re-litigate)
+
+Mobile-first prototypes are previewed on desktop as a **9:16 phone frame**, never as a stretched page, a narrow column glued to the window, or a dialog layout.
+
+1. **Below 768px** the app *is* the screen: the window scrolls and overlays are viewport-fixed.
+2. **At 768px and up** the app sits in a centred 9:16 frame: `height: clamp(640px, 100vh - 48px, 800px)`, `width: height × 9/16`, rounded border, `overflow: hidden`, `transform: translateZ(0)`.
+3. **One scroll area** inside the frame (the content region). The header is pinned above it. The page behind never scrolls because of the frame, and no side panel may be a scroll container.
+4. **Overlays live inside the frame.** Bottom sheets, full-screen viewers, toasts and snackbars are DOM children of the frame (the transform makes `position: fixed` anchor to it). Bottom sheets keep the mobile bottom-sheet behaviour at every width; they are never turned into centred dialogs on desktop.
+5. **Demo/dev panels** float beside the frame (absolutely positioned) and never change its size or centring.
+6. Desktop overrides go in one block at the END of the stylesheet so they beat the mobile rules.
+7. Check before every commit that touches layout: `python3 projects/<project>/docs/layout_check.py` must say ALL PASS (frame 9:16, wheel scroll works, sheet at frame bottom, Rx viewer fills frame, no page errors).

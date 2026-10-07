@@ -12,6 +12,84 @@
 <div id="layout-wrapper">
 
   <!-- ============================================================
+       DESKTOP SIDE PANEL — visible on wide screens only
+  ============================================================ -->
+  <div id="desktop-side-panel">
+
+    <!-- Case Overview -->
+    <div class="side-panel-card tm-card">
+      <div class="side-panel-header">Current Case</div>
+      <div class="side-panel-body">
+        <div id="side-patient-name">—</div>
+        <div id="side-order-id">—</div>
+        <div id="side-badge-row"></div>
+      </div>
+    </div>
+
+    <!-- Call State -->
+    <div class="side-panel-card tm-card">
+      <div class="side-panel-header">Call Status</div>
+      <div class="side-panel-body">
+        <div id="side-state-display">
+          <div id="side-state-icon"><span class="tm-icon tm-icon--24" data-icon="phone"></span></div>
+          <div>
+            <div id="side-state-text">—</div>
+            <div id="side-timer-text">—</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Post-call CTA (mirrors main scroll) -->
+    <div class="side-panel-card tm-card">
+      <div class="side-panel-header">Post-Call Action</div>
+      <div class="side-panel-body">
+        <div id="side-cta-section">
+          <div id="side-ha-banner" class="tm-notice tm-notice--warning"><span class="tm-icon tm-icon--16" data-icon="alert-triangle"></span><span>HA call required before confirming</span></div>
+          <button id="side-skip-ha-btn" class="tm-btn tm-btn--sm tm-btn--secondary tm-btn--block" onclick="openSheet('sheet-skip-ha')">Skip HA Call</button>
+          <button id="side-main-cta" class="tm-btn tm-btn--primary tm-btn--block" onclick="handleMainCTA()">
+            <span id="side-cta-icon"></span>
+            <span id="side-cta-label">Confirm Order</span>
+          </button>
+        </div>
+        <div id="side-cta-locked">
+          Waiting for valid call (50s)
+        </div>
+      </div>
+    </div>
+
+    <!-- Demo Controls -->
+    <div class="side-panel-card tm-card">
+      <div class="side-panel-header"><span class="tm-icon tm-icon--16" data-icon="bolt"></span>Demo scenarios</div>
+      <div class="side-panel-body" id="side-scenario-btns">
+        <button class="tm-btn tm-btn--tertiary tm-btn--sm tm-btn--block side-scenario-btn" aria-pressed="true" data-scenario="cat4">Cat4</button>
+        <button class="tm-btn tm-btn--tertiary tm-btn--sm tm-btn--block side-scenario-btn" aria-pressed="false" data-scenario="pilot_value_meds_ha">Pilot + Value Meds + HA</button>
+        <button class="tm-btn tm-btn--tertiary tm-btn--sm tm-btn--block side-scenario-btn" aria-pressed="false" data-scenario="pilot_nonvalue_meds_ha">Pilot + Non-Value Meds + HA</button>
+        <button class="tm-btn tm-btn--tertiary tm-btn--sm tm-btn--block side-scenario-btn" aria-pressed="false" data-scenario="pilot_ha_skipped_customer">Pilot · HA Skipped (Customer)</button>
+        <button class="tm-btn tm-btn--tertiary tm-btn--sm tm-btn--block side-scenario-btn" aria-pressed="false" data-scenario="pilot_ha_skipped_system">Pilot · HA Skipped (System)</button>
+        <!-- Desktop webhook simulator — visible when state=calling -->
+        <div id="side-demo-call-sim" style="display:none">
+          <div id="side-sim-calling" class="side-sim-row">
+            <button class="tm-btn tm-btn--secondary tm-btn--xs side-sim-btn" onclick="simCallConnected()"><span class="tm-icon tm-icon--16" data-icon="check"></span>Connected</button>
+            <button class="tm-btn tm-btn--tertiary tm-btn--xs side-sim-btn" onclick="simShowWebhookOptions()"><span class="tm-icon tm-icon--16" data-icon="x"></span>No connect</button>
+          </div>
+          <div id="side-sim-webhook" style="display:none">
+            <div class="side-sim-label">Webhook reason</div>
+            <div class="side-sim-row">
+              <button class="tm-btn tm-btn--tertiary tm-btn--xs side-sim-btn" onclick="simWebhook('no_answer')"><span class="tm-icon tm-icon--16" data-icon="phone-off"></span>No answer</button>
+              <button class="tm-btn tm-btn--tertiary tm-btn--xs side-sim-btn" onclick="simWebhook('switched_off')"><span class="tm-icon tm-icon--16" data-icon="volume-off"></span>Switched off</button>
+              <button class="tm-btn tm-btn--tertiary tm-btn--xs side-sim-btn" onclick="simWebhook('wrong_number')"><span class="tm-icon tm-icon--16" data-icon="circle-x"></span>Wrong no.</button>
+              <button class="tm-btn tm-btn--tertiary tm-btn--xs side-sim-btn" onclick="simWebhook('timeout')"><span class="tm-icon tm-icon--16" data-icon="clock"></span>Timeout</button>
+            </div>
+          </div>
+        </div>
+        <button id="side-ff-btn" class="tm-btn tm-btn--tertiary tm-btn--sm tm-btn--block"><span class="tm-icon tm-icon--16" data-icon="player-track-next"></span>Fast-forward to 50s</button>
+      </div>
+    </div>
+
+  </div><!-- /desktop-side-panel -->
+
+  <!-- ============================================================
        MOBILE COLUMN
   ============================================================ -->
   <div id="mobile-column">
@@ -189,90 +267,6 @@
       </div><!-- /action-zone -->
 
     </div><!-- /main-scroll -->
-
-  </div><!-- /mobile-column -->
-
-
-  <!-- ============================================================
-       DESKTOP SIDE PANEL — visible on wide screens only
-  ============================================================ -->
-  <div id="desktop-side-panel">
-
-    <!-- Case Overview -->
-    <div class="side-panel-card tm-card">
-      <div class="side-panel-header">Current Case</div>
-      <div class="side-panel-body">
-        <div id="side-patient-name">—</div>
-        <div id="side-order-id">—</div>
-        <div id="side-badge-row"></div>
-      </div>
-    </div>
-
-    <!-- Call State -->
-    <div class="side-panel-card tm-card">
-      <div class="side-panel-header">Call Status</div>
-      <div class="side-panel-body">
-        <div id="side-state-display">
-          <div id="side-state-icon"><span class="tm-icon tm-icon--24" data-icon="phone"></span></div>
-          <div>
-            <div id="side-state-text">—</div>
-            <div id="side-timer-text">—</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Post-call CTA (mirrors main scroll) -->
-    <div class="side-panel-card tm-card">
-      <div class="side-panel-header">Post-Call Action</div>
-      <div class="side-panel-body">
-        <div id="side-cta-section">
-          <div id="side-ha-banner" class="tm-notice tm-notice--warning"><span class="tm-icon tm-icon--16" data-icon="alert-triangle"></span><span>HA call required before confirming</span></div>
-          <button id="side-skip-ha-btn" class="tm-btn tm-btn--sm tm-btn--secondary tm-btn--block" onclick="openSheet('sheet-skip-ha')">Skip HA Call</button>
-          <button id="side-main-cta" class="tm-btn tm-btn--primary tm-btn--block" onclick="handleMainCTA()">
-            <span id="side-cta-icon"></span>
-            <span id="side-cta-label">Confirm Order</span>
-          </button>
-        </div>
-        <div id="side-cta-locked">
-          Waiting for valid call (50s)
-        </div>
-      </div>
-    </div>
-
-    <!-- Demo Controls -->
-    <div class="side-panel-card tm-card">
-      <div class="side-panel-header"><span class="tm-icon tm-icon--16" data-icon="bolt"></span>Demo scenarios</div>
-      <div class="side-panel-body" id="side-scenario-btns">
-        <button class="tm-btn tm-btn--tertiary tm-btn--sm tm-btn--block side-scenario-btn" aria-pressed="true" data-scenario="cat4">Cat4</button>
-        <button class="tm-btn tm-btn--tertiary tm-btn--sm tm-btn--block side-scenario-btn" aria-pressed="false" data-scenario="pilot_value_meds_ha">Pilot + Value Meds + HA</button>
-        <button class="tm-btn tm-btn--tertiary tm-btn--sm tm-btn--block side-scenario-btn" aria-pressed="false" data-scenario="pilot_nonvalue_meds_ha">Pilot + Non-Value Meds + HA</button>
-        <button class="tm-btn tm-btn--tertiary tm-btn--sm tm-btn--block side-scenario-btn" aria-pressed="false" data-scenario="pilot_ha_skipped_customer">Pilot · HA Skipped (Customer)</button>
-        <button class="tm-btn tm-btn--tertiary tm-btn--sm tm-btn--block side-scenario-btn" aria-pressed="false" data-scenario="pilot_ha_skipped_system">Pilot · HA Skipped (System)</button>
-        <!-- Desktop webhook simulator — visible when state=calling -->
-        <div id="side-demo-call-sim" style="display:none">
-          <div id="side-sim-calling" class="side-sim-row">
-            <button class="tm-btn tm-btn--secondary tm-btn--xs side-sim-btn" onclick="simCallConnected()"><span class="tm-icon tm-icon--16" data-icon="check"></span>Connected</button>
-            <button class="tm-btn tm-btn--tertiary tm-btn--xs side-sim-btn" onclick="simShowWebhookOptions()"><span class="tm-icon tm-icon--16" data-icon="x"></span>No connect</button>
-          </div>
-          <div id="side-sim-webhook" style="display:none">
-            <div class="side-sim-label">Webhook reason</div>
-            <div class="side-sim-row">
-              <button class="tm-btn tm-btn--tertiary tm-btn--xs side-sim-btn" onclick="simWebhook('no_answer')"><span class="tm-icon tm-icon--16" data-icon="phone-off"></span>No answer</button>
-              <button class="tm-btn tm-btn--tertiary tm-btn--xs side-sim-btn" onclick="simWebhook('switched_off')"><span class="tm-icon tm-icon--16" data-icon="volume-off"></span>Switched off</button>
-              <button class="tm-btn tm-btn--tertiary tm-btn--xs side-sim-btn" onclick="simWebhook('wrong_number')"><span class="tm-icon tm-icon--16" data-icon="circle-x"></span>Wrong no.</button>
-              <button class="tm-btn tm-btn--tertiary tm-btn--xs side-sim-btn" onclick="simWebhook('timeout')"><span class="tm-icon tm-icon--16" data-icon="clock"></span>Timeout</button>
-            </div>
-          </div>
-        </div>
-        <button id="side-ff-btn" class="tm-btn tm-btn--tertiary tm-btn--sm tm-btn--block"><span class="tm-icon tm-icon--16" data-icon="player-track-next"></span>Fast-forward to 50s</button>
-      </div>
-    </div>
-
-  </div><!-- /desktop-side-panel -->
-
-</div><!-- /layout-wrapper -->
-
 
 <!-- ============================================================
      RX FULL-SCREEN OVERLAY (dark viewer — intentional for doc readability)
@@ -604,7 +598,15 @@
   </div>
   <button id="success-toast-next" class="tm-btn tm-btn--sm tm-btn--primary" onclick="resetToDemo()">Next Order <span class="tm-icon tm-icon--16" data-icon="arrow-right"></span></button>
 </div>
-</div>
+
+  </div><!-- /mobile-column (phone frame: overlays live inside it) -->
+
+</div><!-- /layout-wrapper -->
+
+
+
+
+
 
 
 <!-- ============================================================

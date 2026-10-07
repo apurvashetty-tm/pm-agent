@@ -518,6 +518,7 @@ function updateCompactStripVisibility() {
   strip.classList.toggle('visible', pdbBottom <= wrapperBottom);
 }
 window.addEventListener('scroll', updateCompactStripVisibility, { passive: true });
+document.getElementById('main-scroll')?.addEventListener('scroll', updateCompactStripVisibility, { passive: true });   // desktop phone frame scrolls #main-scroll
 
 // ================================================================
 // ORDER EXPAND TOGGLE
@@ -564,6 +565,7 @@ function initiateCall() {
   DOCTOR_STATE.endedEarly = false;
   render();
   window.scrollTo({ top: 0, behavior: 'smooth' });
+  document.getElementById('main-scroll')?.scrollTo({ top: 0, behavior: 'smooth' });
   console.log(`[MOCK] call-service.initiateCall | scenario=${DOCTOR_STATE.activeScenario}`);
 }
 
