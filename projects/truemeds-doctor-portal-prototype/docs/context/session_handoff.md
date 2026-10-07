@@ -17,6 +17,39 @@
 
 ---
 
+> **2026-10-07 — RESTYLE IN PROGRESS (visual migration only).** Scope authorised by Apurva:
+> design-system restyle only; every behaviour, the five scenarios, the 50s gate, CTA routing,
+> callback, medicine edits, notes, Rx viewer and demo controls are unchanged.
+> Branch `doctor-portal-restyle`. Decisions D1–D12 recorded in `docs/reviews/2026-10-07-restyle-audit.md`.
+>
+> ### ROLLBACK — say: "revert doctor portal restyle"
+> Checkpoint tag: `checkpoint/doctor-portal-pre-restyle` = commit `3fa1fc8` (pushed to origin).
+> When Apurva says that phrase, run this from the `pm-agent` root (via `device_bash`) — nothing else:
+>
+> 1. `git rev-parse checkpoint/doctor-portal-pre-restyle^{commit}` must print a hash starting `3fa1fc8`.
+> 2. `git diff --stat checkpoint/doctor-portal-pre-restyle -- <RESTYLE FILES>` — show her what will be undone.
+> 3. `git checkout checkpoint/doctor-portal-pre-restyle -- <RESTYLE FILES>`
+> 4. `git diff --quiet checkpoint/doctor-portal-pre-restyle -- <RESTYLE FILES> && echo RESTORED`
+> 5. Delete only the files in **Files created by the restyle** below (needs delete permission; ask once).
+> 6. Tell her what was restored. Do NOT commit unless asked.
+>
+> **Never** use `git reset`, `git clean`, `git stash`, `git checkout .` or `git restore .` — the repo holds unrelated
+> uncommitted work (AGENTS.md hunks, root CLAUDE.md, Roadmap, PRD workflows, ceo-discussions, valuemeds, post-order-aop,
+> Claude outputs, and the untracked audit file) that must not be touched.
+>
+> **RESTYLE FILES** (paths relative to pm-agent root; keep this list current after every batch):
+> `projects/truemeds-doctor-portal-prototype/index.html`
+> `projects/truemeds-doctor-portal-prototype/styles.css`
+> `projects/truemeds-doctor-portal-prototype/app.js`
+> `design-system/src/components.css` `design-system/truemeds.css` `design-system/preview.html`
+> `design-system/icons/icons.txt` `design-system/icons/icons.js`
+>
+> **Files created by the restyle:** none yet.
+>
+> Docs (this handoff, audit, CLAUDE.md) are intentionally NOT rolled back.
+
+---
+
 ## 1. What has been built (current state)
 
 **Architecture:** the prototype is now **three files**, not one — `index.html` (structure), `styles.css` (all cosmetics), `app.js` (all logic). This is a deliberate `[USER-PROVIDED]` change from the original single-file V1 rule; see `docs/design_system.md` for why (button-style drift across the single file was the trigger). `CLAUDE.md` and `frontend_engineer.md` have been updated to match — see their diffs from this same pass.
