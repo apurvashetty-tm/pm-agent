@@ -12,7 +12,7 @@
 
 Orders from South India drop off more than the rest of the country before they reach the warehouse. A big reason is the doctor's call. Today a doctor is picked without looking at language, so a customer in Madurai who speaks only Tamil can get a doctor who speaks only Hindi. The call connects, but the consultation doesn't happen, and the order is lost.
 
-With this feature, every doctor will have the languages they can consult in, and every South pincode will have a language. When an order from a South pincode needs a doctor call, doctors who speak that pincode's language get it first. If no such doctor picks it up within a set time, the order goes back to the normal flow, so no order is ever stuck waiting.
+With this feature, every doctor will have one language they can consult in, and every South pincode will have a language. When an order from a South pincode needs a doctor call, doctors who speak that pincode's language get it first.
 
 Nothing changes for orders outside South, for NFS orders, or for how Super Doctor manually assigns orders.
 
@@ -42,7 +42,7 @@ If we close this gap: **+1,091 more confirmed orders a month, +774 delivered ord
 - Get South customers a doctor who speaks their language.
 - Bring South FTC doctor confirmation up to the rest of India (72.04% → 76.49%).
 - Don't slow down or block any order. If a matching doctor isn't available, the order moves on as it does today, order will get manually assigned by ops
-- Keep the current doctor experience and order priority (LIFO, then FIFO) as they are.
+- Keep the current doctor experience and order priority (LIFO) as they are.
 
 ---
 
@@ -61,9 +61,9 @@ If we close this gap: **+1,091 more confirmed orders a month, +774 delivered ord
 ## 5. How It Works — Simple Rules
 
 ### 5.1 Doctor languages
-- Each doctor has a list of languages they can **consult** in (not just chat in), e.g. `TAMIL,ENGLISH,HINDI`.
-- Doctor Ops provides this list. Tech loads it on the doctor record.
-- A doctor with no languages listed gets normal orders exactly as today.
+- Each doctor has **one** language mapped, the language they can **consult** in (not just chat in), e.g. `TAMIL`.
+- Doctor Ops provides this mapping. Tech loads it on the doctor record.
+- A doctor with no language mapped gets normal orders exactly as today.
 
 ### 5.2 Pincode language
 - Each South pincode has one language: Tamil, Telugu, Kannada or Malayalam.
@@ -73,31 +73,25 @@ If we close this gap: **+1,091 more confirmed orders a month, +774 delivered ord
 An order goes to the language pool only if **all** of these are true:
 1. It is **not** an NFS order. NFS orders always keep their highest priority and never enter the language pool.
 2. Its delivery pincode has a language.
-3. That language is **switched on**, i.e. we have enough doctors who speak it (see 6.6).
+3. That language is **switched on**, i.e. we have enough doctors who speak it.
 
 Otherwise the order goes to the normal flow as it does today.
 
 ### 5.4 Who gets a language pool order
 - Only doctors who speak that language **and** are marked available.
 - For these doctors, language pool only goes to them
-- Within the language pool, orders are picked in the same order as today: LIFO, then FIFO.
+- Within the language pool, orders are picked in the same order as today: LIFO.
 
-### 5.5 Release after 2 hours [This is out of scope]
-- If no doctor who speaks the language picks the order within **2 operational hours**, it is released to the normal flow. From then on it's treated like any other order.
-- The 2 hours count only during operational hours. The clock pauses when the doctor team is off. So an order that comes in late at night gets its time the next morning, when doctors who speak the language log in.
-- The 2 hours start when the order first enters the pool. A retry doesn't restart the clock.
-- Once released, an order doesn't go back to the language pool.
+### 5.5 Starvation Risk – Interim Operational Handling
 
-> **Note: Starvation Risk – Interim Operational Handling**
->
-> Currently, we are accepting the starvation risk and handling it through an operational workaround.
-> - Ops will monitor pending/unassigned orders and manually assign them to available online doctors.
-> - To support this process, we need to build an Ops portal/page that provides visibility into all currently available online doctors, along with relevant filters.
-> - The Super Doctor/Ops team can use this portal/page to identify and assign an order to an available doctor.
-> - Today, Ops manually calls individual doctors to confirm whether they are online/available and then assigns the order accordingly.
-> - The proposed portal should reduce this manual dependency by providing a centralized view of online/available doctors and enabling faster order assignment.
->
-> **Future scope:** Automate doctor availability and order assignment to reduce manual intervention and further mitigate starvation risk.
+Currently, we are accepting the starvation risk and handling it through an operational workaround.
+- Ops will monitor pending/unassigned orders and manually assign them to available online doctors.
+- To support this process, we need to build an Ops portal/page that provides visibility into all currently available online doctors, along with relevant filters.
+- The Super Doctor/Ops team can use this portal/page to identify and assign an order to an available doctor.
+- Today, Ops manually calls individual doctors to confirm whether they are online/available and then assigns the order accordingly.
+- The proposed portal should reduce this manual dependency by providing a centralized view of online/available doctors and enabling faster order assignment.
+
+**Future scope:** Automate doctor availability and order assignment to reduce manual intervention and further mitigate starvation risk.
 
 ### 5.6 Switching a language on or off
 - A language is switched on when there is pincode and and language mapping available
@@ -119,9 +113,9 @@ Otherwise the order goes to the normal flow as it does today.
 4. The consultation happens in Tamil, the order is confirmed, and it moves to the warehouse.
 5. If no doctor who speaks Tamil is free the ops/Super Doctor admin will manually assign the order to the available Dr,  the order goes to the normal flow and any doctor calls, same as today.
 
-**Doctor who speaks Tamil, Hindi and English**
+**Doctor mapped to Tamil**
 1. Clicks to get the next order.
-2. Get a Tamil pool order first, if one is waiting (LIFO, then FIFO).
+2. Get a Tamil pool order first, if one is waiting (LIFO).
 3. If no Tamil orders are waiting nor order till it gets manually assigned
 
 **Doctor who speaks only Hindi and English**
@@ -173,13 +167,10 @@ No Change for Doctor Portal
 
 - **NFS order from a South pincode:** follows the NFS flow with highest priority. Never goes to the language pool.
 - **Pincode with no language (blank or or not in table):** normal flow.
-- **Language switched off (not enough doctors):** normal flow from the start.
 - **Doctors who speak the language are all busy:** the order waits in the pool, and the next one to free up gets it. Or gets manually assigned by Ops to available Doctor
 - **No doctor who speaks the language is available,** Super Doctor can assign manually any time.
 - **More language orders than doctors can handle:** Order waits in the pool or Super Doctor can assign manually.
-- **Order comes in outside operational hours:** the clock starts when operational hours begin.
 - **Call not connected / doctor doesn't call in time:** The order goes back to the language pool.
-- **Doctor speaks more than one South language:** gets orders from all of those language pools.
 - **Customer in a South pincode doesn't speak the local language:** accepted for this release. Most doctors who speak the local language also speak English or Hindi.
 
 ---
@@ -192,14 +183,12 @@ flowchart TD
    B -- Yes --> NFS[NFS flow, highest priority]
    B -- No --> C{Pincode has a language<br/>and language is switched on?}
    C -- No --> N[Normal flow, as today]
-   C -- Yes --> D[Language pool<br/>available doctors who speak it<br/>LIFO, then FIFO]
+   C -- Yes --> D[Language pool<br/>available doctors who speak it<br/>LIFO]
    D -- Doctor who speaks it picks --> E[Doctor call]
-   D -- 2 operational hours passed --> N
    D -- Super Doctor assigns manually --> E
    N --> E
    E -- Confirmed --> F[Order moves to warehouse]
-   E -- Not connected, 2 hrs not up --> D
-   E -- Not connected, 2 hrs up --> N
+   E -- Not connected --> D
 ```
 
 ---
@@ -213,7 +202,6 @@ flowchart TD
 | South FTC doctor confirmation | FTC orders reaching warehouse ÷ FTC orders placed, South | 72.04% (Aug) | 76.49% |
 | South OP2OD | Delivered ÷ placed, South | FTC 51.23% (Aug) | +3.16pp FTC, +0.96pp all South |
 | Match rate | Language pool orders confirmed by a doctor who speaks the language ÷ all language pool orders | New | Track from pilot |
-| Release rate | Language pool orders released to normal flow ÷ all language pool orders | New | Low. A high rate means we're short of doctors for that language. |
 | Guardrail: Non-South doctor confirmation and time to first call | Same as today | Current | No drop |
 | Guardrail: South cancellation | Cancelled ÷ placed, South | FTC 11.88% | No rise |
 
@@ -232,10 +220,9 @@ flowchart TD
 ## 12. Open Items
 
 1. **Minimum number of doctors per language** before switching it on (per shift). Needs Doctor Ops' current headcount by language.
-2. **To confirm:** doctors who speak the language get language pool orders before normal orders, and the pool uses the same LIFO-then-FIFO order as today.
+2. **To confirm:** doctors who speak the language get language pool orders before normal orders, and the pool uses the same LIFO order as today.
 3. **Pilot language:** which South language goes first. Suggest the one with the highest order volume and enough doctors. - TBD
-4. **Call-back time shown to the customer.** The call-back card shows "doctor will call in 5 minutes" before 10 PM. Language pool orders can wait up to 2 hours, so the card could show the wrong time. Decide whether to keep the card as-is for the pilot or show a later time for language pool orders.
-5. **2-hour wait value.** Starting at 2 operational hours. Keep it configurable and tune it after the pilot.
+4. **Call-back time shown to the customer.** The call-back card shows "doctor will call in 5 minutes" before 10 PM. To keep the card as-is for the pilot.
 
 ---
 
