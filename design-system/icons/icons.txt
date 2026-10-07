@@ -103,4 +103,3 @@ medicine-syrup
 droplet
 wind
 test-pipe
-capsule-horizontal

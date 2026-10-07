@@ -23,12 +23,6 @@ for (const n of names) {
 }
 if (missing.length) { console.error("Unknown icon names:", missing.join(", ")); process.exit(1); }
 
-// [PROPOSED] Keep Tabler's capsule silhouette; add the missing join so the
-// medicine-form glyph reads as a two-part capsule at 24px, not an oval tablet.
-if (out["capsule-horizontal"]) {
-  out["capsule-horizontal"] += '<path d="M12 6v12"/>';
-}
-
 // [PROPOSED] Round tablet glyph (circle with a score line). Tabler has no round-tablet medicine
 // icon and its `pill` reads as a capsule, so tablets and capsules were indistinguishable.
 out["tablet-round"] = '<circle cx="12" cy="12" r="8"/><path d="M4 12h16"/>';
