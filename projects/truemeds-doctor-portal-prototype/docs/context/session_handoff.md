@@ -42,7 +42,7 @@
 > `design-system/src/components.css` `design-system/truemeds.css` `design-system/preview.html`
 > `design-system/icons/icons.txt` `design-system/icons/icons.js` `design-system/RULES.md`
 >
-> **Files created by the restyle:** `projects/truemeds-doctor-portal-prototype/truemeds-logo.svg` (official brand asset; rollback deletes it with delete permission). Also `design-system/logo/truemeds-logo.svg` (same official file), `design-system/logo/truemeds-icon.svg` (icon-only, from Figma) and the logo rule 8 added to `design-system/RULES.md` (add RULES.md to the restore list).
+> **Files created by the restyle:** `projects/truemeds-doctor-portal-prototype/truemeds-logo.svg` (official brand asset; rollback deletes it with delete permission). Also `design-system/logo/truemeds-logo.svg` (same official file), `design-system/logo/truemeds-icon.svg` (icon-only, from Figma), `design-system/logo/logo.lock.json` + `design-system/scripts/check_logo.py` (logo lock: blue #1B69DE, green #22B573) and the logo rule 8 added to `design-system/RULES.md` (add RULES.md to the restore list).
 >
 > `[PROPOSED]` central design-system additions (flag to design owner): `.tm-btn--busy`, `.tm-tag--md` (12px), `.tm-snackbar`, `.tm-section-title` 16/24, 16 new Tabler icons.
 >

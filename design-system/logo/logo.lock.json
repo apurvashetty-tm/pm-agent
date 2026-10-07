@@ -1,0 +1,10 @@
+{
+  "allowed_colours": [
+    "#1B69DE",
+    "#22B573"
+  ],
+  "sha256": {
+    "truemeds-icon.svg": "d378662e59eae7ce44855ec6f4a46b1d5b2084e7dd631f22f1c4b9867a73a6f4",
+    "truemeds-logo.svg": "1953a94bd34c46a7349e5f90667d024b9bac5af951a2202dc1611c7301ec46e5"
+  }
+}
