@@ -169,10 +169,10 @@ function haSkipApplicable(scenario) {
 // MEDICINE FORM ICONS — Tabler outline per dosage form
 // ================================================================
 function getMedIcon(form) {
-  // Tabler outline, monochrome — one glyph per dosage form
-  const byForm = { tablet:'pill', capsule:'capsule-horizontal', injection:'vaccine', syrup:'medicine-syrup',
+  // Tabler outline, monochrome — one glyph per dosage form (tablet = round, capsule = two-part pill: they must look different)
+  const byForm = { tablet:'tablet-round', capsule:'capsule-horizontal', injection:'vaccine', syrup:'medicine-syrup',
                    drops:'droplet', cream:'test-pipe', inhaler:'wind' };
-  return iconEl(byForm[form] || 'pill', 24);
+  return iconEl(byForm[form] || 'tablet-round', 24);
 }
 
 // ================================================================
