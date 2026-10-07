@@ -8,8 +8,8 @@
 ---
 
 > **2026-10-07 — Prescription changes, part 2: Prescribe sheet redesign — AGREED WITH APURVA, NOT BUILT YET.**
-> Concept render: `docs/concepts/2026-10-07-prescribe-sheet.png` (tablet, syrup, inhaler; note it still shows "After food"
-> preselected — the agreed rule is no food default). Full detail view stays: every section open with backend defaults,
+> Concept render: `docs/concepts/2026-10-07-prescribe-sheet.png` (tablet, syrup, inhaler; Food row
+> shown on all three with nothing selected, matching the agreed no-default rule). Full detail view stays: every section open with backend defaults,
 > so the doctor scrolls past everything before Prescribe. No collapsed summary. Order, top to bottom:
 > 1. Header: medicine name + form tag, then a "Prints as" line showing exactly what will print (kept).
 > 2. How often: Daily · Every X hours · Alt days · Weekly · Monthly · SOS only.
