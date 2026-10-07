@@ -7,6 +7,31 @@
 
 ---
 
+> **2026-10-07 — Prescription changes, part 2: Prescribe sheet redesign — AGREED WITH APURVA, NOT BUILT YET.**
+> Concept render: `docs/concepts/2026-10-07-prescribe-sheet.png` (tablet, syrup, inhaler; note it still shows "After food"
+> preselected — the agreed rule is no food default). Full detail view stays: every section open with backend defaults,
+> so the doctor scrolls past everything before Prescribe. No collapsed summary. Order, top to bottom:
+> 1. Header: medicine name + form tag, then a "Prints as" line showing exactly what will print (kept).
+> 2. How often: Daily · Every X hours · Alt days · Weekly · Monthly · SOS only.
+> 3. Dose, by choice above; units follow the form. Daily = Morning · Afternoon · Night (3 slots; NO evening slot —
+>    more than 3 a day uses Every X hours; uneven 4-dose schedules go in the note). Every X hours = 4 · 6 · 8 · 12 h,
+>    round the clock, plus dose each time. Alt days / Weekly / Monthly / SOS only = dose each time.
+>    Dose choices: tablet/capsule 0 ½ 1 2; syrup 2.5 · 5 · 10 ml · Other (number entry in ml, not free text);
+>    inhaler 0 1 2 puffs; drops 1 2 3; injection 1 dose or units (number); cream "Apply".
+> 4. Also as needed (SOS) toggle, under the regular schedule; when on, Max per day 1–4 (keeps quantity calculable).
+> 5. Duration: collapsed row "value · Change" (default Ongoing = 6 months, backend). Change opens a picker:
+>    numbers 1 2 3 4 5 6 7 10 14 15 + Days · Weeks · Months · Ongoing. No custom entry, no "until next review".
+> 6. Food: After food · Before food · Empty stomach. Always shown for every form (no form-based hide rule — e.g. insulin
+>    needs it), optional, single-select (tap again to clear), NO default, printed only if selected. All other advice
+>    chips are removed.
+> 7. Additional instructions: optional free text, printed. Holds tapers, varying doses and anything else ("stop if
+>    rash", "shake well", "rinse mouth"); the structured fields still drive quantity (tapers fall back to the backend
+>    default quantity).
+> 8. Prescribe · Disable this medicine.
+> Still open: OQ-014 (pack vs dose units for quantity, non-tablet forms).
+
+---
+
 > **2026-10-07 — Prescription changes, part 1 (quantity and price).** Agreed with Apurva and built:
 > (1) the edit sheet has no quantity at all (stepper removed; the doctor never sees prescription quantity);
 > (2) the medicine row shows the customer's cart "Qty" read-only, unchanged by doctor edits, and no longer shows a
@@ -14,8 +39,7 @@
 > (4) order value (patient block and compact strip) and View Rx are unchanged. Backend rule: frequency and duration are
 > preselected for the configured maximum (6 months, Ongoing), the backend stores the quantity, and recalculates and prints
 > it on the prescription if the doctor changes frequency or duration. Deferred: OQ-014 (pack vs dose units for non-tablet
-> forms) and OQ-015 (per-medicine detail view with price and image). Still to discuss: frequency beyond 3/day and more
-> duration options. Note: the restyle rollback restores pre-restyle files, so it would also undo these product changes.
+> forms) and OQ-015 (per-medicine detail view with price and image). Frequency and duration: see Part 2 above. Note: the restyle rollback restores pre-restyle files, so it would also undo these product changes.
 > Product doubt to raise: the disable reason "Wrong strength" hints "Will disable and add correct one", but adding is gone.
 
 ---
