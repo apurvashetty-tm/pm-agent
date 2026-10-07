@@ -38,7 +38,7 @@ Link two files. Never copy values out of them.
    - Everything else is neutral grey and white.
 6. **One primary button per context.** Other actions step down: secondary → tertiary → ghost → link.
 7. **Use what exists.** Need something new? Check `preview.html` and SALT first. If it truly isn't there, add it to `src/components.css` marked `[PROPOSED]` (built from tokens only) — never inside a project.
-8. **Logo: use the official file, never redraw or recolour it.** `design-system/logo/truemeds-logo.svg` is the official Truemeds nav logo (110x26 viewBox; render at 130x31 in headers). Reference it with `<img src="…/design-system/logo/truemeds-logo.svg" alt="Truemeds">`. Do not inline-edit, stretch, recolour or recreate it, and do not hotlink it. Source of truth for other variants: the Truemeds-LOGO Figma file (https://www.figma.com/design/nD1pPa1SMzuZKnJIZxCdKa/Truemeds-LOGO) — add variants to `logo/` only as exported files.
+8. **Logo: use the official files in `design-system/logo/`; never redraw, recolour, stretch or hotlink them.** `truemeds-logo.svg` is the full logo (icon + wordmark) from the truemeds.in nav (110x26 viewBox; render at 130x31 in headers) and is the primary logo. `truemeds-icon.svg` is the icon-only mark (70x70) from the Truemeds-LOGO Figma file (https://www.figma.com/design/nD1pPa1SMzuZKnJIZxCdKa/Truemeds-LOGO) for favicons, avatars and tight spaces. Reference with `<img src="…/design-system/logo/<file>.svg" alt="Truemeds">`. New variants are added to `logo/` only as unmodified exports. **Known mismatch:** the Figma file uses blue `#0071BC`, the nav logo uses brand blue `#1B69DE` (green `#22B573` matches); design team to confirm which blue is current.
 
 ## 3. Choosing components
 
