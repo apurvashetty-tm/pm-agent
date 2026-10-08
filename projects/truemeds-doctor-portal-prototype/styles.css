@@ -220,6 +220,21 @@
     body:has(#success-toast.show) #main-scroll { padding-bottom: calc(var(--tm-space-3xl) * 3); }
 
     /* ============================================================
+       PINNED ACTION BARS (agreed 2026-10-08, decision log D-22) — .tm-actionbar
+       Case page: the one main action (Call Patient → Confirm …) pinned to the bottom, always active.
+       Phone: fixed to the screen bottom; the page reserves --ab-h (set by syncCaseActionBar()) so nothing hides
+       behind it. Desktop frame: the bar is the last row of the frame (see the desktop block at the end).
+    ============================================================ */
+    #case-actionbar { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 430px; z-index: 150; display: flex; flex-direction: column; }
+    @media (max-width: 767px) { #main-scroll { padding-bottom: calc(var(--ab-h, 0px) + var(--tm-space-2xl)); } }
+    body:has(#case-actionbar:not([hidden])) #toast { bottom: calc(var(--ab-h, 0px) + var(--tm-space-md)); }   /* toast sits above the bar */
+    /* While typing on a touch phone, the pinned bars step aside so they never sit on the keyboard */
+    @media (max-width: 767px) and (pointer: coarse) {
+      body:has(#main-scroll textarea:focus, #main-scroll input:focus) #case-actionbar { display: none; }
+      #prescribe-screen:has(textarea:focus, input:focus) #ps-actionbar { display: none; }
+    }
+
+    /* ============================================================
        PRESCRIBE SCREEN — full-screen view over the case (agreed 2026-10-07). Placement mirrors the Rx viewer;
        look comes from design-system components (.tm-appbar, .tm-chip--lg, .tm-card, .tm-check/.tm-toggle,
        .tm-field, .tm-notice). Only layout lives here.
@@ -235,12 +250,17 @@
     #ps-heading { flex: 1; min-width: 0; }
     #ps-heading .tm-appbar__title { display: block; }
     #ps-form { display: block; font-size: var(--tm-font-size-body-xs); line-height: var(--tm-font-lineheight-xs); color: var(--tm-content-secondary); }
+    /* Same pattern as the case page: grey background, one white card per block, 12px between cards */
     #ps-body {
       flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain;
-      padding: var(--tm-space-lg) var(--tm-space-lg) var(--tm-space-2xl);
-      display: flex; flex-direction: column; gap: var(--tm-space-xl);
+      background: var(--tm-surface-secondary);
+      padding: var(--tm-space-lg);
+      display: flex; flex-direction: column; gap: var(--tm-space-md);
     }
-    #ps-dynamic { display: flex; flex-direction: column; gap: var(--tm-space-xl); }
+    #ps-dynamic { display: flex; flex-direction: column; gap: var(--tm-space-md); }
+    .ps-card { display: flex; flex-direction: column; gap: var(--tm-space-xl); }
+    .ps-card > .ps-sub { margin-top: 0; }
+    #ps-actionbar { flex-shrink: 0; position: relative; }
     #ps-prints .ps-label { margin-bottom: var(--tm-space-xs); }
     #ps-prints-text { font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); color: var(--tm-content-primary); }
     .ps-label { font-size: var(--tm-font-size-body-sm); line-height: var(--tm-font-lineheight-sm); font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-secondary); margin-bottom: var(--tm-space-sm); }
@@ -574,6 +594,7 @@
       #sheet-overlay { left: 0 !important; width: 100% !important; }
       #rx-overlay { left: 0; width: 100%; max-width: none; transform: none; }
       #prescribe-screen { left: 0; width: 100%; max-width: none; transform: none; }
+      #case-actionbar { position: relative; left: auto; transform: none; max-width: none; flex-shrink: 0; }
       #toast { left: 50% !important; }
       #success-toast { left: var(--tm-space-lg) !important; width: calc(100% - 2 * var(--tm-space-lg)) !important; }
       .bottom-sheet { max-width: none; max-height: 85%; }

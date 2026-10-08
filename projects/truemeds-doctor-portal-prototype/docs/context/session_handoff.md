@@ -4,8 +4,12 @@
 
 **Last updated:** 2026-10-08
 **Session status:** Prescribe screen redesign built and reviewed; sticky header and scroll fixes done.
-**Why things are the way they are:** `docs/context/decision_log.md` (D-01 … D-21) — read it before changing any
+**Why things are the way they are:** `docs/context/decision_log.md` (D-01 … D-22) — read it before changing any
 screen it covers. This file says what is built; the decision log says why.
+**Case page main action (2026-10-08, D-22):** `#case-actionbar` (`.tm-actionbar`) pinned to the bottom holds
+`#call-initiate-btn` and `#main-cta-btn`; `syncCaseActionBar()` hides the bar when both are hidden and sets `--ab-h`
+(page bottom padding, toast offset). `scrollToActionZone()` replaces `scrollIntoView` (which also scrolled the desktop
+frame and pushed the header out of view). `layout_check.py` checks both.
 **Live link:** https://doctor-portal-prototype.netlify.app — Netlify deploys every push to `main` (base = repo root,
 publish = this folder). The root `netlify.toml` copies `design-system/` next to `index.html` at deploy time so the
 `../../design-system/…` links resolve. Work on a branch, then merge to `main` to update the live link.
@@ -39,7 +43,8 @@ publish = this folder). The root `netlify.toml` copies `design-system/` next to 
 > 7. Food (optional): After food · Before food · Empty stomach, one row, single-select, tap again to clear, no default,
 >    printed only if chosen. Shown for every form.
 > 8. Additional instructions: optional, printed (tapers, "shake well", "stop if rash"…).
-> 9. Prescribe (primary) at the END of the content, not pinned.
+> 9. Prescribe (primary, large) in a bottom bar pinned to the screen, always active (D-22). Body is grey with one
+>    white card per block (Prints as · Schedule · SOS · Duration · Food · Additional instructions), like the case page.
 > Errors (only two, inline, on Prescribe): 0-0-0 → notice under the dose grid; empty "Other" → field error.
 > Closing: instant if nothing changed, otherwise "Discard changes?" (Discard / Keep editing). Tab stays inside the
 > screen; choice groups labelled for screen readers. Disabled medicine: warning note "Disabled: reason. Prescribing it

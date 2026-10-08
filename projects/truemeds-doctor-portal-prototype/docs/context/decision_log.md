@@ -76,11 +76,12 @@ the reasoning is kept so nobody re-opens a settled question without new informat
 
 ## Prescribe screen (opening a medicine)
 
-### D-10 · A full-screen view, not a bottom sheet — 2026-10-07
-- **Decision:** Opens full screen over the case (like the Rx viewer), one scroll area, Prescribe at the **end** of
-  the content (not pinned).
+### D-10 · A full-screen view, not a bottom sheet — 2026-10-07 (button placement revised 2026-10-08, see D-22)
+- **Decision:** Opens full screen over the case (like the Rx viewer), one scroll area, laid out like the case page:
+  grey background, one white card per block (Prints as · Schedule · SOS · Duration · Food · Additional instructions).
 - **Why:** A long form inside a bottom sheet means two scroll areas, accidental dismissal (losing edits) and no
-  proper header. Prescribe is not pinned so the doctor scrolls past every section before confirming.
+  proper header. Cards match the case page and make each block easy to find while scrolling.
+- **Superseded:** "Prescribe at the end, not pinned, so the doctor scrolls past every section" — replaced by D-22.
 
 ### D-11 · Every section open with backend defaults; no collapsed summary — 2026-10-07
 - **Decision:** All sections are visible and pre-filled; the doctor reads through them and changes what's wrong.
@@ -156,6 +157,20 @@ the reasoning is kept so nobody re-opens a settled question without new informat
 - **Rejected:** pop-up error messages; a confirmation on every close.
 
 ---
+
+### D-22 · Main action pinned to the bottom, always active — 2026-10-08
+- **Decision:** The one main action sits in a bottom bar on both screens: the case page (Call Patient → Calling… /
+  End Call / Call Again → Confirm Order / Transfer / Forward) and the Prescribe screen (Prescribe). Always active.
+  Status, briefing script and secondary actions (Schedule Callback, Skip HA) stay in the action card. The bar
+  hides when there is nothing to do (case completed / unavailable) and steps aside while typing on a phone.
+- **Why:** A button that simply ends where the content ends looks out of place and moves around; a pinned bar is the
+  standard mobile pattern (`.tm-actionbar`) and keeps the main action in thumb reach. Verification before Prescribe
+  comes from the "Prints as" card at the top, which shows the whole prescription in one line.
+- **Rejected:** pinned but greyed out until the doctor scrolls to the bottom — forcing a scroll doesn't make anyone
+  read; a disabled button with no reason confuses mid-call; the scroll rule breaks whenever content height changes
+  (duration open, errors, SOS, rotation, keyboard, tall phones) and fails keyboard/screen-reader users.
+- **Also rejected:** drawing the phone's back / home / recent buttons in the prototype — real phones already show
+  their own, fake buttons get tapped, and the 9:16 frame already reads as a phone.
 
 ## Design system changes made for this work
 

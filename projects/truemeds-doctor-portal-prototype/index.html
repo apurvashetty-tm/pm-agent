@@ -226,10 +226,6 @@
         <!-- Phase 1: Call control (hidden when gate passes) -->
         <div id="az-phase1">
 
-          <button id="call-initiate-btn" class="tm-btn tm-btn--lg tm-btn--primary tm-btn--block" onclick="handleCallAction()">
-            <span id="call-btn-icon" class="tm-icon" data-icon="phone"></span>
-            <span id="call-btn-label">Call Patient</span>
-          </button>
 
           <!-- Pre-gate schedule callback — btn-text during call, btn-ghost after early end (JS swaps) -->
           <button id="pre-gate-callback-btn" class="tm-btn tm-btn--sm tm-btn--ghost tm-btn--block hidden" onclick="openSheet('sheet-callback')">
@@ -243,10 +239,6 @@
         <div id="az-phase2">
           <div id="postcall-cta-card">
             <div id="postcall-cta-label">Post-call action</div>
-            <button id="main-cta-btn" class="tm-btn tm-btn--lg tm-btn--primary tm-btn--block" onclick="handleMainCTA()">
-              <span id="main-cta-icon"></span>
-              <span id="main-cta-label">Confirm Order</span>
-            </button>
             <!-- Secondary actions — compact chip row below primary -->
             <div id="postcall-secondary-row">
               <button id="schedule-callback-btn" class="tm-btn tm-btn--sm tm-btn--secondary" onclick="openSheet('sheet-callback')">
@@ -263,6 +255,20 @@
       </div><!-- /action-zone -->
 
     </div><!-- /main-scroll -->
+
+    <!-- CASE ACTION BAR — the one main action, pinned to the bottom (agreed 2026-10-08, decision log D-22).
+         Call Patient / Calling… / End Call / Call Again before the gate; Confirm Order / Transfer / Forward after it.
+         Status, briefing script and secondary actions stay in the action card above. -->
+    <div id="case-actionbar" class="tm-actionbar">
+      <button id="call-initiate-btn" class="tm-btn tm-btn--lg tm-btn--primary tm-btn--block" onclick="handleCallAction()">
+        <span id="call-btn-icon" class="tm-icon" data-icon="phone"></span>
+        <span id="call-btn-label">Call Patient</span>
+      </button>
+      <button id="main-cta-btn" class="tm-btn tm-btn--lg tm-btn--primary tm-btn--block" onclick="handleMainCTA()" hidden>
+        <span id="main-cta-icon"></span>
+        <span id="main-cta-label">Confirm Order</span>
+      </button>
+    </div>
 
 <!-- ============================================================
      RX FULL-SCREEN OVERLAY (dark viewer — intentional for doc readability)
@@ -356,12 +362,15 @@
     <div id="ps-disabled-note" class="tm-notice tm-notice--warning" hidden><span class="tm-icon" data-icon="alert-triangle"></span><span id="ps-disabled-text">Disabled.</span></div>
     <div id="ps-prints" class="tm-card tm-card--tint"><div class="ps-label">Prints as</div><div id="ps-prints-text" aria-live="polite">—</div></div>
     <div id="ps-dynamic"></div>
-    <div class="tm-field ps-section">
+    <div class="tm-card ps-card"><div class="tm-field ps-section">
       <label class="tm-field__label" for="ps-note">Additional instructions</label>
       <div class="tm-field__control"><textarea id="ps-note" rows="3" placeholder="e.g. Stop if rash appears"></textarea></div>
       <div class="tm-field__helper">Optional. Printed on the prescription.</div>
-    </div>
-    <button id="ps-prescribe" class="tm-btn tm-btn--primary tm-btn--block" onclick="confirmMedEdit()">Prescribe</button>
+    </div></div>
+  </div>
+  <!-- Prescribe pinned to the bottom, always active (agreed 2026-10-08, decision log D-22) -->
+  <div id="ps-actionbar" class="tm-actionbar">
+    <button id="ps-prescribe" class="tm-btn tm-btn--lg tm-btn--primary tm-btn--block" onclick="confirmMedEdit()">Prescribe</button>
   </div>
 </div>
 

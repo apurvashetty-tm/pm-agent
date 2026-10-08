@@ -291,6 +291,7 @@ function render() {
 
   renderCallPhase();
   renderPostCall();
+  syncCaseActionBar();
   renderSidePanel();
   updateCompactStripVisibility();
 
@@ -423,6 +424,7 @@ function renderCallPhase() {
   // ── Phase 1 visibility ──
   const gateOpen = ['gate_passed', 'completed', 'unavailable'].includes(state);
   phase1.style.display = gateOpen ? 'none' : 'flex';
+  callBtn.hidden = gateOpen;            // pinned bar: Call Patient lives there until the gate passes
   if (gateOpen) return;
 
   // ── Reset button defaults — all cosmetics via design-system .tm-btn classes ──
@@ -471,6 +473,7 @@ function renderPostCall() {
   // toast owns the screen exit — hiding phase2 prevents re-submitting.
   const gateOpen = DOCTOR_STATE.consultationState === 'gate_passed';
 
+  ctaBtn.hidden = !gateOpen;            // pinned bar: the post-call CTA appears once the gate passes
   if (!gateOpen) {
     pc.classList.remove('visible','revealed');
     return;
@@ -506,6 +509,29 @@ function renderPostCall() {
   if (scLbl) scLbl.textContent = haApplicable ? 'Schedule' : 'Schedule Callback';
 
   console.log(`[MOCK] cta-routing | scenario=${DOCTOR_STATE.activeScenario} | ha_skip_session=${DOCTOR_STATE.haSkippedInSession} | resolved=${cta.type}`);
+}
+
+// Pinned action bar: hidden when it has nothing to show (completed / unavailable); its height feeds --ab-h so the
+// page can scroll its last content clear of it and toasts can sit above it.
+function syncCaseActionBar() {
+  const bar = document.getElementById('case-actionbar');
+  bar.hidden = [...bar.querySelectorAll('button')].every(b => b.hidden);
+  document.documentElement.style.setProperty('--ab-h', bar.hidden ? '0px' : bar.offsetHeight + 'px');
+}
+window.addEventListener('resize', syncCaseActionBar);
+new ResizeObserver(syncCaseActionBar).observe(document.getElementById('case-actionbar'));   // fonts / label changes alter its height
+
+// Bring the action card into view under the sticky header — scrolls only the real scroll area
+// (#main-scroll inside the desktop phone frame, the window on phones). scrollIntoView also scrolled the
+// frame itself on desktop and pushed the header out of view (audit 2026-10-08).
+function scrollToActionZone() {
+  const az = document.getElementById('action-zone');
+  const ms = document.getElementById('main-scroll');
+  const desktop = matchMedia('(min-width: 768px)').matches;
+  const top = desktop ? ms.getBoundingClientRect().top
+                      : document.getElementById('sticky-top-wrapper').getBoundingClientRect().bottom;
+  const delta = az.getBoundingClientRect().top - top - 8;
+  (desktop ? ms : window).scrollBy({ top: delta, behavior: 'smooth' });
 }
 
 function renderSidePanel() {
@@ -752,7 +778,7 @@ function startCallTimer() {
       render();
       console.log(`[MOCK] call-timer.gateCheck | elapsed=50s | gate=PASSED | cta=${resolveCTA(DOCTOR_STATE.currentCase).type}`);
       showToast('Valid call complete — post-call action unlocked');
-      setTimeout(() => document.getElementById('action-zone').scrollIntoView({ behavior:'smooth', block:'start' }), 300);
+      setTimeout(scrollToActionZone, 300);
     }
 
     document.getElementById('demo-state-label').textContent =
@@ -772,7 +798,7 @@ function doFastForward() {
     DOCTOR_STATE.gatePassedAt = Date.now();
     render();
     showToast('Fast-forwarded to 50s — gate passed');
-    setTimeout(() => document.getElementById('action-zone').scrollIntoView({ behavior:'smooth', block:'start' }), 300);
+    setTimeout(scrollToActionZone, 300);
   } else if (['assigned', 'hold', 'no_answer', 'calling'].includes(s)) {
     // Hide sim panel if showing
     document.getElementById('demo-call-sim').style.display = 'none';
@@ -783,7 +809,7 @@ function doFastForward() {
     DOCTOR_STATE.gatePassedAt = Date.now();
     render();
     showToast('Fast-forwarded — gate passed');
-    setTimeout(() => document.getElementById('action-zone').scrollIntoView({ behavior:'smooth', block:'start' }), 300);
+    setTimeout(scrollToActionZone, 300);
   } else {
     showToast('Fast-forward only works before gate is passed');
   }
@@ -997,6 +1023,8 @@ function renderPrescribe() {
   const x = EDIT_STATE, fd = formDose(x.form);
   const focusKey = document.activeElement?.dataset?.k;
   let h = '';
+  // Cards, like the case page (agreed 2026-10-08): Schedule · SOS · Duration · Food · (note card is static in index.html)
+  h += `<div class="tm-card ps-card" id="ps-card-schedule">`;
   h += group('How often', INTERVALS.map(([v, l]) => chip(`int:${v}`, l, x.interval === v)).join(''));
 
   // Dose — one heading for every schedule: "Dose (unit)". Daily shows the M / A / N rows under it.
@@ -1025,10 +1053,12 @@ function renderPrescribe() {
     }
   }
 
+  h += `</div>`;   // end Schedule card
+
   // SOS add-on: explained in place, with its own dose and a daily cap (both drive quantity and the print line).
   if (x.interval !== 'sos') {
-    h += `<div class="ps-section"><label class="tm-check"><input type="checkbox" class="tm-toggle" id="ps-sos" ${x.sos ? 'checked' : ''} aria-describedby="ps-sos-help"> Also as needed (SOS)</label>
-          <div class="ps-helper" id="ps-sos-help">Extra doses only when needed, on top of the schedule above.</div>`;
+    h += `<div class="ps-section tm-card ps-card"><div><label class="tm-check"><input type="checkbox" class="tm-toggle" id="ps-sos" ${x.sos ? 'checked' : ''} aria-describedby="ps-sos-help"> Also as needed (SOS)</label>
+          <div class="ps-helper" id="ps-sos-help">Extra doses only when needed, on top of the schedule above.</div></div>`;
     if (x.sos) {
       h += `<div class="ps-sub">` +
            group('Dose', fd.each.map(v => chip(`sosdose:${v}`, chipLabel(x.form, v), x.sosDose === v)).join(''), { cls: 'ps-grid', cols: fd.each.length, hint: unitHint(fd) }) +
@@ -1042,7 +1072,7 @@ function renderPrescribe() {
   // again on the same row. Looks like the other form fields so it reads as "fill in", not "information".
   const code = durationCode();
   const sub = code !== x.defaultDuration ? 'Changed from default' : 'Default';
-  h += `<div class="ps-section"><div class="ps-label" id="psl-duration">Duration</div>
+  h += `<div class="ps-section tm-card ps-card"><div class="ps-label" id="psl-duration">Duration</div>
         <div class="ps-dur-field${x.durOpen ? ' is-open' : ''}">
           <button type="button" class="ps-dur-toggle" data-k="dur:toggle" aria-expanded="${x.durOpen}" aria-controls="ps-dur-panel" aria-labelledby="psl-duration ps-dur-value">
             <span class="ps-dur-val" id="ps-dur-value">${durationText(code)}<span>${sub}</span></span>
@@ -1054,7 +1084,7 @@ function renderPrescribe() {
           </div>` : ''}
         </div></div>`;
 
-  h += group('Food', FOODS.map(([v, l]) => chip(`food:${v}`, l, x.food === v)).join(''), { cls: 'ps-chips ps-chips-fill', hint: '(optional)' });
+  h += `<div class="tm-card ps-card">` + group('Food', FOODS.map(([v, l]) => chip(`food:${v}`, l, x.food === v)).join(''), { cls: 'ps-chips ps-chips-fill', hint: '(optional)' }) + `</div>`;
 
   const dyn = document.getElementById('ps-dynamic');
   dyn.innerHTML = h;
@@ -1130,7 +1160,10 @@ function confirmMedEdit() {
     EDIT_STATE.err = err;
     renderPrescribe();
     const target = document.getElementById(err === 'dose' ? 'ps-dose-section' : 'ps-other-field');
-    target?.scrollIntoView({ block: 'center' });
+    if (target) {   // scroll only the screen's own scroll area (scrollIntoView could also move the desktop frame)
+      const body = document.getElementById('ps-body');
+      body.scrollBy({ top: target.getBoundingClientRect().top - body.getBoundingClientRect().top - body.clientHeight / 3 });
+    }
     if (err === 'other') document.getElementById('ps-other')?.focus({ preventScroll: true });
     console.log(`[MOCK] medicine.prescribe.blocked | id=${med.id} | reason=${err}`);
     return;
