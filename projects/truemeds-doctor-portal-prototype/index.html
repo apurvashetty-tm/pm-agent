@@ -348,11 +348,12 @@
 ============================================================ -->
 <div id="prescribe-screen" role="dialog" aria-modal="true" aria-labelledby="ps-title" aria-hidden="true" tabindex="-1">
   <div id="ps-bar" class="tm-appbar">
-    <button class="tm-btn tm-btn--ghost tm-btn--icon" onclick="closePrescribe()" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button>
+    <button class="tm-btn tm-btn--ghost tm-btn--icon" onclick="requestClosePrescribe()" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button>
     <div id="ps-heading"><span id="ps-title" class="tm-appbar__title">—</span><span id="ps-form">—</span></div>
-    <button class="tm-btn tm-btn--destructive tm-btn--xs" onclick="openDisableSheet()">Disable</button>
+    <button id="ps-disable-btn" class="tm-btn tm-btn--destructive tm-btn--xs" onclick="openDisableSheet()">Disable</button>
   </div>
   <div id="ps-body">
+    <div id="ps-disabled-note" class="tm-notice tm-notice--warning" hidden><span class="tm-icon" data-icon="alert-triangle"></span><span id="ps-disabled-text">Disabled.</span></div>
     <div id="ps-prints" class="tm-card tm-card--tint"><div class="ps-label">Prints as</div><div id="ps-prints-text" aria-live="polite">—</div></div>
     <div id="ps-dynamic"></div>
     <div class="tm-field ps-section">
@@ -418,6 +419,17 @@
         <div class="sheet-option-title">Repeat patient — familiar with medicines</div>
         <div class="sheet-option-desc">Patient was counselled in a prior order</div>
       </button>
+    </div>
+  </div>
+
+  <!-- Discard changes? — shown only when closing the Prescribe screen after editing -->
+  <div id="sheet-discard" class="bottom-sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-title">Discard changes?</div>
+    <div class="sheet-body">
+      <div class="sheet-subtitle">Your changes to this medicine will not be saved.</div>
+      <button class="tm-btn tm-btn--destructive tm-btn--block" onclick="discardPrescribe()">Discard</button>
+      <button class="tm-btn tm-btn--secondary tm-btn--block sheet-link-margin" onclick="closeSheet()">Keep editing</button>
     </div>
   </div>
 

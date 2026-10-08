@@ -53,6 +53,16 @@
 > 4/day, Ongoing; B12 = 1 dose monthly. View Rx shows each medicine's frozen `rx_line` (customer's Rx), so doctor edits
 > never change it. `docs/layout_check.py` now checks the Prescribe screen (fills frame, scrolls, Prescribe reachable) and
 > a bottom sheet (profile) at the frame bottom.
+> **2026-10-08 revision (Apurva's design review, all agreed):** subtitle under the name = form only ("Tablet", no
+> "Prescribe"); one dose heading for every schedule, "Dose (unit)" (M / A / N row letters kept — doctors know them;
+> creams: "Dose", choices Apply / —); SOS add-on explained in place ("Extra doses only when needed, on top of the
+> schedule above") with its own Dose chips and "Max extra doses a day" → prints "1-0-1 + SOS 1 tablet (max 2/day)"
+> (SOS-only: "Max doses a day"); duration card is one tap target with a secondary "Change" button (picker: "Done");
+> "Food (optional)"; Ongoing shows "Ongoing (6 months)" on screen and PRINTS the period ("6 months") — confirmed with
+> the medical team. Cross (not back arrow) kept: closing a task that discards edits. QA fixes: Tab stays inside the
+> screen; closing after edits asks "Discard changes?" (Discard / Keep editing), instant when nothing changed; chip
+> groups labelled for screen readers; a disabled medicine shows "Disabled: reason. Prescribing it will enable it again."
+> and hides Disable.
 > Still open: OQ-014 (pack vs dose units for quantity, non-tablet forms).
 
 ---

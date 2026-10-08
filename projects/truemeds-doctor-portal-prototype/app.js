@@ -163,10 +163,14 @@ const FORM_DOSE = {
   cream:     { one: 'apply',   many: 'apply',    slot: [0, 1],         each: [1], apply: true },
 };
 const formDose = f => FORM_DOSE[f] || FORM_DOSE.tablet;
+const defaultSosDose = f => { const e = formDose(f).each; return e.includes(1) ? 1 : e[0]; };   // SOS dose starts at 1 unit where that exists
 const FORM_LABEL = { tablet:'Tablet', capsule:'Capsule', syrup:'Syrup', drops:'Drops', inhaler:'Inhaler', injection:'Injection', cream:'Cream' };
 
 const numLabel = v => v === 0.5 ? '½' : String(v);
-function chipLabel(form, v) { return formDose(form).apply && v === 1 ? 'Apply' : numLabel(v); }
+function chipLabel(form, v) {
+  if (formDose(form).apply) return v === 1 ? 'Apply' : '—';   // creams: Apply / — (none), never "0"
+  return numLabel(v);
+}
 function doseText(form, v, isOther) {
   const fd = formDose(form);
   if (fd.apply) return 'Apply';
@@ -174,14 +178,15 @@ function doseText(form, v, isOther) {
   if (fd.one === 'ml') return `${numLabel(v)} ml`;
   return `${numLabel(v)} ${v > 1 ? fd.many : fd.one}`;
 }
-function durationText(code) {
+// On screen "Ongoing" shows its period; on the printed prescription only the period is printed (agreed 2026-10-08).
+function durationText(code, forPrint = false) {
   if (!code) return '';
-  if (code === 'ongoing') return 'Ongoing';
+  if (code === 'ongoing') return forPrint ? ONGOING_DEFAULT : `Ongoing (${ONGOING_DEFAULT})`;
   const n = parseInt(code, 10), u = code.slice(-1);
   const word = { d: 'day', w: 'week', m: 'month' }[u];
   return `${n} ${word}${n === 1 ? '' : 's'}`;
 }
-// Schedule part of the printed line, e.g. "1-0-1 + SOS (max 2/day)", "5 ml every 8 hours", "2 puffs as needed (max 4/day)".
+// Schedule part of the printed line, e.g. "1-0-1 + SOS 1 tablet (max 2/day)", "5 ml every 8 hours", "2 puffs as needed (max 4/day)".
 function scheduleText(x) {
   const fd = formDose(x.form);
   let t;
@@ -198,12 +203,12 @@ function scheduleText(x) {
     case 'sos':           return `${doseText(x.form, x.dose, x.doseOther)} as needed (max ${x.sosMax}/day)`;
     default:              t = '';
   }
-  return x.sos ? `${t} + SOS (max ${x.sosMax}/day)` : t;
+  return x.sos ? `${t} + SOS ${doseText(x.form, x.sosDose ?? defaultSosDose(x.form))} (max ${x.sosMax}/day)` : t;
 }
 // Full printed line: schedule · duration · food (only if chosen) · note (only if written)
 function printLine(x) {
   const food = FOODS.find(f => f[0] === x.food);
-  return [scheduleText(x), durationText(x.duration), food ? food[1] : '', (x.note || '').trim()].filter(Boolean).join(' · ');
+  return [scheduleText(x), durationText(x.duration, true), food ? food[1] : '', (x.note || '').trim()].filter(Boolean).join(' · ');
 }
 
 // ================================================================
@@ -892,6 +897,7 @@ function confirmSkipHA(reason) {
 // MEDICINE EDIT — full-screen Prescribe view (#prescribe-screen)
 // ================================================================
 let psReturnFocus = null;
+let psSnapshot = '';   // edit state at open, to know whether closing would lose changes
 
 function openMedEdit(medId) {
   const med = DOCTOR_STATE.currentCase.medicines.find(m => m.id === medId);
@@ -906,15 +912,22 @@ function openMedEdit(medId) {
     m: med.m ?? 0, a: med.a ?? 0, n: med.n ?? 0,
     hours: med.hours || 8,
     dose, doseOther: !!med.doseOther, doseOtherVal: med.doseOther ? String(med.dose) : '',
-    sos: !!med.sos, sosMax: med.sosMax || 1,
+    sos: !!med.sos, sosDose: med.sosDose ?? defaultSosDose(med.form), sosMax: med.sosMax || 1,
     durOngoing: dur === 'ongoing', durN: dur === 'ongoing' ? 1 : parseInt(dur, 10), durU: dur === 'ongoing' ? 'd' : dur.slice(-1),
     durOpen: false, defaultDuration: med.default_duration,
     food: med.food || null, note: med.note || '', err: null,
+    disabled: !!med.disabled, disableReason: med.disable_reason || '',
   });
   document.getElementById('ps-title').textContent = `${med.name} ${med.strength}`;
-  document.getElementById('ps-form').textContent = `${FORM_LABEL[EDIT_STATE.form] || 'Medicine'} · Prescribe`;
+  document.getElementById('ps-form').textContent = FORM_LABEL[EDIT_STATE.form] || 'Medicine';
+  document.getElementById('ps-disable-btn').hidden = EDIT_STATE.disabled;
+  const dn = document.getElementById('ps-disabled-note');
+  dn.hidden = !EDIT_STATE.disabled;
+  document.getElementById('ps-disabled-text').textContent =
+    `Disabled${EDIT_STATE.disableReason ? ': ' + EDIT_STATE.disableReason : ''}. Prescribing it will enable it again.`;
   document.getElementById('ps-note').value = EDIT_STATE.note;
   renderPrescribe();
+  psSnapshot = JSON.stringify(editModel());
   const scr = document.getElementById('prescribe-screen');
   psReturnFocus = document.activeElement;
   scr.classList.add('open');
@@ -923,6 +936,15 @@ function openMedEdit(medId) {
   scr.focus({ preventScroll: true });
 }
 
+const psChanged = () => JSON.stringify(editModel()) !== psSnapshot;
+
+// Close (cross / Escape): instant when nothing changed; otherwise ask before throwing edits away.
+function requestClosePrescribe() {
+  if (psChanged()) openSheet('sheet-discard');
+  else closePrescribe();
+}
+function discardPrescribe() { closeSheet(); closePrescribe(); }
+
 function closePrescribe() {
   const scr = document.getElementById('prescribe-screen');
   scr.classList.remove('open');
@@ -930,9 +952,21 @@ function closePrescribe() {
   if (psReturnFocus && document.contains(psReturnFocus)) psReturnFocus.focus({ preventScroll: true });
   psReturnFocus = null;
 }
+// Keyboard: Escape = close request; Tab stays inside the screen (it is modal). Capture phase: runs before the
+// sheet handler, so when a sheet is open over the screen the sheet handles the key instead.
 document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape' && !activeSheet && document.getElementById('prescribe-screen').classList.contains('open')) closePrescribe();
-}, { capture: true });   // capture: runs before the sheet handler, so Escape on a sheet closes only the sheet
+  const scr = document.getElementById('prescribe-screen');
+  if (activeSheet || !scr.classList.contains('open')) return;
+  if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); requestClosePrescribe(); return; }   // stop: the sheet handler must not see this key and close the sheet it just opened
+  if (e.key !== 'Tab') return;
+  const f = [...scr.querySelectorAll('button, input, textarea, [tabindex]:not([tabindex="-1"])')]
+    .filter(el => !el.disabled && !el.hidden && el.offsetParent !== null);
+  if (!f.length) return;
+  const first = f[0], last = f[f.length - 1];
+  if (!scr.contains(document.activeElement)) { e.preventDefault(); first.focus(); return; }
+  if (e.shiftKey && (document.activeElement === first || document.activeElement === scr)) { e.preventDefault(); last.focus(); }
+  else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+}, { capture: true });
 
 const durationCode = () => EDIT_STATE.durOngoing ? 'ongoing' : `${EDIT_STATE.durN}${EDIT_STATE.durU}`;
 function currentDose() {
@@ -940,67 +974,88 @@ function currentDose() {
   const v = parseFloat(EDIT_STATE.doseOtherVal);
   return isFinite(v) ? v : '—';
 }
-const editModel = () => ({ ...EDIT_STATE, dose: currentDose(), duration: durationCode() });
+const editModel = () => {
+  const { err, durOpen, disabled, disableReason, ...rest } = EDIT_STATE;   // UI-only fields are not part of the prescription
+  return { ...rest, dose: currentDose(), duration: durationCode() };
+};
 
-function chip(key, label, pressed, extra = '') {
-  return `<button type="button" class="tm-chip tm-chip--lg" data-k="${key}" aria-pressed="${pressed}" ${extra}>${label}</button>`;
+function chip(key, label, pressed, aria = '') {
+  return `<button type="button" class="tm-chip tm-chip--lg" data-k="${key}" aria-pressed="${pressed}"${aria ? ` aria-label="${aria}"` : ''}>${label}</button>`;
 }
-function chipGroup(label, inner, cls = 'ps-chips', hint = '') {
-  return `<div class="ps-section"><div class="ps-label">${label}${hint ? ` <span class="tm-muted">${hint}</span>` : ''}</div><div class="${cls}">${inner}</div></div>`;
+// A labelled group of chips (role=group so screen readers say which question the chip answers).
+function group(label, inner, { cls = 'ps-chips', hint = '', id = '', cols = 0 } = {}) {
+  const lid = `psl-${label.replace(/\W+/g, '-').toLowerCase()}-${Math.random().toString(36).slice(2, 6)}`;
+  const style = cols ? ` style="--cols:${cols}"` : '';
+  return `<div class="ps-section"${id ? ` id="${id}"` : ''}><div class="ps-label" id="${lid}">${label}${hint ? ` <span class="tm-muted">${hint}</span>` : ''}</div>` +
+         `<div class="${cls}" role="group" aria-labelledby="${lid}"${style}>${inner}</div></div>`;
 }
+const unitHint = (fd, unit) => fd.apply ? '' : `(${unit || fd.many})`;
 
 // Re-renders everything between "Prints as" and the note. The note field is never re-rendered (keeps typing focus).
 function renderPrescribe() {
   const x = EDIT_STATE, fd = formDose(x.form);
   const focusKey = document.activeElement?.dataset?.k;
   let h = '';
-  h += chipGroup('How often', INTERVALS.map(([v, l]) => chip(`int:${v}`, l, x.interval === v)).join(''));
+  h += group('How often', INTERVALS.map(([v, l]) => chip(`int:${v}`, l, x.interval === v)).join(''));
 
+  // Dose — one heading for every schedule: "Dose (unit)". Daily shows the M / A / N rows under it.
+  const errDose = x.err === 'dose' ? `<div class="tm-notice tm-notice--error ps-gap" role="alert"><span class="tm-icon" data-icon="alert-circle"></span><span>Choose a dose for at least one time of day.</span></div>` : '';
   if (x.interval === 'daily') {
-    const unitHint = fd.apply ? '' : `(${fd.many})`;
-    const rows = [['m', 'M'], ['a', 'A'], ['n', 'N']].map(([k, key]) =>
-      `<div class="ps-slot"><span class="ps-slot-key">${key}</span><div class="ps-grid" style="--cols:${fd.slot.length}">${
-        fd.slot.map(v => chip(`slot:${k}:${v}`, chipLabel(x.form, v), x[k] === v)).join('')}</div></div>`).join('');
-    h += `<div class="ps-section" id="ps-dose-section"><div class="ps-label">Morning · Afternoon · Night <span class="tm-muted">${unitHint}</span></div><div class="ps-slots">${rows}</div>${
-      x.err === 'dose' ? `<div class="tm-notice tm-notice--error ps-gap" role="alert"><span class="tm-icon" data-icon="alert-circle"></span><span>Choose a dose for at least one time of day.</span></div>` : ''}</div>`;
+    const rows = [['m', 'M', 'Morning'], ['a', 'A', 'Afternoon'], ['n', 'N', 'Night']].map(([k, key, name]) =>
+      `<div class="ps-slot"><span class="ps-slot-key" aria-hidden="true">${key}</span><div class="ps-grid" role="group" aria-label="${name}" style="--cols:${fd.slot.length}">${
+        fd.slot.map(v => chip(`slot:${k}:${v}`, chipLabel(x.form, v), x[k] === v, `${name}: ${v === 0 ? 'none' : doseText(x.form, v)}`)).join('')}</div></div>`).join('');
+    h += `<div class="ps-section" id="ps-dose-section"><div class="ps-label">Dose <span class="tm-muted">${unitHint(fd)}</span></div><div class="ps-slots">${rows}</div>${errDose}</div>`;
   } else {
     if (x.interval === 'every_x_hours') {
-      h += `<div class="ps-section"><div class="ps-label">Every</div><div class="ps-grid" style="--cols:4">${HOURS.map(v => chip(`hrs:${v}`, `${v} h`, x.hours === v)).join('')}</div>
-            <div class="ps-helper">${24 / x.hours} times a day, round the clock</div></div>`;
+      h += `<div class="ps-section"><div class="ps-label" id="psl-every">Every</div><div class="ps-grid" role="group" aria-labelledby="psl-every" style="--cols:4">${
+             HOURS.map(v => chip(`hrs:${v}`, `${v} h`, x.hours === v, `Every ${v} hours`)).join('')}</div>
+             <div class="ps-helper">${24 / x.hours} times a day, round the clock</div></div>`;
     }
     const opts = fd.each.map(v => chip(`dose:${v}`, chipLabel(x.form, v), !x.doseOther && x.dose === v));
     if (fd.other) opts.push(chip('dose:other', 'Other', x.doseOther));
-    const unitHint = fd.apply ? '' : `(${fd.other && x.doseOther ? fd.other : fd.many})`;
-    h += `<div class="ps-section" id="ps-dose-section"><div class="ps-label">Dose each time <span class="tm-muted">${unitHint}</span></div><div class="ps-grid" style="--cols:${opts.length}">${opts.join('')}</div>${
-      x.doseOther ? `<div class="tm-field ps-gap${x.err === 'other' ? ' tm-field--error' : ''}" id="ps-other-field"><label class="tm-field__label" for="ps-other">Dose in ${fd.other}</label>
+    const other = x.doseOther ? `<div class="tm-field ps-gap${x.err === 'other' ? ' tm-field--error' : ''}" id="ps-other-field"><label class="tm-field__label" for="ps-other">Dose in ${fd.other}</label>
         <div class="tm-field__control"><input id="ps-other" type="text" inputmode="decimal" placeholder="e.g. 7.5" value="${x.doseOtherVal}"><span class="ps-unit">${fd.other}</span></div>
-        ${x.err === 'other' ? `<div class="tm-field__helper" role="alert">Enter the dose in ${fd.other}.</div>` : ''}</div>` : ''}</div>`;
+        ${x.err === 'other' ? `<div class="tm-field__helper" role="alert">Enter the dose in ${fd.other}.</div>` : ''}</div>` : '';
+    const lid = 'psl-dose-each';
+    h += `<div class="ps-section" id="ps-dose-section"><div class="ps-label" id="${lid}">Dose <span class="tm-muted">${unitHint(fd, x.doseOther ? fd.other : '')}</span></div>` +
+         `<div class="ps-grid" role="group" aria-labelledby="${lid}" style="--cols:${opts.length}">${opts.join('')}</div>${other}</div>`;
     if (x.interval === 'sos') {
-      h += `<div class="ps-section"><div class="ps-inline"><div class="ps-label">Max per day</div><div class="ps-chips">${SOS_MAX.map(v => chip(`max:${v}`, v, x.sosMax === v)).join('')}</div></div></div>`;
+      h += `<div class="ps-section"><div class="ps-inline"><div class="ps-label" id="psl-max-only">Max doses a day</div><div class="ps-chips" role="group" aria-labelledby="psl-max-only">${SOS_MAX.map(v => chip(`max:${v}`, v, x.sosMax === v)).join('')}</div></div></div>`;
     }
   }
 
+  // SOS add-on: explained in place, with its own dose and a daily cap (both drive quantity and the print line).
   if (x.interval !== 'sos') {
-    h += `<div class="ps-section"><label class="tm-check"><input type="checkbox" class="tm-toggle" id="ps-sos" ${x.sos ? 'checked' : ''}> Also as needed (SOS)</label>${
-      x.sos ? `<div class="ps-inline ps-gap"><div class="ps-label">Max per day</div><div class="ps-chips">${SOS_MAX.map(v => chip(`max:${v}`, v, x.sosMax === v)).join('')}</div></div>` : ''}</div>`;
+    h += `<div class="ps-section"><label class="tm-check"><input type="checkbox" class="tm-toggle" id="ps-sos" ${x.sos ? 'checked' : ''} aria-describedby="ps-sos-help"> Also as needed (SOS)</label>
+          <div class="ps-helper" id="ps-sos-help">Extra doses only when needed, on top of the schedule above.</div>`;
+    if (x.sos) {
+      h += `<div class="ps-sub">` +
+           group('Dose', fd.each.map(v => chip(`sosdose:${v}`, chipLabel(x.form, v), x.sosDose === v)).join(''), { cls: 'ps-grid', cols: fd.each.length, hint: unitHint(fd) }) +
+           `<div class="ps-section ps-gap"><div class="ps-inline"><div class="ps-label" id="psl-max-extra">Max extra doses a day</div><div class="ps-chips" role="group" aria-labelledby="psl-max-extra">${SOS_MAX.map(v => chip(`max:${v}`, v, x.sosMax === v)).join('')}</div></div></div>` +
+           `</div>`;
+    }
+    h += `</div>`;
   }
 
+  // Duration — the whole card is one tap target; "Change" is a secondary button look (not a text link).
   const code = durationCode();
   if (!x.durOpen) {
     const changed = code !== x.defaultDuration;
-    const sub = changed ? 'Changed from default' : (x.durOngoing ? `Default · ${ONGOING_DEFAULT}` : 'Default');
-    h += `<div class="ps-section"><div class="ps-label">Duration</div><div class="tm-card tm-card--flat"><div class="ps-dur-row">
-          <div class="ps-dur-val">${durationText(code)}<span>${sub}</span></div>
-          <button type="button" class="tm-btn tm-btn--link" data-k="dur:open">Change</button></div></div></div>`;
+    const sub = changed ? 'Changed from default' : 'Default';
+    h += `<div class="ps-section"><div class="ps-label" id="psl-duration">Duration</div>
+          <button type="button" class="tm-card tm-card--flat ps-dur-card" data-k="dur:open" aria-describedby="psl-duration" aria-label="Duration ${durationText(code)}, ${sub}. Change">
+            <span class="ps-dur-val">${durationText(code)}<span>${sub}</span></span>
+            <span class="tm-btn tm-btn--secondary tm-btn--xs" aria-hidden="true">Change</span>
+          </button></div>`;
   } else {
     h += `<div class="ps-section"><div class="ps-label">Duration</div><div class="tm-card tm-card--flat">
-          <div class="ps-grid" style="--cols:5">${DUR_NUMBERS.map(v => chip(`durn:${v}`, v, !x.durOngoing && x.durN === v)).join('')}</div>
-          <div class="ps-grid ps-gap" style="--cols:4">${DUR_UNITS.map(([u, l]) => chip(`duru:${u}`, l, !x.durOngoing && x.durU === u)).join('')}${chip('dur:ongoing', 'Ongoing', x.durOngoing)}</div>
-          <div class="ps-dur-row ps-gap"><span class="ps-dur-val">${durationText(code)}</span><button type="button" class="tm-btn tm-btn--link" data-k="dur:done">Done</button></div>
+          <div class="ps-grid" role="group" aria-label="Duration number" style="--cols:5">${DUR_NUMBERS.map(v => chip(`durn:${v}`, v, !x.durOngoing && x.durN === v)).join('')}</div>
+          <div class="ps-grid ps-gap" role="group" aria-label="Duration unit" style="--cols:4">${DUR_UNITS.map(([u, l]) => chip(`duru:${u}`, l, !x.durOngoing && x.durU === u)).join('')}${chip('dur:ongoing', 'Ongoing', x.durOngoing, `Ongoing, ${ONGOING_DEFAULT}`)}</div>
+          <div class="ps-dur-row ps-gap"><span class="ps-dur-val">${durationText(code)}</span><button type="button" class="tm-btn tm-btn--secondary tm-btn--xs" data-k="dur:done">Done</button></div>
         </div></div>`;
   }
 
-  h += chipGroup('Food', FOODS.map(([v, l]) => chip(`food:${v}`, l, x.food === v)).join(''), 'ps-chips ps-chips-fill', '(optional, pick one)');
+  h += group('Food', FOODS.map(([v, l]) => chip(`food:${v}`, l, x.food === v)).join(''), { cls: 'ps-chips ps-chips-fill', hint: '(optional)' });
 
   const dyn = document.getElementById('ps-dynamic');
   dyn.innerHTML = h;
@@ -1009,12 +1064,12 @@ function renderPrescribe() {
   if (focusKey) dyn.querySelector(`[data-k="${CSS.escape(focusKey)}"]`)?.focus({ preventScroll: true });
 }
 
-// One delegated handler for every chip / link in the screen.
+// One delegated handler for every chip / button in the screen.
 document.getElementById('ps-dynamic').addEventListener('click', (e) => {
   const b = e.target.closest('[data-k]');
   if (!b) return;
   const [kind, p1, p2] = b.dataset.k.split(':');
-  const x = EDIT_STATE, fd = formDose(x.form);
+  const x = EDIT_STATE;
   switch (kind) {
     case 'int':
       x.interval = p1;
@@ -1027,6 +1082,7 @@ document.getElementById('ps-dynamic').addEventListener('click', (e) => {
       if (p1 === 'other') { x.doseOther = true; }
       else { x.doseOther = false; x.dose = parseFloat(p1); if (x.err === 'other') x.err = null; }
       break;
+    case 'sosdose': x.sosDose = parseFloat(p1); break;
     case 'max':  x.sosMax = parseInt(p1, 10); break;
     case 'durn': x.durN = parseInt(p1, 10); x.durOngoing = false; break;
     case 'duru': x.durU = p1; x.durOngoing = false; break;
@@ -1040,6 +1096,8 @@ document.getElementById('ps-dynamic').addEventListener('click', (e) => {
   }
   renderPrescribe();
   if (b.dataset.k === 'dose:other') document.getElementById('ps-other')?.focus();
+  if (b.dataset.k === 'dur:open') document.querySelector('#ps-dynamic [data-k="dur:done"]')?.focus({ preventScroll: true });
+  if (b.dataset.k === 'dur:done') document.querySelector('#ps-dynamic [data-k="dur:open"]')?.focus({ preventScroll: true });
 });
 document.getElementById('ps-dynamic').addEventListener('change', (e) => {
   if (e.target.id === 'ps-sos') { EDIT_STATE.sos = e.target.checked; renderPrescribe(); document.getElementById('ps-sos')?.focus(); }
@@ -1047,7 +1105,7 @@ document.getElementById('ps-dynamic').addEventListener('change', (e) => {
 document.getElementById('ps-dynamic').addEventListener('input', (e) => {
   if (e.target.id !== 'ps-other') return;
   EDIT_STATE.doseOtherVal = e.target.value;
-  if (EDIT_STATE.err === 'other' && isFinite(parseFloat(e.target.value)) && parseFloat(e.target.value) > 0) {
+  if (EDIT_STATE.err === 'other' && parseFloat(e.target.value) > 0) {
     EDIT_STATE.err = null;
     const f = document.getElementById('ps-other-field');
     f.classList.remove('tm-field--error'); f.querySelector('.tm-field__helper')?.remove();
@@ -1084,9 +1142,10 @@ function confirmMedEdit() {
   const x = editModel();
   Object.assign(med, {
     interval: x.interval, m: x.m, a: x.a, n: x.n, hours: x.hours,
-    dose: x.dose, doseOther: x.doseOther, sos: x.interval === 'sos' ? false : x.sos, sosMax: x.sosMax,
+    dose: x.dose, doseOther: x.doseOther,
+    sos: x.interval === 'sos' ? false : x.sos, sosDose: x.sosDose, sosMax: x.sosMax,
     duration: x.duration, food: x.food, note: x.note.trim(),
-    validation_status: 'prescribed', disabled: false,
+    validation_status: 'prescribed', disabled: false, disable_reason: undefined,
   });
   closePrescribe(); render();
   showToast(`${med.name} prescribed`);

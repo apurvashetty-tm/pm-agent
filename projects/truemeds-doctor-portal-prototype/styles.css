@@ -22,7 +22,7 @@
     }
     button { font-family: var(--tm-font); cursor: pointer; border: none; background: none; color: inherit; font-size: inherit; -webkit-tap-highlight-color: transparent; }
     textarea, input { font-family: var(--tm-font); }
-    .hidden { display: none !important; }
+    .hidden, [hidden] { display: none !important; }
 
     /* ============================================================
        LAYOUT — PHONE FRAME (RULE: see design-system/RULES.md §7)
@@ -259,6 +259,10 @@
     .ps-inline { display: flex; align-items: center; gap: var(--tm-space-md); }
     .ps-inline .ps-label { margin: 0; white-space: nowrap; }
     .ps-dur-row { display: flex; align-items: center; justify-content: space-between; gap: var(--tm-space-md); }
+    .ps-dur-card { display: flex; align-items: center; justify-content: space-between; gap: var(--tm-space-md); width: 100%; text-align: left; cursor: pointer; }
+    .ps-dur-card:focus-visible { outline: 2px solid var(--tm-border-focus); outline-offset: 2px; }
+    /* SOS add-on settings sit under the switch, indented with a rule so they read as part of it */
+    .ps-sub { margin-top: var(--tm-space-md); padding-left: var(--tm-space-md); border-left: 2px solid var(--tm-border-subtle); display: flex; flex-direction: column; }
     .ps-dur-val { font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-primary); }
     .ps-dur-val span { display: block; font-size: var(--tm-font-size-body-xs); line-height: var(--tm-font-lineheight-xs); font-weight: var(--tm-font-weight-regular); color: var(--tm-content-secondary); }
     .ps-unit { font-size: var(--tm-font-size-body-md); color: var(--tm-content-secondary); }
