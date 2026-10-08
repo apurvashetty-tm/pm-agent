@@ -232,13 +232,14 @@ function haSkipApplicable(scenario) {
 }
 
 // ================================================================
-// MEDICINE FORM ICONS — Tabler outline per dosage form
+// MEDICINE FORM ICONS — one outline glyph per dosage form
 // ================================================================
 function getMedIcon(form) {
-  // Tabler outline, monochrome — one glyph per dosage form (tablet = round, capsule = two-part pill: they must look different)
-  const byForm = { tablet:'tablet-round', capsule:'pill', injection:'vaccine', syrup:'medicine-syrup',
-                   drops:'droplet', cream:'test-pipe', inhaler:'wind' };
-  return iconEl(byForm[form] || 'tablet-round', 24);
+  // One outline glyph per dosage form (Tabler + [PROPOSED] custom glyphs in build-icons.mjs, D-29). Tablet is drawn at an angle
+  // so it can't read as a "no entry" / minus sign, and it must look different from the capsule.
+  const byForm = { tablet:'tablet', capsule:'pill', injection:'vaccine', syrup:'syrup',
+                   drops:'eye-drops', cream:'ointment-tube', inhaler:'inhaler' };   // custom glyphs: D-29
+  return iconEl(byForm[form] || 'tablet', 24);
 }
 
 // ================================================================

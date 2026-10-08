@@ -31,7 +31,7 @@ Link two files. Never copy values out of them.
 1. **No raw values.** No hex codes, no `rgb()`, no ad-hoc px for colour, radius, spacing or shadow in project code. If a value isn't a token, it isn't allowed.
 2. **Semantic tokens only.** Use `--tm-content-*`, `--tm-surface-*`, `--tm-border-*`, `--tm-feedback-*`, `--tm-space-*`, `--tm-radius-*`. Never use `--tm-core-*` (the raw palette) in a project.
 3. **One font:** Plus Jakarta Sans (comes with `truemeds.css`). No system-font stacks, no second typeface.
-4. **One icon set:** Tabler outline via `icons.js`. Icons are monochrome and inherit text colour (default `--tm-content-secondary` or `--tm-content-primary`). **No emoji in UI.** No illustrated, multicolour or 3D icons. Product images are real photos (`.tm-thumb`), never illustrations.
+4. **One icon set:** Tabler outline via `icons.js`. Icons are monochrome and inherit text colour (default `--tm-content-secondary` or `--tm-content-primary`). **No emoji in UI.** No illustrated, multicolour or 3D icons (no shading, gradients or rendered depth; a one-colour line drawing of an object at an angle, like the `tablet` glyph, is fine). Glyphs Tabler lacks are drawn on its grid in `scripts/build-icons.mjs`, marked [PROPOSED]. Product images are real photos (`.tm-thumb`), never illustrations.
 5. **Colour means state, never decoration.**
    - Brand blue (`--tm-content-brand`, `--tm-surface-brand-*`) = the main action and selection.
    - Green (`success`) = done / saved. Amber (`warning`) = needs attention. Red (`error`) = failed / destructive.

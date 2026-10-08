@@ -246,6 +246,19 @@ Own audit of both screens against the design system; Apurva asked to fix everyth
   the natural end of the consultation, and the pinned button changing marks the moment.
 - **Rejected:** auto-scrolling on every action — it yanks the doctor away from notes they are typing mid-call.
 
+### D-29 · New medicine form icons — 2026-10-09
+- **Decision (Apurva):** tablet = a tablet drawn at an angle with its score line; syrup = bottle + measuring cup;
+  drops = tilted dropper bottle + drop; cream = tube; inhaler = L-shaped puffer. Capsule (`pill`) and injection
+  (`vaccine`) unchanged. Drawn from Apurva's reference images, not copied; same grid and stroke as Tabler.
+- **Why:** the old tablet (circle with a bar) read as "no entry"; wind lines for inhaler, a test tube for cream and a
+  plain drop for eye drops were the wrong objects.
+- **Rejected:** flat tablets — a circle with a full bar reads as "no entry", with a short bar as a "minus / remove"
+  button, with a side edge as coins; a blister strip reads as a dice face (render 2026-10-09/02).
+- **Design-system rule:** RULES.md rule 4 now says one-colour line drawings at an angle are fine; shading, gradients
+  and rendered 3D are not. Open: confirm with the design team which icon set SALT uses (README says Tabler; not yet
+  verified in Figma).
+- Doctor research (icons vs text labels) uses these icons in version A.
+
 ## Design system changes made for this work
 
 ### D-21 · Toggle fix and a large chip size — 2026-10-07
