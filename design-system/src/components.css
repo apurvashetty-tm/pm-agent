@@ -118,6 +118,30 @@
 .tm-field--error   .tm-field__helper  { color: var(--tm-content-error); }
 .tm-field--success .tm-field__helper  { color: var(--tm-content-success); }
 .tm-field--disabled .tm-field__control { background: var(--tm-surface-secondary); border-color: var(--tm-border-disabled); color: var(--tm-content-disabled); }
+/* [PROPOSED] Fixed text before the input inside a field, e.g. the +91 country code. */
+.tm-field__prefix {
+  flex-shrink: 0; padding-right: var(--tm-space-sm); border-right: 1px solid var(--tm-border-default);
+  font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm);
+  font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-primary);
+}
+
+/* [PROPOSED] One-time code. ONE real <input> (keeps SMS autofill, paste and screen readers working) laid over
+   boxes that only display the digits. Markup: .tm-otp > input.tm-otp__input + 6 × .tm-otp__box. */
+.tm-otp { position: relative; display: grid; grid-template-columns: repeat(var(--tm-otp-len, 6), minmax(0, 1fr)); gap: var(--tm-space-sm); }
+.tm-otp__box {
+  height: 52px; display: flex; align-items: center; justify-content: center;
+  background: var(--tm-surface-primary); border: 1px solid var(--tm-border-default); border-radius: var(--tm-radius-md);
+  font-size: var(--tm-font-size-body-xl); line-height: var(--tm-font-lineheight-md);
+  font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-primary);
+}
+.tm-otp__box.is-active { border-color: var(--tm-border-focus); box-shadow: inset 0 0 0 1px var(--tm-border-focus); }
+.tm-otp__input {
+  position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; border: 0;
+  font-size: 16px;   /* 16px stops iOS zooming in on focus */
+  caret-color: transparent; color: transparent; background: transparent;
+}
+.tm-otp--error .tm-otp__box { border-color: var(--tm-border-error-strong); }
+.tm-otp--disabled .tm-otp__box { background: var(--tm-surface-secondary); border-color: var(--tm-border-disabled); color: var(--tm-content-disabled); }
 
 /* ---------- Chip: filter / selection [SALT: Chips › Filters] ---------- */
 .tm-chip {
@@ -282,3 +306,14 @@
 .tm-stat { background: var(--tm-surface-primary); border-radius: var(--tm-radius-lg); box-shadow: var(--tm-shadow-card); padding: var(--tm-space-lg); }
 .tm-stat__label { font-size: var(--tm-font-size-body-xs); line-height: var(--tm-font-lineheight-xs); color: var(--tm-content-secondary); }
 .tm-stat__value { font-size: var(--tm-font-size-title-md); line-height: var(--tm-font-lineheight-xl); font-weight: var(--tm-font-weight-semibold); font-variant-numeric: tabular-nums; }
+
+/* [PROPOSED] Empty / waiting state: a centred icon, title, one line of text and an optional action. */
+.tm-empty { display: flex; flex-direction: column; align-items: center; text-align: center; gap: var(--tm-space-sm); padding: var(--tm-space-2xl) var(--tm-space-lg); }
+.tm-empty__icon {
+  width: 64px; height: 64px; border-radius: 50%; margin-bottom: var(--tm-space-sm);
+  display: flex; align-items: center; justify-content: center;
+  background: var(--tm-surface-brand-subtle); color: var(--tm-content-brand);
+}
+.tm-empty__icon .tm-icon { width: 32px; height: 32px; }
+.tm-empty__title { font-size: var(--tm-font-size-body-lg); line-height: var(--tm-font-lineheight-md); font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-primary); }
+.tm-empty__text { max-width: 300px; font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); color: var(--tm-content-secondary); }

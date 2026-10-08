@@ -175,6 +175,18 @@ Every entry must include:
 
 ---
 
+### OQ-016 — Re-check for orders automatically?
+**Question:** On "No orders right now", should the app re-check every N seconds (and open an order when one appears), or only when the doctor taps Check again?
+**Safe placeholder:** Only on tap. `[MOCK ASSUMPTION]`
+
+### OQ-017 — Sign-in rules for production
+**Question:** OTP length/expiry/lockout values, how long a signed-in session lasts, whether fingerprint is required (not optional) on shared phones, and who approves new doctors and how fast.
+**Safe placeholder:** 6 digits, resend 30 s → 1 min → 2 min, 5 tries then 15 min lock; session 24 h without fingerprint; fingerprint optional; ops approval within 2 working days. `[MOCK ASSUMPTION]`
+
+### OQ-018 — Patient consent when the doctor calls (legal)
+**Question:** Telemedicine Practice Guidelines: a consultation the doctor starts needs explicit, recorded patient consent. Does the patient's order count as the patient starting it?
+**Safe placeholder:** Not built. Needs Legal before the order page changes.
+
 ## Answered Questions
 
 *(None yet)*
