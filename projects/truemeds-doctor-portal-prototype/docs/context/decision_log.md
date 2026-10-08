@@ -158,7 +158,7 @@ the reasoning is kept so nobody re-opens a settled question without new informat
 
 ---
 
-### D-22 · Main action pinned to the bottom, always active — 2026-10-08
+### D-22 · Main action pinned to the bottom, always active — 2026-10-08 (extended by D-28: secondary actions pinned too)
 - **Decision:** The one main action sits in a bottom bar on both screens: the case page (Call Patient → Calling… /
   End Call / Call Again → Confirm Order / Transfer / Forward) and the Prescribe screen (Prescribe). Always active.
   Status, briefing script and secondary actions (Schedule Callback, Skip HA) stay in the action card. The bar
@@ -231,6 +231,20 @@ Own audit of both screens against the design system; Apurva asked to fix everyth
   - 50s passed → the pinned button changes; demo fast-forward and "Logout" say nothing.
 - **Kept:** the white confirmation card with Next Order after a completed case.
 - Overrides the "toast system must not change" line in `session_handoff.md` §3 (explicit instruction).
+
+### D-28 · Every call action pinned; the page never scrolls by itself — 2026-10-08
+- **Problem:** only the main button was pinned (D-22). Schedule Callback, Skip HA and Mark as Unavailable sat in the
+  Call card, the last card on the page, so they were off-screen whenever the doctor was at Medicines or Notes. An
+  auto-scroll to the card patched this in one moment only (50s passed), so the page sometimes jumped and sometimes didn't.
+- **Decision:** secondary call actions sit in the pinned bar, side by side above the main button (one = full width):
+  during the call Schedule Callback · End Call; after 50s Schedule Callback + Skip HA · Confirm & Transfer;
+  after a missed call Mark Unavailable · Call Again. The Call card keeps only status notes and the script.
+  The page never scrolls by itself.
+- **Script:** one small label "End-of-call script" and the quote. Dropped the second heading ("Live HA Transfer" /
+  "HA Follow-up" / "Closing Script") and its icon — the script and the main button already say which case it is.
+- **Trade-off accepted:** the script is no longer pulled into view at 50s; the Call card is last on the page, which is
+  the natural end of the consultation, and the pinned button changing marks the moment.
+- **Rejected:** auto-scrolling on every action — it yanks the doctor away from notes they are typing mid-call.
 
 ## Design system changes made for this work
 

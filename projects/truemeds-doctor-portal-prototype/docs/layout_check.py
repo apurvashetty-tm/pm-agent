@@ -79,9 +79,15 @@ with sync_playwright() as p:
         rx = pg.evaluate("(()=>{const q=document.getElementById('rx-overlay').getBoundingClientRect();return {l:q.left,r:q.right,t:q.top,b:q.bottom}})()")
         check(f"{tag} Rx viewer fills the {'frame' if desktop else 'screen'}", all(abs(rx[k] - ref[k]) <= 2 for k in "lrtb"))
         pg.evaluate("closeRxOverlay()")
-        # after the 50s gate the app scrolls to the action card — only its own scroll area may move (header stays)
+        # after the 50s gate nothing scrolls by itself (D-28) and every call action is visible in the pinned bar
+        q2 = "document.getElementById('main-scroll').scrollTop" if desktop else "scrollY"
+        pg.evaluate("switchScenario('pilot_value_meds_ha')"); pg.wait_for_timeout(100)
         pg.evaluate("document.getElementById('call-initiate-btn').click()"); pg.wait_for_timeout(100)
         pg.evaluate("simCallConnected(); doFastForward()"); pg.wait_for_timeout(900)
+        check(f"{tag} after the gate the page did not scroll by itself", pg.evaluate(q2) == 0, pg.evaluate(q2))
+        vis = pg.evaluate("""(()=>{const lim=innerWidth>=768?document.getElementById('main-scroll').getBoundingClientRect().bottom+200:innerHeight;
+          return ['main-cta-btn','schedule-callback-btn','skip-ha-btn'].map(id=>{const r=document.getElementById(id).getBoundingClientRect();return r.height>0&&r.top>=0&&r.bottom<=lim+1})})()""")
+        check(f"{tag} after the gate all call actions are on screen without scrolling", all(vis), vis)
         hdr = pg.evaluate("document.getElementById('portal-header').getBoundingClientRect().top")
         moved = pg.evaluate("document.getElementById('mobile-column').scrollTop")
         check(f"{tag} after the gate the header stays in view", moved == 0 and abs(hdr - ref["t"]) <= 2, f"frame scrollTop={moved}, header top={hdr:.0f}")

@@ -187,22 +187,15 @@
     .pulsing #call-btn-icon { animation: phone-ring 1.8s ease-in-out infinite; }
 
     /* Phase 2: post-call — hidden until the valid-call gate passes [LOCKED] */
-    #az-phase2 { display: none; opacity: 0; transform: translateY(var(--tm-space-sm)); transition: opacity 0.25s ease, transform 0.25s ease; }
-    #az-phase2.visible { display: block; }
-    #az-phase2.revealed { opacity: 1; transform: translateY(0); }
     /* #8 one Schedule Callback style (secondary, small, full label); stacked with Skip HA when both show */
-    #postcall-secondary-row { display: flex; flex-direction: column; gap: var(--tm-space-sm); }
     #action-zone > .tm-section-title { margin-bottom: 0; }
     #az-closed .tm-icon { color: var(--tm-content-success); }
-    #skip-ha-btn { display: none; }
-    #skip-ha-btn.visible { display: inline-flex; }
 
     /* Pre-call briefing — informational notice (not a warning) */
     #pre-call-brief { display: none; }
     #pre-call-brief.visible { display: flex; }
     .pcb-body { display: flex; flex-direction: column; gap: var(--tm-space-2xs); min-width: 0; }
-    .pcb-label { display: flex; align-items: center; gap: var(--tm-space-xs); font-size: var(--tm-font-size-body-xs); line-height: var(--tm-font-lineheight-xs); font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-brand); }
-    .pcb-script-prefix { font-size: var(--tm-font-size-body-xs); line-height: var(--tm-font-lineheight-xs); color: var(--tm-content-secondary); }
+    .pcb-label { font-size: var(--tm-font-size-body-xs); line-height: var(--tm-font-lineheight-xs); font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-secondary); }
     .pcb-text { font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); color: var(--tm-content-primary); }
 
     /* ============================================================
@@ -222,6 +215,9 @@
        Phone: fixed to the screen bottom; the page reserves --ab-h (set by syncCaseActionBar()) so nothing hides
        behind it. Desktop frame: the bar is the last row of the frame (see the desktop block at the end).
     ============================================================ */
+    #case-actionbar { gap: var(--tm-space-sm); }
+    #ab-secondary { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: var(--tm-space-sm); }
+    #ab-secondary .tm-btn { min-width: 0; white-space: nowrap; }
     #case-actionbar { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 430px; z-index: 150; display: flex; flex-direction: column; }
     @media (max-width: 767px) { #main-scroll { padding-bottom: calc(var(--ab-h, 0px) + var(--tm-space-2xl)); } }
     /* While typing on a touch phone, the pinned bars step aside so they never sit on the keyboard */

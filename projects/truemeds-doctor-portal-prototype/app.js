@@ -405,13 +405,10 @@ function renderCallPhase() {
     const isValue = c.meds_type === 'value';
     brief.classList.add('visible');
     if (isHA && isValue) {
-      pcbLabel.innerHTML = iconEl('arrow-up-right', 16) + '<span>Live HA Transfer</span>';
       pcbText.textContent  = '"Please stay on the line — I\'ll connect you to our Health Advisor"';
     } else if (isHA && !isValue) {
-      pcbLabel.innerHTML = iconEl('clipboard-text', 16) + '<span>HA Follow-up</span>';
       pcbText.textContent  = '"Our Health Advisor will call you shortly after this consultation"';
     } else {
-      pcbLabel.innerHTML = iconEl('package', 16) + '<span>Closing Script</span>';
       pcbText.textContent  = '"I\'m confirming your order now — you can track delivery and updates on the Truemeds app"';
     }
   } else {
@@ -440,7 +437,7 @@ function renderCallPhase() {
     closedBox.querySelector('.tm-icon').innerHTML = icon(state === 'unavailable' ? 'phone-off' : 'circle-check');
   }
   document.getElementById('next-order-btn').hidden = state !== 'unavailable';
-  if (gateOpen) return;
+  if (gateOpen) { document.getElementById('pre-gate-callback-btn').classList.add('hidden'); return; }
 
   // ── Reset button defaults — all cosmetics via design-system .tm-btn classes ──
   callBtn.disabled  = false;
@@ -479,7 +476,6 @@ function renderCallPhase() {
 }
 
 function renderPostCall() {
-  const pc     = document.getElementById('az-phase2');
   const skipBtn = document.getElementById('skip-ha-btn');
   const ctaBtn  = document.getElementById('main-cta-btn');
   const scBtn   = document.getElementById('schedule-callback-btn');
@@ -489,13 +485,9 @@ function renderPostCall() {
   const gateOpen = DOCTOR_STATE.consultationState === 'gate_passed';
 
   ctaBtn.hidden = !gateOpen;            // pinned bar: the post-call CTA appears once the gate passes
-  if (!gateOpen) {
-    pc.classList.remove('visible','revealed');
-    return;
-  }
-
-  pc.classList.add('visible');
-  requestAnimationFrame(() => requestAnimationFrame(() => pc.classList.add('revealed')));
+  scBtn.hidden = !gateOpen;
+  skipBtn.hidden = true;
+  if (!gateOpen) return;
 
   // Restore button structure if innerHTML was replaced during submit
   if (!document.getElementById('main-cta-icon')) {
@@ -510,7 +502,7 @@ function renderPostCall() {
   const haApplicable = haSkipApplicable(c) && !DOCTOR_STATE.haSkippedInSession;
 
   // Skip HA — only Pilot + HA required + not yet skipped [LOCKED]
-  skipBtn.classList.toggle('visible', haApplicable);
+  skipBtn.hidden = !haApplicable;
 
   const effectiveScenario = DOCTOR_STATE.haSkippedInSession
     ? Object.assign({}, c, { ha_status:'skipped_customer' }) : c;
@@ -518,7 +510,6 @@ function renderPostCall() {
   ctaIcon.textContent = cta.icon;
   ctaLbl.textContent  = cta.label;
 
-  // Secondary actions stack (full labels) — Schedule Callback always, Skip HA when applicable
 
   console.log(`[MOCK] cta-routing | scenario=${DOCTOR_STATE.activeScenario} | ha_skip_session=${DOCTOR_STATE.haSkippedInSession} | resolved=${cta.type}`);
 }
@@ -527,24 +518,14 @@ function renderPostCall() {
 // page can scroll its last content clear of it and toasts can sit above it.
 function syncCaseActionBar() {
   const bar = document.getElementById('case-actionbar');
-  bar.hidden = [...bar.querySelectorAll('button')].every(b => b.hidden);
+  const off = b => b.hidden || b.classList.contains('hidden');
+  const sec = document.getElementById('ab-secondary');
+  sec.hidden = [...sec.querySelectorAll('button')].every(off);
+  bar.hidden = [...bar.querySelectorAll('button')].every(off);
   document.documentElement.style.setProperty('--ab-h', bar.hidden ? '0px' : bar.offsetHeight + 'px');
 }
 window.addEventListener('resize', syncCaseActionBar);
 new ResizeObserver(syncCaseActionBar).observe(document.getElementById('case-actionbar'));   // fonts / label changes alter its height
-
-// Bring the action card into view under the sticky header — scrolls only the real scroll area
-// (#main-scroll inside the desktop phone frame, the window on phones). scrollIntoView also scrolled the
-// frame itself on desktop and pushed the header out of view (audit 2026-10-08).
-function scrollToActionZone() {
-  const az = document.getElementById('action-zone');
-  const ms = document.getElementById('main-scroll');
-  const desktop = matchMedia('(min-width: 768px)').matches;
-  const top = desktop ? ms.getBoundingClientRect().top
-                      : document.getElementById('sticky-top-wrapper').getBoundingClientRect().bottom;
-  const delta = az.getBoundingClientRect().top - top - 8;
-  (desktop ? ms : window).scrollBy({ top: delta, behavior: 'smooth' });
-}
 
 function renderSidePanel() {
   const c = DOCTOR_STATE.currentCase;
@@ -790,7 +771,7 @@ function startCallTimer() {
       DOCTOR_STATE.gatePassedAt = Date.now();
       render();
       console.log(`[MOCK] call-timer.gateCheck | elapsed=50s | gate=PASSED | cta=${resolveCTA(DOCTOR_STATE.currentCase).type}`);
-      setTimeout(scrollToActionZone, 300);
+      /* no auto-scroll (D-28): every call action is in the pinned bar */
     }
 
     document.getElementById('demo-state-label').textContent =
@@ -809,7 +790,7 @@ function doFastForward() {
     DOCTOR_STATE.consultationState = 'gate_passed';
     DOCTOR_STATE.gatePassedAt = Date.now();
     render();
-    setTimeout(scrollToActionZone, 300);
+    /* no auto-scroll (D-28): every call action is in the pinned bar */
   } else if (['assigned', 'hold', 'no_answer', 'calling'].includes(s)) {
     // Hide sim panel if showing
     document.getElementById('demo-call-sim').style.display = 'none';
@@ -819,7 +800,7 @@ function doFastForward() {
     DOCTOR_STATE.consultationState = 'gate_passed';
     DOCTOR_STATE.gatePassedAt = Date.now();
     render();
-    setTimeout(scrollToActionZone, 300);
+    /* no auto-scroll (D-28): every call action is in the pinned bar */
   } else {
   }
 }
@@ -1343,8 +1324,6 @@ function switchScenario(scenarioId) {
   }
   DOCTOR_STATE.currentCase = JSON.parse(JSON.stringify(SCENARIOS[scenarioId]));
 
-  const phase2 = document.getElementById('az-phase2');
-  phase2.classList.remove('visible','revealed');
 
   // Restore main CTA button structure in case submit flow destroyed innerHTML
   const ctaBtn = document.getElementById('main-cta-btn');

@@ -219,8 +219,7 @@
         <!-- Briefing strip — all scenarios, persists above both phases -->
         <div id="pre-call-brief" class="tm-notice">
           <div class="pcb-body">
-            <div class="pcb-label" id="pcb-label">—</div>
-            <div class="pcb-script-prefix">End of call script:</div>
+            <div class="pcb-label" id="pcb-label">End-of-call script</div>
             <div class="pcb-text" id="pcb-text">—</div>
           </div>
         </div>
@@ -231,30 +230,7 @@
           <div id="az-missed" class="tm-notice tm-notice--warning" hidden><span class="tm-icon" data-icon="phone-off"></span><span id="az-missed-text">Patient didn't pick up.</span></div>
 
 
-          <!-- Pre-gate schedule callback — btn-text during call, btn-ghost after early end (JS swaps) -->
-          <button id="pre-gate-callback-btn" class="tm-btn tm-btn--sm tm-btn--secondary tm-btn--block hidden" onclick="openSheet('sheet-callback')">
-            <span class="tm-icon tm-icon--16" data-icon="calendar"></span>Schedule Callback
-          </button>
-
-          <button id="az-unavail-btn" class="tm-btn tm-btn--sm tm-btn--destructive tm-btn--block" onclick="markCustomerUnavailable()" hidden>Mark as Unavailable</button>
-
           <div id="az-status-label" class="hidden"></div>
-        </div>
-
-        <!-- Phase 2: Post-call (hidden until valid-call gate passes [LOCKED]) -->
-        <div id="az-phase2">
-          <div id="postcall-cta-card">
-            <!-- Secondary actions — compact chip row below primary -->
-            <div id="postcall-secondary-row">
-              <button id="schedule-callback-btn" class="tm-btn tm-btn--sm tm-btn--secondary tm-btn--block" onclick="openSheet('sheet-callback')">
-                <span class="tm-icon tm-icon--16" data-icon="calendar"></span>
-                <span id="schedule-callback-label">Schedule Callback</span>
-              </button>
-              <button id="skip-ha-btn" class="tm-btn tm-btn--sm tm-btn--secondary tm-btn--block" onclick="openSheet('sheet-skip-ha')">
-                Skip HA Call <span class="tm-icon tm-icon--16" data-icon="chevron-right"></span>
-              </button>
-            </div>
-          </div>
         </div>
 
       </div><!-- /action-zone -->
@@ -263,8 +239,19 @@
 
     <!-- CASE ACTION BAR — the one main action, pinned to the bottom (agreed 2026-10-08, decision log D-22).
          Call Patient / Calling… / End Call / Call Again before the gate; Confirm Order / Transfer / Forward after it.
-         Status, briefing script and secondary actions stay in the action card above. -->
+         Secondary actions sit in the same bar (D-28); the Call card keeps only status and the script. -->
     <div id="case-actionbar" class="tm-actionbar">
+      <!-- Secondary call actions, pinned above the main one (D-28): nothing the doctor can do needs a scroll -->
+      <div id="ab-secondary">
+        <button id="pre-gate-callback-btn" class="tm-btn tm-btn--sm tm-btn--secondary hidden" onclick="openSheet('sheet-callback')">
+          <span class="tm-icon tm-icon--16" data-icon="calendar"></span>Schedule Callback
+        </button>
+        <button id="az-unavail-btn" class="tm-btn tm-btn--sm tm-btn--destructive" onclick="markCustomerUnavailable()" hidden>Mark Unavailable</button>
+        <button id="schedule-callback-btn" class="tm-btn tm-btn--sm tm-btn--secondary" onclick="openSheet('sheet-callback')" hidden>
+          <span class="tm-icon tm-icon--16" data-icon="calendar"></span><span id="schedule-callback-label">Schedule Callback</span>
+        </button>
+        <button id="skip-ha-btn" class="tm-btn tm-btn--sm tm-btn--secondary" onclick="openSheet('sheet-skip-ha')" hidden>Skip HA Call</button>
+      </div>
       <button id="call-initiate-btn" class="tm-btn tm-btn--lg tm-btn--primary tm-btn--block" onclick="handleCallAction()">
         <span id="call-btn-icon" class="tm-icon" data-icon="phone"></span>
         <span id="call-btn-label">Call Patient</span>
