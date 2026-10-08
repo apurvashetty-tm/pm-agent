@@ -39,11 +39,12 @@ The visual system for this prototype is now the central Truemeds design system:
 
 1. `docs/context/project_truth.md`
 2. `docs/context/session_handoff.md`
-3. `docs/roles/product_manager.md`
-4. `docs/roles/frontend_engineer.md`
-5. `docs/roles/uiux_designer.md`
-6. `docs/roles/mock_backend_engineer.md`
-7. `docs/context/open_questions.md`
+3. `docs/context/decision_log.md` — why each screen decision was made (and what was rejected); do not re-open without new information
+4. `docs/roles/product_manager.md`
+5. `docs/roles/frontend_engineer.md`
+6. `docs/roles/uiux_designer.md`
+7. `docs/roles/mock_backend_engineer.md`
+8. `docs/context/open_questions.md`
 
 ---
 
@@ -52,6 +53,7 @@ The visual system for this prototype is now the central Truemeds design system:
 1. **Latest user instruction** — always wins
 2. **`docs/context/project_truth.md`** — locked product truth, cannot be invented around
 3. **`docs/context/session_handoff.md`** — current resume point and latest implementation state
+3a. **`docs/context/decision_log.md`** — agreed design/product decisions with their reasons
 4. **`docs/roles/*`** — role-specific working rules
 5. **`docs/context/open_questions.md`** — unresolved decisions that must not be silently answered
 6. **`[MOCK ASSUMPTION]`** — temporary build unblockers, small and local only, clearly labeled
@@ -68,6 +70,8 @@ If two sources conflict, follow the higher-priority source and surface the confl
 - Work one file or one small focused module at a time
 - Before coding, continue from `docs/context/session_handoff.md` unless the user overrides it
 - After coding, update `docs/context/session_handoff.md` before the final report
+- When a design/product decision is agreed with Apurva, record it in `docs/context/decision_log.md` (decision, why,
+  rejected options). When one changes, edit its entry — don't leave the old guidance standing
 - Do not invent product logic if it is unclear
 - If logic is missing, use a clearly marked `[MOCK ASSUMPTION]` and add it to `docs/context/open_questions.md`
 - Respect the locked consultation flow — do not add CTAs or steps that are not part of the locked workflow
@@ -85,7 +89,7 @@ Do not silently decide or implement the following — ask first:
 - **Transfer vs Forward distinction** — what exact operational difference these have downstream
 - **No-pickup handling** — how many attempts before hold, what hold duration means
 - **Doctor assignment rules** — how a case arrives in a doctor's queue and how re-assignment works
-- **Medicine review authority** — can a doctor add, remove, or only validate medicines?
+- ~~**Medicine review authority**~~ — answered 2026-10-07: no add; prescribe or disable only; quantity is the backend's (`decision_log.md` D-04, D-06)
 - **Notes behavior** — are notes visible to other teams? Are they locked after call completion?
 
 If one of these surfaces during build and no clear answer exists, mark it `[OPEN DECISION]`, use a safe placeholder, and add it to `docs/context/open_questions.md`.

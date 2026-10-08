@@ -153,12 +153,13 @@ const FOODS = [['after_food', 'After food'], ['before_food', 'Before food'], ['e
 const ONGOING_DEFAULT = '6 months';   // backend default for Ongoing [MOCK ASSUMPTION — configured in backend]
 
 // Dose choices and units follow the medicine's form. `other` = the "Other" number entry (unit shown beside it).
+// showUnit: the Dose heading shows the unit only when the form under the name doesn't already say it (ml, puffs) — agreed 2026-10-08.
 const FORM_DOSE = {
   tablet:    { one: 'tablet',  many: 'tablets',  slot: [0, 0.5, 1, 2], each: [0.5, 1, 2] },
   capsule:   { one: 'capsule', many: 'capsules', slot: [0, 0.5, 1, 2], each: [0.5, 1, 2] },
-  syrup:     { one: 'ml',      many: 'ml',       slot: [0, 2.5, 5, 10], each: [2.5, 5, 10], other: 'ml' },
+  syrup:     { one: 'ml',      many: 'ml',       slot: [0, 2.5, 5, 10], each: [2.5, 5, 10], other: 'ml', showUnit: true },
   drops:     { one: 'drop',    many: 'drops',    slot: [0, 1, 2, 3],   each: [1, 2, 3] },
-  inhaler:   { one: 'puff',    many: 'puffs',    slot: [0, 1, 2],      each: [1, 2] },
+  inhaler:   { one: 'puff',    many: 'puffs',    slot: [0, 1, 2],      each: [1, 2], showUnit: true },
   injection: { one: 'dose',    many: 'doses',    slot: [0, 1],         each: [1], other: 'units' },
   cream:     { one: 'apply',   many: 'apply',    slot: [0, 1],         each: [1], apply: true },
 };
@@ -989,7 +990,7 @@ function group(label, inner, { cls = 'ps-chips', hint = '', id = '', cols = 0 } 
   return `<div class="ps-section"${id ? ` id="${id}"` : ''}><div class="ps-label" id="${lid}">${label}${hint ? ` <span class="tm-muted">${hint}</span>` : ''}</div>` +
          `<div class="${cls}" role="group" aria-labelledby="${lid}"${style}>${inner}</div></div>`;
 }
-const unitHint = (fd, unit) => fd.apply ? '' : `(${unit || fd.many})`;
+const unitHint = (fd, unit) => unit ? `(${unit})` : (fd.showUnit ? `(${fd.many})` : '');   // unit = the "Other" entry's unit when chosen
 
 // Re-renders everything between "Prints as" and the note. The note field is never re-rendered (keeps typing focus).
 function renderPrescribe() {
@@ -1037,23 +1038,21 @@ function renderPrescribe() {
     h += `</div>`;
   }
 
-  // Duration — the whole card is one tap target; "Change" is a secondary button look (not a text link).
+  // Duration — a dropdown-style field: one tap target (value + chevron) that opens the picker in place and closes
+  // again on the same row. Looks like the other form fields so it reads as "fill in", not "information".
   const code = durationCode();
-  if (!x.durOpen) {
-    const changed = code !== x.defaultDuration;
-    const sub = changed ? 'Changed from default' : 'Default';
-    h += `<div class="ps-section"><div class="ps-label" id="psl-duration">Duration</div>
-          <button type="button" class="tm-card tm-card--flat ps-dur-card" data-k="dur:open" aria-describedby="psl-duration" aria-label="Duration ${durationText(code)}, ${sub}. Change">
-            <span class="ps-dur-val">${durationText(code)}<span>${sub}</span></span>
-            <span class="tm-btn tm-btn--secondary tm-btn--xs" aria-hidden="true">Change</span>
-          </button></div>`;
-  } else {
-    h += `<div class="ps-section"><div class="ps-label">Duration</div><div class="tm-card tm-card--flat">
-          <div class="ps-grid" role="group" aria-label="Duration number" style="--cols:5">${DUR_NUMBERS.map(v => chip(`durn:${v}`, v, !x.durOngoing && x.durN === v)).join('')}</div>
-          <div class="ps-grid ps-gap" role="group" aria-label="Duration unit" style="--cols:4">${DUR_UNITS.map(([u, l]) => chip(`duru:${u}`, l, !x.durOngoing && x.durU === u)).join('')}${chip('dur:ongoing', 'Ongoing', x.durOngoing, `Ongoing, ${ONGOING_DEFAULT}`)}</div>
-          <div class="ps-dur-row ps-gap"><span class="ps-dur-val">${durationText(code)}</span><button type="button" class="tm-btn tm-btn--secondary tm-btn--xs" data-k="dur:done">Done</button></div>
+  const sub = code !== x.defaultDuration ? 'Changed from default' : 'Default';
+  h += `<div class="ps-section"><div class="ps-label" id="psl-duration">Duration</div>
+        <div class="ps-dur-field${x.durOpen ? ' is-open' : ''}">
+          <button type="button" class="ps-dur-toggle" data-k="dur:toggle" aria-expanded="${x.durOpen}" aria-controls="ps-dur-panel" aria-labelledby="psl-duration ps-dur-value">
+            <span class="ps-dur-val" id="ps-dur-value">${durationText(code)}<span>${sub}</span></span>
+            ${iconEl(x.durOpen ? 'chevron-up' : 'chevron-down', 24)}
+          </button>${x.durOpen ? `
+          <div class="ps-dur-panel" id="ps-dur-panel">
+            <div class="ps-grid" role="group" aria-label="Duration number" style="--cols:5">${DUR_NUMBERS.map(v => chip(`durn:${v}`, v, !x.durOngoing && x.durN === v)).join('')}</div>
+            <div class="ps-grid ps-gap" role="group" aria-label="Duration unit" style="--cols:4">${DUR_UNITS.map(([u, l]) => chip(`duru:${u}`, l, !x.durOngoing && x.durU === u)).join('')}${chip('dur:ongoing', 'Ongoing', x.durOngoing, `Ongoing, ${ONGOING_DEFAULT}`)}</div>
+          </div>` : ''}
         </div></div>`;
-  }
 
   h += group('Food', FOODS.map(([v, l]) => chip(`food:${v}`, l, x.food === v)).join(''), { cls: 'ps-chips ps-chips-fill', hint: '(optional)' });
 
@@ -1087,8 +1086,7 @@ document.getElementById('ps-dynamic').addEventListener('click', (e) => {
     case 'durn': x.durN = parseInt(p1, 10); x.durOngoing = false; break;
     case 'duru': x.durU = p1; x.durOngoing = false; break;
     case 'dur':
-      if (p1 === 'open') x.durOpen = true;
-      else if (p1 === 'done') x.durOpen = false;
+      if (p1 === 'toggle') x.durOpen = !x.durOpen;
       else if (p1 === 'ongoing') x.durOngoing = true;
       break;
     case 'food': x.food = x.food === p1 ? null : p1; break;   // optional: tap again to clear
@@ -1096,8 +1094,6 @@ document.getElementById('ps-dynamic').addEventListener('click', (e) => {
   }
   renderPrescribe();
   if (b.dataset.k === 'dose:other') document.getElementById('ps-other')?.focus();
-  if (b.dataset.k === 'dur:open') document.querySelector('#ps-dynamic [data-k="dur:done"]')?.focus({ preventScroll: true });
-  if (b.dataset.k === 'dur:done') document.querySelector('#ps-dynamic [data-k="dur:open"]')?.focus({ preventScroll: true });
 });
 document.getElementById('ps-dynamic').addEventListener('change', (e) => {
   if (e.target.id === 'ps-sos') { EDIT_STATE.sos = e.target.checked; renderPrescribe(); document.getElementById('ps-sos')?.focus(); }

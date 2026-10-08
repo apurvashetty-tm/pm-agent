@@ -2,8 +2,10 @@
 
 **Purpose:** Captures all decisions, agreements, and pending work so a new Claude session on any machine can pick up exactly where things left off.
 
-**Last updated:** 2026-07-13
-**Session status:** Design-system consolidation pass complete. Schedule Callback / early call-end recovery flow complete. Memory cleanup pass complete (this update).
+**Last updated:** 2026-10-08
+**Session status:** Prescribe screen redesign built and reviewed; sticky header and scroll fixes done.
+**Why things are the way they are:** `docs/context/decision_log.md` (D-01 … D-21) — read it before changing any
+screen it covers. This file says what is built; the decision log says why.
 
 ---
 
@@ -18,57 +20,38 @@
 
 ---
 
-> **2026-10-07 — Prescription changes, part 2: Prescribe screen redesign — AGREED WITH APURVA, BUILT 2026-10-08.**
-> Concept render: `docs/concepts/2026-10-07-prescribe-screen.png` (tablet, syrup, inhaler, plus the two error states).
-> FULL-SCREEN VIEW, not a bottom sheet (opens over the case like the Rx viewer, inside the phone frame). Every section
-> open with backend defaults, so the doctor scrolls past everything before Prescribe. No collapsed summary.
-> 1. App bar: close (x) · medicine name with "<Form> · Prescribe" in grey under it (no coloured form tag) · small red
->    "Disable" button (destructive, xs). Disable is NOT a full-width button next to Prescribe.
-> 2. "Prints as" line (tinted card) showing exactly what will print (kept).
-> 3. How often: Daily · Every X hours · Alt days · Weekly · Monthly · SOS only.
-> 4. Dose, by choice above; units follow the form. Daily = Morning · Afternoon · Night (3 slots; NO evening slot —
->    more than 3 a day uses Every X hours; uneven 4-dose schedules go in the note). Every X hours = 4 · 6 · 8 · 12 h,
->    round the clock, plus dose each time. Alt days / Weekly / Monthly / SOS only = dose each time.
->    Dose choices: tablet/capsule 0 ½ 1 2; syrup 2.5 · 5 · 10 ml · Other (number field in ml, not free text);
->    inhaler 0 1 2 puffs; drops 1 2 3; injection 1 dose or units (number); cream "Apply".
-> 5. Also as needed (SOS): `.tm-check` + `.tm-toggle` under the regular schedule; when on, Max per day 1–4.
-> 6. Duration: flat card "value · Change" (default Ongoing = 6 months, backend). Change opens the picker in place:
->    numbers 1 2 3 4 5 6 7 10 14 15 + Days · Weeks · Months · Ongoing · Done. Always has a value (cannot be cleared).
-> 7. Food: After food · Before food · Empty stomach, on ONE row (chips share the width; wraps only below ~330px).
->    Always shown for every form, optional, single-select (tap again to clear), NO default, printed only if selected.
->    All other advice chips are removed.
-> 8. Additional instructions: `.tm-field` textarea, helper "Optional. Printed on the prescription." Holds tapers,
->    varying doses, "shake well", "rinse mouth" etc.; structured fields still drive quantity.
-> 9. Prescribe (primary, full width) at the END of the content — not pinned.
-> Validation: required pick-one groups always keep one choice (cannot be cleared), so only two errors exist, shown
-> inline when Prescribe is tapped (scroll to it, nothing saved, no toast): 0-0-0 → `.tm-notice--error` under the grid
-> "Choose a dose for at least one time of day."; syrup "Other" empty → `.tm-field--error` "Enter the dose in ml."
-> Chips use `.tm-chip--lg` (design system [PROPOSED], added 2026-10-07) instead of the project's sheet override.
-> Built as specified: `#prescribe-screen` in index.html, styles under "PRESCRIBE SCREEN" in styles.css, logic under
-> "PRESCRIBE SCREEN — model + text" and "MEDICINE EDIT" in app.js (the old `#sheet-edit-med` bottom sheet is gone).
-> Disable opens the existing reason sheet over the screen; cancelling returns to the screen. Escape closes the screen
-> without saving. Build choices: "SOS only" also asks Max per day (keeps quantity calculable); syrup "Other" exists only
-> in "Dose each time" (daily slots are 0 · 2.5 · 5 · 10 ml); injection "Other" = units; cream shows "Apply".
-> Demo data: no food preselected anywhere; Antacid daily slots now in ml (0-10-10); Salbutamol = SOS only, 2 puffs, max
-> 4/day, Ongoing; B12 = 1 dose monthly. View Rx shows each medicine's frozen `rx_line` (customer's Rx), so doctor edits
-> never change it. `docs/layout_check.py` now checks the Prescribe screen (fills frame, scrolls, Prescribe reachable) and
-> a bottom sheet (profile) at the frame bottom.
-> **2026-10-08 revision (Apurva's design review, all agreed):** subtitle under the name = form only ("Tablet", no
-> "Prescribe"); one dose heading for every schedule, "Dose (unit)" (M / A / N row letters kept — doctors know them;
-> creams: "Dose", choices Apply / —); SOS add-on explained in place ("Extra doses only when needed, on top of the
-> schedule above") with its own Dose chips and "Max extra doses a day" → prints "1-0-1 + SOS 1 tablet (max 2/day)"
-> (SOS-only: "Max doses a day"); duration card is one tap target with a secondary "Change" button (picker: "Done");
-> "Food (optional)"; Ongoing shows "Ongoing (6 months)" on screen and PRINTS the period ("6 months") — confirmed with
-> the medical team. Cross (not back arrow) kept: closing a task that discards edits. QA fixes: Tab stays inside the
-> screen; closing after edits asks "Discard changes?" (Discard / Keep editing), instant when nothing changed; chip
-> groups labelled for screen readers; a disabled medicine shows "Disabled: reason. Prescribing it will enable it again."
-> and hides Disable.
+> **Prescribe screen — CURRENT STATE (agreed with Apurva 2026-10-07/08, built 2026-10-08).** Reasons and rejected
+> options: `decision_log.md` D-10 … D-20. Concept render (pre-review): `docs/concepts/2026-10-07-prescribe-screen.png`.
+> Full-screen view over the case (inside the phone frame), one scroll area, every section open with backend defaults.
+> 1. App bar: cross (close) · medicine name with the form in grey under it ("Tablet") · small red "Disable".
+> 2. "Prints as": the exact printed line, live. Ongoing prints its period ("6 months"); on screen "Ongoing (6 months)".
+> 3. How often: Daily · Every X hours (4/6/8/12 h, round the clock) · Alt days · Weekly · Monthly · SOS only.
+> 4. Dose: heading "Dose"; unit shown only where the form doesn't say it ("Dose (ml)" syrups, "Dose (puffs)" inhalers).
+>    Daily = M / A / N rows (no evening slot). Choices: tablet/capsule 0 ½ 1 2; syrup 0 2.5 5 10 ml (single-dose
+>    schedules add "Other" = number in ml); inhaler 0 1 2; drops 0 1 2 3; injection 1 (+ "Other" = units); cream Apply / —.
+> 5. Also as needed (SOS): switch + helper "Extra doses only when needed, on top of the schedule above"; when on, its
+>    own Dose and "Max extra doses a day" (1–4). "SOS only" asks Dose + "Max doses a day". Prints "1-0-1 + SOS 1 tablet (max 2/day)".
+> 6. Duration: dropdown-style field (value + "Default"/"Changed from default" + chevron); tap the row to open/close the
+>    picker: 1–7, 10, 14, 15 + Days · Weeks · Months · Ongoing. Always has a value.
+> 7. Food (optional): After food · Before food · Empty stomach, one row, single-select, tap again to clear, no default,
+>    printed only if chosen. Shown for every form.
+> 8. Additional instructions: optional, printed (tapers, "shake well", "stop if rash"…).
+> 9. Prescribe (primary) at the END of the content, not pinned.
+> Errors (only two, inline, on Prescribe): 0-0-0 → notice under the dose grid; empty "Other" → field error.
+> Closing: instant if nothing changed, otherwise "Discard changes?" (Discard / Keep editing). Tab stays inside the
+> screen; choice groups labelled for screen readers. Disabled medicine: warning note "Disabled: reason. Prescribing it
+> will enable it again." and no Disable button. Disable opens the reason sheet over the screen; cancel returns to it.
+> Code: `#prescribe-screen` (index.html), "PRESCRIBE SCREEN" (styles.css), "PRESCRIBE SCREEN — model + text" and
+> "MEDICINE EDIT" (app.js). Chips use `.tm-chip--lg` (design system [PROPOSED]).
+> Demo data: no food preselected; Antacid daily slots in ml (0-10-10); Salbutamol = SOS only, 2 puffs, max 4/day;
+> B12 = 1 dose monthly. View Rx shows each medicine's frozen `rx_line` (customer's Rx). `docs/layout_check.py` covers
+> the screen (fills frame, scrolls, Prescribe reachable).
 > Still open: OQ-014 (pack vs dose units for quantity, non-tablet forms).
 
 ---
 
 > **2026-10-07 — Prescription changes, part 1 (quantity and price).** Agreed with Apurva and built:
-> (1) the edit sheet has no quantity at all (stepper removed; the doctor never sees prescription quantity);
+> (1) the medicine editor has no quantity at all (stepper removed; the doctor never sees prescription quantity);
 > (2) the medicine row shows the customer's cart "Qty" read-only, unchanged by doctor edits, and no longer shows a
 > line-item price; (3) Add medicine (button, sheet, code) is removed — the doctor cannot add medicines;
 > (4) order value (patient block and compact strip) and View Rx are unchanged. Backend rule: frequency and duration are
@@ -143,7 +126,7 @@
 
 **Architecture:** the prototype is now **three files**, not one — `index.html` (structure), `styles.css` (all cosmetics), `app.js` (all logic). This is a deliberate `[USER-PROVIDED]` change from the original single-file V1 rule; see `docs/design_system.md` for why (button-style drift across the single file was the trigger). `CLAUDE.md` and `frontend_engineer.md` have been updated to match — see their diffs from this same pass.
 
-- Light theme (Truemeds brand-inspired, `#1B69DE` primary blue, `#f0f4f8` background)
+- Central Truemeds design system (`../../design-system/truemeds.css`, `icons.js`) — restyle done 2026-10-07
 - All 5 mock scenarios switchable via demo bar (mobile) / side panel (desktop)
 - Valid-call gate at 50 seconds `[LOCKED, working]`
 - CTA routing matrix `[LOCKED, working]` — Confirm Order / Confirm & Transfer / Confirm & Forward
@@ -152,11 +135,11 @@
 - Rx overlay with dummy prescription, zoom/rotate/pan/pinch
 - Desktop side panel with scenario switcher + demo webhook simulator (mirrors mobile demo bar)
 - Fast-forward to 50s demo button — stuck-on-"Submitting" bug fixed (root cause: `innerHTML` replacement was destroying child spans the render function depended on)
-- Bottom sheets: Hold, No Pickup, Skip HA, Edit Medicine, Add Medicine, Schedule Callback
+- Bottom sheets: Hold, No Pickup, Skip HA, Schedule Callback, Disable reason, Discard changes. Medicine editing is the full-screen Prescribe screen (above); Add medicine was removed 2026-10-07
 - Medicine cards: **entire card is tappable** (not just an edit icon), chevron (`›`) affordance, no separate edit button
 - Sticky compact strip, patient detail block with `ⓘ` order-details expand, profile sheet with earnings/logout
 
-### 1.1 Button / design system (new this pass)
+### 1.1 Button / design system (HISTORY — superseded 2026-10-07 by the central design system; do not use `.btn`)
 
 Every CTA now comes from one shared system: `class="btn btn-{size} btn-{variant}"` in `styles.css`, icons from one `ICONS` map in `app.js`. Full reference: `docs/design_system.md` — **read that file before adding any new CTA**, don't hand-roll button CSS again.
 

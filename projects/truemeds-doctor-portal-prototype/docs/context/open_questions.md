@@ -1,5 +1,8 @@
 # open_questions.md — Truemeds Doctor Portal Prototype
 
+
+> Answered questions and the reasoning behind each design decision are recorded in `decision_log.md` (same folder).
+
 This file tracks all unresolved product decisions that Claude must not silently answer.
 
 Every entry must include:
@@ -142,7 +145,7 @@ Every entry must include:
 
 **Why it matters:** Doctor can now edit qty and disable medicines in the prototype. If there are business rules (e.g., doctor cannot increase qty beyond what was ordered, or disabling a medicine cancels it from the order), those rules are not yet defined.
 
-**Answer on qty (Apurva, 2026-10-07):** The doctor never sees or edits quantity on the edit sheet. Two quantities exist: (1) the customer's cart quantity, shown read-only on the medicine row and unchanged by any doctor edit; (2) the prescription quantity, owned by the backend. The backend preselects frequency and duration for the maximum configured period (6 months; Ongoing preselected) and stores the quantity; if the doctor changes frequency or duration, the backend recalculates the quantity and prints it on the prescription, replacing the default.
+**Answer on qty (Apurva, 2026-10-07):** The doctor never sees or edits quantity on the Prescribe screen. Two quantities exist: (1) the customer's cart quantity, shown read-only on the medicine row and unchanged by any doctor edit; (2) the prescription quantity, owned by the backend. The backend preselects frequency and duration for the maximum configured period (6 months; Ongoing preselected) and stores the quantity; if the doctor changes frequency or duration, the backend recalculates the quantity and prints it on the prescription, replacing the default.
 
 **Status:** Qty part answered. Disable scope (does disabling cancel the item from the order; where it writes) still open.
 

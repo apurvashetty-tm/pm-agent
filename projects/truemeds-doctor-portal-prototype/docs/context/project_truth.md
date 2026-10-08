@@ -150,7 +150,7 @@ Claude must not guess, fake, or silently hardcode final behavior for:
 - **HA requirement logic** — what field or system sets HA required
 - **HA skip eligibility** — what conditions allow a Skip HA Call
 - **Transfer vs Forward distinction** — operational meaning downstream
-- **Medicine add/remove authority** — whether doctor can modify the medicines list
+- ~~**Medicine add/remove authority**~~ — answered 2026-10-07: the doctor cannot add medicines; can prescribe (edit dose/frequency/duration) or disable. Quantity is not the doctor's (backend). See `decision_log.md` D-04, D-06.
 - **Doctor assignment source** — queue system, manual, or rotational
 - **Notes visibility and locking rules** — who can see notes, when are they locked
 
