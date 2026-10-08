@@ -1,0 +1,9 @@
+# Netlify configuration — Truemeds Doctor (doctor-portal-prototype.netlify.app)
+# Static site. The app links the central design system as ../../design-system/… (one shared copy, never vendored).
+# On the published site those links resolve to /design-system/…, so the build copies the shared folder in next to
+# index.html at deploy time. Nothing is copied into git (design-system/ is ignored in this folder).
+# Applies when the Netlify site's base directory is this folder.
+
+[build]
+  publish = "."
+  command = "rm -rf design-system && cp -R ../../design-system ./design-system && rm -rf ./design-system/build"
