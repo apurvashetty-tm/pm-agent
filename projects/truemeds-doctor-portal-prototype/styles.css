@@ -190,13 +190,10 @@
     #az-phase2 { display: none; opacity: 0; transform: translateY(var(--tm-space-sm)); transition: opacity 0.25s ease, transform 0.25s ease; }
     #az-phase2.visible { display: block; }
     #az-phase2.revealed { opacity: 1; transform: translateY(0); }
-    #postcall-cta-label {
-      font-size: var(--tm-font-size-body-xs); line-height: var(--tm-font-lineheight-xs);
-      font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-secondary);
-      margin-bottom: var(--tm-space-sm);
-    }
-    #postcall-secondary-row { display: flex; gap: var(--tm-space-sm); margin-top: var(--tm-space-sm); }
-    #postcall-secondary-row .tm-btn { flex: 1; }
+    /* #8 one Schedule Callback style (secondary, small, full label); stacked with Skip HA when both show */
+    #postcall-secondary-row { display: flex; flex-direction: column; gap: var(--tm-space-sm); }
+    #action-zone > .tm-section-title { margin-bottom: 0; }
+    #az-closed .tm-icon { color: var(--tm-content-success); }
     #skip-ha-btn { display: none; }
     #skip-ha-btn.visible { display: inline-flex; }
 
@@ -248,7 +245,7 @@
     #prescribe-screen:focus { outline: none; }
     #ps-bar { position: relative; flex-shrink: 0; }
     #ps-heading { flex: 1; min-width: 0; }
-    #ps-heading .tm-appbar__title { display: block; }
+    #ps-heading .tm-appbar__title { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }   /* #13 one line */
     #ps-form { display: block; font-size: var(--tm-font-size-body-xs); line-height: var(--tm-font-lineheight-xs); color: var(--tm-content-secondary); }
     /* Same pattern as the case page: grey background, one white card per block, 12px between cards */
     #ps-body {
@@ -263,8 +260,9 @@
     #ps-actionbar { flex-shrink: 0; position: relative; }
     #ps-prints .ps-label { margin-bottom: var(--tm-space-xs); }
     #ps-prints-text { font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); color: var(--tm-content-primary); }
-    .ps-label { font-size: var(--tm-font-size-body-sm); line-height: var(--tm-font-lineheight-sm); font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-secondary); margin-bottom: var(--tm-space-sm); }
-    .ps-label .tm-muted { font-weight: var(--tm-font-weight-regular); }
+    /* #4 group labels use .tm-field__label typography (class added in app.js) — same as "Additional instructions" */
+    .ps-label { display: block; margin-bottom: var(--tm-space-sm); }
+    .ps-label .tm-muted, .tm-field__label .tm-muted { font-weight: var(--tm-font-weight-regular); }
     .ps-chips { display: flex; flex-wrap: wrap; gap: var(--tm-space-sm); }
     .ps-chips .tm-chip { white-space: nowrap; }
     /* Food: one row of equal choices sharing the width; wraps only on very narrow screens */
@@ -276,8 +274,6 @@
     .ps-slot-key { text-align: center; font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-secondary); }
     .ps-helper { font-size: var(--tm-font-size-body-xs); line-height: var(--tm-font-lineheight-xs); color: var(--tm-content-secondary); margin-top: var(--tm-space-sm); }
     .ps-gap { margin-top: var(--tm-space-md); }
-    .ps-inline { display: flex; align-items: center; gap: var(--tm-space-md); }
-    .ps-inline .ps-label { margin: 0; white-space: nowrap; }
     /* Duration: dropdown-style field — same border, corners and padding as .tm-field__control */
     .ps-dur-field { background: var(--tm-surface-primary); border: 1px solid var(--tm-border-default); border-radius: var(--tm-radius-md); }
     .ps-dur-field.is-open { border-color: var(--tm-border-focus); }
@@ -290,7 +286,8 @@
     .ps-dur-val { font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-primary); }
     .ps-dur-val span { display: block; font-size: var(--tm-font-size-body-xs); line-height: var(--tm-font-lineheight-xs); font-weight: var(--tm-font-weight-regular); color: var(--tm-content-secondary); }
     .ps-unit { font-size: var(--tm-font-size-body-md); color: var(--tm-content-secondary); }
-    #ps-note { min-height: calc(var(--tm-space-2xl) * 2); }
+    /* #14 every multi-line field looks the same: fixed height, no resize handle */
+    .tm-field__control textarea { resize: none; min-height: calc(var(--tm-space-2xl) * 2); }
 
     /* ============================================================
        RX FULL-SCREEN OVERLAY — viewer chrome uses tokens
@@ -399,7 +396,7 @@
     .medicine-item { cursor: pointer; user-select: none; transition: opacity 150ms ease; }
     .medicine-item:active { background: var(--tm-surface-secondary); }
     .medicine-item:focus-visible { outline: 2px solid var(--tm-border-focus); outline-offset: 2px; border-radius: var(--tm-radius-sm); }
-    .medicine-item.disabled { opacity: 0.5; }
+    .medicine-item.disabled .med-icon, .medicine-item.disabled .med-info { opacity: 0.5; }
     .medicine-item.disabled .med-name { text-decoration: line-through; color: var(--tm-content-secondary); }
     .med-icon { display: flex; align-items: center; justify-content: center; color: var(--tm-content-secondary); }
     .med-detail { display: flex; flex-wrap: wrap; column-gap: var(--tm-space-sm); }
@@ -450,17 +447,15 @@
     .sheet-body { overscroll-behavior: contain; }
     @media (max-width: 767px) { body:has(#sheet-overlay.open), body:has(#rx-overlay.open), body:has(#prescribe-screen.open) { overflow: hidden; } }   /* mobile: page behind a modal does not scroll */
 
-    .sheet-handle {
-      width: var(--tm-space-2xl); height: var(--tm-space-xs);
-      background: var(--tm-border-default); border-radius: var(--tm-radius-full);
-      margin: var(--tm-space-sm) auto 0;
-    }
+    /* Sheet header: title + quiet close cross (no drag handle — sheets don't support swipe) */
     .sheet-title {
+      display: flex; align-items: center; justify-content: space-between; gap: var(--tm-space-md);
       font-size: var(--tm-font-size-body-xl); line-height: var(--tm-font-lineheight-md);
       font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-primary);
-      padding: var(--tm-space-md) var(--tm-space-lg);
+      padding: var(--tm-space-sm) var(--tm-space-sm) var(--tm-space-sm) var(--tm-space-lg);
       border-bottom: 1px solid var(--tm-border-subtle);
     }
+    .sheet-close { flex-shrink: 0; }
     .sheet-body {
       padding: var(--tm-space-lg) var(--tm-space-lg) var(--tm-space-xl);
       overflow-y: auto; max-height: calc(85vh - 72px);
@@ -472,11 +467,8 @@
     .sheet-subtitle { font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); color: var(--tm-content-secondary); margin-bottom: var(--tm-space-md); }
 
     /* Section labels inside sheets */
-    .sheet-section-label {
-      font-size: var(--tm-font-size-body-xs); line-height: var(--tm-font-lineheight-xs);
-      font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-secondary);
-      margin: var(--tm-space-lg) 0 var(--tm-space-sm);
-    }
+    .sheet-section-label { display: block; margin: var(--tm-space-lg) 0 var(--tm-space-sm); }
+    .sheet-section-label:first-child { margin-top: 0; }
     /* Choice rows (skip-HA options, disable reasons) */
     .choice-row {
       display: flex; flex-direction: column; align-items: flex-start; gap: var(--tm-space-2xs);
@@ -496,32 +488,21 @@
     .reason-list { display: flex; flex-direction: column; }
 
     /* Chips (selection) — design-system .tm-chip; larger touch size inside sheets */
-    .chip-row {
-      display: flex; gap: var(--tm-space-sm); flex-wrap: nowrap;
-      overflow-x: auto; padding-bottom: var(--tm-space-xs);
-      -webkit-mask-image: linear-gradient(to right, black 80%, transparent 100%);
-      mask-image: linear-gradient(to right, black 80%, transparent 100%);
-      scrollbar-width: none;
-    }
-    .chip-row::-webkit-scrollbar { display: none; }
-    .chip-row-wrap { flex-wrap: wrap; overflow-x: visible; -webkit-mask-image: none; mask-image: none; }
-    .bottom-sheet .tm-chip {
-      flex-shrink: 0; white-space: nowrap;
-      padding: var(--tm-space-md) var(--tm-space-lg);
-      font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm);
-    }
+    /* Even grid of large chips (design-system .tm-chip--lg) — callback sheet; same pattern as the Prescribe screen */
+    .chip-grid { display: grid; grid-template-columns: repeat(var(--cols, 3), minmax(0, 1fr)); gap: var(--tm-space-sm); }
+    .chip-grid .tm-chip { padding-left: 0; padding-right: 0; white-space: nowrap; }
 
 
     /* ============================================================
-       TOAST — .tm-toast (SALT: one line, bottom centre). Prototype messages can be longer,
-       so this one wraps; position is set from JS to centre on the mobile column.
+       TOAST — .tm-toast (SALT: one line, bottom centre). Messages are kept short; position is set from JS
+       to centre on the mobile column, above the pinned action bar and below sheets.
     ============================================================ */
     #toast {
       bottom: calc(var(--tm-space-3xl) + var(--tm-space-xl));
       transform: translateX(-50%) translateY(var(--tm-space-lg));
       opacity: 0; pointer-events: none; transition: opacity 0.25s, transform 0.25s;
-      white-space: normal; text-align: center; max-width: min(320px, calc(100vw - var(--tm-space-2xl)));
-      padding: var(--tm-space-sm) var(--tm-space-md); border-radius: var(--tm-radius-sm);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-align: center; max-width: calc(100% - var(--tm-space-2xl));
+      padding: var(--tm-space-sm) var(--tm-space-md); z-index: 850;   /* below sheets (900), above full screens (800) */
     }
     #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
     body:has(#success-toast.show) #toast { bottom: calc(var(--tm-space-3xl) * 2 + var(--tm-space-xl) + var(--tm-space-sm)); }   /* sit above the confirmation */
@@ -549,7 +530,7 @@
     #profile-doctor-name { font-size: var(--tm-font-size-body-lg); line-height: var(--tm-font-lineheight-md); font-weight: var(--tm-font-weight-semibold); }
     #profile-doctor-role { font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); color: var(--tm-content-secondary); }
     #profile-earnings-card { margin-bottom: var(--tm-space-md); }
-    .profile-section-label { font-size: var(--tm-font-size-body-xs); line-height: var(--tm-font-lineheight-xs); font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-secondary); margin-bottom: var(--tm-space-md); }
+    .profile-section-label { display: block; margin-bottom: var(--tm-space-md); }
     #profile-earnings-row { display: flex; align-items: center; }
     .profile-earnings-item { flex: 1; text-align: center; }
     .profile-earnings-label { font-size: var(--tm-font-size-body-xs); line-height: var(--tm-font-lineheight-xs); color: var(--tm-content-secondary); margin-bottom: var(--tm-space-2xs); }
@@ -563,16 +544,6 @@
     }
     .profile-menu-label { display: inline-flex; align-items: center; gap: var(--tm-space-md); }
     .profile-menu-btn > .tm-icon:last-child { color: var(--tm-content-tertiary); }
-
-    .unavail-body { text-align: center; }
-    .state-icon {
-      width: calc(var(--tm-space-2xl) + var(--tm-space-lg)); height: calc(var(--tm-space-2xl) + var(--tm-space-lg));
-      margin: 0 auto var(--tm-space-md); border-radius: var(--tm-radius-full);
-      display: flex; align-items: center; justify-content: center;
-      background: var(--tm-surface-tertiary); color: var(--tm-content-secondary);
-    }
-    .unavail-title { margin-bottom: var(--tm-space-sm); }
-    .unavail-desc { font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); color: var(--tm-content-secondary); margin-bottom: var(--tm-space-xl); }
 
     /* ============================================================
        DESKTOP PHONE FRAME (>=768px) — must stay LAST so it overrides the mobile rules above

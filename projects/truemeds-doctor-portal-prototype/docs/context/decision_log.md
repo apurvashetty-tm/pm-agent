@@ -172,9 +172,35 @@ the reasoning is kept so nobody re-opens a settled question without new informat
 - **Also rejected:** drawing the phone's back / home / recent buttons in the prototype — real phones already show
   their own, fake buttons get tapped, and the 9:16 frame already reads as a phone.
 
+### D-23 · UI audit fixes — 2026-10-08
+Own audit of both screens against the design system; Apurva asked to fix everything except the tablet icon (#11, her call).
+- **Sheets:** one template everywhere — title + grey cross (close) on the right, no drag handle; optional grey subtitle;
+  labels use `tm-field__label`. Discard sheet: Keep editing first, Discard (red) second. Skip HA sheet gets a
+  "Select reason" subtitle. Customer-unavailable sheet uses the same template (no big icon).
+- **Callback chips:** an even grid (2 columns for dates, 3 for times) with `tm-chip--lg`, so rows don't wrap ragged.
+- **Action card:** titled "Call" like the other section titles; the "Post-call action" label is gone. Schedule
+  Callback / Skip HA are full-width small secondary buttons, stacked.
+- **Closed states:** after Unavailable, Callback or a completed action, the card shows one plain notice
+  ("Patient unavailable — case returned to the queue." / "Callback scheduled — …") instead of an empty card.
+  Unavailable also pins **Next Order** in the bottom bar (revises D-22, which hid the bar there) so the doctor
+  always has a way forward.
+- **Patient line:** age and gender only.
+- **Disabled medicine row:** only the icon and text fade; the row's own actions stay full strength.
+- **Toasts:** one line, short text ("Call ended before 50s", "HA call skipped", …); long text is cut with "…".
+- **Prescribe:** labels use `tm-field__label`; SOS "Max doses a day" puts the label above its chips like every other
+  field; long medicine names stay on one line in the app bar; text boxes can't be resized by dragging.
+- **Rx viewer:** controls use the new on-dark button so they read on the dark surface.
+- **Why:** each was a one-off style next to a design-system one, or a state that left the doctor with nothing to do.
+
 ## Design system changes made for this work
 
 ### D-21 · Toggle fix and a large chip size — 2026-10-07
 - **Decision:** Fixed a design-system bug (a checked toggle inside a label stayed grey). Added `.tm-chip--lg`
   ([PROPOSED], about 46px tall) for choices tapped during a call.
 - **Why:** The standard chip is a compact filter chip, too small as a main tap target.
+
+### D-24 · Quiet and on-dark buttons [PROPOSED] — 2026-10-08
+- **Decision:** Added `.tm-btn--quiet` (grey, no fill — app-bar and sheet close) and `.tm-btn--on-dark` (light, no
+  fill — controls on dark surfaces such as the Rx viewer). Both [PROPOSED] in `design-system/src/components.css`.
+- **Why:** the existing ghost button is brand blue, which made a close cross look like the main action; and nothing
+  existed for white controls on a dark background.

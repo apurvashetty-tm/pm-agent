@@ -304,7 +304,7 @@ function updateCompactStrip() {
   if (!c) return;
   document.getElementById('cs-patient-name').textContent = c.patient_name;
   document.getElementById('cs-patient-meta').textContent =
-    `${c.patient_age}y · ${c.patient_gender} · ${c.order_id}`;
+    `${c.patient_age}y · ${c.patient_gender}`;
   document.getElementById('cs-order-value').textContent = `₹${c.order_value.toLocaleString('en-IN')}`;
   document.getElementById('cs-view-rx-btn').classList.toggle('hidden', !c.prescription_attached);
 
@@ -425,6 +425,18 @@ function renderCallPhase() {
   const gateOpen = ['gate_passed', 'completed', 'unavailable'].includes(state);
   phase1.style.display = gateOpen ? 'none' : 'flex';
   callBtn.hidden = gateOpen;            // pinned bar: Call Patient lives there until the gate passes
+  // Closed case: the card says what happened (never a stale script); unavailable gets Next Order in the pinned bar
+  const closed = ['completed', 'unavailable'].includes(state);
+  const closedBox = document.getElementById('az-closed');
+  closedBox.hidden = !closed;
+  if (closed) {
+    brief.classList.remove('visible');
+    document.getElementById('az-closed-text').textContent = state === 'unavailable'
+      ? 'Patient unavailable — case returned to the queue.'
+      : (DOCTOR_STATE.closedNote || 'Case closed.');
+    closedBox.querySelector('.tm-icon').innerHTML = icon(state === 'unavailable' ? 'phone-off' : 'circle-check');
+  }
+  document.getElementById('next-order-btn').hidden = state !== 'unavailable';
   if (gateOpen) return;
 
   // ── Reset button defaults — all cosmetics via design-system .tm-btn classes ──
@@ -447,7 +459,7 @@ function renderCallPhase() {
     callBtnLbl.textContent = 'End Call';
     callBtn.className      = 'tm-btn tm-btn--lg tm-btn--destructive tm-btn--block';
     // Pre-gate schedule callback as quiet escape hatch during live call
-    if (preGateCb) preGateCb.className = 'tm-btn tm-btn--sm tm-btn--ghost tm-btn--block';
+    if (preGateCb) preGateCb.className = 'tm-btn tm-btn--sm tm-btn--secondary tm-btn--block';
     return;
   }
   // assigned / no_answer / hold — show Call Patient
@@ -455,10 +467,10 @@ function renderCallPhase() {
     // Early hang-up: escape routes = retry OR schedule callback (ghost button)
     callBtnIcon.innerHTML  = icon('phone');
     callBtnLbl.textContent = 'Call Again';
-    if (preGateCb) preGateCb.className = 'tm-btn tm-btn--secondary tm-btn--block';
+    if (preGateCb) preGateCb.className = 'tm-btn tm-btn--sm tm-btn--secondary tm-btn--block';
     return;
   }
-  if (preGateCb) preGateCb.className = 'tm-btn tm-btn--sm tm-btn--ghost tm-btn--block hidden';
+  if (preGateCb) preGateCb.className = 'tm-btn tm-btn--sm tm-btn--secondary tm-btn--block hidden';
   callBtnIcon.innerHTML  = icon('phone');
   callBtnLbl.textContent = 'Call Patient';
 }
@@ -503,10 +515,7 @@ function renderPostCall() {
   ctaIcon.textContent = cta.icon;
   ctaLbl.textContent  = cta.label;
 
-  // Secondary chip row: Schedule always present; label shortens to fit
-  // when Skip HA shares the row
-  const scLbl = document.getElementById('schedule-callback-label');
-  if (scLbl) scLbl.textContent = haApplicable ? 'Schedule' : 'Schedule Callback';
+  // Secondary actions stack (full labels) — Schedule Callback always, Skip HA when applicable
 
   console.log(`[MOCK] cta-routing | scenario=${DOCTOR_STATE.activeScenario} | ha_skip_session=${DOCTOR_STATE.haSkippedInSession} | resolved=${cta.type}`);
 }
@@ -626,7 +635,7 @@ function toggleOrderExpand() {
 // ================================================================
 function handleLogout() {
   closeSheet();
-  showToast('[MOCK] Logout — not implemented in prototype');
+  showToast('Logout not in prototype');
   console.log('[MOCK] auth.logout | user=' + DOCTOR_PROFILE.name);
 }
 
@@ -642,7 +651,7 @@ function handleCallAction() {
     DOCTOR_STATE.consultationState = 'assigned';
     DOCTOR_STATE.callTimer = 0;
     DOCTOR_STATE.endedEarly = true;
-    showToast('Call ended before 50s — call again or schedule a callback');
+    showToast('Call ended before 50s');
     render();
     console.log(`[MOCK] call-service.callEnded | gate=NOT_PASSED | escape=retry_or_callback`);
   }
@@ -755,6 +764,7 @@ function confirmScheduleCallback() {
   clearInterval(DOCTOR_STATE.timerInterval);
   DOCTOR_STATE.timerInterval = null;
   DOCTOR_STATE.consultationState = 'completed';
+  DOCTOR_STATE.closedNote = `Callback scheduled — ${dayLabel} at ${timeLabel}.`;
   render();
   showSuccessToast('Callback Scheduled', `${DOCTOR_STATE.currentCase.patient_name} — ${dayLabel} at ${timeLabel}. Order moved to callback queue.`);
   console.log(`[MOCK] case.callbackScheduled | day=${CALLBACK_STATE.day} | time=${CALLBACK_STATE.time} | session=COMPLETED`);
@@ -777,7 +787,7 @@ function startCallTimer() {
       DOCTOR_STATE.gatePassedAt = Date.now();
       render();
       console.log(`[MOCK] call-timer.gateCheck | elapsed=50s | gate=PASSED | cta=${resolveCTA(DOCTOR_STATE.currentCase).type}`);
-      showToast('Valid call complete — post-call action unlocked');
+      showToast('Valid call — actions unlocked');
       setTimeout(scrollToActionZone, 300);
     }
 
@@ -797,7 +807,7 @@ function doFastForward() {
     DOCTOR_STATE.consultationState = 'gate_passed';
     DOCTOR_STATE.gatePassedAt = Date.now();
     render();
-    showToast('Fast-forwarded to 50s — gate passed');
+    showToast('Fast-forwarded to 50s');
     setTimeout(scrollToActionZone, 300);
   } else if (['assigned', 'hold', 'no_answer', 'calling'].includes(s)) {
     // Hide sim panel if showing
@@ -808,10 +818,10 @@ function doFastForward() {
     DOCTOR_STATE.consultationState = 'gate_passed';
     DOCTOR_STATE.gatePassedAt = Date.now();
     render();
-    showToast('Fast-forwarded — gate passed');
+    showToast('Fast-forwarded to 50s');
     setTimeout(scrollToActionZone, 300);
   } else {
-    showToast('Fast-forward only works before gate is passed');
+    showToast('Already past 50s');
   }
 }
 
@@ -837,6 +847,7 @@ function handleMainCTA() {
       ? Object.assign({}, DOCTOR_STATE.currentCase, { ha_status:'skipped_customer' }) : DOCTOR_STATE.currentCase;
     const cta = resolveCTA(effectiveScenario);
     const titles = { confirm_order:'Order Confirmed', confirm_transfer:'Transferred to HA', confirm_forward:'Forwarded for Review' };
+    DOCTOR_STATE.closedNote = `${titles[cta.type] || 'Done'}.`;
     render();
     showSuccessToast(titles[cta.type] || 'Done', `${DOCTOR_STATE.currentCase.patient_name} — "${cta.label}" submitted.`);
     console.log(`[MOCK] cta-action.success | cta=${cta.type}`);
@@ -880,7 +891,7 @@ function openSheet(sheetId) {
   // Accessibility: dialog semantics + focus management (visual/a11y only)
   if (sheetEl) {
     const title = sheetEl.querySelector('.sheet-title');
-    if (title && !title.id) title.id = sheetId + '-title';
+    if (title && !title.id) title.id = sheetId + '-heading';   // not '-title': #sheet-retry-title is the retry sheet's text span
     sheetEl.setAttribute('role', 'dialog');
     sheetEl.setAttribute('aria-modal', 'true');
     if (title) sheetEl.setAttribute('aria-labelledby', title.id);
@@ -916,7 +927,7 @@ function handleSheetOverlayClick(e) {
 function confirmSkipHA(reason) {
   DOCTOR_STATE.haSkippedInSession = true;
   closeSheet(); render();
-  showToast(`HA skipped: ${reason}. CTA updated to Confirm Order`);
+  showToast('HA call skipped');
   console.log(`[MOCK] ha.skip | reason="${reason}" | new_cta=confirm_order`);
 }
 
@@ -1013,7 +1024,7 @@ function chip(key, label, pressed, aria = '') {
 function group(label, inner, { cls = 'ps-chips', hint = '', id = '', cols = 0 } = {}) {
   const lid = `psl-${label.replace(/\W+/g, '-').toLowerCase()}-${Math.random().toString(36).slice(2, 6)}`;
   const style = cols ? ` style="--cols:${cols}"` : '';
-  return `<div class="ps-section"${id ? ` id="${id}"` : ''}><div class="ps-label" id="${lid}">${label}${hint ? ` <span class="tm-muted">${hint}</span>` : ''}</div>` +
+  return `<div class="ps-section"${id ? ` id="${id}"` : ''}><div class="tm-field__label ps-label" id="${lid}">${label}${hint ? ` <span class="tm-muted">${hint}</span>` : ''}</div>` +
          `<div class="${cls}" role="group" aria-labelledby="${lid}"${style}>${inner}</div></div>`;
 }
 const unitHint = (fd, unit) => unit ? `(${unit})` : (fd.showUnit ? `(${fd.many})` : '');   // unit = the "Other" entry's unit when chosen
@@ -1033,10 +1044,10 @@ function renderPrescribe() {
     const rows = [['m', 'M', 'Morning'], ['a', 'A', 'Afternoon'], ['n', 'N', 'Night']].map(([k, key, name]) =>
       `<div class="ps-slot"><span class="ps-slot-key" aria-hidden="true">${key}</span><div class="ps-grid" role="group" aria-label="${name}" style="--cols:${fd.slot.length}">${
         fd.slot.map(v => chip(`slot:${k}:${v}`, chipLabel(x.form, v), x[k] === v, `${name}: ${v === 0 ? 'none' : doseText(x.form, v)}`)).join('')}</div></div>`).join('');
-    h += `<div class="ps-section" id="ps-dose-section"><div class="ps-label">Dose <span class="tm-muted">${unitHint(fd)}</span></div><div class="ps-slots">${rows}</div>${errDose}</div>`;
+    h += `<div class="ps-section" id="ps-dose-section"><div class="tm-field__label ps-label">Dose <span class="tm-muted">${unitHint(fd)}</span></div><div class="ps-slots">${rows}</div>${errDose}</div>`;
   } else {
     if (x.interval === 'every_x_hours') {
-      h += `<div class="ps-section"><div class="ps-label" id="psl-every">Every</div><div class="ps-grid" role="group" aria-labelledby="psl-every" style="--cols:4">${
+      h += `<div class="ps-section"><div class="tm-field__label ps-label" id="psl-every">Every</div><div class="ps-grid" role="group" aria-labelledby="psl-every" style="--cols:4">${
              HOURS.map(v => chip(`hrs:${v}`, `${v} h`, x.hours === v, `Every ${v} hours`)).join('')}</div>
              <div class="ps-helper">${24 / x.hours} times a day, round the clock</div></div>`;
     }
@@ -1046,10 +1057,10 @@ function renderPrescribe() {
         <div class="tm-field__control"><input id="ps-other" type="text" inputmode="decimal" placeholder="e.g. 7.5" value="${x.doseOtherVal}"><span class="ps-unit">${fd.other}</span></div>
         ${x.err === 'other' ? `<div class="tm-field__helper" role="alert">Enter the dose in ${fd.other}.</div>` : ''}</div>` : '';
     const lid = 'psl-dose-each';
-    h += `<div class="ps-section" id="ps-dose-section"><div class="ps-label" id="${lid}">Dose <span class="tm-muted">${unitHint(fd, x.doseOther ? fd.other : '')}</span></div>` +
+    h += `<div class="ps-section" id="ps-dose-section"><div class="tm-field__label ps-label" id="${lid}">Dose <span class="tm-muted">${unitHint(fd, x.doseOther ? fd.other : '')}</span></div>` +
          `<div class="ps-grid" role="group" aria-labelledby="${lid}" style="--cols:${opts.length}">${opts.join('')}</div>${other}</div>`;
     if (x.interval === 'sos') {
-      h += `<div class="ps-section"><div class="ps-inline"><div class="ps-label" id="psl-max-only">Max doses a day</div><div class="ps-chips" role="group" aria-labelledby="psl-max-only">${SOS_MAX.map(v => chip(`max:${v}`, v, x.sosMax === v)).join('')}</div></div></div>`;
+      h += `<div class="ps-section"><div class="tm-field__label ps-label" id="psl-max-only">Max doses a day</div><div class="ps-grid" role="group" aria-labelledby="psl-max-only" style="--cols:4">${SOS_MAX.map(v => chip(`max:${v}`, v, x.sosMax === v)).join('')}</div></div>`;
     }
   }
 
@@ -1062,7 +1073,7 @@ function renderPrescribe() {
     if (x.sos) {
       h += `<div class="ps-sub">` +
            group('Dose', fd.each.map(v => chip(`sosdose:${v}`, chipLabel(x.form, v), x.sosDose === v)).join(''), { cls: 'ps-grid', cols: fd.each.length, hint: unitHint(fd) }) +
-           `<div class="ps-section ps-gap"><div class="ps-inline"><div class="ps-label" id="psl-max-extra">Max extra doses a day</div><div class="ps-chips" role="group" aria-labelledby="psl-max-extra">${SOS_MAX.map(v => chip(`max:${v}`, v, x.sosMax === v)).join('')}</div></div></div>` +
+           `<div class="ps-section ps-gap"><div class="tm-field__label ps-label" id="psl-max-extra">Max extra doses a day</div><div class="ps-grid" role="group" aria-labelledby="psl-max-extra" style="--cols:4">${SOS_MAX.map(v => chip(`max:${v}`, v, x.sosMax === v)).join('')}</div></div>` +
            `</div>`;
     }
     h += `</div>`;
@@ -1072,7 +1083,7 @@ function renderPrescribe() {
   // again on the same row. Looks like the other form fields so it reads as "fill in", not "information".
   const code = durationCode();
   const sub = code !== x.defaultDuration ? 'Changed from default' : 'Default';
-  h += `<div class="ps-section tm-card ps-card"><div class="ps-label" id="psl-duration">Duration</div>
+  h += `<div class="ps-section tm-card ps-card"><div class="tm-field__label ps-label" id="psl-duration">Duration</div>
         <div class="ps-dur-field${x.durOpen ? ' is-open' : ''}">
           <button type="button" class="ps-dur-toggle" data-k="dur:toggle" aria-expanded="${x.durOpen}" aria-controls="ps-dur-panel" aria-labelledby="psl-duration ps-dur-value">
             <span class="ps-dur-val" id="ps-dur-value">${durationText(code)}<span>${sub}</span></span>
@@ -1195,7 +1206,7 @@ function confirmDisable(reason) {
   med.validation_status = 'disabled';
   med.disable_reason = reason;
   closeSheet(); closePrescribe(); render();
-  showToast(`Medicine disabled: ${reason}`);
+  showToast(`${med.name} disabled`);
   console.log(`[MOCK] medicine.disable | id=${med.id} | name=${med.name} | reason="${reason}"`);
 }
 
@@ -1306,6 +1317,7 @@ function switchScenario(scenarioId) {
   DOCTOR_STATE.callbackTime      = null;
   DOCTOR_STATE.editingMedId      = null;
   DOCTOR_STATE.endedEarly        = false;
+  DOCTOR_STATE.closedNote        = null;
   CALLBACK_STATE.day  = null;
   CALLBACK_STATE.time = null;
   hideSuccessToast();

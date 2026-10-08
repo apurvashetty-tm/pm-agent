@@ -3,13 +3,16 @@
 **Purpose:** Captures all decisions, agreements, and pending work so a new Claude session on any machine can pick up exactly where things left off.
 
 **Last updated:** 2026-10-08
-**Session status:** Prescribe screen redesign built and reviewed; sticky header and scroll fixes done.
-**Why things are the way they are:** `docs/context/decision_log.md` (D-01 … D-22) — read it before changing any
+**Session status:** Prescribe redesign built; pinned main action (D-22); UI audit fixes done (D-23, D-24). Open: tablet icon on Prescribe (audit #11, Apurva's call).
+**Why things are the way they are:** `docs/context/decision_log.md` (D-01 … D-24) — read it before changing any
 screen it covers. This file says what is built; the decision log says why.
 **Case page main action (2026-10-08, D-22):** `#case-actionbar` (`.tm-actionbar`) pinned to the bottom holds
 `#call-initiate-btn` and `#main-cta-btn`; `syncCaseActionBar()` hides the bar when both are hidden and sets `--ab-h`
 (page bottom padding, toast offset). `scrollToActionZone()` replaces `scrollIntoView` (which also scrolled the desktop
 frame and pushed the header out of view). `layout_check.py` checks both.
+**UI audit fixes (2026-10-08, D-23/D-24):** every sheet = title + `.sheet-close` (`tm-btn--quiet tm-btn--icon`),
+no handle; callback chips in `.chip-grid` (`--cols`); action card closed state = `#az-closed` notice (text from
+`DOCTOR_STATE.closedNote`); `#next-order-btn` pinned only when unavailable; toasts single-line.
 **Live link:** https://doctor-portal-prototype.netlify.app — Netlify deploys every push to `main` (base = repo root,
 publish = this folder). The root `netlify.toml` copies `design-system/` next to `index.html` at deploy time so the
 `../../design-system/…` links resolve. Work on a branch, then merge to `main` to update the live link.
