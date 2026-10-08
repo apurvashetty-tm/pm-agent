@@ -224,7 +224,6 @@
     ============================================================ */
     #case-actionbar { position: fixed; bottom: 0; left: 50%; transform: translateX(-50%); width: 100%; max-width: 430px; z-index: 150; display: flex; flex-direction: column; }
     @media (max-width: 767px) { #main-scroll { padding-bottom: calc(var(--ab-h, 0px) + var(--tm-space-2xl)); } }
-    body:has(#case-actionbar:not([hidden])) #toast { bottom: calc(var(--ab-h, 0px) + var(--tm-space-md)); }   /* toast sits above the bar */
     /* While typing on a touch phone, the pinned bars step aside so they never sit on the keyboard */
     @media (max-width: 767px) and (pointer: coarse) {
       body:has(#main-scroll textarea:focus, #main-scroll input:focus) #case-actionbar { display: none; }
@@ -274,6 +273,7 @@
       padding: var(--tm-space-lg);
       display: flex; flex-direction: column; gap: var(--tm-space-md);
     }
+    .callback-error { color: var(--tm-content-error); margin-top: var(--tm-space-md); }
     #ps-dynamic { display: flex; flex-direction: column; gap: var(--tm-space-md); }
     .ps-card { display: flex; flex-direction: column; gap: var(--tm-space-xl); }
     .ps-card > .ps-sub { margin-top: 0; }
@@ -511,19 +511,6 @@
     .chip-grid .tm-chip { padding-left: 0; padding-right: 0; white-space: nowrap; }
 
 
-    /* ============================================================
-       TOAST — .tm-toast (SALT: one line, bottom centre). Messages are kept short; position is set from JS
-       to centre on the mobile column, above the pinned action bar and below sheets.
-    ============================================================ */
-    #toast {
-      bottom: calc(var(--tm-space-3xl) + var(--tm-space-xl));
-      transform: translateX(-50%) translateY(var(--tm-space-lg));
-      opacity: 0; pointer-events: none; transition: opacity 0.25s, transform 0.25s;
-      white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-align: center; max-width: calc(100% - var(--tm-space-2xl));
-      padding: var(--tm-space-sm) var(--tm-space-md); z-index: 850;   /* below sheets (900), above full screens (800) */
-    }
-    #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
-    body:has(#success-toast.show) #toast { bottom: calc(var(--tm-space-3xl) * 2 + var(--tm-space-xl) + var(--tm-space-sm)); }   /* sit above the confirmation */
 
     /* ============================================================
        SUCCESS CONFIRMATION — .tm-snackbar [PROPOSED central component]; left/width set in showSuccessToast()
@@ -584,7 +571,6 @@
       #rx-overlay { left: 0; width: 100%; max-width: none; transform: none; }
       #prescribe-screen { left: 0; width: 100%; max-width: none; transform: none; }
       #case-actionbar { position: relative; left: auto; transform: none; max-width: none; flex-shrink: 0; }
-      #toast { left: 50% !important; }
       #success-toast { left: var(--tm-space-lg) !important; width: calc(100% - 2 * var(--tm-space-lg)) !important; }
       .bottom-sheet { max-width: none; max-height: 85%; }
       .bottom-sheet.open { display: flex; flex-direction: column; }

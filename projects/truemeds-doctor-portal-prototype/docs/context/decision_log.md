@@ -222,6 +222,16 @@ Own audit of both screens against the design system; Apurva asked to fix everyth
 - **Kept:** the card title stays "Call" (not "Call actions"): the card holds the call's status and script as well as
   actions, and the main action now sits in the pinned bar outside the card.
 
+### D-27 · No black toasts — 2026-10-08
+- **Decision (Apurva):** the small black pop-up messages are gone everywhere; they don't exist in the real app. Each
+  outcome now shows where it happens:
+  - call ended before 50s → a note in the Call card ("call again or schedule a callback");
+  - Schedule Callback without a date/time → red text in the sheet, naming what is missing;
+  - prescribed / disabled → the row's tag; HA skipped → Skip HA disappears and the button becomes Confirm Order;
+  - 50s passed → the pinned button changes; demo fast-forward and "Logout" say nothing.
+- **Kept:** the white confirmation card with Next Order after a completed case.
+- Overrides the "toast system must not change" line in `session_handoff.md` §3 (explicit instruction).
+
 ## Design system changes made for this work
 
 ### D-21 · Toggle fix and a large chip size — 2026-10-07

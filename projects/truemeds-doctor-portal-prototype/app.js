@@ -394,7 +394,9 @@ function renderCallPhase() {
   // Hide briefing after an early hang-up or a call that didn't connect — closing script is irrelevant
   // until the doctor re-dials
   const missed = state === 'no_answer' || state === 'hold';
-  document.getElementById('az-missed').hidden = !missed;
+  const endedEarly = state === 'assigned' && DOCTOR_STATE.endedEarly;
+  document.getElementById('az-missed').hidden = !(missed || endedEarly);
+  if (endedEarly) document.getElementById('az-missed-text').textContent = 'Call ended before 50 seconds — call again or schedule a callback.';
   document.getElementById('az-unavail-btn').hidden = !missed;
   if (missed) document.getElementById('az-missed-text').textContent =
     state === 'hold' ? 'Call didn\'t connect.' : 'Patient didn\'t pick up.';
@@ -636,7 +638,6 @@ function toggleOrderExpand() {
 // ================================================================
 function handleLogout() {
   closeSheet();
-  showToast('Logout not in prototype');
   console.log('[MOCK] auth.logout | user=' + DOCTOR_PROFILE.name);
 }
 
@@ -652,7 +653,6 @@ function handleCallAction() {
     DOCTOR_STATE.consultationState = 'assigned';
     DOCTOR_STATE.callTimer = 0;
     DOCTOR_STATE.endedEarly = true;
-    showToast('Call ended before 50s');
     render();
     console.log(`[MOCK] call-service.callEnded | gate=NOT_PASSED | escape=retry_or_callback`);
   }
@@ -736,6 +736,7 @@ function markCustomerUnavailable() {
 // ── Schedule Callback (post-gate) ────────────────────────────────
 function selectCallbackDay(day) {
   CALLBACK_STATE.day = day;
+  document.getElementById('callback-error').hidden = true;
   document.querySelectorAll('#callback-day-chips .tm-chip').forEach(b => {
     b.setAttribute('aria-pressed', b.dataset.day === day);
   });
@@ -743,16 +744,21 @@ function selectCallbackDay(day) {
 
 function selectCallbackTime(time) {
   CALLBACK_STATE.time = time;
+  document.getElementById('callback-error').hidden = true;
   document.querySelectorAll('#callback-time-chips .tm-chip').forEach(b => {
     b.setAttribute('aria-pressed', b.dataset.time === time);
   });
 }
 
 function confirmScheduleCallback() {
+  const err = document.getElementById('callback-error');
   if (!CALLBACK_STATE.day || !CALLBACK_STATE.time) {
-    showToast('Pick a date and time');
+    err.textContent = !CALLBACK_STATE.day && !CALLBACK_STATE.time ? 'Pick a date and a time.'
+                    : !CALLBACK_STATE.day ? 'Pick a date.' : 'Pick a time.';
+    err.hidden = false;
     return;
   }
+  err.hidden = true;
   const dayLabel = CALLBACK_STATE.day === 'today' ? 'Today' : 'Tomorrow';
   const [h, m] = CALLBACK_STATE.time.split(':');
   const hr = parseInt(h);
@@ -784,7 +790,6 @@ function startCallTimer() {
       DOCTOR_STATE.gatePassedAt = Date.now();
       render();
       console.log(`[MOCK] call-timer.gateCheck | elapsed=50s | gate=PASSED | cta=${resolveCTA(DOCTOR_STATE.currentCase).type}`);
-      showToast('Valid call — actions unlocked');
       setTimeout(scrollToActionZone, 300);
     }
 
@@ -804,7 +809,6 @@ function doFastForward() {
     DOCTOR_STATE.consultationState = 'gate_passed';
     DOCTOR_STATE.gatePassedAt = Date.now();
     render();
-    showToast('Fast-forwarded to 50s');
     setTimeout(scrollToActionZone, 300);
   } else if (['assigned', 'hold', 'no_answer', 'calling'].includes(s)) {
     // Hide sim panel if showing
@@ -815,10 +819,8 @@ function doFastForward() {
     DOCTOR_STATE.consultationState = 'gate_passed';
     DOCTOR_STATE.gatePassedAt = Date.now();
     render();
-    showToast('Fast-forwarded to 50s');
     setTimeout(scrollToActionZone, 300);
   } else {
-    showToast('Already past 50s');
   }
 }
 
@@ -924,7 +926,6 @@ function handleSheetOverlayClick(e) {
 function confirmSkipHA(reason) {
   DOCTOR_STATE.haSkippedInSession = true;
   closeSheet(); render();
-  showToast('HA call skipped');
   console.log(`[MOCK] ha.skip | reason="${reason}" | new_cta=confirm_order`);
 }
 
@@ -1199,7 +1200,6 @@ function confirmMedEdit() {
     validation_status: 'prescribed', disabled: false, disable_reason: undefined,
   });
   closePrescribe(); render();
-  showToast(`${med.name} prescribed`);
   console.log(`[MOCK] medicine.prescribe | id=${med.id} | name=${med.name} | prints="${printLine(med)}"`);
 }
 
@@ -1217,7 +1217,6 @@ function confirmDisable(reason) {
   med.validation_status = 'disabled';
   med.disable_reason = reason;
   closeSheet(); closePrescribe(); render();
-  showToast(`${med.name} disabled`);
   console.log(`[MOCK] medicine.disable | id=${med.id} | name=${med.name} | reason="${reason}"`);
 }
 
@@ -1331,6 +1330,7 @@ function switchScenario(scenarioId) {
   DOCTOR_STATE.closedNote        = null;
   CALLBACK_STATE.day  = null;
   CALLBACK_STATE.time = null;
+  document.getElementById('callback-error').hidden = true;
   hideSuccessToast();
   const ps = document.getElementById('prescribe-screen');   // a scenario switch discards an open Prescribe screen
   ps.classList.remove('open'); ps.setAttribute('aria-hidden', 'true');
@@ -1382,19 +1382,10 @@ function resetToDemo() {
 }
 
 // ================================================================
-// TOAST [LOCKED]
+// No black toasts (Apurva 2026-10-08, decision log D-27): every outcome is shown where it happens —
+// the row tag, the Call card, the pinned button, or an inline error. Only the white confirmation card
+// (showSuccessToast, with Next Order) remains.
 // ================================================================
-let toastTimer = null;
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  // Anchor to mobile column centre — viewport centre is wrong on desktop (side panel offsets column)
-  const r = document.getElementById('mobile-column').getBoundingClientRect();
-  t.style.left = (r.left + r.width / 2) + 'px';
-  t.textContent = msg;
-  t.classList.add('show');
-  if (toastTimer) clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => t.classList.remove('show'), 2800);
-}
 
 // ================================================================
 // INIT

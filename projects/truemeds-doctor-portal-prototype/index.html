@@ -227,6 +227,8 @@
 
         <!-- Phase 1: Call control (hidden when gate passes) -->
         <div id="az-phase1">
+          <!-- What happened to the last call attempt (didn't pick up / didn't connect / ended before 50s) -->
+          <div id="az-missed" class="tm-notice tm-notice--warning" hidden><span class="tm-icon" data-icon="phone-off"></span><span id="az-missed-text">Patient didn't pick up.</span></div>
 
 
           <!-- Pre-gate schedule callback — btn-text during call, btn-ghost after early end (JS swaps) -->
@@ -234,8 +236,6 @@
             <span class="tm-icon tm-icon--16" data-icon="calendar"></span>Schedule Callback
           </button>
 
-          <!-- Call didn't connect (no answer / timed out): the card keeps the choice the sheet offered, so closing the sheet loses nothing -->
-          <div id="az-missed" class="tm-notice tm-notice--warning" hidden><span class="tm-icon" data-icon="phone-off"></span><span id="az-missed-text">Patient didn't pick up.</span></div>
           <button id="az-unavail-btn" class="tm-btn tm-btn--sm tm-btn--destructive tm-btn--block" onclick="markCustomerUnavailable()" hidden>Mark as Unavailable</button>
 
           <div id="az-status-label" class="hidden"></div>
@@ -418,6 +418,7 @@
         <button class="tm-chip tm-chip--lg" aria-pressed="false" data-time="17:00" onclick="selectCallbackTime('17:00')">5:00 PM</button>
         <button class="tm-chip tm-chip--lg" aria-pressed="false" data-time="18:00" onclick="selectCallbackTime('18:00')">6:00 PM</button>
       </div>
+      <div id="callback-error" class="tm-field__helper callback-error" role="alert" hidden></div>
       <button class="tm-btn tm-btn--primary tm-btn--block sheet-cta-margin" onclick="confirmScheduleCallback()">Confirm Callback</button>
     </div>
   </div>
@@ -528,7 +529,6 @@
 </div><!-- /sheet-overlay -->
 
 <!-- TOAST -->
-<div id="toast" class="tm-toast"></div>
 
 <!-- COMPLETED OVERLAY -->
 <!-- Success toast — non-blocking completion confirmation with Next Order fallback -->

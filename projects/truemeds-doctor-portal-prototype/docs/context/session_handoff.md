@@ -4,7 +4,7 @@
 
 **Last updated:** 2026-10-08
 **Session status:** Prescribe redesign built; pinned main action (D-22); UI audit fixes done (D-23 … D-26). Open: medicine form icon (audit #11) — options in docs/concepts/2026-10-08-medicine-form-icons.png, Apurva's call.
-**Why things are the way they are:** `docs/context/decision_log.md` (D-01 … D-26) — read it before changing any
+**Why things are the way they are:** `docs/context/decision_log.md` (D-01 … D-27) — read it before changing any
 screen it covers. This file says what is built; the decision log says why.
 **Case page main action (2026-10-08, D-22):** `#case-actionbar` (`.tm-actionbar`) pinned to the bottom holds
 `#call-initiate-btn` and `#main-cta-btn`; `syncCaseActionBar()` hides the bar when both are hidden and sets `--ab-h`
@@ -12,7 +12,7 @@ screen it covers. This file says what is built; the decision log says why.
 frame and pushed the header out of view). `layout_check.py` checks both.
 **UI audit fixes (2026-10-08, D-23/D-24):** every sheet = title + `.sheet-close` (`tm-btn--quiet tm-btn--icon`),
 no handle; callback chips in `.chip-grid` (`--cols`); action card closed state = `#az-closed` notice (text from
-`DOCTOR_STATE.closedNote`); `#next-order-btn` pinned only when unavailable; toasts single-line.
+`DOCTOR_STATE.closedNote`); `#next-order-btn` pinned only when unavailable. No black toasts at all (D-27).
 **Call didn't connect (2026-10-08, D-26):** `#az-missed` notice + `#az-unavail-btn` in the Call card and "Call Again"
 pinned for `no_answer` / `hold`; no call timer in the doctor UI (`#cs-timer-badge` removed; demo controls keep theirs).
 **Live link:** https://doctor-portal-prototype.netlify.app — Netlify deploys every push to `main` (base = repo root,
@@ -194,7 +194,7 @@ Full original scope list preserved in git history (`c0e0ab2`, `2d2ad71`, `0a0fa4
 - Valid-call gate at 50 seconds in `startCallTimer()`
 - All 5 scenario IDs and their `case_type`, `ha_status`, `meds_type` fields
 - Rx overlay, zoom, rotate, pan, pinch logic
-- Toast system (`showToast`) and success-toast system (`showSuccessToast`)
+- Success confirmation card (`showSuccessToast`). The black toast (`showToast`) was removed on Apurva's instruction (D-27); do not bring it back
 - `switchScenario()` function structure
 - Sheet overlay alignment in `openSheet()` using `getBoundingClientRect()`
 - The `.btn` button system in `styles.css` and `ICONS` map in `app.js` — cosmetic changes go here, once, not per-button. See `docs/design_system.md`.
