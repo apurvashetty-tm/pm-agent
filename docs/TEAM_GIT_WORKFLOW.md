@@ -70,3 +70,34 @@ Do not share one GitHub account or personal access token across the team.
 2. Enable the `main` branch protection supported by the repository plan.
 3. Add trusted reviewers to `.github/CODEOWNERS` if shared ownership is desired.
 4. Revisit organization ownership only after alignment with Truemeds IT.
+
+## Deployments (live links)
+
+Which branch and folder each live link publishes. Check this before merging into `main` or touching a
+`netlify.toml`.
+
+| Live link | Deploys from | Publishes | Config | Watch out |
+|---|---|---|---|---|
+| https://doctor-portal-prototype.netlify.app | `main` (every push, automatically) | `projects/truemeds-doctor-portal-prototype` | root `netlify.toml` — copies `design-system/` next to the app at deploy | Any push to `main` redeploys this site, including docs-only commits. |
+| Price Lock prototype (Netlify) | `price-lock-proto` | `projects/truemeds-price-lock/prototype/price-lock` | root `netlify.toml` **on that branch** | Merging `price-lock-proto` into `main` will conflict on the root `netlify.toml` — the two site configs must be combined first, or the doctor-portal site breaks. |
+| https://acom-mystats-redesign.netlify.app | manual CLI deploy (not linked to Git) | ACOM My Statistics prototype | none in the repo | Pushing to GitHub does not update it. |
+
+## Operations log (exceptions only)
+
+Git history already records every change, who made it and why (`git log`). Do not copy commits here.
+Log only what a teammate, or an AI assistant in another thread, could be surprised by:
+
+- a push to `main` without a pull request;
+- a change to deployment or hosting (Netlify settings, `netlify.toml`, live links);
+- a change to branch protection, collaborators or repository settings;
+- a known conflict or trap waiting for a future merge.
+
+Format: date · who (person, and tool or AI assistant if one did it) · what · why · follow-up. Newest first.
+
+- 2026-10-08 · Claude (Cowork) for Apurva · Merged `doctor-portal-restyle` into `main` and pushed straight to `main`
+  (2a196f2, then 1997d56 and 7468eeb) without a pull request · to update the doctor-portal live link the same day ·
+  This bypassed the "pull request + one review" rule above. Future changes go through a branch and pull request.
+- 2026-10-08 · Claude (Cowork) for Apurva · Added the root `netlify.toml` for the doctor-portal site · the site publishes
+  only the project folder, but the app loads the shared `design-system/` from outside it; the build now copies it in ·
+  Combine with the Price Lock config before `price-lock-proto` is ever merged into `main` (see Deployments).
+
