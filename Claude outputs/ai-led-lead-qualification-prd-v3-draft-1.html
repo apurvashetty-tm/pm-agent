@@ -1,0 +1,854 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>PRD v3 draft</title><style>
+:root{--bg:#fff;--fg:#1f2328;--muted:#656d76;--line:#d0d7de;--new:#e6f6ea;--newb:#2da44e;--code:#f6f8fa}
+@media (prefers-color-scheme:dark){:root{--bg:#0d1117;--fg:#e6edf3;--muted:#8d96a0;--line:#30363d;--new:#12261a;--newb:#3fb950;--code:#161b22}}
+body{background:var(--bg);color:var(--fg);font:15px/1.6 -apple-system,Segoe UI,Helvetica,Arial,sans-serif;max-width:920px;margin:0 auto;padding:24px 16px}
+h1{font-size:26px}h2{margin-top:36px;border-bottom:1px solid var(--line);padding-bottom:6px}
+table{border-collapse:collapse;width:100%;display:block;overflow-x:auto;font-size:13.5px;margin:12px 0}
+th,td{border:1px solid var(--line);padding:6px 9px;vertical-align:top;text-align:left}
+pre{background:var(--code);padding:12px;overflow-x:auto;font-size:12px;border-radius:6px}
+.new{background:var(--new);box-shadow:inset 4px 0 0 var(--newb)}
+p.new,li.new,blockquote.new,h2.new{padding:6px 10px;border-radius:4px}
+blockquote{margin:12px 0;padding:6px 12px;border-left:4px solid var(--line);color:var(--muted)}
+.legend{position:sticky;top:0;background:var(--bg);padding:8px 0;border-bottom:1px solid var(--line);font-size:13px;color:var(--muted);z-index:1}
+.legend span{background:var(--new);box-shadow:inset 4px 0 0 var(--newb);padding:2px 8px;border-radius:3px;color:var(--fg)}
+</style></head><body><div class="legend"><span>Green = new or changed on 29 Sep</span> &nbsp;Everything else is unchanged from the 25 Sep version.</div><h1>AI-led Lead Qualification — Product Requirements</h1>
+<p><strong>Author:</strong> Apurva Shetty (Product) · <strong>Status:</strong> Draft v3, for review · <strong>Owner team:</strong> ACOM</p>
+<blockquote class="new">
+<p><strong>🟢 Draft v3 (29 Sep) — review copy.</strong> Every addition or change since the 25 Sep Confluence version is marked 🟢. Once approved, the markers and the list below are removed and this replaces the main PRD. Nothing here is synced to Confluence yet.</p>
+</blockquote>
+<h2 class="new">🟢 What changed in this draft</h2>
+<table class="new">
+<thead>
+<tr>
+<th>#</th>
+<th>Where</th>
+<th>Change</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>§1, §2</td>
+<td>Pool and reach updated to Analytics numbers (≈12,500 leads/day at ₹900; agents attempt ≈40%). POC shown as a funnel: 42% of qualified leads went stale, so ≈10% converted end-to-end (not 20%).</td>
+</tr>
+<tr>
+<td>2</td>
+<td>§2, §5, §6, §8, §9, §12</td>
+<td><strong>Minimum AOV lowered to ₹500</strong> — the same for the AI and the manual queue (was ₹900).</td>
+</tr>
+<tr>
+<td>3</td>
+<td>§5, §6, §9</td>
+<td>The AI picks leads using <strong>today's queue logic, as is</strong> (existing filters + final_score), which already prioritises FTC. No separate FTC rule or threshold. FTC share of the pool 20.2% → 25%.</td>
+</tr>
+<tr>
+<td>4</td>
+<td>§4, §13</td>
+<td><strong>One lead at a time:</strong> for each attempt we send the lead to Ring, then dial via Knowlarity; every retry is sent fresh. Retries are ours.</td>
+</tr>
+<tr>
+<td>5</td>
+<td>§5, §6</td>
+<td><strong>Hot/Warm stay in the agents' queue for 24 h from the AI's verdict</strong>, even past the normal 24-hour window; not attempted by then = <strong>stale</strong>, and it leaves the queue.</td>
+</tr>
+<tr>
+<td>6</td>
+<td>§6, §7, §8, §9</td>
+<td><strong>Pause rule:</strong> if the oldest Hot/Warm lead has waited more than 2 h for an agent, no new leads go to the AI. The rollout ramp is the customer-ID split in §14 (replaces the throttle). Kill switch unchanged.</td>
+</tr>
+<tr>
+<td>7</td>
+<td>§6, §9</td>
+<td>Setting values made firm (short-drop retry 2 min, minimum connect 15 s, frequency cap 3 per 7 days, hold-time 24 h, pause rule 2 h).</td>
+</tr>
+<tr>
+<td>8</td>
+<td>§9</td>
+<td>Open items regrouped — none blocks the build: go-live checks (incl. verdict SLA in contracts), an InfoSec call-out, and later items.</td>
+</tr>
+<tr>
+<td>9</td>
+<td>§2, §10</td>
+<td>Metrics rebuilt: attempted / connected terms, stale, Hot/Warm conversion ≥2× human, Cold sample, AOV and <strong>ACOM sales (₹/day)</strong> as the final business number.</td>
+</tr>
+<tr>
+<td>10</td>
+<td>§11, §12</td>
+<td>§11 points to the Cold sample; new edge case 4: Cold leads below ₹900 had no route to a human.</td>
+</tr>
+<tr>
+<td>11</td>
+<td>§14</td>
+<td>New: <strong>GTM &amp; Rollout</strong> — split by customer ID, gates per step.</td>
+</tr>
+</tbody>
+</table>
+<p class="new"><em>Cleanup, not content: old strikethroughs, 25 Sep tags and already-resolved open questions removed.</em></p>
+<hr />
+<h2>1. Executive summary</h2>
+<p class="new">🟢 Today we recover dropped carts by having agents cold-call every eligible customer — it's slow and expensive, and even among the customers who already have a delivery address and patient details on file, agents attempt only about <strong>four in ten</strong>; the wider pool of dropped carts is larger still. We're adding an AI voice agent — from a voice-AI vendor (Ring AI) — that calls customers first, has a real conversation about their pending cart, and tells us who's genuinely interested. Human agents then spend their time only on the high-intent, ready-to-buy customers. Truemeds places the call and keeps all customer data on its own side (except the name); the vendor only holds the conversation and reads intent — it never becomes the caller. We start with dropped carts, but the design works for "any lead or drop-off" we later want to re-engage.</p>
+<h2>2. The problem</h2>
+<p>The ACOM team manually calls every eligible dropped cart. Three facts describe why that's not enough:</p>
+<ul>
+<li class="new">🟢 <strong>Reach.</strong> Today's queue only works higher-value carts — above ₹900 — from customers who already have a delivery address and patient details on file. <strong>Even within that pool of about 12,500 leads a day, agents attempt only about 40%; the other 60% are never attempted.</strong> The wider pool of dropped carts — lower-value carts, and customers without an address or patient on file — is larger still. That's recoverable revenue we simply can't get to.</li>
+<li class="new">🟢 <strong>Conversion.</strong> Around 5% of the leads agents attempt end up placing an order.</li>
+<li><strong>Cost.</strong> About ₹250 per placed order, with a large agent team spending most of its hours on customers who were never going to buy.</li>
+</ul>
+<p class="new">🟢 <strong>Lowering the minimum AOV to ₹500.</strong> With the AI making the first call, cart value no longer needs to limit who gets called. We're lowering the minimum AOV from ₹900 to ₹500 — the same for the AI and the manual queue (§5). That grows the eligible pool from about 12,500 to about 17,000 leads a day. Because agents already can't reach today's pool, we fix reach first and open the lower band only once the AI is proven on the ₹900+ pool (§14).</p>
+<p class="new">🟢 <strong>The POC, as a funnel.</strong> The voice-AI vendor's proof-of-concept on ~1,300 real leads, against today's manual flow:</p>
+<table class="new">
+<thead>
+<tr>
+<th>Step</th>
+<th>Ring POC</th>
+<th>Rate</th>
+<th>Today (manual)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AI calls attempted</td>
+<td>1,313</td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Connected</td>
+<td>1,033</td>
+<td>78.7% of attempted</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Qualified Hot/Warm, passed to agents</td>
+<td>266</td>
+<td>25.75% of connected</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Went stale (not attempted by an agent)</td>
+<td>112</td>
+<td>42% of Hot/Warm</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Attempted by an agent</td>
+<td>154</td>
+<td>58% of Hot/Warm</td>
+<td>100 attempted</td>
+</tr>
+<tr>
+<td>Connected by an agent</td>
+<td>91</td>
+<td>59% of attempted</td>
+<td>33 (33%)</td>
+</tr>
+<tr>
+<td><strong>Order placed</strong></td>
+<td><strong>28</strong></td>
+<td><strong>18% of attempted · 10.5% of all Hot/Warm</strong></td>
+<td><strong>5 (5% of attempted)</strong></td>
+</tr>
+</tbody>
+</table>
+<p><em>Stale — a Hot/Warm lead that an agent hasn't attempted within 24 hours of the AI's verdict.</em></p>
+<p class="new">🟢 Qualified leads convert about 4× better than today's calls — but 42% went stale before an agent attempted them, so getting agents to every qualified lead in time matters as much as the AI itself. An AI can also call far more customers in parallel than a human team can. So the prize sits on both sides of the ledger: reach many more customers, and spend agent time only where it pays off.</p>
+<p class="new"><strong>Expected impact</strong> <em>[Analytics to confirm — @Dinesh Penta]</em>: the incremental, non-cannibalised revenue this drives — incremental ACOM sales, incremental OPD, the FTC-orders/day uplift, and the resulting CAC impact — to be sized. 🟢 Tracked as <strong>ACOM sales (₹/day)</strong> in §10.</p>
+<p class="new"><em>(🟢 POC figures are from the business-run Ring POC (May 2026, ~1,300 leads). Pool size, reach and FTC share are from Analytics and replace the earlier BRD estimates.)</em></p>
+<h2>3. What we're building</h2>
+<p>An AI voice agent calls the customer, talks through their pending cart, and afterwards gives us a clear read on how interested they are — <strong>Hot, Warm, or Cold.</strong> Interested customers — Hot and Warm — are handed to a human agent who calls back and places the order, worked ahead of everything else. Below them comes the <strong>normal manual queue</strong> (leads the AI hasn't called), and <strong>Cold</strong> leads come last, at the lowest priority. (Full order in §5.)</p>
+<p>Four choices shape the whole thing, and each is deliberate:</p>
+<ul>
+<li><strong>We own the call and the customer's data.</strong> Truemeds places the call through its own telephony provider (Knowlarity) and keeps all personal data — phone number, address — on our side. The vendor never receives it (except the name). The vendor is the conversation and the judgment; it is not the caller.</li>
+<li><strong>Our data is the truth; what we send the AI is only a snapshot.</strong> A cart can change between the call and the callback. Before an agent acts, we re-check the live cart — we never act on stale information.</li>
+<li><strong>One customer, one channel at a time.</strong> A customer being worked by the AI is never also called by a human, and the reverse. No one gets two calls at once.</li>
+<li><strong>Built to extend beyond carts.</strong> We tag each interaction with our own reference, not the order number — so the same system can later qualify other customers (uploaded a prescription but didn't order, signed up but never browsed, and so on) without a rebuild.</li>
+</ul>
+<h2>4. How it works</h2>
+<p>One customer, on the path where everything goes cleanly — the branches (no-connect, retries, waiting, stopping) are in §6:</p>
+<pre><code>  For each attempt, one lead at a time (no phone number):
+  send our reference id + cart / custom vars + workspace id to the AI vendor
+                                    │   vendor readies the bot for this call
+                                    ▼
+  Dial: we call the customer via our telephony provider (mobile + our reference id)
+                                    │
+                 ┌──────────────────┴──────────────────┐
+          connected                                 not connected
+                 │                                        │
+                 ▼                                        ▼
+  telephony opens a WebSocket to the vendor       telephony tells us why
+  (carries our reference id) → bot warms up       (busy / no-answer / switched
+                 │                                  off / bad number) → §6:
+  customer picks up → &quot;answered&quot; event             retry, wait, or stop
+                 │
+                 ▼
+  AI conversation (bot streams on that WebSocket)
+                 │
+  call ends → telephony gives us the recording (we store it + the event log)
+                 │
+                 ▼
+  vendor records its own copy → returns verdict (Hot / Warm / Cold / don't-call) on our reference id
+                 │
+      ┌──────────┼───────────────┐
+      ▼          ▼                ▼
+  HOT / WARM   COLD          DON'T-CALL
+ priority     lowest          (from the AI's
+ callback     priority —      post-call read)
+ by a human   after the       → opted out,
+ (AI context; manual queue,   suppressed (§6)
+ re-checks    still called   (§5)
+</code></pre>
+<p class="new">🟢 <strong>One lead at a time.</strong> For each attempt we send the lead to the AI vendor, then dial through our telephony provider. Every retry is sent to the vendor as a fresh request; retries are ours (§6).</p>
+<p><em>A call that connects but drops before a real conversation (under the minimum duration) is treated as not-connected and goes to retry — see §6.</em></p>
+<p>One customer is only ever on one channel at a time — the AI "holds" the lead while it's working it, so no human calls in parallel. The existing manual calling flow keeps running underneath throughout, independent of the AI. The controls (how much the AI works, how to stop it) and everything that happens off this clean path are in §6.</p>
+<h2>5. Which leads the AI works, and in what order</h2>
+<p class="new">🟢 <strong>Working default:</strong> the AI works dropped-cart leads with a <strong>minimum AOV of ₹500</strong> and a <strong>patient and address on file</strong>, in the <strong>same order as today's queue — the existing filters and final_score, used as is</strong>. Under this logic FTC leads get prioritised. Both are decided (§9).</p>
+<p>Three things sit here, and keeping them apart is what stops this getting tangled:</p>
+<ul>
+<li class="new">🟢 <strong>Who's eligible — what a lead needs before the AI can call it.</strong> Today: a <strong>minimum AOV of ₹500</strong>, a <strong>patient name</strong> (so the AI can address the customer and hold the conversation) and an <strong>address</strong> (so the order can actually be completed). This is a <strong>configurable set, not a fixed rule</strong> — a later use case might need only a mobile number and a name. Note that <em>requiring</em> an address to exist is not the same as <em>sending</em> it to the vendor; the no-personal-data rule still holds. If someone other than the patient answers, the AI handles that on the call — confirming who it's speaking to is part of the conversation the vendor owns, not something we manage. <strong>The minimum AOV of ₹500 is the same for the AI and the manual queue (down from ₹900 today). FTC gets its priority from today's queue logic, not from a separate threshold.</strong></li>
+<li class="new">🟢 <strong>The order the AI dials — within its eligible pool.</strong> Today's queue logic, as is: the same filters and final_score order the manual queue uses. Under it, FTC leads get prioritised; we add no separate FTC rule.</li>
+<li><strong>What we don't touch — the manual queue's own prioritisation.</strong> The score the "Assign Order" queue already uses to rank leads for agents stays exactly as it is; we don't change how it scores or orders anything. The AI works a <em>subset</em> of that pool; the human queue keeps running as it does. When the AI returns Hot/Warm, those leads are served <strong>ahead</strong> of that queue as a priority tier — the tier is new, the underlying score is untouched.</li>
+</ul>
+<p><strong>Who agents pick up first — the priority order.</strong> The AI's verdict adds a priority tier in front of the manual queue; the underlying queue score is untouched. Agents work leads in this order:</p>
+<ol>
+<li>Hot FTC</li>
+<li>Hot NFTC</li>
+<li>Warm FTC</li>
+<li>Warm NFTC</li>
+</ol>
+<p>Below these four tiers sits the <strong>normal manual queue</strong> — leads the AI hasn't called (there are always some, because eligibility filters mean not every lead reaches the AI). <strong>Cold</strong> leads come last: callable at the lowest priority — a Cold verdict deprioritises a lead, it doesn't drop it. Only do-not-call and invalid numbers are truly excluded. This ordering is a starting point; business can re-order or switch tiers off.</p>
+<p class="new">🟢 <strong>How long Hot/Warm stay in the queue.</strong> Once the AI marks a lead Hot or Warm, it stays in the agents' queue for <strong>24 hours from that verdict</strong> — even if the normal 24-hour window (from the customer's last cart activity) has ended. If no agent attempts it within those 24 hours, it's <strong>stale</strong> and leaves the queue. Cold leads keep the normal window.</p>
+<p>Which leads the AI calls should be configurable — so pointing it at a new drop-off later is largely a <strong>configuration change, not a ground-up rebuild</strong> (it still needs some Engineering effort; the config layer is in §6). Some drop-offs this could extend to — today's thinking, not an exhaustive list: prescription uploaded but no order · registered but never browsed · browsed but never added to cart · refill reminders for chronic patients · win-back of lapsed customers · recovering discarded or cancelled orders. It's the same reason each lead carries our own reference ID rather than the order number.</p>
+<p class="new">One tension worth naming up front (🟢 a later decision — §9): a strict patient-and-address gate <strong>excludes most FTC customers</strong>, because they're the least likely to have those details on file yet — and FTC may be exactly the segment we most want the AI to prioritise. That trade-off is business's to settle.</p>
+<p class="new">🟢 Lowering the minimum AOV to ₹500 raises FTC's share of the eligible pool from 20.2% to 25%; within the new ₹500–900 band, 38% of leads are FTC. Today's queue logic handles this — no separate FTC threshold (§9).</p>
+<p>This policy is business-owned and can change over time; each use-case / campaign is instrumented separately, so business can see how it performs and adjust.</p>
+<h2>6. The lead's journey — retries, waiting, and when we stop</h2>
+<p>§4 is the clean path. This is what happens when a call doesn't connect, when a lead waits, and when we stop working it.</p>
+<p><strong>Whether a call connected, and how the conversation went, are two different signals from two different places.</strong> Whether the call connected — and if not, why (busy, no answer, switched off, wrong or invalid number) — comes from the <strong>telephony provider</strong>. How the conversation went — Hot, Warm, Cold, a callback request, a do-not-call — comes from the <strong>AI</strong>, and only exists for calls that actually connected. The AI can't "hear" a call that never connected. So <strong>retries are our decision, driven by the telephony outcome — not the AI's — and a retry threshold decides when we stop.</strong></p>
+<p><strong>Retries.</strong> When a call doesn't connect, we try again — a single retry rule, one gap. How many times and how far apart are not fixed in code; they're config values business finalises before go-live (see the settings table below). What triggers a retry — and whether a retry even makes sense — depends on the outcome, and on who reports it:</p>
+<table>
+<thead>
+<tr>
+<th>Signal — from</th>
+<th>What we heard</th>
+<th>Lead's next state</th>
+<th>When it comes back</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Telephony webhook</td>
+<td>Busy / no answer / switched off</td>
+<td>Hold</td>
+<td>after the retry gap</td>
+</tr>
+<tr>
+<td>Telephony webhook</td>
+<td>Temporary network / carrier error</td>
+<td>Hold</td>
+<td>after the retry gap</td>
+</tr>
+<tr>
+<td>Telephony webhook</td>
+<td>Connected but dropped under the minimum duration (no real conversation)</td>
+<td>Hold</td>
+<td>after a short retry gap</td>
+</tr>
+<tr>
+<td>Telephony webhook</td>
+<td>Invalid / wrong number</td>
+<td>Closed</td>
+<td>no retry — flag for data cleanup</td>
+</tr>
+<tr>
+<td>Human agent</td>
+<td>Schedules a callback at a customer-named time</td>
+<td>Scheduled</td>
+<td>at the named time</td>
+</tr>
+<tr>
+<td>AI (post-call read)</td>
+<td>Customer asked to be called back later</td>
+<td>Scheduled</td>
+<td>at the requested time</td>
+</tr>
+<tr>
+<td>AI (post-call read)</td>
+<td>Do-not-call</td>
+<td>Closed</td>
+<td>never</td>
+</tr>
+</tbody>
+</table>
+<p>The full set of telephony responses comes from the provider's hangup-cause list, mapped to these actions in config; the operating runbook — who watches failures, when to escalate — is a business SOP, a dependency rather than part of this PRD. Retrying stops once the retry threshold is hit (see the settings table below).</p>
+<p><strong>Waiting — a lead set aside to come back later.</strong> A lead comes back for a few reasons: the system schedules the next <strong>retry</strong> for a not-connected call, an agent <strong>schedules</strong> a callback for a time the customer named, or the customer asked the AI to call <strong>back later</strong>. Underneath it's one idea — <em>"come back to this lead at time T"</em> — and each waiting lead carries <strong>who resumes it</strong> (the AI or a human, and which agent for a personal callback), so an AI-deferred lead returns to the AI and a human callback to a person. (The old manual <strong>Hold</strong> button for re-queuing a not-reached lead is retired — retries are now system-enforced; see the manual-flow note below.) For a callback the customer named a time for, the default is the <strong>same agent</strong> who promised it, falling back to the general queue if they're not free then — but whether callbacks return to the same agent or to the next available one is an Ops setting, not fixed in code.</p>
+<p><strong>When we stop, and it doesn't come back.</strong> A lead is <strong>closed</strong> when it hits its <strong>retry threshold</strong> (confirmed: 4 attempts, within TRAI/DND limits), reaches a terminal outcome, or times out. A closed lead <strong>leaves every queue</strong>, so no agent sees it again. Because the AI reads nothing about a call it couldn't complete, enforcing this retry threshold is the <strong>system's</strong> job — there's no human eyeballing each AI lead the way there is on the manual queue.</p>
+<p>This closure is permanent for that lead. Retries exhausted means done — we don't reopen it or recheck it later. The only way this customer re-enters is a new cart or order creating a fresh lead with its own reference ID; nothing resurrects a closed one.</p>
+<p class="new"><strong>"Don't call me."</strong> If a customer says "don't call me" on any of our calls — the AI's or a human agent's — we mark them do-not-call, and that permanently stops every call this build controls: the AI and all our human agents. A lead reaches our do-not-call list two ways: (1) from an <strong>AI call</strong> — Ring returns the opt-out as part of its <strong>post-call</strong> read (not mid-call — see §9) 🟢 <em>(to be confirmed with Ring — §9; until then, agents' one-click do-not-call covers human calls)</em>; and (2) from a <strong>human call</strong> — the agent adds it directly via a <strong>one-click CTA</strong> on the lead. Either way it's applied from the next call onward. Extending it across Truemeds' other calling portals (like HA) needs a shared do-not-call list everyone honours — an open dependency (§9).</p>
+<p><strong>Not over-calling anyone (frequency cap).</strong> Separate from retries, we cap how many times a customer is actually <strong>reached</strong> — connected calls, across the AI and human agents — in a rolling window. A lead can keep re-entering the queue as the customer changes their cart or another trigger fires; once the frequency cap is hit, no further call goes out, however many triggers re-queue them. The exact cap is an Ops setting. One consequence to note: because the AI calls first and a human calls back, an interested customer now gets at least <strong>two</strong> connected calls where manual calling made one — so a cap of 3 is already two-thirds spent on a single Hot lead. That's the strongest argument for live transfer (future-state note): handing the AI call straight to a human collapses the two into one.</p>
+<p><strong>The controls Ops holds:</strong></p>
+<ul>
+<li class="new">🟢 <strong>Pause rule</strong> — keeps the AI from finding Hot/Warm leads faster than agents can call them. Each time our system is about to send new leads to the AI, it checks the Hot/Warm lead that has waited longest for an agent. If it has waited <strong>more than 2 hours</strong>, no new leads go to the AI that time; otherwise, carry on. Retries already due still go out. A lead belongs to the AI only once it has been sent. The rule adjusts by itself: when agents fall behind the AI pauses, and when they catch up it resumes. <em>(The ramp-up split used during rollout is in §14.)</em></li>
+<li><strong>Kill switch</strong> — one action stops all <em>new</em> AI calls at once; calls already in progress finish and report; the manual flow keeps running untouched; fully reversible. There's a global master stop and a per-use-case stop — e.g. halt just FTC calling — so one campaign can be switched off without touching the others.</li>
+<li class="new">🟢 Every setting and its value is in the settings table below.</li>
+</ul>
+<p><strong>Where these settings live.</strong> There's no separate "Ops console" today, and none of this is a vendor feature. For this build the settings sit as <strong>backend configuration values — not hardcoded</strong> — so Engineering can change any of them (retry counts and gaps, the retry threshold, the frequency cap, calling window, hold-time, eligibility, dial-order) <strong>on request, without a code deployment</strong>. That "no redeploy to change an attribute" is the bare-minimum bar. The <strong>end state</strong> is a small <strong>self-serve tool</strong> where the team sets these directly, with no Engineering in the loop. <strong>Who decides:</strong> Product proposes the values; business (or a team lead) approves and sets them — and some aren't a free choice at all, but bounded by regulation (TRAI / DND rules on outbound calling). The <strong>frequency cap in particular can only be enforced on our side</strong>, since only we see AI and human calls together. Building this configuration layer is itself an Engineering effort — not a free runtime toggle.</p>
+<p class="new"><strong>The settings, in one place.</strong> 🟢 Every knob above, with its value:</p>
+<table class="new">
+<thead>
+<tr>
+<th>Setting</th>
+<th>What it controls</th>
+<th>Scope</th>
+<th>Value</th>
+<th>Owner</th>
+</tr>
+</thead>
+<tbody>
+<tr class="new">
+<td>🟢 Eligibility set</td>
+<td>what a lead needs to qualify</td>
+<td>per use-case</td>
+<td>minimum AOV ₹500 (same for the manual queue) + patient + address</td>
+<td>Product + Business</td>
+</tr>
+<tr class="new">
+<td>🟢 Dial-order</td>
+<td>order the AI dials its eligible pool</td>
+<td>per use-case</td>
+<td>today's queue logic (final_score), as is</td>
+<td>Product + Business</td>
+</tr>
+<tr class="new">
+<td>🟢 Retry gap</td>
+<td>wait before retrying a not-connected / held lead</td>
+<td>global</td>
+<td>30 min after attempt 1, 60 min after attempt 2, 60 min after attempt 3 (4 attempts total); 2 min for a short-drop</td>
+<td>Business</td>
+</tr>
+<tr>
+<td>Retry threshold</td>
+<td>max attempts before a lead is Closed (not-connected cap); counts every not-connected attempt equally, short or standard gap</td>
+<td>global</td>
+<td>4 attempts (within TRAI/DND)</td>
+<td>Business</td>
+</tr>
+<tr class="new">
+<td>🟢 Minimum connect duration</td>
+<td>shortest connect that counts as a real conversation — below it, a short retry (not a connected call, not sent to Ring)</td>
+<td>global</td>
+<td>15 s</td>
+<td>Business</td>
+</tr>
+<tr class="new">
+<td>🟢 Frequency cap</td>
+<td>max connected calls to a customer, AI + human, in a rolling window (connected cap) — distinct from Retry threshold, which counts not-connected attempts; this counts calls that did connect</td>
+<td>global</td>
+<td>3 connected calls in a rolling 7 days</td>
+<td>Business</td>
+</tr>
+<tr>
+<td>Calling window</td>
+<td>allowed calling hours</td>
+<td>global</td>
+<td>09:00–21:00</td>
+<td>Business + Compliance</td>
+</tr>
+<tr class="new">
+<td>🟢 Hot/Warm hold-time</td>
+<td>how long a Hot/Warm lead stays in the agents' queue after the AI's verdict, even past the normal 24-hour window; not attempted by then = stale, and it leaves the queue</td>
+<td>global</td>
+<td>24 h</td>
+<td>Business</td>
+</tr>
+<tr class="new">
+<td>🟢 Pause rule</td>
+<td>no new leads to the AI while the oldest Hot/Warm lead has waited longer than this for an agent</td>
+<td>global</td>
+<td>2 h</td>
+<td>Business</td>
+</tr>
+<tr>
+<td>Callback routing</td>
+<td>same agent vs next available (named-time callback)</td>
+<td>global</td>
+<td>same agent, else queue</td>
+<td>Business + Product</td>
+</tr>
+<tr class="new">
+<td>🟢 GTM split</td>
+<td>during rollout, which customers the AI gets (by the last digits of the customer ID)</td>
+<td>global</td>
+<td>per §14 (GTM &amp; Rollout)</td>
+<td>Product + Business</td>
+</tr>
+<tr>
+<td>Kill-switch</td>
+<td>stop new AI calls</td>
+<td>global + per use-case</td>
+<td>— (operational)</td>
+<td>Business + Product</td>
+</tr>
+</tbody>
+</table>
+<p><strong>How this touches the existing manual flow.</strong> The manual calling flow keeps running; a few interplay points:</p>
+<ul>
+<li><strong>Hold button retired.</strong> With not-connected retries now system-enforced, the manual <strong>Hold</strong> (an agent re-queuing a not-reached lead) is no longer needed — a frontend change on the manual portal. (Schedule stays.)</li>
+<li><strong>Call button is backend-gated.</strong> "Call patient" is enabled only when a call is actually allowed — within the frequency cap, not a do-not-call, not a closed lead — so the caps are enforced rather than an agent dialling freely. (Also a manual-portal frontend change.)</li>
+<li><strong>Telephony stays as-is.</strong> The manual flow uses its own two-leg SIP-trunk setup (leg 1 dials the agent, leg 2 the customer), separate from the AI's Knowlarity streaming path. We don't migrate it. Attempt counts, retry threshold and frequency cap are tracked on our side, not the vendor's — so a not-connected dial counts the same whether it came from the AI or a human agent. Assumed handled in the manual flow for now: only <strong>leg 2 (the customer) connecting</strong> counts as a customer connection, and a <strong>leg 1 (the agent) failure</strong> is a manual-flow error, not a customer attempt.</li>
+</ul>
+<p><strong>Every state a lead can be in — dispositions we track.</strong> Each lead carries a disposition through its whole journey, captured on the Truemeds side (not inside the vendor), and every dial is counted (the attempt number) so we always know how many calls a lead has taken. Because the telephony outcome is logged for every dial, calls that never connected — which the AI never sees — are tracked too.</p>
+<table>
+<thead>
+<tr>
+<th>State / disposition</th>
+<th>Type</th>
+<th>Set by</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Eligible — picked</td>
+<td>working</td>
+<td>system</td>
+<td>selected into a use-case, given a uuid</td>
+</tr>
+<tr>
+<td>Assigned to AI</td>
+<td>working</td>
+<td>system</td>
+<td>AI is working the lead (holds it; no human in parallel)</td>
+</tr>
+<tr>
+<td>Assigned to a human agent</td>
+<td>working</td>
+<td>system</td>
+<td>priority callback or manual queue</td>
+</tr>
+<tr>
+<td>Dialled — attempt N</td>
+<td>working</td>
+<td>telephony</td>
+<td>each dial increments the attempt count</td>
+</tr>
+<tr>
+<td>Awaiting retry</td>
+<td>waiting</td>
+<td>system (telephony)</td>
+<td>not connected / short-drop — auto-retry after the gap</td>
+</tr>
+<tr>
+<td>Scheduled</td>
+<td>waiting</td>
+<td>agent / customer / AI</td>
+<td>come back at a named time</td>
+</tr>
+<tr>
+<td>Outcome unknown (parked)</td>
+<td>waiting</td>
+<td>system</td>
+<td>no webhook by the timeout — held in place, <strong>not</strong> re-dialled; resolves if a late webhook or an order arrives. Each disposition change is logged, so the unknown period is retained even after it resolves (§12)</td>
+</tr>
+<tr>
+<td>Hot / Warm / Cold</td>
+<td>verdict</td>
+<td>AI</td>
+<td>intent read on a connected call</td>
+</tr>
+<tr>
+<td>Order placed</td>
+<td>terminal</td>
+<td>agent</td>
+<td>success; lead closes</td>
+</tr>
+<tr>
+<td>Do-not-call</td>
+<td>terminal</td>
+<td>AI or any agent</td>
+<td>opted out — stops all channels</td>
+</tr>
+<tr>
+<td>Invalid / wrong number</td>
+<td>terminal</td>
+<td>telephony</td>
+<td>bad number — cleanup, no retry</td>
+</tr>
+<tr>
+<td>No order</td>
+<td>terminal</td>
+<td>agent</td>
+<td>worked, no order</td>
+</tr>
+<tr>
+<td>Closed — retries exhausted</td>
+<td>terminal</td>
+<td>system</td>
+<td>hit the retry threshold or timed out</td>
+</tr>
+</tbody>
+</table>
+<h2>7. User stories</h2>
+<p><strong>The customer.</strong> <em>"I left some medicines in my cart and got one helpful call. Because I was interested, a person called me back quickly and already knew what I needed — so it was fast. When I'm not interested, I'm not chased again and again."</em></p>
+<p><strong>The ACOM agent.</strong> <em>"The leads I get are already qualified and come with context — the customer's objection and a short call summary — so I spend my time closing orders, not dialing numbers that never pick up. When a call doesn't convert, I log the reason, and that makes the next round of qualification sharper."</em></p>
+<p class="new">🟢 <strong>Ops / team lead.</strong> <em>"The AI slows itself down when my team falls behind. I can see how it's performing and switch it off in a single move if anything looks wrong — all without disturbing my human team's normal flow."</em> (For now, switching it off and changing its settings are done by Engineering on request; there's no button for this on the portal yet. A self-serve control comes later — §6.)</p>
+<h2>8. Scope — in and out</h2>
+<p><strong>In scope</strong></p>
+<ul>
+<li>AI qualification calls, starting with dropped carts as the first use case.</li>
+<li><strong>We own the whole call through our telephony provider</strong> — dialling, retries, calling-window, and the rules for when to stop and close a lead.</li>
+<li><strong>Configurable eligibility and dial-order</strong> — which leads the AI works, and in what order (§5).</li>
+<li>The <strong>verdict loop</strong> with the vendor — it records the bot–customer conversation on its own side and returns Hot / Warm / Cold (plus objection and summary where available); we don't send it a recording (see §13).</li>
+<li><strong>Priority callback</strong> routing of Hot/Warm to human agents, with AI context on screen and agent disposition captured.</li>
+<li>The <strong>waiting model</strong> (hold / schedule) and <strong>do-not-call</strong> suppression across every channel.</li>
+<li class="new">🟢 The <strong>GTM split</strong> (§14), the <strong>pause rule</strong> (§6) and an instant <strong>kill-switch</strong>.</li>
+<li class="new">🟢 <strong>Lowering the minimum AOV from ₹900 to ₹500</strong> for both the AI and the manual queue (§5). This changes which leads enter the manual queue, not how it ranks them.</li>
+<li>Retaining, on the Truemeds side, the <strong>call recording (from the telephony provider) and the call's event log</strong> — for audit and RCA; not sent to the vendor.</li>
+<li><strong>Vendor-agnostic by design.</strong> The voice-AI vendor sits behind a generic role, with standard mapping contracts — one shape for what we send a bot (lead + cart), one for what any bot returns (its intent, mapped to our Hot / Warm / Cold) — plus a telephony adapter boundary. We own the number, the data and the uuid, so a future vendor swap (AI or telephony) is a <strong>re-integration, not a rebuild</strong>.</li>
+</ul>
+<p><strong>Out of scope (deliberately)</strong></p>
+<ul>
+<li>The AI placing or editing orders, applying coupons, searching for products, or collecting missing details like an address — humans place the order.</li>
+<li class="new"><strong>Changing how the manual queue prioritises leads</strong> — its existing score stays as it is (§5). 🟢 <em>(Its minimum AOV does change — see In scope.)</em></li>
+<li>Live transfer of the call to an agent mid-conversation (see the future-state note).</li>
+<li>A full plug-and-play multi-vendor platform — a new vendor slotting in as config + a thin adapter, no re-integration. We run a single voice-AI vendor for now and design vendor-agnostic (see "Vendor-agnostic by design" above); whether to build the full platform layer now or as a fast-follow is an effort call, flagged in §9.</li>
+<li>A self-serve campaign-builder tool for Ops.</li>
+<li>Handling a mid-call request to reach the patient on a different number than the one we dialled — out of scope for now.</li>
+<li>The bot giving medical advice, validating prescriptions, or deciding substitutions — these stay with the existing doctor/pharmacist post-order flow. A customer saying "don't call me" is treated as a do-not-call — stopped in this flow (the AI and all our human calling) at once, and extended to the other calling portals (HA and the rest) via a shared do-not-call list where one exists (see §9).</li>
+</ul>
+<h2>9. What's decided vs what's still open</h2>
+<p><strong>Decided — these are firm</strong></p>
+<ul>
+<li>No personal data (phone number, address) is sent to the vendor; Truemeds owns the number and the call.</li>
+<li>Truemeds owns the full call lifecycle — dialling, retries, calling hours — and can stop everything instantly.</li>
+<li><strong>Retries on not-connected calls are system-enforced</strong> — we count the attempts from the telephony response and stop when the <strong>retry threshold</strong> is hit; the lead is then closed and leaves every queue.</li>
+<li>A customer is worked by one channel at a time; the AI and a human never call the same customer at once.</li>
+<li><strong>A closed lead never re-enters any queue.</strong></li>
+<li><strong>A do-not-call is permanent — it stops the AI and human callbacks for good; extending it across the other portals depends on a shared suppression list (open).</strong></li>
+<li>One waiting model underneath hold and schedule, with each lead tagged for who resumes it (AI or human).</li>
+<li>Truemeds data is the source of truth; the live cart is re-checked before an agent acts.</li>
+<li class="new">We <strong>don't change the manual queue's prioritisation score</strong>; 🟢 the AI uses the same queue logic as is; its eligibility is configurable. Qualified Hot/Warm are served ahead of that queue as a tier.</li>
+<li>Each interaction carries our own reference ID, not the order number, so the platform extends to other use cases.</li>
+<li>Recordings are retained on the Truemeds side.</li>
+<li>We send the patient name; where not available, the customer name.</li>
+<li>Once a human agent is assigned to a lead, that lead is never assigned to the bot. Scoped to that lead — a new cart or order creates a fresh lead (§12) and is evaluated fresh.</li>
+<li class="new">🟢 <strong>Minimum AOV of ₹500</strong> for both the AI and the manual queue (down from ₹900).</li>
+<li class="new">🟢 <strong>The AI picks leads using today's queue logic as is</strong>, which prioritises FTC. No separate FTC rule or threshold.</li>
+<li class="new">🟢 <strong>Rollout split by customer ID</strong> — during GTM, the AI gets customers whose ID ends in set digits; everyone else stays with agents. Each side works its leads in today's queue order (§14).</li>
+<li class="new">🟢 <strong>Pause rule</strong> — no new leads to the AI while the oldest Hot/Warm lead has waited more than 2 h for an agent; due retries still go out (§6).</li>
+<li class="new">🟢 <strong>One lead at a time</strong> — for each attempt we send the lead to Ring, then dial via Knowlarity; every retry is sent fresh (§4).</li>
+<li class="new">🟢 <strong>Hot/Warm stay in the agents' queue for 24 h from the AI's verdict</strong>, even past the normal window; not attempted by then = stale (§5).</li>
+<li class="new">🟢 <strong>Rollout follows §14</strong> — starting on the ₹900+ pool; the ₹500–900 band opens only after the AI runs at 100% on it.</li>
+<li class="new">🟢 <strong>Priority order after the AI's verdict:</strong> Hot FTC &gt; Hot NFTC &gt; Warm FTC &gt; Warm NFTC, then the manual queue, then Cold (§5).</li>
+<li class="new">🟢 <strong>Setting values</strong> are final — see the §6 settings table.</li>
+<li class="new">🟢 <strong>Ring returns Hot / Warm / Cold</strong> on each connected call.</li>
+</ul>
+<p class="new"><strong>🟢 Still open — none of these blocks the build</strong> <em>(owner in brackets)</em></p>
+<p><em>Go-live checks</em></p>
+<ul>
+<li class="new">🟢 <strong>Verdict and call-outcome SLA.</strong> How quickly, and how reliably, the verdict (Ring) and the call outcome (Knowlarity) come back. Ring has indicated ~within a minute. Business sets the SLA — and the share of calls it must cover — with Ring and Knowlarity in their contracts. <strong>[Business + Ring + Knowlarity]</strong></li>
+<li>Which languages does the conversation handle well — Hindi, Hinglish, English? <strong>[Ring]</strong></li>
+<li class="new">🟢 <strong>Do-not-call as a label.</strong> Can Ring also return a do-not-call as its own label, so an opt-out heard on an AI call is captured automatically? Not yet discussed. Until then, agents' one-click do-not-call covers human calls. <strong>[Ring + Engineering]</strong></li>
+<li class="new">🟢 <strong>Calls at the same time.</strong> AI calls must stay within Ring's and Knowlarity's limits on simultaneous calls. <strong>[Engineering + Ring + Knowlarity]</strong></li>
+<li class="new">🟢 <strong>Customer-ID split.</strong> Confirm customer IDs are plain running numbers, so the last two digits spread evenly (§14). <strong>[Engineering]</strong></li>
+</ul>
+<p class="new"><em>🟢 Call-out to InfoSec</em></p>
+<ul>
+<li>How do we handle personal details a customer may speak aloud in the recording — consent and any masking? <strong>And:</strong> the telephony provider's "customer answered" event carries the customer number today — it must be stripped so only our reference id + workspace id reach the vendor (to be security-tested our side; see §13). <strong>[InfoSec + Knowlarity + Ring]</strong></li>
+</ul>
+<p class="new"><em>🟢 Later</em></p>
+<ul>
+<li class="new">🟢 <strong>Leads without patient + address.</strong> V1 keeps the patient + address gate. Relaxing it — e.g. FTC with name only, a human collects the address later (the bot won't) — or dropping it for future use cases with only a mobile number + name is a later decision. <strong>[Business]</strong></li>
+<li><strong>Do-not-call reach.</strong> Is there a shared do-not-call / suppression list that every calling portal (HA and the rest) honours, so a do-not-call captured here suppresses the customer across all Truemeds outbound calling? Without it, this build can only guarantee its own two channels (the AI and human callbacks). <strong>[Engineering + Business + Ring]</strong></li>
+<li><strong>How far do we build the vendor layer now?</strong> We commit to vendor-agnostic design (§8); building the <em>full</em> plug-and-play platform — a new AI or telephony vendor as config + a thin adapter — is an effort call. Engineering to size it; if the delta over the agnostic design is small we do it now, otherwise it's a fast-follow. <strong>[Engineering + Product]</strong></li>
+</ul>
+<h2 class="new">10. How we'll know it worked 🟢</h2>
+<p class="new">Baselines are today's manual flow (Analytics) and the Ring POC. Targets are starting values for business to confirm; §14 uses them as the gates between rollout phases.</p>
+<table class="new">
+<thead>
+<tr>
+<th>Metric</th>
+<th>What it measures</th>
+<th>Today (manual)</th>
+<th>Ring POC</th>
+<th>Target</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Reach</strong></td>
+<td>eligible leads attempted at least once, AI or human</td>
+<td>~40%</td>
+<td>—</td>
+<td>≥95% at 100% rollout</td>
+</tr>
+<tr>
+<td><strong>AI connect rate</strong></td>
+<td>AI attempts that connect to a live customer</td>
+<td>—</td>
+<td>78.7%</td>
+<td>≥70%</td>
+</tr>
+<tr>
+<td><strong>Hot/Warm rate</strong></td>
+<td>connected AI calls qualified Hot or Warm</td>
+<td>—</td>
+<td>25.75%</td>
+<td>20–30%</td>
+</tr>
+<tr>
+<td><strong>Stale Hot/Warm</strong></td>
+<td>Hot/Warm leads an agent hasn't attempted within 24 h of the AI's verdict</td>
+<td>—</td>
+<td>42%</td>
+<td>≤10%</td>
+</tr>
+<tr>
+<td><strong>Agent connect rate</strong></td>
+<td>agent attempts that connect</td>
+<td>33%</td>
+<td>59% on Hot/Warm</td>
+<td>≥50% on Hot/Warm</td>
+</tr>
+<tr class="new">
+<td>🟢 <strong>Hot/Warm conversion</strong></td>
+<td>orders placed within 24 h of the AI's verdict ÷ Hot/Warm leads handed to agents (stale included)</td>
+<td>—</td>
+<td>10.5%</td>
+<td>≥2× human conversion</td>
+</tr>
+<tr class="new">
+<td>🟢 <strong>Human conversion</strong></td>
+<td>orders placed within 24 h of the agent's attempt ÷ leads agents attempted. During rollout: customers left with agents; from 100%: today's baseline</td>
+<td>~5%</td>
+<td>—</td>
+<td>the baseline for the 2× check (≥10% at 100%)</td>
+</tr>
+<tr class="new">
+<td>🟢 <strong>Cold sample</strong></td>
+<td>conversion of a random 5% of AI Cold leads, called by Ops outside the allocation logic</td>
+<td>—</td>
+<td>—</td>
+<td>clearly below Hot/Warm</td>
+</tr>
+<tr class="new">
+<td>🟢 <strong>AOV of converted orders</strong></td>
+<td>average value of orders placed — AI-qualified leads vs agent leads</td>
+<td>Analytics to provide</td>
+<td>—</td>
+<td>watched; a clear drop on the AI side → RCA</td>
+</tr>
+<tr class="new">
+<td>🟢 <strong>ACOM sales (₹/day)</strong></td>
+<td>converted orders × their AOV — <strong>the final business number</strong>. During rollout also compared per 100 customers, AI side vs agent side</td>
+<td>Analytics to provide</td>
+<td>—</td>
+<td>above today's baseline; AI side ≥ agent side</td>
+</tr>
+<tr>
+<td><strong>Human productivity</strong></td>
+<td>orders per agent-hour</td>
+<td>today's rate</td>
+<td>—</td>
+<td>above today</td>
+</tr>
+<tr>
+<td><strong>Cost per order</strong></td>
+<td>all-in cost per placed order</td>
+<td>~₹250</td>
+<td>—</td>
+<td>set once vendor commercials close</td>
+</tr>
+<tr>
+<td><strong>Safety gate (hard)</strong></td>
+<td>customers called by the AI and a human at the same time</td>
+<td>—</td>
+<td>—</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p class="new">Also watched: recordings reliably retained; complaints and opt-outs.</p>
+<h2>11. Annexure — suggestions to business</h2>
+<p>Not part of this build — recommendations for business to weigh.</p>
+<p><strong>1. Turn lead prioritisation into an analytics problem.</strong> Today's priority score is built for carts (order value, likelihood to connect and to convert). For a new drop-off that has <em>no</em> cart — someone who registered but never browsed, or viewed products but never added to cart — those signals don't exist; the useful ones are behavioural: app opens, product views, repeat visits, recency. Building a score for those is an analytics exercise — define the signals and weights per use case, and <strong>validate them in the background</strong> against real conversions before they drive who gets called. Separately, one caution on the <em>existing</em> score: whenever Ops changes its weights to favour a segment, keep an eye — <strong>by cohort and by hour</strong> — that another segment isn't quietly getting no calls at all. A guaranteed minimum share per segment is the simplest guard.</p>
+<p class="new"><strong>2. Build confidence in the AI's classification before it drives routing.</strong> Rather than acting on Hot / Warm / Cold from day one, run the AI's calls while continuing today's checks <em>regardless</em> of its verdict, and compare the verdict against what actually converted. Once the classification proves reliable on our own customers, let it drive prioritisation. It's cheap insurance against spending agent time on the strength of a label we haven't yet validated. 🟢 <em>Now part of the GTM as the 5% Cold sample (§14).</em></p>
+<h2>12. Edge cases</h2>
+<p><em>Curated, not exhaustive — the failure modes that genuinely threaten the build. We'll add as more surface.</em></p>
+<p><strong>1. The telephony webhook is missing, late, or wrong — or Ring's verdict never arrives.</strong> Connect confirmation from Knowlarity and the verdict from Ring reach us on two separate signals; either can be missing, late, or, rarely, contradict the other.</p>
+<table>
+<thead>
+<tr>
+<th>Situation</th>
+<th>What we do</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Neither signal arrives</td>
+<td>Mark the lead outcome unknown, hold it, don't retry. Resolves when a late signal arrives or an order is placed.</td>
+</tr>
+<tr>
+<td>Ring's verdict arrives, Knowlarity's webhook doesn't</td>
+<td>Act on Ring's verdict — it's proof the call connected. Flag the missing webhook separately for the record.</td>
+</tr>
+<tr>
+<td>Knowlarity confirms connect, Ring's verdict doesn't arrive</td>
+<td>Same handling — outcome unknown, hold, don't retry. The delay sits with Ring, not Knowlarity.</td>
+</tr>
+<tr>
+<td>Knowlarity says not connected, Ring returns something anyway</td>
+<td>Trust Knowlarity. Log Ring's response for review; don't act on it.</td>
+</tr>
+</tbody>
+</table>
+<p>A missing or late signal — from either side — is a live reliability risk, addressed by a provider SLA and reconciliation, not by our own logs. Our recording and event log (§4/§8) let us reconstruct a call after the fact; they don't fix the reliability itself.</p>
+<p><em>Earlier version of this case, kept for the record:</em></p>
+<ul>
+<li><strong>Hold, don't re-dial.</strong> If no webhook arrives by the timeout, we mark the lead <strong>outcome unknown</strong> and <strong>hold it in place — no retry.</strong> The customer may have spoken and declined, or asked not to be called; re-dialling blind would be a bad experience.</li>
+<li><strong>Order placed → close.</strong> The trusted signal is our own data: if an order was placed for this lead, close it as success regardless of the missing webhook.</li>
+<li><strong>A late webhook resolves it.</strong> If the webhook arrives later, it un-sticks the lead and we act normally then — take the vendor's verdict, apply the outcome, decide the next step. If the lead was already closed (e.g. order placed), the late webhook is <strong>idempotent</strong> — it only enriches the record, never re-opens or re-dials.</li>
+<li><strong>Retain the unknown, even after it resolves.</strong> A late webhook overwrites the disposition, so "outcome unknown" would otherwise vanish. Every disposition change is logged as a timestamped event — we keep that the lead <em>was</em> unknown, and for how long, for analytics and reliability tracking. (Product owns the requirement; Engineering the mechanism — a status-history log; it may also reconcile via the telephony API, but the lead behaviour above is unchanged.)</li>
+<li><strong>Forensics, not a fix.</strong> The recording and event log we keep our side (§4/§8) let us reconstruct and reconcile a call after the fact — but they don't remove the dependency on Knowlarity or Ring delivering their signals reliably; a missing or late signal on either side is still missing. That reliability is a live risk, addressed by a provider SLA + active reconciliation on both sides, not by our logs.</li>
+<li><strong>Watch it.</strong> Track how often leads enter "outcome unknown" — if frequent, it's a go-live reliability risk, on either Knowlarity's event/webhook side or Ring's verdict side; reinforces the §9 reliability questions.</li>
+</ul>
+<p><strong>2. The bot leg can fail on its own, separate from the customer connecting.</strong></p>
+<table>
+<thead>
+<tr>
+<th>Situation</th>
+<th>What we do</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Customer connects, bot leg fails to connect</td>
+<td>Knowlarity returns an error for this. <em>Engineering to confirm the exact error code and handling with Knowlarity before go-live.</em> Doesn't count against the customer's retry budget — they did pick up. Held, flagged for ops.</td>
+</tr>
+<tr>
+<td>Bot leg connects but never speaks</td>
+<td>Rare. Visible in our own recording as dead air. If Ring still returns a verdict, we act on it — checked later against the recording.</td>
+</tr>
+</tbody>
+</table>
+<p><strong>3. The cart changes while a lead is already in the system.</strong> <em>In flight = a lead in any non-terminal disposition (assigned to AI/agent, awaiting retry, scheduled, outcome-unknown); it leaves "in flight" only at a terminal disposition.</em></p>
+<ul>
+<li><strong>One customer, one in-flight lead.</strong> A cart change (or another trigger) while a lead is in flight does <strong>not</strong> create a second lead — it attaches to the existing one. A new lead can start only once the current one is terminal — and even then it's called only if it <strong>doesn't breach the frequency cap</strong> (the connected-call cap still governs).</li>
+<li><strong>Between calls (held / awaiting retry / scheduled):</strong> handled — the change updates the lead, and the <strong>live cart is re-read</strong> when it re-enters (to the AI or a human). The order is always placed against the live cart.</li>
+<li><strong>During a live call:</strong> the AI works from a call-start snapshot, so a mid-call change isn't reflected to the bot live. <strong>Accepted, not blocking</strong> — the snapshot is only for the conversation; the order is placed by a human against the live cart. Guards: (a) Ring handles "I've changed my cart" gracefully (the bot reads item-level only on ask); (b) the agent's screen shows the <strong>live cart in real time</strong>. We do <strong>not</strong> freeze the customer's cart during a call.</li>
+</ul>
+<p class="new"><strong>4. 🟢 A Cold lead below ₹900 had no route to a human.</strong> Raised by Engineering: with the manual queue's minimum AOV at ₹900, a lead between ₹500 and ₹899 that the AI marked Cold could never reach an agent — contradicting §5's promise that Cold stays callable. The single minimum AOV of ₹500 (§5) closes this: every AI lead is also eligible for the manual queue, so a Cold lead sits at the bottom of the same queue as everyone else. Leads closed for exhausted retries stay closed (§6).</p>
+<h2>13. Vendor integration — running MoM</h2>
+<p><em>A living record of what we settle with each vendor on the call architecture, so readers don't re-open the same questions. Dated entries; telephony-side items are confirmed with the telephony provider separately.</em></p>
+<h3>Ring — call architecture (11 Sep 2026)</h3>
+<ul>
+<li class="new"><strong>Chosen path.</strong> 🟢 We send Ring one lead at a time, for each attempt (our reference id + custom variables + workspace id, no PII); every retry is sent as a fresh request. The telephony provider (Knowlarity) dials the customer and, on the same call, opens a WebSocket to Ring carrying our reference id; Ring warms up the bot against it and speaks only once a "customer answered" event fires. Ring records the bot–customer leg on its own side and returns Hot / Warm / Cold by webhook on our reference id.</li>
+<li><strong>Why a WebSocket (not SIP or a plain HTTP call).</strong> Knowlarity doesn't offer SIP connectivity, and the audio is a live two-way stream — so it has to be a WebSocket. Ring already runs this exact WebSocket path with Knowlarity in production (for a simpler inbound case), which is why it's the low-risk option.</li>
+<li><strong>Alternative considered and set aside — Truemeds owning the audio bridge.</strong> We explored Truemeds sitting in the middle (taking a streaming URL from Ring and relaying the audio itself, so nothing connects Ring to the telephony directly) to reduce lock-in. Technically possible, but Ring discourages it: we'd hold two WebSockets open per call and relay audio at Ring's exact tuned packet size (which took Ring real effort to stabilise with Knowlarity), at meaningful cost and a new point of failure. Parked — see the §9 "how far do we build the vendor layer now" question.</li>
+<li><strong>No true platform-agnosticism.</strong> Ring confirmed a telephony swap always needs some custom dev on both sides (data formats and packet handling differ per vendor). A swap is a <strong>re-integration, not a rebuild</strong> (consistent with §8) — not a zero-touch change.</li>
+<li><strong>PII on the "answered" event.</strong> The event carries the customer number today. Knowlarity must strip PII and pass only our reference id + workspace id (bot/agent id optional). To be security-tested on our side.</li>
+<li><strong>Recording &amp; events, our side.</strong> We store the recording from the telephony provider and the event log (dialled, answered, hung up, verdict received) for audit/RCA; we do not send a recording to Ring (it keeps its own copy to produce the verdict). This is forensics — it does not fix telephony reliability (§12).</li>
+<li><strong>Commercials.</strong> Ring charges for connected calls only; no difference between connecting before vs after pickup. A future telephony change carries a one-time integration cost, same rate thereafter.</li>
+<li class="new"><strong>Dev split.</strong> Knowlarity: pass our reference id over the WebSocket + the PII-masked "answered" event. Truemeds: 🟢 send each attempt to Ring, then trigger the Knowlarity call; own retries (Ring does none), store the recording + event log; the earlier "Ring calls our webhook to fetch the phone number" flow is dropped (Ring's verdict webhook to us stays).</li>
+<li><strong>Pending.</strong> Confirm the telephony specifics with Knowlarity; confirm verdict latency with Ring in writing.</li>
+</ul>
+<p><strong>Originally assumed flow (superseded by the above)</strong> — kept for the record:</p>
+<pre><code>   Pick eligible customer  →  send cart + our ID to the AI vendor  (no phone number)
+                                        │
+                                        ▼
+              The AI vendor returns a live voice stream for the call
+                                        │
+                                        ▼
+              We dial via our telephony provider
+                                        │
+                     ┌──────────────────┴──────────────────┐
+              connected                                 not connected
+                     │                                        │
+                     ▼                                        ▼
+             AI conversation                        telephony tells us why
+                     │                              (busy / no-answer / switched
+              call ends → recording                  off / bad number) → §6:
+                     │                               retry, wait, or stop
+                     ▼
+       Send recording to the AI vendor  →  verdict in minutes
+                     │
+      ┌──────────────┼───────────────┐
+      ▼              ▼                ▼
+  HOT / WARM       COLD        no-answer / wrong number /
+ priority        set aside     do-not-call → set aside
+ callback by a   (not          (see §6)
+ human (with     re-chased)
+ AI context;
+ re-checks cart)
+</code></pre>
+<h2 class="new">14. GTM &amp; Rollout 🟢</h2>
+<p class="new">We roll out by <strong>customer ID</strong>: at each step, the AI gets only customers whose ID ends in the digits shown; everyone else stays with agents exactly as today. Customer IDs run in sequence, so this works as a random split — at every step we can compare AI customers against agent customers fairly. Durations are starting values for business to finalise. Definitions (conversion, stale, sales) are in §10.</p>
+<table class="new">
+<thead>
+<tr>
+<th>Phase</th>
+<th>Min AOV</th>
+<th>AI gets customers whose ID ends in</th>
+<th>Duration</th>
+<th>Gate to move on</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0 — Tech pilot</td>
+<td>₹900</td>
+<td>00–04 (5%)</td>
+<td>3–4 days</td>
+<td>No customer called by the AI and an agent at the same time; call outcome and verdict returned within the agreed SLA (§9); retry and frequency caps respected; kill switch tested</td>
+</tr>
+<tr>
+<td>1a</td>
+<td>₹900</td>
+<td>00–24 (25%)</td>
+<td>1 week</td>
+<td>Safety holds; stale ≤10%; Hot/Warm conversion ≥2× human; Cold sample converts clearly lower; sales per 100 customers — AI side ≥ agent side</td>
+</tr>
+<tr>
+<td>1b</td>
+<td>₹900</td>
+<td>00–49 (50%)</td>
+<td>1 week</td>
+<td>Same</td>
+</tr>
+<tr>
+<td>1c</td>
+<td>₹900</td>
+<td>all</td>
+<td>2 weeks</td>
+<td>Same, compared against today's baselines (human conversion ~5%; ACOM sales/day)</td>
+</tr>
+<tr>
+<td>2a</td>
+<td>₹500</td>
+<td>00–74 (75%)</td>
+<td>1 week</td>
+<td>Same, on the ₹500–900 leads — judged on sales, not AOV</td>
+</tr>
+<tr>
+<td>2b</td>
+<td>₹500</td>
+<td>all</td>
+<td>1 week</td>
+<td>Same</td>
+</tr>
+<tr>
+<td>Steady state</td>
+<td>₹500</td>
+<td>all</td>
+<td>—</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li class="new"><strong>A missed gate:</strong> hold at that step and do an RCA. <strong>A safety breach:</strong> kill switch.</li>
+<li class="new"><strong>The pause rule (§6)</strong> runs at every step.</li>
+<li class="new"><strong>Cold sample:</strong> throughout the GTM, Ops calls a random 5% of AI Cold leads — outside the allocation logic (they filter them and call, or assign manually). If Cold converts close to Hot/Warm, the AI is marking buyers Cold.</li>
+</ul>
+<hr />
+<h3>Future state (later, not this build): live transfer</h3>
+<p class="new">Today an interested customer gets a fast callback, because the verdict lands a few minutes after the call ends. A natural later step is <strong>live transfer</strong> — the AI hands the call straight to an available agent while the customer is still on the line, converting them in the moment. Beyond conversion, live transfer also <strong>halves the calls a customer gets</strong> — one call instead of an AI call plus a human callback — which protects both the frequency cap and the customer experience, so it's worth prioritising sooner rather than later. It needs capability on <strong>both sides</strong>: Ring judging interest live (mid-call), and our own telephony/transfer build. A deliberate future step — noted so today's choices don't rule it out — not an immediate blocker for this release.</p></body></html>

@@ -87,6 +87,14 @@ automatically, so apply them manually here:
 - Do not move project-specific resume state into `knowledge/`; keep it in the
   active project's `docs/context/session_handoff.md`.
 
+## Writing or editing a PRD
+
+- Any PRD work (a new PRD, an edit, or a review round on an existing one) follows
+  `templates/lean-prd-guide.md`. Read it before drafting or editing.
+- The heavier `workflows/core/create-prd.md` flow runs only when explicitly asked.
+  Even then, apply the guide's rules on voice, plain words, saying things once,
+  review edits and versions, and AI tells.
+
 ## Building any UI (design system)
 
 Every frontend project — prototypes, portals, internal tools, mockups — uses the
@@ -134,8 +142,10 @@ Truemeds Figma library).
 
 ## Pushing to GitHub (credentials)
 
-- `origin` is already configured with a stored credential inside `.git/config`. That file is **local only and never committed**, so the secret is not part of the repo and never reaches GitHub.
-- Any tool — Codex, Claude Code, Cowork, or a terminal — pushes by running `git push origin <branch-name>` from inside this repo. Git reads the stored credential automatically; **no token needs to live in any tracked file, and none should.**
-- **Never** put the token in a tracked file (README, CLAUDE.md, AGENTS.md, a commit, etc.) or paste it into chat. GitHub secret-scanning auto-revokes any token it finds committed, and it would expose the credential in history.
-- If a push fails with a `403` / auth error, the fine-grained token has expired or lost write access. Fix it: regenerate the token at GitHub -> Settings -> Developer settings -> Personal access tokens -> Fine-grained tokens (repo `pm-agent`, permission **Contents: Read and write**), then re-point the remote (run this in a terminal, not in chat, so the token stays private):
-  `git remote set-url origin https://apurvashetty-tm:<NEW_TOKEN>@github.com/apurvashetty-tm/pm-agent.git`
+- This checkout uses `https://github.com/apurvashetty-tm/pm-agent.git` with a repository-local credential helper. Direct HTTPS pushing from Cowork's `device_bash` against the attached folder was verified on 2026-10-06. Other checkouts need their own authentication setup.
+- Never embed a token in a remote URL, commit credentials, or read, display, copy, or upload private keys. A local-only configuration file can still expose a credential through logs or shared filesystem access.
+- Before publishing, inspect the current branch, pending commits, and working tree. Commit only task-related changes. Use a feature branch and pull request; do not force-push or bypass branch protection.
+- In Cowork, attach this local folder and use `device_bash` at its mounted path for normal Git commits and pushes. The cloud shell is a separate environment. The GitHub connector and Computer Use Terminal are not required for this workflow.
+- Let Git invoke the configured helper; never print credential files, run `git credential fill`, enable credential tracing, or copy secrets into tracked files. The helper resolves its credential file from the current checkout's Git directory so mounted path changes do not require reconfiguration. Credentials persist with this checkout, subject to token expiry or revocation and folder permissions.
+- When the current environment has authorized GitHub access, use `git push --dry-run origin <branch-name>`, then `git push origin <branch-name>`. Verify the remote branch hash matches the intended local commit with `git ls-remote origin refs/heads/<branch-name>`.
+- Diagnose network, filesystem, authentication, and branch-protection failures separately. Do not assume every failed push means a missing or expired token.
