@@ -18,6 +18,8 @@ Unavailable, Schedule Callback, Skip HA — side by side) + the main button. `#a
 auto-scroll (`scrollToActionZone` removed). `#az-phase2` removed.
 **Call didn't connect (2026-10-08, D-26):** `#az-missed` notice + `#az-unavail-btn` in the Call card and "Call Again"
 pinned for `no_answer` / `hold`; no call timer in the doctor UI (`#cs-timer-badge` removed; demo controls keep theirs).
+**Renders (every session):** every image shown in a review is saved in `docs/renders/YYYY-MM-DD/NN_name.png` and
+listed in `docs/renders/README.md` in the same turn. Doctor research files: `docs/research/`.
 **Live link:** https://doctor-portal-prototype.netlify.app — Netlify deploys every push to `main` (base = repo root,
 publish = this folder). The root `netlify.toml` copies `design-system/` next to `index.html` at deploy time so the
 `../../design-system/…` links resolve. Work on a branch, then merge to `main` to update the live link.
