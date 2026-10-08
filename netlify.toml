@@ -1,0 +1,9 @@
+# Netlify — doctor-portal-prototype.netlify.app (production branch: main, base directory: repo root)
+# Publishes the Truemeds Doctor prototype. The app links the central design system as ../../design-system/…;
+# on the published site that resolves to /design-system/…, so the build copies the shared folder in next to
+# index.html at deploy time (never committed — ignored in the project's .gitignore). No other build step.
+# Note: the price-lock-proto branch carries its own root netlify.toml for the Price Lock site.
+
+[build]
+  publish = "projects/truemeds-doctor-portal-prototype"
+  command = "rm -rf projects/truemeds-doctor-portal-prototype/design-system && cp -R design-system projects/truemeds-doctor-portal-prototype/design-system && rm -rf projects/truemeds-doctor-portal-prototype/design-system/build"
