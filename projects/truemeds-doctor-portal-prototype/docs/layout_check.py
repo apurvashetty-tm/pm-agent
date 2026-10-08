@@ -40,8 +40,8 @@ with sync_playwright() as p:
             pg.mouse.move(w / 2, h / 2); pg.mouse.wheel(0, 400); pg.wait_for_timeout(400)
             check(f"{tag} mobile: window scrolls", pg.evaluate("scrollY") > 100)
             pg.evaluate("scrollTo(0,0)")
-        ref = f if desktop else {"l": 0, "r": w, "t": 0, "b": h}
         # Prescribe screen (full-screen view): fills the frame/screen, scrolls inside, Prescribe reachable at the end
+        ref = f if desktop else {"l": 0, "r": w, "t": 0, "b": h}
         # the compact strip must not shift the page: small wheel steps down and back up, no jump bigger than the step
         q = "document.getElementById('main-scroll').scrollTop" if desktop else "scrollY"
         pg.mouse.move((f["l"] + f["r"]) / 2 if desktop else w / 2, (f["t"] + f["b"]) / 2 if desktop else h / 2)
@@ -53,8 +53,10 @@ with sync_playwright() as p:
         pg.evaluate("document.getElementById('main-scroll').scrollTop=0" if desktop else "scrollTo(0,0)")
         # scrolling stops just after the last block (no large empty run-out below the Call / Confirm actions)
         pg.evaluate("document.getElementById('main-scroll').scrollTop=1e6" if desktop else "scrollTo(0,1e6)"); pg.wait_for_timeout(200)
-        gap = pg.evaluate("(()=>{const a=document.getElementById('action-zone').getBoundingClientRect().bottom;const end=innerWidth>=768?document.getElementById('main-scroll').getBoundingClientRect().bottom:innerHeight;return end-a})()")
-        check(f"{tag} scroll ends right after the last action", 0 <= gap <= 40, f"gap {gap:.0f}px")
+        gap = pg.evaluate("(()=>{const a=document.getElementById('action-zone').getBoundingClientRect().bottom;const bar=document.getElementById('case-actionbar').getBoundingClientRect().top;const end=Math.min(bar, innerWidth>=768?document.getElementById('main-scroll').getBoundingClientRect().bottom:innerHeight);return end-a})()")
+        check(f"{tag} scroll ends right after the last card, clear of the pinned bar", 0 <= gap <= 40, f"gap {gap:.0f}px")
+        bar = pg.evaluate("(()=>{const q=document.getElementById('case-actionbar').getBoundingClientRect();return {t:q.top,b:q.bottom,l:q.left,r:q.right}})()")
+        check(f"{tag} main action pinned to the {'frame' if desktop else 'screen'} bottom", abs(bar["b"] - ref["b"]) <= 2 and abs(bar["l"] - ref["l"]) <= 2 and abs(bar["r"] - ref["r"]) <= 2, str({k: round(v) for k, v in bar.items()}))
         pg.evaluate("document.getElementById('main-scroll').scrollTop=0" if desktop else "scrollTo(0,0)")
         pg.locator("#medicines-list > *").first.scroll_into_view_if_needed(); pg.locator("#medicines-list > *").first.click(); pg.wait_for_timeout(400)
         ps = pg.evaluate("(()=>{const q=document.getElementById('prescribe-screen').getBoundingClientRect();return {l:q.left,r:q.right,t:q.top,b:q.bottom}})()")
@@ -62,9 +64,8 @@ with sync_playwright() as p:
         if desktop:
             pg.mouse.move((f["l"] + f["r"]) / 2, (f["t"] + f["b"]) / 2); pg.mouse.wheel(0, 400); pg.wait_for_timeout(400)
             check(f"{tag} wheel scrolls the Prescribe screen", pg.evaluate("document.getElementById('ps-body').scrollTop") > 100)
-        pg.evaluate("document.getElementById('ps-body').scrollTop=99999"); pg.wait_for_timeout(200)
         bb = pg.locator("#ps-prescribe").bounding_box()
-        check(f"{tag} Prescribe button reachable", bool(bb) and bb["y"] >= ref["t"] and bb["y"] + bb["height"] <= ref["b"])
+        check(f"{tag} Prescribe pinned and visible without scrolling", bool(bb) and bb["y"] >= ref["t"] and bb["y"] + bb["height"] <= ref["b"] + 1)
         pg.keyboard.press("Escape"); pg.wait_for_timeout(200)
         # bottom sheets still anchor to the frame/screen bottom
         pg.evaluate("openSheet('sheet-profile')"); pg.wait_for_timeout(500)
@@ -78,6 +79,19 @@ with sync_playwright() as p:
         rx = pg.evaluate("(()=>{const q=document.getElementById('rx-overlay').getBoundingClientRect();return {l:q.left,r:q.right,t:q.top,b:q.bottom}})()")
         check(f"{tag} Rx viewer fills the {'frame' if desktop else 'screen'}", all(abs(rx[k] - ref[k]) <= 2 for k in "lrtb"))
         pg.evaluate("closeRxOverlay()")
+        # after the 50s gate nothing scrolls by itself (D-28) and every call action is visible in the pinned bar
+        q2 = "document.getElementById('main-scroll').scrollTop" if desktop else "scrollY"
+        pg.evaluate("switchScenario('pilot_value_meds_ha')"); pg.wait_for_timeout(100)
+        pg.evaluate("document.getElementById('call-initiate-btn').click()"); pg.wait_for_timeout(100)
+        pg.evaluate("simCallConnected(); doFastForward()"); pg.wait_for_timeout(900)
+        check(f"{tag} after the gate the page did not scroll by itself", pg.evaluate(q2) == 0, pg.evaluate(q2))
+        vis = pg.evaluate("""(()=>{const lim=innerWidth>=768?document.getElementById('main-scroll').getBoundingClientRect().bottom+200:innerHeight;
+          return ['main-cta-btn','schedule-callback-btn','skip-ha-btn'].map(id=>{const r=document.getElementById(id).getBoundingClientRect();return r.height>0&&r.top>=0&&r.bottom<=lim+1})})()""")
+        check(f"{tag} after the gate all call actions are on screen without scrolling", all(vis), vis)
+        hdr = pg.evaluate("document.getElementById('portal-header').getBoundingClientRect().top")
+        moved = pg.evaluate("document.getElementById('mobile-column').scrollTop")
+        check(f"{tag} after the gate the header stays in view", moved == 0 and abs(hdr - ref["t"]) <= 2, f"frame scrollTop={moved}, header top={hdr:.0f}")
+        pg.evaluate("resetToDemo()")
         check(f"{tag} no page errors", not errs, "; ".join(errs))
         pg.close()
     b.close()

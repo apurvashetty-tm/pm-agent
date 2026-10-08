@@ -232,13 +232,14 @@ function haSkipApplicable(scenario) {
 }
 
 // ================================================================
-// MEDICINE FORM ICONS — Tabler outline per dosage form
+// MEDICINE FORM ICONS — one outline glyph per dosage form
 // ================================================================
 function getMedIcon(form) {
-  // Tabler outline, monochrome — one glyph per dosage form (tablet = round, capsule = two-part pill: they must look different)
-  const byForm = { tablet:'tablet-round', capsule:'pill', injection:'vaccine', syrup:'medicine-syrup',
-                   drops:'droplet', cream:'test-pipe', inhaler:'wind' };
-  return iconEl(byForm[form] || 'tablet-round', 24);
+  // One outline glyph per dosage form (Tabler + [PROPOSED] custom glyphs in build-icons.mjs, D-29). Tablet is drawn at an angle
+  // so it can't read as a "no entry" / minus sign, and it must look different from the capsule.
+  const byForm = { tablet:'tablet', capsule:'pill', injection:'vaccine', syrup:'syrup',
+                   drops:'eye-drops', cream:'ointment-tube', inhaler:'inhaler' };   // custom glyphs: D-29
+  return iconEl(byForm[form] || 'tablet', 24);
 }
 
 // ================================================================
@@ -291,6 +292,7 @@ function render() {
 
   renderCallPhase();
   renderPostCall();
+  syncCaseActionBar();
   renderSidePanel();
   updateCompactStripVisibility();
 
@@ -303,15 +305,11 @@ function updateCompactStrip() {
   if (!c) return;
   document.getElementById('cs-patient-name').textContent = c.patient_name;
   document.getElementById('cs-patient-meta').textContent =
-    `${c.patient_age}y · ${c.patient_gender} · ${c.order_id}`;
+    `${c.patient_age}y · ${c.patient_gender}`;
   document.getElementById('cs-order-value').textContent = `₹${c.order_value.toLocaleString('en-IN')}`;
   document.getElementById('cs-view-rx-btn').classList.toggle('hidden', !c.prescription_attached);
 
   const state = DOCTOR_STATE.consultationState;
-  const showTimer = state === 'connected' || state === 'gate_passed';
-  const timerBadge = document.getElementById('cs-timer-badge');
-  timerBadge.classList.toggle('hidden', !showTimer);
-  if (showTimer) document.getElementById('cs-timer-text').textContent = formatTimer(DOCTOR_STATE.callTimer);
 }
 
 function renderRxMedicines(meds) {
@@ -364,6 +362,7 @@ function renderMedicines(meds) {
     el.setAttribute('role', 'button');
     el.setAttribute('tabindex', '0');
     el.setAttribute('aria-label', `Edit ${med.name}`);
+    el.dataset.medId = med.id;
     el.onclick = () => openMedEdit(med.id);
     el.onkeydown = (e) => { if (e.key === 'Enter' || e.key === ' ') openMedEdit(med.id); };
     el.innerHTML = `
@@ -394,20 +393,24 @@ function renderCallPhase() {
   const brief   = document.getElementById('pre-call-brief');
   const pcbText = document.getElementById('pcb-text');
   const pcbLabel = document.getElementById('pcb-label');
-  // Hide briefing after an early hang-up — closing script is irrelevant
+  // Hide briefing after an early hang-up or a call that didn't connect — closing script is irrelevant
   // until the doctor re-dials
-  if (c && !DOCTOR_STATE.endedEarly) {
+  const missed = state === 'no_answer' || state === 'hold';
+  const endedEarly = state === 'assigned' && DOCTOR_STATE.endedEarly;
+  document.getElementById('az-missed').hidden = !(missed || endedEarly);
+  if (endedEarly) document.getElementById('az-missed-text').textContent = 'Call ended before 50 seconds — call again or schedule a callback.';
+  document.getElementById('az-unavail-btn').hidden = !missed;
+  if (missed) document.getElementById('az-missed-text').textContent =
+    state === 'hold' ? 'Call didn\'t connect.' : 'Patient didn\'t pick up.';
+  if (c && !DOCTOR_STATE.endedEarly && !missed) {
     const isHA = c.case_type === 'pilot' && c.ha_status === 'required';
     const isValue = c.meds_type === 'value';
     brief.classList.add('visible');
     if (isHA && isValue) {
-      pcbLabel.innerHTML = iconEl('arrow-up-right', 16) + '<span>Live HA Transfer</span>';
       pcbText.textContent  = '"Please stay on the line — I\'ll connect you to our Health Advisor"';
     } else if (isHA && !isValue) {
-      pcbLabel.innerHTML = iconEl('clipboard-text', 16) + '<span>HA Follow-up</span>';
       pcbText.textContent  = '"Our Health Advisor will call you shortly after this consultation"';
     } else {
-      pcbLabel.innerHTML = iconEl('package', 16) + '<span>Closing Script</span>';
       pcbText.textContent  = '"I\'m confirming your order now — you can track delivery and updates on the Truemeds app"';
     }
   } else {
@@ -423,7 +426,20 @@ function renderCallPhase() {
   // ── Phase 1 visibility ──
   const gateOpen = ['gate_passed', 'completed', 'unavailable'].includes(state);
   phase1.style.display = gateOpen ? 'none' : 'flex';
-  if (gateOpen) return;
+  callBtn.hidden = gateOpen;            // pinned bar: Call Patient lives there until the gate passes
+  // Closed case: the card says what happened (never a stale script); unavailable gets Next Order in the pinned bar
+  const closed = ['completed', 'unavailable'].includes(state);
+  const closedBox = document.getElementById('az-closed');
+  closedBox.hidden = !closed;
+  if (closed) {
+    brief.classList.remove('visible');
+    document.getElementById('az-closed-text').textContent = state === 'unavailable'
+      ? 'Patient unavailable — case returned to the queue.'
+      : (DOCTOR_STATE.closedNote || 'Case closed.');
+    closedBox.querySelector('.tm-icon').innerHTML = icon(state === 'unavailable' ? 'phone-off' : 'circle-check');
+  }
+  document.getElementById('next-order-btn').hidden = state !== 'unavailable';
+  if (gateOpen) { document.getElementById('pre-gate-callback-btn').classList.add('hidden'); return; }
 
   // ── Reset button defaults — all cosmetics via design-system .tm-btn classes ──
   callBtn.disabled  = false;
@@ -445,7 +461,7 @@ function renderCallPhase() {
     callBtnLbl.textContent = 'End Call';
     callBtn.className      = 'tm-btn tm-btn--lg tm-btn--destructive tm-btn--block';
     // Pre-gate schedule callback as quiet escape hatch during live call
-    if (preGateCb) preGateCb.className = 'tm-btn tm-btn--sm tm-btn--ghost tm-btn--block';
+    if (preGateCb) preGateCb.className = 'tm-btn tm-btn--sm tm-btn--secondary tm-btn--block';
     return;
   }
   // assigned / no_answer / hold — show Call Patient
@@ -453,16 +469,15 @@ function renderCallPhase() {
     // Early hang-up: escape routes = retry OR schedule callback (ghost button)
     callBtnIcon.innerHTML  = icon('phone');
     callBtnLbl.textContent = 'Call Again';
-    if (preGateCb) preGateCb.className = 'tm-btn tm-btn--secondary tm-btn--block';
+    if (preGateCb) preGateCb.className = 'tm-btn tm-btn--sm tm-btn--secondary tm-btn--block';
     return;
   }
-  if (preGateCb) preGateCb.className = 'tm-btn tm-btn--sm tm-btn--ghost tm-btn--block hidden';
+  if (preGateCb) preGateCb.className = 'tm-btn tm-btn--sm tm-btn--secondary tm-btn--block hidden';
   callBtnIcon.innerHTML  = icon('phone');
-  callBtnLbl.textContent = 'Call Patient';
+  callBtnLbl.textContent = missed ? 'Call Again' : 'Call Patient';
 }
 
 function renderPostCall() {
-  const pc     = document.getElementById('az-phase2');
   const skipBtn = document.getElementById('skip-ha-btn');
   const ctaBtn  = document.getElementById('main-cta-btn');
   const scBtn   = document.getElementById('schedule-callback-btn');
@@ -471,13 +486,10 @@ function renderPostCall() {
   // toast owns the screen exit — hiding phase2 prevents re-submitting.
   const gateOpen = DOCTOR_STATE.consultationState === 'gate_passed';
 
-  if (!gateOpen) {
-    pc.classList.remove('visible','revealed');
-    return;
-  }
-
-  pc.classList.add('visible');
-  requestAnimationFrame(() => requestAnimationFrame(() => pc.classList.add('revealed')));
+  ctaBtn.hidden = !gateOpen;            // pinned bar: the post-call CTA appears once the gate passes
+  scBtn.hidden = !gateOpen;
+  skipBtn.hidden = true;
+  if (!gateOpen) return;
 
   // Restore button structure if innerHTML was replaced during submit
   if (!document.getElementById('main-cta-icon')) {
@@ -492,7 +504,7 @@ function renderPostCall() {
   const haApplicable = haSkipApplicable(c) && !DOCTOR_STATE.haSkippedInSession;
 
   // Skip HA — only Pilot + HA required + not yet skipped [LOCKED]
-  skipBtn.classList.toggle('visible', haApplicable);
+  skipBtn.hidden = !haApplicable;
 
   const effectiveScenario = DOCTOR_STATE.haSkippedInSession
     ? Object.assign({}, c, { ha_status:'skipped_customer' }) : c;
@@ -500,13 +512,22 @@ function renderPostCall() {
   ctaIcon.textContent = cta.icon;
   ctaLbl.textContent  = cta.label;
 
-  // Secondary chip row: Schedule always present; label shortens to fit
-  // when Skip HA shares the row
-  const scLbl = document.getElementById('schedule-callback-label');
-  if (scLbl) scLbl.textContent = haApplicable ? 'Schedule' : 'Schedule Callback';
 
   console.log(`[MOCK] cta-routing | scenario=${DOCTOR_STATE.activeScenario} | ha_skip_session=${DOCTOR_STATE.haSkippedInSession} | resolved=${cta.type}`);
 }
+
+// Pinned action bar: hidden when it has nothing to show (completed / unavailable); its height feeds --ab-h so the
+// page can scroll its last content clear of it and toasts can sit above it.
+function syncCaseActionBar() {
+  const bar = document.getElementById('case-actionbar');
+  const off = b => b.hidden || b.classList.contains('hidden');
+  const sec = document.getElementById('ab-secondary');
+  sec.hidden = [...sec.querySelectorAll('button')].every(off);
+  bar.hidden = [...bar.querySelectorAll('button')].every(off);
+  document.documentElement.style.setProperty('--ab-h', bar.hidden ? '0px' : bar.offsetHeight + 'px');
+}
+window.addEventListener('resize', syncCaseActionBar);
+new ResizeObserver(syncCaseActionBar).observe(document.getElementById('case-actionbar'));   // fonts / label changes alter its height
 
 function renderSidePanel() {
   const c = DOCTOR_STATE.currentCase;
@@ -600,7 +621,6 @@ function toggleOrderExpand() {
 // ================================================================
 function handleLogout() {
   closeSheet();
-  showToast('[MOCK] Logout — not implemented in prototype');
   console.log('[MOCK] auth.logout | user=' + DOCTOR_PROFILE.name);
 }
 
@@ -616,7 +636,6 @@ function handleCallAction() {
     DOCTOR_STATE.consultationState = 'assigned';
     DOCTOR_STATE.callTimer = 0;
     DOCTOR_STATE.endedEarly = true;
-    showToast('Call ended before 50s — call again or schedule a callback');
     render();
     console.log(`[MOCK] call-service.callEnded | gate=NOT_PASSED | escape=retry_or_callback`);
   }
@@ -664,7 +683,7 @@ function simWebhook(reason) {
   if (reason === 'no_answer' || reason === 'timeout') {
     DOCTOR_STATE.consultationState = reason === 'timeout' ? 'hold' : 'no_answer';
     document.getElementById('sheet-retry-title').textContent =
-      reason === 'timeout' ? 'Webhook timed out' : 'Patient didn\'t pick up';
+      reason === 'timeout' ? 'Call didn\'t connect' : 'Patient didn\'t pick up';
     render();
     openSheet('sheet-retry');
   } else {
@@ -700,6 +719,7 @@ function markCustomerUnavailable() {
 // ── Schedule Callback (post-gate) ────────────────────────────────
 function selectCallbackDay(day) {
   CALLBACK_STATE.day = day;
+  document.getElementById('callback-error').hidden = true;
   document.querySelectorAll('#callback-day-chips .tm-chip').forEach(b => {
     b.setAttribute('aria-pressed', b.dataset.day === day);
   });
@@ -707,16 +727,21 @@ function selectCallbackDay(day) {
 
 function selectCallbackTime(time) {
   CALLBACK_STATE.time = time;
+  document.getElementById('callback-error').hidden = true;
   document.querySelectorAll('#callback-time-chips .tm-chip').forEach(b => {
     b.setAttribute('aria-pressed', b.dataset.time === time);
   });
 }
 
 function confirmScheduleCallback() {
+  const err = document.getElementById('callback-error');
   if (!CALLBACK_STATE.day || !CALLBACK_STATE.time) {
-    showToast('Pick a date and time');
+    err.textContent = !CALLBACK_STATE.day && !CALLBACK_STATE.time ? 'Pick a date and a time.'
+                    : !CALLBACK_STATE.day ? 'Pick a date.' : 'Pick a time.';
+    err.hidden = false;
     return;
   }
+  err.hidden = true;
   const dayLabel = CALLBACK_STATE.day === 'today' ? 'Today' : 'Tomorrow';
   const [h, m] = CALLBACK_STATE.time.split(':');
   const hr = parseInt(h);
@@ -729,6 +754,7 @@ function confirmScheduleCallback() {
   clearInterval(DOCTOR_STATE.timerInterval);
   DOCTOR_STATE.timerInterval = null;
   DOCTOR_STATE.consultationState = 'completed';
+  DOCTOR_STATE.closedNote = `Callback scheduled — ${dayLabel} at ${timeLabel}.`;
   render();
   showSuccessToast('Callback Scheduled', `${DOCTOR_STATE.currentCase.patient_name} — ${dayLabel} at ${timeLabel}. Order moved to callback queue.`);
   console.log(`[MOCK] case.callbackScheduled | day=${CALLBACK_STATE.day} | time=${CALLBACK_STATE.time} | session=COMPLETED`);
@@ -739,10 +765,6 @@ function startCallTimer() {
   DOCTOR_STATE.timerInterval = setInterval(() => {
     DOCTOR_STATE.callTimer++;
 
-    // Update compact strip timer badge
-    const timerBadge = document.getElementById('cs-timer-badge');
-    timerBadge.classList.remove('hidden');
-    document.getElementById('cs-timer-text').textContent = formatTimer(DOCTOR_STATE.callTimer);
 
     if (DOCTOR_STATE.callTimer >= 50 && DOCTOR_STATE.consultationState !== 'gate_passed') {
       clearInterval(DOCTOR_STATE.timerInterval);
@@ -751,8 +773,7 @@ function startCallTimer() {
       DOCTOR_STATE.gatePassedAt = Date.now();
       render();
       console.log(`[MOCK] call-timer.gateCheck | elapsed=50s | gate=PASSED | cta=${resolveCTA(DOCTOR_STATE.currentCase).type}`);
-      showToast('Valid call complete — post-call action unlocked');
-      setTimeout(() => document.getElementById('action-zone').scrollIntoView({ behavior:'smooth', block:'start' }), 300);
+      /* no auto-scroll (D-28): every call action is in the pinned bar */
     }
 
     document.getElementById('demo-state-label').textContent =
@@ -771,8 +792,7 @@ function doFastForward() {
     DOCTOR_STATE.consultationState = 'gate_passed';
     DOCTOR_STATE.gatePassedAt = Date.now();
     render();
-    showToast('Fast-forwarded to 50s — gate passed');
-    setTimeout(() => document.getElementById('action-zone').scrollIntoView({ behavior:'smooth', block:'start' }), 300);
+    /* no auto-scroll (D-28): every call action is in the pinned bar */
   } else if (['assigned', 'hold', 'no_answer', 'calling'].includes(s)) {
     // Hide sim panel if showing
     document.getElementById('demo-call-sim').style.display = 'none';
@@ -782,10 +802,8 @@ function doFastForward() {
     DOCTOR_STATE.consultationState = 'gate_passed';
     DOCTOR_STATE.gatePassedAt = Date.now();
     render();
-    showToast('Fast-forwarded — gate passed');
-    setTimeout(() => document.getElementById('action-zone').scrollIntoView({ behavior:'smooth', block:'start' }), 300);
+    /* no auto-scroll (D-28): every call action is in the pinned bar */
   } else {
-    showToast('Fast-forward only works before gate is passed');
   }
 }
 
@@ -811,6 +829,7 @@ function handleMainCTA() {
       ? Object.assign({}, DOCTOR_STATE.currentCase, { ha_status:'skipped_customer' }) : DOCTOR_STATE.currentCase;
     const cta = resolveCTA(effectiveScenario);
     const titles = { confirm_order:'Order Confirmed', confirm_transfer:'Transferred to HA', confirm_forward:'Forwarded for Review' };
+    DOCTOR_STATE.closedNote = `${titles[cta.type] || 'Done'}.`;
     render();
     showSuccessToast(titles[cta.type] || 'Done', `${DOCTOR_STATE.currentCase.patient_name} — "${cta.label}" submitted.`);
     console.log(`[MOCK] cta-action.success | cta=${cta.type}`);
@@ -854,7 +873,7 @@ function openSheet(sheetId) {
   // Accessibility: dialog semantics + focus management (visual/a11y only)
   if (sheetEl) {
     const title = sheetEl.querySelector('.sheet-title');
-    if (title && !title.id) title.id = sheetId + '-title';
+    if (title && !title.id) title.id = sheetId + '-heading';   // not '-title': #sheet-retry-title is the retry sheet's text span
     sheetEl.setAttribute('role', 'dialog');
     sheetEl.setAttribute('aria-modal', 'true');
     if (title) sheetEl.setAttribute('aria-labelledby', title.id);
@@ -890,7 +909,6 @@ function handleSheetOverlayClick(e) {
 function confirmSkipHA(reason) {
   DOCTOR_STATE.haSkippedInSession = true;
   closeSheet(); render();
-  showToast(`HA skipped: ${reason}. CTA updated to Confirm Order`);
   console.log(`[MOCK] ha.skip | reason="${reason}" | new_cta=confirm_order`);
 }
 
@@ -970,9 +988,17 @@ document.addEventListener('keydown', (e) => {
 }, { capture: true });
 
 const durationCode = () => EDIT_STATE.durOngoing ? 'ongoing' : `${EDIT_STATE.durN}${EDIT_STATE.durU}`;
+// "Other" dose: the WHOLE entry must be a plain positive number ("7", "7.5", ".5"). parseFloat alone read "7..5" or
+// "7abc" as 7 and saved it silently (review 2026-10-09). Anything else is invalid; what the doctor typed is kept.
+function parseDose(s) {
+  const t = String(s ?? '').trim();
+  if (!/^(\d+(\.\d+)?|\.\d+)$/.test(t)) return NaN;
+  const v = Number(t);
+  return v > 0 ? v : NaN;
+}
 function currentDose() {
   if (!EDIT_STATE.doseOther) return EDIT_STATE.dose;
-  const v = parseFloat(EDIT_STATE.doseOtherVal);
+  const v = parseDose(EDIT_STATE.doseOtherVal);
   return isFinite(v) ? v : '—';
 }
 const editModel = () => {
@@ -987,7 +1013,7 @@ function chip(key, label, pressed, aria = '') {
 function group(label, inner, { cls = 'ps-chips', hint = '', id = '', cols = 0 } = {}) {
   const lid = `psl-${label.replace(/\W+/g, '-').toLowerCase()}-${Math.random().toString(36).slice(2, 6)}`;
   const style = cols ? ` style="--cols:${cols}"` : '';
-  return `<div class="ps-section"${id ? ` id="${id}"` : ''}><div class="ps-label" id="${lid}">${label}${hint ? ` <span class="tm-muted">${hint}</span>` : ''}</div>` +
+  return `<div class="ps-section"${id ? ` id="${id}"` : ''}><div class="tm-field__label ps-label" id="${lid}">${label}${hint ? ` <span class="tm-muted">${hint}</span>` : ''}</div>` +
          `<div class="${cls}" role="group" aria-labelledby="${lid}"${style}>${inner}</div></div>`;
 }
 const unitHint = (fd, unit) => unit ? `(${unit})` : (fd.showUnit ? `(${fd.many})` : '');   // unit = the "Other" entry's unit when chosen
@@ -997,6 +1023,8 @@ function renderPrescribe() {
   const x = EDIT_STATE, fd = formDose(x.form);
   const focusKey = document.activeElement?.dataset?.k;
   let h = '';
+  // Cards, like the case page (agreed 2026-10-08): Schedule · SOS · Duration · Food · (note card is static in index.html)
+  h += `<div class="tm-card ps-card" id="ps-card-schedule">`;
   h += group('How often', INTERVALS.map(([v, l]) => chip(`int:${v}`, l, x.interval === v)).join(''));
 
   // Dose — one heading for every schedule: "Dose (unit)". Daily shows the M / A / N rows under it.
@@ -1005,34 +1033,36 @@ function renderPrescribe() {
     const rows = [['m', 'M', 'Morning'], ['a', 'A', 'Afternoon'], ['n', 'N', 'Night']].map(([k, key, name]) =>
       `<div class="ps-slot"><span class="ps-slot-key" aria-hidden="true">${key}</span><div class="ps-grid" role="group" aria-label="${name}" style="--cols:${fd.slot.length}">${
         fd.slot.map(v => chip(`slot:${k}:${v}`, chipLabel(x.form, v), x[k] === v, `${name}: ${v === 0 ? 'none' : doseText(x.form, v)}`)).join('')}</div></div>`).join('');
-    h += `<div class="ps-section" id="ps-dose-section"><div class="ps-label">Dose <span class="tm-muted">${unitHint(fd)}</span></div><div class="ps-slots">${rows}</div>${errDose}</div>`;
+    h += `<div class="ps-section" id="ps-dose-section"><div class="tm-field__label ps-label">Dose <span class="tm-muted">${unitHint(fd)}</span></div><div class="ps-slots">${rows}</div>${errDose}</div>`;
   } else {
     if (x.interval === 'every_x_hours') {
-      h += `<div class="ps-section"><div class="ps-label" id="psl-every">Every</div><div class="ps-grid" role="group" aria-labelledby="psl-every" style="--cols:4">${
+      h += `<div class="ps-section"><div class="tm-field__label ps-label" id="psl-every">Every</div><div class="ps-grid" role="group" aria-labelledby="psl-every" style="--cols:4">${
              HOURS.map(v => chip(`hrs:${v}`, `${v} h`, x.hours === v, `Every ${v} hours`)).join('')}</div>
              <div class="ps-helper">${24 / x.hours} times a day, round the clock</div></div>`;
     }
     const opts = fd.each.map(v => chip(`dose:${v}`, chipLabel(x.form, v), !x.doseOther && x.dose === v));
     if (fd.other) opts.push(chip('dose:other', 'Other', x.doseOther));
     const other = x.doseOther ? `<div class="tm-field ps-gap${x.err === 'other' ? ' tm-field--error' : ''}" id="ps-other-field"><label class="tm-field__label" for="ps-other">Dose in ${fd.other}</label>
-        <div class="tm-field__control"><input id="ps-other" type="text" inputmode="decimal" placeholder="e.g. 7.5" value="${x.doseOtherVal}"><span class="ps-unit">${fd.other}</span></div>
-        ${x.err === 'other' ? `<div class="tm-field__helper" role="alert">Enter the dose in ${fd.other}.</div>` : ''}</div>` : '';
+        <div class="tm-field__control"><input id="ps-other" type="text" inputmode="decimal" placeholder="e.g. 7.5" value="${String(x.doseOtherVal).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;')}"><span class="ps-unit">${fd.other}</span></div>
+        ${x.err === 'other' ? `<div class="tm-field__helper" role="alert">${String(x.doseOtherVal).trim() ? `Use numbers only, e.g. 7.5 ${fd.other}.` : `Enter the dose in ${fd.other}.`}</div>` : ''}</div>` : '';
     const lid = 'psl-dose-each';
-    h += `<div class="ps-section" id="ps-dose-section"><div class="ps-label" id="${lid}">Dose <span class="tm-muted">${unitHint(fd, x.doseOther ? fd.other : '')}</span></div>` +
+    h += `<div class="ps-section" id="ps-dose-section"><div class="tm-field__label ps-label" id="${lid}">Dose <span class="tm-muted">${unitHint(fd, x.doseOther ? fd.other : '')}</span></div>` +
          `<div class="ps-grid" role="group" aria-labelledby="${lid}" style="--cols:${opts.length}">${opts.join('')}</div>${other}</div>`;
     if (x.interval === 'sos') {
-      h += `<div class="ps-section"><div class="ps-inline"><div class="ps-label" id="psl-max-only">Max doses a day</div><div class="ps-chips" role="group" aria-labelledby="psl-max-only">${SOS_MAX.map(v => chip(`max:${v}`, v, x.sosMax === v)).join('')}</div></div></div>`;
+      h += `<div class="ps-section"><div class="tm-field__label ps-label" id="psl-max-only">Max doses a day</div><div class="ps-grid" role="group" aria-labelledby="psl-max-only" style="--cols:4">${SOS_MAX.map(v => chip(`max:${v}`, v, x.sosMax === v)).join('')}</div></div>`;
     }
   }
 
+  h += `</div>`;   // end Schedule card
+
   // SOS add-on: explained in place, with its own dose and a daily cap (both drive quantity and the print line).
   if (x.interval !== 'sos') {
-    h += `<div class="ps-section"><label class="tm-check"><input type="checkbox" class="tm-toggle" id="ps-sos" ${x.sos ? 'checked' : ''} aria-describedby="ps-sos-help"> Also as needed (SOS)</label>
-          <div class="ps-helper" id="ps-sos-help">Extra doses only when needed, on top of the schedule above.</div>`;
+    h += `<div class="ps-section tm-card ps-card"><div><label class="tm-check"><input type="checkbox" class="tm-toggle" id="ps-sos" ${x.sos ? 'checked' : ''} aria-describedby="ps-sos-help"> Also as needed (SOS)</label>
+          <div class="ps-helper" id="ps-sos-help">Extra doses only when needed, on top of the schedule above.</div></div>`;
     if (x.sos) {
       h += `<div class="ps-sub">` +
            group('Dose', fd.each.map(v => chip(`sosdose:${v}`, chipLabel(x.form, v), x.sosDose === v)).join(''), { cls: 'ps-grid', cols: fd.each.length, hint: unitHint(fd) }) +
-           `<div class="ps-section ps-gap"><div class="ps-inline"><div class="ps-label" id="psl-max-extra">Max extra doses a day</div><div class="ps-chips" role="group" aria-labelledby="psl-max-extra">${SOS_MAX.map(v => chip(`max:${v}`, v, x.sosMax === v)).join('')}</div></div></div>` +
+           `<div class="ps-section ps-gap"><div class="tm-field__label ps-label" id="psl-max-extra">Max extra doses a day</div><div class="ps-grid" role="group" aria-labelledby="psl-max-extra" style="--cols:4">${SOS_MAX.map(v => chip(`max:${v}`, v, x.sosMax === v)).join('')}</div></div>` +
            `</div>`;
     }
     h += `</div>`;
@@ -1042,7 +1072,7 @@ function renderPrescribe() {
   // again on the same row. Looks like the other form fields so it reads as "fill in", not "information".
   const code = durationCode();
   const sub = code !== x.defaultDuration ? 'Changed from default' : 'Default';
-  h += `<div class="ps-section"><div class="ps-label" id="psl-duration">Duration</div>
+  h += `<div class="ps-section tm-card ps-card"><div class="tm-field__label ps-label" id="psl-duration">Duration</div>
         <div class="ps-dur-field${x.durOpen ? ' is-open' : ''}">
           <button type="button" class="ps-dur-toggle" data-k="dur:toggle" aria-expanded="${x.durOpen}" aria-controls="ps-dur-panel" aria-labelledby="psl-duration ps-dur-value">
             <span class="ps-dur-val" id="ps-dur-value">${durationText(code)}<span>${sub}</span></span>
@@ -1054,13 +1084,27 @@ function renderPrescribe() {
           </div>` : ''}
         </div></div>`;
 
-  h += group('Food', FOODS.map(([v, l]) => chip(`food:${v}`, l, x.food === v)).join(''), { cls: 'ps-chips ps-chips-fill', hint: '(optional)' });
+  h += `<div class="tm-card ps-card">` + group('Food', FOODS.map(([v, l]) => chip(`food:${v}`, l, x.food === v)).join(''), { cls: 'ps-chips ps-chips-fill', hint: '(optional)' }) + `</div>`;
 
   const dyn = document.getElementById('ps-dynamic');
   dyn.innerHTML = h;
   initIcons();
-  document.getElementById('ps-prints-text').textContent = printLine(editModel());
+  setPrintLine();
   if (focusKey) dyn.querySelector(`[data-k="${CSS.escape(focusKey)}"]`)?.focus({ preventScroll: true });
+}
+
+// The pinned "On prescription" line (D-25). Briefly tints when the text changes so the doctor sees the effect of a tap.
+let _printFlash = null;
+function setPrintLine() {
+  const el = document.getElementById('ps-prints-text');
+  const next = printLine(editModel());
+  const changed = el.textContent !== next && el.textContent !== '—' && document.getElementById('prescribe-screen').classList.contains('open');
+  el.textContent = next;
+  if (!changed) return;
+  const box = document.getElementById('ps-rx');
+  box.classList.add('is-updated');
+  clearTimeout(_printFlash);
+  _printFlash = setTimeout(() => box.classList.remove('is-updated'), 600);
 }
 
 // One delegated handler for every chip / button in the screen.
@@ -1101,16 +1145,16 @@ document.getElementById('ps-dynamic').addEventListener('change', (e) => {
 document.getElementById('ps-dynamic').addEventListener('input', (e) => {
   if (e.target.id !== 'ps-other') return;
   EDIT_STATE.doseOtherVal = e.target.value;
-  if (EDIT_STATE.err === 'other' && parseFloat(e.target.value) > 0) {
+  if (EDIT_STATE.err === 'other' && parseDose(e.target.value) > 0) {
     EDIT_STATE.err = null;
     const f = document.getElementById('ps-other-field');
     f.classList.remove('tm-field--error'); f.querySelector('.tm-field__helper')?.remove();
   }
-  document.getElementById('ps-prints-text').textContent = printLine(editModel());
+  setPrintLine();
 });
 document.getElementById('ps-note').addEventListener('input', (e) => {
   EDIT_STATE.note = e.target.value;
-  document.getElementById('ps-prints-text').textContent = printLine(editModel());
+  setPrintLine();
 });
 
 // Only two invalid states can exist (every required choice always keeps a value): no dose at all on a daily
@@ -1118,7 +1162,7 @@ document.getElementById('ps-note').addEventListener('input', (e) => {
 function validatePrescribe() {
   const x = EDIT_STATE;
   if (x.interval === 'daily' && x.m + x.a + x.n === 0) return 'dose';
-  if (x.interval !== 'daily' && x.doseOther && !(parseFloat(x.doseOtherVal) > 0)) return 'other';
+  if (x.interval !== 'daily' && x.doseOther && !(parseDose(x.doseOtherVal) > 0)) return 'other';
   return null;
 }
 
@@ -1130,7 +1174,10 @@ function confirmMedEdit() {
     EDIT_STATE.err = err;
     renderPrescribe();
     const target = document.getElementById(err === 'dose' ? 'ps-dose-section' : 'ps-other-field');
-    target?.scrollIntoView({ block: 'center' });
+    if (target) {   // scroll only the screen's own scroll area (scrollIntoView could also move the desktop frame)
+      const body = document.getElementById('ps-body');
+      body.scrollBy({ top: target.getBoundingClientRect().top - body.getBoundingClientRect().top - body.clientHeight / 3 });
+    }
     if (err === 'other') document.getElementById('ps-other')?.focus({ preventScroll: true });
     console.log(`[MOCK] medicine.prescribe.blocked | id=${med.id} | reason=${err}`);
     return;
@@ -1143,8 +1190,7 @@ function confirmMedEdit() {
     duration: x.duration, food: x.food, note: x.note.trim(),
     validation_status: 'prescribed', disabled: false, disable_reason: undefined,
   });
-  closePrescribe(); render();
-  showToast(`${med.name} prescribed`);
+  closePrescribe(); render(); focusMedRow(med.id);
   console.log(`[MOCK] medicine.prescribe | id=${med.id} | name=${med.name} | prints="${printLine(med)}"`);
 }
 
@@ -1155,14 +1201,18 @@ function openDisableSheet() {
   openSheet('sheet-disable-reason');   // opens over the Prescribe screen; cancelling returns to it
 }
 
+// After Prescribe / Disable the list is rebuilt, which removes the row that had focus — put focus on the new row.
+function focusMedRow(id) {
+  document.querySelector(`#medicines-list [data-med-id="${id}"]`)?.focus({ preventScroll: true });
+}
+
 function confirmDisable(reason) {
   const med = DOCTOR_STATE.currentCase.medicines.find(m => m.id === EDIT_STATE.medId);
   if (!med) return;
   med.disabled = true;
   med.validation_status = 'disabled';
   med.disable_reason = reason;
-  closeSheet(); closePrescribe(); render();
-  showToast(`Medicine disabled: ${reason}`);
+  closeSheet(); closePrescribe(); render(); focusMedRow(med.id);
   console.log(`[MOCK] medicine.disable | id=${med.id} | name=${med.name} | reason="${reason}"`);
 }
 
@@ -1273,8 +1323,10 @@ function switchScenario(scenarioId) {
   DOCTOR_STATE.callbackTime      = null;
   DOCTOR_STATE.editingMedId      = null;
   DOCTOR_STATE.endedEarly        = false;
+  DOCTOR_STATE.closedNote        = null;
   CALLBACK_STATE.day  = null;
   CALLBACK_STATE.time = null;
+  document.getElementById('callback-error').hidden = true;
   hideSuccessToast();
   const ps = document.getElementById('prescribe-screen');   // a scenario switch discards an open Prescribe screen
   ps.classList.remove('open'); ps.setAttribute('aria-hidden', 'true');
@@ -1287,8 +1339,6 @@ function switchScenario(scenarioId) {
   }
   DOCTOR_STATE.currentCase = JSON.parse(JSON.stringify(SCENARIOS[scenarioId]));
 
-  const phase2 = document.getElementById('az-phase2');
-  phase2.classList.remove('visible','revealed');
 
   // Restore main CTA button structure in case submit flow destroyed innerHTML
   const ctaBtn = document.getElementById('main-cta-btn');
@@ -1326,19 +1376,10 @@ function resetToDemo() {
 }
 
 // ================================================================
-// TOAST [LOCKED]
+// No black toasts (Apurva 2026-10-08, decision log D-27): every outcome is shown where it happens —
+// the row tag, the Call card, the pinned button, or an inline error. Only the white confirmation card
+// (showSuccessToast, with Next Order) remains.
 // ================================================================
-let toastTimer = null;
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  // Anchor to mobile column centre — viewport centre is wrong on desktop (side panel offsets column)
-  const r = document.getElementById('mobile-column').getBoundingClientRect();
-  t.style.left = (r.left + r.width / 2) + 'px';
-  t.textContent = msg;
-  t.classList.add('show');
-  if (toastTimer) clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => t.classList.remove('show'), 2800);
-}
 
 // ================================================================
 // INIT

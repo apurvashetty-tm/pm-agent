@@ -99,7 +99,3 @@ arrows-minimize
 user-circle
 arrow-up-right
 vaccine
-medicine-syrup
-droplet
-wind
-test-pipe

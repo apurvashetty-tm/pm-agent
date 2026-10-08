@@ -3,9 +3,23 @@
 **Purpose:** Captures all decisions, agreements, and pending work so a new Claude session on any machine can pick up exactly where things left off.
 
 **Last updated:** 2026-10-08
-**Session status:** Prescribe screen redesign built and reviewed; sticky header and scroll fixes done.
-**Why things are the way they are:** `docs/context/decision_log.md` (D-01 … D-21) — read it before changing any
+**Session status:** Prescribe redesign built; pinned main action (D-22); UI audit fixes done (D-23 … D-26). Open: medicine form icon (audit #11) — options in docs/concepts/2026-10-08-medicine-form-icons.png, Apurva's call.
+**Why things are the way they are:** `docs/context/decision_log.md` (D-01 … D-30) — read it before changing any
 screen it covers. This file says what is built; the decision log says why.
+**Case page main action (2026-10-08, D-22):** `#case-actionbar` (`.tm-actionbar`) pinned to the bottom holds
+`#call-initiate-btn` and `#main-cta-btn`; `syncCaseActionBar()` hides the bar when both are hidden and sets `--ab-h`
+(page bottom padding, toast offset). `scrollToActionZone()` replaces `scrollIntoView` (which also scrolled the desktop
+frame and pushed the header out of view). `layout_check.py` checks both.
+**UI audit fixes (2026-10-08, D-23/D-24):** every sheet = title + `.sheet-close` (`tm-btn--quiet tm-btn--icon`),
+no handle; callback chips in `.chip-grid` (`--cols`); action card closed state = `#az-closed` notice (text from
+`DOCTOR_STATE.closedNote`); `#next-order-btn` pinned only when unavailable. No black toasts at all (D-27).
+**All call actions pinned (2026-10-08, D-28):** `#case-actionbar` = `#ab-secondary` (pre-gate callback, Mark
+Unavailable, Schedule Callback, Skip HA — side by side) + the main button. `#action-zone` has no buttons; no
+auto-scroll (`scrollToActionZone` removed). `#az-phase2` removed.
+**Call didn't connect (2026-10-08, D-26):** `#az-missed` notice + `#az-unavail-btn` in the Call card and "Call Again"
+pinned for `no_answer` / `hold`; no call timer in the doctor UI (`#cs-timer-badge` removed; demo controls keep theirs).
+**Renders (every session):** every image shown in a review is saved in `docs/renders/YYYY-MM-DD/NN_name.png` and
+listed in `docs/renders/README.md` in the same turn. Doctor research files: `docs/research/`.
 **Live link:** https://doctor-portal-prototype.netlify.app — Netlify deploys every push to `main` (base = repo root,
 publish = this folder). The root `netlify.toml` copies `design-system/` next to `index.html` at deploy time so the
 `../../design-system/…` links resolve. Work on a branch, then merge to `main` to update the live link.
@@ -27,7 +41,9 @@ publish = this folder). The root `netlify.toml` copies `design-system/` next to 
 > options: `decision_log.md` D-10 … D-20. Concept render (pre-review): `docs/concepts/2026-10-07-prescribe-screen.png`.
 > Full-screen view over the case (inside the phone frame), one scroll area, every section open with backend defaults.
 > 1. App bar: cross (close) · medicine name with the form in grey under it ("Tablet") · small red "Disable".
-> 2. "Prints as": the exact printed line, live. Ongoing prints its period ("6 months"); on screen "Ongoing (6 months)".
+> 2. "On prescription" (was "Prints as"; D-25): the exact printed line, live, pinned under the app bar in one header
+>    block (`#ps-top` = `#ps-bar` + `#ps-rx`), 16px semibold on a brand-blue band, flashes on change (`setPrintLine()`).
+>    Ongoing prints its period ("6 months"); on screen "Ongoing (6 months)".
 > 3. How often: Daily · Every X hours (4/6/8/12 h, round the clock) · Alt days · Weekly · Monthly · SOS only.
 > 4. Dose: heading "Dose"; unit shown only where the form doesn't say it ("Dose (ml)" syrups, "Dose (puffs)" inhalers).
 >    Daily = M / A / N rows (no evening slot). Choices: tablet/capsule 0 ½ 1 2; syrup 0 2.5 5 10 ml (single-dose
@@ -39,7 +55,8 @@ publish = this folder). The root `netlify.toml` copies `design-system/` next to 
 > 7. Food (optional): After food · Before food · Empty stomach, one row, single-select, tap again to clear, no default,
 >    printed only if chosen. Shown for every form.
 > 8. Additional instructions: optional, printed (tapers, "shake well", "stop if rash"…).
-> 9. Prescribe (primary) at the END of the content, not pinned.
+> 9. Prescribe (primary, large) in a bottom bar pinned to the screen, always active (D-22). Body is grey with one
+>    white card per block (Schedule · SOS · Duration · Food · Additional instructions), like the case page.
 > Errors (only two, inline, on Prescribe): 0-0-0 → notice under the dose grid; empty "Other" → field error.
 > Closing: instant if nothing changed, otherwise "Discard changes?" (Discard / Keep editing). Tab stays inside the
 > screen; choice groups labelled for screen readers. Disabled medicine: warning note "Disabled: reason. Prescribing it
@@ -182,7 +199,7 @@ Full original scope list preserved in git history (`c0e0ab2`, `2d2ad71`, `0a0fa4
 - Valid-call gate at 50 seconds in `startCallTimer()`
 - All 5 scenario IDs and their `case_type`, `ha_status`, `meds_type` fields
 - Rx overlay, zoom, rotate, pan, pinch logic
-- Toast system (`showToast`) and success-toast system (`showSuccessToast`)
+- Success confirmation card (`showSuccessToast`). The black toast (`showToast`) was removed on Apurva's instruction (D-27); do not bring it back
 - `switchScenario()` function structure
 - Sheet overlay alignment in `openSheet()` using `getBoundingClientRect()`
 - The `.btn` button system in `styles.css` and `ICONS` map in `app.js` — cosmetic changes go here, once, not per-button. See `docs/design_system.md`.

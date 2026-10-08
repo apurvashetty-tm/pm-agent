@@ -145,7 +145,6 @@
           <div id="cs-patient-meta">—</div>
         </div>
         <span id="cs-order-value"></span>
-        <span id="cs-timer-badge" class="tm-tag tm-tag--md tm-tag--info hidden"><span class="tm-icon tm-icon--16" data-icon="phone-call"></span><span id="cs-timer-text">0:00</span></span>
         <button id="cs-view-rx-btn" class="tm-btn tm-btn--secondary tm-btn--xs hidden" onclick="openRxOverlay()"><span class="tm-icon tm-icon--16" data-icon="clipboard-text"></span>View Rx</button>
       </div>
 
@@ -213,70 +212,72 @@
 
       <!-- 4. Action Zone — merged call + post-call -->
       <div id="action-zone" class="tm-card">
+        <h2 class="tm-section-title section-title--inline">Call</h2>
+        <!-- Shown once the case is closed (order confirmed / callback scheduled / patient unavailable) -->
+        <div id="az-closed" class="tm-notice" hidden><span class="tm-icon" data-icon="circle-check"></span><span id="az-closed-text">—</span></div>
 
         <!-- Briefing strip — all scenarios, persists above both phases -->
         <div id="pre-call-brief" class="tm-notice">
           <div class="pcb-body">
-            <div class="pcb-label" id="pcb-label">—</div>
-            <div class="pcb-script-prefix">End of call script:</div>
+            <div class="pcb-label" id="pcb-label">End-of-call script</div>
             <div class="pcb-text" id="pcb-text">—</div>
           </div>
         </div>
 
         <!-- Phase 1: Call control (hidden when gate passes) -->
         <div id="az-phase1">
+          <!-- What happened to the last call attempt (didn't pick up / didn't connect / ended before 50s) -->
+          <div id="az-missed" class="tm-notice tm-notice--warning" hidden><span class="tm-icon" data-icon="phone-off"></span><span id="az-missed-text">Patient didn't pick up.</span></div>
 
-          <button id="call-initiate-btn" class="tm-btn tm-btn--lg tm-btn--primary tm-btn--block" onclick="handleCallAction()">
-            <span id="call-btn-icon" class="tm-icon" data-icon="phone"></span>
-            <span id="call-btn-label">Call Patient</span>
-          </button>
-
-          <!-- Pre-gate schedule callback — btn-text during call, btn-ghost after early end (JS swaps) -->
-          <button id="pre-gate-callback-btn" class="tm-btn tm-btn--sm tm-btn--ghost tm-btn--block hidden" onclick="openSheet('sheet-callback')">
-            <span class="tm-icon tm-icon--16" data-icon="calendar"></span>Schedule Callback
-          </button>
 
           <div id="az-status-label" class="hidden"></div>
-        </div>
-
-        <!-- Phase 2: Post-call (hidden until valid-call gate passes [LOCKED]) -->
-        <div id="az-phase2">
-          <div id="postcall-cta-card">
-            <div id="postcall-cta-label">Post-call action</div>
-            <button id="main-cta-btn" class="tm-btn tm-btn--lg tm-btn--primary tm-btn--block" onclick="handleMainCTA()">
-              <span id="main-cta-icon"></span>
-              <span id="main-cta-label">Confirm Order</span>
-            </button>
-            <!-- Secondary actions — compact chip row below primary -->
-            <div id="postcall-secondary-row">
-              <button id="schedule-callback-btn" class="tm-btn tm-btn--sm tm-btn--secondary" onclick="openSheet('sheet-callback')">
-                <span class="tm-icon tm-icon--16" data-icon="calendar"></span>
-                <span id="schedule-callback-label">Schedule Callback</span>
-              </button>
-              <button id="skip-ha-btn" class="tm-btn tm-btn--sm tm-btn--secondary" onclick="openSheet('sheet-skip-ha')">
-                Skip HA Call <span class="tm-icon tm-icon--16" data-icon="chevron-right"></span>
-              </button>
-            </div>
-          </div>
         </div>
 
       </div><!-- /action-zone -->
 
     </div><!-- /main-scroll -->
 
+    <!-- CASE ACTION BAR — the one main action, pinned to the bottom (agreed 2026-10-08, decision log D-22).
+         Call Patient / Calling… / End Call / Call Again before the gate; Confirm Order / Transfer / Forward after it.
+         Secondary actions sit in the same bar (D-28); the Call card keeps only status and the script. -->
+    <div id="case-actionbar" class="tm-actionbar">
+      <!-- Secondary call actions, pinned above the main one (D-28): nothing the doctor can do needs a scroll -->
+      <div id="ab-secondary">
+        <button id="pre-gate-callback-btn" class="tm-btn tm-btn--sm tm-btn--secondary hidden" onclick="openSheet('sheet-callback')">
+          <span class="tm-icon tm-icon--16" data-icon="calendar"></span>Schedule Callback
+        </button>
+        <button id="az-unavail-btn" class="tm-btn tm-btn--sm tm-btn--destructive" onclick="markCustomerUnavailable()" hidden>Mark Unavailable</button>
+        <button id="schedule-callback-btn" class="tm-btn tm-btn--sm tm-btn--secondary" onclick="openSheet('sheet-callback')" hidden>
+          <span class="tm-icon tm-icon--16" data-icon="calendar"></span><span id="schedule-callback-label">Schedule Callback</span>
+        </button>
+        <button id="skip-ha-btn" class="tm-btn tm-btn--sm tm-btn--secondary" onclick="openSheet('sheet-skip-ha')" hidden>Skip HA Call</button>
+      </div>
+      <button id="call-initiate-btn" class="tm-btn tm-btn--lg tm-btn--primary tm-btn--block" onclick="handleCallAction()">
+        <span id="call-btn-icon" class="tm-icon" data-icon="phone"></span>
+        <span id="call-btn-label">Call Patient</span>
+      </button>
+      <button id="next-order-btn" class="tm-btn tm-btn--lg tm-btn--primary tm-btn--block" onclick="resetToDemo()" hidden>
+        Next Order <span class="tm-icon" data-icon="arrow-right"></span>
+      </button>
+      <button id="main-cta-btn" class="tm-btn tm-btn--lg tm-btn--primary tm-btn--block" onclick="handleMainCTA()" hidden>
+        <span id="main-cta-icon"></span>
+        <span id="main-cta-label">Confirm Order</span>
+      </button>
+    </div>
+
 <!-- ============================================================
      RX FULL-SCREEN OVERLAY (dark viewer — intentional for doc readability)
 ============================================================ -->
 <div id="rx-overlay">
   <div id="rx-overlay-header">
-    <button id="rx-overlay-close" class="tm-btn tm-btn--tertiary tm-btn--xs tm-btn--icon" onclick="closeRxOverlay()" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button>
+    <button id="rx-overlay-close" class="tm-btn tm-btn--on-dark tm-btn--icon" onclick="closeRxOverlay()" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button>
     <div id="rx-overlay-title">Prescription</div>
     <div id="rx-controls">
-      <button class="tm-btn tm-btn--tertiary tm-btn--xs tm-btn--icon rx-ctrl-btn" onclick="rxZoomOut()" title="Zoom out" aria-label="Zoom out"><span class="tm-icon tm-icon--16" data-icon="minus"></span></button>
+      <button class="tm-btn tm-btn--on-dark tm-btn--icon rx-ctrl-btn" onclick="rxZoomOut()" title="Zoom out" aria-label="Zoom out"><span class="tm-icon tm-icon--16" data-icon="minus"></span></button>
       <span id="rx-zoom-label">100%</span>
-      <button class="tm-btn tm-btn--tertiary tm-btn--xs tm-btn--icon rx-ctrl-btn" onclick="rxZoomIn()" title="Zoom in" aria-label="Zoom in"><span class="tm-icon tm-icon--16" data-icon="plus"></span></button>
-      <button class="tm-btn tm-btn--tertiary tm-btn--xs tm-btn--icon rx-ctrl-btn" onclick="rxRotate()" title="Rotate" aria-label="Rotate"><span class="tm-icon tm-icon--16" data-icon="rotate-clockwise"></span></button>
-      <button class="tm-btn tm-btn--tertiary tm-btn--xs tm-btn--icon rx-ctrl-btn" onclick="rxReset()" title="Reset" aria-label="Reset view"><span class="tm-icon tm-icon--16" data-icon="arrows-minimize"></span></button>
+      <button class="tm-btn tm-btn--on-dark tm-btn--icon rx-ctrl-btn" onclick="rxZoomIn()" title="Zoom in" aria-label="Zoom in"><span class="tm-icon tm-icon--16" data-icon="plus"></span></button>
+      <button class="tm-btn tm-btn--on-dark tm-btn--icon rx-ctrl-btn" onclick="rxRotate()" title="Rotate" aria-label="Rotate"><span class="tm-icon tm-icon--16" data-icon="rotate-clockwise"></span></button>
+      <button class="tm-btn tm-btn--on-dark tm-btn--icon rx-ctrl-btn" onclick="rxReset()" title="Reset" aria-label="Reset view"><span class="tm-icon tm-icon--16" data-icon="arrows-minimize"></span></button>
     </div>
   </div>
   <div id="rx-overlay-body">
@@ -343,25 +344,34 @@
 
 <!-- ============================================================
      PRESCRIBE SCREEN — full-screen view over the case (like the Rx viewer), inside the phone frame.
-     Agreed 2026-10-07: every section open with backend defaults; Prescribe at the end of the content (not pinned);
-     Disable is a small action in the app bar. Sections between "Prints as" and the note are rendered by app.js.
+     Agreed 2026-10-07: every section open with backend defaults. Prescribe is pinned to the bottom and always active (D-22, which replaced "Prescribe at the end, not pinned");
+     Disable is a small action in the app bar. The "On prescription" line is pinned under the app bar (D-25); the sections above the note are rendered by app.js.
 ============================================================ -->
 <div id="prescribe-screen" role="dialog" aria-modal="true" aria-labelledby="ps-title" aria-hidden="true" tabindex="-1">
+  <!-- Header group: app bar + the live prescription line, pinned together (never scrolls) — decision log D-25 -->
+  <div id="ps-top">
   <div id="ps-bar" class="tm-appbar">
-    <button class="tm-btn tm-btn--ghost tm-btn--icon" onclick="requestClosePrescribe()" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button>
+    <button class="tm-btn tm-btn--quiet tm-btn--icon" onclick="requestClosePrescribe()" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button>
     <div id="ps-heading"><span id="ps-title" class="tm-appbar__title">—</span><span id="ps-form">—</span></div>
     <button id="ps-disable-btn" class="tm-btn tm-btn--destructive tm-btn--xs" onclick="openDisableSheet()">Disable</button>
   </div>
+  <div id="ps-rx">
+    <div class="ps-rx-label" id="ps-rx-label"><span class="tm-icon tm-icon--16" data-icon="prescription"></span>On prescription</div>
+    <div id="ps-prints-text" aria-live="polite" aria-labelledby="ps-rx-label">—</div>
+  </div>
+  </div><!-- /ps-top -->
   <div id="ps-body">
     <div id="ps-disabled-note" class="tm-notice tm-notice--warning" hidden><span class="tm-icon" data-icon="alert-triangle"></span><span id="ps-disabled-text">Disabled.</span></div>
-    <div id="ps-prints" class="tm-card tm-card--tint"><div class="ps-label">Prints as</div><div id="ps-prints-text" aria-live="polite">—</div></div>
     <div id="ps-dynamic"></div>
-    <div class="tm-field ps-section">
+    <div class="tm-card ps-card"><div class="tm-field ps-section">
       <label class="tm-field__label" for="ps-note">Additional instructions</label>
       <div class="tm-field__control"><textarea id="ps-note" rows="3" placeholder="e.g. Stop if rash appears"></textarea></div>
       <div class="tm-field__helper">Optional. Printed on the prescription.</div>
-    </div>
-    <button id="ps-prescribe" class="tm-btn tm-btn--primary tm-btn--block" onclick="confirmMedEdit()">Prescribe</button>
+    </div></div>
+  </div>
+  <!-- Prescribe pinned to the bottom, always active (agreed 2026-10-08, decision log D-22) -->
+  <div id="ps-actionbar" class="tm-actionbar">
+    <button id="ps-prescribe" class="tm-btn tm-btn--lg tm-btn--primary tm-btn--block" onclick="confirmMedEdit()">Prescribe</button>
   </div>
 </div>
 
@@ -373,29 +383,29 @@
 
   <!-- Hold Sheet -->
   <div id="sheet-callback" class="bottom-sheet">
-    <div class="sheet-handle"></div>
-    <div class="sheet-title">Schedule Callback</div>
+    <div class="sheet-title"><span>Schedule Callback</span><button class="tm-btn tm-btn--quiet tm-btn--icon sheet-close" onclick="closeSheet()" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button></div>
     <div class="sheet-body">
-      <div class="sheet-section-label">Date</div>
-      <div class="chip-row chip-row-wrap" id="callback-day-chips">
-        <button class="tm-chip" aria-pressed="false" data-day="today" onclick="selectCallbackDay('today')">Today</button>
-        <button class="tm-chip" aria-pressed="false" data-day="tomorrow" onclick="selectCallbackDay('tomorrow')">Tomorrow</button>
+      <div class="tm-field__label sheet-section-label">Date</div>
+      <div class="chip-grid" style="--cols:2" id="callback-day-chips">
+        <button class="tm-chip tm-chip--lg" aria-pressed="false" data-day="today" onclick="selectCallbackDay('today')">Today</button>
+        <button class="tm-chip tm-chip--lg" aria-pressed="false" data-day="tomorrow" onclick="selectCallbackDay('tomorrow')">Tomorrow</button>
       </div>
-      <div class="sheet-section-label">Time</div>
-      <div class="chip-row chip-row-wrap" id="callback-time-chips">
-        <button class="tm-chip" aria-pressed="false" data-time="09:00" onclick="selectCallbackTime('09:00')">9:00 AM</button>
-        <button class="tm-chip" aria-pressed="false" data-time="09:30" onclick="selectCallbackTime('09:30')">9:30 AM</button>
-        <button class="tm-chip" aria-pressed="false" data-time="10:00" onclick="selectCallbackTime('10:00')">10:00 AM</button>
-        <button class="tm-chip" aria-pressed="false" data-time="10:30" onclick="selectCallbackTime('10:30')">10:30 AM</button>
-        <button class="tm-chip" aria-pressed="false" data-time="11:00" onclick="selectCallbackTime('11:00')">11:00 AM</button>
-        <button class="tm-chip" aria-pressed="false" data-time="11:30" onclick="selectCallbackTime('11:30')">11:30 AM</button>
-        <button class="tm-chip" aria-pressed="false" data-time="12:00" onclick="selectCallbackTime('12:00')">12:00 PM</button>
-        <button class="tm-chip" aria-pressed="false" data-time="14:00" onclick="selectCallbackTime('14:00')">2:00 PM</button>
-        <button class="tm-chip" aria-pressed="false" data-time="15:00" onclick="selectCallbackTime('15:00')">3:00 PM</button>
-        <button class="tm-chip" aria-pressed="false" data-time="16:00" onclick="selectCallbackTime('16:00')">4:00 PM</button>
-        <button class="tm-chip" aria-pressed="false" data-time="17:00" onclick="selectCallbackTime('17:00')">5:00 PM</button>
-        <button class="tm-chip" aria-pressed="false" data-time="18:00" onclick="selectCallbackTime('18:00')">6:00 PM</button>
+      <div class="tm-field__label sheet-section-label">Time</div>
+      <div class="chip-grid" style="--cols:3" id="callback-time-chips">
+        <button class="tm-chip tm-chip--lg" aria-pressed="false" data-time="09:00" onclick="selectCallbackTime('09:00')">9:00 AM</button>
+        <button class="tm-chip tm-chip--lg" aria-pressed="false" data-time="09:30" onclick="selectCallbackTime('09:30')">9:30 AM</button>
+        <button class="tm-chip tm-chip--lg" aria-pressed="false" data-time="10:00" onclick="selectCallbackTime('10:00')">10:00 AM</button>
+        <button class="tm-chip tm-chip--lg" aria-pressed="false" data-time="10:30" onclick="selectCallbackTime('10:30')">10:30 AM</button>
+        <button class="tm-chip tm-chip--lg" aria-pressed="false" data-time="11:00" onclick="selectCallbackTime('11:00')">11:00 AM</button>
+        <button class="tm-chip tm-chip--lg" aria-pressed="false" data-time="11:30" onclick="selectCallbackTime('11:30')">11:30 AM</button>
+        <button class="tm-chip tm-chip--lg" aria-pressed="false" data-time="12:00" onclick="selectCallbackTime('12:00')">12:00 PM</button>
+        <button class="tm-chip tm-chip--lg" aria-pressed="false" data-time="14:00" onclick="selectCallbackTime('14:00')">2:00 PM</button>
+        <button class="tm-chip tm-chip--lg" aria-pressed="false" data-time="15:00" onclick="selectCallbackTime('15:00')">3:00 PM</button>
+        <button class="tm-chip tm-chip--lg" aria-pressed="false" data-time="16:00" onclick="selectCallbackTime('16:00')">4:00 PM</button>
+        <button class="tm-chip tm-chip--lg" aria-pressed="false" data-time="17:00" onclick="selectCallbackTime('17:00')">5:00 PM</button>
+        <button class="tm-chip tm-chip--lg" aria-pressed="false" data-time="18:00" onclick="selectCallbackTime('18:00')">6:00 PM</button>
       </div>
+      <div id="callback-error" class="tm-field__helper callback-error" role="alert" hidden></div>
       <button class="tm-btn tm-btn--primary tm-btn--block sheet-cta-margin" onclick="confirmScheduleCallback()">Confirm Callback</button>
     </div>
   </div>
@@ -403,10 +413,10 @@
 
   <!-- Skip HA Sheet -->
   <div id="sheet-skip-ha" class="bottom-sheet">
-    <div class="sheet-handle"></div>
-    <div class="sheet-title">Skip HA Call</div>
+    <div class="sheet-title"><span>Skip HA Call</span><button class="tm-btn tm-btn--quiet tm-btn--icon sheet-close" onclick="closeSheet()" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button></div>
     <div class="sheet-body">
       <!-- [OPEN DECISION] OQ-008: skip eligibility TBD -->
+      <div class="sheet-subtitle">Select reason</div>
       <button class="choice-row sheet-option-btn" onclick="confirmSkipHA('Patient declined HA call')">
         <div class="sheet-option-title">Patient declined HA call</div>
         <div class="sheet-option-desc">Patient explicitly did not want an HA call</div>
@@ -424,19 +434,17 @@
 
   <!-- Discard changes? — shown only when closing the Prescribe screen after editing -->
   <div id="sheet-discard" class="bottom-sheet">
-    <div class="sheet-handle"></div>
-    <div class="sheet-title">Discard changes?</div>
+    <div class="sheet-title"><span>Discard changes?</span><button class="tm-btn tm-btn--quiet tm-btn--icon sheet-close" onclick="closeSheet()" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button></div>
     <div class="sheet-body">
       <div class="sheet-subtitle">Your changes to this medicine will not be saved.</div>
-      <button class="tm-btn tm-btn--destructive tm-btn--block" onclick="discardPrescribe()">Discard</button>
-      <button class="tm-btn tm-btn--secondary tm-btn--block sheet-link-margin" onclick="closeSheet()">Keep editing</button>
+      <button class="tm-btn tm-btn--secondary tm-btn--block" onclick="closeSheet()">Keep editing</button>
+      <button class="tm-btn tm-btn--destructive tm-btn--block sheet-link-margin" onclick="discardPrescribe()">Discard</button>
     </div>
   </div>
 
   <!-- Disable Medicine Reason Sheet -->
   <div id="sheet-disable-reason" class="bottom-sheet">
-    <div class="sheet-handle"></div>
-    <div class="sheet-title">Disable Medicine</div>
+    <div class="sheet-title"><span>Disable Medicine</span><button class="tm-btn tm-btn--quiet tm-btn--icon sheet-close" onclick="closeSheet()" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button></div>
     <div class="sheet-body">
       <div class="sheet-subtitle" id="sheet-disable-med-label">Select reason</div>
       <div class="reason-list">
@@ -444,15 +452,14 @@
         <button class="choice-row reason-btn" onclick="confirmDisable('Contraindicated for patient')">Contraindicated for patient<span class="reason-hint">Allergy or known reaction</span></button>
         <button class="choice-row reason-btn" onclick="confirmDisable('Duplicate medication')">Duplicate medication<span class="reason-hint">Already on equivalent drug</span></button>
         <button class="choice-row reason-btn" onclick="confirmDisable('Patient declined')">Patient declined<span class="reason-hint">Patient refused this medicine</span></button>
-        <button class="choice-row reason-btn" onclick="confirmDisable('Wrong strength — will re-prescribe')">Wrong strength<span class="reason-hint">Will disable and add correct one</span></button>
+        <button class="choice-row reason-btn" onclick="confirmDisable('Wrong strength')">Wrong strength<span class="reason-hint">The ordered strength isn't right</span></button>
       </div>
     </div>
   </div>
 
   <!-- Profile Sheet -->
   <div id="sheet-profile" class="bottom-sheet">
-    <div class="sheet-handle"></div>
-    <div class="sheet-title">Profile</div>
+    <div class="sheet-title"><span>Profile</span><button class="tm-btn tm-btn--quiet tm-btn--icon sheet-close" onclick="closeSheet()" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button></div>
     <div class="sheet-body">
       <!-- Doctor identity -->
       <div id="profile-identity">
@@ -464,7 +471,7 @@
       </div>
       <!-- Earnings -->
       <div id="profile-earnings-card" class="tm-card tm-card--flat">
-        <div class="profile-section-label">Today's Earnings</div>
+        <div class="tm-field__label profile-section-label">Today's Earnings</div>
         <div id="profile-earnings-row">
           <div class="profile-earnings-item">
             <div class="profile-earnings-label">Earned</div>
@@ -478,7 +485,7 @@
         </div>
       </div>
       <!-- User Manual -->
-      <button class="profile-menu-btn" onclick="showToast('[MOCK] User Manual — not yet linked'); closeSheet();">
+      <button class="profile-menu-btn" onclick="showToast('User manual not linked yet'); closeSheet();">
         <span class="profile-menu-label"><span class="tm-icon" data-icon="book"></span>User manual</span>
         <span class="tm-icon tm-icon--16" data-icon="chevron-right"></span>
       </button>
@@ -491,8 +498,7 @@
 
   <!-- Retry Sheet — no_answer / timeout paths -->
   <div id="sheet-retry" class="bottom-sheet">
-    <div class="sheet-handle"></div>
-    <div id="sheet-retry-title" class="sheet-title">Patient didn't pick up</div>
+    <div class="sheet-title"><span id="sheet-retry-title">Patient didn't pick up</span><button class="tm-btn tm-btn--quiet tm-btn--icon sheet-close" onclick="closeSheet()" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button></div>
     <div class="sheet-body">
       <button class="tm-btn tm-btn--primary tm-btn--block sheet-cta-margin" onclick="retryCall()">Retry Call</button>
       <button class="tm-btn tm-btn--destructive tm-btn--block sheet-link-margin" onclick="markCustomerUnavailable()">Mark as Unavailable</button>
@@ -501,19 +507,15 @@
 
   <!-- Customer Unavailable Sheet -->
   <div id="sheet-unavailable" class="bottom-sheet">
-    <div class="sheet-handle"></div>
-    <div class="sheet-body unavail-body">
-      <div class="state-icon"><span class="tm-icon tm-icon--24" data-icon="phone-off"></span></div>
-      <div class="unavail-title tm-text-h2">Customer unavailable</div>
-      <div id="unavail-desc" class="unavail-desc">Patient could not be reached. Case will be reassigned to the queue.</div>
-      <button class="tm-btn tm-btn--primary tm-btn--block sheet-cta-margin" onclick="resetToDemo()">Next Order <span class="tm-icon" data-icon="arrow-right"></span></button>
+    <div class="sheet-title"><span>Customer unavailable</span><button class="tm-btn tm-btn--quiet tm-btn--icon sheet-close" onclick="closeSheet()" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button></div>
+    <div class="sheet-body">
+      <div id="unavail-desc" class="sheet-subtitle">Patient could not be reached. Case will be reassigned to the queue.</div>
+      <button class="tm-btn tm-btn--primary tm-btn--block" onclick="resetToDemo()">Next Order <span class="tm-icon" data-icon="arrow-right"></span></button>
     </div>
   </div>
-
 </div><!-- /sheet-overlay -->
 
 <!-- TOAST -->
-<div id="toast" class="tm-toast"></div>
 
 <!-- COMPLETED OVERLAY -->
 <!-- Success toast — non-blocking completion confirmation with Next Order fallback -->

@@ -76,11 +76,12 @@ the reasoning is kept so nobody re-opens a settled question without new informat
 
 ## Prescribe screen (opening a medicine)
 
-### D-10 · A full-screen view, not a bottom sheet — 2026-10-07
-- **Decision:** Opens full screen over the case (like the Rx viewer), one scroll area, Prescribe at the **end** of
-  the content (not pinned).
+### D-10 · A full-screen view, not a bottom sheet — 2026-10-07 (button placement revised 2026-10-08, see D-22)
+- **Decision:** Opens full screen over the case (like the Rx viewer), one scroll area, laid out like the case page:
+  grey background, one white card per block (Schedule · SOS · Duration · Food · Additional instructions).
 - **Why:** A long form inside a bottom sheet means two scroll areas, accidental dismissal (losing edits) and no
-  proper header. Prescribe is not pinned so the doctor scrolls past every section before confirming.
+  proper header. Cards match the case page and make each block easy to find while scrolling.
+- **Superseded:** "Prescribe at the end, not pinned, so the doctor scrolls past every section" — replaced by D-22.
 
 ### D-11 · Every section open with backend defaults; no collapsed summary — 2026-10-07
 - **Decision:** All sections are visible and pre-filled; the doctor reads through them and changes what's wrong.
@@ -97,7 +98,7 @@ the reasoning is kept so nobody re-opens a settled question without new informat
 - **Rejected:** "Tablet · Prescribe" subtitle; a coloured form tag (colour is only for status); full-width Disable
   beside Prescribe; a back arrow.
 
-### D-13 · "Prints as" line at the top — 2026-10-07
+### D-13 · "Prints as" line at the top — 2026-10-07 (revised by D-25: now "On prescription", pinned under the app bar)
 - **Decision:** One line showing exactly what will print, updating live.
 - **Ongoing:** shown on screen as "Ongoing (6 months)"; the print shows the **period** ("6 months"). Confirmed with
   the medical team. The period is the backend's configured default (per medicine if that ever differs).
@@ -157,9 +158,127 @@ the reasoning is kept so nobody re-opens a settled question without new informat
 
 ---
 
+### D-22 · Main action pinned to the bottom, always active — 2026-10-08 (extended by D-28: secondary actions pinned too)
+- **Decision:** The one main action sits in a bottom bar on both screens: the case page (Call Patient → Calling… /
+  End Call / Call Again → Confirm Order / Transfer / Forward) and the Prescribe screen (Prescribe). Always active.
+  Status, briefing script and secondary actions (Schedule Callback, Skip HA) stay in the action card. The bar
+  hides when there is nothing to do (case completed / unavailable) and steps aside while typing on a phone.
+- **Why:** A button that simply ends where the content ends looks out of place and moves around; a pinned bar is the
+  standard mobile pattern (`.tm-actionbar`) and keeps the main action in thumb reach. Verification before Prescribe
+  comes from the "On prescription" line pinned under the app bar (D-25), which shows the whole prescription in one line.
+- **Rejected:** pinned but greyed out until the doctor scrolls to the bottom — forcing a scroll doesn't make anyone
+  read; a disabled button with no reason confuses mid-call; the scroll rule breaks whenever content height changes
+  (duration open, errors, SOS, rotation, keyboard, tall phones) and fails keyboard/screen-reader users.
+- **Also rejected:** drawing the phone's back / home / recent buttons in the prototype — real phones already show
+  their own, fake buttons get tapped, and the 9:16 frame already reads as a phone.
+
+### D-23 · UI audit fixes — 2026-10-08
+Own audit of both screens against the design system; Apurva asked to fix everything except the tablet icon (#11, her call).
+- **Sheets:** one template everywhere — title + grey cross (close) on the right, no drag handle; optional grey subtitle;
+  labels use `tm-field__label`. Discard sheet: Keep editing first, Discard (red) second. Skip HA sheet gets a
+  "Select reason" subtitle. Customer-unavailable sheet uses the same template (no big icon).
+- **Callback chips:** an even grid (2 columns for dates, 3 for times) with `tm-chip--lg`, so rows don't wrap ragged.
+- **Action card:** titled "Call" like the other section titles; the "Post-call action" label is gone. Schedule
+  Callback / Skip HA are full-width small secondary buttons, stacked.
+- **Closed states:** after Unavailable, Callback or a completed action, the card shows one plain notice
+  ("Patient unavailable — case returned to the queue." / "Callback scheduled — …") instead of an empty card.
+  Unavailable also pins **Next Order** in the bottom bar (revises D-22, which hid the bar there) so the doctor
+  always has a way forward.
+- **Patient line:** age and gender only.
+- **Disabled medicine row:** only the icon and text fade; the row's own actions stay full strength.
+- **Toasts:** one line, short text ("Call ended before 50s", "HA call skipped", …); long text is cut with "…".
+- **Prescribe:** labels use `tm-field__label`; SOS "Max doses a day" puts the label above its chips like every other
+  field; long medicine names stay on one line in the app bar; text boxes can't be resized by dragging.
+- **Rx viewer:** controls use the new on-dark button so they read on the dark surface.
+- **Why:** each was a one-off style next to a design-system one, or a state that left the doctor with nothing to do.
+
+### D-25 · "On prescription" line pinned under the app bar — 2026-10-08
+- **Problem it solves:** with Prescribe always active (D-22), this line is the doctor's only check of what the patient
+  will get. It has two jobs: show the effect of every tap while editing, and be the last thing read before Prescribe.
+  As a card at the top of the scroll it disappeared as soon as the doctor scrolled to the fields they were changing,
+  and it was styled like a hint (small grey label, regular text).
+- **Decision:**
+  - **Pinned:** joined to the app bar as one header block (one shadow under both), so it never scrolls away. The
+    medicine name above it and the line below read like the entry on the prescription itself.
+  - **Name:** "On prescription" (with the Rx icon) instead of "Prints as". The patient mostly gets the prescription
+    in the app, not on paper, and "On prescription" says whose document this is.
+  - **Visibility:** the line is the strongest text on the screen (16px semibold, dark) on a light brand-blue band;
+    the label is small and blue. It briefly turns a deeper blue when the text changes, so a tap lower down is visibly
+    reflected (no animation with reduced motion).
+  - **Length:** wraps in full; only a long "Additional instructions" text is cut at 3 lines, since the doctor is
+    looking at that text in its own box.
+- **Rejected:** pinning it above Prescribe at the bottom — on a phone the bottom bar steps aside while typing, so the
+  line would vanish exactly when the doctor types instructions that print; it also stacks two bands in the thumb zone.
+  Keeping it as a scrolling card — fails the "see the effect while editing" job.
+
+### D-26 · Call didn't connect; no call timer for the doctor — 2026-10-08
+- **Decision:** After "didn't pick up" or "call didn't connect", closing the sheet (cross or tap outside) is allowed and
+  loses nothing: the Call card says what happened, keeps **Mark as Unavailable**, and the pinned button reads
+  **Call Again**. The end-of-call script is hidden until the doctor calls again. The sheet title no longer says
+  "Webhook timed out" (system language) — it says "Call didn't connect".
+- **Decision:** No call timer anywhere in the doctor's view (removed from the patient strip). The 50s rule still runs in
+  the background and unlocks the actions; the timer stays only in the demo controls.
+- **Rejected:** making the sheet impossible to close — it blocks the doctor from checking the case before deciding.
+- **Kept:** the card title stays "Call" (not "Call actions"): the card holds the call's status and script as well as
+  actions, and the main action now sits in the pinned bar outside the card.
+
+### D-27 · No black toasts — 2026-10-08
+- **Decision (Apurva):** the small black pop-up messages are gone everywhere; they don't exist in the real app. Each
+  outcome now shows where it happens:
+  - call ended before 50s → a note in the Call card ("call again or schedule a callback");
+  - Schedule Callback without a date/time → red text in the sheet, naming what is missing;
+  - prescribed / disabled → the row's tag; HA skipped → Skip HA disappears and the button becomes Confirm Order;
+  - 50s passed → the pinned button changes; demo fast-forward and "Logout" say nothing.
+- **Kept:** the white confirmation card with Next Order after a completed case.
+- Overrides the "toast system must not change" line in `session_handoff.md` §3 (explicit instruction).
+
+### D-28 · Every call action pinned; the page never scrolls by itself — 2026-10-08
+- **Problem:** only the main button was pinned (D-22). Schedule Callback, Skip HA and Mark as Unavailable sat in the
+  Call card, the last card on the page, so they were off-screen whenever the doctor was at Medicines or Notes. An
+  auto-scroll to the card patched this in one moment only (50s passed), so the page sometimes jumped and sometimes didn't.
+- **Decision:** secondary call actions sit in the pinned bar, side by side above the main button (one = full width):
+  during the call Schedule Callback · End Call; after 50s Schedule Callback + Skip HA · Confirm & Transfer;
+  after a missed call Mark Unavailable · Call Again. The Call card keeps only status notes and the script.
+  The page never scrolls by itself.
+- **Script:** one small label "End-of-call script" and the quote. Dropped the second heading ("Live HA Transfer" /
+  "HA Follow-up" / "Closing Script") and its icon — the script and the main button already say which case it is.
+- **Trade-off accepted:** the script is no longer pulled into view at 50s; the Call card is last on the page, which is
+  the natural end of the consultation, and the pinned button changing marks the moment.
+- **Rejected:** auto-scrolling on every action — it yanks the doctor away from notes they are typing mid-call.
+
+### D-29 · New medicine form icons — 2026-10-09
+- **Decision (Apurva):** tablet = a tablet drawn at an angle with its score line; syrup = bottle + measuring cup;
+  drops = tilted dropper bottle + drop; cream = tube; inhaler = L-shaped puffer. Capsule (`pill`) and injection
+  (`vaccine`) unchanged. Drawn from Apurva's reference images, not copied; same grid and stroke as Tabler.
+- **Why:** the old tablet (circle with a bar) read as "no entry"; wind lines for inhaler, a test tube for cream and a
+  plain drop for eye drops were the wrong objects.
+- **Rejected:** flat tablets — a circle with a full bar reads as "no entry", with a short bar as a "minus / remove"
+  button, with a side edge as coins; a blister strip reads as a dice face (render 2026-10-09/02).
+- **Design-system rule:** RULES.md rule 4 now says one-colour line drawings at an angle are fine; shading, gradients
+  and rendered 3D are not. Open: confirm with the design team which icon set SALT uses (README says Tabler; not yet
+  verified in Figma).
+- Doctor research (icons vs text labels) uses these icons in version A.
+
+### D-30 · Review fixes: dose input, Wrong strength copy, focus — 2026-10-09
+From an external (ChatGPT) review, each point verified before acting.
+- **Other dose:** the whole entry must be a plain positive number ("7", "7.5", ".5"). "7..5", "7abc", "7,5", "1e2",
+  "0", "-2" are rejected in place ("Use numbers only, e.g. 7.5 units"); what the doctor typed is kept; nothing saves.
+  Before, "7..5" silently saved 7 units.
+- **Wrong strength:** hint was "Will disable and add correct one", but adding medicines was removed. Now it only
+  describes the reason ("The ordered strength isn't right"). **Open:** who corrects a wrong strength, and how.
+- **Focus:** after Prescribe or Disable, keyboard focus returns to that medicine's row (the list is rebuilt).
+- **Not changed:** the review said the pinned Prescribe contradicts "see every section first". That rule was replaced
+  by D-22 at Apurva's request; a stale code comment saying "not pinned" was corrected.
+
 ## Design system changes made for this work
 
 ### D-21 · Toggle fix and a large chip size — 2026-10-07
 - **Decision:** Fixed a design-system bug (a checked toggle inside a label stayed grey). Added `.tm-chip--lg`
   ([PROPOSED], about 46px tall) for choices tapped during a call.
 - **Why:** The standard chip is a compact filter chip, too small as a main tap target.
+
+### D-24 · Quiet and on-dark buttons [PROPOSED] — 2026-10-08
+- **Decision:** Added `.tm-btn--quiet` (grey, no fill — app-bar and sheet close) and `.tm-btn--on-dark` (light, no
+  fill — controls on dark surfaces such as the Rx viewer). Both [PROPOSED] in `design-system/src/components.css`.
+- **Why:** the existing ghost button is brand blue, which made a close cross look like the main action; and nothing
+  existed for white controls on a dark background.
