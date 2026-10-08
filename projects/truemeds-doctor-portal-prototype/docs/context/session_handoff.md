@@ -6,6 +6,9 @@
 **Session status:** Prescribe screen redesign built and reviewed; sticky header and scroll fixes done.
 **Why things are the way they are:** `docs/context/decision_log.md` (D-01 … D-21) — read it before changing any
 screen it covers. This file says what is built; the decision log says why.
+**Live link:** https://doctor-portal-prototype.netlify.app — Netlify deploys every push to `main` (base = repo root,
+publish = this folder). The root `netlify.toml` copies `design-system/` next to `index.html` at deploy time so the
+`../../design-system/…` links resolve. Work on a branch, then merge to `main` to update the live link.
 
 ---
 
