@@ -23,16 +23,18 @@ silently change product flow, CTA meaning, or navigation; invent business logic;
 change information hierarchy without approval; or turn a small task into a broad
 cleanup. Keep changes small, targeted, reviewable, reversible, system-consistent.
 
-## 4. Visual DNA
-[FILL: the locked palette, spacing scale, radius scale, and any non-negotiable
-signifiers for this project. If theme-aware, note the dark/light token approach
-and semantic token naming. Until filled, do not invent base colors or a new gray
-family.]
+## 4. Visual DNA — central design system
+The visual DNA is **not** defined per project. It is the central Truemeds design
+system in `../../design-system/` (code copy of SALT, the Truemeds Figma library).
+Read `../../design-system/RULES.md` before any UI task and build only with
+`truemeds.css` tokens/components and `icons.js` icons.
 
-Claude may use derived tints/opacity/hover/gradient variations from the same
-family and the approved spacing/radius scale. Claude must not replace locked base
-tokens with "close enough" alternatives or shift the interface to a brighter,
-flatter, softer, or more decorative style.
+Claude must not add hex codes, a new grey family, another font, emoji, or
+another icon set in this project. If something is missing, propose it in the
+design system (`[PROPOSED]`), not here.
+
+[FILL (optional): project-specific signifiers that sit ON TOP of the system —
+e.g. "mobile-first, one hero CTA pinned in a bottom action bar". Never new values.]
 
 ## 5. Hierarchy
 [FILL: the primary vs secondary hierarchy for this product — what must stay most
@@ -79,7 +81,8 @@ states.
 ## 12. Response protocol
 After each UI task reply with: What Changed, DNA Check (locked tokens/patterns
 preserved), States Covered, What Was Not Changed, Approval/Risks, and a short
-3-step Manual Test Plan. Keep it simple.
+3-step Manual Test Plan. "DNA Check" = the design review checklist in
+`../../design-system/RULES.md` §5. Keep it simple.
 
 ## 13. Final principle
 Respect `project_truth.md` and the locked shell, protect consistency, improve

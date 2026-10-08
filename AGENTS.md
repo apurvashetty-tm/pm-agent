@@ -87,6 +87,27 @@ automatically, so apply them manually here:
 - Do not move project-specific resume state into `knowledge/`; keep it in the
   active project's `docs/context/session_handoff.md`.
 
+## Writing or editing a PRD
+
+- Any PRD work (a new PRD, an edit, or a review round on an existing one) follows
+  `templates/lean-prd-guide.md`. Read it before drafting or editing.
+- The heavier `workflows/core/create-prd.md` flow runs only when explicitly asked.
+  Even then, apply the guide's rules on voice, plain words, saying things once,
+  review edits and versions, and AI tells.
+
+## Building any UI (design system)
+
+Every frontend project — prototypes, portals, internal tools, mockups — uses the
+central Truemeds design system in `design-system/` (a code copy of SALT, the
+Truemeds Figma library).
+
+- Before writing or changing any UI, read `design-system/RULES.md`.
+- Link `design-system/truemeds.css` and `design-system/icons/icons.js`; never
+  copy values out of them, never add hex codes, fonts, or icon sets in a project.
+- Missing a component? Add it to `design-system/src/components.css` marked
+  `[PROPOSED]` and rebuild — don't invent it inside the project.
+- Run the design review checklist (`RULES.md` §5) before calling UI work done.
+
 ## During work
 
 - Follow latest user instruction first.
@@ -118,3 +139,13 @@ automatically, so apply them manually here:
 - Before syncing with GitHub, check `git status --short --branch`.
 - Pull with fast-forward only when bringing down remote changes.
 - Keep local project files and handoff files committed together when possible.
+
+## Pushing to GitHub (credentials)
+
+- This checkout uses `https://github.com/apurvashetty-tm/pm-agent.git` with a repository-local credential helper. Direct HTTPS pushing from Cowork's `device_bash` against the attached folder was verified on 2026-10-06. Other checkouts need their own authentication setup.
+- Never embed a token in a remote URL, commit credentials, or read, display, copy, or upload private keys. A local-only configuration file can still expose a credential through logs or shared filesystem access.
+- Before publishing, inspect the current branch, pending commits, and working tree. Commit only task-related changes. Use a feature branch and pull request; do not force-push or bypass branch protection.
+- In Cowork, attach this local folder and use `device_bash` at its mounted path for normal Git commits and pushes. The cloud shell is a separate environment. The GitHub connector and Computer Use Terminal are not required for this workflow.
+- Let Git invoke the configured helper; never print credential files, run `git credential fill`, enable credential tracing, or copy secrets into tracked files. The helper resolves its credential file from the current checkout's Git directory so mounted path changes do not require reconfiguration. Credentials persist with this checkout, subject to token expiry or revocation and folder permissions.
+- When the current environment has authorized GitHub access, use `git push --dry-run origin <branch-name>`, then `git push origin <branch-name>`. Verify the remote branch hash matches the intended local commit with `git ls-remote origin refs/heads/<branch-name>`.
+- Diagnose network, filesystem, authentication, and branch-protection failures separately. Do not assume every failed push means a missing or expired token.

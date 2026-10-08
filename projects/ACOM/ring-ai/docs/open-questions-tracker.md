@@ -1,5 +1,8 @@
 # ACOM 2.0 / Ring AI — Open Questions Tracker
 
+> **Note (2026-09-09):** This tracker covers the earlier *future-state* design. The live open questions for the current build now live in `ai-led-lead-qualification-prd.md` §9 (Confluence PROD 2023260174).
+
+
 *Companion to the PRD. Owners fill in Status (Open / In progress / Answered) and the Answer. Markers: [DISCOVERY] internal eng · [RINGG] vendor · [TELCO] Ozonetel · [OPS] Product/Ops. ★ = also an M1/M2 design prerequisite.*
 
 ## Engineering [DISCOVERY]

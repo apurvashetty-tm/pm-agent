@@ -1,0 +1,276 @@
+/* ==========================================================
+   Truemeds components — built ONLY from tokens above.
+   Rule: no hex, no raw px for colour/radius/spacing in this file.
+   Every block says where it comes from:
+     [SALT]      matches a SALT Figma component
+     [PROPOSED]  not in SALT yet — internal-tools addition,
+                 built from SALT tokens, pending design-team review
+   ========================================================== */
+
+:root { --tm-font: var(--tm-font-family-plus-jakarta-sans); }
+
+/* ---------- Base ---------- */
+.tm, .tm * { box-sizing: border-box; }
+.tm {
+  font-family: var(--tm-font);
+  font-size: var(--tm-font-size-body-md);
+  line-height: var(--tm-font-lineheight-sm);
+  color: var(--tm-content-primary);
+  background: var(--tm-surface-secondary);
+  -webkit-font-smoothing: antialiased;
+}
+.tm-muted   { color: var(--tm-content-secondary); }
+.tm-subtle  { color: var(--tm-content-tertiary); }
+.tm-brand   { color: var(--tm-content-brand); }
+
+/* ---------- Icon [SALT: Tabler outline, 24 grid, 2px stroke] ---------- */
+.tm-icon {
+  width: 20px; height: 20px; flex: none;
+  display: inline-block; vertical-align: middle;
+  color: currentColor;
+}
+.tm-icon--16 { width: 16px; height: 16px; }
+.tm-icon--24 { width: 24px; height: 24px; }
+.tm-icon svg { width: 100%; height: 100%; display: block; }
+
+/* ---------- Button [SALT: Buttons 2.0] ---------- */
+.tm-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: var(--tm-space-sm);
+  font-family: var(--tm-font); font-weight: var(--tm-font-weight-semibold);
+  /* default = Medium */
+  font-size: var(--tm-font-size-body-lg); line-height: var(--tm-font-lineheight-md);
+  padding: var(--tm-space-md) var(--tm-space-lg);
+  border-radius: var(--tm-radius-lg);
+  border: 0;
+  cursor: pointer; white-space: nowrap; text-decoration: none;
+  transition: background-color 150ms ease, color 150ms ease, border-color 150ms ease;
+}
+.tm-btn--lg { font-size: var(--tm-font-size-body-xl); line-height: var(--tm-font-lineheight-md); padding: var(--tm-space-lg); border-radius: var(--tm-radius-lg); }
+.tm-btn--sm { font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-xs); padding: var(--tm-space-md) var(--tm-space-lg); border-radius: var(--tm-radius-md); }
+.tm-btn--xs { font-size: var(--tm-font-size-body-xs); line-height: var(--tm-font-lineheight-xs); padding: var(--tm-space-sm) var(--tm-space-lg); border-radius: var(--tm-radius-md); gap: var(--tm-space-xs); }
+.tm-btn--block { display: flex; width: 100%; }
+.tm-btn--icon { padding: var(--tm-space-md); }
+
+.tm-btn--primary { background: var(--tm-surface-brand-default); color: var(--tm-content-inverse); }
+.tm-btn--primary:hover  { background: var(--tm-surface-interactive-hover); }
+.tm-btn--primary:active { background: var(--tm-surface-interactive-pressed); }
+
+/* outlined types draw their 1px border inside (as Figma does) so every type keeps the same height */
+.tm-btn--secondary { background: var(--tm-surface-primary); color: var(--tm-content-brand); box-shadow: inset 0 0 0 1px var(--tm-border-default), var(--tm-shadow-button-secondary); }
+.tm-btn--secondary:hover  { background: var(--tm-surface-brand-subtle); }
+.tm-btn--secondary:active { box-shadow: inset 0 0 0 1px var(--tm-border-selected); }
+
+.tm-btn--tertiary { background: var(--tm-surface-primary); color: var(--tm-content-secondary); box-shadow: inset 0 0 0 1px var(--tm-border-default); }
+.tm-btn--tertiary:hover { background: var(--tm-surface-secondary); }
+
+.tm-btn--ghost { background: transparent; color: var(--tm-content-brand); }
+.tm-btn--ghost:hover { background: var(--tm-surface-brand-subtle); }
+
+.tm-btn--destructive { background: var(--tm-surface-primary); color: var(--tm-feedback-error-content); box-shadow: inset 0 0 0 1px var(--tm-feedback-error-border); }
+.tm-btn--destructive:hover { background: var(--tm-feedback-error-surface); }
+
+.tm-btn--link { background: transparent; color: var(--tm-content-brand); padding-left: 0; padding-right: 0; text-decoration: underline; text-underline-offset: 3px; }
+
+.tm-btn:disabled, .tm-btn[aria-disabled="true"] {
+  background: var(--tm-surface-interactive-disabled); color: var(--tm-content-disabled);
+  box-shadow: none; cursor: not-allowed;
+}
+.tm-btn--ghost:disabled, .tm-btn--link:disabled { background: transparent; }
+.tm-btn:focus-visible { outline: 2px solid var(--tm-border-focus); outline-offset: 2px; }
+
+/* [PROPOSED] Busy state — action in progress (e.g. "Calling…"). Keeps the primary look at full
+   strength (a disabled grey would read as unavailable). Not in SALT; pending design-team review. */
+.tm-btn--busy, .tm-btn--busy:disabled { background: var(--tm-surface-brand-default); color: var(--tm-content-inverse); cursor: default; }
+@keyframes tm-pulse-ring {
+  0%   { box-shadow: 0 0 0 0 var(--tm-surface-brand-muted); }
+  70%  { box-shadow: 0 0 0 var(--tm-space-md) transparent; }
+  100% { box-shadow: 0 0 0 0 transparent; }
+}
+.tm-btn--busy.tm-pulsing { animation: tm-pulse-ring 1.2s ease-out infinite; }
+
+/* ---------- Input field [SALT: Input Fields] ---------- */
+.tm-field { display: flex; flex-direction: column; gap: var(--tm-space-xs); }
+.tm-field__label { font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-primary); }
+.tm-field__control {
+  display: flex; align-items: center; gap: var(--tm-space-sm);
+  background: var(--tm-surface-primary);
+  border: 1px solid var(--tm-border-default); border-radius: var(--tm-radius-md);
+  padding: var(--tm-space-md);
+}
+.tm-field__control:focus-within { border-color: var(--tm-border-focus); }
+.tm-field__control input, .tm-field__control textarea, .tm-field__control select {
+  flex: 1; min-width: 0; border: 0; outline: 0; background: transparent; resize: vertical;
+  font: inherit; font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm);
+  color: var(--tm-content-primary);
+}
+.tm-field__control ::placeholder { color: var(--tm-content-tertiary); }
+.tm-field__helper  { font-size: var(--tm-font-size-body-xs); line-height: var(--tm-font-lineheight-xs); color: var(--tm-content-secondary); }
+.tm-field--error   .tm-field__control { border-color: var(--tm-border-error-strong); }
+.tm-field--error   .tm-field__helper  { color: var(--tm-content-error); }
+.tm-field--success .tm-field__helper  { color: var(--tm-content-success); }
+.tm-field--disabled .tm-field__control { background: var(--tm-surface-secondary); border-color: var(--tm-border-disabled); color: var(--tm-content-disabled); }
+
+/* ---------- Chip: filter / selection [SALT: Chips › Filters] ---------- */
+.tm-chip {
+  display: inline-flex; align-items: center; gap: var(--tm-space-xs);
+  padding: var(--tm-space-xs) var(--tm-space-md);
+  border-radius: var(--tm-radius-full);
+  border: 1px solid var(--tm-border-default);
+  background: var(--tm-surface-primary); color: var(--tm-content-primary);
+  font-family: var(--tm-font); font-size: var(--tm-font-size-body-xs); line-height: var(--tm-font-lineheight-xs);
+  font-weight: var(--tm-font-weight-semibold); cursor: pointer;
+}
+.tm-chip[aria-pressed="true"], .tm-chip--selected { background: var(--tm-surface-brand-subtle); border-color: var(--tm-border-selected); color: var(--tm-content-brand); }
+.tm-chip:disabled { color: var(--tm-content-disabled); border-color: var(--tm-border-disabled); cursor: not-allowed; }
+/* [PROPOSED] Size lg — touch-size chip (about 46px tall, 14px label) for pick-one choices people tap during a call or on the move
+   (dose, interval, duration). SALT's chip is a compact filter chip, too small as a primary tap target. */
+.tm-chip--lg { padding: var(--tm-space-md) var(--tm-space-lg); font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); justify-content: center; }
+
+/* ---------- Tag / status label [SALT: Chips › Labels & Text] ---------- */
+.tm-tag {
+  display: inline-flex; align-items: center; gap: var(--tm-space-xs);
+  padding: var(--tm-space-2xs) var(--tm-space-sm);
+  border-radius: var(--tm-radius-full);
+  font-size: var(--tm-font-size-body-3xs); line-height: var(--tm-font-lineheight-2xs);
+  font-weight: var(--tm-font-weight-semibold);
+  background: var(--tm-surface-tertiary); color: var(--tm-content-secondary);
+}
+/* [PROPOSED] Size md — 12px label for dense, doctor-facing screens where SALT's 10px tag is too small to read. */
+.tm-tag--md { padding: var(--tm-space-2xs) var(--tm-space-sm); font-size: var(--tm-font-size-body-xs); line-height: var(--tm-font-lineheight-xs); }
+.tm-tag--info     { background: var(--tm-surface-brand-subtle);   color: var(--tm-content-brand); }
+.tm-tag--success  { background: var(--tm-surface-success-subtle); color: var(--tm-content-success); }
+.tm-tag--warning  { background: var(--tm-surface-warning-subtle); color: var(--tm-content-warning); }
+.tm-tag--critical { background: var(--tm-surface-error-subtle);   color: var(--tm-content-error); }
+.tm-tag--dark     { background: var(--tm-surface-inverse);        color: var(--tm-content-inverse); }
+
+/* ---------- Card [SALT: card surface + tm_core_shadow_card] ---------- */
+.tm-card {
+  background: var(--tm-surface-primary);
+  border-radius: var(--tm-radius-lg);
+  box-shadow: var(--tm-shadow-card);
+  padding: var(--tm-space-lg);
+}
+.tm-card--flat { box-shadow: none; border: 1px solid var(--tm-border-subtle); }
+.tm-card--tint { background: var(--tm-surface-brand-subtle); box-shadow: none; }
+
+/* ---------- List row [SALT: cart / list items] ---------- */
+.tm-row {
+  display: flex; align-items: center; gap: var(--tm-space-md);
+  padding: var(--tm-space-md) 0;
+}
+.tm-row + .tm-row { border-top: 1px solid var(--tm-border-subtle); }
+.tm-row__main { flex: 1; min-width: 0; }
+.tm-row__title { font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); font-weight: var(--tm-font-weight-semibold); }
+.tm-row__meta  { font-size: var(--tm-font-size-body-xs); line-height: var(--tm-font-lineheight-xs); color: var(--tm-content-secondary); }
+.tm-thumb { width: 48px; height: 48px; flex: none; border-radius: var(--tm-radius-sm); background: var(--tm-surface-secondary); object-fit: contain; }
+
+/* ---------- Divider [SALT: Dividers] ---------- */
+.tm-divider { border: 0; border-top: 1px solid var(--tm-border-subtle); margin: var(--tm-space-lg) 0; }
+
+/* ---------- Section label ---------- */
+.tm-section-title { font-size: var(--tm-font-size-body-lg); line-height: var(--tm-font-lineheight-md); font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-primary); margin: 0 0 var(--tm-space-md); }
+
+/* ---------- Notice / inline feedback [SALT: Feedback tokens, Sticky notifications] ---------- */
+.tm-notice {
+  display: flex; gap: var(--tm-space-sm); align-items: flex-start;
+  padding: var(--tm-space-md); border-radius: var(--tm-radius-md);
+  border: 1px solid var(--tm-border-brand-subtle);
+  background: var(--tm-surface-brand-subtle); color: var(--tm-content-primary);
+  font-size: var(--tm-font-size-body-sm); line-height: var(--tm-font-lineheight-sm);
+}
+.tm-notice--warning { background: var(--tm-feedback-warning-surface); border-color: var(--tm-feedback-warning-border); }
+.tm-notice--error   { background: var(--tm-feedback-error-surface);   border-color: var(--tm-feedback-error-border); }
+.tm-notice--warning .tm-icon { color: var(--tm-feedback-warning-content); }
+.tm-notice--error   .tm-icon { color: var(--tm-feedback-error-content); }
+
+/* ---------- Toast [SALT: Toasts — bottom centre, one line] ---------- */
+.tm-toast {
+  position: fixed; left: 50%; bottom: var(--tm-space-xl); transform: translateX(-50%);
+  background: var(--tm-surface-inverse); color: var(--tm-content-inverse);
+  font-size: var(--tm-font-size-body-xs); line-height: var(--tm-font-lineheight-xs); font-weight: var(--tm-font-weight-semibold);
+  padding: var(--tm-space-xs) var(--tm-space-sm); border-radius: var(--tm-radius-xs);
+  white-space: nowrap; z-index: 1000;
+}
+
+/* [PROPOSED] Snackbar — message + one action (e.g. "Order confirmed · Next order"). SALT's toast is one line with
+   no action; this is the minimal compliant surface for a confirmation that carries a next step. Pending design-team review. */
+.tm-snackbar {
+  position: fixed; left: var(--tm-space-lg); right: var(--tm-space-lg); bottom: var(--tm-space-lg); z-index: 950;
+  display: flex; align-items: center; gap: var(--tm-space-md);
+  padding: var(--tm-space-md) var(--tm-space-lg);
+  background: var(--tm-surface-primary); border-radius: var(--tm-radius-lg); box-shadow: var(--tm-shadow-primary);
+}
+.tm-snackbar__icon { flex: none; display: flex; color: var(--tm-content-success); }
+.tm-snackbar__body { flex: 1; min-width: 0; }
+.tm-snackbar__title { font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); font-weight: var(--tm-font-weight-semibold); }
+.tm-snackbar__text  { font-size: var(--tm-font-size-body-xs); line-height: var(--tm-font-lineheight-xs); color: var(--tm-content-secondary); }
+
+/* ---------- Checkbox / radio / toggle [SALT: Checkboxes, Radio Buttons, Toggles] ---------- */
+.tm-check { display: inline-flex; align-items: center; gap: var(--tm-space-sm); cursor: pointer; font-size: var(--tm-font-size-body-md); }
+.tm-check input { width: 18px; height: 18px; margin: 0; accent-color: var(--tm-surface-brand-default); }
+.tm-toggle, .tm-check input.tm-toggle { appearance: none; width: 36px; height: 20px; border-radius: var(--tm-radius-full); background: var(--tm-border-default); position: relative; cursor: pointer; transition: background-color 150ms ease; margin: 0; }
+.tm-toggle::after { content: ""; position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; border-radius: var(--tm-radius-full); background: var(--tm-surface-primary); box-shadow: var(--tm-shadow-tertiary); transition: transform 150ms ease; }
+.tm-toggle:checked, .tm-check input.tm-toggle:checked { background: var(--tm-surface-brand-default); }   /* second selector: inside .tm-check the base rule out-ranks plain :checked */
+.tm-toggle:checked::after { transform: translateX(16px); }
+
+/* ---------- App bar / header [SALT: header + tm_core_shadow_header] ---------- */
+.tm-appbar {
+  display: flex; align-items: center; gap: var(--tm-space-md);
+  min-height: 56px; padding: var(--tm-space-sm) var(--tm-space-lg);
+  background: var(--tm-surface-primary); box-shadow: var(--tm-shadow-header);
+  position: sticky; top: 0; z-index: 10;
+}
+.tm-appbar__title { flex: 1; font-size: var(--tm-font-size-body-lg); line-height: var(--tm-font-lineheight-md); font-weight: var(--tm-font-weight-semibold); }
+
+/* ---------- Bottom sheet + overlay [SALT: modal sheets] ---------- */
+.tm-overlay { position: fixed; inset: 0; background: rgb(0 0 0 / calc(var(--tm-overlay-default) * 1%)); z-index: 900; }
+.tm-sheet {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 901;
+  background: var(--tm-surface-primary);
+  border-radius: var(--tm-radius-2xl) var(--tm-radius-2xl) 0 0;
+  padding: var(--tm-space-xl) var(--tm-space-lg);
+  max-height: 85vh; overflow: auto;
+}
+
+/* ---------- Sticky bottom action bar [SALT: CTA bar on Cart] ---------- */
+.tm-actionbar {
+  position: sticky; bottom: 0; z-index: 10;
+  padding: var(--tm-space-md) var(--tm-space-lg);
+  background: var(--tm-surface-primary); box-shadow: var(--tm-shadow-primary);
+  border-radius: var(--tm-radius-lg) var(--tm-radius-lg) 0 0;
+}
+
+/* ==========================================================
+   INTERNAL TOOLS / WEB LAYER  [PROPOSED]
+   Not in SALT (App). Built from SALT tokens only.
+   Use for portals and desktop screens. Flag new needs here,
+   don't invent them inside a project.
+   ========================================================== */
+
+/* Page widths — web text styles exist in SALT (h1-web…); grid is proposed */
+.tm-page { max-width: 1280px; margin: 0 auto; padding: var(--tm-space-xl); }
+.tm-page--narrow { max-width: 720px; }
+.tm-mobile { max-width: 420px; margin: 0 auto; min-height: 100vh; background: var(--tm-surface-secondary); }
+.tm-stack { display: flex; flex-direction: column; gap: var(--tm-space-lg); }
+.tm-stack--sm { gap: var(--tm-space-sm); }
+.tm-inline { display: flex; align-items: center; gap: var(--tm-space-sm); flex-wrap: wrap; }
+.tm-grid { display: grid; gap: var(--tm-space-xl); grid-template-columns: repeat(12, minmax(0, 1fr)); }
+
+/* Side navigation [PROPOSED] */
+.tm-sidenav { width: 240px; flex: none; background: var(--tm-surface-primary); border-right: 1px solid var(--tm-border-subtle); padding: var(--tm-space-lg) var(--tm-space-sm); }
+.tm-sidenav__item { display: flex; align-items: center; gap: var(--tm-space-sm); padding: var(--tm-space-sm) var(--tm-space-md); border-radius: var(--tm-radius-sm); color: var(--tm-content-secondary); text-decoration: none; font-weight: var(--tm-font-weight-medium); }
+.tm-sidenav__item:hover { background: var(--tm-surface-secondary); }
+.tm-sidenav__item[aria-current="page"] { background: var(--tm-surface-brand-subtle); color: var(--tm-content-brand); font-weight: var(--tm-font-weight-semibold); }
+
+/* Data table [PROPOSED] — dense, scannable, colour only for status */
+.tm-table { width: 100%; border-collapse: collapse; background: var(--tm-surface-primary); font-size: var(--tm-font-size-body-sm); line-height: var(--tm-font-lineheight-xs); }
+.tm-table th { text-align: left; font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-secondary); background: var(--tm-surface-secondary); padding: var(--tm-space-sm) var(--tm-space-md); border-bottom: 1px solid var(--tm-border-default); white-space: nowrap; }
+.tm-table td { padding: var(--tm-space-sm) var(--tm-space-md); border-bottom: 1px solid var(--tm-border-subtle); vertical-align: middle; }
+.tm-table tr:hover td { background: var(--tm-surface-secondary); }
+.tm-table .tm-num { text-align: right; font-variant-numeric: tabular-nums; }
+
+/* KPI tile [PROPOSED] */
+.tm-stat { background: var(--tm-surface-primary); border-radius: var(--tm-radius-lg); box-shadow: var(--tm-shadow-card); padding: var(--tm-space-lg); }
+.tm-stat__label { font-size: var(--tm-font-size-body-xs); line-height: var(--tm-font-lineheight-xs); color: var(--tm-content-secondary); }
+.tm-stat__value { font-size: var(--tm-font-size-title-md); line-height: var(--tm-font-lineheight-xl); font-weight: var(--tm-font-weight-semibold); font-variant-numeric: tabular-nums; }

@@ -1,7 +1,7 @@
 # uiux_designer.md — Truemeds Doctor Portal Prototype
 
-**Status:** LOCKED v1.0
-**Last Updated:** 2026-06-09
+**Status:** Working UI/UX guidance; product truth remains in `docs/context/project_truth.md`
+**Last Updated:** 2026-10-07
 
 ---
 
@@ -16,7 +16,7 @@ This is not a freeform design playground.
 
 ## 1. Role
 
-Claude is the visual design guardian for this prototype.
+The designer is responsible for doctor-facing usability, not only visual consistency.
 
 Claude's job is to:
 - preserve the locked design direction for the consultation workflow
@@ -24,6 +24,12 @@ Claude's job is to:
 - improve hierarchy, spacing, states, and usability carefully
 - optimize for thumb-friendly mobile use
 - support believable mock-data screens
+- make clinical source, mock content, unsaved work, and case state unambiguous
+- check error recovery and accessibility across the full consultation journey
+
+The Rx viewer represents the prescription uploaded by the customer. It is not
+the prescription the doctor is creating during this consultation. Treat that
+distinction as established context in reviews and UI copy.
 
 Strict rule: exploration and brainstorming may happen separately in discussion. Once a direction is locked, Claude must execute inside the approved system.
 
@@ -31,12 +37,13 @@ Strict rule: exploration and brainstorming may happen separately in discussion. 
 
 ## 2. Source of truth priority
 
-Claude must follow this order:
+Follow this order:
 
-1. `project_truth.md`
-2. Other locked project rules
-3. Approved visual direction (this file)
-4. The current task request
+1. Latest user instruction
+2. `docs/context/project_truth.md` for locked workflow and CTA rules
+3. `../../design-system/RULES.md` for current visual tokens and components
+4. `docs/context/session_handoff.md` for current implementation status
+5. This guide for doctor-facing usability checks
 
 If something is unclear, Claude must not invent product logic, silent UX behavior, or visual direction.
 
@@ -63,7 +70,7 @@ Claude should keep changes:
 
 ---
 
-## 4. Locked visual direction
+## 4. Visual direction and source of truth
 
 ### 4.1 Purpose and feel
 
@@ -75,70 +82,37 @@ This portal should feel:
 
 The doctor is doing clinical work. The UI should get out of the way.
 
-### 4.2 Color direction
+### 4.2 Current visual system
 
-**[LIGHT THEME — confirmed by user. Dark theme direction below is superseded and must not be used.]**
+Use central Truemeds design system in `../../design-system/` and its `RULES.md`.
+`docs/design_system.md` and older token values in previous reviews are historical.
+Light theme remains approved. Apply semantic tokens, Plus Jakarta Sans, Tabler icons,
+and central components. Do not invent project-local colours, fonts, radii, shadows,
+or component variants. For a missing component, follow `RULES.md`'s proposed-component
+process.
 
-Confirmed CSS custom properties (in `index.html`):
-
-- **Background:** `#f0f4f8`
-- **Surface / Card:** `#ffffff`
-- **Elevated Surface:** `#f8fafc`
-- **Primary Action (CTA):** `#1B69DE` — Truemeds brand blue
-- **Success / Confirm:** `#16a34a`
-- **Warning / Attention:** `#d97706` — amber for HA banners
-- **Danger / Alert:** `#dc2626`
-- **Text Primary:** `#111827`
-- **Text Secondary:** `#6b7280`
-- **Text Muted:** `#9ca3af`
-
-Token rigidity rule:
-- Do not replace locked tokens with nearby alternatives
-- Do not revert to dark theme
-- Do not introduce a new color without flagging it first
-
-### 4.3 Typography direction
-
-- Use system font stack: `-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif`
-- No external font loading in V1
-- Section headers: 14px, medium weight, muted color, uppercase tracking
-- Primary content: 16px, regular/medium weight, primary text color
-- Metadata / secondary: 13px, muted color
-- CTA buttons: 16px, semibold, full-width or near-full-width on mobile
-
-### 4.4 Shape and radius
-
-- Cards and panels: `border-radius: 12px`
-- Buttons: `border-radius: 10px`
-- Input fields: `border-radius: 8px`
-- Badges and tags: `border-radius: 6px`
-- Do not use sharp square corners (0px) or pill shapes (9999px) for main content containers
-
-### 4.5 Spacing
-
-- Major section gap: 16px between top-level workflow sections
-- Internal card padding: 16px
-- Between items in a list: 12px
-- CTA button height: 52px minimum for thumb comfort
-- Touch targets: minimum 44×44px
+Doctor-facing clinical text must remain readable at phone width and under time
+pressure. Aim for at least the design system's 12px style for labels and metadata;
+reserve its 10px style for non-clinical demo metadata. Verify contrast and text
+scaling in the rendered UI, not by token name alone.
 
 ---
 
-## 5. Locked screen structure — V2 single scroll
+## 5. Consultation screen structure — V2 single scroll
 
 **[Updated after Section 2 rebuild. This is the current locked structure.]**
 
 The screen follows this locked top-to-bottom layout:
 
 1. **`#sticky-top-wrapper`** (sticky, top: 0)
-   - `#demo-bar` — scenario switcher, hidden on desktop (`@media min-width: 800px`)
+   - `#demo-bar` — developer control, excluded from doctor-facing UX decisions
    - `#compact-strip` — hidden until patient block scrolls out of view; shows patient name, age/gender, order value, timer badge, View Rx
-2. **`#patient-detail-block`** (non-sticky) — patient name, age, gender, order value, `ⓘ` expand for order dates + payment, View Rx button (if prescription attached). No badge row.
+2. **`#patient-detail-block`** (non-sticky) — patient name, age, gender, order value, `ⓘ` expand for order dates + payment, View Rx button (if prescription attached). No badge row. Do not add case or HA labels solely because an audit inferred they were missing.
 3. **`#medicines-section`** — medicines with name/strength, M-A-N + qty, selling price, validation badge, edit button
 4. **`#notes-section`** — notes input, available before and after call
 5. **`#action-zone`** — two phases:
-   - Phase 1 (call control): call button, hold/no-pickup secondary buttons, status label
-   - Phase 2 (post-call CTA): HA banner (sibling of CTA card), skip HA button (if applicable), main CTA
+   - Phase 1: call control and available pre-gate recovery actions
+   - Phase 2: system-resolved post-call CTA and applicable secondary actions
 
 Claude must not reorder these sections without approval.
 
@@ -154,8 +128,8 @@ Replaced by pre-call briefing strip (see 5.2). Post-call HA banner is always hid
 
 A compact left-border-accented strip inside the action zone, directly ABOVE the Call Patient button.
 
-- **Trigger:** Pilot + HA required (both value meds and non-value meds)
-- **Visual:** 3px left border solid `--primary`, `--primary-light` background, right-side border-radius
+- **Trigger:** Pilot + HA required (both value meds and non-value meds), per current handoff; surface any implementation mismatch during audit
+- **Visual:** informational central notice treatment
 - **Tone:** Blue (informational), NOT amber (warning) — this is a script cue, not an alert
 - **Copy:** Two variants — value meds (live transfer) vs non-value meds (HA calls after)
 - **Lifecycle:** Visible pre-call → during call (so doctor can reference) → hidden post-gate (phase1 hidden)
@@ -172,7 +146,7 @@ Final action CTAs must be visually distinct and prominent:
 - **Confirm Order** — primary blue, full-width, bottom of post-call section
 - **Confirm & Transfer** — primary blue, full-width, with a transfer icon
 - **Confirm & Forward** — primary blue, full-width, with a forward icon
-- **Skip HA Call** — secondary style (outlined or ghost), smaller than the main CTA, positioned above the main CTA
+- **Skip HA Call** — secondary style (outlined or ghost), smaller than the main CTA, below the main CTA in the current prototype
 
 CTAs before the valid-call gate must be:
 - visually not present (not just disabled or grayed) — hidden from the DOM or hidden with display:none until gate is passed
@@ -201,17 +175,12 @@ Timer color: muted until 50 seconds, then shifts to success green when gate pass
 
 ---
 
-## 8. Case type badge rules
+## 8. Case type and status labels
 
-Case type must always be visible in the patient/order context block.
-
-- **Cat4** — badge in a neutral blue-gray
-- **Pilot** — badge in a warm amber-adjacent tone
-
-HA status must be clearly indicated when relevant:
-- **HA Required** — amber badge or label
-- **HA Skipped** — muted success tone badge or label
-- HA indicators must not appear on Cat4 cases at all
+`project_truth.md` requires doctor access to order type and relevant flags.
+Check the intended source and placement with Product before adding mobile badges
+or changing current patient block. If labels are approved, keep category treatment
+neutral and show HA information only where relevant to Pilot cases.
 
 ---
 
@@ -327,7 +296,43 @@ Keep this practical and lightweight.
 
 ---
 
-## 16. Final working principle
+## 16. UI/UX audit method
+
+Audit the doctor-facing app as a sequence: case identification → Rx review → medicine
+review/edit → notes → call and recovery → post-call action → completion. Audit every
+sheet and state reachable from that sequence. Treat the mobile column as primary;
+assess desktop doctor-facing content separately when requested. Exclude developer
+scenario controls and simulators unless the user explicitly includes them.
+
+For each finding, record:
+
+- **Evidence:** exact screen/state and source location; label `Observed` only after
+  visual or interactive verification, `Source-inferred` for code-based findings,
+  and `Unverified` when rendering or behavior could not be checked.
+- **Intent check:** confirm what a visible surface represents before classifying a
+  flow as broken. For example, uploaded Rx is source material, not a live doctor
+  output. Do not convert prototype mocks or open product decisions into defects.
+- **Doctor impact:** what could be missed, misunderstood, delayed, or entered wrongly.
+- **Recommendation:** smallest change that solves the problem without silently
+  changing locked workflow, clinical policy, permissions, or routing.
+- **Priority:** P0 blocks safe use; P1 creates material clinical or workflow risk;
+  P2 causes repeated friction or ambiguity; P3 is polish.
+- **Validation:** a concrete phone-width task and expected result, including error
+  or recovery state where relevant.
+
+Check: patient and case identity; source and freshness of prescription content;
+medicine name, strength, regimen, quantity and status legibility; action hierarchy
+and reachability during a call; irreversible-action clarity; unsaved note visibility;
+feedback after submission; empty/error/retry states; touch targets, focus, labels,
+screen-reader state, text scaling and zoom; information density and scroll burden.
+Call out mock behavior plainly. Do not infer production medical or operational
+policy from competitor examples or prototype copy.
+
+Keep visual-system compliance in a separate audit. Do not report token or icon
+violations as usability findings unless they cause an actual comprehension,
+accessibility, or workflow problem.
+
+## 17. Final working principle
 
 Claude should behave like a careful UI/UX designer working inside a live mobile-first consultation workflow prototype.
 

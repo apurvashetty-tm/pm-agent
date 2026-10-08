@@ -20,15 +20,31 @@ Use project-local files for project truth and handoff. Use root knowledge files 
 
 ---
 
+## Design system — central, not local  [UPDATED 2026-10-07]
+
+The visual system for this prototype is now the central Truemeds design system:
+`../../design-system/` (code copy of SALT, the Truemeds Figma library).
+- Read `../../design-system/RULES.md` before any UI work.
+- `docs/design_system.md` is **superseded** — kept only as history. Its colours
+  (`#1B69DE`, system font, `#111827` text) and its emoji/illustration icons do not
+  match Truemeds and must not be extended.
+- The restyle onto `truemeds.css` + `icons.js` is **done** (branch `doctor-portal-restyle`);
+  the locked flow, valid-call gate and CTA routing are unchanged. Use only `--tm-*` semantic
+  tokens and `.tm-*` components; do not reintroduce local tokens, emoji or hex colours
+  (the mock Rx paper is the only exempt block).
+
+---
+
 ## Read these files before making any decision
 
 1. `docs/context/project_truth.md`
 2. `docs/context/session_handoff.md`
-3. `docs/roles/product_manager.md`
-4. `docs/roles/frontend_engineer.md`
-5. `docs/roles/uiux_designer.md`
-6. `docs/roles/mock_backend_engineer.md`
-7. `docs/context/open_questions.md`
+3. `docs/context/decision_log.md` — why each screen decision was made (and what was rejected); do not re-open without new information
+4. `docs/roles/product_manager.md`
+5. `docs/roles/frontend_engineer.md`
+6. `docs/roles/uiux_designer.md`
+7. `docs/roles/mock_backend_engineer.md`
+8. `docs/context/open_questions.md`
 
 ---
 
@@ -37,6 +53,7 @@ Use project-local files for project truth and handoff. Use root knowledge files 
 1. **Latest user instruction** — always wins
 2. **`docs/context/project_truth.md`** — locked product truth, cannot be invented around
 3. **`docs/context/session_handoff.md`** — current resume point and latest implementation state
+3a. **`docs/context/decision_log.md`** — agreed design/product decisions with their reasons
 4. **`docs/roles/*`** — role-specific working rules
 5. **`docs/context/open_questions.md`** — unresolved decisions that must not be silently answered
 6. **`[MOCK ASSUMPTION]`** — temporary build unblockers, small and local only, clearly labeled
@@ -53,6 +70,8 @@ If two sources conflict, follow the higher-priority source and surface the confl
 - Work one file or one small focused module at a time
 - Before coding, continue from `docs/context/session_handoff.md` unless the user overrides it
 - After coding, update `docs/context/session_handoff.md` before the final report
+- When a design/product decision is agreed with Apurva, record it in `docs/context/decision_log.md` (decision, why,
+  rejected options). When one changes, edit its entry — don't leave the old guidance standing
 - Do not invent product logic if it is unclear
 - If logic is missing, use a clearly marked `[MOCK ASSUMPTION]` and add it to `docs/context/open_questions.md`
 - Respect the locked consultation flow — do not add CTAs or steps that are not part of the locked workflow
@@ -70,7 +89,7 @@ Do not silently decide or implement the following — ask first:
 - **Transfer vs Forward distinction** — what exact operational difference these have downstream
 - **No-pickup handling** — how many attempts before hold, what hold duration means
 - **Doctor assignment rules** — how a case arrives in a doctor's queue and how re-assignment works
-- **Medicine review authority** — can a doctor add, remove, or only validate medicines?
+- ~~**Medicine review authority**~~ — answered 2026-10-07: no add; prescribe or disable only; quantity is the backend's (`decision_log.md` D-04, D-06)
 - **Notes behavior** — are notes visible to other teams? Are they locked after call completion?
 
 If one of these surfaces during build and no clear answer exists, mark it `[OPEN DECISION]`, use a safe placeholder, and add it to `docs/context/open_questions.md`.
@@ -134,3 +153,10 @@ Build like a real product shell, not a static wireframe.
 Preserve the locked consultation workflow and locked valid-call gate.
 Move fast where it is safe to move fast.
 Stop and ask where the decision belongs to the user.
+
+## Layout rule (do not change without Apurva)
+
+Desktop = centred 9:16 phone frame, one scroll area, sheets/Rx/toasts inside the frame; mobile = full screen. Full rule: `design-system/RULES.md` §7. Run `python3 docs/layout_check.py` before committing any layout/CSS change. Never turn bottom sheets into desktop dialogs and never make the demo panel a scroll container.
+
+## Logo (do not change without Apurva)
+The header logo is the approved "truemeds for doctors" lockup in `brand/truemeds-for-doctors.svg` (project level, not in the design system). It embeds the canonical logo unchanged. Never redraw or recolour it. `python3 brand/check_lockup.py` must pass before any commit that touches `brand/`.

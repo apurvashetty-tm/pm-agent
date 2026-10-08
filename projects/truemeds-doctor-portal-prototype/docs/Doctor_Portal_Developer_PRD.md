@@ -2,7 +2,7 @@
 
 **Status:** Draft for engineering estimation
 **Author:** Claude (PM/UX/architecture pass), consolidating `project_truth.md`, prototype source, current-production screenshots, and DocsStat (PharmEasy) competitor SOP
-**Last updated:** 2026-07-13
+**Last updated:** 2026-10-08 (medicine prescribing sections aligned with `context/decision_log.md`)
 
 **Labels used throughout:** `[LOCKED]` already decided, must be followed · `[RECOMMENDED]` this PRD's expert recommendation, open to override · `[MOCK ASSUMPTION]` prototype-only placeholder · `[OPEN DECISION]` requires Product/Ops/Medical/Compliance confirmation before build.
 
@@ -56,7 +56,7 @@ This is the concrete evidence behind the JTBD boundary problem this PRD exists t
 ### 2.2 What the prototype gets right (keep, don't rebuild)
 
 - Valid-call gate at 50s, CTA routing matrix (`cat4→Confirm Order`, `pilot+HA+value→Confirm & Transfer`, `pilot+HA+non_value→Confirm & Forward`, `HA skipped→Confirm Order`) — correct, deterministic, not doctor-chosen. The doctor never picks a department; the system resolves it from case data. This is a real strength worth calling out: it removes a whole class of doctor error and should not change.
-- Medicine edit sheet (interval, M-A-N, duration, advice, qty) — matches competitor's dosage/frequency/duration/instructions pattern (§7) and is more structured than the free-text-heavy competitor flow.
+- Prescribe screen (replaced the medicine edit sheet, 2026-10-08): full-screen view with How often (incl. every X hours), form-aware Dose (M / A / N), SOS add-on with its own dose and daily cap, Duration, optional Food, free-text Additional instructions and a live "Prints as" line. No quantity and no price — see `context/decision_log.md` D-04 … D-20. More structured than the free-text-heavy competitor flow.
 - Schedule Callback UX (three placements: quiet link during call, ghost-button recovery after early hangup, chip post-gate) — a genuinely well-designed escape hatch; keep as-is.
 - Shared `.btn` design system — solves a real, documented problem (Schedule Callback previously had three different visual treatments across the file before the token system existed). Any new CTA in this PRD must use it.
 
@@ -116,9 +116,9 @@ This is the concise, explicit answer to "what does the doctor own." Anything not
 | Diagnosis | ✅ | ✅ | — | — | — | ✅ |
 | Symptoms / allergies / clinical notes | ✅ | ✅ | — | — | — | ✅ |
 | Medicine list (dosage, frequency, duration, instructions) | ✅ | ✅ | — | — | — | ✅ |
-| Medicine add | ✅ | ✅ | — | — | — | ✅ |
+| Medicine add | ✅ | ❌ Removed 2026-10-07 — doctor cannot add (decision log D-06) | — | — | — | ✅ |
 | Medicine disable (with reason) | ✅ | ✅ | — | — | — | ✅ |
-| Medicine qty/strength beyond what was ordered | ✅ | ⚠️ `[OPEN DECISION]` OQ-011 | — | — | — | ✅ |
+| Medicine quantity | Cart qty only (read-only) | ❌ Never — prescription qty is calculated by the backend from frequency × duration (decision log D-04; OQ-014 open for non-tablet units) | — | — | — | ✅ |
 | Substitution (brand/price selection, consent, merchandising) — all of it | — | ❌ Not on Doctor Portal at all — no view, no consent capture, no touchpoint | — | — | ✅ (pricing engine / CSR) | — |
 | Diagnostic test prescribing | — | ❌ Phase 1 / `[OPEN DECISION]` Phase 2 | — | — | — | — |
 | Call initiate/mute/hold/resume/end/transfer | ✅ | ✅ | — | — | — | ✅ |
@@ -313,7 +313,7 @@ Substitution (brand/price selection, consent capture, or any related UI) is **no
 
 ### R7 — Keep unchanged (explicitly, to bound scope)
 
-Medicine edit sheet, Rx viewer (zoom/rotate/pan), Schedule Callback (all 3 placements), Skip HA Call, toast system, scenario-switching demo bar (dev-only, stays out of the shipped build), design token system.
+Prescribe screen (as agreed in `context/decision_log.md`), Rx viewer (zoom/rotate/pan), Schedule Callback (all 3 placements), Skip HA Call, toast system, scenario-switching demo bar (dev-only, stays out of the shipped build), design token system.
 
 ---
 
@@ -457,8 +457,8 @@ These are final build decisions, not a design audit — `docs/design_system.md` 
 | **Schedule Callback** | Terminal for this session, case moves to callback queue | Any point pre- or post-gate |
 | **Retry Call** | Non-terminal, re-attempt after system-reported no-answer/timeout | Webhook-driven `no_answer`/`hold` states only |
 | **Call Again** | Non-terminal, re-attempt after doctor-initiated early hangup (<50s) | `endedEarly` state only |
-| **Prescribe** | Per-medicine action confirming dosage/frequency/duration | Medicine edit sheet |
-| **Disable** (medicine) | Per-medicine removal with reason, does not affect case-level disposition | Medicine edit sheet |
+| **Prescribe** | Per-medicine action confirming dose/frequency/duration | Prescribe screen (main button, end of screen) |
+| **Disable** (medicine) | Per-medicine removal with reason, does not affect case-level disposition | Prescribe screen (small action in the header) |
 | ~~Hold~~ | **Retired as a doctor-facing term** (§2.3) — no manual Hold button; system-driven re-queue after webhook timeout uses internal state name only, never surfaced as a button label | — |
 | ~~Approve / Validate~~ | **Not used** — "Prescribe" and "Confirm …" cover all doctor-facing confirmation actions; do not introduce synonyms | — |
 | ~~Cancel~~ (as a doctor action) | **Not used on the Doctor Portal** — commercial cancellation is an Ops/CSR action, potentially *triggered by* certain Reject reasons, never directly labeled "Cancel" on a doctor-facing button | — |
@@ -643,7 +643,7 @@ Carried forward or newly surfaced; not silently answered. Each: question — res
 | OQ-001 | Timer behavior on drop/reconnect | Rescoped: webhook-verified duration replaces the client timer (§7.2, §10.3); does a reconnect within N seconds count as continuous? — open |
 | OQ-002 | No-pickup attempts / hold duration | Open — webhook-driven placeholder in use |
 | OQ-003 | Doctor assignment source | Open — out of this PRD's scope |
-| OQ-004 / OQ-011 | Medicine add/remove/qty authority | Open — prototype's permissive placeholder stays (§3.4 ⚠️ row) |
+| OQ-004 / OQ-011 | Medicine add/remove/qty authority | **Answered 2026-10-07** — no add; prescribe or disable; quantity is the backend's (decision log D-04, D-06). Open part: does disabling cancel the item from the order? |
 | OQ-005 | Notes visibility/locking | Open — now also covers Diagnosis/Allergy (R2) |
 | OQ-006 | Pre-call notes capture | Resolved — Reason-for-Review is pre-call read-only; Diagnosis/Allergy/Notes editable pre- and post-call |
 | OQ-007 | Transfer vs Forward distinction | `[RECOMMENDED]` Transfer=live warm transfer, Forward=async (§7.1, §9), inferred from prototype copy — needs **Ops/HA confirmation** before lock |
@@ -652,6 +652,8 @@ Carried forward or newly surfaced; not silently answered. Each: question — res
 | OQ-010 | Cat4 vs Pilot classification | Open, system-classified |
 | OQ-012 | Callback terminal behavior | Open — existing terminal-completion placeholder stays |
 | OQ-013 | Early-call-end retry limit | Open — deferred to Phase 2 |
+| OQ-014 | Prescription quantity units for syrups/injections/creams — packs or doses? | Open — Product to brainstorm |
+| OQ-015 | Per-medicine detail view (price, product image) behind a row-level icon | Deferred — not designed |
 | OQ-New-1 | Hold/No-Pickup: `project_truth.md` §6 (manual actions) vs. built webhook-driven states | Recommend webhook model — **project owner** must confirm and update `project_truth.md` |
 | OQ-New-2 | Reject taxonomy, adapted from competitor SOP | Needs **Medical/Compliance** sign-off before lock |
 | OQ-New-3 | Diagnosis taxonomy source (ICD-10 / internal / free-text) | Needs **Medical/Compliance** input |

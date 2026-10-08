@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Truemeds Design System — Preview</title>
+<!-- GENERATED from src/preview.template.html by scripts/build.py ({{BUILT}}) -->
+<link rel="stylesheet" href="truemeds.css">
+<script src="icons/icons.js"></script>
+<style>
+  /* preview-page chrome only — uses tokens like everything else */
+  body { margin: 0; }
+  .pv-nav { position: sticky; top: 0; z-index: 20; background: var(--tm-surface-primary); box-shadow: var(--tm-shadow-header); }
+  .pv-nav .tm-page { padding-top: var(--tm-space-md); padding-bottom: var(--tm-space-md); display: flex; gap: var(--tm-space-lg); align-items: center; flex-wrap: wrap; }
+  .pv-nav a { color: var(--tm-content-secondary); text-decoration: none; font-weight: var(--tm-font-weight-semibold); font-size: var(--tm-font-size-body-sm); }
+  .pv-nav a:hover { color: var(--tm-content-brand); }
+  section { padding-top: var(--tm-space-2xl); }
+  h2.pv { margin: 0 0 var(--tm-space-xs); }
+  p.pv { margin: 0 0 var(--tm-space-lg); color: var(--tm-content-secondary); }
+  h3.pv { margin: var(--tm-space-xl) 0 var(--tm-space-md); font-size: var(--tm-font-size-body-lg); line-height: var(--tm-font-lineheight-md); }
+  code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: var(--tm-font-size-body-3xs); color: var(--tm-content-secondary); word-break: break-all; }
+  .grid-sw { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: var(--tm-space-md); }
+  .sw { display: flex; gap: var(--tm-space-sm); align-items: center; }
+  .sw span { width: 36px; height: 36px; flex: none; border-radius: var(--tm-radius-sm); border: 1px solid var(--tm-border-subtle); }
+  .sp, .rd, .sh, .ty { display: flex; gap: var(--tm-space-md); align-items: center; margin-bottom: var(--tm-space-sm); }
+  .sp span { height: 12px; background: var(--tm-surface-brand-muted); border-radius: var(--tm-radius-2xs); }
+  .rd span { width: 48px; height: 48px; background: var(--tm-surface-brand-subtle); border: 1px solid var(--tm-border-brand-subtle); }
+  .sh span { width: 96px; height: 56px; background: var(--tm-surface-primary); border-radius: var(--tm-radius-md); }
+  .shwrap { background: var(--tm-surface-secondary); padding: var(--tm-space-lg); border-radius: var(--tm-radius-lg); }
+  .ty span { min-width: 340px; }
+  .icons { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: var(--tm-space-sm); }
+  .icons div { display: flex; flex-direction: column; align-items: center; gap: var(--tm-space-xs); padding: var(--tm-space-sm); color: var(--tm-content-secondary); }
+  .demo-row { display: flex; gap: var(--tm-space-md); flex-wrap: wrap; align-items: center; margin-bottom: var(--tm-space-md); }
+  .demo-label { width: 110px; flex: none; font-size: var(--tm-font-size-body-xs); color: var(--tm-content-tertiary); }
+  .static { position: static !important; transform: none !important; }
+  .phone { width: 375px; border-radius: var(--tm-radius-2xl); overflow: hidden; box-shadow: var(--tm-shadow-primary); background: var(--tm-surface-secondary); position: relative; }
+  .desk { display: flex; border-radius: var(--tm-radius-lg); overflow: hidden; box-shadow: var(--tm-shadow-primary); background: var(--tm-surface-secondary); min-height: 420px; }
+  .two { display: flex; gap: var(--tm-space-2xl); flex-wrap: wrap; align-items: flex-start; }
+</style>
+</head>
+<body class="tm">
+
+<nav class="pv-nav"><div class="tm-page">
+  <strong class="tm-text-body-lg-strong">Truemeds Design System</strong>
+  <a href="#colour">Colour</a><a href="#type">Type</a><a href="#scale">Spacing &amp; shape</a><a href="#icons">Icons</a>
+  <a href="#buttons">Buttons</a><a href="#forms">Forms</a><a href="#labels">Chips &amp; tags</a><a href="#containers">Containers</a>
+  <a href="#internal">Internal tools</a><a href="#examples">Examples</a>
+</div></nav>
+
+<main class="tm-page">
+
+<section>
+  <h1 class="tm-text-h1-web" style="margin:0">Truemeds Design System</h1>
+  <p class="pv">Code copy of SALT (TRUEMEDS Design Library, App). Every project links <code>truemeds.css</code> + <code>icons/icons.js</code>. Rules: <code>RULES.md</code>. Built {{BUILT}}.</p>
+</section>
+
+<section id="colour">
+  <h2 class="pv tm-text-h2-web">Colour</h2>
+  <p class="pv">Semantic tokens only. Brand = action and selection. Green / amber / red = status. Everything else neutral.</p>
+  <h3 class="pv">Content (text &amp; icons)</h3><div class="grid-sw">{{COLOURS_CONTENT}}</div>
+  <h3 class="pv">Surface (backgrounds)</h3><div class="grid-sw">{{COLOURS_SURFACE}}</div>
+  <h3 class="pv">Border &amp; feedback</h3><div class="grid-sw">{{COLOURS_BORDER}}</div>
+</section>
+
+<section id="type">
+  <h2 class="pv tm-text-h2-web">Type — Plus Jakarta Sans</h2>
+  <p class="pv">Mobile headings <code>h1–h3</code>; desktop/portal headings <code>h1-web–h3-web</code>.</p>
+  {{TEXT}}
+</section>
+
+<section id="scale">
+  <h2 class="pv tm-text-h2-web">Spacing, radius, shadow</h2>
+  <div class="two">
+    <div><h3 class="pv">Spacing</h3>{{SPACE}}</div>
+    <div><h3 class="pv">Radius</h3>{{RADIUS}}</div>
+    <div class="shwrap"><h3 class="pv" style="margin-top:0">Shadow</h3>{{SHADOWS}}</div>
+  </div>
+</section>
+
+<section id="icons">
+  <h2 class="pv tm-text-h2-web">Icons — Tabler outline</h2>
+  <p class="pv">Monochrome, inherit text colour. <code>&lt;span class="tm-icon" data-icon="phone"&gt;&lt;/span&gt;</code>. Add more via <code>icons/icons.txt</code>.</p>
+  <div class="icons" id="icon-grid"></div>
+</section>
+
+<section id="buttons">
+  <h2 class="pv tm-text-h2-web">Buttons</h2>
+  <p class="pv">One primary per context. Sizes: <code>--lg</code> 56 · default 48 · <code>--sm</code> 40 · <code>--xs</code> 32.</p>
+  <div class="demo-row"><span class="demo-label">Types</span>
+    <button class="tm-btn tm-btn--primary">Primary</button>
+    <button class="tm-btn tm-btn--secondary">Secondary</button>
+    <button class="tm-btn tm-btn--tertiary">Tertiary</button>
+    <button class="tm-btn tm-btn--ghost">Ghost</button>
+    <button class="tm-btn tm-btn--destructive">Destructive</button>
+    <button class="tm-btn tm-btn--link">Link</button>
+  </div>
+  <div class="demo-row"><span class="demo-label">Sizes</span>
+    <button class="tm-btn tm-btn--primary tm-btn--lg">Large</button>
+    <button class="tm-btn tm-btn--primary">Medium</button>
+    <button class="tm-btn tm-btn--primary tm-btn--sm">Small</button>
+    <button class="tm-btn tm-btn--primary tm-btn--xs">X-Small</button>
+  </div>
+  <div class="demo-row"><span class="demo-label">With icon</span>
+    <button class="tm-btn tm-btn--primary"><span class="tm-icon" data-icon="phone"></span>Call patient</button>
+    <button class="tm-btn tm-btn--secondary"><span class="tm-icon" data-icon="calendar"></span>Schedule</button>
+    <button class="tm-btn tm-btn--destructive"><span class="tm-icon" data-icon="phone-off"></span>End call</button>
+    <button class="tm-btn tm-btn--tertiary tm-btn--icon" aria-label="More"><span class="tm-icon" data-icon="dots-vertical"></span></button>
+  </div>
+  <div class="demo-row"><span class="demo-label">Disabled</span>
+    <button class="tm-btn tm-btn--primary" disabled>Primary</button>
+    <button class="tm-btn tm-btn--secondary" disabled>Secondary</button>
+    <button class="tm-btn tm-btn--ghost" disabled>Ghost</button>
+  </div>
+</section>
+
+<section id="forms">
+  <h2 class="pv tm-text-h2-web">Forms</h2>
+  <div class="tm-grid">
+    <div class="tm-field" style="grid-column: span 4">
+      <label class="tm-field__label" for="f1">Chief complaint</label>
+      <div class="tm-field__control"><input id="f1" placeholder="e.g. Fever since 2 days"></div>
+      <span class="tm-field__helper">Visible to the pharmacist</span>
+    </div>
+    <div class="tm-field tm-field--error" style="grid-column: span 4">
+      <label class="tm-field__label" for="f2">Mobile number</label>
+      <div class="tm-field__control"><input id="f2" value="98201"><span class="tm-icon tm-icon--16" data-icon="alert-circle" style="color:var(--tm-content-error)"></span></div>
+      <span class="tm-field__helper">Enter a 10-digit number</span>
+    </div>
+    <div class="tm-field tm-field--disabled" style="grid-column: span 4">
+      <label class="tm-field__label" for="f3">Order ID</label>
+      <div class="tm-field__control"><input id="f3" value="TM-ORD-20240812" disabled></div>
+    </div>
+    <div class="tm-field" style="grid-column: span 6">
+      <label class="tm-field__label" for="f4">Doctor notes</label>
+      <div class="tm-field__control"><textarea id="f4" rows="3" placeholder="Clinical observations, instructions…"></textarea></div>
+    </div>
+    <div class="tm-stack tm-stack--sm" style="grid-column: span 6">
+      <label class="tm-check"><input type="checkbox" checked> Patient name is same as receiver</label>
+      <label class="tm-check"><input type="radio" name="r" checked> Me</label>
+      <label class="tm-check"><input type="radio" name="r"> Someone else</label>
+      <label class="tm-check"><input type="checkbox" class="tm-toggle" checked> Notify on delivery</label>
+    </div>
+  </div>
+</section>
+
+<section id="labels">
+  <h2 class="pv tm-text-h2-web">Chips &amp; tags</h2>
+  <div class="demo-row"><span class="demo-label">Filter chips</span>
+    <button class="tm-chip" aria-pressed="true">All</button>
+    <button class="tm-chip" aria-pressed="false">Pending</button>
+    <button class="tm-chip" aria-pressed="false"><span class="tm-icon tm-icon--16" data-icon="plus"></span>Add filter</button>
+    <button class="tm-chip" disabled>Disabled</button>
+    <button class="tm-chip tm-chip--lg" aria-pressed="true">1-0-1</button>
+    <button class="tm-chip tm-chip--lg" aria-pressed="false">Large [PROPOSED]</button>
+  </div>
+  <div class="demo-row"><span class="demo-label">Status tags</span>
+    <span class="tm-tag">Default</span>
+    <span class="tm-tag tm-tag--info">Cat4</span>
+    <span class="tm-tag tm-tag--success">Prescribed</span>
+    <span class="tm-tag tm-tag--warning">Pending</span>
+    <span class="tm-tag tm-tag--critical">Rejected</span>
+    <span class="tm-tag tm-tag--dark">HA skipped</span>
+  </div>
+</section>
+
+<section id="containers">
+  <h2 class="pv tm-text-h2-web">Containers &amp; feedback</h2>
+  <div class="tm-grid">
+    <div class="tm-card" style="grid-column: span 4"><div class="tm-section-title">Card</div><span class="tm-muted">Default. White, 16 radius, card shadow.</span></div>
+    <div class="tm-card tm-card--flat" style="grid-column: span 4"><div class="tm-section-title">Card — flat</div><span class="tm-muted">For dense internal-tool layouts.</span></div>
+    <div class="tm-card tm-card--tint" style="grid-column: span 4"><div class="tm-section-title">Card — tint</div><span class="tm-muted">Highlighted info, no shadow.</span></div>
+    <div class="tm-stack tm-stack--sm" style="grid-column: span 6">
+      <div class="tm-notice"><span class="tm-icon" data-icon="info-circle"></span><span>Closing script: confirm the order and mention tracking in the app.</span></div>
+      <div class="tm-notice tm-notice--warning"><span class="tm-icon" data-icon="alert-triangle"></span><span>Health advisor call pending for this order.</span></div>
+      <div class="tm-notice tm-notice--error"><span class="tm-icon" data-icon="alert-circle"></span><span>Call failed. Try again or schedule a callback.</span></div>
+    </div>
+    <div style="grid-column: span 6; display:flex; align-items:center; justify-content:center">
+      <span class="tm-toast static">Recommended substitute added</span>
+    </div>
+  </div>
+</section>
+
+<section id="internal">
+  <h2 class="pv tm-text-h2-web">Internal tools layer <span class="tm-tag tm-tag--warning">Proposed</span></h2>
+  <p class="pv">Not in SALT yet. Built from SALT tokens for portals and desktop screens.</p>
+  <div class="desk">
+    <nav class="tm-sidenav">
+      <a class="tm-sidenav__item" href="#internal" aria-current="page"><span class="tm-icon" data-icon="layout-dashboard"></span>Dashboard</a>
+      <a class="tm-sidenav__item" href="#internal"><span class="tm-icon" data-icon="clipboard-list"></span>My cases</a>
+      <a class="tm-sidenav__item" href="#internal"><span class="tm-icon" data-icon="chart-bar"></span>My statistics</a>
+      <a class="tm-sidenav__item" href="#internal"><span class="tm-icon" data-icon="settings"></span>Settings</a>
+    </nav>
+    <div class="tm-stack" style="flex:1; padding: var(--tm-space-xl)">
+      <div class="tm-text-h3-web">Today</div>
+      <div class="tm-grid">
+        <div class="tm-stat" style="grid-column: span 4"><div class="tm-stat__label">Cases attempted</div><div class="tm-stat__value">48</div></div>
+        <div class="tm-stat" style="grid-column: span 4"><div class="tm-stat__label">Cases connected</div><div class="tm-stat__value">36</div></div>
+        <div class="tm-stat" style="grid-column: span 4"><div class="tm-stat__label">Prescribed</div><div class="tm-stat__value">29</div></div>
+      </div>
+      <div class="tm-card tm-card--flat" style="padding:0; overflow:hidden">
+        <table class="tm-table">
+          <thead><tr><th>Order</th><th>Patient</th><th>Case</th><th>Status</th><th class="tm-num">Value</th></tr></thead>
+          <tbody>
+            <tr><td>TM-ORD-20240812</td><td>Ramesh Gupta</td><td><span class="tm-tag tm-tag--info">Cat4</span></td><td><span class="tm-tag tm-tag--success">Prescribed</span></td><td class="tm-num">₹1,240</td></tr>
+            <tr><td>TM-ORD-20240813</td><td>Anita Desai</td><td><span class="tm-tag">Pilot</span></td><td><span class="tm-tag tm-tag--warning">Pending</span></td><td class="tm-num">₹860</td></tr>
+            <tr><td>TM-ORD-20240814</td><td>Vikram Rao</td><td><span class="tm-tag">Pilot</span></td><td><span class="tm-tag tm-tag--critical">No pickup</span></td><td class="tm-num">₹2,115</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="examples" style="padding-bottom: var(--tm-space-3xl)">
+  <h2 class="pv tm-text-h2-web">Example — mobile screen</h2>
+  <p class="pv">Same building blocks, one primary action, colour only for status.</p>
+  <div class="phone">
+    <div class="tm-appbar"><span class="tm-icon" data-icon="arrow-left"></span><span class="tm-appbar__title">Consultation</span><span class="tm-tag tm-tag--info">Cat4</span></div>
+    <div class="tm-stack" style="padding: var(--tm-space-lg)">
+      <div class="tm-card">
+        <div class="tm-inline" style="justify-content:space-between">
+          <div><div class="tm-text-h2">Ramesh Gupta</div><div class="tm-muted">54 yrs · Male</div></div>
+          <button class="tm-btn tm-btn--secondary tm-btn--sm"><span class="tm-icon tm-icon--16" data-icon="prescription"></span>View Rx</button>
+        </div>
+        <hr class="tm-divider">
+        <div class="tm-inline tm-muted tm-text-body-sm">TM-ORD-20240812 · ₹1,240</div>
+      </div>
+      <div class="tm-card">
+        <div class="tm-section-title">Medicines · 3</div>
+        <div class="tm-row"><div class="tm-thumb"></div><div class="tm-row__main"><div class="tm-row__title">Metformin 500mg</div><div class="tm-row__meta">1-0-1 · Ongoing · Qty 60 · ₹28</div></div><span class="tm-tag tm-tag--success">Prescribed</span></div>
+        <div class="tm-row"><div class="tm-thumb"></div><div class="tm-row__main"><div class="tm-row__title">Amlodipine 5mg</div><div class="tm-row__meta">1-0-0 · Ongoing · Qty 30 · ₹52</div></div><span class="tm-tag tm-tag--warning">Pending</span></div>
+        <div class="tm-row"><div class="tm-thumb"></div><div class="tm-row__main"><div class="tm-row__title">Atorvastatin 10mg</div><div class="tm-row__meta">0-0-1 · Ongoing · Qty 30 · ₹45</div></div><span class="tm-tag tm-tag--warning">Pending</span></div>
+      </div>
+    </div>
+    <div class="tm-actionbar"><button class="tm-btn tm-btn--primary tm-btn--lg tm-btn--block"><span class="tm-icon" data-icon="phone"></span>Call patient</button></div>
+  </div>
+</section>
+
+</main>
+<script>
+  document.getElementById("icon-grid").innerHTML = TMIcons.names.map(function (n) {
+    return '<div><span class="tm-icon tm-icon--24">' + TMIcons.svg(n) + '</span><code>' + n + '</code></div>';
+  }).join("");
+</script>
+</body>
+</html>

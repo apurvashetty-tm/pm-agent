@@ -26,6 +26,8 @@ blanks, and Claude behaves consistently and safely from day one.
    mock-backend only, and adjust wording if needed.
 4. Leave `docs/context/open_questions.md` empty — it fills up as you build.
 5. Tell Claude to read the files listed in `CLAUDE.md` before it starts.
+6. UI projects need no design setup: they use the central `design-system/`
+   (see `design-system/RULES.md`). Don't create a per-project design system.
 
 ## What's inside
 

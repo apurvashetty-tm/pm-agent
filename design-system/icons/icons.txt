@@ -1,0 +1,105 @@
+# Icons bundled into icons.js — Tabler outline set (the set SALT uses).
+# One name per line. Browse names: https://tabler.io/icons (outline style only).
+# Add a name, then run:  node scripts/build-icons.mjs
+# Navigation & actions
+arrow-left
+arrow-right
+arrow-forward-up
+arrows-exchange
+chevron-left
+chevron-right
+chevron-down
+chevron-up
+x
+check
+plus
+minus
+dots-vertical
+menu-2
+search
+filter
+adjustments-horizontal
+refresh
+external-link
+copy
+share
+download
+upload
+pencil
+trash
+eye
+eye-off
+lock
+logout
+settings
+# Status & feedback
+info-circle
+alert-circle
+alert-triangle
+circle-check
+circle-x
+help-circle
+bell
+clock
+history
+hourglass
+# Calls & communication
+phone
+phone-call
+phone-off
+phone-x
+phone-pause
+microphone
+microphone-off
+headset
+message
+mail
+# People & places
+user
+users
+user-check
+id
+home
+building-store
+map-pin
+# Health & orders
+pill
+capsule
+prescription
+stethoscope
+first-aid-kit
+report-medical
+notes
+clipboard-list
+clipboard-check
+file-text
+package
+truck
+shopping-cart
+receipt
+currency-rupee
+discount
+calendar
+calendar-time
+# Data & layout (internal tools)
+layout-dashboard
+chart-bar
+table
+list-details
+star
+# Added for doctor-portal restyle (2026-10-07)
+phone-call
+volume-off
+bolt
+player-track-next
+clipboard-text
+book
+rotate-clockwise
+arrows-minimize
+user-circle
+arrow-up-right
+vaccine
+medicine-syrup
+droplet
+wind
+test-pipe
