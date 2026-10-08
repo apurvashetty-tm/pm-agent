@@ -12,6 +12,9 @@
 > (absolute, fades in) instead of being inserted into the page: inserting it changed the header height, shifted the page
 > and made the browser jump the scroll position by ~50–70px (header looked "half closing" when scrolling up, on phone
 > widths). `docs/layout_check.py` now fails on any such jump.
+> Same day: the case page no longer scrolls on past the Call / Confirm actions. `#main-scroll` had a permanent 144px
+> bottom padding; it is now 32px (as on the Prescribe screen), with the extra room added only while the "Order Confirmed"
+> snackbar is showing. `docs/layout_check.py` checks the scroll ends right after the last action.
 
 ---
 

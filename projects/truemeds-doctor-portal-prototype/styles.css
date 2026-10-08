@@ -211,10 +211,13 @@
     /* ============================================================
        MAIN SCROLL CONTENT
     ============================================================ */
+    /* Scrolling ends just after the last action (same breathing room as the Prescribe screen). Extra room is added
+       only while the success confirmation is showing, so it never covers the buttons. (Was a permanent 144px gap.) */
     #main-scroll {
-      padding: var(--tm-space-lg) var(--tm-space-lg) calc(var(--tm-space-3xl) * 3);
+      padding: var(--tm-space-lg) var(--tm-space-lg) var(--tm-space-2xl);
       display: flex; flex-direction: column; gap: var(--tm-space-md);
     }
+    body:has(#success-toast.show) #main-scroll { padding-bottom: calc(var(--tm-space-3xl) * 3); }
 
     /* ============================================================
        PRESCRIBE SCREEN — full-screen view over the case (agreed 2026-10-07). Placement mirrors the Rx viewer;
