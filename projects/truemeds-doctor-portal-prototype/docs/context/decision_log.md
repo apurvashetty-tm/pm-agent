@@ -78,7 +78,7 @@ the reasoning is kept so nobody re-opens a settled question without new informat
 
 ### D-10 · A full-screen view, not a bottom sheet — 2026-10-07 (button placement revised 2026-10-08, see D-22)
 - **Decision:** Opens full screen over the case (like the Rx viewer), one scroll area, laid out like the case page:
-  grey background, one white card per block (Prints as · Schedule · SOS · Duration · Food · Additional instructions).
+  grey background, one white card per block (Schedule · SOS · Duration · Food · Additional instructions).
 - **Why:** A long form inside a bottom sheet means two scroll areas, accidental dismissal (losing edits) and no
   proper header. Cards match the case page and make each block easy to find while scrolling.
 - **Superseded:** "Prescribe at the end, not pinned, so the doctor scrolls past every section" — replaced by D-22.
@@ -98,7 +98,7 @@ the reasoning is kept so nobody re-opens a settled question without new informat
 - **Rejected:** "Tablet · Prescribe" subtitle; a coloured form tag (colour is only for status); full-width Disable
   beside Prescribe; a back arrow.
 
-### D-13 · "Prints as" line at the top — 2026-10-07
+### D-13 · "Prints as" line at the top — 2026-10-07 (revised by D-25: now "On prescription", pinned under the app bar)
 - **Decision:** One line showing exactly what will print, updating live.
 - **Ongoing:** shown on screen as "Ongoing (6 months)"; the print shows the **period** ("6 months"). Confirmed with
   the medical team. The period is the backend's configured default (per medicine if that ever differs).
@@ -165,7 +165,7 @@ the reasoning is kept so nobody re-opens a settled question without new informat
   hides when there is nothing to do (case completed / unavailable) and steps aside while typing on a phone.
 - **Why:** A button that simply ends where the content ends looks out of place and moves around; a pinned bar is the
   standard mobile pattern (`.tm-actionbar`) and keeps the main action in thumb reach. Verification before Prescribe
-  comes from the "Prints as" card at the top, which shows the whole prescription in one line.
+  comes from the "On prescription" line pinned under the app bar (D-25), which shows the whole prescription in one line.
 - **Rejected:** pinned but greyed out until the doctor scrolls to the bottom — forcing a scroll doesn't make anyone
   read; a disabled button with no reason confuses mid-call; the scroll rule breaks whenever content height changes
   (duration open, errors, SOS, rotation, keyboard, tall phones) and fails keyboard/screen-reader users.
@@ -191,6 +191,36 @@ Own audit of both screens against the design system; Apurva asked to fix everyth
   field; long medicine names stay on one line in the app bar; text boxes can't be resized by dragging.
 - **Rx viewer:** controls use the new on-dark button so they read on the dark surface.
 - **Why:** each was a one-off style next to a design-system one, or a state that left the doctor with nothing to do.
+
+### D-25 · "On prescription" line pinned under the app bar — 2026-10-08
+- **Problem it solves:** with Prescribe always active (D-22), this line is the doctor's only check of what the patient
+  will get. It has two jobs: show the effect of every tap while editing, and be the last thing read before Prescribe.
+  As a card at the top of the scroll it disappeared as soon as the doctor scrolled to the fields they were changing,
+  and it was styled like a hint (small grey label, regular text).
+- **Decision:**
+  - **Pinned:** joined to the app bar as one header block (one shadow under both), so it never scrolls away. The
+    medicine name above it and the line below read like the entry on the prescription itself.
+  - **Name:** "On prescription" (with the Rx icon) instead of "Prints as". The patient mostly gets the prescription
+    in the app, not on paper, and "On prescription" says whose document this is.
+  - **Visibility:** the line is the strongest text on the screen (16px semibold, dark) on a light brand-blue band;
+    the label is small and blue. It briefly turns a deeper blue when the text changes, so a tap lower down is visibly
+    reflected (no animation with reduced motion).
+  - **Length:** wraps in full; only a long "Additional instructions" text is cut at 3 lines, since the doctor is
+    looking at that text in its own box.
+- **Rejected:** pinning it above Prescribe at the bottom — on a phone the bottom bar steps aside while typing, so the
+  line would vanish exactly when the doctor types instructions that print; it also stacks two bands in the thumb zone.
+  Keeping it as a scrolling card — fails the "see the effect while editing" job.
+
+### D-26 · Call didn't connect; no call timer for the doctor — 2026-10-08
+- **Decision:** After "didn't pick up" or "call didn't connect", closing the sheet (cross or tap outside) is allowed and
+  loses nothing: the Call card says what happened, keeps **Mark as Unavailable**, and the pinned button reads
+  **Call Again**. The end-of-call script is hidden until the doctor calls again. The sheet title no longer says
+  "Webhook timed out" (system language) — it says "Call didn't connect".
+- **Decision:** No call timer anywhere in the doctor's view (removed from the patient strip). The 50s rule still runs in
+  the background and unlocks the actions; the timer stays only in the demo controls.
+- **Rejected:** making the sheet impossible to close — it blocks the doctor from checking the case before deciding.
+- **Kept:** the card title stays "Call" (not "Call actions"): the card holds the call's status and script as well as
+  actions, and the main action now sits in the pinned bar outside the card.
 
 ## Design system changes made for this work
 

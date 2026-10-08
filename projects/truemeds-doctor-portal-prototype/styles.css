@@ -127,7 +127,7 @@
     #cs-patient-name { font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); font-weight: var(--tm-font-weight-semibold); }
     #cs-patient-meta { font-size: var(--tm-font-size-body-xs); line-height: var(--tm-font-lineheight-xs); color: var(--tm-content-secondary); }
     #cs-order-value { font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); font-weight: var(--tm-font-weight-semibold); white-space: nowrap; flex-shrink: 0; }
-    #cs-timer-badge, #cs-view-rx-btn { flex-shrink: 0; }
+    #cs-view-rx-btn { flex-shrink: 0; }
 
     /* ============================================================
        PORTAL HEADER — .tm-appbar with the approved "truemeds for doctors" logo (local copy)
@@ -243,7 +243,27 @@
     }
     #prescribe-screen.open { display: flex; }
     #prescribe-screen:focus { outline: none; }
-    #ps-bar { position: relative; flex-shrink: 0; }
+    /* App bar + "On prescription" line form one pinned header (D-25): the line never scrolls away */
+    #ps-top { flex-shrink: 0; position: relative; z-index: 2; background: var(--tm-surface-primary); box-shadow: var(--tm-shadow-header); }
+    #ps-bar { position: relative; box-shadow: none; }
+    #ps-rx {
+      background: var(--tm-surface-brand-subtle);
+      padding: var(--tm-space-sm) var(--tm-space-lg) var(--tm-space-md);
+      transition: background-color 0.3s ease;
+    }
+    #ps-rx.is-updated { background: var(--tm-surface-brand-muted); }
+    .ps-rx-label {
+      display: flex; align-items: center; gap: var(--tm-space-xs); margin-bottom: var(--tm-space-2xs);
+      font-size: var(--tm-font-size-body-xs); line-height: var(--tm-font-lineheight-xs);
+      font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-brand);
+    }
+    /* The line itself is the most important text on the screen; a long note is cut at 3 lines (it is visible in its own field) */
+    #ps-prints-text {
+      font-size: var(--tm-font-size-body-lg); line-height: var(--tm-font-lineheight-md);
+      font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-primary);
+      display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; line-clamp: 3; overflow: hidden; overflow-wrap: anywhere;
+    }
+    @media (prefers-reduced-motion: reduce) { #ps-rx { transition: none; } }
     #ps-heading { flex: 1; min-width: 0; }
     #ps-heading .tm-appbar__title { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }   /* #13 one line */
     #ps-form { display: block; font-size: var(--tm-font-size-body-xs); line-height: var(--tm-font-lineheight-xs); color: var(--tm-content-secondary); }
@@ -258,8 +278,6 @@
     .ps-card { display: flex; flex-direction: column; gap: var(--tm-space-xl); }
     .ps-card > .ps-sub { margin-top: 0; }
     #ps-actionbar { flex-shrink: 0; position: relative; }
-    #ps-prints .ps-label { margin-bottom: var(--tm-space-xs); }
-    #ps-prints-text { font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); color: var(--tm-content-primary); }
     /* #4 group labels use .tm-field__label typography (class added in app.js) — same as "Additional instructions" */
     .ps-label { display: block; margin-bottom: var(--tm-space-sm); }
     .ps-label .tm-muted, .tm-field__label .tm-muted { font-weight: var(--tm-font-weight-regular); }

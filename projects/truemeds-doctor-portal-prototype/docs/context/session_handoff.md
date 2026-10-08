@@ -3,8 +3,8 @@
 **Purpose:** Captures all decisions, agreements, and pending work so a new Claude session on any machine can pick up exactly where things left off.
 
 **Last updated:** 2026-10-08
-**Session status:** Prescribe redesign built; pinned main action (D-22); UI audit fixes done (D-23, D-24). Open: tablet icon on Prescribe (audit #11, Apurva's call).
-**Why things are the way they are:** `docs/context/decision_log.md` (D-01 … D-24) — read it before changing any
+**Session status:** Prescribe redesign built; pinned main action (D-22); UI audit fixes done (D-23 … D-26). Open: medicine form icon (audit #11) — options in docs/concepts/2026-10-08-medicine-form-icons.png, Apurva's call.
+**Why things are the way they are:** `docs/context/decision_log.md` (D-01 … D-26) — read it before changing any
 screen it covers. This file says what is built; the decision log says why.
 **Case page main action (2026-10-08, D-22):** `#case-actionbar` (`.tm-actionbar`) pinned to the bottom holds
 `#call-initiate-btn` and `#main-cta-btn`; `syncCaseActionBar()` hides the bar when both are hidden and sets `--ab-h`
@@ -13,6 +13,8 @@ frame and pushed the header out of view). `layout_check.py` checks both.
 **UI audit fixes (2026-10-08, D-23/D-24):** every sheet = title + `.sheet-close` (`tm-btn--quiet tm-btn--icon`),
 no handle; callback chips in `.chip-grid` (`--cols`); action card closed state = `#az-closed` notice (text from
 `DOCTOR_STATE.closedNote`); `#next-order-btn` pinned only when unavailable; toasts single-line.
+**Call didn't connect (2026-10-08, D-26):** `#az-missed` notice + `#az-unavail-btn` in the Call card and "Call Again"
+pinned for `no_answer` / `hold`; no call timer in the doctor UI (`#cs-timer-badge` removed; demo controls keep theirs).
 **Live link:** https://doctor-portal-prototype.netlify.app — Netlify deploys every push to `main` (base = repo root,
 publish = this folder). The root `netlify.toml` copies `design-system/` next to `index.html` at deploy time so the
 `../../design-system/…` links resolve. Work on a branch, then merge to `main` to update the live link.
@@ -34,7 +36,9 @@ publish = this folder). The root `netlify.toml` copies `design-system/` next to 
 > options: `decision_log.md` D-10 … D-20. Concept render (pre-review): `docs/concepts/2026-10-07-prescribe-screen.png`.
 > Full-screen view over the case (inside the phone frame), one scroll area, every section open with backend defaults.
 > 1. App bar: cross (close) · medicine name with the form in grey under it ("Tablet") · small red "Disable".
-> 2. "Prints as": the exact printed line, live. Ongoing prints its period ("6 months"); on screen "Ongoing (6 months)".
+> 2. "On prescription" (was "Prints as"; D-25): the exact printed line, live, pinned under the app bar in one header
+>    block (`#ps-top` = `#ps-bar` + `#ps-rx`), 16px semibold on a brand-blue band, flashes on change (`setPrintLine()`).
+>    Ongoing prints its period ("6 months"); on screen "Ongoing (6 months)".
 > 3. How often: Daily · Every X hours (4/6/8/12 h, round the clock) · Alt days · Weekly · Monthly · SOS only.
 > 4. Dose: heading "Dose"; unit shown only where the form doesn't say it ("Dose (ml)" syrups, "Dose (puffs)" inhalers).
 >    Daily = M / A / N rows (no evening slot). Choices: tablet/capsule 0 ½ 1 2; syrup 0 2.5 5 10 ml (single-dose
@@ -47,7 +51,7 @@ publish = this folder). The root `netlify.toml` copies `design-system/` next to 
 >    printed only if chosen. Shown for every form.
 > 8. Additional instructions: optional, printed (tapers, "shake well", "stop if rash"…).
 > 9. Prescribe (primary, large) in a bottom bar pinned to the screen, always active (D-22). Body is grey with one
->    white card per block (Prints as · Schedule · SOS · Duration · Food · Additional instructions), like the case page.
+>    white card per block (Schedule · SOS · Duration · Food · Additional instructions), like the case page.
 > Errors (only two, inline, on Prescribe): 0-0-0 → notice under the dose grid; empty "Other" → field error.
 > Closing: instant if nothing changed, otherwise "Discard changes?" (Discard / Keep editing). Tab stays inside the
 > screen; choice groups labelled for screen readers. Disabled medicine: warning note "Disabled: reason. Prescribing it

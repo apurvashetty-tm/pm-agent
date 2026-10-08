@@ -309,10 +309,6 @@ function updateCompactStrip() {
   document.getElementById('cs-view-rx-btn').classList.toggle('hidden', !c.prescription_attached);
 
   const state = DOCTOR_STATE.consultationState;
-  const showTimer = state === 'connected' || state === 'gate_passed';
-  const timerBadge = document.getElementById('cs-timer-badge');
-  timerBadge.classList.toggle('hidden', !showTimer);
-  if (showTimer) document.getElementById('cs-timer-text').textContent = formatTimer(DOCTOR_STATE.callTimer);
 }
 
 function renderRxMedicines(meds) {
@@ -395,9 +391,14 @@ function renderCallPhase() {
   const brief   = document.getElementById('pre-call-brief');
   const pcbText = document.getElementById('pcb-text');
   const pcbLabel = document.getElementById('pcb-label');
-  // Hide briefing after an early hang-up — closing script is irrelevant
+  // Hide briefing after an early hang-up or a call that didn't connect — closing script is irrelevant
   // until the doctor re-dials
-  if (c && !DOCTOR_STATE.endedEarly) {
+  const missed = state === 'no_answer' || state === 'hold';
+  document.getElementById('az-missed').hidden = !missed;
+  document.getElementById('az-unavail-btn').hidden = !missed;
+  if (missed) document.getElementById('az-missed-text').textContent =
+    state === 'hold' ? 'Call didn\'t connect.' : 'Patient didn\'t pick up.';
+  if (c && !DOCTOR_STATE.endedEarly && !missed) {
     const isHA = c.case_type === 'pilot' && c.ha_status === 'required';
     const isValue = c.meds_type === 'value';
     brief.classList.add('visible');
@@ -472,7 +473,7 @@ function renderCallPhase() {
   }
   if (preGateCb) preGateCb.className = 'tm-btn tm-btn--sm tm-btn--secondary tm-btn--block hidden';
   callBtnIcon.innerHTML  = icon('phone');
-  callBtnLbl.textContent = 'Call Patient';
+  callBtnLbl.textContent = missed ? 'Call Again' : 'Call Patient';
 }
 
 function renderPostCall() {
@@ -699,7 +700,7 @@ function simWebhook(reason) {
   if (reason === 'no_answer' || reason === 'timeout') {
     DOCTOR_STATE.consultationState = reason === 'timeout' ? 'hold' : 'no_answer';
     document.getElementById('sheet-retry-title').textContent =
-      reason === 'timeout' ? 'Webhook timed out' : 'Patient didn\'t pick up';
+      reason === 'timeout' ? 'Call didn\'t connect' : 'Patient didn\'t pick up';
     render();
     openSheet('sheet-retry');
   } else {
@@ -775,10 +776,6 @@ function startCallTimer() {
   DOCTOR_STATE.timerInterval = setInterval(() => {
     DOCTOR_STATE.callTimer++;
 
-    // Update compact strip timer badge
-    const timerBadge = document.getElementById('cs-timer-badge');
-    timerBadge.classList.remove('hidden');
-    document.getElementById('cs-timer-text').textContent = formatTimer(DOCTOR_STATE.callTimer);
 
     if (DOCTOR_STATE.callTimer >= 50 && DOCTOR_STATE.consultationState !== 'gate_passed') {
       clearInterval(DOCTOR_STATE.timerInterval);
@@ -1100,8 +1097,22 @@ function renderPrescribe() {
   const dyn = document.getElementById('ps-dynamic');
   dyn.innerHTML = h;
   initIcons();
-  document.getElementById('ps-prints-text').textContent = printLine(editModel());
+  setPrintLine();
   if (focusKey) dyn.querySelector(`[data-k="${CSS.escape(focusKey)}"]`)?.focus({ preventScroll: true });
+}
+
+// The pinned "On prescription" line (D-25). Briefly tints when the text changes so the doctor sees the effect of a tap.
+let _printFlash = null;
+function setPrintLine() {
+  const el = document.getElementById('ps-prints-text');
+  const next = printLine(editModel());
+  const changed = el.textContent !== next && el.textContent !== '—' && document.getElementById('prescribe-screen').classList.contains('open');
+  el.textContent = next;
+  if (!changed) return;
+  const box = document.getElementById('ps-rx');
+  box.classList.add('is-updated');
+  clearTimeout(_printFlash);
+  _printFlash = setTimeout(() => box.classList.remove('is-updated'), 600);
 }
 
 // One delegated handler for every chip / button in the screen.
@@ -1147,11 +1158,11 @@ document.getElementById('ps-dynamic').addEventListener('input', (e) => {
     const f = document.getElementById('ps-other-field');
     f.classList.remove('tm-field--error'); f.querySelector('.tm-field__helper')?.remove();
   }
-  document.getElementById('ps-prints-text').textContent = printLine(editModel());
+  setPrintLine();
 });
 document.getElementById('ps-note').addEventListener('input', (e) => {
   EDIT_STATE.note = e.target.value;
-  document.getElementById('ps-prints-text').textContent = printLine(editModel());
+  setPrintLine();
 });
 
 // Only two invalid states can exist (every required choice always keeps a value): no dose at all on a daily

@@ -145,7 +145,6 @@
           <div id="cs-patient-meta">—</div>
         </div>
         <span id="cs-order-value"></span>
-        <span id="cs-timer-badge" class="tm-tag tm-tag--md tm-tag--info hidden"><span class="tm-icon tm-icon--16" data-icon="phone-call"></span><span id="cs-timer-text">0:00</span></span>
         <button id="cs-view-rx-btn" class="tm-btn tm-btn--secondary tm-btn--xs hidden" onclick="openRxOverlay()"><span class="tm-icon tm-icon--16" data-icon="clipboard-text"></span>View Rx</button>
       </div>
 
@@ -234,6 +233,10 @@
           <button id="pre-gate-callback-btn" class="tm-btn tm-btn--sm tm-btn--secondary tm-btn--block hidden" onclick="openSheet('sheet-callback')">
             <span class="tm-icon tm-icon--16" data-icon="calendar"></span>Schedule Callback
           </button>
+
+          <!-- Call didn't connect (no answer / timed out): the card keeps the choice the sheet offered, so closing the sheet loses nothing -->
+          <div id="az-missed" class="tm-notice tm-notice--warning" hidden><span class="tm-icon" data-icon="phone-off"></span><span id="az-missed-text">Patient didn't pick up.</span></div>
+          <button id="az-unavail-btn" class="tm-btn tm-btn--sm tm-btn--destructive tm-btn--block" onclick="markCustomerUnavailable()" hidden>Mark as Unavailable</button>
 
           <div id="az-status-label" class="hidden"></div>
         </div>
@@ -355,17 +358,23 @@
 <!-- ============================================================
      PRESCRIBE SCREEN — full-screen view over the case (like the Rx viewer), inside the phone frame.
      Agreed 2026-10-07: every section open with backend defaults; Prescribe at the end of the content (not pinned);
-     Disable is a small action in the app bar. Sections between "Prints as" and the note are rendered by app.js.
+     Disable is a small action in the app bar. The "On prescription" line is pinned under the app bar (D-25); the sections above the note are rendered by app.js.
 ============================================================ -->
 <div id="prescribe-screen" role="dialog" aria-modal="true" aria-labelledby="ps-title" aria-hidden="true" tabindex="-1">
+  <!-- Header group: app bar + the live prescription line, pinned together (never scrolls) — decision log D-25 -->
+  <div id="ps-top">
   <div id="ps-bar" class="tm-appbar">
     <button class="tm-btn tm-btn--quiet tm-btn--icon" onclick="requestClosePrescribe()" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button>
     <div id="ps-heading"><span id="ps-title" class="tm-appbar__title">—</span><span id="ps-form">—</span></div>
     <button id="ps-disable-btn" class="tm-btn tm-btn--destructive tm-btn--xs" onclick="openDisableSheet()">Disable</button>
   </div>
+  <div id="ps-rx">
+    <div class="ps-rx-label" id="ps-rx-label"><span class="tm-icon tm-icon--16" data-icon="prescription"></span>On prescription</div>
+    <div id="ps-prints-text" aria-live="polite" aria-labelledby="ps-rx-label">—</div>
+  </div>
+  </div><!-- /ps-top -->
   <div id="ps-body">
     <div id="ps-disabled-note" class="tm-notice tm-notice--warning" hidden><span class="tm-icon" data-icon="alert-triangle"></span><span id="ps-disabled-text">Disabled.</span></div>
-    <div id="ps-prints" class="tm-card tm-card--tint"><div class="ps-label">Prints as</div><div id="ps-prints-text" aria-live="polite">—</div></div>
     <div id="ps-dynamic"></div>
     <div class="tm-card ps-card"><div class="tm-field ps-section">
       <label class="tm-field__label" for="ps-note">Additional instructions</label>
