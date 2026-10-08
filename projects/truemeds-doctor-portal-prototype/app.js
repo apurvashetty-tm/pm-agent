@@ -362,6 +362,7 @@ function renderMedicines(meds) {
     el.setAttribute('role', 'button');
     el.setAttribute('tabindex', '0');
     el.setAttribute('aria-label', `Edit ${med.name}`);
+    el.dataset.medId = med.id;
     el.onclick = () => openMedEdit(med.id);
     el.onkeydown = (e) => { if (e.key === 'Enter' || e.key === ' ') openMedEdit(med.id); };
     el.innerHTML = `
@@ -987,9 +988,17 @@ document.addEventListener('keydown', (e) => {
 }, { capture: true });
 
 const durationCode = () => EDIT_STATE.durOngoing ? 'ongoing' : `${EDIT_STATE.durN}${EDIT_STATE.durU}`;
+// "Other" dose: the WHOLE entry must be a plain positive number ("7", "7.5", ".5"). parseFloat alone read "7..5" or
+// "7abc" as 7 and saved it silently (review 2026-10-09). Anything else is invalid; what the doctor typed is kept.
+function parseDose(s) {
+  const t = String(s ?? '').trim();
+  if (!/^(\d+(\.\d+)?|\.\d+)$/.test(t)) return NaN;
+  const v = Number(t);
+  return v > 0 ? v : NaN;
+}
 function currentDose() {
   if (!EDIT_STATE.doseOther) return EDIT_STATE.dose;
-  const v = parseFloat(EDIT_STATE.doseOtherVal);
+  const v = parseDose(EDIT_STATE.doseOtherVal);
   return isFinite(v) ? v : '—';
 }
 const editModel = () => {
@@ -1034,8 +1043,8 @@ function renderPrescribe() {
     const opts = fd.each.map(v => chip(`dose:${v}`, chipLabel(x.form, v), !x.doseOther && x.dose === v));
     if (fd.other) opts.push(chip('dose:other', 'Other', x.doseOther));
     const other = x.doseOther ? `<div class="tm-field ps-gap${x.err === 'other' ? ' tm-field--error' : ''}" id="ps-other-field"><label class="tm-field__label" for="ps-other">Dose in ${fd.other}</label>
-        <div class="tm-field__control"><input id="ps-other" type="text" inputmode="decimal" placeholder="e.g. 7.5" value="${x.doseOtherVal}"><span class="ps-unit">${fd.other}</span></div>
-        ${x.err === 'other' ? `<div class="tm-field__helper" role="alert">Enter the dose in ${fd.other}.</div>` : ''}</div>` : '';
+        <div class="tm-field__control"><input id="ps-other" type="text" inputmode="decimal" placeholder="e.g. 7.5" value="${String(x.doseOtherVal).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;')}"><span class="ps-unit">${fd.other}</span></div>
+        ${x.err === 'other' ? `<div class="tm-field__helper" role="alert">${String(x.doseOtherVal).trim() ? `Use numbers only, e.g. 7.5 ${fd.other}.` : `Enter the dose in ${fd.other}.`}</div>` : ''}</div>` : '';
     const lid = 'psl-dose-each';
     h += `<div class="ps-section" id="ps-dose-section"><div class="tm-field__label ps-label" id="${lid}">Dose <span class="tm-muted">${unitHint(fd, x.doseOther ? fd.other : '')}</span></div>` +
          `<div class="ps-grid" role="group" aria-labelledby="${lid}" style="--cols:${opts.length}">${opts.join('')}</div>${other}</div>`;
@@ -1136,7 +1145,7 @@ document.getElementById('ps-dynamic').addEventListener('change', (e) => {
 document.getElementById('ps-dynamic').addEventListener('input', (e) => {
   if (e.target.id !== 'ps-other') return;
   EDIT_STATE.doseOtherVal = e.target.value;
-  if (EDIT_STATE.err === 'other' && parseFloat(e.target.value) > 0) {
+  if (EDIT_STATE.err === 'other' && parseDose(e.target.value) > 0) {
     EDIT_STATE.err = null;
     const f = document.getElementById('ps-other-field');
     f.classList.remove('tm-field--error'); f.querySelector('.tm-field__helper')?.remove();
@@ -1153,7 +1162,7 @@ document.getElementById('ps-note').addEventListener('input', (e) => {
 function validatePrescribe() {
   const x = EDIT_STATE;
   if (x.interval === 'daily' && x.m + x.a + x.n === 0) return 'dose';
-  if (x.interval !== 'daily' && x.doseOther && !(parseFloat(x.doseOtherVal) > 0)) return 'other';
+  if (x.interval !== 'daily' && x.doseOther && !(parseDose(x.doseOtherVal) > 0)) return 'other';
   return null;
 }
 
@@ -1181,7 +1190,7 @@ function confirmMedEdit() {
     duration: x.duration, food: x.food, note: x.note.trim(),
     validation_status: 'prescribed', disabled: false, disable_reason: undefined,
   });
-  closePrescribe(); render();
+  closePrescribe(); render(); focusMedRow(med.id);
   console.log(`[MOCK] medicine.prescribe | id=${med.id} | name=${med.name} | prints="${printLine(med)}"`);
 }
 
@@ -1192,13 +1201,18 @@ function openDisableSheet() {
   openSheet('sheet-disable-reason');   // opens over the Prescribe screen; cancelling returns to it
 }
 
+// After Prescribe / Disable the list is rebuilt, which removes the row that had focus — put focus on the new row.
+function focusMedRow(id) {
+  document.querySelector(`#medicines-list [data-med-id="${id}"]`)?.focus({ preventScroll: true });
+}
+
 function confirmDisable(reason) {
   const med = DOCTOR_STATE.currentCase.medicines.find(m => m.id === EDIT_STATE.medId);
   if (!med) return;
   med.disabled = true;
   med.validation_status = 'disabled';
   med.disable_reason = reason;
-  closeSheet(); closePrescribe(); render();
+  closeSheet(); closePrescribe(); render(); focusMedRow(med.id);
   console.log(`[MOCK] medicine.disable | id=${med.id} | name=${med.name} | reason="${reason}"`);
 }
 

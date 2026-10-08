@@ -344,7 +344,7 @@
 
 <!-- ============================================================
      PRESCRIBE SCREEN — full-screen view over the case (like the Rx viewer), inside the phone frame.
-     Agreed 2026-10-07: every section open with backend defaults; Prescribe at the end of the content (not pinned);
+     Agreed 2026-10-07: every section open with backend defaults. Prescribe is pinned to the bottom and always active (D-22, which replaced "Prescribe at the end, not pinned");
      Disable is a small action in the app bar. The "On prescription" line is pinned under the app bar (D-25); the sections above the note are rendered by app.js.
 ============================================================ -->
 <div id="prescribe-screen" role="dialog" aria-modal="true" aria-labelledby="ps-title" aria-hidden="true" tabindex="-1">
@@ -452,7 +452,7 @@
         <button class="choice-row reason-btn" onclick="confirmDisable('Contraindicated for patient')">Contraindicated for patient<span class="reason-hint">Allergy or known reaction</span></button>
         <button class="choice-row reason-btn" onclick="confirmDisable('Duplicate medication')">Duplicate medication<span class="reason-hint">Already on equivalent drug</span></button>
         <button class="choice-row reason-btn" onclick="confirmDisable('Patient declined')">Patient declined<span class="reason-hint">Patient refused this medicine</span></button>
-        <button class="choice-row reason-btn" onclick="confirmDisable('Wrong strength — will re-prescribe')">Wrong strength<span class="reason-hint">Will disable and add correct one</span></button>
+        <button class="choice-row reason-btn" onclick="confirmDisable('Wrong strength')">Wrong strength<span class="reason-hint">The ordered strength isn't right</span></button>
       </div>
     </div>
   </div>

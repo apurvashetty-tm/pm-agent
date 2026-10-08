@@ -259,6 +259,17 @@ Own audit of both screens against the design system; Apurva asked to fix everyth
   verified in Figma).
 - Doctor research (icons vs text labels) uses these icons in version A.
 
+### D-30 · Review fixes: dose input, Wrong strength copy, focus — 2026-10-09
+From an external (ChatGPT) review, each point verified before acting.
+- **Other dose:** the whole entry must be a plain positive number ("7", "7.5", ".5"). "7..5", "7abc", "7,5", "1e2",
+  "0", "-2" are rejected in place ("Use numbers only, e.g. 7.5 units"); what the doctor typed is kept; nothing saves.
+  Before, "7..5" silently saved 7 units.
+- **Wrong strength:** hint was "Will disable and add correct one", but adding medicines was removed. Now it only
+  describes the reason ("The ordered strength isn't right"). **Open:** who corrects a wrong strength, and how.
+- **Focus:** after Prescribe or Disable, keyboard focus returns to that medicine's row (the list is rebuilt).
+- **Not changed:** the review said the pinned Prescribe contradicts "see every section first". That rule was replaced
+  by D-22 at Apurva's request; a stale code comment saying "not pinned" was corrected.
+
 ## Design system changes made for this work
 
 ### D-21 · Toggle fix and a large chip size — 2026-10-07

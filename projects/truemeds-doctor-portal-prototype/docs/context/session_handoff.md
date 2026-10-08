@@ -4,7 +4,7 @@
 
 **Last updated:** 2026-10-08
 **Session status:** Prescribe redesign built; pinned main action (D-22); UI audit fixes done (D-23 … D-26). Open: medicine form icon (audit #11) — options in docs/concepts/2026-10-08-medicine-form-icons.png, Apurva's call.
-**Why things are the way they are:** `docs/context/decision_log.md` (D-01 … D-29) — read it before changing any
+**Why things are the way they are:** `docs/context/decision_log.md` (D-01 … D-30) — read it before changing any
 screen it covers. This file says what is built; the decision log says why.
 **Case page main action (2026-10-08, D-22):** `#case-actionbar` (`.tm-actionbar`) pinned to the bottom holds
 `#call-initiate-btn` and `#main-cta-btn`; `syncCaseActionBar()` hides the bar when both are hidden and sets `--ab-h`
