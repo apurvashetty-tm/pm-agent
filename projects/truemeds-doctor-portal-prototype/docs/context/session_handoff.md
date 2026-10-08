@@ -7,6 +7,14 @@
 
 ---
 
+> **2026-10-08 — Sticky header fix.** The app header always stays on top; once the patient block scrolls away, a compact
+> patient strip (name, age/gender, order, order value, View Rx) appears under it. The strip now OVERLAYS the content
+> (absolute, fades in) instead of being inserted into the page: inserting it changed the header height, shifted the page
+> and made the browser jump the scroll position by ~50–70px (header looked "half closing" when scrolling up, on phone
+> widths). `docs/layout_check.py` now fails on any such jump.
+
+---
+
 > **2026-10-07 — Prescription changes, part 2: Prescribe screen redesign — AGREED WITH APURVA, BUILT 2026-10-08.**
 > Concept render: `docs/concepts/2026-10-07-prescribe-screen.png` (tablet, syrup, inhaler, plus the two error states).
 > FULL-SCREEN VIEW, not a bottom sheet (opens over the case like the Rx viewer, inside the phone frame). Every section

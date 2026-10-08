@@ -107,13 +107,21 @@
     /* ============================================================
        COMPACT STRIP — hidden until patient block scrolls out
     ============================================================ */
+    /* The strip OVERLAYS the top of the content (absolute, under the header) instead of being inserted into the flow.
+       Inserting it changed the header's height, which shifted the page and made the browser jump the scroll position
+       (header "half closing" when scrolling up past the patient block). Overlaying = no layout shift, no jump. */
     #compact-strip {
+      position: absolute; left: 0; right: 0; top: 100%;
       background: var(--tm-surface-primary);
       box-shadow: var(--tm-shadow-header);
       padding: var(--tm-space-sm) var(--tm-space-lg);
-      display: none; align-items: center; gap: var(--tm-space-md);
+      display: flex; align-items: center; gap: var(--tm-space-md);
+      opacity: 0; visibility: hidden; pointer-events: none;
+      transform: translateY(calc(-1 * var(--tm-space-sm)));
+      transition: opacity 150ms ease, transform 150ms ease, visibility 150ms;
     }
-    #compact-strip.visible { display: flex; }
+    #compact-strip.visible { opacity: 1; visibility: visible; pointer-events: auto; transform: none; }
+    @media (prefers-reduced-motion: reduce) { #compact-strip { transition: none; } }
     #cs-patient-info { flex: 1; min-width: 0; }
     #cs-patient-name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     #cs-patient-name { font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); font-weight: var(--tm-font-weight-semibold); }

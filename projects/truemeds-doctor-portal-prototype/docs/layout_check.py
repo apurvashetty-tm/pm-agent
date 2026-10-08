@@ -42,6 +42,15 @@ with sync_playwright() as p:
             pg.evaluate("scrollTo(0,0)")
         ref = f if desktop else {"l": 0, "r": w, "t": 0, "b": h}
         # Prescribe screen (full-screen view): fills the frame/screen, scrolls inside, Prescribe reachable at the end
+        # the compact strip must not shift the page: small wheel steps down and back up, no jump bigger than the step
+        q = "document.getElementById('main-scroll').scrollTop" if desktop else "scrollY"
+        pg.mouse.move((f["l"] + f["r"]) / 2 if desktop else w / 2, (f["t"] + f["b"]) / 2 if desktop else h / 2)
+        ys = []
+        for d in [20] * 20 + [-20] * 20:
+            pg.mouse.wheel(0, d); pg.wait_for_timeout(50); ys.append(pg.evaluate(q))
+        jump = max(abs(ys[i] - ys[i - 1]) for i in range(1, len(ys)))
+        check(f"{tag} no scroll jump when the patient strip appears/hides", jump <= 25, f"max step {jump:.0f}px")
+        pg.evaluate("document.getElementById('main-scroll').scrollTop=0" if desktop else "scrollTo(0,0)")
         pg.locator("#medicines-list > *").first.scroll_into_view_if_needed(); pg.locator("#medicines-list > *").first.click(); pg.wait_for_timeout(400)
         ps = pg.evaluate("(()=>{const q=document.getElementById('prescribe-screen').getBoundingClientRect();return {l:q.left,r:q.right,t:q.top,b:q.bottom}})()")
         check(f"{tag} Prescribe screen fills the {'frame' if desktop else 'screen'}", all(abs(ps[k] - ref[k]) <= 2 for k in "lrtb"), str({k: round(ps[k]) for k in ps}))
