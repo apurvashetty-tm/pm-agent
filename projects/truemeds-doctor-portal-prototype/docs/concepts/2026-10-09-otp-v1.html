@@ -1,0 +1,64 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="design-system/truemeds.css">
+<script src="design-system/icons/icons.js"></script>
+<style>
+  html,body{margin:0;height:100%}
+  body.tm{background:var(--tm-surface-primary)}
+  .screen{height:100dvh;display:flex;flex-direction:column;padding:var(--tm-space-xl) var(--tm-space-lg) 0;box-sizing:border-box;position:relative;overflow:hidden}
+  .logo{width:168px;height:auto}
+  .head{margin-top:56px;display:flex;flex-direction:column;gap:var(--tm-space-sm)}
+  .head h1{margin:0;font-size:24px;line-height:32px;font-weight:var(--tm-font-weight-semibold);color:var(--tm-content-primary)}
+  .head p{margin:0;font-size:var(--tm-font-size-body-lg);line-height:var(--tm-font-lineheight-md);color:var(--tm-content-secondary)}
+  .head p b{color:var(--tm-content-primary);font-weight:var(--tm-font-weight-semibold)}
+  a.lk{color:var(--tm-content-brand);font-weight:var(--tm-font-weight-semibold);text-decoration:none}
+  .form{margin-top:var(--tm-space-2xl);display:flex;flex-direction:column;gap:var(--tm-space-md)}
+  .otp{display:grid;grid-template-columns:repeat(4,60px);gap:12px}
+  .box{height:60px;display:flex;align-items:center;justify-content:center;border:1px solid var(--tm-border-default);border-radius:var(--tm-radius-md);font-size:24px;font-weight:var(--tm-font-weight-semibold);color:var(--tm-content-primary);background:var(--tm-surface-primary)}
+  .box.on{border-color:var(--tm-border-focus);box-shadow:inset 0 0 0 1px var(--tm-border-focus)}
+  .otp.err .box{border-color:var(--tm-border-error-strong)}
+  .otp.off .box{background:var(--tm-surface-secondary);border-color:var(--tm-border-disabled);color:var(--tm-content-disabled)}
+  .otp.wait .box{background:var(--tm-surface-secondary);color:var(--tm-content-secondary)}
+  .msg{font-size:var(--tm-font-size-body-sm);line-height:var(--tm-font-lineheight-sm);color:var(--tm-content-secondary);min-height:20px;display:flex;align-items:center;gap:8px}
+  .msg.err{color:var(--tm-content-error)} .msg.ok{color:var(--tm-content-success)}
+  .msg .tm-icon{width:16px;height:16px;flex-shrink:0}
+  .spin{display:inline-block;width:14px;height:14px;border:2px solid var(--tm-border-default);border-top-color:var(--tm-content-brand);border-radius:50%}
+  .resend{font-size:var(--tm-font-size-body-md);line-height:var(--tm-font-lineheight-sm);color:var(--tm-content-secondary)}
+  .resend .t{color:var(--tm-content-primary);font-weight:var(--tm-font-weight-semibold)}
+  .note{display:none}.note.show{display:flex}
+  .note .tm-icon{flex-shrink:0;margin-top:1px}
+  .note a{color:var(--tm-content-brand);font-weight:var(--tm-font-weight-semibold);text-decoration:none;white-space:nowrap}
+  .kbd{position:absolute;left:0;right:0;bottom:0;height:300px;background:#d1d5db;display:none;grid-template-columns:repeat(3,1fr);gap:6px;padding:8px;box-sizing:border-box}
+  .kbd div{background:#fff;border-radius:6px;display:flex;align-items:center;justify-content:center;font:500 22px/1 sans-serif;color:#111}
+  .sugg{position:absolute;left:0;right:0;bottom:300px;height:44px;background:#e5e7eb;display:none;align-items:center;justify-content:center;font:500 15px/1 sans-serif;color:#111;border-bottom:1px solid #c7cbd1}
+  .sugg small{display:block;font-size:11px;color:#555;margin-top:3px;text-align:center}
+  body.kb .kbd{display:grid} body.sg .sugg{display:flex}
+</style></head><body class="tm">
+<div class="screen">
+  <img class="logo" src="truemeds-for-doctors.svg" alt="Truemeds for doctors">
+  <div class="head">
+    <h1>Enter the code</h1>
+    <p>Sent to <b>+91 98765 43210</b> · <a class="lk" href="#">Change</a></p>
+  </div>
+  <div class="form">
+    <div class="otp" id="o"><div class="box"></div><div class="box"></div><div class="box"></div><div class="box"></div></div>
+    <div class="msg" id="m"></div>
+    <div class="tm-notice note" id="n"><span class="tm-icon" id="ni" data-icon="info-circle"></span><div id="nt"></div></div>
+    <div class="resend" id="r">Didn’t get it? Resend in <span class="t">0:30</span></div>
+  </div>
+  <div class="sugg" id="sg"><div>4827<small>From Messages</small></div></div>
+  <div class="kbd"><div>1</div><div>2</div><div>3</div><div>4</div><div>5</div><div>6</div><div>7</div><div>8</div><div>9</div><div></div><div>0</div><div>⌫</div></div>
+</div>
+<script>
+function state(s){
+  const $=id=>document.getElementById(id),o=$('o'),bx=[...o.children],m=$('m'),r=$('r'),n=$('n');
+  const v=s.v||''; bx.forEach((b,i)=>b.textContent=v[i]||'');
+  if(s.kb!==0)document.body.classList.add('kb');
+  if(s.sg)document.body.classList.add('sg');
+  if(s.focus!==undefined && s.focus>=0)bx[s.focus].classList.add('on');
+  if(s.cls)o.classList.add(s.cls);
+  if(s.m){m.innerHTML=s.m;if(s.mk)m.classList.add(s.mk);}
+  if(s.r!==undefined)r.innerHTML=s.r;
+  if(s.note){n.classList.add('show','tm-notice--'+s.note.k);$('ni').setAttribute('data-icon',s.note.i);$('nt').innerHTML=s.note.t;}
+  if(window.TMIcons)TMIcons.render(document);
+}
+</script></body></html>

@@ -283,6 +283,9 @@ From an external (ChatGPT) review, each point verified before acting.
   earnings on Home; shift capture (next step).
 
 ### D-32 · Sign in, request access, OTP, fingerprint unlock — 2026-10-09
+> **Partly replaced by D-33 (sign-in screen) and `concepts/2026-10-09-otp-screen-spec.md` (OTP and faster sign-in).**
+> Changed: OTP is 4 digits; sign-up opens the existing web form (no Request access, no "under review" state);
+> fingerprint unlock is a passkey offered as a checkbox on the OTP screen. The code on this branch still follows D-32.
 - **Sign in:** mobile number (+91) → **Get OTP** → 6-digit OTP (one input drawn as boxes, so SMS autofill works; the
   6th digit verifies by itself). Resend after 30 s, then 1 min, then 2 min; 5 wrong tries lock for 15 min with a
   "Call Doctor Ops" line. Unregistered numbers are told so and offered **Request access**; numbers under review are
@@ -300,6 +303,24 @@ From an external (ChatGPT) review, each point verified before acting.
   9111111111 is under review. The session is kept on the device, so a refresh doesn't sign the doctor out.
   `?start=case|home|signin|…` opens a given screen (tests use `?start=case`).
 - **Design system [PROPOSED]:** `.tm-otp`, `.tm-field__prefix`, `.tm-empty`; icons fingerprint, user-plus, inbox.
+
+### D-33 · Sign-in screen final (replaces the sign-in part of D-32) — 2026-10-09
+- **Screen:** Apurva's layout as is. Logo, "Welcome, Doctor.", subtitle (pending: recommended "A different kind of
+  house call."), Mobile number (+91), helper "We'll send you a verification code by SMS.", **Send OTP**, footer
+  "New to Truemeds? Sign up" (opens the existing web sign-up form; no in-app form, no Request access).
+- **Errors:** typing problems turn the field red and replace the helper line (empty, under 10 digits, first digit
+  not 6–9). Problems after sending show a notice in the same spot and leave the field neutral: not registered
+  (info), offline (warning), couldn't send (error), too many requests (warning + button counts down), inactive
+  account (error + Call Doctor Ops). No toasts. Pasted or autofilled numbers are cleaned to 10 digits.
+- **Not registered:** sign-up requests aren't stored, so one message serves new and pending doctors: "New here? Sign
+  up below. Already applied? Our team will call you once you're approved." The keyboard closes on this answer so the
+  footer Sign up is visible. Sign up appears once.
+- **Accepted trade-off:** the screen reveals whether a number is registered; rate limiting stops bulk checking.
+- **Build:** not yet. The whole sign-in flow (sign-in, OTP, biometric, Home) is built in one pass once vetted.
+- **Look:** blue top (brand subtle) with logo and heading, white panel with rounded top for the form, shared with
+  the OTP and Welcome back screens. Work screens (the order page) stay plain white.
+- Final renders: `renders/2026-10-09/28`–`29`. Detail: `concepts/2026-10-09-signin-screen-evaluation.md`.
+  OTP screen: `concepts/2026-10-09-otp-screen-spec.md`, renders `25`–`27`.
 
 ## Design system changes made for this work
 

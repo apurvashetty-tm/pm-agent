@@ -1,0 +1,33 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="design-system/truemeds.css"><script src="design-system/icons/icons.js"></script>
+<style>
+ html,body{margin:0;height:100%} body.tm{background:var(--tm-surface-secondary)}
+ .bg{height:100dvh;display:flex;align-items:flex-start;justify-content:center;padding-top:200px;box-sizing:border-box;color:var(--tm-content-tertiary,#999);font:500 15px/1.4 sans-serif}
+ .scrim{position:fixed;inset:0;background:rgba(0,0,0,.45)}
+ .sheet{position:fixed;left:0;right:0;bottom:0;background:var(--tm-surface-primary);border-radius:var(--tm-radius-2xl) var(--tm-radius-2xl) 0 0;padding:12px var(--tm-space-lg) var(--tm-space-xl);display:flex;flex-direction:column;gap:var(--tm-space-lg)}
+ .grab{width:40px;height:4px;border-radius:2px;background:var(--tm-border-default);margin:0 auto 4px}
+ .ic{width:56px;height:56px;border-radius:16px;background:var(--tm-surface-brand-subtle);color:var(--tm-content-brand);display:flex;align-items:center;justify-content:center}
+ .ic .tm-icon,.ic svg{width:30px;height:30px}
+ h2{margin:0;font-size:20px;line-height:28px;font-weight:var(--tm-font-weight-semibold);color:var(--tm-content-primary)}
+ p{margin:4px 0 0;font-size:var(--tm-font-size-body-lg);line-height:var(--tm-font-lineheight-md);color:var(--tm-content-secondary)}
+ .btns{display:flex;flex-direction:column;gap:var(--tm-space-sm)}
+ .quiet{background:none;border:0;font:inherit;font-size:var(--tm-font-size-body-lg);font-weight:var(--tm-font-weight-semibold);color:var(--tm-content-secondary);height:48px}
+</style></head><body class="tm">
+<div class="bg">Home (screen not yet reviewed)</div>
+<div class="scrim"></div>
+<div class="sheet" id="app">
+ <div class="grab"></div>
+ <span class="ic"><span class="tm-icon" data-icon="fingerprint"></span></span>
+ <div><h2>Finish setting up faster sign-in</h2><p>Use your device’s face, fingerprint, or screen lock next time, instead of an OTP.</p></div>
+ <div class="btns"><button class="tm-btn tm-btn--lg tm-btn--primary tm-btn--block">Set up</button><button class="quiet">Not now</button></div>
+</div>
+<div class="sheet os" id="os" style="display:none;background:#f2f2f7;align-items:center;text-align:center;gap:14px">
+ <div class="grab"></div>
+ <div style="font:600 17px/1.3 -apple-system,sans-serif;color:#111">Create a passkey for<br>truemeds.in?</div>
+ <div style="font:400 14px/1.4 sans-serif;color:#555">Phone’s own sheet (iOS / Android).<br>Truemeds doesn’t design this.</div>
+ <div style="width:64px;height:64px;border-radius:50%;background:#e5e5ea;display:flex;align-items:center;justify-content:center;color:#111"><span class="tm-icon" data-icon="fingerprint" style="width:34px;height:34px"></span></div>
+ <div style="font:400 14px/1.4 sans-serif;color:#555">Touch sensor, look at the phone, or use screen lock</div>
+ <button style="width:100%;height:50px;border:0;border-radius:12px;background:#007aff;color:#fff;font:600 17px sans-serif">Continue</button>
+ <button style="background:none;border:0;color:#007aff;font:400 17px sans-serif;height:40px">Cancel</button>
+</div>
+<script>function state(s){ if(s.os){document.getElementById('app').style.display='none';document.getElementById('os').style.display='flex';document.querySelector('.bg').textContent=s.bg||'';TMIcons.render(document);} }</script></body></html>

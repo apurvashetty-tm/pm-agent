@@ -1,0 +1,57 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="design-system/truemeds.css">
+<style>
+  html,body{margin:0;height:100%}
+  body.tm{background:var(--tm-surface-brand-subtle)}
+  .screen{min-height:100dvh;display:flex;flex-direction:column}
+  /* Top: brand area — identity only, nothing to tap */
+  .hero{flex:1;display:flex;flex-direction:column;justify-content:center;gap:var(--tm-space-sm);padding:var(--tm-space-3xl) var(--tm-space-xl) var(--tm-space-2xl)}
+  .hero img{width:176px;height:auto;margin-bottom:var(--tm-space-xl)}
+  .hero h1{margin:0;font-size:24px;line-height:32px;font-weight:var(--tm-font-weight-semibold);color:var(--tm-content-primary)}
+  .hero p{margin:0;font-size:var(--tm-font-size-body-md);line-height:var(--tm-font-lineheight-sm);color:var(--tm-content-secondary)}
+  /* Bottom: everything the doctor touches, in thumb reach */
+  .panel{background:var(--tm-surface-primary);border-radius:var(--tm-radius-xl) var(--tm-radius-xl) 0 0;box-shadow:var(--tm-shadow-primary);
+    padding:var(--tm-space-xl) var(--tm-space-lg) var(--tm-space-lg);display:flex;flex-direction:column;gap:var(--tm-space-lg)}
+  .tm-field__prefix{flex-shrink:0;padding-right:var(--tm-space-sm);border-right:1px solid var(--tm-border-default);font-weight:var(--tm-font-weight-semibold)}
+  .tm-field__control input{font-size:var(--tm-font-size-body-lg)}
+  .note{font-size:var(--tm-font-size-body-xs);line-height:var(--tm-font-lineheight-xs);color:var(--tm-content-secondary)}
+  .tm-field--error .tm-field__helper{color:var(--tm-content-error)}
+  .links{display:flex;flex-direction:column;align-items:center;gap:var(--tm-space-sm);text-align:center}
+  .links .q{font-size:var(--tm-font-size-body-md);line-height:var(--tm-font-lineheight-sm);color:var(--tm-content-secondary)}
+  .links .q a{color:var(--tm-content-brand);font-weight:var(--tm-font-weight-semibold);text-decoration:none}
+  .links .q .tm-icon{width:14px;height:14px;vertical-align:-2px}
+  .links .terms{font-size:var(--tm-font-size-body-xs);line-height:var(--tm-font-lineheight-xs);color:var(--tm-content-secondary)}
+  .links .terms a{color:var(--tm-content-secondary);text-decoration:underline}
+  .tm-btn--busy{opacity:1}
+</style></head><body class="tm">
+<div class="screen">
+  <div class="hero">
+    <img src="truemeds-for-doctors.svg" alt="Truemeds for doctors">
+    <h1>Welcome, Doctor</h1>
+    <p>Sign in to start taking orders.</p>
+  </div>
+  <div class="panel">
+    <div class="tm-field" id="f">
+      <label class="tm-field__label" for="ph">Mobile number</label>
+      <div class="tm-field__control"><span class="tm-field__prefix">+91</span><input id="ph" type="tel" inputmode="numeric" maxlength="10" placeholder="10-digit number"></div>
+      <div class="tm-field__helper" id="h" hidden></div>
+    </div>
+    <button class="tm-btn tm-btn--lg tm-btn--primary tm-btn--block" id="b">Get OTP</button>
+    <div class="links">
+      <div class="q">New doctor? <a href="#">Request access <span class="tm-icon" data-icon="external-link"></span></a></div>
+      <div class="terms">By continuing you agree to the <a href="#">Terms</a> and <a href="#">Privacy policy</a></div>
+    </div>
+  </div>
+</div>
+<script src="design-system/icons/icons.js"></script>
+<script>
+function state(s){
+  const f=document.getElementById('f'),h=document.getElementById('h'),ph=document.getElementById('ph'),b=document.getElementById('b');
+  f.classList.remove('tm-field--error');h.hidden=true;b.textContent='Get OTP';b.className='tm-btn tm-btn--lg tm-btn--primary tm-btn--block';b.disabled=false;
+  if(s.v)ph.value=s.v;
+  if(s.err){f.classList.add('tm-field--error');h.hidden=false;h.textContent=s.err;}
+  if(s.info){h.hidden=false;h.textContent=s.info;}
+  if(s.busy){b.textContent='Sending OTP…';b.classList.add('tm-btn--busy');b.disabled=true;}
+  if(s.focus){ph.focus();}
+}
+</script></body></html>
