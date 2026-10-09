@@ -43,6 +43,9 @@
       width: 280px;
     }
     @media (min-width: 1100px) { #desktop-side-panel { display: block; } }
+    /* Mirror of the side panel on the left of the frame: app-level demo controls (keeps the frame centred) */
+    #desktop-app-panel { display: none; position: absolute; top: var(--tm-space-lg); right: calc(50% + var(--phone-w) / 2 + var(--tm-space-xl)); width: 280px; }
+    @media (min-width: 1100px) { #desktop-app-panel { display: block; } }
     .side-panel-card { padding: 0; overflow: hidden; margin-bottom: var(--tm-space-md); }
     .side-panel-header {
       display: flex; align-items: center; gap: var(--tm-space-sm);
@@ -546,6 +549,67 @@
     .profile-menu-label { display: inline-flex; align-items: center; gap: var(--tm-space-md); }
     .profile-menu-btn > .tm-icon:last-child { color: var(--tm-content-tertiary); }
 
+
+    /* ============================================================
+       APP SCREENS — sign in, OTP, request access, fingerprint, unlock, home (D-31, D-32)
+       body[data-app] picks the one visible screen; the order page (#main-scroll + bars) shows only for "case".
+    ============================================================ */
+    body:not([data-app="case"]) :is(#main-scroll, #case-actionbar, #compact-strip, #demo-bar-scenarios, #demo-call-sim, #demo-bar-row2) { display: none !important; }
+    body:is([data-app="signin"], [data-app="otp"], [data-app="signup"], [data-app="signup-done"], [data-app="bio-setup"], [data-app="unlock"]) #portal-header { display: none; }
+    .app-screen { display: flex; flex-direction: column; min-height: calc(100dvh - var(--top-h, 0px)); background: var(--tm-surface-primary); }
+    .app-screen[hidden] { display: none !important; }
+    .app-screen h1, .app-screen p { margin: 0; }
+    .app-screen h1:focus { outline: none; }   /* focus moves to the heading on every screen change (screen readers); no visible box */
+    .tm-field__helper .tm-btn--link, .otp-help .tm-btn--link { display: inline; padding: 0; min-height: 0; font-size: inherit; line-height: inherit; vertical-align: baseline; }
+    .app-scroll { flex: 1; display: flex; flex-direction: column; gap: var(--tm-space-lg); padding: var(--tm-space-xl) var(--tm-space-lg); }
+    .auth-body--center { justify-content: center; align-items: center; text-align: center; }
+    .auth-logo { width: 196px; height: auto; margin-bottom: var(--tm-space-sm); }
+    .auth-sub { margin-top: calc(var(--tm-space-sm) * -1) !important; font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); color: var(--tm-content-secondary); }
+    .auth-back { align-self: flex-start; margin-left: calc(var(--tm-space-sm) * -1); }
+    .auth-foot { font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); color: var(--tm-content-secondary); }
+    .auth-foot--quiet { font-size: var(--tm-font-size-body-xs); line-height: var(--tm-font-lineheight-xs); }
+    .auth-foot a { color: var(--tm-content-brand); font-weight: var(--tm-font-weight-semibold); text-decoration: none; }
+    .auth-foot .tm-btn--link, .auth-sub .tm-btn--link { padding: 0; min-height: 0; vertical-align: baseline; font-size: inherit; }
+    .app-actionbar { flex-shrink: 0; }
+    .app-actionbar--stack { display: flex; flex-direction: column; gap: var(--tm-space-sm); }
+    .otp-help { margin-top: calc(var(--tm-space-sm) * -1); color: var(--tm-content-error); }
+    .otp-resend { font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); color: var(--tm-content-secondary); }
+    .otp-resend .tm-btn--link { padding: 0; min-height: 0; }
+    .unlock-avatar {
+      width: 72px; height: 72px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      background: var(--tm-surface-brand-subtle); color: var(--tm-content-brand);
+      font-size: var(--tm-font-size-body-xl); font-weight: var(--tm-font-weight-semibold);
+    }
+    #scr-home { background: var(--tm-surface-secondary); }
+    .home-body { gap: var(--tm-space-md); }
+    .home-greet { display: flex; flex-direction: column; gap: var(--tm-space-sm); padding: var(--tm-space-sm) 0; }
+    .home-card { padding: 0; }
+    .home-checked { font-size: var(--tm-font-size-body-xs); line-height: var(--tm-font-lineheight-xs); color: var(--tm-content-tertiary); }
+    .home-today { display: flex; justify-content: space-between; align-items: center; padding: var(--tm-space-md) var(--tm-space-lg);
+      font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); color: var(--tm-content-secondary); }
+    .home-today strong { color: var(--tm-content-primary); font-weight: var(--tm-font-weight-semibold); }
+    /* Fingerprint prompt (mock of the phone's own prompt) */
+    .bio-body { display: flex; flex-direction: column; align-items: center; text-align: center; gap: var(--tm-space-md); }
+    .bio-sub { margin: 0; font-size: var(--tm-font-size-body-md); color: var(--tm-content-secondary); }
+    .bio-sensor {
+      width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer;
+      border: 2px solid var(--tm-border-selected); background: var(--tm-surface-brand-subtle); color: var(--tm-content-brand);
+    }
+    .bio-sensor .tm-icon { width: 40px; height: 40px; }
+    .bio-sensor.is-error { border-color: var(--tm-border-error-strong); background: var(--tm-feedback-error-surface); color: var(--tm-content-error); }
+    .bio-sensor.is-ok { border-color: var(--tm-content-success); color: var(--tm-content-success); background: var(--tm-surface-success-subtle); }
+    .bio-hint { margin: 0; font-size: var(--tm-font-size-body-md); color: var(--tm-content-secondary); min-height: var(--tm-font-lineheight-sm); }
+    .bio-hint.is-error { color: var(--tm-content-error); }
+    /* Demo controls for the app shell */
+    .demo-app { display: flex; flex-direction: column; gap: var(--tm-space-xs); margin-bottom: var(--tm-space-sm); }
+    .demo-app-row { display: flex; flex-wrap: wrap; gap: var(--tm-space-xs); align-items: center; }
+    .demo-app-row .tm-chip { white-space: nowrap; }
+    .demo-app-hint { font-size: var(--tm-font-size-body-xs); line-height: var(--tm-font-lineheight-xs); color: var(--tm-content-secondary); }
+    /* In the phone's own demo bar keep it to two scrollable rows; the full hint lives in the desktop side panel */
+    #demo-bar .demo-app-row { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
+    #demo-bar .demo-app-row .tm-chip { min-height: 32px; padding-top: 0; padding-bottom: 0; }
+    #demo-bar .demo-app-hint { display: none; }
+
     /* ============================================================
        DESKTOP PHONE FRAME (>=768px) — must stay LAST so it overrides the mobile rules above
        (see LAYOUT — PHONE FRAME at the top, and design-system/RULES.md §7)
@@ -562,6 +626,8 @@
       }
       #sticky-top-wrapper { position: relative; flex-shrink: 0; }
       #main-scroll { flex: 1; min-height: 0; overflow-y: auto; }
+      .app-screen { flex: 1; min-height: 0; overflow-y: auto; }
+      .app-screen > .app-actionbar { position: sticky; bottom: 0; }
       /* overlays: fill the frame, not the window (override the JS-set left/width used on mobile) */
       #sheet-overlay { left: 0 !important; width: 100% !important; }
       #rx-overlay { left: 0; width: 100%; max-width: none; transform: none; }

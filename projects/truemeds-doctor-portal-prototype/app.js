@@ -619,10 +619,6 @@ function toggleOrderExpand() {
 // ================================================================
 // PROFILE / LOGOUT
 // ================================================================
-function handleLogout() {
-  closeSheet();
-  console.log('[MOCK] auth.logout | user=' + DOCTOR_PROFILE.name);
-}
 
 // ================================================================
 // CALL FLOW
@@ -1366,7 +1362,7 @@ function switchScenario(scenarioId) {
 
 // Wire up all scenario buttons (both bars)
 document.querySelectorAll('[data-scenario]').forEach(btn => {
-  btn.addEventListener('click', () => switchScenario(btn.dataset.scenario));
+  btn.addEventListener('click', () => { if (APP.screen !== 'case') goApp('case'); switchScenario(btn.dataset.scenario); });
 });
 
 function resetToDemo() {
@@ -1382,7 +1378,347 @@ function resetToDemo() {
 // ================================================================
 
 // ================================================================
+// APP SHELL — sign in, OTP, request access, fingerprint unlock, home (decision log D-31, D-32)
+// Doctors PULL orders ("Get next order" / "Next Order"); nothing is pushed to them. When no order is
+// waiting, the doctor lands on Home with a "No orders right now" state and a Check again button.
+// ================================================================
+const AUTH_KEY = 'tmd.auth.v1';
+const APP = { screen: null, booted: false, phone: '', otpFor: 'signin', signup: null, otpTries: 0, lockedUntil: 0,
+  resendAt: 0, resendCount: 0, bioFails: 0, bioMode: null, noLead: false, checkedAt: null, busy: false, ticker: null };
+const DEMO_APP = { ordersAvailable: true, bioFails: false };
+// [MOCK ASSUMPTION] numbers starting 90 aren't registered; 9111111111 has a request under review.
+// OTP: any 6 digits work; 000000 = wrong, 111111 = expired. Shown only in the demo controls.
+const MOCK_AUTH = { pending: '9111111111', wrongOtp: '000000', expiredOtp: '111111', maxTries: 5, lockMin: 15 };
+const DEMO_ORDER = ['cat4', 'pilot_value_meds_ha', 'pilot_nonvalue_meds_ha', 'pilot_ha_skipped_customer', 'pilot_ha_skipped_system'];
+const SCREEN_IDS = { signin: 'scr-signin', otp: 'scr-otp', signup: 'scr-signup', 'signup-done': 'scr-signup-done',
+  'bio-setup': 'scr-bio-setup', unlock: 'scr-unlock', home: 'scr-home' };
+const $id = id => document.getElementById(id);
+
+function loadAuth() { try { return JSON.parse(localStorage.getItem(AUTH_KEY)) || {}; } catch (e) { return {}; } }
+function saveAuth(patch) {
+  const a = { ...loadAuth(), ...patch };
+  try { localStorage.setItem(AUTH_KEY, JSON.stringify(a)); } catch (e) { /* private mode: session lives in memory only */ }
+  return a;
+}
+const fmtPhone = p => `+91 ${p.slice(0, 5)} ${p.slice(5)}`;
+const isPhone = p => /^[6-9]\d{9}$/.test(p);
+const isRegistered = p => isPhone(p) && !p.startsWith('90') && !isPending(p);
+const isPending = p => p === MOCK_AUTH.pending || (loadAuth().pending || []).includes(p);
+const todayKey = () => new Date().toDateString();
+const todayCount = () => { const a = loadAuth(); return a.closedDay === todayKey() ? (a.closed || 0) : 0; };
+const shortName = () => DOCTOR_PROFILE.name.split(' ').slice(0, 2).join(' ');
+
+function goApp(next) {
+  const prev = APP.screen;
+  if (prev === 'case' && next !== 'case') leaveCase();
+  if (activeSheet) closeSheet();
+  APP.screen = next;
+  document.body.dataset.app = next;
+  document.querySelectorAll('.app-screen').forEach(el => { el.hidden = el.id !== SCREEN_IDS[next]; });
+  renderApp();
+  syncTopHeight();
+  if (next !== 'case') {
+    window.scrollTo(0, 0);
+    document.querySelector(`#${SCREEN_IDS[next]} h1`)?.focus({ preventScroll: true });
+  }
+  if (next === 'otp') startOtpTicker(); else stopOtpTicker();
+  console.log(`[MOCK] app.screen | ${prev} → ${next}`);
+}
+
+// Leaving the order page: nothing may keep running in the background.
+function leaveCase() {
+  clearInterval(DOCTOR_STATE.timerInterval); DOCTOR_STATE.timerInterval = null;
+  hideSuccessToast(); closeRxOverlay();
+  if (document.getElementById('prescribe-screen').classList.contains('open')) closePrescribe();
+}
+
+function syncTopHeight() {
+  document.documentElement.style.setProperty('--top-h', document.getElementById('sticky-top-wrapper').offsetHeight + 'px');
+}
+window.addEventListener('resize', syncTopHeight);
+
+function renderApp() {
+  const a = loadAuth();
+  document.getElementById('profile-initials').textContent = DOCTOR_PROFILE.initials;
+  if (APP.screen === 'otp') {
+    $id('otp-phone').textContent = fmtPhone(APP.phone);
+    renderOtpBoxes();
+  }
+  if (APP.screen === 'unlock') {
+    $id('unlock-name').textContent = shortName();
+    $id('unlock-initials').textContent = DOCTOR_PROFILE.initials;
+    $id('unlock-phone').textContent = a.phone ? fmtPhone(a.phone) : '';
+    $id('unlock-note').hidden = APP.bioFails < 3;
+  }
+  if (APP.screen === 'home') {
+    const h = new Date().getHours();
+    $id('home-greeting').textContent = h < 12 ? 'Good morning' : h < 17 ? 'Good afternoon' : 'Good evening';
+    $id('home-name').textContent = shortName();
+    $id('home-date').textContent = new Date().toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'long' });
+    $id('home-ready').hidden = APP.noLead;
+    $id('home-nolead').hidden = !APP.noLead;
+    if (APP.checkedAt) $id('home-checked').textContent = 'Checked at ' + APP.checkedAt.toLocaleTimeString('en-IN', { hour: 'numeric', minute: '2-digit' });
+    const n = todayCount();
+    $id('home-count').textContent = `${n} order${n === 1 ? '' : 's'} closed`;
+    if (!APP.busy) $id('home-next-btn').textContent = APP.noLead ? 'Check again' : 'Get next order';
+  }
+  renderAppDemo();
+}
+
+// ── Field errors, in place (no toasts, D-27) ──
+function setFieldMsg(field, html, kind = 'error') {
+  const helper = field.querySelector('.tm-field__helper') || field.appendChild(Object.assign(document.createElement('div'), { className: 'tm-field__helper', role: 'alert' }));
+  field.classList.toggle('tm-field--error', kind === 'error' && !!html);
+  helper.innerHTML = html || ''; helper.hidden = !html;
+}
+function setBusy(btn, label) { btn.dataset.label = btn.innerHTML; btn.disabled = true; btn.classList.add('tm-btn--busy'); btn.textContent = label; }
+function clearBusy(btn) { if (btn.dataset.label) btn.innerHTML = btn.dataset.label; delete btn.dataset.label; btn.disabled = false; btn.classList.remove('tm-btn--busy'); }
+function mockDelay(btn, label, fn) {   // 800 ms mock latency (mock_backend_engineer.md)
+  if (APP.busy) return; APP.busy = true; setBusy(btn, label);
+  setTimeout(() => { APP.busy = false; clearBusy(btn); fn(); }, 800);
+}
+
+// ── Sign in ──
+$id('signin-phone').addEventListener('input', e => { e.target.value = e.target.value.replace(/\D/g, ''); setFieldMsg($id('signin-field'), ''); });
+$id('signin-phone').addEventListener('keydown', e => { if (e.key === 'Enter') requestOtp(); });
+function requestOtp() {
+  const p = $id('signin-phone').value.trim();
+  const f = $id('signin-field');
+  if (!isPhone(p)) return setFieldMsg(f, 'Enter your 10-digit mobile number.');
+  if (isPending(p)) return setFieldMsg(f, "Your access request is still being checked. We'll call you once it's approved.", 'info');
+  if (!isRegistered(p)) return setFieldMsg(f, `This number isn't registered as a Truemeds doctor. <button class="tm-btn tm-btn--link" onclick="goApp('signup')">Request access</button>`);
+  mockDelay($id('signin-btn'), 'Sending OTP…', () => startOtp(p, 'signin'));
+}
+
+// ── OTP ──
+function startOtp(phone, purpose) {
+  Object.assign(APP, { phone, otpFor: purpose, otpTries: 0, lockedUntil: 0, resendCount: 0, resendAt: Date.now() + 30000 });
+  $id('otp-input').value = ''; setOtpMsg('');
+  goApp('otp');
+  setTimeout(() => $id('otp-input').focus({ preventScroll: true }), 50);
+  console.log(`[MOCK] auth.otp.sent | to=${fmtPhone(phone)} | for=${purpose}`);
+}
+function otpBack() { goApp(APP.otpFor === 'signup' ? 'signup' : 'signin'); }
+function setOtpMsg(text, kind = 'error') {
+  const h = $id('otp-help'); h.textContent = text; h.hidden = !text;
+  h.style.color = kind === 'error' ? '' : 'var(--tm-content-secondary)';
+  $id('otp-boxes').classList.toggle('tm-otp--error', kind === 'error' && !!text);
+}
+function renderOtpBoxes() {
+  const v = $id('otp-input').value, locked = Date.now() < APP.lockedUntil;
+  $id('otp-boxes').querySelectorAll('.tm-otp__box').forEach((b, i) => {
+    b.textContent = v[i] || '';
+    b.classList.toggle('is-active', !locked && document.activeElement === $id('otp-input') && i === Math.min(v.length, 5));
+  });
+  $id('otp-boxes').classList.toggle('tm-otp--disabled', locked);
+  $id('otp-input').disabled = locked;
+}
+$id('otp-input').addEventListener('input', e => {
+  e.target.value = e.target.value.replace(/\D/g, '').slice(0, 6);
+  if ($id('otp-boxes').classList.contains('tm-otp--error')) setOtpMsg('');
+  renderOtpBoxes();
+  if (e.target.value.length === 6) verifyOtp();   // auto-verify on the 6th digit (also covers SMS autofill)
+});
+['focus', 'blur'].forEach(ev => $id('otp-input').addEventListener(ev, renderOtpBoxes));
+function verifyOtp() {
+  const v = $id('otp-input').value;
+  if (Date.now() < APP.lockedUntil) return;
+  if (v.length < 6) return setOtpMsg('Enter the 6-digit OTP.');
+  if (v === MOCK_AUTH.expiredOtp) { APP.resendAt = Date.now(); updateOtpTimer(); return setOtpMsg('This OTP has expired. Tap Resend OTP for a new one.'); }
+  if (v === MOCK_AUTH.wrongOtp) {
+    APP.otpTries++;
+    const left = MOCK_AUTH.maxTries - APP.otpTries;
+    $id('otp-input').value = '';
+    if (left <= 0) {
+      APP.lockedUntil = Date.now() + MOCK_AUTH.lockMin * 60000;
+      renderOtpBoxes(); updateOtpTimer();
+      console.log('[MOCK] auth.otp.locked | 15 min');
+      return;
+    }
+    renderOtpBoxes();
+    return setOtpMsg(`That OTP is wrong. ${left} ${left === 1 ? 'try' : 'tries'} left.`);
+  }
+  mockDelay($id('otp-btn'), 'Verifying…', onOtpVerified);
+}
+function onOtpVerified() {
+  console.log(`[MOCK] auth.otp.verified | ${fmtPhone(APP.phone)} | for=${APP.otpFor}`);
+  if (APP.otpFor === 'signup') {
+    saveAuth({ pending: [...(loadAuth().pending || []), APP.phone] });
+    $id('signup-done-text').textContent = `We'll check your registration and call you on ${fmtPhone(APP.phone)} within 2 working days. You can sign in once it's approved.`;
+    console.log(`[MOCK] doctor.access.requested | ${JSON.stringify(APP.signup)}`);
+    return goApp('signup-done');
+  }
+  const a = saveAuth({ phone: APP.phone, signedIn: true, signedAt: Date.now() });
+  goApp(a.bio ? 'home' : 'bio-setup');
+}
+function resendOtp() {
+  if (Date.now() < APP.resendAt || Date.now() < APP.lockedUntil) return;
+  if (APP.resendCount >= 4) return setOtpMsg('Too many OTPs requested. Try again in an hour, or call Doctor Ops.');
+  APP.resendCount++;
+  APP.resendAt = Date.now() + [30, 60, 120, 120][Math.min(APP.resendCount, 3)] * 1000;
+  $id('otp-input').value = ''; renderOtpBoxes();
+  setOtpMsg(`New OTP sent to ${fmtPhone(APP.phone)}.`, 'info');
+  updateOtpTimer();
+  console.log(`[MOCK] auth.otp.resent | #${APP.resendCount}`);
+}
+const mmss = ms => { const s = Math.max(0, Math.ceil(ms / 1000)); return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`; };
+function updateOtpTimer() {
+  const now = Date.now(), t = $id('otp-timer'), r = $id('otp-resend');
+  if (now < APP.lockedUntil) {
+    t.hidden = false; r.hidden = true;
+    t.textContent = '';
+    setOtpMsg(`Too many wrong tries. Try again in ${mmss(APP.lockedUntil - now)}, or call Doctor Ops.`);
+    renderOtpBoxes();
+    return;
+  }
+  if (APP.lockedUntil && now >= APP.lockedUntil) { APP.lockedUntil = 0; APP.otpTries = 0; setOtpMsg(''); renderOtpBoxes(); }
+  const wait = APP.resendAt - now;
+  t.hidden = wait <= 0; r.hidden = wait > 0;
+  if (wait > 0) t.textContent = `Resend OTP in ${mmss(wait)}`;
+}
+function startOtpTicker() { stopOtpTicker(); updateOtpTimer(); APP.ticker = setInterval(updateOtpTimer, 1000); }
+function stopOtpTicker() { clearInterval(APP.ticker); APP.ticker = null; }
+
+// ── Request access (sign up). Verified by ops against the medical register; the number is checked by OTP. ──
+document.querySelectorAll('#scr-signup input, #scr-signup select').forEach(el => el.addEventListener('input', () => setFieldMsg(el.closest('.tm-field'), '')));
+$id('su-phone').addEventListener('input', e => { e.target.value = e.target.value.replace(/\D/g, ''); });
+function submitSignup() {
+  const v = id => $id(id).value.trim();
+  const F = k => document.querySelector(`#scr-signup [data-f="${k}"]`);
+  const errs = [];
+  if (v('su-name').length < 3) errs.push(['name', 'Enter your full name.']);
+  if (!isPhone(v('su-phone'))) errs.push(['phone', 'Enter your 10-digit mobile number.']);
+  else if (isPending(v('su-phone'))) errs.push(['phone', 'A request for this number is already being checked.']);
+  else if (isRegistered(v('su-phone'))) errs.push(['phone', `This number is already registered. <button class="tm-btn tm-btn--link" onclick="goApp('signin')">Sign in</button>`]);
+  if (v('su-reg').length < 3) errs.push(['reg', 'Enter your medical registration number.']);
+  if (!v('su-council')) errs.push(['council', 'Choose the council you are registered with.']);
+  ['name', 'phone', 'reg', 'council'].forEach(k => setFieldMsg(F(k), ''));
+  errs.forEach(([k, m]) => setFieldMsg(F(k), m));
+  if (errs.length) return F(errs[0][0]).querySelector('input, select').focus();
+  APP.signup = { name: v('su-name'), phone: v('su-phone'), reg: v('su-reg'), council: v('su-council') };
+  mockDelay($id('signup-btn'), 'Sending OTP…', () => startOtp(APP.signup.phone, 'signup'));
+}
+
+// ── Fingerprint / face unlock (WebAuthn passkey in production; the prompt here stands in for the phone's own) ──
+function enableBiometric() { openBioPrompt('enroll'); }
+function skipBiometric() { console.log('[MOCK] auth.biometric.skipped'); goApp('home'); }
+function openBioPrompt(mode) {
+  APP.bioMode = mode;
+  $id('bio-sensor').className = 'bio-sensor';
+  $id('bio-hint').className = 'bio-hint'; $id('bio-hint').textContent = 'Touch the fingerprint sensor';
+  $id('bio-sub').textContent = mode === 'enroll' ? 'Confirm your fingerprint to turn on unlock' : 'Confirm it’s you';
+  openSheet('sheet-bio');
+}
+function cancelBioPrompt() { closeSheet(); }
+function touchSensor() {
+  if (DEMO_APP.bioFails) {
+    APP.bioFails++;
+    $id('bio-sensor').className = 'bio-sensor is-error';
+    $id('bio-hint').className = 'bio-hint is-error'; $id('bio-hint').textContent = 'Not recognised. Try again.';
+    if (APP.bioFails >= 3) { closeSheet(); renderApp(); console.log('[MOCK] auth.biometric.failed | 3 tries → OTP'); }
+    return;
+  }
+  $id('bio-sensor').className = 'bio-sensor is-ok';
+  $id('bio-hint').className = 'bio-hint'; $id('bio-hint').textContent = 'Fingerprint recognised';
+  setTimeout(() => {
+    closeSheet(); APP.bioFails = 0;
+    if (APP.bioMode === 'enroll') { saveAuth({ bio: true }); console.log('[MOCK] auth.biometric.enrolled'); }
+    else { saveAuth({ signedIn: true, signedAt: Date.now() }); console.log('[MOCK] auth.biometric.unlocked'); }
+    goApp('home');
+  }, 500);
+}
+function unlockWithOtp() { const p = loadAuth().phone; APP.bioFails = 0; mockDelay($id('unlock-btn'), 'Sending OTP…', () => startOtp(p, 'signin')); }
+function switchAccount() { saveAuth({ phone: null, bio: false, signedIn: false }); $id('signin-phone').value = ''; goApp('signin'); }
+
+// ── Next order: the doctor asks; if nothing is waiting, Home shows "No orders right now" (D-31) ──
+function requestNextOrder() {
+  if (APP.busy) return;
+  const fromCase = APP.screen === 'case';
+  if (fromCase && ['completed', 'unavailable'].includes(DOCTOR_STATE.consultationState)) {
+    saveAuth({ closed: todayCount() + 1, closedDay: todayKey() });
+  }
+  const btn = fromCase ? [...document.querySelectorAll('#next-order-btn, #success-toast-next')].find(b => b.offsetParent) || $id('next-order-btn') : $id('home-next-btn');
+  mockDelay(btn, 'Finding an order…', () => {
+    APP.checkedAt = new Date();
+    if (!DEMO_APP.ordersAvailable) {
+      APP.noLead = true;
+      console.log('[MOCK] orders.next | none waiting');
+      return goApp('home');
+    }
+    APP.noLead = false;
+    const i = DEMO_ORDER.indexOf(DOCTOR_STATE.activeScenario);
+    const next = fromCase ? DEMO_ORDER[(i + 1) % DEMO_ORDER.length] : (DOCTOR_STATE.activeScenario || DEMO_ORDER[0]);
+    goApp('case'); switchScenario(next); window.scrollTo(0, 0);
+    console.log(`[MOCK] orders.next | assigned ${next}`);
+  });
+}
+
+// ── Profile / log out ──
+function openProfile() {
+  const active = APP.screen === 'case' && !['completed', 'unavailable'].includes(DOCTOR_STATE.consultationState);
+  $id('profile-logout-btn').hidden = active;
+  $id('profile-logout-note').hidden = !active;
+  openSheet('sheet-profile');
+}
+function handleLogout() { openSheet('sheet-logout'); }
+function confirmLogout() {
+  saveAuth({ signedIn: false });
+  APP.noLead = false;
+  console.log('[MOCK] auth.logout | user=' + DOCTOR_PROFILE.name);
+  goApp(loadAuth().bio && loadAuth().phone ? 'unlock' : 'signin');
+}
+
+// ── Demo controls for the app shell (mobile demo bar + desktop side panel) ──
+function renderAppDemo() {
+  const s = APP.screen;
+  const chip = (act, label, on) => `<button class="tm-chip" data-act="${act}" aria-pressed="${!!on}">${label}</button>`;
+  const html = `
+    <div class="demo-app-row">${chip('go:signin', 'Sign in', s === 'signin')}${chip('go:signup', 'Request access', s === 'signup')}${chip('go:unlock', 'Unlock', s === 'unlock')}${chip('go:home', 'Home', s === 'home')}${chip('go:case', 'Order page', s === 'case')}</div>
+    <div class="demo-app-row">${chip('toggle:orders', 'Orders available', DEMO_APP.ordersAvailable)}${chip('toggle:biofail', 'Fingerprint fails', DEMO_APP.bioFails)}${chip('reset', 'Reset app', false)}</div>
+    <div class="demo-app-hint">OTP: any 6 digits · 000000 wrong · 111111 expired. Numbers starting 90 aren't registered; 9111111111 is under review.</div>`;
+  document.querySelectorAll('[data-demo-app]').forEach(el => { el.innerHTML = html; });
+}
+document.addEventListener('click', e => {
+  const b = e.target.closest('[data-demo-app] [data-act]');
+  if (!b) return;
+  const [kind, arg] = b.dataset.act.split(':');
+  if (kind === 'go') {
+    if (arg === 'unlock' && !loadAuth().phone) saveAuth({ phone: '9876543210', bio: true });
+    if (arg === 'unlock') { saveAuth({ bio: true }); APP.bioFails = 0; }
+    if (arg === 'home' || arg === 'case') saveAuth({ signedIn: true, signedAt: Date.now(), phone: loadAuth().phone || '9876543210' });
+    if (arg === 'case') { goApp('case'); switchScenario(DOCTOR_STATE.activeScenario || 'cat4'); return; }
+    goApp(arg);
+  } else if (kind === 'toggle') {
+    if (arg === 'orders') DEMO_APP.ordersAvailable = !DEMO_APP.ordersAvailable;
+    if (arg === 'biofail') { DEMO_APP.bioFails = !DEMO_APP.bioFails; APP.bioFails = 0; }
+    renderApp();
+  } else if (kind === 'reset') {
+    try { localStorage.removeItem(AUTH_KEY); } catch (err) { /* ignore */ }
+    Object.assign(APP, { noLead: false, checkedAt: null, bioFails: 0 });
+    $id('signin-phone').value = '';
+    goApp('signin');
+  }
+});
+
+// Where the app opens: ?start=case|home|signin|… for demos and tests; otherwise from the saved session.
+function bootApp() {
+  const q = new URLSearchParams(location.search).get('start');
+  const a = loadAuth();
+  APP.booted = true;
+  if (q === 'case') return goApp('case');
+  if (q && SCREEN_IDS[q]) return goApp(q);
+  if (a.phone && a.bio) {
+    goApp('unlock');
+    setTimeout(() => { if (APP.screen === 'unlock' && !activeSheet) openBioPrompt('unlock'); }, 400);   // like a banking app: ask straight away
+    return;
+  }
+  if (a.signedIn && Date.now() - (a.signedAt || 0) < 24 * 3600 * 1000) return goApp('home');
+  goApp('signin');
+}
+
+// ================================================================
 // INIT
 // ================================================================
 initIcons();
 switchScenario('cat4');
+bootApp();

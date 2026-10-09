@@ -270,6 +270,37 @@ From an external (ChatGPT) review, each point verified before acting.
 - **Not changed:** the review said the pinned Prescribe contradicts "see every section first". That rule was replaced
   by D-22 at Apurva's request; a stale code comment saying "not pinned" was corrected.
 
+### D-31 · Doctors pull orders; "no order" lands on Home — 2026-10-09
+- **Fact (Apurva):** Truemeds can't assign orders to a doctor. The doctor asks for one ("Get next order" on Home,
+  "Next Order" after closing an order). Supersedes the push model in `docs/proposals/2026-10-09-sign-in-shift-home.md`.
+- **Decision:** a minimal **Home** is where the doctor sits when not on an order: greeting, a "Ready for your next
+  order?" card, today's count, pinned **Get next order**. Asking for an order shows "Finding an order…".
+  - An order is waiting → the order page opens.
+  - **Nothing waiting** (from Home or from Next Order) → Home shows "No orders right now · New orders come in through
+    the day" with the time last checked, and the button becomes **Check again**. Never an error, never a dead end.
+- **Why:** a failed request is a normal moment (quiet hours), not an error; the doctor needs one obvious next step.
+- **Open:** auto re-check every N seconds while on "No orders right now" (would feel like push without backend change);
+  earnings on Home; shift capture (next step).
+
+### D-32 · Sign in, request access, OTP, fingerprint unlock — 2026-10-09
+- **Sign in:** mobile number (+91) → **Get OTP** → 6-digit OTP (one input drawn as boxes, so SMS autofill works; the
+  6th digit verifies by itself). Resend after 30 s, then 1 min, then 2 min; 5 wrong tries lock for 15 min with a
+  "Call Doctor Ops" line. Unregistered numbers are told so and offered **Request access**; numbers under review are
+  told it is being checked. (Telling a stranger whether a number is registered is accepted for a doctor-only app.)
+- **Sign up = Request access,** not self-serve: name, mobile, registration number, medical council → the number is
+  verified by OTP → "Request received, we'll call you within 2 working days". Ops verifies the registration against
+  the medical register before the account works (Telemedicine Practice Guidelines: platforms must verify every RMP).
+- **Fingerprint / face unlock:** offered once after the first OTP sign-in ("Sign in faster next time"). When on, opening
+  the app shows **Welcome back** and the phone's fingerprint prompt straight away, no SMS. 3 failed tries → "Use OTP
+  instead". "Not you?" forgets the account on this phone. Saves SMS cost; OTP only for a new phone, a switched account
+  or a failed fingerprint. Production: WebAuthn passkey (works in mobile web and native).
+- **Log out:** from the profile sheet, with a confirm; hidden while an order is open ("You can log out after this
+  order is closed"). After log out with fingerprint on → Welcome back screen.
+- **Prototype rules [MOCK]:** any 6 digits work; 000000 wrong; 111111 expired; numbers starting 90 aren't registered;
+  9111111111 is under review. The session is kept on the device, so a refresh doesn't sign the doctor out.
+  `?start=case|home|signin|…` opens a given screen (tests use `?start=case`).
+- **Design system [PROPOSED]:** `.tm-otp`, `.tm-field__prefix`, `.tm-empty`; icons fingerprint, user-plus, inbox.
+
 ## Design system changes made for this work
 
 ### D-21 · Toggle fix and a large chip size — 2026-10-07

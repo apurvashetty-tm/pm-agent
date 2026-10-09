@@ -14,6 +14,14 @@
   <!-- ============================================================
        DESKTOP SIDE PANEL — visible on wide screens only
   ============================================================ -->
+  <!-- DESKTOP APP PANEL (left of the frame) — demo controls for sign-in, home and "orders available" -->
+  <div id="desktop-app-panel">
+    <div class="side-panel-card tm-card">
+      <div class="side-panel-header"><span class="tm-icon tm-icon--16" data-icon="bolt"></span>App demo</div>
+      <div class="side-panel-body"><div class="demo-app" data-demo-app></div></div>
+    </div>
+  </div>
+
   <div id="desktop-side-panel">
 
     <!-- Case Overview -->
@@ -102,7 +110,7 @@
         <div id="portal-title">
           <img class="portal-logo" src="brand/truemeds-for-doctors.svg" alt="Truemeds for doctors" width="147" height="36">
         </div>
-        <button id="profile-btn" onclick="openSheet('sheet-profile')" aria-label="Profile">
+        <button id="profile-btn" onclick="openProfile()" aria-label="Profile">
           <span id="profile-initials">AS</span>
         </button>
       </div>
@@ -110,6 +118,8 @@
       <!-- DEMO BAR — [MOCK ASSUMPTION] dev-only -->
       <div id="demo-bar">
         <div id="demo-bar-label"><span class="tm-icon tm-icon--16" data-icon="bolt"></span>Demo controls</div>
+        <!-- App demo controls (filled by app.js: renderAppDemo) -->
+        <div class="demo-app" data-demo-app></div>
         <div id="demo-bar-scenarios">
           <button class="tm-chip scenario-btn" aria-pressed="true" data-scenario="cat4">Cat4</button>
           <button class="tm-chip scenario-btn" aria-pressed="false" data-scenario="pilot_value_meds_ha">Pilot + Value + HA</button>
@@ -149,6 +159,122 @@
       </div>
 
     </div><!-- /sticky-top-wrapper -->
+
+    <!-- ============================================================
+         APP SCREENS — sign in, OTP, request access, fingerprint, unlock, home (decision log D-31, D-32).
+         One screen shows at a time, chosen by body[data-app] (goApp in app.js). The order page is #main-scroll.
+    ============================================================ -->
+    <section id="scr-signin" class="app-screen auth-screen" hidden aria-labelledby="signin-h">
+      <div class="app-scroll auth-body">
+        <img class="auth-logo" src="brand/truemeds-for-doctors.svg" alt="Truemeds for doctors" width="196" height="48">
+        <h1 id="signin-h" class="tm-text-h1" tabindex="-1">Sign in</h1>
+        <p class="auth-sub">Use the mobile number registered with Truemeds.</p>
+        <div class="tm-field" id="signin-field">
+          <label class="tm-field__label" for="signin-phone">Mobile number</label>
+          <div class="tm-field__control"><span class="tm-field__prefix">+91</span><input id="signin-phone" type="tel" inputmode="numeric" autocomplete="tel-national" maxlength="10" placeholder="10-digit number"></div>
+          <div class="tm-field__helper" id="signin-help" role="alert" hidden></div>
+        </div>
+        <p class="auth-foot">New doctor? <button class="tm-btn tm-btn--link" onclick="goApp('signup')">Request access</button></p>
+      </div>
+      <div class="tm-actionbar app-actionbar"><button id="signin-btn" class="tm-btn tm-btn--lg tm-btn--primary tm-btn--block" onclick="requestOtp('signin')">Get OTP</button></div>
+    </section>
+
+    <section id="scr-otp" class="app-screen auth-screen" hidden aria-labelledby="otp-h">
+      <div class="app-scroll auth-body">
+        <button class="tm-btn tm-btn--quiet tm-btn--icon auth-back" onclick="otpBack()" aria-label="Back"><span class="tm-icon" data-icon="arrow-left"></span></button>
+        <h1 id="otp-h" class="tm-text-h1" tabindex="-1">Enter OTP</h1>
+        <p class="auth-sub">Sent to <span id="otp-phone">—</span> · <button class="tm-btn tm-btn--link" onclick="otpBack()">Change</button></p>
+        <div class="tm-otp" id="otp-boxes">
+          <input id="otp-input" class="tm-otp__input" type="text" inputmode="numeric" autocomplete="one-time-code" maxlength="6" aria-label="6-digit OTP" aria-describedby="otp-help">
+          <div class="tm-otp__box"></div><div class="tm-otp__box"></div><div class="tm-otp__box"></div><div class="tm-otp__box"></div><div class="tm-otp__box"></div><div class="tm-otp__box"></div>
+        </div>
+        <div class="tm-field__helper otp-help" id="otp-help" role="alert" hidden></div>
+        <div class="otp-resend"><span id="otp-timer">Resend OTP in 0:30</span><button id="otp-resend" class="tm-btn tm-btn--link" onclick="resendOtp()" hidden>Resend OTP</button></div>
+        <p class="auth-foot auth-foot--quiet">Can't sign in? Call Doctor Ops on <a href="tel:+918000000000">80000 00000</a></p>
+      </div>
+      <div class="tm-actionbar app-actionbar"><button id="otp-btn" class="tm-btn tm-btn--lg tm-btn--primary tm-btn--block" onclick="verifyOtp()">Verify</button></div>
+    </section>
+
+    <section id="scr-signup" class="app-screen auth-screen" hidden aria-labelledby="signup-h">
+      <div class="app-scroll auth-body">
+        <button class="tm-btn tm-btn--quiet tm-btn--icon auth-back" onclick="goApp('signin')" aria-label="Back to sign in"><span class="tm-icon" data-icon="arrow-left"></span></button>
+        <h1 id="signup-h" class="tm-text-h1" tabindex="-1">Request access</h1>
+        <p class="auth-sub">For registered medical practitioners. Our doctor onboarding team checks every request against the medical register.</p>
+        <div class="tm-field" data-f="name"><label class="tm-field__label" for="su-name">Full name <span class="tm-muted">(as on your registration)</span></label>
+          <div class="tm-field__control"><input id="su-name" autocomplete="name" placeholder="e.g. Priya Nair"></div></div>
+        <div class="tm-field" data-f="phone"><label class="tm-field__label" for="su-phone">Mobile number</label>
+          <div class="tm-field__control"><span class="tm-field__prefix">+91</span><input id="su-phone" type="tel" inputmode="numeric" autocomplete="tel-national" maxlength="10" placeholder="10-digit number"></div></div>
+        <div class="tm-field" data-f="reg"><label class="tm-field__label" for="su-reg">Medical registration number</label>
+          <div class="tm-field__control"><input id="su-reg" autocomplete="off" placeholder="e.g. MH-12847"></div></div>
+        <div class="tm-field" data-f="council"><label class="tm-field__label" for="su-council">Medical council</label>
+          <div class="tm-field__control"><select id="su-council">
+            <option value="">Select council</option><option>National Medical Commission</option><option>Delhi Medical Council</option>
+            <option>Karnataka Medical Council</option><option>Maharashtra Medical Council</option><option>Tamil Nadu Medical Council</option>
+            <option>Telangana State Medical Council</option><option>West Bengal Medical Council</option><option>Other state council</option></select></div></div>
+      </div>
+      <div class="tm-actionbar app-actionbar"><button id="signup-btn" class="tm-btn tm-btn--lg tm-btn--primary tm-btn--block" onclick="submitSignup()">Verify number</button></div>
+    </section>
+
+    <section id="scr-signup-done" class="app-screen auth-screen" hidden aria-labelledby="signupdone-h">
+      <div class="app-scroll auth-body auth-body--center">
+        <div class="tm-empty">
+          <div class="tm-empty__icon"><span class="tm-icon" data-icon="clipboard-check"></span></div>
+          <h1 id="signupdone-h" class="tm-empty__title" tabindex="-1">Request received</h1>
+          <p class="tm-empty__text" id="signup-done-text">We'll check your registration and call you within 2 working days. You can sign in once it's approved.</p>
+        </div>
+      </div>
+      <div class="tm-actionbar app-actionbar"><button class="tm-btn tm-btn--lg tm-btn--primary tm-btn--block" onclick="goApp('signin')">Back to sign in</button></div>
+    </section>
+
+    <section id="scr-bio-setup" class="app-screen auth-screen" hidden aria-labelledby="bio-h">
+      <div class="app-scroll auth-body auth-body--center">
+        <div class="tm-empty">
+          <div class="tm-empty__icon"><span class="tm-icon" data-icon="fingerprint"></span></div>
+          <h1 id="bio-h" class="tm-empty__title" tabindex="-1">Sign in faster next time</h1>
+          <p class="tm-empty__text">Use your phone's fingerprint or face unlock instead of an OTP. It stays on your phone; Truemeds never sees it.</p>
+        </div>
+      </div>
+      <div class="tm-actionbar app-actionbar app-actionbar--stack">
+        <button id="bio-on-btn" class="tm-btn tm-btn--lg tm-btn--primary tm-btn--block" onclick="enableBiometric()">Turn on fingerprint unlock</button>
+        <button class="tm-btn tm-btn--secondary tm-btn--block" onclick="skipBiometric()">Not now</button>
+      </div>
+    </section>
+
+    <section id="scr-unlock" class="app-screen auth-screen" hidden aria-labelledby="unlock-h">
+      <div class="app-scroll auth-body auth-body--center">
+        <img class="auth-logo" src="brand/truemeds-for-doctors.svg" alt="Truemeds for doctors" width="196" height="48">
+        <div class="unlock-avatar" id="unlock-initials" aria-hidden="true">AS</div>
+        <h1 id="unlock-h" class="tm-text-h1" tabindex="-1">Welcome back, <span id="unlock-name">Dr. Apurva</span></h1>
+        <p class="auth-sub" id="unlock-phone">+91 98765 43210</p>
+        <div class="tm-notice tm-notice--warning" id="unlock-note" hidden><span class="tm-icon" data-icon="alert-triangle"></span><span>Fingerprint didn't work. Sign in with an OTP instead.</span></div>
+        <p class="auth-foot"><button class="tm-btn tm-btn--link" onclick="unlockWithOtp()">Use OTP instead</button> · <button class="tm-btn tm-btn--link" onclick="switchAccount()">Not you?</button></p>
+      </div>
+      <div class="tm-actionbar app-actionbar"><button id="unlock-btn" class="tm-btn tm-btn--lg tm-btn--primary tm-btn--block" onclick="openBioPrompt('unlock')"><span class="tm-icon" data-icon="fingerprint"></span>Unlock</button></div>
+    </section>
+
+    <section id="scr-home" class="app-screen" hidden aria-labelledby="home-h">
+      <div class="app-scroll home-body">
+        <div class="home-greet">
+          <h1 id="home-h" class="tm-text-h1" tabindex="-1"><span id="home-greeting">Good afternoon</span>, <span id="home-name">Dr. Apurva</span></h1>
+          <p class="auth-sub" id="home-date">—</p>
+        </div>
+        <div class="tm-card home-card">
+          <div class="tm-empty" id="home-ready">
+            <div class="tm-empty__icon"><span class="tm-icon" data-icon="stethoscope"></span></div>
+            <div class="tm-empty__title">Ready for your next order?</div>
+            <p class="tm-empty__text">Tap Get next order when you're ready to call a patient.</p>
+          </div>
+          <div class="tm-empty" id="home-nolead" hidden>
+            <div class="tm-empty__icon"><span class="tm-icon" data-icon="inbox"></span></div>
+            <div class="tm-empty__title">No orders right now</div>
+            <p class="tm-empty__text">New orders come in through the day. Check again in a minute.</p>
+            <p class="home-checked" id="home-checked">Checked at —</p>
+          </div>
+        </div>
+        <div class="tm-card home-today"><span>Today</span><strong id="home-count">0 orders closed</strong></div>
+      </div>
+      <div class="tm-actionbar app-actionbar"><button id="home-next-btn" class="tm-btn tm-btn--lg tm-btn--primary tm-btn--block" onclick="requestNextOrder()">Get next order</button></div>
+    </section>
 
     <!-- MAIN SCROLL -->
     <div id="main-scroll">
@@ -256,7 +382,7 @@
         <span id="call-btn-icon" class="tm-icon" data-icon="phone"></span>
         <span id="call-btn-label">Call Patient</span>
       </button>
-      <button id="next-order-btn" class="tm-btn tm-btn--lg tm-btn--primary tm-btn--block" onclick="resetToDemo()" hidden>
+      <button id="next-order-btn" class="tm-btn tm-btn--lg tm-btn--primary tm-btn--block" onclick="requestNextOrder()" hidden>
         Next Order <span class="tm-icon" data-icon="arrow-right"></span>
       </button>
       <button id="main-cta-btn" class="tm-btn tm-btn--lg tm-btn--primary tm-btn--block" onclick="handleMainCTA()" hidden>
@@ -485,14 +611,36 @@
         </div>
       </div>
       <!-- User Manual -->
-      <button class="profile-menu-btn" onclick="showToast('User manual not linked yet'); closeSheet();">
+      <button class="profile-menu-btn" onclick="closeSheet(); console.log('[MOCK] user-manual.open | not linked yet')">
         <span class="profile-menu-label"><span class="tm-icon" data-icon="book"></span>User manual</span>
         <span class="tm-icon tm-icon--16" data-icon="chevron-right"></span>
       </button>
       <!-- Logout -->
+      <div class="tm-notice" id="profile-logout-note" hidden><span class="tm-icon" data-icon="info-circle"></span><span>You can log out after this order is closed.</span></div>
       <button id="profile-logout-btn" class="tm-btn tm-btn--destructive tm-btn--block" onclick="handleLogout()">
-        <span class="tm-icon" data-icon="logout"></span>Logout
+        <span class="tm-icon" data-icon="logout"></span>Log out
       </button>
+    </div>
+  </div>
+
+  <!-- Fingerprint prompt — stands in for the phone's own system prompt (the real one is drawn by Android/iOS) -->
+  <div id="sheet-bio" class="bottom-sheet" role="dialog" aria-labelledby="bio-prompt-h">
+    <div class="sheet-title"><span id="bio-prompt-h">Truemeds for Doctors</span><button class="tm-btn tm-btn--quiet tm-btn--icon sheet-close" onclick="cancelBioPrompt()" aria-label="Cancel"><span class="tm-icon" data-icon="x"></span></button></div>
+    <div class="sheet-body bio-body">
+      <p class="bio-sub" id="bio-sub">Confirm it's you</p>
+      <button class="bio-sensor" id="bio-sensor" onclick="touchSensor()" aria-label="Touch the fingerprint sensor (demo)"><span class="tm-icon" data-icon="fingerprint"></span></button>
+      <p class="bio-hint" id="bio-hint" role="status">Touch the fingerprint sensor</p>
+      <button class="tm-btn tm-btn--secondary tm-btn--block" onclick="cancelBioPrompt()">Cancel</button>
+    </div>
+  </div>
+
+  <!-- Log out confirmation -->
+  <div id="sheet-logout" class="bottom-sheet">
+    <div class="sheet-title"><span>Log out?</span><button class="tm-btn tm-btn--quiet tm-btn--icon sheet-close" onclick="closeSheet()" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button></div>
+    <div class="sheet-body">
+      <div class="sheet-subtitle">You'll stop getting orders until you sign in again.</div>
+      <button class="tm-btn tm-btn--secondary tm-btn--block" onclick="closeSheet()">Stay signed in</button>
+      <button class="tm-btn tm-btn--destructive tm-btn--block sheet-link-margin" onclick="confirmLogout()">Log out</button>
     </div>
   </div>
 
@@ -510,7 +658,7 @@
     <div class="sheet-title"><span>Customer unavailable</span><button class="tm-btn tm-btn--quiet tm-btn--icon sheet-close" onclick="closeSheet()" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button></div>
     <div class="sheet-body">
       <div id="unavail-desc" class="sheet-subtitle">Patient could not be reached. Case will be reassigned to the queue.</div>
-      <button class="tm-btn tm-btn--primary tm-btn--block" onclick="resetToDemo()">Next Order <span class="tm-icon" data-icon="arrow-right"></span></button>
+      <button class="tm-btn tm-btn--primary tm-btn--block" onclick="requestNextOrder()">Next Order <span class="tm-icon" data-icon="arrow-right"></span></button>
     </div>
   </div>
 </div><!-- /sheet-overlay -->
@@ -525,7 +673,7 @@
     <div id="success-toast-title" class="tm-snackbar__title">Order Confirmed</div>
     <div id="success-toast-desc" class="tm-snackbar__text">—</div>
   </div>
-  <button id="success-toast-next" class="tm-btn tm-btn--sm tm-btn--primary" onclick="resetToDemo()">Next Order <span class="tm-icon tm-icon--16" data-icon="arrow-right"></span></button>
+  <button id="success-toast-next" class="tm-btn tm-btn--sm tm-btn--primary" onclick="requestNextOrder()">Next Order <span class="tm-icon tm-icon--16" data-icon="arrow-right"></span></button>
 </div>
 
   </div><!-- /mobile-column (phone frame: overlays live inside it) -->

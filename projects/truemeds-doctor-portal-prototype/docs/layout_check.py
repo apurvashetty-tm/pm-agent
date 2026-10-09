@@ -8,7 +8,7 @@ from pathlib import Path
 from playwright.sync_api import sync_playwright
 
 ROOT = Path(__file__).resolve().parent.parent
-URL = "file://" + str(ROOT / "index.html")
+URL = "file://" + str(ROOT / "index.html") + "?start=case"   # order page; app screens are checked below via goApp()
 EXE = os.environ.get("CHROMIUM", "/opt/pw-browsers/chromium")   # set CHROMIUM=... on your machine; omit to use Playwright's own
 fails = []
 def check(name, ok, detail=""):
@@ -92,6 +92,17 @@ with sync_playwright() as p:
         moved = pg.evaluate("document.getElementById('mobile-column').scrollTop")
         check(f"{tag} after the gate the header stays in view", moved == 0 and abs(hdr - ref["t"]) <= 2, f"frame scrollTop={moved}, header top={hdr:.0f}")
         pg.evaluate("resetToDemo()")
+        # app screens (sign in, OTP, request access, unlock, home): fill the frame, button pinned at its bottom,
+        # no sideways scroll, the order page fully hidden (D-31, D-32)
+        for scr in ["signin", "otp", "signup", "unlock", "home"]:
+            pg.evaluate(f"goApp('{scr}')"); pg.wait_for_timeout(200)
+            box = pg.evaluate(f"""(()=>{{const s=document.getElementById(SCREEN_IDS['{scr}']), a=s.querySelector('.app-actionbar').getBoundingClientRect();
+              const lim = innerWidth>=768 ? document.getElementById('mobile-column').getBoundingClientRect().bottom : innerHeight;
+              return {{bar:a.bottom, lim, wide: document.documentElement.scrollWidth <= innerWidth + 1,
+                       caseHidden: getComputedStyle(document.getElementById('main-scroll')).display === 'none' && getComputedStyle(document.getElementById('case-actionbar')).display === 'none'}}}})()""")
+            check(f"{tag} {scr}: button pinned at the bottom of the {'frame' if desktop else 'screen'}", abs(box["bar"] - box["lim"]) <= 2, box)
+            check(f"{tag} {scr}: no sideways scroll, order page hidden", box["wide"] and box["caseHidden"])
+        pg.evaluate("goApp('case')")
         check(f"{tag} no page errors", not errs, "; ".join(errs))
         pg.close()
     b.close()

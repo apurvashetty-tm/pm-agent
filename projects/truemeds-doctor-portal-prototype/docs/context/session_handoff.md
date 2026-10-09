@@ -4,7 +4,7 @@
 
 **Last updated:** 2026-10-08
 **Session status:** Prescribe redesign built; pinned main action (D-22); UI audit fixes done (D-23 … D-26). Open: medicine form icon (audit #11) — options in docs/concepts/2026-10-08-medicine-form-icons.png, Apurva's call.
-**Why things are the way they are:** `docs/context/decision_log.md` (D-01 … D-30) — read it before changing any
+**Why things are the way they are:** `docs/context/decision_log.md` (D-01 … D-32) — read it before changing any
 screen it covers. This file says what is built; the decision log says why.
 **Case page main action (2026-10-08, D-22):** `#case-actionbar` (`.tm-actionbar`) pinned to the bottom holds
 `#call-initiate-btn` and `#main-cta-btn`; `syncCaseActionBar()` hides the bar when both are hidden and sets `--ab-h`
@@ -13,6 +13,12 @@ frame and pushed the header out of view). `layout_check.py` checks both.
 **UI audit fixes (2026-10-08, D-23/D-24):** every sheet = title + `.sheet-close` (`tm-btn--quiet tm-btn--icon`),
 no handle; callback chips in `.chip-grid` (`--cols`); action card closed state = `#az-closed` notice (text from
 `DOCTOR_STATE.closedNote`); `#next-order-btn` pinned only when unavailable. No black toasts at all (D-27).
+**App shell (2026-10-09, D-31, D-32):** the app opens on Sign in (or Welcome back with fingerprint, or Home if signed
+in). `goApp(screen)` shows one `.app-screen` (`#scr-signin`, `#scr-otp`, `#scr-signup`, `#scr-signup-done`,
+`#scr-bio-setup`, `#scr-unlock`, `#scr-home`) or the order page (`case`) via `body[data-app]`. Doctors pull orders:
+`requestNextOrder()` → order page, or Home "No orders right now". Session in `localStorage['tmd.auth.v1']`.
+`?start=case` opens the order page directly (used by `layout_check.py` and the e2e tests). App demo controls:
+left panel on desktop, top of the demo bar on phones.
 **All call actions pinned (2026-10-08, D-28):** `#case-actionbar` = `#ab-secondary` (pre-gate callback, Mark
 Unavailable, Schedule Callback, Skip HA — side by side) + the main button. `#action-zone` has no buttons; no
 auto-scroll (`scrollToActionZone` removed). `#az-phase2` removed.
