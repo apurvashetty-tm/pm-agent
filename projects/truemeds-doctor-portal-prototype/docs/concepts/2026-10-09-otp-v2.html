@@ -1,7 +1,11 @@
-<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<link rel="stylesheet" href="design-system/truemeds.css"><link rel="stylesheet" href="_auth.css">
-<script src="design-system/icons/icons.js"></script>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Truemeds for doctors — Verify your number</title>
+<script>if(new URLSearchParams(location.search).has("capture"))document.documentElement.classList.add("capture")</script>
+<link rel="stylesheet" href="../../../../design-system/truemeds.css"><link rel="stylesheet" href="_auth.css">
+<script src="../../../../design-system/icons/icons.js"></script>
 <style>
+ html.capture body,html.capture .screen{width:390px;overflow:hidden}
+ .back{text-decoration:none;cursor:pointer}
+ .back:focus-visible{outline:2px solid var(--tm-border-focus);outline-offset:var(--tm-space-xs)}
  .code input{text-align:center;font-size:20px;letter-spacing:.35em;height:56px}
  .code .tm-field__control{justify-content:center}
  .code input:placeholder-shown{letter-spacing:normal;font-size:var(--tm-font-size-body-lg)}
@@ -34,22 +38,26 @@
  .code.locked .tm-field__control{background:var(--tm-surface-secondary)} .code.locked input{color:var(--tm-content-secondary)}
  .dim{opacity:.5;pointer-events:none}
  .rs a{color:var(--tm-content-brand);font-weight:var(--tm-font-weight-semibold);text-decoration:none}
+ .rs button{border:0;background:transparent;padding:0;color:var(--tm-content-brand);font:inherit;font-weight:var(--tm-font-weight-semibold);cursor:pointer}
  .tm-btn.busy,.tm-btn.busy:disabled{background:var(--tm-surface-brand-default);color:#fff;opacity:.85;border-color:transparent}
  .spin{display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,.45);border-top-color:#fff;border-radius:50%;margin-right:8px;vertical-align:-3px}
  .bio-wrap.ev hr{display:none}
  label.bio.e{background:var(--tm-surface-secondary);border-radius:var(--tm-radius-lg);padding:var(--tm-space-md);align-items:center;cursor:pointer;min-height:72px;box-sizing:border-box}
  label.bio.e .ic{background:var(--tm-surface-primary)}
  label.bio.e .txt{flex:1}
+ .kbd{height:256px;padding:6px 5px 12px;gap:5px;background:#d4d7dd;grid-template-rows:repeat(4,1fr)}
+ .kbd div{border-radius:5px;font:400 23px/1 system-ui,sans-serif;color:#202124}
+ body.kb .terms,body.kb #b{visibility:hidden}
 </style></head><body class="tm">
 <div class="screen">
  <div class="top">
-  <div class="back"><span class="tm-icon" data-icon="arrow-left"></span>Back</div>
-  <img class="logo" src="truemeds-for-doctors.svg" alt="Truemeds for doctors">
+  <a class="back" href="../../ui-screens/sign-in/sign-in.html"><span class="tm-icon" data-icon="arrow-left" aria-hidden="true"></span>Back</a>
+  <img class="logo" src="../../brand/truemeds-for-doctors.svg" alt="Truemeds for doctors">
   <div class="head" style="margin-top:28px"><h1>Verify your number</h1><p>Enter the OTP sent to<b>+91 98765 43210</b></p></div>
-  <div style="margin-top:14px"><a class="lk" href="#">Change number</a></div>
+  <div style="margin-top:14px"><a class="lk" href="../../ui-screens/sign-in/sign-in.html">Change number</a></div>
  </div>
  <div class="panel"><div class="stack">
-  <div class="tm-field code" id="f"><label class="tm-field__label">Verification code</label>
+  <div class="tm-field code" id="f"><label class="tm-field__label" for="c">Verification code</label>
    <div class="tm-field__control"><input id="c" inputmode="numeric" maxlength="4" placeholder="4-digit OTP" autocomplete="one-time-code"></div>
    <div class="tm-field__helper" id="h" style="display:none"></div></div>
   <div class="tm-notice note" id="n"><span class="tm-icon" id="ni" data-icon="info-circle"></span><div id="nt"></div></div>
@@ -67,7 +75,8 @@ function state(s){const $=id=>document.getElementById(id);
  const on=!!s.on, cb='<span class="cb'+(on?' on':'')+'">'+(on?'<span class="tm-icon" data-icon="check"></span>':'')+'</span>';
  const t='<div class="t">Sign in faster next time</div>', d='<div class="d">Use your device’s face, fingerprint, or screen lock.</div>';
  const ic='<span class="ic">'+(s.icon==='face'?FACE:'<span class="tm-icon" data-icon="fingerprint"></span>')+'</span>';
- const v=s.bio||'a', B=$('bio');
+ const v=s.bio||'a', B=$('bio'), bw=$('bw');
+ bw.classList.remove('dv','ev','hide','dim'); B.style.padding='';
  if(v==='a')B.innerHTML='<div class="bio">'+cb+'<div>'+t+d+'</div></div>';
  if(v==='b')B.innerHTML='<div class="bio">'+cb+'<span class="tm-icon" data-icon="fingerprint" style="width:24px;height:24px;color:var(--tm-content-brand);flex-shrink:0"></span><div>'+t+d+'</div></div>';
  if(v==='c')B.innerHTML='<div class="bio c">'+ic+'<div class="txt">'+t+d+'</div>'+cb+'</div>';
@@ -83,8 +92,10 @@ function state(s){const $=id=>document.getElementById(id);
  if(s.rl!==undefined)$('rs').firstElementChild.innerHTML=s.rl;
  if(s.norow)$('rs').style.display='none';
  if(s.note){const n=$('n');n.classList.add('show','tm-notice--'+s.note.k);$('ni').setAttribute('data-icon',s.note.i);$('nt').innerHTML=s.note.t;}
- if(s.busy){b.innerHTML='<span class="spin"></span>Verifying';b.disabled=true;b.classList.add('busy');f.classList.add('locked');$('bw').classList.add('dim');}
+ if(s.busy){b.innerHTML='<span class="spin"></span>Verifying';b.disabled=true;b.classList.add('busy');f.classList.add('locked');$('c').disabled=true;$('bw').classList.add('dim');}
  if(s.lock){f.classList.add('locked');$('c').disabled=true;$('bw').classList.add('dim');b.disabled=true;}
  TMIcons.render(document);
 }
+const reviewState=new URLSearchParams(location.search).get('capture');
+state(reviewState==='empty-tap'?{bio:'e',err:'Enter the 4-digit code.',kb:true}:reviewState==='too-short'?{bio:'e',v:'48',err:'Enter all 4 digits.',kb:true}:reviewState==='verifying'?{bio:'e',v:'4827',on:true,busy:true}:reviewState==='wrong-code'?{bio:'e',on:true,err:'That code isn’t right. Try again.',kb:true}:reviewState==='two-tries-left'?{bio:'e',on:true,err:'That code isn’t right. 2 tries left.',kb:true}:reviewState==='resend-available'?{bio:'e',rr:'<button type="button">Resend code</button>'}:reviewState==='new-code-sent'?{bio:'e',ok:'New code sent.',rr:'Resend in 01:00'}:reviewState==='code-expired'?{bio:'e',v:'4827',err:'This code has expired. Get a new one.',rr:'<button type="button">Resend code</button>'}:reviewState==='couldnt-verify'?{bio:'e',v:'4827',on:true,note:{k:'error',i:'alert-circle',t:'We couldn’t check the code. Tap Verify &amp; sign in to try again.'}}:reviewState==='too-many-resends'?{bio:'e',note:{k:'warning',i:'clock',t:'You’ve asked for too many codes. Use the last one, or <a href="#">call Doctor Ops</a>.'},rr:'Resend in 09:42'}:reviewState==='locked'?{bio:'e',lock:true,norow:true,note:{k:'warning',i:'clock',t:'Too many wrong tries. Try again in 14:52, or <a href="#">call Doctor Ops</a>.'}}:{bio:'e'});
 </script></body></html>

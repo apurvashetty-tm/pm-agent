@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Truemeds for doctors — Sign in</title>
+<script>if (new URLSearchParams(location.search).has('capture')) document.documentElement.classList.add('capture');</script>
+<link rel="stylesheet" href="../../../../design-system/truemeds.css">
+<style>
+
+#doctor-login-preview { width:100%; }
+#doctor-login-preview .login-stage { padding:24px 0; display:flex; justify-content:center; }
+#doctor-login-preview .login-phone { width:min(390px,100%); min-height:640px; aspect-ratio:9/16; box-sizing:border-box; background:var(--tm-surface-primary); border:1px solid var(--tm-border-subtle); border-radius:var(--tm-radius-2xl); box-shadow:var(--tm-shadow-header); padding:var(--tm-space-xl); color:var(--tm-content-primary); font-family:var(--tm-font); color-scheme:light; display:flex; flex-direction:column; }
+#doctor-login-preview .login-logo { display:block; width:188px; height:auto; }
+#doctor-login-preview .login-content { padding-top:calc(var(--tm-space-3xl) + var(--tm-space-xl)); }
+#doctor-login-preview h1 { font-family:var(--tm-font); color:var(--tm-content-primary); font-size:var(--tm-font-size-title-md); line-height:var(--tm-font-lineheight-lg); font-weight:var(--tm-font-weight-semibold); margin:0 0 var(--tm-space-sm); letter-spacing:normal; }
+#doctor-login-preview p { color:var(--tm-content-secondary); font-size:var(--tm-font-size-body-lg); line-height:var(--tm-font-lineheight-md); margin:0; }
+#doctor-login-preview .login-fields { margin-top:var(--tm-space-2xl); }
+#doctor-login-preview .login-prefix { padding-right:var(--tm-space-md); border-right:1px solid var(--tm-border-default); font-size:var(--tm-font-size-body-lg); line-height:var(--tm-font-lineheight-md); color:var(--tm-content-primary); }
+#doctor-login-preview .login-phone input { font-size:var(--tm-font-size-body-lg); line-height:var(--tm-font-lineheight-md); }
+#doctor-login-preview .login-submit { margin-top:var(--tm-space-xl); }
+#doctor-login-preview .login-spinner { display:none; }
+#doctor-login-preview[data-state="sending"] .login-submit { opacity:.78; display:flex; align-items:center; justify-content:center; gap:10px; }
+#doctor-login-preview[data-state="sending"] .login-spinner { display:block; width:15px; height:15px; border:2px solid rgba(255,255,255,.45); border-top-color:#fff; border-radius:50%; box-sizing:border-box; animation:login-spin .8s linear infinite; }
+@keyframes login-spin { to { transform:rotate(360deg); } }
+@media(prefers-reduced-motion:reduce) { #doctor-login-preview[data-state="sending"] .login-spinner { animation:none; border-color:#fff; } }
+#doctor-login-preview .tm-field__helper { margin-top:var(--tm-space-xs); }
+#doctor-login-preview .login-notice { display:flex; gap:var(--tm-space-md); margin-top:var(--tm-space-lg); padding:var(--tm-space-lg); background:var(--tm-surface-secondary); border:1px solid var(--tm-border-default); border-radius:var(--tm-radius-lg); color:var(--tm-content-primary); font-size:var(--tm-font-size-body-md); line-height:var(--tm-font-lineheight-md); }
+#doctor-login-preview .login-notice-icon { flex:none; color:var(--tm-content-brand); font-size:20px; line-height:1; }
+#doctor-login-preview .login-notice strong { font-weight:var(--tm-font-weight-semibold); }
+#doctor-login-preview .login-offline-notice { display:flex; align-items:flex-start; gap:var(--tm-space-md); margin-top:var(--tm-space-lg); padding:var(--tm-space-lg); background:var(--tm-feedback-warning-surface); border:1px solid var(--tm-feedback-warning-border); border-radius:var(--tm-radius-lg); color:var(--tm-content-primary); font-size:var(--tm-font-size-body-md); line-height:var(--tm-font-lineheight-md); }
+#doctor-login-preview .login-offline-icon { flex:none; color:var(--tm-feedback-warning-content); font-size:20px; line-height:1; }
+#doctor-login-preview .login-send-error-notice { display:flex; align-items:flex-start; gap:var(--tm-space-md); margin-top:var(--tm-space-lg); padding:var(--tm-space-lg); background:var(--tm-feedback-error-surface); border:1px solid var(--tm-feedback-error-border); border-radius:var(--tm-radius-lg); color:var(--tm-content-primary); font-size:var(--tm-font-size-body-md); line-height:var(--tm-font-lineheight-md); }
+#doctor-login-preview .login-send-error-notice .tm-icon { flex:none; color:var(--tm-feedback-error-content); }
+#doctor-login-preview .login-too-many-notice { display:flex; align-items:flex-start; gap:var(--tm-space-md); margin-top:var(--tm-space-lg); padding:var(--tm-space-lg); background:var(--tm-feedback-warning-surface); border:1px solid var(--tm-feedback-warning-border); border-radius:var(--tm-radius-lg); color:var(--tm-content-primary); font-size:var(--tm-font-size-body-md); line-height:var(--tm-font-lineheight-md); }
+#doctor-login-preview .login-too-many-notice .tm-icon { flex:none; color:var(--tm-feedback-warning-content); }
+#doctor-login-preview .login-signup { margin-top:auto; padding-top:var(--tm-space-2xl); padding-bottom:var(--tm-space-sm); text-align:center; font-size:var(--tm-font-size-body-md); line-height:var(--tm-font-lineheight-sm); color:var(--tm-content-secondary); }
+#doctor-login-preview .login-signup-label { color:var(--tm-content-brand); font-weight:var(--tm-font-weight-semibold); margin-left:var(--tm-space-xs); }
+#doctor-login-preview [hidden] { display:none!important; }
+#doctor-login-preview input:focus-visible { outline:2px solid var(--tm-border-focus); outline-offset:var(--tm-space-xs); }
+@media(max-width:360px) { #doctor-login-preview .login-phone { padding:var(--tm-space-lg); } }
+#doctor-login-preview .login-phone { min-height:844px; aspect-ratio:auto; padding:var(--tm-space-xl) var(--tm-space-xl) 0; background:var(--tm-surface-brand-subtle); overflow:hidden; }
+#doctor-login-preview .login-logo { width:174px; }
+#doctor-login-preview .login-content { flex:1; display:flex; flex-direction:column; padding-top:var(--tm-space-3xl); }
+#doctor-login-preview .login-content > p { max-width:31ch; }
+#doctor-login-preview .login-fields { flex:1; margin:var(--tm-space-3xl) calc(-1 * var(--tm-space-xl)) 0; padding:var(--tm-space-xl); background:var(--tm-surface-primary); border-radius:var(--tm-radius-2xl) var(--tm-radius-2xl) 0 0; }
+#doctor-login-preview .login-signup { margin:0 calc(-1 * var(--tm-space-xl)); padding:0 var(--tm-space-xl) var(--tm-space-xl); background:var(--tm-surface-primary); }
+#doctor-login-preview .login-phone { position:relative; }
+#doctor-login-preview.is-focused .login-fields .tm-field__control { border-color:var(--tm-border-focus); box-shadow:0 0 0 1px var(--tm-border-focus); }
+#doctor-login-preview.has-error .login-fields .tm-field__control { border-color:var(--tm-border-error-strong); box-shadow:0 0 0 1px var(--tm-border-error-strong); }
+#doctor-login-preview.has-error .tm-field__helper { color:var(--tm-content-error); }
+#doctor-login-preview[data-keyboard="true"] .login-signup { visibility:hidden; }
+#doctor-login-preview[data-keyboard="false"] .login-keyboard { display:none; }
+#doctor-login-preview .login-keyboard { position:absolute; left:0; right:0; bottom:0; height:256px; padding:6px 5px 12px; background:#d4d7dd; display:grid; grid-template-columns:repeat(3,1fr); grid-template-rows:repeat(4,1fr); gap:5px; box-sizing:border-box; }
+#doctor-login-preview .login-key { display:grid; place-items:center; background:#fff; border-radius:5px; color:#202124; font:400 23px/1 system-ui,sans-serif; }
+#doctor-login-preview .login-key--quiet { background:transparent; }
+@media(max-width:360px) {
+  #doctor-login-preview .login-phone { padding-left:var(--tm-space-lg); padding-right:var(--tm-space-lg); }
+  #doctor-login-preview .login-fields, #doctor-login-preview .login-signup { margin-left:calc(-1 * var(--tm-space-lg)); margin-right:calc(-1 * var(--tm-space-lg)); }
+}
+
+html,body {margin:0;min-height:100%;}
+body {background:var(--tm-surface-primary);}
+#doctor-login-preview input:focus-visible {outline:none;}
+.review-controls {max-width:390px;margin:24px auto 0;font-family:var(--tm-font);color:var(--tm-content-primary);}
+.review-controls label {display:block;margin-bottom:8px;}
+.review-controls select {width:100%;height:44px;padding:0 12px;border:1px solid var(--tm-border-default);border-radius:var(--tm-radius-md);background:var(--tm-surface-primary);font:inherit;}
+html.capture .review-controls {display:none;}
+html.capture body {width:390px;overflow:hidden;}
+html.capture #doctor-login-preview .login-stage {padding:0;justify-content:flex-start;}
+html.capture #doctor-login-preview .login-phone {width:390px;min-height:844px;border:0;border-radius:0;box-shadow:none;}
+</style>
+</head>
+<body class="tm">
+<div class="review-controls"><label for="state">Approved state</label><select id="state" aria-label="Approved sign-in state"><option value="default">Default</option><option value="keyboard-open">Keyboard open</option><option value="empty-tap">Empty tap</option><option value="too-short">Too short</option><option value="wrong-first-digit">Wrong first digit</option><option value="pasted-cleaned">Pasted, cleaned</option><option value="sending">Sending OTP</option><option value="not-registered">Not registered</option><option value="offline">Offline</option><option value="couldnt-send">Couldn’t send</option><option value="too-many-tries">Too many tries</option></select></div>
+<div id="doctor-login-preview" data-state="default" data-keyboard="false">
+  <div class="login-stage">
+    <section class="login-phone tm" aria-label="Truemeds doctor sign-in screen">
+      <img class="login-logo" src="../../brand/truemeds-for-doctors.svg" alt="truemeds for doctors">
+      <main class="login-content">
+        <h1>Welcome, Doctor.</h1>
+        <p>Your partner in thoughtful, affordable care.</p>
+        <div class="login-fields">
+          <div class="tm-field">
+            <label class="tm-field__label" for="tm-login-mobile">Mobile number</label>
+            <div class="tm-field__control">
+              <span class="login-prefix">+91</span>
+              <input id="tm-login-mobile" type="tel" inputmode="tel" autocomplete="tel-national" placeholder="10-digit mobile number" aria-describedby="tm-login-helper">
+            </div>
+            <div id="tm-login-helper" class="tm-field__helper">We’ll send you a verification code by SMS.</div>
+            <div id="tm-login-notice" class="login-notice" role="status" hidden><span class="login-notice-icon" aria-hidden="true">ⓘ</span><div>Number not registered with Truemeds.<br><strong>Already applied?</strong> We’ll contact you after approval.</div></div>
+            <div id="tm-login-offline-notice" class="login-offline-notice" role="alert" hidden><span class="login-offline-icon" aria-hidden="true">⚠︎</span><span>You’re offline. Check your connection and try again.</span></div>
+            <div id="tm-login-send-error-notice" class="login-send-error-notice" role="alert" hidden><span class="tm-icon" data-icon="alert-circle" aria-hidden="true"></span><span>We couldn’t send the code. Please try again.</span></div>
+            <div id="tm-login-too-many-notice" class="login-too-many-notice" role="alert" hidden><span class="tm-icon" data-icon="clock" aria-hidden="true"></span><span>Too many attempts on this number. Please wait before trying again.</span></div>
+          </div>
+          <button class="tm-btn tm-btn--primary tm-btn--lg tm-btn--block login-submit" type="button"><span class="login-spinner" aria-hidden="true"></span><span class="login-submit-label">Send OTP</span></button>
+        </div>
+      </main>
+      <div class="login-signup" id="tm-signup-option">New to Truemeds?<span class="login-signup-label">Sign up</span></div>
+      <div class="login-keyboard" aria-hidden="true">
+        <span class="login-key">1</span><span class="login-key">2</span><span class="login-key">3</span>
+        <span class="login-key">4</span><span class="login-key">5</span><span class="login-key">6</span>
+        <span class="login-key">7</span><span class="login-key">8</span><span class="login-key">9</span>
+        <span class="login-key login-key--quiet"></span><span class="login-key">0</span><span class="login-key login-key--quiet">⌫</span>
+      </div>
+    </section>
+  </div>
+</div>
+
+<script src="../../../../design-system/icons/icons.js"></script>
+<script>
+(() => {
+  const root = document.getElementById('doctor-login-preview');
+  const selector = document.getElementById('state');
+  const input = document.getElementById('tm-login-mobile');
+  const helper = document.getElementById('tm-login-helper');
+  const notice = document.getElementById('tm-login-notice');
+  const offlineNotice = document.getElementById('tm-login-offline-notice');
+  const sendErrorNotice = document.getElementById('tm-login-send-error-notice');
+  const tooManyNotice = document.getElementById('tm-login-too-many-notice');
+  const field = root.querySelector('.tm-field');
+  const submit = root.querySelector('.login-submit');
+  const submitLabel = root.querySelector('.login-submit-label');
+  const states = {
+    default: {number: '', helper: 'We’ll send you a verification code by SMS.', error: false, keyboard: false, focused: false},
+    'keyboard-open': {number: '98765', helper: 'We’ll send you a verification code by SMS.', error: false, keyboard: true, focused: true},
+    'empty-tap': {number: '', helper: 'Enter your mobile number.', error: true, keyboard: true, focused: false},
+    'too-short': {number: '98765432', helper: 'Enter all 10 digits.', error: true, keyboard: true, focused: false},
+    'wrong-first-digit': {number: '1234567890', helper: 'Mobile numbers start with 6, 7, 8 or 9.', error: true, keyboard: true, focused: false},
+    'pasted-cleaned': {number: '9876543210', helper: 'We’ll send you a verification code by SMS.', error: false, keyboard: true, focused: true},
+    sending: {number: '9876543210', helper: 'We’ll send you a verification code by SMS.', error: false, keyboard: true, focused: true},
+    'not-registered': {number: '9876543210', helper: '', error: false, keyboard: false, focused: false},
+    offline: {number: '9876543210', helper: '', error: false, keyboard: false, focused: false},
+    'couldnt-send': {number: '9876543210', helper: '', error: false, keyboard: false, focused: false},
+    'too-many-tries': {number: '9876543210', helper: '', error: false, keyboard: false, focused: false}
+  };
+  function show(state) {
+    const next = states[state] || states.default;
+    root.dataset.state = states[state] ? state : 'default';
+    root.dataset.keyboard = String(next.keyboard);
+    root.classList.toggle('has-error', next.error);
+    root.classList.toggle('is-focused', next.focused);
+    selector.value = root.dataset.state;
+    input.blur();
+    input.value = next.number;
+    input.readOnly = state === 'sending';
+    helper.textContent = next.helper;
+    helper.hidden = state === 'not-registered' || state === 'offline' || state === 'couldnt-send' || state === 'too-many-tries';
+    notice.hidden = state !== 'not-registered';
+    offlineNotice.hidden = state !== 'offline';
+    sendErrorNotice.hidden = state !== 'couldnt-send';
+    tooManyNotice.hidden = state !== 'too-many-tries';
+    input.setAttribute('aria-describedby', state === 'not-registered' ? 'tm-login-notice' : state === 'offline' ? 'tm-login-offline-notice' : state === 'couldnt-send' ? 'tm-login-send-error-notice' : state === 'too-many-tries' ? 'tm-login-too-many-notice' : 'tm-login-helper');
+    submitLabel.textContent = state === 'sending' ? 'Sending OTP' : state === 'too-many-tries' ? 'Try again in 9:42' : 'Send OTP';
+    submit.setAttribute('aria-busy', String(state === 'sending'));
+    submit.setAttribute('aria-disabled', String(state === 'sending' || state === 'too-many-tries'));
+    submit.disabled = state === 'too-many-tries';
+    // Capture exact disabled palette from shared design tokens.
+    submit.style.backgroundColor = state === 'too-many-tries' ? '#D8DBDF' : '';
+    submit.style.color = state === 'too-many-tries' ? '#B6BAC3' : '';
+    field.classList.toggle('tm-field--error', next.error);
+    input.setAttribute('aria-invalid', String(next.error));
+    if (next.error) helper.setAttribute('role', 'alert');
+    else helper.removeAttribute('role');
+  }
+  selector.addEventListener('change', () => show(selector.value));
+  show(new URLSearchParams(location.search).get('capture') || 'default');
+})();
+</script>
+</body>
+</html>

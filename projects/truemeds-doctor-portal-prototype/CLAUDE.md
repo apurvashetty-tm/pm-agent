@@ -35,6 +35,10 @@ The visual system for this prototype is now the central Truemeds design system:
 
 ---
 
+## Approved UI references
+
+`ui-screens/` holds only Apurva-approved screen states for implementation handoff. Read `ui-screens/README.md` before building an approved screen. Do not promote concepts or historical renders from `docs/renders/` into it without explicit approval.
+
 ## Read these files before making any decision
 
 1. `docs/context/project_truth.md`

@@ -305,8 +305,7 @@ From an external (ChatGPT) review, each point verified before acting.
 - **Design system [PROPOSED]:** `.tm-otp`, `.tm-field__prefix`, `.tm-empty`; icons fingerprint, user-plus, inbox.
 
 ### D-33 · Sign-in screen final (replaces the sign-in part of D-32) — 2026-10-09
-- **Screen:** Apurva's layout as is. Logo, "Welcome, Doctor.", subtitle (pending: recommended "A different kind of
-  house call."), Mobile number (+91), helper "We'll send you a verification code by SMS.", **Send OTP**, footer
+- **Screen:** Apurva's layout as is. Logo, "Welcome, Doctor.", subtitle "Your partner in thoughtful, affordable care.", Mobile number (+91), helper "We'll send you a verification code by SMS.", **Send OTP**, footer
   "New to Truemeds? Sign up" (opens the existing web sign-up form; no in-app form, no Request access).
 - **Errors:** typing problems turn the field red and replace the helper line (empty, under 10 digits, first digit
   not 6–9). Problems after sending show a notice in the same spot and leave the field neutral: not registered
@@ -321,6 +320,36 @@ From an external (ChatGPT) review, each point verified before acting.
   the OTP and Welcome back screens. Work screens (the order page) stay plain white.
 - Final renders: `renders/2026-10-09/28`–`29`. Detail: `concepts/2026-10-09-signin-screen-evaluation.md`.
   OTP screen: `concepts/2026-10-09-otp-screen-spec.md`, renders `25`–`27`.
+
+### D-34 · OTP lock applies to mobile number — 2026-10-10
+- **Decision:** 5 server-confirmed wrong OTP submissions lock the attempted mobile number, not the doctor's account. The OTP screen keeps **Change number** available during the lock. Resending a code or restarting sign-in does not reset the wrong-try count.
+- **Access rule:** A doctor may sign in using another number only after Doctor Ops approves that number for the doctor. Changing number does not itself grant access.
+- **Screen consequence:** Keep the locked number's countdown and Doctor Ops action visible; disable OTP entry and verification for that number until its lock expires. Do not present this as an account-wide suspension.
+
+### D-35 · Configurable OTP issue cap — 2026-10-10
+- **Decision:** OTP issue cap is configurable. Start at 4 codes per mobile number in a server-enforced limit window, counting initial code and up to 3 resends. Do not reset count when the doctor restarts sign-in or changes number and returns.
+- **Open implementation detail:** Set limit-window length and reset rule with backend/ops. Keep wait time server-driven; the 09:42 screen timer is illustrative.
+
+### D-36 · Home screen scope: jobs, rules and what's out — 2026-10-12
+- **Detail:** `concepts/2026-10-12-home-jtbd.md` (final jobs to be done, Home states, open questions). Screens not
+  yet designed; items marked Proposed there still need Apurva's yes.
+- **Home's question:** "Am I taking cases right now, and what do I do next?" Anything else lives in the profile menu.
+- **Taking cases:** means the doctor *may request* a case; nothing is pushed. Named "Taking cases", not "Online".
+- **Next order:** pull model. A request made before the window ends is honoured even if the case arrives after.
+- **Window ends during a case:** the case is never interrupted; back on Home, Next order is replaced by Extend or
+  Done for now.
+- **Today's count:** count only, no earnings. A case counts when its prescription is generated (Confirm).
+- **Help:** a help icon in the shared header (left of profile) on Home and inside a case. Support v1 is a WhatsApp
+  hand-off; calling ops is hidden during a live patient call. App crash / freeze (ANR) reports go to tech.
+- **Notifications:** a bell for ops announcements and incentives, on Home only, never inside a case.
+- **One phone at a time:** a doctor may sign in on any phone; only one is active.
+- **Background:** the app may go to the background during a live case; the case continues.
+- **Callbacks go to the pool** (2026-10-10), as the system works today. No callback card on Home; same-doctor
+  callbacks parked.
+- **Out of scope:** case → Home → case navigation during a live case; history, statistics, training on Home.
+- **Later:** Uber-style case offers (accept/decline, background alerts, explicit opt-in); in-app support chat;
+  push alerts for announcements.
+- **To verify:** "Looking for a case" auto re-check (OQ-019).
 
 ## Design system changes made for this work
 

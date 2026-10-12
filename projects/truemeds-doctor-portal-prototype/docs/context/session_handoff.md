@@ -1,3 +1,173 @@
+## 2026-10-12 — Home scope agreed (jobs to be done)
+
+- Final Home jobs, rules, states and open questions in `docs/concepts/2026-10-12-home-jtbd.md`; summary in D-36.
+  The 2026-10-09 Home draft is marked superseded.
+- Callbacks go to the pool (no callback card on Home). Help icon on Home and in the case header; bell on Home only;
+  WhatsApp support hand-off v1; today's count = prescriptions generated.
+- New open questions OQ-019 … OQ-022. No Home screens rendered or built yet.
+- Next step: render Home state 1 ("Not taking cases" + end-time sheet) for review.
+
+---
+
+## 2026-10-12 — Returning doctor unlock variants approved
+
+- Apurva approved Fingerprint, Face ID, and Screen lock variants. Added one editable source at `ui-screens/returning-unlock/returning-unlock.html` and three 390 × 844, 2× PNGs. Each final-source Chrome capture matches its reviewed image by SHA-256.
+- Layout keeps “Hello, Dr. Apurva.” on one line at standard phone width, uses a larger greeting and subtitle, adds space between “Ready when you are” and Unlock, and tightens Unlock to “Use OTP instead.” A 320 × 640 view was checked without clipped controls.
+- The approved Face ID glyph now lives in the shared icon library as `[PROPOSED]` `face-id`; the handoff HTML uses that icon. Its capture remains pixel-identical to the approved PNG. Buttons are visual references; authentication behavior is not implemented here.
+- Next step: continue approved auth-screen handoff or move to Home screen design; do not build auth behavior from the mockup alone.
+
+---
+
+## 2026-10-10 — Five wrong OTP submissions lock mobile number
+
+- Apurva set the number-lock threshold at 5 server-confirmed wrong OTP submissions. Updated D-34, OTP spec, OQ-017, and `ui-screens/README.md`; older handoff references to 5 as a mock placeholder are superseded.
+- Wrong-try count survives code resend and sign-in restart. Counting/reset window and lock duration remain backend/ops decisions. No approved screen visual changed.
+
+---
+
+## 2026-10-10 — OTP locked number approved
+
+- Apurva approved Locked number. Added it to `ui-screens/otp/otp.html` and `otp_locked.png`; saved PNG matches reviewed capture by SHA-256. `ui-screens/README.md` updated.
+- Clarified separate controls: D-35 limits issued OTP codes (initial 4 per number/window); D-34 locks code verification after too many wrong entries on the attempted mobile number. Too many resends leaves the last valid code usable; number lock disables entry and verification until countdown ends. Wrong-entry threshold remains backend/ops open (5 is mock placeholder).
+- Remaining OTP spec states are passkey setup cancelled/failed (doctor still lands on Home) and SMS autofill (OS behavior). Neither has an approved visual render yet.
+
+---
+
+## 2026-10-10 — OTP too many resends approved; number lock in review
+
+- Apurva approved Too many resends. Added it to `ui-screens/otp/otp.html` and `otp_too-many-resends.png`; saved PNG matches reviewed capture by SHA-256. `ui-screens/README.md` updated.
+- D-35 records configurable OTP issue cap, initially 4 codes per mobile number within a server-enforced window (initial send plus up to 3 resends). Window length and reset rule remain open; sign-in restart must not bypass the cap. Updated OTP spec and OQ-017.
+- Next review render: too many wrong OTP attempts lock attempted number; entry, faster sign-in card, and Verify button are disabled until countdown expires. Change number stays available. Review PNG stays outside `ui-screens/` pending approval.
+- Next step: await Apurva's verdict on Locked, then add only that approved state.
+
+---
+
+## 2026-10-10 — OTP couldn't verify approved; too many resends in review
+
+- Apurva approved Couldn't verify. Added it to `ui-screens/otp/otp.html` and `otp_couldnt-verify.png`; saved PNG matches reviewed capture by SHA-256. `ui-screens/README.md` updated.
+- Next review render: too many resends shows a yellow notice, resend wait, and Doctor Ops action; the last valid code remains usable. Review PNG stays outside `ui-screens/` pending approval.
+- CTA copy decision: keep sentence case “Verify & sign in” for consistency with “Send OTP.”
+- Next step: await Apurva's verdict on Too many resends, then add only that approved state and render the following state.
+
+---
+
+## 2026-10-10 — OTP code expired approved; couldn't verify in review
+
+- Apurva approved Code expired. Added it to `ui-screens/otp/otp.html` and `otp_code-expired.png`; saved PNG matches reviewed capture by SHA-256. `ui-screens/README.md` updated.
+- Next review render: after a network or server error, entered `4827` and faster sign-in selection remain; red notice offers retry with Verify & sign in. Review PNG stays outside `ui-screens/` pending approval.
+- Next step: await Apurva's verdict on Couldn't verify, then add only that approved state and render the following state.
+
+---
+
+## 2026-10-10 — OTP new code sent approved; code expired in review
+
+- Apurva approved New code sent. Added it to `ui-screens/otp/otp.html` and `otp_new-code-sent.png`; saved PNG matches reviewed capture by SHA-256. `ui-screens/README.md` updated.
+- Next review render: expired code `4827` stays visible in red field with “This code has expired. Get a new one.” and an immediate Resend code action. Review PNG stays outside `ui-screens/` pending approval.
+- Next step: await Apurva's verdict on Code expired, then add only that approved state and render the following state.
+
+---
+
+## 2026-10-10 — OTP resend available approved; new-code-sent in review
+
+- Apurva approved Resend available. Added it to `ui-screens/otp/otp.html` and `otp_resend-available.png`; PNG matches reviewed direct capture by SHA-256. `ui-screens/README.md` updated.
+- Next review render: after tapping Resend code, a green “New code sent.” confirmation appears below the field and resend wait restarts at 01:00. Temporary image remains outside `ui-screens/` until approval.
+- Validation: direct capture is 780 × 1688; `git diff --check` passes.
+- Next step: await Apurva's verdict on New code sent, then file it and render the next state.
+
+---
+
+## 2026-10-10 — OTP two-tries-left approved; resend available in review
+
+- Apurva approved two tries left. Added it to `ui-screens/otp/otp.html` and `otp_two-tries-left.png`; PNG matches reviewed direct capture by SHA-256. `ui-screens/README.md` updated.
+- Next review render: after resend timer expires, “Resend code” replaces countdown as a semantic button. Review PNG stays temporary until approval.
+- Validation: review capture is 780 × 1688; `git diff --check` passes.
+- Next step: await Apurva's verdict on resend available, then file it and render the next state.
+
+---
+
+## 2026-10-10 — OTP wrong-code approved; two-tries-left in review
+
+- Apurva approved Wrong code. Added it to `ui-screens/otp/otp.html` and `otp_wrong-code.png`; PNG matches the reviewed direct capture by SHA-256. `ui-screens/README.md` updated.
+- Next review render: two remaining OTP tries. Rejected code clears, keyboard reopens, faster sign-in stays selected, and field says “That code isn’t right. 2 tries left.” Review PNG remains temporary until approval.
+- Validation: direct capture is 780 × 1688; `git diff --check` passes.
+- Next step: await Apurva's verdict on two-tries-left, then file it and render the next state.
+
+---
+
+## 2026-10-10 — OTP verifying approved; wrong-code state in review
+
+- Apurva approved the OTP verifying state. Added it to `ui-screens/otp/otp.html` and `otp_verifying.png`; PNG matches the reviewed direct Chrome render by SHA-256. `ui-screens/README.md` updated.
+- Next review render: server rejects the code. Entry clears, code field shows “That code isn’t right. Try again.”, keyboard reopens, and faster sign-in selection remains checked. Review image stays temporary until approved.
+- Validation: approved source capture is 780 × 1688 and pixel-identical to reviewed image; `git diff --check` passes.
+- Next step: await Apurva's verdict on wrong-code state, then file it and render the next state.
+
+---
+
+## 2026-10-10 — OTP two-digit state approved; verifying in review
+
+- Apurva approved the too-short OTP state shown with “48.” Added it to `ui-screens/otp/otp.html` and `otp_too-short.png`; PNG matches the reviewed direct capture. `ui-screens/README.md` updated.
+- Next review render: verifying a complete four-digit code. Selected faster sign-in card, code field and button show locked/progress states. Review image stays temporary until approved.
+- Validation: approved two-digit PNG matches reviewed image by SHA-256; verifying capture is 780 × 1688; `git diff --check` passes.
+- Next step: await Apurva's verdict on verifying, then file it and render the next OTP error state.
+
+---
+
+## 2026-10-10 — OTP empty-code state approved; two-digit state in review
+
+- Apurva approved the empty-code OTP error. Added it to `ui-screens/otp/otp.html` selector and `otp_empty-tap.png`; PNG is pixel-identical to the reviewed capture. Default PNG remains pixel-identical after the HTML update. `ui-screens/README.md` updated.
+- Next review render: Verify tapped with two digits (“48”) shows “Enter all 4 digits.”, keeps entered digits, focuses the field, and opens the numeric keyboard. Temporary PNG remains outside `ui-screens/` until approval.
+- Validation: both approved captures match reviewed images by SHA-256; next review capture is 780 × 1688 pixels; `git diff --check` passes.
+- Next step: await Apurva's verdict on the two-digit state, then file it and render the following state.
+
+---
+
+## 2026-10-10 — OTP default approved; empty-tap state in review
+
+- Apurva approved the OTP default screen. `ui-screens/otp/otp.html` and `ui-screens/otp/otp_default.png` now form its editable source and matching 390 × 844, 2× capture. The PNG is pixel-identical to the approved direct Chrome render. `ui-screens/README.md` indexes it.
+- Next review render: tapping Verify with no code focuses the code field, shows “Enter the 4-digit code.” and the numeric keyboard. This review PNG is temporary, outside `ui-screens/`; it is not approved yet.
+- Validation: approved source opened with all local assets resolved; direct Chrome capture confirmed 780 × 1688 pixels; `git diff --check` passes.
+- Next step: await Apurva's verdict on the empty-tap state, then add only that approved state to the OTP handoff source and move to the following state.
+
+---
+
+## 2026-10-10 — OTP number lock; default screen in review
+
+- D-34 locks only the attempted mobile number after too many wrong OTPs. Change number remains available; another number signs in only after Doctor Ops approves it for that doctor. Updated OTP spec and narrowed OQ-017 accordingly.
+- Rendered the OTP default state from `docs/concepts/2026-10-09-otp-v2.html` at 390 × 844 CSS pixels (2× capture) for Apurva's review. The capture is temporary and has not been added to `ui-screens/`.
+- Validation: screenshot inspected; logo, shared styles, icons and 4-digit field are visible. `git diff --check` passes.
+- Known gap: this concept still has exploratory local styles and placeholder legal links. OTP error states and final handoff source remain unapproved.
+- Next step: wait for Apurva's review of the OTP default render; revise or approve it, then move to the next state one at a time.
+
+---
+
+## 2026-10-10 — OTP concept source repaired
+
+- Repaired `docs/concepts/2026-10-09-otp-v2.html`: shared CSS and icons now resolve from the repository, logo uses the approved project lockup, and the file shows its default biometric card when opened directly.
+- Back and Change number now navigate to the approved sign-in reference; the verification label targets its input. This is a source repair, not an approved OTP screen or a new auth flow.
+- Validation: all local asset links resolve, `git diff --check` passes, and the default concept rendered in Chrome with styles, logo, and icons present.
+- Known gap: the concept still has local exploratory CSS and placeholder Terms/Privacy links. Final approved OTP handoff should use shared components and confirmed destinations.
+- Next step: resume OTP UI/UX and design-system review findings with Apurva before rendering states, one at a time.
+
+---
+
+## 2026-10-09 — Sign-in screen approval in progress
+
+- Apurva approved first-time default, keyboard-open, empty-tap, too-short, wrong-first-digit, pasted-and-cleaned, Sending OTP, Not registered, Offline, Couldn’t send, and Too many tries states. `ui-screens/sign-in/sign-in.html` switches among all eleven and generates one PNG for each (390 × 844 CSS pixels, 2× capture).
+- Other sign-in states remain unapproved and outside the handoff set.
+- Locked sign-in subtitle recorded in D-33: “Your partner in thoughtful, affordable care.”
+- Next step: review the Inactive state; add it only after approval.
+
+---
+
+## 2026-10-09 — Approved UI screen handoff folder
+
+- Created `ui-screens/README.md` as the approved screen index. No mockups or PNGs added yet.
+- Future screen states: render, review with Apurva, then add PNG plus editable HTML and note viewport/behavior.
+- `docs/renders/` remains historical review archive; current app behavior and auth implementation were not changed.
+- Next step: re-render first sign-in state for review; store it only after explicit approval.
+
+---
+
 # session_handoff.md — Truemeds Doctor Portal Prototype
 
 **Purpose:** Captures all decisions, agreements, and pending work so a new Claude session on any machine can pick up exactly where things left off.

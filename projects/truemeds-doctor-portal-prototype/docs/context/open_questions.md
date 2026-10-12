@@ -180,8 +180,8 @@ Every entry must include:
 **Safe placeholder:** Only on tap. `[MOCK ASSUMPTION]`
 
 ### OQ-017 — Sign-in rules for production
-**Question:** OTP length/expiry/lockout values, how long a signed-in session lasts, whether fingerprint is required (not optional) on shared phones, and who approves new doctors and how fast.
-**Safe placeholder:** 6 digits, resend 30 s → 1 min → 2 min, 5 tries then 15 min lock; session 24 h without fingerprint; fingerprint optional; ops approval within 2 working days. `[MOCK ASSUMPTION]`
+**Question:** OTP expiry, wrong-try counting/reset window, OTP issue-cap window/reset, lock duration, signed-in session length, and Doctor Ops approval timing. OTP is 4 digits; faster sign-in is optional. D-35 sets a configurable OTP issue cap, initially 4 codes per mobile number (first send plus up to 3 resends); the server-enforced window and reset rule remain open. D-34 sets 5 server-confirmed wrong OTP submissions as the number-lock threshold; the attempted mobile number is locked, not the account. Resending or restarting sign-in does not reset the count. A different number needs Doctor Ops approval for that doctor before sign-in.
+**Safe placeholder:** 5 min code life, resend 30 s → 1 min → 2 min, 15 min number lock after the decided 5 wrong tries; session 24 h; ops approval timing still unconfirmed. `[MOCK ASSUMPTION]`
 
 ### OQ-018 — Patient consent when the doctor calls (legal)
 **Question:** Telemedicine Practice Guidelines: a consultation the doctor starts needs explicit, recorded patient consent. Does the patient's order count as the patient starting it?
@@ -194,6 +194,23 @@ Every entry must include:
 ---
 
 ## Deferred Questions
+
+
+### OQ-019 — "Looking for a case" (Home)
+**Question:** After one Next order tap with no case, may the app keep re-checking while the doctor stays on Home and open a case when one appears? How often, and is it fair across doctors? To discuss with Apurva, then backend.
+**Safe placeholder:** "No cases right now" with a manual Try again. `[MOCK ASSUMPTION]`
+
+### OQ-020 — Pooled callback hand-over
+**Question:** When a callback returns to the pool (D-36), does the doctor who picks it up see the earlier doctor's notes and outcome on the case page?
+**Safe placeholder:** Assume yes; the case page shows the earlier attempt. `[MOCK ASSUMPTION]`
+
+### OQ-021 — Support contacts
+**Question:** Ops WhatsApp number for the support hand-off and the Doctor Ops phone number.
+**Safe placeholder:** Placeholder numbers in the prototype. `[MOCK ASSUMPTION]`
+
+### OQ-022 — Crash and freeze reporting
+**Question:** Which crash-reporting tool tech uses today (e.g. Crashlytics, Sentry), who triages reports, and how the reference ID in a support message links to a report.
+**Safe placeholder:** Help sheet shows a mock reference ID. `[MOCK ASSUMPTION]`
 
 ### OQ-014 — Prescription quantity units for non-tablet forms
 **Question:** For syrups, injections, creams, drops and inhalers, does the backend's prescription quantity count whole packs (bottles, tubes, vials) or doses? Cart quantity today is whole units.

@@ -1,0 +1,33 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Truemeds for doctors — Returning doctor</title>
+<script>if(new URLSearchParams(location.search).has('capture'))document.documentElement.classList.add('capture')</script>
+<link rel="stylesheet" href="../../../../design-system/truemeds.css">
+<style>
+html,body{margin:0;min-height:100%}body.tm{background:var(--tm-surface-brand-subtle);color:var(--tm-content-primary)}
+.screen{box-sizing:border-box;min-height:100dvh;display:flex;flex-direction:column;background:var(--tm-surface-brand-subtle);font-family:var(--tm-font)}
+.intro{padding:var(--tm-space-xl) var(--tm-space-lg) calc(var(--tm-space-3xl) + var(--tm-space-lg))}.logo{display:block;width:174px;height:auto}
+h1{margin:var(--tm-space-3xl) 0 var(--tm-space-sm);font-size:var(--tm-font-size-title-lg);line-height:var(--tm-font-lineheight-2xl);font-weight:var(--tm-font-weight-semibold)}
+.intro p{margin:0;max-width:32ch;color:var(--tm-content-secondary);font-size:var(--tm-font-size-body-xl);line-height:var(--tm-font-lineheight-lg)}
+.panel{flex:1;display:flex;flex-direction:column;align-items:stretch;padding:calc(var(--tm-space-3xl) + var(--tm-space-lg)) var(--tm-space-lg) var(--tm-space-xl);border-radius:var(--tm-radius-2xl) var(--tm-radius-2xl) 0 0;background:var(--tm-surface-primary)}
+.prompt{margin:0 0 var(--tm-space-3xl);text-align:center}.prompt-icon{width:calc(var(--tm-space-3xl) + var(--tm-space-lg));height:calc(var(--tm-space-3xl) + var(--tm-space-lg));margin:0 auto var(--tm-space-lg);display:grid;place-items:center;border-radius:var(--tm-radius-lg);background:var(--tm-surface-brand-subtle);color:var(--tm-content-brand)}.prompt-icon .tm-icon{width:var(--tm-space-2xl);height:var(--tm-space-2xl)}
+h2{margin:0;font-size:var(--tm-font-size-body-xl);line-height:var(--tm-font-lineheight-lg);font-weight:var(--tm-font-weight-semibold)}
+.actions{display:flex;flex-direction:column;align-items:center;gap:var(--tm-space-sm)}
+.fallback{font-size:var(--tm-font-size-body-md)}.account{margin-top:auto;align-self:center;font-size:var(--tm-font-size-body-md);font-weight:var(--tm-font-weight-medium)}.account strong{color:var(--tm-content-brand);font-weight:var(--tm-font-weight-semibold)}
+@media(min-width:391px){.screen{width:390px;margin:0 auto;min-height:844px}}
+@media(max-height:700px){.intro{padding-bottom:var(--tm-space-2xl)}h1{margin-top:var(--tm-space-2xl)}.panel{padding-top:var(--tm-space-2xl)}.prompt{margin-bottom:var(--tm-space-2xl)}}
+.review-controls{max-width:390px;margin:var(--tm-space-lg) auto;font-family:var(--tm-font);color:var(--tm-content-primary)}.review-controls label{display:block;margin-bottom:var(--tm-space-xs)}.review-controls select{width:100%;padding:var(--tm-space-sm);font:inherit;border:1px solid var(--tm-border-default);border-radius:var(--tm-radius-md);background:var(--tm-surface-primary)}html.capture .review-controls{display:none}
+</style></head><body class="tm"><main class="screen" aria-label="Returning doctor quick unlock">
+<header class="intro"><img class="logo" src="../../brand/truemeds-for-doctors.svg" alt="Truemeds for doctors"><h1>Hello, Dr. Apurva.</h1><p>Let’s check in on your patients today.</p></header>
+<section class="panel" aria-labelledby="ready"><div class="prompt"><div class="prompt-icon" aria-hidden="true"><span class="tm-icon variant-icon" data-icon="fingerprint"></span></div><h2 id="ready">Ready when you are</h2></div>
+<div class="actions"><button class="tm-btn tm-btn--primary tm-btn--lg tm-btn--block" type="button"><span id="unlock-label">Unlock with fingerprint</span></button><button class="tm-btn tm-btn--ghost fallback" type="button">Use OTP instead</button></div><button class="tm-btn tm-btn--quiet account" type="button">Not you? <strong>Switch account</strong></button></section></main>
+<div class="review-controls"><label for="review-variant">Approved device variant</label><select id="review-variant"><option value="fingerprint">Fingerprint</option><option value="face">Face ID</option><option value="screen-lock">Screen lock</option></select></div>
+<script src="../../../../design-system/icons/icons.js"></script><script>
+const params=new URLSearchParams(location.search);
+const variant=params.get('capture')||params.get('variant')||'fingerprint';
+const options={fingerprint:{label:'Unlock with fingerprint',icon:'fingerprint'},face:{label:'Unlock with Face ID',icon:'face-id'},'screen-lock':{label:'Unlock with screen lock',icon:'lock'}};
+const selected=options[variant]||options.fingerprint;
+document.getElementById('review-variant').value=variant in options?variant:'fingerprint';
+document.getElementById('review-variant').addEventListener('change',event=>{location.search='?variant='+event.target.value});
+document.getElementById('unlock-label').textContent=selected.label;
+document.querySelectorAll('.variant-icon').forEach(el=>el.dataset.icon=selected.icon);
+TMIcons.render(document);
+</script></body></html>

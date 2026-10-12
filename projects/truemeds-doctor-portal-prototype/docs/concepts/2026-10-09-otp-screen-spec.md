@@ -30,8 +30,8 @@ notice under the field, field stays neutral. No toasts.
 | 7 | New code sent | Resend tapped | Green: "New code sent." Timer restarts | The old code stops working |
 | 8 | Expired | Server: expired | Red: "This code has expired. Get a new one." Resend link shown at once | |
 | 9 | Couldn't verify | Network or server failure | Red notice: "We couldn't check the code. Tap Verify & sign in to try again." | Code and tick kept; same button retries |
-| 10 | Too many resends | Resend limit hit | Yellow notice: "You've asked for too many codes. Use the last one, or call Doctor Ops." Timer shows the wait | Field still works with the last code |
-| 11 | Locked | Too many wrong tries | Yellow notice with countdown and "call Doctor Ops"; field, card and button disabled | Unlocks when the countdown ends |
+| 10 | Too many resends | Configurable OTP issue cap hit (D-35; initial 4 codes per number including first send) | Yellow notice: "You've asked for too many codes. Use the last one, or call Doctor Ops." Timer shows the wait | Field still works with the last code |
+| 11 | Locked | 5 server-confirmed wrong OTP submissions on this mobile number (D-34) | Yellow notice with countdown and "Call Doctor Ops"; field, card and button disabled; Change number remains available | Only this number unlocks when its countdown ends. Another number works only if Doctor Ops approved it for this doctor. See D-34. |
 | 12 | Passkey setup cancelled or fails | After a correct code, doctor cancels the phone's sheet or setup fails | Signed in anyway; lands on Home | OTP stays the sign-in next time; can be turned on later from the profile sheet |
 | 13 | SMS autofill | Code arrives on the phone | iPhone offers it above the keyboard; Android fills it | Keyboard closes on the 4th digit as usual |
 
@@ -69,6 +69,7 @@ Android Credential Manager (developer.android.com/identity/passkeys/create-passk
 (developers.google.com/identity/passkeys), web.dev passkey registration (web.dev/articles/passkey-registration).
 
 ## Open (backend / ops)
-- Code life, wrong tries allowed, resend limit and lock time. Placeholders: 4 digits, 5 min life, 5 wrong tries,
-  15 min lock, resend 30 s / 60 s / 120 s.
+- OTP issue cap is configurable; initial value 4 codes per mobile number in a server-enforced window (first code plus up to 3 resends). Window length and reset rule remain open (D-35).
+- Wrong-code threshold: 5 server-confirmed incorrect OTP submissions on the attempted mobile number (D-34). Resending or restarting sign-in does not reset the count.
+- Code life and wrong-try lock duration remain open. Placeholders: 5 min code life, 15 min lock, resend 30 s / 60 s / 120 s.
 - Doctor Ops phone number. Terms & Conditions and Privacy Policy URLs.
