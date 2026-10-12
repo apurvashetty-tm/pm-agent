@@ -350,6 +350,17 @@ From an external (ChatGPT) review, each point verified before acting.
 - **Later:** Uber-style case offers (accept/decline, background alerts, explicit opt-in); in-app support chat;
   push alerts for announcements.
 - **To verify:** "Looking for a case" auto re-check (OQ-019).
+- **Clarified 2026-10-12:** Signed-in session stays valid through an open case; no OTP sheet over a live case.
+  Help offers an explicit app-issue report action. Automatic crash/freeze logging continues; app team owns
+  technical triage. A pending Next order request from Home or the prior case page still needs a rule if the doctor
+  taps Stop before the backend responds. Window expiry alone follows the agreed last-second rule.
+
+### D-37 · No faster-sign-in recovery sheet in native app — 2026-10-12
+- **Decision (Apurva):** Drop the “Finish setting up faster sign-in” Home sheet. Production doctor app is React Native;
+  the sheet existed to recover from a Safari web-prompt timing concern and is not part of the native flow.
+- **Flow:** After correct OTP, invoke the phone's passkey setup prompt for doctors who opted in. If cancelled or
+  failed, let the doctor reach Home; OTP remains available next time. Do not nag on Home.
+- **Handoff:** The older concept HTML and render 30 remain historical references, not approved UI screens.
 
 ## Design system changes made for this work
 

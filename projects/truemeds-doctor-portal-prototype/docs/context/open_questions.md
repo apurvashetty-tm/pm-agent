@@ -182,6 +182,7 @@ Every entry must include:
 ### OQ-017 — Sign-in rules for production
 **Question:** OTP expiry, wrong-try counting/reset window, OTP issue-cap window/reset, lock duration, signed-in session length, and Doctor Ops approval timing. OTP is 4 digits; faster sign-in is optional. D-35 sets a configurable OTP issue cap, initially 4 codes per mobile number (first send plus up to 3 resends); the server-enforced window and reset rule remain open. D-34 sets 5 server-confirmed wrong OTP submissions as the number-lock threshold; the attempted mobile number is locked, not the account. Resending or restarting sign-in does not reset the count. A different number needs Doctor Ops approval for that doctor before sign-in.
 **Safe placeholder:** 5 min code life, resend 30 s → 1 min → 2 min, 15 min number lock after the decided 5 wrong tries; session 24 h; ops approval timing still unconfirmed. `[MOCK ASSUMPTION]`
+**Confirmed 2026-10-12:** Signed-in session remains valid until the case is closed; no OTP prompt over a live case. Technical token renewal must not interrupt the doctor. Re-authentication after case closure remains open; the 24 h session value above is only a mock placeholder.
 
 ### OQ-018 — Patient consent when the doctor calls (legal)
 **Question:** Telemedicine Practice Guidelines: a consultation the doctor starts needs explicit, recorded patient consent. Does the patient's order count as the patient starting it?
@@ -204,13 +205,19 @@ Every entry must include:
 **Question:** When a callback returns to the pool (D-36), does the doctor who picks it up see the earlier doctor's notes and outcome on the case page?
 **Safe placeholder:** Assume yes; the case page shows the earlier attempt. `[MOCK ASSUMPTION]`
 
-### OQ-021 — Support contacts
-**Question:** Ops WhatsApp number for the support hand-off and the Doctor Ops phone number.
-**Safe placeholder:** Placeholder numbers in the prototype. `[MOCK ASSUMPTION]`
+### OQ-021 — Support contacts and links
+**Answered 2026-10-12 (Apurva):** Sign up → `https://pwa-doctor.truemeds.in/onboarding`. Doctor Ops / support
+WhatsApp: **+91 86524 24617** (`https://wa.me/918652424617`). Terms & Conditions and Privacy Policy stay dummy links.
+The number takes both voice calls and WhatsApp, so "Call Doctor Ops" (tel:) and "Message support" (WhatsApp) stay as
+approved. **Production:** sign-up URL, Terms, Privacy and support numbers must be configurable, not hard-coded.
+**Safe placeholder:** Terms/Privacy point to a "link pending" page. `[MOCK ASSUMPTION]`
 
 ### OQ-022 — Crash and freeze reporting
-**Question:** Which crash-reporting tool tech uses today (e.g. Crashlytics, Sentry), who triages reports, and how the reference ID in a support message links to a report.
-**Safe placeholder:** Help sheet shows a mock reference ID. `[MOCK ASSUMPTION]`
+**Partly answered 2026-10-12 (Apurva):** the Android and iOS apps use both **Sentry** and **Crashlytics** today.
+Crashlytics covers native apps only; the mobile-web doctor app would report through Sentry. The help-message
+reference ID can be Sentry's event ID, so tech can open the exact report.
+**Answered 2026-10-12 (Apurva):** The app team owns technical triage. Help provides an explicit report action; merely opening Help does not submit a report. Automatic crash and freeze logging remains useful. Exact report contents and support routing remain to be defined.
+**Safe placeholder:** Explicit report action shows a mock reference ID. `[MOCK ASSUMPTION]`
 
 ### OQ-014 — Prescription quantity units for non-tablet forms
 **Question:** For syrups, injections, creams, drops and inhalers, does the backend's prescription quantity count whole packs (bottles, tubes, vials) or doses? Cart quantity today is whole units.

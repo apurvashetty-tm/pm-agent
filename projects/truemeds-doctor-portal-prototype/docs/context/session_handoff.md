@@ -1,3 +1,23 @@
+## 2026-10-12 — Inactive sign-in filed; faster-sign-in recovery sheet dropped
+
+- Added Inactive account to approved `ui-screens/sign-in/sign-in.html` selector and saved `sign-in_inactive.png` at
+  390 × 844, 2×. Red notice reads “This account is inactive.”; primary action reads “Call Doctor Ops.” The Ops
+  number remains an implementation dependency. Other sign-in states are unchanged.
+- Apurva removed the “Finish setting up faster sign-in” Home sheet from native-app scope. Updated D-37, OTP spec and
+  Home jobs. The interrupted draft stayed outside the project and was discarded; no sheet entered `ui-screens/`.
+- Next step: Home state 1 (“Not taking cases”) remains next screen for review.
+
+---
+
+## 2026-10-12 — Production platform: React Native
+
+- Production doctor app is native Android + iOS in React Native. Prototype and `ui-screens/` are design references.
+- Passkeys via Credential Manager / Authentication Services; the "Finish setting up faster sign-in" sheet is
+  web-prototype only. Crash reports: Sentry + Crashlytics. Contacts: sign-up URL and Doctor Ops number in OQ-021.
+- Platform notes added to the OTP spec and Home jobs doc.
+
+---
+
 ## 2026-10-12 — Home scope agreed (jobs to be done)
 
 - Final Home jobs, rules, states and open questions in `docs/concepts/2026-10-12-home-jtbd.md`; summary in D-36.

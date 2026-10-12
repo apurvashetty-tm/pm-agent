@@ -6,6 +6,8 @@ Projects **link** to it; they never copy from it.
 ```
 design-system/
 ├── truemeds.css        ← the one CSS file projects link (generated)
+├── native/             ← React Native copy: tokens.ts, tokens.json, icons.ts (generated)
+├── beyond-salt.md      ← everything used here that isn't in SALT yet
 ├── icons/icons.js      ← icon helper (generated, Tabler outline — SALT's set)
 ├── icons/icons.txt     ← which icons are bundled
 ├── preview.html        ← every token and component, rendered
@@ -35,7 +37,9 @@ Read `RULES.md`, then:
 | Component look changed / new component | Edit `src/components.css` (tokens only; mark non-SALT ones `[PROPOSED]`) → `python3 scripts/build.py` |
 | Need another icon | Add its Tabler name to `icons/icons.txt` → `npm i @tabler/icons` → `node scripts/build-icons.mjs` |
 
-Never edit `truemeds.css` or `icons/icons.js` by hand — they are rebuilt.
+Never edit `truemeds.css`, `icons/icons.js` or `native/` by hand — they are rebuilt. `scripts/build.py` also
+rebuilds `native/`; after changing icons, run `node scripts/build-icons.mjs` and then `python3 scripts/build.py`.
+When you add anything not in SALT, mark it `[PROPOSED]` and list it in `beyond-salt.md`.
 
 After any change, open `preview.html` and check it.
 

@@ -53,10 +53,9 @@ PIN screen.
   4. Faster sign-in counts as on only after the passkey is created **and** saved on our server. Then Home.
   5. Cancelled or failed: Home as normal; OTP next time. No nag.
 - **Flow when unticked:** correct OTP goes straight to Home. No second prompt.
-- **iPhone risk, to test in the build:** Safari only shows the passkey sheet shortly after a tap. The wait for the
-  OTP check can use that up. If Safari blocks it, Home shows one sheet, "Finish setting up faster sign-in" with
-  **Set up** / **Not now**; the new tap opens the phone's sheet. Shown only to doctors who ticked the box and were
-  blocked.
+- **Native app:** Do not show a separate “Finish setting up faster sign-in” sheet on Home. React Native invokes the
+  phone's passkey setup prompt after a successful OTP. If setup is cancelled or fails, sign-in still completes;
+  OTP remains available next time. The older Safari recovery-sheet concept is historical only.
 - **Next visits:** sign in with the passkey, with "Use OTP instead" as the fallback (designed with Welcome back).
   Later option: offer the passkey in the sign-in number field itself.
 - **Security note for compliance:** a passkey unlocked by a screen-lock PIN is only as strong as that PIN (shared
@@ -73,3 +72,15 @@ Android Credential Manager (developer.android.com/identity/passkeys/create-passk
 - Wrong-code threshold: 5 server-confirmed incorrect OTP submissions on the attempted mobile number (D-34). Resending or restarting sign-in does not reset the count.
 - Code life and wrong-try lock duration remain open. Placeholders: 5 min code life, 15 min lock, resend 30 s / 60 s / 120 s.
 - Doctor Ops phone number. Terms & Conditions and Privacy Policy URLs.
+
+## Platform (2026-10-12)
+The production doctor app is **native Android and iOS, built in React Native**. This HTML prototype and
+`ui-screens/` are design references for that team, not shipping code. Consequences:
+- **Passkeys** use Android Credential Manager and iOS Authentication Services, not WebAuthn. The Safari-specific
+  “Finish setting up faster sign-in” recovery sheet is out of scope for the native app.
+- **SMS autofill** uses Android's SMS Retriever / User Consent and iOS one-time-code autofill.
+- **Crash and freeze (ANR) reports** go to Sentry and Crashlytics, as in the current apps; Sentry's event ID can be
+  the support reference ID.
+- **Push notifications** are available natively, which makes the later items (announcement alerts, Uber-style
+  offers) easier.
+- Using the central design system in React Native (token export) is owned by the app team.

@@ -30,8 +30,8 @@
 #doctor-login-preview .login-notice strong { font-weight:var(--tm-font-weight-semibold); }
 #doctor-login-preview .login-offline-notice { display:flex; align-items:flex-start; gap:var(--tm-space-md); margin-top:var(--tm-space-lg); padding:var(--tm-space-lg); background:var(--tm-feedback-warning-surface); border:1px solid var(--tm-feedback-warning-border); border-radius:var(--tm-radius-lg); color:var(--tm-content-primary); font-size:var(--tm-font-size-body-md); line-height:var(--tm-font-lineheight-md); }
 #doctor-login-preview .login-offline-icon { flex:none; color:var(--tm-feedback-warning-content); font-size:20px; line-height:1; }
-#doctor-login-preview .login-send-error-notice { display:flex; align-items:flex-start; gap:var(--tm-space-md); margin-top:var(--tm-space-lg); padding:var(--tm-space-lg); background:var(--tm-feedback-error-surface); border:1px solid var(--tm-feedback-error-border); border-radius:var(--tm-radius-lg); color:var(--tm-content-primary); font-size:var(--tm-font-size-body-md); line-height:var(--tm-font-lineheight-md); }
-#doctor-login-preview .login-send-error-notice .tm-icon { flex:none; color:var(--tm-feedback-error-content); }
+#doctor-login-preview .login-send-error-notice, #doctor-login-preview .login-inactive-notice { display:flex; align-items:flex-start; gap:var(--tm-space-md); margin-top:var(--tm-space-lg); padding:var(--tm-space-lg); background:var(--tm-feedback-error-surface); border:1px solid var(--tm-feedback-error-border); border-radius:var(--tm-radius-lg); color:var(--tm-content-primary); font-size:var(--tm-font-size-body-md); line-height:var(--tm-font-lineheight-md); }
+#doctor-login-preview .login-send-error-notice .tm-icon, #doctor-login-preview .login-inactive-notice .tm-icon { flex:none; color:var(--tm-feedback-error-content); }
 #doctor-login-preview .login-too-many-notice { display:flex; align-items:flex-start; gap:var(--tm-space-md); margin-top:var(--tm-space-lg); padding:var(--tm-space-lg); background:var(--tm-feedback-warning-surface); border:1px solid var(--tm-feedback-warning-border); border-radius:var(--tm-radius-lg); color:var(--tm-content-primary); font-size:var(--tm-font-size-body-md); line-height:var(--tm-font-lineheight-md); }
 #doctor-login-preview .login-too-many-notice .tm-icon { flex:none; color:var(--tm-feedback-warning-content); }
 #doctor-login-preview .login-signup { margin-top:auto; padding-top:var(--tm-space-2xl); padding-bottom:var(--tm-space-sm); text-align:center; font-size:var(--tm-font-size-body-md); line-height:var(--tm-font-lineheight-sm); color:var(--tm-content-secondary); }
@@ -72,7 +72,7 @@ html.capture #doctor-login-preview .login-phone {width:390px;min-height:844px;bo
 </style>
 </head>
 <body class="tm">
-<div class="review-controls"><label for="state">Approved state</label><select id="state" aria-label="Approved sign-in state"><option value="default">Default</option><option value="keyboard-open">Keyboard open</option><option value="empty-tap">Empty tap</option><option value="too-short">Too short</option><option value="wrong-first-digit">Wrong first digit</option><option value="pasted-cleaned">Pasted, cleaned</option><option value="sending">Sending OTP</option><option value="not-registered">Not registered</option><option value="offline">Offline</option><option value="couldnt-send">Couldn’t send</option><option value="too-many-tries">Too many tries</option></select></div>
+<div class="review-controls"><label for="state">Approved state</label><select id="state" aria-label="Approved sign-in state"><option value="default">Default</option><option value="keyboard-open">Keyboard open</option><option value="empty-tap">Empty tap</option><option value="too-short">Too short</option><option value="wrong-first-digit">Wrong first digit</option><option value="pasted-cleaned">Pasted, cleaned</option><option value="sending">Sending OTP</option><option value="not-registered">Not registered</option><option value="offline">Offline</option><option value="couldnt-send">Couldn’t send</option><option value="too-many-tries">Too many tries</option><option value="inactive">Inactive account</option></select></div>
 <div id="doctor-login-preview" data-state="default" data-keyboard="false">
   <div class="login-stage">
     <section class="login-phone tm" aria-label="Truemeds doctor sign-in screen">
@@ -92,6 +92,7 @@ html.capture #doctor-login-preview .login-phone {width:390px;min-height:844px;bo
             <div id="tm-login-offline-notice" class="login-offline-notice" role="alert" hidden><span class="login-offline-icon" aria-hidden="true">⚠︎</span><span>You’re offline. Check your connection and try again.</span></div>
             <div id="tm-login-send-error-notice" class="login-send-error-notice" role="alert" hidden><span class="tm-icon" data-icon="alert-circle" aria-hidden="true"></span><span>We couldn’t send the code. Please try again.</span></div>
             <div id="tm-login-too-many-notice" class="login-too-many-notice" role="alert" hidden><span class="tm-icon" data-icon="clock" aria-hidden="true"></span><span>Too many attempts on this number. Please wait before trying again.</span></div>
+            <div id="tm-login-inactive-notice" class="login-inactive-notice" role="alert" hidden><span class="tm-icon" data-icon="alert-circle" aria-hidden="true"></span><span>This account is inactive.</span></div>
           </div>
           <button class="tm-btn tm-btn--primary tm-btn--lg tm-btn--block login-submit" type="button"><span class="login-spinner" aria-hidden="true"></span><span class="login-submit-label">Send OTP</span></button>
         </div>
@@ -118,6 +119,7 @@ html.capture #doctor-login-preview .login-phone {width:390px;min-height:844px;bo
   const offlineNotice = document.getElementById('tm-login-offline-notice');
   const sendErrorNotice = document.getElementById('tm-login-send-error-notice');
   const tooManyNotice = document.getElementById('tm-login-too-many-notice');
+  const inactiveNotice = document.getElementById('tm-login-inactive-notice');
   const field = root.querySelector('.tm-field');
   const submit = root.querySelector('.login-submit');
   const submitLabel = root.querySelector('.login-submit-label');
@@ -132,7 +134,8 @@ html.capture #doctor-login-preview .login-phone {width:390px;min-height:844px;bo
     'not-registered': {number: '9876543210', helper: '', error: false, keyboard: false, focused: false},
     offline: {number: '9876543210', helper: '', error: false, keyboard: false, focused: false},
     'couldnt-send': {number: '9876543210', helper: '', error: false, keyboard: false, focused: false},
-    'too-many-tries': {number: '9876543210', helper: '', error: false, keyboard: false, focused: false}
+    'too-many-tries': {number: '9876543210', helper: '', error: false, keyboard: false, focused: false},
+    inactive: {number: '9876543210', helper: '', error: false, keyboard: false, focused: false}
   };
   function show(state) {
     const next = states[state] || states.default;
@@ -145,13 +148,14 @@ html.capture #doctor-login-preview .login-phone {width:390px;min-height:844px;bo
     input.value = next.number;
     input.readOnly = state === 'sending';
     helper.textContent = next.helper;
-    helper.hidden = state === 'not-registered' || state === 'offline' || state === 'couldnt-send' || state === 'too-many-tries';
+    helper.hidden = state === 'not-registered' || state === 'offline' || state === 'couldnt-send' || state === 'too-many-tries' || state === 'inactive';
     notice.hidden = state !== 'not-registered';
     offlineNotice.hidden = state !== 'offline';
     sendErrorNotice.hidden = state !== 'couldnt-send';
     tooManyNotice.hidden = state !== 'too-many-tries';
-    input.setAttribute('aria-describedby', state === 'not-registered' ? 'tm-login-notice' : state === 'offline' ? 'tm-login-offline-notice' : state === 'couldnt-send' ? 'tm-login-send-error-notice' : state === 'too-many-tries' ? 'tm-login-too-many-notice' : 'tm-login-helper');
-    submitLabel.textContent = state === 'sending' ? 'Sending OTP' : state === 'too-many-tries' ? 'Try again in 9:42' : 'Send OTP';
+    inactiveNotice.hidden = state !== 'inactive';
+    input.setAttribute('aria-describedby', state === 'not-registered' ? 'tm-login-notice' : state === 'offline' ? 'tm-login-offline-notice' : state === 'couldnt-send' ? 'tm-login-send-error-notice' : state === 'too-many-tries' ? 'tm-login-too-many-notice' : state === 'inactive' ? 'tm-login-inactive-notice' : 'tm-login-helper');
+    submitLabel.textContent = state === 'sending' ? 'Sending OTP' : state === 'too-many-tries' ? 'Try again in 9:42' : state === 'inactive' ? 'Call Doctor Ops' : 'Send OTP';
     submit.setAttribute('aria-busy', String(state === 'sending'));
     submit.setAttribute('aria-disabled', String(state === 'sending' || state === 'too-many-tries'));
     submit.disabled = state === 'too-many-tries';

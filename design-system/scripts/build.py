@@ -177,6 +177,10 @@ def main():
           f"{len(ex_vars)} shadows, {len(text_classes)} text styles")
     build_preview(sem, ex_vars)
 
+    # Same sources -> React Native copy (native/). Keeps web and app values identical.
+    import build_native
+    build_native.main()
+
 
 def build_preview(sem, ex_vars):
     """Fill src/preview.template.html with the live token lists."""
