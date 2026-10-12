@@ -382,6 +382,19 @@ From an external (ChatGPT) review, each point verified before acting.
 - **Known differences from the handoff:** notice icons use the shared icon set instead of the ⓘ / ⚠ text glyphs;
   sign-in notices are larger than OTP notices, as in the approved renders (worth unifying later).
 
+### D-39 · Format checks (regex) on sign in and OTP: when they show — 2026-10-12
+- **Decision (Apurva):** format errors follow one pattern. Impossible input is blocked silently (digits only,
+  maximum length). A value that can still become right shows no error while typing; it is checked on Send OTP /
+  Verify. A value that can never be right (mobile number starting 1–5) shows its error at once. When two things are
+  wrong, the more basic one shows first (first digit before length). Once an error shows, it is re-checked on
+  every keystroke and stays until the value is valid.
+- **Leading 0** is a dialling habit, not an error; it is dropped once all 10 digits are in ("0 + 9 digits" →
+  "Enter all 10 digits.").
+- **Server answers** (wrong code, tries left, expired) are not format checks; they clear when the doctor types a
+  new attempt.
+- **For review:** "That’s more than 10 digits. Check the number." instead of silently cutting an 11+ digit entry
+  that isn't a +91 / 0 prefix (`renders/2026-10-12/01`). Not built until approved.
+
 ## Design system changes made for this work
 
 ### D-21 · Toggle fix and a large chip size — 2026-10-07

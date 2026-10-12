@@ -1,3 +1,11 @@
+## 2026-10-12 — Format-check timing on sign in and OTP (D-39)
+
+- `phoneFormatError()` orders checks empty → first digit → length; first digit 1–5 errors live; leading 0 allowed.
+  Once a format error shows (sign in or OTP) it is re-checked live until valid. e2e 556/556 pass.
+- For review: "more than 10 digits" error (`docs/renders/2026-10-12/01`); entries are still cut to 10 until approved.
+
+---
+
 ## 2026-10-12 — Sign-in, OTP and returning unlock built (draft branch)
 
 - Built the approved sign-in (12 states), OTP (13 states) and returning-unlock (3 variants) screens into

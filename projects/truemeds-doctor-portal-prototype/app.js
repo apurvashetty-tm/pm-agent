@@ -1545,18 +1545,31 @@ function cleanPhone(raw) {
   if (d.length > 10 && d.startsWith('0')) d = d.slice(1);
   return d.slice(0, 10);
 }
+// Format checks (regex). Order: the most basic problem first. A leading 0 is a dialling habit, not a mistake.
+const PHONE_MSG = { empty: 'Enter your mobile number.', start: 'Mobile numbers start with 6, 7, 8 or 9.', short: 'Enter all 10 digits.' };
+function phoneFormatError(p) {
+  if (!p) return PHONE_MSG.empty;
+  const core = p.startsWith('0') ? p.slice(1) : p;         // "0 98765 43210": the 0 is dropped once all 10 digits are in
+  if (core && !/^[6-9]/.test(core)) return PHONE_MSG.start; // impossible from the first digit, so it comes before length
+  if (core.length < 10 || p.length < 10) return PHONE_MSG.short;
+  return null;
+}
+// Live rules: an impossible first digit shows at once; anything else waits for Send OTP. Once an error shows,
+// it is re-checked on every keystroke and stays until the number is valid.
 $id('signin-phone').addEventListener('input', e => {
   const v = cleanPhone(e.target.value);
   if (v !== e.target.value) e.target.value = v;
-  if (!APP.busy) signinMsg(null);
+  if (APP.busy) return;
+  const err = phoneFormatError(v), showing = $id('signin-field').classList.contains('tm-field--error');
+  if (err === PHONE_MSG.start || (showing && err && v)) signinMsg('error', err);
+  else signinMsg(null);
 });
 function requestOtp() {
   if (APP.busy || APP.signinBlockedUntil > Date.now()) return;
   const input = $id('signin-phone'), p = cleanPhone(input.value);
   input.value = p;
-  if (!p) { signinMsg('error', 'Enter your mobile number.'); return input.focus(); }
-  if (p.length < 10) { signinMsg('error', 'Enter all 10 digits.'); return input.focus(); }
-  if (!/^[6-9]/.test(p)) { signinMsg('error', 'Mobile numbers start with 6, 7, 8 or 9.'); return input.focus(); }
+  const err = phoneFormatError(p);
+  if (err) { signinMsg('error', err); return input.focus(); }
   if (!isOnline()) { input.blur(); return signinMsg('offline'); }
   input.readOnly = true;
   mockDelay($id('signin-btn'), 'Sending OTP', () => {
@@ -1602,7 +1615,7 @@ function startOtp(phone, issue) {
   if (!numState(phone).lockedUntil) setTimeout(() => $id('otp-input').focus({ preventScroll: true }), 50);
 }
 function otpBack() { $id('signin-phone').value = APP.phone; signinMsg(null); goApp('signin'); }
-function otpMsg(kind, text) { APP.otpMsg = kind ? { kind, text } : null; renderOtp(); }      // kind: 'error' | 'ok'
+function otpMsg(kind, text, format = false) { APP.otpMsg = kind ? { kind, text, format } : null; renderOtp(); }      // kind: 'error' | 'ok'
 function otpNotice(key) { APP.otpNotice = key; renderOtp(); }
 function renderOtp() {
   if (!APP.phone) return;
@@ -1646,14 +1659,16 @@ function renderOtp() {
 $id('otp-input').addEventListener('input', e => {
   const v = e.target.value.replace(/\D/g, '').slice(0, 4);
   if (v !== e.target.value) e.target.value = v;
-  if (APP.otpMsg || APP.otpNotice === 'couldnt-verify') { APP.otpMsg = null; if (APP.otpNotice === 'couldnt-verify') APP.otpNotice = null; renderOtp(); }
+  // Format errors stay (re-checked live) until 4 digits are in; server answers (wrong, expired) clear on a new attempt.
+  if (APP.otpMsg?.format) otpMsg(v.length === 4 ? null : 'error', !v ? 'Enter the 4-digit code.' : 'Enter all 4 digits.', true);
+  else if (APP.otpMsg || APP.otpNotice === 'couldnt-verify') { APP.otpMsg = null; if (APP.otpNotice === 'couldnt-verify') APP.otpNotice = null; renderOtp(); }
   if (v.length === 4) e.target.blur();   // close the keyboard so the card and Verify & sign in are in view; nothing is sent yet
 });
 function verifyOtp() {
   if (APP.busy || numState(APP.phone).lockedUntil) return;
   const input = $id('otp-input'), v = input.value;
-  if (!v) { otpMsg('error', 'Enter the 4-digit code.'); return input.focus(); }
-  if (v.length < 4) { otpMsg('error', 'Enter all 4 digits.'); return input.focus(); }
+  if (!v) { otpMsg('error', 'Enter the 4-digit code.', true); return input.focus(); }
+  if (v.length < 4) { otpMsg('error', 'Enter all 4 digits.', true); return input.focus(); }
   APP.otpNotice = null; APP.otpMsg = null;
   mockDelay($id('otp-btn'), 'Verifying', () => {
     if (!isOnline() || v === MOCK_AUTH.cantVerify) { otpNotice('couldnt-verify'); return; }   // keeps the code and the tick
