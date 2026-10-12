@@ -1,3 +1,15 @@
+## 2026-10-12 — Sign-in, OTP and returning unlock built (draft branch)
+
+- Built the approved sign-in (12 states), OTP (13 states) and returning-unlock (3 variants) screens into
+  `index.html` / `app.js` / `styles.css` (D-38). Old 6-digit OTP, Request access and fingerprint set-up screens removed.
+- `goApp()` screens are now signin, otp, unlock, home. `?start=otp` opens OTP for 9876543210. Per-number OTP state
+  lives in `localStorage['tmd.otp.v1']`; session in `tmd.auth.v1`. Demo controls list the test numbers and codes.
+- Tests: e2e (app flow rewritten) 536/536 pass on 390 and 1280; `docs/layout_check.py` updated for the inline-button
+  auth layout, all pass.
+- Not merged to `main`: Home is still the interim D-31 screen. Next step: Home state 1 ("Not taking cases") review.
+
+---
+
 ## 2026-10-12 — Inactive sign-in filed; faster-sign-in recovery sheet dropped
 
 - Added Inactive account to approved `ui-screens/sign-in/sign-in.html` selector and saved `sign-in_inactive.png` at

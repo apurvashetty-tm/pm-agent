@@ -315,7 +315,7 @@ From an external (ChatGPT) review, each point verified before acting.
   up below. Already applied? Our team will call you once you're approved." The keyboard closes on this answer so the
   footer Sign up is visible. Sign up appears once.
 - **Accepted trade-off:** the screen reveals whether a number is registered; rate limiting stops bulk checking.
-- **Build:** not yet. The whole sign-in flow (sign-in, OTP, biometric, Home) is built in one pass once vetted.
+- **Build:** built 2026-10-12 on the draft branch (D-38); merges to `main` with the Home screens.
 - **Look:** blue top (brand subtle) with logo and heading, white panel with rounded top for the form, shared with
   the OTP and Welcome back screens. Work screens (the order page) stay plain white.
 - Final renders: `renders/2026-10-09/28`–`29`. Detail: `concepts/2026-10-09-signin-screen-evaluation.md`.
@@ -352,8 +352,10 @@ From an external (ChatGPT) review, each point verified before acting.
 - **To verify:** "Looking for a case" auto re-check (OQ-019).
 - **Clarified 2026-10-12:** Signed-in session stays valid through an open case; no OTP sheet over a live case.
   Help offers an explicit app-issue report action. Automatic crash/freeze logging continues; app team owns
-  technical triage. A pending Next order request from Home or the prior case page still needs a rule if the doctor
-  taps Stop before the backend responds. Window expiry alone follows the agreed last-second rule.
+  technical triage. If Stop is tapped while a Next order request from Home or the prior case page is pending,
+  honour the request already sent, block further requests, and stop after it resolves and any assigned case closes.
+  If no case is assigned, stop when the request resolves. Show a pending-stop status, not an error. Window expiry
+  alone follows the agreed last-second rule and never interrupts a case.
 
 ### D-37 · No faster-sign-in recovery sheet in native app — 2026-10-12
 - **Decision (Apurva):** Drop the “Finish setting up faster sign-in” Home sheet. Production doctor app is React Native;
@@ -361,6 +363,24 @@ From an external (ChatGPT) review, each point verified before acting.
 - **Flow:** After correct OTP, invoke the phone's passkey setup prompt for doctors who opted in. If cancelled or
   failed, let the doctor reach Home; OTP remains available next time. Do not nag on Home.
 - **Handoff:** The older concept HTML and render 30 remain historical references, not approved UI screens.
+
+### D-38 · Sign-in, OTP and returning unlock built into the prototype — 2026-10-12
+- **What:** `#scr-signin`, `#scr-otp` and `#scr-unlock` now follow the approved `ui-screens/` (all states). The old
+  6-digit OTP, in-app Request access screens and fingerprint set-up screen are removed. Home is unchanged (interim).
+- **Behaviour:** paste-safe number and code fields; keyboard closes on "not registered" and on the 4th code digit;
+  Sending / Verifying keep the brand colour with a spinner; the faster-sign-in card is unticked by default and only
+  shown where passkeys are supported; a correct code with the card ticked opens the phone's passkey prompt
+  (stand-in sheet), and cancelling it still signs the doctor in (D-37). Wrong tries, codes issued and the lock are
+  kept per mobile number, so going back or restarting sign-in doesn't reset them (D-34, D-35).
+- **Returning doctor:** opens on Unlock; the phone's prompt opens when the doctor taps Unlock (no automatic prompt,
+  matching the approved "Ready when you are" screen). Three failed tries close the prompt; "Use OTP instead" stays.
+- **[MOCK ASSUMPTION] demo values:** numbers starting 90 not registered, 9222222222 inactive, 9333333333 can't send,
+  9444444444 too many codes; codes 0000 wrong, 1111 expired, 2222 can't verify, any other 4 digits work; resend
+  waits 30 s / 60 s / 120 s; issue-cap window 10 min; lock 15 min (OQ-017). Demo controls add Offline, Passkey
+  supported, unlock method (fingerprint / Face ID / screen lock) and Unlock fails.
+- **Contacts:** Sign up → onboarding web form; Call Doctor Ops → +91 86524 24617; Terms and Privacy dummy (OQ-021).
+- **Known differences from the handoff:** notice icons use the shared icon set instead of the ⓘ / ⚠ text glyphs;
+  sign-in notices are larger than OTP notices, as in the approved renders (worth unifying later).
 
 ## Design system changes made for this work
 

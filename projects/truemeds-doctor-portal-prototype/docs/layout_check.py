@@ -92,15 +92,21 @@ with sync_playwright() as p:
         moved = pg.evaluate("document.getElementById('mobile-column').scrollTop")
         check(f"{tag} after the gate the header stays in view", moved == 0 and abs(hdr - ref["t"]) <= 2, f"frame scrollTop={moved}, header top={hdr:.0f}")
         pg.evaluate("resetToDemo()")
-        # app screens (sign in, OTP, request access, unlock, home): fill the frame, button pinned at its bottom,
-        # no sideways scroll, the order page fully hidden (D-31, D-32)
-        for scr in ["signin", "otp", "signup", "unlock", "home"]:
-            pg.evaluate(f"goApp('{scr}')"); pg.wait_for_timeout(200)
-            box = pg.evaluate(f"""(()=>{{const s=document.getElementById(SCREEN_IDS['{scr}']), a=s.querySelector('.app-actionbar').getBoundingClientRect();
+        # app screens: sign in, OTP and unlock (approved ui-screens: blue top, white panel reaching the bottom, buttons
+        # inline under the field so they sit above the keyboard) and Home (button pinned at the bottom). No sideways
+        # scroll; the order page fully hidden (D-31, D-33 … D-37)
+        for scr in ["signin", "otp", "unlock", "home"]:
+            if scr == "otp": pg.evaluate("startOtp('9876543210', false)")
+            else: pg.evaluate(f"goApp('{scr}')")
+            pg.wait_for_timeout(200)
+            box = pg.evaluate(f"""(()=>{{const s=document.getElementById(SCREEN_IDS['{scr}']);
+              const el = s.querySelector('.app-actionbar') || s.querySelector('.auth-panel'); const a = el.getBoundingClientRect();
               const lim = innerWidth>=768 ? document.getElementById('mobile-column').getBoundingClientRect().bottom : innerHeight;
               return {{bar:a.bottom, lim, wide: document.documentElement.scrollWidth <= innerWidth + 1,
                        caseHidden: getComputedStyle(document.getElementById('main-scroll')).display === 'none' && getComputedStyle(document.getElementById('case-actionbar')).display === 'none'}}}})()""")
-            check(f"{tag} {scr}: button pinned at the bottom of the {'frame' if desktop else 'screen'}", abs(box["bar"] - box["lim"]) <= 2, box)
+            what = "button pinned" if scr == "home" else "white panel reaches"
+            ok = abs(box["bar"] - box["lim"]) <= 2 if scr == "home" else box["bar"] >= box["lim"] - 2   # taller content scrolls inside the screen
+            check(f"{tag} {scr}: {what} the bottom of the {'frame' if desktop else 'screen'}", ok, box)
             check(f"{tag} {scr}: no sideways scroll, order page hidden", box["wide"] and box["caseHidden"])
         pg.evaluate("goApp('case')")
         check(f"{tag} no page errors", not errs, "; ".join(errs))

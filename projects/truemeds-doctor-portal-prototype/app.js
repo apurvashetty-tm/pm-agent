@@ -880,7 +880,7 @@ function openSheet(sheetId) {
 let sheetReturnFocus = null;
 document.addEventListener('keydown', (e) => {
   if (!activeSheet) return;
-  if (e.key === 'Escape') { closeSheet(); return; }
+  if (e.key === 'Escape') { if (activeSheet === 'sheet-bio') cancelBioPrompt(); else closeSheet(); return; }
   if (e.key !== 'Tab') return;
   const sheetEl = document.getElementById(activeSheet);
   const f = [...sheetEl.querySelectorAll('button, input, textarea, [tabindex]:not([tabindex="-1"])')].filter(el => !el.disabled && el.offsetParent !== null);
@@ -899,7 +899,7 @@ function closeSheet() {
 }
 
 function handleSheetOverlayClick(e) {
-  if (e.target === document.getElementById('sheet-overlay')) closeSheet();
+  if (e.target === document.getElementById('sheet-overlay')) { if (activeSheet === 'sheet-bio') cancelBioPrompt(); else closeSheet(); }
 }
 
 function confirmSkipHA(reason) {
@@ -1378,35 +1378,57 @@ function resetToDemo() {
 // ================================================================
 
 // ================================================================
-// APP SHELL — sign in, OTP, request access, fingerprint unlock, home (decision log D-31, D-32)
+// APP SHELL — sign in, OTP, returning-doctor unlock, home (decision log D-31, D-33 … D-37)
+// Screens follow the approved handoff in ui-screens/ (sign-in, otp, returning-unlock).
 // Doctors PULL orders ("Get next order" / "Next Order"); nothing is pushed to them. When no order is
 // waiting, the doctor lands on Home with a "No orders right now" state and a Check again button.
 // ================================================================
 const AUTH_KEY = 'tmd.auth.v1';
-const APP = { screen: null, booted: false, phone: '', otpFor: 'signin', signup: null, otpTries: 0, lockedUntil: 0,
-  resendAt: 0, resendCount: 0, bioFails: 0, bioMode: null, noLead: false, checkedAt: null, busy: false, ticker: null };
-const DEMO_APP = { ordersAvailable: true, bioFails: false };
-// [MOCK ASSUMPTION] numbers starting 90 aren't registered; 9111111111 has a request under review.
-// OTP: any 6 digits work; 000000 = wrong, 111111 = expired. Shown only in the demo controls.
-const MOCK_AUTH = { pending: '9111111111', wrongOtp: '000000', expiredOtp: '111111', maxTries: 5, lockMin: 15 };
+const OTP_KEY = 'tmd.otp.v1';   // per mobile number: codes issued, wrong tries, lock (D-34, D-35). Server-side in production.
+const APP = { screen: null, booted: false, phone: '', bioFails: 0, bioMode: null, noLead: false, checkedAt: null, busy: false,
+  ticker: null, resendAt: 0, signinBlockedUntil: 0 };
+const DEMO_APP = { ordersAvailable: true, bioFails: false, offline: false, passkey: true, method: 'fingerprint' };
+// [MOCK ASSUMPTION] Demo numbers and codes (shown in the demo controls). Production values come from the server.
+const MOCK_AUTH = {
+  inactive: '9222222222', cantSend: '9333333333', tooMany: '9444444444',   // numbers starting 90 aren't registered
+  wrongOtp: '0000', expiredOtp: '1111', cantVerify: '2222',                // any other 4 digits work
+  maxWrong: 5, lockMin: 15,            // D-34: 5 server-confirmed wrong codes lock the number (lock length: OQ-017)
+  maxCodes: 4, capWindowMin: 10,       // D-35: 4 codes per number per window (window length: OQ-017)
+  resendWaits: [30, 60, 120],          // seconds before the next resend
+};
+const SUPPORT = { phone: '+918652424617', signupUrl: 'https://pwa-doctor.truemeds.in/onboarding' };   // OQ-021; configurable in production
+const UNLOCK_METHODS = {
+  fingerprint: { label: 'Unlock with fingerprint', icon: 'fingerprint', hint: 'Touch the fingerprint sensor' },
+  face: { label: 'Unlock with Face ID', icon: 'face-id', hint: 'Look at your phone' },
+  'screen-lock': { label: 'Unlock with screen lock', icon: 'lock', hint: 'Enter your screen lock' },
+};
 const DEMO_ORDER = ['cat4', 'pilot_value_meds_ha', 'pilot_nonvalue_meds_ha', 'pilot_ha_skipped_customer', 'pilot_ha_skipped_system'];
-const SCREEN_IDS = { signin: 'scr-signin', otp: 'scr-otp', signup: 'scr-signup', 'signup-done': 'scr-signup-done',
-  'bio-setup': 'scr-bio-setup', unlock: 'scr-unlock', home: 'scr-home' };
+const SCREEN_IDS = { signin: 'scr-signin', otp: 'scr-otp', unlock: 'scr-unlock', home: 'scr-home' };
 const $id = id => document.getElementById(id);
+const SIGNIN_HELP = 'We’ll send you a verification code by SMS.';
 
-function loadAuth() { try { return JSON.parse(localStorage.getItem(AUTH_KEY)) || {}; } catch (e) { return {}; } }
-function saveAuth(patch) {
-  const a = { ...loadAuth(), ...patch };
-  try { localStorage.setItem(AUTH_KEY, JSON.stringify(a)); } catch (e) { /* private mode: session lives in memory only */ }
-  return a;
+function loadJSON(k) { try { return JSON.parse(localStorage.getItem(k)) || {}; } catch (e) { return {}; } }
+function saveJSON(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { /* private mode: memory only */ } return v; }
+const loadAuth = () => loadJSON(AUTH_KEY);
+const saveAuth = patch => saveJSON(AUTH_KEY, { ...loadAuth(), ...patch });
+function numState(phone) {
+  const all = loadJSON(OTP_KEY), now = Date.now();
+  const s = { codes: [], wrong: 0, lockedUntil: 0, ...(all[phone] || {}) };
+  s.codes = s.codes.filter(t => now - t < MOCK_AUTH.capWindowMin * 60000);
+  if (s.lockedUntil && now >= s.lockedUntil) { s.lockedUntil = 0; s.wrong = 0; }
+  return s;
 }
+function saveNum(phone, patch) { const all = loadJSON(OTP_KEY); all[phone] = { ...numState(phone), ...patch }; saveJSON(OTP_KEY, all); return all[phone]; }
+const capFreeAt = s => s.codes.length >= MOCK_AUTH.maxCodes ? Math.min(...s.codes) + MOCK_AUTH.capWindowMin * 60000 : 0;
+
 const fmtPhone = p => `+91 ${p.slice(0, 5)} ${p.slice(5)}`;
-const isPhone = p => /^[6-9]\d{9}$/.test(p);
-const isRegistered = p => isPhone(p) && !p.startsWith('90') && !isPending(p);
-const isPending = p => p === MOCK_AUTH.pending || (loadAuth().pending || []).includes(p);
+const isOnline = () => !DEMO_APP.offline && navigator.onLine !== false;
 const todayKey = () => new Date().toDateString();
 const todayCount = () => { const a = loadAuth(); return a.closedDay === todayKey() ? (a.closed || 0) : 0; };
 const shortName = () => DOCTOR_PROFILE.name.split(' ').slice(0, 2).join(' ');
+const mmss = ms => { const s = Math.max(0, Math.ceil(ms / 1000)); return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`; };
+const mmss2 = ms => mmss(ms).padStart(5, '0');   // 00:30 — the OTP resend timer format
+function linkPending(name) { console.log(`[MOCK] link.pending | ${name}`); return false; }
 
 function goApp(next) {
   const prev = APP.screen;
@@ -1421,7 +1443,7 @@ function goApp(next) {
     window.scrollTo(0, 0);
     document.querySelector(`#${SCREEN_IDS[next]} h1`)?.focus({ preventScroll: true });
   }
-  if (next === 'otp') startOtpTicker(); else stopOtpTicker();
+  if (next === 'otp' || next === 'signin') startTicker(); else stopTicker();
   console.log(`[MOCK] app.screen | ${prev} → ${next}`);
 }
 
@@ -1438,17 +1460,14 @@ function syncTopHeight() {
 window.addEventListener('resize', syncTopHeight);
 
 function renderApp() {
-  const a = loadAuth();
   document.getElementById('profile-initials').textContent = DOCTOR_PROFILE.initials;
-  if (APP.screen === 'otp') {
-    $id('otp-phone').textContent = fmtPhone(APP.phone);
-    renderOtpBoxes();
-  }
+  if (APP.screen === 'otp') renderOtp();
   if (APP.screen === 'unlock') {
+    const m = UNLOCK_METHODS[DEMO_APP.method];
     $id('unlock-name').textContent = shortName();
-    $id('unlock-initials').textContent = DOCTOR_PROFILE.initials;
-    $id('unlock-phone').textContent = a.phone ? fmtPhone(a.phone) : '';
-    $id('unlock-note').hidden = APP.bioFails < 3;
+    $id('unlock-label').textContent = m.label;
+    $id('unlock-icon').dataset.icon = m.icon;
+    renderIcons($id('scr-unlock'));
   }
   if (APP.screen === 'home') {
     const h = new Date().getHours();
@@ -1464,171 +1483,265 @@ function renderApp() {
   }
   renderAppDemo();
 }
+function renderIcons(root) { if (window.TMIcons) TMIcons.render(root); }
 
-// ── Field errors, in place (no toasts, D-27) ──
-function setFieldMsg(field, html, kind = 'error') {
-  const helper = field.querySelector('.tm-field__helper') || field.appendChild(Object.assign(document.createElement('div'), { className: 'tm-field__helper', role: 'alert' }));
-  field.classList.toggle('tm-field--error', kind === 'error' && !!html);
-  helper.innerHTML = html || ''; helper.hidden = !html;
+// ── Busy buttons: keep the brand colour while working (a grey button reads as unavailable) ──
+function setBusy(btn, label) {
+  btn.dataset.label = btn.innerHTML; btn.disabled = true; btn.classList.add('tm-btn--busy'); btn.setAttribute('aria-busy', 'true');
+  btn.innerHTML = `<span class="btn-spinner" aria-hidden="true"></span>${label}`;
 }
-function setBusy(btn, label) { btn.dataset.label = btn.innerHTML; btn.disabled = true; btn.classList.add('tm-btn--busy'); btn.textContent = label; }
-function clearBusy(btn) { if (btn.dataset.label) btn.innerHTML = btn.dataset.label; delete btn.dataset.label; btn.disabled = false; btn.classList.remove('tm-btn--busy'); }
+function clearBusy(btn) { if (btn.dataset.label) btn.innerHTML = btn.dataset.label; delete btn.dataset.label; btn.disabled = false; btn.classList.remove('tm-btn--busy'); btn.removeAttribute('aria-busy'); }
 function mockDelay(btn, label, fn) {   // 800 ms mock latency (mock_backend_engineer.md)
   if (APP.busy) return; APP.busy = true; setBusy(btn, label);
   setTimeout(() => { APP.busy = false; clearBusy(btn); fn(); }, 800);
 }
+function startTicker() { stopTicker(); tick(); APP.ticker = setInterval(tick, 1000); }
+function stopTicker() { clearInterval(APP.ticker); APP.ticker = null; }
+function tick() { if (APP.screen === 'signin') tickSignin(); if (APP.screen === 'otp') renderOtp(); }
 
-// ── Sign in ──
-$id('signin-phone').addEventListener('input', e => { e.target.value = e.target.value.replace(/\D/g, ''); setFieldMsg($id('signin-field'), ''); });
-$id('signin-phone').addEventListener('keydown', e => { if (e.key === 'Enter') requestOtp(); });
+// ════════════════ Sign in (ui-screens/sign-in, D-33) ════════════════
+// Errors about what was typed: red field + red line in place of the helper. Problems after sending: a notice in
+// the same place, field stays neutral. No toasts.
+const SIGNIN_NOTICES = {
+  'not-registered': ['info', 'info-circle', 'Number not registered with Truemeds.<br><strong>Already applied?</strong> We’ll contact you after approval.'],
+  offline: ['warning', 'alert-triangle', 'You’re offline. Check your connection and try again.'],
+  'couldnt-send': ['error', 'alert-circle', 'We couldn’t send the code. Please try again.'],
+  'too-many': ['warning', 'clock', 'Too many attempts on this number. Please wait before trying again.'],
+  inactive: ['error', 'alert-circle', 'This account is inactive.'],
+};
+function signinMsg(kind, text) {   // kind: null (helper) | 'error' | a SIGNIN_NOTICES key
+  const f = $id('signin-field'), help = $id('signin-help'), n = $id('signin-notice'), notice = SIGNIN_NOTICES[kind];
+  f.classList.toggle('tm-field--error', kind === 'error');
+  $id('signin-phone').setAttribute('aria-invalid', String(kind === 'error'));
+  help.hidden = !!notice;
+  help.textContent = kind === 'error' ? text : SIGNIN_HELP;
+  if (kind === 'error') help.setAttribute('role', 'alert'); else help.removeAttribute('role');
+  n.hidden = !notice;
+  if (notice) {
+    n.className = `auth-notice auth-notice--${notice[0]}`;
+    n.setAttribute('role', notice[0] === 'info' ? 'status' : 'alert');
+    $id('signin-notice-icon').dataset.icon = notice[1];
+    $id('signin-notice-text').innerHTML = notice[2];
+    renderIcons(n);
+  }
+  $id('signin-phone').setAttribute('aria-describedby', notice ? 'signin-notice' : 'signin-help');
+  const inactive = kind === 'inactive';
+  $id('signin-btn').hidden = inactive; $id('signin-call').hidden = !inactive;
+  if (kind !== 'too-many') APP.signinBlockedUntil = 0;
+  tickSignin();
+}
+function tickSignin() {
+  const b = $id('signin-btn');
+  if (APP.busy && b.classList.contains('tm-btn--busy')) return;
+  const wait = APP.signinBlockedUntil - Date.now();
+  if (wait > 0) { b.disabled = true; b.textContent = `Try again in ${mmss(wait)}`; return; }
+  if (APP.signinBlockedUntil) { APP.signinBlockedUntil = 0; signinMsg(null); }
+  b.disabled = false; b.textContent = 'Send OTP';
+}
+// Cleans typing and pastes: "+91 98765-43210", "098765 43210" → "9876543210".
+function cleanPhone(raw) {
+  let d = raw.replace(/\D/g, '');
+  if (d.length > 10 && d.startsWith('91')) d = d.slice(2);
+  if (d.length > 10 && d.startsWith('0')) d = d.slice(1);
+  return d.slice(0, 10);
+}
+$id('signin-phone').addEventListener('input', e => {
+  const v = cleanPhone(e.target.value);
+  if (v !== e.target.value) e.target.value = v;
+  if (!APP.busy) signinMsg(null);
+});
 function requestOtp() {
-  const p = $id('signin-phone').value.trim();
-  const f = $id('signin-field');
-  if (!isPhone(p)) return setFieldMsg(f, 'Enter your 10-digit mobile number.');
-  if (isPending(p)) return setFieldMsg(f, "Your access request is still being checked. We'll call you once it's approved.", 'info');
-  if (!isRegistered(p)) return setFieldMsg(f, `This number isn't registered as a Truemeds doctor. <button class="tm-btn tm-btn--link" onclick="goApp('signup')">Request access</button>`);
-  mockDelay($id('signin-btn'), 'Sending OTP…', () => startOtp(p, 'signin'));
+  if (APP.busy || APP.signinBlockedUntil > Date.now()) return;
+  const input = $id('signin-phone'), p = cleanPhone(input.value);
+  input.value = p;
+  if (!p) { signinMsg('error', 'Enter your mobile number.'); return input.focus(); }
+  if (p.length < 10) { signinMsg('error', 'Enter all 10 digits.'); return input.focus(); }
+  if (!/^[6-9]/.test(p)) { signinMsg('error', 'Mobile numbers start with 6, 7, 8 or 9.'); return input.focus(); }
+  if (!isOnline()) { input.blur(); return signinMsg('offline'); }
+  input.readOnly = true;
+  mockDelay($id('signin-btn'), 'Sending OTP', () => {
+    input.readOnly = false;
+    sendFirstCode(p, outcome => {
+      if (outcome === 'sent' || outcome === 'locked') return;
+      input.blur();   // close the keyboard so the notice and the Sign up link are both in view
+      signinMsg(outcome);
+    });
+  });
+}
+// Sends the first code for a number (sign in, or "Use OTP instead" on unlock). Reports an outcome for screens to show.
+function sendFirstCode(p, report) {
+  const s = numState(p);
+  if (p.startsWith('90')) return report('not-registered');
+  if (p === MOCK_AUTH.inactive) return report('inactive');
+  if (p === MOCK_AUTH.cantSend) return report('couldnt-send');
+  if (s.lockedUntil) { startOtp(p, false); return report('locked'); }       // D-34: the lock stays on the number
+  const capAt = p === MOCK_AUTH.tooMany ? Date.now() + 582000 : capFreeAt(s);   // 9:42 for the demo number
+  if (capAt) { APP.signinBlockedUntil = capAt; return report('too-many'); }
+  startOtp(p, true);
+  report('sent');
 }
 
-// ── OTP ──
-function startOtp(phone, purpose) {
-  Object.assign(APP, { phone, otpFor: purpose, otpTries: 0, lockedUntil: 0, resendCount: 0, resendAt: Date.now() + 30000 });
-  $id('otp-input').value = ''; setOtpMsg('');
+// ════════════════ OTP (ui-screens/otp, D-34, D-35, spec: docs/concepts/2026-10-09-otp-screen-spec.md) ════════════════
+const OTP_NOTICE = {
+  'couldnt-verify': ['error', 'alert-circle', 'We couldn’t check the code. Tap Verify &amp; sign in to try again.'],
+  'too-many-resends': ['warning', 'clock', `You’ve asked for too many codes. Use the last one, or <a href="tel:${SUPPORT.phone}">call Doctor Ops</a>.`],
+  locked: ['warning', 'clock', null],
+};
+function startOtp(phone, issue) {
+  APP.phone = phone; APP.otpNotice = null; APP.otpMsg = null;
+  if (issue) {
+    const s = saveNum(phone, { codes: [...numState(phone).codes, Date.now()] });
+    APP.resendAt = Date.now() + MOCK_AUTH.resendWaits[Math.min(s.codes.length - 1, MOCK_AUTH.resendWaits.length - 1)] * 1000;
+    console.log(`[MOCK] auth.otp.sent | to=${fmtPhone(phone)} | code ${s.codes.length} of ${MOCK_AUTH.maxCodes} in window`);
+  }
+  const a = loadAuth();
+  $id('otp-input').value = '';
+  $id('otp-faster-check').checked = false;                          // unticked by default (passkey spec)
+  $id('otp-faster').hidden = !DEMO_APP.passkey || (a.bio && a.phone === phone);   // shown only where passkey setup is supported
   goApp('otp');
-  setTimeout(() => $id('otp-input').focus({ preventScroll: true }), 50);
-  console.log(`[MOCK] auth.otp.sent | to=${fmtPhone(phone)} | for=${purpose}`);
+  if (!numState(phone).lockedUntil) setTimeout(() => $id('otp-input').focus({ preventScroll: true }), 50);
 }
-function otpBack() { goApp(APP.otpFor === 'signup' ? 'signup' : 'signin'); }
-function setOtpMsg(text, kind = 'error') {
-  const h = $id('otp-help'); h.textContent = text; h.hidden = !text;
-  h.style.color = kind === 'error' ? '' : 'var(--tm-content-secondary)';
-  $id('otp-boxes').classList.toggle('tm-otp--error', kind === 'error' && !!text);
-}
-function renderOtpBoxes() {
-  const v = $id('otp-input').value, locked = Date.now() < APP.lockedUntil;
-  $id('otp-boxes').querySelectorAll('.tm-otp__box').forEach((b, i) => {
-    b.textContent = v[i] || '';
-    b.classList.toggle('is-active', !locked && document.activeElement === $id('otp-input') && i === Math.min(v.length, 5));
-  });
-  $id('otp-boxes').classList.toggle('tm-otp--disabled', locked);
-  $id('otp-input').disabled = locked;
+function otpBack() { $id('signin-phone').value = APP.phone; signinMsg(null); goApp('signin'); }
+function otpMsg(kind, text) { APP.otpMsg = kind ? { kind, text } : null; renderOtp(); }      // kind: 'error' | 'ok'
+function otpNotice(key) { APP.otpNotice = key; renderOtp(); }
+function renderOtp() {
+  if (!APP.phone) return;
+  const s = numState(APP.phone), now = Date.now(), locked = !!s.lockedUntil;
+  if (APP.otpLockedShown && !locked) { APP.otpLockedShown = false; APP.otpNotice = null; APP.otpMsg = null; }   // lock lifted
+  if (locked) { APP.otpLockedShown = true; APP.otpNotice = 'locked'; APP.otpMsg = null; }
+  $id('otp-phone').textContent = fmtPhone(APP.phone);
+  const f = $id('otp-field'), help = $id('otp-help'), input = $id('otp-input'), m = APP.otpMsg;
+  f.classList.toggle('tm-field--error', m?.kind === 'error');
+  input.setAttribute('aria-invalid', String(m?.kind === 'error'));
+  help.hidden = !m;
+  help.className = 'tm-field__helper' + (m?.kind === 'ok' ? ' is-ok' : '');
+  help.innerHTML = !m ? '' : m.kind === 'ok' ? `<span class="tm-icon" data-icon="circle-check" aria-hidden="true"></span>${m.text}` : m.text;
+  if (m?.kind === 'error') help.setAttribute('role', 'alert'); else help.setAttribute('role', 'status');
+  if (m?.kind === 'ok') renderIcons(help);
+  const n = $id('otp-notice'), key = APP.otpNotice, def = OTP_NOTICE[key];
+  n.hidden = !def;
+  if (def) {
+    n.className = `tm-notice tm-notice--${def[0]}`;
+    n.setAttribute('role', 'alert');
+    const text = key === 'locked' ? `Too many wrong tries. Try again in ${mmss(s.lockedUntil - now)}, or <a href="tel:${SUPPORT.phone}">call Doctor Ops</a>.` : def[2];
+    if ($id('otp-notice-text').innerHTML !== text) $id('otp-notice-text').innerHTML = text;
+    if ($id('otp-notice-icon').dataset.icon !== def[1]) { $id('otp-notice-icon').dataset.icon = def[1]; renderIcons(n); }
+  }
+  input.setAttribute('aria-describedby', def ? 'otp-notice' : 'otp-help');
+  // Lock (D-34): entry, the faster-sign-in card and Verify are off until the countdown ends; Change number stays.
+  const busy = APP.busy && APP.screen === 'otp' && $id('otp-btn').classList.contains('tm-btn--busy');
+  f.classList.toggle('is-locked', locked || busy);
+  input.disabled = locked || busy;
+  $id('otp-faster').classList.toggle('is-disabled', locked || busy);
+  $id('otp-faster-check').disabled = locked || busy;
+  if (!busy) $id('otp-btn').disabled = locked;
+  // Resend row: wait, then "Resend code". When the code cap is reached the wait shows when a new code is allowed.
+  $id('otp-resend-row').hidden = locked;
+  const capAt = capFreeAt(s), until = APP.otpNotice === 'too-many-resends' && capAt ? capAt : APP.resendAt;
+  const wait = until - now;
+  if (APP.otpNotice === 'too-many-resends' && !capAt) APP.otpNotice = null;
+  $id('otp-timer').hidden = wait <= 0; $id('otp-resend').hidden = wait > 0;
+  if (wait > 0) $id('otp-timer').textContent = `Resend in ${mmss2(wait)}`;
 }
 $id('otp-input').addEventListener('input', e => {
-  e.target.value = e.target.value.replace(/\D/g, '').slice(0, 6);
-  if ($id('otp-boxes').classList.contains('tm-otp--error')) setOtpMsg('');
-  renderOtpBoxes();
-  if (e.target.value.length === 6) verifyOtp();   // auto-verify on the 6th digit (also covers SMS autofill)
+  const v = e.target.value.replace(/\D/g, '').slice(0, 4);
+  if (v !== e.target.value) e.target.value = v;
+  if (APP.otpMsg || APP.otpNotice === 'couldnt-verify') { APP.otpMsg = null; if (APP.otpNotice === 'couldnt-verify') APP.otpNotice = null; renderOtp(); }
+  if (v.length === 4) e.target.blur();   // close the keyboard so the card and Verify & sign in are in view; nothing is sent yet
 });
-['focus', 'blur'].forEach(ev => $id('otp-input').addEventListener(ev, renderOtpBoxes));
 function verifyOtp() {
-  const v = $id('otp-input').value;
-  if (Date.now() < APP.lockedUntil) return;
-  if (v.length < 6) return setOtpMsg('Enter the 6-digit OTP.');
-  if (v === MOCK_AUTH.expiredOtp) { APP.resendAt = Date.now(); updateOtpTimer(); return setOtpMsg('This OTP has expired. Tap Resend OTP for a new one.'); }
-  if (v === MOCK_AUTH.wrongOtp) {
-    APP.otpTries++;
-    const left = MOCK_AUTH.maxTries - APP.otpTries;
-    $id('otp-input').value = '';
-    if (left <= 0) {
-      APP.lockedUntil = Date.now() + MOCK_AUTH.lockMin * 60000;
-      renderOtpBoxes(); updateOtpTimer();
-      console.log('[MOCK] auth.otp.locked | 15 min');
-      return;
+  if (APP.busy || numState(APP.phone).lockedUntil) return;
+  const input = $id('otp-input'), v = input.value;
+  if (!v) { otpMsg('error', 'Enter the 4-digit code.'); return input.focus(); }
+  if (v.length < 4) { otpMsg('error', 'Enter all 4 digits.'); return input.focus(); }
+  APP.otpNotice = null; APP.otpMsg = null;
+  mockDelay($id('otp-btn'), 'Verifying', () => {
+    if (!isOnline() || v === MOCK_AUTH.cantVerify) { otpNotice('couldnt-verify'); return; }   // keeps the code and the tick
+    if (v === MOCK_AUTH.expiredOtp) { APP.resendAt = 0; otpMsg('error', 'This code has expired. Get a new one.'); return; }
+    if (v === MOCK_AUTH.wrongOtp) {
+      const s = saveNum(APP.phone, { wrong: numState(APP.phone).wrong + 1 });
+      const left = MOCK_AUTH.maxWrong - s.wrong;
+      input.value = '';
+      if (left <= 0) {
+        saveNum(APP.phone, { lockedUntil: Date.now() + MOCK_AUTH.lockMin * 60000 });
+        console.log(`[MOCK] auth.otp.locked | ${fmtPhone(APP.phone)} | ${MOCK_AUTH.lockMin} min`);
+        return renderOtp();
+      }
+      otpMsg('error', left <= 2 ? `That code isn’t right. ${left} ${left === 1 ? 'try' : 'tries'} left.` : 'That code isn’t right. Try again.');
+      return input.focus();
     }
-    renderOtpBoxes();
-    return setOtpMsg(`That OTP is wrong. ${left} ${left === 1 ? 'try' : 'tries'} left.`);
-  }
-  mockDelay($id('otp-btn'), 'Verifying…', onOtpVerified);
+    onOtpVerified();
+  });
+  renderOtp();
 }
 function onOtpVerified() {
-  console.log(`[MOCK] auth.otp.verified | ${fmtPhone(APP.phone)} | for=${APP.otpFor}`);
-  if (APP.otpFor === 'signup') {
-    saveAuth({ pending: [...(loadAuth().pending || []), APP.phone] });
-    $id('signup-done-text').textContent = `We'll check your registration and call you on ${fmtPhone(APP.phone)} within 2 working days. You can sign in once it's approved.`;
-    console.log(`[MOCK] doctor.access.requested | ${JSON.stringify(APP.signup)}`);
-    return goApp('signup-done');
-  }
-  const a = saveAuth({ phone: APP.phone, signedIn: true, signedAt: Date.now() });
-  goApp(a.bio ? 'home' : 'bio-setup');
+  console.log(`[MOCK] auth.otp.verified | ${fmtPhone(APP.phone)}`);
+  saveNum(APP.phone, { wrong: 0 });
+  const same = loadAuth().phone === APP.phone;
+  saveAuth({ phone: APP.phone, signedIn: true, signedAt: Date.now(), bio: same ? !!loadAuth().bio : false });
+  const card = $id('otp-faster');
+  if (!card.hidden && $id('otp-faster-check').checked) return openBioPrompt('enroll');   // faster sign-in is on only after the passkey is saved
+  goApp('home');
 }
 function resendOtp() {
-  if (Date.now() < APP.resendAt || Date.now() < APP.lockedUntil) return;
-  if (APP.resendCount >= 4) return setOtpMsg('Too many OTPs requested. Try again in an hour, or call Doctor Ops.');
-  APP.resendCount++;
-  APP.resendAt = Date.now() + [30, 60, 120, 120][Math.min(APP.resendCount, 3)] * 1000;
-  $id('otp-input').value = ''; renderOtpBoxes();
-  setOtpMsg(`New OTP sent to ${fmtPhone(APP.phone)}.`, 'info');
-  updateOtpTimer();
-  console.log(`[MOCK] auth.otp.resent | #${APP.resendCount}`);
+  const s = numState(APP.phone);
+  if (s.lockedUntil || Date.now() < APP.resendAt) return;
+  if (capFreeAt(s)) { APP.otpMsg = null; return otpNotice('too-many-resends'); }   // the last code still works
+  startOtpResend();
 }
-const mmss = ms => { const s = Math.max(0, Math.ceil(ms / 1000)); return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`; };
-function updateOtpTimer() {
-  const now = Date.now(), t = $id('otp-timer'), r = $id('otp-resend');
-  if (now < APP.lockedUntil) {
-    t.hidden = false; r.hidden = true;
-    t.textContent = '';
-    setOtpMsg(`Too many wrong tries. Try again in ${mmss(APP.lockedUntil - now)}, or call Doctor Ops.`);
-    renderOtpBoxes();
-    return;
-  }
-  if (APP.lockedUntil && now >= APP.lockedUntil) { APP.lockedUntil = 0; APP.otpTries = 0; setOtpMsg(''); renderOtpBoxes(); }
-  const wait = APP.resendAt - now;
-  t.hidden = wait <= 0; r.hidden = wait > 0;
-  if (wait > 0) t.textContent = `Resend OTP in ${mmss(wait)}`;
-}
-function startOtpTicker() { stopOtpTicker(); updateOtpTimer(); APP.ticker = setInterval(updateOtpTimer, 1000); }
-function stopOtpTicker() { clearInterval(APP.ticker); APP.ticker = null; }
-
-// ── Request access (sign up). Verified by ops against the medical register; the number is checked by OTP. ──
-document.querySelectorAll('#scr-signup input, #scr-signup select').forEach(el => el.addEventListener('input', () => setFieldMsg(el.closest('.tm-field'), '')));
-$id('su-phone').addEventListener('input', e => { e.target.value = e.target.value.replace(/\D/g, ''); });
-function submitSignup() {
-  const v = id => $id(id).value.trim();
-  const F = k => document.querySelector(`#scr-signup [data-f="${k}"]`);
-  const errs = [];
-  if (v('su-name').length < 3) errs.push(['name', 'Enter your full name.']);
-  if (!isPhone(v('su-phone'))) errs.push(['phone', 'Enter your 10-digit mobile number.']);
-  else if (isPending(v('su-phone'))) errs.push(['phone', 'A request for this number is already being checked.']);
-  else if (isRegistered(v('su-phone'))) errs.push(['phone', `This number is already registered. <button class="tm-btn tm-btn--link" onclick="goApp('signin')">Sign in</button>`]);
-  if (v('su-reg').length < 3) errs.push(['reg', 'Enter your medical registration number.']);
-  if (!v('su-council')) errs.push(['council', 'Choose the council you are registered with.']);
-  ['name', 'phone', 'reg', 'council'].forEach(k => setFieldMsg(F(k), ''));
-  errs.forEach(([k, m]) => setFieldMsg(F(k), m));
-  if (errs.length) return F(errs[0][0]).querySelector('input, select').focus();
-  APP.signup = { name: v('su-name'), phone: v('su-phone'), reg: v('su-reg'), council: v('su-council') };
-  mockDelay($id('signup-btn'), 'Sending OTP…', () => startOtp(APP.signup.phone, 'signup'));
+function startOtpResend() {
+  const s = saveNum(APP.phone, { codes: [...numState(APP.phone).codes, Date.now()] });
+  APP.resendAt = Date.now() + MOCK_AUTH.resendWaits[Math.min(s.codes.length - 1, MOCK_AUTH.resendWaits.length - 1)] * 1000;
+  APP.otpNotice = null;
+  $id('otp-input').value = '';
+  otpMsg('ok', 'New code sent.');
+  console.log(`[MOCK] auth.otp.resent | code ${s.codes.length} of ${MOCK_AUTH.maxCodes}`);
 }
 
-// ── Fingerprint / face unlock (WebAuthn passkey in production; the prompt here stands in for the phone's own) ──
-function enableBiometric() { openBioPrompt('enroll'); }
-function skipBiometric() { console.log('[MOCK] auth.biometric.skipped'); goApp('home'); }
+// ════════════════ Passkey / unlock (ui-screens/returning-unlock, D-37) ════════════════
+// The sheet stands in for the phone's own prompt (Credential Manager on Android, Authentication Services on iOS).
 function openBioPrompt(mode) {
   APP.bioMode = mode;
+  const m = UNLOCK_METHODS[DEMO_APP.method];
   $id('bio-sensor').className = 'bio-sensor';
-  $id('bio-hint').className = 'bio-hint'; $id('bio-hint').textContent = 'Touch the fingerprint sensor';
-  $id('bio-sub').textContent = mode === 'enroll' ? 'Confirm your fingerprint to turn on unlock' : 'Confirm it’s you';
+  $id('bio-sensor-icon').dataset.icon = m.icon; renderIcons($id('bio-sensor'));
+  $id('bio-hint').className = 'bio-hint'; $id('bio-hint').textContent = m.hint;
+  $id('bio-prompt-h').textContent = mode === 'enroll' ? 'Create a passkey' : 'Truemeds for Doctors';
+  $id('bio-sub').textContent = mode === 'enroll' ? 'Sign in to Truemeds for Doctors with your face, fingerprint or screen lock next time.' : 'Confirm it’s you';
   openSheet('sheet-bio');
 }
-function cancelBioPrompt() { closeSheet(); }
+function cancelBioPrompt() {
+  const enroll = APP.bioMode === 'enroll';
+  closeSheet(); APP.bioFails = 0;
+  if (enroll) { console.log('[MOCK] auth.passkey.cancelled'); goApp('home'); }   // signed in anyway; OTP next time; no nag
+}
 function touchSensor() {
   if (DEMO_APP.bioFails) {
     APP.bioFails++;
     $id('bio-sensor').className = 'bio-sensor is-error';
     $id('bio-hint').className = 'bio-hint is-error'; $id('bio-hint').textContent = 'Not recognised. Try again.';
-    if (APP.bioFails >= 3) { closeSheet(); renderApp(); console.log('[MOCK] auth.biometric.failed | 3 tries → OTP'); }
+    if (APP.bioFails >= 3) { console.log('[MOCK] auth.passkey.failed | 3 tries'); cancelBioPrompt(); }
     return;
   }
   $id('bio-sensor').className = 'bio-sensor is-ok';
-  $id('bio-hint').className = 'bio-hint'; $id('bio-hint').textContent = 'Fingerprint recognised';
+  $id('bio-hint').className = 'bio-hint'; $id('bio-hint').textContent = 'Done';
   setTimeout(() => {
+    const enroll = APP.bioMode === 'enroll';
     closeSheet(); APP.bioFails = 0;
-    if (APP.bioMode === 'enroll') { saveAuth({ bio: true }); console.log('[MOCK] auth.biometric.enrolled'); }
-    else { saveAuth({ signedIn: true, signedAt: Date.now() }); console.log('[MOCK] auth.biometric.unlocked'); }
+    if (enroll) { saveAuth({ bio: true }); console.log('[MOCK] auth.passkey.saved'); }
+    else { saveAuth({ signedIn: true, signedAt: Date.now() }); console.log('[MOCK] auth.passkey.unlocked'); }
     goApp('home');
   }, 500);
 }
-function unlockWithOtp() { const p = loadAuth().phone; APP.bioFails = 0; mockDelay($id('unlock-btn'), 'Sending OTP…', () => startOtp(p, 'signin')); }
-function switchAccount() { saveAuth({ phone: null, bio: false, signedIn: false }); $id('signin-phone').value = ''; goApp('signin'); }
+function unlockWithOtp() {
+  const p = loadAuth().phone; APP.bioFails = 0;
+  mockDelay($id('unlock-otp-btn'), 'Sending OTP', () => sendFirstCode(p, outcome => {
+    if (outcome === 'sent' || outcome === 'locked') return;
+    $id('signin-phone').value = p; goApp('signin'); signinMsg(outcome);   // show the problem where the number is
+  }));
+}
+function switchAccount() { saveAuth({ phone: null, bio: false, signedIn: false }); $id('signin-phone').value = ''; signinMsg(null); goApp('signin'); }
+$id('signup-link').addEventListener('click', () => console.log(`[MOCK] auth.signup.opened | ${SUPPORT.signupUrl}`));
 
 // ── Next order: the doctor asks; if nothing is waiting, Home shows "No orders right now" (D-31) ──
 function requestNextOrder() {
@@ -1672,10 +1785,11 @@ function confirmLogout() {
 function renderAppDemo() {
   const s = APP.screen;
   const chip = (act, label, on) => `<button class="tm-chip" data-act="${act}" aria-pressed="${!!on}">${label}</button>`;
+  const methodLabel = { fingerprint: 'Fingerprint', face: 'Face ID', 'screen-lock': 'Screen lock' }[DEMO_APP.method];
   const html = `
-    <div class="demo-app-row">${chip('go:signin', 'Sign in', s === 'signin')}${chip('go:signup', 'Request access', s === 'signup')}${chip('go:unlock', 'Unlock', s === 'unlock')}${chip('go:home', 'Home', s === 'home')}${chip('go:case', 'Order page', s === 'case')}</div>
-    <div class="demo-app-row">${chip('toggle:orders', 'Orders available', DEMO_APP.ordersAvailable)}${chip('toggle:biofail', 'Fingerprint fails', DEMO_APP.bioFails)}${chip('reset', 'Reset app', false)}</div>
-    <div class="demo-app-hint">OTP: any 6 digits · 000000 wrong · 111111 expired. Numbers starting 90 aren't registered; 9111111111 is under review.</div>`;
+    <div class="demo-app-row">${chip('go:signin', 'Sign in', s === 'signin')}${chip('go:unlock', 'Unlock', s === 'unlock')}${chip('go:home', 'Home', s === 'home')}${chip('go:case', 'Order page', s === 'case')}${chip('reset', 'Reset app', false)}</div>
+    <div class="demo-app-row">${chip('toggle:orders', 'Orders available', DEMO_APP.ordersAvailable)}${chip('toggle:offline', 'Offline', DEMO_APP.offline)}${chip('toggle:passkey', 'Passkey supported', DEMO_APP.passkey)}${chip('toggle:method', 'Unlock: ' + methodLabel, true)}${chip('toggle:biofail', 'Unlock fails', DEMO_APP.bioFails)}</div>
+    <div class="demo-app-hint">Numbers: 90… not registered · 9222222222 inactive · 9333333333 can't send · 9444444444 too many codes.<br>Codes: any 4 digits · 0000 wrong · 1111 expired · 2222 can't verify. 5 wrong codes lock the number for 15 min; 4 codes per number per 10 min.</div>`;
   document.querySelectorAll('[data-demo-app]').forEach(el => { el.innerHTML = html; });
 }
 document.addEventListener('click', e => {
@@ -1683,35 +1797,36 @@ document.addEventListener('click', e => {
   if (!b) return;
   const [kind, arg] = b.dataset.act.split(':');
   if (kind === 'go') {
-    if (arg === 'unlock' && !loadAuth().phone) saveAuth({ phone: '9876543210', bio: true });
-    if (arg === 'unlock') { saveAuth({ bio: true }); APP.bioFails = 0; }
+    if (arg === 'unlock') { saveAuth({ phone: loadAuth().phone || '9876543210', bio: true }); APP.bioFails = 0; }
     if (arg === 'home' || arg === 'case') saveAuth({ signedIn: true, signedAt: Date.now(), phone: loadAuth().phone || '9876543210' });
     if (arg === 'case') { goApp('case'); switchScenario(DOCTOR_STATE.activeScenario || 'cat4'); return; }
+    if (arg === 'signin') { $id('signin-phone').value = ''; signinMsg(null); }
     goApp(arg);
   } else if (kind === 'toggle') {
     if (arg === 'orders') DEMO_APP.ordersAvailable = !DEMO_APP.ordersAvailable;
+    if (arg === 'offline') DEMO_APP.offline = !DEMO_APP.offline;
+    if (arg === 'passkey') { DEMO_APP.passkey = !DEMO_APP.passkey; if (APP.screen === 'otp') $id('otp-faster').hidden = !DEMO_APP.passkey; }
+    if (arg === 'method') { const k = Object.keys(UNLOCK_METHODS); DEMO_APP.method = k[(k.indexOf(DEMO_APP.method) + 1) % k.length]; }
     if (arg === 'biofail') { DEMO_APP.bioFails = !DEMO_APP.bioFails; APP.bioFails = 0; }
     renderApp();
   } else if (kind === 'reset') {
-    try { localStorage.removeItem(AUTH_KEY); } catch (err) { /* ignore */ }
-    Object.assign(APP, { noLead: false, checkedAt: null, bioFails: 0 });
-    $id('signin-phone').value = '';
+    try { localStorage.removeItem(AUTH_KEY); localStorage.removeItem(OTP_KEY); } catch (err) { /* ignore */ }
+    Object.assign(APP, { noLead: false, checkedAt: null, bioFails: 0, phone: '', signinBlockedUntil: 0, resendAt: 0, otpNotice: null, otpMsg: null });
+    $id('signin-phone').value = ''; signinMsg(null);
     goApp('signin');
   }
 });
 
-// Where the app opens: ?start=case|home|signin|… for demos and tests; otherwise from the saved session.
+// Where the app opens: ?start=case|home|signin|otp|unlock for demos and tests; otherwise from the saved session.
+// Returning doctor with a passkey → Unlock (the doctor taps Unlock; the phone's prompt opens then).
 function bootApp() {
   const q = new URLSearchParams(location.search).get('start');
   const a = loadAuth();
   APP.booted = true;
   if (q === 'case') return goApp('case');
+  if (q === 'otp') return startOtp('9876543210', true);
   if (q && SCREEN_IDS[q]) return goApp(q);
-  if (a.phone && a.bio) {
-    goApp('unlock');
-    setTimeout(() => { if (APP.screen === 'unlock' && !activeSheet) openBioPrompt('unlock'); }, 400);   // like a banking app: ask straight away
-    return;
-  }
+  if (a.phone && a.bio) return goApp('unlock');
   if (a.signedIn && Date.now() - (a.signedAt || 0) < 24 * 3600 * 1000) return goApp('home');
   goApp('signin');
 }
