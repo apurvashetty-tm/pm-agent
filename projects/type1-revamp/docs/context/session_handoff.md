@@ -27,13 +27,13 @@ D34: no revamp; current portal + small changes until Portal Unification. Road ah
 
 ## 4. Validation status
 - Portal analysed by running `reference/portal/pharmacist-portal.html` locally with the sample-data overlay in `reference/portal/tools/` (load `overlay.js`, then `go.js`; patch `this.state.genderList.map(` → `(this.state.genderList||[]).map(` in the payload to avoid crash P19). Serve over http from a non-Documents folder (macOS blocks python http.server from reading Documents).
-- Nothing committed to git. Local pm-agent `main` has 3 unpushed Project South commits and has **diverged** from `origin/main` (Apurva's update): needs merge/rebase before any push.
+- **Git:** all Type 1 work is committed and pushed on branch `project/type1-revamp` (origin). Merge to `main` via a pull request (not opened yet). Local `main` separately has 3 unpushed Project South commits and has diverged from `origin/main`; untouched. `projects/project-south/` is untracked and not part of this branch.
 
 ## 5. Known gaps and open decisions
 See `open_questions.md`. Allocation: AQ1–AQ6. Engagement: EQ1–EQ8.
 
 ## 6. Next exact step
-Swapnil reviews `docs/11-problem-statement.md` (PRD feedback, D37) → fold into PRD §2 (remove numbers there per R9) → break problems into workstreams.
+Swapnil reviews `docs/11-problem-statement.md` (now incl. C6) → fold into PRD §2 (remove numbers per R9) → break problems into workstreams. Optional: open a PR from `project/type1-revamp` to `main`.
 
 ## 7. Do not change without approval
 - `project_truth.md` (Swapnil only)

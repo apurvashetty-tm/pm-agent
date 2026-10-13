@@ -259,3 +259,11 @@ Follow-up: reviewed the 12 captured portal screens + code findings; wrote `docs/
 
 Follow-up: only item 4 was new → added **C6 "Call results can't be recorded"** (reason dropdown) to `11` and the where-solved table. Recorded the 8-item portal fix list in `12` (dropped P3 rename, P13 crash).
 
+---
+
+## Entry 25 — 2026-10-13 — Push to repo
+
+> Push everything in Type 1 portal to the repo, along with CONTINUITY.md updated and all the logs as well.
+
+Follow-up: committed all `projects/type1-revamp/` work and pushed branch `project/type1-revamp` to `origin` (commit `39b7cee`, verified against the remote). Updated CONTINUITY.md, session_handoff and logs to record the push, then pushed again.
+

@@ -2,7 +2,7 @@
 
 **Start here in any new session.** Load this folder (`projects/type1-revamp/`) into Claude and say *"read CONTINUITY.md and continue"*. This file tells any agent where the project stands, how to work with Swapnil, and what to update before the session ends.
 
-**Owner:** Swapnil Singh (swapnil.singh@truemeds.in) · **Started:** 2026-10-05 · **Last updated:** 2026-10-09
+**Owner:** Swapnil Singh (swapnil.singh@truemeds.in) · **Started:** 2026-10-05 · **Last updated:** 2026-10-13
 
 ---
 
@@ -30,11 +30,11 @@
 | R8 | **No portal revamp.** Small, targeted changes on the current portal; structural work waits for Portal Unification. | 2026-10-12 |
 | R5 | Label every fact: `[CONFIRMED]` (Swapnil said so) · `[DOC]` (PM-agent repo) · `[CODE]` (portal code) · `[INFERRED]` · `[OPEN]`. Never invent product logic. | 2026-10-05 |
 | R6 | Plain language, concise; the user reads on a busy schedule. | — |
-| R7 | Don't commit/push to GitHub unless Swapnil asks. | — |
+| R7 | Don't commit/push to GitHub unless Swapnil asks. Work lives on branch **`project/type1-revamp`**; merge to `main` via PR. | 2026-10-13 |
 
 ---
 
-## 3. Where we are (2026-10-09)
+## 3. Where we are (2026-10-13)
 
 | Workstream | What | Status | Working doc |
 |---|---|---|---|
@@ -44,12 +44,14 @@
 | **W1a OMS** | Request `RX VERIFICATION PENDING`; pharmacist creates the order; Arm A/B; all abandoned journeys → ACOM | ✅ **Closed for now** (D35). PRD v0.2 (D36: no validity gate, tag only); open items E1–E4 (eng), P1–P5 (product) | `docs/10-oms-prd.md` (history: 06–08) |
 | **W1b Allocation** | Type 1 queue: after-hours orders reached last + never-verified requests (V, from 08 §11) | ⏭ **Next candidate.** Current logic + problem + scope A1–A6 + V options captured | `docs/05-allocation-current-logic.md` |
 | W2a Leads → ACOM | Abandoned Rx uploads as leads | Folded into W1a (`08`) | `docs/08-…` |
+| **Problem statement** | All problems we're solving (A1–A4, B1–B2, C1–C6, D1–D2, E1) — PRD feedback | Draft, **awaiting review** → fold into PRD §2 | `docs/11-problem-statement.md` |
+| **Portal fix list** | 8 agreed fixes (D40) from the mock-flow review | ✅ Agreed | `docs/12-portal-issues-observed.md` |
 | **Portal approach** | No revamp; current portal + small changes until Unification (D34) | Draft road ahead, **awaiting review** | `docs/09-portal-road-ahead.md` |
 | W2b/c Search + OOS | Search quality, OOS instrumentation, substitutes | Not started | — |
 | W2d Coupons | Coupon visibility on portal | Not started | — |
 | W3 App journey | Parked (R3) | Parked | — |
 
-**Next exact step:** Swapnil reviews `11-problem-statement.md` → fold into PRD §2 → break problems into workstreams. (Engineering checks E1–E4 in parallel.)
+**Next exact step:** Swapnil reviews `11-problem-statement.md` → fold into PRD §2 → break problems into workstreams. (Engineering checks E1–E4 in parallel; optional PR to `main`.)
 
 ---
 
@@ -116,3 +118,4 @@ type1-revamp/
 | 2026-10-13 | PRD feedback: full problem statement (doc 11); D37–D39 (three ways to finish; call first) | 22 |
 | 2026-10-13 | Portal issues observed from mock flow (doc 12) | 23 |
 | 2026-10-13 | D40 portal fix list (8); C6 added to problem statement | 24 |
+| 2026-10-13 | Pushed all work to `project/type1-revamp` (D41); continuity + logs updated | 25 |
