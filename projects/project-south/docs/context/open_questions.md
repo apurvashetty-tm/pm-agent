@@ -1,0 +1,19 @@
+# open_questions.md — Project South
+**Last updated:** 2026-09-29
+
+> **Current list: see D1–D9 in `docs/solution/project-south-solution-v1.md` §12** (standalone solution, narration Entry 4). The OQ list below comes from the earlier brainstorm and is kept for history.
+
+Unresolved `[OPEN DECISION]` items surfaced during layered solutioning (`docs/brainstorm/solution-layers.md`). Do not silently answer these — confirm with Swapnil/Ops/Eng/Analytics as noted.
+
+- **OQ-1 [OPEN DECISION]** — Does `language` actually exist as a doctor attribute in production today, in which table/column, how was it populated (self-declared / verified / inferred), and what's the completeness (% of doctors with a non-null value)? Swapnil states it exists (narration_log Entry 2); repo docs (HGS/tm-chotu schema) don't document it. Confirm with Eng/Data before designing further.
+- **OQ-2 [OPEN DECISION]** — Should a doctor be able to belong to multiple language pools (many-to-many), or is this single-primary-language-per-doctor like `DOCTOR_CATEGORY`? See solution-layers.md §2.3. Recommended: many-to-many, but needs sign-off since it's a schema decision.
+- **OQ-3 [OPEN DECISION]** — What is current doctor headcount by language, and by language × shift/hour? Needed to size the starvation risk (§2.1, §2.6) before choosing hard-bypass vs. soft-preference fallback. Owner: Ops/doctor-supply team.
+- **OQ-4 [OPEN DECISION]** — When an order needs both an NFS/HGS specialist category AND a language match, is language a hard filter on top of category (strict intersection) or a soft preference within the category-eligible pool? See solution-layers.md §2.4. Recommended default: soft preference, to avoid over-shrinking an already-narrow specialist pool.
+- **OQ-5 [OPEN DECISION]** — Source and refresh cadence for the `pincode_language_master` table — census data, internal request logs, something else? Who owns drift/corrections? See §2.5.
+- **OQ-6 [OPEN DECISION]** — Fallback behavior when the language pool is empty: hard escalation to manual (Option A), timed fallback to general pool (Option B, recommended default to evaluate), language-adjacency fallback (Option C), or reschedule/callback (Option D — flagged as risky given INIT-03's callback flow is already known to be broken). See §2.1.
+- **OQ-7 [OPEN DECISION]** — Is pincode-as-language-proxy the accepted long-term signal, or a deliberate stopgap pending a customer-level language signal (app locale, explicit selection, etc. — Alternative 1 in §3)? Affects whether multi-language-pincode handling (§2.2) is worth building well now or deferring.
+- **OQ-8 [OPEN DECISION]** — Has `INIT-04 Discard Intelligence` produced any actual discard root-cause data since the last roadmap doc update, and does it currently attribute any share of discard to language/communication factors? Check with Apurva/Analytics — determines whether Project South is validating a hypothesis or building against a known number.
+- **OQ-9 [OPEN DECISION]** — Rollout sequencing: full launch vs. phased pilot (§2.9, recommended: pilot 1–2 high-volume/high-discard languages with known-strong doctor supply first). Needs sign-off since it affects timeline expectations.
+- **OQ-10 [OPEN DECISION]** — Should language-routed orders stay inside the new ETA logic with a language-capacity filter (solution-layers.md §5.1b, recommended), or move out to pull-FIFO pools like HGS orders (§5.1a)? Also: are Dr-call orders actually on the new ETA logic today? Confirm with Eng.
+- **OQ-11 [OPEN DECISION]** — Does the Doctor Portal have any call-outcome field today where a doctor could mark "language barrier"? If not, is adding one (Layer −1, §5.7) acceptable as the first step, before any routing change?
+- **OQ-12 [OPEN DECISION]** — Should Layer 0 be predictive (pincode → language before the first call) or reactive (route by language only after a doctor records a language barrier)? See §5.7.
