@@ -1,6 +1,6 @@
 # session_handoff.md — Type 1 Revamp
 **Purpose:** Exact resume point. Short enough to read every session. (Start with `../../CONTINUITY.md`.)
-**Last updated:** 2026-10-09
+**Last updated:** 2026-10-13
 **Current owner/session:** Claude (with Swapnil)
 **Status:** active
 
@@ -8,8 +8,11 @@
 
 ## 1. Current state
 - Steps 1–2 (Evaluation, Critique) done. Portal analysis done. Business case captured.
-- **W1a Engagement (order → request):** options in `docs/04-…` §4b (B-lite L1/L2). **Waiting for Swapnil's level pick** (EQ1).
-- **W1b Allocation (current focus):** `docs/05-allocation-current-logic.md`. Current logic, discovery problem (§3) and improvement scope A1–A6 (§4) captured. **Waiting for go-ahead to brainstorm fixes.**
+- **W1a OMS: closed for now (D35), PRD v0.2 (D36: no validity gate, tag only).** `docs/10-oms-prd.md`. Open: E1–E4 (engineering), P1–P7 (product).
+- **W1b Allocation (next candidate, now includes never-verified V from `08` §11):** `docs/05-allocation-current-logic.md`. Current logic, discovery problem (§3) and improvement scope A1–A6 (§4) captured. **Waiting for go-ahead to brainstorm fixes.**
+
+## 1b. Portal approach
+D34: no revamp; current portal + small changes until Portal Unification. Road ahead `docs/09-portal-road-ahead.md` (awaiting review; RQ1 CTA wording, RQ2 Now/Later).
 
 ## 2. Latest completed work (2026-10-09)
 - Recorded hours (09:00–19:00), Hold (1 h out of the queue when a call doesn't connect), Schedule (customer-requested delay).
@@ -30,7 +33,7 @@
 See `open_questions.md`. Allocation: AQ1–AQ6. Engagement: EQ1–EQ8.
 
 ## 6. Next exact step
-On Swapnil's go-ahead: **brainstorm Type 1 allocation fixes for A1–A6**: backend + portal only, Type 1 only, min effort / max impact; rank by effort vs impact; stop for confirmation.
+Swapnil reviews `docs/11-problem-statement.md` (PRD feedback, D37) → fold into PRD §2 (remove numbers there per R9) → break problems into workstreams.
 
 ## 7. Do not change without approval
 - `project_truth.md` (Swapnil only)

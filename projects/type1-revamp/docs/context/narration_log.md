@@ -125,3 +125,137 @@ Follow-up: added hours, Hold, Schedule to §1; discovery problem §3; scope A1�
 > Let's create a separate project in the repo for Type 1. Keep the logs, decisions and all the supporting files, data and chats in the project "Type 1 revamp". Also keep a continuity md, which helps me keep continuity: maintain any chats just by loading the repo folder in Claude in any session.
 
 Follow-up: moved `projects/type1-order-flow/` → `projects/type1-revamp/`; added `CONTINUITY.md`, `CLAUDE.md`, `docs/context/{project_truth, decision_log, open_questions, narration_log}.md`; refreshed `session_handoff.md`. Not committed (awaiting instruction).
+
+---
+
+## Entry 14 — 2026-10-09 — OMS scope: request state, two arms, abandoned → ACOM
+
+> Let's start with OMS. Scope is introducing the intermediate state in the flow rather than directly placing the order, i.e. order creation will be done after the pharmacist call and creates the cart. Here too we will have experimentation: we will just create the cart and ask the customer to take it ahead, and also have the current flow where the pharmacist adds the medicines to the cart and places the order. We also need to add the flow where an abandoned flow moves the lead to ACOM, similar to the current cart-abandoned lead flow; need to evaluate how we handle that. In cart abandoned we have medicines in the cart and the cart already created; here only the prescription will be available.
+
+Follow-up: wrote `docs/06-brainstorm-oms-request-state.md` (request state P1 vs P2; Arm A assisted vs Arm B self-checkout; abandonment points L1–L5; cart leads reuse ACOM; Rx-only leads R1+R2; metrics; decisions Q1–Q10). Stopped for picks.
+
+---
+
+## Entry 15 — 2026-10-12 — Request = Pending Verification; pharmacist creates the order
+
+> Let's focus:
+> 1. Every Type 1 action by the user will be considered a request, not the order. Hence we need to create the intermediate state where the Type 1 order is in the Pending Verification state; the order will be created and verified by pharmacists using the Type 1 portal.
+> 2. More enhancement in this part.
+
+Follow-up: wrote `docs/07-pending-verification-state.md`: state model R1–R6 → O1; flagged the clash with the existing portal status `PENDING VERIFICATION` (= digitised, awaiting call); enhancements E1–E15 (state/data, portal, comms); recommended v1; decisions Q1–Q6. Stopped for picks.
+
+---
+
+## Entry 16 — 2026-10-12 — Picks on PV1–PV6 + future scope
+
+> 1. Make the new status "RX Verification Pending".
+> 2. Let's have both. For no app changes, we will use the current flow of order creation, but with one more intermediate state. But down the line, in the full revamp where we are planning to unify the portal, this will be a lead: pharmacist calls, lead tagged as Type 1, something in this line. Explore both.
+> 3. Yes, we need to experiment on the part where the pharmacist only adds the medicine to the cart and the user has to take it forward. Add that as a flow for the experiment. Here there will be complications in current agent conversion and incentive; need to look at that as well.
+> 4. Add more scope: ACOM lead flow. For all the abandoned Type 1 carts, a lead flows to the ACOM portal for a call.
+> 5. Let's keep the rule configurable, with attempts and time.
+> 6. Yes, need to keep handling of that.
+>
+> In future scope, the plan is that we follow the flow of 1mg where users are kept engaged on the app and call wait and assignment are done in real time. That's future scope.
+
+Follow-up: updated `docs/07-pending-verification-state.md` §7–§14: picks; Now vs Future (intermediate state now; Type 1-tagged lead in Portal Unification later; now as stepping stone); Arm B flow + conversion/incentive complications (attribution window, split credit, incentive-neutral test, carts-built productivity); ACOM lead scope for all abandoned Type 1 carts; configurable abandon parameters; after-hours handling; future 1mg real-time scope. Stopped for go-ahead to Finalise.
+
+---
+
+## Entry 17 — 2026-10-12 — Mid-flow abandonment → ACOM; incentives out of scope
+
+> Abandoned also means: let's say the customer uploads the prescription but never clicks or moves through to the final "place order" or "raise request". This is the equivalent of a cart abandoned mid-flow; this too needs to flow to ACOM.
+> Just keep the incentive calculation out of scope currently; just keep the callout of the cart-creation-only flow's impact on this. Let's brainstorm further.
+
+Follow-up: wrote `docs/08-abandoned-type1-leads-acom.md`: full abandon taxonomy (M1–M3 mid-flow, V, A, B); detection without an app release (MQ1 engineering check; value gate likely hides Rx-only incomplete orders today); Rx-only handling H2 nudge → H1 ACOM qualifies & raises a prioritised request; Type 1 lead rules; metrics; Arm B conversion callout. Trimmed `07` §9.2 to a callout (incentive options parked). Stopped for picks MQ1–MQ6.
+
+---
+
+## Entry 18 — 2026-10-12 — Picks on abandon taxonomy + ACOM handling
+
+> M1 — "Proceed to checkout" is current behaviour; need to change app scope to something similar to "raise medicine request", something like 1mg.
+> M2 — Yes, in the scope.
+> M3 — This I believe should not exist in the flow altogether in the future flow, but for the current flow it should be considered as an abandoned flow.
+> V — Shouldn't this be part of Type 1 itself? Never verified; need to brainstorm on this problem's solution.
+> A, B — all are part of ACOM.
+> ACOM call is irrespective; the comm will be a different scope.
+>
+> 3. "Back to pharmacist" — this needs to be an open point, how we handle this. My call is to keep it with ACOM: here ACOM can talk and create the order for the customer over the call.
+> 4. Priority — ACOM logic of prioritisation will be as is; just the cart-value filter needs to be handled, as there will be no way to identify the cart value.
+>
+> What I need from you:
+> 1. This will be an engineering problem; frame it as a requirement and engineering will figure it out.
+> 2. Irrespective of the nudge we will call; scope it that way. Nudge too will be in the scope.
+> 3. Yes.
+> 4. TBD, how we prioritise will need to be brainstormed; we will use current logic for now, excluding the value filter.
+> 5. Need to confirm this.
+> 6. Yes.
+
+Follow-up: `docs/08` §9 picks, §10 engineering requirements (REQ-L1–L7 lead creation, REQ-Q1–Q6 ACOM queue, §10.3 open point ACOM-creates-order implications, APP-1/APP-2 parked app requirements), §11 brainstorm for V (never verified): causes, options V1–V7, lean V1+V3+V2+V6, proposal to treat V as first slice of W1b. Stopped for VQ1–VQ4.
+
+---
+
+## Entry 19 — 2026-10-12 — CTA wording; portal approach
+
+> (On "App changes logged and parked: replace 'Proceed to checkout' with 'Raise medicine request', and remove the payment step from Type 1") Change the CTA to something else.
+>
+> Also, the approach now for the portal will be not to have a complete revamp, as we are going to unify portals later. Before that we will use the current portal; make this the road ahead.
+
+Follow-up: wrote `docs/09-portal-road-ahead.md`: Now (current portal, small changes: status, buttons, columns, config, bug fixes, OOS logging, coupon reach) vs Later (Portal Unification: lead model, push/real-time allocation, shared components, agents by skill); CTA wording options for APP-1 (lean "Send to pharmacist"); P20 duplication note. Updated APP-1 in `08` §10.4.
+
+---
+
+## Entry 20 — 2026-10-12 — Close OMS
+
+> Let's close the OMS for now.
+
+Follow-up: wrote `docs/10-oms-prd.md` (lean PRD format, `templates/lean-prd-guide.md`) consolidating D15–D34: request status, pharmacist creates the order, Arm A/B, all abandoned journeys → ACOM, configurable rules with working defaults, after-hours, scope in/out, open items with owners (E1–E4 engineering, P1–P5 product), metrics. Never-verified (V) handed to W1b. W1a marked closed for now.
+
+---
+
+## Entry 21 — 2026-10-12 — No Rx-validity gate
+
+> Pharmacist verifies or not, still he can call and ask the customer, because sometimes users upload the medicine photo; that too can work. The confirmation of a valid Rx is of no point. It should just take the tag that it is a prescription or not, and the Type 1 flow goes ahead.
+
+Follow-up: PRD bumped to v0.2 (`docs/10-oms-prd.md`): removed the validity gate and the "rejected" branch; pharmacist tags Prescription / Not a prescription and the flow continues; Rx compliance stays with today's post-order flow; guardrail changed; added P6 (unusable upload) and P7 (status name). Noted the portal already has "Is it RX Image? Yes/No" on Verify Rx (reuse) in `09`.
+
+---
+
+## Entry 22 — 2026-10-13 — PRD feedback: list every problem we're solving
+
+> (Paraphrase kept close to the voice note; long dictation.) I got feedback on the PRD. It was supposed to be a smaller part (OMS), but I should include all the problems I'm solving, all that lead to OMS and everything.
+> - App side: customer experience isn't engaging for Type 1. There's an order-placement flow, whereas a Type 1 shouldn't be order placement; it's misleading. There's a payment-selection and discount-offer flow; that shouldn't be part of Type 1. It should be informative so users understand what happens next.
+> - We're letting go the abandoned flow for Type 1; it should flow to ACOM. It will increase ACOM leads and conversion.
+> - Future user flow: user uploads, we keep them engaged, the Type 1 pharmacist calls within that time. Scenarios: (1) the pharmacist checks the prescription, adds all items to the cart, and the user self-checks out; (2) the pharmacist calls, the user says what they want and don't want, a cart is prepared, and the pharmacist asks them to self-checkout; (3) the pharmacist calls, adds to the cart and places the order directly.
+> - ACOM leads: we're wasting the stagnant leads. **Don't mention the numbers; just the problem statement. Don't mention 1mg either.**
+> - Portal: the user has to select the order and assign it to themselves, then confirm valid or invalid Rx. That's irrelevant: irrespective of it, the customer gets a doctor call for those orders, so a tag is enough and shouldn't impact the flow. Only after they confirm and digitise, adding at least one medicine, is the order created; that flow is a waste of time. They should be able to call directly and create.
+> - Search needs to improve a lot: even out-of-stock items should be visible, and if out of stock, the substitute should show; search should be intuitive.
+> - Instrumentation: what is being searched, how many out-of-stocks, to improve cataloguing.
+> - Also the other problems in the opportunity scoping. List all the problems; on the basis of that we'll break it down, and say why we're building OMS and portal.
+
+Follow-up: wrote `docs/11-problem-statement.md`: problems A1–A4 (app), B1–B2 (lost demand), C1–C5 (portal), D1–D2 (data), E1 (observed, not scoped); a map of where each is solved (App later / OMS / Portal / ACOM / Data); why OMS + portal first. No numbers, no competitor names. Draft for review before folding into PRD §2.
+
+---
+
+## Entry 23 — 2026-10-13 — Portal issues from the mock flow
+
+> Go through the portal mock flow; share some issues observed.
+
+Follow-up: reviewed the 12 captured portal screens + code findings; wrote `docs/12-portal-issues-observed.md`: issues by screen (list L1–L6, Verify Rx V1–V7, Patient Call P1–P13, search S1–S5, coupons CP1–CP3, Create Order CO1–CO3, global G1–G3), mapped to problems in `11`; sample-data artifacts excluded; top 10 to fix first.
+
+---
+
+## Entry 24 — 2026-10-13 — Portal fix list; add only new problems
+
+> 1. Wait-time column with sort by age
+> 2. Prescription check as a tag only
+> 3. Call before digitising
+> 4. Call-result options — reason dropdown
+> 5. Out-of-stock medicines shown with a substitute
+> 6. Pack, price and stock in search results
+> 7. Recording of searches and unavailable picks
+> 8. Coupons easier to find, with savings shown
+>
+> Most of them are repeated; exclude the repeated, add the new one only in the portal problems.
+
+Follow-up: only item 4 was new → added **C6 "Call results can't be recorded"** (reason dropdown) to `11` and the where-solved table. Recorded the 8-item portal fix list in `12` (dropped P3 rename, P13 crash).
+

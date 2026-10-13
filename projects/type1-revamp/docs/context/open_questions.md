@@ -1,8 +1,54 @@
+> **2026-10-12:** OMS closed as PRD v0.1. Its live open items are E1–E4 and P1–P5 in `10-oms-prd.md` §8; PV/MQ/OQ rows below are history unless repeated there.
+
 # Open Questions — Type 1 Revamp
 
 Consolidated 2026-10-09 from docs 00–05. Type: Product / Backend / UX / Data. When one is decided, move it to **Resolved** with the decision (don't delete).
 
-## Allocation (W1b) — current focus
+## Pending Verification state (W1a, current focus) — see `07` §6
+| ID | Type | Question | Source |
+|---|---|---|---|
+| PV1 | Product | ~~Name~~ → `RX VERIFICATION PENDING` (D17) | 07 §7 |
+| PV2 | Product | ~~Storage~~ → both horizons (D18): Now = state on order row; Future = Type 1 lead | 07 §8 |
+| PV3 | Product | ~~Arm B?~~ → yes (D19). Open: incentive/attribution model (07 §9.2) | 07 §9 |
+| PV4 | Product | v1 enhancement set (07 §4) | 07 §4 |
+| PV5 | Product | ~~Abandon rule~~ → configurable (D21); default values to confirm (07 §11) | 07 §11 |
+| PV6 | Product | ~~After-hours?~~ → yes (D22) | 07 §12 |
+| PV7 | — | ~~Incentive structure~~ out of scope (D25) | 07 §9.2 |
+| PV8 | — | ~~Arm B attribution/incentive~~ out of scope (D25); callout only | 08 §7 |
+| PV9 | Product | Can an ACOM agent change medicines on a Type 1 cart, or only qty/remove? | 07 §10 |
+| PV10 | Product | Confirm abandon-rule defaults (3 attempts, 24 working h, 2 h checkout window) | 07 §11 |
+
+## Abandoned Type 1 → ACOM (incl. mid-flow) — see `08` §8
+| ID | Type | Question | Source |
+|---|---|---|---|
+| MQ1 | Backend | ~~What's stored at upload~~ → framed as requirements REQ-L1–L7 (D30); engineering to answer | 08 §10 |
+| MQ2 | Product | ~~Nudge vs call~~ → call regardless; nudge in comms track (D28) | 08 §9 |
+| MQ3 | Product | ~~Trigger~~ → 30 min, configurable (D29) | 08 §9 |
+| MQ4 | Product | Type 1 priority for Rx-only leads: **TBD brainstorm**; for now ACOM logic minus value filter (D29). Ranking-score default for zero-value leads (REQ-Q3) | 08 §10.2 |
+| MQ5 | Data | Can we track the abandon step (M1/M2/M3) without an app release? | 08 §3 |
+| MQ6 | Data | ~~55K = this population?~~ → yes (D31) | 08 §9 |
+| MQ7 | Product | **ACOM agent creates the order from an Rx over the call** (Swapnil's lean): tooling, Rx validation route, agent skill guardrail | 08 §10.3 |
+| VQ1 | Product | Treat V (never verified) as the first slice of W1b allocation? | 08 §11 |
+| VQ2 | Product | Verification SLA value (default 2 working hours) | 08 §11 |
+| VQ3 | Product | Pick from V1–V7 (lean V1+V3+V2+V6) | 08 §11 |
+| RQ1 | Product | APP-1 CTA wording (lean "Send to pharmacist") | 09 §3 |
+| RQ2 | Product | Confirm the Now / Later split of portal changes | 09 §2 |
+
+## OMS: request state + experiment + abandoned leads (W1a) — see `06` §7
+| ID | Type | Question | Source |
+|---|---|---|---|
+| OQ1 | Product | ~~P1 vs P2~~ direction set by D16 (pharmacist creates the order); storage now PV2 | 06 §3 |
+| OQ2 | Backend | Can a portal-created incomplete cart (49/400) be checked out in the app today with no release? (Arm B depends on it) | 06 §4 |
+| OQ3 | Product | Arm B: send the cart without a call (B1) or after a short call (B2)? | 06 §4 |
+| OQ4 | Product | Arm B fallback: one pharmacist call, then ACOM? Timeout X hours? | 06 §4 |
+| OQ5 | Product | Arm A abandonment trigger (holds / attempts / hours)? | 06 §5 |
+| OQ6 | Product | Type 1 cart leads: ACOM ₹900 threshold or Type 1-specific? | 06 §5.2 |
+| OQ7 | Product | Rx-only leads: R1 (digitise first) + R2 (ACOM qualifies → Rank-Up to pharmacist)? | 06 §5.3 |
+| OQ8 | Product | Abandoned request = sales lead (DNC applies)? | 06 §5.2 |
+| OQ9 | Product | Conflict with an existing open cart-abandon lead for the same customer? | 06 §5.2 |
+| OQ10 | Data | OP restated, or target moved to Request → OD? (with EQ7) | 06 §6 |
+
+## Allocation (W1b)
 | ID | Type | Question | Source |
 |---|---|---|---|
 | AQ1 | Backend | Is the Type 1 queue **pure LIFO**, or is there any time-of-day/backlog rule in the backend? | 05 §5 |
@@ -15,7 +61,7 @@ Consolidated 2026-10-09 from docs 00–05. Type: Product / Backend / UX / Data. 
 ## Engagement: order → request (W1a)
 | ID | Type | Question | Source |
 |---|---|---|---|
-| EQ1 | Product | B-lite **Level 1 only**, or **Level 1 + 2**? | 04 §5 |
+| EQ1 | Product | ~~B-lite level~~ superseded by D15 (request state + experiment) | 04 §5 |
 | EQ2 | Backend | Which app texts are **server-driven** (tracker steps, status names, "Order placed" title)? | 04 §5 |
 | EQ3 | Backend | Does our WhatsApp provider support **interactive reply buttons**? | 04 §5 |
 | EQ4 | Product | Approval **timeout** before falling back to the pharmacist call (suggested 1–2 working hours). | 04 §5 |

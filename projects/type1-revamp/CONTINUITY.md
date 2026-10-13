@@ -26,6 +26,8 @@
 | R2 | **Type 1 only.** Don't mix allocation/ranking logic from other modules (doctor pool, HGS, ACOM, Project South) into Type 1. Park it in `docs/parked-other-module-allocation.md`. | 2026-10-08 |
 | R3 | **No app release for now** (app is in experimentation). Solutions must ship via **backend + pharmacist portal**. App-side ideas are parked. | 2026-10-08 |
 | R4 | **Minimum effort, maximum impact**, one workstream at a time, then close it. | 2026-10-08 |
+| R9 | **Problem statements: no numbers, no competitor names.** | 2026-10-13 |
+| R8 | **No portal revamp.** Small, targeted changes on the current portal; structural work waits for Portal Unification. | 2026-10-12 |
 | R5 | Label every fact: `[CONFIRMED]` (Swapnil said so) · `[DOC]` (PM-agent repo) · `[CODE]` (portal code) · `[INFERRED]` · `[OPEN]`. Never invent product logic. | 2026-10-05 |
 | R6 | Plain language, concise; the user reads on a busy schedule. | — |
 | R7 | Don't commit/push to GitHub unless Swapnil asks. | — |
@@ -39,14 +41,15 @@
 | Discovery | TM vs 1mg evaluation + critique | ✅ Done | `docs/01-evaluation.md`, `docs/02-critique.md` |
 | Business case | OP 1,333 → 1,750/day, OD 133 → 250/day | ✅ Captured | `docs/00-opportunity-sizing.md` |
 | Portal analysis | Type 1 + Create Order flows, findings P1–P21 | ✅ Done | `docs/03-portal-analysis.md` |
-| **W1a Engagement** | Order → request (backend + portal only) | ⏸ Options ready (B-lite L1/L2); **awaiting Swapnil's pick** | `docs/04-brainstorm-w1-order-to-request.md` §4b |
-| **W1b Allocation** | Type 1 queue: after-hours orders reached last | ▶ **Current.** Current logic + problem + scope A1–A6 captured; **awaiting go-ahead to brainstorm fixes** | `docs/05-allocation-current-logic.md` |
-| W2a Leads → ACOM | Abandoned Rx uploads as leads | Not started | — |
+| **W1a OMS** | Request `RX VERIFICATION PENDING`; pharmacist creates the order; Arm A/B; all abandoned journeys → ACOM | ✅ **Closed for now** (D35). PRD v0.2 (D36: no validity gate, tag only); open items E1–E4 (eng), P1–P5 (product) | `docs/10-oms-prd.md` (history: 06–08) |
+| **W1b Allocation** | Type 1 queue: after-hours orders reached last + never-verified requests (V, from 08 §11) | ⏭ **Next candidate.** Current logic + problem + scope A1–A6 + V options captured | `docs/05-allocation-current-logic.md` |
+| W2a Leads → ACOM | Abandoned Rx uploads as leads | Folded into W1a (`08`) | `docs/08-…` |
+| **Portal approach** | No revamp; current portal + small changes until Unification (D34) | Draft road ahead, **awaiting review** | `docs/09-portal-road-ahead.md` |
 | W2b/c Search + OOS | Search quality, OOS instrumentation, substitutes | Not started | — |
 | W2d Coupons | Coupon visibility on portal | Not started | — |
 | W3 App journey | Parked (R3) | Parked | — |
 
-**Next exact step:** wait for Swapnil's go-ahead → brainstorm Type 1 allocation fixes for gaps A1–A6 (backend + portal only), min effort / max impact.
+**Next exact step:** Swapnil reviews `11-problem-statement.md` → fold into PRD §2 → break problems into workstreams. (Engineering checks E1–E4 in parallel.)
 
 ---
 
@@ -63,6 +66,13 @@ type1-revamp/
 │   ├── 03-portal-analysis.md     pharmacist portal: Type 1 + Create Order, scope W1–W3, PM-agent context
 │   ├── 04-brainstorm-w1-order-to-request.md   W1 engagement options (A/B/C → B-lite)
 │   ├── 05-allocation-current-logic.md         Type 1 allocation: logic, problem, scope A1–A6
+│   ├── 06-brainstorm-oms-request-state.md     OMS: request state, Arm A/B, abandoned → ACOM
+│   ├── 07-pending-verification-state.md       Pending Verification state model + enhancements E1–E15
+│   ├── 08-abandoned-type1-leads-acom.md       abandon taxonomy (incl. mid-flow) → ACOM leads
+│   ├── 09-portal-road-ahead.md                current portal now vs Unification later; CTA options
+│   ├── 10-oms-prd.md                     ✅ OMS closed: lean PRD (v0.2)
+│   ├── 11-problem-statement.md                all problems we're solving (draft → PRD §2)
+│   ├── 12-portal-issues-observed.md           portal issues by screen + top 10
 │   ├── parked-other-module-allocation.md      other modules' logic (reference only, R2)
 │   └── context/
 │       ├── session_handoff.md    exact resume point
@@ -95,4 +105,14 @@ type1-revamp/
 |---|---|---|
 | 2026-10-05 | Project start; Step 1 evaluation; Step 2 critique; stepwise rule set | 1–2 |
 | 2026-10-08 | Scope expanded (W1–W3); portal analysis; Apurva's repo update read; W1 options; no-app constraint; sizing sheet; allocation logic (Type 1 isolated) | 3–11 |
-| 2026-10-09 | Allocation: hours, Hold/Schedule, discovery problem, scope A1–A6; project moved to `projects/type1-revamp/` with continuity files | 12–13 |
+| 2026-10-09 | Allocation: hours, Hold/Schedule, discovery problem, scope A1–A6; project moved to `projects/type1-revamp/` with continuity files; OMS scope reframed + brainstorm (doc 06) | 12–14 |
+| 2026-10-12 | D16: request = Pending Verification, pharmacist creates the order; enhancements doc 07 | 15 |
+| 2026-10-12 | Picks D17–D23 (status name, Now/Future, Arm B + incentives, ACOM leads, configurable rule, after-hours, future real-time scope) | 16 |
+| 2026-10-12 | D24 mid-flow abandon → ACOM; D25 incentives out of scope; doc 08 | 17 |
+| 2026-10-12 | D26–D32: abandon taxonomy picks, V stays in Type 1, ACOM value filter, requirements, app reqs parked; V brainstorm | 18 |
+| 2026-10-12 | D33 CTA wording open; D34 portal: no revamp, current portal until Unification; doc 09 | 19 |
+| 2026-10-12 | OMS closed for now: PRD v0.1 (D35); V moved to W1b | 20 |
+| 2026-10-12 | D36 no Rx-validity gate (tag only); PRD v0.2 | 21 |
+| 2026-10-13 | PRD feedback: full problem statement (doc 11); D37–D39 (three ways to finish; call first) | 22 |
+| 2026-10-13 | Portal issues observed from mock flow (doc 12) | 23 |
+| 2026-10-13 | D40 portal fix list (8); C6 added to problem statement | 24 |
