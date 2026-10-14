@@ -91,10 +91,33 @@ Consolidated 2026-10-09 from docs 00–05. Type: Product / Backend / UX / Data. 
 | BQ4 | Data | What exactly are the "55K stagnant opportunities"? | 00 |
 | BQ5 | Product | Scope: app only, or web/m-site too? | 01 Q4 |
 
+## Main doc `13` Part A (OMS), 2026-10-13
+| ID | Type | Question | Source |
+|---|---|---|---|
+| E3 | Backend | Which app status texts are sent by the backend vs written into the app? | 13 A |
+| E4 | Backend | Neutral ranking default for Rx-only ACOM leads | 13 A |
+| A-Q3 | Product | Call-result reason list (Swapnil + Pharmacy ops) | 13 A4 |
+| A-Q4 | Product | Removal state final name (lean `CLOSED - NOT ACTIONABLE`); skips ACOM ✅ D51 | 13 A4 |
+| A-Q6 | Product | Flow 1 (no call) when the customer already has a cart | 13 A1a |
+| A-Q7 | Product/Compliance | "Asked not to call" also blocks the ACOM lead? | 13 A4 |
+
+## PRD v1.0 review (Apurva, 2026-10-14) — pending Swapnil's go-ahead
+| ID | Type | Question / change | Source |
+|---|---|---|---|
+| RV1 | Product | Limit ACOM to uploads never sent for verification; after submission everything closes with a reason (reverses D20/D26/D62 parts) | Comments 1, 3, 4 |
+| RV2 | Product | Rebuild the PRD around user stories (customer, pharmacist, ACOM agent); move detail to an annexure | Comment 2 |
+| RV3 | Product | Treat Rx + cart-items uploads (Type 2) in the same flow | Comment 11 |
+| RV4 | Product | Reason table: declined reasons → Closed with reason, not ACOM lead | Swapnil + comment 4 |
+| RV5 | Edit | CTA creates the request, not the upload; P1 adds "customers think we have everything"; remove OP GMV; specific metrics; rename OMS requirements; expected-call-time display; substitutes for in-stock medicines priced against the selected original | Comments 5–10, 12 |
+
 ## Resolved
 | ID | Question | Decision | Date |
 |---|---|---|---|
 | R1 | Which app is the pink-UI reference? | PlatinumRx; excluded from scope (D02) | 2026-10-05 |
 | R2 | Pharmacist working hours | Assume 09:00–19:00 (D10) | 2026-10-09 |
 | R3 | What does "Hold — not resolved by the admin" mean? | Call not connected → out of queue 1 h; Schedule = customer-requested delay (D11) | 2026-10-09 |
+| R5 | E1 portal cart → app cart with no release? | Yes, already works; draft + "Create cart" (D44) | 2026-10-13 |
+| R6 | E2 Rx uploaded not submitted | Same as today's abandoned cart (D45) | 2026-10-13 |
+| R7 | Who picks the flow / cart state name / unusable upload / keep status name | Experiment (D47) / `CART CREATED`, "Create cart"/"Create order" (D46) / call or remove (D48) / yes (D49) | 2026-10-13 |
+| R8 | A-Q5 existing customer cart | Show it to the pharmacist, edit on the call, customer confirms (D52) | 2026-10-13 |
 | R4 | W1 option A / B / C? | Superseded by no-app constraint → B-lite (D05, D06); level still open (EQ1) | 2026-10-08 |

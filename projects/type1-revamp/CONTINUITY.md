@@ -4,6 +4,8 @@
 
 **Owner:** Swapnil Singh (swapnil.singh@truemeds.in) · **Started:** 2026-10-05 · **Last updated:** 2026-10-13
 
+**Main doc (Google):** [PRD - Type 1, tab "PRD"](https://docs.google.com/document/d/1YwoJwH8j08sYYtvNcFXhXP7NqcSXkXyN7-EQZp398IU/edit?tab=t.ety8nis1n1hj), a mirror of `docs/13-oms-problem-and-solution.md`. The `.md` is the source; after each agreed change, update the `.md`, then the same Google Doc tab (re-read first; the "Notes" tab is Swapnil's own; never touch it. Swapnil also edits the PRD tab directly, so diff it before each write and mirror his edits back into the `.md`).
+
 ---
 
 ## 1. Read order (every session, in this order)
@@ -51,7 +53,13 @@
 | W2d Coupons | Coupon visibility on portal | Not started | — |
 | W3 App journey | Parked (R3) | Parked | — |
 
-**Next exact step:** Swapnil reviews `11-problem-statement.md` → fold into PRD §2 → break problems into workstreams. (Engineering checks E1–E4 in parallel; optional PR to `main`.)
+**Next exact step (2026-10-14):** apply the PRD v1.0 review. Full PRD is the Google Doc tab "PRD v1.0" (source `docs/15-type1-prd.md`); the "PRD" tab is the problem-and-solution working doc (`docs/13-…`); clickable journey mock `docs/14-type1-journey-mock.html`.
+
+**Last feedback (Apurva Shetty, PRD review, 2026-10-14) — waiting for Swapnil's go-ahead on RV1–RV3 before rewriting:**
+- ACOM wrongly captured: keep ACOM only for uploads never sent for verification; declines/failed calls/unchecked carts close with a reason (RV1, RV4).
+- Too cramped: simplify, use user stories (customer, pharmacist, ACOM agent), annex the detail (RV2).
+- Cover Rx + cart-items uploads (Type 2) in the same flow (RV3).
+- Fixes: CTA creates the request (not the upload); "Order placed" makes customers think we have everything; drop OP GMV; specific metrics; don't call requirements "OMS"; show expected call time; substitutes for in-stock medicines priced against the original (RV5).
 
 ---
 

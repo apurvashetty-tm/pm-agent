@@ -1,0 +1,404 @@
+<title>Type 1 Journey Mock</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: walkthrough console. Screen list left, a working Truemeds phone prototype centre, "what happens underneath" right. Stacks on narrow screens. */
+:root{
+  --bg:#f2f5f9; --panel:#ffffff; --ink:#15212f; --muted:#5b6b7d; --line:#dbe3ec;
+  --accent:#1b6fe0; --accent-soft:#e7f0fc; --warn:#a85f00; --warn-soft:#fff3df;
+  /* phone = Truemeds app look, identical in both themes */
+  --tm-blue:#1a6ee0; --tm-blue-d:#0f4fae; --tm-blue-soft:#eaf3fd; --tm-blue-line:#bcd6f6;
+  --tm-green:#178a55; --tm-green-soft:#e5f4ec; --tm-ink:#1d2733; --tm-muted:#6a7684; --tm-line:#e3e8ee;
+  --tm-bg:#ffffff; --tm-chip:#f1f4f8; --tm-amber:#fff4d9; --tm-amber-ink:#8a5a00; --tm-purple:#7b3fe4; --tm-navy:#0f2a5c; --tm-red:#c93a3a;
+  --f-ui:"Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono:"JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#0e151e;--panel:#151f2b;--ink:#e6edf5;--muted:#9aabbd;--line:#263343;--accent:#5b9bff;--accent-soft:#1a2a40;--warn:#f0b04a;--warn-soft:#2e2412;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0e151e;--panel:#151f2b;--ink:#e6edf5;--muted:#9aabbd;--line:#263343;--accent:#5b9bff;--accent-soft:#1a2a40;--warn:#f0b04a;--warn-soft:#2e2412;color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-ui);font-size:15px;line-height:1.5}
+button{font-family:inherit}
+.wrap{max-width:1280px;margin:0 auto;padding-inline:16px;padding-block:22px 48px;display:flex;flex-direction:column;gap:16px}
+header h1{font-size:25px;margin:0;letter-spacing:-.01em;text-wrap:balance}
+header p{margin:4px 0 0;color:var(--muted);max-width:78ch}
+.tabs{display:flex;gap:8px;flex-wrap:wrap}
+.tab{border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:999px;padding:8px 16px;font-weight:600;font-size:14px;cursor:pointer}
+.tab[aria-selected="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.grid{display:grid;grid-template-columns:240px 380px minmax(0,1fr);gap:20px;align-items:start}
+@media (max-width:1060px){.grid{grid-template-columns:1fr}}
+.rail{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:8px;display:flex;flex-direction:column;gap:2px}
+.rail .grp{font:600 11px var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding:10px 10px 4px}
+.step{display:flex;gap:10px;align-items:center;text-align:left;border:0;background:none;color:var(--ink);padding:7px 10px;border-radius:9px;cursor:pointer;font-size:13.5px;font-weight:500}
+.step .n{flex:0 0 22px;height:22px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;font:600 11px var(--f-mono);color:var(--muted)}
+.step[aria-current="true"]{background:var(--accent-soft)}
+.step[aria-current="true"] .n{background:var(--accent);border-color:var(--accent);color:#fff}
+.stage{display:flex;flex-direction:column;align-items:center;gap:10px}
+.phone{position:relative;width:360px;max-width:100%;height:740px;background:var(--tm-bg);border-radius:38px;border:10px solid #1b222b;box-shadow:0 24px 50px -28px rgba(10,30,60,.5);overflow:hidden;display:flex;flex-direction:column;color:var(--tm-ink);font-size:14px}
+.sb{display:flex;justify-content:space-between;padding:9px 18px 5px;font-weight:600;font-size:12px;flex:0 0 auto}
+#app{flex:1;min-height:0;display:flex;flex-direction:column;position:relative}
+.scr{flex:1;min-height:0;display:flex;flex-direction:column}
+.scroll{flex:1;min-height:0;overflow:auto}
+.hint{font-size:12.5px;color:var(--muted);text-align:center;max-width:360px}
+.demo{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;max-width:380px}
+.dbtn{border:1px dashed var(--warn);background:var(--warn-soft);color:var(--warn);border-radius:999px;padding:5px 11px;font-size:12.5px;font-weight:600;cursor:pointer}
+.notes{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.notes h2{margin:0;font-size:19px;text-wrap:balance}
+.kicker{font:600 11px var(--f-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.blk{display:flex;flex-direction:column;gap:4px}
+.blk h3{margin:0;font:600 11.5px var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+.blk p,.blk ul{margin:0;max-width:66ch}
+.blk ul{padding-left:18px;display:flex;flex-direction:column;gap:3px}
+.state{font:600 12.5px var(--f-mono);background:var(--accent-soft);color:var(--accent);padding:2px 7px;border-radius:5px}
+
+/* ---------- Truemeds phone components ---------- */
+.nav{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--tm-line);font-weight:600;font-size:16px;flex:0 0 auto}
+.icon-btn{border:0;background:none;padding:2px;cursor:pointer;color:var(--tm-ink);display:grid;place-items:center}
+.pad{padding:16px;display:flex;flex-direction:column;gap:14px}
+.foot{padding:12px 16px 16px;border-top:1px solid var(--tm-line);display:flex;flex-direction:column;gap:8px;background:#fff;flex:0 0 auto}
+.cta{border:0;background:var(--tm-blue);color:#fff;border-radius:12px;padding:13px;font-weight:700;font-size:15px;cursor:pointer;width:100%}
+.cta:disabled{background:#b9c7d8;cursor:not-allowed}
+.cta.ghost{background:#fff;color:var(--tm-blue);border:1.5px solid var(--tm-blue)}
+.cta.green{background:var(--tm-green)}
+.h1{font-size:20px;font-weight:700;line-height:1.3;letter-spacing:-.01em}
+.h2{font-size:16px;font-weight:700}
+.sub{color:var(--tm-muted);font-size:13px;line-height:1.45}
+.card{border:1px solid var(--tm-line);border-radius:14px;padding:12px 14px;display:flex;flex-direction:column;gap:6px;background:#fff}
+.soft{background:var(--tm-blue-soft);border-radius:14px;padding:12px 14px}
+.row{display:flex;justify-content:space-between;gap:10px;align-items:center}
+.chip{display:inline-flex;align-items:center;gap:4px;background:var(--tm-chip);border-radius:6px;padding:2px 8px;font-size:11px;font-weight:700;color:var(--tm-muted)}
+.chip.g{background:var(--tm-green-soft);color:var(--tm-green)}
+.chip.b{background:var(--tm-blue-soft);color:var(--tm-blue)}
+.chip.p{background:#f1e9fe;color:var(--tm-purple)}
+.link{border:0;background:none;color:var(--tm-blue);font-weight:600;cursor:pointer;padding:0;font-size:13px}
+.drop{border:1.5px dashed var(--tm-blue-line);background:var(--tm-blue-soft);border-radius:16px;padding:20px 16px;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;cursor:pointer;color:var(--tm-ink)}
+.drop .big{width:48px;height:48px;border-radius:14px;background:#fff;display:grid;place-items:center;color:var(--tm-blue);box-shadow:0 4px 12px -6px rgba(26,110,224,.5)}
+.thumbs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.thumb{position:relative;aspect-ratio:3/4;max-width:100%;border-radius:12px;border:1px solid var(--tm-line);overflow:hidden;background:repeating-linear-gradient(0deg,#fff 0 11px,#eef2f6 11px 12px)}
+.thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.thumb .x{position:absolute;top:4px;right:4px;width:22px;height:22px;border-radius:50%;border:0;background:rgba(20,30,40,.7);color:#fff;font-size:12px;cursor:pointer}
+.thumb .ok{position:absolute;left:4px;bottom:4px;background:var(--tm-green);color:#fff;border-radius:6px;font-size:10px;font-weight:700;padding:1px 6px}
+.thumb.add{display:grid;place-items:center;background:#fff;border-style:dashed;border-color:var(--tm-blue-line);color:var(--tm-blue);font-weight:600;font-size:12.5px;cursor:pointer;text-align:center}
+.steps3{display:flex;flex-direction:column;gap:10px}
+.s3{display:flex;gap:12px;align-items:flex-start}
+.s3 .b{flex:0 0 28px;height:28px;border-radius:50%;background:var(--tm-blue-soft);color:var(--tm-blue);display:grid;place-items:center;font-weight:700;font-size:13px}
+.s3 b{display:block;font-size:13.5px}
+.opt{border:1.5px solid var(--tm-line);border-radius:14px;padding:12px 14px;display:flex;gap:12px;align-items:flex-start;cursor:pointer;background:#fff;text-align:left;width:100%}
+.opt[aria-checked="true"]{border-color:var(--tm-blue);background:var(--tm-blue-soft)}
+.radio{flex:0 0 18px;height:18px;border-radius:50%;border:2px solid #9aa7b5;margin-top:2px}
+.opt[aria-checked="true"] .radio{border-color:var(--tm-blue);background:radial-gradient(circle,var(--tm-blue) 0 4px,#fff 5px)}
+.opt b{display:block;font-size:14px}
+.ticks{display:flex;flex-direction:column;gap:6px}
+.tick{display:flex;gap:8px;align-items:center;font-size:13.5px}
+.tick::before{content:"";flex:0 0 18px;height:18px;border-radius:50%;background:var(--tm-green-soft) center/10px no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 8'%3E%3Cpath d='M1 4l3 3 5-6' fill='none' stroke='%23178a55' stroke-width='1.8'/%3E%3C/svg%3E")}
+.overlay{position:absolute;inset:0;background:rgba(15,25,35,.45);display:flex;flex-direction:column;justify-content:flex-end;z-index:5}
+.sheet{background:#fff;border-radius:22px 22px 0 0;padding:18px 16px 20px;display:flex;flex-direction:column;gap:12px;max-height:88%;overflow:auto}
+.sheet .grab{width:40px;height:4px;border-radius:4px;background:#d5dce4;margin:0 auto -4px}
+.src{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.srcb{border:1.5px solid var(--tm-blue-line);border-radius:14px;background:#fff;padding:14px 6px;display:flex;flex-direction:column;align-items:center;gap:6px;color:var(--tm-blue);font-weight:600;font-size:12.5px;cursor:pointer;text-align:center}
+.infobox{background:var(--tm-blue-soft);border-radius:12px;padding:10px 12px;font-size:12.5px;color:var(--tm-ink)}
+.infobox ul{margin:4px 0 0;padding-left:18px}
+.addr{border:1.5px solid var(--tm-line);border-radius:14px;padding:12px;display:flex;gap:10px;cursor:pointer;background:#fff;text-align:left;width:100%}
+.addr[aria-checked="true"]{border-color:var(--tm-blue)}
+.seg{display:grid;grid-template-columns:repeat(4,1fr);gap:5px}
+.seg i{height:5px;border-radius:5px;background:#e3e8ee;overflow:hidden;position:relative}
+.seg i.done{background:var(--tm-green)}
+.seg i.now::after{content:"";position:absolute;inset:0;width:var(--w,40%);background:var(--tm-green);border-radius:5px;transition:width .6s}
+.hero-live{background:linear-gradient(180deg,var(--tm-blue-soft),#fff);padding:18px 16px 6px;display:flex;flex-direction:column;gap:10px}
+.timer{font:800 32px var(--f-ui);letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.ph{display:flex;gap:12px;align-items:center}
+.avatar{flex:0 0 46px;height:46px;border-radius:50%;background:linear-gradient(135deg,#cfe2f8,#a9c8f2);display:grid;place-items:center;font-weight:800;color:var(--tm-blue-d);position:relative}
+.avatar .on{position:absolute;right:-1px;bottom:-1px;width:13px;height:13px;border-radius:50%;background:var(--tm-green);border:2px solid #fff}
+.feed{display:flex;flex-direction:column;gap:0}
+.fi{display:flex;gap:10px;padding:8px 0;font-size:13px;border-bottom:1px dashed var(--tm-line);animation:in .35s ease both}
+.fi:last-child{border-bottom:0}
+.fi time{flex:0 0 40px;color:var(--tm-muted);font-variant-numeric:tabular-nums;font-size:12px}
+.save-pill{background:var(--tm-green-soft);color:var(--tm-green);border-radius:12px;padding:10px 12px;display:flex;justify-content:space-between;font-weight:700}
+.tip{background:#f6f1ff;border-radius:12px;padding:10px 12px;font-size:12.5px}
+.tip b{color:var(--tm-purple)}
+.item{display:flex;gap:10px;padding:12px 0;border-bottom:1px solid var(--tm-line)}
+.item:last-child{border-bottom:0}
+.pill-img{flex:0 0 46px;height:46px;border-radius:10px;background:var(--tm-chip);display:grid;place-items:center;font-size:20px}
+.item .nm{font-weight:600;font-size:13.5px}
+.price{font-variant-numeric:tabular-nums;white-space:nowrap;text-align:right;font-weight:700}
+.strike{color:var(--tm-muted);text-decoration:line-through;font-weight:500;font-size:12px}
+.qty{display:inline-flex;align-items:center;border:1px solid var(--tm-blue-line);border-radius:8px;overflow:hidden}
+.qty button{border:0;background:#fff;color:var(--tm-blue);width:28px;height:26px;font-weight:700;cursor:pointer}
+.qty span{min-width:22px;text-align:center;font-weight:700;font-size:13px}
+.bill .row{font-size:13.5px;padding:3px 0}
+.green-top{background:var(--tm-green);color:#fff;padding:28px 18px 24px;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center}
+.green-top .h1{color:#fff;font-size:24px}
+.check{width:64px;height:64px;border-radius:50%;background:#fff;color:var(--tm-green);display:grid;place-items:center;font-size:30px;font-weight:800;animation:pop .45s ease both}
+.next{display:flex;flex-direction:column}
+.nx{display:flex;gap:12px;padding:8px 0;align-items:flex-start}
+.nx .d{flex:0 0 22px;height:22px;border-radius:50%;border:2px solid var(--tm-line);display:grid;place-items:center;font-size:11px;color:#fff;margin-top:1px}
+.nx .d.done{background:var(--tm-green);border-color:var(--tm-green)}
+.nx .d.now{border-color:var(--tm-blue);box-shadow:0 0 0 4px var(--tm-blue-soft)}
+.nx.dim b{color:var(--tm-muted);font-weight:500}
+.home-top{background:linear-gradient(180deg,#dcebfb,#f3f8fe);padding:10px 16px 16px;display:flex;flex-direction:column;gap:12px}
+.search{background:#fff;border:1px solid var(--tm-blue-line);border-radius:14px;padding:11px 14px;color:var(--tm-muted);display:flex;gap:8px;align-items:center}
+.banner{display:flex;flex-direction:column;gap:2px}
+.banner .big{font-size:24px;font-weight:800;color:var(--tm-navy);line-height:1.15}
+.banner .pur{color:var(--tm-purple);font-weight:700}
+.livestrip{background:var(--tm-green-soft);border-top:1px solid #cfe8db;padding:10px 14px;display:flex;gap:10px;align-items:center;cursor:pointer;border-left:0;border-right:0;border-bottom:0;width:100%;text-align:left}
+.bnav{display:grid;grid-template-columns:repeat(5,1fr);border-top:1px solid var(--tm-line);padding:8px 0 10px;font-size:11px;text-align:center;color:var(--tm-muted);flex:0 0 auto}
+.bnav b{color:var(--tm-blue)}
+.toast{position:absolute;left:12px;right:12px;top:10px;background:#1e2a36;color:#fff;border-radius:12px;padding:10px 12px;font-size:12.5px;z-index:6;animation:in .3s ease both}
+.callscr{flex:1;background:linear-gradient(180deg,#0f3d2b,#0a2a1e);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;padding:24px}
+.callscr .who{font-size:22px;font-weight:700}
+.callbtns{display:flex;gap:40px;margin-top:40px}
+.round{width:58px;height:58px;border-radius:50%;border:0;color:#fff;font-size:22px;cursor:pointer}
+.amber{background:var(--tm-amber);color:var(--tm-amber-ink);border-radius:12px;padding:10px 12px;font-size:13px}
+.changed{outline:2px dashed #e39b2d;outline-offset:3px;border-radius:10px}
+@keyframes in{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+@keyframes pop{from{transform:scale(.6);opacity:.2}to{transform:none;opacity:1}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>Type 1 journey: Phase 1 and Phase 2</h1>
+    <p>A working prototype of the Truemeds prescription-upload journey. Tap through the phone as a customer would; the panel on the right explains what OMS, the pharmacist portal and comms do at each screen. Names, medicines and prices are examples.</p>
+  </header>
+  <div class="tabs" role="tablist" aria-label="Phase">
+    <button class="tab" role="tab" id="tab-p2" aria-selected="true" data-phase="p2">Phase 2 · new app flow (app release)</button>
+    <button class="tab" role="tab" id="tab-p1" aria-selected="false" data-phase="p1">Phase 1 · this launch, today's app</button>
+  </div>
+  <div class="grid">
+    <nav class="rail" id="rail" aria-label="Screens"></nav>
+    <div class="stage">
+      <div class="phone"><div class="sb"><span id="clock">12:51</span><span>5G ▮▮▮ 93%</span></div><div id="app"></div></div>
+      <div class="hint" id="hint"></div>
+      <div class="demo" id="demo"></div>
+    </div>
+    <section class="notes" id="notes" aria-live="polite"></section>
+  </div>
+</div>
+<input type="file" id="file" accept="image/*,application/pdf" multiple hidden>
+
+<script>
+/* ---------- icons ---------- */
+const I={
+back:'<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>',
+up:'<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 16V4M6 10l6-6 6 6M4 20h16"/></svg>',
+cam:'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>',
+gal:'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="16" height="16" rx="2"/><circle cx="9" cy="9" r="1.6"/><path d="M20 16l-5-5-8 9"/></svg>',
+doc:'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 3h8l4 4v14H6z"/><path d="M9 12h6M9 16h6"/></svg>',
+phone:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 005 5L15 13l5 2v4a2 2 0 01-2 2A16 16 0 013 6a2 2 0 012-2"/></svg>',
+search:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>'
+};
+const P={name:'Priya Sharma',first:'Priya',init:'PS'};
+const fmt=n=>'₹'+n;
+
+/* ---------- state ---------- */
+const st={phase:'p2',screen:'home',rx:[],patient:0,addr:0,choice:'all',afterHours:false,live:{stage:0,t:25,feed:[],save:0},cart:null,pay:'pack',sheet:null,toast:null,branch:null};
+const newCart=()=>[
+ {id:1,nm:'Telmisartan 40mg Tablet',pk:'Strip of 15 tablets',mrp:118,pr:96,q:1,sub:null},
+ {id:2,nm:'Metformin 500mg Tablet',pk:'Strip of 15 tablets',mrp:54,pr:32,q:2,sub:{from:'Glycomet 500 SR',same:'Same composition: Metformin 500mg'}},
+ {id:3,nm:'Atorvastatin 10mg Tablet',pk:'Strip of 15 tablets',mrp:105,pr:88,q:1,sub:null}];
+
+/* ---------- screen definitions (Phase 2) ---------- */
+const P2=[
+ {id:'home',t:'Home',state:'—',see:'Familiar Truemeds home. The prescription card promises what happens next (a pharmacist prepares your cart, call is free) instead of "to place your order". While a request is open, a live strip at the bottom replaces "Processing order".',oms:['The live strip reads the request\'s current stage from OMS.'],ph:[],cm:[]},
+ {id:'upload',t:'Upload prescription',state:'RX UPLOADED (draft)',see:'One clear action, a checklist of what a usable prescription shows, and the three next steps so the customer knows the call is coming. Thumbnails with a quality tick; add more; remove.',oms:['Each upload is saved straight away as a draft request (RX UPLOADED).','If the customer leaves and stays inactive for 30 minutes (configurable), the draft becomes an ACOM lead, the same way as an abandoned cart, tagged with the step they stopped at.','Medicine-strip photos are accepted; the pharmacist tags each upload Prescription / Not a prescription later. Nothing is rejected here.'],ph:[],cm:[]},
+ {id:'patient',t:'Patient & address',state:'RX UPLOADED (draft)',see:'Today\'s Truemeds patient and address screen. No payment mode, coupon or delivery date: those need a real cart.',oms:['Stop step recorded on the draft for the ACOM lead.'],ph:[],cm:[]},
+ {id:'choice',t:'Choose & send',state:'RX UPLOADED → RX VERIFICATION PENDING',see:'The customer picks how the cart is prepared, sees what the pharmacist will do and a live estimate, then taps Send to pharmacist. After hours the screen says calls start at 9 AM.',oms:['Send creates the request in RX VERIFICATION PENDING. It is a request, not an order, and is counted as a request.','The choice sets the flow: "Add all medicines" → flow 1 (pharmacist adds the full Rx, customer checks out). "Call me first" → flow 2 or 3, settled on the call.','The doctor consultation still happens for every order.'],ph:['The request shows the customer\'s choice.'],cm:[]},
+ {id:'save',t:'Save our number',state:'RX VERIFICATION PENDING',see:'One-time prompt to save the pharmacist number so the call isn\'t ignored or flagged as spam (also offered at install and as a home nudge).',oms:[],ph:[],cm:[]},
+ {id:'live',t:'Live status',state:'RX VERIFICATION PENDING · live stages',see:'The waiting screen: a countdown to pharmacist assignment, then the named pharmacist, then a live feed of what they are doing (medicines found, substitute found, coupon applied) and a running savings total. "Call me now" is always there. The customer can leave; the home strip keeps the status.',oms:['Stages come from OMS events: received → pharmacist assigned (request opened) → preparing cart (first item added) → cart created.','Low fill: if the fill rate is below the configurable threshold, the request closes with "Fill rate below threshold" and this screen shows the cannot-prepare state. No ACOM lead.'],ph:['Queue order: first-time customers first; then callbacks the customer asked for; due scheduled or held requests; past-SLA requests; fresh requests by score; backlog.','The pharmacist builds a draft cart; the customer sees items only on Create cart.','Substitutes come from the existing substitution logic; the best coupon is applied.'],cm:['No WhatsApp or SMS while the customer is on this screen. If they leave, one push or WhatsApp at the next stage change.']},
+ {id:'ready',t:'Cart is ready',state:'CART CREATED',see:'A short success moment with the savings, then the cart opens by itself.',oms:['Create cart raises the CART CREATED event with a cart link; the app listens for it.','Flow 3 (pharmacist places the order on the call) skips the cart and payment and lands on Order placed.'],ph:[],cm:['If the customer is not in the app: one push or WhatsApp, "Your cart is ready".']},
+ {id:'cart',t:'Cart',state:'CART CREATED',see:'"Prepared by Priya". Each line shows the pack and price; substitutes say what they replace and share the composition, with an option to keep the original. Quantities editable. Coupon already applied; savings and delivery date shown.',oms:['Not checked out within the window (placeholder 2 working hours) → ACOM lead with the cart.'],ph:[],cm:[]},
+ {id:'payment',t:'Payment',state:'CART CREATED → ORDER CREATED',see:'The exact amount, then Truemeds\' usual choice including paying once the order is packed.',oms:['Place order creates the order in ORDER CREATED. Only now is it counted as an order placed.'],ph:[],cm:[]},
+ {id:'placed',t:'Order placed',state:'ORDER CREATED',see:'Truemeds\' green success screen, now true: medicines and price are known. Next steps show the doctor consultation, packing and payment. Rating prompt only after delivery.',oms:['Today\'s flow continues: doctor call, warehouse, packing, payment link, dispatch.'],ph:[],cm:[]}
+];
+const BR={
+ missed:{t:'Branch · missed call',state:'RX VERIFICATION PENDING · on hold',see:'If the pharmacist could not reach the customer, the app (opened from the missed-call message) shows a callback sheet: call me now, or pick a time.',oms:['Not connected → on hold for 1 hour, then back at the top. After the attempt limit (placeholder 3) → ACOM lead.','Call me now → top of the queue. Pick a time → Scheduled; returns on time to the same pharmacist if online.'],ph:[],cm:['Missed-call message (push or WhatsApp) only if the customer is not in the app; it deep-links to this sheet.']},
+ nofill:{t:'Branch · cannot prepare cart',state:'CLOSED · fill rate below threshold',see:'Plain explanation of why the request was closed and what to do next.',oms:['Closed with the reason "Fill rate below threshold" (or "Medicine not on Truemeds"). Not sent to ACOM.','Every unavailable or out-of-stock medicine is logged for catalogue and procurement.'],ph:['Pharmacist sees the fill rate while building the draft cart and closes the request with the reason.'],cm:['Copy to finalise with the comms track.']}
+};
+const P1=[
+ {id:'p1upload',t:'Upload prescription',state:'RX UPLOADED (draft)',see:'Today\'s screen, unchanged.',oms:['Saved as a draft request. 30 minutes of inactivity → ACOM lead.'],ph:[],cm:[]},
+ {id:'p1summary',t:'Order summary',state:'RX UPLOADED (draft)',see:'Today\'s summary, unchanged.',oms:['Still a draft; stop step recorded.'],ph:[],cm:[]},
+ {id:'p1pay',t:'Payment → Place order',state:'RX UPLOADED → RX VERIFICATION PENDING',see:'Today\'s payment screen, unchanged (removed in Phase 2).',oms:['Place order now creates a request in RX VERIFICATION PENDING, not an order, and it is not counted as an order placed.'],ph:[],cm:[]},
+ {id:'p1success',t:'Success screen',state:'RX VERIFICATION PENDING',see:'The app\'s own "Order placed" screen stays until Phase 2. Backend-sent status text changes (dashed).',oms:['The request joins the Type 1 queue.'],ph:['Assign / Next hands it to a pharmacist in queue order. Manual assignment and admin reassignment stay as today.'],cm:['A message only if the customer has left the app.']},
+ {id:'p1order',t:'Order page while waiting',state:'RX VERIFICATION PENDING',see:'Status reads "Prescription received – pharmacist will call". Delivery date and rating prompt hidden if they come from the backend (engineering check E3).',oms:[],ph:['Pharmacist tags the Rx, builds a draft cart, checks the fill rate. Below the threshold: closed with the reason.'],cm:[]},
+ {id:'p1call',t:'Pharmacist call',state:'RX VERIFICATION PENDING',see:'A call from a verified Truemeds number.',oms:['Every call ends with one specific reason and an optional note.','Not connected → on hold, retried; after the limit → ACOM lead.'],ph:['The experiment assigns the flow in Phase 1.'],cm:['Missed-call message only if the customer is not in the app.']},
+ {id:'p1cart',t:'Cart appears in the app',state:'CART CREATED',see:'Flows 1–2: on the call, the pharmacist presses Create cart and the cart appears in the customer\'s app cart. They check out there.',oms:['Not checked out in time → ACOM lead with the cart.'],ph:['Flow 3: the pharmacist presses Create order on the call instead.'],cm:[]},
+ {id:'p1done',t:'Order created',state:'ORDER CREATED',see:'The order now has medicines and a price.',oms:['Counted as an order placed. Today\'s flow continues.'],ph:[],cm:[]}
+];
+
+/* ---------- helpers ---------- */
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const nav=(title,back)=>`<div class="nav"><button class="icon-btn" data-go="${back}" aria-label="Back">${I.back}</button>${title}</div>`;
+const totals=()=>{const c=st.cart||newCart();const mrp=c.reduce((a,i)=>a+i.mrp*i.q,0),pr=c.reduce((a,i)=>a+i.pr*i.q,0),cp=Math.round(pr*0.1);return{mrp,pr,cp,pay:pr-cp,save:mrp-pr+cp}};
+
+/* ---------- Phase 2 screens ---------- */
+const V={
+home:()=>`<div class="scr"><div class="scroll"><div class="home-top">
+  <div class="row"><div><div class="sub">➤ Delivering to</div><b>Work</b> <span class="sub">| Wework, Truemeds…</span></div><span class="chip">🛒</span></div>
+  <div class="search">${I.search} Search for medicines</div>
+  <div class="banner"><div class="big">Save up to 51%</div><div>with <span class="pur">Branded Substitutes</span></div><div class="sub">✓ Same effect · ✓ Same composition</div></div></div>
+  <div class="pad"><div class="card" style="gap:10px"><div class="row" style="align-items:flex-start"><div style="display:flex;gap:10px"><div class="pill-img">📋</div><div><b>Have a prescription?</b><div class="sub">Upload it and a Truemeds pharmacist prepares your cart with the best savings</div></div></div></div>
+   <button class="cta" data-go="upload">${''}Upload prescription</button>
+   <div class="row sub"><span>Pharmacist call</span><span class="chip g">Free</span></div></div>
+   <div class="card"><div class="row"><b>Or call us to order</b><span class="sub">09240250346</span></div></div></div></div>
+  ${st.live.stage>0&&st.screen==='home'?`<button class="livestrip" data-go="live"><div class="avatar" style="flex-basis:34px;height:34px;font-size:12px">${P.init}<span class="on"></span></div><div style="flex:1"><b style="font-size:13px">Your prescription request</b><div class="sub">${stageLabel()}</div></div><span class="link">View</span></button>`:''}
+  <div class="bnav"><b>Home</b><span>Lab Tests</span><span>Categories</span><span>My Orders</span><span>Account</span></div></div>`,
+upload:()=>`<div class="scr">${nav('Upload Prescription','home')}<div class="scroll"><div class="pad">
+  <div><div class="h1">Upload your prescription</div><div class="sub">Our pharmacist reads it, adds your medicines and finds you the best savings.</div></div>
+  ${st.rx.length?`<div class="thumbs">${st.rx.map((r,i)=>`<div class="thumb">${r.src?`<img src="${r.src}" alt="Prescription ${i+1}">`:''}<button class="x" data-rm="${i}" aria-label="Remove">✕</button><span class="ok">Clear ✓</span></div>`).join('')}${st.rx.length<6?`<button class="thumb add" data-sheet="source">+ Add<br>another</button>`:''}</div>
+   <div class="sub">✓ ${st.rx.length} prescription${st.rx.length>1?'s':''} added. You can add up to 6.</div>`
+  :`<button class="drop" data-sheet="source"><span class="big">${I.up}</span><b>Upload prescription</b><span class="sub">Camera, gallery or a past prescription</span></button>`}
+  <div class="card"><div class="row"><b style="font-size:13.5px">A usable prescription shows</b><button class="link" data-sheet="guide">See example</button></div>
+   <div class="ticks"><span class="tick">Doctor's name and registration</span><span class="tick">Patient's name and date</span><span class="tick">Medicine names and dosage</span></div>
+   <div class="sub">A clear photo of the medicine strip also works.</div></div>
+  <div><b style="font-size:14px">What happens next</b></div>
+  <div class="steps3"><div class="s3"><span class="b">1</span><div><b>Pharmacist checks your prescription</b><span class="sub">A Truemeds pharmacist reviews it within minutes · <span class="chip g">Free</span></span></div></div>
+   <div class="s3"><span class="b">2</span><div><b>Your cart is prepared</b><span class="sub">Medicines added, branded substitutes suggested, best coupon applied</span></div></div>
+   <div class="s3"><span class="b">3</span><div><b>You review and order</b><span class="sub">Pay once your order is packed</span></div></div></div>
+  </div></div><div class="foot"><button class="cta" data-go="patient" ${st.rx.length?'':'disabled'}>Continue</button></div>${sheet()}</div>`,
+patient:()=>`<div class="scr">${nav('Patient & address details','upload')}<div class="scroll"><div class="pad">
+  <div class="row"><b>Select Patient</b><button class="link">+ Add Patient</button></div>
+  ${[['Swapnil','28 · Male','Me'],['Anita Singh','56 · Female','Mother']].map((p,i)=>`<button class="addr" role="radio" aria-checked="${st.patient===i}" data-pat="${i}"><span class="radio" style="${st.patient===i?'border-color:var(--tm-blue);background:radial-gradient(circle,var(--tm-blue) 0 4px,#fff 5px)':''}"></span><div style="flex:1"><b>${p[0]}</b><div class="sub">${p[1]}</div></div><span class="chip b">${p[2]}</span></button>`).join('')}
+  <div class="row"><b>Select Address</b><button class="link">+ Add Address</button></div>
+  ${[['Work (560103)','Wework, Truemeds, RMZ Millenia, Halasuru, Bengaluru'],['Home (421302)','C083, Arunam C, Amantra, Kalyan, Mumbai']].map((a,i)=>`<button class="addr" role="radio" aria-checked="${st.addr===i}" data-adr="${i}"><span class="radio" style="${st.addr===i?'border-color:var(--tm-blue);background:radial-gradient(circle,var(--tm-blue) 0 4px,#fff 5px)':''}"></span><div><b>${a[0]}</b><div class="sub">${a[1]}</div></div></button>`).join('')}
+  </div></div><div class="foot"><button class="cta" data-go="choice">Save & continue</button></div></div>`,
+choice:()=>`<div class="scr">${nav('Send to pharmacist','patient')}<div class="scroll"><div class="pad">
+  <div class="h1">How should we prepare your cart?</div>
+  <div role="radiogroup" style="display:flex;flex-direction:column;gap:10px">
+   <button class="opt" role="radio" aria-checked="${st.choice==='all'}" data-ch="all"><span class="radio"></span><div><b>Add all medicines from my prescription</b><span class="sub">Our pharmacist adds everything and calls you to confirm. You review the cart and order.</span></div></button>
+   <button class="opt" role="radio" aria-checked="${st.choice==='call'}" data-ch="call"><span class="radio"></span><div><b>Call me before adding medicines</b><span class="sub">Tell our pharmacist what you need. Good if you want only some medicines or have questions.</span></div></button></div>
+  ${st.afterHours?`<div class="amber"><b>Our pharmacists are back at 9 AM.</b> Send now and your request will be first in line in the morning.</div>`:`<div class="soft"><div class="row"><span class="sub">Usually ready in</span><b>about 10 minutes</b></div><div class="sub" style="font-size:11.5px">Live estimate from the pharmacist queue</div></div>`}
+  <div class="card"><b style="font-size:13.5px">Your pharmacist will</b><div class="ticks"><span class="tick">Add your medicines</span><span class="tick">Suggest branded substitutes with the same composition</span><span class="tick">Apply the best coupon for you</span></div></div>
+  <div class="card"><div class="row"><span class="sub">${st.rx.length||1} prescription${(st.rx.length||1)>1?'s':''} · ${['Swapnil','Anita Singh'][st.patient]}</span><button class="link" data-go="upload">Change</button></div><div class="row"><span class="sub">Delivering to ${['Work (560103)','Home (421302)'][st.addr]}</span><button class="link" data-go="patient">Change</button></div></div>
+  <div class="sub">A doctor consultation follows for every order, as today. Pharmacist call is free.</div>
+  </div></div><div class="foot"><button class="cta" data-send>Send to pharmacist</button></div>${sheet()}</div>`,
+live:()=>{const L=st.live,s=L.stage;const seg=[1,2,3,4].map(i=>`<i class="${i<s?'done':i===s?'now':''}" style="--w:${i===s?Math.min(90,30+L.feed.length*12):0}%"></i>`).join('');
+ if(st.branch==='nofill')return `<div class="scr">${nav('Prescription request','home')}<div class="scroll"><div class="pad"><div class="amber"><b>We couldn't prepare your cart</b><br>Most medicines on your prescription are unavailable right now, so we've closed this request. You won't be charged.</div>
+  <div class="card"><b style="font-size:13.5px">Not available right now</b><div class="sub">Medicine A 250mg · Medicine B 5ml syrup</div></div><div class="sub">Final copy with the comms track.</div></div></div><div class="foot"><button class="cta ghost" data-reset>Upload another prescription</button></div></div>`;
+ return `<div class="scr">${nav('Prescription request','home')}<div class="scroll"><div class="hero-live">
+  <div class="seg">${seg}</div>
+  ${s===1?`<div><div class="sub">${st.afterHours?'First in line at 9 AM':'Assigning your pharmacist'}</div><div class="timer">00:${String(L.t).padStart(2,'0')}</div><div class="sub">Truemeds pharmacists are registered and trained to get you the right medicines.</div></div>`
+  :`<div class="ph"><div class="avatar">${P.init}<span class="on"></span></div><div style="flex:1"><b>${P.name}</b><div class="sub">Registered pharmacist · Hindi, English</div></div><span class="chip g">${s>=3?'Preparing cart':'Checking Rx'}</span></div>`}
+  </div><div class="pad" style="padding-top:8px">
+  ${L.save?`<div class="save-pill"><span>Savings found so far</span><span>${fmt(L.save)}</span></div>`:''}
+  <div class="card"><b style="font-size:13.5px">Live updates</b><div class="feed">${L.feed.slice().reverse().map(f=>`<div class="fi"><time>${f[0]}</time><span>${f[1]}</span></div>`).join('')}</div></div>
+  <div class="tip"><b>Did you know?</b> Branded substitutes have the same composition and effect as the medicine on your prescription, and can save up to 51%.</div>
+  <div class="sub" style="text-align:center">You can leave this screen. We'll let you know when your cart is ready.</div>
+  </div></div><div class="foot"><button class="cta ghost" data-sheet="callme">${I.phone} Call me now</button></div>${sheet()}${toast()}</div>`},
+ready:()=>{const T=totals();return `<div class="scr"><div class="green-top" style="flex:1;justify-content:center"><div class="check">✓</div><div class="h1">Your cart is ready</div><div>Prepared by ${P.first} · you save ${fmt(T.save)}</div><div style="opacity:.85;font-size:13px;margin-top:8px">Opening your cart…</div></div></div>`},
+cart:()=>{const c=st.cart,T=totals();return `<div class="scr">${nav('Cart','live')}<div class="scroll"><div class="pad">
+  <div class="row"><div class="ph"><div class="avatar" style="flex-basis:36px;height:36px;font-size:12px">${P.init}</div><div><b style="font-size:13.5px">Prepared by ${P.first}</b><div class="sub">Need a change? Edit below or call</div></div></div><button class="link" data-sheet="callme">Call</button></div>
+  <div class="card" style="padding:4px 14px">${c.map(i=>`<div class="item"><div class="pill-img">💊</div><div style="flex:1;min-width:0"><div class="nm">${i.nm}</div><div class="sub">${i.pk}</div>
+   ${i.sub?`<div style="margin-top:4px"><span class="chip p">Substitute for ${i.sub.from}</span><div class="sub" style="font-size:11.5px;margin-top:2px">${i.sub.same} · <button class="link" style="font-size:11.5px" data-keep="${i.id}">Keep original</button></div></div>`:''}
+   <div class="row" style="margin-top:6px"><span class="qty"><button data-q="${i.id}" data-d="-1" aria-label="Fewer">−</button><span>${i.q}</span><button data-q="${i.id}" data-d="1" aria-label="More">+</button></span><span class="price">${i.mrp>i.pr?`<span class="strike">${fmt(i.mrp*i.q)}</span> `:''}${fmt(i.pr*i.q)}</span></div></div></div>`).join('')}</div>
+  <div class="card" style="flex-direction:row;align-items:center;justify-content:space-between"><div><b style="font-size:13.5px">FEST25 applied</b><div class="sub">Best coupon for this cart</div></div><span class="chip g">− ${fmt(T.cp)}</span></div>
+  <div class="card bill"><b style="font-size:13.5px">Bill details</b><div class="row"><span>Item total (MRP)</span><span class="price">${fmt(T.mrp)}</span></div><div class="row"><span>Savings with substitutes and discounts</span><span class="price" style="color:var(--tm-green)">− ${fmt(T.mrp-T.pr)}</span></div><div class="row"><span>Coupon</span><span class="price" style="color:var(--tm-green)">− ${fmt(T.cp)}</span></div><div class="row"><span>Delivery</span><span class="price" style="color:var(--tm-green)">Free</span></div><div class="row" style="border-top:1px solid var(--tm-line);padding-top:8px"><b>To pay</b><b class="price">${fmt(T.pay)}</b></div></div>
+  <div class="row sub"><span>Delivery by</span><b style="color:var(--tm-ink)">Tomorrow, 10 PM</b></div>
+  </div></div><div class="foot"><div class="row"><span class="chip g">You save ${fmt(T.save)}</span><b class="price">${fmt(T.pay)}</b></div><button class="cta" data-go="payment">Proceed to checkout</button></div>${sheet()}</div>`},
+payment:()=>{const T=totals();return `<div class="scr">${nav('Payment Options','cart')}<div class="scroll"><div class="pad">
+  <div class="soft row"><b>Amount to pay</b><b class="price">${fmt(T.pay)}</b></div>
+  ${[['pack','Pay once your order is packed','Most chosen · pay in the app after packing'],['upi','UPI','Google Pay, PhonePe, Paytm'],['cod','Cash on delivery','']].map(o=>`<button class="opt" role="radio" aria-checked="${st.pay===o[0]}" data-pay="${o[0]}"><span class="radio"></span><div><b>${o[1]}</b>${o[2]?`<span class="sub">${o[2]}</span>`:''}</div></button>`).join('')}
+  <div class="sub">PRICELOCK guarantee: the price you see is the price you pay.</div>
+  </div></div><div class="foot"><button class="cta" data-go="placed">Place order</button></div></div>`},
+placed:()=>{const T=totals();return `<div class="scr"><div class="green-top"><div class="check">✓</div><div class="h1">Order placed</div><div>Pay once your order is packed</div></div><div class="scroll"><div class="pad">
+  <div class="card"><div class="row"><b>${st.cart.length} medicines</b><b class="price">${fmt(T.pay)}</b></div><div class="sub">Delivery by tomorrow, 10 PM · you saved ${fmt(T.save)}</div></div>
+  <div class="next"><div class="nx"><span class="d done">✓</span><div><b>Order placed</b><div class="sub">Just now</div></div></div><div class="nx"><span class="d now"></span><div><b>Doctor consultation</b><div class="sub">A doctor will call to confirm your prescription</div></div></div><div class="nx dim"><span class="d"></span><div><b>Order packed</b></div></div><div class="nx dim"><span class="d"></span><div><b>Make payment</b></div></div><div class="nx dim"><span class="d"></span><div><b>Delivered</b></div></div></div>
+  </div></div><div class="foot"><button class="cta ghost" data-reset>Restart the walkthrough</button></div></div>`}
+};
+function stageLabel(){const s=st.live.stage;return st.branch==='nofill'?'Couldn\'t prepare your cart':s===1?'Assigning your pharmacist':s===2?`${P.first} is checking your prescription`:s===3?`${P.first} is preparing your cart`:'Cart is ready'}
+
+/* ---------- sheets ---------- */
+function sheet(){const s=st.sheet;if(!s)return'';
+ if(s==='source')return `<div class="overlay" data-close><div class="sheet" data-stop><div class="grab"></div><div class="row"><div class="h2">Upload a clear image of your prescription</div><button class="icon-btn" data-close aria-label="Close">✕</button></div>
+  <div class="src"><button class="srcb" data-pick="camera">${I.cam}Use Camera</button><button class="srcb" data-pick="gallery">${I.gal}Use Gallery</button><button class="srcb" data-sheet="past">${I.doc}Past Prescription</button></div>
+  <button class="link" data-sample>Use a sample prescription for this demo</button>
+  <div class="infobox"><b>Please keep in mind</b><ul><li>Doctor, patient, date and medicine details visible</li><li>JPG, JPEG, PNG, PDF, WebP or HEIC</li><li>File size under 5 MB</li></ul></div></div></div>`;
+ if(s==='past')return `<div class="overlay" data-close><div class="sheet" data-stop><div class="grab"></div><div class="row"><div class="h2">Past Prescription</div><button class="icon-btn" data-close aria-label="Close">✕</button></div>
+  <div class="chip b" style="align-self:flex-start">Swapnil (2)</div><div class="sub">Uploaded on 16 September 2026</div><div class="thumbs"><button class="thumb" data-sample aria-label="Select past prescription"></button><button class="thumb" data-sample aria-label="Select past prescription"></button></div></div></div>`;
+ if(s==='guide')return `<div class="overlay" data-close><div class="sheet" data-stop><div class="grab"></div><div class="row"><div class="h2">What a usable prescription looks like</div><button class="icon-btn" data-close aria-label="Close">✕</button></div>
+  <div class="thumb" style="aspect-ratio:4/3;max-width:100%"></div><div class="ticks"><span class="tick">Doctor's name, clinic and registration number</span><span class="tick">Patient's name, age and date</span><span class="tick">Medicine name, strength, dose and duration</span><span class="tick">Doctor's signature or stamp</span></div><button class="cta" data-close>Got it</button></div></div>`;
+ if(s==='save')return `<div class="overlay"><div class="sheet"><div class="grab"></div><div class="h2">Save our pharmacist's number</div><div class="sub">So you know it's us when ${P.first} calls. Calls come from <b>0924 025 0346 · Truemeds Pharmacist</b>.</div><button class="cta" data-saved>Save contact</button><button class="cta ghost" data-saved>Not now</button></div></div>`;
+ if(s==='callme')return `<div class="overlay" data-close><div class="sheet" data-stop><div class="grab"></div><div class="h2">Talk to your pharmacist</div><div class="sub">${st.live.stage>1?P.first:'A pharmacist'} will call you on +91 98XXX XX210.</div><button class="cta" data-callnow>Call me now</button><button class="cta ghost" data-close>Call me later · pick a time</button></div></div>`;
+ if(s==='missed')return `<div class="overlay" data-close><div class="sheet" data-stop><div class="grab"></div><div class="h2">We tried calling you</div><div class="sub">${P.first} couldn't reach you about your prescription. Your request is safe.</div><button class="cta" data-callnow>Call me now</button><button class="cta ghost" data-close>Call me later · pick a time</button></div></div>`;
+ return'';}
+function toast(){return st.toast?`<div class="toast">${st.toast}</div>`:''}
+
+/* ---------- Phase 1 (today's app) ---------- */
+const V1={
+p1upload:()=>`<div class="scr">${nav('Upload Prescription','p1upload')}<div class="scroll"><div class="pad"><div class="h1">Upload your prescription to start ordering</div><div class="sub">Please ensure that the prescription is valid and contains doctor, patient and medicine details.</div><div class="thumbs"><div class="thumb"><span class="ok">Uploaded</span></div></div><div class="sub" style="color:var(--tm-green)">✓ Successfully uploaded</div><b>Next Steps</b><div class="card"><div class="row"><b>Pharmacist call</b><span class="chip g">Free</span></div><div class="sub">Our pharmacist will call to confirm the medicines in your prescription</div></div></div></div><div class="foot"><button class="cta" data-go="p1summary">Proceed to checkout</button></div></div>`,
+p1summary:()=>`<div class="scr">${nav('Order Summary','p1upload')}<div class="scroll"><div class="pad"><div class="sub">Delivery by (select address)</div><div class="soft"><div class="sub">Benefit after the order is placed</div><b>Pharmacist call</b><div class="sub">Our pharmacist will call you to confirm the medicines in your prescription</div></div><b>Prescription Uploaded</b><div class="thumbs"><div class="thumb"></div></div><div class="row"><span class="chip">Deliver to</span><span>560103</span></div><div class="row"><span class="chip">Patient</span><span>Swapnil</span></div></div></div><div class="foot"><button class="cta" data-go="p1pay">Select payment mode</button></div></div>`,
+p1pay:()=>`<div class="scr">${nav('Payment Option','p1summary')}<div class="scroll"><div class="pad"><div class="amber">Total amount will be calculated post processing</div>${['UPI','Wallet','Pay later','Cash on delivery'].map((o,i)=>`<div class="opt" aria-checked="${i===3}"><span class="radio"></span><b>${o}</b></div>`).join('')}</div></div><div class="foot"><button class="cta" data-go="p1success">Place order</button></div></div>`,
+p1success:()=>`<div class="scr"><div class="green-top"><div class="h1">Order placed</div><div>Pay once your order is packed</div></div><div class="pad"><div class="card changed"><span class="chip b">Status from backend</span><b>Prescription received – pharmacist will call</b><div class="sub">Saved as a request, not counted as an order yet</div></div><div class="sub">The success screen is built into today's app, so "Order placed" stays until Phase 2.</div></div><div class="foot" style="margin-top:auto"><button class="cta" data-go="p1order">View order</button></div></div>`,
+p1order:()=>`<div class="scr">${nav('Order #56501609','p1success')}<div class="scroll"><div class="pad"><div class="soft changed"><b>Prescription received – pharmacist will call</b><div class="sub">Our pharmacist will call to confirm your medicines and price</div></div><div class="card"><b>Pharmacist call</b><div class="sub">To confirm the medicines in your prescription</div></div><div class="card changed"><span class="chip">Hidden if backend-driven</span><div class="sub" style="text-decoration:line-through">Delivery by Tomorrow 10 PM</div><div class="sub" style="text-decoration:line-through">How was your Truemeds experience?</div></div></div></div><div class="foot"><button class="cta" data-go="p1call">Next: pharmacist call</button></div></div>`,
+p1call:()=>`<div class="scr"><div class="callscr"><div class="avatar" style="width:76px;height:76px;flex-basis:76px;font-size:24px">TM</div><div class="who">Truemeds Pharmacist</div><div>Incoming call…</div><div style="opacity:.75;font-size:13px">Verified caller</div><div class="callbtns"><button class="round" style="background:#d64545" data-go="p1order" aria-label="Decline">✕</button><button class="round" style="background:#2fb36b" data-go="p1cart" aria-label="Answer">✓</button></div></div></div>`,
+p1cart:()=>{st.cart=st.cart||newCart();const T=totals();return `<div class="scr">${nav('Cart','p1order')}<div class="scroll"><div class="pad"><div class="soft changed"><b>Cart prepared on your call</b><div class="sub">By ${P.first}, Truemeds pharmacist</div></div><div class="card" style="padding:4px 14px">${st.cart.map(i=>`<div class="item"><div class="pill-img">💊</div><div style="flex:1"><div class="nm">${i.nm}</div><div class="sub">${i.pk} · qty ${i.q}</div></div><span class="price">${fmt(i.pr*i.q)}</span></div>`).join('')}</div></div></div><div class="foot"><div class="row"><span>To pay</span><b class="price">${fmt(T.pay)}</b></div><button class="cta" data-go="p1done">Proceed</button></div></div>`},
+p1done:()=>`<div class="scr"><div class="green-top"><div class="check">✓</div><div class="h1">Order placed</div><div>Pay once your order is packed</div></div><div class="pad"><div class="next"><div class="nx"><span class="d done">✓</span><div><b>Order placed</b><div class="sub">Now a real order with medicines and price</div></div></div><div class="nx"><span class="d now"></span><div><b>Doctor consultation</b></div></div><div class="nx dim"><span class="d"></span><div><b>Order packed</b></div></div></div></div><div class="foot" style="margin-top:auto"><button class="cta ghost" data-go="p1upload">Restart</button></div></div>`
+};
+
+/* ---------- live simulation ---------- */
+let tick=null;
+const clockStr=m=>{const h=12+Math.floor((51+m)/60),mm=(51+m)%60;return `${h}:${String(mm).padStart(2,'0')}`};
+function startLive(){stopLive();const L=st.live;L.stage=1;L.t=25;L.feed=[[clockStr(0),'Prescription received']];L.save=0;st.branch=null;st.cart=newCart();
+ const script=[[3,()=>{L.stage=2;L.feed.push([clockStr(1),`${P.name} is checking your prescription`])}],[2,()=>L.feed.push([clockStr(2),'Prescription tagged · 3 medicines found'])],[2,()=>{L.stage=3;L.feed.push([clockStr(3),'Telmisartan 40mg added']);L.save+=22}],[2,()=>{L.feed.push([clockStr(4),'Substitute found for Glycomet 500 SR · same composition']);L.save+=44}],[2,()=>{L.feed.push([clockStr(5),'Atorvastatin 10mg added']);L.save+=17}],[2,()=>{L.feed.push([clockStr(6),'Best coupon applied: FEST25']);L.save=totals().save}],[2,()=>{L.stage=4;go('ready');setTimeout(()=>{if(st.screen==='ready')go('cart')},1800)}]];
+ let i=0,wait=0,phase='count';
+ tick=setInterval(()=>{if(st.branch)return;
+  if(phase==='count'){L.t=Math.max(0,L.t-5);if(L.t<=0)phase='run';if(st.screen==='live')render();return}
+  if(wait>0){wait--;return}
+  if(i<script.length){script[i][1]();wait=script[i][0]-1;i++;if(st.screen==='live')render();}else stopLive();
+ },700);}
+function stopLive(){if(tick){clearInterval(tick);tick=null}}
+
+/* ---------- routing ---------- */
+function go(id){st.screen=id;st.sheet=null;if(id!=='live')st.toast=null;render()}
+function curDef(){if(st.phase==='p1')return P1.find(s=>s.id===st.screen);if(st.screen==='live'&&st.branch)return BR[st.branch];if(st.sheet==='missed')return BR.missed;return P2.find(s=>s.id===st.screen)||P2.find(s=>s.id==='choice')}
+function render(){
+ const app=$('#app');
+ if(st.phase==='p2'){const scr=st.screen==='save'?'choice':st.screen;app.innerHTML=(V[scr]||V.home)();}
+ else app.innerHTML=V1[st.screen]();
+ const list=st.phase==='p1'?P1:P2, cur=curDef();
+ const visible=st.phase==='p2'?P2.filter(s=>s.id!=='save'):list;
+ $('#rail').innerHTML=`<div class="grp">${st.phase==='p1'?'Phase 1 screens':'Phase 2 screens'}</div>`+visible.map((s,i)=>`<button class="step" aria-current="${s.id===st.screen||(st.screen==='save'&&s.id==='choice')}" data-jump="${s.id}"><span class="n">${i+1}</span>${s.t}</button>`).join('')+(st.phase==='p2'?`<div class="grp">Branches</div><button class="step" data-br="missed"><span class="n">↳</span>Missed call</button><button class="step" data-br="nofill"><span class="n">↳</span>Cannot prepare cart</button>`:'');
+ const L=a=>a&&a.length?`<ul>${a.map(x=>`<li>${x}</li>`).join('')}</ul>`:'<p style="color:var(--muted)">Nothing at this screen.</p>';
+ $('#notes').innerHTML=`<div class="kicker">${st.phase==='p1'?'Phase 1 · today\'s app':'Phase 2 · new app flow'}</div><h2>${cur.t}</h2>
+  <div class="blk"><h3>OMS state</h3><p><span class="state">${cur.state}</span></p></div>
+  <div class="blk"><h3>Customer sees</h3><p>${cur.see}</p></div>
+  <div class="blk"><h3>OMS and logic</h3>${L(cur.oms)}</div>
+  <div class="blk"><h3>Pharmacist portal</h3>${L(cur.ph)}</div>
+  <div class="blk"><h3>Comms</h3>${L(cur.cm)}</div>`;
+ $('#hint').textContent=st.phase==='p2'?'Tap the phone like a customer. Upload works with a real image, or use the sample.':'Dashed outlines mark what changes for the customer in Phase 1. Everything else is today\'s app.';
+ $('#demo').innerHTML=st.phase==='p2'?`<button class="dbtn" data-demo="hours">${st.afterHours?'Switch to daytime':'Simulate after hours'}</button><button class="dbtn" data-br="missed">Simulate missed call</button><button class="dbtn" data-br="nofill">Simulate low fill</button>`:'';
+ document.querySelectorAll('.tab').forEach(t=>t.setAttribute('aria-selected',t.dataset.phase===st.phase));
+ $('#clock').textContent=st.screen==='live'?clockStr(st.live.feed.length):'12:51';
+}
+
+/* ---------- events ---------- */
+const file=$('#file');
+file.addEventListener('change',()=>{[...file.files].slice(0,6-st.rx.length).forEach(f=>st.rx.push({src:f.type.startsWith('image/')?URL.createObjectURL(f):''}));file.value='';st.sheet=null;render()});
+document.addEventListener('click',e=>{
+ const el=e.target.closest('button,[data-close]');if(!el)return;
+ const d=el.dataset;
+ if(d.phase){stopLive();st.phase=d.phase;st.screen=d.phase==='p1'?'p1upload':'home';st.sheet=null;st.branch=null;render();return}
+ if(d.stop!==undefined&&el===e.target.closest('[data-stop]')&&!e.target.closest('button'))return;
+ if(d.close!==undefined){if(e.target.closest('[data-stop]')&&!e.target.closest('button[data-close]'))return;st.sheet=null;render();return}
+ if(d.jump){const id=d.jump;if(st.phase==='p2'){if(['patient','choice'].includes(id)&&!st.rx.length)st.rx=[{src:''}];if(id==='live'){go('live');startLive();return}if(['ready','cart','payment','placed'].includes(id)){stopLive();st.cart=st.cart||newCart();st.live.stage=4}}go(id);return}
+ if(d.br){st.phase='p2';if(!st.rx.length)st.rx=[{src:''}];if(st.screen!=='live'){st.screen='live';startLive()}if(d.br==='missed'){st.branch=null;st.sheet='missed';render()}else{st.branch='nofill';st.sheet=null;render()}return}
+ if(d.demo==='hours'){st.afterHours=!st.afterHours;render();return}
+ if(d.go){go(d.go);return}
+ if(d.sheet){st.sheet=d.sheet;render();return}
+ if(d.pick){file.click();return}
+ if(d.sample!==undefined){st.rx.push({src:''});st.sheet=null;render();return}
+ if(d.rm!==undefined){st.rx.splice(+d.rm,1);render();return}
+ if(d.pat!==undefined){st.patient=+d.pat;render();return}
+ if(d.adr!==undefined){st.addr=+d.adr;render();return}
+ if(d.ch){st.choice=d.ch;render();return}
+ if(d.pay){st.pay=d.pay;render();return}
+ if(d.send!==undefined){st.screen='save';st.sheet='save';render();return}
+ if(d.saved!==undefined){go('live');startLive();return}
+ if(d.callnow!==undefined){st.sheet=null;st.toast=`${st.live.stage>1?P.first:'A pharmacist'} will call you in a moment. You're first in line.`;render();setTimeout(()=>{st.toast=null;if(st.screen==='live')render()},3000);return}
+ if(d.keep){const it=st.cart.find(i=>i.id==+d.keep);it.sub=null;it.nm='Glycomet 500 SR Tablet';it.pr=54;render();return}
+ if(d.q){const it=st.cart.find(i=>i.id==+d.q);it.q=Math.max(0,it.q+ +d.d);if(!it.q)st.cart=st.cart.filter(i=>i!==it);render();return}
+ if(d.reset!==undefined){stopLive();Object.assign(st,{screen:'home',rx:[],choice:'all',cart:null,sheet:null,branch:null,toast:null,live:{stage:0,t:25,feed:[],save:0}});render();return}
+});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&st.sheet){st.sheet=null;render()}});
+render();
+</script>

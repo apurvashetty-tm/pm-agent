@@ -1,6 +1,6 @@
 # session_handoff.md — Type 1 Revamp
 **Purpose:** Exact resume point. Short enough to read every session. (Start with `../../CONTINUITY.md`.)
-**Last updated:** 2026-10-13
+**Last updated:** 2026-10-14
 **Current owner/session:** Claude (with Swapnil)
 **Status:** active
 
@@ -33,7 +33,7 @@ D34: no revamp; current portal + small changes until Portal Unification. Road ah
 See `open_questions.md`. Allocation: AQ1–AQ6. Engagement: EQ1–EQ8.
 
 ## 6. Next exact step
-Swapnil reviews `docs/11-problem-statement.md` (now incl. C6) → fold into PRD §2 (remove numbers per R9) → break problems into workstreams. Optional: open a PR from `project/type1-revamp` to `main`.
+Apply Apurva's PRD v1.0 review (see CONTINUITY.md "Last feedback" and open_questions RV1–RV5). Get Swapnil's go-ahead on RV1–RV3 first, then rewrite `docs/15-type1-prd.md` and the "PRD v1.0" tab, and reply to the doc comments.
 
 ## 7. Do not change without approval
 - `project_truth.md` (Swapnil only)
