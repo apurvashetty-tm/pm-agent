@@ -1,0 +1,29 @@
+import React, { useEffect, useRef } from 'react';
+import { Keyboard, Platform, Pressable, Text, TextInput, View } from 'react-native';
+import { Frame, Body, Logo, Button, Link, Notice, Icon, s, t, type Insets, type Action } from './ui';
+import { countdown } from './logic';
+import { message } from './messages';
+export const otpStates=['default','empty-tap','too-short','verifying','wrong-code','two-tries-left','resend-available','new-code-sent','code-expired','couldnt-verify','too-many-resends','locked'] as const;
+export type OtpState=typeof otpStates[number];
+export interface OtpProps {
+  insets: Insets; state: OtpState; mobileLabel: string; code: string; resendSeconds: number; lockSeconds: number;
+  fasterSignInSupported: boolean; fasterSignIn: boolean;
+  onCodeChange(code: string): void; onFasterSignInChange(value: boolean): void;
+  onVerify: Action; onResend: Action; onBack(): void; onChangeNumber(): void; onCallOps(): void; onTerms(): void; onPrivacy(): void; onActionError?(error: unknown): void;
+}
+export function OtpScreen(p: OtpProps) {
+  const ref=useRef<React.ElementRef<typeof TextInput>>(null); const busy=p.state==='verifying', locked=p.state==='locked', expired=p.state==='code-expired';
+  useEffect(()=>{if(['empty-tap','too-short','wrong-code','two-tries-left'].includes(p.state))ref.current?.focus();else Keyboard.dismiss();},[p.state]);
+  const errors:Partial<Record<OtpState,string>>={'empty-tap':message('otp.empty'),'too-short':message('otp.short'),'wrong-code':message('otp.wrong'),'two-tries-left':message('otp.triesLeft',{count:2}),'code-expired':message('otp.expired')};
+  const canResend=!busy&&!locked&&p.resendSeconds<=0;
+  return <Frame insets={p.insets}><Body><View style={s.intro}><Link title="‹ Back" onPress={p.onBack} disabled={busy}/><Logo/><Text style={s.title}>Verify your number</Text><Text style={s.subtitle}>Enter the OTP sent to{ '\n' }<Text style={{color:t.color.content.primary}}>{p.mobileLabel}</Text></Text><Link title="Change number" onPress={p.onChangeNumber} disabled={busy}/></View>
+    <View style={s.panel}><Text style={s.label}>Verification code</Text><View style={{height:56,alignSelf:'center',width:248,flexDirection:'row',gap:t.space.sm}}><TextInput ref={ref} accessibilityLabel="Four-digit verification code" accessibilityHint="Enter or paste the code sent by SMS" accessibilityState={{disabled:busy||locked||expired}} value={p.code} onChangeText={v=>{const next=v.replace(/\D/g,'').slice(0,4);p.onCodeChange(next);if(next.length===4)Keyboard.dismiss();}} maxLength={4} keyboardType="number-pad" textContentType="oneTimeCode" autoComplete={Platform.OS==='android'?'sms-otp':'one-time-code'} editable={!busy&&!locked&&!expired} caretHidden underlineColorAndroid="transparent" style={{position:'absolute',left:0,right:0,top:0,bottom:0,color:'transparent',backgroundColor:'transparent',fontSize:16,zIndex:1}}/>{Array.from({length:4},(_,i)=><View key={i} pointerEvents="none" style={{width:56,height:56,borderWidth:1,borderColor:errors[p.state]?t.color.border.error.strong:t.color.border.default,borderRadius:t.radius.md,backgroundColor:locked||expired?t.color.surface.secondary:t.color.surface.primary,alignItems:'center',justifyContent:'center'}}><Text style={[t.text.bodyXlStrong,{color:t.color.content.primary}]}>{p.code[i]||''}</Text></View>)}</View>
+    {errors[p.state]&&<Text accessibilityLiveRegion="polite" style={[t.text.bodySm,{color:t.color.content.error}]}>{errors[p.state]}</Text>}
+    {p.state==='new-code-sent'&&<Text accessibilityLiveRegion="polite" style={[t.text.bodySm,{color:t.color.content.success}]}>{message('otp.newSent')}</Text>}
+    {p.state==='couldnt-verify'&&<Notice tone="error">{message('otp.couldntVerify')}</Notice>}
+    {(p.state==='too-many-resends'||locked)&&<Notice tone="warning">{locked?message('otp.locked',{time:countdown(p.lockSeconds)}).replace('call Doctor Ops.',''):message('otp.tooManyResends').replace('call Doctor Ops.','')}<Text accessibilityRole="link" onPress={p.onCallOps} style={{color:t.color.content.brand,textDecorationLine:'underline'}}>call Doctor Ops</Text>.</Notice>}
+    {!locked&&<View style={[s.row,{justifyContent:'space-between'}]}><Text style={[t.text.bodyMd,{color:t.color.content.secondary}]}>Didn’t receive it?</Text>{canResend?<Button quiet title="Resend code" onPress={p.onResend}/>:<Text style={s.subtitle}>Resend in {countdown(p.resendSeconds)}</Text>}</View>}
+    {p.fasterSignInSupported&&<Pressable accessibilityRole="checkbox" accessibilityState={{checked:p.fasterSignIn,disabled:busy||locked}} disabled={busy||locked} onPress={()=>p.onFasterSignInChange(!p.fasterSignIn)} style={[s.row,{padding:t.space.lg,borderRadius:t.radius.lg,backgroundColor:t.color.surface.secondary,opacity:busy||locked?0.5:1}]}><Icon name="fingerprint" color={t.color.content.brand}/><View style={{flex:1,gap:t.space.xs}}><Text style={t.text.bodyLgStrong}>Sign in faster next time</Text><Text style={s.subtitle}>Use your device’s face, fingerprint, or screen lock.</Text></View><View style={{width:22,height:22,borderWidth:1,borderColor:t.color.border.default,borderRadius:t.radius.xs,alignItems:"center",justifyContent:"center",backgroundColor:p.fasterSignIn?t.color.surface.brand.default:t.color.surface.primary}}>{p.fasterSignIn&&<Icon name="check" size={16} color={t.color.content.inverse}/>}</View></Pressable>}
+    <Text style={[t.text.bodySm,{color:t.color.content.secondary}]}>By selecting Verify & sign in, you agree to the <Text accessibilityRole="link" onPress={p.onTerms} style={{textDecorationLine:'underline'}}>Terms & Conditions</Text> and acknowledge the <Text accessibilityRole="link" onPress={p.onPrivacy} style={{textDecorationLine:'underline'}}>Privacy Policy</Text>.</Text>
+    <Button title={busy?'Verifying…':'Verify & sign in'} busy={busy} disabled={locked||expired} onPress={p.onVerify} onError={p.onActionError}/></View></Body></Frame>;
+}

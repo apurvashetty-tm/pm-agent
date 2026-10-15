@@ -5,140 +5,169 @@
 html,body{margin:0;height:100%}
 body.tm{background:var(--tm-surface-primary)}
 .screen{height:100dvh;display:flex;flex-direction:column;box-sizing:border-box;position:relative;overflow:hidden;background:var(--tm-surface-brand-subtle)}
-.top{padding:var(--tm-space-xl) var(--tm-space-lg) 28px}
-.back{display:inline-flex;align-items:center;gap:6px;color:var(--tm-content-secondary);font-size:var(--tm-font-size-body-lg);margin:-4px 0 18px}
+/* Task header (D-42): Back + title, no logo */
+.top{padding:var(--tm-space-lg) var(--tm-space-xl) var(--tm-space-lg)}   /* 16 not 24 below the header: keeps the inline button 16px clear of the keyboard in the two-line notice states (1.7) */
+.back{display:inline-flex;align-items:center;gap:var(--tm-space-xs);min-height:48px;color:var(--tm-content-secondary);font-size:var(--tm-font-size-body-lg);line-height:var(--tm-font-lineheight-md);text-decoration:none;cursor:pointer}
 .back .tm-icon{width:20px;height:20px}
-.logo{width:168px;height:auto;display:block}
-.head{margin-top:36px;display:flex;flex-direction:column;gap:var(--tm-space-sm)}
-.head h1{margin:0;font-size:24px;line-height:32px;font-weight:var(--tm-font-weight-semibold);color:var(--tm-content-primary)}
+.back:focus-visible{outline:2px solid var(--tm-border-focus);outline-offset:var(--tm-space-xs)}
+.head{margin-top:var(--tm-space-sm);display:flex;flex-direction:column;gap:var(--tm-space-sm)}
+.head h1{margin:0}
 .head p{margin:0;font-size:var(--tm-font-size-body-lg);line-height:var(--tm-font-lineheight-md);color:var(--tm-content-secondary)}
-.head p b{display:block;color:var(--tm-content-primary);font-weight:var(--tm-font-weight-medium,500)}
-a.lk{color:var(--tm-content-brand);font-weight:var(--tm-font-weight-semibold);text-decoration:none}
-.panel{flex:1;background:var(--tm-surface-primary);border-radius:var(--tm-radius-2xl) var(--tm-radius-2xl) 0 0;padding:var(--tm-space-xl) var(--tm-space-lg) 0;display:flex;flex-direction:column}
-.form{display:flex;flex-direction:column;gap:var(--tm-space-lg)}
-.tm-field__prefix{flex-shrink:0;padding-right:var(--tm-space-sm);border-right:1px solid var(--tm-border-default);font-weight:var(--tm-font-weight-semibold)}
-.tm-field__control input{font-size:var(--tm-font-size-body-lg)}
-.tm-field--error .tm-field__helper{color:var(--tm-content-error)}
+.head p b{color:var(--tm-content-primary);font-weight:var(--tm-font-weight-medium,500)}
+a.lk{color:var(--tm-content-brand);font-weight:var(--tm-font-weight-semibold);text-decoration:none;display:inline-flex;align-items:center;min-height:48px}
+/* White panel; section gap 32 between groups, related gap 16 within a group (RULES §8.3) */
+/* Content scrolls when it does not fit; with the keyboard open, the bottom clears the keyboard by 16px (LOCKED, D-46). */
+.panel{flex:1;min-height:0;overflow-y:auto;background:var(--tm-surface-primary);border-radius:var(--tm-radius-2xl) var(--tm-radius-2xl) 0 0;padding:var(--tm-space-2xl) var(--tm-space-xl) var(--tm-space-xl);display:flex;flex-direction:column}
+body.kb .panel{padding-bottom:calc(256px + var(--tm-space-lg))}
+.grp{display:flex;flex-direction:column;gap:var(--tm-space-lg)}
+.grp + .grp{margin-top:var(--tm-space-2xl)}
+.code{display:flex;flex-direction:column;gap:var(--tm-space-sm)}
+.tm-field__helper{margin:0}
+.tm-field__helper[hidden]{display:none}
+.tm-otp-slots{position:relative}
+/* Error: digits stay visible with red borders; no focus box (D-44). Central .tm-field--error and .tm-field--disabled do the look. */
 .note{display:none}.note.show{display:flex}
 .note .tm-icon{flex-shrink:0;margin-top:1px}
-.tm-notice--info{background:var(--tm-surface-info-subtle);border-color:var(--tm-border-info-subtle)}
-.tm-notice--info .tm-icon{color:var(--tm-content-brand)}
-.foot{margin-top:auto;padding:var(--tm-space-lg) 0 var(--tm-space-xl);text-align:center;font-size:var(--tm-font-size-body-md);color:var(--tm-content-secondary)}
-.foot a{color:var(--tm-content-brand);font-weight:var(--tm-font-weight-semibold);text-decoration:none}
-.kbd{position:absolute;left:0;right:0;bottom:0;height:300px;background:#d1d5db;display:none;grid-template-columns:repeat(3,1fr);gap:6px;padding:8px;box-sizing:border-box;z-index:5}
-.kbd div{background:#fff;border-radius:6px;display:flex;align-items:center;justify-content:center;font:500 22px/1 sans-serif;color:#111}
-body.kb .kbd{display:grid}
-.sugg{position:absolute;left:0;right:0;bottom:300px;height:44px;background:#e5e7eb;display:none;align-items:center;justify-content:center;font:500 15px/1.2 sans-serif;color:#111;z-index:5;text-align:center}
-.sugg small{display:block;font-size:11px;color:#555}
-body.sg .sugg{display:flex}
 .note a{color:var(--tm-content-brand);font-weight:var(--tm-font-weight-semibold);text-decoration:none}
-
+/* Resend line: one centred line; timer heavier with fixed-width digits; not tappable */
+.rs{margin:0;text-align:center;font-size:var(--tm-font-size-body-md);line-height:var(--tm-font-lineheight-sm);color:var(--tm-content-secondary)}
+.rs[hidden]{display:none}
+.rs .timer{font-weight:var(--tm-font-weight-semibold);font-variant-numeric:tabular-nums;color:var(--tm-content-primary)}
+.rs button{min-height:48px;min-width:48px;border:0;background:transparent;padding:0 var(--tm-space-xs);color:var(--tm-content-brand);font:inherit;font-weight:var(--tm-font-weight-semibold);cursor:pointer}
+.s1{margin:0;display:none;align-items:center;justify-content:center;gap:var(--tm-space-xs);font-size:var(--tm-font-size-body-md);line-height:var(--tm-font-lineheight-sm);color:var(--tm-content-success)}
+.s1.show{display:flex}
+.s1 .tm-icon{width:16px;height:16px}
+/* Consent: L4 fine print, directly above the button, only when Verify is possible */
+.consent{margin:0 0 var(--tm-space-lg);display:none;color:var(--tm-content-secondary)}
+.consent.show{display:block}
+.consent a{color:var(--tm-content-brand);font-weight:var(--tm-font-weight-semibold);text-decoration:none}
+/* Mock OS keyboard (raw colours allowed here only, as in the other screens) */
+.kbd{position:absolute;left:0;right:0;bottom:0;height:256px;background:#d4d7dd;display:none;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(4,1fr);gap:5px;padding:6px 5px 12px;box-sizing:border-box;z-index:5}
+.kbd div{background:#fff;border-radius:5px;display:flex;align-items:center;justify-content:center;font:400 23px/1 system-ui,sans-serif;color:#202124}
+body.kb .kbd{display:grid}
+html.capture body,html.capture .screen{width:100%;overflow:hidden}
+.review-controls{max-width:390px;margin:var(--tm-space-lg) auto;font-family:var(--tm-font);color:var(--tm-content-primary)}
+.review-controls label{display:block;margin-bottom:var(--tm-space-xs)}
+.review-controls select{width:100%;padding:var(--tm-space-sm);font:inherit;border:1px solid var(--tm-border-default);border-radius:var(--tm-radius-md);background:var(--tm-surface-primary)}
+html.capture .review-controls{display:none}
+@media(min-width:768px){body.tm{display:flex;flex-direction:column;align-items:center;background:var(--tm-surface-secondary)}.screen{width:390px;height:844px;flex:none;overflow:hidden;border:1px solid var(--tm-border-subtle);border-radius:var(--tm-radius-2xl);box-shadow:var(--tm-shadow-header)}html.capture body.tm{display:block;background:var(--tm-surface-primary)}html.capture .screen{border:0;border-radius:0;box-shadow:none;width:100%}}
 </style>
 <script src="../../../../design-system/icons/icons.js"></script>
-<style>
- html.capture body,html.capture .screen{width:390px;overflow:hidden}
- .review-controls{max-width:390px;margin:var(--tm-space-lg) auto;font-family:var(--tm-font);color:var(--tm-content-primary)}
- .review-controls label{display:block;margin-bottom:var(--tm-space-xs)}
- .review-controls select{width:100%;padding:var(--tm-space-sm);font:inherit;border:1px solid var(--tm-border-default);border-radius:var(--tm-radius-md);background:var(--tm-surface-primary)}
- html.capture .review-controls{display:none}
- @media(min-width:768px){body.tm{display:flex;flex-direction:column;align-items:center;background:var(--tm-surface-secondary)}.screen{width:390px;height:844px;flex:none;overflow:hidden;border:1px solid var(--tm-border-subtle);border-radius:var(--tm-radius-2xl);box-shadow:var(--tm-shadow-header)}html.capture body.tm{display:block;background:var(--tm-surface-primary)}html.capture .screen{border:0;border-radius:0;box-shadow:none}}
- .back{text-decoration:none;cursor:pointer}
- .back:focus-visible{outline:2px solid var(--tm-border-focus);outline-offset:var(--tm-space-xs)}
- .code input{text-align:center;font-size:20px;letter-spacing:.35em;height:56px}
- .code .tm-field__control{justify-content:center}
- .code input:placeholder-shown{letter-spacing:normal;font-size:var(--tm-font-size-body-lg)}
- .rs{display:flex;justify-content:space-between;font-size:var(--tm-font-size-body-md);color:var(--tm-content-secondary);margin-top:-4px}
- hr{border:0;border-top:1px solid var(--tm-border-subtle);margin:0}
- .terms{font-size:var(--tm-font-size-body-sm);line-height:var(--tm-font-lineheight-sm);color:var(--tm-content-secondary)}
- .terms a{color:var(--tm-content-primary);text-decoration:underline}
- .stack{display:flex;flex-direction:column;gap:var(--tm-space-lg)}
- /* biometric row variants */
- .bio{display:flex;gap:12px;align-items:flex-start}
- .bio .t{font-size:var(--tm-font-size-body-lg);font-weight:var(--tm-font-weight-semibold);color:var(--tm-content-primary);line-height:24px}
- .bio .d{font-size:var(--tm-font-size-body-md);line-height:var(--tm-font-lineheight-sm);color:var(--tm-content-secondary);margin-top:2px}
- .cb{width:22px;height:22px;border:1.5px solid var(--tm-border-strong);border-radius:6px;flex-shrink:0;margin-top:1px;box-sizing:border-box;display:flex;align-items:center;justify-content:center;background:#fff}
- .cb.on{background:var(--tm-surface-brand-default);border-color:var(--tm-surface-brand-default);color:#fff}
- .cb.on .tm-icon{width:16px;height:16px}
- .ic{width:44px;height:44px;border-radius:12px;background:var(--tm-surface-brand-subtle);color:var(--tm-content-brand);display:flex;align-items:center;justify-content:center;flex-shrink:0}
- .ic .tm-icon,.ic svg{width:24px;height:24px}
- .bio.c{align-items:center}
- .bio.c .txt{flex:1}
- .bio-wrap.dv hr{display:none}
- .bio.d{border:1px solid var(--tm-border-default);border-radius:var(--tm-radius-lg);padding:14px;align-items:center}
- .bio.d.on{border-color:var(--tm-border-selected,var(--tm-surface-brand-default));background:var(--tm-surface-brand-subtle)}
- .bio.d.on .ic{background:#fff}
- .bio.d .txt{flex:1}
- .tm-field.locked .tm-field__control{background:var(--tm-surface-secondary)}
- .bio-wrap.hide{display:none}
- .code.tm-field--error .tm-field__helper{color:var(--tm-content-error)}
- .code .tm-field__helper.ok{color:var(--tm-content-success);display:flex;align-items:center;gap:6px}
- .code .tm-field__helper.ok .tm-icon{width:16px;height:16px}
- .code.locked .tm-field__control{background:var(--tm-surface-secondary)} .code.locked input{color:var(--tm-content-secondary)}
- .dim{opacity:.5;pointer-events:none}
- .rs a{color:var(--tm-content-brand);font-weight:var(--tm-font-weight-semibold);text-decoration:none}
- .rs button{border:0;background:transparent;padding:0;color:var(--tm-content-brand);font:inherit;font-weight:var(--tm-font-weight-semibold);cursor:pointer}
- .tm-btn.busy,.tm-btn.busy:disabled{background:var(--tm-surface-brand-default);color:#fff;opacity:.85;border-color:transparent}
- .spin{display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,.45);border-top-color:#fff;border-radius:50%;margin-right:8px;vertical-align:-3px}
- .bio-wrap.ev hr{display:none}
- label.bio.e{background:var(--tm-surface-secondary);border-radius:var(--tm-radius-lg);padding:var(--tm-space-md);align-items:center;cursor:pointer;min-height:72px;box-sizing:border-box}
- label.bio.e .ic{background:var(--tm-surface-primary)}
- label.bio.e .txt{flex:1}
- .kbd{height:256px;padding:6px 5px 12px;gap:5px;background:#d4d7dd;grid-template-rows:repeat(4,1fr)}
- .kbd div{border-radius:5px;font:400 23px/1 system-ui,sans-serif;color:#202124}
- body.kb .terms,body.kb #b{visibility:hidden}
-</style></head><body class="tm">
-<div class="review-controls"><label for="review-state">Approved state</label><select id="review-state" aria-label="Approved OTP state"><option value="default">Default</option><option value="empty-tap">Verify with no code</option><option value="too-short">Verify with two digits</option><option value="verifying">Verifying</option><option value="wrong-code">Wrong code</option><option value="two-tries-left">Two tries left</option><option value="resend-available">Resend available</option><option value="new-code-sent">New code sent</option><option value="code-expired">Code expired</option><option value="couldnt-verify">Couldn’t verify</option><option value="too-many-resends">Too many resends</option><option value="locked">Locked number</option></select></div>
+<script src="../feedback/messages.js"></script>
+</head><body class="tm">
+<div class="review-controls"><label for="review-state">Approved state</label><select id="review-state" aria-label="OTP state"><option value="default">Default</option><option value="empty-tap">Verify with no code</option><option value="too-short">Verify with two digits</option><option value="verifying">Verifying</option><option value="wrong-code">Wrong code</option><option value="two-tries-left">Two tries left</option><option value="resend-available">Resend available</option><option value="new-code-sent">New code sent</option><option value="code-expired">Code expired</option><option value="couldnt-verify">Couldn’t verify</option><option value="too-many-resends">Too many resends</option><option value="locked">Locked number</option><option value="resending">Resending</option><option value="resend-failed">Resend failed</option><option value="offline">Offline</option><option value="cooldown-reconciling">Cooldown reconciling</option><option value="expired-and-resend-limited">Expired and resend limited</option></select></div>
 <div class="screen">
  <div class="top">
   <a class="back" href="../../ui-screens/sign-in/sign-in.html"><span class="tm-icon" data-icon="arrow-left" aria-hidden="true"></span>Back</a>
-  <img class="logo" src="../../brand/truemeds-for-doctors.svg" alt="Truemeds for doctors">
-  <div class="head" style="margin-top:28px"><h1>Verify your number</h1><p>Enter the OTP sent to<b>+91 98765 43210</b></p></div>
-  <div style="margin-top:14px"><a class="lk" href="../../ui-screens/sign-in/sign-in.html">Change number</a></div>
+  <div class="head"><h1 class="tm-text-title-lg">Verify your number</h1><p>Sent to <b>+91 98765 43210</b> · <a class="lk" href="../../ui-screens/sign-in/sign-in.html">Change</a></p></div>
  </div>
- <div class="panel"><div class="stack">
-  <div class="tm-field code" id="f"><label class="tm-field__label" for="c">Verification code</label>
-   <div class="tm-field__control"><input id="c" inputmode="numeric" maxlength="4" placeholder="4-digit OTP" autocomplete="one-time-code"></div>
-   <div class="tm-field__helper" id="h" style="display:none"></div></div>
-  <div class="tm-notice note" id="n"><span class="tm-icon" id="ni" data-icon="info-circle"></span><div id="nt"></div></div>
-  <div class="rs" id="rs"><span>Didn’t receive it?</span><span id="rr">Resend in 00:30</span></div>
-  <div class="bio-wrap" id="bw"><hr><div id="bio" style="padding:var(--tm-space-lg) 0"></div><hr></div>
-  <div class="terms">By selecting Verify &amp; sign in, you agree to the <a href="#">Terms &amp; Conditions</a> and acknowledge the <a href="#">Privacy Policy</a>.</div>
-  <button class="tm-btn tm-btn--lg tm-btn--primary tm-btn--block" id="b">Verify &amp; sign in</button>
- </div></div>
- <div class="sugg"><div>4827<small>From Messages</small></div></div>
+ <div class="panel">
+  <div class="grp">
+   <div class="tm-field code" id="f">
+    <div class="tm-otp-slots" id="slots"><input class="tm-otp-slots__input" id="c" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="one-time-code" aria-label="Four-digit verification code" aria-describedby="h" aria-invalid="false"><span class="tm-otp-slots__slot" aria-hidden="true"></span><span class="tm-otp-slots__slot" aria-hidden="true"></span><span class="tm-otp-slots__slot" aria-hidden="true"></span><span class="tm-otp-slots__slot" aria-hidden="true"></span></div>
+    <div class="tm-field__helper" id="h" hidden></div>
+   </div>
+   <div class="tm-notice note" id="n" role="status" aria-live="polite"><span class="tm-icon" id="ni" data-icon="info-circle" aria-hidden="true"></span><div id="nt"></div></div>
+   <p class="s1" id="s1" role="status"><span class="tm-icon" data-icon="circle-check" aria-hidden="true"></span><span id="s1t"></span></p>
+   <p class="rs" id="rs">Didn’t receive it? <span id="rr"></span></p>
+  </div>
+  <div class="grp">
+   <p class="consent tm-text-body-sm" id="consent">By selecting Verify &amp; sign in, you agree to the <a href="#">Terms &amp; Conditions</a> and acknowledge the <a href="#">Privacy Policy</a>.</p>
+   <button class="tm-btn tm-btn--lg tm-btn--primary tm-btn--block" id="b" type="button">Verify &amp; sign in</button>
+  </div>
+ </div>
  <div class="kbd"><div>1</div><div>2</div><div>3</div><div>4</div><div>5</div><div>6</div><div>7</div><div>8</div><div>9</div><div></div><div>0</div><div>⌫</div></div>
 </div>
 <script>
-const FACE='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8v-2a2 2 0 0 1 2 -2h2"/><path d="M4 16v2a2 2 0 0 0 2 2h2"/><path d="M16 4h2a2 2 0 0 1 2 2v2"/><path d="M16 20h2a2 2 0 0 0 2 -2v-2"/><path d="M9 10l.01 0"/><path d="M15 10l.01 0"/><path d="M9.5 15a3.5 3.5 0 0 0 5 0"/></svg>';
-function state(s){const $=id=>document.getElementById(id);
- const on=!!s.on, cb='<span class="cb'+(on?' on':'')+'">'+(on?'<span class="tm-icon" data-icon="check"></span>':'')+'</span>';
- const t='<div class="t">Sign in faster next time</div>', d='<div class="d">Use your device’s face, fingerprint, or screen lock.</div>';
- const ic='<span class="ic">'+(s.icon==='face'?FACE:'<span class="tm-icon" data-icon="fingerprint"></span>')+'</span>';
- const v=s.bio||'a', B=$('bio'), bw=$('bw');
- bw.classList.remove('dv','ev','hide','dim'); B.style.padding='';
- if(v==='a')B.innerHTML='<div class="bio">'+cb+'<div>'+t+d+'</div></div>';
- if(v==='b')B.innerHTML='<div class="bio">'+cb+'<span class="tm-icon" data-icon="fingerprint" style="width:24px;height:24px;color:var(--tm-content-brand);flex-shrink:0"></span><div>'+t+d+'</div></div>';
- if(v==='c')B.innerHTML='<div class="bio c">'+ic+'<div class="txt">'+t+d+'</div>'+cb+'</div>';
- if(v==="d"){$("bw").classList.add("dv");B.style.padding="0";B.innerHTML='<div class="bio d'+(on?' on':'')+'">'+ic+'<div class="txt">'+t+d+'</div>'+cb+'</div>';}
- if(v==='e'){$('bw').classList.add('ev');B.style.padding='0';B.innerHTML='<label class="bio e">'+ic+'<div class="txt">'+t+d+'</div>'+cb+'</label>';}
- if(s.nobio)$('bw').classList.add('hide');
- if(s.v)$('c').value=s.v;
- if(s.kb){document.body.classList.add('kb');$('c').focus();} if(s.sg)document.body.classList.add('sg');
- const f=$('f'),h=$('h'),b=$('b');
- if(s.err){f.classList.add('tm-field--error');h.style.display='block';h.textContent=s.err;}
- if(s.ok){h.style.display='flex';h.className='tm-field__helper ok';h.innerHTML='<span class="tm-icon" data-icon="circle-check"></span>'+s.ok;}
- if(s.rr!==undefined)$('rr').innerHTML=s.rr;
- if(s.rl!==undefined)$('rs').firstElementChild.innerHTML=s.rl;
- if(s.norow)$('rs').style.display='none';
- if(s.note){const n=$('n');n.classList.add('show','tm-notice--'+s.note.k);$('ni').setAttribute('data-icon',s.note.i);$('nt').innerHTML=s.note.t;}
- if(s.busy){b.innerHTML='<span class="spin"></span>Verifying';b.disabled=true;b.classList.add('busy');f.classList.add('locked');$('c').disabled=true;$('bw').classList.add('dim');}
- if(s.lock){f.classList.add('locked');$('c').disabled=true;$('bw').classList.add('dim');b.disabled=true;}
+const M=window.TMFeedback.msg;
+const $=id=>document.getElementById(id);
+const code=$('c'), slots=[...document.querySelectorAll('.tm-otp-slots__slot')], field=$('f'), helper=$('h'), btn=$('b');
+const BTN_LABEL='Verify & sign in';
+let replaceNext=false;
+// Each state: code kept, keyboard, F1 error, notice, resend line, S1, consent, lock/expired/busy flags.
+const STATES={
+ 'default':{code:'',kb:true,rs:'wait',consent:true},
+ 'empty-tap':{code:'',kb:true,err:M('otp.empty'),rs:'wait',consent:true},
+ 'too-short':{code:'48',kb:true,err:M('otp.short'),rs:'wait',consent:true},
+ 'verifying':{code:'4827',busy:true,kb:true,rs:'wait',consent:true},
+ 'wrong-code':{code:'4827',kb:true,err:M('otp.wrong'),replace:true,rs:'wait',consent:true},
+ 'two-tries-left':{code:'4827',kb:true,err:M('otp.triesLeft',{count:2}),replace:true,rs:'wait',consent:true},
+ 'resend-available':{code:'',kb:true,rs:'available',consent:true},
+ 'new-code-sent':{code:'',kb:true,s1:M('otp.newSent'),rs:'wait',time:'1:00',consent:true},
+ 'code-expired':{code:'4827',kb:true,expired:true,err:M('otp.expired'),replace:true,rs:'available'},
+ 'couldnt-verify':{code:'4827',kb:true,note:{k:'error',i:'alert-circle',t:M('otp.couldntVerify')},rs:'wait',consent:true},
+ 'too-many-resends':{code:'',kb:true,note:{k:'warning',i:'clock',ops:true,t:M('otp.tooManyResends')},rs:'hidden',consent:true},
+ 'locked':{code:'',locked:true,note:{k:'warning',i:'clock',ops:true,t:M('otp.locked',{time:'14:52'})},rs:'hidden'},
+ 'resending':{code:'4827',kb:true,rs:'sending',consent:true},
+ 'resend-failed':{code:'4827',kb:true,note:{k:'error',i:'alert-circle',t:M('otp.resendFailed')},rs:'available',consent:true},
+ 'offline':{code:'4827',kb:true,note:{k:'warning',i:'alert-triangle',t:M('signin.offline')},rs:'available',consent:true},
+ 'cooldown-reconciling':{code:'',kb:true,rs:'checking',hold:true},
+ 'expired-and-resend-limited':{code:'',locked:true,note:{k:'warning',i:'clock',ops:true,t:M('otp.expiredAndLimited',{time:'9:42'})},rs:'hidden'}
+};
+function clearError(){field.classList.remove('tm-field--error');helper.hidden=true;helper.removeAttribute('role');code.setAttribute('aria-invalid','false');replaceNext=false;}
+function renderSlots(){
+ const v=code.value.replace(/\D/g,'').slice(0,4); if(code.value!==v)code.value=v;
+ const err=field.classList.contains('tm-field--error');
+ const kb=document.body.classList.contains('kb');
+ slots.forEach((s,i)=>{s.textContent=v[i]||'';s.classList.toggle('is-current',kb&&!err&&!code.disabled&&i===Math.min(v.length,3));});
+}
+function note(n){
+ const box=$('n'), body=$('nt'), ico=$('ni');
+ box.classList.remove('show','tm-notice--error','tm-notice--warning','tm-notice--neutral');
+ body.textContent='';
+ if(!n){return;}
+ box.classList.add('show','tm-notice--'+n.k);
+ ico.setAttribute('data-icon',n.i);
+ const phrase='call Doctor Ops', at=n.t.lastIndexOf(phrase);
+ if(n.ops&&at>=0){body.append(document.createTextNode(n.t.slice(0,at)));const a=document.createElement('a');a.href='#';a.textContent=phrase;body.append(a,document.createTextNode(n.t.slice(at+phrase.length)));}
+ else body.textContent=n.t;
+}
+function resendLine(s){
+ const rr=$('rr'), rs=$('rs');
+ rs.hidden=s.rs==='hidden';
+ if(s.rs==='wait') rr.innerHTML='Resend in <span class="timer">'+(s.time||'0:30')+'</span>';
+ if(s.rs==='available') rr.innerHTML='<button type="button">Resend code</button>';
+ if(s.rs==='sending') rr.textContent='Sending a new code…';
+ if(s.rs==='checking') rr.textContent='Checking…';
+}
+let currentS=null;
+function state(k){
+ const s=STATES[k]||STATES['default'];
+ currentS=s;
+ const locked=!!s.locked, busy=!!s.busy;
+ code.value=s.code||'';
+ code.disabled=locked;
+ code.readOnly=busy;
+ field.classList.toggle('tm-field--disabled',locked);
+ clearError();
+ if(s.err){field.classList.add('tm-field--error');helper.hidden=false;helper.textContent=s.err;helper.setAttribute('role','alert');code.setAttribute('aria-invalid','true');}
+ replaceNext=!!s.replace;
+ note(s.note);
+ const s1=$('s1'); s1.classList.toggle('show',!!s.s1); $('s1t').textContent=s.s1||'';
+ resendLine(s);
+ $('consent').classList.toggle('show',!!s.consent&&!locked&&!busy&&!s.expired&&!s.hold);
+ const off=locked||busy||!!s.expired||!!s.hold;
+ btn.disabled=off;
+ btn.classList.toggle('tm-btn--busy',busy);
+ btn.setAttribute('aria-busy',String(busy));
+ btn.innerHTML=busy?'<span class="tm-spinner" aria-hidden="true"></span>Verifying…':BTN_LABEL;
+ const kb=!!s.kb&&!locked;
+ document.body.classList.toggle('kb',kb);
+ if(kb)code.focus();
+ renderSlots();
  TMIcons.render(document);
 }
+// Replace-on-first-keystroke after a server wrong/expired response (D-44)
+code.addEventListener('keydown',e=>{if(replaceNext&&/^\d$/.test(e.key)){e.preventDefault();code.value=e.key;clearError();afterNewCode();renderSlots();}});
+code.addEventListener('input',()=>{if(replaceNext){code.value=code.value.replace(/\D/g,'').slice(-1);clearError();afterNewCode();}renderSlots();});
+code.addEventListener('focus',renderSlots);
+code.addEventListener('blur',renderSlots);
+// A new code after an expiry re-enables Verify (the expired code itself stays blocked)
+function afterNewCode(){if(currentS&&currentS.expired){btn.disabled=false;currentS={...currentS,expired:false};}}
 const params=new URLSearchParams(location.search);
-const reviewState=params.get('capture')||params.get('state')||'default';
-const selector=document.getElementById('review-state');
-selector.value=reviewState;
+const reviewKey=params.get('capture')||params.get('state')||'default';
+const selector=$('review-state');
+selector.value=reviewKey;
 selector.addEventListener('change',()=>{location.search='?state='+encodeURIComponent(selector.value)});
-state(reviewState==='empty-tap'?{bio:'e',err:'Enter the 4-digit code.',kb:true}:reviewState==='too-short'?{bio:'e',v:'48',err:'Enter all 4 digits.',kb:true}:reviewState==='verifying'?{bio:'e',v:'4827',on:true,busy:true}:reviewState==='wrong-code'?{bio:'e',on:true,err:'That code isn’t right. Try again.',kb:true}:reviewState==='two-tries-left'?{bio:'e',on:true,err:'That code isn’t right. 2 tries left.',kb:true}:reviewState==='resend-available'?{bio:'e',rr:'<button type="button">Resend code</button>'}:reviewState==='new-code-sent'?{bio:'e',ok:'New code sent.',rr:'Resend in 01:00'}:reviewState==='code-expired'?{bio:'e',v:'4827',err:'This code has expired. Get a new one.',rr:'<button type="button">Resend code</button>'}:reviewState==='couldnt-verify'?{bio:'e',v:'4827',on:true,note:{k:'error',i:'alert-circle',t:'We couldn’t check the code. Tap Verify &amp; sign in to try again.'}}:reviewState==='too-many-resends'?{bio:'e',note:{k:'warning',i:'clock',t:'You’ve asked for too many codes. Use the last one, or <a href="#">call Doctor Ops</a>.'},rr:'Resend in 09:42'}:reviewState==='locked'?{bio:'e',lock:true,norow:true,note:{k:'warning',i:'clock',t:'Too many wrong tries. Try again in 14:52, or <a href="#">call Doctor Ops</a>.'}}:{bio:'e'});
+state(reviewKey);
 </script></body></html>

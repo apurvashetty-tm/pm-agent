@@ -1,3 +1,67 @@
+## 2026-10-15 — A–D promoted to ui-screens/ (single copy of pictures; old material in docs/_superseded/)
+
+- Screens: `ui-screens/sign-in/`, `otp/`, `faster-signin-offer/`, `returning-unlock/`, `home/` (A–C, fixed in place) and `ui-screens/case/case.html` (D, moved from the concept). Pictures: one copy in `ui-screens/` (263 files moved from `docs/renders/…/final/`). Phase text in `ui-screens/_qa/`.
+- Old 13 Oct screenshots and reviews: `docs/_superseded/ui-screens-2026-10-13/`.
+- QA: 222 of 228 pictures identical to the baseline; 6 differ inside the busy-button spinner only (decision for Apurva). Guard 0 failures; sources check PASS; 0 console errors. Report: `docs/renders/2026-10-15-standards/promotion-report.md`.
+- Still open: native `messages.ts`; Profile / Logout sheet; keyboard check on a device; `index.html` rebuild from `ui-screens/case/case.html`.
+
+---
+
+## 2026-10-15 — Round 17 (last D fixes from the full-size audit)
+
+- Executed `docs/reviews/2026-10-15-round-17-fixes.md` (R17-1 to R17-4). Report: `docs/renders/2026-10-15-standards/round-17-report.md`; measured proofs: `round-17-proofs/proofs.json`.
+- Call card moves up only while live or after the HA question; hidden when empty (ended early). Duration units are a wrapping chip group; numbers grid at the shared chip size; picker scrolled into view for capture; local time-chip padding removed.
+- Full guard round 17: 0 failures (A, B, C, D; 114 states × 390 / 360 / 430). Captured: D round 17 (56 states × 390 / 360). `D/final/` refreshed with contact sheets.
+- Still open: native `messages.ts` regeneration (native team).
+
+---
+
+## 2026-10-15 — Round 16: D-54 open items approved (D-55)
+
+- D-55 recorded. Done: option grids at M/A/N chip width starting at the label edge; R3 exemptions (icon-led text, right-aligned helper, centred titles); "Call didn't connect" keeps the case open (app `timeout` path); superseded renders moved to `docs/_superseded/`.
+- Not done here: grid-chip padding for four-column grids (design team, `design-system/`); native `messages.ts` regeneration (native owner); Profile/Logout sheet (not in Home files, not built).
+- Guard round 16: A 0, B 0, C 0, D 4 (duration picker, central item). Report: `docs/renders/2026-10-15-standards/round-16-report.md`.
+
+---
+
+## 2026-10-15 — Round 15 (D-54 fixes): report in renders
+
+- Executed `docs/reviews/2026-10-15-round-15-fixes.md`. Result per item: `docs/renders/2026-10-15-standards/round-15-report.md` (PASS/FAIL with proof files; measured proofs in `round-15-proofs/proofs.json`).
+- Done: D1–D16, A1–A3, the new Prescribe states, call-did-not-connect, injection doses, bar and row fixes, checks R1–R7 in the guard.
+- Guard round 15: 94 failures (B R3 72, C R3 15, D 5.4 6, D 5.3 1). A clean.
+- Open for Apurva (`<phase>/NEEDS-APURVA.md`): grid chip sizes vs indent rule; duration picker clipped "Ongoing" at 360 (central chip padding); R3 designs (offer points, unlock greeting, wheel helper); Profile/Logout sheet not in Home files; didn't-connect path; native messages not regenerated; old renders not moved (D-54 #10).
+- Not edited: index.html, design-system, RULES.md, decision log, native. No git, no deletes.
+
+---
+
+## 2026-10-15 — Standards pass, round 10 (D-53): guards pass
+
+**Status: Reviewed — yet to be approved by Apurva. Not promoted. `index.html` not edited. Nothing committed.**
+
+- Decision log: D-53 added. Timer h:mm:ss from one hour (Home only; OTP m:ss). Approved copy kept (2 tries left; unlock unavailable). The ten new-state copy approved (metadata marks changed). Back to Home primary only when availability ended. Offline and confirm-failed notices inside the pinned bar. Concept loads `concept-styles.css` (styles.css copy with central restyles removed).
+- Central changes used (design system, not edited): field gap 8, field control 48, read-only classes, notice icon 20, chip grid --3, compact task header, link 48.
+- Guard: zero failures at 390, 360 and 430 for A–D (round 14); zero console errors.
+- Codex: one check per changed journey (case/call ×3 rounds, sheets/Prescribe, endings/new/stress, sign-in/OTP, Home). Last check of the case/call journey was the third run; its blockers were fixed; no further check was run on the last change to it (hidden chevrons, 5.6). Stated honestly in changes.md.
+- Open for Apurva (`<phase>/NEEDS-APURVA.md`): 360 secondaries stack (18px labels); local 8px padding on time chips until the central chip padding changes; index.html rebuild (to retire styles.css); native messages.ts regeneration; design-system RULES §9.7 timer text; keyboard device check.
+- Next step: Apurva decides the open items. Then rebuild index.html from the concept, or fix the central chip padding first.
+
+---
+
+## 2026-10-15 — Standards pass, phases A–D (layout v2, final render)
+
+**Status: Reviewed — yet to be approved by Apurva. Not promoted to `ui-screens/`. `index.html` not edited. Nothing committed.**
+
+- Guard: `ui-screens/feedback/check-locked-specs.py` now runs every checklist "auto" line on every state at 390, 360 and 430 (failures tagged with the checklist line). Coverage matrix: `docs/renders/2026-10-15-standards/README.md` (104 states, each once).
+- Renders: `docs/renders/2026-10-15-standards/<A|B|C|D>/round-N/` (rounds 1–9), capture with `capture.py`, contact sheets with `contact.py`, checklist results with `results.py`. Finals: `<phase>/final/` (contact sheets grouped by journey, PNGs, metrics, guard JSON, `changes.md`, `NEEDS-APURVA.md`).
+- Guard result (round 9): **B and C pass every auto line. A fails 2 (central: sign-in field gap, notice icon). D fails 3 kinds: 5.5 tag reserved width and 4.1 other-dose input (central gaps), 5.12 (19 `styles.css` rules, which index.html shares, plus 2 concept rules).** Nothing claims more than the guard shows.
+- Codex (read-only, per journey): rounds 1–7; each blocker either fixed, rejected with reason, or routed to Apurva as copy or a central gap (see `changes.md`).
+- Central gaps reported, not edited (`design-system/` off limits): tag reserved width; `.tm-field` gap 4 vs 8; `.tm-notice` icon size; `.tm-field__control input` height; four-column chip padding (time slots wrap); read-only variant for closed cases; compact task header class. Details: `<phase>/NEEDS-APURVA.md`.
+- Decisions taken this pass (confirm): End call = call-end (solid red, D-52); HA notice stays dropped; offline/confirm-failed notices at the top of content, not under the pinned bar; Back to Home quiet in all endings; Try again pinned in the bar on load/Rx failure; order details + View Rx on one white card; Cat4 mock dates 14/17 Oct 2026; B12 Rx line monthly.
+- Copy: nine proposed case/Rx strings added to `ui-screens/feedback/messages.json` (+ `metadata.json`), built into `messages.js`. `ui-screens/native/messages.ts` was restored by hand (rule: no native changes), so it is out of date: `home.added` and the new keys need regenerating by the native owner.
+- Next step: Apurva decides the Needs Apurva items (central gaps first, then copy: "2 tries left", unlock unavailable, rx.loadFailed). After the central fixes, rerun `capture.py --round N`, `results.py`, then `contact.py --final`.
+
+---
+
 ## 2026-10-12 — Format-check timing on sign in and OTP (D-39)
 
 - `phoneFormatError()` orders checks empty → first digit → length; first digit 1–5 errors live; leading 0 allowed.
@@ -468,3 +532,194 @@ Full detail in `docs/context/open_questions.md`.
 - Retry-limit logic for early call-end "Call Again" (OQ-013)
 - Real callback-queue backend semantics (OQ-012)
 - `?nodemo` URL param to hide demo controls for real-feel mobile testing (mentioned once by user, deferred — "this can be later")
+
+
+## 2026-10-13 — Home alternatives saved; full flow review rendered
+
+- User explicitly requested both wheel/tap availability renders saved. Exact PNGs in `ui-screens/home/`, SHA-256 verified. Alternatives for doctor testing; final control selection not locked.
+- 43 new draft states and browsable image gallery: `docs/renders/2026-10-13-home-flow/index.html`. State manifest, FLOW.md and reproduction source included. Drafts are not approved renders.
+- Proposed extension uses bottom sheet, adds selected duration to current deadline, and explicitly switches to restart wording if already expired. Pending requests remain protected through stop/expiry. Existing case-page Next order replacement documented in FLOW.md; clinical case UI not modified.
+- Source limitation: programmatic PNGs, not browser captures or interactive prototypes. No browser file-policy workaround. Matching component HTML/RN remains necessary before complete engineering handoff.
+- Validation: reviewed contact sheets; corrected stale secondary actions on ended states and loading feedback. New account/device policies remain proposals, not locked product changes. App code untouched.
+- Next: Apurva reviews grouped states, tests doctor comprehension, chooses duration control; build matching interactive source before interaction testing.
+
+## 2026-10-13 — Active Home/add sheet saved after audit
+
+User accepted happy-flow screens2/3 and requested wheel version. Saved active Home and tap sheet byte-identical; generated/saved wheel alternative with footer pixel-identical, taller sheet. Exact new wheel visual awaits review. Existing setup files untouched and hashes verified. Setup CTA is56px lower than current Home and prescription typography differs; reported, not silently fixed. Audit in ui-screens/home/AUDIT-2026-10-13.md. Toast not approved/saved. Interactive tests and editable component source still missing.
+
+## 2026-10-13 — Home editable source/native handoff repaired
+User identified missing HTML/native linkage. Inspected actual sign-in and OTP HTML plus shared native README, tokens.ts/icons.ts. Added three Home HTML entries and shared JS/CSS, NATIVE-HANDOFF.md and home.native.ts contract. Reuses native exports; not a new CSS-only system or production RN screen. JS syntax, CSS token references, final relative paths checked. Original PNG hashes preserved. Browser visual parity and native runtime/accessibility checks remain outstanding.
+
+
+## 2026-10-13 — Native UI handoff and scoped reminder correction
+
+- User approved add-availability wheel. Approval recorded in ui-screens/home/manifest.json.
+- Added actual TSX components under ui-screens/native for 12 sign-in, 12 OTP, 3 unlock and 5 Home/setup/add-time references. Shared native tokens/icons and canonical SVG used. No app dependency files changed.
+- Corrected scope: setup keeps Minimum 15 minutes once; add-time sheet removes reminder. Four PNG replacements differ only in reminder region; active PNG unchanged. HTML and native copy aligned.
+- Validation: strict TypeScript, duration/normalization/countdown/expiry-addition tests and Home JS syntax passed. Source audit: ui-screens/home/SOURCE-PARITY-2026-10-13.md.
+- Gaps: browser local-file policy prevented visual parity review; HTML wheel remains listbox stand-in. Native font bundle, simulator/device rendering, gestures/accessibility, services and OS auth not validated. Setup CTA remains 56 points lower than active Home; no unapproved layout change made.
+- Next: integrate native references in app sandbox with native fonts, compare device captures to approved PNGs, and close wheel/HTML visual parity before production handoff.
+
+
+## 2026-10-13 — Wheel final; feedback consistency audit
+
+- D-40: user selected wheel as sole availability control. Removed two tap PNGs from ui-screens/home, HTML tap states and native stepper branch; quick presets retained. Current handoff has 30 approved visual references.
+- Source checks: wheel-only HTML syntax, native TypeScript, manifest/path checks. No new image render or device validation claimed.
+- Saved docs/reviews/2026-10-13-feedback-consistency-audit.md. Reviewed all auth/Home source states and 16 historical Home draft states; visual spot checks explicitly listed. Consultation flow was not re-audited.
+- Main findings: sign-in/OTP/native notice specs differ; field-border thickness differs; accessibility associations missing; native generic button errors lack shared ownership; native countdown enables before explicit eligibility and leading-zero normalisation differs from D-39. These remain recommendations/fixes pending review, not implemented changes to auth.
+- Recommendation: two error structures (field and action/status notice), independent of before/after CTA timing; preserve D-39. Next: review representative error examples and then synchronize shared source/render/native specifications.
+
+
+## 2026-10-13 — D-41 feedback rules and render policy
+
+- Added docs/feedback-rules.md (canonical feedback, timing, toast, layout, copy ownership and QA contract), docs/feedback-state-map.md (auth/Home states and behavior combinations), and docs/renders/RENDER-README-TEMPLATE.md.
+- Linked mandatory references from CLAUDE.md, render index, approved UI README and native README. Updated per-state PNG rule to representative capture policy; historical approvals retained.
+- No renders, auth/UI behavior changes or shared design-system edits performed. Target shared copy registry is documented, not implemented.
+- Next: migrate shared feedback/copy and repair audited source mismatches; create batch README before captures; review representative field/notice/toast examples. Initial mapping proposes up to nine captures, reusing existing proofs where sufficient; copy-only states stay in source fixtures.
+
+## 2026-10-13 — Feedback source repair, visual review pending
+
+- User authorized D-41 implementation. Batch README created before any capture attempt at `docs/renders/2026-10-13-feedback-review/README.md`.
+- Added `ui-screens/feedback/` single copy registry, metadata, generated web/native adapters and source checker. Shared design-system CSS now has proposed four-slot OTP and neutral notice components; native Notice/Toast mirror token anatomy.
+- Updated all approved sign-in and OTP HTML states plus returning unlock and Home editable references. OTP has four compact visual slots over one actual input. Home source includes representative setup/request/add failure, near-expiry and compact toast fixtures. React Native components consume same messages and correct locked/expired/leading-zero behavior.
+- Passed registry build, 12 sign-in/12 OTP selector and asset checks, HTML/JS syntax, strict React Native type check and pure duration/number logic tests. Detailed audit: `docs/reviews/2026-10-13-feedback-repair-qa.md`.
+- No new PNGs captured or promoted. Prior browser file-policy rejection barred local source capture and alternate capture workarounds. Existing approved PNGs are historical; changed HTML/native pixel parity, small screen/large text, native autofill and screen reader remain unverified. Proposed copy IDs marked in feedback metadata.
+- Next: source-derived R01–R09 representative visual review when authorized browser capture is available. Replace only images that pass visual review; preserve copy-only siblings as fixtures. Host team must wire authoritative backend states and onActionError callbacks.
+
+## 2026-10-13 — Feedback render review loop (3 rounds), approval pending
+
+- README corrected: page-load smoke recorded as Pass (outside headless-Chromium check, 33 states, zero console/page errors); earlier "HTML/native copy and state mapping: Pass" marked as given before the `msg()` crash fix, now re-based on the page-load check.
+- Captured R01–R09 from real HTML (`file://`, headless Chromium, playwright in scratchpad) at 390×844 @2×, 360 width and large text ×1.3. Folders: `docs/renders/2026-10-13-feedback-review/round-1..3/` (each with `metrics.json`, `codex-review.md`, `changes.md`). Round-3 is final.
+- Codex (read-only) review: round 1 and 2 raised real blockers; round 3 reported BLOCKERS: none.
+- Fixed in source (ui-screens/home only; no feedback copy or registry change):
+  - Add-time wheel: native select replaced by centred shaded band + divider (matches approved `add-availability_wheel.png`). Shared by setup and add.
+  - Add-time error: footer kept in approved position; notice slot between wheel and CTA. Error variant only: picker top 108px, adjust margins 12px.
+  - Home toast raised to ~14px above Request a case.
+- Rejected Codex claims: "+ Add time" missing on R08/R09 (by design: near-expiry ≤15 min only); preset corner shape (central chip component, out of feedback scope).
+- Harness bugs found and fixed in scratchpad capture (360 frame width; compounding large-text scaling; metrics relative to #phone). Round-1 360/large frames superseded.
+- Not promoted to `ui-screens/`. Not committed. Approved PNGs untouched. `decision_log.md` untouched.
+- build-messages.mjs and check-sources.mjs: PASS after final change.
+- Needs Apurva (also in batch README): (1) four-slot OTP anatomy approval; (2) add-time error-sheet spacing variant; (3) sheet CTA 4px variance vs approved (y=704 vs ≈708); (4) seven proposed copy IDs in metadata.json; (5) representatives for R08 toast / R09 request-failed; (6) preset corner treatment (central chip).
+- Next exact step: Apurva reviews `round-3/*_w390.png` (and `_w360`, `_w390-large`) against `ui-screens/` approved references, decides Needs Apurva items, then approved representatives are promoted in a separate step.
+
+## 2026-10-14 — Layout v2 loop, Step 0 partly applied, stopped on verification gate
+
+- Loop: `docs/reviews/2026-10-14-layout-v2-loop.md`. Step 0 applied from `docs/reviews/2026-10-14-layout-v2-rules-review-copy.md`:
+  - `docs/context/decision_log.md`: D-42, D-43, D-44, D-45 added; D-38 pointer line added.
+  - `design-system/RULES.md`: §8 added; §5 checklist (3 lines) and §6 known gaps (2 bullets) added.
+  - `design-system/src/components.css`: `.tm-text-title-lg` [PROPOSED] added; `build.py` run (truemeds.css, preview, native regenerated; logo lock OK).
+  - `docs/feedback-rules.md` → v1.1 (§4 wrong-code bullet, §6 invariants). `docs/feedback-state-map.md` (OTP rows, opt-in wording removed, faster sign-in offer section).
+  - `docs/context/open_questions.md`: OQ-023 added. `ui-screens/README.md`: layout-v2 and delegated-approval notes at top. `CLAUDE.md`: layout v2 line under D-41.
+- **Blocked (not applied, asked Apurva):** loop Step 0.2 verification fails:
+  - `--tm-content-brand` = `--tm-core-blue-500` (#266CE1, SALT). Loop expects blue-600.
+  - `.tm-text-body-lg` = 16/20 in SALT (`extras.json`). RULES §8.1 L2 says 16/24.
+  - `--tm-content-placeholder` does not exist; review copy uses `--tm-content-tertiary`.
+  - `design-system/tokens/truemeds.json` (review says NEW) not created: build reads Core/Default/extras only.
+- Not committed. Nothing promoted to `ui-screens/`. Steps 1–6 not started.
+
+## 2026-10-14 — Layout v2 Step 0 applied (final copy)
+
+- Applied final review copy (`docs/reviews/2026-10-14-layout-v2-rules-review-copy.md`) and loop (`…-loop.md`). Decisions: design-system folder is source of truth; brand text blue-600; placeholder grey-500; title 32/40 semibold; body-lg 16/24.
+- `design-system/tokens/truemeds.json` (new), applied last by `scripts/build.py` and `scripts/build_native.py`. Buttons/surfaces stay blue-500 (SALT).
+- Verified in build: `--tm-content-brand` = blue-600; `--tm-content-placeholder` = grey-500; `.tm-text-title-lg` 32/40/600; `.tm-text-body-lg` 16/24 (CSS and native `bodyLg`). Logo lock OK.
+- RULES.md: opening (folder is source of truth), §8 (incl. §8.7 contrast), §5 checklist line added. `beyond-salt.md` and `design-system/README.md` updated.
+- Decision log D-42–D-45 added (D-43 wording fixed); D-38 pointer. feedback-rules v1.1; state map OTP rows + offer section; OQ-023; CLAUDE.md line.
+- ui-screens/README.md: layout-v2 note only; delegated-approval note removed (per Apurva).
+- Not committed. Nothing promoted.
+
+## 2026-10-14 — Layout v2 Step 1 done (coverage matrix), Step 2 not started
+
+- `docs/renders/2026-10-14-layout-v2/README.md`: coverage matrix, 66 rows (sign-in 12, OTP 17, offer 8, unlock 7, Home 18, case 4); 36 planned own captures at 390×844 plus 360 checks where text wraps.
+- Codex (read-only, one check): added unlock.cancelled / unlock.platform-retry, split Home idle-expired / manually-ended, corrected counts. Its blockers on otp.wrong-code, otp.default and home.no-cases are current-source gaps, so they are Step 2 build items, not matrix errors.
+- Next exact step: Step 2 phase A. Update `ui-screens/otp/otp.html` (task header, four slots with digits visible on wrong code, keyboard open on load, resend line, consent line rules), then `ui-screens/sign-in/sign-in.html` (logo kept, inline button, title 32/40). Run `node ui-screens/feedback/check-sources.mjs`. Then Step 3 capture (Playwright installed outside the project, not yet installed).
+
+## 2026-10-14 — Layout v2 phase A reviewed (awaiting Apurva OK before phase B)
+
+- Built: `ui-screens/otp/otp.html` (task header, one-line "Sent to", four boxes over one input, keyboard open on load, replace-on-first-keystroke, one-line resend, consent only when Verify possible, offer card removed, five extra states added to the selector). `ui-screens/sign-in/sign-in.html` (title 32/40, 14/20 subtitle, gaps 8/16/32, sending button readable).
+- Central changes (design-system, need Apurva OK): `.tm-field__helper` 14/20; `.tm-otp-slots` digits 16/24, boxes flex with 16px gap. Rebuilt; logo lock OK.
+- Renders: `docs/renders/2026-10-14-layout-v2/A/` — rounds 1–3 + round-3-fix, contact sheets `contact-otp.png` and `contact-sign-in.png`, `NEEDS-APURVA.md`.
+- Codex: round 3 no open blockers; rejected points in Needs Apurva. Sign-in gap fix after round 3 verified by DOM, not re-reviewed.
+- Not committed. Not promoted to `ui-screens/`. Phase B waits for Apurva's OK.
+
+## 2026-10-14 — Layout v2: phase A closed (D-46), phase B reviewed, phase C reviewed, phase D blocked
+
+- Phase A: locked specs L1–L6 applied centrally (`design-system/src/components.css`, RULES §8 "Locked specs"), guard `ui-screens/feedback/check-locked-specs.py` (PASS: 17 OTP, 12 sign-in, 7 Home states). D-46 recorded. Final renders `A/round-4/`; Needs Apurva closed.
+- Phase B: `ui-screens/faster-signin-offer/faster-signin-offer.html` (new), `ui-screens/returning-unlock/returning-unlock.html` (task header, pinned footer, pending busy, unavailable). Renders `B/round-1..3`; Needs Apurva `B/NEEDS-APURVA.md`. Codex round 3: no blockers.
+- Phase C: `ui-screens/home/home.html`, `home-reference.js/css` rebuilt (19 states, pinned footer, hero gap 48, m:ss timers, 44pt targets). Five proposed + one more feedback messages in the registry. Renders `C/round-1..3`, `C/round-3-fix`. Codex round 3 blockers fixed and verified by measurement (not re-reviewed). Needs Apurva `C/NEEDS-APURVA.md`.
+- Phase D: BLOCKED. `index.html` scr-home mixes the Home greeting with case sections. Need decisions: which screen is the case page, its title, and its Back target. Not started.
+- Nothing committed. Nothing promoted to `ui-screens/`.
+
+
+## 2026-10-14 — Final review decisions recorded (D-47–D-49); loop paused before phase D
+
+- Apurva reviewed phases A–C with Claude (chat) and decided: L7 helper alignment, L8 balanced titles, L9 value display 32/40; no full stops on titles; no Back on the faster sign-in offer or returning unlock; neutral offer icons; unlock unavailable copy; Home clip bug fix; no time row on stop-pending; no spinner on quiet "Ending…"; Home copy. Recorded as **D-47**. Review notes: `docs/reviews/2026-10-14-final-review-ABCD.md`.
+- Case page: **D-48** (Back by stage; release before the first attempted call with confirmation; blocked during the call; "Request next case" + "Back to Home" at the end; reopen into an open case; "case" wording) and **D-49** (compact blue-tinted sticky header; D-07 strip retired; D-33 plain-white rule replaced).
+- Files updated (docs only, no code): decision_log.md, design-system/RULES.md (§8.5 header sizes, §8.10–12, locked L7–L9), feedback-state-map.md (offer/unlock no Back, stop-pending, new "Case page exits"), feedback-rules.md (L7, no clipping, spinner rule), open_questions.md (OQ-024 release backend, OQ-025 restore open case, OQ-026 "order" wording), CLAUDE.md, project_truth.md (leaving-a-case note), ui-screens/README.md.
+- Not yet done: registry copy changes (messages.json + metadata) and all code; beyond-salt.md entries for L7–L9 and the compact header (add when built).
+- **Next:** one fix pass for phases A–C (D-47) with one Codex check; then phase D **concepts only** for Apurva's review (D-49 process).
+
+## 2026-10-14 — Final CTA labels and tracking (D-50); docs verified
+
+- Apurva: order ID line stays ("Order 12345 · ₹1,240"); final CTAs renamed "Confirm prescription" (Cat4, Pilot HA-skipped), "Confirm & transfer", "Confirm & forward", "Skip HA call"; routing unchanged. The four paths must be distinguishable in analytics (never derived from the label). Recorded as **D-50**; OQ-026 answered (tracking method open for Engineering).
+- Updated: decision_log (D-50, D-48 pointer), project_truth §4–5, open_questions OQ-026, CLAUDE.md, final review outcome, loop file phase D row.
+- Not yet updated: `docs/Doctor_Portal_Developer_PRD.md` still uses the old labels (Apurva to decide); `index.html` labels change only when the case page is rebuilt after concept approval.
+- **Next:** terminal runs the A–C fix pass (D-47) and phase D concepts (D-48–D-50).
+
+
+## 2026-10-14 — Final pass (D-47) and case-page concepts (D-48–D-50)
+
+- Part 1 (D-47): L7 (helper under OTP boxes, central `:has()` rule), L8 (balanced titles, central `text-wrap: balance`), L9 (`.tm-value-display`), no full stops on titles, offer and unlock have no Back, offer icons neutral grey, Home clipping fixed (minimum helper moved onto the Adjust row; scroll area checked), time remaining as value display, stop-pending has no time row, D-47 copy in `messages.json`. Guard `ui-screens/feedback/check-locked-specs.py` extended (L1–L9, titles, clipping, unlock/offer, 19 Home states): PASS. `check-sources.mjs`: PASS.
+- Final renders: `docs/renders/2026-10-14-layout-v2/{A,B,C}/final/` with metrics and contact sheets. One Codex check per phase: no blockers. Batch README and NEEDS-APURVA files updated. Nothing promoted to `ui-screens/`.
+- Part 2 (concepts, D-48–D-50): `docs/concepts/2026-10-14-case-page/` — concept.html, 11 states at 390 and 360 wide, contact-sheet.png, metrics.json, README.md. Codex: no blockers. `index.html` and consultation logic untouched.
+- Sandbox blocked one cleanup (`rm` via shell variable) — the generated `_sheet*.html` helper files remain in the final folders and concept folder. Harmless; can be deleted by hand.
+- Next: Apurva reviews the contact sheets and concept sheet, decides the open points in the concept README; then the case page build is a separate step.
+
+## 2026-10-14 — Amendments applied; case page concept v2 (real page)
+
+- Part 1: Home stop-pending and expired-pending subtitle "You won't get new cases." (notice unchanged). Returning unlock unavailable notice is neutral info (N1). check-locked-specs.py PASS; check-sources.mjs PASS. Changed states re-captured into `A|B|C/final/` (390 + 360) with metrics merged; B and C contact sheets refreshed.
+- Part 2: `docs/concepts/2026-10-14-case-page/v2/` — concept.html is a copy of `index.html` (not edited), with the D-49 header, D-48 pieces, D-50 labels and the concept driver. 12 states × 390 and 360, `contact-sheet.png`, `metrics.json`, `README.md` with Needs Apurva. One Codex check: blockers (wording, sentence case) fixed and checked on rendered text.
+- First-round README marked REJECTED. First-round files kept (no deletes).
+- Open: Apurva's decisions in `v2/README.md` (Needs Apurva items 1–7). Case page build not started; index.html unchanged.
+- Sandbox blocked one cleanup (shell-variable rm); `_sheet.html` helper files remain in final and concept folders.
+
+## 2026-10-14 — Phase C wheel restored (D-40), expired-pending copy; case page v2 round 2
+
+- Phase C: approved wheel restored in `ui-screens/home/home-reference.js/css` (one brand-subtle band across both columns with a divider, large brand-blue selected values, grey neighbours, no grey column boxes; tokens only). Used in setup, setup failed, idle expired, manually ended, Add availability (adding, add failed). "Minimum 15 minutes" stays visible on the Adjust row. expired-pending notice: "Your last request is still active." (registry + build).
+- Guard `check-locked-specs.py` extended: wheel band and selected value match the tokens; no grey column boxes. Guard PASS; check-sources PASS.
+- Re-captured the 9 affected Home states into `C/final/` (390 + 360), metrics merged, `contact-home.png` refreshed. One Codex check on the wheel states: no blockers.
+- Case page v2 round 2 (`docs/concepts/2026-10-14-case-page/v2/`): two-line header at fixed 100 px; content row with Order details as one tap target and View Rx on the right; closed cards at the top of the content titled by path ("Prescription confirmed" / "Transferred to HA" / "Forwarded to HA"); pinned exits stacked (Request next case over Back to Home), availability-ended shows only Back to Home; missed-call sheet in sentence case; the scrolled render verified to differ from top. 14 states × 390 and 360, `contact-sheet.png`, `metrics.json`, README with Needs Apurva (6 items). One Codex check: no blockers.
+- index.html unchanged; nothing promoted to ui-screens/; no git; no deletes.
+
+## 2026-10-14 — Phase D full concept render (v2/full), for one review — not built
+
+- Design system: success tags use `--tm-content-success-strong` (green-700, 6.7:1); fixes the "Prescribed" tag. Added to `tokens/truemeds.json` and `components.css`; rebuilt.
+- Part 1 earlier this round: wheel restored to the approved look (guard checks it), expired-pending copy, Home C/final re-captured, contact-home refreshed, one Codex check (no blockers).
+- Phase D: `docs/concepts/2026-10-14-case-page/v2/` — concept.html (copy of index.html; index.html and app.js untouched) with the full matrix (groups A–E, 34 states × 390/360, 68 renders), `full/metrics.json`, group sheets `full/contact-A-A-case-page.png`, `contact-B-B-call.png`, `contact-C-C-sheets.png`, `contact-D-D-prescribe.png`, `contact-E-E-end-of-case.png`. Codex: round 1 nine batches, round 2 two batches (cap 2); round 1 blockers fixed; round 2 one blocker fixed and DOM-verified. Coverage matrix and 13 Needs Apurva items in `v2/README.md`.
+- Not reachable / not in page: HA transfer banner is desktop-only (side panel); transfer-failed alert has no page path; no on-screen keyboard in the page (focus states only).
+- Stopped for Apurva's review. Nothing built into index.html; nothing promoted to ui-screens/; no git; no deletes (sandbox blocked one shell-variable cleanup; `_sheet*.html` helper files remain in full/ and v2/).
+
+## 2026-10-14 — Phase D review decisions applied (D-51), concept v2 round 3
+
+- Concept only (`docs/concepts/2026-10-14-case-page/v2/`): bar order (primary on top, secondaries below in one row, 44 px); closed case has no header Back, content muted and read-only (no chevrons, nothing tappable), card and bar live; Prescribe white header (proposal rejected), Duration label gap 24; "On prescription" band normal colour in every state; HA banner neutral above medicines on Pilot HA-required; patient unavailable is an end card (neutral icon, no sheet); callback card "Callback today at 3:00 PM"; no blue sheet outline, no Calling glow; Order details labels sentence case.
+- Design system: `.tm-band--brand` (AA pair) added to `components.css`, rebuilt.
+- 68 renders in `v2/full/` (390 + 360), five group sheets refreshed, `metrics.json`. One Codex check: two blockers, both fixed and checked in the DOM.
+- `v2/README.md` updated: resolved Needs Apurva items removed; open: transfer-failed spec, keyboard states on device, desktop side panel.
+- index.html and app.js unchanged; nothing promoted; no git; no deletes (the earlier `d-header-proposal_*` renders are superseded by `d-header-white_*`, not deleted).
+
+## 2026-10-14 — Phase D reviewed from concept.html (D-51 addendum), three rounds
+
+- Decision log: D-51 addendum — concepts approved; phase D rendered from `docs/concepts/2026-10-14-case-page/v2/concept.html`; `index.html` untouched and to be rebuilt fresh after A–D approval (keeping the existing logic).
+- concept.html changes: End call full-width destructive on top, Schedule callback below; HA notice copy by meds type; Rx hint as its own row; closed fields read-only; Duration gap 8 px; injection heading "Dose"; bar focus rule restored; 24 px side margins (case, Prescribe, sheets); closed View Rx and Order details muted; releasing button full opacity, close and stay disabled while releasing; closed endings use "Medicines".
+- Design system: destructive outline now `--tm-border-error-strong` (WCAG 1.4.11); rebuilt; checks PASS.
+- Renders: `docs/renders/2026-10-14-layout-v2/D/round-1..3` (review rounds) and `D/final/` (68 renders, metrics, five contact sheets: contact-case-page, contact-call, contact-sheets, contact-prescribe, contact-end-of-case). Codex: nine batches per round, read-only; round 3 (cap) had one blocker, the mock-data alignment of the Rx and order dates, raised as Needs Apurva.
+- Coverage matrix and Reviewed status: `docs/renders/2026-10-14-layout-v2/README.md` (section Phase D). Open decisions: `D/NEEDS-APURVA.md` (8 items).
+- Nothing committed; nothing promoted to ui-screens/; index.html and app.js unchanged; no deletes (sandbox blocked one shell-variable cleanup; `_sheet-*.html` helper files remain in D/final/).
+
+## 2026-10-15 — Design system review adopted (D-52)
+
+- Central (`design-system/`): RULES.md §2.6, §2.8 (brand hex fixed), §3 table, §5 checklist, §8.5 (edit-screen and viewer headers, compact header with hidden Back), §8.6 (48px tap targets), new **§9 Components and states**; `beyond-salt.md` lists each rule with its implementation status (**pending** in `src/components.css`).
+- Project: decision_log **D-52** (doctor-portal specifics, D-27 adjusted for dark toasts, D-51 HA notice dropped, phase D audit fixes, missing states); feedback-rules.md (toast spec and use); feedback-state-map.md (new "states still to design" table); CLAUDE.md pointer.
+- Review copy: `docs/reviews/2026-10-15-design-system-review.md`.
+- Not done yet: CSS implementation of §9, re-check of A–D, rendering of the missing D states. A–C promotion paused; A–D promote together after Apurva's approval. Nothing committed.
+- **Update (same night): central implementation done by Claude.** `design-system/src/components.css` implements RULES §8.5, §8.6 and §9 (roles incl. `.tm-btn--call-end`, tertiary/ghost → quiet, 48px targets, `.tm-chip-group` / `.tm-chip-grid`, `.tm-row--readonly`, `.tm-tag--neutral` / `--fixed`, `.tm-status-card`, sheet template `.tm-sheet__*` + `.tm-option`, dark 14/20 toast, `.tm-btn-pair`, actionbar stacking, `.tm-header-edit`, `.tm-header-viewer`, focus ring, reduced motion). Rebuilt `truemeds.css` + `native/`; `preview.html` shows every role; renders in `design-system/build/preview-2026-10-15/`; contrast all AA. Truemeds Design System artifact republished (v5). Artifact build output now at `design-system/build/artifact-2026-10-15b/` (old `build/artifact/` and `build/artifact-2026-10-15/` are stale; deletes were blocked).
+- **Effect on screens:** these central changes also change A–D screens (button roles, 48px heights, actionbar margins, toast). The A–D pass must re-render and run `check-locked-specs.py` / `check-sources.mjs` (could not run from this session: no Playwright here, and the mount layout breaks relative paths).

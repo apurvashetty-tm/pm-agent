@@ -2,32 +2,74 @@
 <script>if(new URLSearchParams(location.search).has('capture'))document.documentElement.classList.add('capture')</script>
 <link rel="stylesheet" href="../../../../design-system/truemeds.css">
 <style>
-html,body{margin:0;min-height:100%}body.tm{background:var(--tm-surface-brand-subtle);color:var(--tm-content-primary)}
-.screen{box-sizing:border-box;min-height:100dvh;display:flex;flex-direction:column;background:var(--tm-surface-brand-subtle);font-family:var(--tm-font)}
-.intro{padding:var(--tm-space-xl) var(--tm-space-lg) calc(var(--tm-space-3xl) + var(--tm-space-lg))}.logo{display:block;width:174px;height:auto}
-h1{margin:var(--tm-space-3xl) 0 var(--tm-space-sm);font-size:var(--tm-font-size-title-lg);line-height:var(--tm-font-lineheight-2xl);font-weight:var(--tm-font-weight-semibold)}
-.intro p{margin:0;max-width:32ch;color:var(--tm-content-secondary);font-size:var(--tm-font-size-body-xl);line-height:var(--tm-font-lineheight-lg)}
-.panel{flex:1;display:flex;flex-direction:column;align-items:stretch;padding:calc(var(--tm-space-3xl) + var(--tm-space-lg)) var(--tm-space-lg) var(--tm-space-xl);border-radius:var(--tm-radius-2xl) var(--tm-radius-2xl) 0 0;background:var(--tm-surface-primary)}
-.prompt{margin:0 0 var(--tm-space-3xl);text-align:center}.prompt-icon{width:calc(var(--tm-space-3xl) + var(--tm-space-lg));height:calc(var(--tm-space-3xl) + var(--tm-space-lg));margin:0 auto var(--tm-space-lg);display:grid;place-items:center;border-radius:var(--tm-radius-lg);background:var(--tm-surface-brand-subtle);color:var(--tm-content-brand)}.prompt-icon .tm-icon{width:var(--tm-space-2xl);height:var(--tm-space-2xl)}
-h2{margin:0;font-size:var(--tm-font-size-body-xl);line-height:var(--tm-font-lineheight-lg);font-weight:var(--tm-font-weight-semibold)}
-.actions{display:flex;flex-direction:column;align-items:center;gap:var(--tm-space-sm)}
-.fallback{font-size:var(--tm-font-size-body-md)}.account{margin-top:auto;align-self:center;font-size:var(--tm-font-size-body-md);font-weight:var(--tm-font-weight-medium)}.account strong{color:var(--tm-content-brand);font-weight:var(--tm-font-weight-semibold)}
-@media(min-width:391px){.screen{width:390px;margin:0 auto;min-height:844px}}
-@media(max-height:700px){.intro{padding-bottom:var(--tm-space-2xl)}h1{margin-top:var(--tm-space-2xl)}.panel{padding-top:var(--tm-space-2xl)}.prompt{margin-bottom:var(--tm-space-2xl)}}
-.review-controls{max-width:390px;margin:var(--tm-space-lg) auto;font-family:var(--tm-font);color:var(--tm-content-primary)}.review-controls label{display:block;margin-bottom:var(--tm-space-xs)}.review-controls select{width:100%;padding:var(--tm-space-sm);font:inherit;border:1px solid var(--tm-border-default);border-radius:var(--tm-radius-md);background:var(--tm-surface-primary)}html.capture .review-controls{display:none}
-</style></head><body class="tm"><main class="screen" aria-label="Returning doctor quick unlock">
-<header class="intro"><img class="logo" src="../../brand/truemeds-for-doctors.svg" alt="Truemeds for doctors"><h1>Hello, Dr. Apurva.</h1><p>Let’s check in on your patients today.</p></header>
-<section class="panel" aria-labelledby="ready"><div class="prompt"><div class="prompt-icon" aria-hidden="true"><span class="tm-icon variant-icon" data-icon="fingerprint"></span></div><h2 id="ready">Ready when you are</h2></div>
-<div class="actions"><button class="tm-btn tm-btn--primary tm-btn--lg tm-btn--block" type="button"><span id="unlock-label">Unlock with fingerprint</span></button><button class="tm-btn tm-btn--ghost fallback" type="button">Use OTP instead</button></div><button class="tm-btn tm-btn--quiet account" type="button">Not you? <strong>Switch account</strong></button></section></main>
-<div class="review-controls"><label for="review-variant">Approved device variant</label><select id="review-variant"><option value="fingerprint">Fingerprint</option><option value="face">Face ID</option><option value="screen-lock">Screen lock</option></select></div>
-<script src="../../../../design-system/icons/icons.js"></script><script>
+html,body{margin:0;height:100%}
+body.tm{background:var(--tm-surface-brand-subtle);color:var(--tm-content-primary)}
+/* Task header (D-42): title, no logo, no Back: first screen when the app opens (D-47). Pinned footer (no typing, RULES §8.4). */
+.screen{height:100dvh;box-sizing:border-box;display:flex;flex-direction:column;background:var(--tm-surface-brand-subtle);font-family:var(--tm-font);overflow:hidden;position:relative}
+.intro{padding:var(--tm-space-lg) var(--tm-space-xl) var(--tm-space-2xl)}
+.head{margin-top:var(--tm-space-2xl)}
+h1{margin:0 0 var(--tm-space-sm)}
+.intro p{margin:0;font-size:var(--tm-font-size-body-md);line-height:var(--tm-font-lineheight-sm);color:var(--tm-content-secondary)}
+.panel{flex:1;min-height:0;display:flex;flex-direction:column;padding:var(--tm-space-2xl) var(--tm-space-xl) var(--tm-space-xl);border-radius:var(--tm-radius-2xl) var(--tm-radius-2xl) 0 0;background:var(--tm-surface-primary)}
+.prompt{margin:0;display:flex;flex-direction:column;align-items:center;gap:var(--tm-space-lg);text-align:center}
+.prompt-icon{width:64px;height:64px;display:grid;place-items:center;border-radius:var(--tm-radius-lg);background:var(--tm-surface-brand-subtle);color:var(--tm-content-brand)}
+.prompt-icon .tm-icon{width:var(--tm-space-2xl);height:var(--tm-space-2xl)}
+h2{margin:0;font-size:var(--tm-font-size-body-lg);line-height:var(--tm-font-lineheight-md);font-weight:var(--tm-font-weight-semibold)}
+.unlock-notice{margin-top:0}
+.unlock-notice .tm-icon{width:20px;height:20px;flex:none}
+.footer{margin-top:auto;display:flex;flex-direction:column;align-items:stretch;gap:var(--tm-space-lg);padding-top:var(--tm-space-2xl)}
+.account{align-self:center;font-size:var(--tm-font-size-body-md)}
+.account strong{color:var(--tm-content-brand);font-weight:var(--tm-font-weight-semibold)}
+.screen [hidden]{display:none!important}
+html.capture body,html.capture .screen{width:100%;overflow:hidden}
+.review-controls{max-width:390px;margin:var(--tm-space-lg) auto;font-family:var(--tm-font);color:var(--tm-content-primary)}
+.review-controls label{display:block;margin-bottom:var(--tm-space-xs)}
+.review-controls select{width:100%;padding:var(--tm-space-sm);font:inherit;border:1px solid var(--tm-border-default);border-radius:var(--tm-radius-md);background:var(--tm-surface-primary)}
+html.capture .review-controls{display:none}
+@media(min-width:768px){body.tm{display:flex;flex-direction:column;align-items:center;background:var(--tm-surface-secondary)}.screen{width:390px;height:844px;flex:none;border:1px solid var(--tm-border-subtle);border-radius:var(--tm-radius-2xl);box-shadow:var(--tm-shadow-header)}html.capture body.tm{display:block;background:var(--tm-surface-primary)}html.capture .screen{border:0;border-radius:0;box-shadow:none}}
+</style>
+<script src="../../../../design-system/icons/icons.js"></script>
+<script src="../feedback/messages.js"></script>
+</head><body class="tm">
+<div class="review-controls"><label for="review-variant">Reference state</label><select id="review-variant" aria-label="Returning unlock state"><option value="fingerprint">Fingerprint</option><option value="face">Face ID</option><option value="screen-lock">Screen lock</option><option value="pending">Pending (OS prompt open)</option><option value="cancelled">Cancelled (returns unchanged)</option><option value="platform-retry">Platform retry (OS-owned)</option><option value="unavailable">Unlock unavailable</option></select></div>
+<main class="screen" aria-label="Returning doctor quick unlock">
+ <header class="intro"><div class="head"><h1 class="tm-text-title-lg">Hello, Dr. Apurva</h1><p>Let’s check in on your patients today.</p></div></header>
+ <section class="panel" aria-labelledby="ready">
+  <div class="prompt"><div class="prompt-icon" aria-hidden="true"><span class="tm-icon" id="variant-icon" data-icon="fingerprint"></span></div><h2 id="ready">Ready when you are</h2></div>
+  <div class="tm-notice tm-notice--neutral unlock-notice" id="unlock-notice" role="status" hidden><span class="tm-icon" data-icon="info-circle" aria-hidden="true"></span><span id="unlock-error"></span></div>
+  <div class="footer">
+   <button class="tm-btn tm-btn--primary tm-btn--lg tm-btn--block" id="unlock-action" type="button"><span id="unlock-label">Unlock with fingerprint</span></button>
+   <button class="tm-btn tm-btn--secondary tm-btn--lg tm-btn--block" id="fallback" type="button">Use OTP instead</button>
+   <button class="tm-btn tm-btn--quiet account" type="button">Not you? <strong>Switch account</strong></button>
+  </div>
+ </section>
+</main>
+<script>
 const params=new URLSearchParams(location.search);
 const variant=params.get('capture')||params.get('variant')||'fingerprint';
-const options={fingerprint:{label:'Unlock with fingerprint',icon:'fingerprint'},face:{label:'Unlock with Face ID',icon:'face-id'},'screen-lock':{label:'Unlock with screen lock',icon:'lock'}};
-const selected=options[variant]||options.fingerprint;
-document.getElementById('review-variant').value=variant in options?variant:'fingerprint';
-document.getElementById('review-variant').addEventListener('change',event=>{location.search='?variant='+event.target.value});
-document.getElementById('unlock-label').textContent=selected.label;
-document.querySelectorAll('.variant-icon').forEach(el=>el.dataset.icon=selected.icon);
+const ICON={fingerprint:'fingerprint','face':'face-id','screen-lock':'lock','pending':'fingerprint','cancelled':'fingerprint','platform-retry':'fingerprint','unavailable':'fingerprint'};
+const LABEL={fingerprint:'Unlock with fingerprint',face:'Unlock with Face ID','screen-lock':'Unlock with screen lock',pending:'Unlocking…',cancelled:'Unlock with fingerprint','platform-retry':'Unlock with fingerprint',unavailable:'Unlock with fingerprint'};
+const sel=document.getElementById('review-variant');
+sel.value=variant in ICON?variant:'fingerprint';
+sel.addEventListener('change',()=>{location.search='?variant='+sel.value});
+document.getElementById('variant-icon').dataset.icon=ICON[sel.value];
+const action=document.getElementById('unlock-action');
+const fallback=document.getElementById('fallback');
+const label=document.getElementById('unlock-label');
+label.textContent=LABEL[sel.value];
+if(sel.value==='pending'){
+ // L2: loading primary = brand fill, white label and spinner (central .tm-btn--busy)
+ action.classList.add('tm-btn--busy');action.setAttribute('aria-busy','true');action.disabled=true;
+ label.innerHTML='<span class="tm-spinner" aria-hidden="true"></span>Unlocking…';
+}
+if(sel.value==='unavailable'){
+ // F2 notice; "Use OTP instead" is the single primary here (one primary per context). The biometric prompt is hidden so only the notice speaks.
+ document.querySelector('.prompt').hidden=true;
+ const n=document.getElementById('unlock-notice');n.hidden=false;
+ document.getElementById('unlock-error').textContent=window.TMFeedback.msg('unlock.unavailable');
+ action.hidden=true;
+ fallback.classList.remove('tm-btn--secondary');fallback.classList.add('tm-btn--primary');
+}
 TMIcons.render(document);
-</script></body></html>
+</script>
+</body></html>

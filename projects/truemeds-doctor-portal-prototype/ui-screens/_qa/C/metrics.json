@@ -1,0 +1,268 @@
+[
+  {
+    "state": "home/setup-wheel",
+    "viewport": 390,
+    "file": "home_setup-wheel_w390.png",
+    "bytes": 100188,
+    "console_errors": []
+  },
+  {
+    "state": "home/setup-wheel",
+    "viewport": 360,
+    "file": "home_setup-wheel_w360.png",
+    "bytes": 99720,
+    "console_errors": []
+  },
+  {
+    "state": "home/setting",
+    "viewport": 390,
+    "file": "home_setting_w390.png",
+    "bytes": 99297,
+    "console_errors": []
+  },
+  {
+    "state": "home/setting",
+    "viewport": 360,
+    "file": "home_setting_w360.png",
+    "bytes": 98787,
+    "console_errors": []
+  },
+  {
+    "state": "home/setup-failed",
+    "viewport": 390,
+    "file": "home_setup-failed_w390.png",
+    "bytes": 115988,
+    "console_errors": []
+  },
+  {
+    "state": "home/setup-failed",
+    "viewport": 360,
+    "file": "home_setup-failed_w360.png",
+    "bytes": 115507,
+    "console_errors": []
+  },
+  {
+    "state": "home/active",
+    "viewport": 390,
+    "file": "home_active_w390.png",
+    "bytes": 78965,
+    "console_errors": []
+  },
+  {
+    "state": "home/active",
+    "viewport": 360,
+    "file": "home_active_w360.png",
+    "bytes": 78590,
+    "console_errors": []
+  },
+  {
+    "state": "home/requesting",
+    "viewport": 390,
+    "file": "home_requesting_w390.png",
+    "bytes": 78834,
+    "console_errors": []
+  },
+  {
+    "state": "home/requesting",
+    "viewport": 360,
+    "file": "home_requesting_w360.png",
+    "bytes": 78443,
+    "console_errors": []
+  },
+  {
+    "state": "home/no-cases",
+    "viewport": 390,
+    "file": "home_no-cases_w390.png",
+    "bytes": 90885,
+    "console_errors": []
+  },
+  {
+    "state": "home/no-cases",
+    "viewport": 360,
+    "file": "home_no-cases_w360.png",
+    "bytes": 91074,
+    "console_errors": []
+  },
+  {
+    "state": "home/request-failed",
+    "viewport": 390,
+    "file": "home_request-failed_w390.png",
+    "bytes": 89675,
+    "console_errors": []
+  },
+  {
+    "state": "home/request-failed",
+    "viewport": 360,
+    "file": "home_request-failed_w360.png",
+    "bytes": 89139,
+    "console_errors": []
+  },
+  {
+    "state": "home/offline",
+    "viewport": 390,
+    "file": "home_offline_w390.png",
+    "bytes": 89074,
+    "console_errors": []
+  },
+  {
+    "state": "home/offline",
+    "viewport": 360,
+    "file": "home_offline_w360.png",
+    "bytes": 89626,
+    "console_errors": []
+  },
+  {
+    "state": "home/near-expiry",
+    "viewport": 390,
+    "file": "home_near-expiry_w390.png",
+    "bytes": 99142,
+    "console_errors": []
+  },
+  {
+    "state": "home/near-expiry",
+    "viewport": 360,
+    "file": "home_near-expiry_w360.png",
+    "bytes": 98597,
+    "console_errors": []
+  },
+  {
+    "state": "home/add-wheel",
+    "viewport": 390,
+    "file": "home_add-wheel_w390.png",
+    "bytes": 109597,
+    "console_errors": []
+  },
+  {
+    "state": "home/add-wheel",
+    "viewport": 360,
+    "file": "home_add-wheel_w360.png",
+    "bytes": 108968,
+    "console_errors": []
+  },
+  {
+    "state": "home/adding",
+    "viewport": 390,
+    "file": "home_adding_w390.png",
+    "bytes": 108877,
+    "console_errors": []
+  },
+  {
+    "state": "home/adding",
+    "viewport": 360,
+    "file": "home_adding_w360.png",
+    "bytes": 108212,
+    "console_errors": []
+  },
+  {
+    "state": "home/add-failed",
+    "viewport": 390,
+    "file": "home_add-failed_w390.png",
+    "bytes": 109528,
+    "console_errors": []
+  },
+  {
+    "state": "home/add-failed",
+    "viewport": 360,
+    "file": "home_add-failed_w360.png",
+    "bytes": 109178,
+    "console_errors": []
+  },
+  {
+    "state": "home/added",
+    "viewport": 390,
+    "file": "home_added_w390.png",
+    "bytes": 84040,
+    "console_errors": []
+  },
+  {
+    "state": "home/added",
+    "viewport": 360,
+    "file": "home_added_w360.png",
+    "bytes": 83691,
+    "console_errors": []
+  },
+  {
+    "state": "home/end-confirmation",
+    "viewport": 390,
+    "file": "home_end-confirmation_w390.png",
+    "bytes": 101616,
+    "console_errors": []
+  },
+  {
+    "state": "home/end-confirmation",
+    "viewport": 360,
+    "file": "home_end-confirmation_w360.png",
+    "bytes": 101210,
+    "console_errors": []
+  },
+  {
+    "state": "home/stop-pending",
+    "viewport": 390,
+    "file": "home_stop-pending_w390.png",
+    "bytes": 69148,
+    "console_errors": []
+  },
+  {
+    "state": "home/stop-pending",
+    "viewport": 360,
+    "file": "home_stop-pending_w360.png",
+    "bytes": 69357,
+    "console_errors": []
+  },
+  {
+    "state": "home/expired-pending",
+    "viewport": 390,
+    "file": "home_expired-pending_w390.png",
+    "bytes": 73359,
+    "console_errors": []
+  },
+  {
+    "state": "home/expired-pending",
+    "viewport": 360,
+    "file": "home_expired-pending_w360.png",
+    "bytes": 73006,
+    "console_errors": []
+  },
+  {
+    "state": "home/idle-expired",
+    "viewport": 390,
+    "file": "home_idle-expired_w390.png",
+    "bytes": 115343,
+    "console_errors": []
+  },
+  {
+    "state": "home/idle-expired",
+    "viewport": 360,
+    "file": "home_idle-expired_w360.png",
+    "bytes": 114918,
+    "console_errors": []
+  },
+  {
+    "state": "home/manually-ended",
+    "viewport": 390,
+    "file": "home_manually-ended_w390.png",
+    "bytes": 115199,
+    "console_errors": []
+  },
+  {
+    "state": "home/manually-ended",
+    "viewport": 360,
+    "file": "home_manually-ended_w360.png",
+    "bytes": 114719,
+    "console_errors": []
+  },
+  {
+    "state": "home/unknown-result",
+    "viewport": 390,
+    "file": "home_unknown-result_w390.png",
+    "bytes": 87707,
+    "console_errors": []
+  },
+  {
+    "state": "home/unknown-result",
+    "viewport": 360,
+    "file": "home_unknown-result_w360.png",
+    "bytes": 87281,
+    "console_errors": []
+  }
+]

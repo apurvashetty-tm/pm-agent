@@ -35,6 +35,16 @@ The visual system for this prototype is now the central Truemeds design system:
 
 ---
 
+## Feedback and render contract — D-41
+
+Before any auth/Home UI or render work, read `docs/feedback-rules.md` and `docs/feedback-state-map.md`. They define shared feedback, copy ownership, state coverage and acceptance gates. Do not style error states individually. Before generating an image, create the batch README from `docs/renders/RENDER-README-TEMPLATE.md`. Capture representative layouts and boundary conditions, not every copy variant. Every state still requires source/behavior coverage. Approval and promotion remain explicit.
+
+**Layout v2 — D-42 to D-45.** Read `design-system/RULES.md` §8 (type scale, spacing, button placement, header types) before any screen work. Logo only on home-base screens (sign-in, Home). OTP v2 and the faster sign-in offer screen are defined in D-44 and D-45.
+
+## Layout v2 decisions — D-42 to D-52 (2026-10-14/15)
+
+Read `design-system/RULES.md` §8 (incl. locked specs L1–L9) and **§9 (components and states: button roles, 48px targets, chips, sheet template, toast, states checklist)**, and decision log D-42–D-52, before any screen work. Doctor-portal specifics of the design system are in D-52. Key points: logo only on home-base screens; task headers in hero or compact size, Back only where there is a previous screen; case page exits by stage (D-48); compact tinted case header (D-49). **Wording: "case", never "order", for the doctor's unit of work**; the customer order ID line stays. Final CTA labels and tracking: D-50 ("Confirm prescription", "Confirm & transfer", "Confirm & forward", "Skip HA call").
+
 ## Approved UI references
 
 `ui-screens/` holds only Apurva-approved screen states for implementation handoff. Read `ui-screens/README.md` before building an approved screen. Do not promote concepts or historical renders from `docs/renders/` into it without explicit approval.
@@ -92,7 +102,7 @@ Do not silently decide or implement the following — ask first:
 - **HA skip eligibility** — what field or condition marks an order as HA-skipped
 - **Transfer vs Forward distinction** — what exact operational difference these have downstream
 - **No-pickup handling** — how many attempts before hold, what hold duration means
-- **Doctor assignment rules** — how a case arrives in a doctor's queue and how re-assignment works
+- **Doctor assignment rules** — how a case arrives in a doctor's queue and how re-assignment works (partly answered 2026-10-14: Back before the first attempted call releases the case — D-48; backend OQ-024/025)
 - ~~**Medicine review authority**~~ — answered 2026-10-07: no add; prescribe or disable only; quantity is the backend's (`decision_log.md` D-04, D-06)
 - **Notes behavior** — are notes visible to other teams? Are they locked after call completion?
 

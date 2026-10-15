@@ -1,0 +1,122 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Case page — concepts (D-48, D-49, D-50)</title>
+<script>if(new URLSearchParams(location.search).has('capture'))document.documentElement.classList.add('capture')</script>
+<link rel="stylesheet" href="../../../../../design-system/truemeds.css">
+<style>
+/* CONCEPT ONLY. Not wired to index.html or consultation logic. Mock content is labelled [MOCK ASSUMPTION]. */
+html,body{margin:0;background:var(--tm-surface-secondary)}
+body.tm{min-height:100%}
+.phone{width:min(390px,100%);height:844px;margin:var(--tm-space-lg) auto;position:relative;overflow:hidden;display:flex;flex-direction:column;background:var(--tm-surface-primary);color:var(--tm-content-primary);border-radius:var(--tm-radius-2xl);box-shadow:var(--tm-shadow-header)}
+html.capture .phone{margin:0;border-radius:0;box-shadow:none;width:390px}
+html.capture body{width:390px;overflow:hidden}
+html.capture.w360 body,html.capture.w360 .phone{width:360px}
+/* Compact task header (D-49): tinted, sticky, fixed height (no jump on scroll). */
+.case-head{flex:none;height:104px;background:var(--tm-surface-brand-subtle);padding:var(--tm-space-sm) var(--tm-space-sm) 0 var(--tm-space-xs);display:flex;flex-direction:column;justify-content:flex-start}
+.row{display:flex;align-items:center;height:48px;gap:var(--tm-space-xs)}
+.icon-btn{width:44px;height:44px;flex:none;display:grid;place-items:center;border:0;background:transparent;color:var(--tm-content-secondary);cursor:pointer;padding:0}
+.icon-btn .tm-icon{width:24px;height:24px}
+.icon-btn.spacer{visibility:hidden}
+.name{flex:1;min-width:0;margin:0;font-size:var(--tm-font-size-title-sm,20px);line-height:28px;font-weight:var(--tm-font-weight-semibold);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.meta{margin:0 var(--tm-space-xl) 0 calc(var(--tm-space-xs) + 44px);font-size:var(--tm-font-size-body-md);line-height:var(--tm-font-lineheight-sm);color:var(--tm-content-secondary);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.case-head .help{margin-left:auto}
+/* Content scrolls on white. */
+.scroll{flex:1 1 auto;min-height:0;overflow-y:auto;padding:var(--tm-space-lg) var(--tm-space-xl) var(--tm-space-2xl)}
+.section{margin:0}
+.section + .section{margin-top:var(--tm-space-2xl)}
+.section-title{margin:0 0 var(--tm-space-sm);font-size:var(--tm-font-size-body-lg);line-height:var(--tm-font-lineheight-md);font-weight:var(--tm-font-weight-semibold)}
+.med{display:flex;justify-content:space-between;gap:var(--tm-space-sm);padding:var(--tm-space-lg) 0;border-bottom:1px solid var(--tm-border-default);font-size:var(--tm-font-size-body-lg);line-height:var(--tm-font-lineheight-md)}
+.med small{display:block;font-size:var(--tm-font-size-body-md);line-height:var(--tm-font-lineheight-sm);color:var(--tm-content-secondary)}
+.oncall{display:flex;align-items:center;gap:var(--tm-space-sm);padding:var(--tm-space-md) var(--tm-space-lg);border-radius:var(--tm-radius-md);background:var(--tm-surface-secondary);font-size:var(--tm-font-size-body-md);line-height:var(--tm-font-lineheight-sm)}
+.oncall .tm-icon{color:var(--tm-content-secondary)}
+/* Footer: pinned actions (RULES §8.4). Neutral notice above it when blocked. */
+.footer{flex:none;padding:var(--tm-space-sm) var(--tm-space-xl) var(--tm-space-lg);display:flex;flex-direction:column;gap:var(--tm-space-sm);border-top:1px solid var(--tm-border-subtle);background:var(--tm-surface-primary)}
+.footer .tm-btn--lg{height:56px}
+.note-slot{flex:none;padding:var(--tm-space-sm) var(--tm-space-xl) 0;background:var(--tm-surface-primary)}
+.note-slot .tm-notice{margin:0}
+/* Sheets sit inside the frame. */
+.overlay{position:absolute;inset:0;background:rgba(0,0,0,.32);z-index:5;display:flex;flex-direction:column;justify-content:flex-end}
+.sheet{background:var(--tm-surface-primary);border-radius:var(--tm-radius-2xl) var(--tm-radius-2xl) 0 0;padding:var(--tm-space-sm) var(--tm-space-xl) var(--tm-space-xl)}
+.handle{width:40px;height:4px;border-radius:2px;background:var(--tm-border-default);margin:0 auto var(--tm-space-lg)}
+.sheet h2{margin:0;font-size:var(--tm-font-size-body-lg);line-height:var(--tm-font-lineheight-md);font-weight:var(--tm-font-weight-semibold)}
+.sheet p{margin:var(--tm-space-sm) 0 0;font-size:var(--tm-font-size-body-md);line-height:var(--tm-font-lineheight-sm);color:var(--tm-content-secondary)}
+.sheet .actions{margin-top:var(--tm-space-2xl);display:flex;flex-direction:column;gap:var(--tm-space-sm)}
+.sheet .actions .tm-btn--lg{height:56px}
+.review{position:fixed;left:50%;transform:translateX(-50%);top:4px;font:12px/16px var(--tm-font);color:var(--tm-content-secondary);z-index:9}
+html.capture .review{display:none}
+.review select{font:inherit;padding:4px 8px;border:1px solid var(--tm-border-default);border-radius:var(--tm-radius-md);background:var(--tm-surface-primary)}
+@media(min-width:768px){html:not(.capture) .phone{height:844px}}
+</style>
+<script src="../../../../../design-system/icons/icons.js"></script>
+</head><body class="tm">
+<div class="review"><label for="s">Concept state</label> <select id="s" aria-label="Concept state">
+ <option value="case-top">a. case-top</option><option value="case-scrolled">b. case-scrolled</option><option value="case-leave-sheet">c. case-leave-sheet</option><option value="case-releasing">d. case-releasing</option><option value="case-on-call">e. case-on-call</option><option value="case-back-blocked">f. case-back-blocked</option><option value="case-post-gate">g. case-post-gate (transfer)</option><option value="case-post-gate-cat4">g. case-post-gate (Cat4)</option><option value="case-post-gate-forward">g. case-post-gate (forward)</option><option value="case-closed">h. case-closed</option><option value="case-closed-availability-ended">i. case-closed-availability-ended</option>
+</select></div>
+<main class="phone" id="phone" aria-label="Case page concept"></main>
+<script>
+// Concept states. Patient and order values are mock: [MOCK ASSUMPTION].
+const PATIENT = 'Ananya Rao', META = '54 · Female · Order 12345 · ₹1,240';
+const ICON = n => `<span class="tm-icon" data-icon="${n}" aria-hidden="true"></span>`;
+const MEDS = [['Paracetamol 650 mg','Tablet · 1-0-1 · 5 days'],['Cetirizine 10 mg','Tablet · 0-0-1 · 5 days'],['ORS sachet','As needed · 2 per day']];
+// Stage flags (D-48): leave is a release before the first attempted call; blocked from first attempt until close; closed goes straight to Home.
+const STATES = {
+  'case-top':                       { back: true,  help: true, scroll: 0,   on: false, note: null, footer: 'call', sheet: null },
+  'case-scrolled':                  { back: true,  help: true, scroll: 260, on: false, note: null, footer: 'call', sheet: null },
+  'case-leave-sheet':               { back: true,  help: true, scroll: 0,   on: false, note: null, footer: 'call', sheet: 'leave' },
+  'case-releasing':                 { back: true,  help: true, scroll: 0,   on: false, note: null, footer: 'call', sheet: 'releasing' },
+  'case-on-call':                   { back: false, help: true, scroll: 0,   on: true,  note: null, footer: 'prescribe', sheet: null },
+  'case-back-blocked':              { back: false, help: true, scroll: 0,   on: true,  note: 'Finish this case first. Then you can go back to Home.', footer: 'prescribe', sheet: null },
+  'case-post-gate':                 { back: false, help: true, scroll: 0,   on: false, note: null, footer: 'transfer', sheet: null },
+  'case-post-gate-cat4':            { back: false, help: true, scroll: 0,   on: false, note: null, footer: 'cat4', sheet: null },
+  'case-post-gate-forward':         { back: false, help: true, scroll: 0,   on: false, note: null, footer: 'forward', sheet: null },
+  'case-closed':                    { back: true,  help: true, scroll: 0,   on: false, note: null, footer: 'closed', sheet: null },
+  'case-closed-availability-ended': { back: true,  help: true, scroll: 0,   on: false, note: null, footer: 'closed-ended', sheet: null }
+};
+const FOOTERS = {
+  call:        `<button class="tm-btn tm-btn--primary tm-btn--lg tm-btn--block" type="button">Call patient</button>`,
+  prescribe:   `<button class="tm-btn tm-btn--primary tm-btn--lg tm-btn--block" type="button">Prescribe</button>`,
+  transfer:    `<button class="tm-btn tm-btn--primary tm-btn--lg tm-btn--block" type="button">Confirm &amp; transfer</button><button class="tm-btn tm-btn--quiet tm-btn--lg tm-btn--block" type="button">Skip HA call</button>`,
+  cat4:        `<button class="tm-btn tm-btn--primary tm-btn--lg tm-btn--block" type="button">Confirm prescription</button>`,
+  forward:     `<button class="tm-btn tm-btn--primary tm-btn--lg tm-btn--block" type="button">Confirm &amp; forward</button><button class="tm-btn tm-btn--quiet tm-btn--lg tm-btn--block" type="button">Skip HA call</button>`,
+  closed:      `<button class="tm-btn tm-btn--primary tm-btn--lg tm-btn--block" type="button">Request next case</button><button class="tm-btn tm-btn--quiet tm-btn--lg tm-btn--block" type="button">Back to Home</button>`,
+  'closed-ended': `<button class="tm-btn tm-btn--primary tm-btn--lg tm-btn--block" type="button">Back to Home</button>`
+};
+const SHEETS = {
+  leave: `<div class="overlay"><section class="sheet" role="dialog" aria-modal="true" aria-labelledby="lv-t"><div class="handle"></div><h2 id="lv-t">Leave this case?</h2><p>It goes back to the queue for another doctor.</p><div class="actions"><button class="tm-btn tm-btn--primary tm-btn--lg tm-btn--block" type="button">Release case</button><button class="tm-btn tm-btn--quiet tm-btn--lg tm-btn--block" type="button">Stay on this case</button></div></section></div>`,
+  releasing: `<div class="overlay"><section class="sheet" role="dialog" aria-modal="true" aria-labelledby="lv-t"><div class="handle"></div><h2 id="lv-t">Leave this case?</h2><p>It goes back to the queue for another doctor.</p><div class="actions"><button class="tm-btn tm-btn--primary tm-btn--lg tm-btn--block tm-btn--busy" aria-busy="true" type="button"><span class="tm-spinner" aria-hidden="true"></span>Releasing…</button><button class="tm-btn tm-btn--quiet tm-btn--lg tm-btn--block" type="button" disabled>Stay on this case</button></div></section></div>`
+};
+function render(key) {
+  const s = STATES[key] || STATES['case-top'];
+  const wide = new URLSearchParams(location.search).get('w') === '360';
+  document.documentElement.classList.toggle('w360', wide);
+  const backBtn = s.back ? `<button class="icon-btn" type="button" aria-label="Back">${ICON('arrow-left')}</button>` : `<span class="icon-btn spacer" aria-hidden="true"></span>`;
+  const helpBtn = s.help ? `<button class="icon-btn help" type="button" aria-label="Help">${ICON('help-circle')}</button>` : '';
+  const onCall = s.on ? `<div class="oncall">${ICON('phone')}<span>On call · 02:14 <span style="color:var(--tm-content-secondary)">[MOCK]</span></span></div>` : '';
+  const meds = MEDS.map(([n, d]) => `<div class="med"><div>${n}<small>${d}</small></div></div>`).join('');
+  const note = s.note ? `<div class="note-slot"><div class="tm-notice tm-notice--neutral" role="status">${ICON('info-circle')}<span>${s.note}</span></div></div>` : '';
+  $('#phone').innerHTML = `
+    <header class="case-head">
+      <div class="row">${backBtn}<h1 class="name tm-text-h1">${PATIENT}</h1>${helpBtn}</div>
+      <p class="meta">${META}</p>
+    </header>
+    <div class="scroll" id="scroll">
+      ${onCall}
+      <section class="section"><h2 class="section-title">Medicines to prescribe</h2>${meds}</section>
+      <section class="section"><h2 class="section-title">Notes &amp; symptoms</h2><p class="tm-text-body-md" style="margin:0;color:var(--tm-content-secondary)">Mild fever for two days, no rash. [MOCK ASSUMPTION]</p></section>
+      <section class="section"><h2 class="section-title">Call</h2><p class="tm-text-body-md" style="margin:0;color:var(--tm-content-secondary)">Call the patient to confirm symptoms. [MOCK ASSUMPTION]</p></section>
+      <section class="section"><h2 class="section-title">Allergies</h2><p class="tm-text-body-md" style="margin:0;color:var(--tm-content-secondary)">Penicillin (rash). [MOCK ASSUMPTION]</p></section>
+      <section class="section"><h2 class="section-title">Previous visits</h2><p class="tm-text-body-md" style="margin:0;color:var(--tm-content-secondary)">Visit 12 Sep: viral fever, resolved. [MOCK ASSUMPTION]</p></section>
+      <section class="section"><h2 class="section-title">Patient details</h2><p class="tm-text-body-md" style="margin:0;color:var(--tm-content-secondary)">Weight 62 kg · Lives in Pune. [MOCK ASSUMPTION]</p></section>
+    </div>
+    ${note}
+    <footer class="footer">${FOOTERS[s.footer]}</footer>
+    ${s.sheet ? SHEETS[s.sheet] : ''}`;
+  const sc = document.getElementById('scroll'); if (s.scroll) sc.scrollTop = s.scroll;
+  if (window.TMIcons) TMIcons.render(document.getElementById('phone'));
+  $('#s').value = key;
+}
+function $(q) { return document.querySelector(q); }
+const params = new URLSearchParams(location.search);
+const initial = params.get('s') || 'case-top';
+$('#s').addEventListener('change', e => { location.search = '?s=' + encodeURIComponent(e.target.value); });
+render(initial);
+</script>
+</body></html>

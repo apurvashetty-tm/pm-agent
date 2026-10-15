@@ -36,6 +36,8 @@ The doctor's context:
 
 This is the core journey. Claude must not reorder, skip, or add steps without explicit approval.
 
+> **Leaving a case (approved by Apurva, 2026-10-14, D-48):** before the first attempted call the doctor may go Back and release the case (with confirmation); from the first attempted call until the case is closed, leaving is blocked; after closing, the doctor chooses "Request next case" or "Back to Home". The steps below are unchanged.
+
 **Step 1 — Review patient and order context**
 Doctor sees the patient name, order ID, order type (Cat4 or Pilot), and any relevant flags.
 
@@ -67,7 +69,7 @@ Final operational CTAs must NOT appear before a valid call is completed.
 
 Before the valid-call gate:
 - Show: assignment status, call button, no-pickup/hold actions, medicine review, notes input
-- Do NOT show: Confirm Order, Confirm & Transfer, Confirm & Forward, Skip HA Call
+- Do NOT show: Confirm prescription, Confirm & transfer, Confirm & forward, Skip HA call
 
 After a valid call (connected + ≥50 seconds live):
 - Show the correct final CTA based on case type
@@ -84,14 +86,16 @@ Exact timer behavior (pause on hold, resume on reconnect) is `[OPEN DECISION]`.
 
 | Case Type | HA Status | Correct Final CTA |
 |---|---|---|
-| Cat4 | N/A | Confirm Order |
-| Pilot | HA already skipped (by customer or system) | Confirm Order |
-| Pilot | Value Meds + HA required | Confirm & Transfer |
-| Pilot | Non-Value Meds + HA required | Confirm & Forward |
+| Cat4 | N/A | Confirm prescription |
+| Pilot | HA already skipped (by customer or system) | Confirm prescription |
+| Pilot | Value Meds + HA required | Confirm & transfer |
+| Pilot | Non-Value Meds + HA required | Confirm & forward |
+
+Labels renamed 2026-10-14 (D-50; previously Confirm Order / Confirm & Transfer / Confirm & Forward / Skip HA Call). Routing unchanged. Each of the four rows must be a distinguishable outcome in analytics — never derived from the label (Cat4 and HA-skipped share one).
 
 Additional rules:
-- **Skip HA Call** button is available only after valid-call gate, and only for Pilot orders where HA is required and not yet skipped.
-- Once Skip HA Call is used, the case becomes "HA skipped" → CTA becomes Confirm Order.
+- **Skip HA call** button is available only after valid-call gate, and only for Pilot orders where HA is required and not yet skipped.
+- Once Skip HA call is used, the case becomes "HA skipped" → CTA becomes Confirm prescription.
 - Pilot HA-skipped cases must NOT show Transfer or Forward.
 - Pilot HA-skipped cases must NOT show the HA transfer attention banner.
 - Cat4 cases must never show Transfer, Forward, Skip HA Call, or any HA-related UI.

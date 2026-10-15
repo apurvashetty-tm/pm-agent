@@ -1,0 +1,56 @@
+/* Home reference, layout v2 (phase C). Tokens only. Type: four levels (RULES §8.1). Spacing: 24 margin, gaps 8/16/32 (§8.3). */
+*{box-sizing:border-box}
+body{margin:0;background:var(--tm-surface-secondary)}
+.review{max-width:390px;margin:var(--tm-space-lg) auto}
+.review label{display:block;margin-bottom:var(--tm-space-xs)}
+.review select{width:100%;font:inherit;padding:var(--tm-space-sm);border:1px solid var(--tm-border-default);border-radius:var(--tm-radius-md);background:var(--tm-surface-primary)}
+.review p{font-size:var(--tm-font-size-body-md);line-height:var(--tm-font-lineheight-sm);color:var(--tm-content-secondary)}
+#background{flex:1;min-height:0;display:flex;flex-direction:column}
+.phone{width:100%;height:100dvh;margin:0;position:relative;overflow:hidden;display:flex;flex-direction:column;background:var(--tm-surface-brand-subtle);color:var(--tm-content-primary);transform:translateZ(0)}
+/* RULES §7: below 768px the app is the screen; from 768px it sits in the centred 9:16 frame. */
+@media (min-width:768px){.phone{width:390px;height:844px;margin:auto}}
+/* Home-base header (D-42): logo left, actions right. */
+.header{flex:none;display:flex;align-items:center;justify-content:space-between;padding:var(--tm-space-lg) var(--tm-space-lg) 0 var(--tm-space-xl)}
+.logo{width:149px;height:auto}
+.header-actions{display:flex;gap:var(--tm-space-xs);margin:-9px 0}   /* 48px icon targets keep the header at logo height: logo-to-title stays 48 (L6) */
+/* LOCKED L6 (D-46): home-base hero gap, logo to title, is 48 (--tm-space-3xl). */
+.band{flex:none;padding:var(--tm-space-3xl) var(--tm-space-xl) var(--tm-space-2xl)}
+.band h1{margin:0}
+.sub{margin:var(--tm-space-sm) 0 0;font-size:var(--tm-font-size-body-md);line-height:var(--tm-font-lineheight-sm);color:var(--tm-content-secondary)}
+.panel{flex:1;min-height:0;display:flex;flex-direction:column;background:var(--tm-surface-primary);border-radius:var(--tm-radius-2xl) var(--tm-radius-2xl) 0 0;padding:var(--tm-space-2xl) var(--tm-space-xl) var(--tm-space-xl)}
+.scroll{flex:1 1 auto;min-height:0;overflow-y:auto}
+.rx{display:flex;align-items:center;justify-content:space-between;min-height:48px;border-bottom:1px solid var(--tm-border-default);font-size:var(--tm-font-size-body-lg);line-height:var(--tm-font-lineheight-md);color:var(--tm-content-secondary)}
+.rx strong{font-weight:var(--tm-font-weight-semibold);color:var(--tm-content-primary)}
+.timer-row{margin-top:var(--tm-space-lg);display:flex;align-items:center;justify-content:space-between}
+.timer-row:has(.add-link){min-height:48px}
+.timer-label{font-size:var(--tm-font-size-body-md);line-height:var(--tm-font-lineheight-sm);color:var(--tm-content-secondary)}
+/* Time value is key content (L2, 16/24). Flagged to Apurva: may read small as the hero of the screen. */
+/* Time remaining is a value display (L9, RULES §8.12): 32/40 semibold, fixed-width digits, from the central component. */
+.time{margin:var(--tm-space-xs) 0 0}
+.time--warning{color:var(--tm-content-primary)}
+.picker{margin-top:var(--tm-space-lg)}
+.presets{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--tm-space-sm)}
+.presets .tm-chip{justify-content:center}
+.adjust-row{display:flex;align-items:baseline;justify-content:space-between;gap:var(--tm-space-sm);margin:var(--tm-space-lg) 0 var(--tm-space-sm)}
+.adjust{margin:0;font-size:var(--tm-font-size-body-lg);line-height:var(--tm-font-lineheight-md);font-weight:var(--tm-font-weight-semibold)}
+/* Approved wheel (D-40, availability_wheel.png): one light-blue band across both columns, a divider inside it, large blue
+   selected values, grey neighbours, no grey column boxes. Tokens only. */
+.col-heads{display:grid;grid-template-columns:1fr 1fr;text-align:center;margin-bottom:var(--tm-space-xs);font-size:var(--tm-font-size-body-md);line-height:var(--tm-font-lineheight-sm);color:var(--tm-content-secondary)}
+.columns{position:relative;display:grid;grid-template-columns:1fr 1fr;height:144px}
+.wheel-band{position:absolute;left:0;right:0;top:48px;height:48px;border-radius:var(--tm-radius-md);background:var(--tm-surface-brand-subtle);pointer-events:none}
+.wheel-band::after{content:'';position:absolute;left:50%;top:var(--tm-space-xs);bottom:var(--tm-space-xs);width:1px;background:var(--tm-border-default)}
+.wheel{position:relative;z-index:1;display:flex;flex-direction:column;background:transparent}
+.wheel-item{height:48px;border:0;background:transparent;font:inherit;font-size:var(--tm-font-size-title-md);line-height:var(--tm-font-lineheight-lg);color:var(--tm-content-secondary);cursor:pointer;padding:0}
+.wheel-item.is-selected{color:var(--tm-content-brand);font-size:var(--tm-font-size-title-lg);line-height:var(--tm-font-lineheight-2xl);font-weight:var(--tm-font-weight-semibold)}
+.wheel-item--empty{height:48px}
+.helper{margin:0;text-align:right;flex:none;font-size:var(--tm-font-size-body-md);line-height:var(--tm-font-lineheight-sm);color:var(--tm-content-secondary)}
+/* Status slot sits between content and the pinned footer (stable position). */
+.status-slot{flex:none;padding-top:var(--tm-space-lg)}
+.status{margin:0}
+.status-slot:empty{display:none}
+.footer{flex:none;padding-top:var(--tm-space-lg);display:flex;flex-direction:column;gap:var(--tm-space-sm);padding-bottom:var(--tm-space-sm)}
+.home-toast{position:absolute;left:50%;transform:translateX(-50%);white-space:nowrap;bottom:calc(var(--tm-space-sm) + 56px + var(--tm-space-lg));z-index:4}
+/* Sheets sit inside the frame and keep the bottom-sheet behaviour. */
+.overlay{position:absolute;inset:0;background:rgba(0,0,0,.32);z-index:5;display:flex;flex-direction:column;justify-content:flex-end}
+[hidden]{display:none!important}
+@media(min-width:768px){.phone{border:1px solid var(--tm-border-subtle);border-radius:var(--tm-radius-2xl);box-shadow:var(--tm-shadow-header)}}

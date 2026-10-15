@@ -1,0 +1,667 @@
+{
+  "failures": [
+    {
+      "phase": "B",
+      "state": "offer/fingerprint",
+      "vw": 390,
+      "line": "R3",
+      "msg": "p.pt-t starts at 60px (need 24)"
+    },
+    {
+      "phase": "B",
+      "state": "offer/fingerprint",
+      "vw": 390,
+      "line": "R3",
+      "msg": "p.pt-d starts at 60px (need 24)"
+    },
+    {
+      "phase": "B",
+      "state": "offer/fingerprint",
+      "vw": 390,
+      "line": "R3",
+      "msg": "p.pt-t starts at 60px (need 24)"
+    },
+    {
+      "phase": "B",
+      "state": "offer/fingerprint",
+      "vw": 390,
+      "line": "R3",
+      "msg": "p.pt-d starts at 60px (need 24)"
+    },
+    {
+      "phase": "B",
+      "state": "offer/fingerprint",
+      "vw": 390,
+      "line": "R3",
+      "msg": "p.pt-t starts at 60px (need 24)"
+    },
+    {
+      "phase": "B",
+      "state": "offer/fingerprint",
+      "vw": 390,
+      "line": "R3",
+      "msg": "p.pt-d starts at 60px (need 24)"
+    },
+    {
+      "phase": "B",
+      "state": "offer/fingerprint",
+      "vw": 360,
+      "line": "R3",
+      "msg": "p.pt-t starts at 60px (need 24)"
+    },
+    {
+      "phase": "B",
+      "state": "offer/fingerprint",
+      "vw": 360,
+      "line": "R3",
+      "msg": "p.pt-d starts at 60px (need 24)"
+    },
+    {
+      "phase": "B",
+      "state": "offer/fingerprint",
+      "vw": 360,
+      "line": "R3",
+      "msg": "p.pt-t starts at 60px (need 24)"
+    },
+    {
+      "phase": "B",
+      "state": "offer/fingerprint",
+      "vw": 360,
+      "line": "R3",
+      "msg": "p.pt-d starts at 60px (need 24)"
+    },
+    {
+      "phase": "B",
+      "state": "offer/fingerprint",
+      "vw": 360,
+      "line": "R3",
+      "msg": "p.pt-t starts at 60px (need 24)"
+    },
+    {
+      "phase": "B",
+      "state": "offer/fingerprint",
+      "vw": 360,
+      "line": "R3",
+      "msg": "p.pt-d starts at 60px (need 24)"
+    },
+    {
+      "phase": "B",
+      "state": "offer/fingerprint",
+      "vw": 430,
+      "line": "R3",
+      "msg": "p.pt-t starts at 60px (need 24)"
+    },
+    {
+      "phase": "B",
+      "state": "offer/fingerprint",
+      "vw": 430,
+      "line": "R3",
+      "msg": "p.pt-d starts at 60px (need 24)"
+    },
+    {
+      "phase": "B",
+      "state": "offer/fingerprint",
+      "vw": 430,
+      "line": "R3",
+      "msg": "p.pt-t starts at 60px (need 24)"
+    },
+    {
+      "phase": "B",
+      "state": "offer/fingerprint",
+      "vw": 430,
+      "line": "R3",
+      "msg": "p.pt-d starts at 60px (need 24)"
+    },
+    {
+      "phase": "B",
+      "state": "offer/fingerprint",
+      "vw": 430,
+      "line": "R3",
+      "msg": "p.pt-t starts at 60px (need 24)"
+    },
+    {
+      "phase": "B",
+      "state": "offer/fingerprint",
+      "vw": 430,
+      "line": "R3",
+      "msg": "p.pt-d starts at 60px (need 24)"
+    },
+    {
+      "phase": "B",
+      "state": "offer/face-id",
+      "vw": 390,
+      "line": "R3",
+      "msg": "p.pt-t starts at 60px (need 24)"
+    },
+    {
+      "phase": "B",
+      "state": "offer/face-id",
+      "vw": 390,
+      "line": "R3",
+      "msg": "p.pt-d starts at 60px (need 24)"
+    },
+    {
+      "phase": "B",
+      "state": "offer/face-id",
+      "vw": 390,
+      "line": "R3",
+      "msg": "p.pt-t starts at 60px (need 24)"
+    },
+    {
+      "phase": "B",
+      "state": "offer/face-id",
+      "vw": 390,
+      "line": "R3",
+      "msg": "p.pt-d starts at 60px (need 24)"
+    },
+    {
+      "phase": "B",
+      "state": "offer/face-id",
+      "vw": 390,
+      "line": "R3",
+      "msg": "p.pt-t starts at 60px (need 24)"
+    },
+    {
+      "phase": "B",
+      "state": "offer/face-id",
+      "vw": 390,
+      "line": "R3",
+      "msg": "p.pt-d starts at 60px (need 24)"
+    },
+    {
+      "phase": "B",
+      "state": "offer/face-id",
+      "vw": 360,
+      "line": "R3",
+      "msg": "p.pt-t starts at 60px (need 24)"
+    },
+    {
+      "phase": "B",
+      "state": "offer/face-id",
+      "vw": 360,
+      "line": "R3",
+      "msg": "p.pt-d starts at 60px (need 24)"
+    },
+    {
+      "phase": "B",
+      "state": "offer/face-id",
+      "vw": 360,
+      "line": "R3",
+      "msg": "p.pt-t starts at 60px (need 24)"
+    },
+    {
+      "phase": "B",
+      "state": "offer/face-id",
+      "vw": 360,
+      "line": "R3",
+      "msg": "p.pt-d starts at 60px (need 24)"
+    },
+    {
+      "phase": "B",
+      "state": "offer/face-id",
+      "vw": 360,
+      "line": "R3",
+      "msg": "p.pt-t starts at 60px (need 24)"
+    },
+    {
+      "phase": "B",
+      "state": "offer/face-id",
+      "vw": 360,
+      "line": "R3",
+      "msg": "p.pt-d starts at 60px (need 24)"
+    },
+    {
+      "phase": "B",
+      "state": "offer/face-id",
+      "vw": 430,
+      "line": "R3",
+      "msg": "p.pt-t starts at 60px (need 24)"
+    },
+    {
+      "phase": "B",
+      "state": "offer/face-id",
+      "vw": 430,
+      "line": "R3",
+      "msg": "p.pt-d starts at 60px (need 24)"
+    },
+    {
+      "phase": "B",
+      "state": "offer/face-id",
+      "vw": 430,
+      "line": "R3",
+      "msg": "p.pt-t starts at 60px (need 24)"
+    },
+    {
+      "phase": "B",
+      "state": "offer/face-id",
+      "vw": 430,
+      "line": "R3",
+      "msg": "p.pt-d starts at 60px (need 24)"
+    },
+    {
+      "phase": "B",
+      "state": "offer/face-id",
+      "vw": 430,
+      "line": "R3",
+      "msg": "p.pt-t starts at 60px (need 24)"
+    },
+    {
+      "phase": "B",
+      "state": "offer/face-id",
+      "vw": 430,
+      "line": "R3",
+      "msg": "p.pt-d starts at 60px (need 24)"
+    },
+    {
+      "phase": "B",
+      "state": "offer/enabling",
+      "vw": 390,
+      "line": "R3",
+      "msg": "p.pt-t starts at 60px (need 24)"
+    },
+    {
+      "phase": "B",
+      "state": "offer/enabling",
+      "vw": 390,
+      "line": "R3",
+      "msg": "p.pt-d starts at 60px (need 24)"
+    },
+    {
+      "phase": "B",
+      "state": "offer/enabling",
+      "vw": 390,
+      "line": "R3",
+      "msg": "p.pt-t starts at 60px (need 24)"
+    },
+    {
+      "phase": "B",
+      "state": "offer/enabling",
+      "vw": 390,
+      "line": "R3",
+      "msg": "p.pt-d starts at 60px (need 24)"
+    },
+    {
+      "phase": "B",
+      "state": "offer/enabling",
+      "vw": 390,
+      "line": "R3",
+      "msg": "p.pt-t starts at 60px (need 24)"
+    },
+    {
+      "phase": "B",
+      "state": "offer/enabling",
+      "vw": 390,
+      "line": "R3",
+      "msg": "p.pt-d starts at 60px (need 24)"
+    },
+    {
+      "phase": "B",
+      "state": "offer/enabling",
+      "vw": 360,
+      "line": "R3",
+      "msg": "p.pt-t starts at 60px (need 24)"
+    },
+    {
+      "phase": "B",
+      "state": "offer/enabling",
+      "vw": 360,
+      "line": "R3",
+      "msg": "p.pt-d starts at 60px (need 24)"
+    },
+    {
+      "phase": "B",
+      "state": "offer/enabling",
+      "vw": 360,
+      "line": "R3",
+      "msg": "p.pt-t starts at 60px (need 24)"
+    },
+    {
+      "phase": "B",
+      "state": "offer/enabling",
+      "vw": 360,
+      "line": "R3",
+      "msg": "p.pt-d starts at 60px (need 24)"
+    },
+    {
+      "phase": "B",
+      "state": "offer/enabling",
+      "vw": 360,
+      "line": "R3",
+      "msg": "p.pt-t starts at 60px (need 24)"
+    },
+    {
+      "phase": "B",
+      "state": "offer/enabling",
+      "vw": 360,
+      "line": "R3",
+      "msg": "p.pt-d starts at 60px (need 24)"
+    },
+    {
+      "phase": "B",
+      "state": "offer/enabling",
+      "vw": 430,
+      "line": "R3",
+      "msg": "p.pt-t starts at 60px (need 24)"
+    },
+    {
+      "phase": "B",
+      "state": "offer/enabling",
+      "vw": 430,
+      "line": "R3",
+      "msg": "p.pt-d starts at 60px (need 24)"
+    },
+    {
+      "phase": "B",
+      "state": "offer/enabling",
+      "vw": 430,
+      "line": "R3",
+      "msg": "p.pt-t starts at 60px (need 24)"
+    },
+    {
+      "phase": "B",
+      "state": "offer/enabling",
+      "vw": 430,
+      "line": "R3",
+      "msg": "p.pt-d starts at 60px (need 24)"
+    },
+    {
+      "phase": "B",
+      "state": "offer/enabling",
+      "vw": 430,
+      "line": "R3",
+      "msg": "p.pt-t starts at 60px (need 24)"
+    },
+    {
+      "phase": "B",
+      "state": "offer/enabling",
+      "vw": 430,
+      "line": "R3",
+      "msg": "p.pt-d starts at 60px (need 24)"
+    },
+    {
+      "phase": "B",
+      "state": "unlock/fingerprint",
+      "vw": 390,
+      "line": "R3",
+      "msg": "h2 starts at 118px (need 24)"
+    },
+    {
+      "phase": "B",
+      "state": "unlock/fingerprint",
+      "vw": 360,
+      "line": "R3",
+      "msg": "h2 starts at 103px (need 24)"
+    },
+    {
+      "phase": "B",
+      "state": "unlock/fingerprint",
+      "vw": 430,
+      "line": "R3",
+      "msg": "h2 starts at 138px (need 24)"
+    },
+    {
+      "phase": "B",
+      "state": "unlock/face",
+      "vw": 390,
+      "line": "R3",
+      "msg": "h2 starts at 118px (need 24)"
+    },
+    {
+      "phase": "B",
+      "state": "unlock/face",
+      "vw": 360,
+      "line": "R3",
+      "msg": "h2 starts at 103px (need 24)"
+    },
+    {
+      "phase": "B",
+      "state": "unlock/face",
+      "vw": 430,
+      "line": "R3",
+      "msg": "h2 starts at 138px (need 24)"
+    },
+    {
+      "phase": "B",
+      "state": "unlock/screen-lock",
+      "vw": 390,
+      "line": "R3",
+      "msg": "h2 starts at 118px (need 24)"
+    },
+    {
+      "phase": "B",
+      "state": "unlock/screen-lock",
+      "vw": 360,
+      "line": "R3",
+      "msg": "h2 starts at 103px (need 24)"
+    },
+    {
+      "phase": "B",
+      "state": "unlock/screen-lock",
+      "vw": 430,
+      "line": "R3",
+      "msg": "h2 starts at 138px (need 24)"
+    },
+    {
+      "phase": "B",
+      "state": "unlock/pending",
+      "vw": 390,
+      "line": "R3",
+      "msg": "h2 starts at 118px (need 24)"
+    },
+    {
+      "phase": "B",
+      "state": "unlock/pending",
+      "vw": 360,
+      "line": "R3",
+      "msg": "h2 starts at 103px (need 24)"
+    },
+    {
+      "phase": "B",
+      "state": "unlock/pending",
+      "vw": 430,
+      "line": "R3",
+      "msg": "h2 starts at 138px (need 24)"
+    },
+    {
+      "phase": "B",
+      "state": "unlock/cancelled",
+      "vw": 390,
+      "line": "R3",
+      "msg": "h2 starts at 118px (need 24)"
+    },
+    {
+      "phase": "B",
+      "state": "unlock/cancelled",
+      "vw": 360,
+      "line": "R3",
+      "msg": "h2 starts at 103px (need 24)"
+    },
+    {
+      "phase": "B",
+      "state": "unlock/cancelled",
+      "vw": 430,
+      "line": "R3",
+      "msg": "h2 starts at 138px (need 24)"
+    },
+    {
+      "phase": "B",
+      "state": "unlock/platform-retry",
+      "vw": 390,
+      "line": "R3",
+      "msg": "h2 starts at 118px (need 24)"
+    },
+    {
+      "phase": "B",
+      "state": "unlock/platform-retry",
+      "vw": 360,
+      "line": "R3",
+      "msg": "h2 starts at 103px (need 24)"
+    },
+    {
+      "phase": "B",
+      "state": "unlock/platform-retry",
+      "vw": 430,
+      "line": "R3",
+      "msg": "h2 starts at 138px (need 24)"
+    },
+    {
+      "phase": "C",
+      "state": "home/setup-wheel",
+      "vw": 390,
+      "line": "R3",
+      "msg": "p.helper starts at 235px (need 24)"
+    },
+    {
+      "phase": "C",
+      "state": "home/setup-wheel",
+      "vw": 360,
+      "line": "R3",
+      "msg": "p.helper starts at 205px (need 24)"
+    },
+    {
+      "phase": "C",
+      "state": "home/setup-wheel",
+      "vw": 430,
+      "line": "R3",
+      "msg": "p.helper starts at 275px (need 24)"
+    },
+    {
+      "phase": "C",
+      "state": "home/setting",
+      "vw": 390,
+      "line": "R3",
+      "msg": "p.helper starts at 235px (need 24)"
+    },
+    {
+      "phase": "C",
+      "state": "home/setting",
+      "vw": 360,
+      "line": "R3",
+      "msg": "p.helper starts at 205px (need 24)"
+    },
+    {
+      "phase": "C",
+      "state": "home/setting",
+      "vw": 430,
+      "line": "R3",
+      "msg": "p.helper starts at 275px (need 24)"
+    },
+    {
+      "phase": "C",
+      "state": "home/setup-failed",
+      "vw": 390,
+      "line": "R3",
+      "msg": "p.helper starts at 235px (need 24)"
+    },
+    {
+      "phase": "C",
+      "state": "home/setup-failed",
+      "vw": 360,
+      "line": "R3",
+      "msg": "p.helper starts at 205px (need 24)"
+    },
+    {
+      "phase": "C",
+      "state": "home/setup-failed",
+      "vw": 430,
+      "line": "R3",
+      "msg": "p.helper starts at 275px (need 24)"
+    },
+    {
+      "phase": "C",
+      "state": "home/idle-expired",
+      "vw": 390,
+      "line": "R3",
+      "msg": "p.helper starts at 235px (need 24)"
+    },
+    {
+      "phase": "C",
+      "state": "home/idle-expired",
+      "vw": 360,
+      "line": "R3",
+      "msg": "p.helper starts at 205px (need 24)"
+    },
+    {
+      "phase": "C",
+      "state": "home/idle-expired",
+      "vw": 430,
+      "line": "R3",
+      "msg": "p.helper starts at 275px (need 24)"
+    },
+    {
+      "phase": "C",
+      "state": "home/manually-ended",
+      "vw": 390,
+      "line": "R3",
+      "msg": "p.helper starts at 235px (need 24)"
+    },
+    {
+      "phase": "C",
+      "state": "home/manually-ended",
+      "vw": 360,
+      "line": "R3",
+      "msg": "p.helper starts at 205px (need 24)"
+    },
+    {
+      "phase": "C",
+      "state": "home/manually-ended",
+      "vw": 430,
+      "line": "R3",
+      "msg": "p.helper starts at 275px (need 24)"
+    },
+    {
+      "phase": "D",
+      "state": "case/d-sos-on",
+      "vw": 390,
+      "line": "5.4",
+      "msg": "grid chips use 2 sizes on one screen: 63x48 68x48"
+    },
+    {
+      "phase": "D",
+      "state": "case/d-sos-on",
+      "vw": 360,
+      "line": "5.4",
+      "msg": "grid chips use 2 sizes on one screen: 55x48 61x48"
+    },
+    {
+      "phase": "D",
+      "state": "case/d-sos-on",
+      "vw": 430,
+      "line": "5.4",
+      "msg": "grid chips use 2 sizes on one screen: 73x48 78x48"
+    },
+    {
+      "phase": "D",
+      "state": "case/d-duration-picker",
+      "vw": 390,
+      "line": "5.4",
+      "msg": "grid chips use 2 sizes on one screen: 63x48 65x48"
+    },
+    {
+      "phase": "D",
+      "state": "case/d-duration-picker",
+      "vw": 360,
+      "line": "5.3",
+      "msg": "chip text clipped \"Ongoing\""
+    },
+    {
+      "phase": "D",
+      "state": "case/d-duration-picker",
+      "vw": 360,
+      "line": "5.4",
+      "msg": "grid chips use 2 sizes on one screen: 55x48 58x48"
+    },
+    {
+      "phase": "D",
+      "state": "case/d-duration-picker",
+      "vw": 430,
+      "line": "5.4",
+      "msg": "grid chips use 2 sizes on one screen: 73x48 75x48"
+    }
+  ],
+  "counts": {
+    "R3": 87,
+    "5.4": 6,
+    "5.3": 1
+  }
+}

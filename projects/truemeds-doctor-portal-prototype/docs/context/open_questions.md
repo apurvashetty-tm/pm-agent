@@ -188,6 +188,19 @@ Every entry must include:
 **Question:** Telemedicine Practice Guidelines: a consultation the doctor starts needs explicit, recorded patient consent. Does the patient's order count as the patient starting it?
 **Safe placeholder:** Not built. Needs Legal before the order page changes.
 
+### OQ-023 — When to offer faster sign-in again after "Not now"
+**Question:** After a doctor taps "Not now" on the faster sign-in offer (D-45), when is it offered again? Options: after the next N OTP sign-ins on the same device (e.g. 3); after N days; never (Profile only).
+**Safe placeholder:** Never re-offer automatically; Profile always has the switch (D-45). Needs product + SMS-cost input.
+
+
+### OQ-024 — Releasing a case (backend) [OPEN — Engineering]
+D-48: Back before the first attempted call releases the case to the queue. Needs an unassign action that is only allowed while no call has been attempted, is safe to retry, and returns the case to the pool immediately. Who else is notified, and whether released cases go to the front of the queue, is Engineering/Ops to confirm.
+
+### OQ-025 — Restoring an open case; doctor never returns [OPEN — Engineering]
+D-48: reopening the app goes straight back into an open case. Needs the server to report the doctor's open case on launch. Also: if a case is assigned and the doctor never returns or calls (app killed, phone dead), when is it released automatically, and by whom?
+
+### OQ-026 — "Order" in case-page data and locked CTAs [ANSWERED — Apurva, 2026-10-14, D-50]
+Order ID line stays ("Order 12345 · ₹1,240" — shared reference between customer order and doctor case). CTAs renamed: Confirm prescription / Confirm & transfer / Confirm & forward / Skip HA call. **Open for Engineering:** how the four paths are tracked (separate events vs one event with a flow field) — required: each path distinguishable, never derived from the label.
 ## Answered Questions
 
 *(None yet)*
@@ -212,6 +225,10 @@ The number takes both voice calls and WhatsApp, so "Call Doctor Ops" (tel:) and 
 approved. **Production:** sign-up URL, Terms, Privacy and support numbers must be configurable, not hard-coded.
 **Safe placeholder:** Terms/Privacy point to a "link pending" page. `[MOCK ASSUMPTION]`
 
+**Added 2026-10-14:** what the case-page **Help** button opens (call Doctor Ops, FAQ, or a choice) — needed before the case page is built (D-49).
+
+**Added 2026-10-14:** transfer-failed alert (warm transfer to HA fails) has no spec yet. PRD: blocking alert, doctor confirms before the case is re-routed to forward. Needed before the case page is built (D-51).
+
 ### OQ-022 — Crash and freeze reporting
 **Partly answered 2026-10-12 (Apurva):** the Android and iOS apps use both **Sentry** and **Crashlytics** today.
 Crashlytics covers native apps only; the mobile-web doctor app would report through Sentry. The help-message
@@ -226,3 +243,5 @@ reference ID can be Sentry's event ID, so tech can open the exact report.
 ### OQ-015 — Per-medicine detail view (price, image)
 **Question:** Line-item price was removed from the medicine row (2026-10-07). Apurva's direction: a row-level icon (e.g. eye) opens a per-medicine view showing price, product image and similar reference details, for when a customer asks. Order value stays visible as is.
 **Status:** Deferred — not designed or built yet.
+
+- **Profile / Logout sheet render** (2026-10-15, round 15): listed on the sheet template (D-52) but not in the Home screen files. Render it when `index.html` is rebuilt; not part of the A–D standards pass.

@@ -18,3 +18,6 @@ projects/*/docs/renders/**/round-*/
 __pycache__/
 projects/*/docs/renders/**/promotion-baseline/
 projects/*/docs/renders/**/promotion-check/
+# Superseded renders stay local; their READMEs are committed (2026-10-16)
+projects/*/docs/_superseded/**/*.png
+projects/*/docs/_superseded/**/*.html

@@ -1,0 +1,408 @@
+[
+  {
+    "state": "sign-in/default",
+    "viewport": 390,
+    "file": "sign-in_default_w390.png",
+    "bytes": 72061,
+    "console_errors": []
+  },
+  {
+    "state": "sign-in/default",
+    "viewport": 360,
+    "file": "sign-in_default_w360.png",
+    "bytes": 71674,
+    "console_errors": []
+  },
+  {
+    "state": "sign-in/keyboard-open",
+    "viewport": 390,
+    "file": "sign-in_keyboard-open_w390.png",
+    "bytes": 74900,
+    "console_errors": []
+  },
+  {
+    "state": "sign-in/keyboard-open",
+    "viewport": 360,
+    "file": "sign-in_keyboard-open_w360.png",
+    "bytes": 73927,
+    "console_errors": []
+  },
+  {
+    "state": "sign-in/empty-tap",
+    "viewport": 390,
+    "file": "sign-in_empty-tap_w390.png",
+    "bytes": 73678,
+    "console_errors": []
+  },
+  {
+    "state": "sign-in/empty-tap",
+    "viewport": 360,
+    "file": "sign-in_empty-tap_w360.png",
+    "bytes": 72718,
+    "console_errors": []
+  },
+  {
+    "state": "sign-in/too-short",
+    "viewport": 390,
+    "file": "sign-in_too-short_w390.png",
+    "bytes": 71214,
+    "console_errors": []
+  },
+  {
+    "state": "sign-in/too-short",
+    "viewport": 360,
+    "file": "sign-in_too-short_w360.png",
+    "bytes": 70282,
+    "console_errors": []
+  },
+  {
+    "state": "sign-in/wrong-first-digit",
+    "viewport": 390,
+    "file": "sign-in_wrong-first-digit_w390.png",
+    "bytes": 75782,
+    "console_errors": []
+  },
+  {
+    "state": "sign-in/wrong-first-digit",
+    "viewport": 360,
+    "file": "sign-in_wrong-first-digit_w360.png",
+    "bytes": 74828,
+    "console_errors": []
+  },
+  {
+    "state": "sign-in/pasted-cleaned",
+    "viewport": 390,
+    "file": "sign-in_pasted-cleaned_w390.png",
+    "bytes": 77030,
+    "console_errors": []
+  },
+  {
+    "state": "sign-in/pasted-cleaned",
+    "viewport": 360,
+    "file": "sign-in_pasted-cleaned_w360.png",
+    "bytes": 76072,
+    "console_errors": []
+  },
+  {
+    "state": "sign-in/sending",
+    "viewport": 390,
+    "file": "sign-in_sending_w390.png",
+    "bytes": 79290,
+    "console_errors": []
+  },
+  {
+    "state": "sign-in/sending",
+    "viewport": 360,
+    "file": "sign-in_sending_w360.png",
+    "bytes": 78324,
+    "console_errors": []
+  },
+  {
+    "state": "sign-in/not-registered",
+    "viewport": 390,
+    "file": "sign-in_not-registered_w390.png",
+    "bytes": 84569,
+    "console_errors": []
+  },
+  {
+    "state": "sign-in/not-registered",
+    "viewport": 360,
+    "file": "sign-in_not-registered_w360.png",
+    "bytes": 84155,
+    "console_errors": []
+  },
+  {
+    "state": "sign-in/offline",
+    "viewport": 390,
+    "file": "sign-in_offline_w390.png",
+    "bytes": 76764,
+    "console_errors": []
+  },
+  {
+    "state": "sign-in/offline",
+    "viewport": 360,
+    "file": "sign-in_offline_w360.png",
+    "bytes": 76484,
+    "console_errors": []
+  },
+  {
+    "state": "sign-in/couldnt-send",
+    "viewport": 390,
+    "file": "sign-in_couldnt-send_w390.png",
+    "bytes": 73947,
+    "console_errors": []
+  },
+  {
+    "state": "sign-in/couldnt-send",
+    "viewport": 360,
+    "file": "sign-in_couldnt-send_w360.png",
+    "bytes": 73519,
+    "console_errors": []
+  },
+  {
+    "state": "sign-in/too-many-tries",
+    "viewport": 390,
+    "file": "sign-in_too-many-tries_w390.png",
+    "bytes": 80906,
+    "console_errors": []
+  },
+  {
+    "state": "sign-in/too-many-tries",
+    "viewport": 360,
+    "file": "sign-in_too-many-tries_w360.png",
+    "bytes": 80579,
+    "console_errors": []
+  },
+  {
+    "state": "sign-in/inactive",
+    "viewport": 390,
+    "file": "sign-in_inactive_w390.png",
+    "bytes": 73027,
+    "console_errors": []
+  },
+  {
+    "state": "sign-in/inactive",
+    "viewport": 360,
+    "file": "sign-in_inactive_w360.png",
+    "bytes": 72624,
+    "console_errors": []
+  },
+  {
+    "state": "otp/default",
+    "viewport": 390,
+    "file": "otp_default_w390.png",
+    "bytes": 85802,
+    "console_errors": []
+  },
+  {
+    "state": "otp/default",
+    "viewport": 360,
+    "file": "otp_default_w360.png",
+    "bytes": 85448,
+    "console_errors": []
+  },
+  {
+    "state": "otp/empty-tap",
+    "viewport": 390,
+    "file": "otp_empty-tap_w390.png",
+    "bytes": 89450,
+    "console_errors": []
+  },
+  {
+    "state": "otp/empty-tap",
+    "viewport": 360,
+    "file": "otp_empty-tap_w360.png",
+    "bytes": 89234,
+    "console_errors": []
+  },
+  {
+    "state": "otp/too-short",
+    "viewport": 390,
+    "file": "otp_too-short_w390.png",
+    "bytes": 90197,
+    "console_errors": []
+  },
+  {
+    "state": "otp/too-short",
+    "viewport": 360,
+    "file": "otp_too-short_w360.png",
+    "bytes": 89947,
+    "console_errors": []
+  },
+  {
+    "state": "otp/verifying",
+    "viewport": 390,
+    "file": "otp_verifying_w390.png",
+    "bytes": 67841,
+    "console_errors": []
+  },
+  {
+    "state": "otp/verifying",
+    "viewport": 360,
+    "file": "otp_verifying_w360.png",
+    "bytes": 66884,
+    "console_errors": []
+  },
+  {
+    "state": "otp/wrong-code",
+    "viewport": 390,
+    "file": "otp_wrong-code_w390.png",
+    "bytes": 94341,
+    "console_errors": []
+  },
+  {
+    "state": "otp/wrong-code",
+    "viewport": 360,
+    "file": "otp_wrong-code_w360.png",
+    "bytes": 94166,
+    "console_errors": []
+  },
+  {
+    "state": "otp/two-tries-left",
+    "viewport": 390,
+    "file": "otp_two-tries-left_w390.png",
+    "bytes": 93869,
+    "console_errors": []
+  },
+  {
+    "state": "otp/two-tries-left",
+    "viewport": 360,
+    "file": "otp_two-tries-left_w360.png",
+    "bytes": 93688,
+    "console_errors": []
+  },
+  {
+    "state": "otp/resend-available",
+    "viewport": 390,
+    "file": "otp_resend-available_w390.png",
+    "bytes": 86169,
+    "console_errors": []
+  },
+  {
+    "state": "otp/resend-available",
+    "viewport": 360,
+    "file": "otp_resend-available_w360.png",
+    "bytes": 85864,
+    "console_errors": []
+  },
+  {
+    "state": "otp/new-code-sent",
+    "viewport": 390,
+    "file": "otp_new-code-sent_w390.png",
+    "bytes": 90978,
+    "console_errors": []
+  },
+  {
+    "state": "otp/new-code-sent",
+    "viewport": 360,
+    "file": "otp_new-code-sent_w360.png",
+    "bytes": 90663,
+    "console_errors": []
+  },
+  {
+    "state": "otp/code-expired",
+    "viewport": 390,
+    "file": "otp_code-expired_w390.png",
+    "bytes": 73777,
+    "console_errors": []
+  },
+  {
+    "state": "otp/code-expired",
+    "viewport": 360,
+    "file": "otp_code-expired_w360.png",
+    "bytes": 73646,
+    "console_errors": []
+  },
+  {
+    "state": "otp/couldnt-verify",
+    "viewport": 390,
+    "file": "otp_couldnt-verify_w390.png",
+    "bytes": 104639,
+    "console_errors": []
+  },
+  {
+    "state": "otp/couldnt-verify",
+    "viewport": 360,
+    "file": "otp_couldnt-verify_w360.png",
+    "bytes": 104005,
+    "console_errors": []
+  },
+  {
+    "state": "otp/too-many-resends",
+    "viewport": 390,
+    "file": "otp_too-many-resends_w390.png",
+    "bytes": 96660,
+    "console_errors": []
+  },
+  {
+    "state": "otp/too-many-resends",
+    "viewport": 360,
+    "file": "otp_too-many-resends_w360.png",
+    "bytes": 97222,
+    "console_errors": []
+  },
+  {
+    "state": "otp/locked",
+    "viewport": 390,
+    "file": "otp_locked_w390.png",
+    "bytes": 57758,
+    "console_errors": []
+  },
+  {
+    "state": "otp/locked",
+    "viewport": 360,
+    "file": "otp_locked_w360.png",
+    "bytes": 58420,
+    "console_errors": []
+  },
+  {
+    "state": "otp/resending",
+    "viewport": 390,
+    "file": "otp_resending_w390.png",
+    "bytes": 89975,
+    "console_errors": []
+  },
+  {
+    "state": "otp/resending",
+    "viewport": 360,
+    "file": "otp_resending_w360.png",
+    "bytes": 89218,
+    "console_errors": []
+  },
+  {
+    "state": "otp/resend-failed",
+    "viewport": 390,
+    "file": "otp_resend-failed_w390.png",
+    "bytes": 101184,
+    "console_errors": []
+  },
+  {
+    "state": "otp/resend-failed",
+    "viewport": 360,
+    "file": "otp_resend-failed_w360.png",
+    "bytes": 100948,
+    "console_errors": []
+  },
+  {
+    "state": "otp/offline",
+    "viewport": 390,
+    "file": "otp_offline_w390.png",
+    "bytes": 103510,
+    "console_errors": []
+  },
+  {
+    "state": "otp/offline",
+    "viewport": 360,
+    "file": "otp_offline_w360.png",
+    "bytes": 102914,
+    "console_errors": []
+  },
+  {
+    "state": "otp/cooldown-reconciling",
+    "viewport": 390,
+    "file": "otp_cooldown-reconciling_w390.png",
+    "bytes": 62866,
+    "console_errors": []
+  },
+  {
+    "state": "otp/cooldown-reconciling",
+    "viewport": 360,
+    "file": "otp_cooldown-reconciling_w360.png",
+    "bytes": 62568,
+    "console_errors": []
+  },
+  {
+    "state": "otp/expired-and-resend-limited",
+    "viewport": 390,
+    "file": "otp_expired-and-resend-limited_w390.png",
+    "bytes": 58908,
+    "console_errors": []
+  },
+  {
+    "state": "otp/expired-and-resend-limited",
+    "viewport": 360,
+    "file": "otp_expired-and-resend-limited_w360.png",
+    "bytes": 60868,
+    "console_errors": []
+  }
+]
