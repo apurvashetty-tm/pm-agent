@@ -87,6 +87,31 @@ automatically, so apply them manually here:
 - Do not move project-specific resume state into `knowledge/`; keep it in the
   active project's `docs/context/session_handoff.md`.
 
+## Definition of done — all work (PRDs, docs, prototypes, screens, analyses)
+
+Apurva's standing rule (2026-10-15). Never discover the standard while reviewing.
+**Draft refinement pending:** the checklist applies in full when finishing, not while exploring ideas — see the draft "Explore → Shape → Finish" notes in `knowledge/learnings/2026-10-15-define-done-before-work.md`.
+
+1. **Before the work:** write what "done" means as a pass/fail checklist, built from
+   the rules, templates and decisions that apply. Every line is checkable; mark it
+   "auto" (a script checks it) or "eye" (a reviewer checks it). Include the approved
+   exceptions. Get Apurva's OK on the checklist before building. Template:
+   `templates/definition-of-done.md`.
+2. **Missing foundations first:** if the work needs a rule, component, template or
+   decision that doesn't exist, add it in its central place first (design system,
+   PRD guide, knowledge), never improvised inside one piece of work.
+3. **Decisions before building:** record agreed decisions in the project's decision
+   log / project files, then build or prompt. Never the other way round.
+4. **Review against the checklist, not taste.** Claude, Codex and any reviewer get the
+   checklist. Reviewer feedback is vetted: adopt what's valid, log what's out of scope,
+   flag doubts. Keep an evidence record (item × checklist line × pass/fail).
+5. **Fix shared things first,** then individual items; compare with the last approved
+   version so a fix can't silently break approved work.
+6. **Finish line:** done = every checklist line passes, reviewers report no blockers,
+   Apurva approves. After that the work is **frozen**: anything new is either a **bug**
+   (fixed only where it occurs) or a **next-version idea** (logged, not applied).
+   New ideas never reopen finished work.
+
 ## Writing or editing a PRD
 
 - Any PRD work (a new PRD, an edit, or a review round on an existing one) follows

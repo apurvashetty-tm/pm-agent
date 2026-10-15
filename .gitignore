@@ -12,3 +12,9 @@
 .memsearch/
 .claude/settings*.json
 .claude/skills/
+
+# Render review rounds are local working history; only final/ folders and contact sheets are committed (2026-10-15)
+projects/*/docs/renders/**/round-*/
+__pycache__/
+projects/*/docs/renders/**/promotion-baseline/
+projects/*/docs/renders/**/promotion-check/

@@ -1,0 +1,25 @@
+{
+  "_about": "Truemeds decisions on top of SALT, owned in this folder (approved by Apurva, layout v2, 2026-10-14). Applied LAST by scripts/build.py (truemeds.css) and scripts/build_native.py (native/). A SALT re-export never touches this file. Values are palette references (core:<family>-<shade>) or [size, line-height, weight] for text styles. Listed in beyond-salt.md.",
+  "content": {
+    "brand": "core:blue-600",
+    "placeholder": "core:grey-500",
+    "success-strong": "core:green-700"
+  },
+  "text": {
+    "title-lg": [
+      32,
+      40,
+      600
+    ],
+    "body-lg": [
+      16,
+      24,
+      400
+    ],
+    "body-lg-strong": [
+      16,
+      24,
+      600
+    ]
+  }
+}

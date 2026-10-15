@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Truemeds Design System — Preview</title>
-<!-- GENERATED from src/preview.template.html by scripts/build.py (2026-10-12) -->
+<!-- GENERATED from src/preview.template.html by scripts/build.py (2026-10-15) -->
 <link rel="stylesheet" href="truemeds.css">
 <script src="icons/icons.js"></script>
 <style>
@@ -43,7 +43,7 @@
 <nav class="pv-nav"><div class="tm-page">
   <strong class="tm-text-body-lg-strong">Truemeds Design System</strong>
   <a href="#colour">Colour</a><a href="#type">Type</a><a href="#scale">Spacing &amp; shape</a><a href="#icons">Icons</a>
-  <a href="#buttons">Buttons</a><a href="#forms">Forms</a><a href="#labels">Chips &amp; tags</a><a href="#containers">Containers</a>
+  <a href="#buttons">Buttons</a><a href="#forms">Forms</a><a href="#labels">Chips &amp; tags</a><a href="#containers">Feedback</a><a href="#sheets">Sheets</a><a href="#headers">Headers</a>
   <a href="#internal">Internal tools</a><a href="#examples">Examples</a>
 </div></nav>
 
@@ -51,7 +51,7 @@
 
 <section>
   <h1 class="tm-text-h1-web" style="margin:0">Truemeds Design System</h1>
-  <p class="pv">Code copy of SALT (TRUEMEDS Design Library, App). Every project links <code>truemeds.css</code> + <code>icons/icons.js</code>. Rules: <code>RULES.md</code>. Built 2026-10-12.</p>
+  <p class="pv">Code copy of SALT (TRUEMEDS Design Library, App). Every project links <code>truemeds.css</code> + <code>icons/icons.js</code>. Rules: <code>RULES.md</code>. Built 2026-10-15.</p>
 </section>
 
 <section id="colour">
@@ -66,7 +66,9 @@
 <div class="sw"><span style="background:var(--tm-content-success)"></span><code>--tm-content-success</code></div>
 <div class="sw"><span style="background:var(--tm-content-warning)"></span><code>--tm-content-warning</code></div>
 <div class="sw"><span style="background:var(--tm-content-error)"></span><code>--tm-content-error</code></div>
-<div class="sw"><span style="background:var(--tm-content-accent)"></span><code>--tm-content-accent</code></div></div>
+<div class="sw"><span style="background:var(--tm-content-accent)"></span><code>--tm-content-accent</code></div>
+<div class="sw"><span style="background:var(--tm-content-placeholder)"></span><code>--tm-content-placeholder</code></div>
+<div class="sw"><span style="background:var(--tm-content-success-strong)"></span><code>--tm-content-success-strong</code></div></div>
   <h3 class="pv">Surface (backgrounds)</h3><div class="grid-sw"><div class="sw"><span style="background:var(--tm-surface-primary)"></span><code>--tm-surface-primary</code></div>
 <div class="sw"><span style="background:var(--tm-surface-secondary)"></span><code>--tm-surface-secondary</code></div>
 <div class="sw"><span style="background:var(--tm-surface-tertiary)"></span><code>--tm-surface-tertiary</code></div>
@@ -198,44 +200,53 @@
 
 <section id="buttons">
   <h2 class="pv tm-text-h2-web">Buttons</h2>
-  <p class="pv">One primary per context. Sizes: <code>--lg</code> 56 · default 48 · <code>--sm</code> 40 · <code>--xs</code> 32.</p>
-  <div class="demo-row"><span class="demo-label">Types</span>
+  <p class="pv">Four roles plus call end (RULES §9.1). One primary per screen or sheet. One height per group — differ by style, not size: 56 for action buttons in a bar, sheet or form; 48 for compact inline buttons. Nothing tappable is under 48.</p>
+  <div class="demo-row"><span class="demo-label">Roles</span>
     <button class="tm-btn tm-btn--primary">Primary</button>
     <button class="tm-btn tm-btn--secondary">Secondary</button>
-    <button class="tm-btn tm-btn--tertiary">Tertiary</button>
-    <button class="tm-btn tm-btn--ghost">Ghost</button>
-    <button class="tm-btn tm-btn--destructive">Destructive</button>
-    <button class="tm-btn tm-btn--link">Link</button>
-  </div>
-  <div class="demo-row"><span class="demo-label">Prefix field / OTP / empty [PROPOSED]</span>
-    <div class="tm-field" style="width:240px"><label class="tm-field__label">Mobile number</label><div class="tm-field__control"><span class="tm-field__prefix">+91</span><input placeholder="10-digit number"></div></div>
-    <div class="tm-otp" style="width:300px"><input class="tm-otp__input" aria-label="OTP"><div class="tm-otp__box">4</div><div class="tm-otp__box">7</div><div class="tm-otp__box is-active"></div><div class="tm-otp__box"></div><div class="tm-otp__box"></div><div class="tm-otp__box"></div></div>
-    <div class="tm-empty" style="width:300px"><div class="tm-empty__icon"><span class="tm-icon" data-icon="inbox"></span></div><div class="tm-empty__title">No orders right now</div><div class="tm-empty__text">New orders come in through the day.</div></div>
-  </div>
-  <div class="demo-row"><span class="demo-label">Quiet / on-dark [PROPOSED]</span>
-    <button class="tm-btn tm-btn--quiet tm-btn--icon" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button>
     <button class="tm-btn tm-btn--quiet">Quiet</button>
-    <span style="display:inline-flex;gap:8px;padding:8px;border-radius:12px;background:var(--tm-surface-inverse)">
+    <button class="tm-btn tm-btn--destructive">Destructive</button>
+    <button class="tm-btn tm-btn--call-end"><span class="tm-icon" data-icon="phone-x"></span>End call</button>
+  </div>
+  <div class="demo-row"><span class="demo-label">When</span>
+    <span class="tm-muted tm-text-body-sm" style="max-width:720px">Primary: the one action that moves the flow forward · Secondary: a real alternative · Quiet: leave, cancel, dismiss, "not now" · Destructive: removes or closes something for good, never solid · Call end: only for ending a live call. Links stay inside sentences: <a class="tm-brand" href="#buttons">Resend code</a>.</span>
+  </div>
+  <div class="demo-row"><span class="demo-label">Sizes</span>
+    <button class="tm-btn tm-btn--primary tm-btn--lg">Action 56</button>
+    <button class="tm-btn tm-btn--secondary">Compact 48</button>
+    <button class="tm-btn tm-btn--quiet tm-btn--icon" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button>
+    <button class="tm-btn tm-btn--quiet tm-btn--icon" aria-label="Help"><span class="tm-icon" data-icon="help-circle"></span></button>
+    <span class="tm-muted tm-text-body-sm">Icon buttons: 48 × 48 tap area</span>
+  </div>
+  <div class="demo-row"><span class="demo-label">States</span>
+    <button class="tm-btn tm-btn--primary tm-btn--busy" aria-busy="true" disabled><span class="tm-spinner"></span>Sending OTP</button>
+    <button class="tm-btn tm-btn--primary" disabled>Disabled</button>
+    <button class="tm-btn tm-btn--quiet" disabled>Ending…</button>
+  </div>
+  <div class="demo-row"><span class="demo-label">Pinned bar</span>
+    <div class="phone" style="width:375px">
+      <div class="tm-actionbar" style="position:static">
+        <button class="tm-btn tm-btn--primary tm-btn--lg">Confirm &amp; transfer</button>
+        <div class="tm-btn-pair"><button class="tm-btn tm-btn--secondary tm-btn--lg">Schedule callback</button><button class="tm-btn tm-btn--secondary tm-btn--lg">Skip HA call</button></div>
+      </div>
+    </div>
+    <div class="phone" style="width:375px">
+      <div class="tm-actionbar" style="position:static">
+        <button class="tm-btn tm-btn--primary tm-btn--lg">Request next case</button>
+        <button class="tm-btn tm-btn--quiet tm-btn--lg">Back to Home</button>
+      </div>
+    </div>
+    <span class="tm-muted tm-text-body-sm">Primary on top, then secondary, then quiet. A pair: equal width, no icons.</span>
+  </div>
+  <div class="demo-row"><span class="demo-label">On dark</span>
+    <span style="display:inline-flex;gap:var(--tm-space-sm);padding:var(--tm-space-sm);border-radius:var(--tm-radius-md);background:var(--tm-surface-inverse)">
       <button class="tm-btn tm-btn--on-dark tm-btn--icon" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button>
       <button class="tm-btn tm-btn--on-dark">On dark</button>
     </span>
+    <span class="tm-muted tm-text-body-sm">Only inside the dark viewer header.</span>
   </div>
-  <div class="demo-row"><span class="demo-label">Sizes</span>
-    <button class="tm-btn tm-btn--primary tm-btn--lg">Large</button>
-    <button class="tm-btn tm-btn--primary">Medium</button>
-    <button class="tm-btn tm-btn--primary tm-btn--sm">Small</button>
-    <button class="tm-btn tm-btn--primary tm-btn--xs">X-Small</button>
-  </div>
-  <div class="demo-row"><span class="demo-label">With icon</span>
-    <button class="tm-btn tm-btn--primary"><span class="tm-icon" data-icon="phone"></span>Call patient</button>
-    <button class="tm-btn tm-btn--secondary"><span class="tm-icon" data-icon="calendar"></span>Schedule</button>
-    <button class="tm-btn tm-btn--destructive"><span class="tm-icon" data-icon="phone-off"></span>End call</button>
-    <button class="tm-btn tm-btn--tertiary tm-btn--icon" aria-label="More"><span class="tm-icon" data-icon="dots-vertical"></span></button>
-  </div>
-  <div class="demo-row"><span class="demo-label">Disabled</span>
-    <button class="tm-btn tm-btn--primary" disabled>Primary</button>
-    <button class="tm-btn tm-btn--secondary" disabled>Secondary</button>
-    <button class="tm-btn tm-btn--ghost" disabled>Ghost</button>
+  <div class="demo-row"><span class="demo-label">Retired</span>
+    <span class="tm-muted tm-text-body-sm">Tertiary, ghost and link-styled buttons now render as Quiet. 40 and 32 px sizes are not used for anything tappable on mobile.</span>
   </div>
 </section>
 
@@ -271,37 +282,114 @@
 
 <section id="labels">
   <h2 class="pv tm-text-h2-web">Chips &amp; tags</h2>
-  <div class="demo-row"><span class="demo-label">Filter chips</span>
-    <button class="tm-chip" aria-pressed="true">All</button>
-    <button class="tm-chip" aria-pressed="false">Pending</button>
-    <button class="tm-chip" aria-pressed="false"><span class="tm-icon tm-icon--16" data-icon="plus"></span>Add filter</button>
-    <button class="tm-chip" disabled>Disabled</button>
-    <button class="tm-chip tm-chip--lg" aria-pressed="true">1-0-1</button>
-    <button class="tm-chip tm-chip--lg" aria-pressed="false">Large [PROPOSED]</button>
+  <p class="pv">RULES §9.2–9.3. On mobile every chip is the 48 px size. Free chips wrap; grid chips share one size per screen.</p>
+  <div class="demo-row"><span class="demo-label">Free chips (wrap)</span>
+    <div class="tm-chip-group" style="width:342px">
+      <button class="tm-chip tm-chip--lg" aria-pressed="true">After food</button>
+      <button class="tm-chip tm-chip--lg" aria-pressed="false">Before food</button>
+      <button class="tm-chip tm-chip--lg" aria-pressed="false">Empty stomach</button>
+    </div>
+    <span class="tm-muted tm-text-body-sm">342 px = a 390 phone minus margins. "Empty stomach" wraps; nothing squeezes.</span>
+  </div>
+  <div class="demo-row"><span class="demo-label">Grid chips</span>
+    <div class="tm-stack tm-stack--sm" style="width:342px">
+      <div class="tm-chip-grid"><button class="tm-chip tm-chip--lg">0</button><button class="tm-chip tm-chip--lg">½</button><button class="tm-chip tm-chip--lg" aria-pressed="true">1</button><button class="tm-chip tm-chip--lg">2</button></div>
+      <div class="tm-chip-grid"><button class="tm-chip tm-chip--lg">½</button><button class="tm-chip tm-chip--lg" aria-pressed="true">1</button><button class="tm-chip tm-chip--lg">2</button></div>
+    </div>
+    <span class="tm-muted tm-text-body-sm">Three options use three cells of the 4-grid, not stretched.</span>
+  </div>
+  <div class="demo-row"><span class="demo-label">Compact chip</span>
+    <button class="tm-chip" aria-pressed="true">All</button><button class="tm-chip">Pending</button>
+    <span class="tm-muted tm-text-body-sm">Dense desktop tools only.</span>
   </div>
   <div class="demo-row"><span class="demo-label">Status tags</span>
-    <span class="tm-tag">Default</span>
-    <span class="tm-tag tm-tag--info">Cat4</span>
-    <span class="tm-tag tm-tag--success">Prescribed</span>
-    <span class="tm-tag tm-tag--warning">Pending</span>
-    <span class="tm-tag tm-tag--critical">Rejected</span>
-    <span class="tm-tag tm-tag--dark">HA skipped</span>
+    <span class="tm-tag tm-tag--md tm-tag--success tm-tag--fixed">Prescribed</span>
+    <span class="tm-tag tm-tag--md tm-tag--warning tm-tag--fixed">Pending</span>
+    <span class="tm-tag tm-tag--md tm-tag--neutral tm-tag--fixed">Disabled</span>
+    <span class="tm-tag tm-tag--md tm-tag--critical tm-tag--fixed">Failed</span>
+    <span class="tm-tag tm-tag--md tm-tag--info">Cat4</span>
+    <span class="tm-muted tm-text-body-sm">Done · needs action · inactive · failed. Status tags reserve their width.</span>
+  </div>
+  <div class="demo-row"><span class="demo-label">Rows</span>
+    <div class="tm-card" style="width:342px">
+      <div class="tm-row tm-row--tappable"><div class="tm-thumb"></div><div class="tm-row__main"><div class="tm-row__title">Metformin 500mg</div><div class="tm-row__meta">1-0-1 · Ongoing (6 months)</div></div><span class="tm-tag tm-tag--md tm-tag--success tm-tag--fixed">Prescribed</span><span class="tm-row__chevron tm-icon" data-icon="chevron-right"></span></div>
+      <div class="tm-row tm-row--readonly"><div class="tm-thumb"></div><div class="tm-row__main"><div class="tm-row__title">Amlodipine 5mg</div><div class="tm-row__meta">Read-only: muted, no chevron</div></div><span class="tm-tag tm-tag--md tm-tag--warning tm-tag--fixed">Pending</span><span class="tm-row__chevron tm-icon" data-icon="chevron-right"></span></div>
+    </div>
   </div>
 </section>
 
 <section id="containers">
   <h2 class="pv tm-text-h2-web">Containers &amp; feedback</h2>
+  <p class="pv">RULES §9.3 and §9.5. One message per cause. A toast only where nothing on screen can show the result.</p>
   <div class="tm-grid">
-    <div class="tm-card" style="grid-column: span 4"><div class="tm-section-title">Card</div><span class="tm-muted">Default. White, 16 radius, card shadow.</span></div>
+    <div class="tm-card" style="grid-column: span 4"><div class="tm-section-title">Card</div><span class="tm-muted">Default. White, 16 radius, card shadow. Never inside another card.</span></div>
     <div class="tm-card tm-card--flat" style="grid-column: span 4"><div class="tm-section-title">Card — flat</div><span class="tm-muted">For dense internal-tool layouts.</span></div>
     <div class="tm-card tm-card--tint" style="grid-column: span 4"><div class="tm-section-title">Card — tint</div><span class="tm-muted">Highlighted info, no shadow.</span></div>
     <div class="tm-stack tm-stack--sm" style="grid-column: span 6">
-      <div class="tm-notice"><span class="tm-icon" data-icon="info-circle"></span><span>Closing script: confirm the order and mention tracking in the app.</span></div>
-      <div class="tm-notice tm-notice--warning"><span class="tm-icon" data-icon="alert-triangle"></span><span>Health advisor call pending for this order.</span></div>
-      <div class="tm-notice tm-notice--error"><span class="tm-icon" data-icon="alert-circle"></span><span>Call failed. Try again or schedule a callback.</span></div>
+      <div class="tm-section-title">Notice — in the page, stays</div>
+      <div class="tm-notice tm-notice--neutral"><span class="tm-icon" data-icon="info-circle"></span><span>No cases right now. Try again in a minute.</span></div>
+      <div class="tm-notice tm-notice--warning"><span class="tm-icon" data-icon="alert-triangle"></span><span>Less than 5 minutes left.</span></div>
+      <div class="tm-notice tm-notice--error"><span class="tm-icon" data-icon="alert-circle"></span><span>Couldn't confirm. Nothing was lost. Try again.</span></div>
     </div>
-    <div style="grid-column: span 6; display:flex; align-items:center; justify-content:center">
-      <span class="tm-toast static">Recommended substitute added</span>
+    <div class="tm-stack tm-stack--sm" style="grid-column: span 6">
+      <div class="tm-section-title">Status card — outcome of a task, stays</div>
+      <div class="tm-status-card"><span class="tm-status-card__icon"><span class="tm-icon" data-icon="circle-check"></span></span><div><div class="tm-status-card__title">Prescription confirmed</div></div></div>
+      <div class="tm-status-card tm-status-card--neutral"><span class="tm-status-card__icon"><span class="tm-icon" data-icon="info-circle"></span></span><div><div class="tm-status-card__title">Patient unavailable</div></div></div>
+      <div class="tm-section-title" style="margin-top:var(--tm-space-lg)">Toast — dark, one line, ~4 s, above the bar</div>
+      <div style="display:flex;justify-content:center"><span class="tm-toast static" role="status">Finish this case first. Then you can go back to Home.</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="sheets">
+  <h2 class="pv tm-text-h2-web">Bottom sheet — one template</h2>
+  <p class="pv">RULES §9.4. Title + ✕, no divider, no drag handle, 24 margins, actions per the button rules. ✕, tap outside or swipe down cancels — not while busy.</p>
+  <div class="two">
+    <div class="phone" style="height:420px">
+      <div class="tm-overlay" style="position:absolute"></div>
+      <div class="tm-sheet" style="position:absolute">
+        <div class="tm-sheet__header"><h3 class="tm-sheet__title">Leave this case?</h3><button class="tm-btn tm-btn--quiet tm-btn--icon tm-sheet__close" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button></div>
+        <p class="tm-sheet__subtitle">It goes back to the queue for another doctor.</p>
+        <div class="tm-sheet__actions"><button class="tm-btn tm-btn--primary tm-btn--lg">Release case</button><button class="tm-btn tm-btn--quiet tm-btn--lg">Stay on this case</button></div>
+      </div>
+    </div>
+    <div class="phone" style="height:420px">
+      <div class="tm-overlay" style="position:absolute"></div>
+      <div class="tm-sheet" style="position:absolute">
+        <div class="tm-sheet__header"><h3 class="tm-sheet__title">Skip HA call</h3><button class="tm-btn tm-btn--quiet tm-btn--icon tm-sheet__close" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button></div>
+        <p class="tm-sheet__subtitle">Choose a reason</p>
+        <div class="tm-sheet__body">
+          <button class="tm-option"><span class="tm-option__title">Patient declined HA call</span><span class="tm-option__desc">Patient did not want an HA call</span></button>
+          <button class="tm-option"><span class="tm-option__title">Clinically not required</span><span class="tm-option__desc">HA counselling is not needed</span></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="headers">
+  <h2 class="pv tm-text-h2-web">Headers</h2>
+  <p class="pv">RULES §8.5. Home-base, task (hero / compact) — plus edit screen and viewer.</p>
+  <div class="two">
+    <div class="phone">
+      <div class="tm-header-edit">
+        <button class="tm-btn tm-btn--quiet tm-btn--icon" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button>
+        <div class="tm-header-edit__text"><h3 class="tm-header-edit__title">Metformin 500mg</h3><div class="tm-header-edit__subtitle">Tablet</div></div>
+        <button class="tm-btn tm-btn--destructive">Disable</button>
+      </div>
+      <div style="padding:var(--tm-space-lg);" class="tm-muted tm-text-body-sm">Edit screen: ✕ closes (asks before discarding), one action on the right.</div>
+    </div>
+    <div class="phone">
+      <div class="tm-header-viewer">
+        <button class="tm-btn tm-btn--on-dark tm-btn--icon" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button>
+        <span class="tm-header-viewer__title">Prescription — Ramesh Gupta</span>
+        <span class="tm-header-viewer__tools">
+          <button class="tm-btn tm-btn--on-dark tm-btn--icon" aria-label="Zoom out"><span class="tm-icon" data-icon="minus"></span></button>
+          <button class="tm-btn tm-btn--on-dark tm-btn--icon" aria-label="Zoom in"><span class="tm-icon" data-icon="plus"></span></button>
+          <button class="tm-btn tm-btn--on-dark tm-btn--icon" aria-label="Rotate"><span class="tm-icon" data-icon="rotate-clockwise"></span></button>
+        </span>
+      </div>
+      <div style="padding:var(--tm-space-lg);" class="tm-muted tm-text-body-sm">Viewer: the title truncates before it touches the tools.</div>
     </div>
   </div>
 </section>
@@ -346,7 +434,7 @@
       <div class="tm-card">
         <div class="tm-inline" style="justify-content:space-between">
           <div><div class="tm-text-h2">Ramesh Gupta</div><div class="tm-muted">54 yrs · Male</div></div>
-          <button class="tm-btn tm-btn--secondary tm-btn--sm"><span class="tm-icon tm-icon--16" data-icon="prescription"></span>View Rx</button>
+          <button class="tm-btn tm-btn--secondary"><span class="tm-icon tm-icon--16" data-icon="prescription"></span>View Rx</button>
         </div>
         <hr class="tm-divider">
         <div class="tm-inline tm-muted tm-text-body-sm">TM-ORD-20240812 · ₹1,240</div>
