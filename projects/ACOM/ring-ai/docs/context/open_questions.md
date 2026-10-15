@@ -18,6 +18,10 @@ Last updated: 2026-10-06
 - [OPEN] **Calls at the same time** — AI calls must stay within Ring's and Knowlarity's limits on
   simultaneous calls. **[Engineering + Ring + Knowlarity]**
 
+- [OPEN] **Multiple bots, multiple names** — the bot is named "Arjun" (shown as "Arjun (AI)" on the portal).
+  Ask Ring whether we can run several bots with different names, so the bot name is captured per lead
+  and we can compare which bot performs better. **[Ring + Apurva]** (added 14 Oct 2026)
+
 ## Open — call-out to InfoSec
 - [OPEN] **Spoken PII + the "answered" event** — consent/masking for personal details a customer
   says aloud in the recording; and the "customer answered" event carries the customer number
