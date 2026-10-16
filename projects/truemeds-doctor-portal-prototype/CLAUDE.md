@@ -1,5 +1,7 @@
 # Truemeds Doctor Portal Prototype — Claude Rules
 
+> **Branch check first:** this project lives on branch `doctor-portal/sign-in` (and `main` after each merge). Run `git branch --show-current` before reading anything. On any other branch these files are old copies (e.g. a handoff from July, no `ui-screens/` screens) — stop and switch to a worktree of `doctor-portal/sign-in`.
+
 ## What this project is
 
 This is a **mobile-web prototype** for the Truemeds Doctor Portal revamp.
