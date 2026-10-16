@@ -107,7 +107,7 @@ By default, Claude auto-pushes. If you need to push manually:
 
 ```bash
 cd ~/pm-agent
-~/pm-agent/scripts/commit-and-push.sh "Add PRD: Promise Buffer v3"
+scripts/publish.sh -m "Add PRD: Promise Buffer v3" <files>   # from the project's folder; then open the pull request
 ```
 
 ---

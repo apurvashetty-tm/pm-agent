@@ -250,11 +250,10 @@ function commitAndPush(updateCount, learnings) {
     const summary = learnings.slice(0, 2).join(', ');
     const message = `Weekly synthesis [${today}]: ${updateCount} learning(s) recorded (${summary})`;
 
-    execSync('git add changelogs/', { cwd: REPO_ROOT, stdio: 'pipe' });
-    execSync(`git commit -m "${message}"`, { cwd: REPO_ROOT, stdio: 'pipe' });
-    execSync('git push origin main', { cwd: REPO_ROOT, stdio: 'pipe' });
+    // Publishes to the current branch (shared/weekly-auto) for a pull request; never to main.
+    execSync(`scripts/publish.sh -m "${message}" changelogs`, { cwd: REPO_ROOT, stdio: 'inherit' });
 
-    console.log(`\n✅ Committed & pushed: "${message}"\n`);
+    console.log(`\n✅ Published for review: "${message}"\n`);
   } catch (err) {
     console.error('\n⚠️  Commit/push failed:', err.message);
     console.log('   (Changes are staged locally. Review with: git status)\n');

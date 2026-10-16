@@ -109,9 +109,8 @@ def clarify_in_changelog(workflow, old_text, new_text):
 def commit_to_github(msg):
     """Commit and push to GitHub"""
     os.chdir(REPO_PATH)
-    subprocess.run(["git", "add", "changelogs/"], check=False)
-    subprocess.run(["git", "commit", "-m", msg], check=False)
-    subprocess.run(["git", "push"], check=False)
+    # Publishes to the current branch for a pull request; never to main (AGENTS.md -> Git safety).
+    subprocess.run(["scripts/publish.sh", "-m", msg, "changelogs"], check=False)
 
 def main():
     print("🤖 PM Agent Weekly Synthesis Starting...")
