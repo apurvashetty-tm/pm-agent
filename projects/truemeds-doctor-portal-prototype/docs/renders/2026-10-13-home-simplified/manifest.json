@@ -1,0 +1,98 @@
+[
+  {
+    "id": "01-setup",
+    "title": "Choose availability",
+    "group": "Core",
+    "note": "Shared inactive layout: first arrival, expiry and manual end. Existing wheel alternative remains approved for testing; stepper shown here for continuity."
+  },
+  {
+    "id": "02-setting",
+    "title": "Setting availability",
+    "group": "Core",
+    "note": "Same setup; busy CTA locks duplicate submission. No success popup: transition to active Home."
+  },
+  {
+    "id": "03-setup-error",
+    "title": "Setup error",
+    "group": "Core",
+    "note": "Same setup; retain selected duration. Inline error and retry."
+  },
+  {
+    "id": "04-ready",
+    "title": "Available",
+    "group": "Core",
+    "note": "Primary request, quiet End availability, Add time alongside countdown. No third footer CTA."
+  },
+  {
+    "id": "05-requesting",
+    "title": "Requesting a case",
+    "group": "Core",
+    "note": "Busy CTA. Unknown response uses this same layout with Checking request\u2026 and a short connection notice. Reconcile original request before retry."
+  },
+  {
+    "id": "06-empty",
+    "title": "No cases available",
+    "group": "Core",
+    "note": "Same active layout. Explicit retry; no automatic polling."
+  },
+  {
+    "id": "07-request-error",
+    "title": "Request error",
+    "group": "Core",
+    "note": "Retry only once server confirms no case assigned. Unknown outcome stays in requesting layout."
+  },
+  {
+    "id": "08-offline",
+    "title": "Offline",
+    "group": "Core",
+    "note": "Availability continues. Mutations need connection; retain selections and reconcile when connection returns."
+  },
+  {
+    "id": "09-near-expiry",
+    "title": "Ending soon",
+    "group": "Core",
+    "note": "Promote Add time inside amber notice at 5 minutes; suppress duplicate timer link. Requests remain eligible until deadline."
+  },
+  {
+    "id": "10-add",
+    "title": "Add availability",
+    "group": "Core",
+    "note": "Same picker and presets as initial setup. Expiry while open introduces no new UI or action. Add duration to max(server time, current deadline). Failure preserves selection; retry must be idempotent."
+  },
+  {
+    "id": "11-adding",
+    "title": "Adding time",
+    "group": "Core",
+    "note": "Same picker and presets as initial setup. Expiry while open introduces no new UI or action. Add duration to max(server time, current deadline). Failure preserves selection; retry must be idempotent."
+  },
+  {
+    "id": "12-add-error",
+    "title": "Add time error",
+    "group": "Core",
+    "note": "Same picker and presets as initial setup. Expiry while open introduces no new UI or action. Add duration to max(server time, current deadline). Failure preserves selection; retry must be idempotent."
+  },
+  {
+    "id": "13-toast",
+    "title": "Added \u2014 transient toast",
+    "group": "Core",
+    "note": "Not a separate screen. Return to current Home, update countdown and show toast about 4 seconds; respect native accessibility duration. Preserve previous Home context, including empty queue."
+  },
+  {
+    "id": "14-end-pending",
+    "title": "End during pending request",
+    "group": "Core",
+    "note": "Conditional confirmation only. Idle End availability uses saving feedback then returns to setup with toast. Confirm schedules stop; dismissal changes nothing."
+  },
+  {
+    "id": "15-stop-pending",
+    "title": "Stop scheduled",
+    "group": "Core",
+    "note": "Persistent status, not toast. Request/case resolves then return to setup. No restart until request reconciled."
+  },
+  {
+    "id": "16-expired-pending",
+    "title": "Window ended with request pending",
+    "group": "Core",
+    "note": "Same pending Home layout. No 0-minute hero or expiry popup. Honor request, then existing case or inactive setup."
+  }
+]

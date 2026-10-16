@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Layout v2 — concept (not the prototype)</title>
+<link rel="stylesheet" href="../../../../../design-system/truemeds.css">
+<style>
+/* CONCEPT ONLY — layout v2 proposal. Tokens only; no new colours.
+   Type scale: L1 title 32/40 bold · L2 key 16/24 (medium/semibold) · L3 supporting 14/20 secondary · L4 fine print 12/16 secondary.
+   Gaps: tight 8 (sm) · related 16 (lg) · section 32 (2xl). Side margin 24 (xl) on every screen. */
+html,body{margin:0}
+body{background:var(--tm-surface-primary);font-family:var(--tm-font);color:var(--tm-content-primary)}
+.screen{width:390px;height:844px;position:relative;overflow:hidden;display:flex;flex-direction:column;background:var(--tm-surface-brand-subtle)}
+.band{padding:var(--tm-space-xl) var(--tm-space-xl) var(--tm-space-2xl)}
+.back{display:inline-flex;align-items:center;gap:var(--tm-space-sm);min-height:44px;margin:-10px 0 -10px -12px;padding:0 12px;color:var(--tm-content-secondary);font-size:var(--tm-font-size-body-lg);line-height:var(--tm-font-lineheight-md);text-decoration:none}
+.back .tm-icon{width:20px;height:20px}
+.logo{width:168px;display:block}
+.l1{margin:0;font-size:var(--tm-font-size-title-lg);line-height:var(--tm-font-lineheight-2xl);font-weight:var(--tm-font-weight-bold)}
+.l3{margin:0;font-size:var(--tm-font-size-body-md);line-height:var(--tm-font-lineheight-sm);color:var(--tm-content-secondary)}
+.l3 b{color:var(--tm-content-primary);font-weight:var(--tm-font-weight-medium)}
+.l3 a{display:inline-block;padding:12px 4px;margin:-12px -4px}
+.l3 a,.lk{color:var(--tm-content-brand);font-weight:var(--tm-font-weight-semibold);text-decoration:none}
+.l4{margin:0;font-size:var(--tm-font-size-body-xs);line-height:var(--tm-font-lineheight-xs);color:var(--tm-content-secondary)}
+.l4 a{color:var(--tm-content-secondary);text-decoration:underline}
+.panel{flex:1;display:flex;flex-direction:column;background:var(--tm-surface-primary);border-radius:var(--tm-radius-2xl) var(--tm-radius-2xl) 0 0;padding:var(--tm-space-2xl) var(--tm-space-xl) 0;min-height:0}
+.group{display:flex;flex-direction:column;gap:var(--tm-space-lg)}
+.footer{margin-top:auto;padding:var(--tm-space-lg) 0 var(--tm-space-xl);display:flex;flex-direction:column;gap:var(--tm-space-md);background:var(--tm-surface-primary)}
+.resend{text-align:center}
+.tm-notice .tm-icon{flex:none;width:20px;height:20px}
+.tm-notice{font-size:var(--tm-font-size-body-md);line-height:var(--tm-font-lineheight-sm)}
+.label{font-size:var(--tm-font-size-body-md);line-height:var(--tm-font-lineheight-sm);font-weight:var(--tm-font-weight-medium);margin-bottom:var(--tm-space-sm);display:block}
+.field{display:flex;align-items:center;gap:var(--tm-space-md);height:56px;box-sizing:border-box;border:1px solid var(--tm-border-default);border-radius:var(--tm-radius-md);padding:0 var(--tm-space-lg);font-size:var(--tm-font-size-body-lg)}
+.field .pre{padding-right:var(--tm-space-md);border-right:1px solid var(--tm-border-default)}
+.field .ph{color:var(--tm-content-tertiary,var(--tm-content-secondary))}
+.helper{margin-top:var(--tm-space-sm)}
+.signup{text-align:center}
+.inline{display:flex;flex-direction:column;gap:var(--tm-space-md);margin-top:var(--tm-space-2xl)}
+/* keyboard mock */
+.kb .footer{position:absolute;left:0;right:0;bottom:300px;padding:var(--tm-space-md) var(--tm-space-xl)}
+.kbd{position:absolute;left:0;right:0;bottom:0;height:256px;background:#d4d7dd;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(4,1fr);gap:5px;padding:6px 5px 12px;box-sizing:border-box}
+.kbd div{display:grid;place-items:center;background:#fff;border-radius:5px;font:400 23px/1 system-ui,sans-serif;color:#202124}
+.kbd div.q{background:transparent}
+.sugg{position:absolute;left:0;right:0;bottom:256px;height:44px;background:#e5e7eb;display:flex;align-items:center;justify-content:center;font:500 15px/1.2 system-ui,sans-serif;color:#111;text-align:center}
+.sugg small{display:block;font-size:11px;color:#555}
+.slot-cur{border-color:var(--tm-border-focus)!important;box-shadow:0 0 0 1px var(--tm-border-focus)}
+/* biometric */
+.hero-ic{width:72px;height:72px;border-radius:var(--tm-radius-2xl);background:var(--tm-surface-primary);color:var(--tm-content-brand);display:grid;place-items:center}
+.hero-ic .tm-icon{width:40px;height:40px}
+.points{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:var(--tm-space-lg)}
+.points li{display:flex;gap:var(--tm-space-md);align-items:flex-start}
+.points .tm-icon{flex:none;width:20px;height:20px;color:var(--tm-content-success);margin-top:2px}
+.points .t{font-size:var(--tm-font-size-body-lg);line-height:var(--tm-font-lineheight-md);font-weight:var(--tm-font-weight-medium)}
+</style></head><body class="tm">
+<div id="root"></div>
+<script src="../../../../../design-system/icons/icons.js"></script>
+<script>
+const s=new URLSearchParams(location.search).get('s')||'otp-entering';
+const I=n=>`<span class="tm-icon" data-icon="${n}" aria-hidden="true"></span>`;
+const keys=`<div class="sugg"><div>4827<small>From Messages</small></div></div><div class="kbd">${[1,2,3,4,5,6,7,8,9].map(n=>`<div>${n}</div>`).join('')}<div class="q"></div><div>0</div><div class="q">⌫</div></div>`;
+const slots=(d,{cur=-1,err=false,dis=false}={})=>`<div class="tm-field ${err?'tm-field--error':''} ${dis?'tm-field--disabled':''}"><div class="tm-otp-slots" role="group" aria-label="Four-digit verification code">${[0,1,2,3].map(i=>`<span class="tm-otp-slots__slot ${i===cur?'slot-cur':''}">${d[i]||''}</span>`).join('')}</div></div>`;
+const terms=`<p class="l4">By selecting Verify &amp; sign in, you agree to the <a href="#">Terms &amp; Conditions</a> and acknowledge the <a href="#">Privacy Policy</a>.</p>`;
+const otpBand=`<div class="band"><a class="back" href="#">${I('arrow-left')}Back</a>
+ <h1 class="l1" style="margin-top:var(--tm-space-xl)">Verify your number</h1>
+ <p class="l3" style="margin-top:var(--tm-space-sm)">Sent to <b>+91 98765 43210</b> · <a href="#">Change</a></p></div>`;
+function otp({digits='',cur=0,notice='',tone='error',icon='alert-circle',resend='Didn’t receive it? Resend in 00:30',kb=true,err=false,dis=false,showTerms=true}){
+ return `<div class="screen">${otpBand}<div class="panel"><div class="group">
+ ${slots(digits,{cur:kb?cur:-1,err,dis})}
+ ${notice?`<div class="tm-notice tm-notice--${tone}" role="alert">${I(icon)}<span>${notice}</span></div>`:''}
+ ${resend?`<p class="l3 resend">${resend}</p>`:''}</div>
+ <div class="inline">${showTerms?terms:''}<button class="tm-btn tm-btn--primary tm-btn--lg tm-btn--block" ${dis?'disabled':''}>Verify &amp; sign in</button></div></div>${kb?keys:''}</div>`;}
+function signin(kb){return `<div class="screen"><div class="band"><img class="logo" src="../../../brand/truemeds-for-doctors.svg" alt="Truemeds for doctors">
+  <h1 class="l1" style="margin-top:var(--tm-space-3xl)">Welcome, Doctor.</h1><p class="l3" style="margin-top:var(--tm-space-sm)">Your partner in thoughtful, affordable care.</p></div>
+  <div class="panel"><div><label class="label">Mobile number</label><div class="field" style="${kb?'border-color:var(--tm-border-focus)':''}"><span class="pre">+91</span><span class="${kb?'':'ph'}">${kb?'98765 43':'10-digit mobile number'}</span></div><p class="l3 helper">We’ll send you a verification code by SMS.</p></div>
+  <div class="inline" style="margin-top:var(--tm-space-xl)"><button class="tm-btn tm-btn--primary tm-btn--lg tm-btn--block">Send OTP</button></div>
+  ${kb?'':'<p class="l3 signup" style="margin-top:auto;padding-bottom:var(--tm-space-xl)">New to Truemeds? <a href="#">Sign up</a></p>'}</div>${kb?keys.replace('4827<small>From Messages</small>','<small>&nbsp;</small>'):''}</div>`;}
+const V={
+ 'otp-entering':()=>otp({digits:'48',cur:2}),
+ 'otp-wrong-code':()=>otp({digits:'',cur:0,err:true,notice:'That code isn’t right. Try again.'}),
+ 'otp-locked':()=>otp({kb:false,dis:true,tone:'warning',icon:'clock',notice:'Too many wrong tries. Try again in 14:52, or <a class="lk" href="#">call Doctor Ops</a>.',resend:'',showTerms:false}),
+ 'otp-filled':()=>otp({digits:'4827',cur:-1}),
+ 'signin-default':()=>signin(false),
+ 'signin-keyboard':()=>signin(true),
+ 'biometric-offer':()=>`<div class="screen"><div class="band" style="padding-top:var(--tm-space-3xl)"><div class="hero-ic">${I('fingerprint')}</div>
+  <h1 class="l1" style="margin-top:var(--tm-space-xl)">Skip the OTP next time</h1><p class="l3" style="margin-top:var(--tm-space-sm)">Use your phone’s fingerprint, face or screen lock instead of waiting for an OTP.</p></div>
+  <div class="panel"><ul class="points">
+   <li>${I('circle-check')}<div><div class="t">No more waiting for SMS codes</div><p class="l3">Unlock with one touch each time you open the app.</p></div></li>
+   <li>${I('lock')}<div><div class="t">Your fingerprint stays on your phone</div><p class="l3">Truemeds never sees or stores it.</p></div></li>
+   <li>${I('settings')}<div><div class="t">Change it any time</div><p class="l3">Turn it off from your profile.</p></div></li></ul>
+  <div class="footer"><button class="tm-btn tm-btn--primary tm-btn--lg tm-btn--block">Turn on faster sign-in</button><button class="tm-btn tm-btn--quiet tm-btn--lg tm-btn--block">Not now</button></div></div></div>`
+};
+document.getElementById('root').innerHTML=(V[s]||V['otp-entering'])();
+window.TMIcons&&TMIcons.render(document);
+</script></body></html>

@@ -1,0 +1,646 @@
+[
+  {
+    "state": "case/a-top",
+    "viewport": 390,
+    "file": "a-top_w390.png",
+    "bytes": 154327,
+    "console_errors": []
+  },
+  {
+    "state": "case/a-top",
+    "viewport": 360,
+    "file": "a-top_w360.png",
+    "bytes": 142522,
+    "console_errors": []
+  },
+  {
+    "state": "case/a-scrolled",
+    "viewport": 390,
+    "file": "a-scrolled_w390.png",
+    "bytes": 122239,
+    "console_errors": []
+  },
+  {
+    "state": "case/a-scrolled",
+    "viewport": 360,
+    "file": "a-scrolled_w360.png",
+    "bytes": 129251,
+    "console_errors": []
+  },
+  {
+    "state": "case/a-order-details",
+    "viewport": 390,
+    "file": "a-order-details_w390.png",
+    "bytes": 160008,
+    "console_errors": []
+  },
+  {
+    "state": "case/a-order-details",
+    "viewport": 360,
+    "file": "a-order-details_w360.png",
+    "bytes": 148361,
+    "console_errors": []
+  },
+  {
+    "state": "case/a-rx-viewer",
+    "viewport": 390,
+    "file": "a-rx-viewer_w390.png",
+    "bytes": 216938,
+    "console_errors": []
+  },
+  {
+    "state": "case/a-rx-viewer",
+    "viewport": 360,
+    "file": "a-rx-viewer_w360.png",
+    "bytes": 214256,
+    "console_errors": []
+  },
+  {
+    "state": "case/a-notes-typing",
+    "viewport": 390,
+    "file": "a-notes-typing_w390.png",
+    "bytes": 132676,
+    "console_errors": []
+  },
+  {
+    "state": "case/a-notes-typing",
+    "viewport": 360,
+    "file": "a-notes-typing_w360.png",
+    "bytes": 129695,
+    "console_errors": []
+  },
+  {
+    "state": "case/a-leave-sheet",
+    "viewport": 390,
+    "file": "a-leave-sheet_w390.png",
+    "bytes": 132234,
+    "console_errors": []
+  },
+  {
+    "state": "case/a-leave-sheet",
+    "viewport": 360,
+    "file": "a-leave-sheet_w360.png",
+    "bytes": 125570,
+    "console_errors": []
+  },
+  {
+    "state": "case/a-releasing",
+    "viewport": 390,
+    "file": "a-releasing_w390.png",
+    "bytes": 132144,
+    "console_errors": []
+  },
+  {
+    "state": "case/a-releasing",
+    "viewport": 360,
+    "file": "a-releasing_w360.png",
+    "bytes": 125556,
+    "console_errors": []
+  },
+  {
+    "state": "case/a-back-blocked",
+    "viewport": 390,
+    "file": "a-back-blocked_w390.png",
+    "bytes": 160417,
+    "console_errors": []
+  },
+  {
+    "state": "case/a-back-blocked",
+    "viewport": 360,
+    "file": "a-back-blocked_w360.png",
+    "bytes": 142188,
+    "console_errors": []
+  },
+  {
+    "state": "case/b-calling",
+    "viewport": 390,
+    "file": "b-calling_w390.png",
+    "bytes": 155213,
+    "console_errors": []
+  },
+  {
+    "state": "case/b-calling",
+    "viewport": 360,
+    "file": "b-calling_w360.png",
+    "bytes": 143423,
+    "console_errors": []
+  },
+  {
+    "state": "case/b-on-call",
+    "viewport": 390,
+    "file": "b-on-call_w390.png",
+    "bytes": 157651,
+    "console_errors": []
+  },
+  {
+    "state": "case/b-on-call",
+    "viewport": 360,
+    "file": "b-on-call_w360.png",
+    "bytes": 142524,
+    "console_errors": []
+  },
+  {
+    "state": "case/b-ended-early",
+    "viewport": 390,
+    "file": "b-ended-early_w390.png",
+    "bytes": 158693,
+    "console_errors": []
+  },
+  {
+    "state": "case/b-ended-early",
+    "viewport": 360,
+    "file": "b-ended-early_w360.png",
+    "bytes": 143557,
+    "console_errors": []
+  },
+  {
+    "state": "case/b-missed-call",
+    "viewport": 390,
+    "file": "b-missed-call_w390.png",
+    "bytes": 130450,
+    "console_errors": []
+  },
+  {
+    "state": "case/b-missed-call",
+    "viewport": 360,
+    "file": "b-missed-call_w360.png",
+    "bytes": 118269,
+    "console_errors": []
+  },
+  {
+    "state": "case/b-unavailable-sheet",
+    "viewport": 390,
+    "file": "b-unavailable-sheet_w390.png",
+    "bytes": 143877,
+    "console_errors": []
+  },
+  {
+    "state": "case/b-unavailable-sheet",
+    "viewport": 360,
+    "file": "b-unavailable-sheet_w360.png",
+    "bytes": 141658,
+    "console_errors": []
+  },
+  {
+    "state": "case/b-post-gate-transfer",
+    "viewport": 390,
+    "file": "b-post-gate-transfer_w390.png",
+    "bytes": 159298,
+    "console_errors": []
+  },
+  {
+    "state": "case/b-post-gate-transfer",
+    "viewport": 360,
+    "file": "b-post-gate-transfer_w360.png",
+    "bytes": 148081,
+    "console_errors": []
+  },
+  {
+    "state": "case/b-post-gate-cat4",
+    "viewport": 390,
+    "file": "b-post-gate-cat4_w390.png",
+    "bytes": 160636,
+    "console_errors": []
+  },
+  {
+    "state": "case/b-post-gate-cat4",
+    "viewport": 360,
+    "file": "b-post-gate-cat4_w360.png",
+    "bytes": 145486,
+    "console_errors": []
+  },
+  {
+    "state": "case/b-post-gate-forward",
+    "viewport": 390,
+    "file": "b-post-gate-forward_w390.png",
+    "bytes": 151825,
+    "console_errors": []
+  },
+  {
+    "state": "case/b-post-gate-forward",
+    "viewport": 360,
+    "file": "b-post-gate-forward_w360.png",
+    "bytes": 149501,
+    "console_errors": []
+  },
+  {
+    "state": "case/c-callback",
+    "viewport": 390,
+    "file": "c-callback_w390.png",
+    "bytes": 129873,
+    "console_errors": []
+  },
+  {
+    "state": "case/c-callback",
+    "viewport": 360,
+    "file": "c-callback_w360.png",
+    "bytes": 125484,
+    "console_errors": []
+  },
+  {
+    "state": "case/c-callback-error",
+    "viewport": 390,
+    "file": "c-callback-error_w390.png",
+    "bytes": 132766,
+    "console_errors": []
+  },
+  {
+    "state": "case/c-callback-error",
+    "viewport": 360,
+    "file": "c-callback-error_w360.png",
+    "bytes": 123538,
+    "console_errors": []
+  },
+  {
+    "state": "case/c-skip-ha",
+    "viewport": 390,
+    "file": "c-skip-ha_w390.png",
+    "bytes": 145076,
+    "console_errors": []
+  },
+  {
+    "state": "case/c-skip-ha",
+    "viewport": 360,
+    "file": "c-skip-ha_w360.png",
+    "bytes": 141315,
+    "console_errors": []
+  },
+  {
+    "state": "case/d-default",
+    "viewport": 390,
+    "file": "d-default_w390.png",
+    "bytes": 138026,
+    "console_errors": []
+  },
+  {
+    "state": "case/d-default",
+    "viewport": 360,
+    "file": "d-default_w360.png",
+    "bytes": 132095,
+    "console_errors": []
+  },
+  {
+    "state": "case/d-scrolled",
+    "viewport": 390,
+    "file": "d-scrolled_w390.png",
+    "bytes": 125532,
+    "console_errors": []
+  },
+  {
+    "state": "case/d-scrolled",
+    "viewport": 360,
+    "file": "d-scrolled_w360.png",
+    "bytes": 116971,
+    "console_errors": []
+  },
+  {
+    "state": "case/d-error-dose",
+    "viewport": 390,
+    "file": "d-error-dose_w390.png",
+    "bytes": 139478,
+    "console_errors": []
+  },
+  {
+    "state": "case/d-error-dose",
+    "viewport": 360,
+    "file": "d-error-dose_w360.png",
+    "bytes": 140947,
+    "console_errors": []
+  },
+  {
+    "state": "case/d-error-other",
+    "viewport": 390,
+    "file": "d-error-other_w390.png",
+    "bytes": 131868,
+    "console_errors": []
+  },
+  {
+    "state": "case/d-error-other",
+    "viewport": 360,
+    "file": "d-error-other_w360.png",
+    "bytes": 122189,
+    "console_errors": []
+  },
+  {
+    "state": "case/d-sos-on",
+    "viewport": 390,
+    "file": "d-sos-on_w390.png",
+    "bytes": 143250,
+    "console_errors": []
+  },
+  {
+    "state": "case/d-sos-on",
+    "viewport": 360,
+    "file": "d-sos-on_w360.png",
+    "bytes": 137470,
+    "console_errors": []
+  },
+  {
+    "state": "case/d-notes-keyboard",
+    "viewport": 390,
+    "file": "d-notes-keyboard_w390.png",
+    "bytes": 125698,
+    "console_errors": []
+  },
+  {
+    "state": "case/d-notes-keyboard",
+    "viewport": 360,
+    "file": "d-notes-keyboard_w360.png",
+    "bytes": 121157,
+    "console_errors": []
+  },
+  {
+    "state": "case/d-discard-sheet",
+    "viewport": 390,
+    "file": "d-discard-sheet_w390.png",
+    "bytes": 122951,
+    "console_errors": []
+  },
+  {
+    "state": "case/d-discard-sheet",
+    "viewport": 360,
+    "file": "d-discard-sheet_w360.png",
+    "bytes": 121558,
+    "console_errors": []
+  },
+  {
+    "state": "case/d-disable-sheet",
+    "viewport": 390,
+    "file": "d-disable-sheet_w390.png",
+    "bytes": 141418,
+    "console_errors": []
+  },
+  {
+    "state": "case/d-disable-sheet",
+    "viewport": 360,
+    "file": "d-disable-sheet_w360.png",
+    "bytes": 138930,
+    "console_errors": []
+  },
+  {
+    "state": "case/d-header-white",
+    "viewport": 390,
+    "file": "d-header-white_w390.png",
+    "bytes": 138026,
+    "console_errors": []
+  },
+  {
+    "state": "case/d-header-white",
+    "viewport": 360,
+    "file": "d-header-white_w360.png",
+    "bytes": 132095,
+    "console_errors": []
+  },
+  {
+    "state": "case/e-prescription-confirmed",
+    "viewport": 390,
+    "file": "e-prescription-confirmed_w390.png",
+    "bytes": 148408,
+    "console_errors": []
+  },
+  {
+    "state": "case/e-prescription-confirmed",
+    "viewport": 360,
+    "file": "e-prescription-confirmed_w360.png",
+    "bytes": 145392,
+    "console_errors": []
+  },
+  {
+    "state": "case/e-transferred",
+    "viewport": 390,
+    "file": "e-transferred_w390.png",
+    "bytes": 140529,
+    "console_errors": []
+  },
+  {
+    "state": "case/e-transferred",
+    "viewport": 360,
+    "file": "e-transferred_w360.png",
+    "bytes": 134330,
+    "console_errors": []
+  },
+  {
+    "state": "case/e-forwarded",
+    "viewport": 390,
+    "file": "e-forwarded_w390.png",
+    "bytes": 146120,
+    "console_errors": []
+  },
+  {
+    "state": "case/e-forwarded",
+    "viewport": 360,
+    "file": "e-forwarded_w360.png",
+    "bytes": 144389,
+    "console_errors": []
+  },
+  {
+    "state": "case/e-callback-scheduled",
+    "viewport": 390,
+    "file": "e-callback-scheduled_w390.png",
+    "bytes": 146486,
+    "console_errors": []
+  },
+  {
+    "state": "case/e-callback-scheduled",
+    "viewport": 360,
+    "file": "e-callback-scheduled_w360.png",
+    "bytes": 144361,
+    "console_errors": []
+  },
+  {
+    "state": "case/e-patient-unavailable",
+    "viewport": 390,
+    "file": "e-patient-unavailable_w390.png",
+    "bytes": 143877,
+    "console_errors": []
+  },
+  {
+    "state": "case/e-patient-unavailable",
+    "viewport": 360,
+    "file": "e-patient-unavailable_w360.png",
+    "bytes": 141658,
+    "console_errors": []
+  },
+  {
+    "state": "case/e-availability-ended",
+    "viewport": 390,
+    "file": "e-availability-ended_w390.png",
+    "bytes": 151402,
+    "console_errors": []
+  },
+  {
+    "state": "case/e-availability-ended",
+    "viewport": 360,
+    "file": "e-availability-ended_w360.png",
+    "bytes": 141799,
+    "console_errors": []
+  },
+  {
+    "state": "case/a-loading",
+    "viewport": 390,
+    "file": "a-loading_w390.png",
+    "bytes": 11821,
+    "console_errors": []
+  },
+  {
+    "state": "case/a-loading",
+    "viewport": 360,
+    "file": "a-loading_w360.png",
+    "bytes": 11785,
+    "console_errors": []
+  },
+  {
+    "state": "case/a-load-failed",
+    "viewport": 390,
+    "file": "a-load-failed_w390.png",
+    "bytes": 46045,
+    "console_errors": []
+  },
+  {
+    "state": "case/a-load-failed",
+    "viewport": 360,
+    "file": "a-load-failed_w360.png",
+    "bytes": 45993,
+    "console_errors": []
+  },
+  {
+    "state": "case/a-offline",
+    "viewport": 390,
+    "file": "a-offline_w390.png",
+    "bytes": 150749,
+    "console_errors": []
+  },
+  {
+    "state": "case/a-offline",
+    "viewport": 360,
+    "file": "a-offline_w360.png",
+    "bytes": 139750,
+    "console_errors": []
+  },
+  {
+    "state": "case/a-confirm-busy",
+    "viewport": 390,
+    "file": "a-confirm-busy_w390.png",
+    "bytes": 154692,
+    "console_errors": []
+  },
+  {
+    "state": "case/a-confirm-busy",
+    "viewport": 360,
+    "file": "a-confirm-busy_w360.png",
+    "bytes": 139584,
+    "console_errors": []
+  },
+  {
+    "state": "case/a-confirm-failed",
+    "viewport": 390,
+    "file": "a-confirm-failed_w390.png",
+    "bytes": 157610,
+    "console_errors": []
+  },
+  {
+    "state": "case/a-confirm-failed",
+    "viewport": 360,
+    "file": "a-confirm-failed_w360.png",
+    "bytes": 143508,
+    "console_errors": []
+  },
+  {
+    "state": "case/a-release-failed",
+    "viewport": 390,
+    "file": "a-release-failed_w390.png",
+    "bytes": 153761,
+    "console_errors": []
+  },
+  {
+    "state": "case/a-release-failed",
+    "viewport": 360,
+    "file": "a-release-failed_w360.png",
+    "bytes": 142962,
+    "console_errors": []
+  },
+  {
+    "state": "case/c-callback-failed",
+    "viewport": 390,
+    "file": "c-callback-failed_w390.png",
+    "bytes": 138209,
+    "console_errors": []
+  },
+  {
+    "state": "case/c-callback-failed",
+    "viewport": 360,
+    "file": "c-callback-failed_w360.png",
+    "bytes": 135947,
+    "console_errors": []
+  },
+  {
+    "state": "case/d-rx-failed",
+    "viewport": 390,
+    "file": "d-rx-failed_w390.png",
+    "bytes": 29179,
+    "console_errors": []
+  },
+  {
+    "state": "case/d-rx-failed",
+    "viewport": 360,
+    "file": "d-rx-failed_w360.png",
+    "bytes": 29312,
+    "console_errors": []
+  },
+  {
+    "state": "case/a-no-medicines",
+    "viewport": 390,
+    "file": "a-no-medicines_w390.png",
+    "bytes": 115077,
+    "console_errors": []
+  },
+  {
+    "state": "case/a-no-medicines",
+    "viewport": 360,
+    "file": "a-no-medicines_w360.png",
+    "bytes": 115202,
+    "console_errors": []
+  },
+  {
+    "state": "case/a-long-content",
+    "viewport": 390,
+    "file": "a-long-content_w390.png",
+    "bytes": 161493,
+    "console_errors": []
+  },
+  {
+    "state": "case/a-long-content",
+    "viewport": 360,
+    "file": "a-long-content_w360.png",
+    "bytes": 150957,
+    "console_errors": []
+  },
+  {
+    "state": "case/s-10-medicines",
+    "viewport": 390,
+    "file": "s-10-medicines_w390.png",
+    "bytes": 153871,
+    "console_errors": []
+  },
+  {
+    "state": "case/s-10-medicines",
+    "viewport": 360,
+    "file": "s-10-medicines_w360.png",
+    "bytes": 142529,
+    "console_errors": []
+  },
+  {
+    "state": "case/s-optional-empty",
+    "viewport": 390,
+    "file": "s-optional-empty_w390.png",
+    "bytes": 148473,
+    "console_errors": []
+  },
+  {
+    "state": "case/s-optional-empty",
+    "viewport": 360,
+    "file": "s-optional-empty_w360.png",
+    "bytes": 136627,
+    "console_errors": []
+  }
+]

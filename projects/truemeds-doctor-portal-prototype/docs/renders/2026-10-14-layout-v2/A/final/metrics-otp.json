@@ -1,0 +1,1170 @@
+[
+  {
+    "frameW": 390,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [],
+    "minContrast": {
+      "ratio": 4.87,
+      "el": "Verify & sign in"
+    },
+    "smallTargets": [],
+    "keyboardVisible": true,
+    "keyboardTop": 588,
+    "buttonBottom": 460,
+    "buttonAboveKeyboard": true,
+    "typeStyles": [
+      "12px/16px w400",
+      "12px/16px w600",
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "16px/24px w500",
+      "16px/24px w600",
+      "18px/24px w600",
+      "23px/23px w400",
+      "32px/40px w600"
+    ],
+    "fontLoaded": true,
+    "file": "otp_default_w390.png",
+    "state": "default",
+    "width": 390,
+    "errors": []
+  },
+  {
+    "frameW": 390,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [],
+    "minContrast": {
+      "ratio": 4.87,
+      "el": "Verify & sign in"
+    },
+    "smallTargets": [],
+    "keyboardVisible": true,
+    "keyboardTop": 588,
+    "buttonBottom": 488,
+    "buttonAboveKeyboard": true,
+    "typeStyles": [
+      "12px/16px w400",
+      "12px/16px w600",
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "16px/24px w500",
+      "16px/24px w600",
+      "18px/24px w600",
+      "23px/23px w400",
+      "32px/40px w600"
+    ],
+    "fontLoaded": true,
+    "file": "otp_empty-tap_w390.png",
+    "state": "empty-tap",
+    "width": 390,
+    "errors": []
+  },
+  {
+    "frameW": 390,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [],
+    "minContrast": {
+      "ratio": 4.87,
+      "el": "Verify & sign in"
+    },
+    "smallTargets": [],
+    "keyboardVisible": true,
+    "keyboardTop": 588,
+    "buttonBottom": 488,
+    "buttonAboveKeyboard": true,
+    "typeStyles": [
+      "12px/16px w400",
+      "12px/16px w600",
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "16px/24px w500",
+      "16px/24px w600",
+      "18px/24px w600",
+      "23px/23px w400",
+      "24px/24px w400",
+      "32px/40px w600"
+    ],
+    "fontLoaded": true,
+    "file": "otp_too-short_w390.png",
+    "state": "too-short",
+    "width": 390,
+    "errors": []
+  },
+  {
+    "frameW": 390,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [],
+    "minContrast": {
+      "ratio": 4.87,
+      "el": "Verifying"
+    },
+    "smallTargets": [],
+    "keyboardVisible": true,
+    "keyboardTop": 588,
+    "buttonBottom": 396,
+    "buttonAboveKeyboard": true,
+    "typeStyles": [
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "16px/24px w500",
+      "16px/24px w600",
+      "18px/24px w600",
+      "23px/23px w400",
+      "24px/24px w400",
+      "32px/40px w600"
+    ],
+    "fontLoaded": true,
+    "file": "otp_verifying_w390.png",
+    "state": "verifying",
+    "width": 390,
+    "errors": []
+  },
+  {
+    "frameW": 390,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [],
+    "minContrast": {
+      "ratio": 4.87,
+      "el": "Verify & sign in"
+    },
+    "smallTargets": [],
+    "keyboardVisible": true,
+    "keyboardTop": 588,
+    "buttonBottom": 488,
+    "buttonAboveKeyboard": true,
+    "typeStyles": [
+      "12px/16px w400",
+      "12px/16px w600",
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "16px/24px w500",
+      "16px/24px w600",
+      "18px/24px w600",
+      "23px/23px w400",
+      "24px/24px w400",
+      "32px/40px w600"
+    ],
+    "fontLoaded": true,
+    "file": "otp_wrong-code_w390.png",
+    "state": "wrong-code",
+    "width": 390,
+    "errors": []
+  },
+  {
+    "frameW": 390,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [],
+    "minContrast": {
+      "ratio": 4.87,
+      "el": "Verify & sign in"
+    },
+    "smallTargets": [],
+    "keyboardVisible": true,
+    "keyboardTop": 588,
+    "buttonBottom": 488,
+    "buttonAboveKeyboard": true,
+    "typeStyles": [
+      "12px/16px w400",
+      "12px/16px w600",
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "16px/24px w500",
+      "16px/24px w600",
+      "18px/24px w600",
+      "23px/23px w400",
+      "24px/24px w400",
+      "32px/40px w600"
+    ],
+    "fontLoaded": true,
+    "file": "otp_two-tries-left_w390.png",
+    "state": "two-tries-left",
+    "width": 390,
+    "errors": []
+  },
+  {
+    "frameW": 390,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [],
+    "minContrast": {
+      "ratio": 4.87,
+      "el": "Verify & sign in"
+    },
+    "smallTargets": [],
+    "keyboardVisible": true,
+    "keyboardTop": 588,
+    "buttonBottom": 484,
+    "buttonAboveKeyboard": true,
+    "typeStyles": [
+      "12px/16px w400",
+      "12px/16px w600",
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "16px/24px w500",
+      "16px/24px w600",
+      "18px/24px w600",
+      "23px/23px w400",
+      "32px/40px w600"
+    ],
+    "fontLoaded": true,
+    "file": "otp_resend-available_w390.png",
+    "state": "resend-available",
+    "width": 390,
+    "errors": []
+  },
+  {
+    "frameW": 390,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [],
+    "minContrast": {
+      "ratio": 4.53,
+      "el": "New code sent."
+    },
+    "smallTargets": [],
+    "keyboardVisible": true,
+    "keyboardTop": 588,
+    "buttonBottom": 496,
+    "buttonAboveKeyboard": true,
+    "typeStyles": [
+      "12px/16px w400",
+      "12px/16px w600",
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "16px/24px w500",
+      "16px/24px w600",
+      "18px/24px w600",
+      "23px/23px w400",
+      "32px/40px w600"
+    ],
+    "fontLoaded": true,
+    "file": "otp_new-code-sent_w390.png",
+    "state": "new-code-sent",
+    "width": 390,
+    "errors": []
+  },
+  {
+    "frameW": 390,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [
+      {
+        "text": "Verify & sign in",
+        "ratio": 1.4,
+        "need": 4.5,
+        "disabled": true
+      }
+    ],
+    "minContrast": {
+      "ratio": 1.4,
+      "el": "Verify & sign in"
+    },
+    "smallTargets": [],
+    "keyboardVisible": true,
+    "keyboardTop": 588,
+    "buttonBottom": 448,
+    "buttonAboveKeyboard": true,
+    "typeStyles": [
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "16px/24px w500",
+      "16px/24px w600",
+      "18px/24px w600",
+      "23px/23px w400",
+      "24px/24px w400",
+      "32px/40px w600"
+    ],
+    "fontLoaded": true,
+    "file": "otp_code-expired_w390.png",
+    "state": "code-expired",
+    "width": 390,
+    "errors": []
+  },
+  {
+    "frameW": 390,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [],
+    "minContrast": {
+      "ratio": 4.87,
+      "el": "Verify & sign in"
+    },
+    "smallTargets": [],
+    "keyboardVisible": true,
+    "keyboardTop": 588,
+    "buttonBottom": 542,
+    "buttonAboveKeyboard": true,
+    "typeStyles": [
+      "12px/16px w400",
+      "12px/16px w600",
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "16px/24px w500",
+      "16px/24px w600",
+      "18px/24px w600",
+      "23px/23px w400",
+      "24px/24px w400",
+      "32px/40px w600"
+    ],
+    "fontLoaded": true,
+    "file": "otp_couldnt-verify_w390.png",
+    "state": "couldnt-verify",
+    "width": 390,
+    "errors": []
+  },
+  {
+    "frameW": 390,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [],
+    "minContrast": {
+      "ratio": 4.87,
+      "el": "Verify & sign in"
+    },
+    "smallTargets": [],
+    "keyboardVisible": true,
+    "keyboardTop": 588,
+    "buttonBottom": 506,
+    "buttonAboveKeyboard": true,
+    "typeStyles": [
+      "12px/16px w400",
+      "12px/16px w600",
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "16px/24px w500",
+      "16px/24px w600",
+      "18px/24px w600",
+      "23px/23px w400",
+      "32px/40px w600"
+    ],
+    "fontLoaded": true,
+    "file": "otp_too-many-resends_w390.png",
+    "state": "too-many-resends",
+    "width": 390,
+    "errors": []
+  },
+  {
+    "frameW": 390,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [
+      {
+        "text": "Verify & sign in",
+        "ratio": 1.4,
+        "need": 4.5,
+        "disabled": true
+      }
+    ],
+    "minContrast": {
+      "ratio": 1.4,
+      "el": "Verify & sign in"
+    },
+    "smallTargets": [],
+    "keyboardVisible": false,
+    "keyboardTop": null,
+    "buttonBottom": 442,
+    "buttonAboveKeyboard": null,
+    "typeStyles": [
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "16px/24px w500",
+      "16px/24px w600",
+      "18px/24px w600",
+      "32px/40px w600"
+    ],
+    "fontLoaded": true,
+    "file": "otp_locked_w390.png",
+    "state": "locked",
+    "width": 390,
+    "errors": []
+  },
+  {
+    "frameW": 390,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [],
+    "minContrast": {
+      "ratio": 4.87,
+      "el": "Verify & sign in"
+    },
+    "smallTargets": [],
+    "keyboardVisible": true,
+    "keyboardTop": 588,
+    "buttonBottom": 460,
+    "buttonAboveKeyboard": true,
+    "typeStyles": [
+      "12px/16px w400",
+      "12px/16px w600",
+      "14px/20px w400",
+      "16px/24px w400",
+      "16px/24px w500",
+      "16px/24px w600",
+      "18px/24px w600",
+      "23px/23px w400",
+      "24px/24px w400",
+      "32px/40px w600"
+    ],
+    "fontLoaded": true,
+    "file": "otp_resending_w390.png",
+    "state": "resending",
+    "width": 390,
+    "errors": []
+  },
+  {
+    "frameW": 390,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [],
+    "minContrast": {
+      "ratio": 4.87,
+      "el": "Verify & sign in"
+    },
+    "smallTargets": [],
+    "keyboardVisible": true,
+    "keyboardTop": 588,
+    "buttonBottom": 566,
+    "buttonAboveKeyboard": true,
+    "typeStyles": [
+      "12px/16px w400",
+      "12px/16px w600",
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "16px/24px w500",
+      "16px/24px w600",
+      "18px/24px w600",
+      "23px/23px w400",
+      "24px/24px w400",
+      "32px/40px w600"
+    ],
+    "fontLoaded": true,
+    "file": "otp_resend-failed_w390.png",
+    "state": "resend-failed",
+    "width": 390,
+    "errors": []
+  },
+  {
+    "frameW": 390,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [],
+    "minContrast": {
+      "ratio": 4.87,
+      "el": "Verify & sign in"
+    },
+    "smallTargets": [],
+    "keyboardVisible": true,
+    "keyboardTop": 588,
+    "buttonBottom": 566,
+    "buttonAboveKeyboard": true,
+    "typeStyles": [
+      "12px/16px w400",
+      "12px/16px w600",
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "16px/24px w500",
+      "16px/24px w600",
+      "18px/24px w600",
+      "23px/23px w400",
+      "24px/24px w400",
+      "32px/40px w600"
+    ],
+    "fontLoaded": true,
+    "file": "otp_offline_w390.png",
+    "state": "offline",
+    "width": 390,
+    "errors": []
+  },
+  {
+    "frameW": 390,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [
+      {
+        "text": "Verify & sign in",
+        "ratio": 1.4,
+        "need": 4.5,
+        "disabled": true
+      }
+    ],
+    "minContrast": {
+      "ratio": 1.4,
+      "el": "Verify & sign in"
+    },
+    "smallTargets": [],
+    "keyboardVisible": true,
+    "keyboardTop": 588,
+    "buttonBottom": 396,
+    "buttonAboveKeyboard": true,
+    "typeStyles": [
+      "14px/20px w400",
+      "16px/24px w400",
+      "16px/24px w500",
+      "16px/24px w600",
+      "18px/24px w600",
+      "23px/23px w400",
+      "32px/40px w600"
+    ],
+    "fontLoaded": true,
+    "file": "otp_cooldown-reconciling_w390.png",
+    "state": "cooldown-reconciling",
+    "width": 390,
+    "errors": []
+  },
+  {
+    "frameW": 390,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [
+      {
+        "text": "Verify & sign in",
+        "ratio": 1.4,
+        "need": 4.5,
+        "disabled": true
+      }
+    ],
+    "minContrast": {
+      "ratio": 1.4,
+      "el": "Verify & sign in"
+    },
+    "smallTargets": [],
+    "keyboardVisible": false,
+    "keyboardTop": null,
+    "buttonBottom": 442,
+    "buttonAboveKeyboard": null,
+    "typeStyles": [
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "16px/24px w500",
+      "16px/24px w600",
+      "18px/24px w600",
+      "32px/40px w600"
+    ],
+    "fontLoaded": true,
+    "file": "otp_expired-and-resend-limited_w390.png",
+    "state": "expired-and-resend-limited",
+    "width": 390,
+    "errors": []
+  },
+  {
+    "frameW": 360,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [],
+    "minContrast": {
+      "ratio": 4.87,
+      "el": "Verify & sign in"
+    },
+    "smallTargets": [],
+    "keyboardVisible": true,
+    "keyboardTop": 588,
+    "buttonBottom": 460,
+    "buttonAboveKeyboard": true,
+    "typeStyles": [
+      "12px/16px w400",
+      "12px/16px w600",
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "16px/24px w500",
+      "16px/24px w600",
+      "18px/24px w600",
+      "23px/23px w400",
+      "32px/40px w600"
+    ],
+    "fontLoaded": true,
+    "file": "otp_default_w360.png",
+    "state": "default",
+    "width": 360,
+    "errors": []
+  },
+  {
+    "frameW": 360,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [],
+    "minContrast": {
+      "ratio": 4.87,
+      "el": "Verify & sign in"
+    },
+    "smallTargets": [],
+    "keyboardVisible": true,
+    "keyboardTop": 588,
+    "buttonBottom": 488,
+    "buttonAboveKeyboard": true,
+    "typeStyles": [
+      "12px/16px w400",
+      "12px/16px w600",
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "16px/24px w500",
+      "16px/24px w600",
+      "18px/24px w600",
+      "23px/23px w400",
+      "32px/40px w600"
+    ],
+    "fontLoaded": true,
+    "file": "otp_empty-tap_w360.png",
+    "state": "empty-tap",
+    "width": 360,
+    "errors": []
+  },
+  {
+    "frameW": 360,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [],
+    "minContrast": {
+      "ratio": 4.87,
+      "el": "Verify & sign in"
+    },
+    "smallTargets": [],
+    "keyboardVisible": true,
+    "keyboardTop": 588,
+    "buttonBottom": 488,
+    "buttonAboveKeyboard": true,
+    "typeStyles": [
+      "12px/16px w400",
+      "12px/16px w600",
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "16px/24px w500",
+      "16px/24px w600",
+      "18px/24px w600",
+      "23px/23px w400",
+      "24px/24px w400",
+      "32px/40px w600"
+    ],
+    "fontLoaded": true,
+    "file": "otp_too-short_w360.png",
+    "state": "too-short",
+    "width": 360,
+    "errors": []
+  },
+  {
+    "frameW": 360,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [],
+    "minContrast": {
+      "ratio": 4.87,
+      "el": "Verifying"
+    },
+    "smallTargets": [],
+    "keyboardVisible": true,
+    "keyboardTop": 588,
+    "buttonBottom": 396,
+    "buttonAboveKeyboard": true,
+    "typeStyles": [
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "16px/24px w500",
+      "16px/24px w600",
+      "18px/24px w600",
+      "23px/23px w400",
+      "24px/24px w400",
+      "32px/40px w600"
+    ],
+    "fontLoaded": true,
+    "file": "otp_verifying_w360.png",
+    "state": "verifying",
+    "width": 360,
+    "errors": []
+  },
+  {
+    "frameW": 360,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [],
+    "minContrast": {
+      "ratio": 4.87,
+      "el": "Verify & sign in"
+    },
+    "smallTargets": [],
+    "keyboardVisible": true,
+    "keyboardTop": 588,
+    "buttonBottom": 488,
+    "buttonAboveKeyboard": true,
+    "typeStyles": [
+      "12px/16px w400",
+      "12px/16px w600",
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "16px/24px w500",
+      "16px/24px w600",
+      "18px/24px w600",
+      "23px/23px w400",
+      "24px/24px w400",
+      "32px/40px w600"
+    ],
+    "fontLoaded": true,
+    "file": "otp_wrong-code_w360.png",
+    "state": "wrong-code",
+    "width": 360,
+    "errors": []
+  },
+  {
+    "frameW": 360,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [],
+    "minContrast": {
+      "ratio": 4.87,
+      "el": "Verify & sign in"
+    },
+    "smallTargets": [],
+    "keyboardVisible": true,
+    "keyboardTop": 588,
+    "buttonBottom": 488,
+    "buttonAboveKeyboard": true,
+    "typeStyles": [
+      "12px/16px w400",
+      "12px/16px w600",
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "16px/24px w500",
+      "16px/24px w600",
+      "18px/24px w600",
+      "23px/23px w400",
+      "24px/24px w400",
+      "32px/40px w600"
+    ],
+    "fontLoaded": true,
+    "file": "otp_two-tries-left_w360.png",
+    "state": "two-tries-left",
+    "width": 360,
+    "errors": []
+  },
+  {
+    "frameW": 360,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [],
+    "minContrast": {
+      "ratio": 4.87,
+      "el": "Verify & sign in"
+    },
+    "smallTargets": [],
+    "keyboardVisible": true,
+    "keyboardTop": 588,
+    "buttonBottom": 484,
+    "buttonAboveKeyboard": true,
+    "typeStyles": [
+      "12px/16px w400",
+      "12px/16px w600",
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "16px/24px w500",
+      "16px/24px w600",
+      "18px/24px w600",
+      "23px/23px w400",
+      "32px/40px w600"
+    ],
+    "fontLoaded": true,
+    "file": "otp_resend-available_w360.png",
+    "state": "resend-available",
+    "width": 360,
+    "errors": []
+  },
+  {
+    "frameW": 360,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [],
+    "minContrast": {
+      "ratio": 4.53,
+      "el": "New code sent."
+    },
+    "smallTargets": [],
+    "keyboardVisible": true,
+    "keyboardTop": 588,
+    "buttonBottom": 496,
+    "buttonAboveKeyboard": true,
+    "typeStyles": [
+      "12px/16px w400",
+      "12px/16px w600",
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "16px/24px w500",
+      "16px/24px w600",
+      "18px/24px w600",
+      "23px/23px w400",
+      "32px/40px w600"
+    ],
+    "fontLoaded": true,
+    "file": "otp_new-code-sent_w360.png",
+    "state": "new-code-sent",
+    "width": 360,
+    "errors": []
+  },
+  {
+    "frameW": 360,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [
+      {
+        "text": "Verify & sign in",
+        "ratio": 1.4,
+        "need": 4.5,
+        "disabled": true
+      }
+    ],
+    "minContrast": {
+      "ratio": 1.4,
+      "el": "Verify & sign in"
+    },
+    "smallTargets": [],
+    "keyboardVisible": true,
+    "keyboardTop": 588,
+    "buttonBottom": 448,
+    "buttonAboveKeyboard": true,
+    "typeStyles": [
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "16px/24px w500",
+      "16px/24px w600",
+      "18px/24px w600",
+      "23px/23px w400",
+      "24px/24px w400",
+      "32px/40px w600"
+    ],
+    "fontLoaded": true,
+    "file": "otp_code-expired_w360.png",
+    "state": "code-expired",
+    "width": 360,
+    "errors": []
+  },
+  {
+    "frameW": 360,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [],
+    "minContrast": {
+      "ratio": 4.87,
+      "el": "Verify & sign in"
+    },
+    "smallTargets": [],
+    "keyboardVisible": true,
+    "keyboardTop": 588,
+    "buttonBottom": 542,
+    "buttonAboveKeyboard": true,
+    "typeStyles": [
+      "12px/16px w400",
+      "12px/16px w600",
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "16px/24px w500",
+      "16px/24px w600",
+      "18px/24px w600",
+      "23px/23px w400",
+      "24px/24px w400",
+      "32px/40px w600"
+    ],
+    "fontLoaded": true,
+    "file": "otp_couldnt-verify_w360.png",
+    "state": "couldnt-verify",
+    "width": 360,
+    "errors": []
+  },
+  {
+    "frameW": 360,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [],
+    "minContrast": {
+      "ratio": 4.87,
+      "el": "Verify & sign in"
+    },
+    "smallTargets": [],
+    "keyboardVisible": true,
+    "keyboardTop": 588,
+    "buttonBottom": 506,
+    "buttonAboveKeyboard": true,
+    "typeStyles": [
+      "12px/16px w400",
+      "12px/16px w600",
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "16px/24px w500",
+      "16px/24px w600",
+      "18px/24px w600",
+      "23px/23px w400",
+      "32px/40px w600"
+    ],
+    "fontLoaded": true,
+    "file": "otp_too-many-resends_w360.png",
+    "state": "too-many-resends",
+    "width": 360,
+    "errors": []
+  },
+  {
+    "frameW": 360,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [
+      {
+        "text": "Verify & sign in",
+        "ratio": 1.4,
+        "need": 4.5,
+        "disabled": true
+      }
+    ],
+    "minContrast": {
+      "ratio": 1.4,
+      "el": "Verify & sign in"
+    },
+    "smallTargets": [],
+    "keyboardVisible": false,
+    "keyboardTop": null,
+    "buttonBottom": 442,
+    "buttonAboveKeyboard": null,
+    "typeStyles": [
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "16px/24px w500",
+      "16px/24px w600",
+      "18px/24px w600",
+      "32px/40px w600"
+    ],
+    "fontLoaded": true,
+    "file": "otp_locked_w360.png",
+    "state": "locked",
+    "width": 360,
+    "errors": []
+  },
+  {
+    "frameW": 360,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [],
+    "minContrast": {
+      "ratio": 4.87,
+      "el": "Verify & sign in"
+    },
+    "smallTargets": [],
+    "keyboardVisible": true,
+    "keyboardTop": 588,
+    "buttonBottom": 460,
+    "buttonAboveKeyboard": true,
+    "typeStyles": [
+      "12px/16px w400",
+      "12px/16px w600",
+      "14px/20px w400",
+      "16px/24px w400",
+      "16px/24px w500",
+      "16px/24px w600",
+      "18px/24px w600",
+      "23px/23px w400",
+      "24px/24px w400",
+      "32px/40px w600"
+    ],
+    "fontLoaded": true,
+    "file": "otp_resending_w360.png",
+    "state": "resending",
+    "width": 360,
+    "errors": []
+  },
+  {
+    "frameW": 360,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [],
+    "minContrast": {
+      "ratio": 4.87,
+      "el": "Verify & sign in"
+    },
+    "smallTargets": [],
+    "keyboardVisible": true,
+    "keyboardTop": 588,
+    "buttonBottom": 566,
+    "buttonAboveKeyboard": true,
+    "typeStyles": [
+      "12px/16px w400",
+      "12px/16px w600",
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "16px/24px w500",
+      "16px/24px w600",
+      "18px/24px w600",
+      "23px/23px w400",
+      "24px/24px w400",
+      "32px/40px w600"
+    ],
+    "fontLoaded": true,
+    "file": "otp_resend-failed_w360.png",
+    "state": "resend-failed",
+    "width": 360,
+    "errors": []
+  },
+  {
+    "frameW": 360,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [],
+    "minContrast": {
+      "ratio": 4.87,
+      "el": "Verify & sign in"
+    },
+    "smallTargets": [],
+    "keyboardVisible": true,
+    "keyboardTop": 588,
+    "buttonBottom": 566,
+    "buttonAboveKeyboard": true,
+    "typeStyles": [
+      "12px/16px w400",
+      "12px/16px w600",
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "16px/24px w500",
+      "16px/24px w600",
+      "18px/24px w600",
+      "23px/23px w400",
+      "24px/24px w400",
+      "32px/40px w600"
+    ],
+    "fontLoaded": true,
+    "file": "otp_offline_w360.png",
+    "state": "offline",
+    "width": 360,
+    "errors": []
+  },
+  {
+    "frameW": 360,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [
+      {
+        "text": "Verify & sign in",
+        "ratio": 1.4,
+        "need": 4.5,
+        "disabled": true
+      }
+    ],
+    "minContrast": {
+      "ratio": 1.4,
+      "el": "Verify & sign in"
+    },
+    "smallTargets": [],
+    "keyboardVisible": true,
+    "keyboardTop": 588,
+    "buttonBottom": 396,
+    "buttonAboveKeyboard": true,
+    "typeStyles": [
+      "14px/20px w400",
+      "16px/24px w400",
+      "16px/24px w500",
+      "16px/24px w600",
+      "18px/24px w600",
+      "23px/23px w400",
+      "32px/40px w600"
+    ],
+    "fontLoaded": true,
+    "file": "otp_cooldown-reconciling_w360.png",
+    "state": "cooldown-reconciling",
+    "width": 360,
+    "errors": []
+  },
+  {
+    "frameW": 360,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [
+      {
+        "text": "Verify & sign in",
+        "ratio": 1.4,
+        "need": 4.5,
+        "disabled": true
+      }
+    ],
+    "minContrast": {
+      "ratio": 1.4,
+      "el": "Verify & sign in"
+    },
+    "smallTargets": [],
+    "keyboardVisible": false,
+    "keyboardTop": null,
+    "buttonBottom": 442,
+    "buttonAboveKeyboard": null,
+    "typeStyles": [
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "16px/24px w500",
+      "16px/24px w600",
+      "18px/24px w600",
+      "32px/40px w600"
+    ],
+    "fontLoaded": true,
+    "file": "otp_expired-and-resend-limited_w360.png",
+    "state": "expired-and-resend-limited",
+    "width": 360,
+    "errors": []
+  }
+]

@@ -87,6 +87,52 @@ automatically, so apply them manually here:
 - Do not move project-specific resume state into `knowledge/`; keep it in the
   active project's `docs/context/session_handoff.md`.
 
+## Definition of done — all work (PRDs, docs, prototypes, screens, analyses)
+
+Apurva's standing rule (2026-10-15). Never discover the standard while reviewing.
+**Draft refinement pending:** the checklist applies in full when finishing, not while exploring ideas — see the draft "Explore → Shape → Finish" notes in `knowledge/learnings/2026-10-15-define-done-before-work.md`.
+
+1. **Before the work:** write what "done" means as a pass/fail checklist, built from
+   the rules, templates and decisions that apply. Every line is checkable; mark it
+   "auto" (a script checks it) or "eye" (a reviewer checks it). Include the approved
+   exceptions. Get Apurva's OK on the checklist before building. Template:
+   `templates/definition-of-done.md`.
+2. **Missing foundations first:** if the work needs a rule, component, template or
+   decision that doesn't exist, add it in its central place first (design system,
+   PRD guide, knowledge), never improvised inside one piece of work.
+3. **Decisions before building:** record agreed decisions in the project's decision
+   log / project files, then build or prompt. Never the other way round.
+4. **Review against the checklist, not taste.** Claude, Codex and any reviewer get the
+   checklist. Reviewer feedback is vetted: adopt what's valid, log what's out of scope,
+   flag doubts. Keep an evidence record (item × checklist line × pass/fail).
+5. **Fix shared things first,** then individual items; compare with the last approved
+   version so a fix can't silently break approved work.
+6. **Finish line:** done = every checklist line passes, reviewers report no blockers,
+   Apurva approves. After that the work is **frozen**: anything new is either a **bug**
+   (fixed only where it occurs) or a **next-version idea** (logged, not applied).
+   New ideas never reopen finished work.
+
+## Writing or editing a PRD
+
+- Any PRD work (a new PRD, an edit, or a review round on an existing one) follows
+  `templates/lean-prd-guide.md`. Read it before drafting or editing.
+- The heavier `workflows/core/create-prd.md` flow runs only when explicitly asked.
+  Even then, apply the guide's rules on voice, plain words, saying things once,
+  review edits and versions, and AI tells.
+
+## Building any UI (design system)
+
+Every frontend project — prototypes, portals, internal tools, mockups — uses the
+central Truemeds design system in `design-system/` (a code copy of SALT, the
+Truemeds Figma library).
+
+- Before writing or changing any UI, read `design-system/RULES.md`.
+- Link `design-system/truemeds.css` and `design-system/icons/icons.js`; never
+  copy values out of them, never add hex codes, fonts, or icon sets in a project.
+- Missing a component? Add it to `design-system/src/components.css` marked
+  `[PROPOSED]` and rebuild — don't invent it inside the project.
+- Run the design review checklist (`RULES.md` §5) before calling UI work done.
+
 ## During work
 
 - Follow latest user instruction first.
@@ -118,11 +164,22 @@ automatically, so apply them manually here:
 - Before syncing with GitHub, check `git status --short --branch`.
 - Pull with fast-forward only when bringing down remote changes.
 - Keep local project files and handoff files committed together when possible.
+- **One project per commit, on that project's branch** (2026-10-16, after an ACOM commit swept doctor-portal files onto the doctor-portal branch):
+  - Branches: ACOM / Ring-AI → `acom-portal-revamp` · Doctor portal → `doctor-portal/sign-in` (until merged) · design system changes made for a project go with that project's branch. A new project gets its own branch; ask Apurva if unsure.
+  - Before committing, run `git branch --show-current`. If it is not your project's branch, do **not** commit on it and do not switch branches in a shared working copy (another session may be using it): commit through a temporary worktree (`git worktree add <tmp> <branch>`, copy only your files, commit there, push from the main folder, `git worktree remove`).
+  - Stage **only your project's paths** (`git add projects/<your-project> …`). Never `git add -A` / `git add .` at the repo root, and never commit files staged by someone else — check `git diff --cached --name-only` first.
+  - If git leaves a `.lock` file, stop and tell Apurva; don't work around it.
+- **Read a project only on its own branch** (2026-10-16, after a session read July copies of the doctor portal on another branch). Every branch carries a copy of every project folder, but only the project's own branch (or `main`) has it current. Before reading project files, run `git branch --show-current`; if it isn't that project's branch, read through a worktree of the right branch (or `git show <branch>:<path>`). Sanity check: the project's handoff should have recent entries; if it looks months old, you are on the wrong branch — stop.
+  - Project branches: Doctor portal → `doctor-portal/sign-in` · ACOM / Ring AI → `acom-portal-revamp` · Price Lock → `price-lock-proto` · Project South → `project/project-south` · Type 1 revamp → `project/type1-revamp`.
+  - `main` is the official version. Project work reaches `main` through a pull request. To keep a project branch current, merge `main` into it (never the other way without a PR); its own project folder is never overwritten by `main`.
+  - Backups of every branch as of 2026-10-16: tags `backup/2026-10-16/<branch>`.
 
 ## Pushing to GitHub (credentials)
 
-- `origin` is already configured with a stored credential inside `.git/config`. That file is **local only and never committed**, so the secret is not part of the repo and never reaches GitHub.
-- Any tool — Codex, Claude Code, Cowork, or a terminal — pushes by running `git push origin <branch-name>` from inside this repo. Git reads the stored credential automatically; **no token needs to live in any tracked file, and none should.**
-- **Never** put the token in a tracked file (README, CLAUDE.md, AGENTS.md, a commit, etc.) or paste it into chat. GitHub secret-scanning auto-revokes any token it finds committed, and it would expose the credential in history.
-- If a push fails with a `403` / auth error, the fine-grained token has expired or lost write access. Fix it: regenerate the token at GitHub -> Settings -> Developer settings -> Personal access tokens -> Fine-grained tokens (repo `pm-agent`, permission **Contents: Read and write**), then re-point the remote (run this in a terminal, not in chat, so the token stays private):
-  `git remote set-url origin https://apurvashetty-tm:<NEW_TOKEN>@github.com/apurvashetty-tm/pm-agent.git`
+- This checkout uses `https://github.com/apurvashetty-tm/pm-agent.git` with a repository-local credential helper. Direct HTTPS pushing from Cowork's `device_bash` against the attached folder was verified on 2026-10-06. Other checkouts need their own authentication setup.
+- Never embed a token in a remote URL, commit credentials, or read, display, copy, or upload private keys. A local-only configuration file can still expose a credential through logs or shared filesystem access.
+- Before publishing, inspect the current branch, pending commits, and working tree. Commit only task-related changes. Use a feature branch and pull request; do not force-push or bypass branch protection.
+- In Cowork, attach this local folder and use `device_bash` at its mounted path for normal Git commits and pushes. The cloud shell is a separate environment. The GitHub connector and Computer Use Terminal are not required for this workflow.
+- Let Git invoke the configured helper; never print credential files, run `git credential fill`, enable credential tracing, or copy secrets into tracked files. The helper resolves its credential file from the current checkout's Git directory so mounted path changes do not require reconfiguration. Credentials persist with this checkout, subject to token expiry or revocation and folder permissions.
+- When the current environment has authorized GitHub access, use `git push --dry-run origin <branch-name>`, then `git push origin <branch-name>`. Verify the remote branch hash matches the intended local commit with `git ls-remote origin refs/heads/<branch-name>`.
+- Diagnose network, filesystem, authentication, and branch-protection failures separately. Do not assume every failed push means a missing or expired token.

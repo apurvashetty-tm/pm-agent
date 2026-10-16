@@ -28,11 +28,11 @@ const SCENARIOS = {
     assignment_status: 'assigned',
     prescription_attached: true,
     medicines: [
-      { id:1, name:'Metformin',          strength:'500mg',   m:1, a:0, n:1, qty:60, price:28,  form:'tablet',    interval:'daily',   duration:'ongoing', advice:['after_food'],   validation_status:'prescribed',     disabled:false },
-      { id:2, name:'Amlodipine',         strength:'5mg',     m:1, a:0, n:0, qty:30, price:52,  form:'tablet',    interval:'daily',   duration:'ongoing', advice:['after_food'],   validation_status:'not_prescribed', disabled:false },
-      { id:3, name:'Atorvastatin',       strength:'10mg',    m:0, a:0, n:1, qty:30, price:45,  form:'capsule',   interval:'daily',   duration:'ongoing', advice:['after_food'],   validation_status:'not_prescribed', disabled:false },
-      { id:4, name:'Vitamin B12',        strength:'1000mcg', m:0, a:0, n:0, qty:4,  price:120, form:'injection', interval:'monthly', duration:'3m',      advice:[],               validation_status:'not_prescribed', disabled:false },
-      { id:5, name:'Antacid Suspension', strength:'10ml',    m:0, a:1, n:1, qty:1,  price:85,  form:'syrup',     interval:'daily',   duration:'7d',      advice:['after_food'],   validation_status:'not_prescribed', disabled:false },
+      { id:1, name:'Metformin',          strength:'500mg',   m:1, a:0, n:1, qty:60, price:28,  form:'tablet',    interval:'daily',   duration:'ongoing', food:null,            validation_status:'prescribed',     disabled:false },
+      { id:2, name:'Amlodipine',         strength:'5mg',     m:1, a:0, n:0, qty:30, price:52,  form:'tablet',    interval:'daily',   duration:'ongoing', food:null,            validation_status:'not_prescribed', disabled:false },
+      { id:3, name:'Atorvastatin',       strength:'10mg',    m:0, a:0, n:1, qty:30, price:45,  form:'capsule',   interval:'daily',   duration:'ongoing', food:null,            validation_status:'not_prescribed', disabled:false },
+      { id:4, name:'Vitamin B12',        strength:'1000mcg', m:0, a:0, n:0, qty:4,  price:120, form:'injection', interval:'monthly', duration:'3m',      dose:1,      food:null,               validation_status:'not_prescribed', disabled:false },
+      { id:5, name:'Antacid Suspension', strength:'10ml',    m:0, a:10, n:10, qty:1, price:85, form:'syrup',     interval:'daily',   duration:'7d',      rx_line:'0-1-1 · Qty 1',      food:null,            validation_status:'not_prescribed', disabled:false },
     ]
   },
 
@@ -46,9 +46,9 @@ const SCENARIOS = {
     assignment_status: 'assigned',
     prescription_attached: true,
     medicines: [
-      { id:1, name:'Levothyroxine',            strength:'50mcg', m:1, a:0, n:0, qty:30, price:38, form:'tablet',  interval:'daily', duration:'ongoing', advice:['empty_stomach'], validation_status:'not_prescribed', disabled:false },
-      { id:2, name:'Calcium + Vit D3',         strength:'500mg', m:1, a:0, n:1, qty:60, price:65, form:'capsule', interval:'daily', duration:'ongoing', advice:['after_food'],    validation_status:'prescribed',     disabled:false },
-      { id:3, name:'Sodium Chloride Eye Drops', strength:'0.9%', m:0, a:1, n:1, qty:1,  price:55, form:'drops',   interval:'daily', duration:'7d',      advice:[],                validation_status:'not_prescribed', disabled:false },
+      { id:1, name:'Levothyroxine',            strength:'50mcg', m:1, a:0, n:0, qty:30, price:38, form:'tablet',  interval:'daily', duration:'ongoing', food:null,           validation_status:'not_prescribed', disabled:false },
+      { id:2, name:'Calcium + Vit D3',         strength:'500mg', m:1, a:0, n:1, qty:60, price:65, form:'capsule', interval:'daily', duration:'ongoing', food:null,             validation_status:'prescribed',     disabled:false },
+      { id:3, name:'Sodium Chloride Eye Drops', strength:'0.9%', m:0, a:1, n:1, qty:1,  price:55, form:'drops',   interval:'daily', duration:'7d',      food:null,                validation_status:'not_prescribed', disabled:false },
     ]
   },
 
@@ -62,10 +62,10 @@ const SCENARIOS = {
     assignment_status: 'assigned',
     prescription_attached: true,
     medicines: [
-      { id:1, name:'Losartan',            strength:'50mg',   m:1, a:0, n:0, qty:30, price:42, form:'tablet', interval:'daily', duration:'ongoing', advice:['after_food'],  validation_status:'not_prescribed', disabled:false },
-      { id:2, name:'Hydrochlorothiazide', strength:'12.5mg', m:1, a:0, n:0, qty:30, price:18, form:'tablet', interval:'daily', duration:'ongoing', advice:['after_food'],  validation_status:'not_prescribed', disabled:false },
-      { id:3, name:'Aspirin',             strength:'75mg',   m:0, a:0, n:1, qty:30, price:12, form:'tablet', interval:'daily', duration:'ongoing', advice:['after_food'],  validation_status:'prescribed',     disabled:false },
-      { id:4, name:'Betamethasone Cream', strength:'0.1%',   m:0, a:1, n:1, qty:1,  price:95, form:'cream',  interval:'daily', duration:'7d',      advice:[],              validation_status:'not_prescribed', disabled:false },
+      { id:1, name:'Losartan',            strength:'50mg',   m:1, a:0, n:0, qty:30, price:42, form:'tablet', interval:'daily', duration:'ongoing', food:null,           validation_status:'not_prescribed', disabled:false },
+      { id:2, name:'Hydrochlorothiazide', strength:'12.5mg', m:1, a:0, n:0, qty:30, price:18, form:'tablet', interval:'daily', duration:'ongoing', food:null,           validation_status:'not_prescribed', disabled:false },
+      { id:3, name:'Aspirin',             strength:'75mg',   m:0, a:0, n:1, qty:30, price:12, form:'tablet', interval:'daily', duration:'ongoing', food:null,           validation_status:'prescribed',     disabled:false },
+      { id:4, name:'Betamethasone Cream', strength:'0.1%',   m:0, a:1, n:1, qty:1,  price:95, form:'cream',  interval:'daily', duration:'7d',      food:null,              validation_status:'not_prescribed', disabled:false },
     ]
   },
 
@@ -79,9 +79,9 @@ const SCENARIOS = {
     assignment_status: 'assigned',
     prescription_attached: true,
     medicines: [
-      { id:1, name:'Ferrous Sulphate',   strength:'200mg',  m:0, a:0, n:1, qty:30, price:35,  form:'tablet',  interval:'daily', duration:'3m', advice:['after_food'],  validation_status:'prescribed',     disabled:false },
-      { id:2, name:'Folic Acid',         strength:'5mg',    m:1, a:0, n:0, qty:30, price:22,  form:'tablet',  interval:'daily', duration:'3m', advice:['after_food'],  validation_status:'prescribed',     disabled:false },
-      { id:3, name:'Salbutamol Inhaler', strength:'100mcg', m:0, a:0, n:0, qty:1,  price:185, form:'inhaler', interval:'sos',   duration:null, advice:[],              validation_status:'not_prescribed', disabled:false },
+      { id:1, name:'Ferrous Sulphate',   strength:'200mg',  m:0, a:0, n:1, qty:30, price:35,  form:'tablet',  interval:'daily', duration:'3m', food:null,           validation_status:'prescribed',     disabled:false },
+      { id:2, name:'Folic Acid',         strength:'5mg',    m:1, a:0, n:0, qty:30, price:22,  form:'tablet',  interval:'daily', duration:'3m', food:null,           validation_status:'prescribed',     disabled:false },
+      { id:3, name:'Salbutamol Inhaler', strength:'100mcg', m:0, a:0, n:0, qty:1,  price:185, form:'inhaler', interval:'sos',   duration:'ongoing', dose:2, sosMax:4, food:null,              validation_status:'not_prescribed', disabled:false },
     ]
   },
 
@@ -95,7 +95,7 @@ const SCENARIOS = {
     assignment_status: 'assigned',
     prescription_attached: true,
     medicines: [
-      { id:1, name:'Pantoprazole', strength:'40mg', m:1, a:0, n:0, qty:30, price:44, form:'capsule', interval:'daily', duration:'1m', advice:['empty_stomach'], validation_status:'prescribed', disabled:false },
+      { id:1, name:'Pantoprazole', strength:'40mg', m:1, a:0, n:0, qty:30, price:44, form:'capsule', interval:'daily', duration:'1m', food:null,           validation_status:'prescribed', disabled:false },
     ]
   }
 };
@@ -122,39 +122,95 @@ const DOCTOR_STATE = {
 const CALLBACK_STATE = { day: null, time: null };
 
 // ================================================================
-// ICONS — single source for every CTA icon (see docs/design_system.md)
-// Markup: <span data-icon="name"></span> populated at init.
-// JS state changes reference ICONS.name — never inline SVG elsewhere.
+// ICONS — Tabler outline via the central design system (icons.js → TMIcons).
+// Markup: <span class="tm-icon" data-icon="name"></span> (rendered by icons.js).
+// State changes in JS call icon('name'). Never inline SVG in this file.
 // ================================================================
-const ICONS = {
-  phone:    '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>',
-  phoneEnd: '<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><g transform="rotate(135 12 12)"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></g></svg>',
-  calendar: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="3" x2="8" y2="7"/><line x1="16" y1="3" x2="16" y2="7"/></svg>',
-};
+const icon = (name) => TMIcons.svg(name);                       // bare <svg> (put inside a .tm-icon span)
+const iconEl = (name, size) =>                                  // ready-made sized icon element
+  `<span class="tm-icon${size ? ' tm-icon--' + size : ''}">${TMIcons.svg(name)}</span>`;
+function initIcons() { TMIcons.render(); }
 
-// Populate every <span data-icon="…"> from the ICONS map
-function initIcons() {
-  document.querySelectorAll('[data-icon]').forEach(el => {
-    el.innerHTML = ICONS[el.dataset.icon] || '';
-    el.style.display = 'inline-flex';
-    el.style.alignItems = 'center';
-  });
+// ================================================================
+// PRESCRIBE SCREEN — model + text (agreed 2026-10-07, see docs/context/session_handoff.md)
+// ================================================================
+// Customer Rx (View Rx) is source material: freeze each medicine's Rx line before any doctor edit can touch it.
+Object.values(SCENARIOS).forEach(sc => sc.medicines.forEach(med => {
+  if (!med.rx_line) med.rx_line = `${formatMAN(med.m, med.a, med.n)} · Qty ${med.qty}`;
+}));
+
+const EDIT_STATE = {};   // filled by openMedEdit()
+
+const INTERVALS = [
+  ['daily', 'Daily'], ['every_x_hours', 'Every X hours'], ['alt_days', 'Alt days'],
+  ['weekly', 'Weekly'], ['monthly', 'Monthly'], ['sos', 'SOS only'],
+];
+const HOURS = [4, 6, 8, 12];
+const SOS_MAX = [1, 2, 3, 4];
+const DUR_NUMBERS = [1, 2, 3, 4, 5, 6, 7, 10, 14, 15];
+const DUR_UNITS = [['d', 'Days'], ['w', 'Weeks'], ['m', 'Months']];
+const FOODS = [['after_food', 'After food'], ['before_food', 'Before food'], ['empty_stomach', 'Empty stomach']];
+const ONGOING_DEFAULT = '6 months';   // backend default for Ongoing [MOCK ASSUMPTION — configured in backend]
+
+// Dose choices and units follow the medicine's form. `other` = the "Other" number entry (unit shown beside it).
+// showUnit: the Dose heading shows the unit only when the form under the name doesn't already say it (ml, puffs) — agreed 2026-10-08.
+const FORM_DOSE = {
+  tablet:    { one: 'tablet',  many: 'tablets',  slot: [0, 0.5, 1, 2], each: [0.5, 1, 2] },
+  capsule:   { one: 'capsule', many: 'capsules', slot: [0, 0.5, 1, 2], each: [0.5, 1, 2] },
+  syrup:     { one: 'ml',      many: 'ml',       slot: [0, 2.5, 5, 10], each: [2.5, 5, 10], other: 'ml', showUnit: true },
+  drops:     { one: 'drop',    many: 'drops',    slot: [0, 1, 2, 3],   each: [1, 2, 3] },
+  inhaler:   { one: 'puff',    many: 'puffs',    slot: [0, 1, 2],      each: [1, 2], showUnit: true },
+  injection: { one: 'dose',    many: 'doses',    slot: [0, 1],         each: [1], other: 'units' },
+  cream:     { one: 'apply',   many: 'apply',    slot: [0, 1],         each: [1], apply: true },
+};
+const formDose = f => FORM_DOSE[f] || FORM_DOSE.tablet;
+const defaultSosDose = f => { const e = formDose(f).each; return e.includes(1) ? 1 : e[0]; };   // SOS dose starts at 1 unit where that exists
+const FORM_LABEL = { tablet:'Tablet', capsule:'Capsule', syrup:'Syrup', drops:'Drops', inhaler:'Inhaler', injection:'Injection', cream:'Cream' };
+
+const numLabel = v => v === 0.5 ? '½' : String(v);
+function chipLabel(form, v) {
+  if (formDose(form).apply) return v === 1 ? 'Apply' : '—';   // creams: Apply / — (none), never "0"
+  return numLabel(v);
 }
-
-// ================================================================
-// EDIT STATE — for medicine edit sheet
-// ================================================================
-const EDIT_STATE = {
-  medId:    null,
-  m: 1, a: 0, n: 1,
-  qty:      30,
-  interval: 'daily',
-  duration: null,
-  advice:   [],
-};
-
-const DURATION_LABELS = { '3d':'3 days', '7d':'7 days', '2w':'2 weeks', '1m':'1 month', '3m':'3 months', 'ongoing':'Ongoing' };
-const INTERVAL_LABELS = { 'daily':'Daily', 'alt_days':'Alt days', 'weekly':'Weekly', 'monthly':'Monthly', 'sos':'SOS' };
+function doseText(form, v, isOther) {
+  const fd = formDose(form);
+  if (fd.apply) return 'Apply';
+  if (isOther) return `${v} ${fd.other}`;
+  if (fd.one === 'ml') return `${numLabel(v)} ml`;
+  return `${numLabel(v)} ${v > 1 ? fd.many : fd.one}`;
+}
+// On screen "Ongoing" shows its period; on the printed prescription only the period is printed (agreed 2026-10-08).
+function durationText(code, forPrint = false) {
+  if (!code) return '';
+  if (code === 'ongoing') return forPrint ? ONGOING_DEFAULT : `Ongoing (${ONGOING_DEFAULT})`;
+  const n = parseInt(code, 10), u = code.slice(-1);
+  const word = { d: 'day', w: 'week', m: 'month' }[u];
+  return `${n} ${word}${n === 1 ? '' : 's'}`;
+}
+// Schedule part of the printed line, e.g. "1-0-1 + SOS 1 tablet (max 2/day)", "5 ml every 8 hours", "2 puffs as needed (max 4/day)".
+function scheduleText(x) {
+  const fd = formDose(x.form);
+  let t;
+  switch (x.interval) {
+    case 'daily': {
+      const man = formatMAN(x.m, x.a, x.n);
+      t = fd.apply ? `Apply ${man}` : (['tablet', 'capsule'].includes(x.form) ? man : `${man} ${fd.many}`);
+      break;
+    }
+    case 'every_x_hours': t = `${doseText(x.form, x.dose, x.doseOther)} every ${x.hours} hours`; break;
+    case 'alt_days':      t = `${doseText(x.form, x.dose, x.doseOther)} on alternate days`; break;
+    case 'weekly':        t = `${doseText(x.form, x.dose, x.doseOther)} once a week`; break;
+    case 'monthly':       t = `${doseText(x.form, x.dose, x.doseOther)} once a month`; break;
+    case 'sos':           return `${doseText(x.form, x.dose, x.doseOther)} as needed (max ${x.sosMax}/day)`;
+    default:              t = '';
+  }
+  return x.sos ? `${t} + SOS ${doseText(x.form, x.sosDose ?? defaultSosDose(x.form))} (max ${x.sosMax}/day)` : t;
+}
+// Full printed line: schedule · duration · food (only if chosen) · note (only if written)
+function printLine(x) {
+  const food = FOODS.find(f => f[0] === x.food);
+  return [scheduleText(x), durationText(x.duration, true), food ? food[1] : '', (x.note || '').trim()].filter(Boolean).join(' · ');
+}
 
 // ================================================================
 // CTA ROUTING — [LOCKED] project_truth.md Section 5
@@ -176,93 +232,14 @@ function haSkipApplicable(scenario) {
 }
 
 // ================================================================
-// MEDICINE FORM ICONS — multicolour SVG per dosage form
+// MEDICINE FORM ICONS — one outline glyph per dosage form
 // ================================================================
 function getMedIcon(form) {
-  const icons = {
-
-    tablet: `<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect width="40" height="40" fill="#eef2ff"/>
-      <path d="M7,20 A13,13 0 0,1 33,20 Z" fill="#c7d2fe"/>
-      <path d="M7,20 A13,13 0 0,0 33,20 Z" fill="#a5b4fc"/>
-      <line x1="7" y1="20" x2="33" y2="20" stroke="#818cf8" stroke-width="1.5"/>
-      <ellipse cx="15" cy="14" rx="3.5" ry="2" fill="#fff" opacity="0.45" transform="rotate(-20,15,14)"/>
-      <circle cx="20" cy="20" r="13" fill="none" stroke="#a5b4fc" stroke-width="1.5"/>
-    </svg>`,
-
-    capsule: `<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect width="40" height="40" fill="#fffbeb"/>
-      <path d="M20,13 C20,13 7,13 7,20 C7,27 20,27 20,27 Z" fill="#ef4444"/>
-      <path d="M20,13 C20,13 33,13 33,20 C33,27 20,27 20,27 Z" fill="#fbbf24"/>
-      <ellipse cx="13" cy="17" rx="3" ry="1.8" fill="#fff" opacity="0.3" transform="rotate(-15,13,17)"/>
-      <ellipse cx="27" cy="17" rx="3" ry="1.8" fill="#fff" opacity="0.2" transform="rotate(-15,27,17)"/>
-      <line x1="20" y1="13" x2="20" y2="27" stroke="#00000015" stroke-width="1"/>
-      <rect x="7" y="13" width="26" height="14" rx="7" fill="none" stroke="#d97706" stroke-width="1.4"/>
-    </svg>`,
-
-    injection: `<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect width="40" height="40" fill="#e0f2fe"/>
-      <g transform="rotate(-35,20,20)">
-        <rect x="13" y="14" width="18" height="9" rx="2.5" fill="#bae6fd" stroke="#38bdf8" stroke-width="1.3"/>
-        <rect x="13" y="15" width="8" height="7" rx="1.5" fill="#7dd3fc"/>
-        <rect x="30" y="15.5" width="3" height="6" rx="1" fill="#38bdf8"/>
-        <rect x="32.5" y="16" width="4" height="5" rx="1" fill="#0ea5e9"/>
-        <rect x="7" y="16.5" width="7" height="4" rx="1" fill="#94a3b8"/>
-        <line x1="4" y1="18" x2="8" y2="18" stroke="#64748b" stroke-width="1.5" stroke-linecap="round"/>
-        <line x1="17" y1="14" x2="17" y2="17" stroke="#7dd3fc" stroke-width="1"/>
-        <line x1="21" y1="14" x2="21" y2="17" stroke="#7dd3fc" stroke-width="1"/>
-        <ellipse cx="18" cy="16" rx="3" ry="1.2" fill="#fff" opacity="0.35"/>
-      </g>
-    </svg>`,
-
-    syrup: `<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect width="40" height="40" fill="#fefce8"/>
-      <rect x="13" y="19" width="14" height="17" rx="3" fill="#fef3c7" stroke="#f59e0b" stroke-width="1.3"/>
-      <rect x="13" y="29" width="14" height="7" rx="0 0 2 2" fill="#fbbf24"/>
-      <line x1="13" y1="29" x2="27" y2="29" stroke="#f59e0b" stroke-width="0.9"/>
-      <rect x="15" y="24" width="10" height="4" rx="1.5" fill="#fff" opacity="0.5"/>
-      <rect x="15" y="12" width="10" height="9" rx="2" fill="#fef3c7" stroke="#f59e0b" stroke-width="1.3"/>
-      <rect x="14" y="7" width="12" height="7" rx="3" fill="#f59e0b"/>
-      <rect x="15" y="8" width="10" height="5" rx="2" fill="#fbbf24"/>
-      <ellipse cx="17" cy="22" rx="2" ry="3.5" fill="#fff" opacity="0.22"/>
-    </svg>`,
-
-    drops: `<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect width="40" height="40" fill="#ecfeff"/>
-      <rect x="14" y="18" width="12" height="18" rx="4" fill="#e0f2fe" stroke="#22d3ee" stroke-width="1.3"/>
-      <rect x="15" y="28" width="10" height="8" rx="0 0 3 3" fill="#67e8f9"/>
-      <line x1="14" y1="28" x2="26" y2="28" stroke="#22d3ee" stroke-width="0.9"/>
-      <rect x="16" y="11" width="8" height="9" rx="2" fill="#e0f2fe" stroke="#22d3ee" stroke-width="1.3"/>
-      <rect x="17.5" y="7" width="5" height="6" rx="2.5" fill="#cffafe" stroke="#22d3ee" stroke-width="1.2"/>
-      <path d="M20,3.5 Q20,1 18,2.5 Q16,4 18,6 Q20,7 20,3.5 Z" fill="#0891b2"/>
-      <ellipse cx="17" cy="22" rx="1.8" ry="3.5" fill="#fff" opacity="0.3"/>
-    </svg>`,
-
-    cream: `<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect width="40" height="40" fill="#fdf4ff"/>
-      <g transform="rotate(-10,20,25)">
-        <rect x="7" y="19" width="24" height="13" rx="4" fill="#fae8ff" stroke="#e879f9" stroke-width="1.3"/>
-        <rect x="7" y="23" width="24" height="4" fill="#f0abfc"/>
-        <ellipse cx="9" cy="25.5" rx="3.5" ry="5" fill="#fae8ff" stroke="#e879f9" stroke-width="1.3"/>
-        <rect x="26" y="18" width="8" height="13" rx="3.5" fill="#d946ef"/>
-        <ellipse cx="29" cy="21" rx="1.8" ry="3.5" fill="#fff" opacity="0.25"/>
-        <ellipse cx="14" cy="22" rx="4" ry="2" fill="#fff" opacity="0.2"/>
-      </g>
-      <path d="M32,16 Q36,13 35,10 Q38,8 36,6" stroke="#e879f9" stroke-width="2" fill="none" stroke-linecap="round"/>
-    </svg>`,
-
-    inhaler: `<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect width="40" height="40" fill="#f0fdf4"/>
-      <rect x="16" y="8" width="11" height="19" rx="4" fill="#bbf7d0" stroke="#4ade80" stroke-width="1.3"/>
-      <rect x="17.5" y="10" width="8" height="13" rx="3" fill="#86efac" stroke="#22c55e" stroke-width="1.2"/>
-      <rect x="17.5" y="13" width="8" height="5" rx="1.5" fill="#fff" opacity="0.45"/>
-      <rect x="14" y="25" width="15" height="7" rx="3.5" fill="#bbf7d0" stroke="#4ade80" stroke-width="1.3"/>
-      <path d="M29,28 Q33,26 33,23" stroke="#4ade80" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.8"/>
-      <path d="M29,30 Q35,28 35,24" stroke="#4ade80" stroke-width="1.5" fill="none" stroke-linecap="round" opacity="0.45"/>
-      <ellipse cx="20" cy="12" rx="2" ry="3" fill="#fff" opacity="0.3"/>
-    </svg>`,
-  };
-  return icons[form] || icons.tablet;
+  // One outline glyph per dosage form (Tabler + [PROPOSED] custom glyphs in build-icons.mjs, D-29). Tablet is drawn at an angle
+  // so it can't read as a "no entry" / minus sign, and it must look different from the capsule.
+  const byForm = { tablet:'tablet', capsule:'pill', injection:'vaccine', syrup:'syrup',
+                   drops:'eye-drops', cream:'ointment-tube', inhaler:'inhaler' };   // custom glyphs: D-29
+  return iconEl(byForm[form] || 'tablet', 24);
 }
 
 // ================================================================
@@ -315,6 +292,7 @@ function render() {
 
   renderCallPhase();
   renderPostCall();
+  syncCaseActionBar();
   renderSidePanel();
   updateCompactStripVisibility();
 
@@ -327,22 +305,18 @@ function updateCompactStrip() {
   if (!c) return;
   document.getElementById('cs-patient-name').textContent = c.patient_name;
   document.getElementById('cs-patient-meta').textContent =
-    `${c.patient_age}y · ${c.patient_gender} · ${c.order_id}`;
+    `${c.patient_age}y · ${c.patient_gender}`;
   document.getElementById('cs-order-value').textContent = `₹${c.order_value.toLocaleString('en-IN')}`;
   document.getElementById('cs-view-rx-btn').classList.toggle('hidden', !c.prescription_attached);
 
   const state = DOCTOR_STATE.consultationState;
-  const showTimer = state === 'connected' || state === 'gate_passed';
-  const timerBadge = document.getElementById('cs-timer-badge');
-  timerBadge.classList.toggle('hidden', !showTimer);
-  if (showTimer) timerBadge.textContent = `📞 ${formatTimer(DOCTOR_STATE.callTimer)}`;
 }
 
 function renderRxMedicines(meds) {
   const list = document.getElementById('rx-medicines-list');
   list.innerHTML = '';
   if (!meds || meds.length === 0) {
-    list.innerHTML = '<p style="font-size:12px;color:#6b7280;padding:8px 0">No medicines listed</p>';
+    list.innerHTML = '<p class="rx-empty">No medicines listed</p>';
     return;
   }
   meds.forEach((med, i) => {
@@ -351,7 +325,7 @@ function renderRxMedicines(meds) {
     div.innerHTML = `
       <div class="rx-med-number">Medicine ${i + 1}</div>
       <div class="rx-med-name">${med.name} ${med.strength}</div>
-      <div class="rx-med-details">${formatMAN(med.m, med.a, med.n)} · Qty ${med.qty}</div>
+      <div class="rx-med-details">${med.rx_line}</div>
       <div class="rx-med-note">As directed. Complete full course.</div>
     `;
     list.appendChild(div);
@@ -373,36 +347,34 @@ function renderMedicines(meds) {
   meds.forEach(med => {
     const isDisabled = !!med.disabled;
     const statusMap = {
-      not_prescribed: { cls:'med-status-pending',   label:'Pending'    },
-      prescribed:     { cls:'med-status-validated',  label:'Prescribed' },
-      disabled:       { cls:'med-status-disabled',   label:'Disabled'   },
+      not_prescribed: { cls:'tm-tag--warning', label:'Pending'    },
+      prescribed:     { cls:'tm-tag--success', label:'Prescribed' },
+      disabled:       { cls:'',                label:'Disabled'   },
     };
     const st = isDisabled ? 'disabled' : (med.validation_status || 'not_prescribed');
     const { cls: sc, label: sl } = statusMap[st] || statusMap.not_prescribed;
 
     // Dosage detail line
-    const isDaily = !med.interval || med.interval === 'daily';
-    const dosage  = isDaily ? formatMAN(med.m, med.a, med.n) : (INTERVAL_LABELS[med.interval] || med.interval);
-    const dur     = med.duration ? ` · ${DURATION_LABELS[med.duration] || med.duration}` : '';
-    const priceHtml = med.price != null ? `<span class="med-price">₹${med.price}</span>` : '';
+    const sched   = [scheduleText(med), durationText(med.duration)].filter(Boolean).join(' · ');
 
     const el = document.createElement('div');
-    el.className = `medicine-item${isDisabled ? ' disabled' : ''}`;
+    el.className = `tm-row medicine-item${isDisabled ? ' disabled' : ''}`;
     el.setAttribute('role', 'button');
     el.setAttribute('tabindex', '0');
     el.setAttribute('aria-label', `Edit ${med.name}`);
+    el.dataset.medId = med.id;
     el.onclick = () => openMedEdit(med.id);
     el.onkeydown = (e) => { if (e.key === 'Enter' || e.key === ' ') openMedEdit(med.id); };
     el.innerHTML = `
-      <div class="med-icon">${getMedIcon(med.form || 'tablet')}</div>
-      <div class="med-info">
-        <div class="med-name">${med.name} ${med.strength}</div>
-        <div class="med-detail">
-          <span>${dosage}${dur}</span><span>Qty ${med.qty}</span>${priceHtml}
+      <div class="tm-thumb med-icon">${getMedIcon(med.form || 'tablet')}</div>
+      <div class="tm-row__main med-info">
+        <div class="tm-row__title med-name">${med.name} ${med.strength}</div>
+        <div class="tm-row__meta med-detail">
+          <span>${sched}</span><span>Qty ${med.qty}</span>
         </div>
       </div>
-      <span class="med-status-badge ${sc}">${sl}</span>
-      <span class="med-edit-chevron">›</span>
+      <span class="tm-tag tm-tag--md ${sc}">${sl}</span>
+      ${iconEl('chevron-right', 16)}
     `;
     list.appendChild(el);
   });
@@ -421,20 +393,24 @@ function renderCallPhase() {
   const brief   = document.getElementById('pre-call-brief');
   const pcbText = document.getElementById('pcb-text');
   const pcbLabel = document.getElementById('pcb-label');
-  // Hide briefing after an early hang-up — closing script is irrelevant
+  // Hide briefing after an early hang-up or a call that didn't connect — closing script is irrelevant
   // until the doctor re-dials
-  if (c && !DOCTOR_STATE.endedEarly) {
+  const missed = state === 'no_answer' || state === 'hold';
+  const endedEarly = state === 'assigned' && DOCTOR_STATE.endedEarly;
+  document.getElementById('az-missed').hidden = !(missed || endedEarly);
+  if (endedEarly) document.getElementById('az-missed-text').textContent = 'Call ended before 50 seconds — call again or schedule a callback.';
+  document.getElementById('az-unavail-btn').hidden = !missed;
+  if (missed) document.getElementById('az-missed-text').textContent =
+    state === 'hold' ? 'Call didn\'t connect.' : 'Patient didn\'t pick up.';
+  if (c && !DOCTOR_STATE.endedEarly && !missed) {
     const isHA = c.case_type === 'pilot' && c.ha_status === 'required';
     const isValue = c.meds_type === 'value';
     brief.classList.add('visible');
     if (isHA && isValue) {
-      pcbLabel.textContent = '↗️ Live HA Transfer';
       pcbText.textContent  = '"Please stay on the line — I\'ll connect you to our Health Advisor"';
     } else if (isHA && !isValue) {
-      pcbLabel.textContent = '📋 HA Follow-up';
       pcbText.textContent  = '"Our Health Advisor will call you shortly after this consultation"';
     } else {
-      pcbLabel.textContent = '📦 Closing Script';
       pcbText.textContent  = '"I\'m confirming your order now — you can track delivery and updates on the Truemeds app"';
     }
   } else {
@@ -450,46 +426,58 @@ function renderCallPhase() {
   // ── Phase 1 visibility ──
   const gateOpen = ['gate_passed', 'completed', 'unavailable'].includes(state);
   phase1.style.display = gateOpen ? 'none' : 'flex';
-  if (gateOpen) return;
+  callBtn.hidden = gateOpen;            // pinned bar: Call Patient lives there until the gate passes
+  // Closed case: the card says what happened (never a stale script); unavailable gets Next Order in the pinned bar
+  const closed = ['completed', 'unavailable'].includes(state);
+  const closedBox = document.getElementById('az-closed');
+  closedBox.hidden = !closed;
+  if (closed) {
+    brief.classList.remove('visible');
+    document.getElementById('az-closed-text').textContent = state === 'unavailable'
+      ? 'Patient unavailable — case returned to the queue.'
+      : (DOCTOR_STATE.closedNote || 'Case closed.');
+    closedBox.querySelector('.tm-icon').innerHTML = icon(state === 'unavailable' ? 'phone-off' : 'circle-check');
+  }
+  document.getElementById('next-order-btn').hidden = state !== 'unavailable';
+  if (gateOpen) { document.getElementById('pre-gate-callback-btn').classList.add('hidden'); return; }
 
-  // ── Reset button defaults — all cosmetics via .btn system classes ──
+  // ── Reset button defaults — all cosmetics via design-system .tm-btn classes ──
   callBtn.disabled  = false;
-  callBtn.className = 'btn btn-lg btn-primary';
+  callBtn.className = 'tm-btn tm-btn--lg tm-btn--primary tm-btn--block';
   statusLbl.classList.add('hidden');
   statusLbl.textContent = '';
 
   if (state === 'calling') {
     const name = c ? c.patient_name.split(' ')[0] : 'Patient';
-    callBtnIcon.innerHTML  = ICONS.phone;
+    callBtnIcon.innerHTML  = icon('phone');
     callBtnLbl.textContent = `Calling ${name}…`;
     callBtn.disabled       = true;
-    callBtn.className      = 'btn btn-lg btn-calling pulsing';
+    callBtn.className      = 'tm-btn tm-btn--lg tm-btn--primary tm-btn--block tm-btn--busy pulsing';
     return;
   }
   const preGateCb = document.getElementById('pre-gate-callback-btn');
   if (state === 'connected') {
-    callBtnIcon.innerHTML  = ICONS.phoneEnd;
+    callBtnIcon.innerHTML  = icon('phone-x');
     callBtnLbl.textContent = 'End Call';
-    callBtn.className      = 'btn btn-lg btn-danger';
+    callBtn.className      = 'tm-btn tm-btn--lg tm-btn--destructive tm-btn--block';
     // Pre-gate schedule callback as quiet escape hatch during live call
-    if (preGateCb) preGateCb.className = 'btn btn-sm btn-text';
+    if (preGateCb) preGateCb.className = 'tm-btn tm-btn--sm tm-btn--secondary tm-btn--block';
     return;
   }
   // assigned / no_answer / hold — show Call Patient
   if (DOCTOR_STATE.endedEarly) {
     // Early hang-up: escape routes = retry OR schedule callback (ghost button)
-    callBtnIcon.innerHTML  = ICONS.phone;
+    callBtnIcon.innerHTML  = icon('phone');
     callBtnLbl.textContent = 'Call Again';
-    if (preGateCb) preGateCb.className = 'btn btn-md btn-ghost';
+    if (preGateCb) preGateCb.className = 'tm-btn tm-btn--sm tm-btn--secondary tm-btn--block';
     return;
   }
-  if (preGateCb) preGateCb.className = 'btn btn-sm btn-text hidden';
-  callBtnIcon.innerHTML  = ICONS.phone;
-  callBtnLbl.textContent = 'Call Patient';
+  if (preGateCb) preGateCb.className = 'tm-btn tm-btn--sm tm-btn--secondary tm-btn--block hidden';
+  callBtnIcon.innerHTML  = icon('phone');
+  callBtnLbl.textContent = missed ? 'Call Again' : 'Call Patient';
 }
 
 function renderPostCall() {
-  const pc     = document.getElementById('az-phase2');
   const skipBtn = document.getElementById('skip-ha-btn');
   const ctaBtn  = document.getElementById('main-cta-btn');
   const scBtn   = document.getElementById('schedule-callback-btn');
@@ -498,13 +486,10 @@ function renderPostCall() {
   // toast owns the screen exit — hiding phase2 prevents re-submitting.
   const gateOpen = DOCTOR_STATE.consultationState === 'gate_passed';
 
-  if (!gateOpen) {
-    pc.classList.remove('visible','revealed');
-    return;
-  }
-
-  pc.classList.add('visible');
-  requestAnimationFrame(() => requestAnimationFrame(() => pc.classList.add('revealed')));
+  ctaBtn.hidden = !gateOpen;            // pinned bar: the post-call CTA appears once the gate passes
+  scBtn.hidden = !gateOpen;
+  skipBtn.hidden = true;
+  if (!gateOpen) return;
 
   // Restore button structure if innerHTML was replaced during submit
   if (!document.getElementById('main-cta-icon')) {
@@ -519,7 +504,7 @@ function renderPostCall() {
   const haApplicable = haSkipApplicable(c) && !DOCTOR_STATE.haSkippedInSession;
 
   // Skip HA — only Pilot + HA required + not yet skipped [LOCKED]
-  skipBtn.classList.toggle('visible', haApplicable);
+  skipBtn.hidden = !haApplicable;
 
   const effectiveScenario = DOCTOR_STATE.haSkippedInSession
     ? Object.assign({}, c, { ha_status:'skipped_customer' }) : c;
@@ -527,13 +512,22 @@ function renderPostCall() {
   ctaIcon.textContent = cta.icon;
   ctaLbl.textContent  = cta.label;
 
-  // Secondary chip row: Schedule always present; label shortens to fit
-  // when Skip HA shares the row
-  const scLbl = document.getElementById('schedule-callback-label');
-  if (scLbl) scLbl.textContent = haApplicable ? 'Schedule' : 'Schedule Callback';
 
   console.log(`[MOCK] cta-routing | scenario=${DOCTOR_STATE.activeScenario} | ha_skip_session=${DOCTOR_STATE.haSkippedInSession} | resolved=${cta.type}`);
 }
+
+// Pinned action bar: hidden when it has nothing to show (completed / unavailable); its height feeds --ab-h so the
+// page can scroll its last content clear of it and toasts can sit above it.
+function syncCaseActionBar() {
+  const bar = document.getElementById('case-actionbar');
+  const off = b => b.hidden || b.classList.contains('hidden');
+  const sec = document.getElementById('ab-secondary');
+  sec.hidden = [...sec.querySelectorAll('button')].every(off);
+  bar.hidden = [...bar.querySelectorAll('button')].every(off);
+  document.documentElement.style.setProperty('--ab-h', bar.hidden ? '0px' : bar.offsetHeight + 'px');
+}
+window.addEventListener('resize', syncCaseActionBar);
+new ResizeObserver(syncCaseActionBar).observe(document.getElementById('case-actionbar'));   // fonts / label changes alter its height
 
 function renderSidePanel() {
   const c = DOCTOR_STATE.currentCase;
@@ -545,29 +539,28 @@ function renderSidePanel() {
   // Side badges
   const sideRow = document.getElementById('side-badge-row');
   sideRow.innerHTML = '';
-  const addSideBadge = (text, cls) => {
+  const addSideBadge = (text) => {
     const b = document.createElement('span');
-    b.className = `badge ${cls}`;
+    b.className = 'tm-tag tm-tag--md';
     b.textContent = text;
-    b.style.fontSize = '10px';
     sideRow.appendChild(b);
   };
-  addSideBadge(c.case_type === 'cat4' ? 'Cat4' : 'Pilot', c.case_type === 'cat4' ? 'badge-cat4' : 'badge-pilot');
+  addSideBadge(c.case_type === 'cat4' ? 'Cat4' : 'Pilot');
   if (c.case_type !== 'cat4') {
     const hs = DOCTOR_STATE.haSkippedInSession ? 'skipped_session' : c.ha_status;
     const haMap = {
-      required:         ['HA Required',         'badge-ha-req'],
-      skipped_customer: ['HA Skipped',           'badge-ha-skip'],
-      skipped_system:   ['HA Skipped (Sys)',      'badge-ha-skip'],
-      skipped_session:  ['HA Skipped',            'badge-ha-skip'],
+      required:         ['HA Required'],
+      skipped_customer: ['HA Skipped'],
+      skipped_system:   ['HA Skipped (Sys)'],
+      skipped_session:  ['HA Skipped'],
     };
-    if (haMap[hs]) addSideBadge(haMap[hs][0], haMap[hs][1]);
+    if (haMap[hs]) addSideBadge(haMap[hs][0]);
   }
 
   // Side state
-  const stateIcons  = { assigned:'📞', calling:'📡', connected:'🔴', gate_passed:'✅', no_answer:'📵', hold:'⏸', unavailable:'🚫', completed:'✅' };
+  const stateIcons  = { assigned:'phone', calling:'phone-call', connected:'phone-call', gate_passed:'circle-check', no_answer:'phone-off', hold:'phone-pause', unavailable:'circle-x', completed:'circle-check' };
   const stateLabels = { assigned:'Ready to call', calling:'Dialling…', connected:'In call — live', gate_passed:'Call complete', no_answer:'No answer', hold:'On hold (timeout)', unavailable:'Customer unavailable', completed:'Completed' };
-  document.getElementById('side-state-icon').textContent = stateIcons[DOCTOR_STATE.consultationState] || '📞';
+  document.getElementById('side-state-icon').innerHTML = icon(stateIcons[DOCTOR_STATE.consultationState] || 'phone');
   document.getElementById('side-state-text').textContent = stateLabels[DOCTOR_STATE.consultationState] || '—';
   document.getElementById('side-timer-text').textContent = DOCTOR_STATE.callTimer > 0
     ? `Timer: ${formatTimer(DOCTOR_STATE.callTimer)}` : 'Timer not started';
@@ -592,6 +585,7 @@ function renderSidePanel() {
   // Side scenario buttons sync
   document.querySelectorAll('.side-scenario-btn[data-scenario]').forEach(b => {
     b.classList.toggle('active', b.dataset.scenario === DOCTOR_STATE.activeScenario);
+    b.setAttribute('aria-pressed', b.dataset.scenario === DOCTOR_STATE.activeScenario);
   });
 }
 
@@ -608,6 +602,7 @@ function updateCompactStripVisibility() {
   strip.classList.toggle('visible', pdbBottom <= wrapperBottom);
 }
 window.addEventListener('scroll', updateCompactStripVisibility, { passive: true });
+document.getElementById('main-scroll')?.addEventListener('scroll', updateCompactStripVisibility, { passive: true });   // desktop phone frame scrolls #main-scroll
 
 // ================================================================
 // ORDER EXPAND TOGGLE
@@ -618,16 +613,12 @@ function toggleOrderExpand() {
   const isOpen = !expand.classList.contains('hidden');
   expand.classList.toggle('hidden', isOpen);
   btn.classList.toggle('active', !isOpen);
+  btn.setAttribute('aria-expanded', !isOpen);
 }
 
 // ================================================================
 // PROFILE / LOGOUT
 // ================================================================
-function handleLogout() {
-  closeSheet();
-  showToast('[MOCK] Logout — not implemented in prototype');
-  console.log('[MOCK] auth.logout | user=' + DOCTOR_PROFILE.name);
-}
 
 // ================================================================
 // CALL FLOW
@@ -641,7 +632,6 @@ function handleCallAction() {
     DOCTOR_STATE.consultationState = 'assigned';
     DOCTOR_STATE.callTimer = 0;
     DOCTOR_STATE.endedEarly = true;
-    showToast('Call ended before 50s — call again or schedule a callback');
     render();
     console.log(`[MOCK] call-service.callEnded | gate=NOT_PASSED | escape=retry_or_callback`);
   }
@@ -653,6 +643,7 @@ function initiateCall() {
   DOCTOR_STATE.endedEarly = false;
   render();
   window.scrollTo({ top: 0, behavior: 'smooth' });
+  document.getElementById('main-scroll')?.scrollTo({ top: 0, behavior: 'smooth' });
   console.log(`[MOCK] call-service.initiateCall | scenario=${DOCTOR_STATE.activeScenario}`);
 }
 
@@ -688,7 +679,7 @@ function simWebhook(reason) {
   if (reason === 'no_answer' || reason === 'timeout') {
     DOCTOR_STATE.consultationState = reason === 'timeout' ? 'hold' : 'no_answer';
     document.getElementById('sheet-retry-title').textContent =
-      reason === 'timeout' ? 'Webhook timed out' : 'Patient didn\'t pick up';
+      reason === 'timeout' ? 'Call didn\'t connect' : 'Patient didn\'t pick up';
     render();
     openSheet('sheet-retry');
   } else {
@@ -724,23 +715,29 @@ function markCustomerUnavailable() {
 // ── Schedule Callback (post-gate) ────────────────────────────────
 function selectCallbackDay(day) {
   CALLBACK_STATE.day = day;
-  document.querySelectorAll('#callback-day-chips .chip').forEach(b => {
-    b.classList.toggle('chip-active', b.dataset.day === day);
+  document.getElementById('callback-error').hidden = true;
+  document.querySelectorAll('#callback-day-chips .tm-chip').forEach(b => {
+    b.setAttribute('aria-pressed', b.dataset.day === day);
   });
 }
 
 function selectCallbackTime(time) {
   CALLBACK_STATE.time = time;
-  document.querySelectorAll('#callback-time-chips .chip').forEach(b => {
-    b.classList.toggle('chip-active', b.dataset.time === time);
+  document.getElementById('callback-error').hidden = true;
+  document.querySelectorAll('#callback-time-chips .tm-chip').forEach(b => {
+    b.setAttribute('aria-pressed', b.dataset.time === time);
   });
 }
 
 function confirmScheduleCallback() {
+  const err = document.getElementById('callback-error');
   if (!CALLBACK_STATE.day || !CALLBACK_STATE.time) {
-    showToast('Pick a date and time');
+    err.textContent = !CALLBACK_STATE.day && !CALLBACK_STATE.time ? 'Pick a date and a time.'
+                    : !CALLBACK_STATE.day ? 'Pick a date.' : 'Pick a time.';
+    err.hidden = false;
     return;
   }
+  err.hidden = true;
   const dayLabel = CALLBACK_STATE.day === 'today' ? 'Today' : 'Tomorrow';
   const [h, m] = CALLBACK_STATE.time.split(':');
   const hr = parseInt(h);
@@ -753,6 +750,7 @@ function confirmScheduleCallback() {
   clearInterval(DOCTOR_STATE.timerInterval);
   DOCTOR_STATE.timerInterval = null;
   DOCTOR_STATE.consultationState = 'completed';
+  DOCTOR_STATE.closedNote = `Callback scheduled — ${dayLabel} at ${timeLabel}.`;
   render();
   showSuccessToast('Callback Scheduled', `${DOCTOR_STATE.currentCase.patient_name} — ${dayLabel} at ${timeLabel}. Order moved to callback queue.`);
   console.log(`[MOCK] case.callbackScheduled | day=${CALLBACK_STATE.day} | time=${CALLBACK_STATE.time} | session=COMPLETED`);
@@ -763,10 +761,6 @@ function startCallTimer() {
   DOCTOR_STATE.timerInterval = setInterval(() => {
     DOCTOR_STATE.callTimer++;
 
-    // Update compact strip timer badge
-    const timerBadge = document.getElementById('cs-timer-badge');
-    timerBadge.classList.remove('hidden');
-    timerBadge.textContent = `📞 ${formatTimer(DOCTOR_STATE.callTimer)}`;
 
     if (DOCTOR_STATE.callTimer >= 50 && DOCTOR_STATE.consultationState !== 'gate_passed') {
       clearInterval(DOCTOR_STATE.timerInterval);
@@ -775,8 +769,7 @@ function startCallTimer() {
       DOCTOR_STATE.gatePassedAt = Date.now();
       render();
       console.log(`[MOCK] call-timer.gateCheck | elapsed=50s | gate=PASSED | cta=${resolveCTA(DOCTOR_STATE.currentCase).type}`);
-      showToast('Valid call complete — post-call action unlocked');
-      setTimeout(() => document.getElementById('action-zone').scrollIntoView({ behavior:'smooth', block:'start' }), 300);
+      /* no auto-scroll (D-28): every call action is in the pinned bar */
     }
 
     document.getElementById('demo-state-label').textContent =
@@ -795,8 +788,7 @@ function doFastForward() {
     DOCTOR_STATE.consultationState = 'gate_passed';
     DOCTOR_STATE.gatePassedAt = Date.now();
     render();
-    showToast('⏩ Fast-forwarded to 50s — gate passed');
-    setTimeout(() => document.getElementById('action-zone').scrollIntoView({ behavior:'smooth', block:'start' }), 300);
+    /* no auto-scroll (D-28): every call action is in the pinned bar */
   } else if (['assigned', 'hold', 'no_answer', 'calling'].includes(s)) {
     // Hide sim panel if showing
     document.getElementById('demo-call-sim').style.display = 'none';
@@ -806,10 +798,8 @@ function doFastForward() {
     DOCTOR_STATE.consultationState = 'gate_passed';
     DOCTOR_STATE.gatePassedAt = Date.now();
     render();
-    showToast('⏩ Fast-forwarded — gate passed');
-    setTimeout(() => document.getElementById('action-zone').scrollIntoView({ behavior:'smooth', block:'start' }), 300);
+    /* no auto-scroll (D-28): every call action is in the pinned bar */
   } else {
-    showToast('Fast-forward only works before gate is passed');
   }
 }
 
@@ -835,6 +825,7 @@ function handleMainCTA() {
       ? Object.assign({}, DOCTOR_STATE.currentCase, { ha_status:'skipped_customer' }) : DOCTOR_STATE.currentCase;
     const cta = resolveCTA(effectiveScenario);
     const titles = { confirm_order:'Order Confirmed', confirm_transfer:'Transferred to HA', confirm_forward:'Forwarded for Review' };
+    DOCTOR_STATE.closedNote = `${titles[cta.type] || 'Done'}.`;
     render();
     showSuccessToast(titles[cta.type] || 'Done', `${DOCTOR_STATE.currentCase.patient_name} — "${cta.label}" submitted.`);
     console.log(`[MOCK] cta-action.success | cta=${cta.type}`);
@@ -846,8 +837,9 @@ function showSuccessToast(title, desc) {
   const st  = document.getElementById('success-toast');
   const col = document.getElementById('mobile-column');
   const r   = col.getBoundingClientRect();
-  st.style.left  = (r.left + 16) + 'px';
-  st.style.width = (r.width - 32) + 'px';
+  const w = Math.min(r.width - 32, 480);
+  st.style.left  = (r.left + (r.width - w) / 2) + 'px';
+  st.style.width = w + 'px';
   document.getElementById('success-toast-title').textContent = title;
   document.getElementById('success-toast-desc').textContent  = desc;
   st.classList.add('show');
@@ -870,142 +862,344 @@ function openSheet(sheetId) {
   overlay.style.width = rect.width + 'px';
   if (activeSheet) document.getElementById(activeSheet)?.classList.remove('open');
   overlay.classList.add('open');
-  document.getElementById(sheetId)?.classList.add('open');
+  const sheetEl = document.getElementById(sheetId);
+  sheetEl?.classList.add('open');
+  if (!activeSheet) sheetReturnFocus = document.activeElement;
   activeSheet = sheetId;
+  // Accessibility: dialog semantics + focus management (visual/a11y only)
+  if (sheetEl) {
+    const title = sheetEl.querySelector('.sheet-title');
+    if (title && !title.id) title.id = sheetId + '-heading';   // not '-title': #sheet-retry-title is the retry sheet's text span
+    sheetEl.setAttribute('role', 'dialog');
+    sheetEl.setAttribute('aria-modal', 'true');
+    if (title) sheetEl.setAttribute('aria-labelledby', title.id);
+    sheetEl.setAttribute('tabindex', '-1');
+    sheetEl.focus({ preventScroll: true });
+  }
 }
+let sheetReturnFocus = null;
+document.addEventListener('keydown', (e) => {
+  if (!activeSheet) return;
+  if (e.key === 'Escape') { if (activeSheet === 'sheet-bio') cancelBioPrompt(); else closeSheet(); return; }
+  if (e.key !== 'Tab') return;
+  const sheetEl = document.getElementById(activeSheet);
+  const f = [...sheetEl.querySelectorAll('button, input, textarea, [tabindex]:not([tabindex="-1"])')].filter(el => !el.disabled && el.offsetParent !== null);
+  if (!f.length) return;
+  const first = f[0], last = f[f.length - 1];
+  if (e.shiftKey && (document.activeElement === first || document.activeElement === sheetEl)) { e.preventDefault(); last.focus(); }
+  else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+});
 
 function closeSheet() {
   if (activeSheet) document.getElementById(activeSheet)?.classList.remove('open');
   document.getElementById('sheet-overlay').classList.remove('open');
   activeSheet = null;
+  if (sheetReturnFocus && document.contains(sheetReturnFocus)) sheetReturnFocus.focus({ preventScroll: true });
+  sheetReturnFocus = null;
 }
 
 function handleSheetOverlayClick(e) {
-  if (e.target === document.getElementById('sheet-overlay')) closeSheet();
+  if (e.target === document.getElementById('sheet-overlay')) { if (activeSheet === 'sheet-bio') cancelBioPrompt(); else closeSheet(); }
 }
 
 function confirmSkipHA(reason) {
   DOCTOR_STATE.haSkippedInSession = true;
   closeSheet(); render();
-  showToast(`HA skipped: ${reason} → CTA updated to Confirm Order`);
   console.log(`[MOCK] ha.skip | reason="${reason}" | new_cta=confirm_order`);
 }
 
 // ================================================================
-// MEDICINE EDIT
+// MEDICINE EDIT — full-screen Prescribe view (#prescribe-screen)
 // ================================================================
-function selectMAN(row, val) {
-  EDIT_STATE[row] = val;
-  document.querySelectorAll(`.man-btns[data-man="${row}"] .man-btn`).forEach(btn => {
-    btn.classList.toggle('active', parseFloat(btn.dataset.val) === val);
-  });
-}
-
-function adjustQty(delta) {
-  EDIT_STATE.qty = Math.max(1, EDIT_STATE.qty + delta);
-  document.getElementById('sheet-qty-display').textContent = EDIT_STATE.qty;
-}
-
-function selectInterval(val) {
-  EDIT_STATE.interval = val;
-  document.querySelectorAll('#interval-chips .chip').forEach(b => {
-    b.classList.toggle('chip-active', b.dataset.interval === val);
-  });
-  // Grey out M-A-N for non-daily intervals
-  const manGroup = document.getElementById('man-picker-group');
-  const nonDaily = ['weekly','monthly','sos'].includes(val);
-  manGroup.classList.toggle('man-disabled', nonDaily);
-}
-
-function selectDuration(val) {
-  // Toggle off if already selected
-  if (EDIT_STATE.duration === val) {
-    EDIT_STATE.duration = null;
-    document.querySelectorAll('#duration-chips .chip').forEach(b => b.classList.remove('chip-active'));
-  } else {
-    EDIT_STATE.duration = val;
-    document.querySelectorAll('#duration-chips .chip').forEach(b => {
-      b.classList.toggle('chip-active', b.dataset.dur === val);
-    });
-  }
-}
-
-function toggleAdvice(val) {
-  const idx = EDIT_STATE.advice.indexOf(val);
-  if (idx > -1) {
-    EDIT_STATE.advice.splice(idx, 1);
-  } else {
-    EDIT_STATE.advice.push(val);
-  }
-  document.querySelectorAll('#advice-chips .chip').forEach(b => {
-    b.classList.toggle('chip-active', EDIT_STATE.advice.includes(b.dataset.advice));
-  });
-}
+let psReturnFocus = null;
+let psSnapshot = '';   // edit state at open, to know whether closing would lose changes
 
 function openMedEdit(medId) {
   const med = DOCTOR_STATE.currentCase.medicines.find(m => m.id === medId);
   if (!med) return;
-
-  EDIT_STATE.medId    = medId;
-  EDIT_STATE.m        = med.m;
-  EDIT_STATE.a        = med.a;
-  EDIT_STATE.n        = med.n;
-  EDIT_STATE.qty      = med.qty;
-  EDIT_STATE.interval = med.interval || 'daily';
-  EDIT_STATE.duration = med.duration || null;
-  EDIT_STATE.advice   = Array.isArray(med.advice) ? [...med.advice] : [];
-
-  document.getElementById('sheet-med-name').textContent = `${med.name} ${med.strength}`;
-  document.getElementById('sheet-qty-display').textContent = med.qty;
-
-  // Sync interval chips
-  document.querySelectorAll('#interval-chips .chip').forEach(b => {
-    b.classList.toggle('chip-active', b.dataset.interval === EDIT_STATE.interval);
+  if (med.default_duration === undefined) med.default_duration = med.duration || 'ongoing';   // backend default, kept for "Changed from default"
+  const fd = formDose(med.form);
+  const dur = med.duration || 'ongoing';
+  const dose = med.dose ?? fd.each[Math.min(1, fd.each.length - 1)];
+  Object.assign(EDIT_STATE, {
+    medId, form: med.form || 'tablet',
+    interval: med.interval || 'daily',
+    m: med.m ?? 0, a: med.a ?? 0, n: med.n ?? 0,
+    hours: med.hours || 8,
+    dose, doseOther: !!med.doseOther, doseOtherVal: med.doseOther ? String(med.dose) : '',
+    sos: !!med.sos, sosDose: med.sosDose ?? defaultSosDose(med.form), sosMax: med.sosMax || 1,
+    durOngoing: dur === 'ongoing', durN: dur === 'ongoing' ? 1 : parseInt(dur, 10), durU: dur === 'ongoing' ? 'd' : dur.slice(-1),
+    durOpen: false, defaultDuration: med.default_duration,
+    food: med.food || null, note: med.note || '', err: null,
+    disabled: !!med.disabled, disableReason: med.disable_reason || '',
   });
-  // Sync M-A-N
-  ['m','a','n'].forEach(row => {
-    document.querySelectorAll(`.man-btns[data-man="${row}"] .man-btn`).forEach(btn => {
-      btn.classList.toggle('active', parseFloat(btn.dataset.val) === med[row]);
-    });
-  });
-  // Sync M-A-N disabled state
-  const nonDaily = ['weekly','monthly','sos'].includes(EDIT_STATE.interval);
-  document.getElementById('man-picker-group').classList.toggle('man-disabled', nonDaily);
-  // Sync duration chips
-  document.querySelectorAll('#duration-chips .chip').forEach(b => {
-    b.classList.toggle('chip-active', b.dataset.dur === EDIT_STATE.duration);
-  });
-  // Sync advice chips
-  document.querySelectorAll('#advice-chips .chip').forEach(b => {
-    b.classList.toggle('chip-active', EDIT_STATE.advice.includes(b.dataset.advice));
-  });
+  document.getElementById('ps-title').textContent = `${med.name} ${med.strength}`;
+  document.getElementById('ps-form').textContent = FORM_LABEL[EDIT_STATE.form] || 'Medicine';
+  document.getElementById('ps-disable-btn').hidden = EDIT_STATE.disabled;
+  const dn = document.getElementById('ps-disabled-note');
+  dn.hidden = !EDIT_STATE.disabled;
+  document.getElementById('ps-disabled-text').textContent =
+    `Disabled${EDIT_STATE.disableReason ? ': ' + EDIT_STATE.disableReason : ''}. Prescribing it will enable it again.`;
+  document.getElementById('ps-note').value = EDIT_STATE.note;
+  renderPrescribe();
+  psSnapshot = JSON.stringify(editModel());
+  const scr = document.getElementById('prescribe-screen');
+  psReturnFocus = document.activeElement;
+  scr.classList.add('open');
+  scr.setAttribute('aria-hidden', 'false');
+  document.getElementById('ps-body').scrollTop = 0;
+  scr.focus({ preventScroll: true });
+}
 
-  openSheet('sheet-edit-med');
+const psChanged = () => JSON.stringify(editModel()) !== psSnapshot;
+
+// Close (cross / Escape): instant when nothing changed; otherwise ask before throwing edits away.
+function requestClosePrescribe() {
+  if (psChanged()) openSheet('sheet-discard');
+  else closePrescribe();
+}
+function discardPrescribe() { closeSheet(); closePrescribe(); }
+
+function closePrescribe() {
+  const scr = document.getElementById('prescribe-screen');
+  scr.classList.remove('open');
+  scr.setAttribute('aria-hidden', 'true');
+  if (psReturnFocus && document.contains(psReturnFocus)) psReturnFocus.focus({ preventScroll: true });
+  psReturnFocus = null;
+}
+// Keyboard: Escape = close request; Tab stays inside the screen (it is modal). Capture phase: runs before the
+// sheet handler, so when a sheet is open over the screen the sheet handles the key instead.
+document.addEventListener('keydown', (e) => {
+  const scr = document.getElementById('prescribe-screen');
+  if (activeSheet || !scr.classList.contains('open')) return;
+  if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); requestClosePrescribe(); return; }   // stop: the sheet handler must not see this key and close the sheet it just opened
+  if (e.key !== 'Tab') return;
+  const f = [...scr.querySelectorAll('button, input, textarea, [tabindex]:not([tabindex="-1"])')]
+    .filter(el => !el.disabled && !el.hidden && el.offsetParent !== null);
+  if (!f.length) return;
+  const first = f[0], last = f[f.length - 1];
+  if (!scr.contains(document.activeElement)) { e.preventDefault(); first.focus(); return; }
+  if (e.shiftKey && (document.activeElement === first || document.activeElement === scr)) { e.preventDefault(); last.focus(); }
+  else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+}, { capture: true });
+
+const durationCode = () => EDIT_STATE.durOngoing ? 'ongoing' : `${EDIT_STATE.durN}${EDIT_STATE.durU}`;
+// "Other" dose: the WHOLE entry must be a plain positive number ("7", "7.5", ".5"). parseFloat alone read "7..5" or
+// "7abc" as 7 and saved it silently (review 2026-10-09). Anything else is invalid; what the doctor typed is kept.
+function parseDose(s) {
+  const t = String(s ?? '').trim();
+  if (!/^(\d+(\.\d+)?|\.\d+)$/.test(t)) return NaN;
+  const v = Number(t);
+  return v > 0 ? v : NaN;
+}
+function currentDose() {
+  if (!EDIT_STATE.doseOther) return EDIT_STATE.dose;
+  const v = parseDose(EDIT_STATE.doseOtherVal);
+  return isFinite(v) ? v : '—';
+}
+const editModel = () => {
+  const { err, durOpen, disabled, disableReason, ...rest } = EDIT_STATE;   // UI-only fields are not part of the prescription
+  return { ...rest, dose: currentDose(), duration: durationCode() };
+};
+
+function chip(key, label, pressed, aria = '') {
+  return `<button type="button" class="tm-chip tm-chip--lg" data-k="${key}" aria-pressed="${pressed}"${aria ? ` aria-label="${aria}"` : ''}>${label}</button>`;
+}
+// A labelled group of chips (role=group so screen readers say which question the chip answers).
+function group(label, inner, { cls = 'ps-chips', hint = '', id = '', cols = 0 } = {}) {
+  const lid = `psl-${label.replace(/\W+/g, '-').toLowerCase()}-${Math.random().toString(36).slice(2, 6)}`;
+  const style = cols ? ` style="--cols:${cols}"` : '';
+  return `<div class="ps-section"${id ? ` id="${id}"` : ''}><div class="tm-field__label ps-label" id="${lid}">${label}${hint ? ` <span class="tm-muted">${hint}</span>` : ''}</div>` +
+         `<div class="${cls}" role="group" aria-labelledby="${lid}"${style}>${inner}</div></div>`;
+}
+const unitHint = (fd, unit) => unit ? `(${unit})` : (fd.showUnit ? `(${fd.many})` : '');   // unit = the "Other" entry's unit when chosen
+
+// Re-renders everything between "Prints as" and the note. The note field is never re-rendered (keeps typing focus).
+function renderPrescribe() {
+  const x = EDIT_STATE, fd = formDose(x.form);
+  const focusKey = document.activeElement?.dataset?.k;
+  let h = '';
+  // Cards, like the case page (agreed 2026-10-08): Schedule · SOS · Duration · Food · (note card is static in index.html)
+  h += `<div class="tm-card ps-card" id="ps-card-schedule">`;
+  h += group('How often', INTERVALS.map(([v, l]) => chip(`int:${v}`, l, x.interval === v)).join(''));
+
+  // Dose — one heading for every schedule: "Dose (unit)". Daily shows the M / A / N rows under it.
+  const errDose = x.err === 'dose' ? `<div class="tm-notice tm-notice--error ps-gap" role="alert"><span class="tm-icon" data-icon="alert-circle"></span><span>Choose a dose for at least one time of day.</span></div>` : '';
+  if (x.interval === 'daily') {
+    const rows = [['m', 'M', 'Morning'], ['a', 'A', 'Afternoon'], ['n', 'N', 'Night']].map(([k, key, name]) =>
+      `<div class="ps-slot"><span class="ps-slot-key" aria-hidden="true">${key}</span><div class="ps-grid" role="group" aria-label="${name}" style="--cols:${fd.slot.length}">${
+        fd.slot.map(v => chip(`slot:${k}:${v}`, chipLabel(x.form, v), x[k] === v, `${name}: ${v === 0 ? 'none' : doseText(x.form, v)}`)).join('')}</div></div>`).join('');
+    h += `<div class="ps-section" id="ps-dose-section"><div class="tm-field__label ps-label">Dose <span class="tm-muted">${unitHint(fd)}</span></div><div class="ps-slots">${rows}</div>${errDose}</div>`;
+  } else {
+    if (x.interval === 'every_x_hours') {
+      h += `<div class="ps-section"><div class="tm-field__label ps-label" id="psl-every">Every</div><div class="ps-grid" role="group" aria-labelledby="psl-every" style="--cols:4">${
+             HOURS.map(v => chip(`hrs:${v}`, `${v} h`, x.hours === v, `Every ${v} hours`)).join('')}</div>
+             <div class="ps-helper">${24 / x.hours} times a day, round the clock</div></div>`;
+    }
+    const opts = fd.each.map(v => chip(`dose:${v}`, chipLabel(x.form, v), !x.doseOther && x.dose === v));
+    if (fd.other) opts.push(chip('dose:other', 'Other', x.doseOther));
+    const other = x.doseOther ? `<div class="tm-field ps-gap${x.err === 'other' ? ' tm-field--error' : ''}" id="ps-other-field"><label class="tm-field__label" for="ps-other">Dose in ${fd.other}</label>
+        <div class="tm-field__control"><input id="ps-other" type="text" inputmode="decimal" placeholder="e.g. 7.5" value="${String(x.doseOtherVal).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;')}"><span class="ps-unit">${fd.other}</span></div>
+        ${x.err === 'other' ? `<div class="tm-field__helper" role="alert">${String(x.doseOtherVal).trim() ? `Use numbers only, e.g. 7.5 ${fd.other}.` : `Enter the dose in ${fd.other}.`}</div>` : ''}</div>` : '';
+    const lid = 'psl-dose-each';
+    h += `<div class="ps-section" id="ps-dose-section"><div class="tm-field__label ps-label" id="${lid}">Dose <span class="tm-muted">${unitHint(fd, x.doseOther ? fd.other : '')}</span></div>` +
+         `<div class="ps-grid" role="group" aria-labelledby="${lid}" style="--cols:${opts.length}">${opts.join('')}</div>${other}</div>`;
+    if (x.interval === 'sos') {
+      h += `<div class="ps-section"><div class="tm-field__label ps-label" id="psl-max-only">Max doses a day</div><div class="ps-grid" role="group" aria-labelledby="psl-max-only" style="--cols:4">${SOS_MAX.map(v => chip(`max:${v}`, v, x.sosMax === v)).join('')}</div></div>`;
+    }
+  }
+
+  h += `</div>`;   // end Schedule card
+
+  // SOS add-on: explained in place, with its own dose and a daily cap (both drive quantity and the print line).
+  if (x.interval !== 'sos') {
+    h += `<div class="ps-section tm-card ps-card"><div><label class="tm-check"><input type="checkbox" class="tm-toggle" id="ps-sos" ${x.sos ? 'checked' : ''} aria-describedby="ps-sos-help"> Also as needed (SOS)</label>
+          <div class="ps-helper" id="ps-sos-help">Extra doses only when needed, on top of the schedule above.</div></div>`;
+    if (x.sos) {
+      h += `<div class="ps-sub">` +
+           group('Dose', fd.each.map(v => chip(`sosdose:${v}`, chipLabel(x.form, v), x.sosDose === v)).join(''), { cls: 'ps-grid', cols: fd.each.length, hint: unitHint(fd) }) +
+           `<div class="ps-section ps-gap"><div class="tm-field__label ps-label" id="psl-max-extra">Max extra doses a day</div><div class="ps-grid" role="group" aria-labelledby="psl-max-extra" style="--cols:4">${SOS_MAX.map(v => chip(`max:${v}`, v, x.sosMax === v)).join('')}</div></div>` +
+           `</div>`;
+    }
+    h += `</div>`;
+  }
+
+  // Duration — a dropdown-style field: one tap target (value + chevron) that opens the picker in place and closes
+  // again on the same row. Looks like the other form fields so it reads as "fill in", not "information".
+  const code = durationCode();
+  const sub = code !== x.defaultDuration ? 'Changed from default' : 'Default';
+  h += `<div class="ps-section tm-card ps-card"><div class="tm-field__label ps-label" id="psl-duration">Duration</div>
+        <div class="ps-dur-field${x.durOpen ? ' is-open' : ''}">
+          <button type="button" class="ps-dur-toggle" data-k="dur:toggle" aria-expanded="${x.durOpen}" aria-controls="ps-dur-panel" aria-labelledby="psl-duration ps-dur-value">
+            <span class="ps-dur-val" id="ps-dur-value">${durationText(code)}<span>${sub}</span></span>
+            ${iconEl(x.durOpen ? 'chevron-up' : 'chevron-down', 24)}
+          </button>${x.durOpen ? `
+          <div class="ps-dur-panel" id="ps-dur-panel">
+            <div class="ps-grid" role="group" aria-label="Duration number" style="--cols:5">${DUR_NUMBERS.map(v => chip(`durn:${v}`, v, !x.durOngoing && x.durN === v)).join('')}</div>
+            <div class="ps-grid ps-gap" role="group" aria-label="Duration unit" style="--cols:4">${DUR_UNITS.map(([u, l]) => chip(`duru:${u}`, l, !x.durOngoing && x.durU === u)).join('')}${chip('dur:ongoing', 'Ongoing', x.durOngoing, `Ongoing, ${ONGOING_DEFAULT}`)}</div>
+          </div>` : ''}
+        </div></div>`;
+
+  h += `<div class="tm-card ps-card">` + group('Food', FOODS.map(([v, l]) => chip(`food:${v}`, l, x.food === v)).join(''), { cls: 'ps-chips ps-chips-fill', hint: '(optional)' }) + `</div>`;
+
+  const dyn = document.getElementById('ps-dynamic');
+  dyn.innerHTML = h;
+  initIcons();
+  setPrintLine();
+  if (focusKey) dyn.querySelector(`[data-k="${CSS.escape(focusKey)}"]`)?.focus({ preventScroll: true });
+}
+
+// The pinned "On prescription" line (D-25). Briefly tints when the text changes so the doctor sees the effect of a tap.
+let _printFlash = null;
+function setPrintLine() {
+  const el = document.getElementById('ps-prints-text');
+  const next = printLine(editModel());
+  const changed = el.textContent !== next && el.textContent !== '—' && document.getElementById('prescribe-screen').classList.contains('open');
+  el.textContent = next;
+  if (!changed) return;
+  const box = document.getElementById('ps-rx');
+  box.classList.add('is-updated');
+  clearTimeout(_printFlash);
+  _printFlash = setTimeout(() => box.classList.remove('is-updated'), 600);
+}
+
+// One delegated handler for every chip / button in the screen.
+document.getElementById('ps-dynamic').addEventListener('click', (e) => {
+  const b = e.target.closest('[data-k]');
+  if (!b) return;
+  const [kind, p1, p2] = b.dataset.k.split(':');
+  const x = EDIT_STATE;
+  switch (kind) {
+    case 'int':
+      x.interval = p1;
+      if (p1 === 'sos') x.sos = false;
+      if (p1 !== 'daily' && x.err === 'dose') x.err = null;
+      break;
+    case 'slot': x[p1] = parseFloat(p2); if (x.err === 'dose') x.err = null; break;
+    case 'hrs':  x.hours = parseInt(p1, 10); break;
+    case 'dose':
+      if (p1 === 'other') { x.doseOther = true; }
+      else { x.doseOther = false; x.dose = parseFloat(p1); if (x.err === 'other') x.err = null; }
+      break;
+    case 'sosdose': x.sosDose = parseFloat(p1); break;
+    case 'max':  x.sosMax = parseInt(p1, 10); break;
+    case 'durn': x.durN = parseInt(p1, 10); x.durOngoing = false; break;
+    case 'duru': x.durU = p1; x.durOngoing = false; break;
+    case 'dur':
+      if (p1 === 'toggle') x.durOpen = !x.durOpen;
+      else if (p1 === 'ongoing') x.durOngoing = true;
+      break;
+    case 'food': x.food = x.food === p1 ? null : p1; break;   // optional: tap again to clear
+    default: return;
+  }
+  renderPrescribe();
+  if (b.dataset.k === 'dose:other') document.getElementById('ps-other')?.focus();
+});
+document.getElementById('ps-dynamic').addEventListener('change', (e) => {
+  if (e.target.id === 'ps-sos') { EDIT_STATE.sos = e.target.checked; renderPrescribe(); document.getElementById('ps-sos')?.focus(); }
+});
+document.getElementById('ps-dynamic').addEventListener('input', (e) => {
+  if (e.target.id !== 'ps-other') return;
+  EDIT_STATE.doseOtherVal = e.target.value;
+  if (EDIT_STATE.err === 'other' && parseDose(e.target.value) > 0) {
+    EDIT_STATE.err = null;
+    const f = document.getElementById('ps-other-field');
+    f.classList.remove('tm-field--error'); f.querySelector('.tm-field__helper')?.remove();
+  }
+  setPrintLine();
+});
+document.getElementById('ps-note').addEventListener('input', (e) => {
+  EDIT_STATE.note = e.target.value;
+  setPrintLine();
+});
+
+// Only two invalid states can exist (every required choice always keeps a value): no dose at all on a daily
+// schedule, and "Other" picked with no valid number. Show the error in place, scroll to it, save nothing.
+function validatePrescribe() {
+  const x = EDIT_STATE;
+  if (x.interval === 'daily' && x.m + x.a + x.n === 0) return 'dose';
+  if (x.interval !== 'daily' && x.doseOther && !(parseDose(x.doseOtherVal) > 0)) return 'other';
+  return null;
 }
 
 function confirmMedEdit() {
   const med = DOCTOR_STATE.currentCase.medicines.find(m => m.id === EDIT_STATE.medId);
   if (!med) return;
-  med.m        = EDIT_STATE.m;
-  med.a        = EDIT_STATE.a;
-  med.n        = EDIT_STATE.n;
-  med.qty      = EDIT_STATE.qty;
-  med.interval = EDIT_STATE.interval;
-  med.duration = EDIT_STATE.duration;
-  med.advice   = [...EDIT_STATE.advice];
-  med.validation_status = 'prescribed';
-  med.disabled = false;
-  closeSheet(); render();
-  showToast(`${med.name} prescribed`);
-  console.log(`[MOCK] medicine.prescribe | id=${med.id} | name=${med.name} | interval=${med.interval} | duration=${med.duration}`);
+  const err = validatePrescribe();
+  if (err) {
+    EDIT_STATE.err = err;
+    renderPrescribe();
+    const target = document.getElementById(err === 'dose' ? 'ps-dose-section' : 'ps-other-field');
+    if (target) {   // scroll only the screen's own scroll area (scrollIntoView could also move the desktop frame)
+      const body = document.getElementById('ps-body');
+      body.scrollBy({ top: target.getBoundingClientRect().top - body.getBoundingClientRect().top - body.clientHeight / 3 });
+    }
+    if (err === 'other') document.getElementById('ps-other')?.focus({ preventScroll: true });
+    console.log(`[MOCK] medicine.prescribe.blocked | id=${med.id} | reason=${err}`);
+    return;
+  }
+  const x = editModel();
+  Object.assign(med, {
+    interval: x.interval, m: x.m, a: x.a, n: x.n, hours: x.hours,
+    dose: x.dose, doseOther: x.doseOther,
+    sos: x.interval === 'sos' ? false : x.sos, sosDose: x.sosDose, sosMax: x.sosMax,
+    duration: x.duration, food: x.food, note: x.note.trim(),
+    validation_status: 'prescribed', disabled: false, disable_reason: undefined,
+  });
+  closePrescribe(); render(); focusMedRow(med.id);
+  console.log(`[MOCK] medicine.prescribe | id=${med.id} | name=${med.name} | prints="${printLine(med)}"`);
 }
 
 function openDisableSheet() {
   const med = DOCTOR_STATE.currentCase.medicines.find(m => m.id === EDIT_STATE.medId);
   if (!med) return;
   document.getElementById('sheet-disable-med-label').textContent = `Disable: ${med.name} ${med.strength}`;
-  closeSheet();
-  setTimeout(() => openSheet('sheet-disable-reason'), 150);
+  openSheet('sheet-disable-reason');   // opens over the Prescribe screen; cancelling returns to it
+}
+
+// After Prescribe / Disable the list is rebuilt, which removes the row that had focus — put focus on the new row.
+function focusMedRow(id) {
+  document.querySelector(`#medicines-list [data-med-id="${id}"]`)?.focus({ preventScroll: true });
 }
 
 function confirmDisable(reason) {
@@ -1014,37 +1208,8 @@ function confirmDisable(reason) {
   med.disabled = true;
   med.validation_status = 'disabled';
   med.disable_reason = reason;
-  closeSheet(); render();
-  showToast(`Medicine disabled: ${reason}`);
+  closeSheet(); closePrescribe(); render(); focusMedRow(med.id);
   console.log(`[MOCK] medicine.disable | id=${med.id} | name=${med.name} | reason="${reason}"`);
-}
-
-// ================================================================
-// ADD MEDICINE
-// ================================================================
-document.getElementById('add-medicine-btn').addEventListener('click', () => {
-  document.getElementById('sheet-add-med-name').value     = '';
-  document.getElementById('sheet-add-med-strength').value = '';
-  openSheet('sheet-add-med');
-});
-
-function confirmAddMedicine() {
-  const name     = document.getElementById('sheet-add-med-name').value.trim();
-  const strength = document.getElementById('sheet-add-med-strength').value.trim();
-  if (!name) { showToast('Enter medicine name'); return; }
-  const newMed = {
-    id: Date.now(),
-    name,
-    strength: strength || '',
-    m: 1, a: 0, n: 1,
-    qty: 30,
-    validation_status: 'pending',
-    disabled: false,
-  };
-  DOCTOR_STATE.currentCase.medicines.push(newMed);
-  closeSheet(); render();
-  showToast('[MOCK ASSUMPTION] Medicine added — not persisted to backend');
-  console.log(`[MOCK] medicine.add | name=${name} | strength=${strength}`);
 }
 
 // ================================================================
@@ -1154,9 +1319,13 @@ function switchScenario(scenarioId) {
   DOCTOR_STATE.callbackTime      = null;
   DOCTOR_STATE.editingMedId      = null;
   DOCTOR_STATE.endedEarly        = false;
+  DOCTOR_STATE.closedNote        = null;
   CALLBACK_STATE.day  = null;
   CALLBACK_STATE.time = null;
+  document.getElementById('callback-error').hidden = true;
   hideSuccessToast();
+  const ps = document.getElementById('prescribe-screen');   // a scenario switch discards an open Prescribe screen
+  ps.classList.remove('open'); ps.setAttribute('aria-hidden', 'true');
   // Reset demo call sim panel
   const simDiv = document.getElementById('demo-call-sim');
   if (simDiv) {
@@ -1166,8 +1335,6 @@ function switchScenario(scenarioId) {
   }
   DOCTOR_STATE.currentCase = JSON.parse(JSON.stringify(SCENARIOS[scenarioId]));
 
-  const phase2 = document.getElementById('az-phase2');
-  phase2.classList.remove('visible','revealed');
 
   // Restore main CTA button structure in case submit flow destroyed innerHTML
   const ctaBtn = document.getElementById('main-cta-btn');
@@ -1186,6 +1353,7 @@ function switchScenario(scenarioId) {
   // Sync both scenario button sets
   document.querySelectorAll('.scenario-btn[data-scenario], .side-scenario-btn[data-scenario]').forEach(b => {
     b.classList.toggle('active', b.dataset.scenario === scenarioId);
+    b.setAttribute('aria-pressed', b.dataset.scenario === scenarioId);
   });
 
   render();
@@ -1194,7 +1362,7 @@ function switchScenario(scenarioId) {
 
 // Wire up all scenario buttons (both bars)
 document.querySelectorAll('[data-scenario]').forEach(btn => {
-  btn.addEventListener('click', () => switchScenario(btn.dataset.scenario));
+  btn.addEventListener('click', () => { if (APP.screen !== 'case') goApp('case'); switchScenario(btn.dataset.scenario); });
 });
 
 function resetToDemo() {
@@ -1204,18 +1372,478 @@ function resetToDemo() {
 }
 
 // ================================================================
-// TOAST [LOCKED]
+// No black toasts (Apurva 2026-10-08, decision log D-27): every outcome is shown where it happens —
+// the row tag, the Call card, the pinned button, or an inline error. Only the white confirmation card
+// (showSuccessToast, with Next Order) remains.
 // ================================================================
-let toastTimer = null;
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  // Anchor to mobile column centre — viewport centre is wrong on desktop (side panel offsets column)
-  const r = document.getElementById('mobile-column').getBoundingClientRect();
-  t.style.left = (r.left + r.width / 2) + 'px';
-  t.textContent = msg;
-  t.classList.add('show');
-  if (toastTimer) clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => t.classList.remove('show'), 2800);
+
+// ================================================================
+// APP SHELL — sign in, OTP, returning-doctor unlock, home (decision log D-31, D-33 … D-37)
+// Screens follow the approved handoff in ui-screens/ (sign-in, otp, returning-unlock).
+// Doctors PULL orders ("Get next order" / "Next Order"); nothing is pushed to them. When no order is
+// waiting, the doctor lands on Home with a "No orders right now" state and a Check again button.
+// ================================================================
+const AUTH_KEY = 'tmd.auth.v1';
+const OTP_KEY = 'tmd.otp.v1';   // per mobile number: codes issued, wrong tries, lock (D-34, D-35). Server-side in production.
+const APP = { screen: null, booted: false, phone: '', bioFails: 0, bioMode: null, noLead: false, checkedAt: null, busy: false,
+  ticker: null, resendAt: 0, signinBlockedUntil: 0 };
+const DEMO_APP = { ordersAvailable: true, bioFails: false, offline: false, passkey: true, method: 'fingerprint' };
+// [MOCK ASSUMPTION] Demo numbers and codes (shown in the demo controls). Production values come from the server.
+const MOCK_AUTH = {
+  inactive: '9222222222', cantSend: '9333333333', tooMany: '9444444444',   // numbers starting 90 aren't registered
+  wrongOtp: '0000', expiredOtp: '1111', cantVerify: '2222',                // any other 4 digits work
+  maxWrong: 5, lockMin: 15,            // D-34: 5 server-confirmed wrong codes lock the number (lock length: OQ-017)
+  maxCodes: 4, capWindowMin: 10,       // D-35: 4 codes per number per window (window length: OQ-017)
+  resendWaits: [30, 60, 120],          // seconds before the next resend
+};
+const SUPPORT = { phone: '+918652424617', signupUrl: 'https://pwa-doctor.truemeds.in/onboarding' };   // OQ-021; configurable in production
+const UNLOCK_METHODS = {
+  fingerprint: { label: 'Unlock with fingerprint', icon: 'fingerprint', hint: 'Touch the fingerprint sensor' },
+  face: { label: 'Unlock with Face ID', icon: 'face-id', hint: 'Look at your phone' },
+  'screen-lock': { label: 'Unlock with screen lock', icon: 'lock', hint: 'Enter your screen lock' },
+};
+const DEMO_ORDER = ['cat4', 'pilot_value_meds_ha', 'pilot_nonvalue_meds_ha', 'pilot_ha_skipped_customer', 'pilot_ha_skipped_system'];
+const SCREEN_IDS = { signin: 'scr-signin', otp: 'scr-otp', unlock: 'scr-unlock', home: 'scr-home' };
+const $id = id => document.getElementById(id);
+const SIGNIN_HELP = 'We’ll send you a verification code by SMS.';
+
+function loadJSON(k) { try { return JSON.parse(localStorage.getItem(k)) || {}; } catch (e) { return {}; } }
+function saveJSON(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { /* private mode: memory only */ } return v; }
+const loadAuth = () => loadJSON(AUTH_KEY);
+const saveAuth = patch => saveJSON(AUTH_KEY, { ...loadAuth(), ...patch });
+function numState(phone) {
+  const all = loadJSON(OTP_KEY), now = Date.now();
+  const s = { codes: [], wrong: 0, lockedUntil: 0, ...(all[phone] || {}) };
+  s.codes = s.codes.filter(t => now - t < MOCK_AUTH.capWindowMin * 60000);
+  if (s.lockedUntil && now >= s.lockedUntil) { s.lockedUntil = 0; s.wrong = 0; }
+  return s;
+}
+function saveNum(phone, patch) { const all = loadJSON(OTP_KEY); all[phone] = { ...numState(phone), ...patch }; saveJSON(OTP_KEY, all); return all[phone]; }
+const capFreeAt = s => s.codes.length >= MOCK_AUTH.maxCodes ? Math.min(...s.codes) + MOCK_AUTH.capWindowMin * 60000 : 0;
+
+const fmtPhone = p => `+91 ${p.slice(0, 5)} ${p.slice(5)}`;
+const isOnline = () => !DEMO_APP.offline && navigator.onLine !== false;
+const todayKey = () => new Date().toDateString();
+const todayCount = () => { const a = loadAuth(); return a.closedDay === todayKey() ? (a.closed || 0) : 0; };
+const shortName = () => DOCTOR_PROFILE.name.split(' ').slice(0, 2).join(' ');
+const mmss = ms => { const s = Math.max(0, Math.ceil(ms / 1000)); return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`; };
+const mmss2 = ms => mmss(ms).padStart(5, '0');   // 00:30 — the OTP resend timer format
+function linkPending(name) { console.log(`[MOCK] link.pending | ${name}`); return false; }
+
+function goApp(next) {
+  const prev = APP.screen;
+  if (prev === 'case' && next !== 'case') leaveCase();
+  if (activeSheet) closeSheet();
+  APP.screen = next;
+  document.body.dataset.app = next;
+  document.querySelectorAll('.app-screen').forEach(el => { el.hidden = el.id !== SCREEN_IDS[next]; });
+  renderApp();
+  syncTopHeight();
+  if (next !== 'case') {
+    window.scrollTo(0, 0);
+    document.querySelector(`#${SCREEN_IDS[next]} h1`)?.focus({ preventScroll: true });
+  }
+  if (next === 'otp' || next === 'signin') startTicker(); else stopTicker();
+  console.log(`[MOCK] app.screen | ${prev} → ${next}`);
+}
+
+// Leaving the order page: nothing may keep running in the background.
+function leaveCase() {
+  clearInterval(DOCTOR_STATE.timerInterval); DOCTOR_STATE.timerInterval = null;
+  hideSuccessToast(); closeRxOverlay();
+  if (document.getElementById('prescribe-screen').classList.contains('open')) closePrescribe();
+}
+
+function syncTopHeight() {
+  document.documentElement.style.setProperty('--top-h', document.getElementById('sticky-top-wrapper').offsetHeight + 'px');
+}
+window.addEventListener('resize', syncTopHeight);
+
+function renderApp() {
+  document.getElementById('profile-initials').textContent = DOCTOR_PROFILE.initials;
+  if (APP.screen === 'otp') renderOtp();
+  if (APP.screen === 'unlock') {
+    const m = UNLOCK_METHODS[DEMO_APP.method];
+    $id('unlock-name').textContent = shortName();
+    $id('unlock-label').textContent = m.label;
+    $id('unlock-icon').dataset.icon = m.icon;
+    renderIcons($id('scr-unlock'));
+  }
+  if (APP.screen === 'home') {
+    const h = new Date().getHours();
+    $id('home-greeting').textContent = h < 12 ? 'Good morning' : h < 17 ? 'Good afternoon' : 'Good evening';
+    $id('home-name').textContent = shortName();
+    $id('home-date').textContent = new Date().toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'long' });
+    $id('home-ready').hidden = APP.noLead;
+    $id('home-nolead').hidden = !APP.noLead;
+    if (APP.checkedAt) $id('home-checked').textContent = 'Checked at ' + APP.checkedAt.toLocaleTimeString('en-IN', { hour: 'numeric', minute: '2-digit' });
+    const n = todayCount();
+    $id('home-count').textContent = `${n} order${n === 1 ? '' : 's'} closed`;
+    if (!APP.busy) $id('home-next-btn').textContent = APP.noLead ? 'Check again' : 'Get next order';
+  }
+  renderAppDemo();
+}
+function renderIcons(root) { if (window.TMIcons) TMIcons.render(root); }
+
+// ── Busy buttons: keep the brand colour while working (a grey button reads as unavailable) ──
+function setBusy(btn, label) {
+  btn.dataset.label = btn.innerHTML; btn.disabled = true; btn.classList.add('tm-btn--busy'); btn.setAttribute('aria-busy', 'true');
+  btn.innerHTML = `<span class="btn-spinner" aria-hidden="true"></span>${label}`;
+}
+function clearBusy(btn) { if (btn.dataset.label) btn.innerHTML = btn.dataset.label; delete btn.dataset.label; btn.disabled = false; btn.classList.remove('tm-btn--busy'); btn.removeAttribute('aria-busy'); }
+function mockDelay(btn, label, fn) {   // 800 ms mock latency (mock_backend_engineer.md)
+  if (APP.busy) return; APP.busy = true; setBusy(btn, label);
+  setTimeout(() => { APP.busy = false; clearBusy(btn); fn(); }, 800);
+}
+function startTicker() { stopTicker(); tick(); APP.ticker = setInterval(tick, 1000); }
+function stopTicker() { clearInterval(APP.ticker); APP.ticker = null; }
+function tick() { if (APP.screen === 'signin') tickSignin(); if (APP.screen === 'otp') renderOtp(); }
+
+// ════════════════ Sign in (ui-screens/sign-in, D-33) ════════════════
+// Errors about what was typed: red field + red line in place of the helper. Problems after sending: a notice in
+// the same place, field stays neutral. No toasts.
+const SIGNIN_NOTICES = {
+  'not-registered': ['info', 'info-circle', 'Number not registered with Truemeds.<br><strong>Already applied?</strong> We’ll contact you after approval.'],
+  offline: ['warning', 'alert-triangle', 'You’re offline. Check your connection and try again.'],
+  'couldnt-send': ['error', 'alert-circle', 'We couldn’t send the code. Please try again.'],
+  'too-many': ['warning', 'clock', 'Too many attempts on this number. Please wait before trying again.'],
+  inactive: ['error', 'alert-circle', 'This account is inactive.'],
+};
+function signinMsg(kind, text) {   // kind: null (helper) | 'error' | a SIGNIN_NOTICES key
+  const f = $id('signin-field'), help = $id('signin-help'), n = $id('signin-notice'), notice = SIGNIN_NOTICES[kind];
+  f.classList.toggle('tm-field--error', kind === 'error');
+  $id('signin-phone').setAttribute('aria-invalid', String(kind === 'error'));
+  help.hidden = !!notice;
+  help.textContent = kind === 'error' ? text : SIGNIN_HELP;
+  if (kind === 'error') help.setAttribute('role', 'alert'); else help.removeAttribute('role');
+  n.hidden = !notice;
+  if (notice) {
+    n.className = `auth-notice auth-notice--${notice[0]}`;
+    n.setAttribute('role', notice[0] === 'info' ? 'status' : 'alert');
+    $id('signin-notice-icon').dataset.icon = notice[1];
+    $id('signin-notice-text').innerHTML = notice[2];
+    renderIcons(n);
+  }
+  $id('signin-phone').setAttribute('aria-describedby', notice ? 'signin-notice' : 'signin-help');
+  const inactive = kind === 'inactive';
+  $id('signin-btn').hidden = inactive; $id('signin-call').hidden = !inactive;
+  if (kind !== 'too-many') APP.signinBlockedUntil = 0;
+  tickSignin();
+}
+function tickSignin() {
+  const b = $id('signin-btn');
+  if (APP.busy && b.classList.contains('tm-btn--busy')) return;
+  const wait = APP.signinBlockedUntil - Date.now();
+  if (wait > 0) { b.disabled = true; b.textContent = `Try again in ${mmss(wait)}`; return; }
+  if (APP.signinBlockedUntil) { APP.signinBlockedUntil = 0; signinMsg(null); }
+  b.disabled = false; b.textContent = 'Send OTP';
+}
+// Cleans typing and pastes: "+91 98765-43210", "098765 43210" → "9876543210".
+function cleanPhone(raw) {
+  let d = raw.replace(/\D/g, '');
+  if (d.length > 10 && d.startsWith('91')) d = d.slice(2);
+  if (d.length > 10 && d.startsWith('0')) d = d.slice(1);
+  return d.slice(0, 10);
+}
+// Format checks (regex). Order: the most basic problem first. A leading 0 is a dialling habit, not a mistake.
+const PHONE_MSG = { empty: 'Enter your mobile number.', start: 'Mobile numbers start with 6, 7, 8 or 9.', short: 'Enter all 10 digits.' };
+function phoneFormatError(p) {
+  if (!p) return PHONE_MSG.empty;
+  const core = p.startsWith('0') ? p.slice(1) : p;         // "0 98765 43210": the 0 is dropped once all 10 digits are in
+  if (core && !/^[6-9]/.test(core)) return PHONE_MSG.start; // impossible from the first digit, so it comes before length
+  if (core.length < 10 || p.length < 10) return PHONE_MSG.short;
+  return null;
+}
+// Live rules: an impossible first digit shows at once; anything else waits for Send OTP. Once an error shows,
+// it is re-checked on every keystroke and stays until the number is valid.
+$id('signin-phone').addEventListener('input', e => {
+  const v = cleanPhone(e.target.value);
+  if (v !== e.target.value) e.target.value = v;
+  if (APP.busy) return;
+  const err = phoneFormatError(v), showing = $id('signin-field').classList.contains('tm-field--error');
+  if (err === PHONE_MSG.start || (showing && err && v)) signinMsg('error', err);
+  else signinMsg(null);
+});
+function requestOtp() {
+  if (APP.busy || APP.signinBlockedUntil > Date.now()) return;
+  const input = $id('signin-phone'), p = cleanPhone(input.value);
+  input.value = p;
+  const err = phoneFormatError(p);
+  if (err) { signinMsg('error', err); return input.focus(); }
+  if (!isOnline()) { input.blur(); return signinMsg('offline'); }
+  input.readOnly = true;
+  mockDelay($id('signin-btn'), 'Sending OTP', () => {
+    input.readOnly = false;
+    sendFirstCode(p, outcome => {
+      if (outcome === 'sent' || outcome === 'locked') return;
+      input.blur();   // close the keyboard so the notice and the Sign up link are both in view
+      signinMsg(outcome);
+    });
+  });
+}
+// Sends the first code for a number (sign in, or "Use OTP instead" on unlock). Reports an outcome for screens to show.
+function sendFirstCode(p, report) {
+  const s = numState(p);
+  if (p.startsWith('90')) return report('not-registered');
+  if (p === MOCK_AUTH.inactive) return report('inactive');
+  if (p === MOCK_AUTH.cantSend) return report('couldnt-send');
+  if (s.lockedUntil) { startOtp(p, false); return report('locked'); }       // D-34: the lock stays on the number
+  const capAt = p === MOCK_AUTH.tooMany ? Date.now() + 582000 : capFreeAt(s);   // 9:42 for the demo number
+  if (capAt) { APP.signinBlockedUntil = capAt; return report('too-many'); }
+  startOtp(p, true);
+  report('sent');
+}
+
+// ════════════════ OTP (ui-screens/otp, D-34, D-35, spec: docs/concepts/2026-10-09-otp-screen-spec.md) ════════════════
+const OTP_NOTICE = {
+  'couldnt-verify': ['error', 'alert-circle', 'We couldn’t check the code. Tap Verify &amp; sign in to try again.'],
+  'too-many-resends': ['warning', 'clock', `You’ve asked for too many codes. Use the last one, or <a href="tel:${SUPPORT.phone}">call Doctor Ops</a>.`],
+  locked: ['warning', 'clock', null],
+};
+function startOtp(phone, issue) {
+  APP.phone = phone; APP.otpNotice = null; APP.otpMsg = null;
+  if (issue) {
+    const s = saveNum(phone, { codes: [...numState(phone).codes, Date.now()] });
+    APP.resendAt = Date.now() + MOCK_AUTH.resendWaits[Math.min(s.codes.length - 1, MOCK_AUTH.resendWaits.length - 1)] * 1000;
+    console.log(`[MOCK] auth.otp.sent | to=${fmtPhone(phone)} | code ${s.codes.length} of ${MOCK_AUTH.maxCodes} in window`);
+  }
+  const a = loadAuth();
+  $id('otp-input').value = '';
+  $id('otp-faster-check').checked = false;                          // unticked by default (passkey spec)
+  $id('otp-faster').hidden = !DEMO_APP.passkey || (a.bio && a.phone === phone);   // shown only where passkey setup is supported
+  goApp('otp');
+  if (!numState(phone).lockedUntil) setTimeout(() => $id('otp-input').focus({ preventScroll: true }), 50);
+}
+function otpBack() { $id('signin-phone').value = APP.phone; signinMsg(null); goApp('signin'); }
+function otpMsg(kind, text, format = false) { APP.otpMsg = kind ? { kind, text, format } : null; renderOtp(); }      // kind: 'error' | 'ok'
+function otpNotice(key) { APP.otpNotice = key; renderOtp(); }
+function renderOtp() {
+  if (!APP.phone) return;
+  const s = numState(APP.phone), now = Date.now(), locked = !!s.lockedUntil;
+  if (APP.otpLockedShown && !locked) { APP.otpLockedShown = false; APP.otpNotice = null; APP.otpMsg = null; }   // lock lifted
+  if (locked) { APP.otpLockedShown = true; APP.otpNotice = 'locked'; APP.otpMsg = null; }
+  $id('otp-phone').textContent = fmtPhone(APP.phone);
+  const f = $id('otp-field'), help = $id('otp-help'), input = $id('otp-input'), m = APP.otpMsg;
+  f.classList.toggle('tm-field--error', m?.kind === 'error');
+  input.setAttribute('aria-invalid', String(m?.kind === 'error'));
+  help.hidden = !m;
+  help.className = 'tm-field__helper' + (m?.kind === 'ok' ? ' is-ok' : '');
+  help.innerHTML = !m ? '' : m.kind === 'ok' ? `<span class="tm-icon" data-icon="circle-check" aria-hidden="true"></span>${m.text}` : m.text;
+  if (m?.kind === 'error') help.setAttribute('role', 'alert'); else help.setAttribute('role', 'status');
+  if (m?.kind === 'ok') renderIcons(help);
+  const n = $id('otp-notice'), key = APP.otpNotice, def = OTP_NOTICE[key];
+  n.hidden = !def;
+  if (def) {
+    n.className = `tm-notice tm-notice--${def[0]}`;
+    n.setAttribute('role', 'alert');
+    const text = key === 'locked' ? `Too many wrong tries. Try again in ${mmss(s.lockedUntil - now)}, or <a href="tel:${SUPPORT.phone}">call Doctor Ops</a>.` : def[2];
+    if ($id('otp-notice-text').innerHTML !== text) $id('otp-notice-text').innerHTML = text;
+    if ($id('otp-notice-icon').dataset.icon !== def[1]) { $id('otp-notice-icon').dataset.icon = def[1]; renderIcons(n); }
+  }
+  input.setAttribute('aria-describedby', def ? 'otp-notice' : 'otp-help');
+  // Lock (D-34): entry, the faster-sign-in card and Verify are off until the countdown ends; Change number stays.
+  const busy = APP.busy && APP.screen === 'otp' && $id('otp-btn').classList.contains('tm-btn--busy');
+  f.classList.toggle('is-locked', locked || busy);
+  input.disabled = locked || busy;
+  $id('otp-faster').classList.toggle('is-disabled', locked || busy);
+  $id('otp-faster-check').disabled = locked || busy;
+  if (!busy) $id('otp-btn').disabled = locked;
+  // Resend row: wait, then "Resend code". When the code cap is reached the wait shows when a new code is allowed.
+  $id('otp-resend-row').hidden = locked;
+  const capAt = capFreeAt(s), until = APP.otpNotice === 'too-many-resends' && capAt ? capAt : APP.resendAt;
+  const wait = until - now;
+  if (APP.otpNotice === 'too-many-resends' && !capAt) APP.otpNotice = null;
+  $id('otp-timer').hidden = wait <= 0; $id('otp-resend').hidden = wait > 0;
+  if (wait > 0) $id('otp-timer').textContent = `Resend in ${mmss2(wait)}`;
+}
+$id('otp-input').addEventListener('input', e => {
+  const v = e.target.value.replace(/\D/g, '').slice(0, 4);
+  if (v !== e.target.value) e.target.value = v;
+  // Format errors stay (re-checked live) until 4 digits are in; server answers (wrong, expired) clear on a new attempt.
+  if (APP.otpMsg?.format) otpMsg(v.length === 4 ? null : 'error', !v ? 'Enter the 4-digit code.' : 'Enter all 4 digits.', true);
+  else if (APP.otpMsg || APP.otpNotice === 'couldnt-verify') { APP.otpMsg = null; if (APP.otpNotice === 'couldnt-verify') APP.otpNotice = null; renderOtp(); }
+  if (v.length === 4) e.target.blur();   // close the keyboard so the card and Verify & sign in are in view; nothing is sent yet
+});
+function verifyOtp() {
+  if (APP.busy || numState(APP.phone).lockedUntil) return;
+  const input = $id('otp-input'), v = input.value;
+  if (!v) { otpMsg('error', 'Enter the 4-digit code.', true); return input.focus(); }
+  if (v.length < 4) { otpMsg('error', 'Enter all 4 digits.', true); return input.focus(); }
+  APP.otpNotice = null; APP.otpMsg = null;
+  mockDelay($id('otp-btn'), 'Verifying', () => {
+    if (!isOnline() || v === MOCK_AUTH.cantVerify) { otpNotice('couldnt-verify'); return; }   // keeps the code and the tick
+    if (v === MOCK_AUTH.expiredOtp) { APP.resendAt = 0; otpMsg('error', 'This code has expired. Get a new one.'); return; }
+    if (v === MOCK_AUTH.wrongOtp) {
+      const s = saveNum(APP.phone, { wrong: numState(APP.phone).wrong + 1 });
+      const left = MOCK_AUTH.maxWrong - s.wrong;
+      input.value = '';
+      if (left <= 0) {
+        saveNum(APP.phone, { lockedUntil: Date.now() + MOCK_AUTH.lockMin * 60000 });
+        console.log(`[MOCK] auth.otp.locked | ${fmtPhone(APP.phone)} | ${MOCK_AUTH.lockMin} min`);
+        return renderOtp();
+      }
+      otpMsg('error', left <= 2 ? `That code isn’t right. ${left} ${left === 1 ? 'try' : 'tries'} left.` : 'That code isn’t right. Try again.');
+      return input.focus();
+    }
+    onOtpVerified();
+  });
+  renderOtp();
+}
+function onOtpVerified() {
+  console.log(`[MOCK] auth.otp.verified | ${fmtPhone(APP.phone)}`);
+  saveNum(APP.phone, { wrong: 0 });
+  const same = loadAuth().phone === APP.phone;
+  saveAuth({ phone: APP.phone, signedIn: true, signedAt: Date.now(), bio: same ? !!loadAuth().bio : false });
+  const card = $id('otp-faster');
+  if (!card.hidden && $id('otp-faster-check').checked) return openBioPrompt('enroll');   // faster sign-in is on only after the passkey is saved
+  goApp('home');
+}
+function resendOtp() {
+  const s = numState(APP.phone);
+  if (s.lockedUntil || Date.now() < APP.resendAt) return;
+  if (capFreeAt(s)) { APP.otpMsg = null; return otpNotice('too-many-resends'); }   // the last code still works
+  startOtpResend();
+}
+function startOtpResend() {
+  const s = saveNum(APP.phone, { codes: [...numState(APP.phone).codes, Date.now()] });
+  APP.resendAt = Date.now() + MOCK_AUTH.resendWaits[Math.min(s.codes.length - 1, MOCK_AUTH.resendWaits.length - 1)] * 1000;
+  APP.otpNotice = null;
+  $id('otp-input').value = '';
+  otpMsg('ok', 'New code sent.');
+  console.log(`[MOCK] auth.otp.resent | code ${s.codes.length} of ${MOCK_AUTH.maxCodes}`);
+}
+
+// ════════════════ Passkey / unlock (ui-screens/returning-unlock, D-37) ════════════════
+// The sheet stands in for the phone's own prompt (Credential Manager on Android, Authentication Services on iOS).
+function openBioPrompt(mode) {
+  APP.bioMode = mode;
+  const m = UNLOCK_METHODS[DEMO_APP.method];
+  $id('bio-sensor').className = 'bio-sensor';
+  $id('bio-sensor-icon').dataset.icon = m.icon; renderIcons($id('bio-sensor'));
+  $id('bio-hint').className = 'bio-hint'; $id('bio-hint').textContent = m.hint;
+  $id('bio-prompt-h').textContent = mode === 'enroll' ? 'Create a passkey' : 'Truemeds for Doctors';
+  $id('bio-sub').textContent = mode === 'enroll' ? 'Sign in to Truemeds for Doctors with your face, fingerprint or screen lock next time.' : 'Confirm it’s you';
+  openSheet('sheet-bio');
+}
+function cancelBioPrompt() {
+  const enroll = APP.bioMode === 'enroll';
+  closeSheet(); APP.bioFails = 0;
+  if (enroll) { console.log('[MOCK] auth.passkey.cancelled'); goApp('home'); }   // signed in anyway; OTP next time; no nag
+}
+function touchSensor() {
+  if (DEMO_APP.bioFails) {
+    APP.bioFails++;
+    $id('bio-sensor').className = 'bio-sensor is-error';
+    $id('bio-hint').className = 'bio-hint is-error'; $id('bio-hint').textContent = 'Not recognised. Try again.';
+    if (APP.bioFails >= 3) { console.log('[MOCK] auth.passkey.failed | 3 tries'); cancelBioPrompt(); }
+    return;
+  }
+  $id('bio-sensor').className = 'bio-sensor is-ok';
+  $id('bio-hint').className = 'bio-hint'; $id('bio-hint').textContent = 'Done';
+  setTimeout(() => {
+    const enroll = APP.bioMode === 'enroll';
+    closeSheet(); APP.bioFails = 0;
+    if (enroll) { saveAuth({ bio: true }); console.log('[MOCK] auth.passkey.saved'); }
+    else { saveAuth({ signedIn: true, signedAt: Date.now() }); console.log('[MOCK] auth.passkey.unlocked'); }
+    goApp('home');
+  }, 500);
+}
+function unlockWithOtp() {
+  const p = loadAuth().phone; APP.bioFails = 0;
+  mockDelay($id('unlock-otp-btn'), 'Sending OTP', () => sendFirstCode(p, outcome => {
+    if (outcome === 'sent' || outcome === 'locked') return;
+    $id('signin-phone').value = p; goApp('signin'); signinMsg(outcome);   // show the problem where the number is
+  }));
+}
+function switchAccount() { saveAuth({ phone: null, bio: false, signedIn: false }); $id('signin-phone').value = ''; signinMsg(null); goApp('signin'); }
+$id('signup-link').addEventListener('click', () => console.log(`[MOCK] auth.signup.opened | ${SUPPORT.signupUrl}`));
+
+// ── Next order: the doctor asks; if nothing is waiting, Home shows "No orders right now" (D-31) ──
+function requestNextOrder() {
+  if (APP.busy) return;
+  const fromCase = APP.screen === 'case';
+  if (fromCase && ['completed', 'unavailable'].includes(DOCTOR_STATE.consultationState)) {
+    saveAuth({ closed: todayCount() + 1, closedDay: todayKey() });
+  }
+  const btn = fromCase ? [...document.querySelectorAll('#next-order-btn, #success-toast-next')].find(b => b.offsetParent) || $id('next-order-btn') : $id('home-next-btn');
+  mockDelay(btn, 'Finding an order…', () => {
+    APP.checkedAt = new Date();
+    if (!DEMO_APP.ordersAvailable) {
+      APP.noLead = true;
+      console.log('[MOCK] orders.next | none waiting');
+      return goApp('home');
+    }
+    APP.noLead = false;
+    const i = DEMO_ORDER.indexOf(DOCTOR_STATE.activeScenario);
+    const next = fromCase ? DEMO_ORDER[(i + 1) % DEMO_ORDER.length] : (DOCTOR_STATE.activeScenario || DEMO_ORDER[0]);
+    goApp('case'); switchScenario(next); window.scrollTo(0, 0);
+    console.log(`[MOCK] orders.next | assigned ${next}`);
+  });
+}
+
+// ── Profile / log out ──
+function openProfile() {
+  const active = APP.screen === 'case' && !['completed', 'unavailable'].includes(DOCTOR_STATE.consultationState);
+  $id('profile-logout-btn').hidden = active;
+  $id('profile-logout-note').hidden = !active;
+  openSheet('sheet-profile');
+}
+function handleLogout() { openSheet('sheet-logout'); }
+function confirmLogout() {
+  saveAuth({ signedIn: false });
+  APP.noLead = false;
+  console.log('[MOCK] auth.logout | user=' + DOCTOR_PROFILE.name);
+  goApp(loadAuth().bio && loadAuth().phone ? 'unlock' : 'signin');
+}
+
+// ── Demo controls for the app shell (mobile demo bar + desktop side panel) ──
+function renderAppDemo() {
+  const s = APP.screen;
+  const chip = (act, label, on) => `<button class="tm-chip" data-act="${act}" aria-pressed="${!!on}">${label}</button>`;
+  const methodLabel = { fingerprint: 'Fingerprint', face: 'Face ID', 'screen-lock': 'Screen lock' }[DEMO_APP.method];
+  const html = `
+    <div class="demo-app-row">${chip('go:signin', 'Sign in', s === 'signin')}${chip('go:unlock', 'Unlock', s === 'unlock')}${chip('go:home', 'Home', s === 'home')}${chip('go:case', 'Order page', s === 'case')}${chip('reset', 'Reset app', false)}</div>
+    <div class="demo-app-row">${chip('toggle:orders', 'Orders available', DEMO_APP.ordersAvailable)}${chip('toggle:offline', 'Offline', DEMO_APP.offline)}${chip('toggle:passkey', 'Passkey supported', DEMO_APP.passkey)}${chip('toggle:method', 'Unlock: ' + methodLabel, true)}${chip('toggle:biofail', 'Unlock fails', DEMO_APP.bioFails)}</div>
+    <div class="demo-app-hint">Numbers: 90… not registered · 9222222222 inactive · 9333333333 can't send · 9444444444 too many codes.<br>Codes: any 4 digits · 0000 wrong · 1111 expired · 2222 can't verify. 5 wrong codes lock the number for 15 min; 4 codes per number per 10 min.</div>`;
+  document.querySelectorAll('[data-demo-app]').forEach(el => { el.innerHTML = html; });
+}
+document.addEventListener('click', e => {
+  const b = e.target.closest('[data-demo-app] [data-act]');
+  if (!b) return;
+  const [kind, arg] = b.dataset.act.split(':');
+  if (kind === 'go') {
+    if (arg === 'unlock') { saveAuth({ phone: loadAuth().phone || '9876543210', bio: true }); APP.bioFails = 0; }
+    if (arg === 'home' || arg === 'case') saveAuth({ signedIn: true, signedAt: Date.now(), phone: loadAuth().phone || '9876543210' });
+    if (arg === 'case') { goApp('case'); switchScenario(DOCTOR_STATE.activeScenario || 'cat4'); return; }
+    if (arg === 'signin') { $id('signin-phone').value = ''; signinMsg(null); }
+    goApp(arg);
+  } else if (kind === 'toggle') {
+    if (arg === 'orders') DEMO_APP.ordersAvailable = !DEMO_APP.ordersAvailable;
+    if (arg === 'offline') DEMO_APP.offline = !DEMO_APP.offline;
+    if (arg === 'passkey') { DEMO_APP.passkey = !DEMO_APP.passkey; if (APP.screen === 'otp') $id('otp-faster').hidden = !DEMO_APP.passkey; }
+    if (arg === 'method') { const k = Object.keys(UNLOCK_METHODS); DEMO_APP.method = k[(k.indexOf(DEMO_APP.method) + 1) % k.length]; }
+    if (arg === 'biofail') { DEMO_APP.bioFails = !DEMO_APP.bioFails; APP.bioFails = 0; }
+    renderApp();
+  } else if (kind === 'reset') {
+    try { localStorage.removeItem(AUTH_KEY); localStorage.removeItem(OTP_KEY); } catch (err) { /* ignore */ }
+    Object.assign(APP, { noLead: false, checkedAt: null, bioFails: 0, phone: '', signinBlockedUntil: 0, resendAt: 0, otpNotice: null, otpMsg: null });
+    $id('signin-phone').value = ''; signinMsg(null);
+    goApp('signin');
+  }
+});
+
+// Where the app opens: ?start=case|home|signin|otp|unlock for demos and tests; otherwise from the saved session.
+// Returning doctor with a passkey → Unlock (the doctor taps Unlock; the phone's prompt opens then).
+function bootApp() {
+  const q = new URLSearchParams(location.search).get('start');
+  const a = loadAuth();
+  APP.booted = true;
+  if (q === 'case') return goApp('case');
+  if (q === 'otp') return startOtp('9876543210', true);
+  if (q && SCREEN_IDS[q]) return goApp(q);
+  if (a.phone && a.bio) return goApp('unlock');
+  if (a.signedIn && Date.now() - (a.signedAt || 0) < 24 * 3600 * 1000) return goApp('home');
+  goApp('signin');
 }
 
 // ================================================================
@@ -1223,3 +1851,4 @@ function showToast(msg) {
 // ================================================================
 initIcons();
 switchScenario('cat4');
+bootApp();
