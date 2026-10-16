@@ -14,3 +14,6 @@
 
 # Node (if added later)
 node_modules/
+
+# Netlify build copy of the central design system (created at deploy time, never committed)
+/design-system/

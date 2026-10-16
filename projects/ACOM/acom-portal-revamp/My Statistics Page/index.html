@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Acom Agent Portal — My Statistics (design reference)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="tm-frame" id="frame">
+
+  <!-- ======================================================================
+       SHARED HEADER — existing component, unchanged. Swap for the real one.
+       ====================================================================== -->
+  <header class="tm-header">
+    <button class="tm-hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
+    <div class="tm-header__spacer"></div>
+    <div class="tm-shift">09AM to 06PM</div>
+    <button class="tm-logout" aria-label="Log out" title="Placeholder — use the portal's own logout icon">
+      <span class="tm-logout__door"></span>
+      <img src="https://assets.truemeds.in/Images/website-assets/icons/actions/rightChev.svg" alt="">
+    </button>
+  </header>
+
+  <!-- ======================================================================
+       REDESIGNED PAGE BODY
+       ====================================================================== -->
+  <main class="tm-body">
+
+    <div class="tm-pagehead">
+      <div>
+        <h1 class="tm-title">My Statistics</h1>
+        <div class="tm-subtitle">Your performance for the selected period</div>
+      </div>
+      <div class="tm-segmented" role="tablist" aria-label="Time view">
+        <button class="tm-seg" role="tab" data-view="day" aria-selected="true">Day</button>
+        <button class="tm-seg" role="tab" data-view="week" aria-selected="false">Week</button>
+        <button class="tm-seg" role="tab" data-view="month" aria-selected="false">Month</button>
+      </div>
+    </div>
+
+    <div class="tm-periodbar">
+      <div class="tm-chips" id="chips" role="group" aria-label="Period"></div>
+      <div class="tm-freshness">
+        <span class="tm-dot" aria-hidden="true"></span>
+        <span class="tm-updated" data-bind="updated"></span>
+        <button class="tm-refresh" id="refresh">Refresh</button>
+      </div>
+    </div>
+
+    <!-- ---------------- READY ---------------- -->
+    <div class="tm-state is-active" data-state-panel="ready">
+
+      <div class="tm-sectionhead">
+        <span class="tm-rule" aria-hidden="true"></span>
+        <h2 class="tm-sectiontitle">Key Performance</h2>
+        <span class="tm-sectionmeta" data-bind="periodLabel"></span>
+      </div>
+
+      <div class="tm-kpi-row">
+
+        <!-- Funnel: one card, three stages, rate on each step -->
+        <section class="tm-card tm-funnel" aria-label="Call to order funnel">
+          <div class="tm-funnel__head">
+            <div class="tm-eyebrow">Call to order funnel</div>
+            <div class="tm-convbadge">
+              <span class="tm-convbadge__label">Conversion</span>
+              <span class="tm-convbadge__value" data-bind="convPct"></span>
+              <button class="tm-info tm-info--onTint" title="Formula: orders placed ÷ calls initiated × 100. End-to-end conversion across the whole funnel, so unanswered calls do count. The two step rates below break down where the drop-off happens.">i</button>
+            </div>
+          </div>
+
+          <div class="tm-stages">
+            <div class="tm-stage">
+              <div class="tm-stage__head">
+                <div class="tm-stage__value" data-bind="callsInit"></div>
+                <div class="tm-stage__label">Calls initiated</div>
+                <div class="tm-stage__hint">starting point</div>
+              </div>
+              <div class="tm-bar"><div class="tm-bar__fill tm-bar__fill--1" style="width:100%"></div></div>
+            </div>
+
+            <div class="tm-stage">
+              <div class="tm-stage__head">
+                <div class="tm-stage__value tm-stage__value--conn" data-bind="callsConn"></div>
+                <div class="tm-stage__label">Calls connected</div>
+                <div class="tm-stage__rate">
+                  <span class="tm-stage__rate-num" data-bind="connPct"></span>
+                  <span class="tm-stage__rate-label">answered</span>
+                  <button class="tm-info" title="Formula: calls connected ÷ calls initiated × 100. A call counts as connected only when the customer answers; ring-outs, busy tones and invalid numbers still count as initiated.">i</button>
+                </div>
+              </div>
+              <div class="tm-bar"><div class="tm-bar__fill tm-bar__fill--2" data-width="connPct"></div></div>
+            </div>
+
+            <div class="tm-stage">
+              <div class="tm-stage__head">
+                <div class="tm-stage__value tm-stage__value--orders" data-bind="orders"></div>
+                <div class="tm-stage__label">Orders placed</div>
+                <div class="tm-stage__rate">
+                  <span class="tm-stage__rate-num tm-stage__rate-num--green" data-bind="closePct"></span>
+                  <span class="tm-stage__rate-label">of connected</span>
+                  <button class="tm-info" title="Formula: orders placed ÷ calls connected × 100. Your close rate once a customer actually picks up — the part of the funnel most within your control.">i</button>
+                </div>
+              </div>
+              <div class="tm-bar"><div class="tm-bar__fill tm-bar__fill--3" data-width="convPct"></div></div>
+            </div>
+          </div>
+
+          <div class="tm-divider"></div>
+          <div class="tm-delta-row">
+            <span class="tm-delta-label">Conversion vs previous <span data-bind="viewWord"></span></span>
+            <span class="tm-delta" data-bind="convDelta" data-delta="conv"></span>
+          </div>
+        </section>
+
+        <!-- Order value -->
+        <section class="tm-card tm-valuecard" aria-label="Total order value">
+          <div class="tm-eyebrow">Total order value</div>
+          <div class="tm-valuecard__value" data-bind="orderValue"></div>
+          <div class="tm-valuecard__aov"><span data-bind="aov"></span> average per order</div>
+          <div class="tm-divider" style="margin:16px 0 12px"></div>
+          <div class="tm-delta-row">
+            <span class="tm-delta-label">vs previous <span data-bind="viewWord"></span></span>
+            <span class="tm-delta" data-bind="valueDelta" data-delta="value"></span>
+          </div>
+        </section>
+      </div>
+
+      <div class="tm-sectionhead" style="margin-top:26px">
+        <span class="tm-rule tm-rule--amber" aria-hidden="true"></span>
+        <h2 class="tm-sectiontitle">Needs your attention</h2>
+      </div>
+      <div class="tm-attn-grid">
+        <div class="tm-card tm-attn-card" role="link" tabindex="0">
+          <div class="tm-attn__value tm-attn__value--warn" data-bind="hold"></div>
+          <div class="tm-attn__label">Orders on hold</div>
+          <img class="tm-attn__chev" src="https://assets.truemeds.in/Images/website-assets/icons/actions/rightChev.svg" alt="">
+        </div>
+        <div class="tm-card tm-attn-card" role="link" tabindex="0">
+          <div class="tm-attn__value tm-attn__value--info" data-bind="sched"></div>
+          <div class="tm-attn__label">Scheduled orders</div>
+          <img class="tm-attn__chev" src="https://assets.truemeds.in/Images/website-assets/icons/actions/rightChev.svg" alt="">
+        </div>
+      </div>
+
+      <div class="tm-accordions">
+
+        <section class="tm-card tm-acc" data-acc="fulfilment" data-open="false">
+          <button class="tm-acc__head" aria-expanded="false" aria-controls="acc-fulfilment">
+            <span class="tm-rule tm-rule--grey" aria-hidden="true"></span>
+            <span class="tm-acc__title">Fulfilment</span>
+            <span class="tm-acc__summary"><span data-bind="delivered"></span> delivered · <span data-bind="transit"></span> in transit</span>
+            <span class="tm-acc__toggle" data-toggle-label>Show 5 metrics</span>
+            <img class="tm-acc__chev" src="https://assets.truemeds.in/Images/website-assets/icons/actions/rightChev.svg" alt="">
+          </button>
+          <div class="tm-acc__body" id="acc-fulfilment">
+            <div class="tm-tile">
+              <div class="tm-tile__label">Total orders delivered</div>
+              <div class="tm-tile__value tm-tile__value--good" data-bind="delivered"></div>
+            </div>
+            <div class="tm-tile">
+              <div class="tm-tile__label">Orders in transit</div>
+              <div class="tm-tile__value tm-tile__value--info" data-bind="transit"></div>
+            </div>
+            <div class="tm-tile">
+              <div class="tm-tile__label">Orders cancelled</div>
+              <div class="tm-tile__value tm-tile__value--bad" data-bind="cancelled"></div>
+            </div>
+            <div class="tm-tile">
+              <div class="tm-tile__label">RTOs
+                <button class="tm-info" title="Return to origin. Orders that came back to the warehouse undelivered, including door-to-origin returns where the customer refused at the door. DTOs are bundled in here rather than counted separately.">i</button>
+              </div>
+              <div class="tm-tile__value tm-tile__value--bad" data-bind="rto"></div>
+            </div>
+            <div class="tm-tile">
+              <div class="tm-tile__label">Delivery success rate
+                <button class="tm-info" title="Formula: orders delivered ÷ (delivered + cancelled + RTOs) × 100. Counts only orders that reached dispatch, so orders still in transit are excluded from both sides.">i</button>
+              </div>
+              <div class="tm-tile__value" data-bind="successRate"></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="tm-card tm-acc" data-acc="otc" data-open="false">
+          <button class="tm-acc__head" aria-expanded="false" aria-controls="acc-otc">
+            <span class="tm-rule tm-rule--grey" aria-hidden="true"></span>
+            <span class="tm-acc__title">OTC</span>
+            <span class="tm-acc__summary"><span data-bind="otcOrders"></span> orders · <span data-bind="otcSale"></span> sale value</span>
+            <span class="tm-acc__toggle" data-toggle-label>Show 4 metrics</span>
+            <img class="tm-acc__chev" src="https://assets.truemeds.in/Images/website-assets/icons/actions/rightChev.svg" alt="">
+          </button>
+          <div class="tm-acc__body" id="acc-otc">
+            <div class="tm-tile">
+              <div class="tm-tile__label">OTC orders</div>
+              <div class="tm-tile__value" data-bind="otcOrders"></div>
+            </div>
+            <div class="tm-tile">
+              <div class="tm-tile__label">OTC order value — MRP</div>
+              <div class="tm-tile__value tm-tile__value--muted" data-bind="otcMrp"></div>
+            </div>
+            <div class="tm-tile">
+              <div class="tm-tile__label">OTC order value — Sale value</div>
+              <div class="tm-tile__value tm-tile__value--good" data-bind="otcSale"></div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+    <!-- ---------------- LOADING ---------------- -->
+    <div class="tm-state" data-state-panel="loading">
+      <div class="tm-skel tm-skel--title"></div>
+      <div class="tm-skel-grid">
+        <div class="tm-skel-card"><div class="tm-skel"></div><div class="tm-skel"></div></div>
+        <div class="tm-skel-card"><div class="tm-skel"></div><div class="tm-skel"></div></div>
+        <div class="tm-skel-card"><div class="tm-skel"></div><div class="tm-skel"></div></div>
+      </div>
+      <div class="tm-skel-grid">
+        <div class="tm-skel-card"><div class="tm-skel"></div><div class="tm-skel"></div></div>
+        <div class="tm-skel-card"><div class="tm-skel"></div><div class="tm-skel"></div></div>
+        <div class="tm-skel-card"><div class="tm-skel"></div><div class="tm-skel"></div></div>
+      </div>
+      <div class="tm-loading-note">Fetching your numbers…</div>
+    </div>
+
+    <!-- ---------------- EMPTY ---------------- -->
+    <div class="tm-state" data-state-panel="empty">
+      <div class="tm-panel tm-panel--empty">
+        <img src="https://assets.truemeds.in/Images/website-assets/icons/status/GenericSafe.svg" alt="" style="height:52px">
+        <div class="tm-panel__title">No activity recorded for <span data-bind="periodLabel"></span></div>
+        <div class="tm-panel__body">Once you start calling customers, your numbers appear here automatically. Nothing to fetch or refresh.</div>
+        <div class="tm-panel__actions">
+          <button class="tm-btn tm-btn--primary">Go to my call queue</button>
+          <button class="tm-btn tm-btn--secondary" data-period="prev">View previous period</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ---------------- ERROR ---------------- -->
+    <div class="tm-state" data-state-panel="error">
+      <div class="tm-panel tm-panel--error">
+        <div class="tm-panel__title tm-panel__title--error">Couldn't load your statistics</div>
+        <div class="tm-panel__body">The stats service didn't respond. Your calls and orders are unaffected — this is a reporting issue only.</div>
+        <div class="tm-panel__code">ERR_STATS_TIMEOUT · 09:41 AM</div>
+        <div class="tm-panel__actions">
+          <button class="tm-btn tm-btn--primary" id="retry">Try again</button>
+          <button class="tm-btn tm-btn--secondary">Report to support</button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ======================================================================
+       SHARED FOOTER — existing component, unchanged.
+       ====================================================================== -->
+  <footer class="tm-footer">©2026 Created by Intellihealth Pvt. Ltd. Version 1.18.0</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

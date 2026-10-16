@@ -11,6 +11,8 @@ description: >
 
 # PRD Creator
 
+> **Writing standard:** apply `templates/lean-prd-guide.md` (voice, plain words, say it once, review edits and versions, AI tells, pre-send check) to everything this workflow produces or reviews.
+
 Creates and edits PRDs, Initiative Docs, and Vision Docs. Always invoked by Context
 Recall. Never runs standalone. Context is always loaded before this skill runs.
 

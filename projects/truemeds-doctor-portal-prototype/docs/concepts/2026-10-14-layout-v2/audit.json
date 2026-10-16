@@ -1,0 +1,187 @@
+{
+ "02_otp-v2_entering": {
+  "lowContrastText": [
+   "Change 4.50<4.5"
+  ],
+  "lowContrastIcons": [],
+  "smallTargets": [
+   {
+    "t": "Terms & Conditions",
+    "h": 31,
+    "w": 297,
+    "inline": true
+   },
+   {
+    "t": "Privacy Policy",
+    "h": 15,
+    "w": 77,
+    "inline": true
+   }
+  ],
+  "typeStyles": [
+   "16px/400",
+   "32px/700",
+   "14px/400",
+   "14px/600",
+   "24px/400",
+   "12px/400",
+   "18px/600"
+  ],
+  "primaryBtnBottom": 430,
+  "keyboardTop": 544,
+  "overflowX": 0,
+  "errors": []
+ },
+ "02b_otp-v2_filled-ready": {
+  "lowContrastText": [
+   "Change 4.50<4.5"
+  ],
+  "lowContrastIcons": [],
+  "smallTargets": [
+   {
+    "t": "Terms & Conditions",
+    "h": 31,
+    "w": 297,
+    "inline": true
+   },
+   {
+    "t": "Privacy Policy",
+    "h": 15,
+    "w": 77,
+    "inline": true
+   }
+  ],
+  "typeStyles": [
+   "16px/400",
+   "32px/700",
+   "14px/400",
+   "14px/600",
+   "24px/400",
+   "12px/400",
+   "18px/600"
+  ],
+  "primaryBtnBottom": 430,
+  "keyboardTop": 544,
+  "overflowX": 0,
+  "errors": []
+ },
+ "03_otp-v2_wrong-code": {
+  "lowContrastText": [
+   "Change 4.50<4.5"
+  ],
+  "lowContrastIcons": [],
+  "smallTargets": [
+   {
+    "t": "Terms & Conditions",
+    "h": 31,
+    "w": 297,
+    "inline": true
+   },
+   {
+    "t": "Privacy Policy",
+    "h": 15,
+    "w": 77,
+    "inline": true
+   }
+  ],
+  "typeStyles": [
+   "16px/400",
+   "32px/700",
+   "14px/400",
+   "14px/600",
+   "12px/400",
+   "18px/600"
+  ],
+  "primaryBtnBottom": 492,
+  "keyboardTop": 544,
+  "overflowX": 0,
+  "errors": []
+ },
+ "04_otp-v2_locked": {
+  "lowContrastText": [
+   "Change 4.50<4.5",
+   "call Doctor Ops 4.19<4.5"
+  ],
+  "lowContrastIcons": [],
+  "smallTargets": [
+   {
+    "t": "call Doctor Ops",
+    "h": 18,
+    "w": 105,
+    "inline": false
+   }
+  ],
+  "typeStyles": [
+   "16px/400",
+   "32px/700",
+   "14px/400",
+   "14px/600",
+   "18px/600"
+  ],
+  "primaryBtnBottom": 432,
+  "keyboardTop": null,
+  "overflowX": 0,
+  "errors": []
+ },
+ "06_signin-v2_default": {
+  "lowContrastText": [
+   "10-digit mobile number 3.01<4.5"
+  ],
+  "lowContrastIcons": [],
+  "smallTargets": [],
+  "typeStyles": [
+   "32px/700",
+   "14px/400",
+   "14px/500",
+   "16px/400",
+   "18px/600",
+   "14px/600"
+  ],
+  "primaryBtnBottom": 437,
+  "keyboardTop": null,
+  "overflowX": 0,
+  "errors": []
+ },
+ "06b_signin-v2_keyboard": {
+  "lowContrastText": [],
+  "lowContrastIcons": [],
+  "smallTargets": [],
+  "typeStyles": [
+   "32px/700",
+   "14px/400",
+   "14px/500",
+   "16px/400",
+   "18px/600"
+  ],
+  "primaryBtnBottom": 437,
+  "keyboardTop": 544,
+  "overflowX": 0,
+  "errors": []
+ },
+ "07_biometric-offer_v2": {
+  "lowContrastText": [],
+  "lowContrastIcons": [],
+  "smallTargets": [],
+  "typeStyles": [
+   "32px/700",
+   "14px/400",
+   "16px/500",
+   "18px/600"
+  ],
+  "primaryBtnBottom": 752,
+  "keyboardTop": null,
+  "overflowX": 0,
+  "errors": []
+ },
+ "_css_raw_font_px": [
+  "font-size:11px"
+ ],
+ "_css_raw_colors": [
+  "#d4d7dd",
+  "#fff",
+  "#202124",
+  "#e5e7eb",
+  "#111",
+  "#555"
+ ]
+}

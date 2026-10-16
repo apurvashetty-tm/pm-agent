@@ -1,0 +1,40 @@
+{
+  "$comment": "Suggested response shape for GET /agent/statistics?view=day&period=today. Raw numbers only — the client formats. Percentages are NOT sent: they are derived in the client from documented formulas.",
+  "view": "day",
+  "period": { "id": "today", "label": "Today" },
+  "availablePeriods": [{ "id": "today", "label": "Today" }],
+  "lastUpdatedAt": "2026-09-08T09:41:00+05:30",
+  "hasActivity": true,
+  "metrics": {
+    "callsInitiated": 142,
+    "callsConnected": 98,
+    "ordersPlaced": 31,
+    "orderValue": 48260,
+    "ordersOnHold": 5,
+    "ordersScheduled": 12,
+    "delivered": 24,
+    "inTransit": 4,
+    "cancelled": 3,
+    "rto": 1,
+    "otcOrders": 9,
+    "otcValueMrp": 14820,
+    "otcValueSale": 11240
+  },
+  "comparison": {
+    "$comment": "Deltas against the immediately preceding period of the same view.",
+    "convDeltaPts": 2.4,
+    "valueDeltaPct": 11
+  },
+  "$notes": {
+    "rto": "Bundles return-to-origin and door-to-origin. Do not split these in the UI and do not include cancellations here.",
+    "hasActivity": "When false the client shows the empty state rather than a page of zeroes.",
+    "availablePeriods": "Server-owned so the three-month cap cannot be bypassed from the client. For view=month, send the current month and the two preceding it, newest last.",
+    "derived": [
+      "connectedPct = callsConnected / callsInitiated",
+      "conversionPct = ordersPlaced / callsInitiated",
+      "closePct = ordersPlaced / callsConnected",
+      "deliverySuccessRate = delivered / (delivered + cancelled + rto)",
+      "avgOrderValue = orderValue / ordersPlaced"
+    ]
+  }
+}

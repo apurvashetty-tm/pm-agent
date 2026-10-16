@@ -1,0 +1,142 @@
+[
+  {
+    "state": "offer/fingerprint",
+    "viewport": 390,
+    "file": "offer_fingerprint_w390.png",
+    "bytes": 92840,
+    "console_errors": []
+  },
+  {
+    "state": "offer/fingerprint",
+    "viewport": 360,
+    "file": "offer_fingerprint_w360.png",
+    "bytes": 93295,
+    "console_errors": []
+  },
+  {
+    "state": "offer/face-id",
+    "viewport": 390,
+    "file": "offer_face-id_w390.png",
+    "bytes": 90584,
+    "console_errors": []
+  },
+  {
+    "state": "offer/face-id",
+    "viewport": 360,
+    "file": "offer_face-id_w360.png",
+    "bytes": 89919,
+    "console_errors": []
+  },
+  {
+    "state": "offer/enabling",
+    "viewport": 390,
+    "file": "offer_enabling_w390.png",
+    "bytes": 91231,
+    "console_errors": []
+  },
+  {
+    "state": "offer/enabling",
+    "viewport": 360,
+    "file": "offer_enabling_w360.png",
+    "bytes": 91685,
+    "console_errors": []
+  },
+  {
+    "state": "unlock/fingerprint",
+    "viewport": 390,
+    "file": "unlock_fingerprint_w390.png",
+    "bytes": 59071,
+    "console_errors": []
+  },
+  {
+    "state": "unlock/fingerprint",
+    "viewport": 360,
+    "file": "unlock_fingerprint_w360.png",
+    "bytes": 58767,
+    "console_errors": []
+  },
+  {
+    "state": "unlock/face",
+    "viewport": 390,
+    "file": "unlock_face_w390.png",
+    "bytes": 56681,
+    "console_errors": []
+  },
+  {
+    "state": "unlock/face",
+    "viewport": 360,
+    "file": "unlock_face_w360.png",
+    "bytes": 56434,
+    "console_errors": []
+  },
+  {
+    "state": "unlock/screen-lock",
+    "viewport": 390,
+    "file": "unlock_screen-lock_w390.png",
+    "bytes": 58640,
+    "console_errors": []
+  },
+  {
+    "state": "unlock/screen-lock",
+    "viewport": 360,
+    "file": "unlock_screen-lock_w360.png",
+    "bytes": 58363,
+    "console_errors": []
+  },
+  {
+    "state": "unlock/pending",
+    "viewport": 390,
+    "file": "unlock_pending_w390.png",
+    "bytes": 57223,
+    "console_errors": []
+  },
+  {
+    "state": "unlock/pending",
+    "viewport": 360,
+    "file": "unlock_pending_w360.png",
+    "bytes": 56956,
+    "console_errors": []
+  },
+  {
+    "state": "unlock/cancelled",
+    "viewport": 390,
+    "file": "unlock_cancelled_w390.png",
+    "bytes": 59071,
+    "console_errors": []
+  },
+  {
+    "state": "unlock/cancelled",
+    "viewport": 360,
+    "file": "unlock_cancelled_w360.png",
+    "bytes": 58767,
+    "console_errors": []
+  },
+  {
+    "state": "unlock/platform-retry",
+    "viewport": 390,
+    "file": "unlock_platform-retry_w390.png",
+    "bytes": 59071,
+    "console_errors": []
+  },
+  {
+    "state": "unlock/platform-retry",
+    "viewport": 360,
+    "file": "unlock_platform-retry_w360.png",
+    "bytes": 58767,
+    "console_errors": []
+  },
+  {
+    "state": "unlock/unavailable",
+    "viewport": 390,
+    "file": "unlock_unavailable_w390.png",
+    "bytes": 55201,
+    "console_errors": []
+  },
+  {
+    "state": "unlock/unavailable",
+    "viewport": 360,
+    "file": "unlock_unavailable_w360.png",
+    "bytes": 55758,
+    "console_errors": []
+  }
+]

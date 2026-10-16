@@ -7,6 +7,10 @@ Local TrueMeds reference package: `knowledge/context/tm-chotu/`. Read
 
 ## How to Use
 
+Team members should read [CONTRIBUTING.md](CONTRIBUTING.md) before making changes.
+Repository access, review rules, onboarding, and offboarding are documented in
+[docs/TEAM_GIT_WORKFLOW.md](docs/TEAM_GIT_WORKFLOW.md).
+
 **In Claude Code:**
 1. Click **Code**
 2. **File → Open Folder** → `~/pm-agent`

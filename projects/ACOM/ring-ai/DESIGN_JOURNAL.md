@@ -1,0 +1,191 @@
+# ACOM 2.0 × Ring AI — Design Journal (how we got here)
+
+*A knowledgebase of the **reasoning and evolution** behind the ACOM × Ring AI work — not just what we decided, but why, and what we tried and dropped. Read this alongside the canonical docs in `docs/`. If you're a future agent, also read `claude.md`.*
+
+**Provenance.** Reconstructed from the full working history: the original handoff (`reference/original-handoff.md`), the open-questions tracker, the future-state PRD + engineering walkthrough, the Rapid Pilot PRD and its ~30-iteration review cycle, and the design decisions embedded in each doc. Where a decision was reversed, both the original and the final position are recorded so the reasoning survives.
+
+---
+
+## 0. Where we are now (TL;DR)
+
+> **Current doc:** `docs/ai-led-lead-qualification-prd.md` ("AI-led Lead Qualification", Confluence PROD 2023260174), with its call architecture **locked 11 Sep** (Phase 4). The two deliverables described just below are **historical** — kept for the reasoning trail.
+
+Two related but distinct deliverables exist:
+
+1. **Future-state design** — *Voice-Bot Cart Recovery PRD* + *MVP Engineering Walkthrough* (`docs/`). The full vendor-agnostic voice-bot layer for dropped-cart recovery (Ring AI as first vendor): signal-aware integration, normalized outcomes, lead lifecycle/state machine, telephony considerations, milestones M1–M4. Synced to Confluence.
+2. **Rapid Pilot PRD** (`docs/rapid-pilot-prd.md`) — the earlier build target (now historical — see Phase 3). A deliberately minimal, reversible change to *today's* ACOM queue that proves one thing: *Ring AI pre-qualifies a controlled slice of incomplete-order leads; Hot/Warm customers return to the existing human "Assign Order" flow with priority; Ring and humans never call the same order at once.* Pull model, `max_in_flight` throttle, never-null ownership lock, two-step agent CTA, `call_details` retention, patient-id eligibility filter. Synced to Confluence (page 1850114059).
+
+The Rapid Pilot is **not** a slice of the future-state architecture — it's a thin bolt-on to prove value fast, with the big architecture deferred.
+
+---
+
+## 1. Timeline / phases
+
+### Phase 0 — Brief → "Ringg Integration" PRD (MVP framing)
+Started from the business brief/BRD (`reference/ringg-integration-brief.docx`). Produced the first PRD (`reference/ringg-integration-prd-v0.5.*`) and an HTML walkthrough (`reference/early-walkthrough.html`). Framing at this stage:
+- Vendor-agnostic voice-bot layer, **Ring AI as first vendor**, via a **thin adapter + Truemeds-owned normalized outcomes** (not a multi-vendor platform).
+- Bot calls the customer, qualifies intent (Hot/Warm/Cold); interested customers routed to a human who completes the order.
+- **MVP = M1 + M2a (async callback).** Live transfer (M2b) additive, conditional on discovery, never blocking the MVP.
+- **Payload = a stale-able snapshot; re-validate latest state before any agent acts.**
+- Two gates kept separate: **availability** (queue/staffing/concurrency) vs **order-validity** (at screen-pop). No real-time pre-transfer API in V1.
+- Truemeds order/cart data is always the source of truth. Rx/substitution out of scope (existing post-placement flow handles it).
+
+> **In the stakeholder's own words, kicking this off:** *"Its a AI voice bot that calls all my incomplete order... customer base. Currently since we do this manually we aren't able to cover all 100% of orders and hence there are spill overs day on day also the connectivity is bad and we are wasting precious agent bandwidth... Important call out before starting anything clarify all the doubts... don't get stuck in a loop."* That combination — close the coverage gap, protect agent bandwidth, but escalate rather than stall on unknowns — set the working style for the rest of the project.
+
+The v0.1 draft split the work into "Phase 1 / Phase 2" and routed Hot/Warm leads *straight to agents* through the existing assignment logic. A stakeholder re-brief hardened the direction before Phase 1 began, restating it as principles rather than tasks: *"Ring AI should be treated as a lead qualification layer first. Truemeds order/cart/customer state remains the source of truth. Payload sent to Ring AI is only a call-context snapshot, not the final truth... The integration should not be tightly coupled to Ring AI-specific statuses or payload structures... Build scale-safe architecture from the start; do not create a throwaway POC."* It also mandated the milestone shape that stuck through Phase 1: *"M1: Ring AI Integration Foundation with Scale-Safe Architecture / M2: Latest-State Validation + Agent Routing / M3: Configurability + Operational Control / M4: Same Original Order Conversion Feasibility"* — explicitly **not** "Phase 1 vs Phase 2."
+
+### Phase 1 — Future-state PRD + MVP Engineering Walkthrough
+Reworked into two companion docs: the *Voice-Bot Cart Recovery PRD* (mixed business+eng audience) and the *Ring AI MVP Engineering Walkthrough* (per-block engineering design + a Signal Catalog). Pull-based allocation, an `engagement_tier` concept (Hot/Warm/Cold/Undetermined derived by Truemeds, kept separate from the vendor's raw classification), a lead lifecycle/state machine, and a D1–D12 decision log. The full "Telephony Control Plane / BYOT" was **deferred out of the MVP** — MVP runs on Ring's native telephony; the control plane became a future platform note. Both synced to Confluence.
+
+The v0.1→v0.2 rewrite, in the moment: *"The v0.1 PRD framed this as a Ring AI hookup split into Phase 1 / Phase 2, and it routed Hot/Warm leads straight to agents via the existing assigning logic. Three structural changes: (a) reframe as a vendor-agnostic qualification layer with Ring behind an adapter + Truemeds-owned normalized statuses, so the core routing never touches Ring strings; (b) insert latest-state validation as a hard gate before any agent action — the old 'route Hot/Warm to Cat-1' was unsafe because the snapshot can be stale; (c) replace Phase 1/2 with M1–M4."*
+
+The live-transfer availability gate was argued through, not assumed: *"Async lets the bot dial at whatever concurrency it wants because humans pick up leads later. Live transfer requires an HA to be free at the exact second the bot finishes qualifying. If the bot out-dials agent availability, you get failed transfers — which is worse CX than a clean callback."* Landed as: *"V1 live-transfer scope: Agree to the conservative cut — Hot-only, staffed-hours-only, availability-gated, with priority-callback fallback?"* — **Agreed**. A related distinction was drawn between two similar-looking gates: *"Validating the order state and showing the right info on the agent's screen both happen in V1 — at agent pickup (screen-pop time)... What I labelled 'pre-transfer validation API (V2)' is a narrower, earlier gate: a real-time call Ring makes to us before it connects the customer to the agent... it needs Ring to call our API mid-call and honour the response — so it's more integration and reliability burden."* Only the earlier synchronous gate was deferred to V2; screen-pop validation shipped in V1.
+
+`engagement_tier`'s split from Ring's raw label was pinned down with an explicit case for auditability: *"`engagement_tier` should carry provenance + confidence + tiering-rule version (derived-from `client_analysis.intent_score` / `platform_analysis.classification` / our rule vN) so tiers are auditable and re-derivable when we change thresholds — which operationalizes 'change tiering without touching Ring.'"*
+
+The BYOT reversal (own telephony → Ring-native for MVP) is detailed in §3 below.
+
+### Phase 2 — Rapid Pilot pivot (the current doc) + iteration
+A decision to prove value in **days**, not on the full architecture. A new, standalone *Rapid Pilot PRD* was written from scratch — explicitly **not** a redesign of the future architecture, but a minimal table+query change reusing the existing ACOM assignment flow. This doc then went through a long, high-signal review cycle (below) that repeatedly tightened the design. It is the current source of truth for what gets built first.
+
+---
+
+### Phase 3 — Scope change -> fresh, PM-led platform PRD (the current doc)
+
+A material scope change reset the direction, and a brand-new product-focused PRD was written from scratch: **`docs/ai-led-lead-qualification-prd.md`** ("AI-led Lead Qualification", Confluence PROD 2023260174). It is now the current active doc; the Rapid Pilot and future-state docs are historical.
+
+What changed:
+- **Ring will not integrate Truemeds' APIs — Truemeds integrates Ring.** And **no PII** (phone, maybe address) may be sent to Ring.
+- Because Ring can't hold PII or dial, **Truemeds owns the whole call via Knowlarity** — dialling, retries, calling window, hangup. Ring becomes the conversation + the post-call verdict, never the caller. (Two Knowlarity docs landed: the Notifications/Streaming API and the Hangup Causes / Q.850 cause codes — the latter drives our retry policy.)
+- **Media bridge:** Ring returns a per-lead media stream URL; Knowlarity dials the customer and bridges that stream. (Feasibility is an open question to both vendors.)
+- **Generic `uuid`, not `order_id`**, as the correlation key — so the platform extends to non-cart drop-offs.
+- **Eligibility + Ring dial-order are configurable and ours; the manual queue's prioritisation score is not touched** (Hot/Warm ride as a tier in front). Richer scoring for no-cart use cases is parked as an analytics annexure.
+- Full **lead journey** owned: retries off the telephony disposition (3 buckets), one unified Hold/Schedule "come back at T" state carrying who resumes it, closed-never-re-enter, DNC scope (our two channels firm; cross-portal via a shared list = a dependency), a per-customer frequency cap, throttle + kill-switch.
+- Deliberately **async callback**; live transfer is future-state.
+
+Working-style note: the PRD is written **product-first** (state the what/why + constraints; leave the "how" to engineering as open questions), lean, and human — captured as a reusable method in `../../../templates/lean-prd-guide.md`.
+
+### Phase 4 — Call architecture locked (11 Sep call with Ring)
+
+The 11 Sep call with Ring settled *how a call actually flows*, replacing the media-bridge idea carried in Phase 3. Confirmed and locked:
+- **WebSocket, not a media bridge.** Truemeds pre-loads the lead into Ring (reference id / uuid + cart/custom vars + workspace id; the customer **name** is the one PII field — no phone, no address). Knowlarity dials and opens a **WebSocket** to Ring carrying the reference id; a "customer answered" event starts the bot; the conversation runs over the socket. There is no per-lead media-stream URL to bridge.
+- **Verdict by webhook on the reference id.** Ring records its own side and returns Hot/Warm/Cold (a possible 4th don't-call state is an open question to Ring), keyed on the reference id.
+- **Truemeds keeps its OWN recording + event log for RCA** — its own copy, not sent to Ring. It is forensic proof for debugging, **not** a fix for telephony reliability; if Knowlarity connect quality is the issue, the lever is the Knowlarity SLA + reconciliation, not the recording.
+- **Cold = lowest priority, not set aside;** only a genuine don't-call state is pulled out. DNC is captured two ways — the AI's post-call input, or a human via a CTA — permanent across our channels.
+- **Vendor-agnostic by design, not plug-and-play:** the *shape* (reference id in, verdict webhook out, our telephony, our journey) does not depend on Ring internals, but swapping the voice vendor is still a re-integration.
+- Retries stay ours off the Knowlarity disposition; **Ring does no retries.**
+
+Reflected in the PRD by striking the old assumptions and writing the new ones (§4 flow + reworked ASCII diagram, §8 verdict loop + retain recording/events + vendor-agnostic-by-design, §9 resolved questions + PII-on-event + effort-gate, §12 edge cases incl. "forensics is not a reliability fix"), and captured as a **running MoM with Ring** in new §13. Decision record: `../../../knowledge/decisions/2026-09-11-ring-ai-call-architecture.md`.
+
+---
+
+## 2. Decision log (with reversals)
+
+Legend: **→** marks a reversal/evolution of an earlier position.
+
+| # | Decision | Options considered | Chosen | Why |
+|---|---|---|---|---|
+| D1 | Scope of first build | Full future-state MVP vs a thin rapid pilot | **Rapid Pilot** (thin bolt-on) | Prove "does Ring pre-qualification help?" in days, reversibly, before investing in the platform. |
+| D2 | Direction | Push (Truemeds initiates) vs Pull (Ring requests) vs both | **Pull for the pilot** (internals direction-agnostic; Push a future option) | Simplest to ship; framed as a stakeholder/commercial decision, so the design stays neutral and Push remains addable. |
+| D3 | How to limit Ring's exposure | `MOD(order_id)` cohort/throttle → **rejected**; then `max_in_flight` cap | **`max_in_flight`** (concurrent-hold cap) | A `MOD` cohort on the shared query would also shrink the *human* pool. A concurrency cap throttles Ring without touching the human queue, and self-paces. |
+| D4 | Ownership / no-double-call | Release lock on completion vs never null it | **Never-null**: `assigned_to = RING_BOT_USER_ID` stays for life; only a human overwrites it | Today's BAU query filters `assigned_to IS NULL`, so it *automatically* ignores Ring-touched leads — BAU stays literally unchanged, negatives are parked for free. |
+| D5 | Human assignment order | Single query vs tiered | **Two-step agent CTA**: Step 1 Hot→Warm (FIFO on `modified_on`), Step 2 = BAU unchanged | Prioritise qualified leads without rewriting the main query; keep BAU pristine. |
+| D6 | RING_NO_RESPONSE handling | Above BAU (tier) → interleave with BAU → **listing-only** | **Listing-only** for the pilot; TLs hand-pick a few to observe | "Ring couldn't reach them" is not higher intent; unknown volumes/journey. Keep it out of self-serve, watch it manually, revisit with data. |
+| D7 | Recording/transcript retention | New `ring_call_artifacts` table vs reuse existing `call_details` | **`call_details`** (Ring row marked `agent_names = "Ring AI"`) | Engineering confirmed multiple recordings per `order_id` are supported. Reuse existing infra; Ring + human rows coexist under one `order_id`. |
+| D8 | Patient eligibility | none vs join vs `EXISTS` on `sub_order_details` | **`EXISTS` semi-join** on `sub_order_details.patient_id` | Ring needs a patient *name* to open the call (addressing + intent). `EXISTS` avoids row fan-out from the one-order→many-sub-orders relationship. |
+| D9 | Recency filter | `created_on` (via `order_details`) → **rejected**; use `cx_modified_on` | **`cx_modified_on`** window (30 min–1 day) | `created_on` is fixed at first-SKU; a cart can cross the ₹900 AOV threshold *later* and would be wrongly excluded. `cx_modified_on` is the correct activity clock. |
+| D10 | Measurement | Deterministic holdout / ITT experiment → **removed** | **No controlled experiment** in the pilot; descriptive metrics only | A real holdout needs durable cohort assignment, protected control treatment, capacity-fallback rules — a separate milestone, not a days-scale pilot. |
+| D11 | Doc structure | Single spec vs layered | **Product (§1–§11) + Engineering Implementation Contract (§12)** | Behaviour is Product-owned and binding; engineering may change *implementation* (query shape, indexing) as long as guarantees hold. |
+| D12 | Metrics framing | Hot/Warm-vs-BAU conversion as proof → corrected | **Descriptive, five-layer metrics** (funnel, qualification quality, productivity, safety, economics) | Hot/Warm are post-Ring labels; higher conversion proves qualification quality, not causal lift. Don't over-claim. |
+| D13 | `order_details` in the query | Drop it vs keep as status guard | **Keep** the join only as the `orderstatus=49` source-of-truth guard (given `iod` is in sync) | `iod` mirrors status/value/created_on, but `order_details` is authoritative; the join guards against `iod` staleness. Exact shape is engineering's to tune via `EXPLAIN`. |
+
+---
+
+## 3. Reversals worth remembering (the "why we changed our minds")
+
+- **`MOD` cohort → `max_in_flight`.** `MOD(order_id,100) < pct` was proposed to send only X% of orders to Ring. The trap: humans and Ring share the *same* eligibility query, so putting `MOD` there would starve the human pool too. The right control is a **concurrency cap** on how many leads Ring may *hold* at once — it throttles Ring alone and self-paces. (`MOD` briefly came *back* as a measurement holdout in D10, then was removed entirely.)
+- **Holdout added → removed.** A senior review argued (correctly) that Hot/Warm-vs-BAU isn't proof of incremental lift, and proposed a deterministic 10% BAU holdout for a clean ITT read. On reflection a valid holdout needs durable cohort markers, protected control treatment, and capacity-fallback rules — a real experimentation milestone. For a days-scale pilot it was **out of scope**; the pilot measures feasibility/quality/productivity/safety and explicitly disclaims causal lift.
+- **RING_NO_RESPONSE: above BAU → interleave → listing-only.** First modelled as a priority tier above BAU (anti-orphaning), then "interleave at BAU's tier," then finally **listing-only** — because a Ring-unreached customer carries no positive-intent signal, volumes are unknown, and we'd rather observe a hand-picked sample before wiring it into self-serve.
+- **`created_on` filter rejected.** A newer engineering query added `created_on > NOW()-1day`. But `created_on` is stamped at first-SKU; a cart can mature past ₹900 later and be recently active while created days ago — `created_on` would wrongly drop it. `cx_modified_on` (activity) is the correct clock. (Good catch that came from the stakeholder, not the doc.)
+- **New retention table → reuse `call_details`.** We initially carried a `ring_call_artifacts` table; once engineering confirmed `call_details` supports multiple rows per `order_id`, we reused it (Ring row tagged `agent_names = "Ring AI"`) rather than add a table.
+- **Own telephony (BYOT) → Ring-native for MVP (Phase 1).** Early direction was firm — *"We will not use Ring's native telephony for outbound calls"* — pushing toward Truemeds-owned DIDs/BYOT. It reversed once the tradeoff was named directly: *"If the Telephony Control Plane leaves the MVP, then MVP telephony = Ring's native telephony... That's not a downgrade we're stumbling into — it's the deliberate MVP cut: prove the conversion lift on Ring's stack first; invest in our own telephony platform once the model is proven."* Supporting evidence: the ~4× lift POC (~1,300 leads) had *already run without our own telephony control plane*, so Ring-native was shown sufficient to validate the business case. The Control Plane was reframed as a **Truemeds-owned capability any voice vendor plugs into** (not Ring-specific glue) and deferred to a future track, detail-designed only when picked up.
+
+---
+
+## 4. Settled — do NOT reopen (unless explicitly asked)
+
+- Rapid Pilot is a **thin, reversible bolt-on**, not a slice of the future architecture.
+- **No `MOD`/cohort throttle**, and **no holdout/incrementality experiment** in the pilot.
+- **`max_in_flight`** is the single rollout + throttle lever; `max_in_flight = 0` is the kill switch.
+- **Never-null ownership**: Ring-touched leads keep `assigned_to = RING_BOT_USER_ID`; BAU query is unchanged.
+- **Two-step CTA**: Hot→Warm (FIFO on `modified_on`), then BAU unchanged.
+- **RING_NO_RESPONSE / COLD / DECLINED / CALLBACK = listing-only** (not self-serve) for the pilot.
+- **Retention in `call_details`** (Ring row = `agent_names = "Ring AI"`), not a new table.
+- **`cx_modified_on` window**, **not** `created_on`.
+- **Patient filter via `EXISTS` on `sub_order_details.patient_id`.**
+- **Product/Engineering two-layer split**; behaviour is binding, implementation is engineering's.
+
+## 5. Still open (see the PRD §11 for detail)
+
+- **O1** RING_NO_RESPONSE placement — listing-only for now; revisit with data.
+- **O2** Send-failure rollback — park vs release to `NULL`.
+- **O3** CALLBACK — listing-only; possible scheduled-time column later.
+- **O4** `ring_lead_ttl` value.
+- **O5** Transcript storage — recommend `transcript_s3_uri` column on `call_details`; engineering to confirm.
+- **Open questions:** the Ring **webhook contract** (assume-and-build behind a mapping table), starting values for `reaper_minutes`/`max_in_flight`/`ring_lead_ttl`, economics targets, the listing-page assignment mechanism, and manual-agent hold/callback behaviour (`call_details`).
+
+## 6. How the stakeholder works (apply these)
+
+- **Markdown is the source of truth**; rendered formats (Confluence, HTML) are generated from it.
+- **Present → debate → agree → then edit.** Do not edit during brainstorming; surface proposed changes for review first.
+- **Never sync to Confluence/Atlassian unless explicitly told "sync."**
+- Write for **external readers** — no meta-scaffolding, no "this is the plain-language layer," no narrating the process into the doc; cut filler.
+- **Be concise and direct.** Don't over-flag/over-engineer; distinguish a real blocker from a nit.
+- Don't invent vendor (Ring) API details — verify from official docs or mark clearly as pending.
+- **Whenever a stated fact changes (e.g. a threshold or number), scan the whole document for every occurrence of it before treating the edit as done** — adopted 25 Sep after a retry-threshold update (3→4) was missed in one of three places it appeared.
+- **GTM plans stay lean** (phase, one line, interval); **batch review comments** and apply them in one pass; use **Truemeds funnel terms** (attempted / connected); show many changes as a **full marked review copy**; when Apurva applies suggestions on Confluence herself, anything left out is rejected — **the published page is the base** (adopted 29–30 Sep).
+
+## 7. Key source facts (as verified during the work)
+
+**Data model (from live samples in `reference/schema-samples/`):**
+- `incomplete_order_details` (`iod`) — the abandoned-cart working table. Columns include `order_id`, `customer_id`, `order_value`, `final_score`, `assigned_to`, `orderstatus`, `is_active`, `eligible_for_ranking`, `rank_again_after`, `created_on`, `modified_on`, `cx_modified_on`. One open incomplete order per customer. (`patient_id` is **not** here.)
+- `order_details` — authoritative order table (status source of truth).
+- `sub_order_details` — holds `patient_id` per `order_id` (one order → many sub-orders; one patient per cart in practice).
+- `call_details` — existing telephony (Knowlarity) call log; supports multiple rows per `order_id`; has `recording_url` / `s3bucket_recording_url`, `disposition`, `on_hold_reason`, `is_status_call_back_hold`, `agent_names`, `agent_status`; **no** `agent_id` column and **no** transcript column.
+- Today's eligibility/BAU query: `orderstatus=49`, `order_value>900`, `is_active`, `cx_modified_on` in [NOW−1day, NOW−30min], `eligible_for_ranking`, `assigned_to IS NULL`, `rank_again_after` ok; `ORDER BY final_score DESC, order_value DESC LIMIT 1`.
+
+**Ring AI (verified from docs.ringg.ai; anything not confirmed is marked pending in the PRD):** outbound "Initiate Individual Call"; `custom_args_values` echoes on every webhook event; consolidated terminal event carries status/classification/transcript/`recording_url`; **`recording_url` valid ~24h**; webhook auth is a shared-secret/bearer header (**no HMAC**); Ring manages call retries via `call_retry_config`. The exact pilot webhook contract is **assume-and-build behind a mapping table** until confirmed.
+
+---
+
+## 8. Log — 25 Sep 2026 (Confluence review cycle, 23–25 Sep)
+
+- **Recovered the Confluence PRD from an accidental corruption** (a bad full-body update) back to a known-good state, verified against zero dangling (orphaned-anchor) comments both before and after.
+- Resolved a further batch of reviewer comments: ACOM team strength (#34) and POC design/criteria (#35) answered by business; SKU-level pricing dropped from the doc; `discount_amount`/`discount_percent` fields resolved; callee-name question resolved to "patient name, customer name as fallback."
+- **Retry threshold confirmed at 4 attempts** (was a "~3" placeholder) — caught a gap where a first edit pass updated 2 of the 3 places this number appeared in the doc; the missed one was the "when we stop" prose paragraph. Fixed, and adopted the whole-document-scan practice now in §6 above.
+- **Two new locked product rules added** (both tagged 🆕 Added 25 Sep in the live PRD, both stating the bare requirement with no implementation mechanism named, per §6's product-not-tech norm):
+  - A human-assigned lead is never assigned to the bot (PRD §9) — this took two drafting passes: the first framed it as an open Engineering question ("how do we know a lead was human-called?") when the existing "Assigned to a human agent" disposition already answers that; the second still over-specified by naming that field as the mechanism. Final version states only the requirement.
+  - A retry-exhausted closure is permanent for that lead (PRD §6) — only a new cart/order (fresh reference id) re-enters; nothing resurrects a closed lead.
+- Full write-up: `knowledge/decisions/2026-09-25-ring-ai-prd-clarifications.md`.
+- Synced the whole local knowledgebase to match the live Confluence state: this journal, the PRD markdown, `open_questions.md`, `project_truth.md`, `session_handoff.md`, `reference/prd-review-comments-snapshot.md` (status/delta update, not a full line-by-line rebuild — flagged there as the remaining larger lift if wanted), the new decision-log entry above, and the memory export.
+
+---
+
+## 9. Log — 29–30 Sep 2026 (PRD Draft v3: reach, ₹500, pause rule, GTM)
+
+- **Trigger.** Engineering flagged that a ₹500–899 lead marked Cold by the AI had no route to a human (manual queue floor ₹900). Business separately aligned on lowering the floor. Working it through showed the real problem is **reach, not AOV**: Analytics says ~12,500 eligible leads/day at ₹900, agents attempt only ~40% (the BRD's "~60% reached" was anecdotal and is replaced).
+- **One floor, not two.** Minimum AOV ₹500 for both the AI and the manual queue — simpler, and it closes the Cold-orphan gap. The FTC question was settled by the existing queue logic: `final_score` weights FTC so heavily that FTC already comes first, so no separate FTC rule or threshold.
+- **POC honesty.** Laid the POC out as a funnel. The PRD's "converted about 20%" was 18% of *attempted* leads — 42% of qualified leads went stale first, so only 10.5% of all qualified converted. As run, the POC was roughly level with today per eligible lead; almost all the upside depends on agents attempting Hot/Warm in time. That made **stale** a first-class metric and gate.
+- **Throttle → pause rule + GTM split (the longest thread).** Started as a % throttle; Engineering had missed it as a feature. Tried: % of cron runs (wrong unit — split by lead), the Rapid Pilot in-flight counter (limits concurrency, not stale), a waiting-lead count (needs a number someone must calculate). Landed on: **before each run, if the oldest Hot/Warm lead has waited >2 h, send the AI nothing** — it measures the thing that fails, needs no calculation, and self-adjusts. "Any Hot/Warm waiting → pause" was rejected because at scale there's always one waiting. A proposed "return AI-assigned leads after 4 h" rule was dropped once it was clear a lead is only assigned when the cron actually sends it. Ramp control became a **split by customer ID ending** (customer, not order, because future leads may have no order id; IDs are sequential so it's random-equivalent).
+- **Gates.** First draft used absolute targets and an impossible "every call returns an outcome" gate (the edge cases exist precisely because some don't). Rebuilt around comparison with the control group: Hot/Warm conversion ≥2× human, a 5% Cold sample (Ops-run, outside allocation) to catch the AI marking buyers Cold, stale ≤10%, sales per 100 customers AI ≥ agent, and an SLA (set in vendor contracts) for the tech pilot. Orders count within 24 h (matches the queue window). Apurva added the missing business number: **ACOM sales = converted orders × AOV**.
+- **Hot/Warm 24 h hold.** Found that a lead qualified late in its 24-hour window could vanish before any agent reached it; Hot/Warm now stay 24 h from the verdict. A reviewer later asked for 48 h; Apurva kept 24 h.
+- **Other locks:** one lead at a time per attempt, every retry sent fresh (replaces batch pre-load); data sent listed in §4 (no address, no SKU pricing); firm setting values (2 min, 15 s, 3 connected / 7 days, 24 h, 2 h); kill switch global now; vendor-agnostic dropped from scope; §9 regrouped (none blocks the build); new §14 GTM & Rollout.
+- **Working norms adopted this cycle:** GTM plans stay lean (phase, one line, interval); review comments are batched and applied in one pass; use Truemeds funnel terms (attempted/connected); show many changes as a full marked review copy; when Apurva applies suggestions herself, what she leaves out is rejected — the published page is the base; the Confluence API only returns the published version (ask to publish before a proofread); resolve comments before deleting their anchor text.
+- **AI leg = SIP trunk, not a WebSocket (Engineering correction, late 30 Sep).** Reverses the 11 Sep rationale ("Knowlarity has no SIP, so it has to be a WebSocket"); the 25 Sep reviewer comment "SIP instead of websocket" turned out right. Apurva updated the §4 diagram on Confluence ("telephony bridges to the vendor (SIP trunk)", "bot speaks on that SIP call") with the correction as a comment on the §4 heading. §6 and §13 still carry the WebSocket wording — to align next.
+- **6 Oct — SIP correction finished on Confluence.** §6 and §13 rewritten with Engineering's suggested text; Apurva kept the manual flow's SIP-trunk setup *separate* from the AI's SIP-trunk call to Ring (Engineering's §6 wording). The reason for SIP, added to §13: Ring has already built this integration with Knowlarity for another client and it works — the low-risk option. The 11 Sep audio-bridge alternative stays in §13 with a note that it was weighed under the WebSocket assumption. "Changed." replies on the six SIP threads; resolving is manual (no API).
+- **Confluence gotcha (6 Oct):** a full-body **HTML** write turned every grey highlight (`background-color: #dcdfe4`) into highlight **plus grey text colour**, making those passages unreadable. Fixed by re-writing the page as **ADF** with the stray `textColor` marks removed. For pages with highlights, check `textColor` marks after any HTML write, or edit in ADF.
+- Full write-up: `knowledge/decisions/2026-09-30-ring-ai-v3-reach-gtm-controls.md`; reusable lessons: `knowledge/learnings/rollout-gates-and-control-signals.md`.
+
+---
+
+*This journal is the "why." For the "what/how," read `docs/ai-led-lead-qualification-prd.md` (current build, Confluence PROD 2023260174); `docs/rapid-pilot-prd.md` and the future-state docs are historical. For a fast agent onboarding, read `CLAUDE.md`.*

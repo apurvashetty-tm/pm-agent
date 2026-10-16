@@ -1,0 +1,178 @@
+[
+  {
+    "frameW": 390,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [],
+    "minContrast": {
+      "ratio": 4.87,
+      "el": "Turn on faster sign-in"
+    },
+    "smallTargets": [],
+    "keyboardVisible": false,
+    "keyboardTop": null,
+    "buttonBottom": 748,
+    "buttonAboveKeyboard": null,
+    "typeStyles": [
+      "14px/20px w400",
+      "16px/24px w500",
+      "18px/24px w600",
+      "32px/40px w600"
+    ],
+    "fontLoaded": true,
+    "file": "offer_fingerprint_w390.png",
+    "state": "fingerprint",
+    "width": 390,
+    "errors": []
+  },
+  {
+    "frameW": 390,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [],
+    "minContrast": {
+      "ratio": 4.87,
+      "el": "Turn on faster sign-in"
+    },
+    "smallTargets": [],
+    "keyboardVisible": false,
+    "keyboardTop": null,
+    "buttonBottom": 748,
+    "buttonAboveKeyboard": null,
+    "typeStyles": [
+      "14px/20px w400",
+      "16px/24px w500",
+      "18px/24px w600",
+      "32px/40px w600"
+    ],
+    "fontLoaded": true,
+    "file": "offer_face-id_w390.png",
+    "state": "face-id",
+    "width": 390,
+    "errors": []
+  },
+  {
+    "frameW": 390,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [
+      {
+        "text": "Not now",
+        "ratio": 1.4,
+        "need": 4.5,
+        "disabled": true
+      }
+    ],
+    "minContrast": {
+      "ratio": 1.4,
+      "el": "Not now"
+    },
+    "smallTargets": [],
+    "keyboardVisible": false,
+    "keyboardTop": null,
+    "buttonBottom": 748,
+    "buttonAboveKeyboard": null,
+    "typeStyles": [
+      "14px/20px w400",
+      "16px/24px w500",
+      "18px/24px w600",
+      "32px/40px w600"
+    ],
+    "fontLoaded": true,
+    "file": "offer_enabling_w390.png",
+    "state": "enabling",
+    "width": 390,
+    "errors": []
+  },
+  {
+    "frameW": 360,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [],
+    "minContrast": {
+      "ratio": 4.87,
+      "el": "Turn on faster sign-in"
+    },
+    "smallTargets": [],
+    "keyboardVisible": false,
+    "keyboardTop": null,
+    "buttonBottom": 748,
+    "buttonAboveKeyboard": null,
+    "typeStyles": [
+      "14px/20px w400",
+      "16px/24px w500",
+      "18px/24px w600",
+      "32px/40px w600"
+    ],
+    "fontLoaded": true,
+    "file": "offer_fingerprint_w360.png",
+    "state": "fingerprint",
+    "width": 360,
+    "errors": []
+  },
+  {
+    "frameW": 360,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [],
+    "minContrast": {
+      "ratio": 4.87,
+      "el": "Turn on faster sign-in"
+    },
+    "smallTargets": [],
+    "keyboardVisible": false,
+    "keyboardTop": null,
+    "buttonBottom": 748,
+    "buttonAboveKeyboard": null,
+    "typeStyles": [
+      "14px/20px w400",
+      "16px/24px w500",
+      "18px/24px w600",
+      "32px/40px w600"
+    ],
+    "fontLoaded": true,
+    "file": "offer_face-id_w360.png",
+    "state": "face-id",
+    "width": 360,
+    "errors": []
+  },
+  {
+    "frameW": 360,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [
+      {
+        "text": "Not now",
+        "ratio": 1.4,
+        "need": 4.5,
+        "disabled": true
+      }
+    ],
+    "minContrast": {
+      "ratio": 1.4,
+      "el": "Not now"
+    },
+    "smallTargets": [],
+    "keyboardVisible": false,
+    "keyboardTop": null,
+    "buttonBottom": 748,
+    "buttonAboveKeyboard": null,
+    "typeStyles": [
+      "14px/20px w400",
+      "16px/24px w500",
+      "18px/24px w600",
+      "32px/40px w600"
+    ],
+    "fontLoaded": true,
+    "file": "offer_enabling_w360.png",
+    "state": "enabling",
+    "width": 360,
+    "errors": []
+  }
+]

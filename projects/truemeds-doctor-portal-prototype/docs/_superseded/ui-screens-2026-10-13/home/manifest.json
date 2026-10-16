@@ -1,0 +1,23 @@
+[
+  {
+    "file": "availability_wheel.png",
+    "sha256": "a36ee1d0a2e057bc114918b60be79e63a209fffef29a28549d1f4e1aad24a54f",
+    "approval": "2026-10-13: user explicitly requested both alternatives saved for doctor testing",
+    "updated": "2026-10-13",
+    "change": "Copy only: retain Minimum 15 minutes once on setup; remove reminder from add-time sheet. No other pixel changes.",
+    "selection": "2026-10-13: final wheel-only control selected by user"
+  },
+  {
+    "file": "home_active.png",
+    "sha256": "f7f40943710d569285390d4c763f9dbae37d80c8b9a133a9c201b86dec06992f",
+    "approval": "2026-10-13: user approved screen and requested save"
+  },
+  {
+    "file": "add-availability_wheel.png",
+    "sha256": "e499bad76e758dfbf6cd18699a9ab8bdb895a9babe17b44102b3590ff6c486da",
+    "approval": "2026-10-13: user explicitly approved the wheel screen",
+    "updated": "2026-10-13",
+    "change": "Copy only: retain Minimum 15 minutes once on setup; remove reminder from add-time sheet. No other pixel changes.",
+    "selection": "2026-10-13: final wheel-only control selected by user"
+  }
+]

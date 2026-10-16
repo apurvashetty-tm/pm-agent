@@ -13,6 +13,8 @@ description: >
 
 # PRD Reviewer
 
+> **Writing standard:** apply `templates/lean-prd-guide.md` (voice, plain words, say it once, review edits and versions, AI tells, pre-send check) to everything this workflow produces or reviews.
+
 Reviews PRDs, Vision Docs, and Initiative Docs for quality and completeness.
 Always invoked automatically by PRD Creator. Never skips sections. Never suggests
 fixes — only flags, explains, and hands back to PRD Creator to incorporate changes.

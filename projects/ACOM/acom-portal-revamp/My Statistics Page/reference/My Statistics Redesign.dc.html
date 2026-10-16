@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=IBM+Plex+Mono:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+  html, body { margin: 0; padding: 0; background: #E9ECF2; }
+  * { box-sizing: border-box; }
+  a { color: #1B69DE; text-decoration: none; }
+  a:hover { color: #0F55BC; text-decoration: underline; }
+  @keyframes shimmer { 0% { opacity: .45 } 50% { opacity: 1 } 100% { opacity: .45 } }
+</style>
+</helmet>
+
+<div style="font-family:Manrope,system-ui,sans-serif;color:#0F1724;background:#E9ECF2;padding:20px 20px 40px">
+
+<div style="max-width:1440px;margin:0 auto 16px;display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:12px 14px;background:#0F1724;border-radius:12px">
+  <div style="font:700 11px Manrope,sans-serif;letter-spacing:0.07em;color:#94A3B8;text-transform:uppercase;margin-right:4px">Preview only</div>
+  <div style="display:flex;gap:4px;background:#1E293B;padding:4px;border-radius:9px">
+    <div data-state="ready" onClick="{{ setState }}" style="font:600 12px Manrope,sans-serif;color:#fff;padding:7px 12px;border-radius:6px;cursor:pointer;background:#1B69DE">Ready</div>
+    <div data-state="loading" onClick="{{ setState }}" style="font:600 12px Manrope,sans-serif;color:#94A3B8;padding:7px 12px;border-radius:6px;cursor:pointer" style-hover="color:#fff">Loading</div>
+    <div data-state="empty" onClick="{{ setState }}" style="font:600 12px Manrope,sans-serif;color:#94A3B8;padding:7px 12px;border-radius:6px;cursor:pointer" style-hover="color:#fff">No data</div>
+    <div data-state="error" onClick="{{ setState }}" style="font:600 12px Manrope,sans-serif;color:#94A3B8;padding:7px 12px;border-radius:6px;cursor:pointer" style-hover="color:#fff">Error</div>
+  </div>
+  <div style="width:1px;height:24px;background:#1E293B"></div>
+  <div style="display:flex;gap:4px;background:#1E293B;padding:4px;border-radius:9px">
+    <div data-w="1440" onClick="{{ setWidth }}" style="font:600 12px 'IBM Plex Mono',monospace;color:#94A3B8;padding:7px 12px;border-radius:6px;cursor:pointer" style-hover="color:#fff">1440</div>
+    <div data-w="1180" onClick="{{ setWidth }}" style="font:600 12px 'IBM Plex Mono',monospace;color:#94A3B8;padding:7px 12px;border-radius:6px;cursor:pointer" style-hover="color:#fff">1180</div>
+    <div data-w="980" onClick="{{ setWidth }}" style="font:600 12px 'IBM Plex Mono',monospace;color:#94A3B8;padding:7px 12px;border-radius:6px;cursor:pointer" style-hover="color:#fff">980</div>
+    <div data-w="780" onClick="{{ setWidth }}" style="font:600 12px 'IBM Plex Mono',monospace;color:#94A3B8;padding:7px 12px;border-radius:6px;cursor:pointer" style-hover="color:#fff">780</div>
+  </div>
+  <div style="flex:1"></div>
+  <div style="font:500 11px Manrope,sans-serif;color:#64748B">Controls are not part of the design. Header and footer are unchanged shared components.</div>
+</div>
+
+<div style="overflow-x:auto;padding-bottom:6px">
+<div style="width:{{ frameW }};flex:none;margin:0 auto;background:#F1F2F6;border-radius:14px;overflow:hidden;box-shadow:0 8px 30px rgba(15,23,36,0.10)">
+
+  <div style="background:#fff;padding:16px 22px;display:flex;align-items:center;gap:16px;box-shadow:0 1px 3px rgba(15,23,36,0.07)">
+    <div style="display:flex;flex-direction:column;gap:5px;cursor:pointer;padding:4px">
+      <div style="width:22px;height:2px;background:#2C3038;border-radius:2px"></div>
+      <div style="width:22px;height:2px;background:#2C3038;border-radius:2px"></div>
+      <div style="width:22px;height:2px;background:#2C3038;border-radius:2px"></div>
+    </div>
+    <div style="flex:1"></div>
+    <div style="font:500 13px Manrope,sans-serif;color:#22935B;border:1px solid #22B573;padding:5px 11px;border-radius:5px">09AM to 06PM</div>
+    <div title="Logout — placeholder for the portal's own logout icon" style="display:flex;align-items:center;gap:2px;padding:4px;cursor:pointer">
+      <div style="width:12px;height:18px;border:2px solid #33415C;border-right:none;border-radius:3px 0 0 3px"></div>
+      <img src="https://assets.truemeds.in/Images/website-assets/icons/actions/rightChev.svg" alt="Logout" style="height:14px">
+    </div>
+  </div>
+
+  <div style="padding:26px 26px 32px">
+
+    <div style="display:flex;align-items:flex-end;gap:18px;flex-wrap:wrap">
+      <div>
+        <h1 style="font:700 28px/1.2 Manrope,sans-serif;margin:0;letter-spacing:-0.01em">My Statistics</h1>
+        <div style="font:500 13px Manrope,sans-serif;color:#64748B;margin-top:6px">Your performance for the selected period</div>
+      </div>
+      <div style="flex:1"></div>
+      <div style="display:flex;gap:4px;background:#E2E8F0;padding:4px;border-radius:10px">
+        <sc-if value="{{ isDay }}" hint-placeholder-val="{{ true }}">
+          <div data-view="day" onClick="{{ setView }}" style="font:700 13px Manrope,sans-serif;color:#fff;background:#1B69DE;padding:9px 20px;border-radius:7px;cursor:pointer;min-height:38px">Day</div>
+        </sc-if>
+        <sc-if value="{{ notDay }}" hint-placeholder-val="{{ false }}">
+          <div data-view="day" onClick="{{ setView }}" style="font:600 13px Manrope,sans-serif;color:#33415C;padding:9px 20px;border-radius:7px;cursor:pointer;min-height:38px" style-hover="background:#EEF2F7">Day</div>
+        </sc-if>
+        <sc-if value="{{ isWeek }}" hint-placeholder-val="{{ false }}">
+          <div data-view="week" onClick="{{ setView }}" style="font:700 13px Manrope,sans-serif;color:#fff;background:#1B69DE;padding:9px 20px;border-radius:7px;cursor:pointer;min-height:38px">Week</div>
+        </sc-if>
+        <sc-if value="{{ notWeek }}" hint-placeholder-val="{{ true }}">
+          <div data-view="week" onClick="{{ setView }}" style="font:600 13px Manrope,sans-serif;color:#33415C;padding:9px 20px;border-radius:7px;cursor:pointer;min-height:38px" style-hover="background:#EEF2F7">Week</div>
+        </sc-if>
+        <sc-if value="{{ isMonth }}" hint-placeholder-val="{{ false }}">
+          <div data-view="month" onClick="{{ setView }}" style="font:700 13px Manrope,sans-serif;color:#fff;background:#1B69DE;padding:9px 20px;border-radius:7px;cursor:pointer;min-height:38px">Month</div>
+        </sc-if>
+        <sc-if value="{{ notMonth }}" hint-placeholder-val="{{ true }}">
+          <div data-view="month" onClick="{{ setView }}" style="font:600 13px Manrope,sans-serif;color:#33415C;padding:9px 20px;border-radius:7px;cursor:pointer;min-height:38px" style-hover="background:#EEF2F7">Month</div>
+        </sc-if>
+      </div>
+    </div>
+
+    <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:18px;padding-bottom:18px;border-bottom:1px solid #DCE2EA">
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <sc-for list="{{ periods }}" as="p" hint-placeholder-count="3">
+          <div data-period="{{ p.id }}" onClick="{{ setPeriod }}" style="cursor:pointer;font-family:Manrope,sans-serif;font-size:13px;font-weight:{{ p.weight }};color:{{ p.fg }};background:{{ p.bg }};border:1px solid {{ p.bd }};padding:8px 15px;border-radius:8px;min-height:36px;display:flex;align-items:center">{{ p.label }}</div>
+        </sc-for>
+      </div>
+      <div style="flex:1"></div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <div style="width:7px;height:7px;border-radius:99px;background:#22B573"></div>
+        <div style="font:500 12px 'IBM Plex Mono',monospace;color:#64748B;white-space:nowrap">Last updated {{ updated }}</div>
+        <div onClick="{{ refresh }}" style="font:600 12px Manrope,sans-serif;color:#1B69DE;cursor:pointer;padding:6px 10px;border-radius:7px" style-hover="background:#E6EFFC">Refresh</div>
+      </div>
+    </div>
+
+    <sc-if value="{{ isLoading }}" hint-placeholder-val="{{ false }}">
+      <div style="margin-top:24px">
+        <div style="height:14px;width:170px;background:#DCE2EA;border-radius:5px;animation:shimmer 1.4s ease-in-out infinite"></div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:16px">
+          <div style="background:#fff;border-radius:10px;padding:20px;box-shadow:0 1px 3px rgba(15,23,36,0.07)"><div style="height:11px;width:64%;background:#E9ECF2;border-radius:5px;animation:shimmer 1.4s ease-in-out infinite"></div><div style="height:30px;width:44%;background:#E9ECF2;border-radius:6px;margin-top:16px;animation:shimmer 1.4s ease-in-out .15s infinite"></div></div>
+          <div style="background:#fff;border-radius:10px;padding:20px;box-shadow:0 1px 3px rgba(15,23,36,0.07)"><div style="height:11px;width:54%;background:#E9ECF2;border-radius:5px;animation:shimmer 1.4s ease-in-out .1s infinite"></div><div style="height:30px;width:38%;background:#E9ECF2;border-radius:6px;margin-top:16px;animation:shimmer 1.4s ease-in-out .25s infinite"></div></div>
+          <div style="background:#fff;border-radius:10px;padding:20px;box-shadow:0 1px 3px rgba(15,23,36,0.07)"><div style="height:11px;width:70%;background:#E9ECF2;border-radius:5px;animation:shimmer 1.4s ease-in-out .2s infinite"></div><div style="height:30px;width:52%;background:#E9ECF2;border-radius:6px;margin-top:16px;animation:shimmer 1.4s ease-in-out .35s infinite"></div></div>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:14px">
+          <div style="background:#fff;border-radius:10px;padding:20px;box-shadow:0 1px 3px rgba(15,23,36,0.07)"><div style="height:11px;width:58%;background:#E9ECF2;border-radius:5px;animation:shimmer 1.4s ease-in-out .3s infinite"></div><div style="height:30px;width:40%;background:#E9ECF2;border-radius:6px;margin-top:16px;animation:shimmer 1.4s ease-in-out .45s infinite"></div></div>
+          <div style="background:#fff;border-radius:10px;padding:20px;box-shadow:0 1px 3px rgba(15,23,36,0.07)"><div style="height:11px;width:48%;background:#E9ECF2;border-radius:5px;animation:shimmer 1.4s ease-in-out .35s infinite"></div><div style="height:30px;width:56%;background:#E9ECF2;border-radius:6px;margin-top:16px;animation:shimmer 1.4s ease-in-out .5s infinite"></div></div>
+          <div style="background:#fff;border-radius:10px;padding:20px;box-shadow:0 1px 3px rgba(15,23,36,0.07)"><div style="height:11px;width:66%;background:#E9ECF2;border-radius:5px;animation:shimmer 1.4s ease-in-out .4s infinite"></div><div style="height:30px;width:46%;background:#E9ECF2;border-radius:6px;margin-top:16px;animation:shimmer 1.4s ease-in-out .55s infinite"></div></div>
+        </div>
+        <div style="font:500 13px Manrope,sans-serif;color:#64748B;margin-top:20px">Fetching your numbers…</div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isError }}" hint-placeholder-val="{{ false }}">
+      <div style="margin-top:24px;background:#fff;border-radius:12px;padding:36px 28px;box-shadow:0 1px 3px rgba(15,23,36,0.07);border-top:3px solid #D93025;text-align:center">
+        <div style="font:700 18px Manrope,sans-serif;color:#A5170F">Couldn't load your statistics</div>
+        <div style="font:400 14px/1.6 Manrope,sans-serif;color:#33415C;margin-top:8px;max-width:420px;margin-left:auto;margin-right:auto">The stats service didn't respond. Your calls and orders are unaffected — this is a reporting issue only.</div>
+        <div style="font:500 12px 'IBM Plex Mono',monospace;color:#94A3B8;margin-top:10px">ERR_STATS_TIMEOUT · 09:41 AM</div>
+        <div style="display:flex;gap:10px;justify-content:center;margin-top:20px">
+          <div onClick="{{ refresh }}" style="font:600 13px Manrope,sans-serif;color:#fff;background:#1B69DE;padding:11px 20px;border-radius:9px;cursor:pointer;min-height:42px;display:flex;align-items:center" style-hover="background:#0F55BC">Try again</div>
+          <div style="font:600 13px Manrope,sans-serif;color:#33415C;background:#EEF2F7;padding:11px 20px;border-radius:9px;cursor:pointer;min-height:42px;display:flex;align-items:center" style-hover="background:#E2E8F0">Report to support</div>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isEmpty }}" hint-placeholder-val="{{ false }}">
+      <div style="margin-top:24px;background:#fff;border-radius:12px;padding:48px 28px;box-shadow:0 1px 3px rgba(15,23,36,0.07);text-align:center">
+        <img src="https://assets.truemeds.in/Images/website-assets/icons/status/GenericSafe.svg" alt="" style="height:52px">
+        <div style="font:700 18px Manrope,sans-serif;margin-top:16px">No activity recorded for {{ periodLabel }}</div>
+        <div style="font:400 14px/1.6 Manrope,sans-serif;color:#33415C;margin-top:8px;max-width:430px;margin-left:auto;margin-right:auto">Once you start calling customers, your numbers appear here automatically. Nothing to fetch or refresh.</div>
+        <div style="display:flex;gap:10px;justify-content:center;margin-top:20px">
+          <div style="font:600 13px Manrope,sans-serif;color:#fff;background:#1B69DE;padding:11px 20px;border-radius:9px;cursor:pointer;min-height:42px;display:flex;align-items:center" style-hover="background:#0F55BC">Go to my call queue</div>
+          <div data-period="prev" onClick="{{ setPeriod }}" style="font:600 13px Manrope,sans-serif;color:#33415C;background:#EEF2F7;padding:11px 20px;border-radius:9px;cursor:pointer;min-height:42px;display:flex;align-items:center" style-hover="background:#E2E8F0">View previous period</div>
+        </div>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ isReady }}" hint-placeholder-val="{{ true }}">
+    <div style="margin-top:24px">
+
+      <div style="display:flex;align-items:center;gap:10px">
+        <div style="width:3px;height:16px;background:#1B69DE;border-radius:2px"></div>
+        <h2 style="font:700 16px Manrope,sans-serif;margin:0">Key Performance</h2>
+        <div style="font:500 12px Manrope,sans-serif;color:#94A3B8">{{ periodLabel }}</div>
+      </div>
+
+      <div style="display:flex;gap:14px;margin-top:14px;align-items:stretch;flex-wrap:wrap">
+
+        <div style="flex:2 1 520px;background:#fff;border-radius:12px;box-shadow:0 1px 3px rgba(15,23,36,0.07);padding:16px 20px 20px">
+          <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+            <div style="font:700 11px Manrope,sans-serif;letter-spacing:0.06em;text-transform:uppercase;color:#64748B">Call to order funnel</div>
+            <div style="flex:1"></div>
+            <div style="display:flex;align-items:center;gap:7px;background:#E6EFFC;padding:6px 12px;border-radius:8px">
+              <div style="font:500 12px Manrope,sans-serif;color:#33415C">Conversion</div>
+              <div style="font:700 16px 'IBM Plex Mono',monospace;color:#0A4193">{{ m.convPct }}</div>
+              <div title="Formula: orders placed ÷ calls initiated × 100. End-to-end conversion across the whole funnel, so unanswered calls do count. The two step rates below break down where the drop-off happens." style="width:15px;height:15px;border:1px solid #8DB4EF;border-radius:99px;font:700 10px Manrope,sans-serif;color:#0A4193;display:flex;align-items:center;justify-content:center;cursor:help">i</div>
+            </div>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:14px;margin-top:18px">
+            <div>
+              <div style="display:flex;align-items:baseline;gap:10px;flex-wrap:wrap">
+                <div style="font:700 26px/1.1 'IBM Plex Mono',monospace;min-width:74px">{{ m.callsInit }}</div>
+                <div style="font:600 13px Manrope,sans-serif;color:#33415C">Calls initiated</div>
+                <div style="flex:1"></div>
+                <div style="font:500 12px Manrope,sans-serif;color:#94A3B8">starting point</div>
+              </div>
+              <div style="height:10px;background:#EEF2F7;border-radius:99px;margin-top:7px;overflow:hidden"><div style="width:100%;height:10px;background:#C5D9F7;border-radius:99px"></div></div>
+            </div>
+
+            <div>
+              <div style="display:flex;align-items:baseline;gap:10px;flex-wrap:wrap">
+                <div style="font:700 26px/1.1 'IBM Plex Mono',monospace;color:#1B69DE;min-width:74px">{{ m.callsConn }}</div>
+                <div style="font:600 13px Manrope,sans-serif;color:#33415C">Calls connected</div>
+                <div style="flex:1"></div>
+                <div style="display:flex;align-items:center;gap:6px">
+                  <div style="font:700 13px 'IBM Plex Mono',monospace;color:#0A4193">{{ m.connPct }}</div>
+                  <div style="font:500 12px Manrope,sans-serif;color:#64748B">answered</div>
+                  <div title="Formula: calls connected ÷ calls initiated × 100. A call counts as connected only when the customer answers; ring-outs, busy tones and invalid numbers still count as initiated." style="width:15px;height:15px;border:1px solid #94A3B8;border-radius:99px;font:700 10px Manrope,sans-serif;color:#64748B;display:flex;align-items:center;justify-content:center;cursor:help">i</div>
+                </div>
+              </div>
+              <div style="height:10px;background:#EEF2F7;border-radius:99px;margin-top:7px;overflow:hidden"><div style="width:{{ m.connPct }};height:10px;background:#1B69DE;border-radius:99px"></div></div>
+            </div>
+
+            <div>
+              <div style="display:flex;align-items:baseline;gap:10px;flex-wrap:wrap">
+                <div style="font:700 26px/1.1 'IBM Plex Mono',monospace;color:#22935B;min-width:74px">{{ m.orders }}</div>
+                <div style="font:600 13px Manrope,sans-serif;color:#33415C">Orders placed</div>
+                <div style="flex:1"></div>
+                <div style="display:flex;align-items:center;gap:6px">
+                  <div style="font:700 13px 'IBM Plex Mono',monospace;color:#22935B">{{ m.closePct }}</div>
+                  <div style="font:500 12px Manrope,sans-serif;color:#64748B">of connected</div>
+                  <div title="Formula: orders placed ÷ calls connected × 100. Your close rate once a customer actually picks up — the part of the funnel most within your control." style="width:15px;height:15px;border:1px solid #94A3B8;border-radius:99px;font:700 10px Manrope,sans-serif;color:#64748B;display:flex;align-items:center;justify-content:center;cursor:help">i</div>
+                </div>
+              </div>
+              <div style="height:10px;background:#EEF2F7;border-radius:99px;margin-top:7px;overflow:hidden"><div style="width:{{ m.convPct }};height:10px;background:#22B573;border-radius:99px"></div></div>
+            </div>
+          </div>
+
+          <div style="height:1px;background:#EEF2F7;margin:18px 0 12px"></div>
+          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+            <div style="font:500 12px Manrope,sans-serif;color:#64748B">Conversion vs previous {{ viewWord }}</div>
+            <div style="font:700 12px Manrope,sans-serif;color:#22935B;background:#C8EDDC;padding:4px 9px;border-radius:6px">{{ m.convDelta }}</div>
+          </div>
+        </div>
+
+        <div style="flex: 1 1 320px; border-radius: 12px; box-shadow: 0 4px 14px rgba(15,23,36,0.16); padding: 14px 18px 18px; background-color: #FFFFFF">
+          <div style="font: 700 11px Manrope,sans-serif; letter-spacing: 0.06em; text-transform: uppercase; color: #0E1724">Total order value</div>
+          <div style="font: 700 38px/1.1 'IBM Plex Mono',monospace; color: #171819; margin-top: 12px; letter-spacing: -0.01em">{{ m.value }}</div>
+          <div style="font: 500 13px Manrope,sans-serif; color: #0E1724; margin-top: 8px">{{ m.aov }} average per order</div>
+          <div style="height:1px;background:#EEF2F7;margin:16px 0 12px"></div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <div style="font:500 12px Manrope,sans-serif;color:#64748B">vs previous {{ viewWord }}</div>
+            <div style="font:700 12px Manrope,sans-serif;color:#22935B;background:#C8EDDC;padding:4px 9px;border-radius:6px">{{ m.valueDelta }}</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:center;gap:10px;margin-top:26px">
+        <div style="width:3px;height:16px;background:#F2A93B;border-radius:2px"></div>
+        <h2 style="font:700 16px Manrope,sans-serif;margin:0">Needs your attention</h2>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px;margin-top:14px">
+        <div style="background:#fff;border-radius:12px;box-shadow:0 1px 3px rgba(15,23,36,0.07);padding:16px 18px;display:flex;align-items:center;gap:16px">
+          <div style="font:700 30px 'IBM Plex Mono',monospace;color:#8A5A00">{{ m.hold }}</div>
+          <div>
+            <div style="font:600 14px Manrope,sans-serif">Orders on hold</div>
+          </div>
+          <div style="flex:1"></div>
+          <img src="https://assets.truemeds.in/Images/website-assets/icons/actions/rightChev.svg" alt="" style="height:14px;opacity:0.4;flex:none">
+        </div>
+        <div style="background:#fff;border-radius:12px;box-shadow:0 1px 3px rgba(15,23,36,0.07);padding:16px 18px;display:flex;align-items:center;gap:16px">
+          <div style="font:700 30px 'IBM Plex Mono',monospace;color:#0A4193">{{ m.sched }}</div>
+          <div>
+            <div style="font:600 14px Manrope,sans-serif">Scheduled orders</div>
+          </div>
+          <div style="flex:1"></div>
+          <img src="https://assets.truemeds.in/Images/website-assets/icons/actions/rightChev.svg" alt="" style="height:14px;opacity:0.4;flex:none">
+        </div>
+      </div>
+
+      <div style="margin-top:26px;display:flex;flex-direction:column;gap:12px">
+
+        <div style="background:#fff;border-radius:12px;box-shadow:0 1px 3px rgba(15,23,36,0.07);overflow:hidden">
+          <div onClick="{{ toggleFulfil }}" style="display:flex;align-items:center;gap:14px;padding:16px 18px;cursor:pointer" style-hover="background:#F7F9FC">
+            <div style="width:3px;height:16px;background:#94A3B8;border-radius:2px"></div>
+            <div style="font:700 15px Manrope,sans-serif">Fulfilment</div>
+            <div style="font:500 12px Manrope,sans-serif;color:#64748B">{{ m.delivered }} delivered · {{ m.transit }} in transit</div>
+            <div style="flex:1"></div>
+            <sc-if value="{{ fulfilOpen }}" hint-placeholder-val="{{ false }}">
+              <div style="font:600 12px Manrope,sans-serif;color:#1B69DE">Hide</div>
+              <img src="https://assets.truemeds.in/Images/website-assets/icons/actions/rightChev.svg" alt="" style="height:14px;transform:rotate(-90deg);opacity:0.6;flex:none">
+            </sc-if>
+            <sc-if value="{{ fulfilShut }}" hint-placeholder-val="{{ true }}">
+              <div style="font:600 12px Manrope,sans-serif;color:#1B69DE">Show 5 metrics</div>
+              <img src="https://assets.truemeds.in/Images/website-assets/icons/actions/rightChev.svg" alt="" style="height:14px;transform:rotate(90deg);opacity:0.6;flex:none">
+            </sc-if>
+          </div>
+          <sc-if value="{{ fulfilOpen }}" hint-placeholder-val="{{ false }}">
+            <div style="border-top:1px solid #EEF2F7;padding:18px;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px">
+              <div style="background:#F7F9FC;border-radius:10px;padding:14px 16px">
+                <div style="font:500 12px Manrope,sans-serif;color:#64748B">Total orders delivered</div>
+                <div style="font:700 24px 'IBM Plex Mono',monospace;color:#22935B;margin-top:6px">{{ m.delivered }}</div>
+              </div>
+              <div style="background:#F7F9FC;border-radius:10px;padding:14px 16px">
+                <div style="font:500 12px Manrope,sans-serif;color:#64748B">Orders in transit</div>
+                <div style="font:700 24px 'IBM Plex Mono',monospace;color:#0A4193;margin-top:6px">{{ m.transit }}</div>
+              </div>
+              <div style="background:#F7F9FC;border-radius:10px;padding:14px 16px">
+                <div style="font:500 12px Manrope,sans-serif;color:#64748B">Orders cancelled</div>
+                <div style="font:700 24px 'IBM Plex Mono',monospace;color:#A5170F;margin-top:6px">{{ m.cancelled }}</div>
+              </div>
+              <div style="background:#F7F9FC;border-radius:10px;padding:14px 16px">
+                <div style="display:flex;align-items:center;gap:6px">
+                  <div style="font:500 12px Manrope,sans-serif;color:#64748B">RTOs</div>
+                  <div title="Return to origin. Orders that came back to the warehouse undelivered, including door-to-origin returns where the customer refused at the door. DTOs are bundled in here rather than counted separately." style="width:15px;height:15px;border:1px solid #94A3B8;border-radius:99px;font:700 10px Manrope,sans-serif;color:#64748B;display:flex;align-items:center;justify-content:center;cursor:help">i</div>
+                </div>
+                <div style="font:700 24px 'IBM Plex Mono',monospace;color:#A5170F;margin-top:6px">{{ m.rto }}</div>
+              </div>
+              <div style="background:#F7F9FC;border-radius:10px;padding:14px 16px">
+                <div style="display:flex;align-items:center;gap:6px">
+                  <div style="font:500 12px Manrope,sans-serif;color:#64748B">Delivery success rate</div>
+                  <div title="Formula: orders delivered ÷ (delivered + cancelled + RTOs) × 100. Counts only orders that reached dispatch, so orders still in transit are excluded from both sides." style="width:15px;height:15px;border:1px solid #94A3B8;border-radius:99px;font:700 10px Manrope,sans-serif;color:#64748B;display:flex;align-items:center;justify-content:center;cursor:help">i</div>
+                </div>
+                <div style="font:700 24px 'IBM Plex Mono',monospace;margin-top:6px">{{ m.successRate }}</div>
+              </div>
+            </div>
+          </sc-if>
+        </div>
+
+        <div style="background:#fff;border-radius:12px;box-shadow:0 1px 3px rgba(15,23,36,0.07);overflow:hidden">
+          <div onClick="{{ toggleOtc }}" style="display:flex;align-items:center;gap:14px;padding:16px 18px;cursor:pointer" style-hover="background:#F7F9FC">
+            <div style="width:3px;height:16px;background:#94A3B8;border-radius:2px"></div>
+            <div style="font:700 15px Manrope,sans-serif">OTC</div>
+            <div style="font:500 12px Manrope,sans-serif;color:#64748B">{{ m.otcOrders }} orders · {{ m.otcSale }} sale value</div>
+            <div style="flex:1"></div>
+            <sc-if value="{{ otcOpen }}" hint-placeholder-val="{{ false }}">
+              <div style="font:600 12px Manrope,sans-serif;color:#1B69DE">Hide</div>
+              <img src="https://assets.truemeds.in/Images/website-assets/icons/actions/rightChev.svg" alt="" style="height:14px;transform:rotate(-90deg);opacity:0.6;flex:none">
+            </sc-if>
+            <sc-if value="{{ otcShut }}" hint-placeholder-val="{{ true }}">
+              <div style="font:600 12px Manrope,sans-serif;color:#1B69DE">Show 3 metrics</div>
+              <img src="https://assets.truemeds.in/Images/website-assets/icons/actions/rightChev.svg" alt="" style="height:14px;transform:rotate(90deg);opacity:0.6;flex:none">
+            </sc-if>
+          </div>
+          <sc-if value="{{ otcOpen }}" hint-placeholder-val="{{ false }}">
+            <div style="border-top:1px solid #EEF2F7;padding:18px;display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px">
+              <div style="background:#F7F9FC;border-radius:10px;padding:14px 16px">
+                <div style="font:500 12px Manrope,sans-serif;color:#64748B">OTC orders</div>
+                <div style="font:700 24px 'IBM Plex Mono',monospace;margin-top:6px">{{ m.otcOrders }}</div>
+              </div>
+              <div style="background:#F7F9FC;border-radius:10px;padding:14px 16px">
+                <div style="font:500 12px Manrope,sans-serif;color:#64748B">OTC order value — MRP</div>
+                <div style="font:700 24px 'IBM Plex Mono',monospace;color:#64748B;margin-top:6px">{{ m.otcMrp }}</div>
+              </div>
+              <div style="background:#F7F9FC;border-radius:10px;padding:14px 16px">
+                <div style="font:500 12px Manrope,sans-serif;color:#64748B">OTC order value — Sale value</div>
+                <div style="font:700 24px 'IBM Plex Mono',monospace;color:#22935B;margin-top:6px">{{ m.otcSale }}</div>
+              </div>
+            </div>
+          </sc-if>
+        </div>
+      </div>
+
+    </div>
+    </sc-if>
+
+  </div>
+
+  <div style="background:#F1F2F6;border-top:1px solid #DCE2EA;padding:18px;text-align:center">
+    <div style="font:500 13px Manrope,sans-serif;color:#64748B">©2026 Created by Intellihealth Pvt. Ltd. Version 1.18.0</div>
+  </div>
+</div>
+</div>
+
+<div style="max-width:1440px;margin:16px auto 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px">
+  <div style="background:#fff;border:1px solid #DCE2EA;border-radius:10px;padding:16px 18px">
+    <div style="font:700 12px Manrope,sans-serif;letter-spacing:0.05em;text-transform:uppercase;color:#64748B">Hierarchy</div>
+    <div style="font:500 13px/1.6 Manrope,sans-serif;color:#33415C;margin-top:7px">Fifteen equal cards became two weighted ones. Initiated, connected and orders placed are a single funnel, so they share one card with the drop-off rate on each step; order value is the only inverted card, so it reads first.</div>
+  </div>
+  <div style="background:#fff;border:1px solid #DCE2EA;border-radius:10px;padding:16px 18px">
+    <div style="font:700 12px Manrope,sans-serif;letter-spacing:0.05em;text-transform:uppercase;color:#64748B">No filter bar</div>
+    <div style="font:500 13px/1.6 Manrope,sans-serif;color:#33415C;margin-top:7px">The date range, Get Details and the empty white band are gone. Day is selected on open, data is already there, and month choice is capped at the last three months so there is nothing to type.</div>
+  </div>
+  <div style="background:#fff;border:1px solid #DCE2EA;border-radius:10px;padding:16px 18px">
+    <div style="font:700 12px Manrope,sans-serif;letter-spacing:0.05em;text-transform:uppercase;color:#64748B">Narrow desktop</div>
+    <div style="font:500 13px/1.6 Manrope,sans-serif;color:#33415C;margin-top:7px">Every row is an auto-fit grid. The funnel and order value cards sit side by side from 1440 down to 980, then stack at 780. Expandable sections step from five columns down to three. Nothing is pinned to a fixed pixel width.</div>
+  </div>
+</div>
+
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;dataState&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;ready&quot;,&quot;loading&quot;,&quot;empty&quot;,&quot;error&quot;],&quot;default&quot;:&quot;ready&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Prototype&quot;},&quot;frameWidth&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:1440,&quot;min&quot;:900,&quot;max&quot;:1600,&quot;step&quot;:20,&quot;unit&quot;:&quot;px&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Prototype&quot;}}">
+const DATA = {
+  today:   { callsInit: 142, callsConn: 98,  orders: 31,  value: "₹48,260",   aov: "₹1,557", hold: 5,  sched: 12,  delivered: 24,  transit: 4,  cancelled: 3,  rto: 1,  otcOrders: 9,   otcMrp: "₹14,820",   otcSale: "₹11,240",   convDelta: "+2.4 pts", valueDelta: "+11%" },
+  w0:      { callsInit: 684, callsConn: 471, orders: 152, value: "₹2,41,180", aov: "₹1,587", hold: 18, sched: 46,  delivered: 121, transit: 17, cancelled: 9,  rto: 4,  otcOrders: 41,  otcMrp: "₹71,400",   otcSale: "₹54,180",   convDelta: "+1.8 pts", valueDelta: "+7%"  },
+  w1:      { callsInit: 651, callsConn: 438, orders: 139, value: "₹2,18,940", aov: "₹1,575", hold: 14, sched: 39,  delivered: 128, transit: 3,  cancelled: 6,  rto: 2,  otcOrders: 37,  otcMrp: "₹64,120",   otcSale: "₹48,760",   convDelta: "−0.6 pts", valueDelta: "+3%"  },
+  w2:      { callsInit: 702, callsConn: 462, orders: 148, value: "₹2,29,510", aov: "₹1,551", hold: 11, sched: 34,  delivered: 141, transit: 0,  cancelled: 5,  rto: 2,  otcOrders: 44,  otcMrp: "₹78,300",   otcSale: "₹59,020",   convDelta: "+3.1 pts", valueDelta: "+14%" },
+  m0:      { callsInit: 2918, callsConn: 2004, orders: 638, value: "₹10,42,540", aov: "₹1,634", hold: 27, sched: 184, delivered: 512, transit: 61, cancelled: 38, rto: 15, otcOrders: 168, otcMrp: "₹3,04,600", otcSale: "₹2,29,480", convDelta: "+1.2 pts", valueDelta: "+9%"  },
+  m1:      { callsInit: 3104, callsConn: 2118, orders: 671, value: "₹10,88,920", aov: "₹1,623", hold: 31, sched: 196, delivered: 604, transit: 12, cancelled: 41, rto: 18, otcOrders: 181, otcMrp: "₹3,26,400", otcSale: "₹2,46,100", convDelta: "+0.4 pts", valueDelta: "+5%"  },
+  m2:      { callsInit: 2841, callsConn: 1902, orders: 592, value: "₹9,41,260",  aov: "₹1,590", hold: 22, sched: 171, delivered: 561, transit: 0,  cancelled: 34, rto: 12, otcOrders: 154, otcMrp: "₹2,81,900", otcSale: "₹2,12,700", convDelta: "+2.0 pts", valueDelta: "+6%"  }
+};
+
+const PERIODS = {
+  day:   [{ id: "today", label: "Today" }],
+  week:  [{ id: "w0", label: "This Week" }, { id: "w1", label: "Last Week" }, { id: "w2", label: "Two Weeks Ago" }],
+  month: [{ id: "m2", label: "July" }, { id: "m1", label: "August" }, { id: "m0", label: "September" }]
+};
+
+const UPDATED = { day: "today 09:41 AM", week: "today 09:41 AM", month: "today 09:41 AM" };
+
+class Component extends DCLogic {
+  state = {
+    view: "day",
+    period: { day: "today", week: "w0", month: "m0" },
+    dataState: null,
+    fulfil: false,
+    otc: false,
+    width: null
+  };
+
+  get dataState() { return this.state.dataState || this.props.dataState || "ready"; }
+  get width() { return this.state.width || this.props.frameWidth || 1440; }
+
+  pct(a, b) { return b === 0 ? "0%" : (Math.round((a / b) * 1000) / 10).toFixed(1) + "%"; }
+
+  renderVals() {
+    const view = this.state.view;
+    const pid = this.state.period[view];
+    const d = DATA[pid] || DATA.today;
+    const list = PERIODS[view];
+    const st = this.dataState;
+
+    const m = Object.assign({}, d, {
+      connPct: this.pct(d.callsConn, d.callsInit),
+      convPct: this.pct(d.orders, d.callsInit),
+      closePct: this.pct(d.orders, d.callsConn),
+      successRate: this.pct(d.delivered, d.delivered + d.cancelled + d.rto)
+    });
+
+    return {
+      m: m,
+      frameW: this.width + "px",
+      isDay: view === "day", notDay: view !== "day",
+      isWeek: view === "week", notWeek: view !== "week",
+      isMonth: view === "month", notMonth: view !== "month",
+      viewWord: view,
+      periodLabel: (list.find(p => p.id === pid) || list[0]).label,
+      updated: UPDATED[view],
+      isReady: st === "ready", isLoading: st === "loading", isEmpty: st === "empty", isError: st === "error",
+      fulfilOpen: this.state.fulfil, fulfilShut: !this.state.fulfil,
+      otcOpen: this.state.otc, otcShut: !this.state.otc,
+      periods: list.map(p => {
+        const on = p.id === pid;
+        return {
+          id: p.id, label: p.label,
+          weight: on ? 700 : 500,
+          fg: on ? "#0A4193" : "#33415C",
+          bg: on ? "#E6EFFC" : "#FFFFFF",
+          bd: on ? "#1B69DE" : "#DCE2EA"
+        };
+      }),
+      setView: (e) => {
+        const v = e.currentTarget.getAttribute("data-view");
+        this.setState({ view: v, fulfil: false, otc: false });
+      },
+      setPeriod: (e) => {
+        const raw = e.currentTarget.getAttribute("data-period");
+        const cur = this.state.period[this.state.view];
+        let next = raw;
+        if (raw === "prev") {
+          const ids = PERIODS[this.state.view].map(p => p.id);
+          const i = ids.indexOf(cur);
+          next = ids[Math.max(0, i - 1)];
+        }
+        const p = Object.assign({}, this.state.period);
+        p[this.state.view] = next;
+        this.setState({ period: p, dataState: "ready" });
+      },
+      setState: (e) => this.setState({ dataState: e.currentTarget.getAttribute("data-state") }),
+      setWidth: (e) => this.setState({ width: parseInt(e.currentTarget.getAttribute("data-w"), 10) }),
+      toggleFulfil: () => this.setState(s => ({ fulfil: !s.fulfil })),
+      toggleOtc: () => this.setState(s => ({ otc: !s.otc })),
+      refresh: () => {
+        this.setState({ dataState: "loading" });
+        clearTimeout(this._t);
+        this._t = setTimeout(() => this.setState({ dataState: "ready" }), 1100);
+      }
+    };
+  }
+
+  parseR(s) { return parseInt(String(s).replace(/[^0-9]/g, ""), 10) || 0; }
+
+  componentWillUnmount() { clearTimeout(this._t); }
+}
+
+</script>
+</body>
+</html>

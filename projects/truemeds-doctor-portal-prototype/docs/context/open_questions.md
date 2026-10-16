@@ -1,5 +1,8 @@
 # open_questions.md — Truemeds Doctor Portal Prototype
 
+
+> Answered questions and the reasoning behind each design decision are recorded in `decision_log.md` (same folder).
+
 This file tracks all unresolved product decisions that Claude must not silently answer.
 
 Every entry must include:
@@ -56,9 +59,9 @@ Every entry must include:
 
 **Why it matters:** Determines whether the medicines section is read-only + validation, or editable.
 
-**Safe placeholder:** Doctor can edit M-A-N dosing, strength, qty, disable/enable medicines, and add new medicines. All changes are mock-only and not persisted. `[MOCK ASSUMPTION]`
+**Answer (Apurva, 2026-10-07):** The doctor cannot add medicines; Add medicine is removed from the prototype. The doctor can edit frequency, duration and advice, and can disable a medicine.
 
-**Status:** Partially answered — prototype supports edit/add/disable. Actual backend write authority and business rules (min/max qty constraints, whether disable = order cancellation) remain open. See also OQ-011.
+**Status:** Partially answered — add is answered (no). Whether disable = order cancellation, and where a disable writes, remain open. See also OQ-011.
 
 ---
 
@@ -94,7 +97,7 @@ Every entry must include:
 
 **Safe placeholder:** Both are shown as distinct final CTAs for the relevant Pilot scenarios. Internal routing logic is not implemented in V1. `[MOCK ASSUMPTION]`
 
-**Status:** Open
+**Status:** Answered — Apurva, 2026-10-16, D-57. Transfer = patient handed to an HA on the same call; forward = an HA calls the patient back separately; a failed transfer goes as a forward. Which systems carry this is Engineering's.
 
 ---
 
@@ -142,9 +145,9 @@ Every entry must include:
 
 **Why it matters:** Doctor can now edit qty and disable medicines in the prototype. If there are business rules (e.g., doctor cannot increase qty beyond what was ordered, or disabling a medicine cancels it from the order), those rules are not yet defined.
 
-**Safe placeholder:** Doctor can adjust qty freely (min 1) and disable any medicine. Changes are mock-only and not persisted. `[MOCK ASSUMPTION]`
+**Answer on qty (Apurva, 2026-10-07):** The doctor never sees or edits quantity on the Prescribe screen. Two quantities exist: (1) the customer's cart quantity, shown read-only on the medicine row and unchanged by any doctor edit; (2) the prescription quantity, owned by the backend. The backend preselects frequency and duration for the maximum configured period (6 months; Ongoing preselected) and stores the quantity; if the doctor changes frequency or duration, the backend recalculates the quantity and prints it on the prescription, replacing the default.
 
-**Status:** Open
+**Status:** Qty part answered. Disable scope (does disabling cancel the item from the order; where it writes) still open.
 
 ---
 
@@ -172,6 +175,32 @@ Every entry must include:
 
 ---
 
+### OQ-016 — Re-check for orders automatically?
+**Question:** On "No orders right now", should the app re-check every N seconds (and open an order when one appears), or only when the doctor taps Check again?
+**Safe placeholder:** Only on tap. `[MOCK ASSUMPTION]`
+
+### OQ-017 — Sign-in rules for production
+**Question:** OTP expiry, wrong-try counting/reset window, OTP issue-cap window/reset, lock duration, signed-in session length, and Doctor Ops approval timing. OTP is 4 digits; faster sign-in is optional. D-35 sets a configurable OTP issue cap, initially 4 codes per mobile number (first send plus up to 3 resends); the server-enforced window and reset rule remain open. D-34 sets 5 server-confirmed wrong OTP submissions as the number-lock threshold; the attempted mobile number is locked, not the account. Resending or restarting sign-in does not reset the count. A different number needs Doctor Ops approval for that doctor before sign-in.
+**Safe placeholder:** 5 min code life, resend 30 s → 1 min → 2 min, 15 min number lock after the decided 5 wrong tries; session 24 h; ops approval timing still unconfirmed. `[MOCK ASSUMPTION]`
+**Confirmed 2026-10-12:** Signed-in session remains valid until the case is closed; no OTP prompt over a live case. Technical token renewal must not interrupt the doctor. Re-authentication after case closure remains open; the 24 h session value above is only a mock placeholder.
+
+### OQ-018 — Patient consent when the doctor calls (legal)
+**Question:** Telemedicine Practice Guidelines: a consultation the doctor starts needs explicit, recorded patient consent. Does the patient's order count as the patient starting it?
+**Safe placeholder:** Not built. Needs Legal before the order page changes.
+
+### OQ-023 — When to offer faster sign-in again after "Not now"
+**Question:** After a doctor taps "Not now" on the faster sign-in offer (D-45), when is it offered again? Options: after the next N OTP sign-ins on the same device (e.g. 3); after N days; never (Profile only).
+**Safe placeholder:** Never re-offer automatically; Profile always has the switch (D-45). Needs product + SMS-cost input.
+
+
+### OQ-024 — Releasing a case (backend) [OPEN — Engineering]
+D-48: Back before the first attempted call releases the case to the queue. Needs an unassign action that is only allowed while no call has been attempted, is safe to retry, and returns the case to the pool immediately. Who else is notified, and whether released cases go to the front of the queue, is Engineering/Ops to confirm.
+
+### OQ-025 — Restoring an open case; doctor never returns [OPEN — Engineering]
+D-48: reopening the app goes straight back into an open case. Needs the server to report the doctor's open case on launch. Also: if a case is assigned and the doctor never returns or calls (app killed, phone dead), when is it released automatically, and by whom?
+
+### OQ-026 — "Order" in case-page data and locked CTAs [ANSWERED — Apurva, 2026-10-14, D-50]
+Order ID line stays ("Order 12345 · ₹1,240" — shared reference between customer order and doctor case). CTAs renamed: Confirm prescription / Confirm & transfer / Confirm & forward / Skip HA call. **Open for Engineering:** how the four paths are tracked (separate events vs one event with a flow field) — required: each path distinguishable, never derived from the label.
 ## Answered Questions
 
 *(None yet)*
@@ -180,4 +209,49 @@ Every entry must include:
 
 ## Deferred Questions
 
-*(None yet)*
+
+### OQ-019 — "Looking for a case" (Home)
+**Question:** After one Next order tap with no case, may the app keep re-checking while the doctor stays on Home and open a case when one appears? How often, and is it fair across doctors? To discuss with Apurva, then backend.
+**Safe placeholder:** "No cases right now" with a manual Try again. `[MOCK ASSUMPTION]`
+
+### OQ-020 — Pooled callback hand-over
+**Question:** When a callback returns to the pool (D-36), does the doctor who picks it up see the earlier doctor's notes and outcome on the case page?
+**Safe placeholder:** Assume yes; the case page shows the earlier attempt. `[MOCK ASSUMPTION]`
+
+### OQ-021 — Support contacts and links
+**Answered 2026-10-12 (Apurva):** Sign up → `https://pwa-doctor.truemeds.in/onboarding`. Doctor Ops / support
+WhatsApp: **+91 86524 24617** (`https://wa.me/918652424617`). Terms & Conditions and Privacy Policy stay dummy links.
+The number takes both voice calls and WhatsApp, so "Call Doctor Ops" (tel:) and "Message support" (WhatsApp) stay as
+approved. **Production:** sign-up URL, Terms, Privacy and support numbers must be configurable, not hard-coded.
+**Safe placeholder:** Terms/Privacy point to a "link pending" page. `[MOCK ASSUMPTION]`
+
+**Added 2026-10-14:** what the case-page **Help** button opens (call Doctor Ops, FAQ, or a choice) — needed before the case page is built (D-49).
+
+**Added 2026-10-14:** transfer-failed alert (warm transfer to HA fails) has no spec yet. PRD: blocking alert, doctor confirms before the case is re-routed to forward. Needed before the case page is built (D-51).
+**Update 2026-10-16 (D-57):** routing answered — a failed transfer goes as a forward (HA calls back). Still open: what the doctor sees (alert or silent switch).
+
+### OQ-022 — Crash and freeze reporting
+**Partly answered 2026-10-12 (Apurva):** the Android and iOS apps use both **Sentry** and **Crashlytics** today.
+Crashlytics covers native apps only; the mobile-web doctor app would report through Sentry. The help-message
+reference ID can be Sentry's event ID, so tech can open the exact report.
+**Answered 2026-10-12 (Apurva):** The app team owns technical triage. Help provides an explicit report action; merely opening Help does not submit a report. Automatic crash and freeze logging remains useful. Exact report contents and support routing remain to be defined.
+**Safe placeholder:** Explicit report action shows a mock reference ID. `[MOCK ASSUMPTION]`
+
+### OQ-014 — Prescription quantity units for non-tablet forms
+**Question:** For syrups, injections, creams, drops and inhalers, does the backend's prescription quantity count whole packs (bottles, tubes, vials) or doses? Cart quantity today is whole units.
+**Status:** Deferred — Apurva to brainstorm separately.
+
+### OQ-015 — Per-medicine detail view (price, image)
+**Question:** Line-item price was removed from the medicine row (2026-10-07). Apurva's direction: a row-level icon (e.g. eye) opens a per-medicine view showing price, product image and similar reference details, for when a customer asks. Order value stays visible as is.
+**Status:** Deferred — not designed or built yet.
+
+- **Profile / Logout sheet render** (2026-10-15, round 15): listed on the sheet template (D-52) but not in the Home screen files. Render it when `index.html` is rebuilt; not part of the A–D standards pass.
+
+### OQ-027 — Calling model: phone call now, in-app call later [OPEN — Apurva + Engineering, 2026-10-16]
+First release uses Knowlarity click-to-call: the doctor's phone rings first, the call is ended on the phone (no End call in the app). To confirm with Knowlarity: leg 1 not connected = "doctor didn't answer". In-app (VoIP) calling with native controls to be explored later; patient receives a normal call. Calling screens are redesigned in a separate thread; see `ui-screens/app-logic.md` §5a.
+
+### OQ-028 — Pushed cases (future) [OPEN — later, 2026-10-16]
+Today doctors only request cases; nothing is pushed (D-31, D-36). Apurva: pushing cases to doctors may be explored later. Not in this version.
+
+### OQ-029 — Doctor volume figures [OPEN — Apurva, 2026-10-16]
+project_truth §2 uses approximate figures: ~12,000 orders handled by ~300 active doctors. Apurva to confirm both numbers and the period (per day / per month).

@@ -37,6 +37,8 @@ python scripts/weekly_synthesis.py
 
 No install step; scripts are standalone bash/node/python with no dependency manifest.
 
+This checkout uses HTTPS with a repository-local credential helper. In Cowork, attach the local pm-agent folder and use `device_bash` at its mounted path for normal Git commits and pushes; this route was verified on 2026-10-06. Neither the GitHub connector nor Computer Use Terminal is required. See **AGENTS.md -> "Pushing to GitHub (credentials)"**. Let Git handle authentication; never display credentials or embed tokens in remote URLs.
+
 ## Architecture: PM workflow system
 
 **Entry point is always `workflows/supporting/recall-and-route.md`** — every PM task (PRD, review, objections, exec brief, experiment) is routed through it, never invoked directly:
@@ -67,7 +69,7 @@ Every workspace under `projects/[name]/` follows `templates/project-scaffold/CLA
 - Prototypes lean on `[MOCK ASSUMPTION]` for backend/data gaps rather than inventing product logic; ambiguous business-critical logic gets flagged to `open_questions.md`, not guessed.
 - After any coding task in a project: update that project's `session_handoff.md` (status, files changed, validation done, gaps, next step) before reporting back — this is what the next session resumes from.
 
-Example active projects: `projects/truemeds-doctor-portal-prototype/` (mobile-web prototype split across `index.html`, `app.js`, and `styles.css`), `projects/acom-ring-ai/` (PRD/spec-only, no code — source of truth is markdown, Confluence is generated from it, never sync to Confluence unless explicitly told).
+Example active projects: `projects/truemeds-doctor-portal-prototype/` (mobile-web prototype split across `index.html`, `app.js`, and `styles.css`), `projects/ACOM/` (umbrella for cart-recovery/cart-dropout initiatives; `projects/ACOM/ring-ai/` is the current one — PRD/spec-only, no code — source of truth is markdown, Confluence is generated from it, never sync to Confluence unless explicitly told).
 
 ## Memory updates
 
@@ -84,3 +86,7 @@ Do not modify `project_truth.md` unless the user explicitly locks new truth.
 ## MCP Tools: code-review-graph
 
 `code-review-graph` MCP server is installed and available. This repo is mostly markdown workflows, not a codebase — use the graph tools (`query_graph`, `semantic_search_nodes`, `detect_changes`, etc.) only when working inside a code-bearing subtree like `projects/truemeds-doctor-portal-prototype/`; otherwise Grep/Glob/Read are fine.
+
+## PRD authoring
+
+For any PRD work (new PRDs, edits, and review rounds on existing ones), follow the lean, product-focused method in `templates/lean-prd-guide.md` — state the what/why and the non-negotiable constraints, and leave the *how* to Engineering as Open Questions / Dependencies. The heavier `workflows/core/create-prd` flow remains for when a full, workflow-driven PRD run is explicitly wanted.
