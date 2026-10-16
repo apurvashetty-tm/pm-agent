@@ -131,5 +131,5 @@ Validate the design with representative agents before implementation and monitor
 
 - **Live prototype:** https://acom-mystats-redesign.netlify.app — design reference only, not production code. States reachable via URL params: `?state=loading`, `?state=empty`, `?state=error`, `?view=week`, `?view=month`, `?view=month&open=fulfilment`, `?view=month&open=otc`.
 - **Design handoff bundle** (markup, `styles.css`, `app.js` derived-metric formulas, `data.sample.json` API shape, `tokens.json`, visual-QA screenshots, handoff README): https://drive.google.com/drive/folders/16eqVgYWcsvk3j-tue1DdT8PxVIaaVXKy
-- **Source branch:** `github.com/apurvashetty-tm/pm-agent` @ `acom-portal-revamp` — `projects/ACOM/acom-portal-revamp/My Statistics Page/`
+- **Source branch:** `github.com/apurvashetty-tm/pm-agent` @ `main` (was branch `acom-portal-revamp` until 2026-10-16) — `projects/ACOM/acom-portal-revamp/My Statistics Page/`
 - **Confluence:** https://truemeds.atlassian.net/wiki/spaces/PROD/pages/2019459073/ACOM+My+Statistics+Redesign
