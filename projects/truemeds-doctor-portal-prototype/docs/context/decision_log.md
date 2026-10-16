@@ -631,6 +631,17 @@ From an external (ChatGPT) review, each point verified before acting.
 - **Changes:** D-54 D6 (indent removed, start at label edge kept); checklist 5.4 and R3 exemptions apply to the guard only.
 - **Addendum (Claude, 2026-10-15, round-16 audit):** when a call ends early the script is hidden, so the Call card would be empty; the Call card therefore moves above the medicines only while the call is live or after the HA question, and is hidden when it has nothing to show.
 
+### D-56 · Rebuild from scratch; app logic extracted; calling model — 2026-10-16
+- **Decision (Apurva):**
+  1. **Rebuild the prototype from scratch** (not by extending `index.html` / `app.js`, which were not built to scale). Order: approve `ui-screens/app-logic.md` (the rules, extracted from the old code) → redesign the calling screens → rebuild checklist → build → check against the approved pictures.
+  2. **Confirm is blocked while any medicine is Pending** (all three confirm buttons). The button stays tappable; on tap a notice in the bar says "Prescribe or disable {n} medicines first." and the page scrolls to the first Pending medicine. Callback, Skip HA and Mark as unavailable stay allowed.
+  3. **Phone switched off / wrong number:** the case closes as **Patient unavailable**; the doctor gets Request next case; the lead resurfaces later (backend). No reason line on the card — the doctor heard it on the call and hang-up causes can't be relied on.
+  4. **No queue message:** the case does go back to the queue, but the doctor is never told.
+  5. **Calling, first release = Knowlarity click-to-call:** the doctor's phone rings first, the doctor ends the call on the phone; **no End call in the app**. New state: doctor didn't answer (leg 1 not connected) — to confirm with Knowlarity. In-app (VoIP) calling explored later (OQ-027). The approved calling screens (D-48–D-54) are redesigned in a separate thread.
+  6. **Demo:** one prototype with a demo switch between the calling modes; only the calling part differs.
+- **Why:** the old prototype had grown by patching; the rules are kept, the code is not. The calling screens assumed the app controls the call, which isn't true with click-to-call.
+- **Changes:** D-48/D-51/D-54 calling states (Calling, On call with End call) to be redesigned; everything else in D-42–D-55 stands.
+
 ## Design system changes made for this work
 
 ### D-21 · Toggle fix and a large chip size — 2026-10-07

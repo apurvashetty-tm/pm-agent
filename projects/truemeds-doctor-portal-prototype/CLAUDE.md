@@ -41,7 +41,14 @@ Before any auth/Home UI or render work, read `docs/feedback-rules.md` and `docs/
 
 **Layout v2 — D-42 to D-45.** Read `design-system/RULES.md` §8 (type scale, spacing, button placement, header types) before any screen work. Logo only on home-base screens (sign-in, Home). OTP v2 and the faster sign-in offer screen are defined in D-44 and D-45.
 
-## Layout v2 decisions — D-42 to D-52 (2026-10-14/15)
+## Current state (2026-10-16) — read first
+- **Approved screens A–D:** `ui-screens/` (README there is the index; every state at 360 and 390). Decisions D-42–D-55.
+- **App rules:** `ui-screens/app-logic.md` (DRAFT until Apurva approves) — extracted from the old prototype; the rebuild follows it.
+- **Next:** (1) calling screens for Knowlarity click-to-call (D-56, OQ-027) in a new thread; (2) approve app-logic.md; (3) rebuild checklist; (4) build the prototype **from scratch** — do not extend `index.html` / `app.js`.
+- **Sub-sessions (terminal, Codex) never write to the decision log or record approvals in Apurva's name;** they report under NEEDS-APURVA and Claude records decisions after she agrees.
+- **Audit rule:** before calling screens done, check every decision against every screen it touches at full size (360 and 390), not on contact sheets.
+
+## Layout v2 decisions — D-42 to D-56 (2026-10-14/15)
 
 Read `design-system/RULES.md` §8 (incl. locked specs L1–L9) and **§9 (components and states: button roles, 48px targets, chips, sheet template, toast, states checklist)**, and decision log D-42–D-52, before any screen work. Doctor-portal specifics of the design system are in D-52. Key points: logo only on home-base screens; task headers in hero or compact size, Back only where there is a previous screen; case page exits by stage (D-48); compact tinted case header (D-49). **Wording: "case", never "order", for the doctor's unit of work**; the customer order ID line stays. Final CTA labels and tracking: D-50 ("Confirm prescription", "Confirm & transfer", "Confirm & forward", "Skip HA call").
 

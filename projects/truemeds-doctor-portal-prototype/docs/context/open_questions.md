@@ -245,3 +245,6 @@ reference ID can be Sentry's event ID, so tech can open the exact report.
 **Status:** Deferred — not designed or built yet.
 
 - **Profile / Logout sheet render** (2026-10-15, round 15): listed on the sheet template (D-52) but not in the Home screen files. Render it when `index.html` is rebuilt; not part of the A–D standards pass.
+
+### OQ-027 — Calling model: phone call now, in-app call later [OPEN — Apurva + Engineering, 2026-10-16]
+First release uses Knowlarity click-to-call: the doctor's phone rings first, the call is ended on the phone (no End call in the app). To confirm with Knowlarity: leg 1 not connected = "doctor didn't answer". In-app (VoIP) calling with native controls to be explored later; patient receives a normal call. Calling screens are redesigned in a separate thread; see `ui-screens/app-logic.md` §5a.

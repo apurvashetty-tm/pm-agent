@@ -2,6 +2,8 @@
 
 The approved screens for the Truemeds Doctor Portal, with their pictures. Design system: `design-system/` (rules in `design-system/RULES.md` §8–9). Copy registry and checks: `feedback/`. Native handoff: `native/` (native team).
 
+**Read with the screens:** app rules `app-logic.md` (draft) · decisions `../docs/context/decision_log.md` (D-01–D-56) · locked rules `../docs/context/project_truth.md` · every error/offline/busy state `../docs/feedback-state-map.md` · open questions `../docs/context/open_questions.md`.
+
 ## Screens and pictures
 
 | Phase | Screen file | Pictures folder | States | Decisions |

@@ -24,3 +24,10 @@ Not all-or-nothing. Rules grow as the work firms up; switch stages on purpose.
 - **Always on:** true facts, locked decisions, Truemeds terminology, accessibility, clinical safety.
 - **Switch triggers:** Explore → Shape when Apurva picks a direction; Shape → Finish when other work starts depending on it or it gets expensive to change. Going back is allowed only as Apurva's explicit call.
 - Open: refine the wording, examples per work type, and update `AGENTS.md` / `templates/definition-of-done.md` once agreed.
+
+## Added 2026-10-16 — what still slipped, and the fixes
+- **Automatic checks and AI reviewers passed screens that were wrong** (spilling labels, three stacked buttons, indented chips, stale renders). Checks measure sizes, not decisions. Fix: before "done", trace every decision to every screen it touches and look at each at full size (both widths) — never sign off from contact sheets.
+- **Two rules can conflict** (one chip size per screen vs. grids start at their label). When a check fails against an approved design, look for a rule conflict before changing the design.
+- **Sub-sessions must not record decisions** in the user's name; they report, the lead session records after the user agrees.
+- **Git in a shared folder:** one project per commit, on its own branch, staging only its own paths (see `AGENTS.md` → Git safety).
+- **A prototype that grows by patching** stops being a safe base; extract the rules to a document, then rebuild from scratch.
