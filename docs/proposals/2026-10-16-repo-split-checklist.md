@@ -1,3 +1,5 @@
+> **Superseded 2026-10-16 (Apurva):** not doing the repo split. Chosen instead: one `main`, projects in folders, `scripts/publish.sh`, a one-project commit check, Netlify per project — see `AGENTS.md` → Git safety and `docs/TEAM_GIT_WORKFLOW.md`. Kept for history.
+
 # Repo split — plan and checklist (DRAFT for Apurva's approval)
 
 **Status:** DRAFT — nothing moves until Apurva approves this file. 2026-10-16.

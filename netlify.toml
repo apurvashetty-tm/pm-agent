@@ -2,8 +2,10 @@
 # Publishes the Truemeds Doctor prototype. The app links the central design system as ../../design-system/…;
 # on the published site that resolves to /design-system/…, so the build copies the shared folder in next to
 # index.html at deploy time (never committed — ignored in the project's .gitignore). No other build step.
-# Note: the price-lock-proto branch carries its own root netlify.toml for the Price Lock site.
+# The Price Lock site has its own settings in projects/truemeds-price-lock/netlify.toml.
 
 [build]
+  # Rebuild only when the doctor portal, the design system or this file changes (ACOM docs etc. never trigger it).
+  ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF -- projects/truemeds-doctor-portal-prototype design-system netlify.toml"
   publish = "projects/truemeds-doctor-portal-prototype"
   command = "rm -rf projects/truemeds-doctor-portal-prototype/design-system && cp -R design-system projects/truemeds-doctor-portal-prototype/design-system && rm -rf projects/truemeds-doctor-portal-prototype/design-system/build"

@@ -15,6 +15,10 @@ This setup is independent from any Truemeds engineering GitHub organization.
 
 ## Daily flow
 
+**Apurva's checkout (and the AIs working in it):** the folder stays on `main`; publish with `scripts/publish.sh -m "message" <paths>` (commits only the named files, pushes to `main`). No project branches. See `AGENTS.md` → Git safety.
+
+**Collaborators (e.g. Swapnil):** unchanged —
+
 1. Sync `main`.
 2. Create a branch for one piece of work.
 3. Make and validate changes.
@@ -78,8 +82,8 @@ Which branch and folder each live link publishes. Check this before merging into
 
 | Live link | Deploys from | Publishes | Config | Watch out |
 |---|---|---|---|---|
-| https://doctor-portal-prototype.netlify.app | `main` (every push, automatically) | `projects/truemeds-doctor-portal-prototype` | root `netlify.toml` — copies `design-system/` next to the app at deploy | Any push to `main` redeploys this site, including docs-only commits. |
-| Price Lock prototype (Netlify) | `price-lock-proto` | `projects/truemeds-price-lock/prototype/price-lock` | root `netlify.toml` **on that branch** | Merging `price-lock-proto` into `main` will conflict on the root `netlify.toml` — the two site configs must be combined first, or the doctor-portal site breaks. |
+| https://doctor-portal-prototype.netlify.app | `main` | `projects/truemeds-doctor-portal-prototype` | root `netlify.toml` — copies `design-system/` next to the app at deploy | Rebuilds only when the doctor portal, `design-system/` or `netlify.toml` changes (`ignore` rule). Merged doctor-portal changes go live. |
+| Price Lock prototype (Netlify) | `price-lock-proto` (frozen deploy source) | `projects/truemeds-price-lock/prototype/price-lock` | root `netlify.toml` on that branch | Price Lock's files are on `main` since 2026-10-16. To finish: in Netlify set the site's branch to `main` and base directory to `projects/truemeds-price-lock` (it then uses `projects/truemeds-price-lock/netlify.toml`); then delete `price-lock-proto`. |
 | https://acom-mystats-redesign.netlify.app | manual CLI deploy (not linked to Git) | ACOM My Statistics prototype | none in the repo | Pushing to GitHub does not update it. |
 
 ## Operations log (exceptions only)
@@ -94,6 +98,7 @@ Log only what a teammate, or an AI assistant in another thread, could be surpris
 
 Format: date · who (person, and tool or AI assistant if one did it) · what · why · follow-up. Newest first.
 
+- 2026-10-16 · Claude (Cowork) for Apurva · Moved to one `main`: merged `acom-portal-revamp` and `price-lock-proto` (its project folder; root `netlify.toml` kept from `main`) into `main`; deleted `acom-portal-revamp` and `doctor-portal/sign-in`; added `scripts/publish.sh`, the one-project commit check (`scripts/git-hooks/pre-commit`) and a Netlify `ignore` rule; fixed the credential helper for worktrees. Swapnil's `project/type1-revamp` and `project/project-south` were briefly given a catch-up merge from `main` and then restored exactly to their earlier state (`backup/2026-10-16/*`) — untouched. Backups: `backup/pre-trunk/*`. · Why: stale project copies on long-lived branches and mixed commits. · Follow-up: Apurva re-links the Price Lock site to `main`; uncommitted Aug files of other projects in Apurva's folder await her decision.
 - 2026-10-16 · Claude (Cowork) for Apurva · Repo clean-up: (1) `doctor-portal/sign-in` pushed straight to `main` (fast-forward, 3779ce7) — branch protection bypassed as owner, no PR page; (2) every branch backed up as tag `backup/2026-10-16/<branch>`; (3) `main` merged into `acom-portal-revamp`, `price-lock-proto` (kept its own `netlify.toml`), `project/project-south`, `project/type1-revamp` — no project files changed or deleted; (4) deleted branches already in `main`: `doctor-portal-restyle`, `doctor-portal/audit-fixes`, `doctor-portal/pinned-actions-cards`, `design-system-central`, `ftc-priority-prd`, `docs/cowork-direct-git` (superseded), `cowork/connector-verification-2026-10-06`. · Why: a session read July copies of the doctor portal on another branch. · Follow-up: future `main` changes via PR; decide repo structure.
 - 2026-10-08 · Claude (Cowork) for Apurva · Merged `doctor-portal-restyle` into `main` and pushed straight to `main`
   (2a196f2, then 1997d56 and 7468eeb) without a pull request · to update the doctor-portal live link the same day ·

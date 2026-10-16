@@ -1,0 +1,16 @@
+#!/bin/sh
+# pm-agent commit check. Enabled per checkout with:  git config core.hooksPath scripts/git-hooks
+# Refuses a commit that touches more than one project folder (projects/<name>/).
+# Shared folders (design-system/, knowledge/, docs/, root files) may go with any one project.
+projects=$(git diff --cached --name-only | awk -F/ '$1=="projects" && NF>2 {print $2}' | sort -u)
+count=$(printf '%s\n' "$projects" | grep -c .)
+if [ "$count" -gt 1 ]; then
+  echo "Commit refused: it touches more than one project:" >&2
+  printf '  projects/%s\n' $projects >&2
+  echo "Commit each project separately, naming only that project's files (see AGENTS.md -> Git)." >&2
+  exit 1
+fi
+# Keep any older local hook working (e.g. code-review-graph).
+legacy="$(git rev-parse --git-common-dir)/hooks/pre-commit"
+if [ -x "$legacy" ]; then "$legacy" || exit $?; fi
+exit 0
