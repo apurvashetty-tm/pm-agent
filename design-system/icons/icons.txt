@@ -99,3 +99,7 @@ arrows-minimize
 user-circle
 arrow-up-right
 vaccine
+# Sign-in and home (doctor app, 2026-10-09)
+fingerprint
+user-plus
+inbox

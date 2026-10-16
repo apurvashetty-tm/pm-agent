@@ -4,7 +4,7 @@ A point-in-time copy of Apurva's Claude **persistent memory** (the per-user stor
 across Claude surfaces), mirrored into this git repo for durability and cross-tool
 continuity. Each file below mirrors one memory entry at its memory path.
 
-- **Exported:** 2026-09-25 (by a Claude Code session). `areas/ring-ai.md` and `preferences.md` refreshed 2026-09-30.
+- **Exported:** 2026-10-12 (weekly best-effort backup). Full memory re-mirrored; added `areas/doctor-portal.md`, `areas/iris.md`, `areas/truemeds-design-system.md`, `areas/incentive-platform.md`, `areas/portal-unification.md`, and `people/swapnil.md`; refreshed `preferences.md`.
 - **Why:** so the memory can't be lost, and so any tool/agent reading this repo (Cowork,
   Claude Code, Codex) can pick up the same context.
 - **This is a snapshot, not a live mirror.** Memory keeps changing; refresh to update.
@@ -19,12 +19,18 @@ continuity. Each file below mirrors one memory entry at its memory path.
   (it reads an export back into Claude's memory, additively).
 
 ## Files (memory path → export file)
-- `/profile.md`            → `profile.md`
-- `/preferences.md`        → `preferences.md`
-- `/areas/ring-ai.md`      → `areas/ring-ai.md`
-- `/topics/recent-work.md` → `topics/recent-work.md`
-- `/topics/tools.md`       → `topics/tools.md`
-- `/projects/01a0a379-…/index.md`                     → `projects/01a0a379-…/index.md`
+- `/profile.md`                      → `profile.md`
+- `/preferences.md`                  → `preferences.md`
+- `/areas/doctor-portal.md`          → `areas/doctor-portal.md`
+- `/areas/incentive-platform.md`     → `areas/incentive-platform.md`
+- `/areas/iris.md`                   → `areas/iris.md`
+- `/areas/portal-unification.md`     → `areas/portal-unification.md`
+- `/areas/ring-ai.md`                → `areas/ring-ai.md`
+- `/areas/truemeds-design-system.md` → `areas/truemeds-design-system.md`
+- `/people/swapnil.md`               → `people/swapnil.md`
+- `/topics/recent-work.md`           → `topics/recent-work.md`
+- `/topics/tools.md`                 → `topics/tools.md`
+- `/projects/01a0a379-…/index.md`                      → `projects/01a0a379-…/index.md`
 - `/projects/01a0a379-…/pm-agent-multi-tool-handoff.md`→ same
 - `/projects/01a0a379-…/q2_roadmap_operating_facts.md` → same
 - `/projects/01a0a379-…/roadmap-working-style.md`      → same

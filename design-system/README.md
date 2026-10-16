@@ -1,4 +1,4 @@
-# Truemeds Design System (code copy of SALT)
+# Truemeds Design System (built on SALT)
 
 One shared design system for every frontend project in this workspace.
 Projects **link** to it; they never copy from it.
@@ -6,11 +6,13 @@ Projects **link** to it; they never copy from it.
 ```
 design-system/
 ├── truemeds.css        ← the one CSS file projects link (generated)
+├── native/             ← React Native copy: tokens.ts, tokens.json, icons.ts (generated)
+├── beyond-salt.md      ← everything used here that isn't in SALT yet
 ├── icons/icons.js      ← icon helper (generated, Tabler outline — SALT's set)
 ├── icons/icons.txt     ← which icons are bundled
 ├── preview.html        ← every token and component, rendered
 ├── RULES.md            ← rules every agent/person follows before building UI
-├── tokens/             ← SALT export (Core + Default) + extras.json
+├── tokens/             ← SALT export (Core + Default) + extras.json + truemeds.json (Truemeds overrides, applied last)
 ├── src/components.css  ← component styles (tokens only)
 ├── src/brandbook.md     ← the brand book shown on the Claude artifact
 └── scripts/            ← build.py (CSS), build-icons.mjs (icons), build_artifact.py (Claude copy)
@@ -30,12 +32,15 @@ Read `RULES.md`, then:
 
 | Change | Do this |
 |---|---|
-| SALT colours, spacing, radius or type changed | Re-export variables from Figma → replace `tokens/Core.tokens.json` and `tokens/Default.tokens.json` → `python3 scripts/build.py` |
+| SALT colours, spacing, radius or type changed | Merge the new SALT export into `tokens/Core.tokens.json` / `tokens/Default.tokens.json` → `python3 scripts/build.py` → check `preview.html` against `beyond-salt.md`. Truemeds values in `tokens/truemeds.json` always win. |
+| Truemeds token or text-style change | Edit `tokens/truemeds.json`, list it in `beyond-salt.md` → `python3 scripts/build.py` |
 | Shadow or text style changed in SALT | Edit `tokens/extras.json` → `python3 scripts/build.py` |
 | Component look changed / new component | Edit `src/components.css` (tokens only; mark non-SALT ones `[PROPOSED]`) → `python3 scripts/build.py` |
 | Need another icon | Add its Tabler name to `icons/icons.txt` → `npm i @tabler/icons` → `node scripts/build-icons.mjs` |
 
-Never edit `truemeds.css` or `icons/icons.js` by hand — they are rebuilt.
+Never edit `truemeds.css`, `icons/icons.js` or `native/` by hand — they are rebuilt. `scripts/build.py` also
+rebuilds `native/`; after changing icons, run `node scripts/build-icons.mjs` and then `python3 scripts/build.py`.
+When you add anything not in SALT, mark it `[PROPOSED]` and list it in `beyond-salt.md`.
 
 After any change, open `preview.html` and check it.
 

@@ -1,0 +1,26 @@
+[
+  {
+    "id": "01-setup",
+    "title": "1 \u00b7 Set availability",
+    "group": "Happy",
+    "note": "30 minutes selected. Stepper shown for continuity; wheel remains testing alternative. Draft aligns primary action with active Home; saved alternatives remain unchanged."
+  },
+  {
+    "id": "02-active",
+    "title": "2 \u00b7 Active Home",
+    "group": "Happy",
+    "note": "Same prescription count. Timer starts after confirmation. Add time stays beside timer in all active states, including near expiry."
+  },
+  {
+    "id": "03-add",
+    "title": "3 \u00b7 Add availability",
+    "group": "Happy",
+    "note": "Same picker geometry, presets, weights and step controls as setup. Adds selected duration; natural expiry while open changes no UI. CTA stays at same vertical position."
+  },
+  {
+    "id": "04-added",
+    "title": "4 \u00b7 Updated timer + toast",
+    "group": "Happy",
+    "note": "Toast uses shared 12/16 semibold, 4px vertical/8px horizontal padding, 4px radius and inverse surface. Compact content width; positioned above action bar to avoid covering controls. About 4 seconds; respect accessibility duration. Not a success page."
+  }
+]

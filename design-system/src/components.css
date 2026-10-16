@@ -23,6 +23,15 @@
 .tm-subtle  { color: var(--tm-content-tertiary); }
 .tm-brand   { color: var(--tm-content-brand); }
 
+/* LOCKED L8 (D-47): screen titles wrap balanced, never one word alone on the last line. */
+h1, .tm-text-title-lg, .tm-text-h1 { text-wrap: balance; }
+/* LOCKED L7 (D-47): helper/error text aligns with its field: centred under the centred OTP boxes; left under full-width fields. */
+.tm-field:has(.tm-otp-slots) .tm-field__helper { text-align: center; }
+/* LOCKED L9 (D-47, RULES §8.12): value display (e.g. time remaining) is a component: 32/40 semibold, fixed-width digits. */
+.tm-value-display { font-size: var(--tm-font-size-title-lg); line-height: var(--tm-font-lineheight-2xl); font-weight: var(--tm-font-weight-semibold); font-variant-numeric: tabular-nums; color: var(--tm-content-primary); margin: 0; }
+/* Screen title (L1), layout v2 · RULES.md §8.1. Semibold keeps SALT's heading family; size carries hierarchy. Values also set in tokens/truemeds.json. */
+.tm-text-title-lg { font-size: var(--tm-font-size-title-lg); line-height: var(--tm-font-lineheight-2xl); font-weight: var(--tm-font-weight-semibold); }
+
 /* ---------- Icon [SALT: Tabler outline, 24 grid, 2px stroke] ---------- */
 .tm-icon {
   width: 20px; height: 20px; flex: none;
@@ -47,10 +56,11 @@
   transition: background-color 150ms ease, color 150ms ease, border-color 150ms ease;
 }
 .tm-btn--lg { font-size: var(--tm-font-size-body-xl); line-height: var(--tm-font-lineheight-md); padding: var(--tm-space-lg); border-radius: var(--tm-radius-lg); }
-.tm-btn--sm { font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-xs); padding: var(--tm-space-md) var(--tm-space-lg); border-radius: var(--tm-radius-md); }
+/* RULES §9.1 (2026-10-15): nothing tappable on mobile is under 48px. --sm keeps its 14px label but its tap height is 48. --xs is for dense desktop tools only. */
+.tm-btn--sm { font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-xs); padding: var(--tm-space-md) var(--tm-space-lg); border-radius: var(--tm-radius-md); min-height: calc(var(--tm-space-3xl)); }
 .tm-btn--xs { font-size: var(--tm-font-size-body-xs); line-height: var(--tm-font-lineheight-xs); padding: var(--tm-space-sm) var(--tm-space-lg); border-radius: var(--tm-radius-md); gap: var(--tm-space-xs); }
 .tm-btn--block { display: flex; width: 100%; }
-.tm-btn--icon { padding: var(--tm-space-md); }
+.tm-btn--icon { padding: var(--tm-space-md); min-width: var(--tm-space-3xl); min-height: var(--tm-space-3xl); }   /* 48px tap target (RULES §8.6) */
 
 .tm-btn--primary { background: var(--tm-surface-brand-default); color: var(--tm-content-inverse); }
 .tm-btn--primary:hover  { background: var(--tm-surface-interactive-hover); }
@@ -61,35 +71,44 @@
 .tm-btn--secondary:hover  { background: var(--tm-surface-brand-subtle); }
 .tm-btn--secondary:active { box-shadow: inset 0 0 0 1px var(--tm-border-selected); }
 
-.tm-btn--tertiary { background: var(--tm-surface-primary); color: var(--tm-content-secondary); box-shadow: inset 0 0 0 1px var(--tm-border-default); }
-.tm-btn--tertiary:hover { background: var(--tm-surface-secondary); }
+/* RETIRED (RULES §9.1, 2026-10-15): tertiary and ghost are aliases of Quiet. Use .tm-btn--quiet in new work. */
+.tm-btn--tertiary, .tm-btn--ghost { background: transparent; color: var(--tm-content-secondary); }
+.tm-btn--tertiary:hover, .tm-btn--ghost:hover { background: var(--tm-surface-secondary); color: var(--tm-content-primary); }
 
-.tm-btn--ghost { background: transparent; color: var(--tm-content-brand); }
-.tm-btn--ghost:hover { background: var(--tm-surface-brand-subtle); }
-
-.tm-btn--destructive { background: var(--tm-surface-primary); color: var(--tm-feedback-error-content); box-shadow: inset 0 0 0 1px var(--tm-feedback-error-border); }
+/* Destructive outline uses the strong error border (non-text contrast, WCAG 1.4.11): the subtle border was too faint for a full-width button. */
+.tm-btn--destructive { background: var(--tm-surface-primary); color: var(--tm-feedback-error-content); box-shadow: inset 0 0 0 1px var(--tm-border-error-strong); }
 .tm-btn--destructive:hover { background: var(--tm-feedback-error-surface); }
 
-/* [PROPOSED] Quiet icon/text button — app-bar close and other secondary chrome that must not read as the brand action
-   (SALT ghost is brand blue). Grey content, no fill. */
+/* Quiet (RULES §9.1) — leave / cancel / dismiss / "not now", and icon chrome (close, help). Grey text, no border, no fill.
+   Replaces tertiary, ghost and link-styled buttons. SALT's ghost is brand blue and reads as the main action. */
 .tm-btn--quiet { background: transparent; color: var(--tm-content-secondary); }
 .tm-btn--quiet:hover { background: var(--tm-surface-secondary); color: var(--tm-content-primary); }
 /* [PROPOSED] On-dark icon/text button — controls on a dark surface (e.g. the Rx document viewer). Light content, no fill. */
 .tm-btn--on-dark { background: transparent; color: var(--tm-content-inverse); }
 .tm-btn--on-dark:hover { background: var(--tm-surface-brand-strong); }
 
-.tm-btn--link { background: transparent; color: var(--tm-content-brand); padding-left: 0; padding-right: 0; text-decoration: underline; text-underline-offset: 3px; }
+/* Call end (RULES §9.1) — ONLY for ending a live call (the phone convention). Solid red. Never for other destructive actions. */
+.tm-btn--call-end { background: var(--tm-surface-error-strong); color: var(--tm-content-inverse); }
+.tm-btn--call-end:hover, .tm-btn--call-end:active { background: var(--tm-surface-error-strong); filter: brightness(0.92); }
+
+/* Link — only inside a sentence (RULES §9.1). Standalone actions use a button role. As a button element it still gets a 48px tap height. */
+.tm-btn--link { min-height: var(--tm-space-3xl); background: transparent; color: var(--tm-content-brand); padding-left: 0; padding-right: 0; text-decoration: underline; text-underline-offset: 3px; }
 
 .tm-btn:disabled, .tm-btn[aria-disabled="true"] {
   background: var(--tm-surface-interactive-disabled); color: var(--tm-content-disabled);
   box-shadow: none; cursor: not-allowed;
 }
-.tm-btn--ghost:disabled, .tm-btn--link:disabled { background: transparent; }
+.tm-btn--ghost:disabled, .tm-btn--link:disabled, .tm-btn--quiet:disabled, .tm-btn--tertiary:disabled { background: transparent; }
 .tm-btn:focus-visible { outline: 2px solid var(--tm-border-focus); outline-offset: 2px; }
 
 /* [PROPOSED] Busy state — action in progress (e.g. "Calling…"). Keeps the primary look at full
    strength (a disabled grey would read as unavailable). Not in SALT; pending design-team review. */
-.tm-btn--busy, .tm-btn--busy:disabled { background: var(--tm-surface-brand-default); color: var(--tm-content-inverse); cursor: default; }
+/* LOCKED L2 (D-46): loading primary = brand fill, white label and white spinner, on every screen, even when disabled. Never grey or pale. */
+.tm-btn--busy, .tm-btn--busy:disabled, .tm-btn--primary[aria-busy="true"]:disabled { background: var(--tm-surface-brand-default); color: var(--tm-content-inverse); cursor: default; }
+/* Spinner is solid white with one open gap (LOCKED L2). */
+.tm-btn--busy .tm-spinner { display: inline-block; width: 16px; height: 16px; flex: none; margin-right: var(--tm-space-sm); vertical-align: -3px; box-sizing: border-box; border: 2px solid #fff; border-top-color: transparent; border-radius: 50%; animation: tm-spin 0.8s linear infinite; }
+@keyframes tm-spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .tm-btn--busy .tm-spinner { animation: none; } }
 @keyframes tm-pulse-ring {
   0%   { box-shadow: 0 0 0 0 var(--tm-surface-brand-muted); }
   70%  { box-shadow: 0 0 0 var(--tm-space-md) transparent; }
@@ -98,26 +117,66 @@
 .tm-btn--busy.tm-pulsing { animation: tm-pulse-ring 1.2s ease-out infinite; }
 
 /* ---------- Input field [SALT: Input Fields] ---------- */
-.tm-field { display: flex; flex-direction: column; gap: var(--tm-space-xs); }
+.tm-field { display: flex; flex-direction: column; gap: var(--tm-space-sm); }   /* label↔field and field↔helper = 8 (RULES §8.3) */
 .tm-field__label { font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-primary); }
 .tm-field__control {
   display: flex; align-items: center; gap: var(--tm-space-sm);
   background: var(--tm-surface-primary);
   border: 1px solid var(--tm-border-default); border-radius: var(--tm-radius-md);
   padding: var(--tm-space-md);
+  min-height: var(--tm-space-3xl); cursor: text;   /* 48px tap target (RULES §8.6) */
 }
+/* The input fills the whole control, so the full 48px is tappable (not just the text line). */
+.tm-field__control > input { align-self: stretch; margin: calc(-1 * var(--tm-space-md)) 0; padding: var(--tm-space-md) 0; }
+/* Read-only field (e.g. a closed case): readable, muted, not editable. */
+.tm-field--readonly .tm-field__control { background: var(--tm-surface-secondary); border-color: var(--tm-border-subtle); }
+.tm-field--readonly .tm-field__control input, .tm-field--readonly .tm-field__control textarea { color: var(--tm-content-secondary); pointer-events: none; }
 .tm-field__control:focus-within { border-color: var(--tm-border-focus); }
 .tm-field__control input, .tm-field__control textarea, .tm-field__control select {
   flex: 1; min-width: 0; border: 0; outline: 0; background: transparent; resize: vertical;
   font: inherit; font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm);
   color: var(--tm-content-primary);
 }
-.tm-field__control ::placeholder { color: var(--tm-content-tertiary); }
-.tm-field__helper  { font-size: var(--tm-font-size-body-xs); line-height: var(--tm-font-lineheight-xs); color: var(--tm-content-secondary); }
+.tm-field__control ::placeholder { color: var(--tm-content-placeholder); }
+/* Helper = L3 supporting text, 14/20 (RULES §8.1, D-43). Was body-xs 12/16. */
+.tm-field__helper  { font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); color: var(--tm-content-secondary); }
 .tm-field--error   .tm-field__control { border-color: var(--tm-border-error-strong); }
 .tm-field--error   .tm-field__helper  { color: var(--tm-content-error); }
 .tm-field--success .tm-field__helper  { color: var(--tm-content-success); }
 .tm-field--disabled .tm-field__control { background: var(--tm-surface-secondary); border-color: var(--tm-border-disabled); color: var(--tm-content-disabled); }
+/* [PROPOSED] Four-slot OTP presentation backed by one native input for paste and autofill. */
+/* LOCKED L1 (D-46): slots are square 56x56, 24px digits, one tight centred group with an 8px gap. Never stretched, never 16px digits. */
+.tm-otp-slots { position: relative; display: flex; justify-content: center; gap: var(--tm-space-sm); }
+/* Digit = key content L2 16/24 (RULES §8.1). Boxes share the row width; gaps are the related 16 (RULES §8.3). */
+.tm-otp-slots__slot { display: grid; place-items: center; flex: none; width: 56px; height: 56px; box-sizing: border-box; border: 1px solid var(--tm-border-default); border-radius: var(--tm-radius-md); background: var(--tm-surface-primary); color: var(--tm-content-primary); font-size: var(--tm-font-size-title-md); line-height: 1; }
+.tm-otp-slots:focus-within .tm-otp-slots__slot.is-current { border-color: var(--tm-border-focus); }
+.tm-field--error .tm-otp-slots__slot { border-color: var(--tm-border-error-strong); }
+.tm-field--disabled .tm-otp-slots__slot { background: var(--tm-surface-secondary); border-color: var(--tm-border-disabled); color: var(--tm-content-disabled); }
+.tm-otp-slots__input { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; outline: 0; padding: 0; background: transparent; color: transparent; caret-color: transparent; cursor: text; font-size: 16px; }
+/* [PROPOSED] Fixed text before the input inside a field, e.g. the +91 country code. */
+.tm-field__prefix {
+  flex-shrink: 0; padding-right: var(--tm-space-sm); border-right: 1px solid var(--tm-border-default);
+  font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm);
+  font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-primary);
+}
+
+/* [PROPOSED] One-time code. ONE real <input> (keeps SMS autofill, paste and screen readers working) laid over
+   boxes that only display the digits. Markup: .tm-otp > input.tm-otp__input + 6 × .tm-otp__box. */
+.tm-otp { position: relative; display: grid; grid-template-columns: repeat(var(--tm-otp-len, 6), minmax(0, 1fr)); gap: var(--tm-space-sm); }
+.tm-otp__box {
+  height: 52px; display: flex; align-items: center; justify-content: center;
+  background: var(--tm-surface-primary); border: 1px solid var(--tm-border-default); border-radius: var(--tm-radius-md);
+  font-size: var(--tm-font-size-body-xl); line-height: var(--tm-font-lineheight-md);
+  font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-primary);
+}
+.tm-otp__box.is-active { border-color: var(--tm-border-focus); box-shadow: inset 0 0 0 1px var(--tm-border-focus); }
+.tm-otp__input {
+  position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; border: 0;
+  font-size: 16px;   /* 16px stops iOS zooming in on focus */
+  caret-color: transparent; color: transparent; background: transparent;
+}
+.tm-otp--error .tm-otp__box { border-color: var(--tm-border-error-strong); }
+.tm-otp--disabled .tm-otp__box { background: var(--tm-surface-secondary); border-color: var(--tm-border-disabled); color: var(--tm-content-disabled); }
 
 /* ---------- Chip: filter / selection [SALT: Chips › Filters] ---------- */
 .tm-chip {
@@ -133,7 +192,14 @@
 .tm-chip:disabled { color: var(--tm-content-disabled); border-color: var(--tm-border-disabled); cursor: not-allowed; }
 /* [PROPOSED] Size lg — touch-size chip (about 46px tall, 14px label) for pick-one choices people tap during a call or on the move
    (dose, interval, duration). SALT's chip is a compact filter chip, too small as a primary tap target. */
-.tm-chip--lg { padding: var(--tm-space-md) var(--tm-space-lg); font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); justify-content: center; }
+.tm-chip--lg { padding: var(--tm-space-md) var(--tm-space-lg); font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); justify-content: center; min-height: var(--tm-space-3xl); }
+/* The compact base chip is for dense desktop tools; on mobile every chip is --lg (48px, RULES §8.6). */
+/* Chip layouts (RULES §9.2, 2026-10-15) */
+.tm-chip-group { display: flex; flex-wrap: wrap; gap: var(--tm-space-sm); }          /* free-flowing: hug the label, wrap; never squeeze */
+.tm-chip-group > .tm-chip { flex: none; white-space: nowrap; }
+.tm-chip-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--tm-space-sm); }   /* equal cells; fewer options leave cells empty */
+.tm-chip-grid > .tm-chip { width: 100%; justify-content: center; white-space: nowrap; padding-left: var(--tm-space-sm); padding-right: var(--tm-space-sm); }   /* D-54: the column sets the size; 8px side padding only keeps text off the edge (fits "10:00 AM" at 360) */
+.tm-chip-grid--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }   /* for longer labels (e.g. "10:30 AM") so they never wrap */
 
 /* ---------- Tag / status label [SALT: Chips › Labels & Text] ---------- */
 .tm-tag {
@@ -147,10 +213,14 @@
 /* [PROPOSED] Size md — 12px label for dense, doctor-facing screens where SALT's 10px tag is too small to read. */
 .tm-tag--md { padding: var(--tm-space-2xs) var(--tm-space-sm); font-size: var(--tm-font-size-body-xs); line-height: var(--tm-font-lineheight-xs); }
 .tm-tag--info     { background: var(--tm-surface-brand-subtle);   color: var(--tm-content-brand); }
-.tm-tag--success  { background: var(--tm-surface-success-subtle); color: var(--tm-content-success); }
+/* Success text on the subtle surface uses the strong green (AA 6.7:1; was 3.99:1, D-47 final concepts). */
+.tm-tag--success  { background: var(--tm-surface-success-subtle); color: var(--tm-content-success-strong); }
 .tm-tag--warning  { background: var(--tm-surface-warning-subtle); color: var(--tm-content-warning); }
 .tm-tag--critical { background: var(--tm-surface-error-subtle);   color: var(--tm-content-error); }
 .tm-tag--dark     { background: var(--tm-surface-inverse);        color: var(--tm-content-inverse); }
+.tm-tag--neutral  { background: var(--tm-surface-tertiary);       color: var(--tm-content-secondary); }   /* removed / inactive (RULES §9.3) */
+/* Reserved width (RULES §9.3): the row text never re-wraps when the status changes. */
+.tm-tag--fixed { min-width: calc(var(--tm-space-3xl) * 2); justify-content: center; }
 
 /* ---------- Card [SALT: card surface + tm_core_shadow_card] ---------- */
 .tm-card {
@@ -171,6 +241,20 @@
 .tm-row__main { flex: 1; min-width: 0; }
 .tm-row__title { font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); font-weight: var(--tm-font-weight-semibold); }
 .tm-row__meta  { font-size: var(--tm-font-size-body-xs); line-height: var(--tm-font-lineheight-xs); color: var(--tm-content-secondary); }
+/* RULES §9.3: chevron only when the row opens something; read-only rows are muted, not tappable, still readable. */
+.tm-row__chevron { flex: none; color: var(--tm-content-tertiary); }
+/* Row second line (RULES §9.3, D-54): one short fact on the left (e.g. "Qty 30"), the status tag on the right. The title gets the full width. */
+.tm-row__line { display: flex; align-items: center; justify-content: space-between; gap: var(--tm-space-sm); margin-top: var(--tm-space-2xs); }
+.tm-row__fact { font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-secondary); }
+.tm-row__line > .tm-tag { flex: none; }
+.tm-row--tappable { cursor: pointer; min-height: var(--tm-space-3xl); }
+.tm-row--readonly { pointer-events: none; }
+.tm-row--readonly .tm-row__title, .tm-row--readonly .tm-row__meta { color: var(--tm-content-secondary); }
+.tm-row--readonly .tm-row__chevron { display: none; }
+/* Read-only block (RULES §9.3): any content area of a closed task — muted, not tappable, still readable. */
+.tm-readonly { pointer-events: none; }
+.tm-readonly, .tm-readonly .tm-row__title, .tm-readonly .tm-section-title { color: var(--tm-content-secondary); }
+.tm-readonly .tm-row__chevron { display: none; }
 .tm-thumb { width: 48px; height: 48px; flex: none; border-radius: var(--tm-radius-sm); background: var(--tm-surface-secondary); object-fit: contain; }
 
 /* ---------- Divider [SALT: Dividers] ---------- */
@@ -185,10 +269,15 @@
   padding: var(--tm-space-md); border-radius: var(--tm-radius-md);
   border: 1px solid var(--tm-border-brand-subtle);
   background: var(--tm-surface-brand-subtle); color: var(--tm-content-primary);
-  font-size: var(--tm-font-size-body-sm); line-height: var(--tm-font-lineheight-sm);
+  /* LOCKED L5 (D-46): notice text is 14/20. */
+  font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm);
 }
 .tm-notice--warning { background: var(--tm-feedback-warning-surface); border-color: var(--tm-feedback-warning-border); }
 .tm-notice--error   { background: var(--tm-feedback-error-surface);   border-color: var(--tm-feedback-error-border); }
+/* [PROPOSED] Non-error access and empty-state information. */
+.tm-notice--neutral { background: var(--tm-surface-secondary); border-color: var(--tm-border-default); }
+.tm-notice--neutral .tm-icon { color: var(--tm-content-secondary); }
+.tm-notice .tm-icon { width: 20px; height: 20px; flex: none; }   /* feedback-rules: 20px leading icon */
 .tm-notice--warning .tm-icon { color: var(--tm-feedback-warning-content); }
 .tm-notice--error   .tm-icon { color: var(--tm-feedback-error-content); }
 
@@ -196,12 +285,15 @@
 .tm-toast {
   position: fixed; left: 50%; bottom: var(--tm-space-xl); transform: translateX(-50%);
   background: var(--tm-surface-inverse); color: var(--tm-content-inverse);
-  font-size: var(--tm-font-size-body-xs); line-height: var(--tm-font-lineheight-xs); font-weight: var(--tm-font-weight-semibold);
-  padding: var(--tm-space-xs) var(--tm-space-sm); border-radius: var(--tm-radius-xs);
-  white-space: nowrap; z-index: 1000;
+  /* RULES §9.5 (2026-10-15): dark, 14/20, 12×16 padding, medium radius, one line (two at most). Was 12/16 with 4×8 padding — too small to notice. */
+  font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); font-weight: var(--tm-font-weight-medium);
+  padding: var(--tm-space-md) var(--tm-space-lg); border-radius: var(--tm-radius-md); box-shadow: var(--tm-shadow-secondary);
+  width: max-content; max-width: calc(100% - 2 * var(--tm-space-xl)); text-align: center; z-index: 1000;
 }
+/* Use only where nothing on screen can show the result. One at a time, about 4 s, role="status" (polite), never takes focus. */
 
-/* [PROPOSED] Snackbar — message + one action (e.g. "Order confirmed · Next order"). SALT's toast is one line with
+/* Snackbar — UNUSED: a toast never carries an action (RULES §9.5). Candidate to drop.
+   [PROPOSED] Snackbar — message + one action (e.g. "Order confirmed · Next order"). SALT's toast is one line with
    no action; this is the minimal compliant surface for a confirmation that carries a next step. Pending design-team review. */
 .tm-snackbar {
   position: fixed; left: var(--tm-space-lg); right: var(--tm-space-lg); bottom: var(--tm-space-lg); z-index: 950;
@@ -215,7 +307,7 @@
 .tm-snackbar__text  { font-size: var(--tm-font-size-body-xs); line-height: var(--tm-font-lineheight-xs); color: var(--tm-content-secondary); }
 
 /* ---------- Checkbox / radio / toggle [SALT: Checkboxes, Radio Buttons, Toggles] ---------- */
-.tm-check { display: inline-flex; align-items: center; gap: var(--tm-space-sm); cursor: pointer; font-size: var(--tm-font-size-body-md); }
+.tm-check { display: inline-flex; align-items: center; gap: var(--tm-space-sm); cursor: pointer; font-size: var(--tm-font-size-body-md); min-height: var(--tm-space-3xl); }   /* 48px tap row (RULES §8.6) */
 .tm-check input { width: 18px; height: 18px; margin: 0; accent-color: var(--tm-surface-brand-default); }
 .tm-toggle, .tm-check input.tm-toggle { appearance: none; width: 36px; height: 20px; border-radius: var(--tm-radius-full); background: var(--tm-border-default); position: relative; cursor: pointer; transition: background-color 150ms ease; margin: 0; }
 .tm-toggle::after { content: ""; position: absolute; top: 2px; left: 2px; width: 16px; height: 16px; border-radius: var(--tm-radius-full); background: var(--tm-surface-primary); box-shadow: var(--tm-shadow-tertiary); transition: transform 150ms ease; }
@@ -237,16 +329,79 @@
   position: fixed; left: 0; right: 0; bottom: 0; z-index: 901;
   background: var(--tm-surface-primary);
   border-radius: var(--tm-radius-2xl) var(--tm-radius-2xl) 0 0;
-  padding: var(--tm-space-xl) var(--tm-space-lg);
+  /* RULES §9.4 (2026-10-15) — one template: no drag handle, 24px side margins, safe area at the bottom. */
+  padding: var(--tm-space-lg) var(--tm-space-xl) calc(var(--tm-space-xl) + env(safe-area-inset-bottom));
   max-height: 85vh; overflow: auto;
+  display: flex; flex-direction: column;
 }
+.tm-sheet__header { display: flex; align-items: center; justify-content: space-between; gap: var(--tm-space-md); min-height: var(--tm-space-3xl); }
+.tm-sheet__title { margin: 0; font-size: var(--tm-font-size-title-sm); line-height: var(--tm-font-lineheight-lg); font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-primary); }
+.tm-sheet__subtitle { margin: var(--tm-space-xs) 0 0; font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); color: var(--tm-content-secondary); }
+.tm-sheet__close { margin-right: calc(-1 * var(--tm-space-md)); }   /* .tm-btn.tm-btn--quiet.tm-btn--icon, 48px; aligns the glyph to the margin */
+.tm-sheet__body { margin-top: var(--tm-space-lg); min-height: 0; overflow: auto; }
+.tm-sheet__actions { display: flex; flex-direction: column; gap: var(--tm-space-sm); margin-top: var(--tm-space-xl); }
+.tm-sheet__actions > .tm-btn { width: 100%; }
+/* Option row — one style for every reason list (Skip HA, Disable, …). Tapping applies; no extra button. */
+.tm-option { display: flex; flex-direction: column; gap: var(--tm-space-2xs); width: 100%; min-height: var(--tm-space-3xl); text-align: left;
+  padding: var(--tm-space-md) var(--tm-space-lg); border: 1px solid var(--tm-border-default); border-radius: var(--tm-radius-md);
+  background: var(--tm-surface-primary); font-family: var(--tm-font); cursor: pointer; }
+.tm-option + .tm-option { margin-top: var(--tm-space-sm); }
+.tm-option:hover { background: var(--tm-surface-secondary); }
+.tm-option__title { font-size: var(--tm-font-size-body-lg); line-height: var(--tm-font-lineheight-md); font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-primary); }
+.tm-option__desc { font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); color: var(--tm-content-secondary); }
+@media (min-width: 768px) { .tm-sheet { max-width: 640px; margin: 0 auto; } }
 
 /* ---------- Sticky bottom action bar [SALT: CTA bar on Cart] ---------- */
 .tm-actionbar {
   position: sticky; bottom: 0; z-index: 10;
-  padding: var(--tm-space-md) var(--tm-space-lg);
+  /* RULES §9.1: primary on top, then secondary (pair allowed), then quiet; 24px margins; safe area. */
+  padding: var(--tm-space-md) var(--tm-space-xl) calc(var(--tm-space-md) + env(safe-area-inset-bottom));
   background: var(--tm-surface-primary); box-shadow: var(--tm-shadow-primary);
   border-radius: var(--tm-radius-lg) var(--tm-radius-lg) 0 0;
+  display: flex; flex-direction: column; gap: var(--tm-space-sm);
+}
+.tm-actionbar > .tm-btn { width: 100%; }
+/* Two secondaries side by side: equal width, no icons, label fits on one line at 360px (otherwise stack). */
+.tm-btn-pair { display: grid; grid-template-columns: 1fr 1fr; gap: var(--tm-space-sm); }
+.tm-btn-pair > .tm-btn { width: 100%; }
+/* D-54: icons allowed on a pair only when both buttons carry one (e.g. 📅 Callback | ⏭ Skip HA). */
+
+/* ---------- Status card (RULES §9.3) — the outcome of a task; top of the content; stays. Not a toast. ---------- */
+.tm-status-card { display: flex; align-items: center; gap: var(--tm-space-md); padding: var(--tm-space-lg); background: var(--tm-surface-primary); border-radius: var(--tm-radius-lg); box-shadow: var(--tm-shadow-card); }
+.tm-status-card__icon { flex: none; display: flex; color: var(--tm-content-success); }
+.tm-status-card--neutral .tm-status-card__icon { color: var(--tm-content-secondary); }
+.tm-status-card__title { font-size: var(--tm-font-size-body-lg); line-height: var(--tm-font-lineheight-md); font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-primary); }
+.tm-status-card__text { font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); color: var(--tm-content-secondary); }
+
+/* ---------- Compact task header (RULES §8.5, D-49) — dense work screens: tinted, sticky, fixed height while scrolling ---------- */
+.tm-header-task--compact { position: sticky; top: 0; z-index: 10; display: flex; flex-direction: column; min-height: calc(var(--tm-space-3xl) * 2 + var(--tm-space-xs)); padding: var(--tm-space-xs) var(--tm-space-sm) var(--tm-space-sm) var(--tm-space-xs); background: var(--tm-surface-brand-subtle); }
+.tm-header-task__row { display: flex; align-items: center; gap: var(--tm-space-xs); min-height: var(--tm-space-3xl); }
+.tm-header-task__title { flex: 1; min-width: 0; margin: 0; font-size: var(--tm-font-size-title-sm); line-height: var(--tm-font-lineheight-lg); font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-primary); }   /* wraps to 2 lines at most */
+.tm-header-task__meta { margin: 0 0 0 calc(var(--tm-space-xs) + var(--tm-space-3xl)); font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); color: var(--tm-content-secondary); }
+/* No Back (during a call, closed case): title and meta move to the left margin. */
+.tm-header-task--no-back .tm-header-task__title { padding-left: var(--tm-space-lg); }
+.tm-header-task--no-back .tm-header-task__meta { margin-left: var(--tm-space-lg); }
+
+/* ---------- Edit-screen header (RULES §8.5) — full-screen editor over a page: ✕, title + subtitle, one action ---------- */
+.tm-header-edit { display: flex; align-items: center; gap: var(--tm-space-sm); min-height: calc(var(--tm-space-3xl) + var(--tm-space-lg)); padding: var(--tm-space-sm) var(--tm-space-lg) var(--tm-space-sm) var(--tm-space-sm); background: var(--tm-surface-primary); }
+.tm-header-edit__text { flex: 1; min-width: 0; }
+.tm-header-edit__title { margin: 0; font-size: var(--tm-font-size-title-sm); line-height: var(--tm-font-lineheight-lg); font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-primary); }
+.tm-header-edit__subtitle { font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); color: var(--tm-content-secondary); }
+
+/* ---------- Viewer header (RULES §8.5) — full-screen viewer: dark bar, ✕, title, tools; the title truncates before it overlaps ---------- */
+.tm-header-viewer { display: flex; align-items: center; gap: var(--tm-space-xs); min-height: calc(var(--tm-space-3xl) + var(--tm-space-lg)); padding: var(--tm-space-sm); background: var(--tm-surface-inverse); color: var(--tm-content-inverse); }
+.tm-header-viewer__title { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: var(--tm-font-size-body-lg); line-height: var(--tm-font-lineheight-md); font-weight: var(--tm-font-weight-semibold); }
+.tm-header-viewer__tools { display: flex; align-items: center; flex: none; }
+
+/* ---------- Accessibility (RULES §9.8) ---------- */
+/* D-54: the outline is for buttons, links and tappable rows. Text fields and the OTP code show focus with their own border
+   (.tm-field__control:focus-within, the current OTP box); a sheet or screen focused by script (tabindex="-1") shows nothing. */
+.tm :where(a, button, select, summary, [tabindex]:not([tabindex="-1"]):not(input):not(textarea)):focus-visible { outline: 2px solid var(--tm-border-focus); outline-offset: 2px; }
+.tm :where(input, textarea, [tabindex="-1"]):focus-visible { outline: none; }
+/* D-54: body text avoids a single word alone on its last line (titles already balance, L8). */
+.tm :where(p, li, .tm-notice, .tm-field__helper, .tm-option__desc) { text-wrap: pretty; }
+@media (prefers-reduced-motion: reduce) {
+  .tm *, .tm *::before, .tm *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
 }
 
 /* ==========================================================
@@ -282,3 +437,17 @@
 .tm-stat { background: var(--tm-surface-primary); border-radius: var(--tm-radius-lg); box-shadow: var(--tm-shadow-card); padding: var(--tm-space-lg); }
 .tm-stat__label { font-size: var(--tm-font-size-body-xs); line-height: var(--tm-font-lineheight-xs); color: var(--tm-content-secondary); }
 .tm-stat__value { font-size: var(--tm-font-size-title-md); line-height: var(--tm-font-lineheight-xl); font-weight: var(--tm-font-weight-semibold); font-variant-numeric: tabular-nums; }
+
+/* [PROPOSED] Empty / waiting state: a centred icon, title, one line of text and an optional action. */
+.tm-empty { display: flex; flex-direction: column; align-items: center; text-align: center; gap: var(--tm-space-sm); padding: var(--tm-space-2xl) var(--tm-space-lg); }
+.tm-empty__icon {
+  width: 64px; height: 64px; border-radius: 50%; margin-bottom: var(--tm-space-sm);
+  display: flex; align-items: center; justify-content: center;
+  background: var(--tm-surface-brand-subtle); color: var(--tm-content-brand);
+}
+.tm-empty__icon .tm-icon { width: 32px; height: 32px; }
+.tm-empty__title { font-size: var(--tm-font-size-body-lg); line-height: var(--tm-font-lineheight-md); font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-primary); }
+.tm-empty__text { max-width: 300px; font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); color: var(--tm-content-secondary); }
+
+/* [PROPOSED → decided D-51] Brand band: "On prescription" line. Text/background pair is AA in every state (blue-600 on brand-subtle = 5.5:1). Never a muted or darker band. */
+.tm-band--brand { background: var(--tm-surface-brand-subtle); color: var(--tm-content-brand); }

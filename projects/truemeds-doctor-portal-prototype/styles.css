@@ -43,6 +43,9 @@
       width: 280px;
     }
     @media (min-width: 1100px) { #desktop-side-panel { display: block; } }
+    /* Mirror of the side panel on the left of the frame: app-level demo controls (keeps the frame centred) */
+    #desktop-app-panel { display: none; position: absolute; top: var(--tm-space-lg); right: calc(50% + var(--phone-w) / 2 + var(--tm-space-xl)); width: 280px; }
+    @media (min-width: 1100px) { #desktop-app-panel { display: block; } }
     .side-panel-card { padding: 0; overflow: hidden; margin-bottom: var(--tm-space-md); }
     .side-panel-header {
       display: flex; align-items: center; gap: var(--tm-space-sm);
@@ -546,6 +549,154 @@
     .profile-menu-label { display: inline-flex; align-items: center; gap: var(--tm-space-md); }
     .profile-menu-btn > .tm-icon:last-child { color: var(--tm-content-tertiary); }
 
+
+    /* ============================================================
+       APP SCREENS — sign in, OTP, returning-doctor unlock, home (D-31, D-33 … D-37)
+       body[data-app] picks the one visible screen; the order page (#main-scroll + bars) shows only for "case".
+    ============================================================ */
+    body:not([data-app="case"]) :is(#main-scroll, #case-actionbar, #compact-strip, #demo-bar-scenarios, #demo-call-sim, #demo-bar-row2) { display: none !important; }
+    body:is([data-app="signin"], [data-app="otp"], [data-app="unlock"]) #portal-header { display: none; }
+    .app-screen { display: flex; flex-direction: column; min-height: calc(100dvh - var(--top-h, 0px)); background: var(--tm-surface-primary); }
+    .app-screen[hidden] { display: none !important; }
+    .app-screen h1, .app-screen p { margin: 0; }
+    .app-screen h1:focus { outline: none; }   /* focus moves to the heading on every screen change (screen readers); no visible box */
+    .tm-field__helper .tm-btn--link, .otp-help .tm-btn--link { display: inline; padding: 0; min-height: 0; font-size: inherit; line-height: inherit; vertical-align: baseline; }
+    .app-scroll { flex: 1; display: flex; flex-direction: column; gap: var(--tm-space-lg); padding: var(--tm-space-xl) var(--tm-space-lg); }
+    /* ── Sign-in screens (approved: ui-screens/sign-in, otp, returning-unlock) ──
+       Shared shell: brand-subtle blue top with logo and heading, white panel with a 24px rounded top. */
+    .app-screen.auth { background: var(--tm-surface-brand-subtle); }
+    .auth-top { padding: var(--tm-space-xl) var(--tm-space-xl) var(--tm-space-3xl); }
+    .auth-top--otp { padding: var(--tm-space-xl) var(--tm-space-lg) 28px; }
+    .auth-logo { display: block; width: 174px; height: auto; }
+    .auth-logo--sm { width: 168px; }
+    .auth-title { margin-top: var(--tm-space-3xl) !important; font-size: var(--tm-font-size-title-md); line-height: var(--tm-font-lineheight-xl);
+      font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-primary); }
+    .auth-top--otp .auth-title { margin-top: 28px !important; }
+    .auth-sub { margin-top: var(--tm-space-sm) !important; max-width: 31ch; font-size: var(--tm-font-size-body-lg); line-height: var(--tm-font-lineheight-md); color: var(--tm-content-secondary); }
+    .auth-sub strong { display: block; color: var(--tm-content-primary); font-weight: var(--tm-font-weight-medium); }
+    .auth-back { display: inline-flex; align-items: center; gap: 6px; margin: -4px 0 18px; padding: 0; border: 0; background: none; cursor: pointer;
+      font: inherit; font-size: var(--tm-font-size-body-lg); color: var(--tm-content-secondary); }
+    .auth-back .tm-icon { width: 20px; height: 20px; }
+    .auth-link { margin-top: 14px; padding: 0; border: 0; background: none; cursor: pointer; font: inherit; font-size: var(--tm-font-size-body-lg);
+      font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-brand); }
+    .auth-back:focus-visible, .auth-link:focus-visible, .otp-resend button:focus-visible { outline: 2px solid var(--tm-border-focus); outline-offset: var(--tm-space-xs); border-radius: var(--tm-radius-xs); }
+    .auth-panel { flex: 1; display: flex; flex-direction: column; padding: var(--tm-space-xl) var(--tm-space-xl) 0; background: var(--tm-surface-primary);
+      border-radius: var(--tm-radius-2xl) var(--tm-radius-2xl) 0 0; }
+    #scr-otp .auth-panel { padding-left: var(--tm-space-lg); padding-right: var(--tm-space-lg); }
+    .auth-form { display: flex; flex-direction: column; gap: var(--tm-space-lg); }
+    #signin-form { gap: var(--tm-space-xl); }
+    #signin-form .auth-notice { margin-top: calc(-1 * var(--tm-space-sm)); }
+    .auth .tm-field__control input { font-size: var(--tm-font-size-body-lg); }
+    .auth .tm-field__prefix { padding-right: var(--tm-space-md); font-size: var(--tm-font-size-body-lg); font-weight: var(--tm-font-weight-regular); color: var(--tm-content-primary); }
+    .auth .tm-field--error .tm-field__helper { color: var(--tm-content-error); }
+    .auth-panel .auth-foot { margin-top: auto; }
+    .auth-foot { padding: var(--tm-space-2xl) 0 var(--tm-space-xl); text-align: center; font-size: var(--tm-font-size-body-md);
+      line-height: var(--tm-font-lineheight-sm); color: var(--tm-content-secondary); }
+    .auth-foot a { margin-left: var(--tm-space-xs); color: var(--tm-content-brand); font-weight: var(--tm-font-weight-semibold); text-decoration: none; }
+    /* Sign-in notices: replace the helper line; tone set by .auth-notice--info / --warning / --error */
+    .auth-notice { display: flex; align-items: flex-start; gap: var(--tm-space-md); padding: var(--tm-space-lg); border-radius: var(--tm-radius-lg);
+      border: 1px solid var(--tm-border-default); background: var(--tm-surface-secondary); color: var(--tm-content-primary);
+      font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-md); }
+    .auth-notice[hidden] { display: none; }
+    .auth-notice > .tm-icon { flex: none; width: 20px; height: 20px; color: var(--tm-content-brand); }
+    .auth-notice strong { font-weight: var(--tm-font-weight-semibold); }
+    .auth-notice--warning { background: var(--tm-feedback-warning-surface); border-color: var(--tm-feedback-warning-border); }
+    .auth-notice--warning > .tm-icon { color: var(--tm-feedback-warning-content); }
+    .auth-notice--error { background: var(--tm-feedback-error-surface); border-color: var(--tm-feedback-error-border); }
+    .auth-notice--error > .tm-icon { color: var(--tm-feedback-error-content); }
+    /* OTP */
+    .otp-field .tm-field__control { justify-content: center; }
+    .otp-field input { height: 56px; text-align: center; font-size: 20px !important; letter-spacing: .35em; }
+    .otp-field input:placeholder-shown { letter-spacing: normal; font-size: var(--tm-font-size-body-lg) !important; }
+    .otp-field.is-locked .tm-field__control { background: var(--tm-surface-secondary); }
+    .otp-field.is-locked input { color: var(--tm-content-secondary); }
+    .otp-field .tm-field__helper.is-ok { display: flex; align-items: center; gap: 6px; color: var(--tm-content-success); }
+    .otp-field .tm-field__helper.is-ok .tm-icon { width: 16px; height: 16px; }
+    #otp-notice[hidden] { display: none; }
+    #otp-notice > .tm-icon { flex: none; margin-top: 1px; }
+    #otp-notice a { color: var(--tm-content-brand); font-weight: var(--tm-font-weight-semibold); text-decoration: none; }
+    .otp-resend { display: flex; justify-content: space-between; margin-top: -4px; font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); color: var(--tm-content-secondary); }
+    .otp-resend[hidden] { display: none; }
+    .otp-resend button { padding: 0; border: 0; background: none; cursor: pointer; font: inherit; font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-brand); }
+    .auth-terms { font-size: var(--tm-font-size-body-sm); line-height: var(--tm-font-lineheight-sm); color: var(--tm-content-secondary); }
+    .auth-terms a { color: var(--tm-content-primary); text-decoration: underline; }
+    #scr-otp .auth-form { padding-bottom: var(--tm-space-xl); }
+    /* Option card [PROPOSED]: icon tile, title, description, checkbox on the right; the whole card toggles. */
+    .option-card { display: flex; align-items: center; gap: 12px; min-height: 72px; box-sizing: border-box; padding: var(--tm-space-md);
+      border-radius: var(--tm-radius-lg); background: var(--tm-surface-secondary); cursor: pointer; }
+    .option-card[hidden] { display: none; }
+    .option-card__icon { width: 44px; height: 44px; flex-shrink: 0; display: flex; align-items: center; justify-content: center;
+      border-radius: 12px; background: var(--tm-surface-primary); color: var(--tm-content-brand); }
+    .option-card__icon .tm-icon { width: 24px; height: 24px; }
+    .option-card__text { flex: 1; display: flex; flex-direction: column; gap: 2px; }
+    .option-card__title { font-size: var(--tm-font-size-body-lg); line-height: 24px; font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-primary); }
+    .option-card__desc { font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); color: var(--tm-content-secondary); }
+    .option-card__check { appearance: none; -webkit-appearance: none; flex-shrink: 0; width: 22px; height: 22px; margin: 0; cursor: pointer;
+      border: 1.5px solid var(--tm-border-strong); border-radius: 6px; background: var(--tm-surface-primary) center / 16px no-repeat; }
+    .option-card__check:checked { border-color: var(--tm-surface-brand-default);
+      background-color: var(--tm-surface-brand-default);
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12l5 5l10 -10'/%3E%3C/svg%3E"); }
+    .option-card__check:focus-visible { outline: 2px solid var(--tm-border-focus); outline-offset: 2px; }
+    .option-card.is-disabled { opacity: .5; pointer-events: none; }
+    /* Returning-doctor unlock */
+    .auth-top--unlock { padding: var(--tm-space-xl) var(--tm-space-lg) calc(var(--tm-space-3xl) + var(--tm-space-lg)); }
+    .unlock-title { margin: var(--tm-space-3xl) 0 var(--tm-space-sm) !important; font-size: var(--tm-font-size-title-lg); line-height: var(--tm-font-lineheight-2xl);
+      font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-primary); }
+    .unlock-sub { max-width: 32ch; font-size: var(--tm-font-size-body-xl); line-height: var(--tm-font-lineheight-lg); color: var(--tm-content-secondary); }
+    .unlock-panel { align-items: stretch; padding: calc(var(--tm-space-3xl) + var(--tm-space-lg)) var(--tm-space-lg) var(--tm-space-xl); }
+    .unlock-prompt { margin-bottom: var(--tm-space-3xl); text-align: center; }
+    .unlock-icon { width: calc(var(--tm-space-3xl) + var(--tm-space-lg)); height: calc(var(--tm-space-3xl) + var(--tm-space-lg)); margin: 0 auto var(--tm-space-lg);
+      display: grid; place-items: center; border-radius: var(--tm-radius-lg); background: var(--tm-surface-brand-subtle); color: var(--tm-content-brand); }
+    .unlock-icon .tm-icon { width: var(--tm-space-2xl); height: var(--tm-space-2xl); }
+    .unlock-prompt h2 { margin: 0; font-size: var(--tm-font-size-body-xl); line-height: var(--tm-font-lineheight-lg); font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-primary); }
+    .unlock-actions { display: flex; flex-direction: column; align-items: center; gap: var(--tm-space-sm); }
+    .unlock-fallback { font-size: var(--tm-font-size-body-md); }
+    .unlock-account { margin-top: auto; align-self: center; font-size: var(--tm-font-size-body-md); font-weight: var(--tm-font-weight-medium); }
+    .unlock-account strong { margin-left: var(--tm-space-xs); color: var(--tm-content-brand); font-weight: var(--tm-font-weight-semibold); }
+    @media (max-height: 700px) {
+      .auth-top--unlock { padding-bottom: var(--tm-space-2xl); }
+      .unlock-title { margin-top: var(--tm-space-2xl) !important; }
+      .unlock-panel { padding-top: var(--tm-space-2xl); }
+      .unlock-prompt { margin-bottom: var(--tm-space-2xl); }
+    }
+    /* Busy buttons keep the brand colour, with a spinner (approved Sending OTP / Verifying states) */
+    .tm-btn--busy { opacity: .85; }
+    .btn-spinner { display: inline-block; flex: none; width: 16px; height: 16px; margin-right: var(--tm-space-sm); box-sizing: border-box;
+      border: 2px solid rgba(255, 255, 255, .45); border-top-color: var(--tm-content-inverse); border-radius: 50%; animation: btn-spin .8s linear infinite; }
+    .tm-btn--secondary .btn-spinner, .tm-btn--ghost .btn-spinner { border-color: var(--tm-border-default); border-top-color: var(--tm-content-brand); }
+    @keyframes btn-spin { to { transform: rotate(360deg); } }
+    @media (prefers-reduced-motion: reduce) { .btn-spinner { animation: none; } }
+    .home-date { font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); color: var(--tm-content-secondary); }
+    #scr-home { background: var(--tm-surface-secondary); }
+    .home-body { gap: var(--tm-space-md); }
+    .home-greet { display: flex; flex-direction: column; gap: var(--tm-space-sm); padding: var(--tm-space-sm) 0; }
+    .home-card { padding: 0; }
+    .home-checked { font-size: var(--tm-font-size-body-xs); line-height: var(--tm-font-lineheight-xs); color: var(--tm-content-tertiary); }
+    .home-today { display: flex; justify-content: space-between; align-items: center; padding: var(--tm-space-md) var(--tm-space-lg);
+      font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); color: var(--tm-content-secondary); }
+    .home-today strong { color: var(--tm-content-primary); font-weight: var(--tm-font-weight-semibold); }
+    /* Fingerprint prompt (mock of the phone's own prompt) */
+    .bio-body { display: flex; flex-direction: column; align-items: center; text-align: center; gap: var(--tm-space-md); }
+    .bio-sub { margin: 0; font-size: var(--tm-font-size-body-md); color: var(--tm-content-secondary); }
+    .bio-sensor {
+      width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer;
+      border: 2px solid var(--tm-border-selected); background: var(--tm-surface-brand-subtle); color: var(--tm-content-brand);
+    }
+    .bio-sensor .tm-icon { width: 40px; height: 40px; }
+    .bio-sensor.is-error { border-color: var(--tm-border-error-strong); background: var(--tm-feedback-error-surface); color: var(--tm-content-error); }
+    .bio-sensor.is-ok { border-color: var(--tm-content-success); color: var(--tm-content-success); background: var(--tm-surface-success-subtle); }
+    .bio-hint { margin: 0; font-size: var(--tm-font-size-body-md); color: var(--tm-content-secondary); min-height: var(--tm-font-lineheight-sm); }
+    .bio-hint.is-error { color: var(--tm-content-error); }
+    /* Demo controls for the app shell */
+    .demo-app { display: flex; flex-direction: column; gap: var(--tm-space-xs); margin-bottom: var(--tm-space-sm); }
+    .demo-app-row { display: flex; flex-wrap: wrap; gap: var(--tm-space-xs); align-items: center; }
+    .demo-app-row .tm-chip { white-space: nowrap; }
+    .demo-app-hint { font-size: var(--tm-font-size-body-xs); line-height: var(--tm-font-lineheight-xs); color: var(--tm-content-secondary); }
+    /* In the phone's own demo bar keep it to two scrollable rows; the full hint lives in the desktop side panel */
+    #demo-bar .demo-app-row { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
+    #demo-bar .demo-app-row .tm-chip { min-height: 32px; padding-top: 0; padding-bottom: 0; }
+    #demo-bar .demo-app-hint { display: none; }
+
     /* ============================================================
        DESKTOP PHONE FRAME (>=768px) — must stay LAST so it overrides the mobile rules above
        (see LAYOUT — PHONE FRAME at the top, and design-system/RULES.md §7)
@@ -562,6 +713,8 @@
       }
       #sticky-top-wrapper { position: relative; flex-shrink: 0; }
       #main-scroll { flex: 1; min-height: 0; overflow-y: auto; }
+      .app-screen { flex: 1; min-height: 0; overflow-y: auto; }
+      .app-screen > .app-actionbar { position: sticky; bottom: 0; }
       /* overlays: fill the frame, not the window (override the JS-set left/width used on mobile) */
       #sheet-overlay { left: 0 !important; width: 100% !important; }
       #rx-overlay { left: 0; width: 100%; max-width: none; transform: none; }

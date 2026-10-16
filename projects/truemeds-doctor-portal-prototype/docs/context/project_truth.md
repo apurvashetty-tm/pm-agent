@@ -1,157 +1,69 @@
-# project_truth.md — Truemeds Doctor Portal Prototype
+# project_truth.md — Truemeds Doctor Portal
 
-**Status:** LOCKED v1.0
-**Last Updated:** 2026-06-09
-**Change authority:** User only. Claude must not modify this file without explicit instruction.
-
----
-
-## 1. What this product is
-
-The Truemeds Doctor Portal is a mobile-web tool used by Truemeds doctors to conduct patient consultations.
-
-Doctors primarily use this portal on mobile.
-
-This prototype covers the **doctor consultation workflow** only.
-It does not cover admin, pharmacy operations, order management, customer-facing flows, or ecommerce sections.
+**Status:** Approved by Apurva, 2026-10-16 (v2.0 — rewritten; replaces v1.0 of 2026-06-09, kept in git history)
+**Changes:** Apurva only; every change is recorded in `docs/context/decision_log.md`. Detail lives in `ui-screens/` and `ui-screens/app-logic.md`.
 
 ---
 
-## 2. Who uses this
+## 1. What we're building
 
-**Primary user:** A Truemeds doctor conducting a consultation.
+A mobile app for Truemeds doctors to take a case, call the patient, and confirm the prescription for that order — from sign-in to the next case.
 
-The doctor's context:
-- Works from a phone, not a desktop
-- Each doctor logs in on their own personal device — this is NOT a shared-device or clinic setup
-- There is no carry-forward from IRIS, BA app, or any shared-device model
-- Reviews one case at a time
-- Needs to call the patient, validate medicines, and take a post-call action
-- Must complete a valid connected call before final action CTAs appear
-- Is responsible for capturing symptoms/notes when relevant
+Out of scope: admin, pharmacy operations, ordering, the customer app.
 
----
+**Later (not in this version):** earnings (Wallet in Profile), pushed cases, calling inside the app.
 
-## 3. The locked consultation workflow
+## 2. Who uses it
 
-This is the core journey. Claude must not reorder, skip, or add steps without explicit approval.
+Freelance doctors working with Truemeds, each on their own phone.
 
-**Step 1 — Review patient and order context**
-Doctor sees the patient name, order ID, order type (Cat4 or Pilot), and any relevant flags.
+- They choose when to work: they set how long they're available and request cases one at a time. Today cases are not pushed to them; pushing cases may be explored later.
+- How many cases a doctor handles depends on how long they're available. Today roughly 12,000 orders are handled by about 300 active doctors `[APPROX — Apurva to confirm both numbers and the period]`.
+- They can see how many prescriptions they've confirmed today, on Home.
+- In each case the doctor calls the patient, reviews every medicine on the order, and either confirms the prescription or ends the case another way (callback, patient unavailable).
+- A good session: sign in fast, request a case, get through it without confusion, move straight to the next one.
 
-**Step 2 — Review prescription (if available)**
-If a prescription is attached to the order, the doctor can view it.
+## 3. The doctor's day
 
-**Step 3 — Review medicines added for clinical validation**
-Doctor sees the medicines in the order and their validation status.
+1. **Sign in** with mobile number and OTP. Fingerprint / Face ID can be turned on for faster sign-in.
+2. **Home:** set availability (minimum 15 minutes), then request a case. Home shows the time left and prescriptions confirmed today.
+3. **Open the case:** patient and order details, the prescription if attached, the medicines.
+4. **Call the patient** from the app.
+5. **Review each medicine:** prescribe it or disable it.
+6. **Finish the case**, in one of these ways:
+   - **Confirm prescription:** Cat4 cases, and Pilot cases where HA is skipped.
+   - **Confirm & transfer:** Pilot, Value Meds, HA required. The prescription is confirmed and the patient is handed to an HA on the same call. If the transfer fails, the case is forwarded instead.
+   - **Confirm & forward:** Pilot, Non-Value Meds, HA required. The prescription is confirmed and an HA calls the patient back separately.
+   - **Skip HA:** the doctor decides HA isn't needed; the button then becomes Confirm prescription.
+   - **Callback** or **Patient unavailable:** the case ends without a prescription.
+7. **Next:** request the next case, or go back to Home.
 
-**Step 4 — Assign and call the customer**
-Doctor is assigned the case (or self-assigns). Doctor initiates a call to the patient.
+## 4. Current rules
 
-**Step 5 — Complete a valid connected call**
-A valid call means the call was connected and live for at least 50 seconds.
+These rules apply until Apurva changes them. Every change is recorded in the decision log.
 
-**Step 6 — Capture symptoms/notes (if needed)**
-After a successful call, the doctor may capture notes or symptoms.
+- **50-second call gate:** the final buttons appear only after a connected call lasting at least 50 seconds.
+- **Final button by case type:**
 
-**Step 7 — Take the correct post-call action**
-The correct final CTA depends on the case type and HA status (see Section 5).
-
----
-
-## 4. The valid-call gate
-
-**[LOCKED]**
-
-Final operational CTAs must NOT appear before a valid call is completed.
-
-Before the valid-call gate:
-- Show: assignment status, call button, no-pickup/hold actions, medicine review, notes input
-- Do NOT show: Confirm Order, Confirm & Transfer, Confirm & Forward, Skip HA Call
-
-After a valid call (connected + ≥50 seconds live):
-- Show the correct final CTA based on case type
-- Show Skip HA Call only if applicable (see Section 5)
-
-The 50-second threshold is locked.
-Exact timer behavior (pause on hold, resume on reconnect) is `[OPEN DECISION]`.
-
----
-
-## 5. Post-call CTA routing — locked decision matrix
-
-**[LOCKED]**
-
-| Case Type | HA Status | Correct Final CTA |
+| Case type | HA status | Final button |
 |---|---|---|
-| Cat4 | N/A | Confirm Order |
-| Pilot | HA already skipped (by customer or system) | Confirm Order |
-| Pilot | Value Meds + HA required | Confirm & Transfer |
-| Pilot | Non-Value Meds + HA required | Confirm & Forward |
+| Cat4 | — | Confirm prescription |
+| Pilot | HA skipped (by customer, system or doctor) | Confirm prescription |
+| Pilot | Value Meds + HA required | Confirm & transfer |
+| Pilot | Non-Value Meds + HA required | Confirm & forward |
 
-Additional rules:
-- **Skip HA Call** button is available only after valid-call gate, and only for Pilot orders where HA is required and not yet skipped.
-- Once Skip HA Call is used, the case becomes "HA skipped" → CTA becomes Confirm Order.
-- Pilot HA-skipped cases must NOT show Transfer or Forward.
-- Pilot HA-skipped cases must NOT show the HA transfer attention banner.
-- Cat4 cases must never show Transfer, Forward, Skip HA Call, or any HA-related UI.
+  Skip HA appears only for Pilot cases where HA is required and not yet skipped. Cat4 cases never show anything HA-related. Each of the four rows is a separate outcome in analytics.
+- **No unreviewed medicines:** Confirm is blocked while any medicine is still Pending.
+- **No leaving mid-case:** once the first call is attempted, the case can only end through the flow (confirm, callback, patient unavailable).
+- **The doctor can't add medicines or change quantity.** Quantity is shown on the case, read-only.
 
----
+## 5. Calling
 
-## 6. Pre-valid-call actions — what is always available before the gate
+First release: Knowlarity click-to-call. The doctor taps Call patient; the doctor's own phone rings first, then the patient's. The doctor ends the call on the phone.
 
-These actions are available before the valid-call gate:
+## 6. Where the detail lives
 
-- View patient/order context
-- View prescription (if attached)
-- View medicines list
-- Self-assign or view assignment status
-- Initiate call to customer
-- No-pickup action (mark as no pickup attempt)
-- Hold action (put case on hold — `[OPEN DECISION]` for hold duration and re-queue logic)
-- Capture notes/symptoms (whether notes are saved pre-call or only post-call is `[OPEN DECISION]`)
-
----
-
-## 7. Prototype scenarios — V1 scope
-
-The prototype must support these five named mock scenarios, selectable by the developer:
-
-| Scenario ID | Description | Expected Final CTA |
-|---|---|---|
-| `cat4` | Cat4 order, no HA involved | Confirm Order |
-| `pilot_value_meds_ha` | Pilot order, value meds, HA required | Confirm & Transfer |
-| `pilot_nonvalue_meds_ha` | Pilot order, non-value meds, HA required | Confirm & Forward |
-| `pilot_ha_skipped_customer` | Pilot order, HA skipped by customer | Confirm Order |
-| `pilot_ha_skipped_system` | Pilot order, HA skipped by system validation | Confirm Order |
-
-Each scenario must show a deterministic, believable mock state for the full screen.
-
----
-
-## 8. What this prototype is NOT
-
-- Not a full portal rebuild
-- Not an admin panel
-- Not an order management tool
-- Not a pharmacy operations tool
-- Not a customer-facing flow
-- Not a backend system
-- Not a multi-page app for V1
-
----
-
-## 9. What must never be silently invented
-
-Claude must not guess, fake, or silently hardcode final behavior for:
-
-- **Case type classification** — what makes an order Cat4 vs Pilot
-- **Value Meds vs Non-Value Meds** — how this is determined
-- **HA requirement logic** — what field or system sets HA required
-- **HA skip eligibility** — what conditions allow a Skip HA Call
-- **Transfer vs Forward distinction** — operational meaning downstream
-- ~~**Medicine add/remove authority**~~ — answered 2026-10-07: the doctor cannot add medicines; can prescribe (edit dose/frequency/duration) or disable. Quantity is not the doctor's (backend). See `decision_log.md` D-04, D-06.
-- **Doctor assignment source** — queue system, manual, or rotational
-- **Notes visibility and locking rules** — who can see notes, when are they locked
-
-If any of these surface during build, mark `[OPEN DECISION]` and add to `open_questions.md`.
+- Screens: `ui-screens/` (final pictures of every state)
+- Rules per screen: `ui-screens/app-logic.md`
+- Why things are the way they are: `docs/context/decision_log.md`
+- Still undecided: `docs/context/open_questions.md`

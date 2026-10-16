@@ -1,0 +1,10 @@
+const assert=require('node:assert/strict');
+const x=require(process.env.DOCTOR_LOGIC_MODULE || './compiled/logic.js');
+for(const n of [15,30,45,60,75,180,1440,1455])assert.equal(x.validMinutes(n),true);
+for(const n of [0,-15,1,14,16,15.5,NaN,Infinity])assert.equal(x.validMinutes(n),false);
+assert.equal(x.adjustMinutes(15,-15),15);assert.equal(x.adjustMinutes(45,15),60);assert.equal(x.adjustMinutes(60,-15),45);assert.equal(x.adjustMinutes(75,-60),15);
+assert.equal(x.normaliseMobile('+91 98765 43210'),'9876543210');assert.equal(x.normaliseMobile('98765'),'98765');
+assert.equal(x.countdown(0),'00:00');assert.equal(x.countdown(90),'01:30');assert.equal(x.countdown(-4),'00:00');
+assert.equal(x.addedDeadline(1000,1000+12*60000,30),1000+42*60000);assert.equal(x.addedDeadline(1000,0,30),1000+30*60000);
+assert.equal(x.durationLabel(75),'1 h 15 min');
+console.log('PASS: duration constraints, rollovers, paste cleanup, countdown and extension across expiry');

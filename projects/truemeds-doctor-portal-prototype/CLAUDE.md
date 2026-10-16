@@ -1,5 +1,7 @@
 # Truemeds Doctor Portal Prototype — Claude Rules
 
+> **Branch check first:** this project lives on branch `doctor-portal/sign-in` (and `main` after each merge). Run `git branch --show-current` before reading anything. On any other branch these files are old copies (e.g. a handoff from July, no `ui-screens/` screens) — stop and switch to a worktree of `doctor-portal/sign-in`.
+
 ## What this project is
 
 This is a **mobile-web prototype** for the Truemeds Doctor Portal revamp.
@@ -25,7 +27,7 @@ Use project-local files for project truth and handoff. Use root knowledge files 
 The visual system for this prototype is now the central Truemeds design system:
 `../../design-system/` (code copy of SALT, the Truemeds Figma library).
 - Read `../../design-system/RULES.md` before any UI work.
-- `docs/design_system.md` is **superseded** — kept only as history. Its colours
+- `docs/_superseded/docs-2026-08/design_system.md` is **superseded** — kept only as history. Its colours
   (`#1B69DE`, system font, `#111827` text) and its emoji/illustration icons do not
   match Truemeds and must not be extended.
 - The restyle onto `truemeds.css` + `icons.js` is **done** (branch `doctor-portal-restyle`);
@@ -35,26 +37,47 @@ The visual system for this prototype is now the central Truemeds design system:
 
 ---
 
+## Feedback and render contract — D-41
+
+Before any auth/Home UI or render work, read `docs/feedback-rules.md` and `docs/feedback-state-map.md`. They define shared feedback, copy ownership, state coverage and acceptance gates. Do not style error states individually. Before generating an image, create the batch README from `docs/renders/RENDER-README-TEMPLATE.md`. Capture representative layouts and boundary conditions, not every copy variant. Every state still requires source/behavior coverage. Approval and promotion remain explicit.
+
+**Layout v2 — D-42 to D-45.** Read `design-system/RULES.md` §8 (type scale, spacing, button placement, header types) before any screen work. Logo only on home-base screens (sign-in, Home). OTP v2 and the faster sign-in offer screen are defined in D-44 and D-45.
+
+## Current state (2026-10-16) — read first
+- **Approved screens A–D:** `ui-screens/` (README there is the index; every state at 360 and 390). Decisions D-42–D-55.
+- **App rules:** `ui-screens/app-logic.md` (DRAFT until Apurva approves) — extracted from the old prototype; the rebuild follows it.
+- **Next:** (1) calling screens for Knowlarity click-to-call (D-56, OQ-027) in a new thread; (2) approve app-logic.md; (3) rebuild checklist; (4) build the prototype **from scratch** — do not extend `index.html` / `app.js`.
+- **Sub-sessions (terminal, Codex) never write to the decision log or record approvals in Apurva's name;** they report under NEEDS-APURVA and Claude records decisions after she agrees.
+- **Audit rule:** before calling screens done, check every decision against every screen it touches at full size (360 and 390), not on contact sheets.
+
+## Layout v2 decisions — D-42 to D-56 (2026-10-14/15)
+
+Read `design-system/RULES.md` §8 (incl. locked specs L1–L9) and **§9 (components and states: button roles, 48px targets, chips, sheet template, toast, states checklist)**, and decision log D-42–D-52, before any screen work. Doctor-portal specifics of the design system are in D-52. Key points: logo only on home-base screens; task headers in hero or compact size, Back only where there is a previous screen; case page exits by stage (D-48); compact tinted case header (D-49). **Wording: "case", never "order", for the doctor's unit of work**; the customer order ID line stays. Final CTA labels and tracking: D-50 ("Confirm prescription", "Confirm & transfer", "Confirm & forward", "Skip HA call").
+
+## Approved UI references
+
+`ui-screens/` holds only Apurva-approved screen states for implementation handoff. Read `ui-screens/README.md` before building an approved screen. Do not promote concepts or historical renders from `docs/renders/` into it without explicit approval.
+
 ## Read these files before making any decision
 
 1. `docs/context/project_truth.md`
 2. `docs/context/session_handoff.md`
 3. `docs/context/decision_log.md` — why each screen decision was made (and what was rejected); do not re-open without new information
-4. `docs/roles/product_manager.md`
-5. `docs/roles/frontend_engineer.md`
-6. `docs/roles/uiux_designer.md`
-7. `docs/roles/mock_backend_engineer.md`
-8. `docs/context/open_questions.md`
+4. `ui-screens/README.md` and `ui-screens/app-logic.md` — the approved screens and the app's rules
+5. `docs/feedback-state-map.md` — every error / offline / busy state
+6. `docs/context/open_questions.md`
+
+(The old role files are archived — see `docs/roles/README.md`.)
 
 ---
 
 ## Priority order
 
 1. **Latest user instruction** — always wins
-2. **`docs/context/project_truth.md`** — locked product truth, cannot be invented around
+2. **`docs/context/project_truth.md`** — what we're building and the current rules (Apurva changes them, via the decision log)
 3. **`docs/context/session_handoff.md`** — current resume point and latest implementation state
 3a. **`docs/context/decision_log.md`** — agreed design/product decisions with their reasons
-4. **`docs/roles/*`** — role-specific working rules
+4. **`ui-screens/app-logic.md`** (once approved) and **`ui-screens/`** — the app's rules and approved screens
 5. **`docs/context/open_questions.md`** — unresolved decisions that must not be silently answered
 6. **`[MOCK ASSUMPTION]`** — temporary build unblockers, small and local only, clearly labeled
 
@@ -75,7 +98,7 @@ If two sources conflict, follow the higher-priority source and surface the confl
 - Do not invent product logic if it is unclear
 - If logic is missing, use a clearly marked `[MOCK ASSUMPTION]` and add it to `docs/context/open_questions.md`
 - Respect the locked consultation flow — do not add CTAs or steps that are not part of the locked workflow
-- **[UPDATED 2026-07-13, `[USER-PROVIDED]`]** V1 is now three files: `index.html` (structure), `styles.css` (all cosmetics), `app.js` (all logic) — split from the original single-file rule at explicit user request, to fix CTA-styling drift across a single large file. Do not split further (e.g. per-component files) unless explicitly asked. All cosmetic changes belong in `styles.css` through the shared `.btn` button system — see `docs/design_system.md` before adding any new CTA.
+- **[UPDATED 2026-10-16, D-56]** The prototype is being **rebuilt from scratch**. The old `index.html` / `styles.css` / `app.js` are frozen as reference only (the live Netlify demo still serves them) — do not extend or fix them. The new build's file layout is set by the rebuild checklist; it uses only central design-system components and takes all text from `ui-screens/feedback/messages.json`. (Replaces the 2026-07-13 three-file rule.)
 
 ---
 
@@ -88,7 +111,8 @@ Do not silently decide or implement the following — ask first:
 - **HA skip eligibility** — what field or condition marks an order as HA-skipped
 - **Transfer vs Forward distinction** — what exact operational difference these have downstream
 - **No-pickup handling** — how many attempts before hold, what hold duration means
-- **Doctor assignment rules** — how a case arrives in a doctor's queue and how re-assignment works
+- **Calling model** — click-to-call now, in-app (VoIP) later; doctor-didn't-answer detection (OQ-027, D-56)
+- **Doctor assignment rules** — how a case arrives in a doctor's queue and how re-assignment works (partly answered 2026-10-14: Back before the first attempted call releases the case — D-48; backend OQ-024/025)
 - ~~**Medicine review authority**~~ — answered 2026-10-07: no add; prescribe or disable only; quantity is the backend's (`decision_log.md` D-04, D-06)
 - **Notes behavior** — are notes visible to other teams? Are they locked after call completion?
 
@@ -104,12 +128,14 @@ That means:
 - build the doctor screen fast, mobile-first, with real-looking mock data
 - use `[MOCK ASSUMPTION]` freely for non-critical gaps
 - prefer a working believable demo state over theoretically complete but invisible UI
-- one `index.html` with embedded CSS and JS is the right V1 format
+- a clean, modular rebuild (D-56) — not more patches on the old prototype
 
 That does **not** mean:
 - invent case-type routing logic
 - fake the valid-call gate carelessly
 - override `project_truth.md` for convenience
+
+**Never silently invent** (moved from project_truth v1.0 §9): what makes an order Cat4 vs Pilot · Value vs Non-Value Meds · what sets HA required · HA-skip eligibility · doctor assignment source · notes visibility and locking. If one surfaces during build, mark `[OPEN DECISION]` and add it to `open_questions.md`.
 
 ---
 

@@ -1,0 +1,32 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="design-system/truemeds.css"><link rel="stylesheet" href="_auth.css">
+<script src="design-system/icons/icons.js"></script><style>.tm-btn.busy,.tm-btn.busy:disabled{background:var(--tm-surface-brand-default);color:#fff;opacity:.85;border-color:transparent}.spin{display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,.45);border-top-color:#fff;border-radius:50%;margin-right:8px;vertical-align:-3px}.tm-field.locked .tm-field__control{background:var(--tm-surface-secondary)}.tm-field.locked input{color:var(--tm-content-secondary)}</style></head><body class="tm">
+<div class="screen">
+ <div class="top">
+  <img class="logo" src="truemeds-for-doctors.svg" alt="Truemeds for doctors">
+  <div class="head"><h1>Welcome, Doctor.</h1><p id="sub">A different kind of house call.</p></div>
+ </div>
+ <div class="panel">
+  <div class="form">
+    <div class="tm-field" id="f">
+      <label class="tm-field__label" for="ph">Mobile number</label>
+      <div class="tm-field__control"><span class="tm-field__prefix">+91</span><input id="ph" type="tel" inputmode="numeric" maxlength="10" placeholder="10-digit mobile number"></div>
+      <div class="tm-field__helper" id="h">We'll send you a verification code by SMS.</div>
+    </div>
+    <div class="tm-notice note" id="n"><span class="tm-icon" id="ni" data-icon="info-circle"></span><div id="nt"></div></div>
+    <button class="tm-btn tm-btn--lg tm-btn--primary tm-btn--block" id="b">Send OTP</button>
+  </div>
+  <div class="foot">New to Truemeds? <a href="#">Sign up</a></div>
+ </div>
+ <div class="kbd"><div>1</div><div>2</div><div>3</div><div>4</div><div>5</div><div>6</div><div>7</div><div>8</div><div>9</div><div></div><div>0</div><div>⌫</div></div>
+</div>
+<script>
+function state(s){const $=id=>document.getElementById(id),f=$('f'),h=$('h'),n=$('n');
+ if(s.v)$('ph').value=s.v; if(s.kb){document.body.classList.add('kb');$('ph').focus();}
+ if(s.err){f.classList.add('tm-field--error');h.textContent=s.err;}
+ if(s.note){h.style.display='none';n.classList.add('show','tm-notice--'+s.note.k);$('ni').setAttribute('data-icon',s.note.i);$('nt').innerHTML=s.note.t;TMIcons.render(n);}
+ const b=$('b');
+ if(s.busy){b.innerHTML='<span class="spin"></span>Sending OTP';b.disabled=true;b.classList.add('busy');f.classList.add('locked');}
+ if(s.btn){b.textContent=s.btn;b.disabled=true;}
+}
+</script></body></html>

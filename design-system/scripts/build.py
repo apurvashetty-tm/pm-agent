@@ -118,6 +118,37 @@ def build_semantic(core_index):
     return lines
 
 
+def truemeds_overrides():
+    """tokens/truemeds.json: Truemeds layer applied last. Returns (semantic overrides, text-style rules)."""
+    tm = json.loads((ROOT / "tokens/truemeds.json").read_text())
+    sem = {}
+    for name, ref in tm["content"].items():
+        family, shade = ref.split(":", 1)[1].rsplit("-", 1)
+        sem[f"--tm-content-{name}"] = f"var(--tm-core-{family}-{shade})"
+    text = []
+    for k, (size, lh, weight) in tm["text"].items():
+        text.append(
+            f".tm-text-{k} {{ font-size: {size}px; line-height: {lh}px; font-weight: {weight}; }}"
+        )
+    return sem, text
+
+
+def apply_semantic_overrides(sem_lines, overrides):
+    """Replace an existing semantic line in place; append new names."""
+    out, seen = [], set()
+    for line in sem_lines:
+        name = line.split(":")[0].strip()
+        if name in overrides:
+            out.append(f"  {name}: {overrides[name]};")
+            seen.add(name)
+        else:
+            out.append(line)
+    for name, val in overrides.items():
+        if name not in seen:
+            out.append(f"  {name}: {val};")
+    return out
+
+
 def build_extras():
     ex = json.loads((ROOT / "tokens/extras.json").read_text())
     lines = []
@@ -139,6 +170,8 @@ def build_extras():
 def main():
     core, idx = build_core()
     sem = build_semantic(idx)
+    tm_sem, tm_text = truemeds_overrides()
+    sem = apply_semantic_overrides(sem, tm_sem)
     ex_vars, text_classes = build_extras()
     components = (ROOT / "src/components.css").read_text()
     out = [
@@ -171,11 +204,18 @@ def main():
         "",
         "/* ---- 4. Components — from src/components.css ---- */",
         components,
+        "",
+        "/* ---- 5. Truemeds overrides — tokens/truemeds.json, applied last ---- */",
+        *tm_text,
     ]
     (ROOT / "truemeds.css").write_text("\n".join(out))
     print(f"truemeds.css written: {len(core)} core, {len(sem)} semantic, "
           f"{len(ex_vars)} shadows, {len(text_classes)} text styles")
     build_preview(sem, ex_vars)
+
+    # Same sources -> React Native copy (native/). Keeps web and app values identical.
+    import build_native
+    build_native.main()
 
 
 def build_preview(sem, ex_vars):

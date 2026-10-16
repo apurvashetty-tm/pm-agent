@@ -1,0 +1,423 @@
+{
+  "signin.smsHelper": {
+    "pattern": "none",
+    "trigger": "entry",
+    "slot": "field helper",
+    "next": "Send OTP",
+    "clear": "input or submit",
+    "retain": "number",
+    "copy": "existing"
+  },
+  "signin.empty": {
+    "pattern": "F1",
+    "trigger": "empty submit",
+    "slot": "mobile field",
+    "next": "enter number",
+    "clear": "valid edit",
+    "retain": "number",
+    "copy": "approved"
+  },
+  "signin.short": {
+    "pattern": "F1",
+    "trigger": "short submit",
+    "slot": "mobile field",
+    "next": "complete number",
+    "clear": "valid edit",
+    "retain": "number",
+    "copy": "approved"
+  },
+  "signin.prefix": {
+    "pattern": "F1",
+    "trigger": "impossible prefix",
+    "slot": "mobile field",
+    "next": "correct prefix",
+    "clear": "valid edit",
+    "retain": "number",
+    "copy": "approved"
+  },
+  "signin.notRegistered": {
+    "pattern": "N1",
+    "trigger": "access lookup",
+    "slot": "form notice",
+    "next": "Sign up or await Ops",
+    "clear": "new number",
+    "retain": "number",
+    "copy": "existing"
+  },
+  "signin.offline": {
+    "pattern": "F2",
+    "trigger": "failed send offline",
+    "slot": "form notice",
+    "next": "reconnect and retry",
+    "clear": "new attempt",
+    "retain": "number",
+    "copy": "existing"
+  },
+  "signin.couldntSend": {
+    "pattern": "F2",
+    "trigger": "failed send",
+    "slot": "form notice",
+    "next": "retry",
+    "clear": "new attempt",
+    "retain": "number",
+    "copy": "approved (Apurva, D-54, wording changed)"
+  },
+  "signin.tooMany": {
+    "pattern": "W1",
+    "trigger": "number issuance lock",
+    "slot": "form notice",
+    "next": "wait for server eligibility",
+    "clear": "authoritative unlock",
+    "retain": "number",
+    "copy": "existing"
+  },
+  "signin.inactive": {
+    "pattern": "F2",
+    "trigger": "account inactive",
+    "slot": "form notice",
+    "next": "Call Doctor Ops",
+    "clear": "Ops resolution",
+    "retain": "number",
+    "copy": "approved"
+  },
+  "otp.empty": {
+    "pattern": "F1",
+    "trigger": "empty verify",
+    "slot": "OTP field",
+    "next": "enter code",
+    "clear": "new input",
+    "retain": "opt-in",
+    "copy": "approved"
+  },
+  "otp.short": {
+    "pattern": "F1",
+    "trigger": "short verify",
+    "slot": "OTP field",
+    "next": "complete code",
+    "clear": "new input",
+    "retain": "code and opt-in",
+    "copy": "approved"
+  },
+  "otp.wrong": {
+    "pattern": "F1",
+    "trigger": "server wrong code",
+    "slot": "OTP field",
+    "next": "enter new code",
+    "clear": "new attempt",
+    "retain": "opt-in",
+    "copy": "approved"
+  },
+  "otp.triesLeft": {
+    "pattern": "F1",
+    "trigger": "server wrong code with remaining count",
+    "slot": "OTP field",
+    "next": "enter new code",
+    "clear": "new attempt",
+    "retain": "opt-in",
+    "copy": "approved",
+    "placeholders": [
+      "count"
+    ]
+  },
+  "otp.expired": {
+    "pattern": "F1",
+    "trigger": "server expired challenge",
+    "slot": "OTP field",
+    "next": "Resend code",
+    "clear": "fresh challenge",
+    "retain": "opt-in",
+    "copy": "approved"
+  },
+  "otp.newSent": {
+    "pattern": "S1",
+    "trigger": "confirmed resend",
+    "slot": "resend helper",
+    "next": "enter new code",
+    "clear": "new input",
+    "retain": "opt-in",
+    "copy": "approved"
+  },
+  "otp.couldntVerify": {
+    "pattern": "F2",
+    "trigger": "verification service failure",
+    "slot": "form notice",
+    "next": "retry",
+    "clear": "new attempt",
+    "retain": "code and opt-in",
+    "copy": "approved"
+  },
+  "otp.tooManyResends": {
+    "pattern": "W1",
+    "trigger": "resend limit",
+    "slot": "form notice",
+    "next": "use last valid code or Ops",
+    "clear": "server eligibility",
+    "retain": "code and opt-in",
+    "copy": "approved"
+  },
+  "otp.locked": {
+    "pattern": "W1",
+    "trigger": "number verification lock",
+    "slot": "form notice",
+    "next": "wait or Ops",
+    "clear": "authoritative unlock",
+    "retain": "opt-in",
+    "copy": "approved",
+    "placeholders": [
+      "time"
+    ]
+  },
+  "otp.resendFailed": {
+    "pattern": "F2",
+    "trigger": "resend failure",
+    "slot": "form notice",
+    "next": "retry if eligible",
+    "clear": "new attempt",
+    "retain": "code and opt-in",
+    "copy": "approved (Apurva, D-54, wording changed)"
+  },
+  "otp.expiredAndLimited": {
+    "pattern": "W1 (locked treatment, D-46)",
+    "trigger": "expired and resend limited",
+    "slot": "form notice",
+    "next": "request a new code in {time}, or Ops",
+    "clear": "fresh challenge",
+    "retain": "none; boxes empty and disabled",
+    "copy": "approved (Apurva, D-46)",
+    "placeholders": [
+      "time"
+    ]
+  },
+  "home.setupFailed": {
+    "pattern": "F2",
+    "trigger": "set availability failure",
+    "slot": "Home status",
+    "next": "retry",
+    "clear": "new attempt",
+    "retain": "duration",
+    "copy": "approved (Apurva, D-53)"
+  },
+  "home.addFailed": {
+    "pattern": "F2",
+    "trigger": "add time failure",
+    "slot": "sheet notice",
+    "next": "retry",
+    "clear": "new attempt",
+    "retain": "duration and deadline",
+    "copy": "approved (Apurva, D-53)"
+  },
+  "home.requestFailed": {
+    "pattern": "F2",
+    "trigger": "confirmed case request failure",
+    "slot": "Home status",
+    "next": "retry",
+    "clear": "new attempt",
+    "retain": "availability",
+    "copy": "approved (Apurva, D-54, wording changed)"
+  },
+  "home.offline": {
+    "pattern": "F2",
+    "trigger": "request failed offline",
+    "slot": "Home status",
+    "next": "reconnect and reconcile",
+    "clear": "reconciled request",
+    "retain": "availability",
+    "copy": "approved (Apurva, D-53)"
+  },
+  "home.added": {
+    "pattern": "T1",
+    "trigger": "confirmed add success",
+    "slot": "toast above footer",
+    "next": "continue",
+    "clear": "automatic display timeout",
+    "retain": "updated deadline",
+    "copy": "existing",
+    "placeholders": []
+  },
+  "home.endingSoon": {
+    "pattern": "W1",
+    "trigger": "15 minutes or less",
+    "slot": "Home status",
+    "next": "Add time or request case",
+    "clear": "extension or expiry",
+    "retain": "availability",
+    "copy": "existing"
+  },
+  "unlock.unavailable": {
+    "pattern": "F2",
+    "trigger": "credential unavailable",
+    "slot": "unlock notice",
+    "next": "Use OTP instead",
+    "clear": "new authentication path",
+    "retain": "account",
+    "copy": "approved (Apurva, D-47)"
+  },
+  "home.noCases": {
+    "pattern": "N1",
+    "trigger": "no cases in queue",
+    "slot": "form status slot",
+    "next": "check again",
+    "clear": "authoritative state",
+    "retain": "selected duration",
+    "copy": "approved (Apurva, D-47)",
+    "placeholders": []
+  },
+  "home.stopPending": {
+    "pattern": "N1",
+    "trigger": "stop requested with pending request",
+    "slot": "status slot",
+    "next": "wait for assignment",
+    "clear": "authoritative state",
+    "retain": "selected duration",
+    "copy": "approved (Apurva, D-47)",
+    "placeholders": []
+  },
+  "home.expiredPending": {
+    "pattern": "N1",
+    "trigger": "availability expired with pending request",
+    "slot": "status slot",
+    "next": "wait for assignment",
+    "clear": "authoritative state",
+    "retain": "selected duration",
+    "copy": "approved (Apurva, D-47)",
+    "placeholders": []
+  },
+  "home.idleExpired": {
+    "pattern": "N1",
+    "trigger": "availability expired while idle",
+    "slot": "status slot",
+    "next": "set availability",
+    "clear": "authoritative state",
+    "retain": "selected duration",
+    "copy": "approved (Apurva, D-47, as drafted)",
+    "placeholders": []
+  },
+  "home.unknownResult": {
+    "pattern": "N1",
+    "trigger": "uncertain server outcome",
+    "slot": "status slot",
+    "next": "reconcile, then retry",
+    "clear": "authoritative state",
+    "retain": "selected duration",
+    "copy": "approved (Apurva, D-47)",
+    "placeholders": []
+  },
+  "home.manuallyEnded": {
+    "pattern": "N1",
+    "trigger": "availability ended manually",
+    "slot": "status slot",
+    "next": "set availability",
+    "clear": "availability set again",
+    "retain": "selected duration",
+    "copy": "approved (Apurva, D-47, as drafted)",
+    "placeholders": []
+  },
+  "case.loadFailed": {
+    "pattern": "F2",
+    "trigger": "case did not load",
+    "slot": "content notice",
+    "next": "Try again",
+    "clear": "case loads",
+    "retain": "none",
+    "copy": "approved (Apurva, D-53)"
+  },
+  "case.offline": {
+    "pattern": "N1",
+    "trigger": "connectivity lost while browsing a case",
+    "slot": "notice above the action bar",
+    "next": "reconnect",
+    "clear": "connection returns",
+    "retain": "typed notes",
+    "copy": "approved (Apurva, D-53)"
+  },
+  "case.offlineAction": {
+    "pattern": "F2",
+    "trigger": "action attempted offline",
+    "slot": "notice above the action bar",
+    "next": "retry when online",
+    "clear": "new attempt",
+    "retain": "typed notes and choices",
+    "copy": "approved (Apurva, D-53)"
+  },
+  "case.confirming": {
+    "pattern": "L1",
+    "trigger": "final confirmation sent",
+    "slot": "primary button label",
+    "next": "wait for result",
+    "clear": "result",
+    "retain": "all case data",
+    "copy": "approved (Apurva, D-53)"
+  },
+  "case.confirmFailed": {
+    "pattern": "F2",
+    "trigger": "confirmation failed",
+    "slot": "notice above the action bar",
+    "next": "Confirm again after reconciling",
+    "clear": "new attempt",
+    "retain": "all case data",
+    "copy": "approved (Apurva, D-53)"
+  },
+  "case.releaseFailed": {
+    "pattern": "F2",
+    "trigger": "release failed",
+    "slot": "notice in the content",
+    "next": "Try again",
+    "clear": "release succeeds or new attempt",
+    "retain": "case stays open",
+    "copy": "approved (Apurva, D-53)"
+  },
+  "case.callbackFailed": {
+    "pattern": "F2",
+    "trigger": "callback save failed",
+    "slot": "notice inside the sheet",
+    "next": "Try again",
+    "clear": "new attempt",
+    "retain": "chosen day and time",
+    "copy": "approved (Apurva, D-53)"
+  },
+  "rx.loadFailed": {
+    "pattern": "F2",
+    "trigger": "prescription image failed",
+    "slot": "notice inside the viewer",
+    "next": "Try again",
+    "clear": "image loads",
+    "retain": "none",
+    "copy": "approved (Apurva, D-53)"
+  },
+  "case.noMedicines": {
+    "pattern": "empty",
+    "trigger": "order has no medicines",
+    "slot": "medicines card",
+    "next": "none",
+    "clear": "none",
+    "retain": "none",
+    "copy": "approved (Apurva, D-53)"
+  },
+  "case.callEndedEarly": {
+    "pattern": "W1",
+    "trigger": "call ended before the 50s valid-call minimum",
+    "slot": "warning notice inside the pinned bar, directly above the buttons",
+    "next": "call again or schedule a callback (buttons)",
+    "clear": "new call or case closed",
+    "retain": "case data and chosen medicines",
+    "copy": "approved (Apurva, D-54)"
+  },
+  "case.noPickup": {
+    "pattern": "W1",
+    "trigger": "call not answered",
+    "slot": "warning notice inside the pinned bar, directly above the buttons",
+    "next": "retry call, mark as unavailable or schedule a callback (buttons and sheet)",
+    "clear": "new call or case closed",
+    "retain": "case data",
+    "copy": "approved (Apurva, D-54)"
+  },
+  "case.didntConnect": {
+    "pattern": "W1",
+    "trigger": "call attempted but did not connect",
+    "slot": "warning notice inside the pinned bar, directly above the buttons",
+    "next": "call again or schedule a callback (buttons)",
+    "clear": "new call or case closed",
+    "retain": "case data",
+    "copy": "approved (Apurva, D-54)"
+  }
+}
