@@ -1,0 +1,54 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="design-system/truemeds.css">
+<style>
+  html,body{margin:0;height:100%}
+  body.tm{background:var(--tm-surface-primary)}
+  .screen{height:100dvh;display:flex;flex-direction:column;padding:var(--tm-space-xl) var(--tm-space-lg) 0;box-sizing:border-box;position:relative}
+  .logo{width:168px;height:auto}
+  .head{margin-top:56px;display:flex;flex-direction:column;gap:var(--tm-space-sm)}
+  .head h1{margin:0;font-size:24px;line-height:32px;font-weight:var(--tm-font-weight-semibold);color:var(--tm-content-primary)}
+  .head p{margin:0;font-size:var(--tm-font-size-body-lg);line-height:var(--tm-font-lineheight-md);color:var(--tm-content-secondary)}
+  .form{margin-top:var(--tm-space-2xl);display:flex;flex-direction:column;gap:var(--tm-space-lg)}
+  .tm-field__prefix{flex-shrink:0;padding-right:var(--tm-space-sm);border-right:1px solid var(--tm-border-default);font-weight:var(--tm-font-weight-semibold)}
+  .tm-field__control input{font-size:var(--tm-font-size-body-lg)}
+  .tm-field--error .tm-field__helper{color:var(--tm-content-error)}
+  .tm-field__helper a{color:var(--tm-content-brand);font-weight:var(--tm-font-weight-semibold);text-decoration:none}
+  .foot{margin-top:auto;padding:var(--tm-space-lg) 0 var(--tm-space-xl);text-align:center;font-size:var(--tm-font-size-body-md);line-height:var(--tm-font-lineheight-sm);color:var(--tm-content-secondary)}
+  .foot a{color:var(--tm-content-brand);font-weight:var(--tm-font-weight-semibold);text-decoration:none}
+  .terms{margin-top:var(--tm-space-xs);font-size:var(--tm-font-size-body-xs);line-height:var(--tm-font-lineheight-xs);color:var(--tm-content-secondary)}
+  .terms a{color:var(--tm-content-secondary);font-weight:400;text-decoration:underline}
+  .tm-btn--busy{opacity:1}
+  /* stand-in for the phone keyboard (numeric pad) */
+  .kbd{position:absolute;left:0;right:0;bottom:0;height:300px;background:#d1d5db;display:none;grid-template-columns:repeat(3,1fr);gap:6px;padding:8px;box-sizing:border-box}
+  .kbd div{background:#fff;border-radius:6px;display:flex;align-items:center;justify-content:center;font:500 22px/1 sans-serif;color:#111}
+  body.kb .kbd{display:grid}
+</style></head><body class="tm">
+<div class="screen">
+  <img class="logo" src="truemeds-for-doctors.svg" alt="Truemeds for doctors">
+  <div class="head">
+    <h1>Welcome, Doctor</h1>
+    <p>Sign in to start taking orders.</p>
+  </div>
+  <div class="form">
+    <div class="tm-field" id="f">
+      <label class="tm-field__label" for="ph">Mobile number</label>
+      <div class="tm-field__control"><span class="tm-field__prefix">+91</span><input id="ph" type="tel" inputmode="numeric" maxlength="10" placeholder="10-digit mobile number"></div>
+      <div class="tm-field__helper" id="h">We'll send a 4-digit code by SMS.</div>
+    </div>
+    <button class="tm-btn tm-btn--lg tm-btn--primary tm-btn--block" id="b">Send OTP</button>
+  </div>
+  <div class="foot">
+    <div>New doctor? <a href="#">Sign up</a></div>
+    <div class="terms">By continuing you agree to the <a href="#">Terms</a> and <a href="#">Privacy policy</a></div>
+  </div>
+  <div class="kbd"><div>1</div><div>2</div><div>3</div><div>4</div><div>5</div><div>6</div><div>7</div><div>8</div><div>9</div><div></div><div>0</div><div>⌫</div></div>
+</div>
+<script>
+function state(s){
+  const f=document.getElementById('f'),h=document.getElementById('h'),ph=document.getElementById('ph'),b=document.getElementById('b');
+  if(s.v)ph.value=s.v;
+  if(s.kb){document.body.classList.add('kb');ph.focus();}
+  if(s.err){f.classList.add('tm-field--error');h.innerHTML=s.err;}
+  if(s.busy){b.textContent='Sending OTP…';b.classList.add('tm-btn--busy');b.disabled=true;}
+}
+</script></body></html>

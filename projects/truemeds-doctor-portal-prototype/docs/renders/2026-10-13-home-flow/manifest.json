@@ -1,0 +1,260 @@
+[
+  {
+    "id": "01-setting",
+    "title": "Setting availability",
+    "group": "Start",
+    "note": "Prevent repeat submissions. Countdown begins only after server confirmation."
+  },
+  {
+    "id": "02-start-error",
+    "title": "Couldn\u2019t start",
+    "group": "Start",
+    "note": "Keep chosen duration. Retry uses same operation identifier or reconciles first if outcome is unknown."
+  },
+  {
+    "id": "03-ready",
+    "title": "Available",
+    "group": "Home",
+    "note": "Request pulls one case. No automatic polling or push offers."
+  },
+  {
+    "id": "04-requesting",
+    "title": "Request in progress",
+    "group": "Home",
+    "note": "No duplicate request. Timer continues. End availability schedules stop after this request."
+  },
+  {
+    "id": "05-empty",
+    "title": "No cases available",
+    "group": "Home",
+    "note": "Keep availability and countdown. Check again makes one new request."
+  },
+  {
+    "id": "06-request-failed",
+    "title": "Confirmed request failure",
+    "group": "Home",
+    "note": "Use only after server confirms no assignment. An unknown outcome uses status-checking state."
+  },
+  {
+    "id": "07-offline",
+    "title": "Offline",
+    "group": "Home",
+    "note": "Local countdown reflects server deadline. Mutations require connection; retain selections. Reconcile status after reconnect."
+  },
+  {
+    "id": "08-reconciling",
+    "title": "Request outcome unknown",
+    "group": "Home",
+    "note": "Reconcile original request ID; do not create duplicate. Assigned case opens; otherwise resolve to empty or failed."
+  },
+  {
+    "id": "09-ending-soon",
+    "title": "Five minutes remaining",
+    "group": "Home",
+    "note": "Proposed warning threshold. Extend and End actions keep same positions."
+  },
+  {
+    "id": "10-expired",
+    "title": "Window ended while idle",
+    "group": "Home",
+    "note": "Set availability returns to inline setup. No case request until new window confirmed."
+  },
+  {
+    "id": "11-ended",
+    "title": "Manually ended",
+    "group": "Home",
+    "note": "After confirmed stop. Return to inline duration setup on CTA."
+  },
+  {
+    "id": "12-expired-pending",
+    "title": "Expired with request pending",
+    "group": "Home",
+    "note": "Honor request sent before deadline. Assigned case opens; no assignment goes to ended state."
+  },
+  {
+    "id": "13-stop-pending",
+    "title": "Stop scheduled",
+    "group": "Home",
+    "note": "Stop intent survives reconnect. Assigned case completes normally; then availability ends. No assignment ends immediately."
+  },
+  {
+    "id": "14-extend",
+    "title": "Extend time sheet",
+    "group": "Extend",
+    "note": "Add to latest server deadline on confirmation. Countdown continues behind sheet. Expired window requires explicit Start wording; do not silently restart. Retry is idempotent."
+  },
+  {
+    "id": "15-extending",
+    "title": "Adding time",
+    "group": "Extend",
+    "note": "Add to latest server deadline on confirmation. Countdown continues behind sheet. Expired window requires explicit Start wording; do not silently restart. Retry is idempotent."
+  },
+  {
+    "id": "16-extend-error",
+    "title": "Extension failed",
+    "group": "Extend",
+    "note": "Add to latest server deadline on confirmation. Countdown continues behind sheet. Expired window requires explicit Start wording; do not silently restart. Retry is idempotent."
+  },
+  {
+    "id": "17-expired-in-sheet",
+    "title": "Expired while extending",
+    "group": "Extend",
+    "note": "Add to latest server deadline on confirmation. Countdown continues behind sheet. Expired window requires explicit Start wording; do not silently restart. Retry is idempotent."
+  },
+  {
+    "id": "18-extended",
+    "title": "Extension confirmed",
+    "group": "Extend",
+    "note": "Brief confirmation; authoritative new deadline. Remain on Home."
+  },
+  {
+    "id": "19-end-confirm",
+    "title": "End availability sheet",
+    "group": "End",
+    "note": "Close or Keep dismisses without change. Server confirmation required. Unknown stop result reconciles before allowing new requests. Saving locks controls."
+  },
+  {
+    "id": "20-ending",
+    "title": "Ending availability",
+    "group": "End",
+    "note": "Close or Keep dismisses without change. Server confirmation required. Unknown stop result reconciles before allowing new requests. Saving locks controls."
+  },
+  {
+    "id": "21-end-error",
+    "title": "Couldn\u2019t end availability",
+    "group": "End",
+    "note": "Close or Keep dismisses without change. Server confirmation required. Unknown stop result reconciles before allowing new requests. Saving locks controls."
+  },
+  {
+    "id": "22-end-pending-confirm",
+    "title": "End during request",
+    "group": "End",
+    "note": "Close or Keep dismisses without change. Server confirmation required. Unknown stop result reconciles before allowing new requests. Saving locks controls."
+  },
+  {
+    "id": "23-help",
+    "title": "Help",
+    "group": "Support",
+    "note": "Message and call launch configured native destinations. Report requires explicit submission. In live case Call is hidden during patient call."
+  },
+  {
+    "id": "24-report",
+    "title": "Report app issue",
+    "group": "Support",
+    "note": "Draft diagnostic disclosure; app team must finalize exact fields. Keyboard screen scrolls input and CTA into view."
+  },
+  {
+    "id": "25-report-sent",
+    "title": "Report submitted",
+    "group": "Support",
+    "note": "Reference is a mock, replaced by actual report ID. Send failure preserves description."
+  },
+  {
+    "id": "26-report-error",
+    "title": "Report failed",
+    "group": "Support",
+    "note": "Retry same report to avoid duplicates. Preserve typed description."
+  },
+  {
+    "id": "27-notifications-empty",
+    "title": "Notifications empty",
+    "group": "Account",
+    "note": "No push offers. Opening inbox does not end availability."
+  },
+  {
+    "id": "28-notifications",
+    "title": "Notifications list",
+    "group": "Account",
+    "note": "Illustrative content only. Unread state and list/detail navigation required."
+  },
+  {
+    "id": "29-notification-detail",
+    "title": "Announcement detail",
+    "group": "Account",
+    "note": "Illustrative announcement; no forced update during live case."
+  },
+  {
+    "id": "30-notifications-error",
+    "title": "Notifications failed",
+    "group": "Account",
+    "note": "Availability continues. Retain cached list when available."
+  },
+  {
+    "id": "31-profile",
+    "title": "Profile",
+    "group": "Account",
+    "note": "Read-only approved record; no invented registration number. Log out absent during case or request in flight."
+  },
+  {
+    "id": "32-wallet",
+    "title": "Wallet placeholder",
+    "group": "Account",
+    "note": "No balance, KYC, bank details, payout or withdrawal actions in current scope."
+  },
+  {
+    "id": "33-faster-signin",
+    "title": "Faster sign-in settings",
+    "group": "Account",
+    "note": "Explicit tap invokes native credential setup. OS controls biometric/PIN UI. Cancellation stays here. Existing credential shows enabled and Turn off confirmation."
+  },
+  {
+    "id": "34-logout",
+    "title": "Log out confirmation",
+    "group": "Account",
+    "note": "Proposed: end window and revoke session atomically; no logout while request/case active. On failure remain signed in and reconcile."
+  },
+  {
+    "id": "35-notifications-loading",
+    "title": "Loading notifications",
+    "group": "Account",
+    "note": "Show cached content if available; otherwise loading state. Back remains available."
+  },
+  {
+    "id": "36-report-sending",
+    "title": "Sending report",
+    "group": "Support",
+    "note": "Prevent duplicate submission. Preserve description until server confirms receipt."
+  },
+  {
+    "id": "37-crash-report",
+    "title": "Post-crash report offer",
+    "group": "Support",
+    "note": "Proposed occasional prompt after state reconciliation. Never interrupt or obscure an active case on recovery. Automatic crash logging is separate."
+  },
+  {
+    "id": "38-faster-enabled",
+    "title": "Faster sign-in enabled",
+    "group": "Account",
+    "note": "Turning off requires confirmation. Does not remove other accounts\u2019 device credentials."
+  },
+  {
+    "id": "39-faster-error",
+    "title": "Setup cancelled or failed",
+    "group": "Account",
+    "note": "OS cancellation is neutral. Native error may supply actionable reason. No repeat prompt without user action."
+  },
+  {
+    "id": "40-faster-off",
+    "title": "Disable faster sign-in",
+    "group": "Account",
+    "note": "After success return to settings off state. Failure preserves enabled state; server/device credential behavior requires app-team validation."
+  },
+  {
+    "id": "41-device-switch",
+    "title": "New-phone confirmation",
+    "group": "Account",
+    "note": "Proposed JTBD rule. Native session policy remains open; not an approved auth change."
+  },
+  {
+    "id": "42-device-case",
+    "title": "Live case on other phone",
+    "group": "Account",
+    "note": "Proposed device-switch guard; do not interrupt current doctor case."
+  },
+  {
+    "id": "43-device-signed-out",
+    "title": "Old phone signed out",
+    "group": "Account",
+    "note": "Proposed session-takeover result after server confirms no live case."
+  }
+]

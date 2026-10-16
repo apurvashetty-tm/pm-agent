@@ -14,6 +14,14 @@
   <!-- ============================================================
        DESKTOP SIDE PANEL — visible on wide screens only
   ============================================================ -->
+  <!-- DESKTOP APP PANEL (left of the frame) — demo controls for sign-in, home and "orders available" -->
+  <div id="desktop-app-panel">
+    <div class="side-panel-card tm-card">
+      <div class="side-panel-header"><span class="tm-icon tm-icon--16" data-icon="bolt"></span>App demo</div>
+      <div class="side-panel-body"><div class="demo-app" data-demo-app></div></div>
+    </div>
+  </div>
+
   <div id="desktop-side-panel">
 
     <!-- Case Overview -->
@@ -102,7 +110,7 @@
         <div id="portal-title">
           <img class="portal-logo" src="brand/truemeds-for-doctors.svg" alt="Truemeds for doctors" width="147" height="36">
         </div>
-        <button id="profile-btn" onclick="openSheet('sheet-profile')" aria-label="Profile">
+        <button id="profile-btn" onclick="openProfile()" aria-label="Profile">
           <span id="profile-initials">AS</span>
         </button>
       </div>
@@ -110,6 +118,8 @@
       <!-- DEMO BAR — [MOCK ASSUMPTION] dev-only -->
       <div id="demo-bar">
         <div id="demo-bar-label"><span class="tm-icon tm-icon--16" data-icon="bolt"></span>Demo controls</div>
+        <!-- App demo controls (filled by app.js: renderAppDemo) -->
+        <div class="demo-app" data-demo-app></div>
         <div id="demo-bar-scenarios">
           <button class="tm-chip scenario-btn" aria-pressed="true" data-scenario="cat4">Cat4</button>
           <button class="tm-chip scenario-btn" aria-pressed="false" data-scenario="pilot_value_meds_ha">Pilot + Value + HA</button>
@@ -145,11 +155,107 @@
           <div id="cs-patient-meta">—</div>
         </div>
         <span id="cs-order-value"></span>
-        <span id="cs-timer-badge" class="tm-tag tm-tag--md tm-tag--info hidden"><span class="tm-icon tm-icon--16" data-icon="phone-call"></span><span id="cs-timer-text">0:00</span></span>
         <button id="cs-view-rx-btn" class="tm-btn tm-btn--secondary tm-btn--xs hidden" onclick="openRxOverlay()"><span class="tm-icon tm-icon--16" data-icon="clipboard-text"></span>View Rx</button>
       </div>
 
     </div><!-- /sticky-top-wrapper -->
+
+    <!-- ============================================================
+         APP SCREENS — sign in, OTP, returning-doctor unlock, home (D-31, D-33 … D-37).
+         Sign in, OTP and unlock follow the approved screens in ui-screens/ (sign-in, otp, returning-unlock).
+         One screen shows at a time, chosen by body[data-app] (goApp in app.js). The order page is #main-scroll.
+    ============================================================ -->
+    <section id="scr-signin" class="app-screen auth" hidden aria-labelledby="signin-h">
+      <div class="auth-top">
+        <img class="auth-logo" src="brand/truemeds-for-doctors.svg" alt="Truemeds for doctors" width="174" height="43">
+        <h1 id="signin-h" class="auth-title" tabindex="-1">Welcome, Doctor.</h1>
+        <p class="auth-sub">Your partner in thoughtful, affordable care.</p>
+      </div>
+      <div class="auth-panel">
+        <form class="auth-form" id="signin-form" novalidate onsubmit="event.preventDefault(); requestOtp();">
+          <div class="tm-field" id="signin-field">
+            <label class="tm-field__label" for="signin-phone">Mobile number</label>
+            <div class="tm-field__control"><span class="tm-field__prefix">+91</span><input id="signin-phone" type="tel" inputmode="tel" autocomplete="tel-national" placeholder="10-digit mobile number" aria-describedby="signin-help"></div>
+            <div class="tm-field__helper" id="signin-help">We’ll send you a verification code by SMS.</div>
+          </div>
+          <div class="auth-notice" id="signin-notice" hidden><span class="tm-icon" id="signin-notice-icon" data-icon="info-circle" aria-hidden="true"></span><div id="signin-notice-text"></div></div>
+          <button id="signin-btn" type="submit" class="tm-btn tm-btn--lg tm-btn--primary tm-btn--block">Send OTP</button>
+          <a id="signin-call" class="tm-btn tm-btn--lg tm-btn--primary tm-btn--block" href="tel:+918652424617" hidden>Call Doctor Ops</a>
+        </form>
+        <p class="auth-foot">New to Truemeds? <a id="signup-link" href="https://pwa-doctor.truemeds.in/onboarding" target="_blank" rel="noopener">Sign up</a></p>
+      </div>
+    </section>
+
+    <section id="scr-otp" class="app-screen auth" hidden aria-labelledby="otp-h">
+      <div class="auth-top auth-top--otp">
+        <button type="button" class="auth-back" onclick="otpBack()"><span class="tm-icon" data-icon="arrow-left" aria-hidden="true"></span>Back</button>
+        <img class="auth-logo auth-logo--sm" src="brand/truemeds-for-doctors.svg" alt="Truemeds for doctors" width="168" height="41">
+        <h1 id="otp-h" class="auth-title" tabindex="-1">Verify your number</h1>
+        <p class="auth-sub">Enter the OTP sent to<strong id="otp-phone">—</strong></p>
+        <button type="button" class="auth-link" onclick="otpBack()">Change number</button>
+      </div>
+      <div class="auth-panel">
+        <form class="auth-form" id="otp-form" novalidate onsubmit="event.preventDefault(); verifyOtp();">
+          <div class="tm-field otp-field" id="otp-field">
+            <label class="tm-field__label" for="otp-input">Verification code</label>
+            <div class="tm-field__control"><input id="otp-input" type="text" inputmode="numeric" autocomplete="one-time-code" placeholder="4-digit OTP" aria-describedby="otp-help"></div>
+            <div class="tm-field__helper" id="otp-help" hidden></div>
+          </div>
+          <div class="tm-notice" id="otp-notice" hidden><span class="tm-icon" id="otp-notice-icon" data-icon="info-circle" aria-hidden="true"></span><div id="otp-notice-text"></div></div>
+          <div class="otp-resend" id="otp-resend-row"><span>Didn’t receive it?</span><span id="otp-timer">Resend in 00:30</span><button type="button" id="otp-resend" onclick="resendOtp()" hidden>Resend code</button></div>
+          <label class="option-card" id="otp-faster">
+            <span class="option-card__icon"><span class="tm-icon" data-icon="fingerprint" aria-hidden="true"></span></span>
+            <span class="option-card__text"><span class="option-card__title">Sign in faster next time</span><span class="option-card__desc">Use your device’s face, fingerprint, or screen lock.</span></span>
+            <input type="checkbox" class="option-card__check" id="otp-faster-check">
+          </label>
+          <p class="auth-terms">By selecting Verify &amp; sign in, you agree to the <a href="#" onclick="return linkPending('Terms & Conditions')">Terms &amp; Conditions</a> and acknowledge the <a href="#" onclick="return linkPending('Privacy Policy')">Privacy Policy</a>.</p>
+          <button id="otp-btn" type="submit" class="tm-btn tm-btn--lg tm-btn--primary tm-btn--block">Verify &amp; sign in</button>
+        </form>
+      </div>
+    </section>
+
+    <section id="scr-unlock" class="app-screen auth" hidden aria-labelledby="unlock-h">
+      <div class="auth-top auth-top--unlock">
+        <img class="auth-logo" src="brand/truemeds-for-doctors.svg" alt="Truemeds for doctors" width="174" height="43">
+        <h1 id="unlock-h" class="unlock-title" tabindex="-1">Hello, <span id="unlock-name">Dr. Apurva</span>.</h1>
+        <p class="unlock-sub">Let’s check in on your patients today.</p>
+      </div>
+      <div class="auth-panel unlock-panel">
+        <div class="unlock-prompt">
+          <div class="unlock-icon" aria-hidden="true"><span class="tm-icon" id="unlock-icon" data-icon="fingerprint"></span></div>
+          <h2>Ready when you are</h2>
+        </div>
+        <div class="unlock-actions">
+          <button id="unlock-btn" type="button" class="tm-btn tm-btn--primary tm-btn--lg tm-btn--block" onclick="openBioPrompt('unlock')"><span id="unlock-label">Unlock with fingerprint</span></button>
+          <button id="unlock-otp-btn" type="button" class="tm-btn tm-btn--ghost unlock-fallback" onclick="unlockWithOtp()">Use OTP instead</button>
+        </div>
+        <button type="button" class="tm-btn tm-btn--quiet unlock-account" onclick="switchAccount()">Not you? <strong>Switch account</strong></button>
+      </div>
+    </section>
+
+    <section id="scr-home" class="app-screen" hidden aria-labelledby="home-h">
+      <div class="app-scroll home-body">
+        <div class="home-greet">
+          <h1 id="home-h" class="tm-text-h1" tabindex="-1"><span id="home-greeting">Good afternoon</span>, <span id="home-name">Dr. Apurva</span></h1>
+          <p class="home-date" id="home-date">—</p>
+        </div>
+        <div class="tm-card home-card">
+          <div class="tm-empty" id="home-ready">
+            <div class="tm-empty__icon"><span class="tm-icon" data-icon="stethoscope"></span></div>
+            <div class="tm-empty__title">Ready for your next order?</div>
+            <p class="tm-empty__text">Tap Get next order when you're ready to call a patient.</p>
+          </div>
+          <div class="tm-empty" id="home-nolead" hidden>
+            <div class="tm-empty__icon"><span class="tm-icon" data-icon="inbox"></span></div>
+            <div class="tm-empty__title">No orders right now</div>
+            <p class="tm-empty__text">New orders come in through the day. Check again in a minute.</p>
+            <p class="home-checked" id="home-checked">Checked at —</p>
+          </div>
+        </div>
+        <div class="tm-card home-today"><span>Today</span><strong id="home-count">0 orders closed</strong></div>
+      </div>
+      <div class="tm-actionbar app-actionbar"><button id="home-next-btn" class="tm-btn tm-btn--lg tm-btn--primary tm-btn--block" onclick="requestNextOrder()">Get next order</button></div>
+    </section>
 
     <!-- MAIN SCROLL -->
     <div id="main-scroll">
@@ -213,70 +319,72 @@
 
       <!-- 4. Action Zone — merged call + post-call -->
       <div id="action-zone" class="tm-card">
+        <h2 class="tm-section-title section-title--inline">Call</h2>
+        <!-- Shown once the case is closed (order confirmed / callback scheduled / patient unavailable) -->
+        <div id="az-closed" class="tm-notice" hidden><span class="tm-icon" data-icon="circle-check"></span><span id="az-closed-text">—</span></div>
 
         <!-- Briefing strip — all scenarios, persists above both phases -->
         <div id="pre-call-brief" class="tm-notice">
           <div class="pcb-body">
-            <div class="pcb-label" id="pcb-label">—</div>
-            <div class="pcb-script-prefix">End of call script:</div>
+            <div class="pcb-label" id="pcb-label">End-of-call script</div>
             <div class="pcb-text" id="pcb-text">—</div>
           </div>
         </div>
 
         <!-- Phase 1: Call control (hidden when gate passes) -->
         <div id="az-phase1">
+          <!-- What happened to the last call attempt (didn't pick up / didn't connect / ended before 50s) -->
+          <div id="az-missed" class="tm-notice tm-notice--warning" hidden><span class="tm-icon" data-icon="phone-off"></span><span id="az-missed-text">Patient didn't pick up.</span></div>
 
-          <button id="call-initiate-btn" class="tm-btn tm-btn--lg tm-btn--primary tm-btn--block" onclick="handleCallAction()">
-            <span id="call-btn-icon" class="tm-icon" data-icon="phone"></span>
-            <span id="call-btn-label">Call Patient</span>
-          </button>
-
-          <!-- Pre-gate schedule callback — btn-text during call, btn-ghost after early end (JS swaps) -->
-          <button id="pre-gate-callback-btn" class="tm-btn tm-btn--sm tm-btn--ghost tm-btn--block hidden" onclick="openSheet('sheet-callback')">
-            <span class="tm-icon tm-icon--16" data-icon="calendar"></span>Schedule Callback
-          </button>
 
           <div id="az-status-label" class="hidden"></div>
-        </div>
-
-        <!-- Phase 2: Post-call (hidden until valid-call gate passes [LOCKED]) -->
-        <div id="az-phase2">
-          <div id="postcall-cta-card">
-            <div id="postcall-cta-label">Post-call action</div>
-            <button id="main-cta-btn" class="tm-btn tm-btn--lg tm-btn--primary tm-btn--block" onclick="handleMainCTA()">
-              <span id="main-cta-icon"></span>
-              <span id="main-cta-label">Confirm Order</span>
-            </button>
-            <!-- Secondary actions — compact chip row below primary -->
-            <div id="postcall-secondary-row">
-              <button id="schedule-callback-btn" class="tm-btn tm-btn--sm tm-btn--secondary" onclick="openSheet('sheet-callback')">
-                <span class="tm-icon tm-icon--16" data-icon="calendar"></span>
-                <span id="schedule-callback-label">Schedule Callback</span>
-              </button>
-              <button id="skip-ha-btn" class="tm-btn tm-btn--sm tm-btn--secondary" onclick="openSheet('sheet-skip-ha')">
-                Skip HA Call <span class="tm-icon tm-icon--16" data-icon="chevron-right"></span>
-              </button>
-            </div>
-          </div>
         </div>
 
       </div><!-- /action-zone -->
 
     </div><!-- /main-scroll -->
 
+    <!-- CASE ACTION BAR — the one main action, pinned to the bottom (agreed 2026-10-08, decision log D-22).
+         Call Patient / Calling… / End Call / Call Again before the gate; Confirm Order / Transfer / Forward after it.
+         Secondary actions sit in the same bar (D-28); the Call card keeps only status and the script. -->
+    <div id="case-actionbar" class="tm-actionbar">
+      <!-- Secondary call actions, pinned above the main one (D-28): nothing the doctor can do needs a scroll -->
+      <div id="ab-secondary">
+        <button id="pre-gate-callback-btn" class="tm-btn tm-btn--sm tm-btn--secondary hidden" onclick="openSheet('sheet-callback')">
+          <span class="tm-icon tm-icon--16" data-icon="calendar"></span>Schedule Callback
+        </button>
+        <button id="az-unavail-btn" class="tm-btn tm-btn--sm tm-btn--destructive" onclick="markCustomerUnavailable()" hidden>Mark Unavailable</button>
+        <button id="schedule-callback-btn" class="tm-btn tm-btn--sm tm-btn--secondary" onclick="openSheet('sheet-callback')" hidden>
+          <span class="tm-icon tm-icon--16" data-icon="calendar"></span><span id="schedule-callback-label">Schedule Callback</span>
+        </button>
+        <button id="skip-ha-btn" class="tm-btn tm-btn--sm tm-btn--secondary" onclick="openSheet('sheet-skip-ha')" hidden>Skip HA Call</button>
+      </div>
+      <button id="call-initiate-btn" class="tm-btn tm-btn--lg tm-btn--primary tm-btn--block" onclick="handleCallAction()">
+        <span id="call-btn-icon" class="tm-icon" data-icon="phone"></span>
+        <span id="call-btn-label">Call Patient</span>
+      </button>
+      <button id="next-order-btn" class="tm-btn tm-btn--lg tm-btn--primary tm-btn--block" onclick="requestNextOrder()" hidden>
+        Next Order <span class="tm-icon" data-icon="arrow-right"></span>
+      </button>
+      <button id="main-cta-btn" class="tm-btn tm-btn--lg tm-btn--primary tm-btn--block" onclick="handleMainCTA()" hidden>
+        <span id="main-cta-icon"></span>
+        <span id="main-cta-label">Confirm Order</span>
+      </button>
+    </div>
+
 <!-- ============================================================
      RX FULL-SCREEN OVERLAY (dark viewer — intentional for doc readability)
 ============================================================ -->
 <div id="rx-overlay">
   <div id="rx-overlay-header">
-    <button id="rx-overlay-close" class="tm-btn tm-btn--tertiary tm-btn--xs tm-btn--icon" onclick="closeRxOverlay()" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button>
+    <button id="rx-overlay-close" class="tm-btn tm-btn--on-dark tm-btn--icon" onclick="closeRxOverlay()" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button>
     <div id="rx-overlay-title">Prescription</div>
     <div id="rx-controls">
-      <button class="tm-btn tm-btn--tertiary tm-btn--xs tm-btn--icon rx-ctrl-btn" onclick="rxZoomOut()" title="Zoom out" aria-label="Zoom out"><span class="tm-icon tm-icon--16" data-icon="minus"></span></button>
+      <button class="tm-btn tm-btn--on-dark tm-btn--icon rx-ctrl-btn" onclick="rxZoomOut()" title="Zoom out" aria-label="Zoom out"><span class="tm-icon tm-icon--16" data-icon="minus"></span></button>
       <span id="rx-zoom-label">100%</span>
-      <button class="tm-btn tm-btn--tertiary tm-btn--xs tm-btn--icon rx-ctrl-btn" onclick="rxZoomIn()" title="Zoom in" aria-label="Zoom in"><span class="tm-icon tm-icon--16" data-icon="plus"></span></button>
-      <button class="tm-btn tm-btn--tertiary tm-btn--xs tm-btn--icon rx-ctrl-btn" onclick="rxRotate()" title="Rotate" aria-label="Rotate"><span class="tm-icon tm-icon--16" data-icon="rotate-clockwise"></span></button>
-      <button class="tm-btn tm-btn--tertiary tm-btn--xs tm-btn--icon rx-ctrl-btn" onclick="rxReset()" title="Reset" aria-label="Reset view"><span class="tm-icon tm-icon--16" data-icon="arrows-minimize"></span></button>
+      <button class="tm-btn tm-btn--on-dark tm-btn--icon rx-ctrl-btn" onclick="rxZoomIn()" title="Zoom in" aria-label="Zoom in"><span class="tm-icon tm-icon--16" data-icon="plus"></span></button>
+      <button class="tm-btn tm-btn--on-dark tm-btn--icon rx-ctrl-btn" onclick="rxRotate()" title="Rotate" aria-label="Rotate"><span class="tm-icon tm-icon--16" data-icon="rotate-clockwise"></span></button>
+      <button class="tm-btn tm-btn--on-dark tm-btn--icon rx-ctrl-btn" onclick="rxReset()" title="Reset" aria-label="Reset view"><span class="tm-icon tm-icon--16" data-icon="arrows-minimize"></span></button>
     </div>
   </div>
   <div id="rx-overlay-body">
@@ -343,25 +451,34 @@
 
 <!-- ============================================================
      PRESCRIBE SCREEN — full-screen view over the case (like the Rx viewer), inside the phone frame.
-     Agreed 2026-10-07: every section open with backend defaults; Prescribe at the end of the content (not pinned);
-     Disable is a small action in the app bar. Sections between "Prints as" and the note are rendered by app.js.
+     Agreed 2026-10-07: every section open with backend defaults. Prescribe is pinned to the bottom and always active (D-22, which replaced "Prescribe at the end, not pinned");
+     Disable is a small action in the app bar. The "On prescription" line is pinned under the app bar (D-25); the sections above the note are rendered by app.js.
 ============================================================ -->
 <div id="prescribe-screen" role="dialog" aria-modal="true" aria-labelledby="ps-title" aria-hidden="true" tabindex="-1">
+  <!-- Header group: app bar + the live prescription line, pinned together (never scrolls) — decision log D-25 -->
+  <div id="ps-top">
   <div id="ps-bar" class="tm-appbar">
-    <button class="tm-btn tm-btn--ghost tm-btn--icon" onclick="requestClosePrescribe()" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button>
+    <button class="tm-btn tm-btn--quiet tm-btn--icon" onclick="requestClosePrescribe()" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button>
     <div id="ps-heading"><span id="ps-title" class="tm-appbar__title">—</span><span id="ps-form">—</span></div>
     <button id="ps-disable-btn" class="tm-btn tm-btn--destructive tm-btn--xs" onclick="openDisableSheet()">Disable</button>
   </div>
+  <div id="ps-rx">
+    <div class="ps-rx-label" id="ps-rx-label"><span class="tm-icon tm-icon--16" data-icon="prescription"></span>On prescription</div>
+    <div id="ps-prints-text" aria-live="polite" aria-labelledby="ps-rx-label">—</div>
+  </div>
+  </div><!-- /ps-top -->
   <div id="ps-body">
     <div id="ps-disabled-note" class="tm-notice tm-notice--warning" hidden><span class="tm-icon" data-icon="alert-triangle"></span><span id="ps-disabled-text">Disabled.</span></div>
-    <div id="ps-prints" class="tm-card tm-card--tint"><div class="ps-label">Prints as</div><div id="ps-prints-text" aria-live="polite">—</div></div>
     <div id="ps-dynamic"></div>
-    <div class="tm-field ps-section">
+    <div class="tm-card ps-card"><div class="tm-field ps-section">
       <label class="tm-field__label" for="ps-note">Additional instructions</label>
       <div class="tm-field__control"><textarea id="ps-note" rows="3" placeholder="e.g. Stop if rash appears"></textarea></div>
       <div class="tm-field__helper">Optional. Printed on the prescription.</div>
-    </div>
-    <button id="ps-prescribe" class="tm-btn tm-btn--primary tm-btn--block" onclick="confirmMedEdit()">Prescribe</button>
+    </div></div>
+  </div>
+  <!-- Prescribe pinned to the bottom, always active (agreed 2026-10-08, decision log D-22) -->
+  <div id="ps-actionbar" class="tm-actionbar">
+    <button id="ps-prescribe" class="tm-btn tm-btn--lg tm-btn--primary tm-btn--block" onclick="confirmMedEdit()">Prescribe</button>
   </div>
 </div>
 
@@ -373,29 +490,29 @@
 
   <!-- Hold Sheet -->
   <div id="sheet-callback" class="bottom-sheet">
-    <div class="sheet-handle"></div>
-    <div class="sheet-title">Schedule Callback</div>
+    <div class="sheet-title"><span>Schedule Callback</span><button class="tm-btn tm-btn--quiet tm-btn--icon sheet-close" onclick="closeSheet()" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button></div>
     <div class="sheet-body">
-      <div class="sheet-section-label">Date</div>
-      <div class="chip-row chip-row-wrap" id="callback-day-chips">
-        <button class="tm-chip" aria-pressed="false" data-day="today" onclick="selectCallbackDay('today')">Today</button>
-        <button class="tm-chip" aria-pressed="false" data-day="tomorrow" onclick="selectCallbackDay('tomorrow')">Tomorrow</button>
+      <div class="tm-field__label sheet-section-label">Date</div>
+      <div class="chip-grid" style="--cols:2" id="callback-day-chips">
+        <button class="tm-chip tm-chip--lg" aria-pressed="false" data-day="today" onclick="selectCallbackDay('today')">Today</button>
+        <button class="tm-chip tm-chip--lg" aria-pressed="false" data-day="tomorrow" onclick="selectCallbackDay('tomorrow')">Tomorrow</button>
       </div>
-      <div class="sheet-section-label">Time</div>
-      <div class="chip-row chip-row-wrap" id="callback-time-chips">
-        <button class="tm-chip" aria-pressed="false" data-time="09:00" onclick="selectCallbackTime('09:00')">9:00 AM</button>
-        <button class="tm-chip" aria-pressed="false" data-time="09:30" onclick="selectCallbackTime('09:30')">9:30 AM</button>
-        <button class="tm-chip" aria-pressed="false" data-time="10:00" onclick="selectCallbackTime('10:00')">10:00 AM</button>
-        <button class="tm-chip" aria-pressed="false" data-time="10:30" onclick="selectCallbackTime('10:30')">10:30 AM</button>
-        <button class="tm-chip" aria-pressed="false" data-time="11:00" onclick="selectCallbackTime('11:00')">11:00 AM</button>
-        <button class="tm-chip" aria-pressed="false" data-time="11:30" onclick="selectCallbackTime('11:30')">11:30 AM</button>
-        <button class="tm-chip" aria-pressed="false" data-time="12:00" onclick="selectCallbackTime('12:00')">12:00 PM</button>
-        <button class="tm-chip" aria-pressed="false" data-time="14:00" onclick="selectCallbackTime('14:00')">2:00 PM</button>
-        <button class="tm-chip" aria-pressed="false" data-time="15:00" onclick="selectCallbackTime('15:00')">3:00 PM</button>
-        <button class="tm-chip" aria-pressed="false" data-time="16:00" onclick="selectCallbackTime('16:00')">4:00 PM</button>
-        <button class="tm-chip" aria-pressed="false" data-time="17:00" onclick="selectCallbackTime('17:00')">5:00 PM</button>
-        <button class="tm-chip" aria-pressed="false" data-time="18:00" onclick="selectCallbackTime('18:00')">6:00 PM</button>
+      <div class="tm-field__label sheet-section-label">Time</div>
+      <div class="chip-grid" style="--cols:3" id="callback-time-chips">
+        <button class="tm-chip tm-chip--lg" aria-pressed="false" data-time="09:00" onclick="selectCallbackTime('09:00')">9:00 AM</button>
+        <button class="tm-chip tm-chip--lg" aria-pressed="false" data-time="09:30" onclick="selectCallbackTime('09:30')">9:30 AM</button>
+        <button class="tm-chip tm-chip--lg" aria-pressed="false" data-time="10:00" onclick="selectCallbackTime('10:00')">10:00 AM</button>
+        <button class="tm-chip tm-chip--lg" aria-pressed="false" data-time="10:30" onclick="selectCallbackTime('10:30')">10:30 AM</button>
+        <button class="tm-chip tm-chip--lg" aria-pressed="false" data-time="11:00" onclick="selectCallbackTime('11:00')">11:00 AM</button>
+        <button class="tm-chip tm-chip--lg" aria-pressed="false" data-time="11:30" onclick="selectCallbackTime('11:30')">11:30 AM</button>
+        <button class="tm-chip tm-chip--lg" aria-pressed="false" data-time="12:00" onclick="selectCallbackTime('12:00')">12:00 PM</button>
+        <button class="tm-chip tm-chip--lg" aria-pressed="false" data-time="14:00" onclick="selectCallbackTime('14:00')">2:00 PM</button>
+        <button class="tm-chip tm-chip--lg" aria-pressed="false" data-time="15:00" onclick="selectCallbackTime('15:00')">3:00 PM</button>
+        <button class="tm-chip tm-chip--lg" aria-pressed="false" data-time="16:00" onclick="selectCallbackTime('16:00')">4:00 PM</button>
+        <button class="tm-chip tm-chip--lg" aria-pressed="false" data-time="17:00" onclick="selectCallbackTime('17:00')">5:00 PM</button>
+        <button class="tm-chip tm-chip--lg" aria-pressed="false" data-time="18:00" onclick="selectCallbackTime('18:00')">6:00 PM</button>
       </div>
+      <div id="callback-error" class="tm-field__helper callback-error" role="alert" hidden></div>
       <button class="tm-btn tm-btn--primary tm-btn--block sheet-cta-margin" onclick="confirmScheduleCallback()">Confirm Callback</button>
     </div>
   </div>
@@ -403,10 +520,10 @@
 
   <!-- Skip HA Sheet -->
   <div id="sheet-skip-ha" class="bottom-sheet">
-    <div class="sheet-handle"></div>
-    <div class="sheet-title">Skip HA Call</div>
+    <div class="sheet-title"><span>Skip HA Call</span><button class="tm-btn tm-btn--quiet tm-btn--icon sheet-close" onclick="closeSheet()" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button></div>
     <div class="sheet-body">
       <!-- [OPEN DECISION] OQ-008: skip eligibility TBD -->
+      <div class="sheet-subtitle">Select reason</div>
       <button class="choice-row sheet-option-btn" onclick="confirmSkipHA('Patient declined HA call')">
         <div class="sheet-option-title">Patient declined HA call</div>
         <div class="sheet-option-desc">Patient explicitly did not want an HA call</div>
@@ -424,19 +541,17 @@
 
   <!-- Discard changes? — shown only when closing the Prescribe screen after editing -->
   <div id="sheet-discard" class="bottom-sheet">
-    <div class="sheet-handle"></div>
-    <div class="sheet-title">Discard changes?</div>
+    <div class="sheet-title"><span>Discard changes?</span><button class="tm-btn tm-btn--quiet tm-btn--icon sheet-close" onclick="closeSheet()" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button></div>
     <div class="sheet-body">
       <div class="sheet-subtitle">Your changes to this medicine will not be saved.</div>
-      <button class="tm-btn tm-btn--destructive tm-btn--block" onclick="discardPrescribe()">Discard</button>
-      <button class="tm-btn tm-btn--secondary tm-btn--block sheet-link-margin" onclick="closeSheet()">Keep editing</button>
+      <button class="tm-btn tm-btn--secondary tm-btn--block" onclick="closeSheet()">Keep editing</button>
+      <button class="tm-btn tm-btn--destructive tm-btn--block sheet-link-margin" onclick="discardPrescribe()">Discard</button>
     </div>
   </div>
 
   <!-- Disable Medicine Reason Sheet -->
   <div id="sheet-disable-reason" class="bottom-sheet">
-    <div class="sheet-handle"></div>
-    <div class="sheet-title">Disable Medicine</div>
+    <div class="sheet-title"><span>Disable Medicine</span><button class="tm-btn tm-btn--quiet tm-btn--icon sheet-close" onclick="closeSheet()" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button></div>
     <div class="sheet-body">
       <div class="sheet-subtitle" id="sheet-disable-med-label">Select reason</div>
       <div class="reason-list">
@@ -444,15 +559,14 @@
         <button class="choice-row reason-btn" onclick="confirmDisable('Contraindicated for patient')">Contraindicated for patient<span class="reason-hint">Allergy or known reaction</span></button>
         <button class="choice-row reason-btn" onclick="confirmDisable('Duplicate medication')">Duplicate medication<span class="reason-hint">Already on equivalent drug</span></button>
         <button class="choice-row reason-btn" onclick="confirmDisable('Patient declined')">Patient declined<span class="reason-hint">Patient refused this medicine</span></button>
-        <button class="choice-row reason-btn" onclick="confirmDisable('Wrong strength — will re-prescribe')">Wrong strength<span class="reason-hint">Will disable and add correct one</span></button>
+        <button class="choice-row reason-btn" onclick="confirmDisable('Wrong strength')">Wrong strength<span class="reason-hint">The ordered strength isn't right</span></button>
       </div>
     </div>
   </div>
 
   <!-- Profile Sheet -->
   <div id="sheet-profile" class="bottom-sheet">
-    <div class="sheet-handle"></div>
-    <div class="sheet-title">Profile</div>
+    <div class="sheet-title"><span>Profile</span><button class="tm-btn tm-btn--quiet tm-btn--icon sheet-close" onclick="closeSheet()" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button></div>
     <div class="sheet-body">
       <!-- Doctor identity -->
       <div id="profile-identity">
@@ -464,7 +578,7 @@
       </div>
       <!-- Earnings -->
       <div id="profile-earnings-card" class="tm-card tm-card--flat">
-        <div class="profile-section-label">Today's Earnings</div>
+        <div class="tm-field__label profile-section-label">Today's Earnings</div>
         <div id="profile-earnings-row">
           <div class="profile-earnings-item">
             <div class="profile-earnings-label">Earned</div>
@@ -478,21 +592,43 @@
         </div>
       </div>
       <!-- User Manual -->
-      <button class="profile-menu-btn" onclick="showToast('[MOCK] User Manual — not yet linked'); closeSheet();">
+      <button class="profile-menu-btn" onclick="closeSheet(); console.log('[MOCK] user-manual.open | not linked yet')">
         <span class="profile-menu-label"><span class="tm-icon" data-icon="book"></span>User manual</span>
         <span class="tm-icon tm-icon--16" data-icon="chevron-right"></span>
       </button>
       <!-- Logout -->
+      <div class="tm-notice" id="profile-logout-note" hidden><span class="tm-icon" data-icon="info-circle"></span><span>You can log out after this order is closed.</span></div>
       <button id="profile-logout-btn" class="tm-btn tm-btn--destructive tm-btn--block" onclick="handleLogout()">
-        <span class="tm-icon" data-icon="logout"></span>Logout
+        <span class="tm-icon" data-icon="logout"></span>Log out
       </button>
+    </div>
+  </div>
+
+  <!-- Fingerprint prompt — stands in for the phone's own system prompt (the real one is drawn by Android/iOS) -->
+  <!-- Stands in for the phone's own passkey / biometric prompt (Android Credential Manager, iOS). Not a Truemeds screen. -->
+  <div id="sheet-bio" class="bottom-sheet" role="dialog" aria-labelledby="bio-prompt-h">
+    <div class="sheet-title"><span id="bio-prompt-h">Truemeds for Doctors</span><button class="tm-btn tm-btn--quiet tm-btn--icon sheet-close" onclick="cancelBioPrompt()" aria-label="Cancel"><span class="tm-icon" data-icon="x"></span></button></div>
+    <div class="sheet-body bio-body">
+      <p class="bio-sub" id="bio-sub">Confirm it's you</p>
+      <button class="bio-sensor" id="bio-sensor" onclick="touchSensor()" aria-label="Confirm with your phone (demo)"><span class="tm-icon" id="bio-sensor-icon" data-icon="fingerprint"></span></button>
+      <p class="bio-hint" id="bio-hint" role="status">Touch the fingerprint sensor</p>
+      <button class="tm-btn tm-btn--secondary tm-btn--block" onclick="cancelBioPrompt()">Cancel</button>
+    </div>
+  </div>
+
+  <!-- Log out confirmation -->
+  <div id="sheet-logout" class="bottom-sheet">
+    <div class="sheet-title"><span>Log out?</span><button class="tm-btn tm-btn--quiet tm-btn--icon sheet-close" onclick="closeSheet()" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button></div>
+    <div class="sheet-body">
+      <div class="sheet-subtitle">You'll stop getting orders until you sign in again.</div>
+      <button class="tm-btn tm-btn--secondary tm-btn--block" onclick="closeSheet()">Stay signed in</button>
+      <button class="tm-btn tm-btn--destructive tm-btn--block sheet-link-margin" onclick="confirmLogout()">Log out</button>
     </div>
   </div>
 
   <!-- Retry Sheet — no_answer / timeout paths -->
   <div id="sheet-retry" class="bottom-sheet">
-    <div class="sheet-handle"></div>
-    <div id="sheet-retry-title" class="sheet-title">Patient didn't pick up</div>
+    <div class="sheet-title"><span id="sheet-retry-title">Patient didn't pick up</span><button class="tm-btn tm-btn--quiet tm-btn--icon sheet-close" onclick="closeSheet()" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button></div>
     <div class="sheet-body">
       <button class="tm-btn tm-btn--primary tm-btn--block sheet-cta-margin" onclick="retryCall()">Retry Call</button>
       <button class="tm-btn tm-btn--destructive tm-btn--block sheet-link-margin" onclick="markCustomerUnavailable()">Mark as Unavailable</button>
@@ -501,19 +637,15 @@
 
   <!-- Customer Unavailable Sheet -->
   <div id="sheet-unavailable" class="bottom-sheet">
-    <div class="sheet-handle"></div>
-    <div class="sheet-body unavail-body">
-      <div class="state-icon"><span class="tm-icon tm-icon--24" data-icon="phone-off"></span></div>
-      <div class="unavail-title tm-text-h2">Customer unavailable</div>
-      <div id="unavail-desc" class="unavail-desc">Patient could not be reached. Case will be reassigned to the queue.</div>
-      <button class="tm-btn tm-btn--primary tm-btn--block sheet-cta-margin" onclick="resetToDemo()">Next Order <span class="tm-icon" data-icon="arrow-right"></span></button>
+    <div class="sheet-title"><span>Customer unavailable</span><button class="tm-btn tm-btn--quiet tm-btn--icon sheet-close" onclick="closeSheet()" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button></div>
+    <div class="sheet-body">
+      <div id="unavail-desc" class="sheet-subtitle">Patient could not be reached. Case will be reassigned to the queue.</div>
+      <button class="tm-btn tm-btn--primary tm-btn--block" onclick="requestNextOrder()">Next Order <span class="tm-icon" data-icon="arrow-right"></span></button>
     </div>
   </div>
-
 </div><!-- /sheet-overlay -->
 
 <!-- TOAST -->
-<div id="toast" class="tm-toast"></div>
 
 <!-- COMPLETED OVERLAY -->
 <!-- Success toast — non-blocking completion confirmation with Next Order fallback -->
@@ -523,7 +655,7 @@
     <div id="success-toast-title" class="tm-snackbar__title">Order Confirmed</div>
     <div id="success-toast-desc" class="tm-snackbar__text">—</div>
   </div>
-  <button id="success-toast-next" class="tm-btn tm-btn--sm tm-btn--primary" onclick="resetToDemo()">Next Order <span class="tm-icon tm-icon--16" data-icon="arrow-right"></span></button>
+  <button id="success-toast-next" class="tm-btn tm-btn--sm tm-btn--primary" onclick="requestNextOrder()">Next Order <span class="tm-icon tm-icon--16" data-icon="arrow-right"></span></button>
 </div>
 
   </div><!-- /mobile-column (phone frame: overlays live inside it) -->

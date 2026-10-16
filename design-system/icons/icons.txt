@@ -99,7 +99,7 @@ arrows-minimize
 user-circle
 arrow-up-right
 vaccine
-medicine-syrup
-droplet
-wind
-test-pipe
+# Sign-in and home (doctor app, 2026-10-09)
+fingerprint
+user-plus
+inbox

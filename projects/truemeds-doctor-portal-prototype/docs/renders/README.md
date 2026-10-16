@@ -1,0 +1,78 @@
+# Renders — Doctor Portal prototype
+
+Every image rendered while designing this prototype is kept here, in a dated batch folder with its render brief. Historical folders retain their original numbering. Why each one exists is in `docs/context/decision_log.md` (D-numbers below).
+
+## Current render policy — D-41, 2026-10-13
+
+Read [feedback rules](../feedback-rules.md) and [state mapping](../feedback-state-map.md) before rendering. Every new batch needs a README created first from [the template](RENDER-README-TEMPLATE.md), with one row per intended image. Generate representatives for distinct layout/behavior and wrapping risks; do not generate a PNG for every copy change.
+
+Save every review image with its batch README in this folder. List source/fixture IDs, checks, limitations and approval status. Automated disposable test screenshots need not enter the approved library. Only explicit approval promotes images into ui-screens. Existing historical galleries do not define the next required batch size.
+
+## 2026-10-07
+| File | What it shows |
+|---|---|
+| 01–04 `logo-lockup-concepts_*` | "truemeds for doctors" lockup directions: overview, logos, headers, login screens |
+| 05 `logo-icon-doctor-badge` | Icon-only direction with a doctor badge |
+| 06–07 `medicine-icons_*` | Medicine form icons after the first fix, and the final set then chosen |
+| 08–10 `logo-update_*` | Chosen lockup in the app header (desktop, phone) |
+| 11 `qty-price-change_mobile` | Medicine row after removing the quantity stepper and line price |
+| 12–13 `prescribe-sheet-concepts_v1/v2` | First Prescribe concepts (bottom sheet) |
+| 14 `prescribe-sheet-concept_v3` | Third sheet concept |
+| 15 `prescribe-screen-concept_v4` | Full-screen Prescribe concept (D-10 … D-20) |
+| 16 `prescribe-screen_built` | Prescribe screen as first built |
+| `layout-checks/` | Phone-frame layout checks at 390 / 1280 / 1440 (top, scrolled, header, sheet, Rx) |
+
+## 2026-10-08
+| File | What it shows |
+|---|---|
+| 01 `prescribe-review-changes` | Prescribe after the seven review points |
+| 02 `dose-duration-review` | Dose and duration options under review |
+| 03 `duration-field_built` | Duration field as built |
+| 04 `pinned-main-action_cards` | Main action pinned + Prescribe in cards (D-22) |
+| 05 `ui-audit-fixes_review` | UI audit fixes: gate state, callback sheet, Rx viewer, unavailable (D-23, D-24) |
+| 06 `before_missed-call-and-prints-as` | Before: closing "didn't pick up" lost the choice; "Prints as" scrolled away |
+| 07 `on-prescription-line_and_missed-call` | After: missed-call note, Call Again, pinned "On prescription" line (D-25, D-26) |
+| 08 `patient-strip_no-timer` | Patient strip without the call timer (D-26) |
+| 09 `medicine-form-icon-options` | Tablet icon options: now / rotated / pill + capsule / text labels (audit #11) |
+| 10 `pinned-call-actions_proposal` | Proposal: all call actions in the pinned bar |
+| 11 `no-toasts_early-end-note_and_callback-error` | Black toasts removed: early-end note in the card, inline callback error (D-27) |
+| 12 `pinned-call-actions_built` | All call actions pinned, one-label script, as built (D-28) |
+| 13–14 `research_case-page_version-A/B` | Doctor research files: same case, icons (A) vs text labels (B) |
+
+## 2026-10-09
+| File | What it shows |
+|---|---|
+| 01 `medicine-form-icons_upgrade-proposal` | Proposed form icons drawn from Apurva's references (3D tablet, bottle + cup, dropper, tube, puffer); capsule and injection kept |
+| 02 `tablet-icon_flat-options` | Flat tablet tries (circle + edge, short score, blister strip) vs the angled tablet |
+| 04 `end-of-call-script_options-overview` | Script options side by side: during call, after 50s today, option 4 (pinned script, two cases), option 5 (training sheet) |
+| 05–09 `script_*` | The same five screens as single files |
+| 10 `dose-validation_and_wrong-strength-copy` | Mistyped "Other" dose (7..5) now rejected in place; Wrong strength hint no longer promises a new medicine (D-30) |
+| 11 `signin-otp-fingerprint-home` | Sign in (empty, short number, unregistered), OTP (typing, wrong), fingerprint offer and prompt, Home (ready, no orders), Welcome back (D-31, D-32). Sign-up opens the existing web form, so no sign-up screen |
+| 12 `home-desktop-with-app-demo` | Home in the desktop frame with the new App demo panel on the left |
+| 13 `signin-screen_states-for-review` | Sign in screen for Apurva's review: empty, typed, too short, not registered, under review; Terms line proposed |
+| 14 `signin-screen_v2-thumb-zone` | Sign in v2 after Apurva's review: brand area on top, field + Get OTP + links in a bottom panel (thumb zone); Request access shown once; keyboard-open state |
+| 15a `signin_apurva-reference` | Apurva's reference sign-in layout (stacked at the top) |
+| 15 `signin-screen_v3-your-layout` | Recommended: Apurva's stacked layout in the design system, keyboard down/up, sending, too short, not registered. See `docs/concepts/2026-10-09-signin-screen-evaluation.md` |
+| 16 `signin-final_input-states` | Final sign-in (Apurva's screen as is): opens, keyboard up, empty tap, too short, wrong first digit, pasted number cleaned, sending |
+| 17 `signin-final_send-and-account-errors` | Same screen: not registered, offline, couldn't send, too many tries (timed button), inactive account (Call Doctor Ops) |
+| 18 `signin_subtitle-options` | The four subtitle lines under "Welcome, Doctor." side by side |
+| 19 `signin_not-registered_keyboard-closes` | Not registered, fixed: keyboard closes on the answer so the footer Sign up shows; copy names both paths (new here / already applied) |
+| 20 `otp-screen_entry-states` | 4-digit OTP for review: arrives, SMS autofill, typing, verifying by itself, wrong code, 2 tries left |
+| 21 `otp-screen_resend-and-errors` | OTP: resend available, new code sent, code expired, couldn't verify, locked (call Doctor Ops) |
+| 22 `otp_biometric-row-options` | Apurva's OTP screen; biometric row options: A hers, B icon beside text, C icon tile + box on the right (recommended), C ticked, D bordered card |
+| 23 `signin_blue-tint-theme` | Sign in with the OTP screen's blue top + white panel: opens, keyboard up, too short, not registered |
+| 24 `otp_keyboard-closes-on-4th-digit` | OTP: keyboard up hides Verify & sign in; fix: keyboard closes on the 4th digit so the biometric choice and the button show |
+| 25 `otp_final_biometric-card` | Agreed OTP biometric row (copy: "Sign in faster next time / Use your device's face, fingerprint, or screen lock."): option C on a grey card (no border, no dividers), whole card tappable, only the checkbox changes when ticked; keyboard closes on 4th digit; row hidden only when passkey setup isn't supported |
+| 26 `otp_final_errors-1-entry-and-wrong-code` | Final OTP errors: Verify with nothing / 2 digits, verifying, wrong code, 2 tries left, resend available |
+| 27 `otp_final_errors-2-resend-network-lock` | Final OTP errors: new code sent, expired, couldn't verify, too many resends, locked |
+| 28 `signin_final_input-states` | **Final sign-in** (blue top + white panel): opens, keyboard up, empty, too short, wrong first digit, pasted, sending |
+| 29 `signin_final_send-and-account-errors` | **Final sign-in**: not registered (keyboard closes), offline, couldn't send, too many tries, inactive |
+| 30 `otp_passkey-setup-flow` | Ticked flow: Verify tapped → OTP checked → phone's own passkey sheet (OS, not designed by us) → fallback sheet on Home if iPhone blocked it |
+
+## 2026-10-12
+| File | What it shows |
+|---|---|
+| 01 `signin_more-than-10-digits_for-review` | For review (not approved): new sign-in error "That’s more than 10 digits. Check the number." next to the approved too-short state |
+
+Also in `docs/concepts/`: `2026-10-07-prescribe-screen.png`, `2026-10-08-medicine-form-icons.png`.
+Doctor research copies also in `docs/research/form-marker-test/`.

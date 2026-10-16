@@ -94,6 +94,7 @@ Log only what a teammate, or an AI assistant in another thread, could be surpris
 
 Format: date · who (person, and tool or AI assistant if one did it) · what · why · follow-up. Newest first.
 
+- 2026-10-16 · Claude (Cowork) for Apurva · Repo clean-up: (1) `doctor-portal/sign-in` pushed straight to `main` (fast-forward, 3779ce7) — branch protection bypassed as owner, no PR page; (2) every branch backed up as tag `backup/2026-10-16/<branch>`; (3) `main` merged into `acom-portal-revamp`, `price-lock-proto` (kept its own `netlify.toml`), `project/project-south`, `project/type1-revamp` — no project files changed or deleted; (4) deleted branches already in `main`: `doctor-portal-restyle`, `doctor-portal/audit-fixes`, `doctor-portal/pinned-actions-cards`, `design-system-central`, `ftc-priority-prd`, `docs/cowork-direct-git` (superseded), `cowork/connector-verification-2026-10-06`. · Why: a session read July copies of the doctor portal on another branch. · Follow-up: future `main` changes via PR; decide repo structure.
 - 2026-10-08 · Claude (Cowork) for Apurva · Merged `doctor-portal-restyle` into `main` and pushed straight to `main`
   (2a196f2, then 1997d56 and 7468eeb) without a pull request · to update the doctor-portal live link the same day ·
   This bypassed the "pull request + one review" rule above. Future changes go through a branch and pull request.

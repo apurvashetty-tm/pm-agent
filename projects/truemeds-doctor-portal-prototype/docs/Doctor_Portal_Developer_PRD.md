@@ -1,5 +1,7 @@
 # Truemeds Doctor Portal — Developer PRD (v2)
 
+> **⚠ Partly out of date (2026-10-16).** Written 2026-10-08, before decisions D-38–D-56: labels, the case page, sign-in, Home/availability and calling have changed. Current sources: `ui-screens/` (approved screens), `ui-screens/app-logic.md` (rules), `docs/context/decision_log.md`. This PRD will be replaced by an engineering hand-off note.
+
 **Status:** Draft for engineering estimation
 **Author:** Claude (PM/UX/architecture pass), consolidating `project_truth.md`, prototype source, current-production screenshots, and DocsStat (PharmEasy) competitor SOP
 **Last updated:** 2026-10-08 (medicine prescribing sections aligned with `context/decision_log.md`)

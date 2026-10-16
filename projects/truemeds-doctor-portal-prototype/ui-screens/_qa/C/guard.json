@@ -1,0 +1,36 @@
+{
+  "failures": [
+    {
+      "phase": "D",
+      "state": "case/d-duration-picker",
+      "vw": 390,
+      "line": "5.4",
+      "msg": "grid chips use 2 sizes on one screen: 63x48 65x48"
+    },
+    {
+      "phase": "D",
+      "state": "case/d-duration-picker",
+      "vw": 360,
+      "line": "5.3",
+      "msg": "chip text clipped \"Ongoing\""
+    },
+    {
+      "phase": "D",
+      "state": "case/d-duration-picker",
+      "vw": 360,
+      "line": "5.4",
+      "msg": "grid chips use 2 sizes on one screen: 55x48 58x48"
+    },
+    {
+      "phase": "D",
+      "state": "case/d-duration-picker",
+      "vw": 430,
+      "line": "5.4",
+      "msg": "grid chips use 2 sizes on one screen: 73x48 75x48"
+    }
+  ],
+  "counts": {
+    "5.4": 3,
+    "5.3": 1
+  }
+}

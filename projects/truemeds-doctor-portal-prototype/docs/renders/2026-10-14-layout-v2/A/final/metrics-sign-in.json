@@ -1,0 +1,700 @@
+[
+  {
+    "frameW": 390,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [],
+    "minContrast": {
+      "ratio": 4.87,
+      "el": "Send OTP"
+    },
+    "smallTargets": [],
+    "keyboardVisible": false,
+    "keyboardTop": null,
+    "buttonBottom": 419,
+    "buttonAboveKeyboard": null,
+    "typeStyles": [
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "18px/24px w600",
+      "32px/40px w600"
+    ],
+    "fontLoaded": true,
+    "file": "signin_default_w390.png",
+    "state": "default",
+    "width": 390,
+    "errors": []
+  },
+  {
+    "frameW": 390,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [],
+    "minContrast": {
+      "ratio": 4.87,
+      "el": "Send OTP"
+    },
+    "smallTargets": [],
+    "keyboardVisible": true,
+    "keyboardTop": 588,
+    "buttonBottom": 419,
+    "buttonAboveKeyboard": true,
+    "typeStyles": [
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "18px/24px w600",
+      "23px/23px w400",
+      "32px/40px w600"
+    ],
+    "fontLoaded": true,
+    "file": "signin_keyboard-open_w390.png",
+    "state": "keyboard-open",
+    "width": 390,
+    "errors": []
+  },
+  {
+    "frameW": 390,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [],
+    "minContrast": {
+      "ratio": 4.87,
+      "el": "Send OTP"
+    },
+    "smallTargets": [],
+    "keyboardVisible": true,
+    "keyboardTop": 588,
+    "buttonBottom": 419,
+    "buttonAboveKeyboard": true,
+    "typeStyles": [
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "18px/24px w600",
+      "23px/23px w400",
+      "32px/40px w600"
+    ],
+    "fontLoaded": true,
+    "file": "signin_empty-tap_w390.png",
+    "state": "empty-tap",
+    "width": 390,
+    "errors": []
+  },
+  {
+    "frameW": 390,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [],
+    "minContrast": {
+      "ratio": 4.87,
+      "el": "Send OTP"
+    },
+    "smallTargets": [],
+    "keyboardVisible": true,
+    "keyboardTop": 588,
+    "buttonBottom": 419,
+    "buttonAboveKeyboard": true,
+    "typeStyles": [
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "18px/24px w600",
+      "23px/23px w400",
+      "32px/40px w600"
+    ],
+    "fontLoaded": true,
+    "file": "signin_too-short_w390.png",
+    "state": "too-short",
+    "width": 390,
+    "errors": []
+  },
+  {
+    "frameW": 390,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [],
+    "minContrast": {
+      "ratio": 4.87,
+      "el": "Send OTP"
+    },
+    "smallTargets": [],
+    "keyboardVisible": true,
+    "keyboardTop": 588,
+    "buttonBottom": 419,
+    "buttonAboveKeyboard": true,
+    "typeStyles": [
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "18px/24px w600",
+      "23px/23px w400",
+      "32px/40px w600"
+    ],
+    "fontLoaded": true,
+    "file": "signin_wrong-first-digit_w390.png",
+    "state": "wrong-first-digit",
+    "width": 390,
+    "errors": []
+  },
+  {
+    "frameW": 390,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [],
+    "minContrast": {
+      "ratio": 4.87,
+      "el": "Send OTP"
+    },
+    "smallTargets": [],
+    "keyboardVisible": true,
+    "keyboardTop": 588,
+    "buttonBottom": 419,
+    "buttonAboveKeyboard": true,
+    "typeStyles": [
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "18px/24px w600",
+      "23px/23px w400",
+      "32px/40px w600"
+    ],
+    "fontLoaded": true,
+    "file": "signin_pasted-cleaned_w390.png",
+    "state": "pasted-cleaned",
+    "width": 390,
+    "errors": []
+  },
+  {
+    "frameW": 390,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [],
+    "minContrast": {
+      "ratio": 4.87,
+      "el": "Sending OTP"
+    },
+    "smallTargets": [],
+    "keyboardVisible": true,
+    "keyboardTop": 588,
+    "buttonBottom": 419,
+    "buttonAboveKeyboard": true,
+    "typeStyles": [
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "18px/24px w600",
+      "23px/23px w400",
+      "32px/40px w600"
+    ],
+    "fontLoaded": true,
+    "file": "signin_sending_w390.png",
+    "state": "sending",
+    "width": 390,
+    "errors": []
+  },
+  {
+    "frameW": 390,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [],
+    "minContrast": {
+      "ratio": 4.87,
+      "el": "Send OTP"
+    },
+    "smallTargets": [],
+    "keyboardVisible": false,
+    "keyboardTop": null,
+    "buttonBottom": 485,
+    "buttonAboveKeyboard": null,
+    "typeStyles": [
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "18px/24px w600",
+      "32px/40px w600"
+    ],
+    "fontLoaded": true,
+    "file": "signin_not-registered_w390.png",
+    "state": "not-registered",
+    "width": 390,
+    "errors": []
+  },
+  {
+    "frameW": 390,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [],
+    "minContrast": {
+      "ratio": 4.87,
+      "el": "Send OTP"
+    },
+    "smallTargets": [],
+    "keyboardVisible": false,
+    "keyboardTop": null,
+    "buttonBottom": 465,
+    "buttonAboveKeyboard": null,
+    "typeStyles": [
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "18px/24px w600",
+      "32px/40px w600"
+    ],
+    "fontLoaded": true,
+    "file": "signin_offline_w390.png",
+    "state": "offline",
+    "width": 390,
+    "errors": []
+  },
+  {
+    "frameW": 390,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [],
+    "minContrast": {
+      "ratio": 4.87,
+      "el": "Send OTP"
+    },
+    "smallTargets": [],
+    "keyboardVisible": false,
+    "keyboardTop": null,
+    "buttonBottom": 465,
+    "buttonAboveKeyboard": null,
+    "typeStyles": [
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "18px/24px w600",
+      "32px/40px w600"
+    ],
+    "fontLoaded": true,
+    "file": "signin_couldnt-send_w390.png",
+    "state": "couldnt-send",
+    "width": 390,
+    "errors": []
+  },
+  {
+    "frameW": 390,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [
+      {
+        "text": "Try again in 9:42",
+        "ratio": 1.4,
+        "need": 4.5,
+        "disabled": true
+      }
+    ],
+    "minContrast": {
+      "ratio": 1.4,
+      "el": "Try again in 9:42"
+    },
+    "smallTargets": [],
+    "keyboardVisible": false,
+    "keyboardTop": null,
+    "buttonBottom": 465,
+    "buttonAboveKeyboard": null,
+    "typeStyles": [
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "18px/24px w600",
+      "32px/40px w600"
+    ],
+    "fontLoaded": true,
+    "file": "signin_too-many-tries_w390.png",
+    "state": "too-many-tries",
+    "width": 390,
+    "errors": []
+  },
+  {
+    "frameW": 390,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [],
+    "minContrast": {
+      "ratio": 4.87,
+      "el": "Call Doctor Ops"
+    },
+    "smallTargets": [],
+    "keyboardVisible": false,
+    "keyboardTop": null,
+    "buttonBottom": 445,
+    "buttonAboveKeyboard": null,
+    "typeStyles": [
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "18px/24px w600",
+      "32px/40px w600"
+    ],
+    "fontLoaded": true,
+    "file": "signin_inactive_w390.png",
+    "state": "inactive",
+    "width": 390,
+    "errors": []
+  },
+  {
+    "frameW": 360,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [],
+    "minContrast": {
+      "ratio": 4.87,
+      "el": "Send OTP"
+    },
+    "smallTargets": [],
+    "keyboardVisible": false,
+    "keyboardTop": null,
+    "buttonBottom": 419,
+    "buttonAboveKeyboard": null,
+    "typeStyles": [
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "18px/24px w600",
+      "32px/40px w600"
+    ],
+    "fontLoaded": true,
+    "file": "signin_default_w360.png",
+    "state": "default",
+    "width": 360,
+    "errors": []
+  },
+  {
+    "frameW": 360,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [],
+    "minContrast": {
+      "ratio": 4.87,
+      "el": "Send OTP"
+    },
+    "smallTargets": [],
+    "keyboardVisible": true,
+    "keyboardTop": 588,
+    "buttonBottom": 419,
+    "buttonAboveKeyboard": true,
+    "typeStyles": [
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "18px/24px w600",
+      "23px/23px w400",
+      "32px/40px w600"
+    ],
+    "fontLoaded": true,
+    "file": "signin_keyboard-open_w360.png",
+    "state": "keyboard-open",
+    "width": 360,
+    "errors": []
+  },
+  {
+    "frameW": 360,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [],
+    "minContrast": {
+      "ratio": 4.87,
+      "el": "Send OTP"
+    },
+    "smallTargets": [],
+    "keyboardVisible": true,
+    "keyboardTop": 588,
+    "buttonBottom": 419,
+    "buttonAboveKeyboard": true,
+    "typeStyles": [
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "18px/24px w600",
+      "23px/23px w400",
+      "32px/40px w600"
+    ],
+    "fontLoaded": true,
+    "file": "signin_empty-tap_w360.png",
+    "state": "empty-tap",
+    "width": 360,
+    "errors": []
+  },
+  {
+    "frameW": 360,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [],
+    "minContrast": {
+      "ratio": 4.87,
+      "el": "Send OTP"
+    },
+    "smallTargets": [],
+    "keyboardVisible": true,
+    "keyboardTop": 588,
+    "buttonBottom": 419,
+    "buttonAboveKeyboard": true,
+    "typeStyles": [
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "18px/24px w600",
+      "23px/23px w400",
+      "32px/40px w600"
+    ],
+    "fontLoaded": true,
+    "file": "signin_too-short_w360.png",
+    "state": "too-short",
+    "width": 360,
+    "errors": []
+  },
+  {
+    "frameW": 360,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [],
+    "minContrast": {
+      "ratio": 4.87,
+      "el": "Send OTP"
+    },
+    "smallTargets": [],
+    "keyboardVisible": true,
+    "keyboardTop": 588,
+    "buttonBottom": 419,
+    "buttonAboveKeyboard": true,
+    "typeStyles": [
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "18px/24px w600",
+      "23px/23px w400",
+      "32px/40px w600"
+    ],
+    "fontLoaded": true,
+    "file": "signin_wrong-first-digit_w360.png",
+    "state": "wrong-first-digit",
+    "width": 360,
+    "errors": []
+  },
+  {
+    "frameW": 360,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [],
+    "minContrast": {
+      "ratio": 4.87,
+      "el": "Send OTP"
+    },
+    "smallTargets": [],
+    "keyboardVisible": true,
+    "keyboardTop": 588,
+    "buttonBottom": 419,
+    "buttonAboveKeyboard": true,
+    "typeStyles": [
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "18px/24px w600",
+      "23px/23px w400",
+      "32px/40px w600"
+    ],
+    "fontLoaded": true,
+    "file": "signin_pasted-cleaned_w360.png",
+    "state": "pasted-cleaned",
+    "width": 360,
+    "errors": []
+  },
+  {
+    "frameW": 360,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [],
+    "minContrast": {
+      "ratio": 4.87,
+      "el": "Sending OTP"
+    },
+    "smallTargets": [],
+    "keyboardVisible": true,
+    "keyboardTop": 588,
+    "buttonBottom": 419,
+    "buttonAboveKeyboard": true,
+    "typeStyles": [
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "18px/24px w600",
+      "23px/23px w400",
+      "32px/40px w600"
+    ],
+    "fontLoaded": true,
+    "file": "signin_sending_w360.png",
+    "state": "sending",
+    "width": 360,
+    "errors": []
+  },
+  {
+    "frameW": 360,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [],
+    "minContrast": {
+      "ratio": 4.87,
+      "el": "Send OTP"
+    },
+    "smallTargets": [],
+    "keyboardVisible": false,
+    "keyboardTop": null,
+    "buttonBottom": 485,
+    "buttonAboveKeyboard": null,
+    "typeStyles": [
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "18px/24px w600",
+      "32px/40px w600"
+    ],
+    "fontLoaded": true,
+    "file": "signin_not-registered_w360.png",
+    "state": "not-registered",
+    "width": 360,
+    "errors": []
+  },
+  {
+    "frameW": 360,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [],
+    "minContrast": {
+      "ratio": 4.87,
+      "el": "Send OTP"
+    },
+    "smallTargets": [],
+    "keyboardVisible": false,
+    "keyboardTop": null,
+    "buttonBottom": 465,
+    "buttonAboveKeyboard": null,
+    "typeStyles": [
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "18px/24px w600",
+      "32px/40px w600"
+    ],
+    "fontLoaded": true,
+    "file": "signin_offline_w360.png",
+    "state": "offline",
+    "width": 360,
+    "errors": []
+  },
+  {
+    "frameW": 360,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [],
+    "minContrast": {
+      "ratio": 4.87,
+      "el": "Send OTP"
+    },
+    "smallTargets": [],
+    "keyboardVisible": false,
+    "keyboardTop": null,
+    "buttonBottom": 465,
+    "buttonAboveKeyboard": null,
+    "typeStyles": [
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "18px/24px w600",
+      "32px/40px w600"
+    ],
+    "fontLoaded": true,
+    "file": "signin_couldnt-send_w360.png",
+    "state": "couldnt-send",
+    "width": 360,
+    "errors": []
+  },
+  {
+    "frameW": 360,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [
+      {
+        "text": "Try again in 9:42",
+        "ratio": 1.4,
+        "need": 4.5,
+        "disabled": true
+      }
+    ],
+    "minContrast": {
+      "ratio": 1.4,
+      "el": "Try again in 9:42"
+    },
+    "smallTargets": [],
+    "keyboardVisible": false,
+    "keyboardTop": null,
+    "buttonBottom": 465,
+    "buttonAboveKeyboard": null,
+    "typeStyles": [
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "18px/24px w600",
+      "32px/40px w600"
+    ],
+    "fontLoaded": true,
+    "file": "signin_too-many-tries_w360.png",
+    "state": "too-many-tries",
+    "width": 360,
+    "errors": []
+  },
+  {
+    "frameW": 360,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [],
+    "minContrast": {
+      "ratio": 4.87,
+      "el": "Call Doctor Ops"
+    },
+    "smallTargets": [],
+    "keyboardVisible": false,
+    "keyboardTop": null,
+    "buttonBottom": 445,
+    "buttonAboveKeyboard": null,
+    "typeStyles": [
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "18px/24px w600",
+      "32px/40px w600"
+    ],
+    "fontLoaded": true,
+    "file": "signin_inactive_w360.png",
+    "state": "inactive",
+    "width": 360,
+    "errors": []
+  }
+]

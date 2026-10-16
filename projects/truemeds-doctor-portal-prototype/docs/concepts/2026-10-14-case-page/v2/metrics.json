@@ -1,0 +1,1170 @@
+[
+  {
+    "frameW": 390,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [
+      {
+        "text": "Prescribed",
+        "ratio": 3.99,
+        "need": 4.5,
+        "disabled": false
+      }
+    ],
+    "minContrast": {
+      "ratio": 3.99,
+      "el": "Prescribed"
+    },
+    "smallTargets": [
+      "BUTTON:View Rx 109x40"
+    ],
+    "keyboardVisible": false,
+    "keyboardTop": null,
+    "buttonBottom": 832,
+    "buttonAboveKeyboard": null,
+    "typeStyles": [
+      "12px/16px w400",
+      "12px/16px w600",
+      "14px/16px w600",
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "16px/24px w600",
+      "18px/24px w600",
+      "20px/28px w600"
+    ],
+    "fontLoaded": true,
+    "state": "case-top",
+    "width": 390,
+    "file": "case-top_w390.png",
+    "errors": []
+  },
+  {
+    "frameW": 390,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [
+      {
+        "text": "Prescribed",
+        "ratio": 3.99,
+        "need": 4.5,
+        "disabled": false
+      }
+    ],
+    "minContrast": {
+      "ratio": 3.99,
+      "el": "Prescribed"
+    },
+    "smallTargets": [
+      "BUTTON:View Rx 109x40"
+    ],
+    "keyboardVisible": false,
+    "keyboardTop": null,
+    "buttonBottom": 832,
+    "buttonAboveKeyboard": null,
+    "typeStyles": [
+      "12px/16px w400",
+      "12px/16px w600",
+      "14px/16px w600",
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "16px/24px w600",
+      "18px/24px w600",
+      "20px/28px w600"
+    ],
+    "fontLoaded": true,
+    "state": "case-scrolled",
+    "width": 390,
+    "file": "case-scrolled_w390.png",
+    "errors": []
+  },
+  {
+    "frameW": 390,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [
+      {
+        "text": "Prescribed",
+        "ratio": 3.99,
+        "need": 4.5,
+        "disabled": false
+      }
+    ],
+    "minContrast": {
+      "ratio": 3.99,
+      "el": "Prescribed"
+    },
+    "smallTargets": [
+      "BUTTON:View Rx 109x40"
+    ],
+    "keyboardVisible": false,
+    "keyboardTop": null,
+    "buttonBottom": 832,
+    "buttonAboveKeyboard": null,
+    "typeStyles": [
+      "12px/16px w400",
+      "12px/16px w600",
+      "14px/16px w600",
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "16px/24px w600",
+      "18px/24px w600",
+      "20px/28px w600"
+    ],
+    "fontLoaded": true,
+    "state": "case-leave-sheet",
+    "width": 390,
+    "file": "case-leave-sheet_w390.png",
+    "errors": []
+  },
+  {
+    "frameW": 390,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [
+      {
+        "text": "Prescribed",
+        "ratio": 3.99,
+        "need": 4.5,
+        "disabled": false
+      }
+    ],
+    "minContrast": {
+      "ratio": 3.99,
+      "el": "Prescribed"
+    },
+    "smallTargets": [
+      "BUTTON:View Rx 109x40"
+    ],
+    "keyboardVisible": false,
+    "keyboardTop": null,
+    "buttonBottom": 832,
+    "buttonAboveKeyboard": null,
+    "typeStyles": [
+      "12px/16px w400",
+      "12px/16px w600",
+      "14px/16px w600",
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "16px/24px w600",
+      "18px/24px w600",
+      "20px/28px w600"
+    ],
+    "fontLoaded": true,
+    "state": "case-releasing",
+    "width": 390,
+    "file": "case-releasing_w390.png",
+    "errors": []
+  },
+  {
+    "frameW": 390,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [
+      {
+        "text": "Prescribed",
+        "ratio": 3.99,
+        "need": 4.5,
+        "disabled": false
+      }
+    ],
+    "minContrast": {
+      "ratio": 3.99,
+      "el": "Prescribed"
+    },
+    "smallTargets": [
+      "BUTTON:View Rx 109x40",
+      "BUTTON:Schedule callback 358x40"
+    ],
+    "keyboardVisible": false,
+    "keyboardTop": null,
+    "buttonBottom": 0,
+    "buttonAboveKeyboard": null,
+    "typeStyles": [
+      "12px/16px w400",
+      "12px/16px w600",
+      "14px/16px w600",
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "16px/24px w600",
+      "18px/24px w600",
+      "20px/28px w600"
+    ],
+    "fontLoaded": true,
+    "state": "case-on-call",
+    "width": 390,
+    "file": "case-on-call_w390.png",
+    "errors": []
+  },
+  {
+    "frameW": 390,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [
+      {
+        "text": "Prescribed",
+        "ratio": 3.99,
+        "need": 4.5,
+        "disabled": false
+      }
+    ],
+    "minContrast": {
+      "ratio": 3.99,
+      "el": "Prescribed"
+    },
+    "smallTargets": [
+      "BUTTON:View Rx 109x40",
+      "BUTTON:Schedule callback 358x40"
+    ],
+    "keyboardVisible": false,
+    "keyboardTop": null,
+    "buttonBottom": 0,
+    "buttonAboveKeyboard": null,
+    "typeStyles": [
+      "12px/16px w400",
+      "12px/16px w600",
+      "14px/16px w600",
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "16px/24px w600",
+      "18px/24px w600",
+      "20px/28px w600"
+    ],
+    "fontLoaded": true,
+    "state": "case-back-blocked",
+    "width": 390,
+    "file": "case-back-blocked_w390.png",
+    "errors": []
+  },
+  {
+    "frameW": 390,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [
+      {
+        "text": "Prescribed",
+        "ratio": 3.99,
+        "need": 4.5,
+        "disabled": false
+      }
+    ],
+    "minContrast": {
+      "ratio": 3.99,
+      "el": "Prescribed"
+    },
+    "smallTargets": [
+      "BUTTON:View Rx 109x40",
+      "BUTTON:Schedule callback 175x40",
+      "BUTTON:Skip HA call 175x40"
+    ],
+    "keyboardVisible": false,
+    "keyboardTop": null,
+    "buttonBottom": 0,
+    "buttonAboveKeyboard": null,
+    "typeStyles": [
+      "12px/16px w400",
+      "12px/16px w600",
+      "14px/16px w600",
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "16px/24px w600",
+      "18px/24px w600",
+      "20px/28px w600"
+    ],
+    "fontLoaded": true,
+    "state": "case-post-gate",
+    "width": 390,
+    "file": "case-post-gate_w390.png",
+    "errors": []
+  },
+  {
+    "frameW": 390,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [
+      {
+        "text": "Prescribed",
+        "ratio": 3.99,
+        "need": 4.5,
+        "disabled": false
+      }
+    ],
+    "minContrast": {
+      "ratio": 3.99,
+      "el": "Prescribed"
+    },
+    "smallTargets": [
+      "BUTTON:View Rx 109x40",
+      "BUTTON:Schedule callback 358x40"
+    ],
+    "keyboardVisible": false,
+    "keyboardTop": null,
+    "buttonBottom": 0,
+    "buttonAboveKeyboard": null,
+    "typeStyles": [
+      "12px/16px w400",
+      "12px/16px w600",
+      "14px/16px w600",
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "16px/24px w600",
+      "18px/24px w600",
+      "20px/28px w600"
+    ],
+    "fontLoaded": true,
+    "state": "case-post-gate-cat4",
+    "width": 390,
+    "file": "case-post-gate-cat4_w390.png",
+    "errors": []
+  },
+  {
+    "frameW": 390,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [
+      {
+        "text": "Prescribed",
+        "ratio": 3.99,
+        "need": 4.5,
+        "disabled": false
+      }
+    ],
+    "minContrast": {
+      "ratio": 3.99,
+      "el": "Prescribed"
+    },
+    "smallTargets": [
+      "BUTTON:View Rx 109x40",
+      "BUTTON:Schedule callback 175x40",
+      "BUTTON:Skip HA call 175x40"
+    ],
+    "keyboardVisible": false,
+    "keyboardTop": null,
+    "buttonBottom": 0,
+    "buttonAboveKeyboard": null,
+    "typeStyles": [
+      "12px/16px w400",
+      "12px/16px w600",
+      "14px/16px w600",
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "16px/24px w600",
+      "18px/24px w600",
+      "20px/28px w600"
+    ],
+    "fontLoaded": true,
+    "state": "case-post-gate-forward",
+    "width": 390,
+    "file": "case-post-gate-forward_w390.png",
+    "errors": []
+  },
+  {
+    "frameW": 390,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [
+      {
+        "text": "Prescribed",
+        "ratio": 3.99,
+        "need": 4.5,
+        "disabled": false
+      }
+    ],
+    "minContrast": {
+      "ratio": 3.99,
+      "el": "Prescribed"
+    },
+    "smallTargets": [
+      "BUTTON:View Rx 109x40",
+      "BUTTON:Mark Unavailable 358x40"
+    ],
+    "keyboardVisible": false,
+    "keyboardTop": null,
+    "buttonBottom": 832,
+    "buttonAboveKeyboard": null,
+    "typeStyles": [
+      "12px/16px w400",
+      "12px/16px w600",
+      "14px/16px w600",
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "16px/24px w600",
+      "18px/24px w600",
+      "20px/28px w600"
+    ],
+    "fontLoaded": true,
+    "state": "case-missed-call",
+    "width": 390,
+    "file": "case-missed-call_w390.png",
+    "errors": []
+  },
+  {
+    "frameW": 390,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [
+      {
+        "text": "Prescribed",
+        "ratio": 3.99,
+        "need": 4.5,
+        "disabled": false
+      }
+    ],
+    "minContrast": {
+      "ratio": 3.99,
+      "el": "Prescribed"
+    },
+    "smallTargets": [
+      "BUTTON:View Rx 109x40"
+    ],
+    "keyboardVisible": false,
+    "keyboardTop": null,
+    "buttonBottom": 768,
+    "buttonAboveKeyboard": null,
+    "typeStyles": [
+      "12px/16px w400",
+      "12px/16px w600",
+      "14px/16px w600",
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "16px/24px w600",
+      "18px/24px w600",
+      "20px/28px w600"
+    ],
+    "fontLoaded": true,
+    "state": "case-closed",
+    "width": 390,
+    "file": "case-closed_w390.png",
+    "errors": []
+  },
+  {
+    "frameW": 390,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [
+      {
+        "text": "Prescribed",
+        "ratio": 3.99,
+        "need": 4.5,
+        "disabled": false
+      }
+    ],
+    "minContrast": {
+      "ratio": 3.99,
+      "el": "Prescribed"
+    },
+    "smallTargets": [
+      "BUTTON:View Rx 109x40"
+    ],
+    "keyboardVisible": false,
+    "keyboardTop": null,
+    "buttonBottom": 768,
+    "buttonAboveKeyboard": null,
+    "typeStyles": [
+      "12px/16px w400",
+      "12px/16px w600",
+      "14px/16px w600",
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "16px/24px w600",
+      "18px/24px w600",
+      "20px/28px w600"
+    ],
+    "fontLoaded": true,
+    "state": "case-closed-value",
+    "width": 390,
+    "file": "case-closed-value_w390.png",
+    "errors": []
+  },
+  {
+    "frameW": 390,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [
+      {
+        "text": "Prescribed",
+        "ratio": 3.99,
+        "need": 4.5,
+        "disabled": false
+      }
+    ],
+    "minContrast": {
+      "ratio": 3.99,
+      "el": "Prescribed"
+    },
+    "smallTargets": [
+      "BUTTON:View Rx 109x40"
+    ],
+    "keyboardVisible": false,
+    "keyboardTop": null,
+    "buttonBottom": 768,
+    "buttonAboveKeyboard": null,
+    "typeStyles": [
+      "12px/16px w400",
+      "12px/16px w600",
+      "14px/16px w600",
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "16px/24px w600",
+      "18px/24px w600",
+      "20px/28px w600"
+    ],
+    "fontLoaded": true,
+    "state": "case-closed-forward",
+    "width": 390,
+    "file": "case-closed-forward_w390.png",
+    "errors": []
+  },
+  {
+    "frameW": 390,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [
+      {
+        "text": "Prescribed",
+        "ratio": 3.99,
+        "need": 4.5,
+        "disabled": false
+      }
+    ],
+    "minContrast": {
+      "ratio": 3.99,
+      "el": "Prescribed"
+    },
+    "smallTargets": [
+      "BUTTON:View Rx 109x40"
+    ],
+    "keyboardVisible": false,
+    "keyboardTop": null,
+    "buttonBottom": 0,
+    "buttonAboveKeyboard": null,
+    "typeStyles": [
+      "12px/16px w400",
+      "12px/16px w600",
+      "14px/16px w600",
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "16px/24px w600",
+      "18px/24px w600",
+      "20px/28px w600"
+    ],
+    "fontLoaded": true,
+    "state": "case-closed-availability-ended",
+    "width": 390,
+    "file": "case-closed-availability-ended_w390.png",
+    "errors": []
+  },
+  {
+    "frameW": 360,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [
+      {
+        "text": "Prescribed",
+        "ratio": 3.99,
+        "need": 4.5,
+        "disabled": false
+      }
+    ],
+    "minContrast": {
+      "ratio": 3.99,
+      "el": "Prescribed"
+    },
+    "smallTargets": [
+      "BUTTON:View Rx 109x40"
+    ],
+    "keyboardVisible": false,
+    "keyboardTop": null,
+    "buttonBottom": 832,
+    "buttonAboveKeyboard": null,
+    "typeStyles": [
+      "12px/16px w400",
+      "12px/16px w600",
+      "14px/16px w600",
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "16px/24px w600",
+      "18px/24px w600",
+      "20px/28px w600"
+    ],
+    "fontLoaded": true,
+    "state": "case-top",
+    "width": 360,
+    "file": "case-top_w360.png",
+    "errors": []
+  },
+  {
+    "frameW": 360,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [
+      {
+        "text": "Prescribed",
+        "ratio": 3.99,
+        "need": 4.5,
+        "disabled": false
+      }
+    ],
+    "minContrast": {
+      "ratio": 3.99,
+      "el": "Prescribed"
+    },
+    "smallTargets": [
+      "BUTTON:View Rx 109x40"
+    ],
+    "keyboardVisible": false,
+    "keyboardTop": null,
+    "buttonBottom": 832,
+    "buttonAboveKeyboard": null,
+    "typeStyles": [
+      "12px/16px w400",
+      "12px/16px w600",
+      "14px/16px w600",
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "16px/24px w600",
+      "18px/24px w600",
+      "20px/28px w600"
+    ],
+    "fontLoaded": true,
+    "state": "case-scrolled",
+    "width": 360,
+    "file": "case-scrolled_w360.png",
+    "errors": []
+  },
+  {
+    "frameW": 360,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [
+      {
+        "text": "Prescribed",
+        "ratio": 3.99,
+        "need": 4.5,
+        "disabled": false
+      }
+    ],
+    "minContrast": {
+      "ratio": 3.99,
+      "el": "Prescribed"
+    },
+    "smallTargets": [
+      "BUTTON:View Rx 109x40"
+    ],
+    "keyboardVisible": false,
+    "keyboardTop": null,
+    "buttonBottom": 832,
+    "buttonAboveKeyboard": null,
+    "typeStyles": [
+      "12px/16px w400",
+      "12px/16px w600",
+      "14px/16px w600",
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "16px/24px w600",
+      "18px/24px w600",
+      "20px/28px w600"
+    ],
+    "fontLoaded": true,
+    "state": "case-leave-sheet",
+    "width": 360,
+    "file": "case-leave-sheet_w360.png",
+    "errors": []
+  },
+  {
+    "frameW": 360,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [
+      {
+        "text": "Prescribed",
+        "ratio": 3.99,
+        "need": 4.5,
+        "disabled": false
+      }
+    ],
+    "minContrast": {
+      "ratio": 3.99,
+      "el": "Prescribed"
+    },
+    "smallTargets": [
+      "BUTTON:View Rx 109x40"
+    ],
+    "keyboardVisible": false,
+    "keyboardTop": null,
+    "buttonBottom": 832,
+    "buttonAboveKeyboard": null,
+    "typeStyles": [
+      "12px/16px w400",
+      "12px/16px w600",
+      "14px/16px w600",
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "16px/24px w600",
+      "18px/24px w600",
+      "20px/28px w600"
+    ],
+    "fontLoaded": true,
+    "state": "case-releasing",
+    "width": 360,
+    "file": "case-releasing_w360.png",
+    "errors": []
+  },
+  {
+    "frameW": 360,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [
+      {
+        "text": "Prescribed",
+        "ratio": 3.99,
+        "need": 4.5,
+        "disabled": false
+      }
+    ],
+    "minContrast": {
+      "ratio": 3.99,
+      "el": "Prescribed"
+    },
+    "smallTargets": [
+      "BUTTON:View Rx 109x40",
+      "BUTTON:Schedule callback 328x40"
+    ],
+    "keyboardVisible": false,
+    "keyboardTop": null,
+    "buttonBottom": 0,
+    "buttonAboveKeyboard": null,
+    "typeStyles": [
+      "12px/16px w400",
+      "12px/16px w600",
+      "14px/16px w600",
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "16px/24px w600",
+      "18px/24px w600",
+      "20px/28px w600"
+    ],
+    "fontLoaded": true,
+    "state": "case-on-call",
+    "width": 360,
+    "file": "case-on-call_w360.png",
+    "errors": []
+  },
+  {
+    "frameW": 360,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [
+      {
+        "text": "Prescribed",
+        "ratio": 3.99,
+        "need": 4.5,
+        "disabled": false
+      }
+    ],
+    "minContrast": {
+      "ratio": 3.99,
+      "el": "Prescribed"
+    },
+    "smallTargets": [
+      "BUTTON:View Rx 109x40",
+      "BUTTON:Schedule callback 328x40"
+    ],
+    "keyboardVisible": false,
+    "keyboardTop": null,
+    "buttonBottom": 0,
+    "buttonAboveKeyboard": null,
+    "typeStyles": [
+      "12px/16px w400",
+      "12px/16px w600",
+      "14px/16px w600",
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "16px/24px w600",
+      "18px/24px w600",
+      "20px/28px w600"
+    ],
+    "fontLoaded": true,
+    "state": "case-back-blocked",
+    "width": 360,
+    "file": "case-back-blocked_w360.png",
+    "errors": []
+  },
+  {
+    "frameW": 360,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [
+      {
+        "text": "Prescribed",
+        "ratio": 3.99,
+        "need": 4.5,
+        "disabled": false
+      }
+    ],
+    "minContrast": {
+      "ratio": 3.99,
+      "el": "Prescribed"
+    },
+    "smallTargets": [
+      "BUTTON:View Rx 109x40",
+      "BUTTON:Schedule callback 160x40",
+      "BUTTON:Skip HA call 160x40"
+    ],
+    "keyboardVisible": false,
+    "keyboardTop": null,
+    "buttonBottom": 0,
+    "buttonAboveKeyboard": null,
+    "typeStyles": [
+      "12px/16px w400",
+      "12px/16px w600",
+      "14px/16px w600",
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "16px/24px w600",
+      "18px/24px w600",
+      "20px/28px w600"
+    ],
+    "fontLoaded": true,
+    "state": "case-post-gate",
+    "width": 360,
+    "file": "case-post-gate_w360.png",
+    "errors": []
+  },
+  {
+    "frameW": 360,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [
+      {
+        "text": "Prescribed",
+        "ratio": 3.99,
+        "need": 4.5,
+        "disabled": false
+      }
+    ],
+    "minContrast": {
+      "ratio": 3.99,
+      "el": "Prescribed"
+    },
+    "smallTargets": [
+      "BUTTON:View Rx 109x40",
+      "BUTTON:Schedule callback 328x40"
+    ],
+    "keyboardVisible": false,
+    "keyboardTop": null,
+    "buttonBottom": 0,
+    "buttonAboveKeyboard": null,
+    "typeStyles": [
+      "12px/16px w400",
+      "12px/16px w600",
+      "14px/16px w600",
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "16px/24px w600",
+      "18px/24px w600",
+      "20px/28px w600"
+    ],
+    "fontLoaded": true,
+    "state": "case-post-gate-cat4",
+    "width": 360,
+    "file": "case-post-gate-cat4_w360.png",
+    "errors": []
+  },
+  {
+    "frameW": 360,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [
+      "Hydrochlorothiazide 12.5mg"
+    ],
+    "contrastFails": [
+      {
+        "text": "Prescribed",
+        "ratio": 3.99,
+        "need": 4.5,
+        "disabled": false
+      }
+    ],
+    "minContrast": {
+      "ratio": 3.99,
+      "el": "Prescribed"
+    },
+    "smallTargets": [
+      "BUTTON:View Rx 109x40",
+      "BUTTON:Schedule callback 160x40",
+      "BUTTON:Skip HA call 160x40"
+    ],
+    "keyboardVisible": false,
+    "keyboardTop": null,
+    "buttonBottom": 0,
+    "buttonAboveKeyboard": null,
+    "typeStyles": [
+      "12px/16px w400",
+      "12px/16px w600",
+      "14px/16px w600",
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "16px/24px w600",
+      "18px/24px w600",
+      "20px/28px w600"
+    ],
+    "fontLoaded": true,
+    "state": "case-post-gate-forward",
+    "width": 360,
+    "file": "case-post-gate-forward_w360.png",
+    "errors": []
+  },
+  {
+    "frameW": 360,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [
+      {
+        "text": "Prescribed",
+        "ratio": 3.99,
+        "need": 4.5,
+        "disabled": false
+      }
+    ],
+    "minContrast": {
+      "ratio": 3.99,
+      "el": "Prescribed"
+    },
+    "smallTargets": [
+      "BUTTON:View Rx 109x40",
+      "BUTTON:Mark Unavailable 328x40"
+    ],
+    "keyboardVisible": false,
+    "keyboardTop": null,
+    "buttonBottom": 832,
+    "buttonAboveKeyboard": null,
+    "typeStyles": [
+      "12px/16px w400",
+      "12px/16px w600",
+      "14px/16px w600",
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "16px/24px w600",
+      "18px/24px w600",
+      "20px/28px w600"
+    ],
+    "fontLoaded": true,
+    "state": "case-missed-call",
+    "width": 360,
+    "file": "case-missed-call_w360.png",
+    "errors": []
+  },
+  {
+    "frameW": 360,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [
+      {
+        "text": "Prescribed",
+        "ratio": 3.99,
+        "need": 4.5,
+        "disabled": false
+      }
+    ],
+    "minContrast": {
+      "ratio": 3.99,
+      "el": "Prescribed"
+    },
+    "smallTargets": [
+      "BUTTON:View Rx 109x40"
+    ],
+    "keyboardVisible": false,
+    "keyboardTop": null,
+    "buttonBottom": 768,
+    "buttonAboveKeyboard": null,
+    "typeStyles": [
+      "12px/16px w400",
+      "12px/16px w600",
+      "14px/16px w600",
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "16px/24px w600",
+      "18px/24px w600",
+      "20px/28px w600"
+    ],
+    "fontLoaded": true,
+    "state": "case-closed",
+    "width": 360,
+    "file": "case-closed_w360.png",
+    "errors": []
+  },
+  {
+    "frameW": 360,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [
+      {
+        "text": "Prescribed",
+        "ratio": 3.99,
+        "need": 4.5,
+        "disabled": false
+      }
+    ],
+    "minContrast": {
+      "ratio": 3.99,
+      "el": "Prescribed"
+    },
+    "smallTargets": [
+      "BUTTON:View Rx 109x40"
+    ],
+    "keyboardVisible": false,
+    "keyboardTop": null,
+    "buttonBottom": 768,
+    "buttonAboveKeyboard": null,
+    "typeStyles": [
+      "12px/16px w400",
+      "12px/16px w600",
+      "14px/16px w600",
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "16px/24px w600",
+      "18px/24px w600",
+      "20px/28px w600"
+    ],
+    "fontLoaded": true,
+    "state": "case-closed-value",
+    "width": 360,
+    "file": "case-closed-value_w360.png",
+    "errors": []
+  },
+  {
+    "frameW": 360,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [
+      "Hydrochlorothiazide 12.5mg"
+    ],
+    "contrastFails": [
+      {
+        "text": "Prescribed",
+        "ratio": 3.99,
+        "need": 4.5,
+        "disabled": false
+      }
+    ],
+    "minContrast": {
+      "ratio": 3.99,
+      "el": "Prescribed"
+    },
+    "smallTargets": [
+      "BUTTON:View Rx 109x40"
+    ],
+    "keyboardVisible": false,
+    "keyboardTop": null,
+    "buttonBottom": 768,
+    "buttonAboveKeyboard": null,
+    "typeStyles": [
+      "12px/16px w400",
+      "12px/16px w600",
+      "14px/16px w600",
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "16px/24px w600",
+      "18px/24px w600",
+      "20px/28px w600"
+    ],
+    "fontLoaded": true,
+    "state": "case-closed-forward",
+    "width": 360,
+    "file": "case-closed-forward_w360.png",
+    "errors": []
+  },
+  {
+    "frameW": 360,
+    "frameH": 844,
+    "hOverflow": false,
+    "clipped": [],
+    "contrastFails": [
+      {
+        "text": "Prescribed",
+        "ratio": 3.99,
+        "need": 4.5,
+        "disabled": false
+      }
+    ],
+    "minContrast": {
+      "ratio": 3.99,
+      "el": "Prescribed"
+    },
+    "smallTargets": [
+      "BUTTON:View Rx 109x40"
+    ],
+    "keyboardVisible": false,
+    "keyboardTop": null,
+    "buttonBottom": 0,
+    "buttonAboveKeyboard": null,
+    "typeStyles": [
+      "12px/16px w400",
+      "12px/16px w600",
+      "14px/16px w600",
+      "14px/20px w400",
+      "14px/20px w600",
+      "16px/24px w400",
+      "16px/24px w600",
+      "18px/24px w600",
+      "20px/28px w600"
+    ],
+    "fontLoaded": true,
+    "state": "case-closed-availability-ended",
+    "width": 360,
+    "file": "case-closed-availability-ended_w360.png",
+    "errors": []
+  }
+]
