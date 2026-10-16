@@ -737,7 +737,7 @@ User identified missing HTML/native linkage. Inspected actual sign-in and OTP HT
 
 ## 2026-10-16 — NEXT: plan agreed with Apurva (start here in the new thread)
 1. **New thread: click-to-call screens** (D-56, OQ-027, `ui-screens/app-logic.md` §5a).
-   - Agree the flow in words first: calling your phone ("answer the incoming call") · you didn't answer · connecting to the patient · patient didn't pick up / didn't connect (exist) · on call (timer + script, Callback, **no End call**) · call ended before 50 s · 50 s passed (final buttons) · returning to the app from the phone's call screen. Apurva approves states and copy → record as D-57.
+   - Agree the flow in words first: calling your phone ("answer the incoming call") · you didn't answer · connecting to the patient · patient didn't pick up / didn't connect (exist) · on call (timer + script, Callback, **no End call**) · call ended before 50 s · 50 s passed (final buttons) · returning to the app from the phone's call screen. Apurva approves states and copy → record as the next free D-number (D-57 was used for the project_truth rewrite).
    - Checklist first: existing design-system components only, 360 and 390, standards checklist, only the call states change.
    - Concept renders of the changed states only, side by side with today's approved ones; review one by one; full-size audit per decision.
    - On approval: pictures into `ui-screens/case/`; update `app-logic.md`, `docs/feedback-state-map.md`, `ui-screens/feedback/messages.json`; commit to `doctor-portal/sign-in`.
@@ -745,3 +745,11 @@ User identified missing HTML/native linkage. Inspected actual sign-in and OTP HT
 2. **Then: one clean documentation rewrite around `ui-screens/`** (Apurva agreed 2026-10-16). Final set: `ui-screens/` + README · `app-logic.md` · `project_truth.md` rewritten short (fold in `docs/reviews/2026-10-16-project-truth-review-copy.md`; Apurva approves) · `messages.json` + `feedback-state-map.md` · `decision_log.md` (kept as is, append only) · `open_questions.md` (open items only) · `CLAUDE.md` (short) · `session_handoff.md` (fresh; this log archived). Everything else → `docs/_superseded/`.
 3. **Then: rebuild from scratch** (D-56): rebuild checklist → build (one file per screen, one case state, mock data/calling separate with a Phone/VoIP demo switch, design-system only, text from messages.json) → photo comparison with `ui-screens/` → audit → Apurva approves.
 - Git: commit only this project's paths, on `doctor-portal/sign-in` (see `AGENTS.md` → Git safety). Not merged to `main` yet; Netlify (main) still shows the old prototype.
+
+---
+
+### 2026-10-16 — project_truth.md rewritten (v2.0), D-57
+- Apurva vetted and approved a one-page `project_truth.md`: what we're building, who uses it (freelance doctors), the doctor's day, current rules, calling (click-to-call), where detail lives. "Later" line: earnings (Wallet in Profile), pushed cases, in-app calling.
+- D-57 logged: rewrite + transfer/forward meaning (transfer = handed to HA on the same call; forward = HA calls back; failed transfer → forward). OQ-007 answered. Transfer-failed screen still open.
+- `docs/reviews/2026-10-16-project-truth-review-copy.md` superseded by the rewrite. The planned docs rewrite no longer needs to redo project_truth.
+- Still to confirm by Apurva: the 12,000 orders / 300 doctors figures and their period.

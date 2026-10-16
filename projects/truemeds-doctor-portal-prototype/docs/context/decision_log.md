@@ -643,6 +643,13 @@ From an external (ChatGPT) review, each point verified before acting.
 - **Why:** the old prototype had grown by patching; the rules are kept, the code is not. The calling screens assumed the app controls the call, which isn't true with click-to-call.
 - **Changes:** D-48/D-51/D-54 calling states (Calling, On call with End call) to be redesigned; everything else in D-42–D-55 stands.
 
+### D-57 · project_truth rewritten; transfer vs forward defined — 2026-10-16
+- **Decision (Apurva):**
+  1. **`project_truth.md` rewritten** (v2.0) as a one-page description of what we're building: what it is, who uses it, the doctor's day, current rules, calling, where detail lives. "LOCKED" and "never" wording dropped — rules are the current rules until Apurva changes them. The old v1.0 scope line ("consultation workflow only") was a set-up default, never Apurva's decision. Old §7 test scenarios live in `ui-screens/app-logic.md` §11; old §9 "never invent" moved to `CLAUDE.md`.
+  2. **Transfer vs forward (answers OQ-007):** *transfer* = the patient is handed to an HA on the same call; *forward* = an HA calls the patient back separately. **If a transfer fails, the case goes as a forward.** What the doctor sees when a transfer fails stays open.
+  3. **Later, not this version:** earnings (Wallet in Profile), pushed cases (may be explored; today cases are only requested), calling inside the app. Prescriptions-today count stays on Home.
+- **Why:** the old file described the June single-screen prototype and mixed product truth with instructions to Claude and test setup.
+
 ## Design system changes made for this work
 
 ### D-21 · Toggle fix and a large chip size — 2026-10-07

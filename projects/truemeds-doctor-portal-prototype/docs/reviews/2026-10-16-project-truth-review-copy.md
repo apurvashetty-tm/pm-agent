@@ -1,3 +1,5 @@
+> **Superseded 2026-10-16:** Apurva approved a full rewrite instead (project_truth v2.0, D-57). Kept for history only.
+
 # project_truth.md — proposed updates for Apurva (review copy)
 
 `docs/context/project_truth.md` is LOCKED and changes only with Apurva's approval. It was last updated 2026-06-09. Below: every place that no longer matches the decisions (D-31–D-56), with the exact proposed wording. **Accept or reject each one;** nothing is applied until you say so. ~~Struck~~ = remove · **bold** = add.

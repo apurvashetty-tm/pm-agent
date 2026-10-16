@@ -72,7 +72,7 @@ Read `design-system/RULES.md` §8 (incl. locked specs L1–L9) and **§9 (compon
 ## Priority order
 
 1. **Latest user instruction** — always wins
-2. **`docs/context/project_truth.md`** — locked product truth, cannot be invented around
+2. **`docs/context/project_truth.md`** — what we're building and the current rules (Apurva changes them, via the decision log)
 3. **`docs/context/session_handoff.md`** — current resume point and latest implementation state
 3a. **`docs/context/decision_log.md`** — agreed design/product decisions with their reasons
 4. **`ui-screens/app-logic.md`** (once approved) and **`ui-screens/`** — the app's rules and approved screens
@@ -132,6 +132,8 @@ That does **not** mean:
 - invent case-type routing logic
 - fake the valid-call gate carelessly
 - override `project_truth.md` for convenience
+
+**Never silently invent** (moved from project_truth v1.0 §9): what makes an order Cat4 vs Pilot · Value vs Non-Value Meds · what sets HA required · HA-skip eligibility · doctor assignment source · notes visibility and locking. If one surfaces during build, mark `[OPEN DECISION]` and add it to `open_questions.md`.
 
 ---
 

@@ -97,7 +97,7 @@ Every entry must include:
 
 **Safe placeholder:** Both are shown as distinct final CTAs for the relevant Pilot scenarios. Internal routing logic is not implemented in V1. `[MOCK ASSUMPTION]`
 
-**Status:** Open
+**Status:** Answered — Apurva, 2026-10-16, D-57. Transfer = patient handed to an HA on the same call; forward = an HA calls the patient back separately; a failed transfer goes as a forward. Which systems carry this is Engineering's.
 
 ---
 
@@ -228,6 +228,7 @@ approved. **Production:** sign-up URL, Terms, Privacy and support numbers must b
 **Added 2026-10-14:** what the case-page **Help** button opens (call Doctor Ops, FAQ, or a choice) — needed before the case page is built (D-49).
 
 **Added 2026-10-14:** transfer-failed alert (warm transfer to HA fails) has no spec yet. PRD: blocking alert, doctor confirms before the case is re-routed to forward. Needed before the case page is built (D-51).
+**Update 2026-10-16 (D-57):** routing answered — a failed transfer goes as a forward (HA calls back). Still open: what the doctor sees (alert or silent switch).
 
 ### OQ-022 — Crash and freeze reporting
 **Partly answered 2026-10-12 (Apurva):** the Android and iOS apps use both **Sentry** and **Crashlytics** today.
@@ -248,3 +249,9 @@ reference ID can be Sentry's event ID, so tech can open the exact report.
 
 ### OQ-027 — Calling model: phone call now, in-app call later [OPEN — Apurva + Engineering, 2026-10-16]
 First release uses Knowlarity click-to-call: the doctor's phone rings first, the call is ended on the phone (no End call in the app). To confirm with Knowlarity: leg 1 not connected = "doctor didn't answer". In-app (VoIP) calling with native controls to be explored later; patient receives a normal call. Calling screens are redesigned in a separate thread; see `ui-screens/app-logic.md` §5a.
+
+### OQ-028 — Pushed cases (future) [OPEN — later, 2026-10-16]
+Today doctors only request cases; nothing is pushed (D-31, D-36). Apurva: pushing cases to doctors may be explored later. Not in this version.
+
+### OQ-029 — Doctor volume figures [OPEN — Apurva, 2026-10-16]
+project_truth §2 uses approximate figures: ~12,000 orders handled by ~300 active doctors. Apurva to confirm both numbers and the period (per day / per month).

@@ -66,7 +66,7 @@ Order on first use: Sign-in → OTP → (offer, once) → Home → Case. Returni
 
 ---
 
-## 4. The case journey `[LOCKED]` (project_truth §3–6, D-48–D-55)
+## 4. The case journey `[LOCKED]` (project_truth §3–4, D-48–D-56)
 
 **Stages** (the old code's state names in brackets, for developers):
 
@@ -134,7 +134,7 @@ The approved case screens assume the app controls the call. Real life differs, s
 
 ---
 
-## 6. Final buttons and HA `[LOCKED]` (project_truth §5, D-50, D-54)
+## 6. Final buttons and HA `[LOCKED]` (project_truth §4, D-50, D-54, D-57)
 
 | Case type | HA status | Final button | Ending card |
 |---|---|---|---|
@@ -145,9 +145,10 @@ The approved case screens assume the app controls the call. Real life differs, s
 
 - **Skip HA** only after 50 s, only for Pilot with HA required and not yet skipped. Opens the reason sheet: Patient declined HA call · Clinically not required · Repeat patient — familiar with medicines. Choosing a reason applies it at once; the final button becomes **Confirm prescription**.
 - Cat4 never shows anything about HA. HA-skipped Pilot never shows Transfer or Forward.
+- **Transfer vs forward** (D-57): transfer = the patient is handed to an HA on the same call; forward = an HA calls the patient back separately. A failed transfer goes as a forward; what the doctor sees then is open (OQ-021 note).
 - Confirm: button shows "Confirming…", everything else disabled, no second submit. Failure: notice in the bar "Couldn't confirm. Nothing was lost. Try again." An unclear result is checked before retrying (no double confirm).
 - **Analytics:** the four rows are four different outcomes and must stay separate events — never worked out from the button text (Cat4 and HA-skipped share a label). Event names are Engineering's choice `[LOCKED D-50]`.
-- What decides case type, value vs non-value, HA required and HA-skip eligibility comes from the backend `[OPEN, project_truth §9]`.
+- What decides case type, value vs non-value, HA required and HA-skip eligibility comes from the backend `[OPEN — see CLAUDE.md "Never silently invent"]`.
 
 ✅ **Flag 5 — answered (Apurva, 2026-10-16):** Confirm is blocked while any medicine is Pending. The button stays tappable; on tap a notice in the bar says "Prescribe or disable {n} medicines first." and the page scrolls to the first Pending medicine. Applies to all three confirm buttons; Callback, Skip HA and Mark as unavailable stay allowed. *Original flag:* The old code lets the doctor confirm while some medicines are still Pending (not prescribed, not disabled). No decision covers this. Options: (a) block Confirm until every medicine is Prescribed or Disabled, with a note saying how many are left; (b) allow it, and Pending medicines are dropped from the prescription; (c) allow it with a confirmation sheet. Recommendation: (a) — a prescription with unreviewed medicines is a clinical risk.
 
@@ -205,7 +206,7 @@ The approved case screens assume the app controls the call. Real life differs, s
 
 - **Order details ⓘ** expands in its card: Order created, Expected delivery, Payment. Hidden when the order has none of these.
 - **View Rx** opens the customer's prescription full screen: zoom (50–400%), rotate, reset, pinch and drag. Load failure: notice + Try again; ✕ always closes. Disabled while confirming.
-- **Notes & symptoms:** Chief complaints / symptoms and Doctor notes, both optional, typed text kept if the connection drops. Whether notes save before the call or only after `[OPEN, project_truth §6]`; who sees notes and when they lock `[OPEN, project_truth §9]`.
+- **Notes & symptoms:** Chief complaints / symptoms and Doctor notes, both optional, typed text kept if the connection drops. Whether notes save before the call or only after `[OPEN, OQ-006]`; who sees notes and when they lock `[OPEN, OQ-005]`.
 
 ---
 
@@ -234,4 +235,4 @@ Follow `docs/feedback-state-map.md` exactly. Summary for the case page: loading 
 
 ## 12. Open questions (not for the rebuild to invent)
 
-OQ-017 OTP lock and window lengths · OQ-019 no-cases auto re-check · OQ-023 when to re-offer faster sign-in · OQ-024 release backend · OQ-025 restoring an open case · timer behaviour on hold (project_truth §4) · notes saving and visibility (project_truth §6, §9) · case type / value / HA logic (project_truth §9) · Flags 2, 3, 5, 6 above.
+OQ-017 OTP lock and window lengths · OQ-019 no-cases auto re-check · OQ-023 when to re-offer faster sign-in · OQ-024 release backend · OQ-025 restoring an open case · timer behaviour on hold (OQ-001) · notes saving and visibility (OQ-005, OQ-006) · case type / value / HA logic (OQ-008–OQ-010) · transfer-failed screen (OQ-021 note) · doctor volume figures (OQ-029) · Flags 2, 3, 5, 6 above.
