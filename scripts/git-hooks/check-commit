@@ -12,11 +12,16 @@ if [ "$mode" = merge ]; then
   # A merge may only bring in main: every project folder other than the branch's own must equal origin/main.
   git rev-parse -q --verify origin/main >/dev/null || refuse "origin/main is unknown; run git fetch first."
   scope=$(branch_scope "$branch")
-  for p in $(touched_projects --cached HEAD); do
-    [ "$p" = "$scope" ] && continue
-    git diff --cached --quiet origin/main -- "projects/$p" || refuse "this merge brings in projects/$p/ changes that aren't in main (branch $branch)."
-  done
+  list=$(touched_projects --cached HEAD) || refuse "couldn't read the staged changes (git diff failed)."
+  while IFS= read -r p; do
+    [ -z "$p" ] || [ "$p" = "$scope" ] && continue
+    git diff --cached --quiet origin/main -- "projects/$p"; rc=$?
+    [ $rc -eq 0 ] && continue
+    [ $rc -eq 1 ] && refuse "this merge brings in projects/$p/ changes that aren't in main (branch $branch)."
+    refuse "couldn't compare projects/$p/ with main (git diff failed)."
+  done <<< "$list"
 else
-  reason=$(touched_projects --cached HEAD | check_scope "$branch") || refuse "$reason"
+  list=$(touched_projects --cached HEAD) || refuse "couldn't read the staged changes (git diff failed)."
+  reason=$(check_scope "$branch" <<< "$list") || refuse "$reason"
 fi
 exit 0

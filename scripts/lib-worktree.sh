@@ -32,11 +32,23 @@ point_worktree_record_here() {   # $1 = absolute path of the working folder
   printf '%s\n' "$wt/.git" > "$adm/gitdir.tmp" && mv "$adm/gitdir.tmp" "$adm/gitdir"
 }
 
-# NUL-safe list of project folders touched by a diff. Args are passed to `git diff --name-only --no-renames -z`.
+# NUL-safe list of project folders touched by a diff. Args go to `git diff --name-only --no-renames -z`.
+# Returns non-zero (and prints nothing) if git can't produce the diff — callers must treat that as a refusal.
 touched_projects() {
-  git diff --name-only --no-renames -z "$@" | while IFS= read -r -d '' f; do
-    case "$f" in projects/*/*) f=${f#projects/}; printf '%s\n' "${f%%/*}";; esac
-  done | sort -u
+  local tmp rc; tmp=$(mktemp) || return 1
+  git diff --name-only --no-renames -z "$@" > "$tmp"; rc=$?
+  if [ $rc -ne 0 ]; then rm -f "$tmp"; return 1; fi
+  python3 - "$tmp" <<'PYX' || { rm -f "$tmp"; return 1; }
+import sys
+names = open(sys.argv[1], 'rb').read().split(b'\0')
+out = set()
+for n in names:
+    parts = n.split(b'/')
+    if len(parts) >= 3 and parts[0] == b'projects':
+        out.add(parts[1].decode('utf-8', 'surrogateescape'))
+for p in sorted(out): print(p)
+PYX
+  rm -f "$tmp"
 }
 
 # Which project folders a branch may change: prints own folder, "NONE" (shared/*), or "ANY1" (other).

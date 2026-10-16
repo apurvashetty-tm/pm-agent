@@ -48,7 +48,8 @@ if ! git merge -q --no-edit origin/main; then
 fi
 
 # 3. Final content check of everything this branch would bring into main (covers fast-forwards, which skip hooks).
-if ! reason=$(touched_projects origin/main HEAD | check_scope "$branch"); then
+list=$(touched_projects origin/main HEAD) || { echo "Stop (committed locally, NOT pushed): couldn't compare this branch with main."; exit 1; }
+if ! reason=$(check_scope "$branch" <<< "$list"); then
   echo "Stop (committed locally, NOT pushed): this branch would change more than it may — $reason"; exit 1
 fi
 

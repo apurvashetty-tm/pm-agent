@@ -265,7 +265,7 @@ function commitAndPush(updateCount, learnings) {
   } catch (err) {
     process.exitCode = 1;
     console.error('\n⚠️  Commit/push failed:', err.message);
-    console.log('   (Changes are staged locally. Review with: git status)\n');
+    console.log('   (Not published — see the publish message above. Nothing was pushed to main.)\n');
   }
 }
 
@@ -299,4 +299,4 @@ try {
 } catch (err) {
   console.error('❌ Synthesis failed:', err.message);
   process.exit(1);
-} EOF
+}
