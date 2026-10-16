@@ -169,6 +169,10 @@ Truemeds Figma library).
   - Before committing, run `git branch --show-current`. If it is not your project's branch, do **not** commit on it and do not switch branches in a shared working copy (another session may be using it): commit through a temporary worktree (`git worktree add <tmp> <branch>`, copy only your files, commit there, push from the main folder, `git worktree remove`).
   - Stage **only your project's paths** (`git add projects/<your-project> …`). Never `git add -A` / `git add .` at the repo root, and never commit files staged by someone else — check `git diff --cached --name-only` first.
   - If git leaves a `.lock` file, stop and tell Apurva; don't work around it.
+- **Read a project only on its own branch** (2026-10-16, after a session read July copies of the doctor portal on another branch). Every branch carries a copy of every project folder, but only the project's own branch (or `main`) has it current. Before reading project files, run `git branch --show-current`; if it isn't that project's branch, read through a worktree of the right branch (or `git show <branch>:<path>`). Sanity check: the project's handoff should have recent entries; if it looks months old, you are on the wrong branch — stop.
+  - Project branches: Doctor portal → `doctor-portal/sign-in` · ACOM / Ring AI → `acom-portal-revamp` · Price Lock → `price-lock-proto` · Project South → `project/project-south` · Type 1 revamp → `project/type1-revamp`.
+  - `main` is the official version. Project work reaches `main` through a pull request. To keep a project branch current, merge `main` into it (never the other way without a PR); its own project folder is never overwritten by `main`.
+  - Backups of every branch as of 2026-10-16: tags `backup/2026-10-16/<branch>`.
 
 ## Pushing to GitHub (credentials)
 
