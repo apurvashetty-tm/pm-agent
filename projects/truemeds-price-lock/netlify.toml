@@ -1,0 +1,7 @@
+# Netlify — Truemeds Price Lock prototype (used once the site is re-linked to `main` with
+# base directory = projects/truemeds-price-lock). Until then the site still deploys from branch price-lock-proto.
+[build]
+  publish = "prototype/price-lock"
+  command = ""
+  # Rebuild only when this project's folder changes.
+  ignore  = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF -- ."
