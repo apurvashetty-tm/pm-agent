@@ -760,3 +760,7 @@ User identified missing HTML/native linkage. Inspected actual sign-in and OTP HT
 - The doctor portal now lives on `main`; branch `doctor-portal/sign-in` was merged and deleted (backup tag `backup/pre-trunk/doctor-portal/sign-in`). The pm-agent folder stays on `main`.
 - Publish with `scripts/publish.sh -m "message" <paths>` from the pm-agent folder. A commit check refuses commits touching two projects. Rules: repo `AGENTS.md` → Git safety ("One main, projects in folders", "Working in parallel").
 - Netlify rebuilds this site only when this folder, `design-system/` or `netlify.toml` changes. Merged changes to the live files go live — build the rebuild in a new folder and switch only when Apurva approves.
+
+### 2026-10-16 (later) — Git: project branch and folder
+- Final model (supersedes the "lives on main" note above): this project lives on branch `project/truemeds-doctor-portal-prototype`, folder `pm-agent/.work/truemeds-doctor-portal-prototype` (`scripts/start-project.sh truemeds-doctor-portal-prototype`). Publish with `scripts/publish.sh`; changes reach `main` (and the live Netlify demo) only through a pull request Apurva merges.
+- Next: check OQ-008 to OQ-010 (case type, Value Meds, HA rules) against tm-chotu v0.4.3 `tm-chotu-rx-cadence`; then the click-to-call screens thread.
