@@ -5,6 +5,8 @@ workflows, templates, decisions, and reusable knowledge.
 
 ## Working agreement
 
+(Apurva's own checkout publishes directly to `main` with `scripts/publish.sh`; everyone else follows the steps below.)
+
 1. Pull the latest `main` branch before starting.
 2. Create a short-lived branch from `main`.
 3. Keep changes scoped to one project or one shared-system improvement.

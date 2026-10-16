@@ -29,5 +29,5 @@ Not all-or-nothing. Rules grow as the work firms up; switch stages on purpose.
 - **Automatic checks and AI reviewers passed screens that were wrong** (spilling labels, three stacked buttons, indented chips, stale renders). Checks measure sizes, not decisions. Fix: before "done", trace every decision to every screen it touches and look at each at full size (both widths) — never sign off from contact sheets.
 - **Two rules can conflict** (one chip size per screen vs. grids start at their label). When a check fails against an approved design, look for a rule conflict before changing the design.
 - **Sub-sessions must not record decisions** in the user's name; they report, the lead session records after the user agrees.
-- **Git in a shared folder:** one project per commit, on its own branch, staging only its own paths (see `AGENTS.md` → Git safety).
+- **Git in a shared folder:** one `main`, each project in its own folder; publish only named files with `scripts/publish.sh`; a commit check refuses commits that touch two projects (see `AGENTS.md` → Git safety; changed 2026-10-16 from per-project branches, which left stale copies).
 - **A prototype that grows by patching** stops being a safe base; extract the rules to a document, then rebuild from scratch.

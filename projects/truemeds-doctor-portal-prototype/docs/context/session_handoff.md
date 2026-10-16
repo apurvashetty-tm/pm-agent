@@ -753,3 +753,10 @@ User identified missing HTML/native linkage. Inspected actual sign-in and OTP HT
 - D-57 logged: rewrite + transfer/forward meaning (transfer = handed to HA on the same call; forward = HA calls back; failed transfer → forward). OQ-007 answered. Transfer-failed screen still open.
 - `docs/reviews/2026-10-16-project-truth-review-copy.md` superseded by the rewrite. The planned docs rewrite no longer needs to redo project_truth.
 - Still to confirm by Apurva: the 12,000 orders / 300 doctors figures and their period.
+
+---
+
+### 2026-10-16 — Git: one `main` (no project branch any more)
+- The doctor portal now lives on `main`; branch `doctor-portal/sign-in` was merged and deleted (backup tag `backup/pre-trunk/doctor-portal/sign-in`). The pm-agent folder stays on `main`.
+- Publish with `scripts/publish.sh -m "message" <paths>` from the pm-agent folder. A commit check refuses commits touching two projects. Rules: repo `AGENTS.md` → Git safety ("One main, projects in folders", "Working in parallel").
+- Netlify rebuilds this site only when this folder, `design-system/` or `netlify.toml` changes. Merged changes to the live files go live — build the rebuild in a new folder and switch only when Apurva approves.

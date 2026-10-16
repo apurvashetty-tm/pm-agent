@@ -1,0 +1,115 @@
+<!doctype html><html><head><meta charset="utf-8">
+<style>
+:root{--hot:#D64545;--blue:#4C6BB5}
+body{background:#F1F2F6;padding:20px 24px 40px;font-family:system-ui,sans-serif;margin:0}
+h1{font-size:15px;font-weight:600;color:#333;margin-bottom:18px;letter-spacing:.01em}
+.states{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;align-items:start}
+.card{background:#fff;box-shadow:0 1px 6px rgba(0,0,0,.08)}
+.label{text-align:center;font-size:11.5px;font-weight:600;padding:8px 12px;letter-spacing:.03em;text-transform:uppercase}
+.label.ai{background:#FFF3E0;color:#C06800;border-bottom:2px solid #F5A623}
+.label.freq{background:#FEF3C7;color:#92400E;border-bottom:2px solid #F59E0B}
+.label.retry{background:#F3F4F6;color:#374151;border-bottom:2px solid #9CA3AF}
+.hdr{background:#F8EADB;padding:10px 18px 14px;display:grid;grid-template-columns:1fr auto;align-items:start;gap:8px}
+.name{color:#E07B24;font-size:16px;font-weight:600}
+.sub{font-size:10.5px;color:#4C6BB5;margin-top:2px}
+.pill{display:inline-block;margin-top:6px;border:1.5px solid #4C6BB5;color:#4C6BB5;border-radius:14px;padding:2px 10px;font-size:10.5px;font-weight:600;background:#EEF2FA}
+.stars{text-align:right;color:#E0A21B;font-size:22px;letter-spacing:-4px;margin-top:6px}
+.ai-box{margin:12px 18px 0;border:1px solid #F3C9C9;border-left:4px solid var(--hot);border-radius:5px;background:#FFFBFB;padding:10px 14px}
+.ai-meta{display:flex;gap:10px;align-items:center;font-size:11.5px;color:#555;padding-bottom:8px;border-bottom:1px solid #f3dede;margin-bottom:8px}
+.hot-chip{font-size:12px;padding:3px 12px;border-radius:12px;background:var(--hot);color:#fff;font-weight:600}
+.ftc-badge{padding:1px 7px;border:1px solid #2F7A3E;color:#2F7A3E;border-radius:10px;font-weight:600;font-size:11px}
+.ai-cols{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:14px}
+.ai-cols h4{font-size:10.5px;font-weight:500;color:#777;margin-bottom:3px}
+.ai-cols p{font-size:11.5px;line-height:1.45;margin:0}
+.sheet{margin:14px 18px 18px;padding:12px 14px;background:#fff;box-shadow:0 -3px 12px rgba(0,0,0,.07)}
+.attempts{text-align:center;font-size:11.5px;color:#666;margin-bottom:10px}
+.btns{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.btn-call{background:var(--blue);color:#fff;border:none;border-radius:4px;padding:9px;font-family:inherit;font-size:12.5px;font-weight:600;cursor:pointer}
+.btn-call.disabled{background:#B0BEC5;cursor:default}
+.btn-sched{background:#fff;color:#222;border:1px solid #bbb;border-radius:4px;padding:9px;font-family:inherit;font-size:12.5px}
+.err{border-radius:4px;padding:8px 12px;font-size:11.5px;display:flex;align-items:flex-start;gap:7px;margin-top:8px;line-height:1.4}
+.err.orange{background:#FFF3E0;border:1px solid #FFCC80;color:#7B4700}
+.err.amber{background:#FFFBEB;border:1px solid #FDE68A;color:#78350F}
+.err.grey{background:#F3F4F6;border:1px solid #D1D5DB;color:#374151}
+.err-icon{font-size:14px;flex-shrink:0;margin-top:1px}
+.state-tag{display:inline-block;font-size:10.5px;font-weight:600;padding:2px 8px;border-radius:3px;margin-bottom:7px}
+.state-tag.ai-tag{background:#1F2A44;color:#fff}
+.state-tag.freq-tag{background:#92400E;color:#fff}
+.state-tag.retry-tag{background:#4B5563;color:#fff}
+</style></head><body>
+<h1>CALL PATIENT — three blocked states (Phase 2)</h1>
+<div class="states">
+<div class="card">
+ <div class="label ai">State 1 · AI holds lead</div>
+ <div class="hdr">
+  <div><div style="font-size:10.5px;color:#555;background:#fff;display:inline-block;padding:1px 5px">&#9666; Back</div><div class="name" style="margin-top:5px">Ishwar Singh, <span style="font-size:10px">81 M</span></div><div class="sub">TrueMeds | Customer #1322408</div><div class="pill">F - Generic 35–50%</div></div>
+  <div class="stars">&#9733;&#9733;&#9733;&#9733;</div>
+ </div>
+ <div class="ai-box">
+  <div class="ai-meta"><span class="hot-chip">Hot</span><span style="margin-left:8px">Qualified by Arjun (AI) at 7:42 PM, 38 min ago</span><span class="ftc-badge" style="margin-left:8px">FTC</span></div>
+  <div class="ai-cols">
+   <div><h4>Summary</h4><p>Customer inquired about product details and requested an extra discount, for which a Senior Agent callback was suggested.</p></div>
+   <div><h4>Customer Request</h4><p>Wants to check for extra discount</p></div>
+   <div><h4>Non Completion Reason</h4><p>Price</p></div>
+  </div>
+ </div>
+ <div class="sheet">
+  <div class="attempts">No. of Call(s) Attempted: 1</div>
+  <div><span class="state-tag ai-tag">AI holds this lead</span></div>
+  <div class="btns">
+   <button class="btn-call">CALL PATIENT</button>
+   <button class="btn-sched">Schedule Call</button>
+  </div>
+  <div class="err orange"><span class="err-icon">&#9888;</span><span>Can't call: Arjun AI is working on this lead.</span></div>
+ </div>
+</div>
+<div class="card">
+ <div class="label freq">State 2 · Frequency cap hit</div>
+ <div class="hdr">
+  <div><div style="font-size:10.5px;color:#555;background:#fff;display:inline-block;padding:1px 5px">&#9666; Back</div><div class="name" style="margin-top:5px">Ishwar Singh, <span style="font-size:10px">81 M</span></div><div class="sub">TrueMeds | Customer #1322408</div><div class="pill">F - Generic 35–50%</div></div>
+  <div class="stars">&#9733;&#9733;&#9733;&#9733;</div>
+ </div>
+ <div class="ai-box">
+  <div class="ai-meta"><span class="hot-chip">Hot</span><span style="margin-left:8px">Qualified by Arjun (AI) at 7:42 PM, 38 min ago</span><span class="ftc-badge" style="margin-left:8px">FTC</span></div>
+  <div class="ai-cols">
+   <div><h4>Summary</h4><p>Customer inquired about product details and requested an extra discount, for which a Senior Agent callback was suggested.</p></div>
+   <div><h4>Customer Request</h4><p>Wants to check for extra discount</p></div>
+   <div><h4>Non Completion Reason</h4><p>Price</p></div>
+  </div>
+ </div>
+ <div class="sheet">
+  <div class="attempts">No. of Call(s) Attempted: 3</div>
+  <div><span class="state-tag freq-tag">Frequency cap reached</span></div>
+  <div class="btns">
+   <button class="btn-call disabled" disabled>CALL PATIENT</button>
+   <button class="btn-sched">Schedule Call</button>
+  </div>
+  <div class="err amber"><span class="err-icon">&#9888;</span><span>Can't call: this customer has been contacted 3 times this week.</span></div>
+ </div>
+</div>
+<div class="card">
+ <div class="label retry">State 3 · Retry limit reached</div>
+ <div class="hdr">
+  <div><div style="font-size:10.5px;color:#555;background:#fff;display:inline-block;padding:1px 5px">&#9666; Back</div><div class="name" style="margin-top:5px">Ishwar Singh, <span style="font-size:10px">81 M</span></div><div class="sub">TrueMeds | Customer #1322408</div><div class="pill">F - Generic 35–50%</div></div>
+  <div class="stars">&#9733;&#9733;&#9733;&#9733;</div>
+ </div>
+ <div class="ai-box">
+  <div class="ai-meta"><span class="hot-chip">Hot</span><span style="margin-left:8px">Qualified by Arjun (AI) at 7:42 PM, 38 min ago</span><span class="ftc-badge" style="margin-left:8px">FTC</span></div>
+  <div class="ai-cols">
+   <div><h4>Summary</h4><p>Customer inquired about product details and requested an extra discount, for which a Senior Agent callback was suggested.</p></div>
+   <div><h4>Customer Request</h4><p>Wants to check for extra discount</p></div>
+   <div><h4>Non Completion Reason</h4><p>Price</p></div>
+  </div>
+ </div>
+ <div class="sheet">
+  <div class="attempts">No. of Call(s) Attempted: 4</div>
+  <div><span class="state-tag retry-tag">Maximum attempts reached</span></div>
+  <div class="btns">
+   <button class="btn-call disabled" disabled>CALL PATIENT</button>
+   <button class="btn-sched">Schedule Call</button>
+  </div>
+  <div class="err grey"><span class="err-icon">&#9888;</span><span>Can't call: maximum attempts reached for this lead.</span></div>
+ </div>
+</div>
+</div>
+</body></html>

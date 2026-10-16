@@ -165,16 +165,15 @@ Truemeds Figma library).
 - Pull with fast-forward only when bringing down remote changes.
 - Keep local project files and handoff files committed together when possible.
 - Before merging into `main` or changing anything that deploys, read `docs/TEAM_GIT_WORKFLOW.md` → **Deployments** (pushes to `main` go live).
-- Record exceptions — a push to `main` without a pull request, deployment/hosting changes, repository-setting changes, known merge traps — in `docs/TEAM_GIT_WORKFLOW.md` → **Operations log** (date · who and which tool/AI · what · why · follow-up). Normal commits need no log entry; git history is the log.
-- **One project per commit, on that project's branch** (2026-10-16, after an ACOM commit swept doctor-portal files onto the doctor-portal branch):
-  - Branches: ACOM / Ring-AI → `acom-portal-revamp` · Doctor portal → `doctor-portal/sign-in` (until merged) · design system changes made for a project go with that project's branch. A new project gets its own branch; ask Apurva if unsure.
-  - Before committing, run `git branch --show-current`. If it is not your project's branch, do **not** commit on it and do not switch branches in a shared working copy (another session may be using it): commit through a temporary worktree (`git worktree add <tmp> <branch>`, copy only your files, commit there, push from the main folder, `git worktree remove`).
-  - Stage **only your project's paths** (`git add projects/<your-project> …`). Never `git add -A` / `git add .` at the repo root, and never commit files staged by someone else — check `git diff --cached --name-only` first.
+- Record exceptions — deployment/hosting changes, repository-setting changes, known merge traps — in `docs/TEAM_GIT_WORKFLOW.md` → **Operations log** (date · who and which tool/AI · what · why · follow-up). Normal commits need no log entry; git history is the log.
+- **One `main`, projects in folders** (2026-10-16, Apurva — replaces project branches). Every project lives in its own folder under `projects/` on `main`; there are no long-lived project branches. The attached pm-agent folder stays on `main` — never switch branches in it (other threads share it).
+  - **Publish with `scripts/publish.sh -m "message" <paths…>`** from the pm-agent folder: it checks the folder is on `main`, refuses if someone else's files are staged or a `.lock` file exists, brings `main` up to date, commits only the named paths, and pushes to GitHub `main`. Name your files explicitly — never `git add -A` / `git add .`.
+  - **Commit check:** `scripts/git-hooks/pre-commit` (enabled in Apurva's checkout via `core.hooksPath`) refuses any commit touching more than one project folder. Shared folders (`design-system/`, `knowledge/`, `docs/`, root files) may go with one project's commit.
+  - **Swapnil's projects** (Type 1 revamp → `project/type1-revamp`, Project South → `project/project-south`) follow his own flow: his branches, merged to `main` by his pull requests (`CONTRIBUTING.md`, each project's `CONTINUITY.md`). Never commit to, merge, rebase or delete his branches.
+  - Apurva's own checkout publishes straight to `main` (owner). Collaborators (e.g. Swapnil) use short-lived branches and pull requests (`CONTRIBUTING.md`). Use `--pr` when Apurva wants a change reviewed before it reaches `main`.
+  - `main` changes to a deployed prototype go live (see `docs/TEAM_GIT_WORKFLOW.md` → Deployments). Build big rewrites (e.g. the doctor-portal rebuild) in a new folder and switch the live files only when Apurva approves.
   - If git leaves a `.lock` file, stop and tell Apurva; don't work around it.
-- **Read a project only on its own branch** (2026-10-16, after a session read July copies of the doctor portal on another branch). Every branch carries a copy of every project folder, but only the project's own branch (or `main`) has it current. Before reading project files, run `git branch --show-current`; if it isn't that project's branch, read through a worktree of the right branch (or `git show <branch>:<path>`). Sanity check: the project's handoff should have recent entries; if it looks months old, you are on the wrong branch — stop.
-  - Project branches: Doctor portal → `doctor-portal/sign-in` · ACOM / Ring AI → `acom-portal-revamp` · Price Lock → `price-lock-proto` · Project South → `project/project-south` · Type 1 revamp → `project/type1-revamp`.
-  - `main` is the official version. Project work reaches `main` through a pull request. To keep a project branch current, merge `main` into it (never the other way without a PR); its own project folder is never overwritten by `main`.
-  - Backups of every branch as of 2026-10-16: tags `backup/2026-10-16/<branch>`.
+  - Old branches are backed up as tags `backup/2026-10-16/*` and `backup/pre-trunk/*`. `price-lock-proto` stays only as the Price Lock site's deploy source until that site is re-linked to `main`; don't work on it.
 - **Working in parallel** (2026-10-16, Apurva): several threads / AIs on one project at once is normal. The handoff and decision log pass context *over time*; they do not coordinate threads running *at the same time*, so:
   - **Read:** any number of threads, any time.
   - **Write:** one thread per file or area at a time (e.g. one thread owns the calling screens, another the docs rewrite — different files, so they can run together). Before editing a file another thread may be working on, re-read it from disk immediately before writing; never save a version built from an earlier read.
@@ -183,10 +182,8 @@ Truemeds Figma library).
 
 ## Pushing to GitHub (credentials)
 
-- This checkout uses `https://github.com/apurvashetty-tm/pm-agent.git` with a repository-local credential helper. Direct HTTPS pushing from Cowork's `device_bash` against the attached folder was verified on 2026-10-06. Other checkouts need their own authentication setup.
-- Never embed a token in a remote URL, commit credentials, or read, display, copy, or upload private keys. A local-only configuration file can still expose a credential through logs or shared filesystem access.
-- Before publishing, inspect the current branch, pending commits, and working tree. Commit only task-related changes. Use a feature branch and pull request; do not force-push or bypass branch protection.
-- In Cowork, attach this local folder and use `device_bash` at its mounted path for normal Git commits and pushes. The cloud shell is a separate environment. The GitHub connector and Computer Use Terminal are not required for this workflow.
-- Let Git invoke the configured helper; never print credential files, run `git credential fill`, enable credential tracing, or copy secrets into tracked files. The helper resolves its credential file from the current checkout's Git directory so mounted path changes do not require reconfiguration. Credentials persist with this checkout, subject to token expiry or revocation and folder permissions.
-- When the current environment has authorized GitHub access, use `git push --dry-run origin <branch-name>`, then `git push origin <branch-name>`. Verify the remote branch hash matches the intended local commit with `git ls-remote origin refs/heads/<branch-name>`.
-- Diagnose network, filesystem, authentication, and branch-protection failures separately. Do not assume every failed push means a missing or expired token.
+- This checkout uses `https://github.com/apurvashetty-tm/pm-agent.git` with a repository-local credential helper. In Cowork, attach the pm-agent folder and run git through `device_bash` at its mounted path. The GitHub connector and Computer Use Terminal are not needed.
+- The helper finds its credential file through the repository's shared git directory (`--git-common-dir`), so it works from the main folder and from temporary worktrees alike (fixed 2026-10-16).
+- Never embed a token in a remote URL, commit credentials, print credential files, run `git credential fill`, or enable credential tracing.
+- Normal publishing: `scripts/publish.sh` (see Git safety). Never force-push.
+- Diagnose network, filesystem, authentication and branch-protection failures separately; a failed push doesn't always mean an expired token.
