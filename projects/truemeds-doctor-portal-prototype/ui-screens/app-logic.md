@@ -172,7 +172,7 @@ The approved case screens assume the app controls the call. Real life differs, s
 
 **On the case page**: each row = icon by form, name + strength, **Qty** and status tag (Prescribed = green · Pending = yellow · Disabled = grey). No dose or duration on the case page (D-54). Tap → Prescribe. Closed case: rows read-only, no arrow.
 
-**What the doctor can do**: prescribe (set the schedule) or disable a medicine. The doctor **cannot add medicines** and **does not set quantity** (backend) `[LOCKED D-04, D-06]`.
+**What the doctor can do**: prescribe (set the schedule) or disable a medicine. The doctor **cannot add medicines** and **does not set quantity** (backend) `[LOCKED D-04, D-06]`. Qty appears only on the case page rows (read-only); the Prescribe screen shows no Qty (D-56).
 
 **Prescribe screen**
 - Header: ✕, medicine name + form, **Disable**. Pinned "On prescription" line shows exactly what will print, updated on every tap.

@@ -1,6 +1,6 @@
 # OTP screen: final spec and error handling (2026-10-09)
 
-Status: **agreed screen, not built.** Built together with sign-in, biometric and Home in one pass (see D-33).
+Status: **HISTORICAL for layout** — OTP v2 (D-44, D-46) and `ui-screens/otp/` win. Original status: agreed screen, not built. Built together with sign-in, biometric and Home in one pass (see D-33).
 Concept: `2026-10-09-otp-v2.html`. Renders: `renders/2026-10-09/25` (screen), `26`–`27` (errors).
 
 ## Screen (Apurva's layout)

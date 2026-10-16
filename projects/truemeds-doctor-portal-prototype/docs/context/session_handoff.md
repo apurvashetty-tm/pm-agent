@@ -727,3 +727,10 @@ User identified missing HTML/native linkage. Inspected actual sign-in and OTP HT
 ## 2026-10-16 — App logic draft and calling model
 - `ui-screens/app-logic.md` drafted (not committed, not approved): every rule from the old prototype, checked against project_truth and D-01–D-55. Flags 2, 3, 5, 6 answered by Apurva.
 - Calling: first release = Knowlarity click-to-call (doctor ends the call on the phone); VoIP later (OQ-027). Calling screens to be redesigned in a new thread, then the from-scratch rebuild (one prototype, demo switch between the two calling modes).
+
+## 2026-10-16 — Documentation sweep
+- Archived (moved, not deleted): the four role files → `docs/_superseded/roles-2026-06/` (pointer: `docs/roles/README.md`); `design_system.md` and the two August PRD copies → `docs/_superseded/docs-2026-08/`.
+- `CLAUDE.md`: read-list, priority order and core rules updated for D-56 (rebuild from scratch; old prototype frozen); calling model added to "ask first".
+- Developer PRD marked partly out of date; state map, concept and proposal statuses brought up to date.
+- Qty clarified (Apurva, 2026-10-16): no Qty on the Prescribe screen; Qty shown read-only on the case page rows (D-54).
+- Prepared for Apurva: `docs/reviews/2026-10-16-project-truth-review-copy.md` (proposed changes to the locked project_truth.md — not applied).

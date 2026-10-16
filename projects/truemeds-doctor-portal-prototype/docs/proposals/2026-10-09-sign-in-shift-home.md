@@ -1,6 +1,6 @@
 # Proposal: sign-in, shift and the doctor's day outside a case
 
-Status: **proposal, partly superseded.** Orders are pulled by the doctor, not pushed (D-31); sign-in is built (D-32). Shift capture is next. From a four-role review on 2026-10-09: Product/Ops, UX/IA, Auth & compliance (with web research) and Prototype engineering. Once agreed, the decisions move to `context/decision_log.md`.
+Status: **SUPERSEDED** by D-33–D-40 (sign-in, OTP, availability Home); kept as history. Original status: proposal, partly superseded. Orders are pulled by the doctor, not pushed (D-31); sign-in is built (D-32). Shift capture is next. From a four-role review on 2026-10-09: Product/Ops, UX/IA, Auth & compliance (with web research) and Prototype engineering. Once agreed, the decisions move to `context/decision_log.md`.
 
 ## The model: three different things
 

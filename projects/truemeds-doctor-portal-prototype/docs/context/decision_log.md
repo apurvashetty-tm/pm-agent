@@ -639,6 +639,7 @@ From an external (ChatGPT) review, each point verified before acting.
   4. **No queue message:** the case does go back to the queue, but the doctor is never told.
   5. **Calling, first release = Knowlarity click-to-call:** the doctor's phone rings first, the doctor ends the call on the phone; **no End call in the app**. New state: doctor didn't answer (leg 1 not connected) — to confirm with Knowlarity. In-app (VoIP) calling explored later (OQ-027). The approved calling screens (D-48–D-54) are redesigned in a separate thread.
   6. **Demo:** one prototype with a demo switch between the calling modes; only the calling part differs.
+  7. **Quantity (clarified):** the Prescribe screen shows **no Qty** (the doctor doesn't set it, D-06); Qty is shown **read-only on the case page rows** (D-54).
 - **Why:** the old prototype had grown by patching; the rules are kept, the code is not. The calling screens assumed the app controls the call, which isn't true with click-to-call.
 - **Changes:** D-48/D-51/D-54 calling states (Calling, On call with End call) to be redesigned; everything else in D-42–D-55 stands.
 

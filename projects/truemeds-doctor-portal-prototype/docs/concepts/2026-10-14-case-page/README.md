@@ -2,7 +2,7 @@
 
 # Case page — concepts (D-48, D-49, D-50)
 
-Status: **CONCEPT — Reviewed — yet to be approved by Apurva.** Not wired to `index.html` or any consultation logic. Build only after approval (D-49 process). Mock content is labelled `[MOCK ASSUMPTION]`.
+Status: **APPROVED 2026-10-14 (D-51), refined through D-55; promoted 2026-10-15 to `ui-screens/case/case.html`. This file is history — build from `ui-screens/`.** Original status: CONCEPT — Reviewed — yet to be approved by Apurva. Not wired to `index.html` or any consultation logic. Build only after approval (D-49 process). Mock content is labelled `[MOCK ASSUMPTION]`.
 
 Source: `concept.html` (`?s=<state>`, `&w=360` for the 360-wide check). Renders: 390×844 @2x and 360 wide, one PNG per state. Contact sheet: `contact-sheet.png` (390 only). Metrics: `metrics.json`.
 

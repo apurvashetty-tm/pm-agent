@@ -114,7 +114,7 @@ Current references: `../ui-screens/home/`; native `../ui-screens/native/HomeScre
 
 ## Case page exits (D-48)
 
-Applies to the case page in `index.html`. Copy approved (D-53).
+Applies to the case page (`ui-screens/case/case.html`; the old `index.html` is frozen, D-56). Copy approved (D-53).
 
 | State | Pattern | Behaviour |
 |---|---|---|
