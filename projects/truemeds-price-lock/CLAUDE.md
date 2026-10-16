@@ -1,5 +1,6 @@
 # Truemeds Price Lock — Claude Rules
 
+> **Git:** this project lives on branch `project/truemeds-price-lock`, in the folder `pm-agent/.work/truemeds-price-lock` (open it with `scripts/start-project.sh truemeds-price-lock`). Work and publish only there (`scripts/publish.sh -m "..." <files>`); changes reach `main` through a pull request Apurva merges. The main pm-agent folder is read-only. Rules: repo `AGENTS.md` → Git safety.
 ## What this project is
 
 This project captures Truemeds Price Lock / Cost Absorption decisions across Pre-order, WMS, invoice, pricing, tax, payments, and fulfilment dependencies.
