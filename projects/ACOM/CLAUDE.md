@@ -1,5 +1,6 @@
 # Context primer — ACOM (Assisted Commerce)
 
+> **Git:** this project lives on branch `project/ACOM`, in the folder `pm-agent/.work/ACOM` (open it with `scripts/start-project.sh ACOM`). Work and publish only there (`scripts/publish.sh -m "..." <files>`); changes reach `main` through a pull request Apurva merges. The main pm-agent folder is read-only. Rules: repo `AGENTS.md` → Git safety.
 *Scoped `CLAUDE.md` for this umbrella folder. Read before any sub-initiative's own `CLAUDE.md`.*
 
 ## Workspace memory
