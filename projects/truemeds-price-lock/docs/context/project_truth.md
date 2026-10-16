@@ -27,6 +27,8 @@ Locked invariant = FSP. The two live fields in the Pre-order → Post-order hand
 
 ## 3. What happens now
 
+> **Rollout status (2026-09-25):** CAB is live at **100%** — no longer an A/B/C experiment and no longer Mumbai-FC-only — and **Variant B (the full UI) is the live customer experience**. This supersedes the experiment / Variant / Mumbai-only framing in `reference/CAB/`.
+
 Current calculation keeps the existing discount behaviour when the picked batch changes MRP.
 
 ### Higher fulfilled MRP

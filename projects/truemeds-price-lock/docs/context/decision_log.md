@@ -221,3 +221,11 @@ The absorption/delight story ("we covered ₹X") lives on the Price Lock fronten
 Confirm with finance (open): the absorbed amount must stay a pre-tax, taxable-value-reducing discount (as coupon is today) to fold into Discount correctly.
 
 Backend: base/coupon/absorption breakdown still retained as frozen metadata for tax and returns, despite the blended presentation.
+
+## 2026-09-25 — CAB is fully scaled (100%); Variant B is the live UI
+
+Status: Current-state fact. Supersedes the experiment / rollout framing in `reference/CAB/`.
+
+Cost Absorption (CAB) is no longer an A/B/C experiment and is no longer Mumbai-FC-only. It is rolled out to **100%**, and the full-UI variant (**Variant B**) is the live customer experience.
+
+Reading historical files: anywhere `reference/CAB/` describes CAB as an experiment, as Variant A/B/C, or as “Mumbai FC only / not live for other FCs/MFCs,” treat that as historical. The current live system is 100% CAB with the Variant B UI. Per the reference priority in project_truth §14, this entry and project_truth §3 take precedence over those documents.
