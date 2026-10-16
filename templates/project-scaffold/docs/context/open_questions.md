@@ -16,6 +16,7 @@ This file is only for unresolved questions during the build.
 ### [Open] [Type] Question title
 - Context:
 - Why it is unclear:
+- tm-chotu says (snapshot 2026-08-13):
 - Options considered:
 - Current temporary handling:
 - Final decision:
