@@ -23,7 +23,7 @@ Time elapsed between order events. Truemeds maintains a **promised-vs-actual mod
 | Table | DB | Why |
 |---|---|---|
 | `order_tat_base_model` | 170 | **Stale.** Has 40 tempting cols (op2od, drc2ful, etc.) but data is unreliable. Don't use. |
-| `order_tat_details` | 170 | Needs deep-dive before locking (promise_tat / supposed_tat / delay_days). v0.1.5 gap. |
+| `order_tat_details` ⚠️CONTESTED [subject: pickup_time] — `tm-chotu-dcoe-cohorts` *requires* its `pickup_time` for zone-shipping; this skill lists it as not-to-use. Resolve before relying on either | | 170 | Needs deep-dive before locking (promise_tat / supposed_tat / delay_days). v0.1.5 gap. |
 | `pincode_tat_adherence_data` / `_mfc` | 630/170 | Rich (21 cols, breach buckets, adherence %) but needs deep-dive before locking. v0.1.5 gap. |
 
 ---
@@ -42,7 +42,7 @@ Time elapsed between order events. Truemeds maintains a **promised-vs-actual mod
 | **`promised_air_delivery_date`** | datetime | Set ONCE — for air-eligible pincodes. |
 | **`current_delivery_date`** | datetime | **Live re-projection** — UPDATES at every step. |
 | **`actual_delivery_date`** | datetime | Set when delivered. Frozen. |
-| **`actual_dispatch_date`** | datetime | Set when dispatched. Frozen. |
+| **`actual_dispatch_date`** | datetime | ⚠️ **CONTESTED [subject: actual_dispatch_date] — do not treat either side as settled.** `tm-chotu-dcoe-cohorts` states this column is **NULL for 100% of orders** and that dispatch time must come from `order_tat_details.pickup_time`. Verify before using it for dispatch SLA. Prior claim: set when dispatched, frozen |
 | **`actual_doctor_call_time`** | datetime | Set when doctor connects. Frozen. |
 | **`actual_warehouse_processing`** | datetime | Set when WH processing completes. Frozen. |
 | `created_on`, `modified_on` | timestamps | Standard. |
@@ -449,3 +449,27 @@ ORDER BY created_on;
 - `tm-chotu-data-sources` → DB 630 (DDT live), DB 170 (DDT Airbyte mirror), DB 994 SF LOGISTICS (gap)
 - `tm-chotu-query-rigor` → Schema-case HARD RULE (TMMUMPSDB uppercase MySQL, tmmumpsdb lowercase Redshift, INVENTORY_SCHEMA on DB 180), verify-table-has-data rule
 - `tm-chotu-joins` → Recipe 2 (Lifecycle stage counts) — same `order_status` pattern used in Recipe 4 above
+
+## Courier identity, AWB, and "in transit" (locked 2026-08-07)
+
+**Courier partner** — `m_courier_partner_master` (DB 170). Join `package_details_tracking.courier_partner_id` to the master's **`courier_partner_id`**, *not* the master's `id`.
+
+| Partner | `courier_partner_id` |
+|---|---|
+| **XpressBees** | **6** (both Surface master-id 1 and Express master-id 11 collapse to 6) |
+| Delhivery | 4 |
+| Bluedart | 5 |
+| Shiprocket | 105 |
+| Shipsy | 150 |
+
+`pdt.active` only ever holds `'1'` (no ghost rows). The master also carries `svm_id` (XpressBees 185 Surface / 286 Express) and `ankw_courier_partner_account_code` — note the DB typo **"XpressBees Surace ANKW"**.
+
+**AWB (forward waybill)** = `net_suite_shipment_details.awb_no` (varchar). Join on `order_id`, filter `active = 1`, take the latest by `modified_on`. **DB 630 only — it is NOT in the Redshift 170 mirror.** `package_details_tracking` has only `is_awb_no_printed` and `awb_sticker_print_date`; its `package_number` ("PKG-…") is an internal id, ~2% filled, and is **not** an AWB.
+
+**Order-level "in transit"** = `orderstatus = 60` (ORDER DISPATCHED). TM collapses *all* post-dispatch states into 60 — the granular codes (217 / 285 / 275 / 289) return ~zero at order level. Processing = `orderstatus 142`.
+
+⚠️ **Status 60 is sticky.** It includes stale zombies — in one probe ~23% were placed >90 days ago and never marked delivered. If you mean "moving right now", bound by `created_on`.
+
+**🔴 `logistics_tracker` (DB 170, Redshift-only) is DEAD.** It is the Airbyte feed from the logistics microservice and carries the real courier-scan status (`TRACKING_STATUS_IN_TRANSIT` / `OUT_FOR_DELIVERY` / `DELIVERED` / `RTO`), `awb_number`, `delivery_partner_code`, `delivery_partner_id`. The mapping is 100% clean — every IN_TRANSIT XpressBees order reconciles to `pdt.courier_partner_id = 6` — but **0 rows have loaded since 2026-07-20**, across all partners. It cannot answer "current courier status" until the feed is fixed. Not present on DB 630 at all.
+
+This is the canonical example of `tm-chotu-learnings` L12: a clean join proves mapping, never currency.

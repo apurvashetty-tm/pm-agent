@@ -1,12 +1,12 @@
 # tm-chotu local integration
 
-`knowledge/context/tm-chotu/` contains the preserved TrueMeds `tm-chotu` v0.1.20 package from the local ZIP. It is reusable reference context for Claude, Codex, and other tools working from this repository.
+`knowledge/context/tm-chotu/` contains the TrueMeds `tm-chotu` **v0.4.3** package (released 2026-08-25 by Truemeds Analytics, `gitlab.com/tm-exp/tm-chotu`; copied here 2026-10-16 from the ZIP Apurva supplied, replacing v0.1.20 of 2026-08-13). The package's own `.gitignore` is left out on purpose — it ignores `SKILL_REQUESTS/*.md`, and here gap notes must be committed. It is reusable reference context for Claude, Codex, and other tools working from this repository.
 
 ## Read order
 
 1. Read `knowledge/context/tm-chotu/skills/using-tm-chotu/SKILL.md`.
 2. Read only domain skills relevant to the task.
-3. Use `knowledge/context/tm-chotu/KNOWLEDGE_DUMP.md` as dated reference, not live truth.
+3. `knowledge/context/tm-chotu/KNOWLEDGE_DUMP.md` is a historical source since v0.4.2 — **the skills win on any conflict**.
 4. For SQL or metrics, read `tm-chotu-query-rigor` and verify freshness/source.
 
 ## Truth handling
@@ -47,5 +47,8 @@ join recipes, algo logic) but none of the automation. Treat `AGENTS.md`'s routin
 table as the substitute for what the plugin's hook would otherwise do for you.
 
 ## Updates
+
+Current: v0.4.3 (2026-08-25). New since v0.1.20: `tm-chotu-rx-cadence` (Rx / doctor-portal lifecycle), `tm-chotu-pii-register` (where personal data sits; rules), `tm-chotu-learnings` (failure ledger), `tm-chotu-excel-deliverable` (house .xlsx standard), `tm-chotu-mood-router` (Claude Code persona; not used here).
+
 
 Replace only `knowledge/context/tm-chotu/` when a newer ZIP is approved. Review its `CHANGELOG.md` and `UPDATE.md` first. Keep this adapter and root instructions. Do not modify or push automatically.

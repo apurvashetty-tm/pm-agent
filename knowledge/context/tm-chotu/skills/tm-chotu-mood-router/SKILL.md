@@ -17,7 +17,7 @@ description: Reads user prompt signal, picks mood (pinpoint / brainstorm / resea
 
 1. Tokenize user prompt
 2. Match triggers in priority order: pinpoint > research > impact > brainstorm > clarify
-3. If no trigger → use default mood from `.state.json`
+3. If no trigger → use default mood from `~/.claude/tm-chotu-state.json`
 4. Announce in caveman: `Mood: <picked>.` (one line)
 5. Hand off to relevant section skill(s)
 

@@ -61,8 +61,8 @@ These definitions are canonical. Anyone in any function should resolve ambiguity
 | **Auto-confirm** | `workflow_status = 242 NO_DOCTOR_CALL`. Triggered when valid Rx already attached → bypasses doctor call |
 | **Digitized** | Order has been verified + structured. `DRX_STATUS = 30 DIGITIZED` line-item; `orderstatus = 39 DIGITIZED` order-level |
 | **Confirmed** | `orderstatus = 66 ORDER CONFIRMED` — past doctor/pharmacist review, ready for fulfilment |
-| **HA call** | Health Advisor call — substitution explanation. Triggered when SUBSTITUTE is available post-confirm. orderstatus 595 HEALTH ADVISOR CALL ATTEMPTED. HA can add only OTC, not Rx |
-| **Warehouse Assigned** | orderstatus 233 — routing decision (MFC vs FC) complete |
+| **HA call** | Health Advisor call — substitution explanation. Triggered when SUBSTITUTE is available post-confirm. ⚠️ the HA leg reuses **209 DOCTOR ASSIGNED / 215 CALL ATTEMPTED** (position AFTER `452` = HA). ❌ `595 HEALTH ADVISOR CALL ATTEMPTED` exists in the master but is **never stamped** — a metric built on it returns zero. HA can add only OTC, not Rx |
+| **Warehouse Assigned** | orderstatus 233 — ⚠️ **a warehouse id attached for PRICING/CATALOGUE, not physical assignment.** The real warehouse assignment is the scheduler moving the order to PROCESSING. See `tm-chotu-rx-cadence` |
 | **AWB Printed** | orderstatus 289 — Air Waybill sticker printed for 3PL pickup |
 | **Dispatched** | orderstatus 60 — order handed to 3PL |
 | **Delivered** | orderstatus 55 — customer received |
@@ -93,7 +93,7 @@ These definitions are canonical. Anyone in any function should resolve ambiguity
 | **NEW / ACT / RISK / LAPS / CHURN** (Lifecycle) | FTC<30d / Active<30d / 31–60d / 61–90d / >90d |
 | **NC / LD / MD / HD / AC** (Coupon dependency) | 0% / <30% / 30–70% / >70% / 100% orders with coupon |
 | **SA / SW / SR / SNO** (Substitution propensity) | >70% accept / 30–70% / <30% / never offered |
-| **Golden Geese** | `HV ∩ CM++ ∩ SA ∩ ACT` — protect cohort, minimal spend, organic only |
+| **Golden Geese** | ⚠️ **CONTESTED [subject: Golden Geese] — do not treat either side as settled.** `tm-chotu-customer` / `tm-chotu-dcoe-cohorts` say the F1 pivot (2026-06-09) moved the 5th axis from **SA** to **`generic_share` (S1 ≥30%)**. Ask which before cutting. Pre-pivot: `HV ∩ CM++ ∩ SA ∩ ACT` — protect cohort, minimal spend, organic only |
 
 ## Persona tiers (TMEXP1 / probab-subs-persona)
 
@@ -124,7 +124,7 @@ These definitions are canonical. Anyone in any function should resolve ambiguity
 | **HA** (Health Advisor) | Internal role + portal. Substitution confirmation calls (post-confirm, pre-WH-assign). OTC-only cart additions |
 | **CSR** (Customer Service Rep) | Inbound + outbound customer support. Two portals: Create Order + Post Order |
 | **CMT** (Catalog Management Team) | Function owning Dynamic Content Mgmt. Approves catalog + substitution pairs via `CMT STATUS` × `CMT APPROVALS` |
-| **3PL** | Third-party logistics partner. Locked roster: 13 partners (Delhivery, Bluedart, XpressBees, Shadowfax, Ecom, Shiprocket, Blitz, CABT, ATS, WeFast, Shipsy, Ithink, Urbanebolt) + Self / Hand Delivery |
+| **3PL** | Third-party logistics partner. Locked roster: 14 partner IDs — 13 external 3PLs (Delhivery, Bluedart, XpressBees, Shadowfax, Ecom, Shiprocket, Blitz, CABT, ATS, WeFast, Shipsy, Ithink, Urbanebolt) + Self / Hand Delivery |
 | **JIT** (Just-In-Time) | Inventory type. Masters 282 JIT 1, 283 JIT 2, 371 WH weekly JIT |
 | **PO** (Purchase Order) | Procurement order to vendor |
 | **VRA** (Vendor Receipt Authorization) | Step in Central Procurement flow — receipt of inwarded goods |
@@ -171,7 +171,7 @@ These definitions are canonical. Anyone in any function should resolve ambiguity
 ## Status-code shorthand cheatsheet
 
 When someone says "status 55" or "status 61", check which master family they mean:
-- **ORDER STATUS** family: 55 = DELIVERED, 57 = CANCELED, 60 = DISPATCHED, 66 = CONFIRMED, 39 = DIGITIZED, 233 = WAREHOUSE ASSIGNED, 595 = HA CALL ATTEMPTED
+- **ORDER STATUS** family: 55 = DELIVERED, 57 = CANCELED, 60 = DISPATCHED, 66 = CONFIRMED, 39 = DIGITIZED, 233 = WAREHOUSE ASSIGNED (pricing/catalogue id, not physical), 595 = ⚠️DEAD, never stamped (HA leg reuses 209/215)
 - **MEDICINE_STATUS** family: 61 = SUBSTITUTE, 62 = ORIGINAL, 211 = NO SUBSTITUTE
 - **ORDER_TYPE** family: 52 = RX (Type 1), 53 = RX AND MEDICINES (Type 2), 54 = MEDICINES (Type 3)
 - **WORK FLOW** family: 242 = NO_DOCTOR_CALL (auto-confirm), 343 = CUSTOMER_ORDER_ONHOLD
@@ -183,11 +183,13 @@ Codes overlap across families — always look up via `m_system_value_master WHER
 
 A "dead" order never became real revenue. **"Net of cancels" / "exclude cancelled" NEVER means just `57`** — it means the full dead set. Excluding only 57 leaks discarded, incomplete and scrapped junk into the number (caused a wrong "revenue yesterday").
 
-`orderstatus IN (49, 274, 400, 668, 57, 232, 174, 312)` — grouped:
+`orderstatus IN (49, 274, 668, 57, 232, 174, 312)` — grouped:
 
 | Category | Codes | Labels |
 |---|---|---|
-| **Incomplete / abandoned** | 49, 274, 400, 668 | INCOMPLETE ORDER, INCOMPLETE ORDER ASSIGNED, PORTAL INCOMPLETE ORDER, REVERTED TO INCOMPLETE |
+| **Incomplete / abandoned** | 49, 274, 668 | INCOMPLETE ORDER, INCOMPLETE ORDER ASSIGNED, REVERTED TO INCOMPLETE |
+
+> ⚠️ **`400` removed (verified 2026-08-19).** `400 PORTAL INCOMPLETE ORDER` belongs to the **WORK FLOW** family, not ORDER STATUS — there is no `orderstatus = 400`, so it never matched anything. Measured over 30 days, only **49 / 312 / 174 / 57** actually occur as current status; `274`, `668` and `232` returned zero rows too (they may appear in the `order_status` transition log — unverified). The revenue number was never affected, because excluding a code that never fires is a no-op.
 | **Cancelled** | 57, 232 | ORDER CANCELED, REQUEST CANCELLATION |
 | **Discard** | 174 | ORDER DISCARD |
 | **Scrapped** | 312 | SCRAPPED |
@@ -224,6 +226,29 @@ CM1 is the **product gross-margin line only** — it does NOT subtract shipping 
 
 **NSIB-era boundary — 2022-11-17.** Before that date NSIB is empty → COGS unavailable. For older orders use `product_pts_tracker.pts * qty` (cap pts at MRP; approximate — current not historical) as a cost proxy, or flag margin N/A. Never report the spurious large-negative that empty-NSIB produces.
 
+## Cost & catalogue flags — additional LOCKS (2026-08-19)
+
+- **`net_suite_invoice_batch.rate` is a per-unit COST, not a selling price.** Stated explicitly because it has been mis-read as price before. It is the same number COGS is built from.
+- **generic vs branded comes from `medicine_master.generic_branded` ONLY.** `medicine_warehouse_master.branded_tag` and `generic_branded_for_procurement` are **procurement-team** flags and must not be used for analysis.
+- **`ORDER_RETURN` and `WH_ADJUSTMENT` inward lines carry corrupted unit costs** — they were the bulk of apparent inventory losses in the full margin run. Treat cost from those lines as suspect by default and bucket them separately.
+
+## COST ≡ COGS — LOCKED (user-stated 2026-08-19)
+
+**"Cost" and "COGS" are the same cost basis.** The only difference is scope — which goods you are asking about.
+
+| Term | Scope | Applied to |
+|---|---|---|
+| **COGS** | goods that **sold** | invoiced order lines |
+| **COST** | goods we **hold** | on-hand inventory |
+
+There is one unit-cost concept in the business, asked at two stages of the same goods. Never present them as rival definitions — state the scope and move on.
+
+- COGS on an order = `SUM(nsib.rate * nsib.quantity) WHERE active = 1` (see COGS & CM1 above).
+- Cost of held stock = the same per-unit cost applied to on-hand quantity, derived as a **90d NSIB product × batch weighted average**. **No table holds cost against held inventory** — the only two forms cost exists in are COGS (on orders) and `medicine_warehouse_master.pts` (latest inward, and `mwm` has **no `modified_on`** so it cannot be aged).
+- 🔴 The **FIFO disclosure fires on both** — NSIB `rate` is the latest batch rate in that WH at invoice-creation, not NetSuite FIFO COGS, so neither figure reconciles to NetSuite or the P&L.
+
+**Inventory holding value** = on-hand qty × that derived cost basis — **LOCKED 2026-08-19**. Always presented as **DERIVED, not read**, and always split **sellable / non-pickable / total** (non-pickable = bin types EXCESS + QUARANTINE). Full model, grains and caveats in `tm-chotu-inventory` → Inventory VALUATION.
+
 ## HM / LM product-margin segregation — LOCKED + 🔒 GATED (user-validated 2026-07-23)
 
 > 🔒 **HARD GATE — do NOT surface any of this unless `persona = Founder/Leadership` AND the user's goal is margin-health / "how many products actually make money". Enforced in `tm-chotu-query-rigor`.** Either condition false → say nothing about HM/LM; fall back to CM1/cm_net (quick analysis) or the branded/generic shorthand (framing only).
@@ -257,3 +282,38 @@ Quarter is taken from the order **placement date** (`created_on`). This COGS is 
 - **Quarter-specific** — never carry a product's tag across quarters.
 
 **Provenance.** Built from `IRL_base_combined_v3` (prepared 2026-07-21), "Scenario 5" pack; DCOE `CM_CALCULATION` lineage. Table + join contract: `tm-chotu-tables-enums` / `METRIC_CATALOG`.
+
+## Substitution defects — LOCKED vocabulary (validated Aug 2026)
+
+These four are distinct. Do not blur them — each has a different owner and a different fix.
+
+| Term | Means | Verdict source |
+|---|---|---|
+| **Wrong-molecule sub / MISMATCH** | The shipped product has a **different salt** (`medicine_master.sub_group`) from the cart line it replaced | Invoice vs its own original, via the `fsp_id` chain |
+| **FORM_CHANGE** | Same salt, **different dosage form** (`drug_type`) | Same |
+| **Subs-consent misfire** | A sub was **taken without customer or HA acceptance** — molecule may be perfectly correct | `final_substitute_product.status_id = 61` + no acceptance + no human `src_type_id` |
+| **DEACTIVATED_LINE_SHIPPED** | A product shipped whose only cart rows are `active = 0`, deactivated **before** invoice | Cart state vs invoice |
+
+**Shipped truth = `net_suite_invoice_batch` (`active = 1`).** `product_details` is the **cart** (what was added), not the shipment. `final_substitute_product` is the **algo decision** and **can be corrected after the wrong item already shipped** — so it is context, never the verdict.
+
+**Compare on `medicine_master.sub_group`**, not `molecule_combination_cd` (blank on many OTC products → manufactured false mismatches). **Verdict is line-level — shipped vs ITS OWN original.**
+
+**Not a defect:** `suggestion_type = 'SIMILAR'` (the Similar-OTC feature — "similar salts, may not fully match", rare, ~90/day) and DIFF_SUBS_ON_PORTAL (a different generic of the *same* composition — already correct by exact match; a DiffSub with different composition **is** a bug).
+
+**Reporting caveat, mandatory:** only ~30% of a day's orders are invoiced at any moment, so a same-day mismatch count is a **lower bound** — today typically reads ≈ 0. Quote rates off a fully-invoiced 30d window.
+
+## Locked MRP — LOCKED
+
+**Locked MRP** = the batch-level MRP that has cleared verification: on `WMS.BATCH_MASTER_V`, the latest version of a batch with `STATUS ∈ {LOCKED, VERIFICATION_NOT_REQUIRED}`, carrying **`MRP_REFORMED`**. Latest `STATUS ∈ {OPEN, null}` = **NOT LOCKED**, i.e. no trustworthy MRP for that batch.
+
+- `MRP_PRINTED` = what is on the pack. `MRP_REFORMED` = the authoritative value (≤ printed). The gap between them is a useful "MRP is wrong" signal.
+- Batch-level and **location-independent** — distinct from `medicine_warehouse_master.mrp`, which is per-warehouse.
+
+## PII vocabulary — LOCKED
+
+- **`tm_view_nopii`** — the MySQL role the three prod CDC users (`snowflake_shellkode`, `airbyteuser`, `prod_dms`) read through instead of blanket `SELECT`. If a pipeline suddenly cannot see a column, that is the lock, not a bug.
+- **Tap vs tank** — revoking access closes the **tap**, not the **tank**. Data already replicated downstream (Snowflake / Airbyte / DMS targets) is still there. So is any extract taken before the lock.
+- **"Encrypted" is a claim, not a fact** — a column named `encrypted_*` proves nothing. Sample before trusting it. `customer_details.lookup_mobile_no` / `lookup_email_address` **are** genuinely encrypted and deterministic, which makes them safe **join keys**.
+- **DPDP** — India's data-protection regime; the reason downstream copies of plaintext identity data are a live question and not just hygiene.
+
+Full register and handling rules: **`tm-chotu-pii-register`**.
