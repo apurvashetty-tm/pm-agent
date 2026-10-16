@@ -39,12 +39,13 @@ Source: Whimsical bird's-eye PDF (full Truemeds product architecture).
   ORDER CONFIRMED (orderstatus = 66 ORDER CONFIRMED)
     ↓
   Decision: Health Advisor call required? (triggered when SUBSTITUTE is available)
-    ├─ Yes → Health Advisor call (orderstatus 595 HEALTH ADVISOR CALL ATTEMPTED)
+    ├─ Yes → 452 PARTIALLY DIGITIZED (doctor done, awaiting HA) → HA call via 209/215
+    │        ❌ NOT 595 — that code is never stamped. See the corrected flow below.
     ├─ Or  → Pharmacist call
     └─ Or  → Assisted Commerce call
     ↓
   Order Fulfilment
-    → Warehouse assigned (orderstatus 233 WAREHOUSE ASSIGNED) — MFC (553) / HUB (455) / WAREHOUSE (454)
+    → 233 WAREHOUSE ASSIGNED ⚠️ pricing/catalogue id only, NOT physical — MFC (553) / HUB (455) / WAREHOUSE (454)
     → Create Sales Order in NetSuite
     → FIFO Fulfilment
     → All items + customer created in NS & DB
@@ -153,3 +154,26 @@ Customer raises return → 190 RETURN REQUESTED → 191 RETURN GENERATED
 **Refund destinations** (`REFUND_TO` master): TM_CREDIT / TM_CASH / CASHFREE (original gateway) / TM_CASHBACK.
 
 **RTO accounting:** RTO orders ARE reversed (do not count in final GMV). RTD (124) marks the goods physically returning to warehouse — reverse putaway then restocks the SKU.
+
+
+## 🔴 Doctor-portal flow — CORRECTED (user-taught 2026-08-19)
+
+Supersedes any earlier reading of these statuses. Full detail + consequences in **`tm-chotu-rx-cadence`**.
+
+```
+39  DIGITIZED            order reaches the DOCTOR PORTAL
+ → 209 DOCTOR ASSIGNED   ⚠️ same code later used for HA assignment
+ → 215 CALL ATTEMPTED    ⚠️ same code later used for the HA call
+      ├─ no connect → 216 ORDER ON HOLD
+      └─ connects, consult completes
+ → 452 PARTIALLY DIGITIZED   🔴 doctor consult DONE, awaiting HA consult
+ → 209 DOCTOR ASSIGNED   (this time = HA assigned)
+ → 215 CALL ATTEMPTED    (this time = HA call)
+ → 317 DR ORDER CONFIRMED    all consults complete or not required → scheduler go-signal
+ → scheduler moves order to PROCESSING = the real warehouse assignment
+      └─ on failure → 318 SCHEDULER ERROR DR CONFIRM ORDER
+```
+
+**The label is not the meaning.** `452` is a clinical checkpoint, not transcription. `209`/`215` each serve two actors — position relative to `452` is the only discriminator. `317` is not "a doctor confirmed". `233 WAREHOUSE ASSIGNED` only attaches a warehouse id for pricing/catalogue.
+
+**Auto-confirm:** `workflow_status = 242 NO_DOCTOR_CALL` — a valid Rx already attached means no consultation is needed, so the order goes straight to `317` for the scheduler. Correct by design.

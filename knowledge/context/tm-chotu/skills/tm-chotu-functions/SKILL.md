@@ -67,7 +67,7 @@ Owns the **Dynamic Content Management** surface from a product perspective. Oper
 | **Warehouse — Hub Config** | SKU Categorization, Bulk SKU List, Hub Transit Days, Refill PO Tracking, Cold Chain SKU List, Homeopathy SKU List, Pack-size mgmt, Excess Inventory Report, WH Prioritization, Hub-level SKU Forecasting |
 | **Faridabad hub** | North-zone fulfilment hub, dedicated FBD putaway workflow exists |
 | **Logistics** | Serviceability check, Courier Partner Priority, Pincode Master, Pincode Warehouse Master, Courier Partner Pincode TAT Adherence Calc |
-| **3PL partners** | 13 partners locked: XpressBees, Delhivery (Express/NDD), Bluedart (Express), CABT, WeFast, Shipsy, ATS, Ecom (Surface/Air), Shadowfax (Express/Surface/Reverse), Blitz (Express), Ithink, Urbane Bolt, Shiprocket (Delivery/Courier/NDD) + Self/Hand Delivery |
+| **3PL partners** | 14 partner IDs in `m_courier_partner_master` — 13 external 3PLs locked: XpressBees, Delhivery (Express/NDD), Bluedart (Express), CABT, WeFast, Shipsy, ATS, Ecom (Surface/Air), Shadowfax (Express/Surface/Reverse), Blitz (Express), Ithink, Urbane Bolt, Shiprocket (Delivery/Courier/NDD) + Self/Hand Delivery |
 | **Return & Refunds** | RTO chain (RTO-IT → RTD → reverse putaway → restock). Customer returns via CSR Portal. Refund destinations: TM_CREDIT / TM_CASH / CASHFREE / TM_CASHBACK |
 
 **KPIs:** order-to-ship time, RTO%, stockout%, OTIF, return rate, refund-SLA, picker/checker throughput, putaway TAT
@@ -90,7 +90,7 @@ Owns the **Dynamic Content Management** surface from a product perspective. Oper
 | **Doctor Portal — Rx review + substitution** | Live order picking from assigned warehouse, view Order Details (Patient / Delivery / All Originals SKU / All Subs / Bill / Order Info & Subs), Call Patient, Confirm Order, Hold/Cancel Order, Patient Ranking, ETA, Doctor Fraud detection |
 | **Doctor Super-Admin** | Doctor Onboarding (Registration form → Super Admin approval Pending/Approved/Not-Approved lists), Dashboard Statistics, Earnings & Incentives, Broadcast Message, Doctor Allocation, Doctor Blocked List, Live Order, Doctor Category (5 categories), Doctor Calls Mgmt, Category Blocking, Dosage Tagging, Doctor Fraud module, OTC Insights, Pilot Order Statistics, IVR |
 | **Pharmacist Type 1** | First-attempt digitization for **prescription-only orders** (`ORDER_TYPE = 52 RX`). Validate prescription(s), calculate delivery date, search/add doctor, apply coupon + TM rewards, add notes → DIGITIZE / DISCARD / MARK UNREACHABLE. **Type 2 (RX AND MEDICINES = 53) and Type 3 (MEDICINES = 54) bypass Pharmacist and go straight to Doctor.** |
-| **Health Advisor (HA)** | Substitution explanation + customer confirmation call. **Triggered when SUBSTITUTE is available** — post ORDER CONFIRMED, pre WAREHOUSE ASSIGNED. orderstatus 595 HEALTH ADVISOR CALL ATTEMPTED. HA can add only OTC (not Rx) to cart. Substitution actions: Replace original / Keep both / Hold Order |
+| **Health Advisor (HA)** | Substitution explanation + customer confirmation call. **Triggered when SUBSTITUTE is available** — post ORDER CONFIRMED, pre WAREHOUSE ASSIGNED. ⚠️ the HA leg reuses **209 DOCTOR ASSIGNED / 215 CALL ATTEMPTED** (position AFTER `452` = HA). ❌ `595 HEALTH ADVISOR CALL ATTEMPTED` exists in the master but is **never stamped** — a metric built on it returns zero. HA can add only OTC (not Rx) to cart. Substitution actions: Replace original / Keep both / Hold Order |
 
 **KPIs:** Rx-generation TAT, sub-acceptance rate, HA single-call connect %, Doctor approval TAT, Pharmacist Type-1 digitize TAT
 

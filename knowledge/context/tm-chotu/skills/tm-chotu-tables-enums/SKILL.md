@@ -111,6 +111,10 @@ Per-product-×-quarter High-Margin / Low-Margin tag. **Grain: unique `(product_c
 
 **Join contract:** `product_code` AND `date_trunc('quarter', order.created_on) = quarter`; **unmatched line → LM** (`COALESCE(hl,'LM')`). Full definition + 1Q-lag + thresholds in `tm-chotu-definitions` → HM/LM.
 
+**State after the v2 load (2026-08-06):** 636,228 rows · 64,499 products · HM 162,936 / LM 473,292 · 0 null `product_code`. New column **`quarter_label_fy`** VARCHAR(10) (FY label, e.g. `FY27 Q2`) — 15 columns total. Threshold set refined: 18% default, **20%** in 2024-Q4 / 2025-Q1 / 2025-Q4, **19%** in 2026-Q3. `gm_source` distribution ≈ 91% `1Q lag`.
+
+**⚠️ Operational gotcha — a DMS full reload recreates the Redshift target table, so every GRANT is lost** and Metabase reads start failing `permission denied for relation`. After any reload, re-grant: `GRANT SELECT ON tmmumpsdb.medicine_quarter_master TO GROUP tm_analytics;` plus the Metabase reader role. Loads use `REPLACE` (not an empty-then-reload) because emptying a MySQL table is not captured in the binlog, so CDC would never propagate it.
+
 ## Diagnostics tables
 
 `tm_diagnostics_catalog_master`, `tm_diagnostics_order_master`, `tm_diagnostics_order_master_lineitem`, `tm_diagnostics_order_master_event`, `tm_diagnostics_order_master_address`, `tm_diagnostics_order_master_order`, `tm_diagnostics_order_master_phlebo`, `tm_diagnostics_serviceability`.
@@ -120,6 +124,20 @@ Per-product-×-quarter High-Margin / Low-Margin tag. **Grain: unique `(product_c
 # Master enums (LOCKED — sourced from `m_system_value_master`)
 
 > Codes overlap across master families — always look up via `m_system_value_master WHERE serial_id = <code> AND name = '<family>'`.
+
+## 🔴 BEFORE using any status code: the label is not the meaning
+
+Several ORDER STATUS codes mean something different from their English name, and two are reused for two different actors. Full flow + consequences in **`tm-chotu-rx-cadence`**. The ones that bite:
+
+| Code | Label says | Actually means |
+|---|---|---|
+| **452** | PARTIALLY DIGITIZED | **Doctor consult DONE, awaiting HA** — and it fires **only when an HA consult is required**; no-HA orders reach 317 without it. So it counts HA-required orders, **not** doctor consults |
+| **209 / 215** | DOCTOR ASSIGNED / CALL ATTEMPTED | **Used twice each** — once for the doctor leg, once for the HA leg. No separate HA code. Position relative to **452** is the discriminator |
+| **317** | DR ORDER CONFIRMED | **All doctor-portal consultations complete or not required** — the scheduler's go-signal. ~23% are system-stamped on the `242 NO_DOCTOR_CALL` auto-confirm path |
+| **595** | HEALTH ADVISOR CALL ATTEMPTED | ❌ **DEAD CODE — never stamped** (0 rows in a 62k-order probe). The HA leg reuses 209/215. A metric built on 595 silently returns zero |
+| **233** | WAREHOUSE ASSIGNED | A warehouse id attached **for pricing/catalogue**. Physical assignment is the scheduler moving to **processing** |
+
+**Never infer actor, workload or physical state from a status name.** See `tm-chotu-learnings` L23.
 
 ## `orderstatus` — FULL 96-CODE DECODE
 
@@ -156,24 +174,24 @@ Stored as `bigint`. Codes are `serial_id` in master `name = 'ORDER STATUS'`. `or
 | Code | Meaning |
 |---|---|
 | 39 | DIGITIZED |
-| 452 | PARTIALLY DIGITIZED |
-| 209 | DOCTOR ASSIGNED |
+| 209 | DOCTOR ASSIGNED | ⚠️ serves **both** legs — doctor assign AND HA assign. Position, not code, tells you which |
 | 213 | PHARMACIST MAKER ASSIGNED |
 | 214 | PHARMACIST CHECKER ASSIGNED |
-| 215 | DOCTOR CALL ATTEMPTED |
+| 215 | DOCTOR CALL ATTEMPTED | ⚠️ serves **both** legs. A `215` **after** a `452` is the **HA** call, not a doctor call |
 | 216 | DOCTOR ORDER ON HOLD |
 | 236 | PHARMACIST CALL ATTEMPTED |
 | 276 | DOCTOR CALL SCHEDULED |
 | 300 | PHARMACIST ORDER ON HOLD |
 | 316 | REMINDER CALL ATTEMPTED |
-| 317 | DR ORDER CONFIRMED |
+| 317 | DR ORDER CONFIRMED | ⚠️ = all consultations done/not-required (scheduler go-signal), NOT "a doctor confirmed" |
+| **452** | **PARTIALLY DIGITIZED** | ⚠️ = doctor consult DONE, awaiting HA consult |
 | 318 | SCHEDULER ERROR DR CONFIRM ORDER |
 | 331 | AGENT CALL ATTEMPTED |
 | 332 | AGENT ORDER ON HOLD |
 | 333 | AGENT CALL SCHEDULED |
 | 405 | ASSIGN TO DR |
 | 407 | DOCTOR_FRAUD_HOLD |
-| **595** | **HEALTH ADVISOR CALL ATTEMPTED** |
+| **595** | **HEALTH ADVISOR CALL ATTEMPTED** ❌ DEAD — never stamped; HA leg reuses 209/215 |
 | 66 | ORDER CONFIRMED |
 | 222 | EDIT SUBS CONFIRM |
 | 81 | ON HOLD |
@@ -258,7 +276,7 @@ Only 4 codes:
 | **242** | **NO_DOCTOR_CALL** (Auto-confirm path) |
 | 343 | CUSTOMER_ORDER_ONHOLD |
 | 381 | RE_ORDER_PRODUCT_CHECK (Reorder 2.0) |
-| 400 | PORTAL INCOMPLETE ORDER |
+| 400 | PORTAL INCOMPLETE ORDER | ⚠️ **WORK FLOW family only — there is NO `orderstatus` 400.** Verified: 0 rows in 30d. Do not put it in an `orderstatus` filter |
 
 ## `order_details.order_type_status` (`name = 'ORDER_TYPE'`)
 
@@ -375,3 +393,79 @@ Multi-tenant marker. **Truemeds main = 1.** Filter `WHERE organisation_id = 1` f
 | customer_traffic_tracking | order_id (idx added 2026-05-28) | **128M rows** — was full-scan on order_id; INDEX(order_id) added |
 
 Redshift (DB 170) has order_details/odm/d_address/customer_details but NOT cdt/ctt/rto% (MySQL-only).
+
+## Logistics / shipment tables (locked 2026-08-07)
+
+| Table | DB | Notes |
+|---|---|---|
+| `net_suite_shipment_details` | **630 only** | **The AWB source** — `awb_no` (varchar). Join `order_id`, filter `active=1`, latest by `modified_on`. **Not in the 170 mirror** |
+| `m_courier_partner_master` | 170 | Courier identity. Join `package_details_tracking.courier_partner_id` → master **`courier_partner_id`** (NOT master `id`). XpressBees **6** (Surface 1 + Express 11 both collapse to 6), Delhivery 4, Bluedart 5, Shiprocket 105, Shipsy 150. Also `svm_id` (XB 185 Surface / 286 Express) and `ankw_courier_partner_account_code` (DB typo: "XpressBees **Surace** ANKW") |
+| `package_details_tracking` | 170 | `active` only ever `'1'`. Has `is_awb_no_printed` + `awb_sticker_print_date` but **no AWB**; `package_number` ("PKG-…") is an internal id, ~2% filled |
+| ❌ `logistics_tracker` | 170 only | **DEAD — Airbyte feed stopped 2026-07-20**, 0 rows since, all partners. Carries `status` (TRACKING_STATUS_*), `awb_number`, `delivery_partner_code`, `delivery_partner_id`. Mapping is 100% clean but it is stale — do not use for current status |
+
+## Mongo — `OrderFootPrintTracking` (DB 3)
+
+Per-order event log; one doc per order, `_id` = `order_id`. 48.5M docs / 3.6 TB, avg ~78 KB (~242 KB for an active order, ~39 events).
+
+Embedded array `footPrintTrackingList`, per-event keys: `createdOn` (**UTC**), `statusId`, `statusName`, `comments`, `userId`, `userName`, `visibilityLvl`, `warehouseId`, `currentMedList`, `lockedMedList`, `currFinalCalc`, `prevFinalCalc`, `lockedFinalCalc`, `couponDetails`, `teamList`.
+
+Indexes: `_id_`; **`comments_date`** = (`footPrintTrackingList.comments`, `footPrintTrackingList.createdOn`) — the one that makes time-window queries viable; and a text index (`_fts`) despite its "StatusNm & Comments" name. Access path + gotchas in `tm-chotu-data-sources`.
+
+## Snowflake — `WMS.BATCH_MASTER_V` (DB 993)
+
+Batch-level locked-MRP source. CDC change-stream view, **not** a clean master — dedupe to latest per `(PRODUCT_ID, BATCH_NUMBER)` by max `VERSION`, tiebreak max `EVENT_TIME`. `MRP_REFORMED` is authoritative; `STATUS ∈ {LOCKED, VERIFICATION_NOT_REQUIRED}` = trustworthy. Never `SELECT *` (the `RAW_*` columns blow the token cap). Full rules in `tm-chotu-inventory`.
+
+## `product_details.src_type_id` — `PRODUCT_SOURCE_TYPE` master
+
+**Who added the cart line.** Critical for separating algo behaviour from staff action — a human code means the line was handled by a person, not the substitution engine.
+
+| Code | Source | |
+|---|---|---|
+| 302 | Customer — app | customer |
+| 303 | Customer — web | customer |
+| **304** | **DOCTOR** | human |
+| **305** | **OPERATION** | human |
+| **307** | **PHARMACIST** | human |
+| **308** | **CSR** | human |
+| **327** | **CHECKER** | human |
+| **369** | **ASSISTED** | human |
+| 388 / 389 | SCHEDULER | system |
+
+⚠️ The staff signal usually sits on the **original's** row, not the substitute's — the shipped sub is rarely its own `product_details` line.
+
+## Warehouse bin tables (`wp_bin_*`) — on the per-WH picker DBs
+
+🔴 **One warehouse = one DB connection. The schema name is not the warehouse** — `prod_picker` carries WH 20 on DB 174 and WH 23 on DB 202. Always assert `warehouse_id` from inside the table. See `tm-chotu-inventory`.
+
+| Table | Grain | Notes |
+|---|---|---|
+| **`wp_bin_product_batch_mapping`** | **bin × product × batch** | The batch-level stock table. `product_code`, `batch`, `warehouse_id`, `quantity` (total), `available_quantity`, `active`, `bin_type_mapping_id`, `process_qty`. **BIN-level → roll up to product×batch×WH before valuing.** 🔴 It also carries `mrp`, `printed_mrp`, `expiry`, `pts` — **never use those**; batch attributes come from `BATCH_MASTER_V` only |
+| `wp_bin_master` | bin | `bin_name`, `warehouse_id`, `bin_type_id`, `active`, `issue`, `bin_full`, `pick_path` |
+| `wp_bin_type_mapping` | bin × type | `bin_id`, `bin_type_id`, `zone_id`, `bin_rules_id`. The hop from `bin_type_mapping_id` to the type |
+| `wp_bin_type_master` | 5 rows | The bin-type enum — see below |
+| `wp_bin_product_mapping` | bin × product | product-level bin allocation |
+| `wp_bin_order_rack_issue` | issue log | live rows in most WHs |
+| ❌ `wp_bin_rules` | — | 0 rows in every schema |
+
+### `wp_bin_type_master` — 5 codes (identical in every WH schema)
+
+| id | `bin_type_name` | Pickable / sellable |
+|---|---|---|
+| 1 | JIT | ✅ |
+| 2 | BULK | ✅ |
+| 3 | REGULAR | ✅ |
+| **4** | **EXCESS** | 🔴 **NO** |
+| **5** | **QUARANTINE** | 🔴 **NO** (only type with `multiple_allowed = true`) |
+
+Chain: `wp_bin_product_batch_mapping.bin_type_mapping_id` → `wp_bin_type_mapping.id` → `.bin_type_id` → `wp_bin_type_master.id`.
+
+
+## `register_details` — the Rx register (DB 170 `tmmumpsdb`)
+
+Summary-level prescription register, and **the only source carrying doctor identity plus a real confirmation timestamp**.
+
+Key columns: `doctor_id`, `prescriber_name`, **`doctor_confirm_date`**, `med_change_after_dr_call` (bool), **`current_order_id` / `previous_order_id`** (the cadence linkage), `medicine_composition`, `medicine_schedule` (H/H1/X), `medicine_drug_type`, `drug_name`, `product_code`, `quantity`, `fsp_id` (→ `final_substitute_product.final_subs_id`), `checker_id`/`checker_name`, `batch_number`, `serial_number`, `invoice_number`, `warehouse_id`, `supply_date`, `expiry_date`.
+
+🔴 **`drx_link` and `invoice_link` are document URLs — P0 PII.** Never select into an export or paste into chat. See `tm-chotu-pii-register`.
+
+Prefer `doctor_confirm_date` over inferring doctor confirmation from status 317. Full model in `tm-chotu-rx-cadence`.

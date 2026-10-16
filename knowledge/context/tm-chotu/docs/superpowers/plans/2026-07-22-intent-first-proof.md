@@ -152,7 +152,7 @@ Fires on ANY request for a metric, number, count, rate, or aggregate. Mandatory 
 
 **Step 3 — Confirm + proof-scope.** Show the sample, ask together: "Pull full? And do you want **all raw data**, or just the capped proof rows?" *Skip this confirm-halt if `mood = research` and the window is already small (existing sample-first exemption — do not override it).*
 
-**Step 4 — Deliver with proof.** The number ALWAYS ships with: (1) the exact SQL, (2) a capped raw sample (10–20 rows), (3) an aggregate breakdown (e.g. revenue by status bucket; inventory by source). If the user asked for **all raw data** → deliver via export (CSV to scratchpad / saved Metabase question); chat can't hold thousands of rows and the 200-row MCP cap truncates silently.
+**Step 4 — Deliver with proof.** The number ALWAYS ships with: (1) the exact SQL, (2) a capped raw sample (10–20 rows), (3) an aggregate breakdown (e.g. revenue by status bucket; inventory by source). If the user asked for **all raw data** → deliver via export (CSV to scratchpad / saved Metabase question); chat can't hold thousands of rows and the MCP row cap cuts results short silently (2,000-row budget in 200-row pages; 200 is the PAGE, not the cap).
 
 **Escape hatch.** "just the number" / "skip the explanation" → collapse Steps 1 and 3 (no hard-stop, no confirm-halt), run the pull, ship **number + one-line branch tag + minimal cited proof** (one-line SQL + breakdown). Offer the 10–20-row sample "(say 'show rows')" rather than dumping it. The branch and the SQL are NEVER hidden — that is the whole point.
 

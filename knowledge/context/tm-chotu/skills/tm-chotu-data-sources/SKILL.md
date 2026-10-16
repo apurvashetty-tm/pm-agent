@@ -9,9 +9,9 @@ description: All 53 Metabase databases + Mixpanel Production Env 2900163, classi
 
 ## MCP routing (HARD RULE)
 
-All Metabase queries go through the **native Metabase MCP** at `https://one-truemeds.metabaseapp.com/api/mcp` — namespace `mcp__3955c18e-…__*` or `mcp__plugin_tm-chotu_metabase__*`. Toolset includes `search`, `get_table`, `execute_query`, `construct_query`, `query`, `list`.
+All Metabase queries go through the **native Metabase MCP** at `https://one-truemeds.metabaseapp.com/api/mcp` — namespace `mcp__<uuid>__*` — **the UUID is per-install; never fingerprint on it.** Toolset observed live **2026-08-25**, read off the connector's own tool schemas: `search`, `construct_query`, `execute_query`, `query`, `create_question`, `create_dashboard`. **The toolset is configurable per install** — some also expose `visualize_query`. Fingerprint on **any two**, never the full list. ⚠️ There is **no** `execute_sql`, `get_table`, `list`, or `get_metric*` — earlier docs claimed those and were wrong. Native SQL goes through `execute_query`.
 
-Do **NOT** use the unofficial community MCP (`mcp__Metabase__Unofficial___Community___*`, toolset `list / retrieve / execute / export / clear_cache`). It is being sunset. See `tm-chotu-query-rigor` § "Metabase MCP — namespace policy" for the full rule.
+Do **NOT** use the unofficial community MCP (`mcp__Metabase__Unofficial___Community___*`, toolset `retrieve`, `execute`, `export`, `clear_cache`, `list`). ⚠️ `search` exists on **both** connectors — never use it to tell them apart. It is being sunset. See `tm-chotu-query-rigor` § "Metabase MCP — namespace policy" for the full rule.
 
 ## A. Default for tm-chotu
 
@@ -26,6 +26,8 @@ DB 170 schema:
 | `tmmumpsdb` | 156 | Main DB mirror + analytical. Includes `order_details`, `final_calculated_amount`, `customer_details`, `order_status`, `product_details`, `m_system_value_master`, `m_courier_partner_master`, `medicine_master`, `medicine_warehouse_master`, `medicine_molecule`, `disease_product_mapping`, `org_sub_medicine_mapping_*_hub_new_algo` (5 hubs), `final_substitute_product_*` variants, `orders_campaign_attribution`, `appsflyer_installs`, `package_details_tracking`, `net_suite_*` (7 tables), `tm_diagnostics_*` (10 tables) |
 | `public` | 2 | (minimal) |
 
+**🔴 `tmmumpsdb.customer_details` on 170 was emptied on 2026-08-13 with no backup** (the operation auto-commits on Redshift and cannot be rolled back). Whether it refilled depends on the connector's sync mode — full-refresh self-heals, incremental does not. **Probe the row count before using it**; if it is empty or short, fall back to DB 630. Do not assume customer-level joins on 170 are complete without checking.
+
 **Note:** DB 663 (Mangesh Redshift) is Mangesh's personal scoped instance (198 tables, includes `maranalytics` + `public` schemas with ads + DMS outputs). Most Truemeds employees do NOT have access. **Do not default users to 663.**
 
 **🔒 `medicine_quarter_master`** (HM/LM product-margin tag) lives on **170** (`tmmumpsdb`, default) + Main DB 630 mirror, grants via group `tm_analytics`. **GATED** — route here only when the leadership + margin-health gate is open (see `tm-chotu-query-rigor`). Otherwise do not touch it.
@@ -35,12 +37,12 @@ DB 170 schema:
 | ID | Name | Use |
 |---|---|---|
 | **2** | **Main_DB (TMMUMPSDB)** | Live transactional. Use only for <30 min fresh data — DB 170 (Redshift) lags by minutes |
-| 3 | Mongo | Document store (product catalog / unstructured data) |
+| **3** | **Mongo** | **The canonical per-order EVENT LOG** — collection `OrderFootPrintTracking`, one doc per order, `_id` = `order_id`. This is the only source that sees **cart activity** (product add / remove / qty change), because `order_status` records status transitions only. 48.5M docs / 3.6 TB. See "Mongo — how to actually query it" below before touching it |
 | 169 | Checker Main DB | Pharmacist checker workflow |
 | 135 | Picker Main DB | Picker workflow (general / legacy) |
 | 174 | PROD WH PICKER | Warehouse-wide picker (general) |
 | 175 | PROD WH CHECKER | Warehouse-wide checker (general) |
-| 180 | PROD INVENTORY | **Live qty source for WMS 2.0 WHs.** `INVENTORY_SCHEMA.product_inventory_data` = per-(warehouse_id, product_cd) live qty (available, total, pending_consult, pending_invoice, pending_shipped, threshold, NetSuite-synced). Also `order_inventory_ledger`, `order_inventory_ledger_partitioned`, `order_inventory_tag`. ❌ `inventory_tracking` is legacy. Faridabad (Vinculum) NOT here — use DB 432 |
+| 180 | PROD INVENTORY | **Live qty source for WMS 2.0 WHs.** `INVENTORY_SCHEMA.product_inventory_data` = per-(warehouse_id, product_cd) live qty (available, total, pending_consult, pending_invoice, pending_shipped, threshold, NetSuite-synced). Also `order_inventory_ledger`, `order_inventory_ledger_partitioned`, `order_inventory_tag`. ❌ `inventory_tracking` is legacy. ⚠️ **CONTESTED [subject: Faridabad] — do not treat either side as settled.** `tm-chotu-inventory` states Faridabad (wh 21) **is** synced into 180. Unresolved — ask before answering a Faridabad stock question. Older claim: Faridabad (Vinculum) not here, use DB 432 |
 | 136 | Transfer Order main DB | TO operations |
 | 960 | Prod Middleware | Middleware service DB |
 | 894 | CASS DB | CASS = doctor / HA call infra |
@@ -70,7 +72,18 @@ DB 170 schema:
 | 762 | PROD WH MFC RANCHI PICKER | Ranchi MFC |
 | 498 | PROD WH MFC VARANASI PICKER | Varanasi MFC |
 
-These power Single / Multi-order / Pigeon-hole picking flows per WH. National-scale picking queries need a UNION OR use the Redshift mirror.
+These power Single / Multi-order / Pigeon-hole picking flows per WH.
+
+**🔴 One warehouse = one connection. The schema name is NOT the warehouse.** Every MFC has its own database. Proved live 2026-08-19: schema `prod_picker` holds **warehouse 20 (Mumbai)** on **DB 174** but **warehouse 23** on **DB 202** — same name, different host, different stock. Reading it from the wrong connection returns a populated, plausible, wrong answer. DB 202 and DB 399 also return identical rows for the same MFC schema (two connections, one host), so **seeing a schema in `information_schema` does not make that connection the right route to it**.
+
+- Pick the warehouse's **own** Metabase database by name.
+- **Assert `warehouse_id` from inside the table before using the rows** — the WH-level tables hold exactly one.
+- Cross-WH work = union **across connections**, client-side. Never a cross-schema union on one connection.
+- Confirmed: **Mumbai = WH 20 on DB 174** · Pune 26 · Patna 27 · DB 202's `prod_picker` = 23.
+
+Batch-level stock lives here (`wp_bin_product_batch_mapping`) — see `tm-chotu-inventory`.
+
+**🔴 `warehouse_details` is the warehouse MASTER** — use it to resolve or validate a warehouse id/name. **`pincode_warehouse_master` is pincode→WH *serviceability*** (which WH serves a pincode) and must **never** be used to identify or validate a warehouse. Different questions, different tables.
 
 ## D. Per-warehouse checker DBs (3)
 
@@ -97,7 +110,7 @@ Picker DBs being moved MySQL → Snowflake:
 
 | ID | Name | Purpose |
 |---|---|---|
-| 993 | SF WAREHOUSE_MANAGEMENT_SYSTEM | WMS aggregate (Snowflake) — scope TBD vs DB 180/432 |
+| 993 | `SF WAREHOUSE_MANAGEMENT_SYSTEM ` ⚠️ **trailing space in the DB name** — include it in MBQL field refs | WMS aggregate (Snowflake). Hosts **`WMS.BATCH_MASTER_V`** = the batch-level **locked MRP** source (see `tm-chotu-inventory`). ⚠️ **Native SQL is blocked via the MCP** — through the MCP use MBQL only (`construct_query` / `query`); pages cap at 200 rows. **The block is an MCP limitation, not a Snowflake one**: the Metabase REST path (`POST /api/dataset/csv` with `x-api-key`) runs native SQL against DB 993 fine, and bypasses the row cap |
 | 994 | SF LOGISTICS | Logistics / TAT / courier |
 | 995 | SF TRUEMEDS | General Truemeds analytics |
 | 996 | SF MUMBAI PICKER | Mumbai picker |
@@ -136,13 +149,72 @@ Picker DBs being moved MySQL → Snowflake:
 | Snowflake migration | 6 |
 | Marketing | 1 |
 | Staging / UAT | 7 |
-| **Total** | **53** ✅ |
+| **Total distinct DBs** | **53** |
+
+⚠️ The bucket rows sum to 54 because **DB 170 is listed twice** — in bucket A as the default and in bucket E as the analytical platform. 53 is the distinct-database count.
 
 ## Mixpanel
 
 - **Project:** Production Env, ID **2900163** (default)
 - Use for app + web event funnels — pre-order behaviour, post-order engagement
 - Canonical events + properties: `~/.claude/projects/.../memory/mixpanel_events.md`
+
+## Mongo (DB 3) — how to actually query it
+
+`OrderFootPrintTracking`: one doc per order, `_id` = `order_id` (indexed PK, so a chunked `$in` is prod-safe). Everything else sits in the embedded array `footPrintTrackingList` — ~39 events per order, **~242 KB per doc**. Full-doc pulls are infeasible (72k orders ≈ 17 GB); always `$filter` + `$project` server-side.
+
+Per-event keys: `createdOn`, `statusId`, `statusName`, `comments`, `userId`, `userName`, `warehouseId`, `currentMedList`, `lockedMedList`, `currFinalCalc`, `prevFinalCalc`, `couponDetails`. `currentMedList` / `lockedMedList` per event mean **cart state is diffable across events** — that is the basis of any "what did the algo change" analysis.
+
+**🔴 The Metabase MCP cannot query Mongo.** `execute_query` wraps SQL into `native.query` only, and the driver rejects it: *"Cannot execute MongoDB query without a :collection name"*. MBQL works but cannot unwind or filter inside arrays. The only working path is the raw HTTP API, where the body is ours:
+
+```
+POST https://one-truemeds.metabaseapp.com/api/dataset/csv     (header: x-api-key)
+{"database":3,"type":"native",
+ "native":{"collection":"OrderFootPrintTracking",
+           "query":"<JSON aggregation pipeline as a STRING>"}}
+```
+
+**Querying by time window** — the hard part. A naive time range is a full scan of 3.6 TB. The collection's useful index is `comments_date` = (`footPrintTrackingList.comments`, `footPrintTrackingList.createdOn`). Give `comments` a full string range so the compound index can bound `createdOn`:
+
+```js
+{"$match": {"footPrintTrackingList": {"$elemMatch": {
+    "comments":  {"$gte": "", "$lt": "￿"},
+    "createdOn": {"$gte": ISODate(LO), "$lt": ISODate(HI)}}}}}
+```
+
+**`$elemMatch` is required** — bare dot-notation does not get index bounds on a multikey array and scans. Measured: **0.9 s** with it, >5 min timeouts without. Dates parse as both `{"$date":"..."}` and `ISODate("...")`, in `$match` and inside `$filter`.
+
+⚠️ **Completeness caveat:** events with `comments` null/missing sort before `""` in BSON and would be skipped. Validated once (0 blank-comment events; 67/67 orders recovered against an independent `_id`-based pull) — **re-validate on a new window** before trusting it.
+
+**Timezone (verified):** Mongo `createdOn` is **UTC**; `order_details.created_on` is **IST** and equals the **DIGITIZED** footprint event, *not* cart creation (statusId 49). Same-doc comparisons are tz-safe; only day-scoping needs the +5:30 care.
+
+**Comment strings are exact, and are not one event:** `Algo Completed For A Product : <NAME>` is line-level and steady background (~1,700 events / 2,000 orders per day); `Algo Completed For An Order` is order-level and rare.
+
+**Scope-collapse tip:** filter to orders that actually reached the anchor status first — on one day 72,204 orders were placed but only 24,971 reached status 317 (the rest were abandoned carts, status 49). Cuts the Mongo pull ~3×.
+
+For big pulls, a direct driver beats Metabase: Metabase caps at `maxTimeMS` 20 min and materialises the whole CSV before responding, where a streaming cursor succeeds. Throughput reference: a 67-minute window = 99,287 events / 22,528 orders in **587 s**. Cost scales with **matched-doc count**, not window length.
+
+## Known source traps — check before you trust
+
+| Source | Trap |
+|---|---|
+| `logistics_tracker` (170, Redshift-only) | Carries courier-scan status + `awb_number`, and the mapping is 100% clean — but the **Airbyte feed has been dead since 2026-07-20** (0 rows in 7d, all partners). Cannot be used for "current" courier status |
+| **AWB numbers** | Live only on **DB 630** (`net_suite_shipment_details.awb_no`, join `order_id`, `active=1`, latest by `modified_on`). **Not in the Redshift 170 mirror.** `package_details_tracking` has only `is_awb_no_printed` / `awb_sticker_print_date`; its `package_number` ("PKG-…") is an internal id, ~2% filled, **not** an AWB |
+| `customer_details` on 170 | Emptied 2026-08-13, no backup — probe row count first (see bucket A) |
+| `medicine_quarter_master` on 170 🔒 | **Gated table — see the gate rule in `tm-chotu-query-rigor` before touching it.** Operationally: a DMS full reload recreates the target and **loses every GRANT** → reads fail `permission denied for relation`. Re-grant to group `tm_analytics` after any reload |
+| `customer_order_rank` | Broken — 13mo stale, 3% coverage. Compute rank on the fly |
+| `cx_lifetime_metrics` | Partial — 73% coverage, 7d lag. Reference only |
+| `mobile_otp` | Superseded — use gateway logs + `customer_details` |
+
+General rule: **existence is not usability.** Probe freshness (`MAX(created_on)`) and coverage against a table you trust before locking any source into an answer. See `tm-chotu-learnings` L12.
+
+## PII routing
+
+Before writing any query that touches mobile / email / name / address / DOB / prescription / bank / call-recording / device-identity columns, load **`tm-chotu-pii-register`**. Prod CDC users now read through a no-PII role, several tables carry confirmed plaintext, and `SELECT *` fails on column-restricted tables by design.
+
+## Bulk export — past the row caps
+
+The Metabase MCP `query` tool caps at **2,000 rows** (200-row pages). For anything bigger, run server-side on DCOE (`ssh dcoe-prod`) and POST to `https://one-truemeds.metabaseapp.com/api/dataset/csv` with the `x-api-key` from Secrets Manager — that path is uncapped up to **1,048,575 rows** (chunk weekly beyond that). A large IN-list blows `ARG_MAX`: write the SQL to a file, build the JSON with `jq --rawfile`, and pass `query@file.json`.
 
 ## What NOT to mention to non-engineers
 
@@ -174,6 +246,15 @@ Question is replenishment / Min-Max?
 
 Question is logistics TAT / courier perf?
   → Use DB 994 (SF LOGISTICS).
+    AWB number specifically → DB 630 net_suite_shipment_details (NOT 170).
+    Do NOT use logistics_tracker — feed dead since 2026-07-20.
+
+Question is about what HAPPENED INSIDE an order (cart edits, algo
+events, who touched it, event timeline)?
+  → Mongo DB 3, OrderFootPrintTracking. order_status CANNOT answer this.
+
+Question is batch-level MRP / locked MRP?
+  → DB 993 Snowflake, WMS.BATCH_MASTER_V (MBQL only).
 ```
 
 ### Scoped ELT pattern (tm-fraud-engine Spec 2, 2026-05-28)

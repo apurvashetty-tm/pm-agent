@@ -1,8 +1,12 @@
 # tm-chotu — KNOWLEDGE DUMP
 
-**v0.0.1 draft — 2026-05-15. PRE-REDLINE.**
+**Status: HISTORICAL SOURCE — not authoritative, not kept in sync.** Last structural pass 2026-08-25.
 
-This file is the source-of-truth for every section skill. After Mangesh redlines, sections translate 1:1 into `skills/tm-chotu-<section>/SKILL.md` bodies.
+> 🔴 **The skills win on conflict. Always.**
+>
+> This file is where the skills were originally lifted from (drafted 2026-05-15). It is **no longer maintained in step with them.** Every correction since v0.2.0 — doctor-portal status semantics, the Metabase toolset, inventory valuation, the 2,000-row cap, the contested-fact tags — landed in `skills/` and **not** here. This file still carries superseded readings and carries **zero ⚠️ CONTESTED tags** while shipping both sides of at least one contested fact.
+>
+> Read it for history, for provenance, and for sections no skill covers. **Verify against the relevant skill before acting on anything in it.** If the two disagree, the skill is right and this file is stale.
 
 **Markup conventions:**
 - `[VERIFY]` — item needs user confirm before locking
@@ -191,7 +195,7 @@ Owns the **Dynamic Content Management** surface from a product perspective. Oper
 | **Doctor Portal — Rx review + substitution** | Live order picking from assigned warehouse, view Order Details (Patient / Delivery / All Originals SKU / All Subs / Bill / Order Info & Subs), Call Patient, Confirm Order, Hold/Cancel Order, Patient Ranking, ETA, Doctor Fraud detection | DOCTOR PORTAL |
 | **Doctor Super-Admin** | Doctor Onboarding (Registration form → Super Admin approval Pending/Approved/Not-Approved lists), Dashboard Statistics, Earnings & Incentives, Broadcast Message, Doctor Allocation, Doctor Blocked List, Live Order, Doctor Category (5 categories), Doctor Calls Mgmt, Category Blocking, Dosage Tagging, Doctor Fraud module, OTC Insights, Pilot Order Statistics, IVR | DOCTOR PORTAL Super-Admin |
 | **Pharmacist Type 1** | First-attempt digitization for **prescription-only orders** (`ORDER_TYPE = 52 RX`). Validate prescription(s), calculate delivery date, search/add doctor, apply coupon + TM rewards, add notes → DIGITIZE / DISCARD / MARK UNREACHABLE. **Type 2 (RX AND MEDICINES = 53) and Type 3 (MEDICINES = 54) bypass Pharmacist and go straight to Doctor.** | PHARMACIST PORTAL TYPE 1 ORDER |
-| **Health Advisor (HA)** | Substitution explanation + customer confirmation call. **Triggered when SUBSTITUTE is available** — post ORDER CONFIRMED, pre WAREHOUSE ASSIGNED. orderstatus 595 HEALTH ADVISOR CALL ATTEMPTED. HA can add only OTC (not Rx) to cart. Substitution actions: Replace original / Keep both / Hold Order | HEALTH ADVISOR CALL |
+| **Health Advisor (HA)** | Substitution explanation + customer confirmation call. **Triggered when SUBSTITUTE is available** — post ORDER CONFIRMED, pre WAREHOUSE ASSIGNED. ⚠️ the HA leg reuses **209 DOCTOR ASSIGNED / 215 CALL ATTEMPTED** (position AFTER `452` = HA). ❌ `595` is **never stamped** — see § 25. HA can add only OTC (not Rx) to cart. Substitution actions: Replace original / Keep both / Hold Order | HEALTH ADVISOR CALL |
 
 **KPIs:** Rx-generation TAT, sub-acceptance rate, HA single-call connect %, Doctor approval TAT, Pharmacist Type-1 digitize TAT
 
@@ -340,12 +344,13 @@ Source for this section: `~/Desktop/Bird's eye view.pdf` (Whimsical export, 2026
   ORDER CONFIRMED (orderstatus = 66 ORDER CONFIRMED)
     ↓
   Decision: Health Advisor call required? (triggered when SUBSTITUTE is available)
-    ├─ Yes → Health Advisor call (orderstatus 595 HEALTH ADVISOR CALL ATTEMPTED)
+    ├─ Yes → 452 PARTIALLY DIGITIZED (doctor done, awaiting HA) → HA call via 209/215
+    │        ❌ NOT 595 — never stamped. See § 25.
     ├─ Or  → Pharmacist call
     └─ Or  → Assisted Commerce call
     ↓
   Order Fulfilment
-    → Warehouse assigned (orderstatus 233 WAREHOUSE ASSIGNED) — MFC (553) / HUB (455) / WAREHOUSE (454)
+    → 233 WAREHOUSE ASSIGNED ⚠️ pricing/catalogue id only, NOT physical — MFC (553) / HUB (455) / WAREHOUSE (454)
     → Create Sales Order in NetSuite
     → FIFO Fulfilment
     → All items + customer created in NS & DB
@@ -831,7 +836,7 @@ Therapy via 4 master tables linked through `disease_product_mapping` (439,760 ro
 - Warehouse types (master 'WAREHOUSE TYPE'): 454 WAREHOUSE / 455 HUB / 553 MFC
 - Pincode → warehouse mapping via `pincode_warehouse_master`, `pincode_microfc_master`, `analytics_pincode_microfc_master`
 - Sets `order_details.warehouse_id` on confirmation
-- orderstatus transition: → 233 WAREHOUSE ASSIGNED
+- orderstatus transition: → 233 WAREHOUSE ASSIGNED ⚠️ (**pricing/catalogue id only**, not physical)
 
 #### Picklist module — 3 variants
 
@@ -903,7 +908,7 @@ For "sales of product/molecule X by state & month" use **`net_suite_invoice_batc
 - **Serviceability check** at PDP + checkout (pincode → warehouse → courier partner)
 - **Courier Partner Priority** matrix (which partner gets the order first for a given pincode)
 - Masters: `m_courier_partner_master`, `pincode_master`, `pincode_warehouse_master`, courier partner pincode TAT adherence calculation
-- **3PL universe — locked from `m_courier_partner_master` (13 partner IDs):**
+- **3PL universe — locked from `m_courier_partner_master` (14 partner IDs, of which 13 are external 3PLs + ID 35 = Self / Hand Delivery):**
 
 | Partner ID | Name | Express? | Notes |
 |---|---|---|---|
@@ -972,8 +977,8 @@ orderstatus events: 213 PHARMACIST MAKER ASSIGNED, 214 PHARMACIST CHECKER ASSIGN
 
 #### Health Advisor (HA) Call portal
 
-- Triggered when SUBSTITUTE is available (post ORDER CONFIRMED, pre WAREHOUSE ASSIGNED)
-- orderstatus → 595 HEALTH ADVISOR CALL ATTEMPTED
+- Triggered when SUBSTITUTE is available (post ORDER CONFIRMED, pre WAREHOUSE ASSIGNED — via 452 then 209/215, never 595)
+- ⚠️ the HA leg reuses **209 DOCTOR ASSIGNED / 215 CALL ATTEMPTED** (position AFTER `452` = HA). ❌ `595` is **never stamped** — see § 25
 - Flow: Login → Dashboard → Agent Shift / Statistics / Target Mgmt / OTC Sales Dashboard / Assign-Unassign Order / Incentive Management
 - Per-order: Fetch Order → View details → Call Customer → Read Prescription(s) → View Products → Change Quantity / Payment method → Substitution (Replace original / Keep both) → Cancel / Hold / Place Order
 - **Cart constraint:** HA can add only OTC (`ITEM_TYPE = 475 OTC`); cannot add Rx
@@ -1116,7 +1121,7 @@ Tied to chronic customers (recurring tests for diabetes, lipid panel, thyroid). 
 
 ### MCP routing — HARD RULE (v0.1.6)
 
-All Metabase queries route through the **native Metabase MCP** at `https://one-truemeds.metabaseapp.com/api/mcp` (Metabase 0.55+ native server). Tool namespace is UUID-prefixed (`mcp__<uuid>__*`) or `mcp__plugin_tm-chotu_metabase__*` post-OAuth. Toolset signature: `search`, `get_table`, `execute_query`, `construct_query`, `query`, `list`, `get_metric`, `create_question`, `create_dashboard`.
+All Metabase queries route through the **native Metabase MCP** at `https://one-truemeds.metabaseapp.com/api/mcp` (Metabase 0.55+ native server). Tool namespace is UUID-prefixed (`mcp__<uuid>__*`) post-OAuth — **the UUID differs per install, never match on it.** Toolset observed live **2026-08-25**, read off the connector's own tool schemas: `search`, `construct_query`, `execute_query`, `query`, `create_question`, `create_dashboard`. **The toolset is configurable per install** — some also expose `visualize_query`. Fingerprint on **any two**, never the full list. ⚠️ There is **no** `execute_sql`, `get_table`, `list`, or `get_metric*` — earlier docs claimed those and were wrong. Native SQL goes through `execute_query`.
 
 The **unofficial community MCP** (`mcp__Metabase__Unofficial___Community___*`, toolset `list / retrieve / execute / export / clear_cache`) is sunset. Do not use. If only the unofficial is available, tell user — never silently fall back. Full policy in `tm-chotu-query-rigor` § "Metabase MCP — namespace policy".
 
@@ -1140,7 +1145,7 @@ DB 170 schema:
 | ID | Name | Use |
 |---|---|---|
 | **2** | **Main_DB (TMMUMPSDB)** | Live transactional. Use only for <30 min fresh data — DB 170 (Redshift) lags by minutes |
-| 3 | Mongo | Document store (likely product catalog / unstructured data) |
+| 3 | Mongo | **The canonical per-order EVENT LOG** — `OrderFootPrintTracking`, one doc per order, `_id` = `order_id`. The ONLY source that sees cart activity (add / remove / qty change); `order_status` records transitions only. 48.5M docs / 3.6 TB. Access path + index rules in § 18 |
 | 169 | Checker Main DB | Pharmacist checker workflow |
 | 135 | Picker Main DB | Picker workflow (general / legacy) |
 | 174 | PROD WH PICKER | Warehouse-wide picker (general) |
@@ -1383,7 +1388,7 @@ Stored as `bigint`. Codes are `serial_id`. Note: `order_details.orderstatus` sho
 | 333 | AGENT CALL SCHEDULED |
 | 405 | ASSIGN TO DR |
 | 407 | DOCTOR_FRAUD_HOLD |
-| **595** | **HEALTH ADVISOR CALL ATTEMPTED** |
+| **595** | **HEALTH ADVISOR CALL ATTEMPTED** ❌ DEAD — never stamped; HA leg reuses 209/215 |
 | 66 | ORDER CONFIRMED |
 | 222 | EDIT SUBS CONFIRM |
 | 81 | ON HOLD |
@@ -1392,7 +1397,7 @@ Stored as `bigint`. Codes are `serial_id`. Note: `order_details.orderstatus` sho
 **Fulfilment / warehouse / packing:**
 | Code | Meaning |
 |---|---|
-| **233** | **WAREHOUSE ASSIGNED** |
+| **233** | **WAREHOUSE ASSIGNED** ⚠️ pricing/catalogue id, NOT physical assignment |
 | 277 | BOX ASSIGNED |
 | 278 | RACK ASSIGNED |
 | 245 | Picker Assigned |
@@ -1681,7 +1686,8 @@ WHERE DATE(os.modified_on) = CURRENT_DATE - 1
   AND os.order_status_id IN (
     66,   -- ORDER CONFIRMED
     317,  -- DR ORDER CONFIRMED
-    595,  -- HEALTH ADVISOR CALL ATTEMPTED
+    452,  -- PARTIALLY DIGITIZED = doctor consult done, awaiting HA
+    -- ❌ NOT 595: never stamped. HA leg reuses 209/215; position AFTER 452 = HA.
     57,   -- ORDER CANCELED
     60,   -- ORDER DISPATCHED
     55    -- ORDER DELIVERED
@@ -1878,7 +1884,7 @@ These definitions are canonical. Anyone in any function should resolve ambiguity
 | **Auto-confirm** | `workflow_status = 242 NO_DOCTOR_CALL`. Triggered when valid Rx already attached → bypasses doctor call |
 | **Digitized** | Order has been verified + structured. `DRX_STATUS = 30 DIGITIZED` line-item-level; `orderstatus = 39 DIGITIZED` order-level |
 | **Confirmed** | `orderstatus = 66 ORDER CONFIRMED` — past doctor/pharmacist review, ready for fulfilment |
-| **HA call** | Health Advisor call — substitution explanation. Triggered when SUBSTITUTE is available post-confirm. orderstatus 595 HEALTH ADVISOR CALL ATTEMPTED. HA can add only OTC, not Rx |
+| **HA call** | Health Advisor call — substitution explanation. Triggered when SUBSTITUTE is available post-confirm. ⚠️ the HA leg reuses **209 DOCTOR ASSIGNED / 215 CALL ATTEMPTED** (position AFTER `452` = HA). ❌ `595` is **never stamped** — see § 25. HA can add only OTC, not Rx |
 | **Warehouse Assigned** | orderstatus 233 — routing decision (MFC vs FC) complete |
 | **AWB Printed** | orderstatus 289 — Air Waybill sticker printed for 3PL pickup |
 | **Dispatched** | orderstatus 60 — order handed to 3PL |
@@ -1942,7 +1948,7 @@ These definitions are canonical. Anyone in any function should resolve ambiguity
 | **HA** (Health Advisor) | Internal role + portal. Substitution confirmation calls (post-confirm, pre-WH-assign). OTC-only cart additions |
 | **CSR** (Customer Service Rep) | Inbound + outbound customer support. Two portals: Create Order + Post Order |
 | **CMT** (Catalog Management Team) | Function owning Dynamic Content Mgmt. Approves catalog + substitution pairs via `CMT STATUS` × `CMT APPROVALS` |
-| **3PL** | Third-party logistics partner. Locked roster: 13 partners (Delhivery, Bluedart, XpressBees, Shadowfax, Ecom, Shiprocket, Blitz, CABT, ATS, WeFast, Shipsy, Ithink, Urbanebolt) + Self / Hand Delivery (§ 5) |
+| **3PL** | Third-party logistics partner. Locked roster: 14 partner IDs — 13 external 3PLs (Delhivery, Bluedart, XpressBees, Shadowfax, Ecom, Shiprocket, Blitz, CABT, ATS, WeFast, Shipsy, Ithink, Urbanebolt) + Self / Hand Delivery (§ 5) |
 | **JIT** (Just-In-Time) | Inventory type. Masters 282 JIT 1, 283 JIT 2, 371 WH weekly JIT. Lower-volume / faster-cycle stocking |
 | **PO** (Purchase Order) | Procurement order to vendor |
 | **VRA** (Vendor Receipt Authorization) | Step in Central Procurement flow — receipt of inwarded goods |
@@ -1989,7 +1995,7 @@ These definitions are canonical. Anyone in any function should resolve ambiguity
 ### Status-code shorthand cheatsheet (lifts from § 7)
 
 When someone says "status 55" or "status 61", check which master family they mean:
-- **ORDER STATUS** family: 55 = DELIVERED, 57 = CANCELED, 60 = DISPATCHED, 66 = CONFIRMED, 39 = DIGITIZED, 233 = WAREHOUSE ASSIGNED, 595 = HA CALL ATTEMPTED
+- **ORDER STATUS** family: 55 = DELIVERED, 57 = CANCELED, 60 = DISPATCHED, 66 = CONFIRMED, 39 = DIGITIZED, 233 = WAREHOUSE ASSIGNED (pricing/catalogue id, not physical), 595 = HA CALL ATTEMPTED ⚠️DEAD, never stamped
 - **MEDICINE_STATUS** family: 61 = SUBSTITUTE, 62 = ORIGINAL, 211 = NO SUBSTITUTE
 - **ORDER_TYPE** family: 52 = RX (Type 1), 53 = RX AND MEDICINES (Type 2), 54 = MEDICINES (Type 3)
 - **WORK FLOW** family: 242 = NO_DOCTOR_CALL (auto-confirm), 343 = CUSTOMER_ORDER_ONHOLD
@@ -2035,7 +2041,7 @@ Codes overlap across families — always look up via `m_system_value_master WHER
 Placeholder. Pushed by analytics team via tm-chotu plugin updates.
 
 **Update pattern** (proposed — confirm with Mangesh):
-1. Analytics team author drafts entry as a skill-request file at `~/.claude/plugins/tm-chotu/SKILL_REQUESTS/<date>_<topic>.md`
+1. Analytics team author drafts entry as a skill-request file at `SKILL_REQUESTS/<YYYY-MM-DD>_<topic>.md` **inside the installed plugin folder** (find it with `claude plugin list`; it is versioned). ⚠️ That directory is **replaced on every update** — email it to Mangesh the same day
 2. Mangesh (or designated reviewer) approves + folds into `KNOWLEDGE_DUMP.md`
 3. Plugin version bumps (semver)
 4. Users `git pull` the GitLab repo to get the update
@@ -2046,7 +2052,7 @@ Placeholder. Pushed by analytics team via tm-chotu plugin updates.
 
 When a question asked of tm-chotu doesn't match any loaded skill content:
 
-1. Plugin drafts a skill-request markdown at `~/.claude/plugins/tm-chotu/SKILL_REQUESTS/<YYYY-MM-DD>_<topic>.md`
+1. Plugin drafts a skill-request markdown at `SKILL_REQUESTS/<YYYY-MM-DD>_<topic>.md` **inside the installed plugin folder** (find it with `claude plugin list`; it is versioned). ⚠️ That directory is **replaced on every update** — email it to Mangesh the same day
 2. Prompts user: "Email this to Mangesh"
 3. Analytics team beefs up plugin → ships update via GitLab pull
 
@@ -2604,7 +2610,7 @@ Every metric request is hard-gated: chotu states the data structure + interpreta
 
 ## Dead-order status set (v0.1.16)
 
-"Net of cancels" / "exclude cancelled" for placed-level revenue or real-order counts = the FULL DEAD-ORDER STATUS SET, never just orderstatus 57. Locked in tm-chotu-definitions: `orderstatus NOT IN (49,274,400,668, 57,232, 174, 312)` = incomplete (49/274/400/668) + cancelled (57/232) + discard (174) + scrapped (312). Pre-conversion (1 NEW/2 PENDING VERIFICATION/3 ERROR) excluded per use-case; 284 DELIVERY FAILED is a real billed order (RTO path, not dead). Fixes the "revenue yesterday" miss where only 57 was excluded and discarded/incomplete (₹0) rows leaked in. Enforced by a query-rigor rule + METRIC_CATALOG revenue branch (a) now = SUM(final_amount) placed, net of dead set.
+"Net of cancels" / "exclude cancelled" for placed-level revenue or real-order counts = the FULL DEAD-ORDER STATUS SET, never just orderstatus 57. Locked in tm-chotu-definitions: `orderstatus NOT IN (49, 274, 668, 57, 232, 174, 312)` = incomplete (49/274/400/668) + cancelled (57/232) + discard (174) + scrapped (312). Pre-conversion (1 NEW/2 PENDING VERIFICATION/3 ERROR) excluded per use-case; 284 DELIVERY FAILED is a real billed order (RTO path, not dead). Fixes the "revenue yesterday" miss where only 57 was excluded and discarded/incomplete (₹0) rows leaked in. Enforced by a query-rigor rule + METRIC_CATALOG revenue branch (a) now = SUM(final_amount) placed, net of dead set.
 
 ## COGS & CM1 gross margin (v0.1.17)
 
@@ -2617,3 +2623,198 @@ New table `medicine_quarter_master` (per-product-×-quarter HM/LM tag; 631,811 r
 ## HM/LM gate — silent close (v0.1.19)
 
 When the HM/LM gate is CLOSED, close SILENTLY: never say "HM/LM"/"medicine_quarter_master"/"margin-tier", never narrate the gate check in the visible reply, never surface the branded≠margin decoupling insight (that IS the gated crux, not permitted framing). Permitted for non-leadership = plain "branded≈low/generic≈high" shorthand (no corrective twist) + CM1/cm_net for quick analysis. Fix from v0.1.18 battery: 2 leaks were meta-leaks (chotu printed "HM/LM stay hidden" / its gate scratchpad, and leaked the decoupling caveat to a CX persona).
+
+## § 17 — "What did this shipped line REPLACE?" — the fsp_id chain (2026-08-10)
+
+**There is exactly ONE correct way to resolve what a shipped product displaced. Never infer it.**
+
+```sql
+net_suite_invoice_batch.fsp_id
+  -> final_substitute_product.final_subs_id
+  -> final_substitute_product.product_id
+  -> product_details.product_details_id
+  -> product_details.product_code            -- THE ORIGINAL (the cart line)
+```
+
+`final_substitute_product.product_code` on that row = what SHIPPED; the `product_details` row it points at = what the customer had in the CART. **One invoice line → one cart line, always.** Verified on order 52621090: shipped `TM-TOTE1-000199` → `fsp_id 177508063` → `product_id 172421843` → `product_details_id 172421843` → `TM-TOTE1-000046` (PRO ENSHINE toothpaste).
+
+Use this for any substitution / mismatch / refund / complaint analysis. An "ambiguous original" is impossible in this data — if an analysis emits ambiguous or blank originals, the chain was not used and the output is wrong.
+
+**🔴 Dead ends — do NOT rebuild, all measured:**
+- `final_substitute_product.original_product_code` / `original_product_name` — **0% populated**.
+- FSP `status_id=61` rows are **self-referential** (`product_code == subs_product_code`) on **99.8%** of records → comparing those two columns compares a thing to itself.
+- `_cx_confirm` / `_dr_confirm` keyed on the landed sub — the algo **swaps generics mid-flow**, so the code that ships is often not the code pitched.
+- "Which cart line failed to ship" — invents ambiguity that is not in the data.
+
+**Verdict must be LINE-level: shipped vs ITS OWN original,** on `medicine_master.sub_group` (salt) + `drug_type` (dosage form). Comparing a shipped product against *any* cart line silently excuses real defects whenever an unrelated cart line shares the salt. Measured on a 163k-order run: the loose rule hid 2 real mismatches (e.g. ISTAMET metformin+sitagliptin → GLIMP glimepiride, masked by another glimepiride line) and invented ~220 false form-changes (233 → 12 once pinned to the true original).
+
+**Multi-batch:** one product can occupy several `net_suite_invoice_batch` rows with different `fsp_id` (same product, different batches). Dedupe on `(order_id, shipped_code, original_code)` or a split shipment counts twice.
+
+**Coverage gap:** some invoice lines carry no usable `fsp_id` (256 of 525,601 on the Aug-2026 run). Report as their own bucket — neither cleared nor flagged.
+
+Columns easy to omit and both REQUIRED: `final_substitute_product.product_id`, `product_details.product_details_id`.
+
+## § 18 — Mongo `OrderFootPrintTracking` — the per-order event log (2026-08-10)
+
+**Metabase DB 3.** One doc per order, `_id` = `order_id` (indexed PK → a chunked `$in` is prod-safe). Top level also `warehouseId`, `_class`; everything else in the embedded array `footPrintTrackingList` (~39 events/order, **~242 KB per doc**; 72k orders ≈ 17 GB, so full-doc pulls are infeasible — always `$filter` + `$project` server-side). Collection is **48.5M docs / 3.6 TB logical / 398 GB storage**.
+
+Per-event keys: `createdOn` (**UTC**), `statusId`, `statusName`, `comments`, `userId`, `userName`, `visibilityLvl`, `warehouseId`, `currentMedList`, `lockedMedList`, `currFinalCalc`, `prevFinalCalc`, `lockedFinalCalc`, `couponDetails`, `teamList`. `currentMedList`/`lockedMedList` per event ⇒ **cart state is diffable across events** — the basis of any "what did the algo change" analysis.
+
+**🔴 This is the ONLY source for cart activity.** `order_status` records status transitions only, so it structurally cannot see product add / remove / qty change. Never substitute it (see § 21 L1).
+
+**🔴 Access.** The Metabase MCP cannot query Mongo — `execute_query` wraps SQL into `native.query` only and the driver asserts *"Cannot execute MongoDB query without a :collection name"*. MBQL works but cannot unwind or filter inside arrays. Only working path = the raw HTTP API where the body is ours:
+
+```
+POST https://one-truemeds.metabaseapp.com/api/dataset/csv   (header x-api-key)
+{"database":3,"type":"native","native":{"collection":"OrderFootPrintTracking",
+ "query":"<JSON aggregation pipeline as a STRING>"}}
+```
+
+Run it from `dcoe-prod`; the API key lives in Secrets Manager.
+
+**Indexes** (verified via `index_information()`; `$indexStats` is unauthorized):
+
+| Index | Key |
+|---|---|
+| `_id_` | `_id` (= order_id) |
+| **`comments_date`** | `footPrintTrackingList.comments` ASC, `footPrintTrackingList.createdOn` ASC (13 GB) |
+| `StatusNm & Comments Index` | `_fts` TEXT index (17 GB) — despite the name, NOT statusName+comments |
+
+**The access path for a time window** — give `comments` a full string range so the compound index can bound `createdOn`:
+
+```js
+{"$match": {"footPrintTrackingList": {"$elemMatch": {
+    "comments":   {"$gte": "", "$lt": "￿"},
+    "createdOn":  {"$gte": ISODate(LO), "$lt": ISODate(HI)}}}}}
+```
+
+Turns a 3.6 TB collection scan into a 13 GB index scan — probe with `$limit 5` returned in **0.9 s** vs >5 min timeouts without it. **`$elemMatch` is required**: bare dot-notation does not get index bounds on a multikey array. Dates parse as both `{"$date":"…"}` and `ISODate("…")`, in `$match` and inside `$filter`.
+
+⚠️ **Completeness caveat:** events whose `comments` is null/missing sort before `""` in BSON and would be skipped. Validated once — 0 blank-comment events, and 67/67 orders from an independent `_id`-based pull recovered — but **re-validate on a new window** before trusting it.
+
+**Timezone (verified):** Mongo `createdOn` is UTC; `order_details.created_on` is IST and equals the **DIGITIZED** footprint event (order 52937385: Redshift 11:48:27 IST == Mongo 06:18:27Z), NOT cart creation (statusId 49). Same-doc comparisons are tz-safe; only day-scoping needs the +5:30 care.
+
+**Comment strings are exact and are not one event:** `Algo Completed For A Product : <NAME>` = line-level, steady background ~1,700 events / 2,000 orders per day. `Algo Completed For An Order` = order-level, rare.
+
+**Throughput / cost:** a 67-minute window = 99,287 events / 22,528 orders in **587 s**. Cost is dominated by fetching matched 78 KB docs — scale by **matched-doc count**, not window length. A direct pymongo cursor (SECONDARY_PREFERRED, `allowDiskUse=True`, `batchSize=5000`, stream to CSV) beats Metabase, which caps at `maxTimeMS` 20 min and materialises the whole CSV before responding. ⚠️ `.explain()` in pymongo **executes** the query — use `verbosity='queryPlanner'` or skip it.
+
+**Scope-collapse tip:** filter to orders that actually reached the anchor status first — on 8-Aug, 72,204 orders placed but only 24,971 reached 317 (23,476 abandoned carts at status 49). Cuts the pull ~3×.
+
+## § 19 — Courier, AWB and the dead logistics feed (2026-08-07)
+
+**Courier identity** — `m_courier_partner_master` (DB 170). Join `package_details_tracking.courier_partner_id` to the master's `courier_partner_id`, **not** the master `id`. XpressBees = **6** (Surface master-id 1 and Express master-id 11 both collapse to 6); Delhivery 4, Bluedart 5, Shiprocket 105, Shipsy 150. `pdt.active` domain is only `'1'`. Master also carries `svm_id` (XB 185 Surface / 286 Express) and `ankw_courier_partner_account_code` — DB typo "XpressBees **Surace** ANKW".
+
+**AWB (forward waybill)** = `net_suite_shipment_details.awb_no` (varchar), join `order_id`, filter `active=1`, latest by `modified_on`. **DB 630 (Main) ONLY — not in the Redshift 170 mirror, not in `package_details_tracking`** (which has only `is_awb_no_printed` + `awb_sticker_print_date`; `package_number` "PKG-…" is an internal id, ~2% filled, not an AWB).
+
+**Order-level "in transit"** = `orderstatus = 60` (ORDER DISPATCHED). TM collapses all post-dispatch states into 60 — granular codes 217/285/275/289 return ~zero at order level. Processing = `orderstatus 142`. **60 is sticky** → includes stale zombies (~23% of one probe were placed >90d ago and never marked delivered); bound by `created_on` for "moving now".
+
+**🔴 `logistics_tracker` (DB 170, Redshift-only) is DEAD.** Airbyte feed from the logistics microservice (DynamoDB pk/sk schema); carries courier-scan `status` (TRACKING_STATUS_IN_TRANSIT / OUT_FOR_DELIVERY / DELIVERED / RTO / …), `awb_number`, `delivery_partner_code`, `delivery_partner_id`. Mapping is 100% clean — every IN_TRANSIT XpressBees order reconciles to `pdt.courier_partner_id = 6` — but **0 rows loaded since 2026-07-20**, all partners. Unusable for current status. Not on DB 630.
+
+## § 20 — PII register + handling guardrail (2026-08-13/14)
+
+Full detail in `skills/tm-chotu-pii-register/SKILL.md`. Summary of the locked position:
+
+**Access model.** The three prod-MySQL CDC users — `snowflake_shellkode@%`, `airbyteuser@%`, `prod_dms@%` — read via the **`tm_view_nopii`** role instead of blanket `SELECT`, plus the global-only replication privileges CDC requires (`REPLICATION SLAVE`, `REPLICATION CLIENT`; Airbyte also `RELOAD`, `SHOW DATABASES`). All three have `SET DEFAULT ROLE ALL`. If a pipeline suddenly cannot see a column, that is the lock, not a bug.
+
+**Confirmed plaintext PII, revoked from the role** (all sampled with evidence):
+
+| Table | What |
+|---|---|
+| `oauth_access_token.authentication` | Java-serialised `OAuth2Authentication`, **not encrypted** — mobiles regexed out of 5/5 sampled rows; ~1.6M rows ⇒ ~1.6M mobiles in clear. Defeats the encryption on `customer_details.encrypted_mobile_no` |
+| `truemeds_doctor` | Bank account, IFSC, DOB, cancelled cheque, signature/cert paths |
+| `exotel_customer_feedback` | `call_from` / `call_to` / `dial_whom_number` |
+| `true_caller_response_data` | Given/family name, city, zipcode, social IDs |
+| `support_ticket_details.audio_url` | Call recordings on the prod storage bucket |
+| `cashfree_payment_details`, `cash_free_mapping_new` | `card_number` — empty today, revoked pre-emptively |
+| `biometric_data.url` | ⚠️ still readable — a table-level grant survived the column-level revoke |
+| `third_party_api_logs` | 3.2M rows of third-party request/response bodies, never column-listed |
+
+Cleared as non-issues: `customer_details.lookup_mobile_no` / `lookup_email_address` **are** encrypted (deterministic → still usable as stable join keys).
+
+**Mechanics.** Column-level privileges live in `mysql.columns_priv` and survive a table-level revoke. Column-level-only grants **break connector metadata discovery** (MySQL hides ungranted columns from `information_schema.columns` and refuses `SHOW CREATE TABLE`; DMS fails "no table definition found", Airbyte "SHOW command denied"). **Grants never filter the binlog** — `REPLICATION SLAVE` streams every column of every base table and views do not exist in the binlog at all, so PII exclusion for CDC must live in the connector (DMS `remove-column`, Airbyte `column.exclude.list`). Hunting PII column names: escape `_`, it is a single-char wildcard.
+
+**Tap vs tank.** Revoking closes the tap, not the tank — the ~1.6M plaintext mobiles had already replicated into Snowflake / Airbyte / DMS targets. Live DPDP question.
+
+**Redshift 170 posture.** 5 PTS columns on `inward_product_details` are excluded from the `tm_analytics` grant (`SELECT *` fails by design). **Three holders of `sys:superuser`** bypass every permission check including that one — check `svv_user_grants` before proposing any grant-based control there. `tmmumpsdb.customer_details` was emptied 2026-08-13 with no backup and the operation is not reversible on Redshift; probe row count before use.
+
+## § 21 — Learnings ledger (2026-08-19)
+
+Full ledger in `skills/tm-chotu-learnings/SKILL.md` — **that file is authoritative for both the content and the entry count; this one is not kept in sync and its count was stale.** Each entry is `BELIEF → WHAT BROKE → LOCKED NOW → MEASURED COST`.
+
+**The meta-lesson:** every entry is a **silent wrong answer, not an error**. Nothing crashed, no test failed, the number just came back confidently wrong. The check is never "did it run" — it is *"what population did I actually measure, and what got dropped without telling me"*.
+
+Index: L1 named source is a constraint (227× family) · L2 fresh scope = fresh pull (**227×**) · L3 zero-sentinel IDs (**66% of fraud fires artifact**) · L4 alias drift (**89.8% under-detection**) · L5 Redshift bigint division (**132×**) · L6 "cancelled" is a set not a code · L7 never infer the displaced original (**hid 2 real, invented ~220 false**) · L8 cart ≠ shipment (**"0 shipped" was invalid; 86 wrong subs shipped, 3 delivered**) · L9 invoice lag ⇒ recent days are a lower bound · L10 `order_id` is not a date proxy · L11 compute belongs off the transactional DB (**87 s scan**) · L12 existence ≠ usability · L13 grants and pipelines don't mean what you'd guess · L14 `_` is a wildcard · L15 `$elemMatch` for index bounds (**0.9 s vs timeout**) · L16 a CDC change-stream view is not a master · L17 someone else's flag is a lead not a verdict (**5× overcount**) · L18 row caps are silent · L19 explaining a metric is cheaper than re-pulling it.
+
+**Adding an entry:** only when an analysis produced a *confidently wrong* answer and the reason generalises — and the cost must be **measured, not estimated**.
+
+## § 22 — Batch-level locked MRP: `BATCH_MASTER_V` (Snowflake DB 993)
+
+DB **993**, Metabase name `SF WAREHOUSE_MANAGEMENT_SYSTEM ` (⚠️ **trailing space** is part of the name — include it in MBQL field refs), schema `WMS`, view `BATCH_MASTER_V` (query the `_V` view, not the `BATCH_MASTER` base table). MRP here is **batch-level and location-independent**, unlike `medicine_warehouse_master.mrp` (per-WH).
+
+**Access:** native SQL is **blocked** on this connection — MBQL only (`construct_query` / `query`); native SQL via `execute_query` is unavailable. Field ref = `["field",{},["SF WAREHOUSE_MANAGEMENT_SYSTEM ","WMS","BATCH_MASTER_V","<COL>"]]`; `["=",{},field,v1,v2,…]` acts as IN. Pages cap at 200 rows.
+
+**It is a DynamoDB→Kinesis CDC change-stream view, not a clean master.** 33 columns including `LOADED_AT`, `KINESIS_*`, `EVENT_ID`, `EVENT_NAME`, `PK`, `SK`, `NEW_IMAGE_RAW`, `OLD_IMAGE_RAW`, `RAW_RECORD`, `RAW_METADATA` — the `RAW_*` columns are huge, so `SELECT *` even at LIMIT 10 exceeds the token cap. Always name explicit fields.
+
+**Grain = multiple event-rows per `(PRODUCT_ID, BATCH_NUMBER)`:** real `VERSION` bumps through the batch lifecycle, plus backfill re-emissions (same VERSION reloaded ~3× on one day, differing only by load time). **Latest per batch = max `VERSION`, tiebreak max `EVENT_TIME`.**
+
+**Lifecycle (`STATUS`):** `OPEN` (in MRP verification) → `LOCKED` (MRP frozen); `VERIFICATION_NOT_REQUIRED` = older batches auto-accepted. Event-level counts on 2.34M rows: VERIFICATION_NOT_REQUIRED 1,840,660 / LOCKED 380,240 / OPEN 116,115 / null 201; ~69k products, ~1.35M distinct SK.
+
+**Two MRP columns:** `MRP_PRINTED` (on-pack) and `MRP_REFORMED` (≤ printed, **authoritative**). The PRINTED − REFORMED gap is a useful "MRP is wrong" signal.
+
+**🔒 Locked-MRP rule:** trustworthy MRP = latest-version `STATUS ∈ {LOCKED, VERIFICATION_NOT_REQUIRED}` carrying `MRP_REFORMED`. Latest `STATUS ∈ {OPEN, null}` → flag **NOT LOCKED**. Join to inventory on `(PRODUCT_ID, BATCH_NUMBER)`; one WH's top-15 validation gave a 100% batch hit-rate. ⚠️ Some raw-CSV `PRODUCT_ID`s arrive Excel-date-mangled (`TM-1-Dec-000045`) — watch full-run join hit-rate.
+
+## § 23 — Substitution defect classes + the Org-Subs engine (Aug 2026)
+
+Detail in `skills/tm-chotu-modules` (mechanisms), `skills/tm-chotu-joins` (the classifier), `skills/tm-chotu-definitions` (vocabulary).
+
+**Four distinct defect classes** — do not blur them: **MISMATCH** (shipped salt ≠ its own original's salt) · **FORM_CHANGE** (same salt, different `drug_type`) · **subs-consent misfire** (sub taken without customer/HA acceptance; molecule may be correct) · **DEACTIVATED_LINE_SHIPPED** (shipped product whose only cart rows are `active=0`, deactivated pre-invoice — 205 lines / 183 orders over two days).
+
+**Layer truth:** cart = `product_details` (added) · algo decision = `final_substitute_product` (`status_id=61` = sub taken; **can be corrected after the wrong item shipped**) · **shipped = `net_suite_invoice_batch` `active=1` ← the verdict**. Compare on `medicine_master.sub_group`, not `molecule_combination_cd` (blank on many OTC → false mismatches). Verdict is **line-level vs its own original** via the § 17 `fsp_id` chain.
+
+**Root cause of MISMATCH = runtime "magnet fallback", not the nightly precompute.** 94% (369/392) of wrong Mumbai pairs are absent from `org_sub_medicine_mapping_mumbai_hub_new_algo`; 80% (1,644/2,056) of wrong subs had a correct same-molecule, same-form generic in stock somewhere (only ~5% OOS, ~15% no-generic-exists); present across all 18 warehouses. A handful of cheap high-volume generics absorb dozens of unrelated originals (atorvastatin ← 77 distinct molecule-sets, glimepiride ← 54, Calcium Sandoz ← 52). **It reaches customers:** 86 genuinely-wrong subs shipped across 63 orders — 3 delivered, 51 in transit, 9 pre-dispatch. Open remediation includes molecule-**synonym** normalisation (methylcobalamin vs mecobalamin are different molecule ids) before any disjointness test.
+
+**Consent misfire — two traps that caused a 7× overcount:** HA acceptance is `final_substitute_product_dr_confirm.status_id=61` and on that row `product_code = subs_product_code`, so **never** filter `dr_confirm` on `subs_product_code <> product_code` (it removes exactly the acceptances); and `product_details.src_type_id` (PRODUCT_SOURCE_TYPE master — 304 DOCTOR / 305 OPERATION / 307 PHARMACIST / 308 CSR / 327 CHECKER / 369 ASSISTED) marks staff-handled lines as clean, with the signal usually on the **original's** row. Also, `final_substitute_product` is populated at cart stage for every order, so ~97% of the raw pending bucket is abandoned/scrapped carts — excluding dead statuses is mandatory.
+
+**Reporting caveat:** only ~30% of a day's orders are invoiced at any moment ⇒ same-day counts are a **lower bound** (today reads ≈ 0). Use a fully-invoiced 30d window.
+
+**Org-Subs enrichment engine** (runtime, no storage) vs the stored per-hub tables: catalogue/master fields 100% match, substitution agreement **98.56%**, with 2,282 genuinely lost substitutes escalated. Engine quirks: proto3-style omission (falsy fields dropped ⇒ absent = false); OLD pricing scaled by `sub_recommended_qty` vs NEW per-pack; OLD `subs_margin` legacy absolute vs NEW `margin.amount` = % × price; both sides emit keep-original self-recommendations (gate symmetrically); `rank` is a constant on both sides; kind `SIMILAR` is a relabel not a loss; `orig_strength` "mismatches" are always the old table truncating.
+
+## § 24 — Inventory valuation + the warehouse-identity trap (2026-08-19)
+
+Full model in `skills/tm-chotu-inventory` → Inventory VALUATION. The load-bearing points:
+
+**No table holds cost against held inventory.** Cost exists in exactly two forms: **COGS** (cost applied on orders, `net_suite_invoice_batch` — only knows a unit once it ships) and **`medicine_warehouse_master.pts`** (what the system shows now, from the latest inward). `medicine_warehouse_master` has **no `modified_on`** (verified), so a PTS value cannot be aged — it may be from this week or from 2023. **Every valuation is therefore DERIVED, never read, and must say so.**
+
+**Locked method:** 90-day NSIB **product × batch** weighted average — `SUM(rate*quantity)/SUM(quantity)`, `active=1`, `rate>0`, 90d on `created_on` — multiplied by quantity. `nsib.rate` is a **per-unit COST**, not a selling price.
+
+**Two grains, and they must match.** Product × WH (including stock blocked on consult / invoice / packing) → DB 180 `product_inventory_data` with a product-level average cost. Batch level (the correct grain for valuation) → `wp_bin_product_batch_mapping` on the warehouse's own picker DB, with a **batch-level** average cost. A batch quantity times a product average is a wrong number with a convincing decimal.
+
+**`wp_bin_product_batch_mapping` is BIN-level** — one product×batch spans several bins, so roll up (`SUM(quantity) GROUP BY product_code, batch, warehouse_id`) or a split batch is counted twice. It carries `mrp`, `printed_mrp`, `expiry` and `pts`, and **all four are wrong to use** — batch attributes come from `BATCH_MASTER_V` only (status ∈ {LOCKED, VERIFICATION_NOT_REQUIRED}).
+
+**Non-pickable = bin types EXCESS (4) + QUARANTINE (5).** Every valuation ships **sellable / non-pickable / total** — reporting only the total hides quarantine build-up, reporting only sellable understates what we own.
+
+**🔴 The warehouse-identity trap.** Every MFC has its **own database**; the Metabase connection is the warehouse identity, **never the schema name**. Measured 2026-08-19: schema `prod_picker` = **798,325 rows / warehouse 20 (Mumbai)** on **DB 174**, but **206,459 rows / warehouse 23** on **DB 202**. DB 202 and DB 399 return identical rows for the same MFC schema (two connections onto one host), so `information_schema` visibility says nothing about which connection is the right route. Assert `warehouse_id` from inside the table before trusting rows; cross-WH work unions across **connections**, client-side. Ledger entry L20.
+
+**Also locked:** generic vs branded comes from `medicine_master.generic_branded` **only** (the `medicine_warehouse_master` flags are procurement's); `ORDER_RETURN` and `WH_ADJUSTMENT` inward lines carry **corrupted unit costs** and were the bulk of apparent inventory losses in the full margin run.
+
+**Correction to § 22:** native SQL is blocked on Snowflake DB 993 **via the MCP only** — the Metabase REST path (`POST /api/dataset/csv`, `x-api-key`) runs native SQL there and bypasses the row cap.
+
+## § 25 — Rx lifecycle + molecule cadence; and "the label is not the meaning" (2026-08-19)
+
+Full model in `skills/tm-chotu-rx-cadence`. The corrections that matter most:
+
+**🔴 Status labels lie.** `452 PARTIALLY DIGITIZED` is **not** a transcription state — it means the **doctor consultation is DONE and the order is awaiting the HA consultation**. `209 DOCTOR ASSIGNED` and `215 CALL ATTEMPTED` are each used **twice**, once for the doctor leg and once for the HA leg, with no separate HA code — **position relative to 452 is the only discriminator**. `317 DR ORDER CONFIRMED` means *all doctor-portal consultations complete or not required* (the scheduler's go-signal), not "a doctor confirmed it" — measured 17-Aug, 5,636 of 24,475 (23%) were stamped by one system actor on the `242 NO_DOCTOR_CALL` auto-confirm path, which is correct by design. `233 WAREHOUSE ASSIGNED` only attaches a warehouse id **for pricing and catalogue**; physical assignment is the scheduler moving to processing.
+
+**Flow:** 39 DIGITIZED (reaches doctor portal) → 209 → 215 → [216 ON HOLD if no connect] → **452** (doctor done, awaiting HA) → 209 (HA) → 215 (HA call) → **317** (all consults done) → scheduler → PROCESSING, or 318 on failure.
+
+**`register_details`** (DB 170) is the Rx register and the only source carrying **`doctor_id` / `prescriber_name` / `doctor_confirm_date`** plus `med_change_after_dr_call` and the **`current_order_id` / `previous_order_id`** cadence linkage. Prefer `doctor_confirm_date` over inferring from 317. 🔴 `drx_link` / `invoice_link` are document URLs = P0 PII.
+
+**Days-of-supply (DCOE, locked):** `doses_per_day = DOSAGE.value / FREQUENCY.value`; `units_per_day = doses_per_day × prescribed_dosage_unit_quantity`; `DoS_days = ordered_quantity / units_per_day`; `run_out = COALESCE(actual_delivery_date, order_placed_date) + DoS_days`. `ordered_quantity` is already in **consumable units** — no pack conversion. Decode truth is the 38-row **`salt_dosage_master_data_mapping`** (one keyspace for dosage/frequency/duration codes); the 9-row `dosage_master` is **stale, do not use**; the tmprod analytics copy is **frozen at 2026-02-14**.
+
+**🚩 The line is a copy of the salt's template** (98.9% / 97.7% / 97.5% / 96.5% identical to master) — DoS is a per-SALT rate applied to a per-PATIENT quantity, never a bespoke doctor instruction. Because `uq` equals the master ceiling 97.5% of the time, you are usually multiplying by a ceiling; ship a confidence flag (HIGH when `uq` deviates, LOW when it equals the max). Prefer the **empirical per-salt rate** derived from realised refills.
+
+**🔒 Scope = primary-disease (D1) salts only** (an OTC line must never dictate cadence — scope FIRST, then roll up). **🔒 Grain = `(customer_id, patient_id, molecule)`** — the send is per customer, the due-date is per patient. Uncomputable ⇒ honest UNKNOWN, never a defaulted date. Test case `order_id 52637339`.
+
+**Also corrected:** `400 PORTAL INCOMPLETE ORDER` is **WORK FLOW**, not ORDER STATUS (0 rows as `orderstatus` in 30d) — the working dead-order set is `(49, 312, 174, 57)`. **`warehouse_details` is the WH master**; `pincode_warehouse_master` is pincode→WH serviceability and must never validate a warehouse id.
+
+**New ledger entries:** L21 row count is not freshness · L22 a check that cannot fail is not a check · L23 a status label is not the status meaning.

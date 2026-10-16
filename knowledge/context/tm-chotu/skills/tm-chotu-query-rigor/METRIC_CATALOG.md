@@ -1,5 +1,7 @@
 # Metric Interpretation Catalog
 
+> **Read `ASK_RESOLVER.md` first.** It maps how people actually phrase an ask onto the canonical metric and its locked DEFAULT branch. This catalog holds the branch *derivations* the resolver cites; the resolver decides whether chotu answers straight away (fast path) or runs the full Intent-First gate.
+
 Presentation index for the Intent-First Protocol (see `SKILL.md`). For each metric: the branches chotu presents at **Step 0**, each citing the **authoritative section skill** for the full derivation. Do NOT copy formulas here — cite, so this never drifts from the owning skill.
 
 Grades of claim:
@@ -15,18 +17,18 @@ If a requested metric is not listed → derive branches from the owning section 
 
 | Branch | Grade | Derivation | When |
 |---|---|---|---|
-| (a) Placed booked revenue (customer payable, net of dead) | **SLICE** | `SUM(fca.final_amount)` (customer payable, NOT `order_value`) at order-placed stage, `organisation_id = 1`, `orderstatus NOT IN (49,274,400,668, 57,232, 174, 312)` = strip incomplete + cancelled + discard + scrapped. **"Net of cancels" = the full DEAD-ORDER STATUS SET, never just 57** (LOCKED in `tm-chotu-definitions`). | Daily trend of what we actually book (Mangesh's canonical "revenue yesterday") |
+| (a) Placed booked revenue (customer payable, net of dead) | **SLICE** | `SUM(fca.final_amount)` (customer payable, NOT `order_value`) at order-placed stage, `organisation_id = 1`, `orderstatus NOT IN (49, 274, 668, 57, 232, 174, 312)` = strip incomplete + cancelled + discard + scrapped. **"Net of cancels" = the full DEAD-ORDER STATUS SET, never just 57** (LOCKED in `tm-chotu-definitions`). | Daily trend of what we actually book (Mangesh's canonical "revenue yesterday") |
 | (b) Placed gross volume proxy | **SLICE** | `SUM(order_details.order_value)`, all placement rows. ⚠️ `order_value` = cart pre-bill, NOT billable — crude volume signal only, never report as revenue. | Rough order-volume momentum |
 | (c) Business / delivered = **GMV** | **LOCKED** | `SUM(final_calculated_amount.final_amount) WHERE order_details.orderstatus = 55 AND organisation_id = 1`. **Never** `order_details.order_value`. | Board / business revenue |
 | (d) Net revenue | **LOCKED** | GMV − returns − refunds. | Revenue net of returns |
 
-**Anti-pattern (Rahul's failure), LOCKED:** (1) using `order_value` as revenue (cart pre-bill); (2) **excluding only `57` when the user says "net of cancels"** — must strip the whole DEAD-ORDER STATUS SET (49,274,400,668, 57,232, 174, 312 = incomplete + cancelled + discard + scrapped; see `tm-chotu-definitions`). Excluding only 57 leaks discarded/incomplete/scrapped junk. Flag explicitly.
+**Anti-pattern (Rahul's failure), LOCKED:** (1) using `order_value` as revenue (cart pre-bill); (2) **excluding only `57` when the user says "net of cancels"** — must strip the whole DEAD-ORDER STATUS SET (49, 274, 668, 57, 232, 174, 312 = incomplete + cancelled + discard + scrapped; see `tm-chotu-definitions`). Excluding only 57 leaks discarded/incomplete/scrapped junk. Flag explicitly.
 
 ## Inventory — authority: `tm-chotu-inventory`
 
 | Branch | Grade | Source | When |
 |---|---|---|---|
-| (a) Business / analytics live qty | **LOCKED** | DB 180 `INVENTORY_SCHEMA.product_inventory_data` (real-time NetSuite sync, universal across all active WHs incl. Vinculum-backed Faridabad). Cross-DB joins → DB 432 `tmmumpsdb.product_inventory_data` (Airbyte mirror). | Business case, availability, stockout% |
+| (a) Business / analytics live qty | **LOCKED** | DB 180 `INVENTORY_SCHEMA.product_inventory_data` (real-time NetSuite sync). ⚠️ **CONTESTED [subject: Faridabad]** — whether Faridabad (Vinculum-backed) is covered by 180 or requires DB 432 is **unresolved**. Do not state 180 as universal; stop and ask on any Faridabad stock question. Cross-DB joins → DB 432 `tmmumpsdb.product_inventory_data` (Airbyte mirror). | Business case, availability, stockout% |
 | (b) WH / physical / rack-level ops | ⚠️ **VERIFY-GAP** | Exact rack/bin-level table NOT yet locked in `tm-chotu-inventory`. Do NOT name a table. State the gap; route to WMS/NetSuite bin data. | Physical/rack ops |
 
 - **Caveat (anchored):** live onhand qty diverges from the *manual* `medicine_warehouse_master.availability` Catalogue flag (JIT → non-onhand ≠ unavailable; flag not real-time). The stronger "live vs a physical/rack source may not reconcile" stays conditional on resolving the VERIFY-GAP.
