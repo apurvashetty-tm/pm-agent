@@ -734,3 +734,14 @@ User identified missing HTML/native linkage. Inspected actual sign-in and OTP HT
 - Developer PRD marked partly out of date; state map, concept and proposal statuses brought up to date.
 - Qty clarified (Apurva, 2026-10-16): no Qty on the Prescribe screen; Qty shown read-only on the case page rows (D-54).
 - Prepared for Apurva: `docs/reviews/2026-10-16-project-truth-review-copy.md` (proposed changes to the locked project_truth.md — not applied).
+
+## 2026-10-16 — NEXT: plan agreed with Apurva (start here in the new thread)
+1. **New thread: click-to-call screens** (D-56, OQ-027, `ui-screens/app-logic.md` §5a).
+   - Agree the flow in words first: calling your phone ("answer the incoming call") · you didn't answer · connecting to the patient · patient didn't pick up / didn't connect (exist) · on call (timer + script, Callback, **no End call**) · call ended before 50 s · 50 s passed (final buttons) · returning to the app from the phone's call screen. Apurva approves states and copy → record as D-57.
+   - Checklist first: existing design-system components only, 360 and 390, standards checklist, only the call states change.
+   - Concept renders of the changed states only, side by side with today's approved ones; review one by one; full-size audit per decision.
+   - On approval: pictures into `ui-screens/case/`; update `app-logic.md`, `docs/feedback-state-map.md`, `ui-screens/feedback/messages.json`; commit to `doctor-portal/sign-in`.
+   - Out of scope there: in-app (VoIP) screens (parked), the docs rewrite, the rebuild. Knowlarity "leg 1 not connected = doctor didn't answer" is an assumption until confirmed.
+2. **Then: one clean documentation rewrite around `ui-screens/`** (Apurva agreed 2026-10-16). Final set: `ui-screens/` + README · `app-logic.md` · `project_truth.md` rewritten short (fold in `docs/reviews/2026-10-16-project-truth-review-copy.md`; Apurva approves) · `messages.json` + `feedback-state-map.md` · `decision_log.md` (kept as is, append only) · `open_questions.md` (open items only) · `CLAUDE.md` (short) · `session_handoff.md` (fresh; this log archived). Everything else → `docs/_superseded/`.
+3. **Then: rebuild from scratch** (D-56): rebuild checklist → build (one file per screen, one case state, mock data/calling separate with a Phone/VoIP demo switch, design-system only, text from messages.json) → photo comparison with `ui-screens/` → audit → Apurva approves.
+- Git: commit only this project's paths, on `doctor-portal/sign-in` (see `AGENTS.md` → Git safety). Not merged to `main` yet; Netlify (main) still shows the old prototype.
