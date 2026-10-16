@@ -39,7 +39,7 @@ SEMANTIC_USAGE = {
     "tm-content-tertiary": "Hints and placeholders only — 3.0:1 on white, never essential information.",
     "tm-content-inverse": "Text and icons on brand, inverse or strong status surfaces.",
     "tm-content-disabled": "Text and icons of disabled controls.",
-    "tm-content-brand": "Brand-blue text: secondary/ghost/link buttons, selected chips, links. 4.9:1 on white.",
+    "tm-content-brand": "Brand-blue text: secondary buttons, selected chips, links. blue-600, AA on white and the light-blue band.",
     "tm-content-success": "Done / saved / savings text and icons.",
     "tm-content-warning": "Needs-attention text and icons.",
     "tm-content-error": "Error, failed or destructive text and icons.",
@@ -47,7 +47,7 @@ SEMANTIC_USAGE = {
     "tm-surface-primary": "Cards, sheets, app bars, inputs — the white working surface.",
     "tm-surface-secondary": "Page background behind cards.",
     "tm-surface-tertiary": "Quiet fills: default tags, skeletons, table hover.",
-    "tm-surface-inverse": "Dark grey: toasts and dark tags.",
+    "tm-surface-inverse": "Dark grey: toasts, the viewer header and dark tags.",
     "tm-surface-brand-subtle": "Selected chip, tinted card, info notice background.",
     "tm-surface-brand-muted": "Light brand fill for decorative brand moments.",
     "tm-surface-brand-default": "Primary button and the one main action. The brand blue.",
@@ -177,16 +177,19 @@ HEAD = '<!doctype html>\n<html><head><meta charset="utf-8"><script src="../../ic
 FOOT = '\n</body></html>\n'
 
 COMPONENTS = {
-    "Button": ("Actions", 200, """Buttons trigger actions; one primary per context. From SALT Buttons 2.0.
+    "Button": ("Actions", 330, """Four roles plus call end (RULES §9.1). One primary per screen or sheet.
 
-- Classes: `tm-btn` + a type (`--primary`, `--secondary`, `--tertiary`, `--ghost`, `--destructive`, `--link`) + optional size (`--lg` 56px, default 48px, `--sm` 40px, `--xs` 32px), `--block` for full width, `--icon` for icon-only.
-- Use `--primary` for the one main action; step others down to secondary → tertiary → ghost → link.
-- `--destructive` for stop/remove/end actions. Disabled via the `disabled` attribute.
-- Icons go before the label: `<span class="tm-icon" data-icon="phone"></span>`.
-""", """<div class="row" style="margin-bottom:12px">
-<button class="tm-btn tm-btn--primary">Primary</button><button class="tm-btn tm-btn--secondary">Secondary</button><button class="tm-btn tm-btn--tertiary">Tertiary</button><button class="tm-btn tm-btn--ghost">Ghost</button><button class="tm-btn tm-btn--destructive">Destructive</button><button class="tm-btn tm-btn--link">Link</button></div>
-<div class="row" style="margin-bottom:12px"><button class="tm-btn tm-btn--primary tm-btn--lg">Large</button><button class="tm-btn tm-btn--primary">Medium</button><button class="tm-btn tm-btn--primary tm-btn--sm">Small</button><button class="tm-btn tm-btn--primary tm-btn--xs">X-Small</button><button class="tm-btn tm-btn--primary" disabled>Disabled</button></div>
-<div class="row"><button class="tm-btn tm-btn--primary"><span class="tm-icon" data-icon="phone"></span>Call patient</button><button class="tm-btn tm-btn--secondary"><span class="tm-icon" data-icon="calendar"></span>Schedule</button><button class="tm-btn tm-btn--destructive"><span class="tm-icon" data-icon="phone-off"></span>End call</button></div>"""),
+- **Primary** `tm-btn--primary`: the one action that moves the flow forward.
+- **Secondary** `tm-btn--secondary`: a real alternative action (white, brand border).
+- **Quiet** `tm-btn--quiet`: leave, cancel, dismiss, "not now" (grey text, no border). Tertiary, ghost and link-styled buttons are retired into Quiet.
+- **Destructive** `tm-btn--destructive`: removes or closes something for good. Red outline, never solid, never the primary role.
+- **Call end** `tm-btn--call-end`: solid red, only for ending a live call.
+- **One height per group** (differ by style, not size): `--lg` 56px for action buttons in a bar, sheet or form; default 48px for compact inline buttons. Nothing tappable is under 48px (`--sm`/`--xs` only in dense desktop tools).
+- **Order:** primary → secondary (a pair may sit side by side in `tm-btn-pair`, no icons) → quiet. Labels: verb first, sentence case.
+- Links stay inside sentences (`tm-btn--link` / plain link).
+""", """<div class="row" style="margin-bottom:12px"><button class="tm-btn tm-btn--primary">Primary</button><button class="tm-btn tm-btn--secondary">Secondary</button><button class="tm-btn tm-btn--quiet">Quiet</button><button class="tm-btn tm-btn--destructive">Destructive</button><button class="tm-btn tm-btn--call-end"><span class="tm-icon" data-icon="phone-x"></span>End call</button></div>
+<div class="row" style="margin-bottom:12px"><button class="tm-btn tm-btn--primary tm-btn--lg">Action 56</button><button class="tm-btn tm-btn--secondary">Compact 48</button><button class="tm-btn tm-btn--quiet tm-btn--icon" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button><button class="tm-btn tm-btn--primary tm-btn--busy" aria-busy="true" disabled><span class="tm-spinner"></span>Sending OTP</button><button class="tm-btn tm-btn--primary" disabled>Disabled</button></div>
+<div style="display:flex;gap:16px;flex-wrap:wrap"><div style="width:360px;max-width:100%" class="tm-actionbar"><button class="tm-btn tm-btn--primary tm-btn--lg">Confirm &amp; transfer</button><div class="tm-btn-pair"><button class="tm-btn tm-btn--secondary tm-btn--lg">Schedule callback</button><button class="tm-btn tm-btn--secondary tm-btn--lg">Skip HA call</button></div></div><div style="width:360px;max-width:100%" class="tm-actionbar"><button class="tm-btn tm-btn--primary tm-btn--lg">Request next case</button><button class="tm-btn tm-btn--quiet tm-btn--lg">Back to Home</button></div></div>"""),
 
     "InputField": ("Forms", 210, """Labelled text entry with helper, error and success text. From SALT Input Fields.
 
@@ -199,18 +202,21 @@ COMPONENTS = {
 <div class="tm-field tm-field--disabled"><label class="tm-field__label">Order ID</label><div class="tm-field__control"><input value="TM-ORD-20240812" disabled></div></div>
 <div class="tm-field" style="grid-column:span 3"><label class="tm-field__label">Doctor notes</label><div class="tm-field__control"><textarea rows="2" placeholder="Clinical observations, instructions…"></textarea></div></div></div>"""),
 
-    "Chip": ("Selection", 72, """Filter and pick-one options. From SALT Chips › Filters.
+    "Chip": ("Selection", 200, """Filter and pick-one options (RULES §9.2).
 
-- `tm-chip` as a `<button>`; selected with `aria-pressed="true"` (or `tm-chip--selected`); disabled via `disabled`.
-- Chips select or filter. They are not buttons for actions and not status labels (use Tag).
-""", """<div class="row"><button class="tm-chip" aria-pressed="true">All</button><button class="tm-chip" aria-pressed="false">Pending</button><button class="tm-chip" aria-pressed="false">Prescribed</button><button class="tm-chip"><span class="tm-icon tm-icon--16" data-icon="plus"></span>Add filter</button><button class="tm-chip" disabled>Disabled</button></div>"""),
+- `tm-chip` as a `<button>`; selected with `aria-pressed="true"`. On mobile always `tm-chip--lg` (48px); the compact chip is for dense desktop tools.
+- **Free-flowing chips** in `tm-chip-group`: width hugs the label and they **wrap** to the next row. Never squeeze, clip or shrink text.
+- **Grid chips** in `tm-chip-grid` (4 equal columns): every grid on one screen uses the same chip size; fewer options leave cells empty instead of stretching.
+- Chips select or filter. They are not action buttons and not status labels (use Tag).
+""", """<div style="display:flex;gap:32px;flex-wrap:wrap;align-items:flex-start"><div class="tm-chip-group" style="width:342px;max-width:100%"><button class="tm-chip tm-chip--lg" aria-pressed="true">After food</button><button class="tm-chip tm-chip--lg">Before food</button><button class="tm-chip tm-chip--lg">Empty stomach</button></div>
+<div style="width:342px;max-width:100%;display:flex;flex-direction:column;gap:8px"><div class="tm-chip-grid"><button class="tm-chip tm-chip--lg">0</button><button class="tm-chip tm-chip--lg">½</button><button class="tm-chip tm-chip--lg" aria-pressed="true">1</button><button class="tm-chip tm-chip--lg">2</button></div><div class="tm-chip-grid"><button class="tm-chip tm-chip--lg">½</button><button class="tm-chip tm-chip--lg" aria-pressed="true">1</button><button class="tm-chip tm-chip--lg">2</button></div></div></div>"""),
 
-    "Tag": ("Status", 64, """Small status label. From SALT Chips › Labels and Text.
+    "Tag": ("Status", 64, """Small status label (RULES §9.3).
 
-- `tm-tag` + tone: `--info` (brand), `--success`, `--warning`, `--critical`, `--dark`; no tone = neutral.
-- The only way to show status in a list or table. Never colour a whole row or card instead.
-- The success tag is 4.0:1 (SALT's pair) — keep labels short and pair with text meaning, not colour alone.
-""", """<div class="row"><span class="tm-tag">Default</span><span class="tm-tag tm-tag--info">Cat4</span><span class="tm-tag tm-tag--success">Prescribed</span><span class="tm-tag tm-tag--warning">Pending</span><span class="tm-tag tm-tag--critical">No pickup</span><span class="tm-tag tm-tag--dark">HA skipped</span></div>"""),
+- `tm-tag` (use `tm-tag--md` on mobile) + tone by meaning: `--success` done · `--warning` needs action · `--neutral` removed / inactive · `--critical` failed · `--info` category.
+- `tm-tag--fixed` reserves the width so the row text never re-wraps when the status changes.
+- The only way to show status in a list or table. Never colour a whole row or card instead. All tones meet AA.
+""", """<div class="row"><span class="tm-tag tm-tag--md tm-tag--success tm-tag--fixed">Prescribed</span><span class="tm-tag tm-tag--md tm-tag--warning tm-tag--fixed">Pending</span><span class="tm-tag tm-tag--md tm-tag--neutral tm-tag--fixed">Disabled</span><span class="tm-tag tm-tag--md tm-tag--critical tm-tag--fixed">Failed</span><span class="tm-tag tm-tag--md tm-tag--info">Cat4</span></div>"""),
 
     "Card": ("Containers", 150, """White grouped container with the SALT card shadow.
 
@@ -221,14 +227,20 @@ COMPONENTS = {
 <div class="tm-card tm-card--flat"><div class="tm-section-title">Flat</div><span class="tm-muted">For dense internal tools.</span></div>
 <div class="tm-card tm-card--tint"><div class="tm-section-title">Tint</div><span class="tm-muted">Highlighted information.</span></div></div>"""),
 
-    "ListRow": ("Containers", 300, """Item rows for medicines, orders and cases, with a real product thumbnail.
+    "ListRow": ("Containers", 230, """Item rows for medicines, orders and cases (RULES §9.3).
 
-- `tm-row` > `tm-thumb` (real photo, never an illustration), `tm-row__main` (`tm-row__title`, `tm-row__meta`), then a trailing tag, value or chevron.
-- Rows inside one card get a `tm-border-subtle` divider automatically.
-""", """<div class="tm-card" style="max-width:420px"><div class="tm-section-title">Medicines · 3</div>
-<div class="tm-row"><div class="tm-thumb"></div><div class="tm-row__main"><div class="tm-row__title">Metformin 500mg</div><div class="tm-row__meta">1-0-1 · Ongoing · Qty 60 · ₹28</div></div><span class="tm-tag tm-tag--success">Prescribed</span></div>
-<div class="tm-row"><div class="tm-thumb"></div><div class="tm-row__main"><div class="tm-row__title">Amlodipine 5mg</div><div class="tm-row__meta">1-0-0 · Ongoing · Qty 30 · ₹52</div></div><span class="tm-tag tm-tag--warning">Pending</span></div>
-<div class="tm-row"><div class="tm-thumb"></div><div class="tm-row__main"><div class="tm-row__title">Atorvastatin 10mg</div><div class="tm-row__meta">0-0-1 · Ongoing · Qty 30 · ₹45</div></div><span class="tm-icon" data-icon="chevron-right"></span></div></div>"""),
+- `tm-row` > `tm-thumb`, `tm-row__main` (`tm-row__title`, `tm-row__meta`), then a trailing tag and `tm-row__chevron`.
+- A chevron only when the row opens something (`tm-row--tappable`, 48px+).
+- **Read-only** (`tm-row--readonly`, e.g. a closed case): muted text, no chevron, not tappable, still readable.
+""", """<div class="tm-card" style="max-width:420px">
+<div class="tm-row tm-row--tappable"><div class="tm-thumb"></div><div class="tm-row__main"><div class="tm-row__title">Metformin 500mg</div><div class="tm-row__meta">1-0-1 · Ongoing (6 months) · Qty 60</div></div><span class="tm-tag tm-tag--md tm-tag--success tm-tag--fixed">Prescribed</span><span class="tm-row__chevron tm-icon" data-icon="chevron-right"></span></div>
+<div class="tm-row tm-row--readonly"><div class="tm-thumb"></div><div class="tm-row__main"><div class="tm-row__title">Amlodipine 5mg</div><div class="tm-row__meta">Read-only: muted, no chevron</div></div><span class="tm-tag tm-tag--md tm-tag--warning tm-tag--fixed">Pending</span><span class="tm-row__chevron tm-icon" data-icon="chevron-right"></span></div></div>"""),
+
+    "StatusCard": ("Feedback", 150, """The outcome of a task (RULES §9.3): icon + title, at the top of the content, stays on screen. Not a toast.
+
+- `tm-status-card` > `tm-status-card__icon`, `tm-status-card__title` (optional `__text`).
+- Success outcomes use the success icon; non-success outcomes add `tm-status-card--neutral` (info icon).
+""", """<div style="display:flex;flex-direction:column;gap:8px;max-width:420px"><div class="tm-status-card"><span class="tm-status-card__icon"><span class="tm-icon" data-icon="circle-check"></span></span><div class="tm-status-card__title">Prescription confirmed</div></div><div class="tm-status-card tm-status-card--neutral"><span class="tm-status-card__icon"><span class="tm-icon" data-icon="info-circle"></span></span><div class="tm-status-card__title">Patient unavailable</div></div></div>"""),
 
     "Notice": ("Feedback", 170, """Inline message inside a screen. Built from SALT's Feedback tokens.
 
@@ -239,11 +251,12 @@ COMPONENTS = {
 <div class="tm-notice tm-notice--warning"><span class="tm-icon" data-icon="alert-triangle"></span><span>Health advisor call pending for this order.</span></div>
 <div class="tm-notice tm-notice--error"><span class="tm-icon" data-icon="alert-circle"></span><span>Call failed. Try again or schedule a callback.</span></div></div>"""),
 
-    "Toast": ("Feedback", 64, """Brief one-line confirmation, bottom centre, above everything. From SALT Toasts.
+    "Toast": ("Feedback", 80, """Brief message where nothing on the screen can show the result (RULES §9.5).
 
-- `tm-toast` is fixed to the bottom centre of the screen. Copy must fit on one line.
-- Auto-dismiss after a few seconds; never put an action the user must take in a toast.
-""", """<div class="row" style="justify-content:center"><span class="tm-toast" style="position:static;transform:none">Recommended substitute added</span></div>"""),
+- `tm-toast`: dark, 14/20, one line (two at most), just above the bottom bar. One at a time, about 4 seconds.
+- `role="status"` (polite); never takes focus; never carries an action or anything the user must do.
+- Prefer showing the outcome where it happens (a tag, a status card, a notice). Toasts are rare.
+""", """<div class="row" style="justify-content:center"><span class="tm-toast" role="status" style="position:static;transform:none">Finish this case first. Then you can go back to Home.</span></div>"""),
 
     "SelectionControls": ("Selection", 120, """Checkbox, radio and toggle. From SALT Checkboxes, Radio Buttons and Toggles.
 
@@ -255,20 +268,27 @@ COMPONENTS = {
 <label class="tm-check"><input type="radio" name="r"> Someone else</label>
 <label class="tm-check"><input type="checkbox" class="tm-toggle" checked> Notify on delivery</label></div>"""),
 
-    "AppBar": ("Navigation", 90, """Sticky top bar for mobile screens, with the SALT header shadow.
+    "AppBar": ("Navigation", 220, """Headers (RULES §8.5): home-base (logo + icon actions), task (hero or compact, Back only where there is a previous screen), **edit screen** and **viewer**.
 
-- `tm-appbar` > back icon, `tm-appbar__title`, then at most one or two trailing items (a tag or icon button).
-""", """<div class="tm-appbar" style="position:static"><span class="tm-icon" data-icon="arrow-left"></span><span class="tm-appbar__title">Consultation</span><span class="tm-tag tm-tag--info">Cat4</span></div>"""),
+- Edit screen `tm-header-edit`: ✕ on the left (asks before discarding), title + subtitle, at most one action on the right.
+- Viewer `tm-header-viewer`: dark bar, ✕, title, tools (`tm-btn--on-dark`, 48px); the title truncates before it touches the tools.
+- Icon buttons are 48px with an accessible name.
+""", """<div style="display:flex;flex-direction:column;gap:16px;max-width:420px"><div class="tm-header-edit"><button class="tm-btn tm-btn--quiet tm-btn--icon" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button><div class="tm-header-edit__text"><div class="tm-header-edit__title">Metformin 500mg</div><div class="tm-header-edit__subtitle">Tablet</div></div><button class="tm-btn tm-btn--destructive">Disable</button></div>
+<div class="tm-header-viewer"><button class="tm-btn tm-btn--on-dark tm-btn--icon" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button><span class="tm-header-viewer__title">Prescription — Ramesh Gupta</span><span class="tm-header-viewer__tools"><button class="tm-btn tm-btn--on-dark tm-btn--icon" aria-label="Zoom out"><span class="tm-icon" data-icon="minus"></span></button><button class="tm-btn tm-btn--on-dark tm-btn--icon" aria-label="Zoom in"><span class="tm-icon" data-icon="plus"></span></button><button class="tm-btn tm-btn--on-dark tm-btn--icon" aria-label="Rotate"><span class="tm-icon" data-icon="rotate-clockwise"></span></button></span></div></div>"""),
 
-    "ActionBar": ("Navigation", 110, """Sticky bottom bar holding the screen's one main action on mobile (SALT Cart CTA bar).
+    "ActionBar": ("Navigation", 170, """Pinned bottom bar for screens without text entry (RULES §8.4, §9.1).
 
-- `tm-actionbar` with a `tm-btn--primary tm-btn--lg tm-btn--block` inside. Keeps the main action in thumb reach.
-""", """<div style="max-width:420px"><div class="tm-actionbar"><button class="tm-btn tm-btn--primary tm-btn--lg tm-btn--block"><span class="tm-icon" data-icon="phone"></span>Call patient</button></div></div>"""),
+- `tm-actionbar`: primary on top, then secondary (a `tm-btn-pair` for two), then quiet. All `--lg` (56px). 24px margins and the safe-area inset. Steps aside while typing.
+""", """<div style="max-width:390px"><div class="tm-actionbar"><button class="tm-btn tm-btn--call-end tm-btn--lg"><span class="tm-icon" data-icon="phone-x"></span>End call</button><button class="tm-btn tm-btn--secondary tm-btn--lg">Schedule callback</button></div></div>"""),
 
-    "BottomSheet": ("Containers", 240, """Mobile panel for choices and details, over a 60% scrim.
+    "BottomSheet": ("Containers", 300, """One template for every sheet (RULES §9.4).
 
-- `tm-overlay` + `tm-sheet` (top corners `tm-radius-2xl`). Title, short content, then the sheet's actions.
-""", """<div style="position:relative;height:208px;overflow:hidden;border-radius:16px"><div class="tm-overlay" style="position:absolute"></div><div class="tm-sheet" style="position:absolute"><div class="tm-text-h2" style="margin-bottom:12px">Mark no pickup?</div><div class="row"><button class="tm-btn tm-btn--tertiary">Cancel</button><button class="tm-btn tm-btn--primary">Confirm</button></div></div></div>"""),
+- `tm-overlay` + `tm-sheet` > `tm-sheet__header` (`tm-sheet__title` 20/28 + `tm-sheet__close` ✕, 48px, no divider, no drag handle), optional `tm-sheet__subtitle`, `tm-sheet__body`, `tm-sheet__actions`.
+- 24px side margins; 16px header → content; 24px + safe area at the bottom. Actions follow the button rules (56px, full width).
+- Reason lists use `tm-option` rows (title + description); tapping applies, no extra button.
+- ✕, tap outside or swipe down = cancel, except while an action is in progress. Max 85% height; max width 640px on desktop.
+""", """<div style="display:flex;gap:16px;flex-wrap:wrap"><div style="position:relative;width:360px;max-width:100%;height:270px;overflow:hidden;border-radius:16px"><div class="tm-overlay" style="position:absolute"></div><div class="tm-sheet" style="position:absolute"><div class="tm-sheet__header"><div class="tm-sheet__title">Leave this case?</div><button class="tm-btn tm-btn--quiet tm-btn--icon tm-sheet__close" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button></div><p class="tm-sheet__subtitle">It goes back to the queue for another doctor.</p><div class="tm-sheet__actions"><button class="tm-btn tm-btn--primary tm-btn--lg">Release case</button><button class="tm-btn tm-btn--quiet tm-btn--lg">Stay on this case</button></div></div></div>
+<div style="position:relative;width:360px;max-width:100%;height:270px;overflow:hidden;border-radius:16px"><div class="tm-overlay" style="position:absolute"></div><div class="tm-sheet" style="position:absolute"><div class="tm-sheet__header"><div class="tm-sheet__title">Skip HA call</div><button class="tm-btn tm-btn--quiet tm-btn--icon tm-sheet__close" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button></div><p class="tm-sheet__subtitle">Choose a reason</p><div class="tm-sheet__body"><button class="tm-option"><span class="tm-option__title">Patient declined HA call</span><span class="tm-option__desc">Patient did not want an HA call</span></button></div></div></div></div>"""),
 
     "SideNav": ("Internal tools (proposed)", 220, """**Proposed — not in SALT.** Left navigation for portals and desktop tools, built from SALT tokens.
 

@@ -87,6 +87,31 @@ automatically, so apply them manually here:
 - Do not move project-specific resume state into `knowledge/`; keep it in the
   active project's `docs/context/session_handoff.md`.
 
+## Definition of done — all work (PRDs, docs, prototypes, screens, analyses)
+
+Apurva's standing rule (2026-10-15). Never discover the standard while reviewing.
+**Draft refinement pending:** the checklist applies in full when finishing, not while exploring ideas — see the draft "Explore → Shape → Finish" notes in `knowledge/learnings/2026-10-15-define-done-before-work.md`.
+
+1. **Before the work:** write what "done" means as a pass/fail checklist, built from
+   the rules, templates and decisions that apply. Every line is checkable; mark it
+   "auto" (a script checks it) or "eye" (a reviewer checks it). Include the approved
+   exceptions. Get Apurva's OK on the checklist before building. Template:
+   `templates/definition-of-done.md`.
+2. **Missing foundations first:** if the work needs a rule, component, template or
+   decision that doesn't exist, add it in its central place first (design system,
+   PRD guide, knowledge), never improvised inside one piece of work.
+3. **Decisions before building:** record agreed decisions in the project's decision
+   log / project files, then build or prompt. Never the other way round.
+4. **Review against the checklist, not taste.** Claude, Codex and any reviewer get the
+   checklist. Reviewer feedback is vetted: adopt what's valid, log what's out of scope,
+   flag doubts. Keep an evidence record (item × checklist line × pass/fail).
+5. **Fix shared things first,** then individual items; compare with the last approved
+   version so a fix can't silently break approved work.
+6. **Finish line:** done = every checklist line passes, reviewers report no blockers,
+   Apurva approves. After that the work is **frozen**: anything new is either a **bug**
+   (fixed only where it occurs) or a **next-version idea** (logged, not applied).
+   New ideas never reopen finished work.
+
 ## Writing or editing a PRD
 
 - Any PRD work (a new PRD, an edit, or a review round on an existing one) follows
@@ -139,6 +164,15 @@ Truemeds Figma library).
 - Before syncing with GitHub, check `git status --short --branch`.
 - Pull with fast-forward only when bringing down remote changes.
 - Keep local project files and handoff files committed together when possible.
+- **One project per commit, on that project's branch** (2026-10-16, after an ACOM commit swept doctor-portal files onto the doctor-portal branch):
+  - Branches: ACOM / Ring-AI → `acom-portal-revamp` · Doctor portal → `doctor-portal/sign-in` (until merged) · design system changes made for a project go with that project's branch. A new project gets its own branch; ask Apurva if unsure.
+  - Before committing, run `git branch --show-current`. If it is not your project's branch, do **not** commit on it and do not switch branches in a shared working copy (another session may be using it): commit through a temporary worktree (`git worktree add <tmp> <branch>`, copy only your files, commit there, push from the main folder, `git worktree remove`).
+  - Stage **only your project's paths** (`git add projects/<your-project> …`). Never `git add -A` / `git add .` at the repo root, and never commit files staged by someone else — check `git diff --cached --name-only` first.
+  - If git leaves a `.lock` file, stop and tell Apurva; don't work around it.
+- **Read a project only on its own branch** (2026-10-16, after a session read July copies of the doctor portal on another branch). Every branch carries a copy of every project folder, but only the project's own branch (or `main`) has it current. Before reading project files, run `git branch --show-current`; if it isn't that project's branch, read through a worktree of the right branch (or `git show <branch>:<path>`). Sanity check: the project's handoff should have recent entries; if it looks months old, you are on the wrong branch — stop.
+  - Project branches: Doctor portal → `doctor-portal/sign-in` · ACOM / Ring AI → `acom-portal-revamp` · Price Lock → `price-lock-proto` · Project South → `project/project-south` · Type 1 revamp → `project/type1-revamp`.
+  - `main` is the official version. Project work reaches `main` through a pull request. To keep a project branch current, merge `main` into it (never the other way without a PR); its own project folder is never overwritten by `main`.
+  - Backups of every branch as of 2026-10-16: tags `backup/2026-10-16/<branch>`.
 
 ## Pushing to GitHub (credentials)
 
