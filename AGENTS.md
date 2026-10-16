@@ -42,14 +42,14 @@ files below.
 - an open question is raised, reviewed or answered in any project (check tm-chotu *before* writing or escalating an open question, and quote what it says in the question's entry);
 - you need to understand how something at Truemeds works today, or how it worked historically (flows, statuses, modules, ownership, past projects).
 
-**How current is it:** `knowledge/context/tm-chotu/` is a snapshot of tm-chotu v0.1.20, copied 2026-08-13. Facts can be out of date — when you use one, say it comes from the tm-chotu snapshot (2026-08-13).
+**How current is it:** `knowledge/context/tm-chotu/` holds tm-chotu **v0.4.3** (released 2026-08-25, copied 2026-10-16). Facts can still be out of date — when you use one, say it comes from tm-chotu v0.4.3 (2026-08-25). To update: replace the folder from a newer package via a `shared/` pull request (see `knowledge/context/tm-chotu-integration.md`).
 
 **When sources disagree:**
 
 | Kind of question | Wins | Note |
 |---|---|---|
 | What a project decided (screens, scope, rules) | The project's `decision_log.md` / `project_truth.md` | tm-chotu doesn't know project decisions. |
-| Company facts (definitions, metrics, statuses, tables, ownership, how a flow works) | tm-chotu snapshot | Dated 2026-08-13; flag anything that may have changed. |
+| Company facts (definitions, metrics, statuses, tables, ownership, how a flow works) | tm-chotu | Dated by its version (v0.4.3, 2026-08-25); flag anything that may have changed. |
 | Live numbers | Live data (Metabase / Mixpanel) | Both files go stale. |
 | Apurva says something that contradicts tm-chotu | What Apurva says | Log the conflict in `knowledge/context/tm-chotu/SKILL_REQUESTS/<date>_<topic>.md` and tell her. |
 
@@ -74,20 +74,18 @@ On trigger, before answering:
 | SQL recipe, "how do I join X to Y" | `knowledge/context/tm-chotu/skills/tm-chotu-joins/SKILL.md` |
 | "What does X mean", define a term, FTC vs FOP, ROAS vs CAC | `knowledge/context/tm-chotu/skills/tm-chotu-definitions/SKILL.md` |
 | Named project (DCOE, TMEXP1/3/4, tm-po-analytics, search-validator, tm-fraud-engine) | `knowledge/context/tm-chotu/skills/tm-chotu-projects/SKILL.md` |
+| Prescription (Rx) lifecycle, doctor-portal statuses (digitized → doctor consult → HA consult → confirmed), Rx register, reused vs fresh Rx | `knowledge/context/tm-chotu/skills/tm-chotu-rx-cadence/SKILL.md` |
+| Anything touching personal data (mobile numbers, emails, addresses, names) — **before** any such query or export | `knowledge/context/tm-chotu/skills/tm-chotu-pii-register/SKILL.md` |
+| Before any non-trivial analysis, or when a result looks too clean / too big / too small | `knowledge/context/tm-chotu/skills/tm-chotu-learnings/SKILL.md` (the failure ledger) |
+| Building or reviewing an Excel (.xlsx) deliverable | `knowledge/context/tm-chotu/skills/tm-chotu-excel-deliverable/SKILL.md` |
 | Any number/metric/count/date/% being pulled or estimated | **Also** read `knowledge/context/tm-chotu/skills/tm-chotu-query-rigor/SKILL.md` + `METRIC_CATALOG.md` before answering |
 
-Hard rules — these replace what the Claude Code plugin's hook would otherwise enforce
-automatically, so apply them manually here:
+tm-chotu rules (the data rules that apply to every project are in **Numbers and data — every project**, below):
 
-- Never state a metric without citing source table + DB + time window.
-- Never accept "all time / since launch / lifetime / ever" as a query window — cap at
-  3 months by default; only widen if the user pushes after you flag it.
-- `customer_order_rank` and `cx_lifetime_metrics.chronic_flag` are known-broken —
-  don't use them; use the on-the-fly derivations noted in the relevant skill file.
-- Treat `KNOWLEDGE_DUMP.md` as dated reference, not live truth, for anything you'd
-  otherwise use a domain-skill file for.
+- `KNOWLEDGE_DUMP.md` is a historical source; where it and a skill disagree, the skill wins.
 - If nothing loaded covers the question, say so explicitly rather than guessing, and
   draft a gap note at `knowledge/context/tm-chotu/SKILL_REQUESTS/<date>_<topic>.md`.
+- `tm-chotu-mood-router` and the plugin's slash commands are Claude Code features; ignore them here.
 
 ## Knowledgebase
 
@@ -101,6 +99,23 @@ automatically, so apply them manually here:
 - Do not bury reusable company/system knowledge only inside a project handoff.
 - Do not move project-specific resume state into `knowledge/`; keep it in the
   active project's `docs/context/session_handoff.md`.
+
+## Numbers and data — every project
+
+Rough, approximate or anecdotal numbers are fine. What isn't allowed is a number with no stated origin — so nobody later mistakes a guess for data. Every number in any doc, PRD, analysis, deck or reply carries its origin:
+
+| Where the number came from | How it's written | Example |
+|---|---|---|
+| Apurva (or another person) said it — approximate, anecdotal, from a meeting | `[USER-PROVIDED]`, plus `approx` and the date if so | "~12,000 orders `[USER-PROVIDED, approx, 2026-10-16]`" |
+| Pulled from data | Source table + database + time window | "4,812 orders `[order_details, DB 170, 1–30 Sep 2026]`" |
+| Estimated or derived | `[INFERRED: how]` | "~40 cases per doctor `[INFERRED: 12,000 ÷ 300]`" |
+| From tm-chotu or another document | The source and its date | "`[tm-chotu v0.4.3, 2026-08-25]`" |
+| Nobody knows where it came from | Not allowed — ask Apurva, or leave it out | — |
+
+When querying data:
+- No "all time / since launch / lifetime / ever" windows — cap at 3 months by default; widen only if Apurva asks after you've flagged it.
+- Don't use `customer_order_rank` or `cx_lifetime_metrics.chronic_flag` (known broken); use the derivations in tm-chotu (`tm-chotu-query-rigor`).
+- Before any query touching personal data, read `tm-chotu-pii-register`.
 
 ## Definition of done — all work (PRDs, docs, prototypes, screens, analyses)
 
