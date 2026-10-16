@@ -38,6 +38,21 @@ you are not 100% certain of. This applies in every tool, not just Claude Code �
 is no auto-loading hook here; you only get this knowledge by actually reading the
 files below.
 
+**Also use it — extensively — whenever** (Apurva, 2026-10-16):
+- an open question is raised, reviewed or answered in any project (check tm-chotu *before* writing or escalating an open question, and quote what it says in the question's entry);
+- you need to understand how something at Truemeds works today, or how it worked historically (flows, statuses, modules, ownership, past projects).
+
+**How current is it:** `knowledge/context/tm-chotu/` holds tm-chotu **v0.4.3** (released 2026-08-25, copied 2026-10-16). Facts can still be out of date — when you use one, say it comes from tm-chotu v0.4.3 (2026-08-25). To update: replace the folder from a newer package via a `shared/` pull request (see `knowledge/context/tm-chotu-integration.md`).
+
+**When sources disagree:**
+
+| Kind of question | Wins | Note |
+|---|---|---|
+| What a project decided (screens, scope, rules) | The project's `decision_log.md` / `project_truth.md` | tm-chotu doesn't know project decisions. |
+| Company facts (definitions, metrics, statuses, tables, ownership, how a flow works) | tm-chotu | Dated by its version (v0.4.3, 2026-08-25); flag anything that may have changed. |
+| Live numbers | Live data (Metabase / Mixpanel) | Both files go stale. |
+| Apurva says something that contradicts tm-chotu | What Apurva says | Log the conflict in `knowledge/context/tm-chotu/SKILL_REQUESTS/<date>_<topic>.md` and tell him. |
+
 On trigger, before answering:
 
 1. Read `knowledge/context/tm-chotu-integration.md` (read order + truth-handling rules).
@@ -59,20 +74,18 @@ On trigger, before answering:
 | SQL recipe, "how do I join X to Y" | `knowledge/context/tm-chotu/skills/tm-chotu-joins/SKILL.md` |
 | "What does X mean", define a term, FTC vs FOP, ROAS vs CAC | `knowledge/context/tm-chotu/skills/tm-chotu-definitions/SKILL.md` |
 | Named project (DCOE, TMEXP1/3/4, tm-po-analytics, search-validator, tm-fraud-engine) | `knowledge/context/tm-chotu/skills/tm-chotu-projects/SKILL.md` |
+| Prescription (Rx) lifecycle, doctor-portal statuses (digitized → doctor consult → HA consult → confirmed), Rx register, reused vs fresh Rx | `knowledge/context/tm-chotu/skills/tm-chotu-rx-cadence/SKILL.md` |
+| Anything touching personal data (mobile numbers, emails, addresses, names) — **before** any such query or export | `knowledge/context/tm-chotu/skills/tm-chotu-pii-register/SKILL.md` |
+| Before any non-trivial analysis, or when a result looks too clean / too big / too small | `knowledge/context/tm-chotu/skills/tm-chotu-learnings/SKILL.md` (the failure ledger) |
+| Building or reviewing an Excel (.xlsx) deliverable | `knowledge/context/tm-chotu/skills/tm-chotu-excel-deliverable/SKILL.md` |
 | Any number/metric/count/date/% being pulled or estimated | **Also** read `knowledge/context/tm-chotu/skills/tm-chotu-query-rigor/SKILL.md` + `METRIC_CATALOG.md` before answering |
 
-Hard rules — these replace what the Claude Code plugin's hook would otherwise enforce
-automatically, so apply them manually here:
+tm-chotu rules (the data rules that apply to every project are in **Numbers and data — every project**, below):
 
-- Never state a metric without citing source table + DB + time window.
-- Never accept "all time / since launch / lifetime / ever" as a query window — cap at
-  3 months by default; only widen if the user pushes after you flag it.
-- `customer_order_rank` and `cx_lifetime_metrics.chronic_flag` are known-broken —
-  don't use them; use the on-the-fly derivations noted in the relevant skill file.
-- Treat `KNOWLEDGE_DUMP.md` as dated reference, not live truth, for anything you'd
-  otherwise use a domain-skill file for.
+- `KNOWLEDGE_DUMP.md` is a historical source; where it and a skill disagree, the skill wins.
 - If nothing loaded covers the question, say so explicitly rather than guessing, and
   draft a gap note at `knowledge/context/tm-chotu/SKILL_REQUESTS/<date>_<topic>.md`.
+- `tm-chotu-mood-router` and the plugin's slash commands are Claude Code features; ignore them here.
 
 ## Knowledgebase
 
@@ -86,6 +99,23 @@ automatically, so apply them manually here:
 - Do not bury reusable company/system knowledge only inside a project handoff.
 - Do not move project-specific resume state into `knowledge/`; keep it in the
   active project's `docs/context/session_handoff.md`.
+
+## Numbers and data — every project
+
+Rough, approximate or anecdotal numbers are fine. What isn't allowed is a number with no stated origin — so nobody later mistakes a guess for data. Every number in any doc, PRD, analysis, deck or reply carries its origin:
+
+| Where the number came from | How it's written | Example |
+|---|---|---|
+| Apurva (or another person) said it — approximate, anecdotal, from a meeting | `[USER-PROVIDED]`, plus `approx` and the date if so | "~12,000 orders `[USER-PROVIDED, approx, 2026-10-16]`" |
+| Pulled from data | Source table + database + time window | "4,812 orders `[order_details, DB 170, 1–30 Sep 2026]`" |
+| Estimated or derived | `[INFERRED: how]` | "~40 cases per doctor `[INFERRED: 12,000 ÷ 300]`" |
+| From tm-chotu or another document | The source and its date | "`[tm-chotu v0.4.3, 2026-08-25]`" |
+| Nobody knows where it came from | Not allowed — ask Apurva, or leave it out | — |
+
+When querying data:
+- No "all time / since launch / lifetime / ever" windows — cap at 3 months by default; widen only if Apurva asks after you've flagged it.
+- Don't use `customer_order_rank` or `cx_lifetime_metrics.chronic_flag` (known broken); use the derivations in tm-chotu (`tm-chotu-query-rigor`).
+- Before any query touching personal data, read `tm-chotu-pii-register`.
 
 ## Definition of done — all work (PRDs, docs, prototypes, screens, analyses)
 
@@ -166,14 +196,20 @@ Truemeds Figma library).
 - Keep local project files and handoff files committed together when possible.
 - Before merging into `main` or changing anything that deploys, read `docs/TEAM_GIT_WORKFLOW.md` → **Deployments** (pushes to `main` go live).
 - Record exceptions — deployment/hosting changes, repository-setting changes, known merge traps — in `docs/TEAM_GIT_WORKFLOW.md` → **Operations log** (date · who and which tool/AI · what · why · follow-up). Normal commits need no log entry; git history is the log.
-- **One `main`, projects in folders** (2026-10-16, Apurva — replaces project branches). Every project lives in its own folder under `projects/` on `main`; there are no long-lived project branches. The attached pm-agent folder stays on `main` — never switch branches in it (other threads share it).
-  - **Publish with `scripts/publish.sh -m "message" <paths…>`** from the pm-agent folder: it checks the folder is on `main`, refuses if someone else's files are staged or a `.lock` file exists, brings `main` up to date, commits only the named paths, and pushes to GitHub `main`. Name your files explicitly — never `git add -A` / `git add .`.
-  - **Commit check:** `scripts/git-hooks/pre-commit` (enabled in Apurva's checkout via `core.hooksPath`) refuses any commit touching more than one project folder. Shared folders (`design-system/`, `knowledge/`, `docs/`, root files) may go with one project's commit.
-  - **Swapnil's projects** (Type 1 revamp → `project/type1-revamp`, Project South → `project/project-south`) follow his own flow: his branches, merged to `main` by his pull requests (`CONTRIBUTING.md`, each project's `CONTINUITY.md`). Never commit to, merge, rebase or delete his branches.
-  - Apurva's own checkout publishes straight to `main` (owner). Collaborators (e.g. Swapnil) use short-lived branches and pull requests (`CONTRIBUTING.md`). Use `--pr` when Apurva wants a change reviewed before it reaches `main`.
-  - `main` changes to a deployed prototype go live (see `docs/TEAM_GIT_WORKFLOW.md` → Deployments). Build big rewrites (e.g. the doctor-portal rebuild) in a new folder and switch the live files only when Apurva approves.
-  - If git leaves a `.lock` file, stop and tell Apurva; don't work around it.
-  - Old branches are backed up as tags `backup/2026-10-16/*` and `backup/pre-trunk/*`. `price-lock-proto` stays only as the Price Lock site's deploy source until that site is re-linked to `main`; don't work on it.
+- **Branches: `main` = approved only; one project, one branch** (2026-10-16, Apurva — final model, reviewed with Codex).
+  - **`main` holds only approved work.** Nothing is committed on it; it changes only by merging a pull request — as normal merge commits, never squash or rebase. **Merge only when Apurva says so in the conversation** (GitHub can't tell his approval from an AI using his login). The Netlify live links deploy from `main`.
+  - **One project, one branch:** `project/<folder-name>` for `projects/<folder-name>/` (e.g. `project/truemeds-doctor-portal-prototype`). The branch lives while the project is active and stays after each merged pull request, catching up with `main` on every publish.
+  - **One folder per branch:** `.work/<folder-name>/` inside pm-agent (git worktree, git-ignored). Threads for a project work only there. The main pm-agent folder stays on `main` as a read-only reference — never edit, commit or switch branches in it.
+  - **Start or reopen work:** `scripts/start-project.sh <folder-name>` — creates the branch and folder from the latest `main` if needed (a new project gets the standard scaffold), otherwise brings the folder up to date (GitHub branch first, then `main`), and prints the folder path. Confirm a new project's name with Apurva first.
+  - **Publish:** from the project's folder, `scripts/publish.sh -m "message" <files>` — commits only the named files, syncs with the branch on GitHub, merges the latest `main`, checks that the whole branch only changes its own project, pushes the branch and prints the pull-request link. It says plainly whether the work was not committed, committed but not pushed, or pushed. Claude threads then open the pull request (GitHub tool) if none is open. Never `git add -A` / `git add .`.
+  - **Pause / retire a project:** when everything is merged, `scripts/workspace.sh close project <folder-name>` removes the folder, the local branch **and the branch on GitHub**, so reopening starts fresh from `main`. It stops (removing nothing) if anything is unmerged, unpushed, or would be lost — uncommitted, untracked or ignored files, except `.DS_Store`.
+  - **Shared things** (knowledge base, design system, templates, workflows, rules): changed *for* a project → on that project's branch, in the same pull request. Changed on their own → `scripts/workspace.sh shared <topic>` (branch `shared/<topic>`, folder `.work/shared-<topic>/`), their own pull request.
+  - **Checks** (enabled in Apurva's checkout via `core.hooksPath=scripts/git-hooks`; collaborators unaffected): `pre-commit` and `pre-merge-commit` refuse commits on `main`, with no branch, or on Swapnil's branches; on `project/<name>` refuse changes to other project folders; on `shared/<topic>` refuse project-folder changes; a merge may only bring in what's already in `main`. File names are read NUL-safe.
+  - **Swapnil's projects** (Type 1 revamp → `project/type1-revamp`, Project South → `project/project-south`) follow his own flow (`CONTRIBUTING.md`, each project's `CONTINUITY.md`): he opens the pull requests, Apurva approves. The scripts and checks refuse to touch his branches; never commit to, merge, rebase or delete them.
+  - **Folders work from any session or device:** the scripts keep each `.work/` folder's git link relative and locked. Don't create `.work/` folders with plain `git worktree add`, and don't delete them by hand; use the scripts. **One git command at a time per folder**: two threads must not run git in the same project folder simultaneously.
+  - **Delete permission (prevents stuck `.lock` files):** in Cowork, before the first git command in a thread or scheduled run, request delete permission for the pm-agent folder (`device_request_delete_permission`). If a `.lock` file exists, stop and tell Apurva unless you know your own command left it.
+  - **What is enforced where:** GitHub enforces "pull request into `main`" (and, once the admin-bypass setting is on, even for Apurva's login). The scripts and checks above enforce one-project branches locally. Raw git commands (`--no-verify`, manual fast-forwards, pushing by hand) can skip local checks — so always use the scripts. Merging only on Apurva's say-so is an instruction, not a check.
+  - Backups of all old branches: tags `backup/2026-10-16/*` and `backup/pre-trunk/*`. `price-lock-proto` stays only as the Price Lock site's deploy source until that site is re-linked to `main`; don't work on it. `scripts/commit-and-push.sh` and `scripts/weekly_synthesis.py` are retired.
 - **Working in parallel** (2026-10-16, Apurva): several threads / AIs on one project at once is normal. The handoff and decision log pass context *over time*; they do not coordinate threads running *at the same time*, so:
   - **Read:** any number of threads, any time.
   - **Write:** one thread per file or area at a time (e.g. one thread owns the calling screens, another the docs rewrite — different files, so they can run together). Before editing a file another thread may be working on, re-read it from disk immediately before writing; never save a version built from an earlier read.
@@ -185,5 +221,5 @@ Truemeds Figma library).
 - This checkout uses `https://github.com/apurvashetty-tm/pm-agent.git` with a repository-local credential helper. In Cowork, attach the pm-agent folder and run git through `device_bash` at its mounted path. The GitHub connector and Computer Use Terminal are not needed.
 - The helper finds its credential file through the repository's shared git directory (`--git-common-dir`), so it works from the main folder and from temporary worktrees alike (fixed 2026-10-16).
 - Never embed a token in a remote URL, commit credentials, print credential files, run `git credential fill`, or enable credential tracing.
-- Normal publishing: `scripts/publish.sh` (see Git safety). Never force-push.
+- Normal publishing: `scripts/publish.sh` from a project's or shared folder (see Git safety). Never force-push; never push to `main`.
 - Diagnose network, filesystem, authentication and branch-protection failures separately; a failed push doesn't always mean an expired token.

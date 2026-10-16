@@ -24,7 +24,8 @@ There is no root package.json, build step, linter, or test runner. Do not assume
 
 ```bash
 # Push archives to GitHub (auto-invoked by workflows; run manually only if asked)
-scripts/commit-and-push.sh "commit message"
+scripts/start-project.sh <project-folder>          # open the project's working folder (.work/<project>)
+scripts/publish.sh -m "commit message" <files>   # from that folder: push the branch for a pull request
 
 # Compute next version filename for an archive type + feature
 ~/pm-agent/scripts/get-next-version.sh "archives/projects" "feature-name"
@@ -32,7 +33,6 @@ scripts/commit-and-push.sh "commit message"
 
 # Weekly self-learning synthesis (extracts corrections/patterns from git history into changelogs/)
 node scripts/run-synthesis.js
-python scripts/weekly_synthesis.py
 ```
 
 No install step; scripts are standalone bash/node/python with no dependency manifest.

@@ -13,7 +13,15 @@ const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
 
-const REPO_ROOT = path.resolve(process.cwd());
+// Repo root = the folder this script lives in (its .work/shared-weekly-auto copy), never the current directory.
+const REPO_ROOT = path.resolve(__dirname, '..');
+{
+  const br = require('child_process').execSync('git branch --show-current', { cwd: REPO_ROOT }).toString().trim();
+  if (br !== 'shared/weekly-auto') {
+    console.error(`Stop: run this from the shared/weekly-auto folder (scripts/workspace.sh shared weekly-auto); this copy is on '${br || 'no branch'}'.`);
+    process.exit(1);
+  }
+}
 const CHANGELOGS_DIR = path.join(REPO_ROOT, 'changelogs');
 const WORKFLOWS_DIR = path.join(REPO_ROOT, 'workflows');
 const ARCHIVES_DIR = path.join(REPO_ROOT, 'archives');
@@ -250,14 +258,14 @@ function commitAndPush(updateCount, learnings) {
     const summary = learnings.slice(0, 2).join(', ');
     const message = `Weekly synthesis [${today}]: ${updateCount} learning(s) recorded (${summary})`;
 
-    execSync('git add changelogs/', { cwd: REPO_ROOT, stdio: 'pipe' });
-    execSync(`git commit -m "${message}"`, { cwd: REPO_ROOT, stdio: 'pipe' });
-    execSync('git push origin main', { cwd: REPO_ROOT, stdio: 'pipe' });
+    // Publishes to the current branch (shared/weekly-auto) for a pull request; never to main.
+    execSync(`scripts/publish.sh -m "${message}" changelogs`, { cwd: REPO_ROOT, stdio: 'inherit' });
 
-    console.log(`\n✅ Committed & pushed: "${message}"\n`);
+    console.log(`\n✅ Published for review: "${message}"\n`);
   } catch (err) {
+    process.exitCode = 1;
     console.error('\n⚠️  Commit/push failed:', err.message);
-    console.log('   (Changes are staged locally. Review with: git status)\n');
+    console.log('   (Not published — see the publish message above. Nothing was pushed to main.)\n');
   }
 }
 
@@ -291,4 +299,4 @@ try {
 } catch (err) {
   console.error('❌ Synthesis failed:', err.message);
   process.exit(1);
-} EOF
+}

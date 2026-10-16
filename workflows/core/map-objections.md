@@ -184,7 +184,7 @@ I will automatically:
 
 3. **Auto-commit and push**:
 ```bash
-   ~/pm-agent/scripts/commit-and-push.sh "Add Objections: [feature-name] (v#)"
+   scripts/publish.sh -m "Add Objections: [feature-name] (v#)" <files>   # from the project's folder; then open the pull request
 ```
 
 4. **Result**:

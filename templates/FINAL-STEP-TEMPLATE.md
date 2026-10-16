@@ -13,10 +13,10 @@ I will use `~/pm-agent/scripts/get-next-version.sh` to auto-increment versions.
 ## 2. Save the file to disk
 I will write the final document directly to the correct archive folder.
 
-## 3. Run the commit-and-push script
+## 3. Publish for review (pull request)
 I will execute:
 ```bash
-~/pm-agent/scripts/commit-and-push.sh "Add [DOC-TYPE]: [feature-name] (v#)"
+scripts/publish.sh -m "Add [DOC-TYPE]: [feature-name] (v#)" <files>   # from the project's folder (.work/<project>), then open the pull request
 ```
 
 ## 4. Verify success

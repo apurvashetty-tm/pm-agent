@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# Automatic (conflict-free) merges skip pre-commit; this runs for them.
+exec "$(git rev-parse --show-toplevel)/scripts/git-hooks/check-commit" merge

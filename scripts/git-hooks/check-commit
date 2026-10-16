@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+# Commit check for Apurva's checkout (core.hooksPath=scripts/git-hooks). Called by pre-commit and pre-merge-commit.
+#   $1 = "commit" (normal) or "merge" (completing a merge)
+set -u
+top=$(git rev-parse --show-toplevel); source "$top/scripts/lib-worktree.sh"
+refuse() { echo "Commit refused: $1" >&2; echo "See AGENTS.md -> Git safety." >&2; exit 1; }
+branch=$(git symbolic-ref --short -q HEAD) || refuse "no branch checked out (detached HEAD)."
+[ "$branch" = main ] && refuse "commits never go straight to main. Work in your project's folder (scripts/start-project.sh <project>) and publish with scripts/publish.sh."
+refuse_collaborator_branch "$branch" >&2 || exit 1
+mode=$1; [ -f "$(git rev-parse --absolute-git-dir)/MERGE_HEAD" ] && mode=merge
+if [ "$mode" = merge ]; then
+  # A merge may only bring in main: every project folder other than the branch's own must equal origin/main.
+  git rev-parse -q --verify origin/main >/dev/null || refuse "origin/main is unknown; run git fetch first."
+  scope=$(branch_scope "$branch")
+  list=$(touched_projects --cached HEAD) || refuse "couldn't read the staged changes (git diff failed)."
+  while IFS= read -r p; do
+    [ -z "$p" ] && continue
+    [[ "$p" =~ ^[A-Za-z0-9][A-Za-z0-9._\ -]*$ ]] || refuse "unusual project folder name in this merge: $p"
+    [ "$p" = "$scope" ] && continue
+    git diff --cached --quiet origin/main -- "projects/$p"; rc=$?
+    [ $rc -eq 0 ] && continue
+    [ $rc -eq 1 ] && refuse "this merge brings in projects/$p/ changes that aren't in main (branch $branch)."
+    refuse "couldn't compare projects/$p/ with main (git diff failed)."
+  done <<< "$list"
+else
+  list=$(touched_projects --cached HEAD) || refuse "couldn't read the staged changes (git diff failed)."
+  reason=$(check_scope "$branch" <<< "$list") || refuse "$reason"
+fi
+exit 0

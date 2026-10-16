@@ -5,7 +5,7 @@ workflows, templates, decisions, and reusable knowledge.
 
 ## Working agreement
 
-(Apurva's own checkout publishes directly to `main` with `scripts/publish.sh`; everyone else follows the steps below.)
+(Everyone — Apurva's own AI threads included — reaches `main` only through an approved pull request. Apurva's checkout uses `scripts/start-project.sh` and `scripts/publish.sh` to do the steps below; see `AGENTS.md` → Git safety.)
 
 1. Pull the latest `main` branch before starting.
 2. Create a short-lived branch from `main`.
