@@ -1,6 +1,6 @@
 # Truemeds Doctor Portal Prototype — Claude Rules
 
-> **Branch check first:** this project lives on branch `doctor-portal/sign-in` (and `main` after each merge). Run `git branch --show-current` before reading anything. On any other branch these files are old copies (e.g. a handoff from July, no `ui-screens/` screens) — stop and switch to a worktree of `doctor-portal/sign-in`.
+> **Git:** this project lives on `main` (no project branch since 2026-10-16). The pm-agent folder stays on `main`; publish with `scripts/publish.sh` (see the repo's `AGENTS.md` → Git safety). If you find yourself on another branch, the files may be old copies — stop.
 
 ## What this project is
 
