@@ -164,6 +164,8 @@ Truemeds Figma library).
 - Before syncing with GitHub, check `git status --short --branch`.
 - Pull with fast-forward only when bringing down remote changes.
 - Keep local project files and handoff files committed together when possible.
+- Before merging into `main` or changing anything that deploys, read `docs/TEAM_GIT_WORKFLOW.md` → **Deployments** (pushes to `main` go live).
+- Record exceptions — a push to `main` without a pull request, deployment/hosting changes, repository-setting changes, known merge traps — in `docs/TEAM_GIT_WORKFLOW.md` → **Operations log** (date · who and which tool/AI · what · why · follow-up). Normal commits need no log entry; git history is the log.
 - **One project per commit, on that project's branch** (2026-10-16, after an ACOM commit swept doctor-portal files onto the doctor-portal branch):
   - Branches: ACOM / Ring-AI → `acom-portal-revamp` · Doctor portal → `doctor-portal/sign-in` (until merged) · design system changes made for a project go with that project's branch. A new project gets its own branch; ask Apurva if unsure.
   - Before committing, run `git branch --show-current`. If it is not your project's branch, do **not** commit on it and do not switch branches in a shared working copy (another session may be using it): commit through a temporary worktree (`git worktree add <tmp> <branch>`, copy only your files, commit there, push from the main folder, `git worktree remove`).
