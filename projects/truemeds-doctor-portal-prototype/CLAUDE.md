@@ -1,6 +1,6 @@
 # Truemeds Doctor Portal Prototype — Claude Rules
 
-> **Git:** this project lives on `main` (no project branch since 2026-10-16). The pm-agent folder stays on `main`; publish with `scripts/publish.sh` (see the repo's `AGENTS.md` → Git safety). If you find yourself on another branch, the files may be old copies — stop.
+> **Git:** this project lives on branch `project/truemeds-doctor-portal-prototype`, in the folder `pm-agent/.work/truemeds-doctor-portal-prototype` (open it with `scripts/start-project.sh truemeds-doctor-portal-prototype`). Work and publish only there (`scripts/publish.sh -m "..." <files>`); changes reach `main` through a pull request Apurva merges. The main pm-agent folder is read-only. Rules: repo `AGENTS.md` → Git safety.
 
 ## What this project is
 
