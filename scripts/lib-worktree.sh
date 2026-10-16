@@ -45,7 +45,10 @@ out = set()
 for n in names:
     parts = n.split(b'/')
     if len(parts) >= 3 and parts[0] == b'projects':
-        out.add(parts[1].decode('utf-8', 'surrogateescape'))
+        name = parts[1].decode('utf-8', 'backslashreplace')
+        if '\n' in name or '\r' in name:      # never let a line break split one folder into several names
+            name = 'INVALID:' + name.encode('unicode_escape').decode('ascii')
+        out.add(name)
 for p in sorted(out): print(p)
 PYX
   rm -f "$tmp"
@@ -61,6 +64,8 @@ check_scope() {   # $1 = branch
   local scope list bad
   scope=$(branch_scope "$1"); list=$(cat)
   [ -z "$list" ] && return 0
+  bad=$(printf '%s\n' "$list" | grep -v -E '^[A-Za-z0-9][A-Za-z0-9._ -]*$' || true)
+  [ -z "$bad" ] || { echo "unusual project folder name (line break or other special character): $(echo $bad)"; return 1; }
   case "$scope" in
     NONE) echo "shared/ branches don't change project folders (found: $(echo $list))"; return 1;;
     ANY1) [ "$(printf '%s\n' "$list" | grep -c .)" -le 1 ] || { echo "touches more than one project: $(echo $list)"; return 1; };;

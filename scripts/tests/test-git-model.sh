@@ -50,6 +50,16 @@ expect_ok "newline file name in own project" git commit -q -m nl2; need git rese
 need git checkout -q --detach; echo d > projects/zz/d.md; need git add projects/zz/d.md
 expect_refused "commit on detached HEAD" git commit -q -m d; git reset -q --hard; rm -f projects/zz/d.md; need git checkout -q project/zz
 
+echo "3b. line break inside a project folder name"
+d=$'projects/zz\nzz/file.md'; mkdir -p "$(dirname "$d")" || { echo "SETUP FAILED: newline dir"; exit 2; }; echo e > "$d"; need git add -- "$d"
+expect_refused "commit with a line break in a project folder name" git commit -q -m nd; git reset -q --hard; rm -rf $'projects/zz\nzz'
+need git checkout -q -b nl-src; mkdir -p $'projects/zz\nzz'; echo e > "$d"; need git add -- "$d"; need $RAW commit -q -m "nl dir"; need git checkout -q project/zz
+expect_refused "merge commit bringing in a line-break project folder" git merge -q --no-ff --no-edit nl-src; git merge --abort 2>/dev/null; git reset -q --hard
+need git merge -q --ff-only nl-src 2>/dev/null || { git reset -q --hard nl-src; }
+echo z2 > projects/zz/z2.md
+out=$(scripts/publish.sh -m nl projects/zz/z2.md 2>&1); echo "$out" | grep -q -E "unusual project folder name|would change more than it may" && pass "publish check stops a line-break project folder" || fail "publish nl: $out"
+need git reset -q --hard origin/project/zz; git branch -q -D nl-src; rm -rf $'projects/zz\nzz'
+
 echo "4. failing git diff must reject (mocked)"
 mkdir -p $T/fakebin; cat > $T/fakebin/git <<'FG'
 #!/usr/bin/env bash

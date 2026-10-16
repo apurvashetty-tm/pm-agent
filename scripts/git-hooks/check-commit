@@ -14,7 +14,9 @@ if [ "$mode" = merge ]; then
   scope=$(branch_scope "$branch")
   list=$(touched_projects --cached HEAD) || refuse "couldn't read the staged changes (git diff failed)."
   while IFS= read -r p; do
-    [ -z "$p" ] || [ "$p" = "$scope" ] && continue
+    [ -z "$p" ] && continue
+    [[ "$p" =~ ^[A-Za-z0-9][A-Za-z0-9._\ -]*$ ]] || refuse "unusual project folder name in this merge: $p"
+    [ "$p" = "$scope" ] && continue
     git diff --cached --quiet origin/main -- "projects/$p"; rc=$?
     [ $rc -eq 0 ] && continue
     [ $rc -eq 1 ] && refuse "this merge brings in projects/$p/ changes that aren't in main (branch $branch)."
