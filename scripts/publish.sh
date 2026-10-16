@@ -6,6 +6,10 @@ set -euo pipefail
 msg=""; paths=()
 while [ $# -gt 0 ]; do case "$1" in -m) msg="$2"; shift 2;; *) paths+=("$1"); shift;; esac; done
 [ -n "$msg" ] && [ ${#paths[@]} -gt 0 ] || { echo 'usage: scripts/publish.sh -m "message" path [path ...]'; exit 2; }
+source "$(dirname "$0")/lib-worktree.sh"
+here="$(pwd -P)"
+while [ "$here" != / ] && [ ! -e "$here/.git" ]; do here=$(dirname "$here"); done
+[ -f "$here/.git" ] && { fix_worktree_links "$here" || exit 1; }
 cd "$(git rev-parse --show-toplevel)"
 common="$(git rev-parse --path-format=absolute --git-common-dir)"
 for l in "$common"/*.lock "$(git rev-parse --absolute-git-dir)"/*.lock; do [ -e "$l" ] && { echo "Stop: git lock file $l exists. See AGENTS.md -> Git (delete permission)."; exit 1; }; done
