@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>POD Impact + OMS/Cart Migration</title>
+<style>
+  :root { --red:#c00; --green:#0a7d29; --line:#000; }
+  * { box-sizing: border-box; }
+  html,body { background:#fff; color:#000; margin:0; }
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px; line-height: 1.35;
+    max-width: 900px; margin: 0 auto; padding: 22px 26px;
+  }
+  h1 { font-size: 18px; margin: 0 0 2px; }
+  h2 { font-size: 13px; margin: 16px 0 6px; text-transform: uppercase; letter-spacing: .04em; border-bottom: 1.5px solid var(--line); padding-bottom: 3px; }
+  .sub { font-size: 11px; margin: 0 0 4px; }
+  .spine { border-left: 3px solid var(--red); padding: 6px 10px; margin: 8px 0 2px; font-size: 12.5px; }
+  table { width: 100%; border-collapse: collapse; margin: 4px 0; }
+  th, td { border: 1px solid var(--line); padding: 5px 7px; text-align: left; vertical-align: top; }
+  th { font-size: 10.5px; text-transform: uppercase; letter-spacing: .03em; }
+  .g { color: var(--green); font-weight: bold; white-space: nowrap; }
+  .r { color: var(--red); font-weight: bold; }
+  .chips { margin: 4px 0; }
+  .chip { display: inline-block; border: 1px solid var(--line); border-radius: 3px; padding: 2px 8px; margin: 2px 4px 2px 0; font-size: 11px; }
+  ul { margin: 4px 0; padding-left: 18px; }
+  li { margin: 2px 0; }
+  td ul { margin: 0; padding-left: 15px; }
+  td ul li { margin: 1px 0; }
+  .drv-intro { margin: 0 0 3px; }
+  .mw { color: var(--red); font-weight: bold; white-space: nowrap; }
+  .note { font-style: italic; font-size: 10.5px; }
+  .tot { font-size: 15px; }
+  .two { display: flex; gap: 14px; }
+  .two > div { flex: 1; border: 1px solid var(--line); padding: 8px 10px; }
+  .foot { font-size: 10px; color:#000; margin-top: 14px; border-top: 1px solid var(--line); padding-top: 5px; }
+  .ask { border: 2px solid var(--red); padding: 8px 10px; margin: 6px 0; }
+  small.d { font-size: 10px; color: var(--red); }
+  @media print { body { padding: 0; } }
+</style>
+</head>
+<body>
+
+<h1>POD — Impact &amp; OMS / Cart Migration</h1>
+<p class="sub"><b>Payments + Portals</b> (6 engineers + 2 leads) &middot; one story &middot; the post-order downstream layer: reliability, compliance, recovery, cost, capacity &mdash; between preorder and postorder.</p>
+<p class="sub">Alignment with VP Product + Engineering Director, before the CEO call &middot; 2026-08-19</p>
+
+<div class="spine">
+We moved these numbers through <b>functional and non-functional work &mdash; without blocking a single business project.</b> That freed capacity, and the same team is now unblocking Cart &mdash; here is where Product&rsquo;s bandwidth is going, and the future backlog + vision it is surfacing along the way.
+</div>
+
+<h2>1 &middot; Impact — outcomes and what drove them</h2>
+<table>
+  <tr><th>Outcome (L1)</th><th>Baseline &rarr; Current</th><th>What drove it (L2)</th></tr>
+  <tr>
+    <td><b>HA CPO</b></td>
+    <td><span class="g">&#8377;16.5 &rarr; &#8377;7.8</span><br>~&#8377;67L/mo saved<br><small>FY-end goal, hit ~8 mo early</small></td>
+    <td><p class="drv-intro">HA headcount reduction, driven by:</p><ul><li>Substitution skips</li><li>Prescription-required handling</li><li>HAs unable to confirm orders</li><li>Forced substitutions</li><li>HAs unable to log in</li><li>HAs not getting orders</li></ul></td>
+  </tr>
+  <tr>
+    <td><b>Pharmacist / CSR CPO</b></td>
+    <td><span class="g">&#8377;14 &rarr; ~&#8377;9</span><br><small>same FY-end goal, ~8 mo early</small></td>
+    <td><ul><li>Voicebot: 55% of call volume auto-handled &amp; resolved</li><li>Only 13% call back (87% contained)</li></ul></td>
+  </tr>
+  <tr>
+    <td><b>Stuck orders</b><br><small>(incomplete / payment-pending / status)</small></td>
+    <td><span class="g">~100/day &rarr; ~0</span></td>
+    <td><ul><li>Order-state + payment/decimal-mismatch fixes</li><li>Cleaner order progression, healthier OP&rarr;OD</li></ul></td>
+  </tr>
+  <tr>
+    <td><b>Engineers freed</b></td>
+    <td><span class="g">support/on-call &rarr; ~1/3</span></td>
+    <td><ul><li>Recurring bug-fix + KTLO for doctors/HAs cleared</li><li>More engineers available for functional / impactful work</li></ul></td>
+  </tr>
+</table>
+<p class="sub"><small>Proof of mechanism: HA order-confirmation failures (every alternate day, most orders) &rarr; <b>zero</b>; Value-Meds telecom switching (was 4 incidents/mo, 2 eng each) &rarr; business toggle, last switch ran with <b>zero engineering</b>.</small></p>
+
+<h2>2 &middot; We did not block business</h2>
+<p class="sub">Delivered / enabled alongside the foundational work &mdash; clearing recurring ops is what dropped support man-hours to ~1/3 and freed engineers for these:</p>
+<ul>
+  <li><b>Call-skipping logic</b></li>
+  <li><b>Valid-Rx categorisation</b></li>
+  <li><b>Voicebot</b></li>
+  <li><b>Assisted Commerce</b></li>
+  <li><b>Ring AI</b></li>
+  <li><b>NFS salts</b></li>
+</ul>
+
+<h2>3 &middot; What the team is doing now — Cart unlock</h2>
+<p class="sub">Cart can&rsquo;t unblock until the new <b>OMS</b> is live. For OMS to go live, <b>all our portals + payment services must migrate to it. Engineering owns the migration bandwidth.</b></p>
+<p class="sub"><b>Aligned direction: migrate-only</b> for now &mdash; protect the Cart date. Enhancements found along the way are captured as backlog + vision for the phase after, not taken up now.</p>
+
+<h2>4 &middot; Migration effort — <span class="r">43 man-weeks</span> across 4 charters</h2>
+<p class="sub">Not a new-feature build &mdash; this is the cost of pulling four systems back out of Order. Every line is a hard dependency on the GTM date. (MW = man-weeks.)</p>
+<table>
+  <tr><th>Charter</th><th>Breakdown</th></tr>
+  <tr>
+    <td><b>Portals &amp; Cx</b><br><span class="tot mw">18 MW</span><br><small>1 SDE2 + 2 SDE1 &middot; 6 weeks</small></td>
+    <td><ul>
+      <li>14 APIs moved out of Order &mdash; Pharmacist, Assisted Commerce, Dr, HA + Consultation pre-req <span class="mw">14 MW</span></li>
+      <li>Pharmacist: full post-order tracking <span class="mw">1 MW</span></li>
+      <li>Assisted Commerce: cart-creation touchpoints <span class="mw">2 MW</span></li>
+      <li>Order type 1: Rx upload + past Rx <span class="mw">1 MW</span></li>
+    </ul><p class="note">Dev done + dev testing by 18 Sept.</p></td>
+  </tr>
+  <tr>
+    <td><b>WMS</b><br><span class="tot mw">11 MW</span><br><small>1 resource &middot; 11 weeks</small></td>
+    <td><ul>
+      <li>Cost absorption moves out of Order <span class="mw">2 MW</span></li>
+      <li>Invoice batching moves out of Order <span class="mw">2 MW</span></li>
+      <li>Dashboards + return flow decoupled from Order <span class="mw">7 MW</span></li>
+    </ul><p class="note">Splits into GTM blockers + split-cart pre-reqs.</p></td>
+  </tr>
+  <tr>
+    <td><b>Payment</b><br><span class="tot mw">8 MW</span><br><small>integration + downstream onboarding</small></td>
+    <td><ul>
+      <li>Payment integration into new cart <span class="mw">1 MW</span></li>
+      <li>TM Credit onboarded as a payment method; TM Rewards moved downstream of Discounting <span class="mw">7 MW</span></li>
+    </ul></td>
+  </tr>
+  <tr>
+    <td><b>Logistics</b><br><span class="tot mw">6 MW</span><br><small>pre-order cart gate + post-order</small></td>
+    <td><ul>
+      <li>ETA + Serviceability &mdash; pre-order cart pre-requisite <span class="mw">3 MW</span></li>
+      <li>Post-order logistics &mdash; split-cart blocker, not a GTM blocker <span class="mw">3 MW</span></li>
+    </ul><p class="note">3 MW GTM-blocking &middot; 3 MW split-cart only.</p></td>
+  </tr>
+</table>
+<div class="two">
+  <div><b>What it unlocks</b><br><small>Split Cart cannot ship while Order revamp is not done, which depends on WMS + Logistics. All four charters are dependencies on the GTM date, not parallel nice-to-haves &mdash; Portals &amp; Cx is dev-complete 18 Sept, and Logistics ETA + Serviceability gates the cart itself.</small></div>
+  <div><b>What it permanently removes</b><br><small>14 portal APIs and four business capabilities &mdash; cost absorption, invoice batching, TM Credit, ETA / serviceability &mdash; leave Order for good. A one-time paydown: every future post-order change stops paying the Order-coupling tax that makes small changes expensive today.</small></div>
+</div>
+
+<h2>5 &middot; Where Product&rsquo;s bandwidth is going</h2>
+<p class="sub">Two prongs this phase &mdash; both compounding:</p>
+<ul>
+  <li><b>Prong 1 &mdash; Cut scope to unblock Cart faster.</b> Identify the <i>right</i> features to migrate, not all of them. Super Doctor Portal: <span class="g">29 features &rarr; 16 useful</span>. Less throwaway work, less rework, faster Cart.</li>
+  <li><b>Prong 2 &mdash; Rapid discovery in the same phase.</b> Deep-diving the portals at speed &mdash; mapping real usage, exposing cross-portal gaps. This feeds a <b>future backlog</b> and sharpens <b>product vision</b> at near-zero extra cost.</li>
+</ul>
+
+<h2>6 &middot; What discovery is producing — future backlog + vision</h2>
+<p class="sub"><b>Vision emerging from the deep-dive:</b></p>
+<ul>
+  <li><b>Unified Commerce Platform</b> &mdash; one capability layer to place &amp; manage orders across all commercial journeys (Type-1, Pill Reminder, Assisted Commerce, Pharmacist Portal) + shared CRM. Ends silos, duplicate build, and inconsistent coverage across portals.</li>
+  <li><b>Rule Engine</b> &mdash; configurable agent categorisation and signal-based routing of orders/customers. Differentiated workflows, faster experimentation, lower recurring Product/Eng dependency.</li>
+</ul>
+<p class="sub"><b>Gap backlog surfaced</b> (captured for post-migration, examples):</p>
+<table>
+  <tr><th>Gap found</th><th>Cost today</th></tr>
+  <tr><td><b>Warehouse / logistics change on live order</b></td><td>&ge;100 orders/day cancelled &mdash; no WH/3PL change; customer must restart the whole journey</td></tr>
+  <tr><td><b>Cross-portal substitute pricing</b></td><td>Same medicine, different substitute price in Pharmacist Portal vs app/web &rarr; distrust, lost conversion</td></tr>
+  <tr><td><b>Credits &amp; coupons in Pill Reminder</b></td><td>Can&rsquo;t apply &rarr; order discarded &rarr; pharmacist recreates it</td></tr>
+  <tr><td><b>Call-preference propagation</b></td><td>Opted-out of HA calls, still pulled into Assisted calls &rarr; compliance/CX risk</td></tr>
+  <tr><td><b>HA-call skip for Type-1</b></td><td>Pharmacist already the substitution touchpoint; no skip &rarr; redundant calls + cost</td></tr>
+</table>
+
+<p class="foot">Figures are approximate / directional, to be data-locked before the CEO call. Prepared by Apurva Shetty.</p>
+
+</body>
+</html>
