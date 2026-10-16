@@ -1,6 +1,8 @@
 # Open Questions
 This file is only for unresolved questions during the build.
 
+> Before adding or answering a question here, check tm-chotu (`knowledge/context/tm-chotu/`, see `AGENTS.md` → tm-chotu) and quote what it says — marked as the 2026-08-13 snapshot.
+
 ## Rules
 - Do not guess when product, backend, or UX behavior is unclear
 - Add the question here instead

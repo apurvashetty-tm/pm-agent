@@ -38,6 +38,21 @@ you are not 100% certain of. This applies in every tool, not just Claude Code �
 is no auto-loading hook here; you only get this knowledge by actually reading the
 files below.
 
+**Also use it — extensively — whenever** (Apurva, 2026-10-16):
+- an open question is raised, reviewed or answered in any project (check tm-chotu *before* writing or escalating an open question, and quote what it says in the question's entry);
+- you need to understand how something at Truemeds works today, or how it worked historically (flows, statuses, modules, ownership, past projects).
+
+**How current is it:** `knowledge/context/tm-chotu/` is a snapshot of tm-chotu v0.1.20, copied 2026-08-13. Facts can be out of date — when you use one, say it comes from the tm-chotu snapshot (2026-08-13).
+
+**When sources disagree:**
+
+| Kind of question | Wins | Note |
+|---|---|---|
+| What a project decided (screens, scope, rules) | The project's `decision_log.md` / `project_truth.md` | tm-chotu doesn't know project decisions. |
+| Company facts (definitions, metrics, statuses, tables, ownership, how a flow works) | tm-chotu snapshot | Dated 2026-08-13; flag anything that may have changed. |
+| Live numbers | Live data (Metabase / Mixpanel) | Both files go stale. |
+| Apurva says something that contradicts tm-chotu | What Apurva says | Log the conflict in `knowledge/context/tm-chotu/SKILL_REQUESTS/<date>_<topic>.md` and tell her. |
+
 On trigger, before answering:
 
 1. Read `knowledge/context/tm-chotu-integration.md` (read order + truth-handling rules).
