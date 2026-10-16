@@ -50,7 +50,7 @@ Replace the current one-way "explain the logic BEFORE pulling data" section with
   1. the **exact SQL** that produced it,
   2. a **capped raw sample** of the underlying rows (10–20),
   3. an **aggregate breakdown** (e.g. revenue split by status bucket; inventory by source table).
-  - If the user asked for **all raw data** → deliver via an **export path** (CSV to scratchpad / a saved Metabase question), because chat cannot hold thousands of rows and the 200-row MCP cap truncates silently.
+  - If the user asked for **all raw data** → deliver via an **export path** (CSV to scratchpad / a saved Metabase question), because chat cannot hold thousands of rows and the MCP row cap cuts results short silently (2,000-row budget in 200-row pages; 200 is the PAGE, not the cap).
 
 **Escape hatch.** If the user says "just the number" / "skip the explanation," chotu **collapses the dialogue steps**: skip the Step-1 hard-stop AND the Step-3 confirm-halt, run the pull directly, and ship **number + one-line branch tag + minimal cited proof** (the exact SQL as a one-liner + the aggregate breakdown). The 10–20-row raw sample is offered "(say 'show rows' for the raw sample)" rather than dumped. So in escape-hatch mode Step 4's "always" degrades to *minimal proof inline, full sample on request* — the branch and the SQL are still never hidden. The nuance is *surfaced*, never *hidden* — this is the whole point of both updates.
 

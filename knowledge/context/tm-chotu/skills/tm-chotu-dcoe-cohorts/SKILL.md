@@ -9,7 +9,7 @@ description: How to DERIVE the DCOE cohort axes from scratch on Metabase alone (
 
 - **Default DB: 170 (Redshift), schema `tmmumpsdb`.** All SQL below is Redshift dialect. For <30-min-fresh, DB 2 (Main_DB MySQL) — swap `DATEADD`/`PERCENT_RANK` for MySQL equivalents.
 - **Bigint money math** (`final_amount`, `order_value`, etc. are ×10^6 paise-scaled on some cols) → cast `::numeric / 1000000.0` where a col is bigint-scaled. `discount_applied`, `selling_price`, `rate` are already rupee-scaled — do **not** re-divide.
-- **Valid-order filter (locked, use everywhere):** `organisation_id = 1 AND orderstatus NOT IN (49,312,174,1,2,3,4,58,274,344,668)`. These are cancel/discard/test statuses DCOE excludes.
+- **DCOE's valid-order filter** (this is DCOE's cohorting scope — **NOT** the revenue dead-order set): `organisation_id = 1 AND orderstatus NOT IN (49,312,174,1,2,3,4,58,274,344,668)`. ⚠️ It **keeps** cancelled (57/232) deliberately — a cancelled order still counts as a customer touch for cohorting — and adds pre-conversion states (1,2,3,4,58) + 344. For **revenue or real-order counts** use the dead-order set in `tm-chotu-definitions` instead. Two different questions, two different filters; do not mix. These are discard/test statuses DCOE excludes.
 - **Delivered order = `orderstatus = 55`.** Cohort features aggregate over *delivered* orders.
 - **Windows:** CM = 90d, coupon/subs = 180d, generic = 365d, LTV = lifetime. (DCOE's chosen windows — keep them for parity.)
 
@@ -55,7 +55,7 @@ cm_net = product_rev_ex_gst + delivery_rev_ex_gst + packaging_rev_ex_gst
 **Component sources + gotchas (the ones that bite):**
 - **product_rev_ex_gst** = `SUM( fsp.selling_price / (1 + gst/100) )` over **invoiced FSP lines only** (`invoice_batch_id IS NOT NULL`). `selling_price` is already the per-line total (do **not** ×qty). Summing non-invoiced FSP candidates = phantom revenue → cm explodes. `gst` from `medicine_master.gst` (default 5 if null), join `LOWER(product_code)`.
 - **COGS** = `SUM(net_suite_invoice_batch.rate)` where `active=1`, join `nsib.fsp_id = fsp.final_subs_id`. ⚠️ known grain caveat: nsib invoiced value is `rate × quantity` but the DCOE extract sums `rate` only (`amount` col NULL since 2024) — a uniform under-count on both stages; flag, don't silently trust absolute ₹.
-- **zone_shipping** needs dispatch time from `order_tat_details.pickup_time` (NOT `delivery_date_tracker.actual_dispatch_date` — that's NULL for 100% of orders and silently zones everything to C). SDD flag wins: `package_details_tracking.is_sdd`.
+- **zone_shipping** needs dispatch time from `order_tat_details.pickup_time` (NOT `delivery_date_tracker.actual_dispatch_date` — that's NULL for 100% of orders and silently zones everything to C). ⚠️ **CONTESTED [subject: pickup_time, actual_dispatch_date] — do not treat either side as settled.** `tm-chotu-tat` carries the opposing reading (`actual_dispatch_date` populated, `order_tat_details` forbidden). Ask which before computing a dispatch time. SDD flag wins: `package_details_tracking.is_sdd`.
 - **CPO** gates on `order_details.order_category → aov_category_master.id → name`. Must resolve **id→name** and match the name-set (one name = many scattered ids). Hardcoding ids → CPO fires ≈0 → cm overstated ~₹26.6/order. `workflow_status = 242` → skip doctor+HA.
 - **return_logistics** = `38 × COUNT(DISTINCT ticket_issues.id)` where `status=90` (RESOLVED only), per ticket, NOT per line. `ticket_issues` is **MySQL-only** (DB 2, not on Redshift) → on Redshift use `return_tracker`+`sales_return_details` (`is_rto=0 AND refunded_on/return_delivered_on NOT NULL`), count `DISTINCT return_id`.
 
@@ -80,7 +80,7 @@ rev AS (                                                 -- product revenue ex-G
   GROUP BY fsp.order_id
 ),
 cogs AS (
-  SELECT fsp.order_id, SUM(nsib.rate) AS cogs           -- rate only (grain caveat above)
+  SELECT fsp.order_id, SUM(nsib.rate * nsib.quantity) AS cogs   -- rate * quantity. NEVER rate alone
   FROM tmmumpsdb.final_substitute_product fsp
   JOIN tmmumpsdb.net_suite_invoice_batch nsib ON nsib.fsp_id = fsp.final_subs_id
   WHERE nsib.active = 1
@@ -264,7 +264,7 @@ Join the four per-customer feature tables (+ LTV percentile + recency) and AND t
 
 | Cohort | Definition | Play |
 |---|---|---|
-| **Golden Geese** | `CM++` ∧ LTV top-decile ∧ generic `S1`(≥0.30) ∧ ordered ≤30d | Protect. Minimal spend, organic only. No coupon. |
+| **Golden Geese** ⚠️CONTESTED [subject: Golden Geese] (definitions still says the 5th axis is **SA**, not generic-share — ask which) | `CM++` ∧ LTV top-decile ∧ generic `S1`(≥0.30) ∧ ordered ≤30d | Protect. Minimal spend, organic only. No coupon. |
 | **Generic Champions** | `generic_share ≥ 0.50` | Margin heroes — retain, cross-sell, barely coupon. |
 | **Coupon Addicts** | `HD/AC` ∧ `CM-` ∧ ordered ≤30d | Wean off coupons; test without. |
 | **Margin Bleeders** | `CM--` ∧ `HD` ∧ active | Cut spend, stop couponing, accept churn. |
@@ -278,7 +278,7 @@ Join the four per-customer feature tables (+ LTV percentile + recency) and AND t
 
 ## 6. Metabase execution notes (for whoever runs this)
 
-- **Run it** in Metabase's native SQL editor on **DB 170**, or via the Metabase MCP `execute_sql` path. (Some MCP `execute_query`/native endpoints reject raw SQL — use the SQL question / `execute_sql`.)
+- **Run it** in Metabase's native SQL editor on **DB 170**, or via the Metabase MCP `execute_query` path. (If the MCP's native endpoint rejects the raw SQL, save it as a Metabase SQL question and run that instead. There is no `execute_sql` tool to fall back to.)
 - **Everything is derivable from tmprod.** No DCOE RDS, no EC2, no `app.*` / `dm_dcoe.*` tables required.
 - **Parity caveat (documented, not silent):** these queries window on `created_on` + `orderstatus=55`. DCOE's exact feature-builder windows on `delivery_date_tracker.actual_delivery_date` (true delivered date). For strict parity, join `append_only_delivery_date_tracker` (DB 170) and filter on `actual_delivery_date` instead of `created_on`. The margin proxy also omits zone-shipping / CPO / promo-comm / return-logistics — add them per §1 for exact cm_net.
 - **Recalibrate percentiles per pull.** P90 for "high" and the generic/coupon floors drift; re-cut on your own data before a campaign.

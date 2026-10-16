@@ -4,7 +4,7 @@ description: Probe data freshness on key Redshift tables (DB 170). Tells user ho
 
 # tm-chotu freshness
 
-Run light queries on DB 170 via `mcp__Metabase__execute`:
+Run light queries on DB 170 through the **official** Metabase connector — the structured `query` tool, or `execute_query` with its base64 JSON envelope. **Not** `mcp__Metabase__execute`: that is the unofficial connector's tool, and tm-chotu does not use it (see `tm-chotu-query-rigor` → namespace policy).
 
 ```sql
 -- 1. Order pipeline freshness

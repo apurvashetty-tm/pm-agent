@@ -23,14 +23,14 @@ Customers scored on 5 axes; final cohort = combination of bucket labels.
 | Dimension | Buckets | Source |
 |---|---|---|
 | **Value (LTV)** | `HV` (top 20%) / `MV` (20–60th) / `LV` (bottom 40%) / `DM` (no order in 90d) | `order_details` + `final_calculated_amount` |
-| **CM1 (Contribution Margin)** | `CM++` (top 10%) / `CM+` (>0) / `CM-` (−3 to 0) / `CM--` (<−3) | FSP + `net_suite_invoice_batch` |
+| **`cm_net` (fully-loaded contribution margin — **not** CM1; CM1 is product gross only, see METRIC_CATALOG)** | `CM++` (top 10%) / `CM+` (>0) / `CM-` (−3 to 0) / `CM--` (<−3) | FSP + `net_suite_invoice_batch` |
 | **Lifecycle** | `NEW` (FTC in 30d) / `ACT` (ordered <30d) / `RISK` (31–60d) / `LAPS` (61–90d) / `CHURN` (>90d) | `order_details`, `order_status` |
 | **Coupon dependency** | `NC` (0%) / `LD` (<30%) / `MD` (30–70%) / `HD` (>70%) / `AC` (100%) | `order_details.offer_id`, `discount_applied` |
 | **Generic adoption** (was "subs propensity") | `L3` champion (≥50% generic) / `S1` adopter (≥30%) / `S2` branded-loyal (≤10%) — guard ≥5 delivered lines | `final_substitute_product` × `medicine_master.generic_branded` |
 
 > ⚠️ **F1 pivot (2026-06-09):** the 5th axis moved off `subs_accept_rate` (the substitution *mechanism*) onto **`generic_share`** (the *goal* = generic adoption = margin). `subs_accept_rate` (`SA`/`SW`/`SR`/`SNO`, from `final_substitute_product_cx_confirm.status_id`) is kept only as a **secondary explanatory signal** + the Gold/Silver/Bronze bridge below.
 
-**Golden Geese** = `HV ∩ CM++ ∩ S1(generic ≥30%) ∩ ACT` — protect cohort. Minimal spend, organic only. Used in campaign mapper for "variant count = 1" decisions (no exploration on proven winners).
+**Golden Geese** = `HV ∩ CM++ ∩ S1(generic ≥30%) ∩ ACT` — protect cohort. ⚠️ **CONTESTED [subject: Golden Geese] — do not treat either side as settled.** `tm-chotu-definitions` still defines the 5th axis as **SA (substitution propensity)**, pre-F1-pivot — a different population. Ask which before cutting a cohort. Minimal spend, organic only. Used in campaign mapper for "variant count = 1" decisions (no exploration on proven winners).
 
 > 🔧 **To DERIVE any of these axes from scratch on Metabase (no DCOE instance) — CM-high, Generic Champions, Coupon dependency, Substitution propensity — see the `tm-chotu-dcoe-cohorts` skill.** Full `cm_net` formula + ready-to-run DB 170 SQL for each.
 

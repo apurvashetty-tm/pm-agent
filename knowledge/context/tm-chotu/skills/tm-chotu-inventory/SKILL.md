@@ -11,6 +11,8 @@ Per-warehouse SKU live qty system. Drives Warehouse Assignment, Substitution ava
 >
 > This includes Vinculum-backed warehouses (e.g. **ANKW Faridabad Hub `warehouse_id=21`** runs Vinculum underneath but its inventory IS synced into DB 180).
 >
+> ⚠️ **CONTESTED [subject: Faridabad] — do not treat either side as settled.** `tm-chotu-data-sources` states the opposite — that Faridabad is **not** on DB 180 and DB 432 must be used. Unresolved; flag the conflict and ask before answering a Faridabad stock question.
+>
 > **NetSuite is the underlying inventory management system**, real-time synced into DB 180.
 >
 > ❌ **Decommissioned WHs** (despite `warehouse_details.status = 1` showing active — that field is stale):
@@ -300,7 +302,7 @@ Other Hub Config dimensions (admin UI): SKU Categorization (A/B/C), Bulk SKU Lis
 - ❌ **SUM a quantity across inventory tables** (live DB 180 + mirror + rack/physical) — they don't reconcile. Pick ONE source by use-case: business/analytics → `product_inventory_data`; physical/rack ops → WMS/NetSuite bin data. Summing double-counts.
 - ❌ Trust `warehouse_details.status = 1` as "active WH" list — 4 ids (3, 5, 7, 11) are decommissioned but still status=1. Use `SELECT DISTINCT warehouse_id FROM INVENTORY_SCHEMA.product_inventory_data WHERE active=1`
 - ❌ Mix MySQL/Redshift schema case — DB 630/2 need `TMMUMPSDB.` UPPERCASE; DB 432 Redshift uses `tmmumpsdb.` lowercase; DB 180 uses `INVENTORY_SCHEMA.`. Wrong case → "Unknown database" error
-- ⚠️ Old skill caveat "Faridabad on Vinculum so query DB 432" was misleading — ANKW Faridabad (id=21) IS synced into DB 180 PROD INVENTORY despite Vinculum being the underlying WMS. id=11 (old Intellihealth Faridabad) is decommissioned
+- ⚠️ **CONTESTED [subject: Faridabad] — unresolved, do not present either side as the correction.** One reading: ANKW Faridabad (id=21) IS synced into DB 180 despite Vinculum being the underlying WMS. The other (`tm-chotu-data-sources`): Faridabad is **not** on 180 and DB 432 must be used. **Settle it with a probe before answering** — `SELECT COUNT(*), MAX(last_synced_on) FROM INVENTORY_SCHEMA.product_inventory_data WHERE warehouse_id = 21 AND active = 1` on DB 180. Not contested and true either way: id=11 (old Intellihealth Faridabad) is decommissioned while `warehouse_details.status` still shows 1, so the live WH is **21**
 - ❌ Bypass 5 PTS-restricted cols on `inward_product_details` for `tm_analytics` group queries
 - ❌ Assume cold-chain at WH level — it's pincode-level (`pincode_warehouse_master.is_cold_chain_deliverable` on priority=1 rows)
 - ❌ Read 5 PTS cols and share externally — restricted
@@ -396,3 +398,134 @@ ORDER BY warehouse_id;
 - `tm-chotu-tat` → Putaway TAT, inwarding TAT, courier-pincode TAT (uses `pincode_warehouse_master` surface/air_delivery_days)
 - `tm-chotu-data-sources` → DB 180 PROD INVENTORY, DB 432 Min Max Redshift, DB 993 SF WAREHOUSE_MANAGEMENT_SYSTEM
 - `tm-chotu-query-rigor` → Verify-table-before-lock + verify-table-HAS-DATA hard rules
+
+## Batch-level locked MRP — `BATCH_MASTER_V` (Snowflake DB 993)
+
+The batch-level MRP source, **location-independent** — unlike `medicine_warehouse_master.mrp`, which is per-warehouse.
+
+| | |
+|---|---|
+| DB | **993**, Metabase name `SF WAREHOUSE_MANAGEMENT_SYSTEM ` — ⚠️ **trailing space is part of the name**, include it in MBQL field refs |
+| Schema / table | `WMS.BATCH_MASTER_V` (the `_V` view — query this, not the `BATCH_MASTER` base table) |
+| Access | ⚠️ **Native SQL is blocked** on this connection. **MBQL only** (`construct_query` / `query`). Field ref = `["field",{},["SF WAREHOUSE_MANAGEMENT_SYSTEM ","WMS","BATCH_MASTER_V","<COL>"]]`; `["=",{},field,v1,v2,…]` acts as IN. Pages cap at 200 rows |
+
+**🔴 It is a DynamoDB→Kinesis CDC change-stream view, not a clean master.** 33 columns including `LOADED_AT`, `KINESIS_*`, `EVENT_ID`, `EVENT_NAME`, `PK`, `SK`, `NEW_IMAGE_RAW`, `OLD_IMAGE_RAW`, `RAW_RECORD`, `RAW_METADATA`. The `RAW_*` columns are huge — `SELECT *` even at LIMIT 10 blows the token cap. **Always name explicit fields.**
+
+**Grain = multiple event-rows per `(PRODUCT_ID, BATCH_NUMBER)`** — from real `VERSION` bumps as a batch moves through its lifecycle, *and* from backfill re-emissions (the same VERSION reloaded ~3× on one day, differing only by load time). **Latest per batch = max `VERSION`, tiebreak max `EVENT_TIME`.**
+
+**Two MRP columns:** `MRP_PRINTED` (on-pack) and `MRP_REFORMED` (≤ printed, and **the authoritative one**). Both vary batch to batch; the PRINTED − REFORMED gap is a useful "MRP is wrong" signal.
+
+**Lifecycle (`STATUS`):** `OPEN` (in MRP verification) → `LOCKED` (MRP frozen). `VERIFICATION_NOT_REQUIRED` = older batches auto-accepted, never through the lock workflow.
+
+**🔒 Locked-MRP rule:** trustworthy MRP = latest-version `STATUS ∈ {LOCKED, VERIFICATION_NOT_REQUIRED}`, carrying **`MRP_REFORMED`**. Latest `STATUS ∈ {OPEN, null}` → flag **NOT LOCKED**, no trustworthy MRP.
+
+Join to inventory on `(PRODUCT_ID, BATCH_NUMBER)`. Validation on one WH's top-15 showed a 100% batch hit-rate. ⚠️ Watch join hit-rate on full runs — some raw-CSV `PRODUCT_ID`s arrive Excel-date-mangled (e.g. `TM-1-Dec-000045`).
+
+## Inventory VALUATION — LOCKED (user-taught + live-probed 2026-08-19)
+
+### 🔴 The first thing to say, every time
+
+**No table holds cost against held inventory.** Cost exists in exactly two forms, and neither is a valuation:
+
+1. **COGS** — cost applied on **orders**, from `net_suite_invoice_batch`. Only knows a unit once it has shipped.
+2. **`medicine_warehouse_master.pts`** — what the system shows **now**, from the **latest inward**. ⚠️ `medicine_warehouse_master` **has no `modified_on`** (verified) — so there is no way to tell whether a given row's PTS was set this week or in 2023.
+
+**Therefore every inventory valuation is DERIVED, never read.** State that, and state which cost basis was used. A valuation presented as a fact read from a table is wrong.
+
+### The locked method
+
+**90-day NSIB product × batch weighted-average cost × quantity.**
+
+```sql
+-- cost side: DB 170
+SELECT product_code, batch_number,
+       SUM(rate * quantity)::numeric / NULLIF(SUM(quantity), 0) AS unit_cost_90d
+FROM tmmumpsdb.net_suite_invoice_batch
+WHERE active = 1 AND rate > 0
+  AND created_on >= CURRENT_DATE - 90
+GROUP BY 1, 2;
+```
+
+`net_suite_invoice_batch.rate` is a **per-unit COST**, not a selling price. (Locked — it has been mis-read as price before.)
+
+### Two grains — pick by the question
+
+| Question | Qty source | Cost grain |
+|---|---|---|
+| **Product × WH overall**, including stock blocked on doctor consult / invoice / packing | DB 180 `INVENTORY_SCHEMA.product_inventory_data` | **product-level** avg cost |
+| **Batch-level** — the correct grain for anything valuation-serious | `wp_bin_product_batch_mapping` on the WH's picker schema | **batch-level** avg cost |
+
+**The grains must match.** A batch-grain quantity multiplied by a product-level average cost is a wrong number wearing a precise-looking decimal.
+
+### `wp_bin_product_batch_mapping` — the batch-level stock table
+
+Present in every picker schema. Columns: `product_code`, `batch`, `warehouse_id`, `quantity` (total), `available_quantity`, `active`, `bin_type_mapping_id`, `mrp`, `printed_mrp`, `expiry`, `pts`, `process_qty`.
+
+**🔴 NEVER take batch attributes from this table.** `mrp`, `printed_mrp`, `expiry` and `pts` are all sitting right there, correctly named, and all wrong to use. **MRP and expiry come from `BATCH_MASTER_V` only** (Snowflake DB 993), joined on product × batch, and only where the latest-version `STATUS ∈ {LOCKED, VERIFICATION_NOT_REQUIRED}` (those two are final). See the locked-MRP rule above.
+
+**🔴 It is BIN-level, not batch-level.** One product × batch spans multiple bins, so **roll up before valuing** or a split batch is counted several times:
+
+```sql
+SELECT product_code, batch, warehouse_id,
+       SUM(quantity)           AS total_qty,
+       SUM(available_quantity) AS available_qty
+FROM <picker_schema>.wp_bin_product_batch_mapping
+WHERE active = 1
+GROUP BY 1, 2, 3;
+```
+
+### Bin types + the non-pickable filter
+
+`bin_type_mapping_id` → `wp_bin_type_mapping.id` → `.bin_type_id` → `wp_bin_type_master.id`. That master is **5 rows, identical in every schema**:
+
+| id | `bin_type_name` | Pickable? |
+|---|---|---|
+| 1 | JIT | ✅ |
+| 2 | BULK | ✅ |
+| 3 | REGULAR | ✅ |
+| **4** | **EXCESS** | 🔴 **NOT pickable** |
+| **5** | **QUARANTINE** | 🔴 **NOT pickable** (only type with `multiple_allowed = true`) |
+
+`wp_bin_type_mapping.bin_id` → `wp_bin_master`, which also carries `active`, `issue`, `bin_full`, `pick_path`.
+
+### 🔒 Always split the valuation three ways
+
+Every valuation ships as **sellable + non-pickable + total** — never one blended number.
+
+- **sellable** = bin types JIT / BULK / REGULAR
+- **non-pickable** = EXCESS + QUARANTINE
+- **total** = what the company owns
+
+Reporting only the total hides quarantine build-up; reporting only sellable understates what we own. Both failure modes are real, so the split is mandatory.
+
+### 🔴 One warehouse = one DB connection. The SCHEMA NAME IS NOT THE WAREHOUSE.
+
+**Every MFC has its own database.** The Metabase connection is the warehouse identity — the schema name is not, and trusting it returns another warehouse's stock silently.
+
+Proved on live data 2026-08-19:
+
+| Connection | Schema | Rows | `warehouse_id` |
+|---|---|---|---|
+| **DB 174** (PROD WH PICKER) | `prod_picker` | 798,325 | **20 — Mumbai** |
+| **DB 202** (PROD WH MFC Picker) | `prod_picker` | 206,459 | **23 — NOT Mumbai** |
+| DB 202 | `prod_picker_patna` | 275,415 | 27 |
+| DB 399 (PROD WH MFC PATNA PICKER) | `prod_picker_patna` | 275,415 | 27 |
+
+Two things to read off that table:
+
+1. **`prod_picker` exists on at least two different hosts carrying different warehouses** (20 vs 23). It is the most dangerous name in the estate — querying it from the wrong connection yields a real, populated, completely wrong answer.
+2. **DB 202 and DB 399 return identical rows** for the same MFC schema — they are two connections onto the same MFC host, differing only in default schema. Seeing a schema in `information_schema` from a connection does **not** make that connection the right route to it.
+
+**Rules:**
+- Go through **the warehouse's own DB connection**, chosen from the Metabase database name.
+- **Always assert `warehouse_id` from inside the table before using the rows.** Every `wp_bin_product_batch_mapping` holds exactly **one** `warehouse_id` (verified). If it isn't the WH you meant, you are on the wrong connection — stop.
+- **Cross-WH work = query each warehouse's own connection and union the results client-side.** Never a cross-schema union on one connection: it looks like it works and quietly mixes warehouses.
+
+Confirmed WH ids so far: **Mumbai = 20** (DB 174) · Pune = 26 · Patna = 27 · DB 202's `prod_picker` = 23. The rest must be confirmed the same way — from `warehouse_id` inside the table, not from the schema name.
+
+### Mandatory caveats on any valuation answer
+
+1. It is **derived**, not read — no cost-of-held-inventory table exists.
+2. Which basis was used — **90d NSIB weighted average** (preferred) or **`mwm.pts`** (latest inward, **un-ageable**).
+3. Batch coverage — products with no NSIB sales in the 90d window have **no derived cost**; report them as their own bucket, never silently at zero.
+4. The **sellable / non-pickable / total** split.

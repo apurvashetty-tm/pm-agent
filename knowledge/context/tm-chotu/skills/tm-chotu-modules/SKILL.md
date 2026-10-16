@@ -1,6 +1,6 @@
 ---
 name: tm-chotu-modules
-description: Core Truemeds modules — Search (OpenSearch + tiered EXACT/PARTIAL/FUZZY), Pricing (incl. Price Lock), Substitution algo (6-step, 5 FCs, TS formula), Chronic engine, Reminders, Live Inventory, Warehouse Assignment (MFC vs FC), Picklist (3 variants), Replenishment, Putaway (8 types), Central Procurement, Logistics (13 partners), Doctor / Pharmacist / HA / CSR / Assisted Commerce / Pill Reminder portals, CMT Dynamic Content Mgmt, Fraud (3 sub-systems), Diagnostics, Pincode Mapping. Load when user asks "how does X module work", "how is substitution computed", "how does picking / putaway / WH assignment work", "what 3PL partners do we use", "how does Doctor / Pharmacist / HA flow work", or any system/engine question.
+description: Core Truemeds modules — Search (OpenSearch + tiered EXACT/PARTIAL/FUZZY), Pricing (incl. Price Lock), Substitution algo (6-step, 5 FCs, TS formula), Chronic engine, Reminders, Live Inventory, Warehouse Assignment (MFC vs FC), Picklist (3 variants), Replenishment, Putaway (8 types), Central Procurement, Logistics (14 partner IDs), Doctor / Pharmacist / HA / CSR / Assisted Commerce / Pill Reminder portals, CMT Dynamic Content Mgmt, Fraud (3 sub-systems), Diagnostics, Pincode Mapping. Load when user asks "how does X module work", "how is substitution computed", "how does picking / putaway / WH assignment work", "what 3PL partners do we use", "how does Doctor / Pharmacist / HA flow work", or any system/engine question.
 ---
 
 # Core modules
@@ -300,7 +300,7 @@ Sort all candidates by TS DESC, keep those with `TS ≥ original_TS`, pick top.
 - Warehouse types (master 'WAREHOUSE TYPE'): 454 WAREHOUSE / 455 HUB / 553 MFC
 - Pincode → warehouse via `pincode_warehouse_master`, `pincode_microfc_master`, `analytics_pincode_microfc_master`
 - Sets `order_details.warehouse_id` on confirmation
-- orderstatus transition: → 233 WAREHOUSE ASSIGNED
+- orderstatus transition: → 233 WAREHOUSE ASSIGNED ⚠️ (**pricing/catalogue id only** — physical assignment is the scheduler moving to PROCESSING)
 
 ### Picklist module — 3 variants
 
@@ -359,7 +359,7 @@ Sort all candidates by TS DESC, keep those with `TS ≥ original_TS`, pick top.
 - **Serviceability check** at PDP + checkout (pincode → warehouse → courier partner)
 - **Courier Partner Priority** matrix
 - Masters: `m_courier_partner_master`, `pincode_master`, `pincode_warehouse_master`, courier partner pincode TAT adherence
-- **3PL universe — locked from `m_courier_partner_master` (13 partner IDs):**
+- **3PL universe — locked from `m_courier_partner_master` (14 partner IDs, of which 13 are external 3PLs + ID 35 = Self / Hand Delivery):**
 
 | Partner ID | Name | Express? | Notes |
 |---|---|---|---|
@@ -421,14 +421,14 @@ Pharmacist Portal handles ONLY Type 1.
 
 Flow: Login → Type 1 Order Listing → Assign/Unassign/Filter → Open → View customer ratings / past orders / Rx / subs history / CSR tickets → Search Products / Change Qty / Set Payment → Calculate delivery date → Search/Add doctor → Apply coupon + TM rewards → Add notes → DIGITIZE ORDER / DISCARD ORDER / MARK UNREACHABLE.
 
-orderstatus events: 213 PHARMACIST MAKER ASSIGNED, 214 CHECKER ASSIGNED, 236 CALL ATTEMPTED, 300 ORDER ON HOLD, 452 PARTIALLY DIGITIZED.
+orderstatus events: 213 PHARMACIST MAKER ASSIGNED, 214 CHECKER ASSIGNED, 236 CALL ATTEMPTED, 300 ORDER ON HOLD, 452 PARTIALLY DIGITIZED ⚠️ (**not a pharmacist/transcription state** — it means the DOCTOR consult is done and the order awaits the HA; fires only on the HA path. See `tm-chotu-rx-cadence`).
 
 `DRX_STATUS`: 29 PENDING / 30 DIGITIZED / 31 INVALID_RX / 37 MULTIPLE RX.
 
 ### Health Advisor (HA) Call portal
 
 - Triggered when SUBSTITUTE is available (post ORDER CONFIRMED, pre WAREHOUSE ASSIGNED)
-- orderstatus → 595 HEALTH ADVISOR CALL ATTEMPTED
+- ⚠️ the HA leg reuses **209 DOCTOR ASSIGNED / 215 CALL ATTEMPTED** (position AFTER `452` = HA). ❌ `595 HEALTH ADVISOR CALL ATTEMPTED` exists in the master but is **never stamped** — a metric built on it returns zero
 - Flow: Login → Dashboard → Agent Shift / Statistics / Target Mgmt / OTC Sales Dashboard / Assign-Unassign / Incentive Mgmt
 - Per-order: Fetch → View details → Call → Read Rx → View Products → Change Qty / Payment → Substitution (Replace original / Keep both) → Cancel / Hold / Place
 - **Cart constraint:** HA can add only OTC (`ITEM_TYPE = 475 OTC`); cannot add Rx
@@ -559,3 +559,52 @@ Deep expansion deferred — owner to push via plugin update.
 - Tables: `pincode_master`, `pincode_warehouse_master`, `pincode_microfc_master`, `analytics_pincode_microfc_master`
 - Admin: **Permanent Pincode Movement** under Hub Config
 - Used by: Warehouse Assignment, Logistics (TAT adherence), COD enable/disable in checkout
+
+## Substitution — known defect classes (validated Aug 2026)
+
+Two independent defects were measured on the live substitution path. Both are **runtime** behaviour, not the nightly precompute.
+
+### 1. Wrong-molecule subs — "magnet fallback"
+
+The runtime `findBestSubForProducts` path collapses unrelated originals onto a few cheap, high-volume generics instead of returning no-sub. Atorvastatin absorbed 77 distinct molecule-sets, glimepiride 54, Calcium Sandoz 52.
+
+Evidence it is the runtime, not the mapping:
+- **94%** (369/392) of wrong Mumbai pairs are **not present** in `org_sub_medicine_mapping_mumbai_hub_new_algo` — the precompute is mostly correct; the runtime invents them.
+- **80%** (1,644/2,056) of wrong subs had a correct same-molecule, same-form generic **in stock** in at least one hub. Only ~5% were OOS-driven, ~15% no-generic-exists.
+- Present across all 18 warehouses, not one FC.
+
+**It reaches customers.** On an invoice-based re-run: 86 genuinely-wrong subs shipped across 63 orders — 3 delivered, 51 in transit, 9 pre-dispatch. Safety-relevant, not just pitch quality.
+
+Open remediation: molecule-**synonym** normalisation before any disjointness test (methylcobalamin vs mecobalamin are coded as different molecule ids), and the runtime selection fix itself.
+
+### 2. Subs-consent misfire
+
+A sub taken without customer or HA acceptance. Anchor on `final_substitute_product.status_id = 61` (algo **took** sub S) — not on the invoice (misses pending) and not on the CX-offered sub (the algo swaps generics mid-flow, so the code that ships is often not the code pitched).
+
+**MISFIRE = final-FSP-61 sub S where** S is not in the cart (`product_details` active), **and** S is not HA-accepted, **and** the order has no human `src_type_id`, **and** the order is not in a dead status.
+
+Two traps that produced a 7× overcount before they were found:
+- **HA acceptance is `final_substitute_product_dr_confirm.status_id = 61`, and on that row `product_code = subs_product_code`** (it holds the taken sub). So **never** filter `dr_confirm` on `subs_product_code <> product_code` — that removes exactly the acceptances.
+- **`product_details.src_type_id` says WHO added the line** (PRODUCT_SOURCE_TYPE master): 302 customer-app, 303 customer-web, **304 DOCTOR**, 305 OPERATION, 307 PHARMACIST, 308 CSR, 327 CHECKER, 369 ASSISTED, 388/389 SCHEDULER. A human code means staff handled it cleanly — not a misfire. The signal usually sits on the **original's** row, not the sub's.
+
+Also: `final_substitute_product` is populated at **cart** stage for every order, so the raw pending bucket is ~97% abandoned/scrapped carts. Excluding dead statuses is mandatory or the result is noise.
+
+**Detection runs daily** on DCOE (`~/subs_scan`, 3 stages: Redshift `created_on`-scoped pull → local stdlib classify → live status enrich by `order_id` IN-list). A frozen regression fixture gates any logic change.
+
+### Related defect class — DEACTIVATED_LINE_SHIPPED
+
+A product shipped whose only cart rows are `active = 0`, all deactivated **before** invoice (median 16.4h, min 9 min, zero post-invoice). Measured 205 lines / 183 orders over two days. Not versioning (4,047 lines legitimately carry both states) and not cleanup — its own bucket. A shipped code present in `product_details` in **any** active state is not an incoming sub; but do **not** extend that to "sub_group matches an inactive line", which hid this class.
+
+## Org-Subs enrichment engine (runtime, no storage)
+
+The new dynamic enrichment engine replaces the stored per-hub Org-Subs tables (`org_sub_medicine_mapping_<hub>_hub_new_algo`). Parity validated on 226k Mumbai rows: catalogue/master fields **100%** match, substitution agreement **98.56%**.
+
+Real divergences are engine behaviour, not data errors: **2,282 genuinely lost substitutes** (escalated), 6,470 same-sub price recomputes, 18,358 availability diffs, 3,464 different-sub picks.
+
+Engine quirks worth knowing before comparing anything against it:
+- **proto3-style omission** — falsy/0 fields are dropped from the JSON, so absent means false.
+- **Pricing basis differs** — OLD `selling_price`/`savings` are scaled by `sub_recommended_qty`; NEW is **per-pack**. OLD `subs_margin` is a legacy absolute; NEW `margin.amount` is % × price.
+- Both sides emit keep-original **self-recommendations** (rec code == original) — gate them symmetrically.
+- `rank` is a constant on both sides (OLD 0 / NEW 1) — not a real ranking.
+- Engine sub kind ∈ {`SUBSTITUTE`, `SIMILAR`}; **`SIMILAR` is a relabel, not a loss** — every apparent loss in one cut was the identical old sub under the other label.
+- `orig_strength` "mismatches" are **always** the old table truncating (char limit, sometimes mid-token) — the engine is strictly more complete. Zero genuine value differences.

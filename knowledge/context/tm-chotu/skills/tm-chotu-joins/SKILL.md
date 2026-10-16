@@ -68,7 +68,9 @@ WHERE DATE(os.modified_on) = CURRENT_DATE - 1
   AND os.order_status_id IN (
     66,   -- ORDER CONFIRMED
     317,  -- DR ORDER CONFIRMED
-    595,  -- HEALTH ADVISOR CALL ATTEMPTED
+    452,  -- PARTIALLY DIGITIZED = doctor consult done, awaiting HA (HA-required marker)
+    -- ❌ NOT 595: HEALTH ADVISOR CALL ATTEMPTED is never stamped (0 rows). The HA leg
+    --    reuses 209/215; position AFTER 452 = HA. See tm-chotu-rx-cadence.
     57,   -- ORDER CANCELED
     60,   -- ORDER DISPATCHED
     55    -- ORDER DELIVERED
@@ -252,3 +254,80 @@ ORDER BY 2, invoiced_value DESC;
 5. **`net_suite_invoice_batch.amount` is NULL** (≥2024) — invoiced value = `rate * quantity`. Filter `active = 1` to drop reversed lines.
 6. **Order/customer state lives ONLY in the pincode chain** — `d_address_master.state_id` & `city_id` are 100% NULL; `customer_state` is dirty free-text (~40% filled, hundreds of J&K spellings). Resolve via `pincode_id → pincode_warehouse_master.id → city_id → m_city_master → m_state_master` (100%).
 7. **"All products of a molecule" by name** — `medicine_molecule.molecule_code` is a composite strength-string (≠ the int code; `= 1527` returns 0 rows). Match `molecule_combination_cd` token: `LIKE '%-<code>' OR LIKE '%-<code>-%'`. Resolve `<code>` from `molecule_master` (DB 2/630 only). (For exact same-composition substitution matching, the self-join on identical `molecule_code` string is still correct — different use case.)
+
+## What did this shipped line REPLACE? (fsp_id chain — canonical)
+
+```sql
+SELECT n.order_id,
+       n.product_code                AS shipped_code,
+       pd.product_code               AS original_code   -- what it displaced
+FROM tmmumpsdb.net_suite_invoice_batch n
+JOIN tmmumpsdb.final_substitute_product f ON f.final_subs_id = n.fsp_id
+JOIN tmmumpsdb.product_details         pd ON pd.product_details_id = f.product_id
+WHERE n.active = 1;
+```
+
+One invoice line → one cart line, always. **Never infer the original** from
+`_cx_confirm`/`_dr_confirm` (the algo swaps generics mid-flow, so the landed code
+≠ the pitched code), from `original_product_code` (**0% populated**), or from
+"which cart line failed to ship". FSP `status_id=61` rows are self-referential
+(`product_code = subs_product_code`) on **99.8%** of records.
+
+Compare shipped vs **its own** original on `medicine_master.sub_group` (salt) and
+`drug_type` (form) — comparing against *any* cart line excuses real defects when
+an unrelated line shares the salt. Dedupe `(order_id, shipped_code,
+original_code)` for multi-batch splits. See KNOWLEDGE_DUMP § 17.
+
+## Did a wrong substitute actually SHIP? (the locked classifier)
+
+Three layers, and only one of them is truth:
+
+| Layer | Table | What it means |
+|---|---|---|
+| Cart | `product_details` | what the customer **added** |
+| Algo | `final_substitute_product` (`status_id=61` = sub taken) | what the algo **decided** — and it can be **corrected after shipping** |
+| Shipped | `net_suite_invoice_batch` (`active=1`) | **what actually reached the customer** ← the verdict |
+
+**Never verdict on FSP.** It can show the right sub post-hoc while the invoice shows the wrong product that shipped. FSP is context for algo-vs-shipped divergence only.
+
+Per shipped line, resolve its own original via the fsp_id chain above, then compare on `medicine_master.sub_group` (composition name) + `drug_type` (dosage form):
+
+| Bucket | Test |
+|---|---|
+| CORRECT | same `sub_group` **and** same `drug_type` |
+| FORM_CHANGE | same salt, different dosage form |
+| MISMATCH | different salt |
+| SIMILAR_SUPPRESSED | `final_substitute_product.suggestion_type = 'SIMILAR'` (the Similar-OTC feature), **or** the (original → recommended) pair appears on the maintained similar-pairs list |
+| NO_FSP_LINK | no usable `fsp_id` — its own bucket, neither cleared nor flagged |
+
+Gotchas that produced wrong answers before:
+- **Compare on `sub_group`, not `molecule_combination_cd`** — the molecule code is blank on many OTC products, which manufactures false mismatches.
+- **Verdict is line-level, shipped vs ITS OWN original** — comparing against *any* cart line excuses a real defect whenever an unrelated line shares the salt.
+- **Multi-batch:** one product can occupy several invoice rows with different `fsp_id`. Dedupe on `(order_id, shipped_code, original_code)` or a split shipment counts twice.
+- **`suggestion_type = 'SIMILAR'` under-covers** the similar universe — cross-check the maintained pair list too, matching the *recommended* side against what shipped.
+- **Invoice lag:** only ~30% of a day's orders are invoiced at any moment, so a same-day rate is a lower bound (today often reads ≈ 0). Use a fully-invoiced 30d window.
+- **Cancelled (57) orders can carry real mismatches** — invoiced-then-cancelled is often the remediation of one that was caught.
+
+## Order event timeline / cart activity (Mongo DB 3)
+
+`order_status` records **status transitions only** — it cannot see product add / remove / qty change. For anything about what happened *inside* an order, go to Mongo `OrderFootPrintTracking`:
+
+```js
+[
+ {"$match": {"footPrintTrackingList": {"$elemMatch": {
+     "comments":  {"$gte": "", "$lt": "￿"},
+     "createdOn": {"$gte": {"$date": "2026-08-08T00:00:00Z"},
+                   "$lt":  {"$date": "2026-08-08T01:00:00Z"}}}}}},
+ {"$project": {"ev": {"$filter": {
+     "input": "$footPrintTrackingList", "as": "e",
+     "cond": {"$and": [
+        {"$gte": ["$$e.createdOn", {"$date": "2026-08-08T00:00:00Z"}]},
+        {"$lt":  ["$$e.createdOn", {"$date": "2026-08-08T01:00:00Z"}]}]}}}}},
+ {"$unwind": "$ev"},
+ {"$project": {"order_id": "$_id", "created_on": "$ev.createdOn",
+               "status_id": "$ev.statusId", "comments": "$ev.comments",
+               "user": "$ev.userName"}}
+]
+```
+
+`$elemMatch` with a full string range on `comments` is what lets the compound `comments_date` index bound `createdOn` — **0.9 s instead of a >5 min timeout**. Mongo `createdOn` is **UTC**; `order_details.created_on` is **IST**. See `tm-chotu-data-sources` for the access path and the completeness caveat.

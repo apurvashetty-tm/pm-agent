@@ -1,13 +1,23 @@
 ---
 name: tm-chotu-query-rigor
-description: HARD STOP rules for data queries. Intent-first hard gate (structure + interpretation branches → clarify goal → confirm branch BEFORE pulling), back-by-proof (every number ships SQL + raw sample + breakdown), sample-first pipeline, time-window guard, index check, DB preference, backoff. Enforced on every data-bound prompt.
+description: HARD STOP rules for data queries. ASK_RESOLVER wording map (phrasing -> canonical metric -> locked default answer, fast path), intent-first hard gate (structure + interpretation branches → clarify goal → confirm branch BEFORE pulling), back-by-proof (every number ships SQL + raw sample + breakdown), sample-first pipeline, time-window guard, index check, DB preference, backoff. Enforced on every data-bound prompt.
 ---
 
 # Query rigor — HARD STOP
 
-## RULE: Intent-First Protocol — HARD GATE on every metric
+## RULE: resolve the WORDING first — `ASK_RESOLVER.md` (LOCKED 2026-08-19)
 
-Fires on ANY request for a metric, number, count, rate, or aggregate. Mandatory order — do not skip steps.
+**Read `ASK_RESOLVER.md` before the Intent-First gate below.** It maps the many ways people phrase the same ask onto one canonical metric.
+
+**If the ask resolves to a row there → take the FAST PATH, not the gate:** answer on the metric's DEFAULT branch, **declare the branch in one line**, name the alternate, and ship the full back-by-proof (SQL + capped sample + breakdown). Mandatory caveats still fire (COGS/margin FIFO disclosure, invoice lag, HM/LM gate).
+
+**If it does not resolve — or the ask crosses an ambiguity killer, asks for something derived (a rate, ratio, cohort cut, trend) rather than the metric itself, or is gated with the gate shut → run the full Intent-First gate below.**
+
+The fast path removes the *vocabulary* question, never the *branch declaration*. Answering without naming the branch is the exact failure this rule exists to prevent.
+
+## RULE: Intent-First Protocol — HARD GATE on every UNRESOLVED metric
+
+Fires on ANY request for a metric, number, count, rate, or aggregate **that `ASK_RESOLVER.md` did not resolve** (see the rule directly above). Mandatory order — do not skip steps.
 
 **Step 0 — Structure + branches.** From the loaded section skill + `METRIC_CATALOG.md` (read it now), state up front:
 - *Where the data lives* + structural caveats (inventory → live DB 180 vs the manual `medicine_warehouse_master.availability` flag, which can diverge; a separate rack/physical source may exist but is a **VERIFY-GAP** — never assert a rack-reconciliation gap as settled fact; revenue → placed → confirmed → dispatched → delivered → returned lifecycle).
@@ -20,7 +30,7 @@ Fires on ANY request for a metric, number, count, rate, or aggregate. Mandatory 
 
 **Step 3 — Confirm + proof-scope.** Show the sample, ask together: "Pull full? And do you want **all raw data**, or just the capped proof rows?" *Skip this confirm-halt if `mood = research` and the window is already small (existing sample-first exemption — do not override it).*
 
-**Step 4 — Deliver with proof.** The number ALWAYS ships with: (1) the exact SQL, (2) a capped raw sample (10–20 rows), (3) an aggregate breakdown (e.g. revenue by status bucket; inventory by source). If the user asked for **all raw data** → deliver via export (CSV to scratchpad / saved Metabase question); chat can't hold thousands of rows and the 200-row MCP cap truncates silently.
+**Step 4 — Deliver with proof.** The number ALWAYS ships with: (1) the exact SQL, (2) a capped raw sample (10–20 rows), (3) an aggregate breakdown (e.g. revenue by status bucket; inventory by source). If the user asked for **all raw data** → deliver via export (CSV to scratchpad / saved Metabase question); chat can't hold thousands of rows and the MCP row cap truncates silently.
 
 **Escape hatch.** "just the number" / "skip the explanation" → collapse Steps 1 and 3 (no hard-stop, no confirm-halt), run the pull, ship **number + one-line branch tag + minimal cited proof** (one-line SQL + breakdown). Offer the 10–20-row sample "(say 'show rows')" rather than dumping it. The branch and the SQL are NEVER hidden — that is the whole point.
 
@@ -70,10 +80,12 @@ Two Metabase MCPs may surface in a Truemeds Claude Code session. **Always use th
 
 | Connector | Server | Namespace pattern | Toolset signature | Use? |
 |---|---|---|---|---|
-| **Native Metabase MCP** | `https://one-truemeds.metabaseapp.com/api/mcp` (Metabase 0.55+ native server) | UUID-prefixed (e.g. `mcp__3955c18e-…__*`) OR `mcp__plugin_tm-chotu_metabase__*` post-OAuth | `search`, `get_table`, `execute_query`, `query`, `construct_query`, `list`, `get_metric`, `get_metric_field_values`, `get_table_field_values`, `create_question`, `create_dashboard` | ✅ **DEFAULT** |
-| Community / Unofficial | npm `metabase-mcp` (deprecated) | `mcp__Metabase__Unofficial___Community___*` (literal `Unofficial` / `Community` in name) | `list`, `retrieve`, `execute`, `export`, `search`, `clear_cache` | ❌ **NEVER** |
+| **Official Metabase MCP** (connector) | `https://one-truemeds.metabaseapp.com/api/mcp` | UUID-prefixed, e.g. `mcp__3955c18e-…__*` | `search`, `construct_query`, `execute_query`, `query`, `create_question`, `create_dashboard` (observed live 2026-08-25 off the connector's own tool schemas). **Toolset is configurable per install** — match on any two, never the full list. No `execute_sql`, no `get_table` | ✅ **DEFAULT** |
+| Community / Unofficial | npm `metabase-mcp` (deprecated) | `mcp__Metabase__Unofficial___Community___*` | `retrieve`, `execute`, `export`, `clear_cache`, `list` | ❌ **NEVER** |
 
-**Detection heuristic if uncertain:** if the available Metabase tool has `execute_query` and `construct_query` → native. If it has `retrieve` and `clear_cache` → unofficial, skip.
+**Detection heuristic:** `execute_query` + `construct_query` present → **official**. `retrieve` / `clear_cache` / `export` present → **unofficial**, skip. Never fingerprint on the UUID — it is per-install.
+
+⚠️ **`search` is on BOTH connectors — it cannot discriminate.** And there is no `mcp__plugin_tm-chotu_metabase__*` namespace: that form only exists for a plugin-declared MCP server, and this plugin declares none by design.
 
 **If only the unofficial is available** (e.g. native not yet authenticated): tell the user, do not silently fall back. Sample line:
 
@@ -84,7 +96,7 @@ The unofficial connector is being sunset. New skills, new recipes, all new SQL g
 ### Native MCP — execution gotchas (validated 2026-06-05)
 
 - **`execute_query` needs a base64-encoded JSON envelope**, not raw SQL: `{"database":N,"type":"native","native":{"query":"..."}}` → `printf '%s' '<json>' | base64`. Bare base64 SQL fails (`Illegal base64 character 20`). Prefer the structured `query` tool for simple single-table pulls.
-- **200-row cap** on agent results (`max-results`). For a state×month long-form pull you'll silently truncate at 200 → **pivot months into columns** (one row per state) instead.
+- **Row budget (read off the `query` tool's own schema, 2026-08-25):** `query` auto-paginates to a **hard 2,000-row total, in 200-row pages**, returning a `continuation_token`. A **missing token is ambiguous** — it means either the 2,000 budget is spent *or* the table is smaller than one page. It never says it cut the result short. Treat **2,000 as the ceiling on any MCP pull** and export beyond it. For a state×month long-form pull you will silently stop at a page boundary → **pivot months into columns** (one row per state) instead.
 - **MariaDB reserved words** (DB 2/630): `lines` breaks `AS lines` → alias `n_lines`. Use `DATE_FORMAT(d,'%Y-%m')` (no `DATE_TRUNC` on MySQL).
 - **DB 630 pool occasionally drops** (`unable-to-acquire-connection` / socket closed) — transient; retry once.
 
@@ -142,7 +154,7 @@ Also: COGS = `SUM(nsib.rate * nsib.quantity) WHERE active=1` (never `rate` alone
 
 ## RULE: "exclude cancelled / net of cancels" = the FULL dead-order set
 
-When a user says "net of cancels", "minus cancelled", "exclude cancelled/dead orders" for any placed-level revenue or real-order count, exclude the **whole DEAD-ORDER STATUS SET** (`tm-chotu-definitions`): `orderstatus NOT IN (49,274,400,668, 57,232, 174, 312)` = incomplete + cancelled + discard + scrapped. **NEVER just `57`** — that leaks discarded/incomplete/scrapped junk (₹0 rows) into the number. Match the word "cancelled" to the intent (all non-real orders), not the single literal code.
+When a user says "net of cancels", "minus cancelled", "exclude cancelled/dead orders" for any placed-level revenue or real-order count, exclude the **whole DEAD-ORDER STATUS SET** (`tm-chotu-definitions`): `orderstatus NOT IN (49, 274, 668, 57, 232, 174, 312)` = incomplete + cancelled + discard + scrapped. **NEVER just `57`** — that leaks discarded/incomplete/scrapped junk (₹0 rows) into the number. Match the word "cancelled" to the intent (all non-real orders), not the single literal code.
 
 ## Refuse to fake
 
@@ -245,3 +257,104 @@ WHERE placed_date BETWEEN order_placed_date - INTERVAL 30 DAY AND order_placed_d
 Wrong-form works for daily-T-1-cron only (run_date ≈ event_date). Breaks on backfill, batch, or any case where job runs days after event.
 
 Validated 2026-05-27 on tm-fraud-engine: 6 signals had the wrong-form; fix landed in Spec 1 Family F (commits `28c22b1` `7ce8778` `1ed8e53` `fc6db4c`).
+
+## RULE: the named source is a CONSTRAINT — never switch silently
+
+If the user names a source ("from Mongo", "on 630", "from the invoice table"), that is a **constraint on the answer**, not a hint you may optimise away.
+
+- If the named source is slow or awkward, solve **inside** it — index probing, chunking, a direct driver, a different access path.
+- If it genuinely cannot answer, **say so and stop**. Do not quietly substitute another system to build the population.
+- If a second source is unavoidable, disclose it **before** running and **measure the completeness gap against ground truth first**, not after.
+
+Substituting a source silently changes the *population* being measured, and the output carries no marker of what got dropped. Ground truth: `order_status` was used as a stand-in for Mongo footprints — it records status transitions only, so it structurally could not see cart edits, and it leaked 1 of 67 known-active orders. See `tm-chotu-learnings` L1.
+
+## RULE: a fresh scope means a FRESH PULL — never reuse a cached cohort
+
+A new time window or a new entity scope requires a new pull. Cached data from earlier in the session is an input to **validation**, never a substitute for the population.
+
+"It's already on disk" is not a reason. Filtering a cached 513-order cohort for a fresh-window question returned 437 events / 67 orders against a true 99,287 events / 22,528 orders — **227× off**. See `tm-chotu-learnings` L2.
+
+## RULE: all-zero identifiers are ABSENT, not values
+
+Before grouping, joining or counting on any ID column, normalise the sentinels to NULL:
+
+| Column | Sentinel | Prevalence |
+|---|---|---|
+| `order_details.offer_id` | `0` (BIGINT) | ~91.6% — means **no offer applied** |
+| `order_device_mapping.device_id` | `00000000-0000-0000-0000-000000000000` | ~3.3% — the #1 device_id bucket |
+| `customer_device_tracker.ip` | `0.0.0.0` | ~1.0% |
+
+Grouping on them collapses every record with missing data into one bucket that **looks like a shared identity** — a silent false-positive generator. In tm-fraud-engine this produced 66% of app / 43% of web HIGH-weight device fires as pure artifact.
+
+**IDs only.** For amounts and flags, `0` is genuine data (`tm_cash=0`, `discount_applied=0`, `ftc_flag=0` are real values) — do not null them. See `tm-chotu-learnings` L3.
+
+## RULE: prod is prod — extract raw, compute locally
+
+DB 2 / DB 630 and the live MySQL are **production**. Heavy queries there degrade the app for everyone.
+
+**Never on live MySQL:** analytical joins, GROUP BY / aggregation over big tables, unindexed-column filters, correlated subqueries at scale. `WHERE created_on >= CURDATE()` on `order_details` is an **87 s full-table scan** — `created_on` is not indexed, and FSP `created_at` is not either.
+
+**The shape that works:**
+1. Accept **one** controlled single-pass scan to get the day's `order_id` list.
+2. Hit every big table **by `order_id` index** (IN-list off that list, chunks ≤1000).
+3. Pull **minimal raw rows** — no enrichment joins on the DB. Masters (`medicine_master` ~231k, `medicine_molecule` ~223k) are small and static; dump them once.
+4. Join, parse and classify **locally in Python**.
+
+Date-scoping **must** use `created_on`. **`order_id` is NOT a date proxy** — ids are assigned at a different lifecycle point than placement, incomplete orders leave gaps, and an order created today can carry an old id. Never invent an id range for "today".
+
+The Metabase MCP loads the same prod — it is not a free scratchpad. For a `created_on` scan, prefer columnar **Redshift 170** over MySQL 630.
+
+## RULE: normalise row shapes at the read boundary
+
+Any pipeline that pulls rows, persists them (JSONL / CSV / parquet) and reads them back by canonical key must normalise on read. Metabase MCP, ad-hoc REST calls and Python DB drivers strip column aliases under different conditions — **two pulls of the same SQL can produce different key shapes**.
+
+Canonical wins when set; raw fills only when canonical is missing. Idempotent, pure, and regression-tested on the exact bad row shape.
+
+Detection heuristic: when a probe produces "unexpectedly clean" results, sample the persisted rows and compare key sets across a start-file and an end-file. Alias drift once caused **89.8% of orders to be scored with half the engine** — no error, no failing test. See `tm-chotu-learnings` L4.
+
+## RULE: check for silent truncation on every pull
+
+Row caps do not announce themselves:
+- Metabase MCP `query` → **2,000 rows** (200-row pages; cap is on the tool, not on the SQL)
+- Metabase CSV API → **1,048,575 rows**
+- Snowflake (DB 993) MBQL pages → **200 rows**
+
+Compare the returned row count against expectation before reporting anything derived from it.
+
+## RULE: PII columns — consult the register first
+
+Before any query touching mobile, email, name, address, DOB, prescription, bank details, call recordings or device/IP identity, load **`tm-chotu-pii-register`**.
+
+Hard behaviours: no `SELECT *` on register tables; never export identity columns to CSV / Excel / chat — aggregate or use `customer_id` / `order_id`; if a request would pull identity, name the exposure in one line and offer the id-only version first; **never recommend widening a grant to fix a `permission denied`** — that error is usually the control working.
+
+## RULE: verify freshness AND coverage, not just existence
+
+A table existing and joining cleanly proves mapping, never currency. Before locking any source into an answer, probe `MAX(created_on)`, row count against expectation, and coverage against a table you trust.
+
+Live examples: `logistics_tracker` maps 100% cleanly and has been **dead since 2026-07-20**; `customer_details` on DB 170 was emptied 2026-08-13 with no backup; `customer_order_rank` is 13mo stale at 3% coverage. See `tm-chotu-learnings` L12.
+
+## RULE: someone else's flag is a LEAD, not a verdict
+
+Re-derive from source before acting on any hand-built sheet, tracker flag or team-supplied classification. A team "Molecule Mismatch" sheet over-counted **~5×**, and 28 of its surviving rows were molecule-synonym artifacts (methylcobalamin vs mecobalamin).
+
+Converse: for **action state** (cancelled / returned / refunded), the ops tracker is truth and system status lags it. Don't call a tracker row wrong on system-status evidence alone. See `tm-chotu-learnings` L17.
+
+
+## RULE: say "I don't know" — the gap loop is a HARD STOP, not a footnote
+
+Constructing a plausible answer where knowledge is missing is worse than refusing, because the reader cannot tell the difference. **A hedge is the tell.** If you are about to write any of these, stop — that is a knowledge gap, not a caveat:
+
+- "if that table isn't on 630 I'd map locally…"
+- "the exact column isn't locked but it's probably…"
+- "assuming `X` joins to `Y`…"
+- naming a table you have not seen in a skill or a probe
+
+**What to do instead:**
+1. Say plainly: **"I don't know this — it isn't in what I've got loaded."**
+2. Name precisely what is missing (table, column, definition, which of two meanings).
+3. Draft a skill-request at `SKILL_REQUESTS/<YYYY-MM-DD>_<topic>.md` **inside the installed plugin folder** (find it with `claude plugin list`; it is versioned, e.g. `.../cache/tm-chotu/tm-chotu/<version>/`). ⚠️ That directory is **replaced on every update** — email the file to Mangesh the same day, don't leave it as your only copy — and tell the user to send it to Mangesh for a context top-up.
+4. Offer the *probe* that would settle it, rather than a guess dressed as an answer.
+
+**Partial knowledge ships as partial.** State the part you do know, mark the boundary, and stop at it. "Here is the half I can stand behind, and here is exactly what I'd need for the rest" is a good answer. A complete-looking answer built over a gap is not.
+
+This applies hardest to **status semantics and clinical meaning**, where a confident wrong reading is invisible: `452` was read as a transcription state when it means the doctor consult is done — the opposite end of the flow. See `tm-chotu-learnings` L23.
