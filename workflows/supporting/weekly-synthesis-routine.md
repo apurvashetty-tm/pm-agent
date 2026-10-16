@@ -21,6 +21,6 @@
 
 **Token Budget:** ~10K per week (under 15% of typical plan)
 
-**Execution:** See scripts/weekly_synthesis.py
+**Execution:** `node scripts/run-synthesis.js`, run from `.work/shared-weekly-auto` (`scripts/weekly_synthesis.py` is retired).
 
 **Publishing (2026-10-16):** the weekly job runs in `.work/shared-weekly-auto` (branch `shared/weekly-auto`, via `scripts/workspace.sh shared weekly-auto`) and publishes with `scripts/publish.sh`; Apurva approves the pull request. It never pushes to `main`.

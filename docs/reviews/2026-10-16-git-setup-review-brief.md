@@ -7,12 +7,12 @@
 ## 1. The setup
 
 - **Repo:** `apurvashetty-tm/pm-agent` (private). One repo for everything: ~9 of Apurva's projects in `projects/<name>/` (PRDs, docs, and two HTML prototypes), plus shared folders: `design-system/` (CSS used by the prototypes), `knowledge/` (company knowledge incl. tm-chotu, learnings, memory export), `templates/`, `workflows/`, `scripts/`, and root rules files (`AGENTS.md`, `CLAUDE.md`, `CONTRIBUTING.md`).
-- **People:** Apurva (owner/admin). Swapnil (her report, write access) has two projects on his own branches and works by pull request.
+- **People:** Apurva (owner/admin). Swapnil (his report, write access) has two projects on his own branches and works by pull request.
 - **How work happens:** almost entirely through AI assistants:
   - several Claude threads at once (Claude desktop app "Cowork"), each running git through a bridge into the same folder on Apurva's Mac (`/Users/mac/src/pm-agent`), seen inside each thread's sandbox under a *different* absolute path (`/sessions/<session-id>/mnt/pm-agent`);
   - Codex / a terminal on the same folder;
   - two weekly scheduled AI tasks (memory export, "self-learning synthesis") that commit and push.
-- **Pushing:** HTTPS with a repo-local credential helper. `main` has GitHub branch protection ("changes through a pull request"); Apurva is admin, so her pushes can bypass it (GitHub prints a warning).
+- **Pushing:** HTTPS with a repo-local credential helper. `main` has GitHub branch protection ("changes through a pull request"); Apurva is admin, so his pushes can bypass it (GitHub prints a warning).
 - **Live sites (Netlify):** doctor-portal prototype deploys from `main` (root `netlify.toml`); Price Lock prototype deployed from its own branch `price-lock-proto` (its own root `netlify.toml`).
 
 ## 2. What went wrong (incidents)
@@ -49,27 +49,26 @@
 | One `main`, no project branches, Apurva's threads push straight to `main` | Built, then reverted the same day — Apurva's requirement is that `main` holds only approved work. |
 | **`main` approved-only; one project, one branch, each in its own folder; scripts + a commit check enforce it** | **Chosen — PR #9.** |
 
-## 5. The fix (PR #9)
+## 5. The fix (PR #9, after review with Codex)
 
-**Model**
-- `main` holds only approved work: nothing is committed on it; it changes only by merging a pull request Apurva approves (as repo owner she can't formally "approve" her own PRs, so merging = approving). Netlify's doctor-portal site deploys from `main`, so it only shows approved work.
-- One project, one branch: `project/<folder-name>`. A branch exists only while the project is active; it's created fresh from `main` and catches up with `main` on every publish, so it can't drift for months.
-- One folder per branch: `.work/<folder-name>/` inside the repo (git worktree, git-ignored). Threads for a project work only there. The main folder stays on `main` and is read-only.
-- Shared changes made *for* a project go on that project's branch (same PR). Standalone shared changes go on `shared/<topic>` with their own PR.
-- Swapnil's branches and PR flow are unchanged and excluded from all of this.
+**Model:** `main` holds only approved work (pull requests only; normal merge commits; merged only when Apurva says so). One project, one branch (`project/<folder>`), alive while the project is active, each in its own folder `.work/<folder>/`; retired (folder, local and GitHub branch) by `workspace.sh close` once everything is merged. Shared changes for a project travel with it; standalone ones use `shared/<topic>`. Swapnil's branches are excluded everywhere.
 
-**Enforcement**
-- `scripts/start-project.sh <name>` / `scripts/workspace.sh project|shared <name>`: creates or opens the branch and its folder (new projects get the scaffold), catches up with `main`, prints the folder. `workspace.sh close …` removes a folder only if nothing is uncommitted or unpushed.
-- `scripts/publish.sh -m "msg" <files>`: refuses on `main`, on files staged by someone else, or on a lock file; commits only the named files; merges the latest `main` into the branch (stops on conflict); pushes the branch; prints the PR link. Never pushes to `main`.
-- `scripts/git-hooks/pre-commit` (enabled in Apurva's checkout via `core.hooksPath`; collaborators unaffected): refuses commits on `main`; on `project/<name>` refuses changes to any other project folder; on `shared/*` refuses project-folder changes; allows the commit that completes a merge of `main`.
-- `scripts/lib-worktree.sh`: keeps each `.work/` folder's git link **relative**, re-points the repo's record of the folder to the current session's path, and **locks** the folder so another session's `git worktree prune` can't remove it (found and fixed while writing this brief; tested by simulating another session's path).
-- Credential helper now resolves via `--git-common-dir` (works from worktrees).
-- `commit-and-push.sh` retired. `run-synthesis.js` / `weekly_synthesis.py` publish through `publish.sh`.
-- Scheduled tasks rewritten: both work in `.work/shared-weekly-auto` (branch `shared/weekly-auto`), publish for approval, request delete permission first, and stop (never work around) on any "Stop:".
-- Rule for every Cowork thread: request delete permission for the pm-agent folder before the first git command (prevents stale locks).
-- Netlify: doctor-portal site rebuilds only when `projects/truemeds-doctor-portal-prototype/`, `design-system/` or `netlify.toml` change (`ignore` rule). Price Lock got its own `projects/truemeds-price-lock/netlify.toml`, used once Apurva re-links that site to `main` (base directory = the project folder); then `price-lock-proto` is deleted.
+**Enforced by code (scripts and local checks in Apurva's checkout)**
+- `scripts/workspace.sh` (`start-project.sh`): validated names; refuses Swapnil's branches; reopening checks the folder is on the right branch, syncs with GitHub (fast-forward only), then merges `main`; leaves a folder with uncommitted work untouched; `close` stops if anything is unmerged, unpushed, or would be lost (untracked/ignored files except `.DS_Store`), then removes folder, local branch and GitHub branch.
+- `scripts/publish.sh`: commits only named files; on a refused commit keeps the work staged and says how to unstage; syncs with the GitHub branch before merging `main`; **final content check** of everything the branch would bring into `main` (catches fast-forwards, which skip hooks); reports not-committed / committed-not-pushed / pushed; never pushes `main`.
+- `scripts/git-hooks/pre-commit` + **`pre-merge-commit`** (automatic merges skip `pre-commit`): refuse `main`, detached HEAD, Swapnil's branches, cross-project changes; a merge may only bring in what's in `main`. NUL-safe file-name handling.
+- `scripts/lib-worktree.sh`: relative, locked folder links; the session-specific reverse record is only rewritten at close.
+- Weekly runner (`run-synthesis.js`) refuses to run outside `shared/weekly-auto` and exits non-zero if publishing fails; the Python runner is retired.
 
-**Tested** (with the new check switched on): commit on `main` refused · cross-project commit on a project branch refused · project change on a `shared/` branch refused · own-project commit allowed · new project scaffolded · existing folder reopened · folder with another session's absolute path repaired by `publish.sh` and pushed · locked folder survives another session's prune · close refuses nothing-to-lose cases correctly and removes the folder · push from a worktree works.
+**Enforced by local configuration:** `core.hooksPath`, the credential helper (`--git-common-dir`).
+
+**Enforced by GitHub:** pull request required for `main`; with "do not allow bypassing" switched on, also for the admin login (pending — after checking that no required-approval rule would block the owner's own merges).
+
+**Instruction only (behavioural):** merge only when Apurva says so; always use the scripts; one git command at a time per folder; request delete permission first in Cowork; one writer per file.
+
+**External configuration:** the two scheduled tasks (run in `.work/shared-weekly-auto`, publish for approval); Netlify (`ignore` rule; Price Lock re-link pending).
+
+**Tested (34/34, throwaway repo with its own fake GitHub):** commit on `main` refused · bad names refused · Swapnil's branch refused by open, publish and hook · new project scaffolded with a relative, locked link · own-project publish pushed · cross-project publish refused with work kept staged · cross-project rename refused · newline file names handled · detached HEAD refused · automatic merge of `main` allowed · automatic merge of another project's branch refused · fast-forward bypass stopped by the publish content check · folder on the wrong branch refused · runner outside `shared/weekly-auto` stops · shared branch can't change a project · close stops on unmerged work, on untracked/ignored files (lists them, skips `.DS_Store`, removes nothing) and on GitHub-branch commits not in `main` · close of merged work retires folder, local and GitHub branch · reopening starts fresh from `main` · close works when the GitHub branch is already gone. **Still to validate:** git inside a `.work/` folder from a second real environment (Apurva's Mac terminal).
 
 ## 6. Clean-up already done (2026-10-16)
 
@@ -80,14 +79,13 @@
 - Stale worktrees and lock files cleared; tm-chotu knowledge package updated v0.1.20 → v0.4.3 (PR #10, merged).
 - The last direct pushes to `main` happened during this clean-up; PR #9 ends them.
 
-## 7. Known limits and open risks (please challenge these)
+## 7. Known limits (after review)
 
-1. **Enforcement is local.** The commit check lives in Apurva's checkout only (`core.hooksPath`); a session with a different clone, or `git commit --no-verify`, bypasses it. GitHub branch protection still blocks non-admin pushes to `main`, but Apurva's admin credential can bypass it.
-2. **Opening PRs** needs a GitHub tool (Claude threads have one); a terminal/Codex session only gets the link to open it by hand.
-3. **Weekly jobs:** after Apurva merges a `shared/weekly-auto` PR, the next week's push needs a new PR to be opened (GitHub doesn't reopen merged PRs).
-4. **Delete permission in unattended runs** may not be granted, so a scheduled run could still leave a lock file; the job then stops and reports instead of working around it.
-5. **Two threads on the same project** share one folder; the "one writer per file, re-read before writing" rule is behavioural, not enforced.
-6. **Shared files edited on two branches** (e.g. `design-system/`) conflict at the second PR's merge; `publish.sh` stops and a human decides.
-7. **Netlify `ignore` rule** relies on `$CACHED_COMMIT_REF`; if wrong, a needed rebuild could be skipped (first builds always run).
-8. **Folder locks** mean `.work/` folders must be closed with `workspace.sh close`, not deleted by hand (otherwise a stale lock record remains in `.git/worktrees/`).
-9. **Approval = merge** by the owner; there's no second reviewer for her own threads' PRs.
+1. Local checks live in Apurva's checkout only; raw git commands (`--no-verify`, manual fast-forwards, pushing by hand) can skip them. Mitigation: GitHub protection on `main`; scripts required by instruction.
+2. GitHub can't tell Apurva's approval from an AI merging with his login — "merge only on his say-so" is an instruction.
+3. Opening pull requests needs a GitHub tool (Claude threads have one); terminal sessions get the link.
+4. Weekly jobs: after a `shared/weekly-auto` pull request is merged, the next week's push needs a new pull request.
+5. Unattended runs may not get delete permission; they then stop on a lock file instead of working around it.
+6. Two threads must not run git in the same project folder at the same time (instruction). Reading in parallel is fine.
+7. Two branches changing the same shared file conflict at the second merge; `publish.sh` stops and a human decides.
+8. Netlify's `ignore` rule relies on `$CACHED_COMMIT_REF`; first builds always run.

@@ -33,7 +33,6 @@ scripts/publish.sh -m "commit message" <files>   # from that folder: push the br
 
 # Weekly self-learning synthesis (extracts corrections/patterns from git history into changelogs/)
 node scripts/run-synthesis.js
-python scripts/weekly_synthesis.py
 ```
 
 No install step; scripts are standalone bash/node/python with no dependency manifest.

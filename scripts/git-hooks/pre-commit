@@ -1,22 +1,5 @@
-#!/bin/sh
-# pm-agent commit check (enabled in Apurva's checkout: git config core.hooksPath scripts/git-hooks)
-#  - never commit on main (main changes only through approved pull requests)
-#  - on project/<name>: only projects/<name>/ among project folders (shared folders allowed)
-#  - on shared/<topic>: no project folders
-#  - anything else: at most one project folder
-gitdir=$(git rev-parse --absolute-git-dir)
-[ -f "$gitdir/MERGE_HEAD" ] && exit 0      # finishing a merge of main: allowed
-branch=$(git symbolic-ref --short -q HEAD || true)
-refuse() { echo "Commit refused: $1" >&2; echo "See AGENTS.md -> Git safety." >&2; exit 1; }
-[ "$branch" = main ] && refuse "commits never go straight to main. Work in your project's folder (scripts/start-project.sh <project>) and publish with scripts/publish.sh."
-projects=$(git diff --cached --name-only | awk -F/ '$1=="projects" && NF>2 {print $2}' | sort -u)
-case "$branch" in
-  project/*) own=${branch#project/}
-             other=$(printf '%s\n' "$projects" | grep -v -x -F "$own" | grep . || true)
-             [ -n "$other" ] && refuse "branch $branch may only change projects/$own/, not: $(echo $other)";;
-  shared/*)  [ -n "$projects" ] && refuse "shared/ branches don't change project folders (found: $(echo $projects))";;
-  *)         [ "$(printf '%s\n' "$projects" | grep -c .)" -gt 1 ] && refuse "touches more than one project: $(echo $projects)";;
-esac
-legacy="$(git rev-parse --git-common-dir)/hooks/pre-commit"
+#!/usr/bin/env bash
+"$(git rev-parse --show-toplevel)/scripts/git-hooks/check-commit" commit || exit 1
+legacy="$(git rev-parse --git-common-dir)/hooks/pre-commit"   # keep any older local hook (e.g. code-review-graph)
 if [ -x "$legacy" ]; then "$legacy" || exit $?; fi
 exit 0
