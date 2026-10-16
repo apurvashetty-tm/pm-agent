@@ -175,6 +175,11 @@ Truemeds Figma library).
   - Project branches: Doctor portal → `doctor-portal/sign-in` · ACOM / Ring AI → `acom-portal-revamp` · Price Lock → `price-lock-proto` · Project South → `project/project-south` · Type 1 revamp → `project/type1-revamp`.
   - `main` is the official version. Project work reaches `main` through a pull request. To keep a project branch current, merge `main` into it (never the other way without a PR); its own project folder is never overwritten by `main`.
   - Backups of every branch as of 2026-10-16: tags `backup/2026-10-16/<branch>`.
+- **Working in parallel** (2026-10-16, Apurva): several threads / AIs on one project at once is normal. The handoff and decision log pass context *over time*; they do not coordinate threads running *at the same time*, so:
+  - **Read:** any number of threads, any time.
+  - **Write:** one thread per file or area at a time (e.g. one thread owns the calling screens, another the docs rewrite — different files, so they can run together). Before editing a file another thread may be working on, re-read it from disk immediately before writing; never save a version built from an earlier read.
+  - **Shared records** — decision log, session handoff, `project_truth.md`, open questions — are written only by the project's **main thread**. Other threads (terminal, Codex, side threads) report back; the main thread records. New decision numbers are taken only by the main thread, at the moment of writing.
+  - **Commit only your own files,** named explicitly. Never commit everything that changed; if `git status` shows changes you didn't make, leave them alone and mention them.
 
 ## Pushing to GitHub (credentials)
 
