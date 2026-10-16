@@ -43,6 +43,12 @@ Last updated: 2026-10-06
 - **§14 GTM & Rollout added** — tech pilot 5% → 25% → 50% → 100% on ₹900+, then ₹500 (75% →
   100%), with gates per step.
 
+## 14 Oct 2026 — Frontend PRD for AI lead context (new)
+- Drafted `docs/frontend-ai-lead-context-prd.md` (Draft v1, markdown only, not synced). Covers the parked "AI context on agent screen" item + listing-page fixes for TLs; DNC (PPE-284) and Hold retirement out.
+- Phase 1: listing (eligible-window leads only, quick chips with unassigned counts, FTC/NFTC replaces Status, Handled by / Lead bucket / AI verdict / Waiting since columns, column search/filter/sort, working page size, selection bar with select-all-matching, "Arjun (AI)" rows locked with clear messages) + lead-page AI box (Ring fields verbatim, NA when empty). Phase 2: CALL PATIENT gating.
+- Mockups: `docs/assets/frontend-ai-context/` (listing-page-v4.png, lead-page-v2.png are current).
+- Next: Apurva's review; open items in PRD §7 (per-lead bulk result, select-all limit, outcome-unknown display, bot name "Arjun", listing window check).
+
 ## Pending / next exact steps
 1. **Close the loop on Confluence** — reply + resolve the answered threads listed in
    `open_questions.md` (incl. "send address" → no address; "48 hours" → 24 h kept).
