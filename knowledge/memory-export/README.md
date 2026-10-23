@@ -4,7 +4,7 @@ A point-in-time copy of Apurva's Claude **persistent memory** (the per-user stor
 across Claude surfaces), mirrored into this git repo for durability and cross-tool
 continuity. Each file below mirrors one memory entry at its memory path.
 
-- **Exported:** 2026-10-12 (weekly best-effort backup). Full memory re-mirrored; added `areas/doctor-portal.md`, `areas/iris.md`, `areas/truemeds-design-system.md`, `areas/incentive-platform.md`, `areas/portal-unification.md`, and `people/swapnil.md`; refreshed `preferences.md`.
+- **Exported:** 2026-10-23 (weekly best-effort backup). Full memory re-mirrored; added `areas/acom-ring-ai-prd.md`; refreshed `preferences.md`, `profile.md`, `areas/doctor-portal.md`, `areas/ring-ai.md`, `areas/truemeds-design-system.md`, and `topics/tools.md`.
 - **Why:** so the memory can't be lost, and so any tool/agent reading this repo (Cowork,
   Claude Code, Codex) can pick up the same context.
 - **This is a snapshot, not a live mirror.** Memory keeps changing; refresh to update.
@@ -21,6 +21,7 @@ continuity. Each file below mirrors one memory entry at its memory path.
 ## Files (memory path → export file)
 - `/profile.md`                      → `profile.md`
 - `/preferences.md`                  → `preferences.md`
+- `/areas/acom-ring-ai-prd.md`       → `areas/acom-ring-ai-prd.md`
 - `/areas/doctor-portal.md`          → `areas/doctor-portal.md`
 - `/areas/incentive-platform.md`     → `areas/incentive-platform.md`
 - `/areas/iris.md`                   → `areas/iris.md`
