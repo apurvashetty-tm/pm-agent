@@ -44,7 +44,7 @@ Link two files. Never copy values out of them.
 | Need | Use |
 |---|---|
 | The one main action | `.tm-btn.tm-btn--primary` (`--block` for full width on mobile) |
-| Secondary action | `.tm-btn--secondary` (white, brand border and text) — §9.1 |
+| Secondary action | `.tm-btn--secondary` (white, grey border, brand text, subtle shadow — as SALT) — §9.1 |
 | Leave / cancel / dismiss | `.tm-btn--quiet` (grey text, no border) — §9.1. Tertiary, ghost and link-styled buttons are retired into Quiet. |
 | Link inside a sentence | `.tm-btn--link` / plain link, brand colour |
 | Destructive (remove or close for good) | `.tm-btn--destructive` (red border and text, never solid) — §9.1 |
@@ -178,7 +178,7 @@ Set once in the design system; a project never restyles them. Where `src/compone
 | Role | Look | Use for |
 |---|---|---|
 | **Primary** | Solid brand blue, white label | The one action that moves the flow forward. One per screen or sheet. |
-| **Secondary** | White, brand border and label | A real alternative action, less likely than the primary. |
+| **Secondary** | White, grey border (`--tm-border-default`), brand label, subtle shadow (`--tm-shadow-button-secondary`) — as SALT | A real alternative action, less likely than the primary. |
 | **Quiet** | Grey text, no border | Leave, cancel, dismiss, "not now", "back to …". |
 | **Destructive** | White, red border and label — never solid | Removes or closes something for good (disable, mark unavailable). Never the primary role (Apple HIG). |
 | **Call end** (special) | Solid red, white label | Only for ending a live call (the phone convention). Nothing else uses it. |
