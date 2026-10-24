@@ -25,7 +25,7 @@ Every entry must include:
 
 **Safe placeholder:** Timer counts continuously from first connection. A drop followed by reconnect resets the timer. `[MOCK ASSUMPTION]`
 
-**Status:** Open
+**Status:** Partly answered (Apurva, 2026-10-19, D-58) — a drop before the gate is treated as a call that isn't valid (Call again · Callback · Unavailable); the gate time is a setting. Reconnect-and-accumulate is not needed.
 
 ---
 
@@ -37,7 +37,7 @@ Every entry must include:
 
 **Safe placeholder:** No-pickup marks a single attempt. Hold is manual with no auto-return. `[MOCK ASSUMPTION]`
 
-**Status:** Open
+**Status:** Answered by D-58 (2026-10-19) — a patient who doesn't answer closes the case as Patient unavailable automatically; no hold.
 
 ---
 
@@ -49,7 +49,7 @@ Every entry must include:
 
 **Safe placeholder:** Cases are pre-assigned and arrive in the doctor's queue. No self-pick action in V1. `[MOCK ASSUMPTION]`
 
-**Status:** Open
+**Status:** Answered by D-31/D-36 — doctors request the next case themselves (pull); nothing is pushed (pushed cases: OQ-028, later).
 
 ---
 
@@ -61,7 +61,7 @@ Every entry must include:
 
 **Answer (Apurva, 2026-10-07):** The doctor cannot add medicines; Add medicine is removed from the prototype. The doctor can edit frequency, duration and advice, and can disable a medicine.
 
-**Status:** Partially answered — add is answered (no). Whether disable = order cancellation, and where a disable writes, remain open. See also OQ-011.
+**Status:** Answered (Apurva, 2026-10-22, D-59) — no add; a disabled medicine is removed from the order; if none is left, the order is cancelled later.
 
 ---
 
@@ -73,7 +73,7 @@ Every entry must include:
 
 **Safe placeholder:** Notes are visible only to the doctor for V1. No lock behavior shown. `[MOCK ASSUMPTION]`
 
-**Status:** Open
+**Status:** Answered (Apurva, 2026-10-22, D-59) — saved only on Confirm, locked after; symptoms printed on the prescription, Doctor notes internal (doctor, HA, ops, pharmacy).
 
 ---
 
@@ -85,7 +85,7 @@ Every entry must include:
 
 **Safe placeholder:** Notes input is shown before the valid-call gate for pre-call observations. `[MOCK ASSUMPTION]`
 
-**Status:** Open
+**Status:** Answered (Apurva, 2026-10-22, D-59) — notes are editable from the moment the case opens until Confirm.
 
 ---
 
@@ -109,7 +109,7 @@ Every entry must include:
 
 **Safe placeholder:** Skip HA Call is shown for all Pilot + HA-required scenarios in the prototype, controlled by the mock scenario flag. `[MOCK ASSUMPTION]`
 
-**Status:** Open
+**Status:** Answered (Apurva, 2026-10-22, D-59) — Skip HA is allowed on both Pilot types whenever an HA call follows the doctor call; no other conditions.
 
 ---
 
@@ -121,7 +121,7 @@ Every entry must include:
 
 **Safe placeholder:** Controlled by scenario flag in mock data. Not derived from medicine attributes in V1. `[MOCK ASSUMPTION]`
 
-**Status:** Open
+**Status:** Answered (Apurva, 2026-10-19/22, D-58/D-59) — ideal is Value Meds (transfer on the same call); fallback is Non-Value Meds. Either set before the doctor call (categories with no dedicated HA) or at the moment of transfer (no HA free). Apurva to confirm with Engineering and Ops.
 
 ---
 
@@ -133,7 +133,7 @@ Every entry must include:
 
 **Safe placeholder:** Case type is a top-level field in mock scenario data. Not derived from any logic in V1. `[MOCK ASSUMPTION]`
 
-**Status:** Open
+**Status:** Answered (Apurva, 2026-10-19, D-58) — four order categories: Cat4 (= doctor category 4) doctor call only · Valid Rx HA call only (not in the doctor app) · Pilot Value Meds · Pilot Non-Value Meds (both calls).
 
 ---
 
@@ -147,7 +147,7 @@ Every entry must include:
 
 **Answer on qty (Apurva, 2026-10-07):** The doctor never sees or edits quantity on the Prescribe screen. Two quantities exist: (1) the customer's cart quantity, shown read-only on the medicine row and unchanged by any doctor edit; (2) the prescription quantity, owned by the backend. The backend preselects frequency and duration for the maximum configured period (6 months; Ongoing preselected) and stores the quantity; if the doctor changes frequency or duration, the backend recalculates the quantity and prints it on the prescription, replacing the default.
 
-**Status:** Qty part answered. Disable scope (does disabling cancel the item from the order; where it writes) still open.
+**Status:** Answered (Apurva, 2026-10-22, D-59) — quantity is the backend's (D-06); a disabled medicine is removed from the order; last one disabled → order cancelled later.
 
 ---
 
@@ -159,7 +159,7 @@ Every entry must include:
 
 **Safe placeholder:** Scheduling a callback ends the session (`consultationState = 'completed'`), shows success toast "Callback Scheduled ... Order moved to callback queue," doctor proceeds via Next Order. `[MOCK ASSUMPTION]` — not confirmed backend truth.
 
-**Status:** Open
+**Status:** Answered by D-36 — a confirmed callback closes the case for this doctor and goes to the callback pool (see OQ-020 for the hand-over).
 
 ---
 
@@ -171,7 +171,7 @@ Every entry must include:
 
 **Safe placeholder:** "Call Again" has no retry limit in the prototype. Each early end-call simply resets to the pre-call state with the recovery UI (Call Again + Schedule Callback ghost button) shown. `[MOCK ASSUMPTION]`
 
-**Status:** Open
+**Status:** Answered (Apurva, 2026-10-19, D-58) — no retry limit; Unavailable is always one tap away; misuse is handled by ops.
 
 ---
 
@@ -193,8 +193,8 @@ Every entry must include:
 **Safe placeholder:** Never re-offer automatically; Profile always has the switch (D-45). Needs product + SMS-cost input.
 
 
-### OQ-024 — Releasing a case (backend) [OPEN — Engineering]
-D-48: Back before the first attempted call releases the case to the queue. Needs an unassign action that is only allowed while no call has been attempted, is safe to retry, and returns the case to the pool immediately. Who else is notified, and whether released cases go to the front of the queue, is Engineering/Ops to confirm.
+### OQ-024 — Releasing a case [NOT DECIDED — Apurva, 2026-10-19, D-58]
+Release was discussed, never agreed; parked with `a-leave-sheet`. If adopted later: D-48 described Back before the first attempted call releasing the case to the queue. Needs an unassign action that is only allowed while no call has been attempted, is safe to retry, and returns the case to the pool immediately. Who else is notified, and whether released cases go to the front of the queue, is Engineering/Ops to confirm.
 
 ### OQ-025 — Restoring an open case; doctor never returns [OPEN — Engineering]
 D-48: reopening the app goes straight back into an open case. Needs the server to report the doctor's open case on launch. Also: if a case is assigned and the doctor never returns or calls (app killed, phone dead), when is it released automatically, and by whom?
@@ -247,7 +247,8 @@ reference ID can be Sentry's event ID, so tech can open the exact report.
 
 - **Profile / Logout sheet render** (2026-10-15, round 15): listed on the sheet template (D-52) but not in the Home screen files. Render it when `index.html` is rebuilt; not part of the A–D standards pass.
 
-### OQ-027 — Calling model: phone call now, in-app call later [OPEN — Apurva + Engineering, 2026-10-16]
+### OQ-027 — Calling model: phone call now, in-app call later [PARTLY ANSWERED — 2026-10-19, D-58]
+Answered: one telecom partner at a time (Ozonetel or Knowlarity); leg 1 and leg 2 are reported separately, so "doctor didn't answer" is its own state. Still open: in-app (VoIP) calling, later.
 First release uses Knowlarity click-to-call: the doctor's phone rings first, the call is ended on the phone (no End call in the app). To confirm with Knowlarity: leg 1 not connected = "doctor didn't answer". In-app (VoIP) calling with native controls to be explored later; patient receives a normal call. Calling screens are redesigned in a separate thread; see `ui-screens/app-logic.md` §5a.
 
 ### OQ-028 — Pushed cases (future) [OPEN — later, 2026-10-16]
@@ -255,3 +256,14 @@ Today doctors only request cases; nothing is pushed (D-31, D-36). Apurva: pushin
 
 ### OQ-029 — Doctor volume figures [OPEN — Apurva, 2026-10-16]
 project_truth §2 uses approximate figures: ~12,000 orders handled by ~300 active doctors. Apurva to confirm both numbers and the period (per day / per month).
+
+### OQ-030 — Live call events and result reconciliation [OPEN — Engineering, 2026-10-19]
+D-58 needs, from the telecom partner: (1) **live** events during the call — leg 1 answered, leg 2 answered — for "Connecting to patient", "On call" and the transfer count; (2) a way for the backend to ask for call details when a result is late, before the app shows "Result not received"; (3) the mapping of each vendor's codes (Ozonetel `CustomerStatus`, Knowlarity hangup causes) to D-58's buckets, per leg; (4) how a failed HA transfer leg is reported. Without (1), "Connecting" disappears and transfer cases can't be counted.
+
+**Update 2026-10-23 (D-58 point 14):** requirement — the app shows the call's status within about 5 seconds of the partner reporting it; Engineering chooses polling or push. Also needed: a backend check "is this call valid" (gate time since `customerAnswered`, call live) before Confirm & transfer shows; measure from today's logs the usual result delay (sets the wait) and a maximum call length. Which partner handles Cat4 / Non-Value Meds, and whether it sends live events, is still to confirm. Ozonetel reference: `reference/telephony/ozonetel-webhook-reference.md`.
+
+### OQ-031 — Mobile data during a normal call [OPEN — Engineering, 2026-10-19]
+On phones without VoLTE, mobile data pauses during a normal call, so the app can't count or send Confirm & transfer. Agreed for now (D-58): the case goes as a forward; track how often it happens. Engineering: can the app detect data loss during a call?
+
+### OQ-032 — HA reservation and allocation [OPEN — Apurva + Engineering + Ops, 2026-10-24]
+Target design (D-58 point 15, option A) needs an HA reserved at the start of the doctor's call, so the route (transfer / forward) is known before Confirm. Today HAs click Assign and wait 60 s for a live transfer, else get a failed-transfer order — about 35% of single-call cases end as two calls, and failed-transfer callback TAT suffers. Apurva is relooking at HA allocation separately (outside this project); until reservation exists, the fallback (option B) applies.

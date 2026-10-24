@@ -650,6 +650,52 @@ From an external (ChatGPT) review, each point verified before acting.
   3. **Later, not this version:** earnings (Wallet in Profile), pushed cases (may be explored; today cases are only requested), calling inside the app. Prescriptions-today count stays on Home.
 - **Why:** the old file described the June single-screen prototype and mixed product truth with instructions to Claude and test setup.
 
+### D-58 · Calling with a telecom partner (click-to-call): states, gate and ways out — 2026-10-19
+- **Decision (Apurva):**
+  1. **Telecom partner, one at a time** (Ozonetel or Knowlarity; no automatic fallback between them). Leg 1 = doctor, leg 2 = patient; the partner reports each leg separately. The doctor ends the call on the phone; **no End call in the app**.
+  2. **Attempted call = leg 2 answered.** A failed request, a doctor who didn't answer, or a patient who didn't answer is not an attempted call.
+  3. **Gate time is a setting** (today 50 s); copy reads it.
+  4. **Transfer cases:** our app counts from the moment the patient answers; Confirm & transfer appears on the live call. Our count is the truth; the partner's duration is for reporting only. **Other cases:** next actions unlock only after the partner's result.
+  5. **Leg 2 failed** (no answer, busy, rejected, unreachable, invalid) → the case closes as **Patient unavailable** automatically; Request next case. Busy/rejected treated as no answer, accepted risk for simplicity.
+  6. **Every call that isn't valid** (before the gate, dropped, or result not received) → **Call again · Callback · Unavailable**; no retry limit. "Not interested" is not a new outcome — Unavailable is the way out.
+  7. **Result not received:** backend asks the partner first; then Confirm is **not shown**. A late result updates the screen. Repeated problems → the doctor uses **Help**. No outage mode.
+  8. **Transfer:** hung up after the gate before transferring → goes as a forward with an explanation; HA didn't join → live notice, then "Prescription confirmed. The HA will call the patient later." Skip HA during a transfer call → "HA call will be skipped."; Confirm shows busy until the result.
+  9. **On call:** Callback only on transfer calls (other cases schedule after the call). Bar for other cases = **"On call…"** busy button, static phone icon, no animation.
+  10. **Three actions** use the case page's existing pattern: primary on top, two secondaries side by side (**Callback · Unavailable**).
+  11. **Release** (Back before the first attempted call, D-48) is **not decided** — it was discussed, never agreed. Parked with `a-leave-sheet`.
+  12. **Order categories (answers OQ-009/OQ-010):** Cat4 (= doctor category 4) — doctor call only · Valid Rx — HA call only (does not reach the doctor app) · Pilot — doctor and HA: **Value Meds** = one call, doctor transfers to the HA; **Non-Value Meds** = two separate calls; which one depends on HA availability.
+  13. **Misuse of Unavailable** is handled by ops (per-doctor rate, SOP), not by app friction.
+  14. **Update 2026-10-23 — simplified flow (temporarily approved; Apurva to verify with Engineering and Ops):**
+     - During the call the bar shows the existing busy **"Calling {name}…"** button for the whole call; separate "Connecting" and "On call" states are dropped. New layouts reduce to the three actions (layout 3).
+     - **Transfer cases:** Confirm & transfer is shown only after the backend confirms the call is valid — at least the gate time since the patient answered (Ozonetel `customerAnswered`) and the call still live. Not shown greyed out; no error in the normal case. A last check on tap covers a call that ended in between. (Today's system counts 50 s from the tap; this replaces it.)
+     - **Requirement:** the app shows the call's current status within about 5 seconds of the telecom partner reporting it — doctor/patient didn't answer, dropped, ended, valid. How (app checks the backend every few seconds, or the backend pushes) is Engineering's call (OQ-030).
+     - **No response at all:** when the doctor returns to the app the backend asks the partner for the call status; otherwise after a maximum call length the app shows "We didn't get the call result" (layout 3). Wait time and maximum call length are settings Engineering measures from today's call logs (OQ-030).
+     - **Unavailable** keeps the approved button style (red outline, destructive), label "Unavailable" so it fits beside Callback.
+     - Ozonetel webhook reference: `reference/telephony/ozonetel-webhook-reference.md`.
+     - Still to confirm: Callback during the call for all cases (proposed: yes, same bar everywhere); script visible from the tap on Call (proposed); which partner handles Cat4 and Non-Value Meds, and whether it sends live events.
+  15. **Update 2026-10-24 — final button for Pilot cases (Apurva):**
+     - **Target (A): HA reserved at the start of the call** (to discuss with Engineering). The route is known before the tap, so there is **one button labelled by route** — Confirm & transfer or Confirm & forward (D-50 labels kept) — and no second sheet. The script matches the route from the start; the label teaches the doctor what to say. After the tap: "Connecting the HA…", then Transferred; if the HA doesn't join, the case is forwarded.
+     - **Fallback (B), documented: HA checked at the tap** (today). One generic **Confirm prescription** button and a neutral script ("Our Health Advisor will help you with the next steps."); after the tap "Checking for a Health Advisor…", then either the script changes to "stay on the line" while the HA connects, or the case is forwarded with what to tell the patient.
+     - **Closed card carries the line for the patient** as a second line under the title (one card at the top, read in one scan). A failed transfer shows the card in **amber (warning)** — the prescription is confirmed, nothing to retry, but the doctor must tell the patient. Normal forward stays green.
+     - Design system: `.tm-status-card` warning variant is **[PROPOSED]** (not yet in `components.css`).
+     - Rejected: two buttons shown before the route is known; the patient line as a separate notice below Order details (split one message across two cards); red error for a failed transfer (nothing to retry).
+     - Renders: `docs/renders/2026-10-22-calling/round-1/storyboard-A-reserved.png`, `storyboard-B-current.png`.
+  16. **Update 2026-10-24 — case page layout (Apurva):** **Order details always first**; directly under it **one slot for "what to say / what happened"** — the script during the call, then the outcome card in the same place once the case closes (replaces "status card on top" from the approved closed screens). The script card has **one title, "End-of-call script"** (the separate "Call" title is dropped — the card holds only the script since D-28 moved the buttons to the bar).
+  17. **Update 2026-10-24 — what happened vs what to say (Apurva):** two cards with two jobs, stacked in the slot under Order details: the **outcome card** says what happened ("Forwarded to HA"; **amber** with "The HA couldn't join." when a transfer fails), and the **End-of-call script** card says what to say ("Our Health Advisor will call you shortly."). The script card always looks the same (never amber) so doctors recognise it; amber belongs to the event. Replaces the "line inside the outcome card" in point 15.
+- **Why:** the approved screens assumed the app controls the call; with click-to-call it doesn't. One rule per outcome keeps the doctor's choices few and the screens alike.
+- **Rejected:** automatic vendor fallback (one vendor at a time); an ops "outage mode" letting Confirm work without a result (would bypass the gate); a "Patient not interested" outcome; Mark as unavailable as red text below the buttons (breaks the existing three-action pattern); an animated call icon; a retry cap; a separate "Call Doctor Ops" link (Help covers it).
+- **Changes:** D-48 (Release reopened), D-51/D-54 calling states (End call removed; failed-call sheets retired), D-26 (didn't-connect sheet replaced by notices). State table: `ui-screens/app-logic.md` §5.
+
+### D-59 · Notes, Skip HA, disable and Value Meds answers — 2026-10-22
+- **Decision (Apurva):**
+  1. **Notes:** editable from the moment the case opens until Confirm; saved only when the prescription is confirmed (lost on Callback or Unavailable — they are consultation notes, not a call log); locked after Confirm. **Symptoms printed on the prescription; Doctor notes internal** (doctor, HA, ops, pharmacy). (OQ-005, OQ-006)
+  2. **Skip HA:** allowed on both Pilot types whenever an HA call follows the doctor call; no other conditions. (OQ-008)
+  3. **Disable:** the medicine is removed from the order; the order ships without it; if none is left the order is cancelled later. No extra warning for the last medicine. (OQ-004, OQ-011)
+  4. **Value vs Non-Value Meds:** ideal is Value Meds (transfer on the same call); fallback Non-Value Meds — set either before the doctor call (no dedicated HA for the category) or at the moment of transfer (no HA free). To confirm with Engineering and Ops. (OQ-009)
+- **Why:** keep the doctor's flow simple; notes wait for Confirm because only a confirmed prescription needs them.
+- **Rejected:** notes only after the call connects (needless complication); a last-medicine warning (extra friction, no value); printing Doctor notes on the prescription (private clinical notes).
+- **Closed by earlier decisions:** OQ-002 (D-58), OQ-003 (D-31/D-36), OQ-012 (D-36).
+
 ## Design system changes made for this work
 
 ### D-21 · Toggle fix and a large chip size — 2026-10-07

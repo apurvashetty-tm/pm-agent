@@ -163,3 +163,5 @@ Review by pattern groups (field, notice, toast), not arbitrary groups of four. K
 Completed in source: registry and metadata, generated browser/native adapters, shared web/native notice anatomy, neutral notice proposal, compact four-slot OTP with one real input, server-controlled lock gating, leading-zero normalization, field association and polite announcements. `ui-screens/feedback/check-sources.mjs`, React Native type check and pure logic checks passed on 2026-10-13.
 
 Still open: source-derived 390×844 captures and visual approval, 360-width and large-text/device checks, native platform autofill/accessibility, real callbacks and authoritative backend reconciliation. Future combination rows above remain integration fixtures, not approved standalone screens. See `renders/2026-10-13-feedback-review/README.md` for capture status.
+
+> **Calling states (2026-10-19, D-58):** the full list of call states, triggers, screens and actions is in `ui-screens/app-logic.md` §5 (state table). This file does not repeat it. Rows above for `case.noPickup` / `case.didntConnect` sheets are retired by D-58.
