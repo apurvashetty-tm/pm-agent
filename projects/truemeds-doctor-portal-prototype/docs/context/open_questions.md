@@ -25,7 +25,7 @@ Every entry must include:
 
 **Safe placeholder:** Timer counts continuously from first connection. A drop followed by reconnect resets the timer. `[MOCK ASSUMPTION]`
 
-**Status:** Partly answered (Apurva, 2026-10-19, D-58) — a drop before the gate is treated as a call that isn't valid (Call again · Callback · Unavailable); the gate time is a setting. Reconnect-and-accumulate is not needed.
+**Status:** Answered (Apurva, 2026-10-24, D-58 point 22) — talk time adds up across calls on the same case (min ~10 s per call, within ~30 min).
 
 ---
 
@@ -193,7 +193,7 @@ Every entry must include:
 **Safe placeholder:** Never re-offer automatically; Profile always has the switch (D-45). Needs product + SMS-cost input.
 
 
-### OQ-024 — Releasing a case [NOT DECIDED — Apurva, 2026-10-19, D-58]
+### OQ-024 — Releasing a case [DECIDED — Apurva, 2026-10-24, D-58 point 20; backend still needed]
 Release was discussed, never agreed; parked with `a-leave-sheet`. If adopted later: D-48 described Back before the first attempted call releasing the case to the queue. Needs an unassign action that is only allowed while no call has been attempted, is safe to retry, and returns the case to the pool immediately. Who else is notified, and whether released cases go to the front of the queue, is Engineering/Ops to confirm.
 
 ### OQ-025 — Restoring an open case; doctor never returns [OPEN — Engineering]
@@ -262,8 +262,19 @@ D-58 needs, from the telecom partner: (1) **live** events during the call — le
 
 **Update 2026-10-23 (D-58 point 14):** requirement — the app shows the call's status within about 5 seconds of the partner reporting it; Engineering chooses polling or push. Also needed: a backend check "is this call valid" (gate time since `customerAnswered`, call live) before Confirm & transfer shows; measure from today's logs the usual result delay (sets the wait) and a maximum call length. Which partner handles Cat4 / Non-Value Meds, and whether it sends live events, is still to confirm. Ozonetel reference: `reference/telephony/ozonetel-webhook-reference.md`.
 
+**Update 2026-10-24:** method decided — polling, in both the web portal and the app (D-58 point 19). Remaining for Engineering: interval, maximum call length, result-wait time.
+
+**Update 2026-10-24:** confirm that Ozonetel reports who ended a non-transfer call (`doctorAnswered` HANGUP/DIAL or CDR `Comments`) in time for state 16 — the reference says yes; Apurva has seen hang-up mainly during transfers.
+
 ### OQ-031 — Mobile data during a normal call [OPEN — Engineering, 2026-10-19]
 On phones without VoLTE, mobile data pauses during a normal call, so the app can't count or send Confirm & transfer. Agreed for now (D-58): the case goes as a forward; track how often it happens. Engineering: can the app detect data loss during a call?
 
 ### OQ-032 — HA reservation and allocation [OPEN — Apurva + Engineering + Ops, 2026-10-24]
 Target design (D-58 point 15, option A) needs an HA reserved at the start of the doctor's call, so the route (transfer / forward) is known before Confirm. Today HAs click Assign and wait 60 s for a live transfer, else get a failed-transfer order — about 35% of single-call cases end as two calls, and failed-transfer callback TAT suffers. Apurva is relooking at HA allocation separately (outside this project); until reservation exists, the fallback (option B) applies.
+
+### OQ-033 — Ops review for calls without a record [OPEN — Apurva + Ops, 2026-10-24]
+D-58 point 20 depends on Ops. To lock: (1) a review queue for "Prescription submitted" cases whose call record **never arrives** (after how long?); (2) what Ops does with each — confirm, cancel, or callback — and who tells the patient; (3) the flag and per-doctor metric for Unavailable and for submitted-without-record (thresholds, SOP, who acts); (4) whether doctor earnings count only after confirmation. Lock before the doctor app goes live.
+**Separate discussion (Apurva, 2026-10-24):** what happens when a submitted case's record arrives late showing **under 50 s or no answer** — not part of this review queue; to be decided on its own (relates to the 50-second rule across dropped calls).
+
+### OQ-034 — Icons on buttons: one rule [ANSWERED — RULES §9.1, 2026-10-24; no screen changes needed] [was OPEN — Apurva, 2026-10-24; do before the final render]
+Buttons are inconsistent today: Call patient / Call again (phone), Callback (calendar), Skip HA (track-next), Unavailable (phone-off), Request next case (arrow after) have icons; Confirm prescription / transfer / forward, Back to Home, Yes still talking / No call ended, Release case, Stay on this case have none. Needs one design-system rule (RULES §9.1) and a pass over every screen — ideally before the terminal's final render so screens aren't rendered twice.

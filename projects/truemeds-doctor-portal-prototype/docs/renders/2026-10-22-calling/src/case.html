@@ -846,7 +846,7 @@ body.concept-closed #success-toast{pointer-events:auto}
   // ---- Wording (D-48), sentence case, D-50 labels; page text only, concept only ----
   const RELABEL = { 'Confirm Order': 'Confirm prescription', 'Confirm & Transfer': 'Confirm & transfer', 'Confirm & Forward': 'Confirm & forward' };
   const TEXT = { 'Call Patient': 'Call patient', 'Retry Call': 'Retry call', 'Mark as Unavailable': 'Mark as unavailable', 'Schedule Callback': 'Schedule callback', 'End Call': 'End call', 'Call Again': 'Call again', 'Skip HA Call': 'Skip HA call', 'Confirm Callback': 'Confirm callback', 'Order Created': 'Order created', 'Expected Delivery': 'Expected delivery', 'Mark Unavailable': 'Mark unavailable', 'Request Next Case': 'Request next case', 'Next Order': 'Request next case' };
-  const TITLE = { 'Order Confirmed': 'Prescription confirmed', 'Transferred to HA': 'Transferred to HA', 'Forwarded for Review': 'Forwarded to HA', 'Callback Scheduled': 'Callback scheduled', 'Patient unavailable': 'Patient unavailable' };
+  const TITLE = { 'Order Confirmed': 'Prescription confirmed', 'Transferred to HA': 'Transferred to Health Advisor', 'Forwarded for Review': 'Forwarded to Health Advisor', 'Callback Scheduled': 'Callback scheduled', 'Patient unavailable': 'Patient unavailable' };
   function relabelText(scope) {
     const w = document.createTreeWalker(scope, NodeFilter.SHOW_TEXT); let n;
     while ((n = w.nextNode())) { const t = n.nodeValue.trim(); if (TEXT[t]) n.nodeValue = n.nodeValue.replace(t, TEXT[t]); }
@@ -1055,8 +1055,19 @@ body.concept-closed #success-toast{pointer-events:auto}
   const btn = (cls, html, busy) => { const b = document.createElement('button'); b.type = 'button'; b.className = 'tm-btn tm-btn--lg ' + cls; if (busy) { b.classList.add('tm-btn--busy'); b.disabled = true; b.setAttribute('aria-busy','true'); } b.innerHTML = html; return b; };
   const setBar = (...els) => { const bar = $('case-actionbar'); Array.from(bar.children).forEach(c => { c.style.display = 'none'; }); bar.hidden = false; els.forEach(e => { e.classList.add('concept-new'); bar.appendChild(e); }); if (window.TMIcons) TMIcons.render(bar); };
   const pair = (a, b) => { const w = document.createElement('div'); w.className = 'tm-btn-pair'; w.style.order = getComputedStyle($('ab-secondary')).order; w.append(a, b); return w; };   // same place as the approved pair (#ab-secondary)
-  const threeWays = () => [btn('tm-btn--primary tm-btn--block', icon('phone') + 'Call again'), pair(btn('tm-btn--secondary', icon('calendar') + 'Callback'), btn('tm-btn--secondary', icon('circle-x') + 'Unavailable'))];
+  const threeWays = () => [btn('tm-btn--primary tm-btn--block', icon('phone') + 'Call again'), pair(btn('tm-btn--secondary', icon('calendar') + 'Callback'), btn('tm-btn--destructive', icon('phone-off') + 'Unavailable'))];
   const GATE = 50;
+  // ---- 2026-10-24: state 7 (no call result) ----
+  const showBack = () => { head.classList.remove('tm-header-task--no-back'); $('ch-back').style.display = ''; };
+  const pairOf = (a, b) => { const w = pair(a, b); return w; };
+  const ask = () => [notice('neutral', 'status', MSG('call.stillOnCall'), 'phone'), pairOf(btn('tm-btn--secondary', 'Yes, still talking'), btn('tm-btn--secondary', 'No, call ended'))];
+  // ---- 2026-10-24: full calling storyboard (target A) ----
+  const SCRIPT = { cat4: MSG('call.scriptCat4'), pilot_value_meds_ha: MSG('call.scriptTransfer'), pilot_nonvalue_meds_ha: MSG('call.scriptForward') };   // D-58 point 21
+  const showScript = txt => { const az = $('action-zone'); $('success-toast').after(az); az.hidden = false; az.style.display = ''; const b = $('pre-call-brief'); b.classList.add('visible'); b.hidden = false; b.style.display = ''; $('pcb-text').textContent = txt || SCRIPT[DOCTOR_STATE.activeScenario] || SCRIPT.cat4; const cl = $('az-closed'); if (cl) cl.hidden = true; };
+  const callbackRow = () => { const w = document.createElement('div'); w.className = 'tm-btn-pair'; w.style.order = getComputedStyle($('ab-secondary')).order; w.style.gridTemplateColumns = '1fr'; w.appendChild(btn('tm-btn--secondary', icon('calendar') + 'Callback')); return w; };
+  const busy = label => btn('tm-btn--primary tm-btn--block', '<span class="tm-spinner" aria-hidden="true"></span>' + label, true);
+  const first = () => DOCTOR_STATE.currentCase.patient_name.split(' ')[0];
+  const calling = scn => { switchScenario(scn); initiateCall(); return later(() => { setBar(busy('Calling ' + first() + '…'), callbackRow()); showScript(); head.classList.remove('tm-header-task--no-back'); $('ch-back').style.display = ''; }, 250); };
   const scriptAfterOutcome = text => { const az = $('action-zone'); $('success-toast').after(az); az.hidden = false; az.style.display = ''; const b = $('pre-call-brief'); b.classList.add('visible'); b.hidden = false; b.style.display = ''; $('pcb-text').textContent = text; const cl = $('az-closed'); if (cl) cl.hidden = true; };
   const cardText = (text, warn) => { const c = $('success-toast'); c.classList.add('concept-has-text'); $('success-toast-desc').textContent = text; if (warn) { c.classList.add('concept-warning'); const ic = c.querySelector('#success-toast-icon .tm-icon'); if (ic) { ic.setAttribute('data-icon', 'alert-triangle'); if (window.TMIcons) TMIcons.render(c); } } };
   const allRx = () => { DOCTOR_STATE.currentCase.medicines.forEach(x => { x.validation_status = 'prescribed'; }); render(); };
@@ -1067,16 +1078,45 @@ body.concept-closed #success-toast{pointer-events:auto}
     'n2b-on-call-transfer':    () => { startCall(VALUE); return later(() => { const cb = btn('tm-btn--secondary', icon('calendar') + 'Callback'); const w = document.createElement('div'); w.className = 'tm-btn-pair concept-single'; w.style.order = getComputedStyle($('ab-secondary')).order; w.style.gridTemplateColumns = '1fr'; w.appendChild(cb); setBar(btn('tm-btn--primary tm-btn--block', icon('phone') + MSG('call.onCall'), true), w); }, 250); },
     'n2c-calling-transfer':    () => { switchScenario(VALUE); initiateCall(); return later(() => { const w = document.createElement('div'); w.className = 'tm-btn-pair concept-new'; w.style.order = getComputedStyle($('ab-secondary')).order; w.style.gridTemplateColumns = '1fr'; w.appendChild(btn('tm-btn--secondary', icon('calendar') + 'Callback')); $('case-actionbar').appendChild(w); if (window.TMIcons) TMIcons.render(w); }, 250); },
     's2-connecting-ha':        () => { passGate(VALUE); allRx(); return later(() => setBar(btn('tm-btn--primary tm-btn--block', '<span class="tm-spinner" aria-hidden="true"></span>' + MSG('call.connectingHa'), true)), 250); },
-    's4-transfer-failed':      () => closeCase(VALUE, () => { showSuccessToast('Forwarded for Review', ''); cardText(MSG('call.transferFailed'), true); scriptAfterOutcome(MSG('call.forwardedTell')); }),
+    's4-transfer-failed':      () => closeCase(VALUE, () => { showSuccessToast('Forwarded for Review', ''); $('success-toast-title').textContent = 'Forwarded to Health Advisor'; cardText(MSG('call.transferFailed'), true); scriptAfterOutcome(MSG('call.forwardedTell')); }),
     // Storyboard B — route decided at the tap (no HA reserved): one generic button, neutral script
     'g1-generic-confirm':      () => { passGate(VALUE); allRx(); return later(() => { $('pcb-text').textContent = MSG('call.scriptNeutral'); const b = $('main-cta-btn'); b.textContent = 'Confirm prescription'; }, 250); },
     'g2-checking-ha':          () => { passGate(VALUE); allRx(); return later(() => { $('pcb-text').textContent = MSG('call.scriptNeutral'); setBar(btn('tm-btn--primary tm-btn--block', '<span class="tm-spinner" aria-hidden="true"></span>' + MSG('call.checkingHa'), true)); }, 250); },
     'g3a-connecting-ha':       () => { passGate(VALUE); allRx(); return later(() => setBar(btn('tm-btn--primary tm-btn--block', '<span class="tm-spinner" aria-hidden="true"></span>' + MSG('call.connectingHa'), true)), 250); },
-    'g3b-forwarded':           () => closeCase(VALUE, () => { showSuccessToast('Forwarded for Review', ''); scriptAfterOutcome(MSG('call.forwardedTell')); }),
+    'g3b-forwarded':           () => closeCase(VALUE, () => { showSuccessToast('Forwarded for Review', ''); $('success-toast-title').textContent = 'Forwarded to Health Advisor'; cardText(MSG('call.noHaFree'), false); scriptAfterOutcome(MSG('call.forwardedTell')); }),
     'a1-transfer-ready':       () => { passGate(VALUE); allRx(); },
     'a1f-forward-ready':       () => { passGate(FWD); allRx(); },
-    'n3-ended-early':          () => { startCall(CAT4); handleCallAction(); return later(() => setBar(notice('warning', 'status', MSG('call.endedEarly', { seconds: GATE }), 'phone-off'), ...threeWays()), 250); },
+    'n3-ended-early':          () => { startCall(CAT4); handleCallAction(); return later(() => setBar(notice('warning', 'status', MSG('call.endedEarly'), 'phone-off'), btn('tm-btn--primary tm-btn--block', icon('phone') + 'Call again'), callbackRow()), 250); },
     'n3-result-missing':       () => { startCall(CAT4); handleCallAction(); return later(() => setBar(notice('warning', 'status', MSG('call.resultMissing'), 'alert-triangle'), ...threeWays()), 250); },
+    // T. Full calling storyboard, target A (2026-10-24)
+    't01-ready':               () => { switchScenario(CAT4); },
+    't02-calling':             () => calling(CAT4),
+    't03-not-through':         () => { switchScenario(CAT4); return later(() => setBar(notice('error', 'alert', MSG('call.notThrough'), 'alert-circle'), btn('tm-btn--primary tm-btn--block', icon('phone') + 'Call again')), 250); },
+    't04-doctor-missed':       () => { switchScenario(CAT4); return later(() => setBar(notice('warning', 'status', MSG('call.doctorMissed'), 'phone-off'), btn('tm-btn--primary tm-btn--block', icon('phone') + 'Call again')), 250); },
+    't05-result-wait':         () => { switchScenario(CAT4); initiateCall(); return later(() => { setBar(busy(MSG('call.resultWait')), callbackRow()); showScript(); }, 250); },
+    't06-ended-early':         () => { startCall(CAT4); handleCallAction(); return later(() => setBar(notice('warning', 'status', MSG('call.endedEarly'), 'phone-off'), btn('tm-btn--primary tm-btn--block', icon('phone') + 'Call again'), callbackRow()), 250); },
+    't07-result-missing':      () => { startCall(CAT4); handleCallAction(); return later(() => setBar(notice('warning', 'status', MSG('call.resultMissing'), 'alert-triangle'), ...threeWays()), 250); },
+    't08a-valid-cat4':         () => { passGate(CAT4); allRx(); return later(() => showScript(), 200); },
+    't08b-valid-forward':      () => { passGate(FWD); allRx(); return later(() => showScript(), 200); },
+    't09-patient-unavailable': () => { switchScenario(CAT4); initiateCall(); markCustomerUnavailable(); setTimeout(() => { closeSheet(); showSuccessToast('Patient unavailable', ''); ready(); }, 150); return 'wait'; },
+    't10a-confirmed':          () => { switchScenario(CAT4); allRx(); return closeCase(CAT4); },
+    't10b-forwarded':          () => { switchScenario(FWD); allRx(); return closeCase(FWD); },
+    't11-calling-transfer':    () => calling(VALUE),
+    't12-transfer-ready':      () => { passGate(VALUE); allRx(); return later(() => showScript(), 200); },
+    't13-connecting-ha':       () => { passGate(VALUE); allRx(); return later(() => { showScript(); setBar(busy(MSG('call.connectingHa'))); }, 250); },
+    't14-transferred':         () => { switchScenario(VALUE); allRx(); return closeCase(VALUE); },
+    't15-ha-no-join':          () => closeCase(VALUE, () => { showSuccessToast('Forwarded for Review', ''); cardText(MSG('call.transferFailed'), true); scriptAfterOutcome(MSG('call.forwardedTell')); }),
+    't16-transfer-missed':     () => { passGate(VALUE); allRx(); return later(() => { $('action-zone').style.display = 'none';   /* call already over: nobody to read the script to */ setBar(notice('warning', 'status', MSG('call.transferMissedDoctor'), 'phone-off'), btn('tm-btn--primary tm-btn--block', 'Confirm & forward')); }, 250); },
+    't16b-transfer-missed-patient': () => { passGate(VALUE); allRx(); return later(() => { $('action-zone').style.display = 'none'; setBar(notice('warning', 'status', MSG('call.transferMissedPatient'), 'phone-off'), btn('tm-btn--primary tm-btn--block', 'Confirm & forward')); }, 250); },
+    't16c-transfer-missed-unknown': () => { passGate(VALUE); allRx(); return later(() => { $('action-zone').style.display = 'none'; setBar(notice('warning', 'status', MSG('call.transferMissed'), 'phone-off'), btn('tm-btn--primary tm-btn--block', 'Confirm & forward')); }, 250); },
+    't17-skip-ha-wait':        () => { passGate(VALUE); allRx(); return later(() => { showScript(SCRIPT.cat4); setBar(notice('neutral', 'status', MSG('call.skipHa'), 'info-circle'), busy(MSG('call.resultWait'))); }, 250); },
+    // S7. No call result (2026-10-24)
+    's7a-calling':             () => { switchScenario(CAT4); initiateCall(); return later(() => { setBar(busy('Calling ' + first() + '…'), callbackRow()); showScript(); showBack(); }, 250); },
+    's7b-still-on-call':       () => { switchScenario(CAT4); initiateCall(); return later(() => { setBar(...ask()); showScript(); showBack(); }, 250); },
+    's7c-checking':            () => { switchScenario(CAT4); initiateCall(); return later(() => { setBar(busy(MSG('call.checkingResult'))); showScript(); }, 250); },
+    's7d-result-missing':      () => { switchScenario(CAT4); initiateCall(); allRx(); return later(() => { setBar(notice('warning', 'status', MSG('call.resultMissing'), 'alert-triangle'), btn('tm-btn--primary tm-btn--block', 'Confirm prescription'), pair(btn('tm-btn--secondary', icon('calendar') + 'Callback'), btn('tm-btn--destructive', icon('phone-off') + 'Unavailable'))); }, 250); },
+    's7e-leave-sheet':         () => { switchScenario(CAT4); initiateCall(); return later(() => { setBar(busy('Calling ' + first() + '…'), callbackRow()); showScript(); showBack(); showLeave(); }, 250); },
+    's7f-submitted':           () => { switchScenario(CAT4); allRx(); return closeCase(CAT4, () => { showSuccessToast('Patient unavailable', ''); $('success-toast-title').textContent = 'Prescription submitted'; cardText(MSG('call.submittedText'), false); const ic = $('success-toast').querySelector('#success-toast-icon .tm-icon'); if (ic) { ic.setAttribute('data-icon', 'clock'); TMIcons.render($('success-toast')); } }); },
     // A. Case page
     'a-top':                   () => { switchScenario(CAT4); },
     'a-scrolled':              () => { switchScenario(CAT4); return later(() => { $('main-scroll').scrollTop = 420; }, 200); },

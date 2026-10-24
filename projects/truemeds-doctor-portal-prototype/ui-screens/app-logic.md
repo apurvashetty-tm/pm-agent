@@ -95,6 +95,7 @@ Order on first use: Sign-in → OTP → (offer, once) → Home → Case. Returni
 
 **Rules**
 - **Gate time is a setting** (today 50 s). Every message reads it — no "50" hard-coded in copy.
+- **Talk time adds up** across connected calls on the same case (each at least ~10 s, within ~30 min) — D-58 point 22. The doctor is never shown the count.
 - **Attempted call** = leg 2 answered. A failed request, a doctor who didn't answer, or a patient who didn't answer is not an attempted call.
 - **Transfer cases** (Pilot, Value Meds): our app counts from the moment the patient answers, while the call is live; at the gate time **Confirm & transfer** appears on the live call. Our count is the truth; the partner's duration is stored for reporting only.
 - **All other cases** (Cat4, Pilot Non-Value Meds, HA skipped): the next actions unlock only when the partner's call result arrives after the call ends.
@@ -104,27 +105,35 @@ Order on first use: Sign-in → OTP → (offer, once) → Home → Case. Returni
 - **Result not received:** the backend asks the partner for the call details first; if there is still no result, Confirm is **not shown**, only the three actions. A late result updates the screen by itself. Repeated problems → the doctor uses **Help** on the case.
 - **Vendor terms are mapped by Engineering** to the buckets in the table (Ozonetel `CustomerStatus`, Knowlarity hangup causes — `projects/ACOM/ring-ai/reference/knowlarity-hangup-causes.pdf`).
 
-**State table** — one row per state. Screen = approved picture in `ui-screens/case/` (existing file names kept). Copy key = `ui-screens/feedback/messages.json` (to be added with the layout step).
+**State table (final, 2026-10-24 — D-58 points 14–22).** One row per state. Render id = recipe in `docs/renders/2026-10-22-calling/src/case.html`. Copy keys in `ui-screens/feedback/messages.json`. During every call the End-of-call script shows under Order details; Callback is offered in every call.
 
-| State ID | State | Trigger | Screen | Doctor's actions |
-|---|---|---|---|---|
-| `call.ready` | Ready to call | Case opened | `a-top` | Call patient |
-| `call.calling-you` | Calling your phone | Doctor taps Call; request accepted | `b-calling` (copy) | — |
-| `call.not-through` | Call didn't go through | Request refused, or leg-1 network/vendor error | `a-confirm-failed` notice (copy) | Call again |
-| `call.doctor-missed` | You didn't answer | Leg 1: no answer, busy, rejected | `a-confirm-failed` notice (copy) | Call again |
-| `call.calling-you` (continued) | Call in progress | Until the call ends | `b-calling` busy "Calling {name}…" (+ Callback — to confirm) | — |
-| `call.calling-transfer` | Call in progress, transfer case | Until the backend confirms the call is valid | `b-calling` busy + Callback (`round-1/n2c`) | Callback |
-| `call.transfer-ready` | Transfer, gate passed | Backend confirms: gate time since the patient answered, call live | `b-post-gate-transfer` + "Stay on the call" | Confirm & transfer · Callback · Skip HA |
-| `call.result-wait` | Getting call result | Call ended (other cases) | busy button as `a-confirm-busy` (copy) | — |
-| `call.ended-early` | Ended before the gate | Result: answered, under the gate time | `b-ended-early` — **new layout 3** | Call again · Callback · Unavailable |
-| `call.valid` | Gate passed | Result: answered, gate time or more | `b-post-gate-cat4`, `b-post-gate-forward` | Final button · Callback · Skip HA (if allowed) |
-| `call.result-missing` | Result not received | No result after the wait (a setting, ~10–15 s) and the backend check | `b-ended-early` — **new layout 3** (copy) | Call again · Callback · Unavailable |
-| `call.patient-unavailable` | Patient unavailable | Leg 2 failed | `e-patient-unavailable` | Request next case |
-| `call.transfer-missed` | Hung up before the transfer | Transfer case, call ended after the gate, not transferred; or app offline during the transfer call | `b-post-gate-forward` + notice | Confirm & forward |
-| `call.ha-no-join` | HA didn't join | Transfer leg failed, call still live | `b-on-call` notice (copy) | — |
-| `call.transfer-failed` | Transfer failed, closed | After `call.ha-no-join` | `e-forwarded` (copy) | Request next case |
-| `call.transferred` | Transferred | Transfer succeeded | `e-transferred` | Request next case |
-| `call.skip-ha-wait` | Skip HA during a transfer call | Skip HA confirmed | `c-skip-ha`, then Confirm busy as `a-confirm-busy` until the result | then as `call.valid` / `call.ended-early` / `call.result-missing` |
+| # | State ID | State | Trigger (from the backend, by polling) | Bar (top → bottom) | Render id |
+|---|---|---|---|---|---|
+| 1 | `call.ready` | Ready to call | Case opened | Call patient · header Back (leave sheet) | `t01-ready` |
+| 2 | `call.calling` | Calling (whole call) = 7a | Doctor taps Call; until a result | "Calling {name}…" busy · Callback · header Back | `t02-calling` / `s7a-calling` |
+| 3 | `call.not-through` | Didn't go through | Request refused, or leg-1 network/vendor error | Red notice · Call again · header Back | `t03-not-through` |
+| 4 | `call.doctor-missed` | You didn't answer | Leg 1 not answered / busy / rejected | Amber notice · Call again · header Back | `t04-doctor-missed` |
+| 5 | `call.result-wait` | Getting call result | Call known to have ended, result not in yet | "Getting call result…" busy · Callback | `t05-result-wait` |
+| 6 | `call.ended-early` | Call too short | Result: total talk time on the case under the gate | Amber "Call too short…" · Call again · Callback (no Unavailable — D-58 point 23) | `t06-ended-early` |
+| 7b | `call.still-on-call` | Still on the call? | 3 min after the tap with no result (repeats every 3 min) | Grey "Are you still on the call?" · Yes, still talking + No, call ended · header Back | `s7b-still-on-call` |
+| 7c | `call.checking` | Checking call result | Doctor tapped "No, call ended" | "Checking call result…" busy | `s7c-checking` |
+| 7d | `call.result-missing` | Result not received | Backend check found nothing | Amber notice · Confirm prescription · Callback + Unavailable | `s7d-result-missing` |
+| 7e | — | Leave this case? | Back in 1–4, 7a, 7b | Approved sheet: Release case / Stay on this case | `s7e-leave-sheet` |
+| 7f | `call.submitted` | Prescription submitted | Confirm in 7d | Grey card "Prescription submitted" · Request next case · Back to Home | `s7f-submitted` |
+| 8a | `call.valid` | Valid call (Cat4 / HA skipped) | Result: total talk time ≥ gate | Confirm prescription · Callback | `t08a-valid-cat4` |
+| 8b | `call.valid` | Valid call (forward) | Same | Confirm & forward · Callback + Skip HA | `t08b-valid-forward` |
+| 9 | `call.patient-unavailable` | Patient unavailable (automatic) | Leg 2 failed | Grey card · Request next case · Back to Home | `t09-patient-unavailable` |
+| 10a | — | Prescription confirmed | Confirm (Cat4) | Green card · Request next case · Back to Home | `t10a-confirmed` |
+| 10b | — | Forwarded to HA | Confirm & forward | Green card · same | `t10b-forwarded` |
+| 11 | `call.calling-transfer` | Calling, transfer case | Tap on Call; until the backend confirms validity | "Calling {name}…" busy · Callback · header Back | `t11-calling-transfer` |
+| 12 | `call.transfer-ready` | Confirm & transfer | Backend: gate time since `customerAnswered`, call live | Confirm & transfer · Callback + Skip HA | `t12-transfer-ready` |
+| 13 | — | Transferring | Tap on Confirm & transfer | "Transferring…" busy | `t13-connecting-ha` |
+| 14 | `call.transferred` | Transferred | Transfer succeeded | Green card · Request next case · Back to Home | `t14-transferred` |
+| 15 | `call.transfer-failed` | Health Advisor unavailable | Transfer failed / none free | Amber card "Forwarded to Health Advisor · Health Advisor unavailable right now. Read the script, then end the call." + script | `t15-ha-no-join` |
+| 16 | `call.transfer-missed` | Ended before the transfer | Ozonetel hang-up after the gate, not transferred | Amber notice naming who ended the call (doctor / patient / unknown) · Confirm & forward · no script | `t16-transfer-missed` (doctor) · `t16b-…-patient` · `t16c-…-unknown` |
+| 17 | `call.skip-ha-wait` | Skip HA during a transfer call | Skip HA confirmed | Grey "HA call will be skipped." · "Getting call result…" busy | `t17-skip-ha-wait` |
+
+**Fallback B (documented, D-58 point 15):** `g1-generic-confirm` (Confirm prescription, neutral script) · `g2-checking-ha` ("Checking for a Health Advisor…") · `g3b-forwarded` (Forwarded + script). Transfer path in B reuses 13–15.
 
 Retired: `b-missed-call`, `b-didnt-connect` (sheets) — replaced by the automatic close and the notices. `a-leave-sheet` parked while Release is not decided. The old state name **hold** for "didn't connect" is retired (old Flag 4).
 

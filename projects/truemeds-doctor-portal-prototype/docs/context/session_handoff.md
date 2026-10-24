@@ -786,3 +786,13 @@ User identified missing HTML/native linkage. Inspected actual sign-in and OTP HT
 ### 2026-10-24 — Pilot final button: A target, B fallback (D-58 point 15)
 - A (HA reserved at call start): one button labelled by route; B (HA checked at the tap): generic Confirm prescription. Closed card holds the line for the patient; failed transfer in amber ([PROPOSED] status-card warning). OQ-032 (HA reservation/allocation) added.
 - Next: render the full storyboard of all calling states (target A), then the terminal loop at 360/390.
+
+### 2026-10-24 — State 7 agreed (D-58 point 20); open before final render
+- OQ-033 (Ops review for calls without a record) — lock with Ops before go-live.
+- OQ-034 (one icon rule for buttons) — decide before the terminal's final render.
+- Then: scripts → 50-second rule across dropped calls → final render → terminal brief.
+
+### 2026-10-25 — Calling flow complete; handed to the terminal
+- Decisions D-58 points 14–23 (polling, state 7, Release, scripts, icon rule, cumulative talk time, final review fixes). State table final in `ui-screens/app-logic.md` §5 (20 states + 3 fallback-B screens, state 16 in three variants).
+- Pre-check render by the main thread: `docs/renders/2026-10-22-calling/storyboard-final-draft.png`. Next: terminal runs `docs/renders/2026-10-22-calling/TERMINAL-BRIEF.md` → `round-4/REPORT.md` → Apurva reviews → main thread records, promotes to `ui-screens/case/`, publishes.
+- Open: OQ-030 (Engineering: polling interval, max call length, result wait, who-ended-the-call), OQ-032 (HA reservation), OQ-033 (Ops review queue), late record under 50 s on a submitted case (separate discussion). After the render: PRD outline (page by page, JTBD, use cases, screenshots).
