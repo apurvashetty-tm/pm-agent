@@ -1,7 +1,7 @@
 # Added beyond SALT
 
 Everything below is a **Truemeds decision on top of SALT, owned here** (approved by Apurva). Share it with the SALT
-designers so Figma can catch up; the native app team treats it as final, not as proposals. Last updated 2026-10-24.
+designers so Figma can catch up; the native app team treats it as final, not as proposals. Last updated 2026-10-15.
 
 ## Truemeds token and text-style decisions (`tokens/truemeds.json`, layout v2 · D-43)
 Applied last by `scripts/build.py`; these override SALT values on purpose.
@@ -18,7 +18,6 @@ Mobile layout rules: `RULES.md` §8 (four type levels, one side margin, three ga
 ## Components (`src/components.css`)
 | Item | Class | Why it exists |
 |---|---|---|
-| Secondary button, **no drop shadow** | `.tm-btn--secondary` | SALT gives the white secondary button a drop shadow (`--tm-shadow-button-secondary`) and the primary none, so secondaries look raised above the main action. Truemeds keeps SALT's grey border and brand label, drops the shadow (Apurva, 2026-10-24). Share with the SALT designers. |
 | Quiet button | `.tm-btn--quiet` | Grey text, no border: leave / cancel / dismiss / "not now" (RULES §9.1). Replaces tertiary, ghost and link-styled buttons. SALT's ghost button is brand blue and reads as the main action. |
 | On-dark button | `.tm-btn--on-dark` | Light controls on a dark surface (prescription viewer). |
 | Busy button | `.tm-btn--busy` | "Calling…", "Sending OTP": keeps the primary look while working; disabled grey reads as unavailable. |

@@ -698,7 +698,8 @@ From an external (ChatGPT) review, each point verified before acting.
 
 ## Design system changes made for this work
 
-### D-60 · Secondary button without drop shadow (design system) — 2026-10-24
+### D-60 · Secondary button without drop shadow (design system) — 2026-10-24 · **REVERTED same day**
+- **Reverted (Apurva, 2026-10-24):** keep the secondary button as SALT has it today — white, grey border, brand label, drop shadow. The change below was undone; recorded so it isn't proposed again without new information.
 - **Decision (Apurva):** `.tm-btn--secondary` keeps SALT's white fill, grey border (`--tm-border-default`) and brand label, but **drops SALT's drop shadow** (`--tm-shadow-button-secondary`). Fixed centrally in `design-system/src/components.css`; listed in `beyond-salt.md`; `RULES.md` wording corrected (it said "brand border", which never matched SALT or the code).
 - **Why:** SALT gives only the secondary a shadow and the primary none, so secondaries looked raised above the main action. The doctor app is the design system's first project; a clear miss is fixed at the source.
 - **Rejected:** keeping the shadow for parity with SALT; a blue border (never SALT).
