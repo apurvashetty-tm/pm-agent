@@ -698,6 +698,12 @@ From an external (ChatGPT) review, each point verified before acting.
 
 ## Design system changes made for this work
 
+### D-60 · Secondary button without drop shadow (design system) — 2026-10-24
+- **Decision (Apurva):** `.tm-btn--secondary` keeps SALT's white fill, grey border (`--tm-border-default`) and brand label, but **drops SALT's drop shadow** (`--tm-shadow-button-secondary`). Fixed centrally in `design-system/src/components.css`; listed in `beyond-salt.md`; `RULES.md` wording corrected (it said "brand border", which never matched SALT or the code).
+- **Why:** SALT gives only the secondary a shadow and the primary none, so secondaries looked raised above the main action. The doctor app is the design system's first project; a clear miss is fixed at the source.
+- **Rejected:** keeping the shadow for parity with SALT; a blue border (never SALT).
+- Render: `docs/renders/2026-10-22-calling/secondary-shadow-before-after.png`. Affects every screen with a secondary button (approved A–D renders show the old shadow until re-rendered).
+
 ### D-21 · Toggle fix and a large chip size — 2026-10-07
 - **Decision:** Fixed a design-system bug (a checked toggle inside a label stayed grey). Added `.tm-chip--lg`
   ([PROPOSED], about 46px tall) for choices tapped during a call.
