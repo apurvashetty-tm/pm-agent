@@ -764,3 +764,25 @@ User identified missing HTML/native linkage. Inspected actual sign-in and OTP HT
 ### 2026-10-16 (later) — Git: project branch and folder
 - Final model (supersedes the "lives on main" note above): this project lives on branch `project/truemeds-doctor-portal-prototype`, folder `pm-agent/.work/truemeds-doctor-portal-prototype` (`scripts/start-project.sh truemeds-doctor-portal-prototype`). Publish with `scripts/publish.sh`; changes reach `main` (and the live Netlify demo) only through a pull request Apurva merges.
 - Next: check OQ-008 to OQ-010 (case type, Value Meds, HA rules) against tm-chotu v0.4.3 `tm-chotu-rx-cadence`; then the click-to-call screens thread.
+
+---
+
+### 2026-10-19 — Click-to-call: flow agreed (D-58); records written, not published
+- Agreed with Apurva in words: 18 calling states, triggers and actions — state table in `ui-screens/app-logic.md` §5 (§4 stages and §7 updated; §5a folded in). D-58 logged. OQ-001/009/010/013 answered or partly; OQ-024 (Release) not decided; OQ-027 updated; OQ-030 (live call events, reconciliation, vendor mapping) and OQ-031 (mobile data during calls) added. `feedback-state-map.md` points to the table.
+- 15 of 18 states reuse approved screens with copy changes; **3 new layouts**: (1) On call, other cases — bar = "On call…" busy, static phone icon; (2) On call, transfer — notice + Callback, no End call; (3) Ended early / Result not received — Call again, then Callback · Unavailable side by side.
+- **Next:** (a) pass/fail checklist for the 3 layouts → Apurva OK; (b) Claude renders first versions of the 3 layouts into `docs/renders/2026-10-19-calling/`; (c) copy into `ui-screens/feedback/messages.json`; (d) terminal loop renders all 18 states at 360/390 and runs the checks; (e) Apurva approves → promote to `ui-screens/case/`.
+- Git: work in `.work/truemeds-doctor-portal-prototype` on `project/truemeds-doctor-portal-prototype`; publish with `scripts/publish.sh`; `main` only via a PR Apurva merges.
+
+### 2026-10-22 — Open questions round with Apurva (D-59)
+- Answered: OQ-004/005/006/008/009/011; closed by earlier decisions: OQ-002/003/012. `app-logic.md` §3 (Source line replaces Flag 1), §6 Skip HA, §8 Disable, §9 Notes updated. OQ-029 (volume figures) left open — not needed now.
+- Still unpublished (D-58 + D-59 records). Next: checklist for the 3 calling layouts → renders.
+
+### 2026-10-23 — Simplified call flow (D-58 point 14, temporarily approved)
+- During the call: busy "Calling {name}…" for the whole call; transfer button only after the backend confirms the call is valid; app reflects call status within ~5 s (Engineering picks polling/push, OQ-030). Ozonetel reference moved to `reference/telephony/`.
+- Renders so far: `docs/renders/2026-10-22-calling/round-1/` (layouts, transfer bar before/at 50 s). Layout 3 still to re-render with the approved red-outline Unavailable.
+- To confirm with Apurva: Callback during the call for all cases; script visible from the tap; partner for Cat4 / Non-Value Meds. Then: storyboard of all states → terminal loop.
+- `.stage-tmp/` in the work folder is a temporary render bundle — never publish it.
+
+### 2026-10-24 — Pilot final button: A target, B fallback (D-58 point 15)
+- A (HA reserved at call start): one button labelled by route; B (HA checked at the tap): generic Confirm prescription. Closed card holds the line for the patient; failed transfer in amber ([PROPOSED] status-card warning). OQ-032 (HA reservation/allocation) added.
+- Next: render the full storyboard of all calling states (target A), then the terminal loop at 360/390.
