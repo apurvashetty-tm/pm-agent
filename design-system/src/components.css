@@ -357,7 +357,7 @@ h1, .tm-text-title-lg, .tm-text-h1 { text-wrap: balance; }
   /* RULES §9.1: primary on top, then secondary (pair allowed), then quiet; 24px margins; safe area. */
   padding: var(--tm-space-md) var(--tm-space-xl) calc(var(--tm-space-md) + env(safe-area-inset-bottom));
   /* [Decided D-62, 2026-10-25 — not in SALT yet] (T3): hairline top edge + soft upward shadow so the bar reads as its own layer over white cards. SALT's shadow-primary points down and left the bar merged with the content. */
-  background: var(--tm-surface-primary); box-shadow: 0 -1px 0 var(--tm-border-default), 0 -4px 12px rgba(16, 24, 40, 0.06);
+  background: var(--tm-surface-primary); box-shadow: 0 -1px 0 var(--tm-border-default), 0 -8px 24px rgba(16, 24, 40, 0.10);   /* option B: deeper so the bar sits above the content */
   border-radius: var(--tm-radius-lg) var(--tm-radius-lg) 0 0;
   display: flex; flex-direction: column; gap: var(--tm-space-sm);
 }

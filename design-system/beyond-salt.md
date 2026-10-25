@@ -19,7 +19,7 @@ Mobile layout rules: `RULES.md` §8 (four type levels, one side margin, three ga
 | Item | Class | Why it exists |
 |---|---|---|
 | Tinted status cards | `.tm-status-card--success / --neutral / --warning` | Decided 2026-10-25 (D-62): a plain white outcome card looked like any other content card and was easy to miss on a closed case; the tint makes the result read at a glance and keeps it apart from small green status tags. Final look (C5): tint + 1px tone edge, no shadow; neutral = grey-100 fill + grey-200 edge. |
-| Action bar edge | `.tm-actionbar` box-shadow | Decided 2026-10-25 (D-62, T3): hairline top border + soft upward shadow. SALT's shadow-primary is cast downward, so the bar merged with white cards behind it. Compared with upward shadow only and a grey bar (read as disabled). |
+| Action bar edge | `.tm-actionbar` box-shadow | Decided 2026-10-25 (D-62, T3): hairline top border + upward shadow (0 -8px 24px, 10%) — deepened 2026-10-26 (option B) because the softer one still read as the next card. SALT's shadow-primary is cast downward, so the bar merged with white cards behind it. Compared with upward shadow only and a grey bar (read as disabled). |
 | Quiet button | `.tm-btn--quiet` | Grey text, no border: leave / cancel / dismiss / "not now" (RULES §9.1). Replaces tertiary, ghost and link-styled buttons. SALT's ghost button is brand blue and reads as the main action. |
 | On-dark button | `.tm-btn--on-dark` | Light controls on a dark surface (prescription viewer). |
 | Busy button | `.tm-btn--busy` | "Calling…", "Sending OTP": keeps the primary look while working; disabled grey reads as unavailable. |
