@@ -6,7 +6,7 @@ Order = the order we work in.
 
 ## 1. Calling screens — close the work
 - [ ] **D-62 / D-63 on the calling screens** — C5 cards, T3 action bar, grey neutral card, 7b question as plain text; new state 15b "End the call to get your next case." (also on B3). Render the changed states myself (7b, 7f, 9, 10a, 10b, 14, 15, 15b, B3), self-audit, Apurva reviews.
-- [ ] **To decide: B3 colour** — green (planned route: no Health Advisor free, forwarded) or amber like 15. Recommendation: green.
+- [x] **B3 colour: amber, like 15** — decided 2026-10-26 (D-62 point 7).
 - [ ] **Terminal round — full calling storyboard** at 390 and 360 with the audit. Brief: `docs/renders/2026-10-22-calling/TERMINAL-BRIEF.md` (update for D-62/D-63 first).
 - [ ] **Apurva's final approval** → promote the calling screens into `ui-screens/case/`, update the `ui-screens` README, publish.
 

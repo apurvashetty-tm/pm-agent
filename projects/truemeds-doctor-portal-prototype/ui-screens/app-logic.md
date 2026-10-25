@@ -134,7 +134,7 @@ Order on first use: Sign-in → OTP → (offer, once) → Home → Case. Returni
 | 16 | `call.transfer-missed` | Ended before the transfer | Ozonetel hang-up after the gate, not transferred | Amber notice naming who ended the call (doctor / patient / unknown) · Confirm & forward · Skip HA · no script | `t16-transfer-missed` (doctor) · `t16b-…-patient` · `t16c-…-unknown` |
 | 17 | `call.skip-ha-wait` | Skip HA during a transfer call | Skip HA confirmed | Grey "Health Advisor call will be skipped." · "Getting call result…" busy · Callback | `t17-skip-ha-wait` |
 
-**Fallback B (documented, D-58 point 15):** `g1-generic-confirm` (Confirm prescription, neutral script) · `g2-checking-ha` ("Checking for a Health Advisor…") · `g3b-forwarded` (Forwarded + script; Request next case checks the call has ended, as 15b — D-63). Transfer path in B reuses 13–15.
+**Fallback B (documented, D-58 point 15):** `g1-generic-confirm` (Confirm prescription, neutral script) · `g2-checking-ha` ("Checking for a Health Advisor…") · `g3b-forwarded` (amber card "Forwarded to Health Advisor" + script; Request next case checks the call has ended, as 15b — D-63). Transfer path in B reuses 13–15.
 
 Retired: `b-missed-call`, `b-didnt-connect` (sheets) — replaced by the automatic close and the notices. `a-leave-sheet` parked while Release is not decided. The old state name **hold** for "didn't connect" is retired (old Flag 4).
 

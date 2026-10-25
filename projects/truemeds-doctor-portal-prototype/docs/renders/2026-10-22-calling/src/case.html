@@ -31,7 +31,7 @@ html.capture #main-scroll{flex:1 1 auto;min-height:0;overflow-y:auto}
 /* End-of-case card: title only (no second line). */
 #success-toast-desc{display:none !important}
 #success-toast:not(.show){display:none !important}
-#success-toast.show{position:static !important;left:auto !important;top:auto !important;bottom:auto !important;width:100% !important;transform:none !important;margin:0 0 var(--tm-space-sm);box-shadow:var(--tm-shadow-card);z-index:auto !important}
+#success-toast.show{position:static !important;left:auto !important;top:auto !important;bottom:auto !important;width:100% !important;transform:none !important;margin:0 0 var(--tm-space-sm);z-index:auto !important}   /* D-62: edge comes from the tone variant, no drop shadow */
 #success-toast.show #success-toast-next{display:none !important}
 #concept-back-home{display:none}
 body.concept-closed #concept-back-home{display:flex}
@@ -1084,7 +1084,7 @@ body.concept-closed #success-toast{pointer-events:auto}
     'g1-generic-confirm':      () => { passGate(VALUE); allRx(); return later(() => { $('pcb-text').textContent = MSG('call.scriptNeutral'); const b = $('main-cta-btn'); b.textContent = 'Confirm prescription'; }, 250); },
     'g2-checking-ha':          () => { passGate(VALUE); allRx(); return later(() => { $('pcb-text').textContent = MSG('call.scriptNeutral'); setBar(btn('tm-btn--primary tm-btn--block', '<span class="tm-spinner" aria-hidden="true"></span>' + MSG('call.checkingHa'), true)); }, 250); },
     'g3a-connecting-ha':       () => { passGate(VALUE); allRx(); return later(() => setBar(btn('tm-btn--primary tm-btn--block', '<span class="tm-spinner" aria-hidden="true"></span>' + MSG('call.connectingHa'), true)), 250); },
-    'g3b-forwarded':           () => closeCase(VALUE, () => { showSuccessToast('Forwarded for Review', ''); $('success-toast-title').textContent = 'Forwarded to Health Advisor'; cardText(MSG('call.noHaFree'), false); scriptAfterOutcome(MSG('call.forwardedTell')); }),
+    'g3b-forwarded':           () => closeCase(VALUE, () => { showSuccessToast('Forwarded for Review', ''); $('success-toast-title').textContent = 'Forwarded to Health Advisor'; cardText(MSG('call.noHaFree'), true); scriptAfterOutcome(MSG('call.forwardedTell')); }),   // D-62 update: B3 amber, like 15
     'a1-transfer-ready':       () => { passGate(VALUE); allRx(); },
     'a1f-forward-ready':       () => { passGate(FWD); allRx(); },
     'n3-ended-early':          () => { startCall(CAT4); handleCallAction(); return later(() => setBar(notice('warning', 'status', MSG('call.endedEarly'), 'phone-off'), btn('tm-btn--primary tm-btn--block', icon('phone') + 'Call again'), callbackRow()), 250); },
@@ -1106,6 +1106,7 @@ body.concept-closed #success-toast{pointer-events:auto}
     't12-transfer-ready':      () => { passGate(VALUE); allRx(); return later(() => showScript(), 200); },
     't13-connecting-ha':       () => { passGate(VALUE); allRx(); return later(() => { showScript(); setBar(busy(MSG('call.connectingHa'))); }, 250); },
     't14-transferred':         () => { switchScenario(VALUE); allRx(); return closeCase(VALUE); },
+    't15b-end-call-first':     () => closeCase(VALUE, () => { showSuccessToast('Forwarded for Review', ''); cardText(MSG('call.transferFailed'), true); scriptAfterOutcome(MSG('call.forwardedTell')); noticeAboveBar(notice('error', 'alert', MSG('call.endCallFirst'), 'phone')); }),   // D-63
     't15-ha-no-join':          () => closeCase(VALUE, () => { showSuccessToast('Forwarded for Review', ''); cardText(MSG('call.transferFailed'), true); scriptAfterOutcome(MSG('call.forwardedTell')); }),
     't16-transfer-missed':     () => { passGate(VALUE); allRx(); return later(() => { $('action-zone').style.display = 'none';   /* call already over: nobody to read the script to */ setBar(notice('warning', 'status', MSG('call.transferMissedDoctor'), 'phone-off'), btn('tm-btn--primary tm-btn--block', 'Confirm & forward'), (() => { const w = callbackRow(); w.innerHTML = ''; w.appendChild(btn('tm-btn--secondary', icon('player-track-next') + 'Skip HA')); return w; })()); }, 250); },
     't16b-transfer-missed-patient': () => { passGate(VALUE); allRx(); return later(() => { $('action-zone').style.display = 'none'; setBar(notice('warning', 'status', MSG('call.transferMissedPatient'), 'phone-off'), btn('tm-btn--primary tm-btn--block', 'Confirm & forward'), (() => { const w = callbackRow(); w.innerHTML = ''; w.appendChild(btn('tm-btn--secondary', icon('player-track-next') + 'Skip HA')); return w; })()); }, 250); },
