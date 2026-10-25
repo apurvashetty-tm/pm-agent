@@ -540,6 +540,15 @@
     "retain": "—",
     "copy": "approved (Apurva, 2026-10-24, D-58 point 23)"
   },
+  "call.endCallFirst": {
+    "pattern": "W1",
+    "trigger": "tap on Request next case on 15 or B3 while the call is still live (D-63)",
+    "slot": "line in the action bar, above Request next case",
+    "next": "doctor ends the call, taps again",
+    "clear": "next tap after the call has ended",
+    "retain": "case closed state",
+    "copy": "approved (Apurva, 2026-10-25, D-63)"
+  },
   "call.skipHa": {
     "pattern": "N1",
     "trigger": "Skip HA confirmed during a transfer call",

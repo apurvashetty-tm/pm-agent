@@ -57,6 +57,7 @@
   "call.transferMissed": "The call ended before the transfer. The Health Advisor will call the patient back.",
   "call.haNoJoin": "The Health Advisor couldn't join. Read the script, then end the call.",
   "call.transferFailed": "Health Advisor unavailable right now. Read the script, then end the call.",
+  "call.endCallFirst": "End the call to get your next case.",
   "call.skipHa": "Health Advisor call will be skipped.",
   "call.scriptNeutral": "\"I'm writing your prescription now. Our Health Advisor will help you with the next steps.\"",
   "call.checkingHa": "Checking for a Health Advisor…",

@@ -129,11 +129,12 @@ Order on first use: Sign-in → OTP → (offer, once) → Home → Case. Returni
 | 12 | `call.transfer-ready` | Confirm & transfer | Backend: gate time since `customerAnswered`, call live | Confirm & transfer · Callback + Skip HA | `t12-transfer-ready` |
 | 13 | — | Transferring | Tap on Confirm & transfer | "Transferring…" busy | `t13-connecting-ha` |
 | 14 | `call.transferred` | Transferred | Transfer succeeded | Green card · Request next case · Back to Home | `t14-transferred` |
-| 15 | `call.transfer-failed` | Health Advisor unavailable | Transfer failed / none free | Amber card "Forwarded to Health Advisor · Health Advisor unavailable right now. Read the script, then end the call." + script | `t15-ha-no-join` |
+| 15 | `call.transfer-failed` | Health Advisor unavailable | Transfer failed / none free | Amber card "Forwarded to Health Advisor · Health Advisor unavailable right now. Read the script, then end the call." + script. **Request next case checks the call has ended** (D-63) | `t15-ha-no-join` |
+| 15b | `call.end-call-first` | Call still live on Request next case | Tap on Request next case, backend: call not finished | Same as 15 + line in the action bar "End the call to get your next case." · Request next case stays enabled | `t15b-end-call-first` |
 | 16 | `call.transfer-missed` | Ended before the transfer | Ozonetel hang-up after the gate, not transferred | Amber notice naming who ended the call (doctor / patient / unknown) · Confirm & forward · Skip HA · no script | `t16-transfer-missed` (doctor) · `t16b-…-patient` · `t16c-…-unknown` |
 | 17 | `call.skip-ha-wait` | Skip HA during a transfer call | Skip HA confirmed | Grey "Health Advisor call will be skipped." · "Getting call result…" busy · Callback | `t17-skip-ha-wait` |
 
-**Fallback B (documented, D-58 point 15):** `g1-generic-confirm` (Confirm prescription, neutral script) · `g2-checking-ha` ("Checking for a Health Advisor…") · `g3b-forwarded` (Forwarded + script). Transfer path in B reuses 13–15.
+**Fallback B (documented, D-58 point 15):** `g1-generic-confirm` (Confirm prescription, neutral script) · `g2-checking-ha` ("Checking for a Health Advisor…") · `g3b-forwarded` (Forwarded + script; Request next case checks the call has ended, as 15b — D-63). Transfer path in B reuses 13–15.
 
 Retired: `b-missed-call`, `b-didnt-connect` (sheets) — replaced by the automatic close and the notices. `a-leave-sheet` parked while Release is not decided. The old state name **hold** for "didn't connect" is retired (old Flag 4).
 

@@ -806,3 +806,8 @@ User identified missing HTML/native linkage. Inspected actual sign-in and OTP HT
 - Calling working copy uses them: 9 and 7f neutral; 10a, 10b, 14, g3b success; 15 warning. 7b question shown as plain text (no box). Review sheet: `docs/renders/2026-10-22-calling/d62-tinted-cards.png`.
 - Approved `e-*` closed screens still white — re-render in the full screen pass. No overlay on closed cases → rebuild item (read-only, muted).
 - Next: Apurva's final approval of the calling storyboard → promote into `ui-screens/case/`.
+
+## 2026-10-25 (eve) · C5 / T3 locked, D-63, backlog
+- One-screen experiment (`docs/renders/2026-10-25-card-tray-experiment/`): Apurva chose **C5** (tint + tone edge, no shadow; neutral grey-100 fill) and **T3** (action bar hairline + upward shadow). Recorded under D-62; design system updated and rebuilt.
+- **D-63:** Request next case on 15 and B3 checks the call has ended; new copy `call.endCallFirst`; app-logic row 15b.
+- **New `docs/context/backlog.md`** — the single list of agreed-but-not-applied work, in working order. Start there next session.
