@@ -200,7 +200,7 @@ Set once in the design system; a project never restyles them. Where `src/compone
 - **Rows:** thumb · title · meta · trailing. A **chevron** only when the row opens something. **Row with a status:** title on line 1 (full width); line 2 = one short fact on the left (14/20 semibold, e.g. "Qty 30") and the status tag on the right (`.tm-row__line`, D-54). Details that belong to an edit screen (dose, duration) are not repeated in the row. **Read-only rows** (e.g. a closed task): muted text, no chevron, not tappable, still readable.
 - **Status tags:** colour by meaning — done = success, needs action = warning, removed / inactive = neutral, failed = critical. **Reserve the tag width** so the row text never re-wraps when the status changes. Tag text meets AA.
 - **Cards:** one level only, never a card inside a card.
-- **Status card** (outcome of a task): icon + title (optional one line under it), at the top of the content, stays on screen. Success outcomes use the success icon; non-success outcomes use a neutral info icon. Not a toast.
+- **Status card** (outcome of a task): icon + title (optional one line under it), stays on screen. Not a toast. **Tinted by outcome** (2026-10-25, [PROPOSED]): `--success` (confirmed, transferred, forwarded — success tint, tick), `--neutral` (pending or no outcome — grey tint, clock / phone-off / info icon), `--warning` (completed with a problem the user must act on — amber tint, warning icon). A plain white status card is not used: the outcome must not look like another content card.
 - **Empty state:** `.tm-empty`.
 
 ### 9.4 Bottom sheets — one template

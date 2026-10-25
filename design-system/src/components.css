@@ -370,6 +370,13 @@ h1, .tm-text-title-lg, .tm-text-h1 { text-wrap: balance; }
 .tm-status-card { display: flex; align-items: center; gap: var(--tm-space-md); padding: var(--tm-space-lg); background: var(--tm-surface-primary); border-radius: var(--tm-radius-lg); box-shadow: var(--tm-shadow-card); }
 .tm-status-card__icon { flex: none; display: flex; color: var(--tm-content-success); }
 .tm-status-card--neutral .tm-status-card__icon { color: var(--tm-content-secondary); }
+/* [PROPOSED] 2026-10-25 (doctor portal D-62): the outcome is tinted so it reads as "the result", not as another content card.
+   Success: confirmed / transferred / forwarded. Neutral: pending or no outcome (submitted, unavailable). Warning: completed with a problem the user must act on. */
+.tm-status-card--success { background: var(--tm-surface-success-subtle); box-shadow: inset 0 0 0 1px var(--tm-border-success-subtle); }
+.tm-status-card--neutral { background: var(--tm-surface-tertiary); box-shadow: none; }
+.tm-status-card--warning { background: var(--tm-feedback-warning-surface); box-shadow: inset 0 0 0 1px var(--tm-feedback-warning-border); }
+.tm-status-card--warning .tm-status-card__icon { color: var(--tm-feedback-warning-content); }
+.tm-status-card--success .tm-status-card__text, .tm-status-card--warning .tm-status-card__text, .tm-status-card--neutral .tm-status-card__text { color: var(--tm-content-primary); }
 .tm-status-card__title { font-size: var(--tm-font-size-body-lg); line-height: var(--tm-font-lineheight-md); font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-primary); }
 .tm-status-card__text { font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); color: var(--tm-content-secondary); }
 

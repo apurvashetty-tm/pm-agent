@@ -67,10 +67,10 @@ body.concept-load-failed #case-actionbar > :not(.concept-new){display:none}
 /* 2026-10-24 concept: status card with a second line, and [PROPOSED] warning variant (design system, not yet in components.css) */
 #success-toast.concept-has-text #success-toast-desc{display:block !important;-webkit-line-clamp:unset;white-space:normal;font-size:var(--tm-font-size-body-md);line-height:var(--tm-font-lineheight-sm);color:var(--tm-content-secondary);margin-top:4px}
 #success-toast.concept-has-text{align-items:flex-start}
-#success-toast.concept-warning{background:var(--tm-feedback-warning-surface);border:1px solid var(--tm-feedback-warning-border)}
-#success-toast.concept-warning #success-toast-icon .tm-icon{color:var(--tm-feedback-warning-content) !important}
-#success-toast.concept-warning #success-toast-desc{color:var(--tm-content-primary)}
 #pcb-label{display:none !important}   /* 2026-10-24: one title — the card title says it */
+    /* D-62 (2): 7b is a question, not a field — no box, primary semibold text */
+    .tm-notice.concept-question { background: none; border-color: transparent; padding-left: 0; padding-right: 0; justify-content: center; font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-primary); font-size: var(--tm-font-size-body-lg); }
+    .tm-notice.concept-question .tm-icon { color: var(--tm-content-brand, var(--tm-content-primary)); }
 </style>
 <style id="concept-d51">
 /* D-51 (round 3). Concept layer only. */
@@ -956,6 +956,7 @@ body.concept-closed #success-toast{pointer-events:auto}
     _toast(title, '');
     const card = $('success-toast'), neutral = t === 'Patient unavailable';
     card.classList.toggle('is-neutral', neutral);
+    card.classList.remove('tm-status-card--success', 'tm-status-card--neutral', 'tm-status-card--warning'); card.classList.add(neutral ? 'tm-status-card--neutral' : 'tm-status-card--success');   // D-62 tinted outcome
     const ic = card.querySelector('#success-toast-icon .tm-icon');
     if (ic) { ic.setAttribute('data-icon', neutral ? 'info-circle' : 'circle-check'); if (window.TMIcons) TMIcons.render(card); }
     syncConcept();
@@ -1044,7 +1045,7 @@ body.concept-closed #success-toast{pointer-events:auto}
   const CAT4 = 'cat4', VALUE = 'pilot_value_meds_ha', FWD = 'pilot_nonvalue_meds_ha', SKIPPED = 'pilot_ha_skipped_customer';
   const startCall = scn => { switchScenario(scn); initiateCall(); simCallConnected(); };
   const passGate = scn => { startCall(scn); doFastForward(); };
-  const closeCase = (scn, after) => { passGate(scn); handleMainCTA(); setTimeout(() => { window.__confirmed = true; syncConcept(); if (after) after(); ready(); }, 1100); return 'wait'; };
+  const closeCase = (scn, after) => { passGate(scn); allRx(); handleMainCTA();setTimeout(() => { window.__confirmed = true; syncConcept(); if (after) after(); ready(); }, 1100); return 'wait'; };
   const ready = () => { document.body.dataset.ready = '1'; };
   const later = (fn, ms) => { setTimeout(() => { fn(); ready(); }, ms || 120); return 'wait'; };
   const openRx = () => openRxOverlay();
@@ -1060,7 +1061,7 @@ body.concept-closed #success-toast{pointer-events:auto}
   // ---- 2026-10-24: state 7 (no call result) ----
   const showBack = () => { head.classList.remove('tm-header-task--no-back'); $('ch-back').style.display = ''; };
   const pairOf = (a, b) => { const w = pair(a, b); return w; };
-  const ask = () => [notice('neutral', 'status', MSG('call.stillOnCall'), 'phone'), pairOf(btn('tm-btn--secondary', 'Yes, still talking'), btn('tm-btn--secondary', 'No, call ended'))];
+  const ask = () => { const q = notice('neutral', 'status', MSG('call.stillOnCall'), 'phone'); q.classList.add('concept-question'); return [q, pairOf(btn('tm-btn--secondary', 'Yes, still talking'), btn('tm-btn--secondary', 'No, call ended'))]; };
   // ---- 2026-10-24: full calling storyboard (target A) ----
   const SCRIPT = { cat4: MSG('call.scriptCat4'), pilot_value_meds_ha: MSG('call.scriptTransfer'), pilot_nonvalue_meds_ha: MSG('call.scriptForward') };   // D-58 point 21
   const showScript = txt => { const az = $('action-zone'); $('success-toast').after(az); az.hidden = false; az.style.display = ''; const b = $('pre-call-brief'); b.classList.add('visible'); b.hidden = false; b.style.display = ''; $('pcb-text').textContent = txt || SCRIPT[DOCTOR_STATE.activeScenario] || SCRIPT.cat4; const cl = $('az-closed'); if (cl) cl.hidden = true; };
@@ -1069,7 +1070,7 @@ body.concept-closed #success-toast{pointer-events:auto}
   const first = () => DOCTOR_STATE.currentCase.patient_name.split(' ')[0];
   const calling = scn => { switchScenario(scn); initiateCall(); return later(() => { setBar(busy('Calling ' + first() + '…'), callbackRow()); showScript(); head.classList.remove('tm-header-task--no-back'); $('ch-back').style.display = ''; }, 250); };
   const scriptAfterOutcome = text => { const az = $('action-zone'); $('success-toast').after(az); az.hidden = false; az.style.display = ''; const b = $('pre-call-brief'); b.classList.add('visible'); b.hidden = false; b.style.display = ''; $('pcb-text').textContent = text; const cl = $('az-closed'); if (cl) cl.hidden = true; };
-  const cardText = (text, warn) => { const c = $('success-toast'); c.classList.add('concept-has-text'); $('success-toast-desc').textContent = text; if (warn) { c.classList.add('concept-warning'); const ic = c.querySelector('#success-toast-icon .tm-icon'); if (ic) { ic.setAttribute('data-icon', 'alert-triangle'); if (window.TMIcons) TMIcons.render(c); } } };
+  const cardText = (text, warn) => { const c = $('success-toast'); c.classList.add('concept-has-text'); $('success-toast-desc').textContent = text; if (warn) { c.classList.remove('tm-status-card--success', 'tm-status-card--neutral'); c.classList.add('tm-status-card--warning'); const ic = c.querySelector('#success-toast-icon .tm-icon'); if (ic) { ic.setAttribute('data-icon', 'alert-triangle'); if (window.TMIcons) TMIcons.render(c); } } };
   const allRx = () => { DOCTOR_STATE.currentCase.medicines.forEach(x => { x.validation_status = 'prescribed'; }); render(); };
   const recipes = {
     // G. D-58 calling layouts (2026-10-22)
@@ -1093,11 +1094,11 @@ body.concept-closed #success-toast{pointer-events:auto}
     't02-calling':             () => calling(CAT4),
     't03-not-through':         () => { switchScenario(CAT4); return later(() => setBar(notice('error', 'alert', MSG('call.notThrough'), 'alert-circle'), btn('tm-btn--primary tm-btn--block', icon('phone') + 'Call again')), 250); },
     't04-doctor-missed':       () => { switchScenario(CAT4); return later(() => setBar(notice('warning', 'status', MSG('call.doctorMissed'), 'phone-off'), btn('tm-btn--primary tm-btn--block', icon('phone') + 'Call again')), 250); },
-    't05-result-wait':         () => { switchScenario(CAT4); initiateCall(); return later(() => { setBar(busy(MSG('call.resultWait')), callbackRow()); showScript(); }, 250); },
+    't05-result-wait':         () => { switchScenario(CAT4); initiateCall(); return later(() => { setBar(busy(MSG('call.resultWait')), callbackRow()); showScript(SCRIPT.cat4); }, 250); },   // live transfer call: doctor still talking (D-58 point 25)
     't06-ended-early':         () => { startCall(CAT4); handleCallAction(); return later(() => setBar(notice('warning', 'status', MSG('call.endedEarly'), 'phone-off'), btn('tm-btn--primary tm-btn--block', icon('phone') + 'Call again'), callbackRow()), 250); },
     't07-result-missing':      () => { startCall(CAT4); handleCallAction(); return later(() => setBar(notice('warning', 'status', MSG('call.resultMissing'), 'alert-triangle'), ...threeWays()), 250); },
-    't08a-valid-cat4':         () => { passGate(CAT4); allRx(); return later(() => showScript(), 200); },
-    't08b-valid-forward':      () => { passGate(FWD); allRx(); return later(() => showScript(), 200); },
+    't08a-valid-cat4':         () => { passGate(CAT4); allRx(); return later(() => { $('action-zone').style.display = 'none'; }, 200); },
+    't08b-valid-forward':      () => { passGate(FWD); allRx(); return later(() => { $('action-zone').style.display = 'none'; }, 200); },
     't09-patient-unavailable': () => { switchScenario(CAT4); initiateCall(); markCustomerUnavailable(); setTimeout(() => { closeSheet(); showSuccessToast('Patient unavailable', ''); ready(); }, 150); return 'wait'; },
     't10a-confirmed':          () => { switchScenario(CAT4); allRx(); return closeCase(CAT4); },
     't10b-forwarded':          () => { switchScenario(FWD); allRx(); return closeCase(FWD); },
@@ -1106,17 +1107,17 @@ body.concept-closed #success-toast{pointer-events:auto}
     't13-connecting-ha':       () => { passGate(VALUE); allRx(); return later(() => { showScript(); setBar(busy(MSG('call.connectingHa'))); }, 250); },
     't14-transferred':         () => { switchScenario(VALUE); allRx(); return closeCase(VALUE); },
     't15-ha-no-join':          () => closeCase(VALUE, () => { showSuccessToast('Forwarded for Review', ''); cardText(MSG('call.transferFailed'), true); scriptAfterOutcome(MSG('call.forwardedTell')); }),
-    't16-transfer-missed':     () => { passGate(VALUE); allRx(); return later(() => { $('action-zone').style.display = 'none';   /* call already over: nobody to read the script to */ setBar(notice('warning', 'status', MSG('call.transferMissedDoctor'), 'phone-off'), btn('tm-btn--primary tm-btn--block', 'Confirm & forward')); }, 250); },
-    't16b-transfer-missed-patient': () => { passGate(VALUE); allRx(); return later(() => { $('action-zone').style.display = 'none'; setBar(notice('warning', 'status', MSG('call.transferMissedPatient'), 'phone-off'), btn('tm-btn--primary tm-btn--block', 'Confirm & forward')); }, 250); },
-    't16c-transfer-missed-unknown': () => { passGate(VALUE); allRx(); return later(() => { $('action-zone').style.display = 'none'; setBar(notice('warning', 'status', MSG('call.transferMissed'), 'phone-off'), btn('tm-btn--primary tm-btn--block', 'Confirm & forward')); }, 250); },
-    't17-skip-ha-wait':        () => { passGate(VALUE); allRx(); return later(() => { showScript(SCRIPT.cat4); setBar(notice('neutral', 'status', MSG('call.skipHa'), 'info-circle'), busy(MSG('call.resultWait'))); }, 250); },
+    't16-transfer-missed':     () => { passGate(VALUE); allRx(); return later(() => { $('action-zone').style.display = 'none';   /* call already over: nobody to read the script to */ setBar(notice('warning', 'status', MSG('call.transferMissedDoctor'), 'phone-off'), btn('tm-btn--primary tm-btn--block', 'Confirm & forward'), (() => { const w = callbackRow(); w.innerHTML = ''; w.appendChild(btn('tm-btn--secondary', icon('player-track-next') + 'Skip HA')); return w; })()); }, 250); },
+    't16b-transfer-missed-patient': () => { passGate(VALUE); allRx(); return later(() => { $('action-zone').style.display = 'none'; setBar(notice('warning', 'status', MSG('call.transferMissedPatient'), 'phone-off'), btn('tm-btn--primary tm-btn--block', 'Confirm & forward'), (() => { const w = callbackRow(); w.innerHTML = ''; w.appendChild(btn('tm-btn--secondary', icon('player-track-next') + 'Skip HA')); return w; })()); }, 250); },
+    't16c-transfer-missed-unknown': () => { passGate(VALUE); allRx(); return later(() => { $('action-zone').style.display = 'none'; setBar(notice('warning', 'status', MSG('call.transferMissed'), 'phone-off'), btn('tm-btn--primary tm-btn--block', 'Confirm & forward'), (() => { const w = callbackRow(); w.innerHTML = ''; w.appendChild(btn('tm-btn--secondary', icon('player-track-next') + 'Skip HA')); return w; })()); }, 250); },
+    't17-skip-ha-wait':        () => { passGate(VALUE); allRx(); return later(() => { showScript(SCRIPT.cat4); setBar(notice('neutral', 'status', MSG('call.skipHa'), 'info-circle'), busy(MSG('call.resultWait')), callbackRow()); }, 250); },
     // S7. No call result (2026-10-24)
     's7a-calling':             () => { switchScenario(CAT4); initiateCall(); return later(() => { setBar(busy('Calling ' + first() + '…'), callbackRow()); showScript(); showBack(); }, 250); },
     's7b-still-on-call':       () => { switchScenario(CAT4); initiateCall(); return later(() => { setBar(...ask()); showScript(); showBack(); }, 250); },
-    's7c-checking':            () => { switchScenario(CAT4); initiateCall(); return later(() => { setBar(busy(MSG('call.checkingResult'))); showScript(); }, 250); },
-    's7d-result-missing':      () => { switchScenario(CAT4); initiateCall(); allRx(); return later(() => { setBar(notice('warning', 'status', MSG('call.resultMissing'), 'alert-triangle'), btn('tm-btn--primary tm-btn--block', 'Confirm prescription'), pair(btn('tm-btn--secondary', icon('calendar') + 'Callback'), btn('tm-btn--destructive', icon('phone-off') + 'Unavailable'))); }, 250); },
+    's7c-checking':            () => { switchScenario(CAT4); initiateCall(); return later(() => { setBar(busy(MSG('call.checkingResult'))); $('pre-call-brief').style.display = 'none'; }, 250); },
+    's7d-result-missing':      () => { switchScenario(CAT4); initiateCall(); allRx(); return later(() => { setBar(notice('warning', 'status', MSG('call.resultMissing'), 'alert-triangle'), btn('tm-btn--primary tm-btn--block', 'Confirm prescription'), pair(btn('tm-btn--secondary', icon('calendar') + 'Callback'), btn('tm-btn--destructive', icon('phone-off') + 'Unavailable'))); $('pre-call-brief').style.display = 'none'; }, 250); },
     's7e-leave-sheet':         () => { switchScenario(CAT4); initiateCall(); return later(() => { setBar(busy('Calling ' + first() + '…'), callbackRow()); showScript(); showBack(); showLeave(); }, 250); },
-    's7f-submitted':           () => { switchScenario(CAT4); allRx(); return closeCase(CAT4, () => { showSuccessToast('Patient unavailable', ''); $('success-toast-title').textContent = 'Prescription submitted'; cardText(MSG('call.submittedText'), false); const ic = $('success-toast').querySelector('#success-toast-icon .tm-icon'); if (ic) { ic.setAttribute('data-icon', 'clock'); TMIcons.render($('success-toast')); } }); },
+    's7f-submitted':           () => { switchScenario(CAT4); allRx(); return closeCase(CAT4, () => { showSuccessToast('Patient unavailable', ''); $('success-toast-title').textContent = 'Prescription submitted'; $('success-toast').classList.remove('tm-status-card--success'); $('success-toast').classList.add('tm-status-card--neutral'); cardText(MSG('call.submittedText'), false); const ic = $('success-toast').querySelector('#success-toast-icon .tm-icon'); if (ic) { ic.setAttribute('data-icon', 'clock'); TMIcons.render($('success-toast')); } }); },
     // A. Case page
     'a-top':                   () => { switchScenario(CAT4); },
     'a-scrolled':              () => { switchScenario(CAT4); return later(() => { $('main-scroll').scrollTop = 420; }, 200); },

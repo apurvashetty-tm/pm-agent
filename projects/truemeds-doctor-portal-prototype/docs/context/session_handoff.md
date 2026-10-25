@@ -796,3 +796,13 @@ User identified missing HTML/native linkage. Inspected actual sign-in and OTP HT
 - Decisions D-58 points 14–23 (polling, state 7, Release, scripts, icon rule, cumulative talk time, final review fixes). State table final in `ui-screens/app-logic.md` §5 (20 states + 3 fallback-B screens, state 16 in three variants).
 - Pre-check render by the main thread: `docs/renders/2026-10-22-calling/storyboard-final-draft.png`. Next: terminal runs `docs/renders/2026-10-22-calling/TERMINAL-BRIEF.md` → `round-4/REPORT.md` → Apurva reviews → main thread records, promotes to `ui-screens/case/`, publishes.
 - Open: OQ-030 (Engineering: polling interval, max call length, result wait, who-ended-the-call), OQ-032 (HA reservation), OQ-033 (Ops review queue), late record under 50 s on a submitted case (separate discussion). After the render: PRD outline (page by page, JTBD, use cases, screenshots).
+
+### 2026-10-25 — Round-4 review answered (D-58 point 24)
+- Rebuild checklist items (from round 4): all button labels through `MSG()`; after-confirm and closed states render View Rx, medicine rows and notes read-only (old `app.js` doesn't).
+- Next: terminal round 5 (recipe + fixture fixes below), then Apurva's approval, promotion, publish.
+
+## 2026-10-25 · D-62 tinted outcome cards
+- Design system: `.tm-status-card--success` (green-50 + green-100 border), `--neutral` (grey-100), `--warning` (amber) [PROPOSED]; RULES §9.3, beyond-salt.md; build.py run.
+- Calling working copy uses them: 9 and 7f neutral; 10a, 10b, 14, g3b success; 15 warning. 7b question shown as plain text (no box). Review sheet: `docs/renders/2026-10-22-calling/d62-tinted-cards.png`.
+- Approved `e-*` closed screens still white — re-render in the full screen pass. No overlay on closed cases → rebuild item (read-only, muted).
+- Next: Apurva's final approval of the calling storyboard → promote into `ui-screens/case/`.

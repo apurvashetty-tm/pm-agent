@@ -81,11 +81,11 @@ Order on first use: Sign-in → OTP → (offer, once) → Home → Case. Returni
 
 **Leaving a case:** an **attempted call** = leg 2 answered (the patient picked up) (D-58). Once a call is attempted, leaving is blocked until the case is closed (callback, unavailable, confirm). Before that, whether Back releases the case is **not decided** (D-58; OQ-024). Help stays available at every stage and is the way to reach Doctor Ops when something keeps failing. App closed or phone off mid-case → reopening goes straight back into the case `[OPEN OQ-025, backend]`.
 
-**End-of-call script** (shown in the Call card while on call and after 50 s):
-- Pilot, value meds, HA required: "Please stay on the line — I'll connect you to our Health Advisor"
-- Pilot, non-value meds, HA required: "Our Health Advisor will call you shortly after this consultation"
-- Everything else: "I'm confirming your order now — you can track delivery and updates on the Truemeds app"
-- Hidden after an early hang-up or a failed call, until the doctor calls again.
+**End-of-call script** (D-58 points 18, 21, 24 — copy keys in `messages.json`). Shown from the tap on Call while a call may be live; **hidden once the call has ended** (no one to read it to), except after a failed transfer (15) and B3, where the doctor is still on the line:
+- Transfer (Pilot, Value Meds): `call.scriptTransfer` — "I'm writing your prescription now. Please stay on the line — I'll connect you to our Health Advisor."
+- Forward (Pilot, Non-Value Meds): `call.scriptForward` — "I'm writing your prescription now. Our Health Advisor will call you shortly."
+- Everything else (Cat4, HA skipped): `call.scriptCat4` — "I'm writing your prescription now. You can track your order in the Truemeds app."
+- After a failed transfer / no Health Advisor free: `call.forwardedTell` — "I've written your prescription. Our Health Advisor isn't available right now — they'll call you back shortly."
 
 ---
 
@@ -101,8 +101,8 @@ Order on first use: Sign-in → OTP → (offer, once) → Home → Case. Returni
 - **All other cases** (Cat4, Pilot Non-Value Meds, HA skipped): the next actions unlock only when the partner's call result arrives after the call ends.
 - **Before the gate, never show:** Confirm prescription, Confirm & transfer, Confirm & forward, Skip HA.
 - **Leg 2 failed** (no answer, busy, rejected, unreachable, invalid number): the case closes as **Patient unavailable** by itself; the doctor gets **Request next case**. Busy and rejected are accepted as "no answer" to keep it simple.
-- **Every call that isn't valid** (ended or dropped before the gate, or result not received) offers **Call again · Callback · Unavailable**. No retry limit.
-- **Result not received:** the backend asks the partner for the call details first; if there is still no result, Confirm is **not shown**, only the three actions. A late result updates the screen by itself. Repeated problems → the doctor uses **Help** on the case.
+- **A call that's too short** (state 6) offers **Call again · Callback** (D-58 point 23). No retry limit. **Callback is offered in every live call until the doctor taps a confirm button** (D-58 point 24).
+- **No call result** (state 7, D-58 point 20): at 3 min the bar asks "Are you still on the call?"; after "No, call ended" and a backend check with nothing found: **Confirm prescription · Callback · Unavailable**; Confirm there shows "Prescription submitted" until the record arrives. A late result updates the screen by itself. Repeated problems → the doctor uses **Help** on the case.
 - **Vendor terms are mapped by Engineering** to the buckets in the table (Ozonetel `CustomerStatus`, Knowlarity hangup causes — `projects/ACOM/ring-ai/reference/knowlarity-hangup-causes.pdf`).
 
 **State table (final, 2026-10-24 — D-58 points 14–22).** One row per state. Render id = recipe in `docs/renders/2026-10-22-calling/src/case.html`. Copy keys in `ui-screens/feedback/messages.json`. During every call the End-of-call script shows under Order details; Callback is offered in every call.
@@ -120,8 +120,8 @@ Order on first use: Sign-in → OTP → (offer, once) → Home → Case. Returni
 | 7d | `call.result-missing` | Result not received | Backend check found nothing | Amber notice · Confirm prescription · Callback + Unavailable | `s7d-result-missing` |
 | 7e | — | Leave this case? | Back in 1–4, 7a, 7b | Approved sheet: Release case / Stay on this case | `s7e-leave-sheet` |
 | 7f | `call.submitted` | Prescription submitted | Confirm in 7d | Grey card "Prescription submitted" · Request next case · Back to Home | `s7f-submitted` |
-| 8a | `call.valid` | Valid call (Cat4 / HA skipped) | Result: total talk time ≥ gate | Confirm prescription · Callback | `t08a-valid-cat4` |
-| 8b | `call.valid` | Valid call (forward) | Same | Confirm & forward · Callback + Skip HA | `t08b-valid-forward` |
+| 8a | `call.valid` | Valid call (Cat4 / HA skipped) | Result: total talk time ≥ gate | Confirm prescription · Callback · no script (call has ended) | `t08a-valid-cat4` |
+| 8b | `call.valid` | Valid call (forward) | Same | Confirm & forward · Callback + Skip HA · no script | `t08b-valid-forward` |
 | 9 | `call.patient-unavailable` | Patient unavailable (automatic) | Leg 2 failed | Grey card · Request next case · Back to Home | `t09-patient-unavailable` |
 | 10a | — | Prescription confirmed | Confirm (Cat4) | Green card · Request next case · Back to Home | `t10a-confirmed` |
 | 10b | — | Forwarded to HA | Confirm & forward | Green card · same | `t10b-forwarded` |
@@ -130,8 +130,8 @@ Order on first use: Sign-in → OTP → (offer, once) → Home → Case. Returni
 | 13 | — | Transferring | Tap on Confirm & transfer | "Transferring…" busy | `t13-connecting-ha` |
 | 14 | `call.transferred` | Transferred | Transfer succeeded | Green card · Request next case · Back to Home | `t14-transferred` |
 | 15 | `call.transfer-failed` | Health Advisor unavailable | Transfer failed / none free | Amber card "Forwarded to Health Advisor · Health Advisor unavailable right now. Read the script, then end the call." + script | `t15-ha-no-join` |
-| 16 | `call.transfer-missed` | Ended before the transfer | Ozonetel hang-up after the gate, not transferred | Amber notice naming who ended the call (doctor / patient / unknown) · Confirm & forward · no script | `t16-transfer-missed` (doctor) · `t16b-…-patient` · `t16c-…-unknown` |
-| 17 | `call.skip-ha-wait` | Skip HA during a transfer call | Skip HA confirmed | Grey "HA call will be skipped." · "Getting call result…" busy | `t17-skip-ha-wait` |
+| 16 | `call.transfer-missed` | Ended before the transfer | Ozonetel hang-up after the gate, not transferred | Amber notice naming who ended the call (doctor / patient / unknown) · Confirm & forward · Skip HA · no script | `t16-transfer-missed` (doctor) · `t16b-…-patient` · `t16c-…-unknown` |
+| 17 | `call.skip-ha-wait` | Skip HA during a transfer call | Skip HA confirmed | Grey "Health Advisor call will be skipped." · "Getting call result…" busy · Callback | `t17-skip-ha-wait` |
 
 **Fallback B (documented, D-58 point 15):** `g1-generic-confirm` (Confirm prescription, neutral script) · `g2-checking-ha` ("Checking for a Health Advisor…") · `g3b-forwarded` (Forwarded + script). Transfer path in B reuses 13–15.
 
@@ -154,7 +154,7 @@ Retired: `b-missed-call`, `b-didnt-connect` (sheets) — replaced by the automat
 | Pilot | Value meds, HA required | Confirm & transfer | Transferred to HA |
 | Pilot | Non-value meds, HA required | Confirm & forward | Forwarded to HA |
 
-- **Skip HA** only after the gate, for **both Pilot types** (Value and Non-Value Meds) whenever an HA call follows the doctor call and it isn't already skipped — no other conditions (D-59). Opens the reason sheet: Patient declined HA call · Clinically not required · Repeat patient — familiar with medicines. Choosing a reason applies it at once; the final button becomes **Confirm prescription**.
+- **Skip HA** only after the gate, for **both Pilot types** (Value and Non-Value Meds) whenever an HA call follows the doctor call and it isn't already skipped — no other conditions (D-59). Opens the reason sheet: Patient declined HA call · Clinically not required · Repeat patient — familiar with medicines. Choosing a reason applies it at once. On a call with a result the final button becomes **Confirm prescription**; during a live transfer call the case then waits for the call result (state 17, D-58 point 14). Skip HA is also offered after a missed transfer (state 16, D-58 point 24).
 - Cat4 never shows anything about HA. HA-skipped Pilot never shows Transfer or Forward.
 - **Transfer vs forward** (D-57): transfer = the patient is handed to an HA on the same call; forward = an HA calls the patient back separately. A failed transfer goes as a forward; the doctor sees `call.ha-no-join`, then `call.transfer-failed` (§5, D-58).
 - Confirm: button shows "Confirming…", everything else disabled, no second submit. Failure: notice in the bar "Couldn't confirm. Nothing was lost. Try again." An unclear result is checked before retrying (no double confirm).
