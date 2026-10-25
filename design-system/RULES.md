@@ -44,7 +44,7 @@ Link two files. Never copy values out of them.
 | Need | Use |
 |---|---|
 | The one main action | `.tm-btn.tm-btn--primary` (`--block` for full width on mobile) |
-| Secondary action | `.tm-btn--secondary` (white, brand border and text) — §9.1 |
+| Secondary action | `.tm-btn--secondary` (white, grey border, brand text, subtle shadow — as SALT) — §9.1 |
 | Leave / cancel / dismiss | `.tm-btn--quiet` (grey text, no border) — §9.1. Tertiary, ghost and link-styled buttons are retired into Quiet. |
 | Link inside a sentence | `.tm-btn--link` / plain link, brand colour |
 | Destructive (remove or close for good) | `.tm-btn--destructive` (red border and text, never solid) — §9.1 |
@@ -58,7 +58,7 @@ Link two files. Never copy values out of them.
 | Brief confirmation with nowhere else to show it | `.tm-toast` — dark, one line (two at most), above the bottom bar — §9.5 |
 | Outcome of a task (e.g. case completed) | Status card — §9.3 |
 | Mobile choice / detail panel | `.tm-sheet` over `.tm-overlay`, one template — §9.4 |
-| Mobile sticky action | `.tm-actionbar` |
+| Mobile sticky action | `.tm-actionbar` — white, hairline top edge + soft upward shadow so it separates from white cards (D-62) |
 
 Button sizes: `--lg` 56px for every full-width action button in a group (bar, sheet, form), default 48px for compact inline buttons. `--sm` 40px and `--xs` 32px are **not used for anything tappable on mobile** (below the 48px minimum, §8.6). Details in §9.1.
 
@@ -178,12 +178,13 @@ Set once in the design system; a project never restyles them. Where `src/compone
 | Role | Look | Use for |
 |---|---|---|
 | **Primary** | Solid brand blue, white label | The one action that moves the flow forward. One per screen or sheet. |
-| **Secondary** | White, brand border and label | A real alternative action, less likely than the primary. |
+| **Secondary** | White, grey border (`--tm-border-default`), brand label, subtle shadow (`--tm-shadow-button-secondary`) — as SALT | A real alternative action, less likely than the primary. |
 | **Quiet** | Grey text, no border | Leave, cancel, dismiss, "not now", "back to …". |
 | **Destructive** | White, red border and label — never solid | Removes or closes something for good (disable, mark unavailable). Never the primary role (Apple HIG). |
 | **Call end** (special) | Solid red, white label | Only for ending a live call (the phone convention). Nothing else uses it. |
 
 - **One height per group** — differ by style, not size (Apple HIG). Full-width action buttons in a pinned bar, sheet or form: **56px, 18 semibold**, whatever their role. Compact inline buttons (e.g. "View Rx" in a content row): **48px, 16 semibold**.
+- **Icons on buttons (2026-10-24):** primary and secondary buttons carry an icon only when it helps the user recognise the action at a glance — calling, scheduling, viewing, skipping, direction (→ next). No icon when the label must be read: confirming, finalising, releasing, and answers to a question. Quiet buttons never have icons. One icon per button, from `icons.js`, before the label (direction arrows after).
 - **Order, top to bottom:** primary → secondary → quiet. Two secondaries may sit side by side (equal width, label fits on one line at 360px wide with room to spare; otherwise shorten the label or stack). (D-54)
 - **Icons in buttons:** only when they add meaning (e.g. a phone on "Call patient"). On a side-by-side pair, **both buttons or neither** carry an icon (D-54).
 - **Labels:** verb first, sentence case, no full stop, never "Click" / "Tap".
@@ -199,7 +200,7 @@ Set once in the design system; a project never restyles them. Where `src/compone
 - **Rows:** thumb · title · meta · trailing. A **chevron** only when the row opens something. **Row with a status:** title on line 1 (full width); line 2 = one short fact on the left (14/20 semibold, e.g. "Qty 30") and the status tag on the right (`.tm-row__line`, D-54). Details that belong to an edit screen (dose, duration) are not repeated in the row. **Read-only rows** (e.g. a closed task): muted text, no chevron, not tappable, still readable.
 - **Status tags:** colour by meaning — done = success, needs action = warning, removed / inactive = neutral, failed = critical. **Reserve the tag width** so the row text never re-wraps when the status changes. Tag text meets AA.
 - **Cards:** one level only, never a card inside a card.
-- **Status card** (outcome of a task): icon + title (optional one line under it), at the top of the content, stays on screen. Success outcomes use the success icon; non-success outcomes use a neutral info icon. Not a toast.
+- **Status card** (outcome of a task): icon + title (optional one line under it), stays on screen. Not a toast. **Tinted by outcome** (decided D-62, 2026-10-25): `--success` (confirmed, transferred, forwarded — success tint, tick), `--neutral` (pending or no outcome — grey tint, clock / phone-off / info icon), `--warning` (completed with a problem the user must act on — amber tint, warning icon). A plain white status card is not used: the outcome must not look like another content card. **Edge, not shadow** (2026-10-25, option C5): every tone has a 1px edge in its colour (success green-300, neutral grey-200, warning amber-700) and no drop shadow, so it reads as a result, not as a tappable card. Neutral keeps the grey-100 fill.
 - **Empty state:** `.tm-empty`.
 
 ### 9.4 Bottom sheets — one template
