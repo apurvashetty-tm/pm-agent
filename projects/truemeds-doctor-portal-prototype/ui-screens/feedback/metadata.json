@@ -69,7 +69,7 @@
     "next": "wait for server eligibility",
     "clear": "authoritative unlock",
     "retain": "number",
-    "copy": "existing"
+    "copy": "approved (Apurva, 2026-10-26, D-66)"
   },
   "signin.inactive": {
     "pattern": "F2",
@@ -489,15 +489,6 @@
     "retain": "case data and notes",
     "copy": "proposed (D-58, 2026-10-22) — needs Apurva approval"
   },
-  "call.transferReady": {
-    "pattern": "N1",
-    "trigger": "our count reaches the gate time (transfer case)",
-    "slot": "neutral notice inside the pinned bar, above the buttons",
-    "next": "Confirm & transfer",
-    "clear": "transfer done or call ended",
-    "retain": "case data and notes",
-    "copy": "approved (Apurva, 2026-10-26, D-65 — no repeated button)"
-  },
   "call.resultWait": {
     "pattern": "B",
     "trigger": "call ended (other cases)",
@@ -739,6 +730,6 @@
     "next": "reconnect, tap Turn on again, or Not now",
     "clear": "leaving the offer, or a successful retry",
     "retain": "—",
-    "copy": "approved (Apurva, 2026-10-26, D-64/D-65)"
+    "copy": "approved (Apurva, 2026-10-26, D-66)"
   }
 }

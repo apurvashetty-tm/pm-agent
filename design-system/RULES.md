@@ -58,7 +58,7 @@ Link two files. Never copy values out of them.
 | Brief confirmation with nowhere else to show it | `.tm-toast` — dark, one line (two at most), above the bottom bar — §9.5 |
 | Outcome of a task (e.g. case completed) | Status card — §9.3 |
 | Mobile choice / detail panel | `.tm-sheet` over `.tm-overlay`, one template — §9.4 |
-| Mobile sticky action | `.tm-actionbar` — white, hairline top edge + soft upward shadow so it separates from white cards (D-62) |
+| Mobile sticky action | `.tm-actionbar` — white, hairline top edge + upward shadow so it separates from white cards (D-62). Only where content scrolls under the buttons; a footer that sits on a fixed panel (sign-in, OTP, unlock, offer) keeps the panel and needs no edge |
 
 Button sizes: `--lg` 56px for every full-width action button in a group (bar, sheet, form), default 48px for compact inline buttons. `--sm` 40px and `--xs` 32px are **not used for anything tappable on mobile** (below the 48px minimum, §8.6). Details in §9.1.
 
@@ -184,7 +184,7 @@ Set once in the design system; a project never restyles them. Where `src/compone
 | **Call end** (special) | Solid red, white label | Only for ending a live call (the phone convention). Nothing else uses it. |
 
 - **One height per group** — differ by style, not size (Apple HIG). Full-width action buttons in a pinned bar, sheet or form: **56px, 18 semibold**, whatever their role. Compact inline buttons (e.g. "View Rx" in a content row): **48px, 16 semibold**.
-- **Icons on buttons (2026-10-24):** primary and secondary buttons carry an icon only when it helps the user recognise the action at a glance — calling, scheduling, viewing, skipping, direction (→ next). No icon when the label must be read: confirming, finalising, releasing, and answers to a question. Quiet buttons never have icons. One icon per button, from `icons.js`, before the label (direction arrows after).
+- **Icons on buttons (2026-10-24):** primary and secondary buttons carry an icon only when it helps the user recognise the action at a glance — calling, scheduling, viewing, skipping, direction (→ next). No icon when the label must be read: confirming, finalising, releasing, and answers to a question. Quiet buttons never have icons. One icon per button, from `icons.js`, before the label (direction arrows after). **Scope:** labelled buttons only — header icons, the close ×, status and notice icons are not buttons and are not covered; adding time ("Add time" with a plus) counts as scheduling.
 - **Order, top to bottom:** primary → secondary → quiet. Two secondaries may sit side by side (equal width, label fits on one line at 360px wide with room to spare; otherwise shorten the label or stack). (D-54)
 - **Icons in buttons:** only when they add meaning (e.g. a phone on "Call patient"). On a side-by-side pair, **both buttons or neither** carry an icon (D-54).
 - **Labels:** verb first, sentence case, no full stop, never "Click" / "Tap".

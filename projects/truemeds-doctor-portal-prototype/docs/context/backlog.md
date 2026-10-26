@@ -22,6 +22,8 @@ Order = the order we work in.
   - [ ] Faster sign-in offer: missing states — enabling failed, prompt cancelled, no fingerprint/face set up (agree the treatment), offline; hero icon placed as on returning unlock.
 - [ ] **D-65 copy** on every approved screen that shows a shortened message (sign-in, OTP, Home, case) and the calling states 3, 4, 6, 12 — re-render.
 - [ ] **D-62 on approved closed screens (`e-*`)**: tinted status cards (C5), T3 action bar on every screen with a bottom bar.
+- [x] Round 1 done (2026-10-26); answers in D-66.
+- [ ] **Round 2 fix** (D-66): unlock-unavailable primary, two copy lines, outcome card under Order details, availability-ended green, re-render affected screens.
 - [ ] Findings to Apurva before any render → **terminal round** re-renders only the affected screens.
 
 ## 3. Rebuild items (for the build, not the renders)

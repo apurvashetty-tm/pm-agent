@@ -8,7 +8,7 @@
   "signin.notRegistered": "Number not registered with Truemeds. Already applied? We’ll contact you after approval.",
   "signin.offline": "You’re offline. Check your connection.",
   "signin.couldntSend": "We couldn't send the code.",
-  "signin.tooMany": "Too many attempts on this number. Please wait before trying again.",
+  "signin.tooMany": "Too many attempts on this number.",
   "signin.inactive": "This account is inactive.",
   "otp.empty": "Enter the 4-digit code.",
   "otp.short": "Enter all 4 digits.",
@@ -53,7 +53,6 @@
   "call.doctorMissed": "You didn't answer the call.",
   "call.onCall": "On call…",
   "call.onCallTransfer": "On call",
-  "call.transferReady": "Stay on the call while you confirm.",
   "call.resultWait": "Getting call result…",
   "call.endedEarly": "Call too short to write a prescription.",
   "call.resultMissing": "We didn't get the call result.",
@@ -80,7 +79,7 @@
   "offer.screenLockLine": "Unlock the app with your PIN or pattern, not an OTP.",
   "offer.screenLockTrust": "Your screen lock stays on your phone",
   "offer.enableFailed": "Couldn’t turn on faster sign-in.",
-  "offer.offline": "You’re offline. Reconnect to turn on faster sign-in."
+  "offer.offline": "You’re offline. Check your connection."
 });
   window.TMFeedback = Object.freeze({
     messages,

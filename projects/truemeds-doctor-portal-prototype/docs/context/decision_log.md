@@ -738,6 +738,17 @@ From an external (ChatGPT) review, each point verified before acting.
 - **Why:** repeating the button doubles the reading on a busy screen and adds nothing; the doctor already sees the action.
 - **Affects approved screens:** sign-in, OTP, Home, case and calling renders that show these messages — re-rendered in the entry + design-system pass.
 
+### D-66 · Entry + design-system pass, round-1 answers — 2026-10-26
+- **Decision (Apurva):**
+  - **A. Outcome card under Order details** on every closed case (D-58 point 16 stands); the approved `e-*` file is out of date — fix.
+  - **B. Icon rule = labelled buttons only.** Header icons, the close ×, status and notice icons are out of scope; "Add time" keeps its plus (scheduling). RULES §9.1.
+  - **C. Copy:** `offer.offline` → "You're offline. Check your connection." (same as sign-in, OTP); `signin.tooMany` → "Too many attempts on this number." (the countdown button already says wait). Kept: `case.offline` (explains blocked buttons), "Couldn't confirm / release / schedule…" (naming what failed is not a repeat). Rule wording tightened in feedback-rules §4.
+  - **D. Availability-ended card is success (green)** — the case was confirmed; title stays "Prescription confirmed". The D-62 brief listed it as neutral by mistake.
+  - **E. Entry screens keep their panel footer** — no action-bar edge where nothing scrolls under the buttons. RULES action-bar row.
+  - **F. `call.transferReady` retired** — unused; 12's script asks the patient to stay on the line, 16 covers the doctor hanging up early.
+  - **G. Back controls unchanged** — case page Back before a call (opens Leave this case?), Prescribe and medicine overlays use a close ×. Only OTP lost its Back (D-61).
+  - **Returning unlock, unavailable state: "Use OTP instead" becomes the primary button** — it is the only way forward there (main-thread review of batch A, replacing the Codex batch that couldn't run).
+
 ## Design system changes made for this work
 
 ### D-60 · Secondary button without drop shadow (design system) — 2026-10-24 · **REVERTED same day**

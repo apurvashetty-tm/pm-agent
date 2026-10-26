@@ -64,3 +64,22 @@ Send renders to Codex in batches, read-only. Fix only blockers that break this c
 - Edit `ui-screens/`, the design system or `messages.json`; promote, publish, open or merge pull requests.
 - Invent states, copy or rules.
 - Run git commands other than `git status`.
+
+---
+
+## Round 2 — fix round (2026-10-26, decisions in D-66)
+
+Read D-66 first. Work in the same `src/` working copies; renders into `round-2/`. Same Never list.
+
+**Fix:**
+1. **Returning unlock, `unlock_unavailable`:** "Use OTP instead" is the **primary** button (only way forward). Every other unlock state keeps it quiet.
+2. **Copy** (already changed in `messages.json`): `offer.offline` = "You’re offline. Check your connection."; `signin.tooMany` = "Too many attempts on this number." If either screen has the old text typed in, change it in the working copy and note it.
+3. **Outcome card under Order details** on all six `e-*` closed states (D-58 point 16), same slot as the calling set.
+4. **`e-availability-ended` = success tone** (green tint + green edge), title unchanged.
+5. `call.transferReady` is retired — nothing to render; confirm no working copy references it.
+
+**Re-render only:** `returning-unlock` (all states — check the others did not change), `faster-signin-offer/offer_offline`, `sign-in/sign-in_too-many-tries`, `case` `e-*` (6). 390 and 360.
+
+**Check:** items 1–4 by DOM probe and full-size view at both widths; every message on these screens against the D-65 rule as tightened in `docs/feedback-rules.md` §4. No Codex round needed unless a fix touches layout beyond these screens; if you run one, cap 1.
+
+**Report:** `round-2/REPORT.md` — each fix pass/fail with evidence, anything new as NEEDS-APURVA. Then stop.
