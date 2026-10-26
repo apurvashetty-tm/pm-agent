@@ -816,7 +816,7 @@ body.concept-closed #success-toast{pointer-events:auto}
   back.id = 'concept-back-home'; back.type = 'button'; back.className = 'tm-btn tm-btn--lg tm-btn--block tm-btn--quiet';
   back.textContent = 'Back to Home'; back.onclick = () => goApp('home');
   $('case-actionbar').appendChild(back);
-  main.insertBefore($('success-toast'), main.firstChild);   // the outcome card is the first thing in the content (5.7)
+  $('case-tools').after($('success-toast'));   // D-58 point 16 / D-66 A: outcome card directly under Order details
   $('cl-stay').onclick = () => { leave.hidden = true; };
   $('cl-x').onclick = () => { leave.hidden = true; };
   $('cl-release').onclick = () => {
@@ -947,7 +947,7 @@ body.concept-closed #success-toast{pointer-events:auto}
       title = `Callback ${day} at ${disp}`;
     }
     _toast(title, '');
-    const card = $('success-toast'), neutral = t === 'Patient unavailable' || t === 'Callback Scheduled' || !!window.__availabilityEnded;   // D-62 neutral: unavailable, callback, availability ended
+    const card = $('success-toast'), neutral = t === 'Patient unavailable' || t === 'Callback Scheduled';   // D-62 neutral: unavailable, callback (D-66 D: availability ended is success)
     card.classList.toggle('is-neutral', neutral);
     card.classList.remove('tm-status-card--success', 'tm-status-card--neutral', 'tm-status-card--warning'); card.classList.add(neutral ? 'tm-status-card--neutral' : 'tm-status-card--success');   // D-62 tinted outcome
     const ic = card.querySelector('#success-toast-icon .tm-icon');

@@ -69,7 +69,7 @@ if(sel.value==='unavailable'){
  const n=document.getElementById('unlock-notice');n.hidden=false;
  document.getElementById('unlock-error').textContent=window.TMFeedback.msg('unlock.unavailable');
  action.hidden=true;
- fallback.classList.remove('tm-btn--secondary');fallback.classList.add('tm-btn--primary');
+ fallback.classList.remove('tm-btn--quiet');fallback.classList.add('tm-btn--primary');   // D-66 A1: the only way forward here, so primary
 }
 TMIcons.render(document);
 </script>
