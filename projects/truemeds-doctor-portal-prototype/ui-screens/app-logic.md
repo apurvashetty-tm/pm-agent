@@ -122,6 +122,7 @@ Order on first use: Sign-in → OTP → (offer, once) → Home → Case. Returni
 | 7f | `call.submitted` | Prescription submitted | Confirm in 7d | Grey card "Prescription submitted" · Request next case · Back to Home | `s7f-submitted` |
 | 8a | `call.valid` | Valid call (Cat4 / HA skipped) | Result: total talk time ≥ gate | Confirm prescription · Callback · no script (call has ended) | `t08a-valid-cat4` |
 | 8b | `call.valid` | Valid call (forward) | Same | Confirm & forward · Callback + Skip HA · no script | `t08b-valid-forward` |
+| 8c | `case.confirm-blocked` | Confirm tapped with Pending medicines | Tap on any confirm button while a medicine is Pending (Flag 5) | Same bar + red line "Prescribe or disable {n} medicines first."; page scrolls to the first Pending medicine; button stays tappable | `t08c-confirm-blocked` |
 | 9 | `call.patient-unavailable` | Patient unavailable (automatic) | Leg 2 failed | Grey card · Request next case · Back to Home | `t09-patient-unavailable` |
 | 10a | — | Prescription confirmed | Confirm (Cat4) | Green card · Request next case · Back to Home | `t10a-confirmed` |
 | 10b | — | Forwarded to HA | Confirm & forward | Green card · same | `t10b-forwarded` |

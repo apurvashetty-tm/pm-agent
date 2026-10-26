@@ -38,6 +38,7 @@ export const messages = {
   "case.offlineAction": "No connection. Nothing was lost. Try again when you’re back online.",
   "case.confirming": "Confirming…",
   "case.confirmFailed": "Couldn’t confirm. Nothing was lost. Try again.",
+  "case.confirmBlocked": "Prescribe or disable {n} medicines first.",
   "case.releaseFailed": "Couldn’t release this case. You’re still on it. Try again.",
   "case.callbackFailed": "Couldn’t schedule the callback. Your time is kept. Try again.",
   "rx.loadFailed": "Couldn’t load the prescription.",

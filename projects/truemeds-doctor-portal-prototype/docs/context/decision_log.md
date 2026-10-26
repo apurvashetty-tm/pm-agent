@@ -725,6 +725,14 @@ From an external (ChatGPT) review, each point verified before acting.
 - **Why only these two:** Cat4 and Non-Value Meds unlock Confirm only after the call result arrives, i.e. after the call has ended (app-logic §4); in a successful transfer (14) the doctor leaves the call. Both 15 and B3 are Ozonetel flows, so the live/finished signal exists — no Knowlarity "unknown" case.
 - **Rejected:** blocking on every closed state (not needed); disabling the button until the call ends (no reason shown).
 
+### D-64 · Round-7 answers, confirm-blocked state, faster sign-in without biometrics — 2026-10-26
+- **Decision (Apurva):**
+  1. **No Callback on 15, 15b, B3** — the doctor already tapped a confirm button; D-58 24-1 ("Callback until a confirm tap") is met, not broken.
+  2. **15b covers B3** — same line, same place; no separate B3 render.
+  3. **Medicines may be Pending before confirm** (doctors prescribe during the call). **Every confirm button checks that no medicine is Pending** (Prescribed or Disabled) — Flag 5 (2026-10-16): button stays tappable; on tap a red line in the bar "Prescribe or disable {n} medicines first." and the page scrolls to the first Pending medicine. It had no copy key and no render: added `case.confirmBlocked` and calling state **8c** (`t08c-confirm-blocked`).
+  4. **Faster sign-in offer without fingerprint / face:** offer the **phone's screen lock (PIN / pattern / password)** instead; **skip the offer only if the phone has no screen lock at all**. Returning unlock already has a screen-lock variant ("Unlock with screen lock"); the offer gets one too (`offer_screen-lock`).
+- **Why:** a prescription must not go out with unreviewed medicines; most doctors' phones have at least a screen lock, so they still get faster sign-in.
+
 ## Design system changes made for this work
 
 ### D-60 · Secondary button without drop shadow (design system) — 2026-10-24 · **REVERTED same day**

@@ -357,6 +357,18 @@
     "retain": "all case data",
     "copy": "approved (Apurva, D-53)"
   },
+  "case.confirmBlocked": {
+    "pattern": "W1",
+    "trigger": "tap on any confirm button while a medicine is Pending (Flag 5)",
+    "slot": "line in the action bar, above the confirm button; page scrolls to the first Pending medicine",
+    "next": "prescribe or disable the medicines, tap again",
+    "clear": "no medicine Pending",
+    "retain": "call state, notes",
+    "copy": "approved (Apurva, 2026-10-16, Flag 5)",
+    "placeholders": [
+      "n"
+    ]
+  },
   "case.releaseFailed": {
     "pattern": "F2",
     "trigger": "release failed",
