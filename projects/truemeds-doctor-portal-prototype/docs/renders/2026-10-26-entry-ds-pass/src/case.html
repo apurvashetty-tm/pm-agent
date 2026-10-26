@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+<!-- Phase D case page: approved 2026-10-15 (D-48 to D-55). Moved from docs/concepts/2026-10-14-case-page/v2/concept.html. -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Truemeds for Doctors</title>
+  <link rel="stylesheet" href="../../../../../../design-system/truemeds.css" />
+  <link rel="stylesheet" href="case-styles.css" />   <!-- D-53: copy of styles.css without central-component restyles -->
+<style id="concept-v4">
+/* CONCEPT v4 (phase D full render). Changes to index.html are concept-only: header, content row, end-of-case card and
+   exits, D-50 labels, sentence case, the Prescribe header proposal, and the design-system success tag. app.js untouched. */
+html.capture body{background:var(--tm-surface-secondary)}
+#mobile-column{transform:translateZ(0)}   /* RULES §7.4: overlays anchor to the frame */
+html.capture #mobile-column{height:844px;max-height:844px;overflow:hidden;display:flex;flex-direction:column;margin:0 auto;width:390px}
+html.capture.w360 #mobile-column{width:360px}
+html.capture #main-scroll{flex:1 1 auto;min-height:0;overflow-y:auto}
+#demo-bar,#compact-strip,#portal-header,#desktop-side-panel{display:none !important}
+#patient-detail-block{display:none !important}
+#case-tools{display:flex;flex-direction:column;gap:var(--tm-space-sm)}
+#case-tools .ct-row{display:flex;align-items:center;justify-content:space-between;gap:var(--tm-space-sm);min-height:48px}
+#case-tools .ct-details{display:inline-flex;align-items:center;gap:var(--tm-space-xs);min-height:48px;border:0;background:transparent;padding:0 var(--tm-space-xs) 0 0;font:inherit;font-size:var(--tm-font-size-body-lg);line-height:var(--tm-font-lineheight-md);color:var(--tm-content-primary);cursor:pointer}
+#case-tools .ct-details .tm-icon{width:20px;height:20px;color:var(--tm-content-secondary)}
+#case-tools #pdb-info-btn{display:none !important}
+#case-tools #pdb-order-expand{margin:0}
+#concept-leave[hidden]{display:none}
+#concept-leave{position:absolute;inset:0;z-index:500;display:flex;flex-direction:column;justify-content:flex-end}
+#concept-toast{position:absolute;left:var(--tm-space-xl);right:var(--tm-space-xl);bottom:calc(var(--concept-bar-h,0px) + var(--tm-space-sm));z-index:55;display:flex;justify-content:center;pointer-events:none}
+#concept-toast > .tm-toast{position:relative;left:auto;right:auto;bottom:auto;transform:none;text-align:center}
+#concept-toast[hidden]{display:none}
+/* End-of-case card: title only (no second line). */
+#success-toast-desc{display:none !important}
+#success-toast:not(.show){display:none !important}
+#success-toast.show{position:static !important;left:auto !important;top:auto !important;bottom:auto !important;width:100% !important;transform:none !important;margin:0 0 var(--tm-space-sm);z-index:auto !important}
+#success-toast.show #success-toast-next{display:none !important}
+#concept-back-home{display:none}
+body.concept-closed #concept-back-home{display:flex}
+body.concept-ended #next-order-btn{display:none !important}
+/* Prescribe header PROPOSAL (for review only): compact blue-tinted header like the case page. Cross to close stays. */
+/* New states (2026-10-15, proposed copy in ui-screens/feedback/messages.json). Concept-only layout. */
+body.concept-loading #main-scroll > :not(.concept-new){visibility:hidden}
+body.concept-loading #case-actionbar{display:none}
+body.concept-loading #case-head .tm-header-task__title,body.concept-loading #case-head .tm-header-task__meta{visibility:hidden}
+.concept-skel{display:block;background:var(--tm-border-subtle);border-radius:var(--tm-radius-md);margin-bottom:var(--tm-space-lg)}
+body.concept-load-failed #main-scroll > :not(.concept-new){display:none}
+body.concept-load-failed #case-actionbar > :not(.concept-new){display:none}
+.concept-stack{display:flex;flex-direction:column;gap:var(--tm-space-lg);width:100%;box-sizing:border-box;padding:0 var(--tm-space-xl)}
+.concept-bar-note{padding:0 var(--tm-space-xl) var(--tm-space-sm);box-sizing:border-box}
+.concept-gap{margin:var(--tm-space-lg) 0}
+#main-scroll > .concept-new,#case-actionbar > .concept-new{margin-top:0}
+/* Standards pass (2026-10-15): medicine and order-detail meta text lifted from 12px to 14px (RULES §8.1); tags keep 12px. */
+#medicines-count,.med-detail,#pcb-label.pcb-label,.pdb-expand-label,.pdb-expand-value{font-size:14px !important;line-height:20px !important}
+/* Prescribe and Rx viewer text: L3 is 14px (RULES §8.1). Tags keep 12px. */
+#ps-form,.ps-rx-label,#ps-dur-val,#ps-sos-help,#rx-zoom-label,#rx-hint{font-size:14px !important;line-height:20px !important}
+#ps-dur-val,#ps-dur-val *,#ps-dur-value,#ps-dur-value *{font-size:14px !important;line-height:20px !important}
+.ps-helper{font-size:14px !important;line-height:20px !important}   /* L3 supporting text on Prescribe (RULES §8.1) */
+/* One grid size per screen (RULES §9.2): every option grid is four equal columns. */
+.ps-grid{grid-template-columns:repeat(4,minmax(0,1fr)) !important;gap:var(--tm-space-sm) !important;width:100%;box-sizing:border-box}
+/* D-55 (approved): every option grid in a section has the M/A/N chip width (5.4) and starts at its label's left edge (D-54 D6). */
+.ps-section > .ps-grid{width:calc(100% - var(--tm-space-xl) + var(--tm-space-2xs)) !important;margin-left:0 !important}
+/* R17-2: the duration numbers grid has the same chip width as the other option grids (5.4). */
+.ps-dur-panel > .ps-grid{width:calc(100% - var(--tm-space-md) + var(--tm-space-2xs)) !important;margin-left:calc(-1 * var(--tm-space-md)) !important}   /* panel padding is 12px; the grid starts at the label edge */
+/* Every option grid in a section takes the dose grid's inset, so all chips on the screen are one size (RULES §9.2). */
+/* Viewer header: the tools take their own row so the title is never cut (RULES §8.5 viewer header). */
+#rx-overlay-header{flex-wrap:wrap;row-gap:var(--tm-space-xs)}
+#rx-controls{flex-basis:100%;justify-content:flex-end;display:flex;align-items:center}
+</style>
+<style id="concept-d51">
+/* D-51 (round 3). Concept layer only. */
+/* 1. Bar: primary on top; secondaries below (central pair; stacked under 430px). */
+#case-actionbar{display:flex;flex-direction:column;gap:var(--tm-space-sm)}
+#case-actionbar[hidden],body:has(#main-scroll textarea:focus) #case-actionbar,body:has(#ps-body textarea:focus) #case-actionbar{display:none !important}
+#case-actionbar > .tm-btn--lg{order:1}
+#ab-secondary{order:2;width:100%}
+#callback-error-wrap{margin-top:var(--tm-space-sm)}   /* 8px under the Time grid (D-54 D11) */
+#callback-error-wrap > #callback-error{margin:0}   /* the helper sits exactly 8px under the Time grid */
+/* Side by side below the primary (checklist 7.5). */
+#ab-secondary{grid-template-columns:minmax(0,1fr) minmax(0,1fr) !important;grid-auto-flow:row !important}
+#ab-secondary.concept-single{grid-template-columns:minmax(0,1fr) !important;grid-auto-flow:row !important}
+/* RULES §9.1: at 360 the 18px labels do not fit half-width buttons, so the secondaries stack (decision for Apurva, NEEDS-APURVA). */
+#ab-secondary[hidden],#ab-secondary [hidden]{display:none !important}
+#concept-back-home{order:2}
+/* 2. Closed case: no header Back; content read-only and muted (no chevrons, nothing tappable); card and bar live. */
+body.concept-closed #main-scroll{pointer-events:none}
+body.concept-closed #success-toast{pointer-events:auto}
+/* Closed: the medicine rows' chevrons (16px icons) are removed; nothing in the list is tappable. */
+/* The zoom hint sits in a reserved strip under the prescription (it overlapped the General advice text). */
+/* The zoom hint moves into the viewer header (own line), so it never sits over the prescription text. */
+#rx-overlay-body{flex-direction:column;justify-content:flex-start;padding-top:var(--tm-space-xs)}
+#rx-hint{position:static;flex:none;display:block;text-align:center;padding:var(--tm-space-xs) var(--tm-space-md);font-size:var(--tm-font-size-body-xs);line-height:var(--tm-font-lineheight-xs);color:var(--tm-content-inverse)}
+#rx-doc-wrapper{flex:none}
+/* RULES §8.6 (44pt for icon and standalone buttons): Rx viewer controls and the Prescribe Disable action. */
+/* 3. Prescribe: white header (tinted proposal rejected). "On prescription" band keeps its normal colour in every state. */
+#ps-rx,#ps-rx.is-updated{background:var(--tm-surface-brand-subtle) !important}
+.ps-rx-label{color:var(--tm-content-brand) !important}
+/* Duration card: label-to-field gap equals the card's own gap (24), same as the other cards. */
+#psl-duration + .ps-dur-field{margin-top:calc(var(--tm-space-xl) * -1)}
+/* RULES §8.2: 24px side margin on every mobile screen (case page, Prescribe, sheets). */
+#main-scroll{padding-left:var(--tm-space-xl) !important;padding-right:var(--tm-space-xl) !important}
+#case-actionbar{padding-left:var(--tm-space-xl) !important;padding-right:var(--tm-space-xl) !important}
+#ps-body,#ps-actionbar{padding-left:var(--tm-space-xl) !important;padding-right:var(--tm-space-xl) !important}
+.bottom-sheet{padding-left:var(--tm-space-xl) !important;padding-right:var(--tm-space-xl) !important}
+/* Closed case: View Rx and Order details look inactive (muted, no raised button). */
+/* 7. No blue outline on bottom sheets or the Prescribe screen; no glow ring on "Calling…". */
+.bottom-sheet:focus,.bottom-sheet:focus-visible,#prescribe-screen:focus,#prescribe-screen:focus-visible,#concept-leave .cl-sheet:focus,#concept-leave .cl-sheet:focus-visible{outline:none !important;box-shadow:none !important}
+.bottom-sheet,.bottom-sheet *:focus{outline:none}
+#call-initiate-btn,#call-initiate-btn *,.pulsing,.pulsing *{animation:none !important}
+.pulsing{box-shadow:none !important}
+/* 5. Patient unavailable card: neutral icon (not a green tick). */
+#success-toast.is-neutral #success-toast-icon,#success-toast.is-neutral #success-toast-icon .tm-icon{color:var(--tm-content-secondary) !important}
+/* 4. HA transfer banner: neutral notice above the medicines (display only). */
+#ha-banner-m{margin:0 0 var(--tm-space-md)}
+</style>
+</head>
+<body class="tm">
+
+<div id="layout-wrapper">
+
+  <!-- ============================================================
+       DESKTOP SIDE PANEL — visible on wide screens only
+  ============================================================ -->
+  <!-- DESKTOP APP PANEL (left of the frame) — demo controls for sign-in, home and "orders available" -->
+  <div id="desktop-app-panel">
+    <div class="side-panel-card tm-card">
+      <div class="side-panel-header"><span class="tm-icon tm-icon--16" data-icon="bolt"></span>App demo</div>
+      <div class="side-panel-body"><div class="demo-app" data-demo-app></div></div>
+    </div>
+  </div>
+
+  <div id="desktop-side-panel">
+
+    <!-- Case Overview -->
+    <div class="side-panel-card tm-card">
+      <div class="side-panel-header">Current Case</div>
+      <div class="side-panel-body">
+        <div id="side-patient-name">—</div>
+        <div id="side-order-id">—</div>
+        <div id="side-badge-row"></div>
+      </div>
+    </div>
+
+    <!-- Call State -->
+    <div class="side-panel-card tm-card">
+      <div class="side-panel-header">Call Status</div>
+      <div class="side-panel-body">
+        <div id="side-state-display">
+          <div id="side-state-icon"><span class="tm-icon tm-icon--24" data-icon="phone"></span></div>
+          <div>
+            <div id="side-state-text">—</div>
+            <div id="side-timer-text">—</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Post-call CTA (mirrors main scroll) -->
+    <div class="side-panel-card tm-card">
+      <div class="side-panel-header">Post-Call Action</div>
+      <div class="side-panel-body">
+        <div id="side-cta-section">
+          <div id="side-ha-banner" class="tm-notice tm-notice--warning"><span class="tm-icon tm-icon--16" data-icon="alert-triangle"></span><span>HA call required before confirming</span></div>
+          <button id="side-skip-ha-btn" class="tm-btn tm-btn--secondary tm-btn--block" onclick="openSheet('sheet-skip-ha')">Skip HA call</button>
+          <button id="side-main-cta" class="tm-btn tm-btn--primary tm-btn--block" onclick="handleMainCTA()">
+            <span id="side-cta-icon"></span>
+            <span id="side-cta-label">Confirm prescription</span>
+          </button>
+        </div>
+        <div id="side-cta-locked">
+          Waiting for valid call (50s)
+        </div>
+      </div>
+    </div>
+
+    <!-- Demo Controls -->
+    <div class="side-panel-card tm-card">
+      <div class="side-panel-header"><span class="tm-icon tm-icon--16" data-icon="bolt"></span>Demo scenarios</div>
+      <div class="side-panel-body" id="side-scenario-btns">
+        <button class="tm-btn tm-btn--tertiary tm-btn--block side-scenario-btn" aria-pressed="true" data-scenario="cat4">Cat4</button>
+        <button class="tm-btn tm-btn--tertiary tm-btn--block side-scenario-btn" aria-pressed="false" data-scenario="pilot_value_meds_ha">Pilot + Value Meds + HA</button>
+        <button class="tm-btn tm-btn--tertiary tm-btn--block side-scenario-btn" aria-pressed="false" data-scenario="pilot_nonvalue_meds_ha">Pilot + Non-Value Meds + HA</button>
+        <button class="tm-btn tm-btn--tertiary tm-btn--block side-scenario-btn" aria-pressed="false" data-scenario="pilot_ha_skipped_customer">Pilot · HA Skipped (Customer)</button>
+        <button class="tm-btn tm-btn--tertiary tm-btn--block side-scenario-btn" aria-pressed="false" data-scenario="pilot_ha_skipped_system">Pilot · HA Skipped (System)</button>
+        <!-- Desktop webhook simulator — visible when state=calling -->
+        <div id="side-demo-call-sim" style="display:none">
+          <div id="side-sim-calling" class="side-sim-row">
+            <button class="tm-btn tm-btn--secondary side-sim-btn" onclick="simCallConnected()"><span class="tm-icon tm-icon--16" data-icon="check"></span>Connected</button>
+            <button class="tm-btn tm-btn--tertiary side-sim-btn" onclick="simShowWebhookOptions()"><span class="tm-icon tm-icon--16" data-icon="x"></span>No connect</button>
+          </div>
+          <div id="side-sim-webhook" style="display:none">
+            <div class="side-sim-label">Webhook reason</div>
+            <div class="side-sim-row">
+              <button class="tm-btn tm-btn--tertiary side-sim-btn" onclick="simWebhook('no_answer')"><span class="tm-icon tm-icon--16" data-icon="phone-off"></span>No answer</button>
+              <button class="tm-btn tm-btn--tertiary side-sim-btn" onclick="simWebhook('switched_off')"><span class="tm-icon tm-icon--16" data-icon="volume-off"></span>Switched off</button>
+              <button class="tm-btn tm-btn--tertiary side-sim-btn" onclick="simWebhook('wrong_number')"><span class="tm-icon tm-icon--16" data-icon="circle-x"></span>Wrong no.</button>
+              <button class="tm-btn tm-btn--tertiary side-sim-btn" onclick="simWebhook('timeout')"><span class="tm-icon tm-icon--16" data-icon="clock"></span>Timeout</button>
+            </div>
+          </div>
+        </div>
+        <button id="side-ff-btn" class="tm-btn tm-btn--tertiary tm-btn--block"><span class="tm-icon tm-icon--16" data-icon="player-track-next"></span>Fast-forward to 50s</button>
+      </div>
+    </div>
+
+  </div><!-- /desktop-side-panel -->
+
+  <!-- ============================================================
+       MOBILE COLUMN
+  ============================================================ -->
+  <div id="mobile-column">
+
+    <!-- STICKY TOP WRAPPER — portal header + demo bar + compact strip -->
+    <div id="sticky-top-wrapper">
+
+      <!-- PORTAL HEADER — always visible -->
+      <div id="portal-header" class="tm-appbar">
+        <div id="portal-title">
+          <img class="portal-logo" src="../../../../brand/truemeds-for-doctors.svg" alt="Truemeds for doctors" width="147" height="36">
+        </div>
+        <button id="profile-btn" onclick="openProfile()" aria-label="Profile">
+          <span id="profile-initials">AS</span>
+        </button>
+      </div>
+
+      <!-- DEMO BAR — [MOCK ASSUMPTION] dev-only -->
+      <div id="demo-bar">
+        <div id="demo-bar-label"><span class="tm-icon tm-icon--16" data-icon="bolt"></span>Demo controls</div>
+        <!-- App demo controls (filled by app.js: renderAppDemo) -->
+        <div class="demo-app" data-demo-app></div>
+        <div id="demo-bar-scenarios">
+          <button class="tm-chip scenario-btn" aria-pressed="true" data-scenario="cat4">Cat4</button>
+          <button class="tm-chip scenario-btn" aria-pressed="false" data-scenario="pilot_value_meds_ha">Pilot + Value + HA</button>
+          <button class="tm-chip scenario-btn" aria-pressed="false" data-scenario="pilot_nonvalue_meds_ha">Pilot + Non-Value + HA</button>
+          <button class="tm-chip scenario-btn" aria-pressed="false" data-scenario="pilot_ha_skipped_customer">HA Skipped (Cust)</button>
+          <button class="tm-chip scenario-btn" aria-pressed="false" data-scenario="pilot_ha_skipped_system">HA Skipped (Sys)</button>
+        </div>
+        <!-- Webhook simulator — visible when state=calling [MOCK ASSUMPTION] -->
+        <div id="demo-call-sim" style="display:none">
+          <div id="demo-sim-calling">
+            <span class="demo-sim-label">Simulate:</span>
+            <button class="tm-btn tm-btn--secondary demo-sim-btn" onclick="simCallConnected()"><span class="tm-icon tm-icon--16" data-icon="check"></span>Connected</button>
+            <button class="tm-btn tm-btn--tertiary demo-sim-btn" onclick="simShowWebhookOptions()"><span class="tm-icon tm-icon--16" data-icon="x"></span>No connect</button>
+          </div>
+          <div id="demo-sim-webhook" style="display:none">
+            <span class="demo-sim-label">Webhook:</span>
+            <button class="tm-btn tm-btn--tertiary demo-sim-btn" onclick="simWebhook('no_answer')"><span class="tm-icon tm-icon--16" data-icon="phone-off"></span>No answer</button>
+            <button class="tm-btn tm-btn--tertiary demo-sim-btn" onclick="simWebhook('switched_off')"><span class="tm-icon tm-icon--16" data-icon="volume-off"></span>Switched off</button>
+            <button class="tm-btn tm-btn--tertiary demo-sim-btn" onclick="simWebhook('wrong_number')"><span class="tm-icon tm-icon--16" data-icon="circle-x"></span>Wrong no.</button>
+            <button class="tm-btn tm-btn--tertiary demo-sim-btn" onclick="simWebhook('timeout')"><span class="tm-icon tm-icon--16" data-icon="clock"></span>Timeout</button>
+          </div>
+        </div>
+        <div id="demo-bar-row2">
+          <span id="demo-state-label">State: assigned</span>
+          <button id="demo-ff-btn-mobile" class="tm-btn tm-btn--tertiary"><span class="tm-icon tm-icon--16" data-icon="player-track-next"></span>Fast-forward 50s</button>
+        </div>
+      </div>
+
+      <!-- COMPACT STRIP — hidden until patient block scrolls out of view -->
+      <div id="compact-strip">
+        <div id="cs-patient-info">
+          <div id="cs-patient-name">—</div>
+          <div id="cs-patient-meta">—</div>
+        </div>
+        <span id="cs-order-value"></span>
+        <button id="cs-view-rx-btn" class="tm-btn tm-btn--secondary hidden" onclick="openRxOverlay()"><span class="tm-icon tm-icon--16" data-icon="clipboard-text"></span>View Rx</button>
+      </div>
+
+    </div><!-- /sticky-top-wrapper -->
+
+    <!-- ============================================================
+         APP SCREENS — sign in, OTP, returning-doctor unlock, home (D-31, D-33 … D-37).
+         Sign in, OTP and unlock follow the approved screens in ui-screens/ (sign-in, otp, returning-unlock).
+         One screen shows at a time, chosen by body[data-app] (goApp in app.js). The order page is #main-scroll.
+    ============================================================ -->
+    <section id="scr-signin" class="app-screen auth" hidden aria-labelledby="signin-h">
+      <div class="auth-top">
+        <img class="auth-logo" src="../../../../brand/truemeds-for-doctors.svg" alt="Truemeds for doctors" width="174" height="43">
+        <h1 id="signin-h" class="auth-title" tabindex="-1">Welcome, Doctor.</h1>
+        <p class="auth-sub">Your partner in thoughtful, affordable care.</p>
+      </div>
+      <div class="auth-panel">
+        <form class="auth-form" id="signin-form" novalidate onsubmit="event.preventDefault(); requestOtp();">
+          <div class="tm-field" id="signin-field">
+            <label class="tm-field__label" for="signin-phone">Mobile number</label>
+            <div class="tm-field__control"><span class="tm-field__prefix">+91</span><input id="signin-phone" type="tel" inputmode="tel" autocomplete="tel-national" placeholder="10-digit mobile number" aria-describedby="signin-help"></div>
+            <div class="tm-field__helper" id="signin-help">We’ll send you a verification code by SMS.</div>
+          </div>
+          <div class="auth-notice" id="signin-notice" hidden><span class="tm-icon" id="signin-notice-icon" data-icon="info-circle" aria-hidden="true"></span><div id="signin-notice-text"></div></div>
+          <button id="signin-btn" type="submit" class="tm-btn tm-btn--lg tm-btn--primary tm-btn--block">Send OTP</button>
+          <a id="signin-call" class="tm-btn tm-btn--lg tm-btn--primary tm-btn--block" href="tel:+918652424617" hidden>Call Doctor Ops</a>
+        </form>
+        <p class="auth-foot">New to Truemeds? <a id="signup-link" href="https://pwa-doctor.truemeds.in/onboarding" target="_blank" rel="noopener">Sign up</a></p>
+      </div>
+    </section>
+
+    <section id="scr-otp" class="app-screen auth" hidden aria-labelledby="otp-h">
+      <div class="auth-top auth-top--otp">
+        <button type="button" class="auth-back" onclick="otpBack()"><span class="tm-icon" data-icon="arrow-left" aria-hidden="true"></span>Back</button>
+        <img class="auth-logo auth-logo--sm" src="../../../../brand/truemeds-for-doctors.svg" alt="Truemeds for doctors" width="168" height="41">
+        <h1 id="otp-h" class="auth-title" tabindex="-1">Verify your number</h1>
+        <p class="auth-sub">Enter the OTP sent to<strong id="otp-phone">—</strong></p>
+        <button type="button" class="auth-link" onclick="otpBack()">Change number</button>
+      </div>
+      <div class="auth-panel">
+        <form class="auth-form" id="otp-form" novalidate onsubmit="event.preventDefault(); verifyOtp();">
+          <div class="tm-field otp-field" id="otp-field">
+            <label class="tm-field__label" for="otp-input">Verification code</label>
+            <div class="tm-field__control"><input id="otp-input" type="text" inputmode="numeric" autocomplete="one-time-code" placeholder="4-digit OTP" aria-describedby="otp-help"></div>
+            <div class="tm-field__helper" id="otp-help" hidden></div>
+          </div>
+          <div class="tm-notice" id="otp-notice" hidden><span class="tm-icon" id="otp-notice-icon" data-icon="info-circle" aria-hidden="true"></span><div id="otp-notice-text"></div></div>
+          <div class="otp-resend" id="otp-resend-row"><span>Didn’t receive it?</span><span id="otp-timer">Resend in 00:30</span><button type="button" id="otp-resend" onclick="resendOtp()" hidden>Resend code</button></div>
+          <label class="option-card" id="otp-faster">
+            <span class="option-card__icon"><span class="tm-icon" data-icon="fingerprint" aria-hidden="true"></span></span>
+            <span class="option-card__text"><span class="option-card__title">Sign in faster next time</span><span class="option-card__desc">Use your device’s face, fingerprint, or screen lock.</span></span>
+            <input type="checkbox" class="option-card__check" id="otp-faster-check">
+          </label>
+          <p class="auth-terms">By selecting Verify &amp; sign in, you agree to the <a href="#" onclick="return linkPending('Terms & Conditions')">Terms &amp; Conditions</a> and acknowledge the <a href="#" onclick="return linkPending('Privacy Policy')">Privacy Policy</a>.</p>
+          <button id="otp-btn" type="submit" class="tm-btn tm-btn--lg tm-btn--primary tm-btn--block">Verify &amp; sign in</button>
+        </form>
+      </div>
+    </section>
+
+    <section id="scr-unlock" class="app-screen auth" hidden aria-labelledby="unlock-h">
+      <div class="auth-top auth-top--unlock">
+        <img class="auth-logo" src="../../../../brand/truemeds-for-doctors.svg" alt="Truemeds for doctors" width="174" height="43">
+        <h1 id="unlock-h" class="unlock-title" tabindex="-1">Hello, <span id="unlock-name">Dr. Apurva</span>.</h1>
+        <p class="unlock-sub">Let’s check in on your patients today.</p>
+      </div>
+      <div class="auth-panel unlock-panel">
+        <div class="unlock-prompt">
+          <div class="unlock-icon" aria-hidden="true"><span class="tm-icon" id="unlock-icon" data-icon="fingerprint"></span></div>
+          <h2>Ready when you are</h2>
+        </div>
+        <div class="unlock-actions">
+          <button id="unlock-btn" type="button" class="tm-btn tm-btn--primary tm-btn--lg tm-btn--block" onclick="openBioPrompt('unlock')"><span id="unlock-label">Unlock with fingerprint</span></button>
+          <button id="unlock-otp-btn" type="button" class="tm-btn tm-btn--ghost unlock-fallback" onclick="unlockWithOtp()">Use OTP instead</button>
+        </div>
+        <button type="button" class="tm-btn tm-btn--quiet unlock-account" onclick="switchAccount()">Not you? <strong>Switch account</strong></button>
+      </div>
+    </section>
+
+    <section id="scr-home" class="app-screen" hidden aria-labelledby="home-h">
+      <div class="app-scroll home-body">
+        <div class="home-greet">
+          <h1 id="home-h" class="tm-text-h1" tabindex="-1"><span id="home-greeting">Good afternoon</span>, <span id="home-name">Dr. Apurva</span></h1>
+          <p class="home-date" id="home-date">—</p>
+        </div>
+        <div class="tm-card home-card">
+          <div class="tm-empty" id="home-ready">
+            <div class="tm-empty__icon"><span class="tm-icon" data-icon="stethoscope"></span></div>
+            <div class="tm-empty__title">Ready for your next order?</div>
+            <p class="tm-empty__text">Tap Get next order when you're ready to call a patient.</p>
+          </div>
+          <div class="tm-empty" id="home-nolead" hidden>
+            <div class="tm-empty__icon"><span class="tm-icon" data-icon="inbox"></span></div>
+            <div class="tm-empty__title">No orders right now</div>
+            <p class="tm-empty__text">New orders come in through the day. Check again in a minute.</p>
+            <p class="home-checked" id="home-checked">Checked at —</p>
+          </div>
+        </div>
+        <div class="tm-card home-today"><span>Today</span><strong id="home-count">0 orders closed</strong></div>
+      </div>
+      <div class="tm-actionbar app-actionbar"><button id="home-next-btn" class="tm-btn tm-btn--lg tm-btn--primary tm-btn--block" onclick="requestNextOrder()">Get next order</button></div>
+    </section>
+
+    <!-- MAIN SCROLL -->
+    <div id="main-scroll">
+
+      <!-- 1. Patient Detail Block — non-sticky, no badge row -->
+      <div id="patient-detail-block" class="tm-card">
+        <div id="pdb-top-row">
+          <div>
+            <div id="patient-full-name" class="tm-text-h2">—</div>
+            <div id="patient-details-row">—</div>
+          </div>
+          <div id="pdb-actions">
+            <button id="pdb-info-btn" class="tm-btn tm-btn--ghost tm-btn--icon" aria-expanded="false" onclick="toggleOrderExpand()" title="Order details" aria-label="Order details"><span class="tm-icon" data-icon="info-circle"></span></button>
+            <button id="pdb-view-rx-btn" class="tm-btn tm-btn--secondary hidden" onclick="openRxOverlay()"><span class="tm-icon tm-icon--16" data-icon="clipboard-text"></span>View Rx</button>
+          </div>
+        </div>
+        <div id="order-id-row">
+          Order&nbsp;<span id="display-order-id">—</span>
+          &nbsp;·&nbsp;
+          <span id="display-order-value">—</span>
+        </div>
+        <!-- Expandable order details — hidden by default -->
+        <div id="pdb-order-expand" class="hidden">
+          <div class="pdb-expand-item">
+            <span class="pdb-expand-label">Order Created</span>
+            <span class="pdb-expand-value" id="display-order-created">—</span>
+          </div>
+          <div class="pdb-expand-item">
+            <span class="pdb-expand-label">Expected Delivery</span>
+            <span class="pdb-expand-value" id="display-order-delivery">—</span>
+          </div>
+          <div class="pdb-expand-item">
+            <span class="pdb-expand-label">Payment</span>
+            <span class="pdb-expand-value" id="display-payment-mode">—</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. Medicines to Validate -->
+      <div id="medicines-section">
+        <div id="medicines-header">
+          <h2 class="tm-section-title section-title--inline">Medicines to prescribe</h2>
+          <span id="medicines-count">0 medicines</span>
+        </div>
+        <div id="medicines-empty">No medicines on this order.</div>
+        <div id="medicines-list"></div>
+      </div>
+
+      <!-- 3. Notes + Symptoms — [OPEN DECISION] OQ-006 -->
+      <div id="notes-section">
+        <h2 class="tm-section-title">Notes &amp; symptoms</h2>
+        <div class="tm-field">
+          <label class="tm-field__label" for="symptoms-input">Chief complaints / symptoms</label>
+          <div class="tm-field__control"><textarea id="symptoms-input" placeholder="e.g., Fever since 2 days, sore throat, mild cough…" rows="3"></textarea></div>
+        </div>
+        <div class="tm-field">
+          <label class="tm-field__label" for="doctor-notes-input">Doctor notes</label>
+          <div class="tm-field__control"><textarea id="doctor-notes-input" placeholder="Clinical observations, instructions, internal notes…" rows="3"></textarea></div>
+        </div>
+      </div>
+
+      <!-- 4. Action Zone — merged call + post-call -->
+      <div id="action-zone" class="tm-card">
+        <h2 class="tm-section-title section-title--inline">Call</h2>
+        <!-- Shown once the case is closed (order confirmed / callback scheduled / patient unavailable) -->
+        <div id="az-closed" class="tm-notice" hidden><span class="tm-icon" data-icon="circle-check"></span><span id="az-closed-text">—</span></div>
+
+        <!-- Briefing strip — all scenarios, persists above both phases -->
+        <div id="pre-call-brief" class="tm-notice">
+          <div class="pcb-body">
+            <div class="pcb-label" id="pcb-label">End-of-call script</div>
+            <div class="pcb-text" id="pcb-text">—</div>
+          </div>
+        </div>
+
+        <!-- Phase 1: Call control (hidden when gate passes) -->
+        <div id="az-phase1">
+          <!-- What happened to the last call attempt (didn't pick up / didn't connect / ended before 50s) -->
+          <div id="az-missed" class="tm-notice tm-notice--warning" hidden><span class="tm-icon" data-icon="phone-off"></span><span id="az-missed-text">Patient didn't pick up.</span></div>
+
+
+          <div id="az-status-label" class="hidden"></div>
+        </div>
+
+      </div><!-- /action-zone -->
+
+    </div><!-- /main-scroll -->
+
+    <!-- CASE ACTION BAR — the one main action, pinned to the bottom (agreed 2026-10-08, decision log D-22).
+         Call Patient / Calling… / End Call / Call Again before the gate; Confirm Order / Transfer / Forward after it.
+         Secondary actions sit in the same bar (D-28); the Call card keeps only status and the script. -->
+    <div id="case-actionbar" class="tm-actionbar">
+      <!-- Secondary call actions, pinned above the main one (D-28): nothing the doctor can do needs a scroll -->
+      <div id="ab-secondary" class="tm-btn-pair">
+        <button id="pre-gate-callback-btn" class="tm-btn tm-btn--secondary hidden" onclick="openSheet('sheet-callback')">
+          <span class="tm-icon tm-icon--16" data-icon="calendar"></span>Callback
+        </button>
+        <button id="az-unavail-btn" class="tm-btn tm-btn--destructive" onclick="markCustomerUnavailable()" hidden>Mark as unavailable</button>
+        <button id="schedule-callback-btn" class="tm-btn tm-btn--secondary" onclick="openSheet('sheet-callback')" hidden>
+          <span class="tm-icon tm-icon--16" data-icon="calendar"></span><span id="schedule-callback-label">Callback</span>
+        </button>
+        <button id="skip-ha-btn" class="tm-btn tm-btn--secondary" onclick="openSheet('sheet-skip-ha')" hidden><span class="tm-icon tm-icon--16" data-icon="player-track-next"></span>Skip HA</button>
+      </div>
+      <button id="call-initiate-btn" class="tm-btn tm-btn--lg tm-btn--primary tm-btn--block" onclick="handleCallAction()">
+        <span id="call-btn-icon" class="tm-icon" data-icon="phone"></span>
+        <span id="call-btn-label">Call Patient</span>
+      </button>
+      <button id="next-order-btn" class="tm-btn tm-btn--lg tm-btn--primary tm-btn--block" onclick="requestNextOrder()" hidden>
+        Request next case <span class="tm-icon" data-icon="arrow-right"></span>
+      </button>
+      <button id="main-cta-btn" class="tm-btn tm-btn--lg tm-btn--primary tm-btn--block" onclick="handleMainCTA()" hidden>
+        <span id="main-cta-icon"></span>
+        <span id="main-cta-label">Confirm prescription</span>
+      </button>
+    </div>
+
+<!-- ============================================================
+     RX FULL-SCREEN OVERLAY (dark viewer — intentional for doc readability)
+============================================================ -->
+<div id="rx-overlay">
+  <div id="rx-overlay-header" class="tm-header-viewer">
+    <button id="rx-overlay-close" class="tm-btn tm-btn--on-dark tm-btn--icon" onclick="closeRxOverlay()" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button>
+    <div id="rx-overlay-title" class="tm-header-viewer__title">Prescription</div>
+    <div id="rx-controls" class="tm-header-viewer__tools">
+      <button class="tm-btn tm-btn--on-dark tm-btn--icon rx-ctrl-btn" onclick="rxZoomOut()" title="Zoom out" aria-label="Zoom out"><span class="tm-icon tm-icon--16" data-icon="minus"></span></button>
+      <span id="rx-zoom-label">100%</span>
+      <button class="tm-btn tm-btn--on-dark tm-btn--icon rx-ctrl-btn" onclick="rxZoomIn()" title="Zoom in" aria-label="Zoom in"><span class="tm-icon tm-icon--16" data-icon="plus"></span></button>
+      <button class="tm-btn tm-btn--on-dark tm-btn--icon rx-ctrl-btn" onclick="rxRotate()" title="Rotate" aria-label="Rotate"><span class="tm-icon tm-icon--16" data-icon="rotate-clockwise"></span></button>
+      <button class="tm-btn tm-btn--on-dark tm-btn--icon rx-ctrl-btn" onclick="rxReset()" title="Reset" aria-label="Reset view"><span class="tm-icon tm-icon--16" data-icon="arrows-minimize"></span></button>
+    </div>
+  </div>
+  <div id="rx-overlay-body">
+    <div id="rx-doc-wrapper">
+
+      <!-- DUMMY PRESCRIPTION — [MOCK ASSUMPTION] All details fictional -->
+      <div id="rx-doc">
+
+        <div class="rx-letterhead">
+          <div class="rx-clinic-name">Sunrise Medical Centre</div>
+          <div class="rx-doctor-name">Dr. Meenakshi Iyer</div>
+          <div class="rx-doctor-quals">MBBS, MD (General Medicine) · Reg. No. MH-12847</div>
+          <div class="rx-clinic-address">
+            402, Lotus Tower, Andheri West, Mumbai – 400053<br>
+            Mon–Sat: 10am–1pm, 5pm–8pm · Tel: 022-4567-8901
+          </div>
+        </div>
+
+        <div class="rx-body">
+          <div class="rx-patient-row">
+            <div class="rx-patient-info">
+              <div class="rx-patient-label">Patient</div>
+              <div id="rx-patient-name-display" class="rx-patient-value">—</div>
+              <div class="rx-patient-label rx-label-gap">Date</div>
+              <div class="rx-patient-value" id="rx-date-display">—</div>
+            </div>
+            <div>
+              <div class="rx-patient-info rx-align-right">
+                <div class="rx-patient-label">Age / Gender</div>
+                <div id="rx-age-display" class="rx-patient-value">—</div>
+              </div>
+              <div class="rx-symbol">℞</div>
+            </div>
+          </div>
+
+          <div class="rx-medicines" id="rx-medicines-list">
+            <!-- Populated by JS -->
+          </div>
+
+          <div class="rx-footer">
+            <div class="rx-advice">
+              <div class="rx-advice-label">General Advice</div>
+              <div class="rx-advice-text">
+                Take medicines as prescribed.<br>
+                Drink plenty of water. Follow-up in 2 weeks.
+              </div>
+              <div class="rx-stamp rx-stamp-gap">
+                <div class="rx-stamp-text">TRUEMEDS VERIFIED</div>
+              </div>
+            </div>
+            <div class="rx-signature">
+              <div class="rx-sig-line"></div>
+              <div class="rx-sig-name">Dr. Meenakshi Iyer</div>
+              <div class="rx-sig-reg">MH-12847</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /rx-doc-wrapper -->
+    <div id="rx-hint">Double-tap to zoom · Pinch to zoom · Drag to pan</div>
+  </div>
+</div>
+
+<!-- ============================================================
+     PRESCRIBE SCREEN — full-screen view over the case (like the Rx viewer), inside the phone frame.
+     Agreed 2026-10-07: every section open with backend defaults. Prescribe is pinned to the bottom and always active (D-22, which replaced "Prescribe at the end, not pinned");
+     Disable is a small action in the app bar. The "On prescription" line is pinned under the app bar (D-25); the sections above the note are rendered by app.js.
+============================================================ -->
+<div id="prescribe-screen" role="dialog" aria-modal="true" aria-labelledby="ps-title" aria-hidden="true" tabindex="-1">
+  <!-- Header group: app bar + the live prescription line, pinned together (never scrolls) — decision log D-25 -->
+  <div id="ps-top">
+  <div id="ps-bar" class="tm-header-edit">
+    <button class="tm-btn tm-btn--quiet tm-btn--icon" onclick="requestClosePrescribe()" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button>
+    <div id="ps-heading" class="tm-header-edit__text"><h2 id="ps-title" class="tm-header-edit__title">—</h2><p id="ps-form" class="tm-header-edit__subtitle">—</p></div>
+    <button id="ps-disable-btn" class="tm-btn tm-btn--destructive" onclick="openDisableSheet()">Disable</button>
+  </div>
+  <div id="ps-rx">
+    <div class="ps-rx-label" id="ps-rx-label"><span class="tm-icon tm-icon--16" data-icon="prescription"></span>On prescription</div>
+    <div id="ps-prints-text" aria-live="polite" aria-labelledby="ps-rx-label">—</div>
+  </div>
+  </div><!-- /ps-top -->
+  <div id="ps-body">
+    <div id="ps-disabled-note" class="tm-notice tm-notice--warning" hidden><span class="tm-icon" data-icon="alert-triangle"></span><span id="ps-disabled-text">Disabled.</span></div>
+    <div id="ps-dynamic"></div>
+    <div class="tm-card ps-card"><div class="tm-field ps-section">
+      <label class="tm-field__label" for="ps-note">Additional instructions</label>
+      <div class="tm-field__control"><textarea id="ps-note" rows="3" placeholder="e.g. Stop if rash appears"></textarea></div>
+      <div class="tm-field__helper">Optional. Printed on the prescription.</div>
+    </div></div>
+  </div>
+  <!-- Prescribe pinned to the bottom, always active (agreed 2026-10-08, decision log D-22) -->
+  <div id="ps-actionbar" class="tm-actionbar">
+    <button id="ps-prescribe" class="tm-btn tm-btn--lg tm-btn--primary tm-btn--block" onclick="confirmMedEdit()">Prescribe</button>
+  </div>
+</div>
+
+
+<!-- ============================================================
+     BOTTOM SHEETS
+============================================================ -->
+<div id="sheet-overlay" onclick="handleSheetOverlayClick(event)">
+
+  <!-- Hold Sheet -->
+  <div id="sheet-callback" class="bottom-sheet tm-sheet">
+    <header class="tm-sheet__header"><h2 class="tm-sheet__title">Schedule callback</h2><button class="tm-btn tm-btn--quiet tm-btn--icon tm-sheet__close" onclick="closeSheet()" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button></header>
+    <div class="tm-sheet__body">
+      <div class="tm-field__label sheet-section-label">Date</div>
+      <div class="tm-chip-group" id="callback-day-chips">
+        <button class="tm-chip tm-chip--lg" aria-pressed="false" data-day="today" onclick="selectCallbackDay('today')">Today</button>
+        <button class="tm-chip tm-chip--lg" aria-pressed="false" data-day="tomorrow" onclick="selectCallbackDay('tomorrow')">Tomorrow</button>
+      </div>
+      <div class="tm-field__label sheet-section-label">Time</div>
+      <div class="tm-chip-grid tm-chip-grid--3" id="callback-time-chips">
+        <button class="tm-chip tm-chip--lg" aria-pressed="false" data-time="09:00" onclick="selectCallbackTime('09:00')">9:00 AM</button>
+        <button class="tm-chip tm-chip--lg" aria-pressed="false" data-time="09:30" onclick="selectCallbackTime('09:30')">9:30 AM</button>
+        <button class="tm-chip tm-chip--lg" aria-pressed="false" data-time="10:00" onclick="selectCallbackTime('10:00')">10:00 AM</button>
+        <button class="tm-chip tm-chip--lg" aria-pressed="false" data-time="10:30" onclick="selectCallbackTime('10:30')">10:30 AM</button>
+        <button class="tm-chip tm-chip--lg" aria-pressed="false" data-time="11:00" onclick="selectCallbackTime('11:00')">11:00 AM</button>
+        <button class="tm-chip tm-chip--lg" aria-pressed="false" data-time="11:30" onclick="selectCallbackTime('11:30')">11:30 AM</button>
+        <button class="tm-chip tm-chip--lg" aria-pressed="false" data-time="12:00" onclick="selectCallbackTime('12:00')">12:00 PM</button>
+        <button class="tm-chip tm-chip--lg" aria-pressed="false" data-time="14:00" onclick="selectCallbackTime('14:00')">2:00 PM</button>
+        <button class="tm-chip tm-chip--lg" aria-pressed="false" data-time="15:00" onclick="selectCallbackTime('15:00')">3:00 PM</button>
+        <button class="tm-chip tm-chip--lg" aria-pressed="false" data-time="16:00" onclick="selectCallbackTime('16:00')">4:00 PM</button>
+        <button class="tm-chip tm-chip--lg" aria-pressed="false" data-time="17:00" onclick="selectCallbackTime('17:00')">5:00 PM</button>
+        <button class="tm-chip tm-chip--lg" aria-pressed="false" data-time="18:00" onclick="selectCallbackTime('18:00')">6:00 PM</button>
+      </div>
+      <div class="tm-field tm-field--error" id="callback-error-wrap"><div id="callback-error" class="tm-field__helper callback-error" role="alert" hidden></div></div>
+      <div class="tm-sheet__actions"><button class="tm-btn tm-btn--primary tm-btn--lg tm-btn--block" onclick="confirmScheduleCallback()">Confirm callback</button></div>
+    </div>
+  </div>
+
+
+  <!-- Skip HA Sheet -->
+  <div id="sheet-skip-ha" class="bottom-sheet tm-sheet">
+    <header class="tm-sheet__header"><h2 class="tm-sheet__title">Skip HA call</h2><button class="tm-btn tm-btn--quiet tm-btn--icon tm-sheet__close" onclick="closeSheet()" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button></header>
+    <div class="tm-sheet__body">
+      <!-- [OPEN DECISION] OQ-008: skip eligibility TBD -->
+      <p class="tm-sheet__subtitle">Select reason</p>
+      <button class="tm-option" onclick="confirmSkipHA('Patient declined HA call')"><span class="tm-option__title">Patient declined HA call</span><span class="tm-option__desc">Patient explicitly did not want an HA call</span></button>
+      <button class="tm-option" onclick="confirmSkipHA('Clinically not required')"><span class="tm-option__title">Clinically not required</span><span class="tm-option__desc">Doctor assessed HA counselling is not needed</span></button>
+      <button class="tm-option" onclick="confirmSkipHA('Repeat patient — familiar with medicines')"><span class="tm-option__title">Repeat patient — familiar with medicines</span><span class="tm-option__desc">Patient was counselled in a prior order</span></button>
+    </div>
+  </div>
+
+  <!-- Discard changes? — shown only when closing the Prescribe screen after editing -->
+  <div id="sheet-discard" class="bottom-sheet tm-sheet">
+    <header class="tm-sheet__header"><h2 class="tm-sheet__title">Discard changes?</h2><button class="tm-btn tm-btn--quiet tm-btn--icon tm-sheet__close" onclick="closeSheet()" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button></header>
+    <div class="tm-sheet__body">
+      <p class="tm-sheet__subtitle">Your changes to this medicine will not be saved.</p>
+      <div class="tm-sheet__actions"><button class="tm-btn tm-btn--destructive tm-btn--lg tm-btn--block" onclick="discardPrescribe()">Discard</button>
+        <button class="tm-btn tm-btn--quiet tm-btn--lg tm-btn--block" onclick="closeSheet()">Keep editing</button></div>
+    </div>
+  </div>
+
+  <!-- Disable Medicine Reason Sheet -->
+  <div id="sheet-disable-reason" class="bottom-sheet tm-sheet">
+    <header class="tm-sheet__header"><h2 class="tm-sheet__title">Disable medicine</h2><button class="tm-btn tm-btn--quiet tm-btn--icon tm-sheet__close" onclick="closeSheet()" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button></header>
+    <div class="tm-sheet__body">
+      <div class="tm-sheet__subtitle" id="sheet-disable-med-label">Select reason</div>
+      <div class="reason-list">
+        <button class="tm-option" onclick="confirmDisable('Cannot prescribe remotely')"><span class="tm-option__title">Cannot prescribe remotely</span><span class="tm-option__desc">Requires in-person consultation</span></button>
+        <button class="tm-option" onclick="confirmDisable('Contraindicated for patient')"><span class="tm-option__title">Contraindicated for patient</span><span class="tm-option__desc">Allergy or known reaction</span></button>
+        <button class="tm-option" onclick="confirmDisable('Duplicate medication')"><span class="tm-option__title">Duplicate medication</span><span class="tm-option__desc">Already on equivalent drug</span></button>
+        <button class="tm-option" onclick="confirmDisable('Patient declined')"><span class="tm-option__title">Patient declined</span><span class="tm-option__desc">Patient refused this medicine</span></button>
+        <button class="tm-option" onclick="confirmDisable('Wrong strength')"><span class="tm-option__title">Wrong strength</span><span class="tm-option__desc">The ordered strength isn't right</span></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Profile Sheet -->
+  <div id="sheet-profile" class="bottom-sheet tm-sheet">
+    <header class="tm-sheet__header"><h2 class="tm-sheet__title">Profile</h2><button class="tm-btn tm-btn--quiet tm-btn--icon tm-sheet__close" onclick="closeSheet()" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button></header>
+    <div class="tm-sheet__body">
+      <!-- Doctor identity -->
+      <div id="profile-identity">
+        <div id="profile-avatar-large">AS</div>
+        <div>
+          <div id="profile-doctor-name">Dr. Apurva Shetty</div>
+          <div id="profile-doctor-role">General Physician</div>
+        </div>
+      </div>
+      <!-- Earnings -->
+      <div id="profile-earnings-card" class="tm-card tm-card--flat">
+        <div class="tm-field__label profile-section-label">Today's Earnings</div>
+        <div id="profile-earnings-row">
+          <div class="profile-earnings-item">
+            <div class="profile-earnings-label">Earned</div>
+            <div class="profile-earnings-value" id="profile-earned">₹0.00</div>
+          </div>
+          <div class="profile-earnings-divider"></div>
+          <div class="profile-earnings-item">
+            <div class="profile-earnings-label">Incentive</div>
+            <div class="profile-earnings-value" id="profile-incentive">₹0.00</div>
+          </div>
+        </div>
+      </div>
+      <!-- User Manual -->
+      <button class="profile-menu-btn" onclick="closeSheet(); console.log('[MOCK] user-manual.open | not linked yet')">
+        <span class="profile-menu-label"><span class="tm-icon" data-icon="book"></span>User manual</span>
+        <span class="tm-icon tm-icon--16" data-icon="chevron-right"></span>
+      </button>
+      <!-- Logout -->
+      <div class="tm-notice" id="profile-logout-note" hidden><span class="tm-icon" data-icon="info-circle"></span><span>You can log out after this order is closed.</span></div>
+      <button id="profile-logout-btn" class="tm-btn tm-btn--destructive tm-btn--block" onclick="handleLogout()">
+        <span class="tm-icon" data-icon="logout"></span>Log out
+      </button>
+    </div>
+  </div>
+
+  <!-- Fingerprint prompt — stands in for the phone's own system prompt (the real one is drawn by Android/iOS) -->
+  <!-- Stands in for the phone's own passkey / biometric prompt (Android Credential Manager, iOS). Not a Truemeds screen. -->
+  <div id="sheet-bio" class="bottom-sheet tm-sheet" role="dialog" aria-labelledby="bio-prompt-h">
+    <div class="sheet-title"><span id="bio-prompt-h">Truemeds for Doctors</span><button class="tm-btn tm-btn--quiet tm-btn--icon sheet-close" onclick="cancelBioPrompt()" aria-label="Cancel"><span class="tm-icon" data-icon="x"></span></button></div>
+    <div class="sheet-body bio-body">
+      <p class="bio-sub" id="bio-sub">Confirm it's you</p>
+      <button class="bio-sensor" id="bio-sensor" onclick="touchSensor()" aria-label="Confirm with your phone (demo)"><span class="tm-icon" id="bio-sensor-icon" data-icon="fingerprint"></span></button>
+      <p class="bio-hint" id="bio-hint" role="status">Touch the fingerprint sensor</p>
+      <button class="tm-btn tm-btn--secondary tm-btn--block" onclick="cancelBioPrompt()">Cancel</button>
+    </div>
+  </div>
+
+  <!-- Log out confirmation -->
+  <div id="sheet-logout" class="bottom-sheet tm-sheet">
+    <header class="tm-sheet__header"><h2 class="tm-sheet__title">Log out?</h2><button class="tm-btn tm-btn--quiet tm-btn--icon tm-sheet__close" onclick="closeSheet()" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button></header>
+    <div class="tm-sheet__body">
+      <p class="tm-sheet__subtitle">You'll stop getting orders until you sign in again.</p>
+      <button class="tm-btn tm-btn--secondary tm-btn--block" onclick="closeSheet()">Stay signed in</button>
+      <button class="tm-btn tm-btn--destructive tm-btn--block sheet-link-margin" onclick="confirmLogout()">Log out</button>
+    </div>
+  </div>
+
+  <!-- Retry Sheet — no_answer / timeout paths -->
+  <div id="sheet-retry" class="bottom-sheet tm-sheet">
+    <header class="tm-sheet__header"><h2 class="tm-sheet__title" id="sheet-retry-title">Patient didn't pick up</h2><button class="tm-btn tm-btn--quiet tm-btn--icon tm-sheet__close" onclick="closeSheet()" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button></header>
+    <div class="tm-sheet__body">
+      <div class="tm-sheet__actions"><button class="tm-btn tm-btn--primary tm-btn--lg tm-btn--block" onclick="retryCall()">Retry call</button>
+        <button class="tm-btn tm-btn--destructive tm-btn--lg tm-btn--block" onclick="markCustomerUnavailable()">Mark as unavailable</button></div>
+    </div>
+  </div>
+
+  <!-- Customer Unavailable Sheet -->
+  <div id="sheet-unavailable" class="bottom-sheet tm-sheet">
+    <header class="tm-sheet__header"><h2 class="tm-sheet__title">Patient unavailable</h2><button class="tm-btn tm-btn--quiet tm-btn--icon tm-sheet__close" onclick="closeSheet()" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button></header>
+    <div class="tm-sheet__body">
+      <p id="unavail-desc" class="tm-sheet__subtitle">Patient could not be reached. Case will be reassigned to the queue.</p>
+      <div class="tm-sheet__actions"><button class="tm-btn tm-btn--primary tm-btn--lg tm-btn--block" onclick="requestNextOrder()">Request next case <span class="tm-icon" data-icon="arrow-right"></span></button></div>
+    </div>
+  </div>
+</div><!-- /sheet-overlay -->
+
+<!-- TOAST -->
+
+<!-- COMPLETED OVERLAY -->
+<!-- Success toast — non-blocking completion confirmation with Next Order fallback -->
+<div id="success-toast" class="tm-status-card">
+  <div id="success-toast-icon" class="tm-status-card__icon"><span class="tm-icon tm-icon--24" data-icon="circle-check"></span></div>
+  <div id="success-toast-body" class="tm-status-card__body">
+    <div id="success-toast-title" class="tm-status-card__title">Prescription confirmed</div>
+    <div id="success-toast-desc" class="tm-status-card__text">—</div>
+  </div>
+  <button id="success-toast-next" class="tm-btn tm-btn--primary" onclick="requestNextOrder()">Request next case <span class="tm-icon tm-icon--16" data-icon="arrow-right"></span></button>
+</div>
+
+  </div><!-- /mobile-column (phone frame: overlays live inside it) -->
+
+</div><!-- /layout-wrapper -->
+
+
+
+
+
+
+
+<!-- ============================================================
+     JAVASCRIPT
+============================================================ -->
+<script src="../../../../../../design-system/icons/icons.js"></script>
+<script src="../../../../ui-screens/feedback/messages.js"></script>
+<script src="../../../../app.js"></script>
+<script>
+/* CONCEPT v4 driver: every state in the matrix (v2/README.md) reached with index.html's own functions and controls. */
+(function () {
+  const q = new URLSearchParams(location.search);
+  const S = q.get('s') || 'a-top';
+  if (q.get('capture')) document.documentElement.classList.add('capture');
+  if (q.get('w') === '360') document.documentElement.classList.add('w360');
+  const $ = id => document.getElementById(id);
+  const ICON = n => `<span class="tm-icon" data-icon="${n}" aria-hidden="true"></span>`;
+
+  // ---- Compact task header (D-49) ----
+  const head = document.createElement('header');
+  head.id = 'case-head';
+  head.className = 'tm-header-task--compact';
+  head.innerHTML = `<div class="tm-header-task__row"><button class="tm-btn tm-btn--quiet tm-btn--icon" id="ch-back" type="button" aria-label="Back">${ICON('arrow-left')}</button><h1 class="tm-header-task__title" id="ch-name">—</h1><button class="tm-btn tm-btn--quiet tm-btn--icon" id="ch-help" type="button" aria-label="Help">${ICON('help-circle')}</button></div><p class="tm-header-task__meta" id="ch-meta1">—</p><p class="tm-header-task__meta" id="ch-meta2">—</p>`;
+  document.getElementById('sticky-top-wrapper').prepend(head);
+  $('ch-back').addEventListener('click', caseBack);
+
+  // ---- Content row: one tap target "Order details ⓘ" left, View Rx right ----
+  const tools = document.createElement('div');
+  tools.id = 'case-tools';
+  tools.className = 'tm-card';   // the row and the expanded order details sit on one white card (1.5, D-52)
+  tools.innerHTML = `<div class="ct-row"><button class="ct-details" id="ct-details" type="button" aria-expanded="false"><span>Order details</span>${ICON('info-circle')}</button><span id="ct-actions"></span></div>`;
+  const main = $('main-scroll');
+  main.insertBefore(tools, main.firstChild);
+  { const hint = document.getElementById('rx-hint'); if (hint) document.getElementById('rx-overlay-body').prepend(hint); }
+  $('ct-details').addEventListener('click', () => { toggleOrderExpand(); $('ct-details').setAttribute('aria-expanded', $('pdb-order-expand').classList.contains('hidden') ? 'false' : 'true'); });
+  $('ct-actions').appendChild($('pdb-view-rx-btn'));
+  tools.appendChild($('pdb-order-expand'));
+
+  // ---- D-48 overlays and closed exits ----
+  const frame = $('mobile-column');
+  const leave = document.createElement('div');
+  leave.id = 'concept-leave'; leave.hidden = true;
+  leave.className = 'tm-overlay';
+  leave.innerHTML = `<section class="tm-sheet" id="cl-sheet" role="dialog" aria-modal="true" aria-labelledby="cl-t" tabindex="-1"><header class="tm-sheet__header"><h2 class="tm-sheet__title" id="cl-t">Leave this case?</h2><button class="tm-btn tm-btn--quiet tm-btn--icon tm-sheet__close" id="cl-x" type="button" aria-label="Close"><span class="tm-icon" data-icon="x" aria-hidden="true"></span></button></header><div class="tm-sheet__body"><p class="tm-sheet__subtitle">It goes back to the queue for another doctor.</p></div><div class="tm-sheet__actions"><button class="tm-btn tm-btn--primary tm-btn--lg tm-btn--block" id="cl-release" type="button">Release case</button><button class="tm-btn tm-btn--quiet tm-btn--lg tm-btn--block" id="cl-stay" type="button">Stay on this case</button></div></section>`;
+  const showLeave = () => { leave.hidden = false; document.getElementById('cl-sheet').focus({ preventScroll: true }); };
+  frame.appendChild(leave);
+  const toast = document.createElement('div');
+  toast.id = 'concept-toast'; toast.hidden = true;
+  toast.innerHTML = `<div class="tm-toast" role="status">Finish this case first. Then you can go back to Home.</div>`;
+  frame.appendChild(toast);
+  const back = document.createElement('button');
+  back.id = 'concept-back-home'; back.type = 'button'; back.className = 'tm-btn tm-btn--lg tm-btn--block tm-btn--quiet';
+  back.textContent = 'Back to Home'; back.onclick = () => goApp('home');
+  $('case-actionbar').appendChild(back);
+  main.insertBefore($('success-toast'), main.firstChild);   // the outcome card is the first thing in the content (5.7)
+  $('cl-stay').onclick = () => { leave.hidden = true; };
+  $('cl-x').onclick = () => { leave.hidden = true; };
+  $('cl-release').onclick = () => {
+    const b = $('cl-release'); b.classList.add('tm-btn--busy'); b.setAttribute('aria-busy', 'true'); b.disabled = true;
+    $('cl-stay').disabled = true; $('cl-x').disabled = true;   // no way out while the release runs
+    b.innerHTML = '<span class="tm-spinner" aria-hidden="true"></span>Releasing…';
+    setTimeout(() => goApp('home'), 800);   // mock: release (OQ-024)
+  };
+  const attempted = () => !!window.__attempted || !['assigned', 'completed', 'unavailable'].includes(DOCTOR_STATE.consultationState);
+  const closed = () => ['completed', 'unavailable'].includes(DOCTOR_STATE.consultationState);
+  function setBarVar() { frame.style.setProperty('--concept-bar-h', $('case-actionbar').offsetHeight + 'px'); }
+  function caseBack() {
+    if (APP.screen !== 'case') return;
+    if (closed()) return goApp('home');
+    if (!attempted()) { showLeave(); return; }
+    setBarVar(); toast.hidden = false;   // blocked: calm message, no error style
+  }
+  function openLeave(busy) { showLeave(); if (busy) $('cl-release').click(); }
+
+  // ---- Wording (D-48), sentence case, D-50 labels; page text only, concept only ----
+  const RELABEL = { 'Confirm Order': 'Confirm prescription', 'Confirm & Transfer': 'Confirm & transfer', 'Confirm & Forward': 'Confirm & forward' };
+  const TEXT = { 'Call Patient': 'Call patient', 'Retry Call': 'Retry call', 'Mark as Unavailable': 'Mark as unavailable', 'Schedule Callback': 'Schedule callback', 'End Call': 'End call', 'Call Again': 'Call again', 'Skip HA Call': 'Skip HA call', 'Confirm Callback': 'Confirm callback', 'Order Created': 'Order created', 'Expected Delivery': 'Expected delivery', 'Mark Unavailable': 'Mark unavailable', 'Request Next Case': 'Request next case', 'Next Order': 'Request next case' };
+  const TITLE = { 'Order Confirmed': 'Prescription confirmed', 'Transferred to HA': 'Transferred to HA', 'Forwarded for Review': 'Forwarded to HA', 'Callback Scheduled': 'Callback scheduled', 'Patient unavailable': 'Patient unavailable' };
+  function relabelText(scope) {
+    const w = document.createTreeWalker(scope, NodeFilter.SHOW_TEXT); let n;
+    while ((n = w.nextNode())) { const t = n.nodeValue.trim(); if (TEXT[t]) n.nodeValue = n.nodeValue.replace(t, TEXT[t]); }
+  }
+  // Closed medicines: as they are at confirmation — prescribed, or disabled. Never "Pending".
+  function closedMedTags() {
+    document.querySelectorAll('#medicines-list .tm-tag').forEach(t => {
+      if (/Pending|Not prescribed/i.test(t.textContent)) { t.textContent = 'Prescribed'; t.className = 'tm-tag tm-tag--md tm-tag--success'; }
+    });
+  }
+  function syncConcept() {
+    const c = DOCTOR_STATE.currentCase;
+    if (c) {
+      $('ch-name').textContent = c.patient_name;
+      $('ch-meta1').textContent = `${c.patient_age} · ${c.patient_gender}`;
+      $('ch-meta2').textContent = `Order ${c.order_id} · ₹${c.order_value.toLocaleString('en-IN')}`;
+    }
+    const isClosed = closed();
+    const ended = !!window.__availabilityEnded && isClosed;
+    // The unavailable sheet is the end action of an attempted call: Back stays hidden while it is open (D-48).
+    const noBack = isClosed || attempted();   // D-48: no Back once a call is attempted or the case is closed
+    head.classList.toggle('tm-header-task--no-back', noBack);
+    $('ch-back').style.display = noBack ? 'none' : '';
+    document.body.classList.toggle('concept-closed', isClosed);
+    document.body.classList.toggle('concept-ended', ended);
+    const nx = $('next-order-btn');
+    if (nx) { nx.hidden = !isClosed || ended; if (nx.firstChild) nx.firstChild.nodeValue = 'Request next case '; }
+    const bh = $('concept-back-home');
+    if (bh) { bh.classList.toggle('tm-btn--primary', ended); bh.classList.toggle('tm-btn--quiet', !ended); }   // D-53: primary only when availability has ended
+    const lbl = $('main-cta-label'); if (lbl && RELABEL[lbl.textContent]) lbl.textContent = RELABEL[lbl.textContent];
+    const skip = $('skip-ha-btn'); if (skip && !skip.querySelector('.tm-icon')) { skip.innerHTML = '<span class="tm-icon tm-icon--16" data-icon="player-track-next"></span>Skip HA'; if (window.TMIcons) TMIcons.render(skip); }
+    if (!toast.hidden && !attempted()) toast.hidden = true;
+    ['#case-actionbar', '#main-scroll', '#success-toast', '#concept-leave', '#sheet-retry', '#sheet-unavailable', '#sheet-callback', '#sheet-skip-ha', '#sheet-discard', '#sheet-disable-reason', '#prescribe-screen', '#pdb-order-expand'].forEach(sel => { const el = document.querySelector(sel); if (el) relabelText(el); });
+    const calling = DOCTOR_STATE.consultationState === 'calling';
+    const cb = $('call-initiate-btn'), ci = $('call-btn-icon');
+    if (cb && ci) {
+      cb.classList.toggle('tm-btn--busy', calling); if (calling) cb.setAttribute('aria-busy', 'true'); else cb.removeAttribute('aria-busy');
+      ci.hidden = calling;
+      let sp = $('call-spin'); if (!sp) { sp = document.createElement('span'); sp.id = 'call-spin'; sp.className = 'tm-spinner'; sp.setAttribute('aria-hidden', 'true'); ci.after(sp); }
+      sp.hidden = !calling;
+    }
+    // Medicine statuses change only when the case is confirmed; an unsuccessful call keeps the real statuses (D-48).
+    if (isClosed && window.__confirmed) closedMedTags();
+    if (!window.__azHome) { const az0 = $('action-zone'); window.__azHome = { parent: az0.parentElement, next: az0.nextElementSibling }; }
+    if (DOCTOR_STATE.consultationState === 'connected' && !isClosed) window.__postConnect = true;
+    if (isClosed) window.__postConnect = false;
+    { // R17-1 (D-55 addendum): the Call card moves up only while the call is live or after the HA question (gate_passed)
+      const az = $('action-zone'), med = $('medicines-section');
+      const live = ['connected', 'gate_passed'].includes(DOCTOR_STATE.consultationState) && !isClosed;
+      if (live) med.parentElement.insertBefore(az, med); else window.__azHome.parent.insertBefore(az, window.__azHome.next);
+      // hidden when nothing is visible besides its title (e.g. the script is hidden after a call that ended early)
+      const shown = [...az.children].some(c => c.tagName !== 'H2' && c.getClientRects().length && getComputedStyle(c).display !== 'none' && (c.innerText || '').trim());   // visible text only
+      az.style.display = shown ? '' : 'none';
+    }
+    if (isClosed) document.querySelectorAll('#main-scroll textarea, #main-scroll input').forEach(e => { e.readOnly = true; const f = e.closest('.tm-field'); if (f) f.classList.add('tm-field--readonly'); });
+    if (isClosed) { ['medicines-list', 'medicines-header', 'case-tools'].forEach(id => { const el = $(id); if (el) el.classList.add('tm-readonly'); }); }   // closed: read-only, no chevrons, not tappable (D-51)
+    if (isClosed) document.querySelectorAll('#medicines-list .tm-row').forEach(r => { r.classList.add('tm-row--readonly'); if (r.lastElementChild && r.lastElementChild.classList.contains('tm-icon')) r.lastElementChild.classList.add('tm-row__chevron'); r.removeAttribute('role'); if (r.tagName === 'BUTTON') r.disabled = true; r.tabIndex = -1; });   // D-51: rows read-only, chevrons removed, not focusable
+    else { ['medicines-list', 'medicines-header', 'case-tools'].forEach(id => { const el = $(id); if (el) el.classList.remove('tm-readonly'); }); }
+    // D-15: injection heading is plain 'Dose' (units belong to the Other entry).
+    if (typeof EDIT_STATE !== 'undefined' && EDIT_STATE.form === 'injection') document.querySelectorAll('#ps-body .tm-muted').forEach(e => { if (e.textContent.trim() === '(units)') e.textContent = ''; });
+    const hb = $('ha-banner-m'); if (hb && DOCTOR_STATE.currentCase) {
+      hb.hidden = true;   // D-52: the HA notice is dropped from the case page
+      $('ha-banner-text').textContent = DOCTOR_STATE.currentCase.meds_type === 'non_value' ? 'An HA follows up after you confirm.' : 'An HA joins this case after you confirm.';
+    }
+    // On call: End call is a full-width destructive button on top (D-51 round 4).
+    const endBtn = $('call-initiate-btn');
+    if (endBtn) { const onCall = DOCTOR_STATE.consultationState === 'connected'; endBtn.classList.remove('tm-btn--destructive'); endBtn.classList.toggle('tm-btn--call-end', onCall); endBtn.classList.toggle('tm-btn--primary', !onCall); }   // D-52: End call is the call-end role (solid red)
+    const mh = document.querySelector('#medicines-header .tm-section-title, #medicines-header h2');
+    if (mh) mh.textContent = isClosed ? 'Medicines' : 'Medicines to prescribe';
+    // Standards pass: retired button sizes stripped, notices announced, field errors linked, closed-case roles (RULES §9.1, §9.5, §8.9).
+    document.querySelectorAll('.tm-btn--sm,.tm-btn--xs').forEach(b => b.classList.remove('tm-btn--sm', 'tm-btn--xs'));
+    // Pinned bar (D-53): every button is 56px and full width; the two secondaries are equal halves; a lone secondary is full width.
+    const ab = $('ab-secondary');
+    if (ab) { ab.querySelectorAll('button').forEach(b => b.classList.add('tm-btn--lg')); ab.classList.toggle('concept-single', [...ab.children].filter(b => !b.hidden && b.getClientRects().length).length === 1); }
+    $('case-actionbar').querySelectorAll(':scope > button').forEach(b => b.classList.add('tm-btn--lg', 'tm-btn--block'));
+    // D-54 #2: medicine rows: line 1 name; line 2 Qty (left) and the status tag (right). No dose, frequency or duration on the case page.
+    document.querySelectorAll('#medicines-list .medicine-item').forEach(r => {
+      if (r.querySelector('.tm-row__line')) return;
+      const meta = r.querySelector('.med-detail'); if (!meta) return;
+      const med = DOCTOR_STATE.currentCase && DOCTOR_STATE.currentCase.medicines.find(m => String(m.id) === r.dataset.medId);
+      const line = document.createElement('div'); line.className = 'tm-row__line';
+      const fact = document.createElement('span'); fact.className = 'tm-row__fact'; fact.textContent = 'Qty ' + (med ? med.qty : '');
+      line.appendChild(fact);
+      const tag = r.querySelector('.tm-tag'); if (tag) line.appendChild(tag);
+      meta.replaceWith(line);
+    });
+    // Status tags in rows keep a reserved width (checklist 5.5)
+    document.querySelectorAll('#medicines-list .tm-tag').forEach(t => { if (/Prescribed|Pending|Disabled/.test(t.textContent)) t.classList.add('tm-tag--fixed'); });
+    document.querySelectorAll('.tm-notice:not([role])').forEach(n => n.setAttribute('role', 'status'));
+    if ($('az-missed')) $('az-missed').style.display = 'none';   // D-54 #4: the reason is shown in the pinned bar
+    const pv = $('pdb-view-rx-btn'); if (pv) { pv.classList.toggle('tm-btn--quiet', isClosed); pv.classList.toggle('tm-btn--secondary', !isClosed); }
+    const po = document.getElementById('ps-other'); if (po) { const f = po.closest('.tm-field'); const h = f && f.querySelector('.tm-field__helper'); if (h) { if (!h.id) h.id = 'ps-other-helper'; po.setAttribute('aria-describedby', h.id); po.setAttribute('aria-invalid', String(f.classList.contains('tm-field--error'))); } }
+    const sc = $('success-toast'); if (sc) sc.setAttribute('role', 'status');   // outcome card is announced (RULES §9.8)
+    if (typeof syncCaseActionBar === 'function') syncCaseActionBar();
+  }
+  const _render = render;
+  render = function () { _render(); syncConcept(); };
+  const _toast = showSuccessToast;
+  showSuccessToast = function (t, d) {
+    let title = TITLE[t] || t;
+    if (t === 'Callback Scheduled') {
+      const day = CALLBACK_STATE.day === 'today' ? 'today' : 'tomorrow';
+      const [h, m] = CALLBACK_STATE.time.split(':'); const hr = parseInt(h, 10);
+      const disp = (hr > 12 ? hr - 12 : (hr === 0 ? 12 : hr)) + ':' + m + ' ' + (hr >= 12 ? 'PM' : 'AM');
+      title = `Callback ${day} at ${disp}`;
+    }
+    _toast(title, '');
+    const card = $('success-toast'), neutral = t === 'Patient unavailable' || t === 'Callback Scheduled' || !!window.__availabilityEnded;   // D-62 neutral: unavailable, callback, availability ended
+    card.classList.toggle('is-neutral', neutral);
+    card.classList.remove('tm-status-card--success', 'tm-status-card--neutral', 'tm-status-card--warning'); card.classList.add(neutral ? 'tm-status-card--neutral' : 'tm-status-card--success');   // D-62 tinted outcome
+    const ic = card.querySelector('#success-toast-icon .tm-icon');
+    if (ic) { ic.setAttribute('data-icon', neutral ? 'info-circle' : 'circle-check'); if (window.TMIcons) TMIcons.render(card); }
+    syncConcept();
+  };
+  const _init = initiateCall;
+  initiateCall = function () { window.__attempted = true; return _init(); };
+  // D-54 #3 (concept layer): injection doses 1 · 2 · 3 · Other; daily slots 0 · 1 · 2 · 3.
+  FORM_DOSE.injection.each = [1, 2, 3];
+  FORM_DOSE.injection.slot = [0, 1, 2, 3];
+  // D-54 D12: an invalid Other dose leaves the dose out of the On prescription line; no placeholder dash.
+  const _spl = setPrintLine;
+  setPrintLine = function () {
+    _spl();
+    const el = document.getElementById('ps-prints-text');
+    if (el && el.textContent.includes('—')) {
+      const t = el.textContent.replace(/^—\s*\S*\s*/, '').replace(/^\s*/, '');
+      el.textContent = t.charAt(0).toUpperCase() + t.slice(1);
+    }
+  };
+  // R17-2 (D-55 item 2): duration units are words, so they are free chips that wrap; the numbers stay a grid at the shared chip size.
+  function fixDurationPanel() {
+    const panel = document.getElementById('ps-dur-panel'); if (!panel) return;
+    const grids = panel.querySelectorAll(':scope > .ps-grid');
+    if (grids[0]) grids[0].removeAttribute('style');
+    if (grids[1]) { const grp = document.createElement('div'); grp.className = 'tm-chip-group'; grp.setAttribute('role', 'group'); grp.setAttribute('aria-label', 'Duration unit'); [...grids[1].children].forEach(c => grp.appendChild(c)); grids[1].replaceWith(grp); }
+  }
+  const _rp = renderPrescribe;
+  renderPrescribe = function () { _rp(); fixDurationPanel(); };
+  const _sw = switchScenario;
+  /* D-54 D13: the B12 Rx line reads like the Prescribe band. */
+  // D-53 mock data: Cat4 order dates in Oct 2026 and the B12 Rx line matches its monthly schedule (2.8). Patched before the render so order details show it.
+  function patchMock() { const c = DOCTOR_STATE.currentCase; if (!c) return; if (c.case_id === 'C-CAT4-00431') { c.order_created = '14 Oct 2026'; c.order_delivery = '17 Oct 2026'; } const b12 = c.medicines.find(m => m.name === 'Vitamin B12'); if (b12) b12.rx_line = '1 dose once a month · Qty 4'; }
+  switchScenario = function (id) { window.__attempted = false; window.__confirmed = false; window.__postConnect = false; const r = _sw(id); patchMock(); render(); return r; };
+  // 5. Patient unavailable: no sheet; straight to the end card (D-51).
+  const _openSheet = openSheet;
+  openSheet = function (id) {
+    if (id === 'sheet-unavailable') { closeSheet(); showSuccessToast('Patient unavailable', ''); return; }
+    if (id === 'sheet-disable-reason') {
+      // D-52: title names the medicine; the subtitle asks for the reason.
+      const r = _openSheet(id);
+      const med = document.getElementById('ps-title').textContent.trim();
+      document.querySelector('#sheet-disable-reason .tm-sheet__title').textContent = 'Disable ' + med;
+      document.getElementById('sheet-disable-med-label').textContent = 'Select reason';
+      return r;
+    }
+    return _openSheet(id);
+  };
+  // HA transfer banner element (display only), above the medicines.
+  const haBanner = document.createElement('div');
+  haBanner.id = 'ha-banner-m'; haBanner.className = 'tm-notice tm-notice--neutral'; haBanner.hidden = true;
+  haBanner.innerHTML = '<span class="tm-icon" data-icon="info-circle" aria-hidden="true"></span><span id="ha-banner-text">An HA joins this case after you confirm.</span>';
+  const medHead = document.getElementById('medicines-header');
+  if (medHead) medHead.parentNode.insertBefore(haBanner, medHead);
+  const _goApp = goApp;
+  goApp = function (n) { leave.hidden = true; toast.hidden = true; return _goApp(n); };
+
+  // ---- New states (2026-10-15): loading, failures, offline, busy/confirm, stress. Copy from messages.json (proposed). ----
+  const MSG = id => window.TMFeedback.msg(id);
+  const notice = (kind, role, text, icon) => {
+    const d = document.createElement('div');
+    d.className = `tm-notice tm-notice--${kind} concept-new`;
+    d.setAttribute('role', role);
+    d.innerHTML = `<span class="tm-icon" data-icon="${icon}" aria-hidden="true"></span><span>${text}</span>`;
+    if (window.TMIcons) TMIcons.render(d);
+    return d;
+  };
+  const pinnedTryAgain = () => { const b = document.createElement('button'); b.type = 'button'; b.className = 'tm-btn tm-btn--primary tm-btn--lg tm-btn--block concept-new'; b.textContent = 'Try again'; return b; };
+  const tryAgain = () => { const w = document.createElement('div'); w.className = 'concept-new concept-stack'; w.innerHTML = '<button class="tm-btn tm-btn--primary tm-btn--lg tm-btn--block" type="button">Try again</button>'; return w; };
+  const cardNotice = el => { const w = document.createElement('div'); w.className = 'tm-card concept-new'; w.appendChild(el); return w; };   // notices on the grey work surface sit on a white card (1.5)
+  const noticeAboveBar = el => { el.classList.add('concept-new'); $('case-actionbar').prepend(el); };   // D-53: inside the pinned bar, directly above the buttons (7b.4)
+  const noticeInContent = el => main.insertBefore(cardNotice(el), tools.nextSibling);
+  function resetNew() {
+    document.querySelectorAll('.concept-new').forEach(n => n.remove());
+    document.body.classList.remove('concept-loading', 'concept-load-failed');
+    document.getElementById('case-head').classList.remove('is-long');   // (no longer used)
+    const r = $('rx-doc-wrapper'); if (r) r.style.display = '';
+    ['rx-hint','rx-controls','medicines-count'].forEach(id => { const el = $(id); if (el) el.style.display = ''; });
+    if ($('ct-details')) $('ct-details').style.visibility = '';
+    const cb = $('call-initiate-btn'); if (cb) cb.disabled = false;
+    ['case-head','case-tools'].forEach(id => { const el = document.getElementById(id); if (el) el.querySelectorAll('button').forEach(b => b.disabled = false); });
+    $('case-actionbar').querySelectorAll('button').forEach(b => { b.disabled = false; });
+  }
+  const skeleton = () => { const f = document.createElement('div'); f.className = 'concept-new'; f.setAttribute('role', 'status'); f.setAttribute('aria-label', 'Loading case'); f.innerHTML = '<div class="concept-skel" style="height:72px"></div><div class="concept-skel" style="height:160px"></div><div class="concept-skel" style="height:120px"></div>'; return f; };
+
+  // ---- Recipes: each returns 'wait' when the render settles asynchronously ----
+  const CAT4 = 'cat4', VALUE = 'pilot_value_meds_ha', FWD = 'pilot_nonvalue_meds_ha', SKIPPED = 'pilot_ha_skipped_customer';
+  const startCall = scn => { switchScenario(scn); initiateCall(); simCallConnected(); };
+  const passGate = scn => { startCall(scn); doFastForward(); };
+  const closeCase = (scn, after) => { passGate(scn); handleMainCTA(); setTimeout(() => { window.__confirmed = true; syncConcept(); if (after) after(); ready(); }, 1100); return 'wait'; };
+  const ready = () => { document.body.dataset.ready = '1'; };
+  const later = (fn, ms) => { setTimeout(() => { fn(); ready(); }, ms || 120); return 'wait'; };
+  const openRx = () => openRxOverlay();
+  const openPS = id => { openMedEdit(id); };
+  const recipes = {
+    // A. Case page
+    'a-top':                   () => { switchScenario(CAT4); },
+    'a-scrolled':              () => { switchScenario(CAT4); return later(() => { $('main-scroll').scrollTop = 420; }, 200); },
+    'a-order-details':         () => { switchScenario(CAT4); $('ct-details').click(); },
+    'a-rx-viewer':             () => { switchScenario(CAT4); openRx(); },
+    'a-notes-typing':          () => { switchScenario(CAT4); $('symptoms-input').focus(); $('symptoms-input').value = 'Fever since 2 days'; },
+    'a-leave-sheet':           () => { switchScenario(CAT4); showLeave(); },
+    'a-releasing':             () => { switchScenario(CAT4); showLeave(); $('cl-release').click(); },
+    'a-back-blocked':          () => { startCall(CAT4); caseBack(); },
+    // B. Call
+    'b-calling':               () => { switchScenario(CAT4); initiateCall(); },
+    'b-on-call':               () => { startCall(CAT4); },
+    'b-ended-early':           () => { startCall(CAT4); handleCallAction(); noticeAboveBar(notice('warning', 'status', MSG('case.callEndedEarly'), 'phone-off')); },
+    'b-missed-call':           () => { switchScenario(CAT4); initiateCall(); simWebhook('no_answer'); noticeAboveBar(notice('warning', 'status', MSG('case.noPickup'), 'phone-off')); },
+    'b-didnt-connect':         () => { switchScenario(CAT4); initiateCall(); simWebhook('timeout'); noticeAboveBar(notice('warning', 'status', MSG('case.didntConnect'), 'phone-off')); },
+    'b-patient-unavailable':   () => { switchScenario(CAT4); initiateCall(); markCustomerUnavailable(); },
+    'b-post-gate-transfer':    () => { passGate(VALUE); },
+    'b-post-gate-cat4':        () => { passGate(CAT4); },
+    'b-post-gate-forward':     () => { passGate(FWD); },
+    // C. Sheets
+    'c-callback':              () => { passGate(CAT4); openSheet('sheet-callback'); },
+    'c-callback-error':        () => { passGate(CAT4); openSheet('sheet-callback'); confirmScheduleCallback(); },
+    'c-skip-ha':               () => { passGate(VALUE); openSheet('sheet-skip-ha'); },
+    // D. Prescribe screen
+    'd-default':               () => { switchScenario(CAT4); openPS(1); },
+    'd-scrolled':              () => { switchScenario(CAT4); openPS(1); later(() => { $('ps-body').scrollTop = 420; }, 150); return 'wait'; },
+    'd-error-dose':            () => { switchScenario(CAT4); openPS(1); EDIT_STATE.interval = 'daily'; EDIT_STATE.m = 0; EDIT_STATE.a = 0; EDIT_STATE.n = 0; renderPrescribe(); confirmMedEdit(); },
+    'd-error-other':           () => { switchScenario(CAT4); openPS(4); EDIT_STATE.doseOther = true; EDIT_STATE.doseOtherVal = 'abc'; renderPrescribe(); confirmMedEdit(); },
+    'd-sos-on':                () => { switchScenario(CAT4); openPS(1); EDIT_STATE.sos = true; renderPrescribe(); },
+    'd-notes-keyboard':        () => { switchScenario(CAT4); openPS(1); $('ps-note').focus(); },
+    'd-discard-sheet':         () => { switchScenario(CAT4); openPS(1); EDIT_STATE.note = 'Take after dinner'; renderPrescribe(); requestClosePrescribe(); },
+    'd-disable-sheet':         () => { switchScenario(CAT4); openPS(1); openDisableSheet(); },
+    'd-header-white':          () => { switchScenario(CAT4); openPS(1); },
+    // E. End of case
+    'e-prescription-confirmed':() => closeCase(CAT4),
+    'e-transferred':           () => closeCase(VALUE),
+    'e-forwarded':             () => closeCase(FWD),
+    'e-callback-scheduled':    () => { passGate(CAT4); openSheet('sheet-callback'); selectCallbackDay('today'); selectCallbackTime('15:00'); confirmScheduleCallback(); setTimeout(ready, 150); return 'wait'; },
+    'e-patient-unavailable':   () => { switchScenario(CAT4); initiateCall(); markCustomerUnavailable(); setTimeout(() => { closeSheet(); showSuccessToast('Patient unavailable', ''); ready(); }, 150); return 'wait'; },
+    'e-availability-ended':    () => { window.__availabilityEnded = true; return closeCase(CAT4); },
+    // F. New states (2026-10-15)
+    'a-loading':               () => { switchScenario(CAT4); document.body.classList.add('concept-loading'); main.insertBefore(skeleton(), tools.nextSibling); },
+    'a-load-failed':           () => { switchScenario(CAT4); document.body.classList.add('concept-load-failed'); const card = document.createElement('div'); card.className = 'tm-card concept-new'; card.appendChild(notice('error', 'alert', MSG('case.loadFailed'), 'alert-circle')); main.appendChild(card); $('case-actionbar').appendChild(pinnedTryAgain()); },
+    'a-offline':               () => { switchScenario(CAT4); noticeAboveBar(notice('warning', 'status', MSG('case.offline'), 'alert-triangle')); },
+    'd-injection-default':     () => { switchScenario(CAT4); openPS(4); },
+    // D-54 renders of the other Prescribe forms and schedules, on medicines that already exist in the scenarios
+    'd-syrup':                 () => { switchScenario(CAT4); openPS(5); },
+    'd-drops':                 () => { switchScenario('pilot_value_meds_ha'); openPS(3); },
+    'd-cream':                 () => { switchScenario('pilot_nonvalue_meds_ha'); openPS(4); },
+    'd-every-x-hours':         () => { switchScenario(CAT4); const m = DOCTOR_STATE.currentCase.medicines.find(x => x.id === 1); m.interval = 'every_x_hours'; m.hours = 6; openPS(1); },
+    'd-sos-only':              () => { switchScenario(CAT4); const m = DOCTOR_STATE.currentCase.medicines.find(x => x.id === 2); m.interval = 'sos'; openPS(2); },
+    'd-weekly':                () => { switchScenario(CAT4); const m = DOCTOR_STATE.currentCase.medicines.find(x => x.id === 3); m.interval = 'weekly'; openPS(3); },
+    'd-duration-picker':       () => { switchScenario(CAT4); openPS(1); EDIT_STATE.durOpen = true; renderPrescribe(); return later(() => { const p = document.getElementById('ps-dur-panel'); if (p) p.scrollIntoView({ block: 'center' }); }, 200); },
+    'd-food-selected':         () => { switchScenario(CAT4); openPS(1); EDIT_STATE.food = 'before_food'; renderPrescribe(); },
+    'a-confirm-busy':          () => { passGate(CAT4); const b = $('main-cta-btn'); b.classList.add('tm-btn--busy'); b.disabled = true; b.setAttribute('aria-busy', 'true'); b.innerHTML = '<span class="tm-spinner" aria-hidden="true"></span>' + MSG('case.confirming'); $('ab-secondary').querySelectorAll('button').forEach(x => x.disabled = true); $('case-actionbar').querySelectorAll(':scope > button').forEach(x => { if (x !== b) x.disabled = true; }); $('pdb-view-rx-btn').disabled = true; },
+    'a-confirm-failed':        () => { passGate(CAT4); noticeAboveBar(notice('error', 'alert', MSG('case.confirmFailed'), 'alert-circle')); },
+    'a-release-failed':        () => { switchScenario(CAT4); showLeave(); const b = $('cl-release'); b.classList.add('tm-btn--busy'); b.disabled = true; b.innerHTML = '<span class="tm-spinner" aria-hidden="true"></span>Releasing…'; $('cl-stay').disabled = true; $('cl-x').disabled = true; setTimeout(() => { leave.hidden = true; b.classList.remove('tm-btn--busy'); b.disabled = false; b.textContent = 'Release case'; $('cl-stay').disabled = false; $('cl-x').disabled = false; noticeInContent(notice('error', 'alert', MSG('case.releaseFailed'), 'alert-circle')); ready(); }, 300); return 'wait'; },
+    'c-callback-failed':       () => { passGate(CAT4); openSheet('sheet-callback'); selectCallbackDay('today'); selectCallbackTime('15:00'); const a = document.querySelector('#sheet-callback .tm-sheet__actions'); const g = document.createElement('div'); g.className = 'concept-new concept-gap'; g.appendChild(notice('error', 'alert', MSG('case.callbackFailed'), 'alert-circle')); a.before(g); },
+    'd-rx-failed':             () => { switchScenario(CAT4); openRxOverlay(); $('rx-doc-wrapper').style.display = 'none'; $('rx-hint').style.display = 'none'; $('rx-controls').style.display = 'none'; const f = document.createElement('div'); f.className = 'concept-new concept-stack'; f.appendChild(notice('error', 'alert', MSG('rx.loadFailed'), 'alert-circle')); $('rx-overlay-body').appendChild(f); const bar = document.createElement('div'); bar.className = 'tm-actionbar concept-new'; bar.appendChild(pinnedTryAgain()); $('rx-overlay').appendChild(bar); },
+    'a-no-medicines':          () => { switchScenario(CAT4); renderMedicines([]); $('medicines-count').style.display = 'none'; const e = document.getElementById('medicines-empty'); e.hidden = false; e.innerHTML = '<div class="tm-empty"><p class="tm-empty__title">' + MSG('case.noMedicines') + '</p></div>'; },
+    'a-long-content':          () => { switchScenario(CAT4); const c = DOCTOR_STATE.currentCase; c.patient_name = 'Venkataraman Ramachandran Iyer'; c.patient_age = 54; document.getElementById('case-head').classList.add('is-long'); c.medicines[0].name = 'Amoxicillin Clavulanate Dispersible'; c.medicines[0].strength = '625mg'; render(); },
+    's-10-medicines':          () => { switchScenario(CAT4); const c = DOCTOR_STATE.currentCase; const base = c.medicines.slice(); for (let i = 0; i < 7; i++) { const m = Object.assign({}, base[i % base.length], { id: 100 + i, name: ['Pantoprazole', 'Cetirizine', 'Ibuprofen', 'Losartan', 'Telmisartan', 'Levocetirizine', 'Montelukast'][i], strength: ['40mg', '10mg', '400mg', '50mg', '40mg', '5mg', '10mg'][i] }); c.medicines.push(m); } render(); },
+    's-optional-empty':        () => { switchScenario(CAT4); const c = DOCTOR_STATE.currentCase; c.order_created = ''; c.order_delivery = ''; c.payment_mode = ''; render(); const n = document.getElementById('symptoms-input'); if (n) n.value = ''; $('ct-details').style.visibility = 'hidden'; }   // no order details: keep the slot, View Rx stays at the right edge (D-54 D15)
+  };
+  resetNew();
+  const run = recipes[S] || recipes['a-top'];
+  const r = run();
+  if (r !== 'wait') ready();
+  setTimeout(syncConcept, 60);
+})();
+</script>
+</body>
+</html>
