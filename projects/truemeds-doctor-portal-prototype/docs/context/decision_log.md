@@ -749,6 +749,13 @@ From an external (ChatGPT) review, each point verified before acting.
   - **G. Back controls unchanged** — case page Back before a call (opens Leave this case?), Prescribe and medicine overlays use a close ×. Only OTP lost its Back (D-61).
   - **Returning unlock, unavailable state: "Use OTP instead" becomes the primary button** — it is the only way forward there (main-thread review of batch A, replacing the Codex batch that couldn't run).
 
+### D-67 · Page margin 16 everywhere — 2026-10-26
+- **Decision (Apurva, with the Truemeds design team):** the **page margin is 16px on every mobile screen** — content, header (patient name, back and help icons), bottom sheets — and the **action bar has 16px padding on all four sides** (plus the phone's safe area at the bottom). Cards keep their 16px inner padding. Replaces the 24px side margin (RULES §8 item 2, §9.4) and the 12px action-bar top (D-62).
+- **Why:** the design team's standard (simpler native hand-off); the action bar's top gap matched neither side (team review); at 360 the extra 16px of width helps the two-button pairs, scripts and long medicine names. Checked on 12 and 7b at 360 (`docs/renders/2026-10-25-card-tray-experiment/exp-16-everywhere-w360.png`).
+- **Rejected:** 24 on top and sides (C) — fine on its own but not the team standard; 16 on the action bar only — buttons would stick out 8px past the cards.
+- **Design system:** new token `--tm-space-page` (16); `.tm-actionbar` and `.tm-sheet` use it; RULES and beyond-salt updated. Desktop web layer (`.tm-page`) unchanged.
+- **Affects every approved and calling screen** — one mechanical re-render round before promotion; layout guards that lock 24 are updated at promotion.
+
 ## Design system changes made for this work
 
 ### D-60 · Secondary button without drop shadow (design system) — 2026-10-24 · **REVERTED same day**

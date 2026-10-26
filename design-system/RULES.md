@@ -58,7 +58,7 @@ Link two files. Never copy values out of them.
 | Brief confirmation with nowhere else to show it | `.tm-toast` — dark, one line (two at most), above the bottom bar — §9.5 |
 | Outcome of a task (e.g. case completed) | Status card — §9.3 |
 | Mobile choice / detail panel | `.tm-sheet` over `.tm-overlay`, one template — §9.4 |
-| Mobile sticky action | `.tm-actionbar` — white, hairline top edge + upward shadow so it separates from white cards (D-62). Only where content scrolls under the buttons; a footer that sits on a fixed panel (sign-in, OTP, unlock, offer) keeps the panel and needs no edge |
+| Mobile sticky action | `.tm-actionbar` — white, 16px padding on all four sides (+ safe area), hairline top edge + upward shadow so it separates from white cards (D-62, D-67). Only where content scrolls under the buttons; a footer that sits on a fixed panel (sign-in, OTP, unlock, offer) keeps the panel and needs no edge |
 
 Button sizes: `--lg` 56px for every full-width action button in a group (bar, sheet, form), default 48px for compact inline buttons. `--sm` 40px and `--xs` 32px are **not used for anything tappable on mobile** (below the 48px minimum, §8.6). Details in §9.1.
 
@@ -133,7 +133,7 @@ Mobile-first prototypes are previewed on desktop as a **9:16 phone frame**, neve
    Only the screen title is large; buttons keep their design-system style. Don't introduce in-between sizes.
    **Small sizes:** 9–11px text tokens are never used in apps. 12px only for tags and L4 fine print. Anything the user needs to act on (clinical details, amounts, status, errors) is 14px or larger.
    The type scale applies to screen text. Component internals (OTP digits, button labels, keyboard) keep their component specs.
-2. **Side margin:** `--tm-space-xl` (24) on every mobile screen. Every block — fields, notices, cards, code boxes, buttons — shares the same left and right edges.
+2. **Side margin:** `--tm-space-page` (**16**, the design team's standard — changed from 24 on 2026-10-26, D-67) on every mobile screen, including the header, sheets and the action bar. Every block — fields, notices, cards, code boxes, buttons — shares the same left and right edges.
 3. **Three gaps only:** tight `--tm-space-sm` (8): label↔field, field↔helper · related `--tm-space-lg` (16): items within a group · section `--tm-space-2xl` (32): between groups. Spare vertical space goes between the content and a pinned button, never inside a group.
    Home-base screens use 3xl (48) as the hero gap between logo and title.
 4. **Main button placement:**
@@ -209,7 +209,7 @@ Set once in the design system; a project never restyles them. Where `src/compone
 | Background | Page dimmed behind the sheet (`.tm-overlay`). |
 | Top | Rounded top corners; **no drag handle** (the ✕ is always there). |
 | Header | Title 20/28 semibold, left · ✕ right (48px target) · **no divider**. Optional one-line subtitle (L3). |
-| Spacing | 24px side margins (same as screens) · 16px header → content · 24px + safe area at the bottom. |
+| Spacing | 16px side margins (`--tm-space-page`, same as screens) · 16px header → content · 24px + safe area at the bottom. |
 | Content | Fields, chips, or **option rows** (one shared style for reason lists: title + one-line description, full width, 48px+; tapping applies). |
 | Actions | §9.1 order and size (56px, full width). Reason lists need no button. **Confirmation sheet** ("Leave this case?", "Discard changes?"): the action the sheet asks about on top — red outline if it can't easily be undone, primary otherwise — and the "stay" option as quiet text below. A sheet offering two real actions (e.g. Retry call / Mark as unavailable) is a choice, not a confirmation (D-54). |
 | Closing | ✕, tap outside or swipe down = cancel — **except while an action is in progress**. Unsaved input asks before closing. |

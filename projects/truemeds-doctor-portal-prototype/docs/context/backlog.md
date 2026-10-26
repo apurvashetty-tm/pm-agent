@@ -26,6 +26,16 @@ Order = the order we work in.
 - [ ] **Round 2 fix** (D-66): unlock-unavailable primary, two copy lines, outcome card under Order details, availability-ended green, re-render affected screens.
 - [ ] Findings to Apurva before any render → **terminal round** re-renders only the affected screens.
 
+## 2b. Page margin 16 (D-67) — before promotion
+- [x] Design system: `--tm-space-page` (16), action bar 16 all sides, sheets 16 (2026-10-26).
+- [ ] Terminal round: margin 16 on every working copy, re-render all families + calling storyboard (`docs/renders/2026-10-26-margin-16/TERMINAL-BRIEF.md`).
+- [ ] Main-thread check, then Apurva's final approval of calling + entry + Home + case.
+
+## 2c. Promotion (after approval)
+- [ ] Move calling + entry + Home + case working copies into `ui-screens/`; replace old calling (`b-*`, `c-*`) and duplicate closed states (`e-prescription-confirmed`, `e-transferred`, `e-forwarded`, `e-patient-unavailable` → calling 10a, 14, 10b, 9).
+- [ ] Update `ui-screens/README.md`; update the guards for D-61/62/65/66/67 and re-run them on the promoted files.
+- [ ] Freeze: mark approved in the decision log; new PR for Apurva to merge.
+
 ## 3. Rebuild items (for the build, not the renders)
 - [ ] All button labels through `MSG()` (some are typed inline in the render recipes).
 - [ ] After-confirm and closed states: View Rx, medicine rows and notes read-only and muted; no overlay (D-62).
