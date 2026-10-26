@@ -733,6 +733,11 @@ From an external (ChatGPT) review, each point verified before acting.
   4. **Faster sign-in offer without fingerprint / face:** offer the **phone's screen lock (PIN / pattern / password)** instead; **skip the offer only if the phone has no screen lock at all**. Returning unlock already has a screen-lock variant ("Unlock with screen lock"); the offer gets one too (`offer_screen-lock`).
 - **Why:** a prescription must not go out with unreviewed medicines; most doctors' phones have at least a screen lock, so they still get faster sign-in.
 
+### D-65 · Messages don't repeat buttons; faster sign-in offer copy — 2026-10-26
+- **Decision (Apurva):** (1) **A message says what happened (and what is safe or kept); it does not repeat a button already on screen.** Instructions only when no control does it, to explain a blocked button, or to add timing. Rule in `docs/feedback-rules.md` §4. (2) **16 messages shortened** after an audit of all 70: sign-in offline / couldn't send; OTP wrong / expired / couldn't verify / resend failed; Home set-up / add time / request failed; case offline action / confirm / release / callback failed; call didn't go through / you didn't answer / call too short. `call.transferReady` → "Stay on the call while you confirm." (3) **Kept:** "Read the script, then end the call", "End the call to get your next case", "Nothing was lost" and similar reassurance, "…or call Doctor Ops", "Try again in a minute", "Reconnect to request a case". (4) **Faster sign-in offer copy:** screen-lock variant mirrors the fingerprint / Face ID lines; enabling failed = "Couldn't turn on faster sign-in." (Try again · Not now carry the action); offline = "You're offline. Reconnect to turn on faster sign-in." Failed stays on the offer (D-61 replaces D-45 here); cancelling the phone prompt returns to the offer with no message.
+- **Why:** repeating the button doubles the reading on a busy screen and adds nothing; the doctor already sees the action.
+- **Affects approved screens:** sign-in, OTP, Home, case and calling renders that show these messages — re-rendered in the entry + design-system pass.
+
 ## Design system changes made for this work
 
 ### D-60 · Secondary button without drop shadow (design system) — 2026-10-24 · **REVERTED same day**

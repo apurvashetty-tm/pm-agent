@@ -4,7 +4,7 @@ Owner: main Claude thread (records decisions) · Worker: terminal session (rende
 
 ## Read first
 1. `projects/truemeds-doctor-portal-prototype/CLAUDE.md`
-2. `docs/context/decision_log.md` — **D-61** (entry screens), **D-62** points 1–8 (status cards, action bar), **D-64** point 4 (faster sign-in without biometrics). D-42, D-44, D-45 for history.
+2. `docs/context/decision_log.md` — **D-61** (entry screens), **D-62** points 1–8 (status cards, action bar), **D-64** point 4 (faster sign-in without biometrics), **D-65** (messages don't repeat buttons; offer copy). D-42, D-44, D-45 for history.
 3. `docs/context/backlog.md` section 2 — this job.
 4. `design-system/RULES.md` (§9.1 icons, §9.3 status card, action bar row) and `beyond-salt.md`.
 5. `docs/feedback-rules.md`, `ui-screens/feedback/messages.json`.
@@ -25,9 +25,9 @@ Owner: main Claude thread (records decisions) · Worker: terminal session (rende
 5. **Faster sign-in offer — states** (render each):
    - `offer_fingerprint`, `offer_face-id` (exist), **`offer_screen-lock` (new, D-64)** — lock icon, copy below.
    - `offer_enabling` (exists).
-   - **`offer_enable-failed` (new)** — notice in the bar, Try again (primary) · Not now. D-61 replaces D-45's "failed → Home with no error" for this case only.
+   - **`offer_enable-failed` (new)** — notice in the footer, Try again (primary) · Not now. Stays on the offer. D-61 replaces D-45's "failed → Home with no error" for this case only.
    - **`offer_offline` (new)** — Turn on stays tappable; on tap, the offline notice in the bar (same pattern as sign-in offline).
-   - Cancelled (doctor closes the phone prompt): back to the offer, no error — no new render needed; note it in the report.
+   - Cancelled (doctor closes the phone prompt): back to the offer (not Home), no message — no new render needed; note it in the report.
    - No fingerprint, face or screen lock on the phone: **the offer is skipped** — no render; note it.
 6. **Back-arrow inventory (report only):** list every approved screen that shows a header Back, with the screen id. Don't change any except OTP (item 2). Apurva decides the rest.
 
@@ -36,16 +36,21 @@ Owner: main Claude thread (records decisions) · Worker: terminal session (rende
 8. **Action bar** on every screen that has one (sign-in, OTP, unlock, offer, Home, case `a-*`, `d-*`, `s-*`, `e-*`): white, hairline top edge + upward shadow (`0 -8px 24px` 10%). It comes from `design-system/truemeds.css`; verify by DOM probe and at full size; if a screen overrides it, report the override.
 9. **Questions above buttons** are plain text, not a boxed notice (as calling 7b) — report any screen where a question sits in a box.
 
-### C. Always
-10. Copy only from `messages.json` via the screen's message helper — no invented copy. The new keys below are the only additions.
-11. Icon rule §9.1; primary on top; labels on one line at 360.
-12. Run `ui-screens/feedback/check-locked-specs.py`, `check-sources.mjs`, `docs/layout_check.py`, `brand/check_lockup.py`. Some guards will fail **because** the approved look changed (logo, Back, unlock order) — list each as "expected (D-61 / D-62)" with the guard name; anything else is a real fail. Never write "passed" without running.
+### C. Copy (D-65)
+10a. Every approved screen that shows one of the 17 shortened messages (list in D-65; keys marked `D-65` in `metadata.json`) is re-rendered with the new copy: sign-in, OTP, Home, case (`a-confirm-failed`, `a-release-failed`, `c-callback-failed`, `a-offline` and any other). Screens whose copy comes from `messages.js` pick it up automatically; where an approved HTML has the text typed in, change it in the working copy only and note it.
+10b. Calling states that show changed copy — `t03-not-through`, `t04-doctor-missed`, `t06-ended-early`, `t12-transfer-ready` — re-render from `docs/renders/2026-10-22-calling/src/case.html` into `docs/renders/2026-10-22-calling/round-8/` (no other change), plus `t08c-confirm-blocked` (new, D-64), and refresh `storyboard-final.png` with 8c added to group C.
+10c. Read every message on every rendered screen: none repeats a button that is on the same screen (D-65 rule, `docs/feedback-rules.md` §4). List any you find as NEEDS-APURVA, don't rewrite.
 
-## New copy (approved by Apurva before this brief is pasted — main thread adds the keys)
+### D. Always
+11. Copy only from `messages.json` via the screen's message helper — no invented copy. The new keys below are the only additions.
+12. Icon rule §9.1; primary on top; labels on one line at 360.
+13. Run `ui-screens/feedback/check-locked-specs.py`, `check-sources.mjs`, `docs/layout_check.py`, `brand/check_lockup.py`. Some guards will fail **because** the approved look changed (logo, Back, unlock order, card look, shortened copy) — list each as "expected (D-61 / D-62 / D-65)" with the guard name; anything else is a real fail. Never write "passed" without running.
+
+## New copy (approved by Apurva 2026-10-26, keys already in `messages.json`)
 - `offer.screenLockSub` — "Use your phone’s screen lock instead of waiting for an OTP."
 - `offer.screenLockLine` — "Unlock the app with your PIN or pattern, not an OTP."
 - `offer.screenLockTrust` — "Your screen lock stays on your phone"
-- `offer.enableFailed` — "Couldn’t turn on faster sign-in. Try again, or tap Not now."
+- `offer.enableFailed` — "Couldn’t turn on faster sign-in."
 - `offer.offline` — "You’re offline. Reconnect to turn on faster sign-in."
 
 ## Codex loop (as in earlier rounds)
