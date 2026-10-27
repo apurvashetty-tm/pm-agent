@@ -756,6 +756,12 @@ From an external (ChatGPT) review, each point verified before acting.
 - **Design system:** new token `--tm-space-page` (16); `.tm-actionbar` and `.tm-sheet` use it; RULES and beyond-salt updated. Desktop web layer (`.tm-page`) unchanged.
 - **Affects every approved and calling screen** — one mechanical re-render round before promotion; layout guards that lock 24 are updated at promotion.
 
+### D-68 · Keep "Confirm prescription"; 7f wording; disabled-medicine state — 2026-10-27
+- **Decision (Apurva):**
+  1. **The final button stays "Confirm prescription"** (and Confirm & transfer / Confirm & forward). Considered after a designer suggested "Create prescription". Ratings: Confirm 8 · Submit 7 · Create 3. "Create" reads as starting something (the doctor has already prescribed each medicine) and breaks the siblings; "Submit" works but is a new word for doctors who know "Confirm" from the current portal and would need 4–5 messages reworded.
+  2. **7f wording:** title **"Waiting for the call record"**, line **"Your prescription is saved. We'll confirm it once the record arrives."** (`call.submittedTitle`, `call.submittedText`). Names the real reason it is pending; doesn't start with "Prescription…", so it can't be mistaken for the green "Prescription confirmed". **Rejected:** "under review" — most of these confirm automatically when the record arrives; it reads like an audit of the doctor.
+  3. **New state `s-medicine-disabled`** (case page with a Disabled medicine: struck-through name, grey row and tag, arrow kept to re-enable) — it was missing from the approved set. Contrast of the greyed name to be checked at promotion (RULES item 7); darken if it fails.
+
 ## Design system changes made for this work
 
 ### D-60 · Secondary button without drop shadow (design system) — 2026-10-24 · **REVERTED same day**

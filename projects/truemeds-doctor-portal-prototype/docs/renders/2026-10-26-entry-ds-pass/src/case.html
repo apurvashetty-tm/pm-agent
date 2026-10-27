@@ -44,8 +44,8 @@ body.concept-loading #case-head .tm-header-task__title,body.concept-loading #cas
 .concept-skel{display:block;background:var(--tm-border-subtle);border-radius:var(--tm-radius-md);margin-bottom:var(--tm-space-lg)}
 body.concept-load-failed #main-scroll > :not(.concept-new){display:none}
 body.concept-load-failed #case-actionbar > :not(.concept-new){display:none}
-.concept-stack{display:flex;flex-direction:column;gap:var(--tm-space-lg);width:100%;box-sizing:border-box;padding:0 var(--tm-space-xl)}
-.concept-bar-note{padding:0 var(--tm-space-xl) var(--tm-space-sm);box-sizing:border-box}
+.concept-stack{display:flex;flex-direction:column;gap:var(--tm-space-lg);width:100%;box-sizing:border-box;padding:0 var(--tm-space-page)}
+.concept-bar-note{padding:0 var(--tm-space-page) var(--tm-space-sm);box-sizing:border-box}
 .concept-gap{margin:var(--tm-space-lg) 0}
 #main-scroll > .concept-new,#case-actionbar > .concept-new{margin-top:0}
 /* Standards pass (2026-10-15): medicine and order-detail meta text lifted from 12px to 14px (RULES §8.1); tags keep 12px. */
@@ -96,10 +96,10 @@ body.concept-closed #success-toast{pointer-events:auto}
 /* Duration card: label-to-field gap equals the card's own gap (24), same as the other cards. */
 #psl-duration + .ps-dur-field{margin-top:calc(var(--tm-space-xl) * -1)}
 /* RULES §8.2: 24px side margin on every mobile screen (case page, Prescribe, sheets). */
-#main-scroll{padding-left:var(--tm-space-xl) !important;padding-right:var(--tm-space-xl) !important}
-#case-actionbar{padding-left:var(--tm-space-xl) !important;padding-right:var(--tm-space-xl) !important}
-#ps-body,#ps-actionbar{padding-left:var(--tm-space-xl) !important;padding-right:var(--tm-space-xl) !important}
-.bottom-sheet{padding-left:var(--tm-space-xl) !important;padding-right:var(--tm-space-xl) !important}
+#main-scroll{padding-left:var(--tm-space-page) !important;padding-right:var(--tm-space-page) !important}
+#case-actionbar{padding-left:var(--tm-space-page) !important;padding-right:var(--tm-space-page) !important}
+#ps-body,#ps-actionbar{padding-left:var(--tm-space-page) !important;padding-right:var(--tm-space-page) !important}
+.bottom-sheet{padding-left:var(--tm-space-page) !important;padding-right:var(--tm-space-page) !important}
 /* Closed case: View Rx and Order details look inactive (muted, no raised button). */
 /* 7. No blue outline on bottom sheets or the Prescribe screen; no glow ring on "Calling…". */
 .bottom-sheet:focus,.bottom-sheet:focus-visible,#prescribe-screen:focus,#prescribe-screen:focus-visible,#concept-leave .cl-sheet:focus,#concept-leave .cl-sheet:focus-visible{outline:none !important;box-shadow:none !important}
@@ -1106,6 +1106,7 @@ body.concept-closed #success-toast{pointer-events:auto}
     'a-no-medicines':          () => { switchScenario(CAT4); renderMedicines([]); $('medicines-count').style.display = 'none'; const e = document.getElementById('medicines-empty'); e.hidden = false; e.innerHTML = '<div class="tm-empty"><p class="tm-empty__title">' + MSG('case.noMedicines') + '</p></div>'; },
     'a-long-content':          () => { switchScenario(CAT4); const c = DOCTOR_STATE.currentCase; c.patient_name = 'Venkataraman Ramachandran Iyer'; c.patient_age = 54; document.getElementById('case-head').classList.add('is-long'); c.medicines[0].name = 'Amoxicillin Clavulanate Dispersible'; c.medicines[0].strength = '625mg'; render(); },
     's-10-medicines':          () => { switchScenario(CAT4); const c = DOCTOR_STATE.currentCase; const base = c.medicines.slice(); for (let i = 0; i < 7; i++) { const m = Object.assign({}, base[i % base.length], { id: 100 + i, name: ['Pantoprazole', 'Cetirizine', 'Ibuprofen', 'Losartan', 'Telmisartan', 'Levocetirizine', 'Montelukast'][i], strength: ['40mg', '10mg', '400mg', '50mg', '40mg', '5mg', '10mg'][i] }); c.medicines.push(m); } render(); },
+    's-medicine-disabled':     () => { switchScenario(CAT4); const c = DOCTOR_STATE.currentCase; c.medicines[0].validation_status = 'prescribed'; c.medicines[1].disabled = true; c.medicines[1].disable_reason = 'Patient declined'; render(); },   // a Disabled row on the case page (app-logic: grey tag, removed from the order)
     's-optional-empty':        () => { switchScenario(CAT4); const c = DOCTOR_STATE.currentCase; c.order_created = ''; c.order_delivery = ''; c.payment_mode = ''; render(); const n = document.getElementById('symptoms-input'); if (n) n.value = ''; $('ct-details').style.visibility = 'hidden'; }   // no order details: keep the slot, View Rx stays at the right edge (D-54 D15)
   };
   resetNew();

@@ -624,14 +624,23 @@
     "retain": "case data",
     "copy": "proposed (2026-10-24, state 7 — no call result) — needs Apurva approval"
   },
+  "call.submittedTitle": {
+    "pattern": "N1",
+    "trigger": "Confirm tapped in 7d (no call result)",
+    "slot": "title of the grey closed card (7f)",
+    "next": "Request next case",
+    "clear": "call record arrives → card becomes \"Prescription confirmed\"",
+    "retain": "case closed",
+    "copy": "approved (Apurva, 2026-10-27, D-68)"
+  },
   "call.submittedText": {
     "pattern": "N1",
     "trigger": "Confirm prescription with no call result (state 7d)",
-    "slot": "second line of the grey closed card \"Prescription submitted\"",
+    "slot": "second line of the grey closed card \"Waiting for the call record\" (7f)",
     "next": "Request next case",
     "clear": "—",
     "retain": "—",
-    "copy": "proposed (2026-10-24, state 7 — no call result) — needs Apurva approval"
+    "copy": "approved (Apurva, 2026-10-27, D-68)"
   },
   "call.scriptCat4": {
     "pattern": "N1",

@@ -7,7 +7,7 @@ body.tm{background:var(--tm-surface-primary)}
 .screen{height:100dvh;display:flex;flex-direction:column;box-sizing:border-box;position:relative;overflow:hidden;background:var(--tm-surface-brand-subtle)}
 /* Task header (D-61): logo + title, no Back (Change and the phone back gesture cover it) */
 .login-logo{display:block;width:174px;height:auto;margin-bottom:var(--tm-space-lg)}
-.top{padding:var(--tm-space-lg) var(--tm-space-xl) var(--tm-space-lg)}   /* 16 not 24 below the header: keeps the inline button 16px clear of the keyboard in the two-line notice states (1.7) */
+.top{padding:var(--tm-space-lg) var(--tm-space-page) var(--tm-space-lg)}   /* 16 not 24 below the header: keeps the inline button 16px clear of the keyboard in the two-line notice states (1.7) */
 .back{display:inline-flex;align-items:center;gap:var(--tm-space-xs);min-height:48px;color:var(--tm-content-secondary);font-size:var(--tm-font-size-body-lg);line-height:var(--tm-font-lineheight-md);text-decoration:none;cursor:pointer}
 .back .tm-icon{width:20px;height:20px}
 .back:focus-visible{outline:2px solid var(--tm-border-focus);outline-offset:var(--tm-space-xs)}
@@ -18,7 +18,7 @@ body.tm{background:var(--tm-surface-primary)}
 a.lk{color:var(--tm-content-brand);font-weight:var(--tm-font-weight-semibold);text-decoration:none;display:inline-flex;align-items:center;min-height:48px}
 /* White panel; section gap 32 between groups, related gap 16 within a group (RULES §8.3) */
 /* Content scrolls when it does not fit; with the keyboard open, the bottom clears the keyboard by 16px (LOCKED, D-46). */
-.panel{flex:1;min-height:0;overflow-y:auto;background:var(--tm-surface-primary);border-radius:var(--tm-radius-2xl) var(--tm-radius-2xl) 0 0;padding:var(--tm-space-2xl) var(--tm-space-xl) var(--tm-space-xl);display:flex;flex-direction:column}
+.panel{flex:1;min-height:0;overflow-y:auto;background:var(--tm-surface-primary);border-radius:var(--tm-radius-2xl) var(--tm-radius-2xl) 0 0;padding:var(--tm-space-2xl) var(--tm-space-page) var(--tm-space-xl);display:flex;flex-direction:column}
 body.kb .panel{padding-bottom:calc(256px + var(--tm-space-lg))}
 .grp{display:flex;flex-direction:column;gap:var(--tm-space-lg)}
 .grp + .grp{margin-top:var(--tm-space-2xl)}

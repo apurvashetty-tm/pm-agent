@@ -6,7 +6,7 @@ html,body{margin:0;height:100%}
 body.tm{background:var(--tm-surface-primary)}
 /* Decision D-45 (faster sign-in offer): own screen, no OTP opt-in. Task header (D-42): Back + title, no logo. */
 .screen{height:100dvh;display:flex;flex-direction:column;box-sizing:border-box;position:relative;overflow:hidden;background:var(--tm-surface-brand-subtle)}
-.top{padding:var(--tm-space-lg) var(--tm-space-xl) var(--tm-space-xl)}
+.top{padding:var(--tm-space-lg) var(--tm-space-page) var(--tm-space-xl)}
 .back{display:inline-flex;align-items:center;gap:var(--tm-space-xs);min-height:44px;color:var(--tm-content-secondary);font-size:var(--tm-font-size-body-lg);line-height:var(--tm-font-lineheight-md);text-decoration:none;cursor:pointer;background:none;border:0;padding:0;font-family:inherit}
 .back .tm-icon{width:20px;height:20px}
 .back:focus-visible{outline:2px solid var(--tm-border-focus);outline-offset:var(--tm-space-xs)}
@@ -19,7 +19,7 @@ body.tm{background:var(--tm-surface-primary)}
 h1{margin:var(--tm-space-lg) 0 var(--tm-space-sm)}
 .sub{margin:0;font-size:var(--tm-font-size-body-md);line-height:var(--tm-font-lineheight-sm);color:var(--tm-content-secondary)}
 /* White panel; points are one group (related 16). Footer is pinned (no typing on this screen, RULES §8.4). */
-.panel{flex:1;min-height:0;display:flex;flex-direction:column;background:var(--tm-surface-primary);border-radius:var(--tm-radius-2xl) var(--tm-radius-2xl) 0 0;padding:var(--tm-space-2xl) var(--tm-space-xl) var(--tm-space-xl)}
+.panel{flex:1;min-height:0;display:flex;flex-direction:column;background:var(--tm-surface-primary);border-radius:var(--tm-radius-2xl) var(--tm-radius-2xl) 0 0;padding:var(--tm-space-2xl) var(--tm-space-page) var(--tm-space-xl)}
 .points{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:var(--tm-space-lg)}
 .points li{display:flex;gap:var(--tm-space-md);align-items:flex-start}
 /* Decorative icons are neutral (RULES §8.11, D-47). Blue stays for actions and the hero tile. */

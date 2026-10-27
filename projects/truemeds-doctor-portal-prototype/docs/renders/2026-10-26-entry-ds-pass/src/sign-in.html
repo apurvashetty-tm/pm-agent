@@ -24,13 +24,13 @@
 #doctor-login-preview .login-signup-label { color:var(--tm-content-brand); font-weight:var(--tm-font-weight-semibold); margin-left:var(--tm-space-xs); }
 #doctor-login-preview [hidden] { display:none!important; }
 #doctor-login-preview input:focus-visible { outline:2px solid var(--tm-border-focus); outline-offset:var(--tm-space-xs); }
-#doctor-login-preview .login-phone { min-height:844px; aspect-ratio:auto; padding:var(--tm-space-xl) var(--tm-space-xl) 0; background:var(--tm-surface-brand-subtle); overflow:hidden; }
+#doctor-login-preview .login-phone { min-height:844px; aspect-ratio:auto; padding:var(--tm-space-xl) var(--tm-space-page) 0; background:var(--tm-surface-brand-subtle); overflow:hidden; }
 #doctor-login-preview .login-logo { width:174px; }
 /* LOCKED L6 (D-46): home-base hero gap between logo and title is 48 (--tm-space-3xl). */
 #doctor-login-preview .login-content { flex:1; display:flex; flex-direction:column; padding-top:var(--tm-space-3xl); }
 #doctor-login-preview .login-content > p { max-width:31ch; }
-#doctor-login-preview .login-fields { flex:1; margin:var(--tm-space-2xl) calc(-1 * var(--tm-space-xl)) 0; padding:var(--tm-space-xl); background:var(--tm-surface-primary); border-radius:var(--tm-radius-2xl) var(--tm-radius-2xl) 0 0; }
-#doctor-login-preview .login-signup { margin:0 calc(-1 * var(--tm-space-xl)); padding:0 var(--tm-space-xl) var(--tm-space-xl); background:var(--tm-surface-primary); }
+#doctor-login-preview .login-fields { flex:1; margin:var(--tm-space-2xl) calc(-1 * var(--tm-space-page)) 0; padding:var(--tm-space-xl) var(--tm-space-page); background:var(--tm-surface-primary); border-radius:var(--tm-radius-2xl) var(--tm-radius-2xl) 0 0; }
+#doctor-login-preview .login-signup { margin:0 calc(-1 * var(--tm-space-page)); padding:0 var(--tm-space-page) var(--tm-space-xl); background:var(--tm-surface-primary); }
 #doctor-login-preview .login-phone { position:relative; }
 #doctor-login-preview.is-focused .login-fields .tm-field__control { border-color:var(--tm-border-focus); }
 #doctor-login-preview.has-error .login-fields .tm-field__control { border-color:var(--tm-border-error-strong); }
@@ -41,7 +41,7 @@
 #doctor-login-preview .login-key { display:grid; place-items:center; background:#fff; border-radius:5px; color:#202124; font:400 23px/1 system-ui,sans-serif; }
 #doctor-login-preview .login-key--quiet { background:transparent; }
 @media(max-width:360px) {
-  #doctor-login-preview .login-phone { padding-left:var(--tm-space-xl); padding-right:var(--tm-space-xl); }
+  #doctor-login-preview .login-phone { padding-left:var(--tm-space-page); padding-right:var(--tm-space-page); }
 }
 
 html,body {margin:0;min-height:100%;}

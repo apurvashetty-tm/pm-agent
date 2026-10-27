@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Truemeds for Doctors</title>
   <link rel="stylesheet" href="../../../../../../design-system/truemeds.css" />
-  <link rel="stylesheet" href="../../../../ui-screens/case/case-styles.css" />   <!-- D-53: copy of styles.css without central-component restyles -->
+  <link rel="stylesheet" href="../../2026-10-26-entry-ds-pass/src/case-styles.css" />   <!-- D-53: copy of styles.css without central-component restyles -->
 <style id="concept-v4">
 /* CONCEPT v4 (phase D full render). Changes to index.html are concept-only: header, content row, end-of-case card and
    exits, D-50 labels, sentence case, the Prescribe header proposal, and the design-system success tag. app.js untouched. */
@@ -44,8 +44,8 @@ body.concept-loading #case-head .tm-header-task__title,body.concept-loading #cas
 .concept-skel{display:block;background:var(--tm-border-subtle);border-radius:var(--tm-radius-md);margin-bottom:var(--tm-space-lg)}
 body.concept-load-failed #main-scroll > :not(.concept-new){display:none}
 body.concept-load-failed #case-actionbar > :not(.concept-new){display:none}
-.concept-stack{display:flex;flex-direction:column;gap:var(--tm-space-lg);width:100%;box-sizing:border-box;padding:0 var(--tm-space-xl)}
-.concept-bar-note{padding:0 var(--tm-space-xl) var(--tm-space-sm);box-sizing:border-box}
+.concept-stack{display:flex;flex-direction:column;gap:var(--tm-space-lg);width:100%;box-sizing:border-box;padding:0 var(--tm-space-page)}
+.concept-bar-note{padding:0 var(--tm-space-page) var(--tm-space-sm);box-sizing:border-box}
 .concept-gap{margin:var(--tm-space-lg) 0}
 #main-scroll > .concept-new,#case-actionbar > .concept-new{margin-top:0}
 /* Standards pass (2026-10-15): medicine and order-detail meta text lifted from 12px to 14px (RULES §8.1); tags keep 12px. */
@@ -102,11 +102,11 @@ body.concept-closed #success-toast{pointer-events:auto}
 .ps-rx-label{color:var(--tm-content-brand) !important}
 /* Duration card: label-to-field gap equals the card's own gap (24), same as the other cards. */
 #psl-duration + .ps-dur-field{margin-top:calc(var(--tm-space-xl) * -1)}
-/* RULES §8.2: 24px side margin on every mobile screen (case page, Prescribe, sheets). */
-#main-scroll{padding-left:var(--tm-space-xl) !important;padding-right:var(--tm-space-xl) !important}
-#case-actionbar{padding-left:var(--tm-space-xl) !important;padding-right:var(--tm-space-xl) !important}
-#ps-body,#ps-actionbar{padding-left:var(--tm-space-xl) !important;padding-right:var(--tm-space-xl) !important}
-.bottom-sheet{padding-left:var(--tm-space-xl) !important;padding-right:var(--tm-space-xl) !important}
+/* D-67: 16px page margin on every mobile screen (case page, Prescribe, sheets, action bar). */
+#main-scroll{padding-left:var(--tm-space-page) !important;padding-right:var(--tm-space-page) !important}
+#case-actionbar{padding-left:var(--tm-space-page) !important;padding-right:var(--tm-space-page) !important}
+#ps-body,#ps-actionbar{padding-left:var(--tm-space-page) !important;padding-right:var(--tm-space-page) !important}
+.bottom-sheet{padding-left:var(--tm-space-page) !important;padding-right:var(--tm-space-page) !important}
 /* Closed case: View Rx and Order details look inactive (muted, no raised button). */
 /* 7. No blue outline on bottom sheets or the Prescribe screen; no glow ring on "Calling…". */
 .bottom-sheet:focus,.bottom-sheet:focus-visible,#prescribe-screen:focus,#prescribe-screen:focus-visible,#concept-leave .cl-sheet:focus,#concept-leave .cl-sheet:focus-visible{outline:none !important;box-shadow:none !important}
@@ -1119,7 +1119,7 @@ body.concept-closed #success-toast{pointer-events:auto}
     's7c-checking':            () => { switchScenario(CAT4); initiateCall(); return later(() => { setBar(busy(MSG('call.checkingResult'))); $('pre-call-brief').style.display = 'none'; }, 250); },
     's7d-result-missing':      () => { switchScenario(CAT4); initiateCall(); allRx(); return later(() => { setBar(notice('warning', 'status', MSG('call.resultMissing'), 'alert-triangle'), btn('tm-btn--primary tm-btn--block', 'Confirm prescription'), pair(btn('tm-btn--secondary', icon('calendar') + 'Callback'), btn('tm-btn--destructive', icon('phone-off') + 'Unavailable'))); $('pre-call-brief').style.display = 'none'; }, 250); },
     's7e-leave-sheet':         () => { switchScenario(CAT4); initiateCall(); return later(() => { setBar(busy('Calling ' + first() + '…'), callbackRow()); showScript(); showBack(); showLeave(); }, 250); },
-    's7f-submitted':           () => { switchScenario(CAT4); allRx(); return closeCase(CAT4, () => { showSuccessToast('Patient unavailable', ''); $('success-toast-title').textContent = 'Prescription submitted'; $('success-toast').classList.remove('tm-status-card--success'); $('success-toast').classList.add('tm-status-card--neutral'); cardText(MSG('call.submittedText'), false); const ic = $('success-toast').querySelector('#success-toast-icon .tm-icon'); if (ic) { ic.setAttribute('data-icon', 'clock'); TMIcons.render($('success-toast')); } }); },
+    's7f-submitted':           () => { switchScenario(CAT4); allRx(); return closeCase(CAT4, () => { showSuccessToast('Patient unavailable', ''); $('success-toast-title').textContent = MSG('call.submittedTitle'); $('success-toast').classList.remove('tm-status-card--success'); $('success-toast').classList.add('tm-status-card--neutral'); cardText(MSG('call.submittedText'), false); const ic = $('success-toast').querySelector('#success-toast-icon .tm-icon'); if (ic) { ic.setAttribute('data-icon', 'clock'); TMIcons.render($('success-toast')); } }); },
     // A. Case page
     'a-top':                   () => { switchScenario(CAT4); },
     'a-scrolled':              () => { switchScenario(CAT4); return later(() => { $('main-scroll').scrollTop = 420; }, 200); },

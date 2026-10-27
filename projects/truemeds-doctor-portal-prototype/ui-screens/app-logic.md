@@ -102,7 +102,7 @@ Order on first use: Sign-in → OTP → (offer, once) → Home → Case. Returni
 - **Before the gate, never show:** Confirm prescription, Confirm & transfer, Confirm & forward, Skip HA.
 - **Leg 2 failed** (no answer, busy, rejected, unreachable, invalid number): the case closes as **Patient unavailable** by itself; the doctor gets **Request next case**. Busy and rejected are accepted as "no answer" to keep it simple.
 - **A call that's too short** (state 6) offers **Call again · Callback** (D-58 point 23). No retry limit. **Callback is offered in every live call until the doctor taps a confirm button** (D-58 point 24).
-- **No call result** (state 7, D-58 point 20): at 3 min the bar asks "Are you still on the call?"; after "No, call ended" and a backend check with nothing found: **Confirm prescription · Callback · Unavailable**; Confirm there shows "Prescription submitted" until the record arrives. A late result updates the screen by itself. Repeated problems → the doctor uses **Help** on the case.
+- **No call result** (state 7, D-58 point 20): at 3 min the bar asks "Are you still on the call?"; after "No, call ended" and a backend check with nothing found: **Confirm prescription · Callback · Unavailable**; Confirm there shows "Waiting for the call record" until the record arrives (D-68). A late result updates the screen by itself. Repeated problems → the doctor uses **Help** on the case.
 - **Vendor terms are mapped by Engineering** to the buckets in the table (Ozonetel `CustomerStatus`, Knowlarity hangup causes — `projects/ACOM/ring-ai/reference/knowlarity-hangup-causes.pdf`).
 
 **State table (final, 2026-10-24 — D-58 points 14–22).** One row per state. Render id = recipe in `docs/renders/2026-10-22-calling/src/case.html`. Copy keys in `ui-screens/feedback/messages.json`. During every call the End-of-call script shows under Order details; Callback is offered in every call.
@@ -119,7 +119,7 @@ Order on first use: Sign-in → OTP → (offer, once) → Home → Case. Returni
 | 7c | `call.checking` | Checking call result | Doctor tapped "No, call ended" | "Checking call result…" busy | `s7c-checking` |
 | 7d | `call.result-missing` | Result not received | Backend check found nothing | Amber notice · Confirm prescription · Callback + Unavailable | `s7d-result-missing` |
 | 7e | — | Leave this case? | Back in 1–4, 7a, 7b | Approved sheet: Release case / Stay on this case | `s7e-leave-sheet` |
-| 7f | `call.submitted` | Prescription submitted | Confirm in 7d | Grey card "Prescription submitted" · Request next case · Back to Home | `s7f-submitted` |
+| 7f | `call.submitted` | Waiting for the call record | Confirm in 7d | Grey card "Waiting for the call record · Your prescription is saved. We'll confirm it once the record arrives." (D-68); becomes "Prescription confirmed" when the record arrives · Request next case · Back to Home | `s7f-submitted` |
 | 8a | `call.valid` | Valid call (Cat4 / HA skipped) | Result: total talk time ≥ gate | Confirm prescription · Callback · no script (call has ended) | `t08a-valid-cat4` |
 | 8b | `call.valid` | Valid call (forward) | Same | Confirm & forward · Callback + Skip HA · no script | `t08b-valid-forward` |
 | 8c | `case.confirm-blocked` | Confirm tapped with Pending medicines | Tap on any confirm button while a medicine is Pending (Flag 5) | Same bar + red line "Prescribe or disable {n} medicines first."; page scrolls to the first Pending medicine; button stays tappable | `t08c-confirm-blocked` |

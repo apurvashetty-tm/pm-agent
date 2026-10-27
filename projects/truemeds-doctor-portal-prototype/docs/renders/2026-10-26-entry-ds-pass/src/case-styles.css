@@ -558,7 +558,7 @@
     /* ── Sign-in screens (approved: ui-screens/sign-in, otp, returning-unlock) ──
        Shared shell: brand-subtle blue top with logo and heading, white panel with a 24px rounded top. */
     .app-screen.auth { background: var(--tm-surface-brand-subtle); }
-    .auth-top { padding: var(--tm-space-xl) var(--tm-space-xl) var(--tm-space-3xl); }
+    .auth-top { padding: var(--tm-space-xl) var(--tm-space-page) var(--tm-space-3xl); }
     .auth-top--otp { padding: var(--tm-space-xl) var(--tm-space-lg) 28px; }
     .auth-logo { display: block; width: 174px; height: auto; }
     .auth-logo--sm { width: 168px; }
@@ -573,7 +573,7 @@
     .auth-link { margin-top: 14px; padding: 0; border: 0; background: none; cursor: pointer; font: inherit; font-size: var(--tm-font-size-body-lg);
       font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-brand); }
     .auth-back:focus-visible, .auth-link:focus-visible, .otp-resend button:focus-visible { outline: 2px solid var(--tm-border-focus); outline-offset: var(--tm-space-xs); border-radius: var(--tm-radius-xs); }
-    .auth-panel { flex: 1; display: flex; flex-direction: column; padding: var(--tm-space-xl) var(--tm-space-xl) 0; background: var(--tm-surface-primary);
+    .auth-panel { flex: 1; display: flex; flex-direction: column; padding: var(--tm-space-xl) var(--tm-space-page) 0; background: var(--tm-surface-primary);
       border-radius: var(--tm-radius-2xl) var(--tm-radius-2xl) 0 0; }
     #scr-otp .auth-panel { padding-left: var(--tm-space-lg); padding-right: var(--tm-space-lg); }
     .auth-form { display: flex; flex-direction: column; gap: var(--tm-space-lg); }
@@ -714,3 +714,12 @@
       .bottom-sheet .sheet-title { flex-shrink: 0; }
       .bottom-sheet .sheet-body { flex: 1; min-height: 0; max-height: none; }
     }
+
+/* D-67 (margin 16): the compact task header sits on the page edge. The 48px icon targets step out 14px so the glyphs
+   sit on the 16 edge (48 - 20 glyph = 28, half = 14). The meta lines keep their offset from the back glyph (xs + 48 - 14). */
+#case-head.tm-header-task--compact { padding-left: var(--tm-space-page); padding-right: var(--tm-space-page); }
+#case-head #ch-back { margin-left: -14px; }
+#case-head #ch-help { margin-right: -14px; }
+#case-head .tm-header-task__meta { margin-left: calc(var(--tm-space-xs) + var(--tm-space-3xl) - 14px); }
+#case-head.tm-header-task--no-back .tm-header-task__title,
+#case-head.tm-header-task--no-back .tm-header-task__meta { padding-left: 0; margin-left: 0; }
