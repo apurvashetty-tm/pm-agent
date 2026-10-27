@@ -762,6 +762,17 @@ From an external (ChatGPT) review, each point verified before acting.
   2. **7f wording:** title **"Waiting for the call record"**, line **"Your prescription is saved. We'll confirm it once the record arrives."** (`call.submittedTitle`, `call.submittedText`). Names the real reason it is pending; doesn't start with "Prescription…", so it can't be mistaken for the green "Prescription confirmed". **Rejected:** "under review" — most of these confirm automatically when the record arrives; it reads like an audit of the doctor.
   3. **New state `s-medicine-disabled`** (case page with a Disabled medicine: struck-through name, grey row and tag, arrow kept to re-enable) — it was missing from the approved set. Contrast of the greyed name to be checked at promotion (RULES item 7); darken if it fails.
 
+### D-69 · Final-audit answers; Profile ported; navigation later — 2026-10-27
+- **Decision (Apurva):**
+  1. **Amber card on 15 / B3** keeps the rendered text (D-58 points 21, 23): "Forwarded to Health Advisor · Health Advisor unavailable right now. Read the script, then end the call." Point 17's "The HA couldn't join" is superseded; `call.haNoJoin` removed (no separate state — 15 is it).
+  2. **Copy removed:** `call.callingYou`, `call.connecting` (retired by D-58 point 14), `call.stayOnLine` (no state; the transfer script covers it), `case.callEndedEarly` (retired with `b-ended-early`; contains "50") — removed **at promotion**, together with `b-ended-early`, so the old approved file never shows a missing message. **Kept:** `case.offlineAction` (the offline-action notice, G12). "Try again in a minute" stays (D-65, timing).
+  3. **Inline links** (Terms, Privacy, call Doctor Ops in a sentence) are exempt from the 48px tap rule (RULES item 6 already says so).
+  4. **No picture needed** for: cancelled faster-sign-in prompt, no-screen-lock skip (behaviour only); the **unclear confirm result** — the button stays on "Confirming…" (same as `a-confirm-busy`) while the app checks.
+  5. **Disabled medicine name** darkened to reach AA (it measured ~2.2:1) — D-68 point 3.
+  6. **Profile sheet ported as is** from the current app with design-system fixes only, **plus a Faster sign-in on/off row** (the offer promises "Turn it off from your profile"). Entry point = the profile icon on Home. Logout confirmation sheet ported as is. Proper redesign of Profile and the content of **Help** → next design round (backlog).
+  7. **Navigation:** no change now. When a second real destination is approved (e.g. diagnostic tests, consultations), use a **bottom tab bar**, not a hamburger; no navigation inside a case. Logged as a next-version idea.
+  8. `app-logic.md` §2 brought up to date with D-61 / D-64 / D-65 / D-66; §6 outcome names spell out "Health Advisor".
+
 ## Design system changes made for this work
 
 ### D-60 · Secondary button without drop shadow (design system) — 2026-10-24 · **REVERTED same day**

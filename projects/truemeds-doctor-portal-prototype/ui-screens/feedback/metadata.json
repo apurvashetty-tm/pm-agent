@@ -432,27 +432,6 @@
     "retain": "case data",
     "copy": "approved (Apurva, D-54)"
   },
-  "call.callingYou": {
-    "pattern": "B",
-    "trigger": "doctor taps Call patient; request accepted",
-    "slot": "busy main button label",
-    "next": "answer the incoming call on the phone",
-    "clear": "leg 1 answered or failed",
-    "retain": "case data",
-    "copy": "proposed (D-58, 2026-10-22) — needs Apurva approval"
-  },
-  "call.connecting": {
-    "pattern": "B",
-    "trigger": "leg 1 answered",
-    "slot": "busy main button label",
-    "next": "wait for the patient to answer",
-    "clear": "leg 2 answered or failed",
-    "retain": "case data",
-    "copy": "proposed (D-58, 2026-10-22) — needs Apurva approval",
-    "placeholders": [
-      "name"
-    ]
-  },
   "call.notThrough": {
     "pattern": "F2",
     "trigger": "request refused or leg-1 network/vendor error",
@@ -525,15 +504,6 @@
     "retain": "case data and notes",
     "copy": "approved (Apurva, 2026-10-24, D-58 point 23)"
   },
-  "call.haNoJoin": {
-    "pattern": "W1",
-    "trigger": "transfer leg failed, call still live",
-    "slot": "warning notice inside the pinned bar",
-    "next": "end the call on the phone",
-    "clear": "call ended",
-    "retain": "case data and notes",
-    "copy": "approved (Apurva, 2026-10-24, D-58 point 23)"
-  },
   "call.transferFailed": {
     "pattern": "W1",
     "trigger": "after a failed transfer",
@@ -587,15 +557,6 @@
     "clear": "transfer done or failed",
     "retain": "case data",
     "copy": "approved (Apurva, 2026-10-24, D-58 point 23)"
-  },
-  "call.stayOnLine": {
-    "pattern": "N1",
-    "trigger": "transfer started",
-    "slot": "neutral notice inside the pinned bar, above the busy button",
-    "next": "read it to the patient",
-    "clear": "transfer done or failed",
-    "retain": "case data",
-    "copy": "proposed (2026-10-24, storyboard B — route decided at the tap) — needs Apurva approval"
   },
   "call.forwardedTell": {
     "pattern": "N1",
@@ -740,5 +701,23 @@
     "clear": "leaving the offer, or a successful retry",
     "retain": "—",
     "copy": "approved (Apurva, 2026-10-26, D-66)"
+  },
+  "profile.logoutBlocked": {
+    "pattern": "N1",
+    "trigger": "Profile opened while a case is open",
+    "slot": "notice in the Profile sheet, in place of Log out",
+    "next": "close the case, then Log out",
+    "clear": "case closed",
+    "retain": "—",
+    "copy": "ported from the current app (D-69); \"order\" → \"case\" to match the app's terms"
+  },
+  "profile.logoutConfirm": {
+    "pattern": "none",
+    "trigger": "Log out tapped in Profile",
+    "slot": "text of the \"Log out?\" sheet",
+    "next": "Log out (destructive) or Stay signed in",
+    "clear": "sheet closed",
+    "retain": "—",
+    "copy": "ported from the current app (D-69); \"orders\" → \"cases\""
   }
 }

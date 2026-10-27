@@ -46,8 +46,6 @@ export const messages = {
   "case.callEndedEarly": "Call ended before 50 seconds.",
   "case.noPickup": "Patient didn't pick up.",
   "case.didntConnect": "Call didn't connect.",
-  "call.callingYou": "Calling your phone…",
-  "call.connecting": "Connecting to {name}…",
   "call.notThrough": "Call didn't go through.",
   "call.doctorMissed": "You didn't answer the call.",
   "call.onCall": "On call…",
@@ -56,14 +54,12 @@ export const messages = {
   "call.endedEarly": "Call too short to write a prescription.",
   "call.resultMissing": "We didn't get the call result.",
   "call.transferMissed": "The call ended before the transfer. The Health Advisor will call the patient back.",
-  "call.haNoJoin": "The Health Advisor couldn't join. Read the script, then end the call.",
   "call.transferFailed": "Health Advisor unavailable right now. Read the script, then end the call.",
   "call.endCallFirst": "End the call to get your next case.",
   "call.skipHa": "Health Advisor call will be skipped.",
   "call.scriptNeutral": "\"I'm writing your prescription now. Our Health Advisor will help you with the next steps.\"",
   "call.checkingHa": "Checking for a Health Advisor…",
   "call.connectingHa": "Transferring…",
-  "call.stayOnLine": "Tell the patient: \"Please stay on the line — I'm connecting you to our Health Advisor.\"",
   "call.forwardedTell": "\"I've written your prescription. Our Health Advisor isn't available right now — they'll call you back shortly.\"",
   "call.stillOnCall": "Are you still on the call?",
   "call.checkingResult": "Checking call result…",
@@ -79,7 +75,9 @@ export const messages = {
   "offer.screenLockLine": "Unlock the app with your PIN or pattern, not an OTP.",
   "offer.screenLockTrust": "Your screen lock stays on your phone",
   "offer.enableFailed": "Couldn’t turn on faster sign-in.",
-  "offer.offline": "You’re offline. Check your connection."
+  "offer.offline": "You’re offline. Check your connection.",
+  "profile.logoutBlocked": "You can log out after this case is closed.",
+  "profile.logoutConfirm": "You’ll stop getting cases until you sign in again."
 } as const;
 export type FeedbackMessageId = keyof typeof messages;
 export function message(id: FeedbackMessageId, values: Record<string, string | number> = {}): string {

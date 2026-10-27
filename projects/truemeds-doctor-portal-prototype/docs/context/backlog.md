@@ -37,6 +37,7 @@ Order = the order we work in.
 
 ## 2c. Promotion (after approval)
 - [ ] Move calling + entry + Home + case working copies into `ui-screens/`; replace old calling (`b-*`, `c-*`) and duplicate closed states (`e-prescription-confirmed`, `e-transferred`, `e-forwarded`, `e-patient-unavailable` → calling 10a, 14, 10b, 9).
+- [ ] Remove `case.callEndedEarly` and the retired recipes (`b-*`, old `c-*`, duplicate `e-*`) at the same time (D-69).
 - [ ] Update `ui-screens/README.md`; update the guards for D-61/62/65/66/67 and re-run them on the promoted files.
 - [ ] Freeze: mark approved in the decision log; new PR for Apurva to merge.
 
@@ -51,6 +52,11 @@ Order = the order we work in.
 - [ ] OQ-032 — Health Advisor reservation and allocation.
 - [ ] OQ-033 — ops review queue for submitted cases whose record never arrives.
 - [ ] Separate discussion: a late record that shows talk time under 50 s.
+
+## 4b. Next design round (logged, not in this release)
+- [ ] Profile redesign (today: ported as is + faster sign-in toggle, D-69).
+- [ ] Help: what the "?" opens on Home and the case page.
+- [ ] App navigation for future features — bottom tab bar once a second destination is approved (D-69 point 7).
 
 ## 5. After the final render
 - [ ] Page-by-page PRD (job to be done, use cases, screenshots, decision logic).

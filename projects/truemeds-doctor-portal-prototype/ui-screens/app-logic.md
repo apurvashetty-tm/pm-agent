@@ -42,7 +42,8 @@ Order on first use: Sign-in → OTP → (offer, once) → Home → Case. Returni
 - All OTP limits are enforced by the server; the app only shows them.
 
 **Faster sign-in** (D-45, D-47)
-- Offered once, on its own screen, after the first successful OTP sign-in on a phone that supports it and has it off. **Turn on** → phone prompt → Home. Cancel or failure → Home, no error. **Not now** → Home; offered again later `[OPEN OQ-023]`; always available in Profile.
+- Offered once, on its own screen, after the first successful OTP sign-in on a phone that supports it and has it off. **Turn on** → phone prompt → Home. **Cancelled** prompt → back to the offer, no message. **Failed** → stays on the offer with "Couldn't turn on faster sign-in." · Try again · Not now (D-61, D-65). **Offline** → "You're offline. Check your connection." (D-66). **Not now** → Home; offered again later `[OPEN OQ-023]`; can be turned on or off in Profile (D-69).
+- **Which unlock (D-64):** fingerprint or face if set up on the phone; otherwise the phone's **screen lock** (PIN / pattern / password); if the phone has no screen lock at all, the offer is skipped.
 - Returning unlock: the phone's own prompt; 3 failed tries → fall back to OTP `[MOCK]`. "Not you? Switch account" → sign-in. If unavailable: neutral notice, **Use OTP instead** becomes the main button.
 - Wording follows the phone ("Face ID" / "fingerprint"); never suggest Truemeds stores biometric data.
 
@@ -59,7 +60,8 @@ Order on first use: Sign-in → OTP → (offer, once) → Home → Case. Returni
 - **Window ends during a case:** the case is never interrupted. The ending card then offers only **Back to Home**; Home shows the ended state.
 - **Prescriptions today:** a count only, no earnings. A case counts when its prescription is confirmed. It stays visible after availability ends.
 - **No cases:** neutral notice "No cases right now. Try again in a minute." Auto re-check `[OPEN OQ-019]`.
-- Notifications bell and Help on Home; the bell never inside a case. Profile holds Wallet · Coming soon, faster sign-in and Logout.
+- Notifications bell, Help and Profile icons on Home; the bell never inside a case. Help's content is not designed yet (backlog).
+- **Profile sheet** (ported from the current app with design-system fixes, D-69; full redesign later): doctor name and role · today's earnings (earned, incentive) · User manual · **Faster sign-in on/off** · **Log out** (destructive). During an open case Log out is replaced by "You can log out after this case is closed." Log out asks first: "Log out? — You'll stop getting cases until you sign in again." · Log out · Stay signed in.
 - One phone active at a time. Session stays valid through an open case (no OTP over a live case).
 
 **Source:** approved screens in `ui-screens/home/`; reference behaviour in `ui-screens/home/home-reference.js`.
@@ -153,13 +155,13 @@ Retired: `b-missed-call`, `b-didnt-connect` (sheets) — replaced by the automat
 |---|---|---|---|
 | Cat4 | — | Confirm prescription | Prescription confirmed |
 | Pilot | HA skipped (by customer, system, or the doctor's Skip HA) | Confirm prescription | Prescription confirmed |
-| Pilot | Value meds, HA required | Confirm & transfer | Transferred to HA |
-| Pilot | Non-value meds, HA required | Confirm & forward | Forwarded to HA |
+| Pilot | Value meds, HA required | Confirm & transfer | Transferred to Health Advisor |
+| Pilot | Non-value meds, HA required | Confirm & forward | Forwarded to Health Advisor |
 
 - **Skip HA** only after the gate, for **both Pilot types** (Value and Non-Value Meds) whenever an HA call follows the doctor call and it isn't already skipped — no other conditions (D-59). Opens the reason sheet: Patient declined HA call · Clinically not required · Repeat patient — familiar with medicines. Choosing a reason applies it at once. On a call with a result the final button becomes **Confirm prescription**; during a live transfer call the case then waits for the call result (state 17, D-58 point 14). Skip HA is also offered after a missed transfer (state 16, D-58 point 24).
 - Cat4 never shows anything about HA. HA-skipped Pilot never shows Transfer or Forward.
 - **Transfer vs forward** (D-57): transfer = the patient is handed to an HA on the same call; forward = an HA calls the patient back separately. A failed transfer goes as a forward; the doctor sees `call.ha-no-join`, then `call.transfer-failed` (§5, D-58).
-- Confirm: button shows "Confirming…", everything else disabled, no second submit. Failure: notice in the bar "Couldn't confirm. Nothing was lost. Try again." An unclear result is checked before retrying (no double confirm).
+- Confirm: button shows "Confirming…", everything else disabled, no second submit. Failure: notice in the bar "Couldn't confirm. Nothing was lost." (D-65). **Unclear result** (no answer from the server): the button stays on "Confirming…" — the same screen as `a-confirm-busy` — while the app checks; then it shows the confirmed card or the failure notice, never a second submit (D-69). An unclear result is checked before retrying (no double confirm).
 - **Analytics:** the four rows are four different outcomes and must stay separate events — never worked out from the button text (Cat4 and HA-skipped share a label). Event names are Engineering's choice `[LOCKED D-50]`.
 - What decides case type, value vs non-value, HA required and HA-skip eligibility comes from the backend `[OPEN — see CLAUDE.md "Never silently invent"]`.
 
