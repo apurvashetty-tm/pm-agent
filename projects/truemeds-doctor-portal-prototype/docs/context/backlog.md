@@ -31,6 +31,10 @@ Order = the order we work in.
 - [ ] Terminal round: margin 16 on every working copy, re-render all families + calling storyboard (`docs/renders/2026-10-26-margin-16/TERMINAL-BRIEF.md`).
 - [ ] Main-thread check, then Apurva's final approval of calling + entry + Home + case.
 
+## 2b2. Final audit (agreed 2026-10-27)
+- [ ] Terminal audit (6 points) — `docs/renders/2026-10-27-final-audit/TERMINAL-BRIEF.md`; gaps to Apurva; fix; then promotion.
+- [ ] Folders on promotion: `case/` (case page, calling, sheets, closed, stress) and **`prescribe/`** (all `d-*`), Apurva 2026-10-27.
+
 ## 2c. Promotion (after approval)
 - [ ] Move calling + entry + Home + case working copies into `ui-screens/`; replace old calling (`b-*`, `c-*`) and duplicate closed states (`e-prescription-confirmed`, `e-transferred`, `e-forwarded`, `e-patient-unavailable` → calling 10a, 14, 10b, 9).
 - [ ] Update `ui-screens/README.md`; update the guards for D-61/62/65/66/67 and re-run them on the promoted files.
