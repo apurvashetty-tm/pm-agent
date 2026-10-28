@@ -773,6 +773,17 @@ From an external (ChatGPT) review, each point verified before acting.
   7. **Navigation:** no change now. When a second real destination is approved (e.g. diagnostic tests, consultations), use a **bottom tab bar**, not a hamburger; no navigation inside a case. Logged as a next-version idea.
   8. `app-logic.md` §2 brought up to date with D-61 / D-64 / D-65 / D-66; §6 outcome names spell out "Health Advisor".
 
+### D-70 · Profile is a page; Skip HA sheet wording; fix-round answers — 2026-10-28
+- **Decision (Apurva):**
+  1. **Profile opens as a page**, not a bottom sheet: task header with Back and the title "Profile" (no logo); grey page with white cards at the 16 margin — name and role · Today's earnings · User manual and Faster sign-in rows · **Log out last in the content** (not pinned: not the page's main action; fewer accidental taps). Open case → the "You can log out after this case is closed." note. **Log out? stays a sheet** (confirmations are sheets). Scales to Help, settings, earnings history later.
+  2. **Log out is a text button with no icon** — icon-only buttons are kept for back, close and help; a logout icon is ambiguous and the action has a cost; §9.1 gives finalising actions no icon.
+  3. **Skip HA sheet wording** (Health Advisor spelled out, D-58 point 23; the button keeps "Skip HA"): title "Skip the Health Advisor call"; "Patient declined the Health Advisor call — The patient didn't want the call"; "Clinically not required — Health Advisor counselling isn't needed"; "Repeat patient, familiar with the medicines — Counselled in an earlier order". Reason codes sent to the backend unchanged.
+  4. **Callback and Skip HA sheets open over the new calling screens** (callback over 7a Calling, Skip HA over 12) — the old call card no longer shows behind them.
+  5. **Callback errors moved into the registry** ("Pick a date and a time." / "Pick a date." / "Pick a time."); wiring them in code is a rebuild item.
+  6. **Faster sign-in toggle behaviour** defined (app-logic §3); no extra picture.
+  7. **Dose choices stay by medicine form** (tablet ½·1·2, syrup 2.5·5·10 ml, drops 1·2·3, inhaler 1·2 puffs, injection, cream) — a fixed 7-row table keyed by form, not per-medicine logic; "Max doses a day" (1–4), "Every X hours" (4·6·8·12) and durations are already one standard list.
+  8. Mock name/role in Profile are prototype data; User manual link → backlog. Option rows may wrap at 360 (the one-line rule is for buttons).
+
 ## Design system changes made for this work
 
 ### D-60 · Secondary button without drop shadow (design system) — 2026-10-24 · **REVERTED same day**

@@ -410,8 +410,10 @@
     .medicine-item { cursor: pointer; user-select: none; transition: opacity 150ms ease; }
     .medicine-item:active { background: var(--tm-surface-secondary); }
     .medicine-item:focus-visible { outline: 2px solid var(--tm-border-focus); outline-offset: 2px; border-radius: var(--tm-radius-sm); }
-    .medicine-item.disabled .med-icon, .medicine-item.disabled .med-info { opacity: 0.5; }
+    /* Fix round G10 (D-68 pt 3): only the icon tile fades. Text keeps full opacity so the struck name, Qty and Disabled tag reach AA (>= 4.5:1). */
+    .medicine-item.disabled .med-icon { opacity: 0.5; }
     .medicine-item.disabled .med-name { text-decoration: line-through; color: var(--tm-content-secondary); }
+    .medicine-item.disabled .tm-row__fact { color: var(--tm-content-secondary); }
     .med-icon { display: flex; align-items: center; justify-content: center; color: var(--tm-content-secondary); }
     .med-detail { display: flex; flex-wrap: wrap; column-gap: var(--tm-space-sm); }
     .med-detail > span:first-child { flex-basis: 100%; }          /* dosage · duration on its own line */

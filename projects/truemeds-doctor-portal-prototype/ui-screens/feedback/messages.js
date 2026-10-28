@@ -78,7 +78,10 @@
   "offer.enableFailed": "Couldn’t turn on faster sign-in.",
   "offer.offline": "You’re offline. Check your connection.",
   "profile.logoutBlocked": "You can log out after this case is closed.",
-  "profile.logoutConfirm": "You’ll stop getting cases until you sign in again."
+  "profile.logoutConfirm": "You’ll stop getting cases until you sign in again.",
+  "case.callbackPickBoth": "Pick a date and a time.",
+  "case.callbackPickDate": "Pick a date.",
+  "case.callbackPickTime": "Pick a time."
 });
   window.TMFeedback = Object.freeze({
     messages,

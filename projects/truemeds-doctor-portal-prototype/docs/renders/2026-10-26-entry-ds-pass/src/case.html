@@ -625,13 +625,13 @@ body.concept-closed #success-toast{pointer-events:auto}
 
   <!-- Skip HA Sheet -->
   <div id="sheet-skip-ha" class="bottom-sheet tm-sheet">
-    <header class="tm-sheet__header"><h2 class="tm-sheet__title">Skip HA call</h2><button class="tm-btn tm-btn--quiet tm-btn--icon tm-sheet__close" onclick="closeSheet()" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button></header>
+    <header class="tm-sheet__header"><h2 class="tm-sheet__title">Skip the Health Advisor call</h2><button class="tm-btn tm-btn--quiet tm-btn--icon tm-sheet__close" onclick="closeSheet()" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button></header>
     <div class="tm-sheet__body">
       <!-- [OPEN DECISION] OQ-008: skip eligibility TBD -->
       <p class="tm-sheet__subtitle">Select reason</p>
-      <button class="tm-option" onclick="confirmSkipHA('Patient declined HA call')"><span class="tm-option__title">Patient declined HA call</span><span class="tm-option__desc">Patient explicitly did not want an HA call</span></button>
-      <button class="tm-option" onclick="confirmSkipHA('Clinically not required')"><span class="tm-option__title">Clinically not required</span><span class="tm-option__desc">Doctor assessed HA counselling is not needed</span></button>
-      <button class="tm-option" onclick="confirmSkipHA('Repeat patient — familiar with medicines')"><span class="tm-option__title">Repeat patient — familiar with medicines</span><span class="tm-option__desc">Patient was counselled in a prior order</span></button>
+      <button class="tm-option" onclick="confirmSkipHA('Patient declined HA call')"><span class="tm-option__title">Patient declined the Health Advisor call</span><span class="tm-option__desc">The patient didn’t want the call</span></button>
+      <button class="tm-option" onclick="confirmSkipHA('Clinically not required')"><span class="tm-option__title">Clinically not required</span><span class="tm-option__desc">Health Advisor counselling isn’t needed</span></button>
+      <button class="tm-option" onclick="confirmSkipHA('Repeat patient — familiar with medicines')"><span class="tm-option__title">Repeat patient, familiar with the medicines</span><span class="tm-option__desc">Counselled in an earlier order</span></button>
     </div>
   </div>
 
@@ -1088,6 +1088,7 @@ body.concept-closed #success-toast{pointer-events:auto}
     'a-loading':               () => { switchScenario(CAT4); document.body.classList.add('concept-loading'); main.insertBefore(skeleton(), tools.nextSibling); },
     'a-load-failed':           () => { switchScenario(CAT4); document.body.classList.add('concept-load-failed'); const card = document.createElement('div'); card.className = 'tm-card concept-new'; card.appendChild(notice('error', 'alert', MSG('case.loadFailed'), 'alert-circle')); main.appendChild(card); $('case-actionbar').appendChild(pinnedTryAgain()); },
     'a-offline':               () => { switchScenario(CAT4); noticeAboveBar(notice('warning', 'status', MSG('case.offline'), 'alert-triangle')); },
+    'a-offline-action':        () => { switchScenario(CAT4); noticeAboveBar(notice('error', 'alert', MSG('case.offlineAction'), 'alert-circle')); },   // fix round G12: the attempted action replaces the passive offline notice (app-logic §10, feedback-rules §4)
     'd-injection-default':     () => { switchScenario(CAT4); openPS(4); },
     // D-54 renders of the other Prescribe forms and schedules, on medicines that already exist in the scenarios
     'd-syrup':                 () => { switchScenario(CAT4); openPS(5); },
@@ -1096,6 +1097,9 @@ body.concept-closed #success-toast{pointer-events:auto}
     'd-every-x-hours':         () => { switchScenario(CAT4); const m = DOCTOR_STATE.currentCase.medicines.find(x => x.id === 1); m.interval = 'every_x_hours'; m.hours = 6; openPS(1); },
     'd-sos-only':              () => { switchScenario(CAT4); const m = DOCTOR_STATE.currentCase.medicines.find(x => x.id === 2); m.interval = 'sos'; openPS(2); },
     'd-weekly':                () => { switchScenario(CAT4); const m = DOCTOR_STATE.currentCase.medicines.find(x => x.id === 3); m.interval = 'weekly'; openPS(3); },
+    'd-alt-days':              () => { switchScenario(CAT4); const m = DOCTOR_STATE.currentCase.medicines.find(x => x.id === 1); m.interval = 'alt_days'; openPS(1); },   // fix round G3 (app-logic §8 How often)
+    'd-monthly':               () => { switchScenario(CAT4); const m = DOCTOR_STATE.currentCase.medicines.find(x => x.id === 1); m.interval = 'monthly'; openPS(1); },   // fix round G4
+    'd-inhaler':               () => { switchScenario('pilot_ha_skipped_customer'); openPS(3); },   // fix round G5: Salbutamol Inhaler fixture (form inhaler)
     'd-duration-picker':       () => { switchScenario(CAT4); openPS(1); EDIT_STATE.durOpen = true; renderPrescribe(); return later(() => { const p = document.getElementById('ps-dur-panel'); if (p) p.scrollIntoView({ block: 'center' }); }, 200); },
     'd-food-selected':         () => { switchScenario(CAT4); openPS(1); EDIT_STATE.food = 'before_food'; renderPrescribe(); },
     'a-confirm-busy':          () => { passGate(CAT4); const b = $('main-cta-btn'); b.classList.add('tm-btn--busy'); b.disabled = true; b.setAttribute('aria-busy', 'true'); b.innerHTML = '<span class="tm-spinner" aria-hidden="true"></span>' + MSG('case.confirming'); $('ab-secondary').querySelectorAll('button').forEach(x => x.disabled = true); $('case-actionbar').querySelectorAll(':scope > button').forEach(x => { if (x !== b) x.disabled = true; }); $('pdb-view-rx-btn').disabled = true; },

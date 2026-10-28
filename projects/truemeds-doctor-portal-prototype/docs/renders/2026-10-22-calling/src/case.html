@@ -632,13 +632,13 @@ body.concept-closed #success-toast{pointer-events:auto}
 
   <!-- Skip HA Sheet -->
   <div id="sheet-skip-ha" class="bottom-sheet tm-sheet">
-    <header class="tm-sheet__header"><h2 class="tm-sheet__title">Skip HA call</h2><button class="tm-btn tm-btn--quiet tm-btn--icon tm-sheet__close" onclick="closeSheet()" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button></header>
+    <header class="tm-sheet__header"><h2 class="tm-sheet__title">Skip the Health Advisor call</h2><button class="tm-btn tm-btn--quiet tm-btn--icon tm-sheet__close" onclick="closeSheet()" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button></header>
     <div class="tm-sheet__body">
       <!-- [OPEN DECISION] OQ-008: skip eligibility TBD -->
       <p class="tm-sheet__subtitle">Select reason</p>
-      <button class="tm-option" onclick="confirmSkipHA('Patient declined HA call')"><span class="tm-option__title">Patient declined HA call</span><span class="tm-option__desc">Patient explicitly did not want an HA call</span></button>
-      <button class="tm-option" onclick="confirmSkipHA('Clinically not required')"><span class="tm-option__title">Clinically not required</span><span class="tm-option__desc">Doctor assessed HA counselling is not needed</span></button>
-      <button class="tm-option" onclick="confirmSkipHA('Repeat patient — familiar with medicines')"><span class="tm-option__title">Repeat patient — familiar with medicines</span><span class="tm-option__desc">Patient was counselled in a prior order</span></button>
+      <button class="tm-option" onclick="confirmSkipHA('Patient declined HA call')"><span class="tm-option__title">Patient declined the Health Advisor call</span><span class="tm-option__desc">The patient didn’t want the call</span></button>
+      <button class="tm-option" onclick="confirmSkipHA('Clinically not required')"><span class="tm-option__title">Clinically not required</span><span class="tm-option__desc">Health Advisor counselling isn’t needed</span></button>
+      <button class="tm-option" onclick="confirmSkipHA('Repeat patient — familiar with medicines')"><span class="tm-option__title">Repeat patient, familiar with the medicines</span><span class="tm-option__desc">Counselled in an earlier order</span></button>
     </div>
   </div>
 
@@ -1140,9 +1140,9 @@ body.concept-closed #success-toast{pointer-events:auto}
     'b-post-gate-cat4':        () => { passGate(CAT4); },
     'b-post-gate-forward':     () => { passGate(FWD); },
     // C. Sheets
-    'c-callback':              () => { passGate(CAT4); openSheet('sheet-callback'); },
-    'c-callback-error':        () => { passGate(CAT4); openSheet('sheet-callback'); confirmScheduleCallback(); },
-    'c-skip-ha':               () => { passGate(VALUE); openSheet('sheet-skip-ha'); },
+    'c-callback':              () => { switchScenario(CAT4); initiateCall(); return later(() => { setBar(busy('Calling ' + first() + '…'), callbackRow()); showScript(); showBack(); openSheet('sheet-callback'); }, 250); },   // D-69 fix: over 7a Calling, not the old call card
+    'c-callback-error':        () => { switchScenario(CAT4); initiateCall(); return later(() => { setBar(busy('Calling ' + first() + '…'), callbackRow()); showScript(); showBack(); openSheet('sheet-callback'); confirmScheduleCallback(); }, 250); },
+    'c-skip-ha':               () => { passGate(VALUE); allRx(); return later(() => { showScript(); openSheet('sheet-skip-ha'); }, 200); },   // over 12 Confirm & transfer
     // D. Prescribe screen
     'd-default':               () => { switchScenario(CAT4); openPS(1); },
     'd-scrolled':              () => { switchScenario(CAT4); openPS(1); later(() => { $('ps-body').scrollTop = 420; }, 150); return 'wait'; },
@@ -1177,7 +1177,7 @@ body.concept-closed #success-toast{pointer-events:auto}
     'a-confirm-busy':          () => { passGate(CAT4); const b = $('main-cta-btn'); b.classList.add('tm-btn--busy'); b.disabled = true; b.setAttribute('aria-busy', 'true'); b.innerHTML = '<span class="tm-spinner" aria-hidden="true"></span>' + MSG('case.confirming'); $('ab-secondary').querySelectorAll('button').forEach(x => x.disabled = true); $('case-actionbar').querySelectorAll(':scope > button').forEach(x => { if (x !== b) x.disabled = true; }); $('pdb-view-rx-btn').disabled = true; },
     'a-confirm-failed':        () => { passGate(CAT4); noticeAboveBar(notice('error', 'alert', MSG('case.confirmFailed'), 'alert-circle')); },
     'a-release-failed':        () => { switchScenario(CAT4); showLeave(); const b = $('cl-release'); b.classList.add('tm-btn--busy'); b.disabled = true; b.innerHTML = '<span class="tm-spinner" aria-hidden="true"></span>Releasing…'; $('cl-stay').disabled = true; $('cl-x').disabled = true; setTimeout(() => { leave.hidden = true; b.classList.remove('tm-btn--busy'); b.disabled = false; b.textContent = 'Release case'; $('cl-stay').disabled = false; $('cl-x').disabled = false; noticeInContent(notice('error', 'alert', MSG('case.releaseFailed'), 'alert-circle')); ready(); }, 300); return 'wait'; },
-    'c-callback-failed':       () => { passGate(CAT4); openSheet('sheet-callback'); selectCallbackDay('today'); selectCallbackTime('15:00'); const a = document.querySelector('#sheet-callback .tm-sheet__actions'); const g = document.createElement('div'); g.className = 'concept-new concept-gap'; g.appendChild(notice('error', 'alert', MSG('case.callbackFailed'), 'alert-circle')); a.before(g); },
+    'c-callback-failed':       () => { switchScenario(CAT4); initiateCall(); return later(() => { setBar(busy('Calling ' + first() + '…'), callbackRow()); showScript(); showBack(); openSheet('sheet-callback'); selectCallbackDay('today'); selectCallbackTime('15:00'); const a = document.querySelector('#sheet-callback .tm-sheet__actions'); const g = document.createElement('div'); g.className = 'concept-new concept-gap'; g.appendChild(notice('error', 'alert', MSG('case.callbackFailed'), 'alert-circle')); a.before(g); }, 250); },
     'd-rx-failed':             () => { switchScenario(CAT4); openRxOverlay(); $('rx-doc-wrapper').style.display = 'none'; $('rx-hint').style.display = 'none'; $('rx-controls').style.display = 'none'; const f = document.createElement('div'); f.className = 'concept-new concept-stack'; f.appendChild(notice('error', 'alert', MSG('rx.loadFailed'), 'alert-circle')); $('rx-overlay-body').appendChild(f); const bar = document.createElement('div'); bar.className = 'tm-actionbar concept-new'; bar.appendChild(pinnedTryAgain()); $('rx-overlay').appendChild(bar); },
     'a-no-medicines':          () => { switchScenario(CAT4); renderMedicines([]); $('medicines-count').style.display = 'none'; const e = document.getElementById('medicines-empty'); e.hidden = false; e.innerHTML = '<div class="tm-empty"><p class="tm-empty__title">' + MSG('case.noMedicines') + '</p></div>'; },
     'a-long-content':          () => { switchScenario(CAT4); const c = DOCTOR_STATE.currentCase; c.patient_name = 'Venkataraman Ramachandran Iyer'; c.patient_age = 54; document.getElementById('case-head').classList.add('is-long'); c.medicines[0].name = 'Amoxicillin Clavulanate Dispersible'; c.medicines[0].strength = '625mg'; render(); },

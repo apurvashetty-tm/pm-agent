@@ -719,5 +719,32 @@
     "clear": "sheet closed",
     "retain": "—",
     "copy": "ported from the current app (D-69); \"orders\" → \"cases\""
+  },
+  "case.callbackPickBoth": {
+    "pattern": "F1",
+    "trigger": "Confirm callback tapped with the date and/or time missing",
+    "slot": "line under the time grid in the callback sheet",
+    "next": "pick the missing value",
+    "clear": "both picked",
+    "retain": "what was picked",
+    "copy": "approved as built (current app); moved into the registry 2026-10-28 (D-70)"
+  },
+  "case.callbackPickDate": {
+    "pattern": "F1",
+    "trigger": "Confirm callback tapped with the date and/or time missing",
+    "slot": "line under the time grid in the callback sheet",
+    "next": "pick the missing value",
+    "clear": "both picked",
+    "retain": "what was picked",
+    "copy": "approved as built (current app); moved into the registry 2026-10-28 (D-70)"
+  },
+  "case.callbackPickTime": {
+    "pattern": "F1",
+    "trigger": "Confirm callback tapped with the date and/or time missing",
+    "slot": "line under the time grid in the callback sheet",
+    "next": "pick the missing value",
+    "clear": "both picked",
+    "retain": "what was picked",
+    "copy": "approved as built (current app); moved into the registry 2026-10-28 (D-70)"
   }
 }

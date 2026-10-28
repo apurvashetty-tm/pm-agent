@@ -54,3 +54,22 @@ body{margin:0;background:var(--tm-surface-secondary)}
 .overlay{position:absolute;inset:0;background:rgba(0,0,0,.32);z-index:5;display:flex;flex-direction:column;justify-content:flex-end}
 [hidden]{display:none!important}
 @media(min-width:768px){.phone{border:1px solid var(--tm-border-subtle);border-radius:var(--tm-radius-2xl);box-shadow:var(--tm-shadow-header)}}
+
+/* D-70 Profile page (tokens only): task header with Back, grey page, white cards at the 16 page margin, Log out last. */
+.profile-page{flex:1;min-height:0;display:flex;flex-direction:column;background:var(--tm-surface-secondary)}
+.profile-header{flex:none;background:var(--tm-surface-brand-subtle);padding:var(--tm-space-xs) var(--tm-space-page) var(--tm-space-xs) var(--tm-space-xs)}
+.profile-body{flex:1;overflow:auto;padding:var(--tm-space-lg) var(--tm-space-page) calc(var(--tm-space-xl) + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:var(--tm-space-md)}
+.profile-identity{display:flex;align-items:center;gap:var(--tm-space-md);padding:var(--tm-space-lg)}
+.profile-avatar{flex:none;width:var(--tm-space-3xl);height:var(--tm-space-3xl);border-radius:var(--tm-radius-full);background:var(--tm-surface-brand-subtle);color:var(--tm-content-brand);display:flex;align-items:center;justify-content:center;font-weight:var(--tm-font-weight-semibold)}
+.profile-page .pt-t{margin:0;font-size:var(--tm-font-size-body-lg);line-height:var(--tm-font-lineheight-md);font-weight:var(--tm-font-weight-semibold);color:var(--tm-content-primary)}
+.profile-page .pt-d{margin:0;font-size:var(--tm-font-size-body-md);line-height:var(--tm-font-lineheight-sm);color:var(--tm-content-secondary)}
+.profile-earnings{padding:var(--tm-space-lg)}
+.profile-label{margin:0 0 var(--tm-space-sm);font-size:var(--tm-font-size-body-md);line-height:var(--tm-font-lineheight-sm);font-weight:var(--tm-font-weight-semibold);color:var(--tm-content-primary)}
+.profile-earnings-row{display:flex;gap:var(--tm-space-2xl)}
+.profile-rows{padding:0 var(--tm-space-lg)}
+.profile-row{display:flex;align-items:center;justify-content:space-between;width:100%;min-height:var(--tm-space-3xl);padding:var(--tm-space-sm) 0;background:none;border:0;font:inherit;color:var(--tm-content-primary);cursor:pointer;text-align:left}
+.profile-row + .profile-row{border-top:1px solid var(--tm-border-subtle)}
+.profile-row-label{display:flex;align-items:center;gap:var(--tm-space-sm);font-size:var(--tm-font-size-body-lg);line-height:var(--tm-font-lineheight-md)}
+.profile-row .tm-toggle{flex:none}
+.profile-logout{margin-top:var(--tm-space-sm)}
+.sheet-feedback{margin-bottom:var(--tm-space-sm)}

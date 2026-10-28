@@ -54,7 +54,7 @@ Order = the order we work in.
 - [ ] Separate discussion: a late record that shows talk time under 50 s.
 
 ## 4b. Next design round (logged, not in this release)
-- [ ] Profile redesign (today: ported as is + faster sign-in toggle, D-69).
+- [ ] Profile redesign (today: a page with the ported content + faster sign-in toggle, D-69/D-70); User manual link.
 - [ ] Help: what the "?" opens on Home and the case page.
 - [ ] App navigation for future features — bottom tab bar once a second destination is approved (D-69 point 7).
 
