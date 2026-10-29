@@ -75,14 +75,14 @@ Order on first use: Sign-in → OTP → (offer, once) → Home → Case. Returni
 
 | Stage | What the doctor sees | Bar (top → bottom) | Header Back / phone back |
 |---|---|---|---|
-| Ready to call (`call.ready`) | Order details + View Rx, medicines, notes, Call card | **Call patient** | Back before the first attempted call: **not decided** (Release, D-48, reopened — D-58) |
+| Ready to call (`call.ready`) | Order details + View Rx, medicines, notes (no script card before Call — D-58 pt 18, D-71) | **Call patient** | Header Back → "Leave this case?" sheet: **Release case** / Stay on this case (D-58 pt 20, OQ-024) |
 | Calling and connecting (`call.calling-you`, `call.connecting`) | Same | Busy button (§5 table) | Back hidden; phone back → toast "Finish this case first. Then you can go back to Home." |
 | On call (`call.on-call`, `call.on-call-transfer`) | Call card with the end-of-call script moves above the medicines | **On call…** busy, static phone icon, no button (other cases) · or notice + **Callback** (transfer cases). **No End call** — the doctor ends the call on the phone | Blocked, as above |
 | Call not valid (`call.ended-early`, `call.result-missing`) | Call card back below the medicines | Notice · **Call again** · then **Callback** · **Unavailable** side by side | Blocked |
 | After 50 s (`call.valid`, `call.transfer-ready`) | Call card with script on top | Final button (§6) · 📅 **Callback** · ⏭ **Skip HA** (only when allowed, §6) | Blocked |
 | Closed (`completed` / `unavailable`) | Outcome card directly under Order details (where the script was, D-58 point 16); content read-only and muted | **Request next case** · Back to Home (only **Back to Home**, as primary, if availability ended) | Header Back hidden; phone back → Home |
 
-**Leaving a case:** an **attempted call** = leg 2 answered (the patient picked up) (D-58). Once a call is attempted, leaving is blocked until the case is closed (callback, unavailable, confirm). Before that, whether Back releases the case is **not decided** (D-58; OQ-024). Help stays available at every stage and is the way to reach Doctor Ops when something keeps failing. App closed or phone off mid-case → reopening goes straight back into the case `[OPEN OQ-025, backend]`.
+**Leaving a case:** an **attempted call** = leg 2 answered (the patient picked up) (D-58). Once a call is attempted, leaving is blocked until the case is closed (callback, unavailable, confirm). Before that, header **Back** opens the "Leave this case?" sheet — **Release case** (the case returns to the queue) or Stay on this case (D-58 point 20, OQ-024; also during Calling 7a and the 7b question). The unassign action itself is a backend dependency (OQ-024). Help stays available at every stage and is the way to reach Doctor Ops when something keeps failing. App closed or phone off mid-case → reopening goes straight back into the case `[OPEN OQ-025, backend]`.
 
 **End-of-call script** (D-58 points 18, 21, 24 — copy keys in `messages.json`). Shown from the tap on Call while a call may be live; **hidden once the call has ended** (no one to read it to), except after a failed transfer (15) and B3, where the doctor is still on the line:
 - Transfer (Pilot, Value Meds): `call.scriptTransfer` — "I'm writing your prescription now. Please stay on the line — I'll connect you to our Health Advisor."
@@ -140,7 +140,7 @@ Order on first use: Sign-in → OTP → (offer, once) → Home → Case. Returni
 
 **Fallback B (documented, D-58 point 15):** `g1-generic-confirm` (Confirm prescription, neutral script) · `g2-checking-ha` ("Checking for a Health Advisor…") · `g3b-forwarded` (amber card "Forwarded to Health Advisor" + script; Request next case checks the call has ended, as 15b — D-63). Transfer path in B reuses 13–15.
 
-Retired: `b-missed-call`, `b-didnt-connect` (sheets) — replaced by the automatic close and the notices. `a-leave-sheet` parked while Release is not decided. The old state name **hold** for "didn't connect" is retired (old Flag 4).
+Retired: `b-missed-call`, `b-didnt-connect` (sheets) — replaced by the automatic close and the notices. `a-leave-sheet` / `s7e-leave-sheet` is the approved Release sheet (D-58 point 20). The old state name **hold** for "didn't connect" is retired (old Flag 4).
 
 **Update 2026-10-23 (D-58 point 14, temporarily approved):** no separate Connecting / On call states; the app shows the call status within about 5 s of the partner reporting it (method: Engineering). Transfer button only after the backend confirms the call is valid.
 
