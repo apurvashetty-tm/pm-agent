@@ -10,9 +10,7 @@ This Home package follows that reference pattern: editable HTML entries, shared 
 
 ## Files
 
-- availability.html: saved setup alternatives, tap/wheel selector.
-- home.html: active Home reference.
-- add-availability.html: tap/wheel extension sheet selector.
+- home.html: all Home states as one reference page. Setup (`setup-wheel`), active Home (`active`), the add-time sheet (`add-wheel`), and Profile (`profile`, `profile-case-open`, `logout-confirm`) are states of this page (`?state=<state>`). The earlier `availability.html` and `add-availability.html` were retired on 2026-10-29; their states are in `home.html`.
 - home-reference.js / home-reference.css: shared editable renderer and geometry.
 - home.native.ts: shared native token imports and typed duration/availability contract.
 - Existing PNGs remain approved visual evidence. Wheel add variant was explicitly approved on 2026-10-13.

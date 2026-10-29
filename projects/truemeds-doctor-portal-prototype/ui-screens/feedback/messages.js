@@ -44,7 +44,6 @@
   "case.callbackFailed": "Couldn’t schedule the callback. Your time is kept.",
   "rx.loadFailed": "Couldn’t load the prescription.",
   "case.noMedicines": "No medicines on this order.",
-  "case.callEndedEarly": "Call ended before 50 seconds.",
   "case.noPickup": "Patient didn't pick up.",
   "case.didntConnect": "Call didn't connect.",
   "call.notThrough": "Call didn't go through.",

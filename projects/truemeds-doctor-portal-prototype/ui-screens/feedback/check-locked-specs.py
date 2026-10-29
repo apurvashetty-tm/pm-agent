@@ -340,7 +340,7 @@ STD_JS = r"""(exemptSel) => {
     if (cs.textOverflow === 'ellipsis' && el.scrollWidth > el.clientWidth + 1 && el.textContent.trim()) add('1.4', `text truncated with ellipsis: "${el.textContent.trim().slice(0, 40)}"`);
   }
 
-  // --- 1.1 side margin 24 on every top-level block (screen root = .screen, #mobile-column or the sign-in phone)
+  // --- 1.1 side margin on every top-level block (screen root = .screen, #mobile-column or the sign-in phone). D-67: page margin is 16 (was 24).
   const root = [...document.querySelectorAll('#mobile-column,.screen,#doctor-login-preview .login-phone')].find(vis) || document.body;
   const rr = root.getBoundingClientRect();
   const BLOCK = '.tm-field,.tm-notice,.tm-card,.tm-status-card,.tm-row,.tm-chip-group,.tm-chip-grid,.chip-grid,.tm-btn--block,.tm-btn-pair,#ab-secondary';
@@ -352,11 +352,11 @@ STD_JS = r"""(exemptSel) => {
         a = a.parentElement; }
       if (inset) continue; }
     const r = el.getBoundingClientRect();
-    if (Math.abs(r.left - rr.left - 24) > 0.6 || Math.abs(rr.right - r.right - 24) > 0.6) add('1.1', `${el.className.toString().split(' ')[0] || el.tagName} margins ${Math.round(r.left - rr.left)}/${Math.round(rr.right - r.right)} (need 24/24)`);
+    if (Math.abs(r.left - rr.left - 16) > 0.6 || Math.abs(rr.right - r.right - 16) > 0.6) add('1.1', `${el.className.toString().split(' ')[0] || el.tagName} margins ${Math.round(r.left - rr.left)}/${Math.round(rr.right - r.right)} (need 24/24)`);
   }
 
   // --- 2.4 sentence case on buttons and titles; 2.6 "case" not "order"; 2.7 retired labels
-  const names = new Set(['Home','Rx','HA','OTP','Doctor','Ops','Truemeds','Dr','Face','ID','Apurva','Order','Help','Help','Call','Wait']);
+  const names = new Set(['Home','Rx','HA','OTP','Doctor','Ops','Truemeds','Dr','Face','ID','Apurva','Order','Help','Help','Call','Wait','Health','Advisor']);   // 'Health Advisor' is a proper noun (D-58 pt 23, D-70 pt 3)
   const data = [...document.querySelectorAll('#ch-name,.ch-name,#ps-title,.tm-row .tm-text-body-lg,.tm-row .tm-text-body-strong,.tm-row strong')].map(e => e.textContent).join(' ');
   data.split(/\s+/).forEach(w => names.add(w.replace(/[^A-Za-z]/g, '')));
   const RETIRED = ['Confirm Order', 'Confirm & Transfer', 'Confirm & Forward', 'Skip HA Call', 'Next Order', 'Order Confirmed', 'Call Patient', 'Retry Call', 'Mark as Unavailable', 'Mark Unavailable', 'Schedule Callback', 'End Call', 'Customer unavailable', 'Request Next Case'];
@@ -475,7 +475,7 @@ STD_JS = r"""(exemptSel) => {
     if (!s.contains(document.activeElement)) add('4.7', `focus not inside open sheet "${s.id || s.className}"`);
   }
 
-  // --- 5.1 sheet template: title + close, no handle, no divider, 24 side margins, 16 header→content
+  // --- 5.1 sheet template: title + close, no handle, no divider, 16 side margins (D-67; was 24), 16 header→content
   for (const s of document.querySelectorAll('.tm-sheet,.bottom-sheet,.cl-sheet')) {
     if (!vis(s)) continue;
     const id = s.id || s.className.toString().split(' ')[0];
@@ -486,10 +486,10 @@ STD_JS = r"""(exemptSel) => {
     const cs = getComputedStyle(s);
     const body = s.querySelector('.tm-sheet__body,.sheet-body') || s;
     const bcs = getComputedStyle(body);
-    if (PX(bcs.paddingLeft) + (body === s ? 0 : 0) !== 24 && Math.abs(s.getBoundingClientRect().left - document.querySelector('#mobile-column')?.getBoundingClientRect().left || 0) < 999) {
+    if (PX(bcs.paddingLeft) + (body === s ? 0 : 0) !== 16 && Math.abs(s.getBoundingClientRect().left - document.querySelector('#mobile-column')?.getBoundingClientRect().left || 0) < 999) {
       const sheetLeft = s.getBoundingClientRect().left;
       const cLeft = (s.querySelector('.tm-sheet__title,.sheet-title span,.cl-head h2') || body).getBoundingClientRect().left;
-      if (Math.abs(cLeft - sheetLeft - 24) > 0.6) add('5.1', `sheet "${id}" content inset ${Math.round(cLeft - sheetLeft)}px (need 24)`);
+      if (Math.abs(cLeft - sheetLeft - 16) > 0.6) add('5.1', `sheet "${id}" content inset ${Math.round(cLeft - sheetLeft)}px (need 16, D-67)`);
     }
     const hdr = s.querySelector('.tm-sheet__header,.sheet-title,.cl-head');
     if (hdr && PX(getComputedStyle(hdr).borderBottomWidth) > 0) add('5.1', `sheet "${id}" header has a divider`);
@@ -543,7 +543,7 @@ STD_JS = r"""(exemptSel) => {
     if (vis(t)) add('5.8', `phone-back toast is a light notice, must be the dark .tm-toast (D-52): "${t.textContent.trim().slice(0, 40)}"`);
   }
 
-  // --- D-54 automatic checks (round 15): R1 focus outline; R2 toast; R3 side margin 24 on every top-level block; R4 Help never disabled; R6 busy labels; R7 no placeholder dash.
+  // --- D-54 automatic checks (round 15): R1 focus outline; R2 toast; R3 side margin on every top-level block (16, D-67; was 24); R4 Help never disabled; R6 busy labels; R7 no placeholder dash.
   const ae = document.activeElement;
   if (ae && ae !== document.body && ae.matches('input,textarea,[tabindex="-1"]') && vis(ae)) {
     const fcs = getComputedStyle(ae);
@@ -569,7 +569,7 @@ STD_JS = r"""(exemptSel) => {
         a = a.parentElement; }
       if (inset) continue; }
     const rr3 = root.getBoundingClientRect(), r = el.getBoundingClientRect();
-    if (Math.abs(r.left - rr3.left - 24) > 0.6 && r.width > 0) add('R3', `${el.tagName.toLowerCase()}${el.className ? '.' + String(el.className).split(' ')[0] : ''} starts at ${Math.round(r.left - rr3.left)}px (need 24)`);
+    if (Math.abs(r.left - rr3.left - 16) > 0.6 && r.width > 0) add('R3', `${el.tagName.toLowerCase()}${el.className ? '.' + String(el.className).split(' ')[0] : ''} starts at ${Math.round(r.left - rr3.left)}px (need 24)`);
   }
   const help = document.getElementById('ch-help');
   if (help && vis(help) && help.disabled) add('R4', 'Help button is disabled on the case page');

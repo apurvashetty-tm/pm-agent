@@ -405,15 +405,6 @@
     "retain": "none",
     "copy": "approved (Apurva, D-53)"
   },
-  "case.callEndedEarly": {
-    "pattern": "W1",
-    "trigger": "call ended before the 50s valid-call minimum",
-    "slot": "warning notice inside the pinned bar, directly above the buttons",
-    "next": "call again or schedule a callback (buttons)",
-    "clear": "new call or case closed",
-    "retain": "case data and chosen medicines",
-    "copy": "approved (Apurva, D-54)"
-  },
   "case.noPickup": {
     "pattern": "W1",
     "trigger": "call not answered",

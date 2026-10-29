@@ -6,11 +6,12 @@ html,body{margin:0;height:100%}
 body.tm{background:var(--tm-surface-brand-subtle);color:var(--tm-content-primary)}
 /* Task header (D-42): title, no logo, no Back: first screen when the app opens (D-47). Pinned footer (no typing, RULES §8.4). */
 .screen{height:100dvh;box-sizing:border-box;display:flex;flex-direction:column;background:var(--tm-surface-brand-subtle);font-family:var(--tm-font);overflow:hidden;position:relative}
-.intro{padding:var(--tm-space-lg) var(--tm-space-xl) var(--tm-space-2xl)}
+.intro{padding:var(--tm-space-lg) var(--tm-space-page) var(--tm-space-2xl)}
+.login-logo{display:block;width:174px;height:auto;margin-bottom:var(--tm-space-lg)}
 .head{margin-top:var(--tm-space-2xl)}
 h1{margin:0 0 var(--tm-space-sm)}
 .intro p{margin:0;font-size:var(--tm-font-size-body-md);line-height:var(--tm-font-lineheight-sm);color:var(--tm-content-secondary)}
-.panel{flex:1;min-height:0;display:flex;flex-direction:column;padding:var(--tm-space-2xl) var(--tm-space-xl) var(--tm-space-xl);border-radius:var(--tm-radius-2xl) var(--tm-radius-2xl) 0 0;background:var(--tm-surface-primary)}
+.panel{flex:1;min-height:0;display:flex;flex-direction:column;padding:var(--tm-space-2xl) var(--tm-space-page) var(--tm-space-xl);border-radius:var(--tm-radius-2xl) var(--tm-radius-2xl) 0 0;background:var(--tm-surface-primary)}
 .prompt{margin:0;display:flex;flex-direction:column;align-items:center;gap:var(--tm-space-lg);text-align:center}
 .prompt-icon{width:64px;height:64px;display:grid;place-items:center;border-radius:var(--tm-radius-lg);background:var(--tm-surface-brand-subtle);color:var(--tm-content-brand)}
 .prompt-icon .tm-icon{width:var(--tm-space-2xl);height:var(--tm-space-2xl)}
@@ -33,13 +34,13 @@ html.capture .review-controls{display:none}
 </head><body class="tm">
 <div class="review-controls"><label for="review-variant">Reference state</label><select id="review-variant" aria-label="Returning unlock state"><option value="fingerprint">Fingerprint</option><option value="face">Face ID</option><option value="screen-lock">Screen lock</option><option value="pending">Pending (OS prompt open)</option><option value="cancelled">Cancelled (returns unchanged)</option><option value="platform-retry">Platform retry (OS-owned)</option><option value="unavailable">Unlock unavailable</option></select></div>
 <main class="screen" aria-label="Returning doctor quick unlock">
- <header class="intro"><div class="head"><h1 class="tm-text-title-lg">Hello, Dr. Apurva</h1><p>Let’s check in on your patients today.</p></div></header>
+ <header class="intro"><img class="login-logo" src="../../brand/truemeds-for-doctors.svg" alt="truemeds for doctors"><div class="head"><h1 class="tm-text-title-lg">Hello, Dr. Apurva</h1><p>Let’s check in on your patients today.</p></div></header>
  <section class="panel" aria-labelledby="ready">
   <div class="prompt"><div class="prompt-icon" aria-hidden="true"><span class="tm-icon" id="variant-icon" data-icon="fingerprint"></span></div><h2 id="ready">Ready when you are</h2></div>
   <div class="tm-notice tm-notice--neutral unlock-notice" id="unlock-notice" role="status" hidden><span class="tm-icon" data-icon="info-circle" aria-hidden="true"></span><span id="unlock-error"></span></div>
   <div class="footer">
    <button class="tm-btn tm-btn--primary tm-btn--lg tm-btn--block" id="unlock-action" type="button"><span id="unlock-label">Unlock with fingerprint</span></button>
-   <button class="tm-btn tm-btn--secondary tm-btn--lg tm-btn--block" id="fallback" type="button">Use OTP instead</button>
+   <button class="tm-btn tm-btn--quiet tm-btn--lg tm-btn--block" id="fallback" type="button">Use OTP instead</button>
    <button class="tm-btn tm-btn--quiet account" type="button">Not you? <strong>Switch account</strong></button>
   </div>
  </section>
@@ -68,7 +69,7 @@ if(sel.value==='unavailable'){
  const n=document.getElementById('unlock-notice');n.hidden=false;
  document.getElementById('unlock-error').textContent=window.TMFeedback.msg('unlock.unavailable');
  action.hidden=true;
- fallback.classList.remove('tm-btn--secondary');fallback.classList.add('tm-btn--primary');
+ fallback.classList.remove('tm-btn--quiet');fallback.classList.add('tm-btn--primary');   // D-66 A1: the only way forward here, so primary
 }
 TMIcons.render(document);
 </script>
