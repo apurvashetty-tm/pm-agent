@@ -31,3 +31,18 @@ Apurva approved the screens on 2026-10-28 (decisions D-58 → D-70). This round 
 - Change any design, copy or behaviour; touch the design system; edit the decision log, backlog, open questions or project truth.
 - `index.html` / `app.js` behaviour changes (path fixes only if a copied file needs them — report them).
 - Publish, commit, open or merge pull requests (main thread does it). Git: `git status` only.
+
+
+---
+
+## Answers to the round-1 stop items (2026-10-29, D-71) — continue from step 1
+
+1. **One `case/case.html`.** Use the **calling file's card markup and CSS** for the live-call card: heading "End-of-call script", label inside the script box hidden (D-58 pts 16, 17, 21). Remove the entry-file "Call" heading.
+2. **Ready state shows no script card** (D-58 pt 18). If an `a-*`/`d-*`/`e-*`/`s-*` state shows the card before Call, hide it there.
+3. **8px offset:** find the leftover 24px side margin in either stylesheet and set it to `var(--tm-space-page)` (16, D-67). Re-run the DOM probe: every card, notice and button on the 16 edge.
+4. **Re-baseline:** a picture that differs **only** because of 1–3 is re-rendered and replaces the approved one (list each in the report with the reason). Any other difference → stop and report.
+5. **`c-*` sheets:** use the new renders (over 7a / 12). Intended (D-70 pt 4).
+6. **`a-confirm-busy`, `a-releasing`, `a-rx-viewer`:** re-compare with animations frozen (`*{animation:none!important;transition:none!important}` at capture). Spinner-frame-only differences are accepted; anything else → report.
+7. **`g3a-connecting-ha`:** not promoted (fallback B transfer reuses 13).
+
+Then carry on with steps 2–8 as written.

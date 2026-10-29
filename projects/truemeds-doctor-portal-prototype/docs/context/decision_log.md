@@ -784,6 +784,16 @@ From an external (ChatGPT) review, each point verified before acting.
   7. **Dose choices stay by medicine form** (tablet ½·1·2, syrup 2.5·5·10 ml, drops 1·2·3, inhaler 1·2 puffs, injection, cream) — a fixed 7-row table keyed by form, not per-medicine logic; "Max doses a day" (1–4), "Every X hours" (4·6·8·12) and durations are already one standard list.
   8. Mock name/role in Profile are prototype data; User manual link → backlog. Option rows may wrap at 360 (the one-line rule is for buttons).
 
+### D-71 · Promotion answers: one case page, calling markup wins — 2026-10-29
+- **Decision (Apurva, on the main thread's recommendation):**
+  1. **One case page file**, not two. The **calling markup is the approved one** (D-58 points 16, 17, 21): the live-call card is titled **"End-of-call script"** and the label inside the script box is hidden. The entry-pass "Call" heading is a leftover from before D-58.
+  2. **No script card before the doctor taps Call** (D-58 point 18). If an approved `a-*`, `d-*`, `e-*` or `s-*` picture shows a card in the ready state, that picture is stale.
+  3. **The 8px offset is a leftover 24px margin** in one of the two stylesheets; **16 is correct** (D-67). Fix the leftover, don't keep both.
+  4. Pictures that change **only** because of points 1–3 are re-rendered and the new picture replaces the approved one. Any other difference stops the round.
+  5. The callback and Skip HA sheet pictures are replaced by the new renders over 7a and 12 (D-70 point 4) — intended.
+  6. Busy / spinner differences (`a-confirm-busy`, `a-releasing`, `a-rx-viewer`): compare with animations frozen; spinner-frame-only differences are accepted.
+  7. **`g3a-connecting-ha` is not promoted** — fallback B's transfer path reuses state 13 (app-logic §5).
+
 ## Design system changes made for this work
 
 ### D-60 · Secondary button without drop shadow (design system) — 2026-10-24 · **REVERTED same day**
