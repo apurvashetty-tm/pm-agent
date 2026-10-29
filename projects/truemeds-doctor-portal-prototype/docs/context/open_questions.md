@@ -272,7 +272,7 @@ On phones without VoLTE, mobile data pauses during a normal call, so the app can
 ### OQ-032 — HA reservation and allocation [OPEN — Apurva + Engineering + Ops, 2026-10-24]
 Target design (D-58 point 15, option A) needs an HA reserved at the start of the doctor's call, so the route (transfer / forward) is known before Confirm. Today HAs click Assign and wait 60 s for a live transfer, else get a failed-transfer order — about 35% of single-call cases end as two calls, and failed-transfer callback TAT suffers. Apurva is relooking at HA allocation separately (outside this project); until reservation exists, the fallback (option B) applies.
 
-### OQ-033 — Ops review for calls without a record [OPEN — Apurva + Ops, 2026-10-24]
+### OQ-033 — Ops review for calls without a record [PROVISIONALLY DECIDED — D-73, 2026-10-29: 30-minute configurable cut-off approved; SOP, monitoring and earnings provisional] [was OPEN — Apurva + Ops, 2026-10-24]
 D-58 point 20 depends on Ops. To lock: (1) a review queue for "Prescription submitted" cases whose call record **never arrives** (after how long?); (2) what Ops does with each — confirm, cancel, or callback — and who tells the patient; (3) the flag and per-doctor metric for Unavailable and for submitted-without-record (thresholds, SOP, who acts); (4) whether doctor earnings count only after confirmation. Lock before the doctor app goes live.
 **Separate discussion (Apurva, 2026-10-24):** what happens when a submitted case's record arrives late showing **under 50 s or no answer** — not part of this review queue; to be decided on its own (relates to the 50-second rule across dropped calls).
 

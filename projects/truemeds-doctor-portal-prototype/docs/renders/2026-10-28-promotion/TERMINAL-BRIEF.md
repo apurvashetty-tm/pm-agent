@@ -46,3 +46,17 @@ Apurva approved the screens on 2026-10-28 (decisions D-58 → D-70). This round 
 7. **`g3a-connecting-ha`:** not promoted (fallback B transfer reuses 13).
 
 Then carry on with steps 2–8 as written.
+
+
+---
+
+## Close-out round (2026-10-29, D-73) — finish and stop
+
+The main thread changed the design system (already built): `.tm-header-task--compact` now uses the 16 page margin and steps the Back/Help/× targets out so their glyphs sit on the 16 edge; meta and no-back offsets follow; new `.tm-notice--question` variant.
+
+1. **Guard 5.12:** remove the four local overrides (`case/case.html` `.tm-notice.concept-question` rule; `case/case-styles.css` `#case-head` compact padding, `#ch-back`/`#ch-help` margins, meta margin, no-back title/meta). Use the `tm-notice--question` class for the 7b question. Pixel-compare every case and prescribe state at 390/360: must be identical to the promoted pictures (the design-system rules reproduce the same positions). Any difference → stop and report.
+2. **Profile:** the promoted code is approved (D-70). Re-render the three Profile pictures from it and replace the round-2 ones.
+3. **Sheet labels:** leave as typed (rebuild item).
+4. **Retire** `home/availability.html` and `home/add-availability.html`; update `home/README.md`, `home/NATIVE-HANDOFF.md` and `ui-screens/README.md` to point to `home.html` states (`setup-wheel`, `add-wheel`, …).
+5. **Fixed clock:** set a fixed date/time in the capture scripts (e.g. 2026-10-28 15:00 IST via Playwright clock or a page override) and re-render `a-releasing`, `a-rx-viewer` and any other state that shows a date.
+6. Run the four guards: **0 failures**. Update `REPORT.md` (append "Close-out") and `ui-screens/REVIEW.html`. Then stop. No commits.

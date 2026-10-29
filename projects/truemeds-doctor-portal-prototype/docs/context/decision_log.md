@@ -802,6 +802,13 @@ From an external (ChatGPT) review, each point verified before acting.
   4. **Open engineering / ops questions (OQ-030 → OQ-033) go into the PRD as open questions.** Until answered, **polling is the working assumption** (app requests status from the backend), clearly marked as an assumption.
   5. **Prototype build plan** (architecture for the prototype only — not the production HLD/LLD, which is Engineering's) written in parallel with the promotion, agreed before building.
 
+### D-73 · Ops rules for calls without a record (provisional); promotion close-out — 2026-10-29
+- **Decision (Apurva):**
+  1. **Calls without a record → Ops review queue after 30 minutes** from the doctor's confirm, **configurable** (a backend setting). Approved.
+  2. **Provisionally approved (Ops SOP, to confirm after the first weeks):** Ops checks the call in the telecom partner's portal — found and ≥ 50 s → confirm; not found or unclear → Ops calls the patient: consultation happened → confirm; didn't → cancel the prescription, send the case back to the queue, Ops tells the patient. The order is held until confirmed; Ops clears the queue within 2 working hours. **Monitoring (owner: Doctor Ops):** rolling 7 days, at least 10 attempted cases — Patient unavailable rate > 2× team average, or ≥ 3 confirmed without a record → flag; first time coaching, repeat within 30 days written warning, third time new cases paused pending review. **Earnings** count only once a case is confirmed — by the record or by Ops; cancelled cases don't count.
+  3. **Health Advisor reservation** stays with Apurva's separate HA allocation work; the fallback flow applies until then.
+  4. **Promotion close-out:** guard 5.12 fixed in the design system, not as exceptions — `.tm-header-task--compact` follows the 16 page margin (D-67) and `.tm-notice--question` is the 7b question (D-62 pt 2); the case page drops its local overrides. Profile: the promoted code is the approved look (D-70 page); pictures re-baselined. Sheet labels typed in code are accepted for now (rebuild item; the error lines are already in the registry). Log out has no icon (D-70). `home/availability.html` and `home/add-availability.html` are retired — `home.html` covers the same states; NATIVE-HANDOFF points there. Captures use a fixed clock date so pictures don't change daily.
+
 ## Design system changes made for this work
 
 ### D-60 · Secondary button without drop shadow (design system) — 2026-10-24 · **REVERTED same day**
