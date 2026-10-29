@@ -42,7 +42,7 @@ Order = the order we work in.
 - [ ] Freeze: mark approved in the decision log; new PR for Apurva to merge.
 
 ## 2d. After promotion — order agreed 2026-10-29 (Apurva)
-1. [ ] **Prototype rebuild** from the frozen `ui-screens/` (D-56, D-72): build plan + rebuild checklist first (Cat4 demo, new Netlify link alongside the current one), then journey by journey, checked against the pictures. Installable from the Netlify link (opens full screen from the home screen, no review controls); demo mode with one order type and the happy path.
+1. [ ] **Prototype rebuild** from the frozen `ui-screens/` (D-56, D-72): build plan + rebuild checklist first; covers all order types and states; the phone demo alone is Cat4 happy path; new Netlify link alongside the current one; then journey by journey, checked against the pictures. Installable from the Netlify link (opens full screen from the home screen, no review controls); demo mode with one order type and the happy path.
 2. [ ] **Token inspector** page generated from the screens (which tokens each element uses) for engineering. Figma snapshot only if the design team asks.
 3. [ ] **PRD** page by page, engineering hand-off pack, then the rest of this backlog.
 

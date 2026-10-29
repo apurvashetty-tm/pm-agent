@@ -797,7 +797,7 @@ From an external (ChatGPT) review, each point verified before acting.
 ### D-72 · After the screens: prototype first; demo and hosting; open questions in the PRD — 2026-10-29
 - **Decision (Apurva):**
   1. **Order:** prototype rebuild → token inspector → PRD and the rest.
-  2. **Demo mode** uses **Cat4** (doctor call only), happy path: sign-in → Home → case → call → Prescription confirmed → next case. Review controls only in a separate review mode.
+  2. **The prototype covers everything**: all order types (Cat4, Pilot Value / Non-Value Meds, HA skipped, fallback B) and every state in app-logic. **Only the phone demo** (the installable UI/UX touch-and-feel test) is limited to **Cat4, happy path**: sign-in → Home → case → call → Prescription confirmed → next case. Review controls only in review mode.
   3. **The rebuilt prototype lives at a new Netlify link alongside the current site** until Apurva approves it; installable from the link (opens full screen from the home screen).
   4. **Open engineering / ops questions (OQ-030 → OQ-033) go into the PRD as open questions.** Until answered, **polling is the working assumption** (app requests status from the backend), clearly marked as an assumption.
   5. **Prototype build plan** (architecture for the prototype only — not the production HLD/LLD, which is Engineering's) written in parallel with the promotion, agreed before building.
