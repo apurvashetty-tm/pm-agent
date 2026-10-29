@@ -811,3 +811,10 @@ User identified missing HTML/native linkage. Inspected actual sign-in and OTP HT
 - One-screen experiment (`docs/renders/2026-10-25-card-tray-experiment/`): Apurva chose **C5** (tint + tone edge, no shadow; neutral grey-100 fill) and **T3** (action bar hairline + upward shadow). Recorded under D-62; design system updated and rebuilt.
 - **D-63:** Request next case on 15 and B3 checks the call has ended; new copy `call.endCallFirst`; app-logic row 15b.
 - **New `docs/context/backlog.md`** — the single list of agreed-but-not-applied work, in working order. Start there next session.
+
+## 2026-10-26 → 10-29 · Final screens, promotion in progress
+- **Decisions D-64 → D-71** (all in `decision_log.md`): round-7 answers + 8c Confirm blocked + screen-lock fallback (D-64); messages don't repeat buttons (D-65); entry-pass answers (D-66); **page margin 16 everywhere** (D-67, design team standard); keep "Confirm prescription", 7f = "Waiting for the call record", disabled-medicine state (D-68); final-audit answers, Profile ported + faster sign-in toggle, bottom tabs later (D-69); **Profile is a page**, Skip HA wording, sheets over new calling screens (D-70); promotion answers — one case page, calling markup wins (D-71).
+- **Design system:** status cards C5 (tint + tone edge, no shadow), action bar 16 all sides + hairline + upward shadow, `--tm-space-page` 16.
+- **Renders:** calling `docs/renders/2026-10-22-calling/` (storyboard 31 states); entry/Home/case `docs/renders/2026-10-26-entry-ds-pass/src` + `2026-10-26-margin-16/round-1` (review page `REVIEW.html`); final audit `2026-10-27-final-audit/`; fix rounds `2026-10-27-fix-round/round-1,2`.
+- **Now:** terminal is running the promotion (`docs/renders/2026-10-28-promotion/TERMINAL-BRIEF.md` + D-71 answers). Its `candidate/` folder is work in progress — don't publish it until the report is in.
+- **Next:** check the promotion report (pixel compare, guards 0 failures) → mark frozen in the decision log → publish → open a new PR (PR #15 already merged) → Apurva merges. Then backlog §3 rebuild items, §4 engineering/ops questions, §4b next design round, §5 PRD.
