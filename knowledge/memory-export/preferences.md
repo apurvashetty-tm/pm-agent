@@ -1,4 +1,4 @@
-<!-- memory path: /preferences.md · last updated in memory: 2026-10-16 -->
+<!-- memory path: /preferences.md · last updated in memory: 2026-10-28 -->
 ---
 name: preferences
 description: How Apurva wants Claude to work — output style, PRD conventions, working cadence.
@@ -26,3 +26,5 @@ aliases: []
 - [stated] The rules-first standard must not kill creativity: it is not all-or-nothing ("not 0 or 1") — balance freedom and rules, and be clear about when to allow freedom and when to define and enforce rules.
 - [stated] When Claude writes or changes an md file for her review, open it in the side panel (send/render it) — don't just name the file path.
 - [stated] Use tm-chotu (Truemeds knowledge package in pm-agent `knowledge/context/tm-chotu/`) extensively whenever there are open questions or to understand how things at Truemeds work now or historically.
+- [stated] Changes agreed mid-discussion but not acted on immediately should go on a to-do/backlog list rather than being lost in the chat.
+- [stated] Jira tickets created on the Portals and Cx - Engineering board (PPE): assign directly to Kundan Falodia.

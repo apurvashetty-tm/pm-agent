@@ -1,4 +1,4 @@
-<!-- memory path: /areas/doctor-portal.md · last updated in memory: 2026-10-17 -->
+<!-- memory path: /areas/doctor-portal.md · last updated in memory: 2026-10-29 -->
 ---
 name: doctor-portal
 description: Truemeds Doctor Portal revamp prototype — Apurva's view of its state and the UI fix direction; read when doctor portal comes up
@@ -28,6 +28,9 @@ aliases: [truemeds doctor portal, doctor portal prototype, doctor portal revamp]
 - [stated] Calling today: "Call patient" triggers Knowlarity click-to-call — Knowlarity rings the doctor's own phone first, then connects the patient; the doctor ends the call on the phone, not in the app. Exploring an alternative where Call patient / End call work like native call buttons inside the app so doctors never leave it.
 - [stated] Going with Knowlarity click-to-call for the first release (call ended on the doctor's phone, no End call in the app); in-app VoIP calling to be explored later
 - [stated] Click-to-call is not Knowlarity alone: it's Ozonetel + Knowlarity together — refer to it generically as the "telecom partner"
+- [stated] Orders needing both HA and doctor calls (e.g. Pilot, single-call/Value Meds flow) go through Ozonetel, which sends leg 1 (doctor) and leg 2 (customer) webhooks separately; today's system counts the 50 s for transfer from the tap on Call
 - [stated] The doctors using the portal are freelance doctors; case volume per doctor depends on their availability (rough, unconfirmed: ~12,000 orders touched by ~300 active doctors — she'll confirm the numbers)
 - [stated] Truemeds order categories (her definitions; don't conflate with tm-chotu's DOCTOR_CATEGORY): Cat4 = doctor category 4 = doctor call only; Valid Rx = valid Rx present, HA call only; Pilot = both doctor and HA calls — Value Meds when the doctor transfers the patient to the HA on the same call, Non-Value Meds when they are two separate calls. Which one a Pilot case becomes depends on HA availability (transfers, drop-offs).
 - [stated] A call counts as "attempted" only if leg 2 (the customer) is connected.
+- [stated] After the approved screens are promoted (Oct 2026), her order of work: 1) rebuild the prototype from the final screens, installable from the Netlify link to try on a phone like an app; 2) a design-token reference for engineers (they want to know which tokens each screen uses); 3) the page-by-page PRD and the rest
+- [stated] Rebuilt prototype will live on a new Netlify site named truemeds-doctor-app-preview (agreed 2026-10-29), alongside the current site until she approves it
