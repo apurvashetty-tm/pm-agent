@@ -809,6 +809,12 @@ From an external (ChatGPT) review, each point verified before acting.
   3. **Health Advisor reservation** stays with Apurva's separate HA allocation work; the fallback flow applies until then.
   4. **Promotion close-out:** guard 5.12 fixed in the design system, not as exceptions — `.tm-header-task--compact` follows the 16 page margin (D-67) and `.tm-notice--question` is the 7b question (D-62 pt 2); the case page drops its local overrides. Profile: the promoted code is the approved look (D-70 page); pictures re-baselined. Sheet labels typed in code are accepted for now (rebuild item; the error lines are already in the registry). Log out has no icon (D-70). `home/availability.html` and `home/add-availability.html` are retired — `home.html` covers the same states; NATIVE-HANDOFF points there. Captures use a fixed clock date so pictures don't change daily.
 
+### D-74 · Long waits are status text, not buttons — 2026-10-30
+- **Decision (Apurva):** a wait that lasts longer than a moment after a tap is shown as a **status line** — plain text with a small spinner, no button shape or fill (`.tm-status-line`, option B of `docs/renders/2026-10-25-card-tray-experiment/exp-busy-status.png`). Applies to **2 / 7a / 11 "Calling {name}…"**, **5 / 17 "Getting call result…"**, **7c "Checking call result…"**, **B2 "Checking for a Health Advisor…"**. Callback stays as the only button where it was. **Busy buttons stay** for short waits right after the doctor's own tap: Confirming…, Transferring…, Sending OTP…, Verifying…, Releasing…, Unlocking…, Turning on….
+- **Why:** a full blue button that stayed for a whole call looked tappable and did nothing — a false affordance on the most-used screen. Plain text = information, buttons = actions (same as the 7b question, D-62).
+- **Rejected:** A (today's busy button), C (tinted status strip — reads like the script card, could still look tappable).
+- **Follow-up:** an affordance audit of every approved screen (things that look tappable but aren't, and the reverse) before the freeze.
+
 ## Design system changes made for this work
 
 ### D-60 · Secondary button without drop shadow (design system) — 2026-10-24 · **REVERTED same day**

@@ -58,6 +58,7 @@ Link two files. Never copy values out of them.
 | Brief confirmation with nowhere else to show it | `.tm-toast` — dark, one line (two at most), above the bottom bar — §9.5 |
 | Outcome of a task (e.g. case completed) | Status card — §9.3 |
 | Mobile choice / detail panel | `.tm-sheet` over `.tm-overlay`, one template — §9.4 |
+| A long wait that is not an action (calling, getting a result, checking) | `.tm-status-line` — plain text + spinner, no button shape (D-74). Busy button only for short waits right after a tap |
 | A question above two answers | `.tm-notice--question` — plain centred text, no box (D-62) |
 | Mobile sticky action | `.tm-actionbar` — white, 16px padding on all four sides (+ safe area), hairline top edge + upward shadow so it separates from white cards (D-62, D-67). Only where content scrolls under the buttons; a footer that sits on a fixed panel (sign-in, OTP, unlock, offer) keeps the panel and needs no edge |
 
