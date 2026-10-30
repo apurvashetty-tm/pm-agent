@@ -419,5 +419,269 @@
     "clear": "new call or case closed",
     "retain": "case data",
     "copy": "approved (Apurva, D-54)"
+  },
+  "call.callingYou": {
+    "pattern": "B",
+    "trigger": "doctor taps Call patient; request accepted",
+    "slot": "busy main button label",
+    "next": "answer the incoming call on the phone",
+    "clear": "leg 1 answered or failed",
+    "retain": "case data",
+    "copy": "proposed (D-58, 2026-10-22) — needs Apurva approval"
+  },
+  "call.connecting": {
+    "pattern": "B",
+    "trigger": "leg 1 answered",
+    "slot": "busy main button label",
+    "next": "wait for the patient to answer",
+    "clear": "leg 2 answered or failed",
+    "retain": "case data",
+    "copy": "proposed (D-58, 2026-10-22) — needs Apurva approval",
+    "placeholders": [
+      "name"
+    ]
+  },
+  "call.notThrough": {
+    "pattern": "F2",
+    "trigger": "request refused or leg-1 network/vendor error",
+    "slot": "error notice inside the pinned bar, above the buttons",
+    "next": "Call again",
+    "clear": "new call",
+    "retain": "case data",
+    "copy": "proposed (D-58, 2026-10-22) — needs Apurva approval"
+  },
+  "call.doctorMissed": {
+    "pattern": "W1",
+    "trigger": "leg 1 not answered, busy or rejected",
+    "slot": "warning notice inside the pinned bar, above the buttons",
+    "next": "Call again",
+    "clear": "new call",
+    "retain": "case data",
+    "copy": "proposed (D-58, 2026-10-22) — needs Apurva approval"
+  },
+  "call.onCall": {
+    "pattern": "B",
+    "trigger": "leg 2 answered (other cases)",
+    "slot": "busy main button label, static phone icon",
+    "next": "end the call on the phone",
+    "clear": "call result arrives",
+    "retain": "case data and notes",
+    "copy": "proposed (D-58, 2026-10-22) — needs Apurva approval"
+  },
+  "call.onCallTransfer": {
+    "pattern": "N1",
+    "trigger": "leg 2 answered (transfer case)",
+    "slot": "neutral notice inside the pinned bar, above Callback",
+    "next": "wait for Confirm & transfer",
+    "clear": "gate reached or call ended",
+    "retain": "case data and notes",
+    "copy": "proposed (D-58, 2026-10-22) — needs Apurva approval"
+  },
+  "call.transferReady": {
+    "pattern": "N1",
+    "trigger": "our count reaches the gate time (transfer case)",
+    "slot": "neutral notice inside the pinned bar, above the buttons",
+    "next": "Confirm & transfer",
+    "clear": "transfer done or call ended",
+    "retain": "case data and notes",
+    "copy": "proposed (D-58, 2026-10-22) — needs Apurva approval"
+  },
+  "call.resultWait": {
+    "pattern": "B",
+    "trigger": "call ended (other cases)",
+    "slot": "busy main button label",
+    "next": "wait",
+    "clear": "result arrives or wait times out",
+    "retain": "case data and notes",
+    "copy": "proposed (D-58, 2026-10-22) — needs Apurva approval"
+  },
+  "call.endedEarly": {
+    "pattern": "W1",
+    "trigger": "result: total connected talk time on this case still under the gate",
+    "slot": "warning notice inside the pinned bar, above the buttons",
+    "next": "Call again, Callback or Unavailable",
+    "clear": "new call or case closed",
+    "retain": "case data and notes",
+    "copy": "proposed (2026-10-24, D-58 point 22) — needs Apurva approval"
+  },
+  "call.resultMissing": {
+    "pattern": "W1",
+    "trigger": "no result after the wait and the backend check",
+    "slot": "warning notice inside the pinned bar, above the buttons",
+    "next": "Call again, Callback or Unavailable; a late result updates the screen",
+    "clear": "result arrives, new call or case closed",
+    "retain": "case data and notes",
+    "copy": "proposed (D-58, 2026-10-22) — needs Apurva approval"
+  },
+  "call.transferMissed": {
+    "pattern": "N1",
+    "trigger": "transfer case: call ended after the gate, not transferred",
+    "slot": "neutral notice inside the pinned bar, above Confirm & forward",
+    "next": "Confirm & forward",
+    "clear": "case closed",
+    "retain": "case data and notes",
+    "copy": "approved (Apurva, 2026-10-24, D-58 point 23)"
+  },
+  "call.haNoJoin": {
+    "pattern": "W1",
+    "trigger": "transfer leg failed, call still live",
+    "slot": "warning notice inside the pinned bar",
+    "next": "end the call on the phone",
+    "clear": "call ended",
+    "retain": "case data and notes",
+    "copy": "approved (Apurva, 2026-10-24, D-58 point 23)"
+  },
+  "call.transferFailed": {
+    "pattern": "W1",
+    "trigger": "after a failed transfer",
+    "slot": "second line of the amber outcome card \"Forwarded to HA\"",
+    "next": "Request next case",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved (Apurva, 2026-10-24, D-58 point 23)"
+  },
+  "call.endCallFirst": {
+    "pattern": "W1",
+    "trigger": "tap on Request next case on 15 or B3 while the call is still live (D-63)",
+    "slot": "line in the action bar, above Request next case",
+    "next": "doctor ends the call, taps again",
+    "clear": "next tap after the call has ended",
+    "retain": "case closed state",
+    "copy": "approved (Apurva, 2026-10-25, D-63)"
+  },
+  "call.skipHa": {
+    "pattern": "N1",
+    "trigger": "Skip HA confirmed during a transfer call",
+    "slot": "neutral notice inside the pinned bar",
+    "next": "Confirm unlocks when the call result arrives",
+    "clear": "result arrives",
+    "retain": "case data and notes",
+    "copy": "approved (Apurva, 2026-10-24, D-58 point 23)"
+  },
+  "call.scriptNeutral": {
+    "pattern": "N1",
+    "trigger": "gate passed, route not known yet",
+    "slot": "End-of-call script, fallback B (route not known)",
+    "next": "Confirm prescription",
+    "clear": "route decided",
+    "retain": "case data",
+    "copy": "approved (Apurva, 2026-10-24, D-58 point 21)"
+  },
+  "call.checkingHa": {
+    "pattern": "B",
+    "trigger": "doctor taps Confirm prescription (route decided at the tap)",
+    "slot": "busy main button label",
+    "next": "wait",
+    "clear": "HA found or not",
+    "retain": "case data",
+    "copy": "approved (Apurva, 2026-10-24, D-58 point 23)"
+  },
+  "call.connectingHa": {
+    "pattern": "B",
+    "trigger": "HA free; transfer started",
+    "slot": "busy main button label",
+    "next": "wait for the HA to join",
+    "clear": "transfer done or failed",
+    "retain": "case data",
+    "copy": "approved (Apurva, 2026-10-24, D-58 point 23)"
+  },
+  "call.stayOnLine": {
+    "pattern": "N1",
+    "trigger": "transfer started",
+    "slot": "neutral notice inside the pinned bar, above the busy button",
+    "next": "read it to the patient",
+    "clear": "transfer done or failed",
+    "retain": "case data",
+    "copy": "proposed (2026-10-24, storyboard B — route decided at the tap) — needs Apurva approval"
+  },
+  "call.forwardedTell": {
+    "pattern": "N1",
+    "trigger": "no HA free at the tap; forwarded",
+    "slot": "End-of-call script after a failed transfer / no HA free",
+    "next": "Request next case",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved (Apurva, 2026-10-24, D-58 point 21)"
+  },
+  "call.stillOnCall": {
+    "pattern": "N1",
+    "trigger": "3 min after the tap with no call result, repeats every 3 min",
+    "slot": "neutral notice inside the pinned bar, above two answers",
+    "next": "Yes, still talking / No, call ended",
+    "clear": "result arrives or answered",
+    "retain": "case data",
+    "copy": "proposed (2026-10-24, state 7 — no call result) — needs Apurva approval"
+  },
+  "call.checkingResult": {
+    "pattern": "B",
+    "trigger": "doctor tapped No, call ended; backend asks the partner",
+    "slot": "busy main button label",
+    "next": "wait",
+    "clear": "result found or not",
+    "retain": "case data",
+    "copy": "proposed (2026-10-24, state 7 — no call result) — needs Apurva approval"
+  },
+  "call.submittedText": {
+    "pattern": "N1",
+    "trigger": "Confirm prescription with no call result (state 7d)",
+    "slot": "second line of the grey closed card \"Prescription submitted\"",
+    "next": "Request next case",
+    "clear": "—",
+    "retain": "—",
+    "copy": "proposed (2026-10-24, state 7 — no call result) — needs Apurva approval"
+  },
+  "call.scriptCat4": {
+    "pattern": "N1",
+    "trigger": "End-of-call script, Cat4 / HA skipped",
+    "slot": "End-of-call script, Cat4 / HA skipped",
+    "next": "read to the patient",
+    "clear": "call ended or case closed",
+    "retain": "case data",
+    "copy": "approved (Apurva, 2026-10-24, D-58 point 21)"
+  },
+  "call.scriptTransfer": {
+    "pattern": "N1",
+    "trigger": "End-of-call script, transfer",
+    "slot": "End-of-call script, transfer",
+    "next": "read to the patient",
+    "clear": "call ended or case closed",
+    "retain": "case data",
+    "copy": "approved (Apurva, 2026-10-24, D-58 point 21)"
+  },
+  "call.scriptForward": {
+    "pattern": "N1",
+    "trigger": "End-of-call script, forward",
+    "slot": "End-of-call script, forward",
+    "next": "read to the patient",
+    "clear": "call ended or case closed",
+    "retain": "case data",
+    "copy": "approved (Apurva, 2026-10-24, D-58 point 21)"
+  },
+  "call.transferMissedDoctor": {
+    "pattern": "W1",
+    "trigger": "call.transferMissedDoctor",
+    "slot": "notice / outcome card second line",
+    "next": "read the script, end the call",
+    "clear": "case closed",
+    "retain": "case data",
+    "copy": "approved (Apurva, 2026-10-24, D-58 point 23)"
+  },
+  "call.transferMissedPatient": {
+    "pattern": "W1",
+    "trigger": "call.transferMissedPatient",
+    "slot": "notice / outcome card second line",
+    "next": "read the script, end the call",
+    "clear": "case closed",
+    "retain": "case data",
+    "copy": "approved (Apurva, 2026-10-24, D-58 point 23)"
+  },
+  "call.noHaFree": {
+    "pattern": "W1",
+    "trigger": "call.noHaFree",
+    "slot": "notice / outcome card second line",
+    "next": "read the script, end the call",
+    "clear": "case closed",
+    "retain": "case data",
+    "copy": "approved (Apurva, 2026-10-24, D-58 point 23)"
   }
 }

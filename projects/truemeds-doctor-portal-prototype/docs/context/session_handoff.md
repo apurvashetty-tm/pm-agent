@@ -764,3 +764,50 @@ User identified missing HTML/native linkage. Inspected actual sign-in and OTP HT
 ### 2026-10-16 (later) — Git: project branch and folder
 - Final model (supersedes the "lives on main" note above): this project lives on branch `project/truemeds-doctor-portal-prototype`, folder `pm-agent/.work/truemeds-doctor-portal-prototype` (`scripts/start-project.sh truemeds-doctor-portal-prototype`). Publish with `scripts/publish.sh`; changes reach `main` (and the live Netlify demo) only through a pull request Apurva merges.
 - Next: check OQ-008 to OQ-010 (case type, Value Meds, HA rules) against tm-chotu v0.4.3 `tm-chotu-rx-cadence`; then the click-to-call screens thread.
+
+---
+
+### 2026-10-19 — Click-to-call: flow agreed (D-58); records written, not published
+- Agreed with Apurva in words: 18 calling states, triggers and actions — state table in `ui-screens/app-logic.md` §5 (§4 stages and §7 updated; §5a folded in). D-58 logged. OQ-001/009/010/013 answered or partly; OQ-024 (Release) not decided; OQ-027 updated; OQ-030 (live call events, reconciliation, vendor mapping) and OQ-031 (mobile data during calls) added. `feedback-state-map.md` points to the table.
+- 15 of 18 states reuse approved screens with copy changes; **3 new layouts**: (1) On call, other cases — bar = "On call…" busy, static phone icon; (2) On call, transfer — notice + Callback, no End call; (3) Ended early / Result not received — Call again, then Callback · Unavailable side by side.
+- **Next:** (a) pass/fail checklist for the 3 layouts → Apurva OK; (b) Claude renders first versions of the 3 layouts into `docs/renders/2026-10-19-calling/`; (c) copy into `ui-screens/feedback/messages.json`; (d) terminal loop renders all 18 states at 360/390 and runs the checks; (e) Apurva approves → promote to `ui-screens/case/`.
+- Git: work in `.work/truemeds-doctor-portal-prototype` on `project/truemeds-doctor-portal-prototype`; publish with `scripts/publish.sh`; `main` only via a PR Apurva merges.
+
+### 2026-10-22 — Open questions round with Apurva (D-59)
+- Answered: OQ-004/005/006/008/009/011; closed by earlier decisions: OQ-002/003/012. `app-logic.md` §3 (Source line replaces Flag 1), §6 Skip HA, §8 Disable, §9 Notes updated. OQ-029 (volume figures) left open — not needed now.
+- Still unpublished (D-58 + D-59 records). Next: checklist for the 3 calling layouts → renders.
+
+### 2026-10-23 — Simplified call flow (D-58 point 14, temporarily approved)
+- During the call: busy "Calling {name}…" for the whole call; transfer button only after the backend confirms the call is valid; app reflects call status within ~5 s (Engineering picks polling/push, OQ-030). Ozonetel reference moved to `reference/telephony/`.
+- Renders so far: `docs/renders/2026-10-22-calling/round-1/` (layouts, transfer bar before/at 50 s). Layout 3 still to re-render with the approved red-outline Unavailable.
+- To confirm with Apurva: Callback during the call for all cases; script visible from the tap; partner for Cat4 / Non-Value Meds. Then: storyboard of all states → terminal loop.
+- `.stage-tmp/` in the work folder is a temporary render bundle — never publish it.
+
+### 2026-10-24 — Pilot final button: A target, B fallback (D-58 point 15)
+- A (HA reserved at call start): one button labelled by route; B (HA checked at the tap): generic Confirm prescription. Closed card holds the line for the patient; failed transfer in amber ([PROPOSED] status-card warning). OQ-032 (HA reservation/allocation) added.
+- Next: render the full storyboard of all calling states (target A), then the terminal loop at 360/390.
+
+### 2026-10-24 — State 7 agreed (D-58 point 20); open before final render
+- OQ-033 (Ops review for calls without a record) — lock with Ops before go-live.
+- OQ-034 (one icon rule for buttons) — decide before the terminal's final render.
+- Then: scripts → 50-second rule across dropped calls → final render → terminal brief.
+
+### 2026-10-25 — Calling flow complete; handed to the terminal
+- Decisions D-58 points 14–23 (polling, state 7, Release, scripts, icon rule, cumulative talk time, final review fixes). State table final in `ui-screens/app-logic.md` §5 (20 states + 3 fallback-B screens, state 16 in three variants).
+- Pre-check render by the main thread: `docs/renders/2026-10-22-calling/storyboard-final-draft.png`. Next: terminal runs `docs/renders/2026-10-22-calling/TERMINAL-BRIEF.md` → `round-4/REPORT.md` → Apurva reviews → main thread records, promotes to `ui-screens/case/`, publishes.
+- Open: OQ-030 (Engineering: polling interval, max call length, result wait, who-ended-the-call), OQ-032 (HA reservation), OQ-033 (Ops review queue), late record under 50 s on a submitted case (separate discussion). After the render: PRD outline (page by page, JTBD, use cases, screenshots).
+
+### 2026-10-25 — Round-4 review answered (D-58 point 24)
+- Rebuild checklist items (from round 4): all button labels through `MSG()`; after-confirm and closed states render View Rx, medicine rows and notes read-only (old `app.js` doesn't).
+- Next: terminal round 5 (recipe + fixture fixes below), then Apurva's approval, promotion, publish.
+
+## 2026-10-25 · D-62 tinted outcome cards
+- Design system: `.tm-status-card--success` (green-50 + green-100 border), `--neutral` (grey-100), `--warning` (amber) [PROPOSED]; RULES §9.3, beyond-salt.md; build.py run.
+- Calling working copy uses them: 9 and 7f neutral; 10a, 10b, 14, g3b success; 15 warning. 7b question shown as plain text (no box). Review sheet: `docs/renders/2026-10-22-calling/d62-tinted-cards.png`.
+- Approved `e-*` closed screens still white — re-render in the full screen pass. No overlay on closed cases → rebuild item (read-only, muted).
+- Next: Apurva's final approval of the calling storyboard → promote into `ui-screens/case/`.
+
+## 2026-10-25 (eve) · C5 / T3 locked, D-63, backlog
+- One-screen experiment (`docs/renders/2026-10-25-card-tray-experiment/`): Apurva chose **C5** (tint + tone edge, no shadow; neutral grey-100 fill) and **T3** (action bar hairline + upward shadow). Recorded under D-62; design system updated and rebuilt.
+- **D-63:** Request next case on 15 and B3 checks the call has ended; new copy `call.endCallFirst`; app-logic row 15b.
+- **New `docs/context/backlog.md`** — the single list of agreed-but-not-applied work, in working order. Start there next session.
