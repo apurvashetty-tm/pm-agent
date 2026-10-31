@@ -39,3 +39,22 @@ Change anything beyond Part 1; edit decisions, backlog, design system or `messag
 5. **New sheet + state `s7d-unavailable-sheet`:** from 7d, Unavailable opens the sheet — `.tm-sheet`, title "Mark patient unavailable", label "Select reason", three `.tm-option` rows (title · desc): "Didn't answer" · "Rang with no answer, or the line was busy"; "Not reachable" · "Phone switched off or out of coverage"; "Wrong number" · "Invalid or not the patient's number". Same markup as the Disable sheet; choosing a reason → `t09-patient-unavailable`. Copy typed like the other sheets (rebuild item).
 6. Re-render the changed states (390/360, fixed clock), add the new one to `case/` pictures, contact sheets, the calling storyboard (new tile after 7d) and `REVIEW.html`; pixel-compare everything else (identical); four guards 0 failures.
 7. Append "Round 2" to this folder's REPORT.md. Stop. No commits.
+
+---
+
+## Round 3 — stale case states found in the main thread's visual pass (2026-10-31) — after Round 2, work in `ui-screens/`, then stop
+
+Six approved `a-*` states were promoted unchanged from before D-58. Their recipes use the old `app.js` helpers (`startCall`, `passGate`, the old pre-call card), so they show things later decisions removed. **Rebuild each recipe from the calling helpers** (`calling`, `showScript`/hide, `setBar`, `busy`, `MSG`), so it matches the calling set. These are bug fixes against existing decisions — no new design.
+
+| State | What's wrong now | Should show (decision) |
+|---|---|---|
+| `a-back-blocked` | Red **End call** button; old script "I'm confirming your order now…" | No End call (D-58). The attempted-call state = Calling: status line "Calling {name}…" + Callback (D-74), Cat4 script (`call.scriptCat4`, D-58 pt 21), **no header Back** (D-58: never after an attempted call); the phone-back toast as today. |
+| `a-confirm-busy` | Old script shown; old copy | State 8a after the call (script hidden on 8a/8b, D-58 pt 24) with **"Confirming…" busy button** (short wait — stays a busy button, D-74) and Callback disabled. |
+| `a-confirm-failed` | Old script shown; old copy | 8a, no script, red line `case.confirmFailed` above Confirm prescription, Callback as on 8a. |
+| `a-scrolled` | End-of-call script card **before Call** | Ready state scrolled — no script card before Call (D-58 pt 18, D-71); same as `t01-ready` otherwise. |
+| `a-long-content` | Script card before Call (below the notes) | Ready state with long content — no script card (D-58 pt 18). |
+| `a-releasing` | **Old Home design** ("Good afternoon… Get next order", "0 orders closed") | The leave sheet (`s7e` look) with **"Releasing…"** busy on Release case (short wait after a tap). After release the doctor lands on the approved Home — not a separate picture. |
+
+Also check every other `a-*`, `c-*`, `e-*`, `s-*` recipe for the same old helpers or old copy ("order" for case, "I'm confirming your order", "Get next order", End call) and list any you find; fix only those that clearly break a decision, list the rest.
+
+Re-render the changed states (390/360, fixed clock), contact sheets and `REVIEW.html`; pixel-compare everything else; guards 0 failures. Append "Round 3" to REPORT.md. Stop. No commits.
