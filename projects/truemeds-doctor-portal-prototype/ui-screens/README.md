@@ -15,10 +15,10 @@ Each state has a 390-wide and a 360-wide picture (`_w390.png`, `_w360.png`, 2× 
 | Returning unlock | `returning-unlock/returning-unlock.html` | `returning-unlock/` (`unlock_<state>_…`) | 7 | D-45, D-47, D-61, D-66 |
 | Faster sign-in offer | `faster-signin-offer/faster-signin-offer.html` | `faster-signin-offer/` (`offer_<state>_…`) | 6 | D-45, D-61, D-64, D-65 |
 | Home (availability, add time, end, profile) | `home/home.html` (+ `home-reference.js`, `home-reference.css`) | `home/` (`home_<state>_…`) | 22 | D-36, D-40, D-47, D-53, D-69, D-70 |
-| Case page: ready, calling, call outcomes, closed cases, sheets, stress | `case/case.html` (+ `case-styles.css`) | `case/` (`<state>_…`) | 57 | D-48 to D-71 |
+| Case page: ready, calling, call outcomes, closed cases, sheets, stress | `case/case.html` (+ `case-styles.css`) | `case/` (`<state>_…`) | 58 | D-48 to D-76 |
 | Prescribe (one medicine) | `case/case.html` (`d-*`) | `prescribe/` (`d-<state>_…`) | 22 | D-04, D-06, D-08 to D-30, D-54, D-56, D-68 |
 
-Counts: pictures are 2 per state. Case page: 31 calling states, 4 callback/Skip-HA sheets, 16 + 1 stress/action states (`a-*`), 2 closed (`e-*`), 3 stress (`s-*`). Home: 19 states plus 3 Profile pages.
+Counts: pictures are 2 per state. Case page: 32 calling states (incl. `s7d-unavailable-sheet`), 4 callback/Skip-HA sheets, 16 + 1 stress/action states (`a-*`), 2 closed (`e-*`), 3 stress (`s-*`). Home: 19 states plus 3 Profile pages.
 
 ## Case page: calling render ids
 
@@ -35,6 +35,7 @@ The calling states follow app-logic §5 (D-58 points 14–25, D-63, D-64). The r
 | 7b Still on the call? | `s7b-still-on-call` | Question as plain text, no box (D-62) |
 | 7c Checking | `s7c-checking` | |
 | 7d Result not received | `s7d-result-missing` | Confirm prescription · Callback · Unavailable |
+| 7d Unavailable sheet (D-75) | `s7d-unavailable-sheet` | Sheet "Mark patient unavailable" with three reasons; a reason goes to `t09-patient-unavailable` |
 | 7e Leave this case? | `s7e-leave-sheet` | Release case / Stay on this case |
 | 7f Waiting for the call record | `s7f-submitted` | D-68 wording |
 | 8a Valid (Cat4) | `t08a-valid-cat4` | No script (call ended) |
@@ -96,6 +97,8 @@ Open the file in a browser. `capture=` (and `?capture=1`) hides the review contr
 - **Status cards** are tinted by outcome with a 1px edge and no drop shadow: success (green) for 10a, 10b, 14 and availability ended; neutral (grey) for 7f, 9 and callback scheduled; warning (amber) for 15 and 15b (D-62, D-66).
 - **Icons** only on labelled call, callback, view, skip and direction controls, and the phone-off icon on Unavailable (D-66 B). Log out has no icon (D-70 pt 2).
 - **Health Advisor** is spelled out everywhere except the Skip HA button (D-58 pt 23, D-70 pt 3).
+- **Script card (D-58 pt 18, D-71, Round 3):** the Ready state shows no script card, anywhere on the page. The card belongs to an attempted call (calling, outcome and transfer states).
+- **View Rx (D-76, D-51):** the same outlined button on open and closed cases. It stays tappable after close: the case card stays live.
 - **Copy** comes from `feedback/messages.json`. Some sheet text (callback and Skip HA titles, options and errors) is typed in the approved sheets and is not in the registry yet (see the NEEDS-APURVA list in the promotion report).
 
 ## Open items
@@ -104,7 +107,7 @@ Open the file in a browser. `capture=` (and `?capture=1`) hides the review contr
 - **Callback and Skip HA sheet copy:** not yet in `feedback/messages.json` (titles, options, field errors). Add keys or accept the typed copy.
 - **Log out icon:** removed to match the icon rule (D-70 pt 2); confirm.
 - **Calling pictures and the card:** the live-call card follows the calling markup (D-71 pt 1); the ready state shows no script card (D-71 pt 2).
-- **Guard 5.12 (no local restyling of central components):** four items remain (the 7b question box, and the compact-header edge overrides on the case page). They need a design-system variant before promotion can be signed off.
+- **Guard 5.12 (no local restyling of central components):** resolved at close-out (D-73): the design-system variants `tm-notice--question` and the compact header are used; no local overrides remain.
 - **Profile is a prototype:** name, role, earnings and the User manual link are mock data (D-70 pt 8).
 - **Not in these pictures:** Help (what the "?" opens on Home and the case page), the Profile redesign, the cancelled faster sign-in prompt, and the no-screen-lock skip (behaviour only).
 - **Retired on 2026-10-29:** `home/availability.html` and `home/add-availability.html`. Their states are in `home/home.html` (`setup-wheel`, `add-wheel`).

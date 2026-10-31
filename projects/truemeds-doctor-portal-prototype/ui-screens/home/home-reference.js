@@ -26,6 +26,8 @@ function picker() {
 }
 // Status slot: one notice above the footer. Copy from the registry or a labelled screen string.
 function statusNotice() {
+  // D-75: unknown-result is one status line (spinner + copy) in place of the notice and the Checking… button.
+  if (state === 'unknown-result') return `<div class="tm-status-line status" role="status"><span class="tm-spinner" aria-hidden="true"></span>${M('home.unknownResult')}</div>`;
   const map = {
     'setup-failed': ['tm-notice--error', 'alert-circle', M('home.setupFailed')],
     'request-failed': ['tm-notice--error', 'alert-circle', M('home.requestFailed')],
@@ -35,7 +37,6 @@ function statusNotice() {
     'expired-pending': ['tm-notice--neutral', 'info-circle', M('home.expiredPending')],
     'idle-expired': ['tm-notice--neutral', 'info-circle', M('home.idleExpired')],
     'manually-ended': ['tm-notice--neutral', 'info-circle', M('home.manuallyEnded')],
-    'unknown-result': ['tm-notice--neutral', 'info-circle', M('home.unknownResult')],
     'near-expiry': ['tm-notice--warning', 'clock', M('home.endingSoon')],
   };
   const n = map[state];
@@ -44,12 +45,13 @@ function statusNotice() {
 }
 // Footer (pinned, RULES §8.4). Loading primary = brand fill, white label and spinner (LOCKED L2).
 function footer() {
-  const busyLabel = { setting: 'Setting…', requesting: 'Requesting…', adding: 'Adding…', 'unknown-result': 'Checking…' }[state];
+  if (state === 'unknown-result') return '';   // D-75: the status line above carries the wait; no busy button
+  const busyLabel = { setting: 'Setting…', requesting: 'Requesting…', adding: 'Adding…' }[state];
   let primary = isSetup() ? 'Set availability' : 'Request a case';
-  let disabled = state === 'offline' || state === 'expired-pending' || state === 'stop-pending' || state === 'unknown-result';
+  let disabled = state === 'offline' || state === 'expired-pending' || state === 'stop-pending';
   let busy = !!busyLabel;
   if (busy) primary = busyLabel;
-  const secondary = isSetup() || isSheet() || state === 'expired-pending' || state === 'unknown-result' ? '' : (state === 'stop-pending' ? 'Ending…' : 'End availability');
+  const secondary = isSetup() || isSheet() || state === 'expired-pending' ? '' : (state === 'stop-pending' ? 'Ending…' : 'End availability');
   const primaryHtml = busy
     ? `<button class="tm-btn tm-btn--primary tm-btn--lg tm-btn--block tm-btn--busy" aria-busy="true" disabled><span class="tm-spinner" aria-hidden="true"></span>${primary}</button>`
     : `<button class="tm-btn tm-btn--primary tm-btn--lg tm-btn--block" data-confirm ${disabled ? 'disabled' : ''}>${primary}</button>`;
@@ -109,7 +111,8 @@ function render() {
     window.TMIcons?.render(document.querySelector('#phone'));
     $('#profile-back').onclick = () => { state = previous; render(); };
     const lo = document.querySelector('[data-logout]'); if (lo) lo.onclick = () => { state = 'logout-confirm'; render(); $('#close')?.focus(); };
-    if (isSheet()) { $('#close').onclick = () => { state = 'profile'; render(); }; const sec = document.querySelector('.tm-sheet [data-secondary]'); if (sec) sec.onclick = () => { state = 'profile'; render(); }; }
+    if (isSheet()) { $('#close').onclick = () => { state = 'profile'; render(); }; const sec = document.querySelector('.tm-sheet [data-secondary]'); if (sec) sec.onclick = () => { state = 'profile'; render(); }; const sh = document.querySelector('.tm-sheet'); sh.setAttribute('tabindex', '-1'); sh.focus({ preventScroll: true }); }   // Round 3: focus moves into the dialog (guard 4.7)
+    document.querySelectorAll('[data-confirm]').forEach(b => b.onclick = () => { $('#review-status').textContent = 'Reference only: connect this action to native app state and server confirmation.'; });   // D-75: Log out confirm (reference only)
     $('#state').value = state;
     return;
   }

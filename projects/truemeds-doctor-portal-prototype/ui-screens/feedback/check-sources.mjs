@@ -30,7 +30,7 @@ for (const [name, html] of [['sign-in', sign], ['otp', otp], ['returning-unlock'
   }
 }
 const requiredSign = ['default','keyboard-open','empty-tap','too-short','wrong-first-digit','pasted-cleaned','sending','not-registered','offline','couldnt-send','too-many-tries','inactive'];
-const requiredOtp = ['default','empty-tap','too-short','verifying','wrong-code','two-tries-left','resend-available','new-code-sent','code-expired','couldnt-verify','too-many-resends','locked'];
+const requiredOtp = ['default','empty-tap','too-short','verifying','wrong-code','two-tries-left','resend-available','new-code-sent','code-expired','couldnt-verify','too-many-resends','locked','resending','resend-failed','offline','cooldown-reconciling','expired-and-resend-limited']; // Round 3: all 17 OTP pictures
 for (const id of requiredSign) assert.match(sign, new RegExp(`value="${id}"`));
 for (const id of requiredOtp) assert.match(otp, new RegExp(`value="${id}"`));
 assert.equal((otp.match(/class="tm-otp-slots__slot"/g) || []).length, 4);

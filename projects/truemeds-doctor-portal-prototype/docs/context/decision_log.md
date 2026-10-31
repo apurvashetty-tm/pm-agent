@@ -834,6 +834,11 @@ From an external (ChatGPT) review, each point verified before acting.
   2. **Back-blocked stays a toast.** Inline notices answer an on-screen action; the back-blocked message answers a **system** action (phone back button / swipe) with no on-screen control to sit next to, and the header Back is hidden after an attempted call (D-58). A short toast is the platform pattern for that (feedback rules: toasts for brief information needing no action). Android: shown on the system back. iOS: the back swipe can be switched off during a call, so it rarely shows.
   3. **"Order" stays where it means the patient's order**: "No medicines on this order." (`case.noMedicines`) and the Skip HA reason "Counselled in an earlier order". The case-wording rule ("case", not "order") is for the doctor's unit of work; the patient's purchase is an order, as in "Order details".
 
+### D-78 · Screens and app logic approved and frozen — 2026-10-31
+- **Decision (Apurva):** the screens in `ui-screens/` (sign-in, OTP, returning unlock, faster sign-in offer, Home + Profile, case incl. calling, `prescribe/` — 144 states, 390 and 360) and `ui-screens/app-logic.md` are **approved and frozen**, covering decisions D-56 → D-77. Evidence: promotion and close-out reports (`docs/renders/2026-10-28-promotion/REPORT.md`), status-line rounds 1–3 + D-77 (`docs/renders/2026-10-30-status-line/REPORT.md`), four guards at 0 failures over all 144 states, main-thread visual checks.
+- **From here:** anything new is a bug (fix only where it occurs) or a next-version idea (backlog §4b). Next work (D-72): prototype rebuild → token inspector → PRD.
+- **Known and accepted:** sheet labels typed in code, the reference pages' unwired buttons, the 1.1 s window after Confirm in the reference — all handled in the prototype rebuild (backlog §3).
+
 ## Design system changes made for this work
 
 ### D-60 · Secondary button without drop shadow (design system) — 2026-10-24 · **REVERTED same day**

@@ -562,14 +562,14 @@
     "pattern": "N1",
     "trigger": "3 min after the tap with no call result, repeats every 3 min",
     "slot": "neutral notice inside the pinned bar, above two answers",
-    "next": "Yes, still talking / No, call ended",
+    "next": "Still talking / Call ended",
     "clear": "result arrives or answered",
     "retain": "case data",
     "copy": "proposed (2026-10-24, state 7 — no call result) — needs Apurva approval"
   },
   "call.checkingResult": {
     "pattern": "B",
-    "trigger": "doctor tapped No, call ended; backend asks the partner",
+    "trigger": "doctor tapped Call ended; backend asks the partner",
     "slot": "busy main button label",
     "next": "wait",
     "clear": "result found or not",

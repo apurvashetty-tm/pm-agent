@@ -1,6 +1,6 @@
 # Doctor Portal — app logic
 
-**Status:** DRAFT for Apurva's review (2026-10-16). Not approved yet. Flags 2, 3, 5, 6 answered by Apurva on 2026-10-16 (see each flag); calling screens to be redesigned in a separate thread (§5a).
+**Status:** APPROVED and frozen — Apurva, 2026-10-31 (D-78). Covers decisions up to D-77. Changes from here are either a bug (fix where it occurs) or a next-version idea (backlog). Open backend dependencies stay marked `[OPEN]` with their question.
 **What this is:** every rule the app follows, taken out of the old prototype (`index.html` + `app.js`) and checked against the locked rules (`docs/context/project_truth.md`) and the decision log (D-01 to D-55). It is the logic half of the rebuild spec; the look is in `ui-screens/` (pictures) and `design-system/RULES.md`.
 **How to read it:** `[LOCKED]` = decided, build exactly this · `[MOCK]` = prototype placeholder, the real value comes from the backend · `[OPEN]` = not decided, see the linked question · **⚠ Flag** = the old code and the decisions disagree, or a rule was never written down — needs Apurva before the rebuild.
 
@@ -105,7 +105,7 @@ Order on first use: Sign-in → OTP → (offer, once) → Home → Case. Returni
 - **Before the gate, never show:** Confirm prescription, Confirm & transfer, Confirm & forward, Skip HA.
 - **Leg 2 failed** (no answer, busy, rejected, unreachable, invalid number): the case closes as **Patient unavailable** by itself; the doctor gets **Request next case**. Busy and rejected are accepted as "no answer" to keep it simple.
 - **A call that's too short** (state 6) offers **Call again · Callback** (D-58 point 23). No retry limit. **Callback is offered in every live call until the doctor taps a confirm button** (D-58 point 24).
-- **No call result** (state 7, D-58 point 20): at 3 min the bar asks "Are you still on the call?"; after "No, call ended" and a backend check with nothing found: **Confirm prescription · Callback · Unavailable**; Confirm there shows "Waiting for the call record" until the record arrives (D-68). A late result updates the screen by itself. Repeated problems → the doctor uses **Help** on the case.
+- **No call result** (state 7, D-58 point 20): at 3 min the bar asks "Are you still on the call?"; after "Call ended" and a backend check with nothing found: **Confirm prescription · Callback · Unavailable**; Confirm there shows "Waiting for the call record" until the record arrives (D-68). A late result updates the screen by itself. Repeated problems → the doctor uses **Help** on the case.
 - **Vendor terms are mapped by Engineering** to the buckets in the table (Ozonetel `CustomerStatus`, Knowlarity hangup causes — `projects/ACOM/ring-ai/reference/knowlarity-hangup-causes.pdf`).
 
 **State table (final, 2026-10-24 — D-58 points 14–22).** One row per state. Render id = recipe in `docs/renders/2026-10-22-calling/src/case.html`. Copy keys in `ui-screens/feedback/messages.json`. During every call the End-of-call script shows under Order details; Callback is offered in every call.
@@ -118,8 +118,8 @@ Order on first use: Sign-in → OTP → (offer, once) → Home → Case. Returni
 | 4 | `call.doctor-missed` | You didn't answer | Leg 1 not answered / busy / rejected | Amber notice · Call again · header Back | `t04-doctor-missed` |
 | 5 | `call.result-wait` | Getting call result | Call known to have ended, result not in yet | "Getting call result…" busy · Callback | `t05-result-wait` |
 | 6 | `call.ended-early` | Call too short | Result: total talk time on the case under the gate | Amber "Call too short…" · Call again · Callback (no Unavailable — D-58 point 23) | `t06-ended-early` |
-| 7b | `call.still-on-call` | Still on the call? | 3 min after the tap with no result (repeats every 3 min) | Grey "Are you still on the call?" · Yes, still talking + No, call ended · header Back | `s7b-still-on-call` |
-| 7c | `call.checking` | Checking call result | Doctor tapped "No, call ended" | "Checking call result…" busy | `s7c-checking` |
+| 7b | `call.still-on-call` | Still on the call? | 3 min after the tap with no result (repeats every 3 min) | Grey "Are you still on the call?" · Still talking + Call ended · header Back | `s7b-still-on-call` |
+| 7c | `call.checking` | Checking call result | Doctor tapped "Call ended" | "Checking call result…" busy | `s7c-checking` |
 | 7d | `call.result-missing` | Result not received | Backend check found nothing | Amber notice · Confirm prescription · Callback + Unavailable (Unavailable opens the reason sheet, D-75; **the chosen reason is saved with the case** for Ops monitoring, D-73) | `s7d-result-missing` |
 | 7e | — | Leave this case? | Back in 1–4, 7a, 7b | Approved sheet: Release case / Stay on this case | `s7e-leave-sheet` |
 | 7f | `call.submitted` | Waiting for the call record | Confirm in 7d | Grey card "Waiting for the call record · Your prescription is saved. We'll confirm it once the record arrives." (D-68); becomes "Prescription confirmed" when the record arrives · Request next case · Back to Home | `s7f-submitted` |

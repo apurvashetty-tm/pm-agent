@@ -179,7 +179,8 @@ def check_sign(page, state, errs):
 HOME = SCREENS / 'home' / 'home.html'
 HOME_STATES = ['setup-wheel', 'setting', 'setup-failed', 'active', 'requesting', 'no-cases', 'request-failed', 'offline',
                'near-expiry', 'add-wheel', 'adding', 'add-failed', 'added', 'end-confirmation', 'stop-pending', 'expired-pending',
-               'idle-expired', 'manually-ended', 'unknown-result']
+               'idle-expired', 'manually-ended', 'unknown-result',
+               'profile', 'profile-case-open', 'logout-confirm']   # Round 3: Profile pages (D-70)
 
 WHEEL_JS = r"""() => {
   const band = document.querySelector('.wheel-band');
@@ -202,13 +203,16 @@ def check_home(page, state, errs):
     page.goto(HOME.as_uri() + f'?state={state}')
     page.wait_for_timeout(120)
     gap = page.evaluate("""() => {
-      const logo = document.querySelector('.logo').getBoundingClientRect();
-      const h1 = document.querySelector('.band h1').getBoundingClientRect();
+      // Round 3: Profile is a task page with no logo (D-70), so the logo gap is measured only where both exist
+      const logoEl = document.querySelector('.logo'); const h1El = document.querySelector('.band h1');
+      const logo = logoEl ? logoEl.getBoundingClientRect() : null; const h1 = h1El ? h1El.getBoundingClientRect() : null;
       const ph = document.querySelector('.phone').getBoundingClientRect();
-      const f = document.querySelector('.footer').getBoundingClientRect();
+      // D-75: unknown-result has no footer (the status line carries the wait), so the footer check runs only where one exists
+      const fe = document.querySelector('.footer');
+      const f = fe ? fe.getBoundingClientRect() : null;
       const t = document.querySelector('.time');
       const tcs = t ? getComputedStyle(t) : null;
-      return { logoToTitle: Math.round(h1.top - logo.bottom), footerInside: f.bottom - ph.top <= ph.height - 16,
+      return { logoToTitle: logo && h1 ? Math.round(h1.top - logo.bottom) : null, footerInside: f ? f.bottom - ph.top <= ph.height - 16 : null,
                valueFs: tcs ? tcs.fontSize : null, valueFw: tcs ? tcs.fontWeight : null, valueNum: tcs ? tcs.fontVariantNumeric : null };
     }""")
     if gap.get('valueFs') is not None and (PX(gap['valueFs']) != 32 or gap['valueFw'] != '600' or 'tabular' not in (gap['valueNum'] or '')):
@@ -221,13 +225,13 @@ def check_home(page, state, errs):
         if w['bandBg'] != w['brandSubtle']: errs.append(f"{tag}: wheel band {w['bandBg']} is not the brand-subtle token {w['brandSubtle']} (D-40 approved wheel)")
         if w['selColor'] != w['brandText']: errs.append(f"{tag}: wheel selected value {w['selColor']} is not the brand text token {w['brandText']}")
         if w['greyBoxes']: errs.append(f"{tag}: {w['greyBoxes']} grey column box(es) behind the wheel (approved wheel has none)")
-    if gap['logoToTitle'] != 48: errs.append(f'{tag}: L6 logo-to-title gap {gap["logoToTitle"]}px != 48px (home-base hero gap)')
-    if not gap['footerInside']: errs.append(f'{tag}: pinned footer outside the frame')
+    if gap['logoToTitle'] is not None and gap['logoToTitle'] != 48: errs.append(f'{tag}: L6 logo-to-title gap {gap["logoToTitle"]}px != 48px (home-base hero gap)')
+    if gap['footerInside'] is False: errs.append(f'{tag}: pinned footer outside the frame')
 
 UNLOCK = SCREENS / 'returning-unlock' / 'returning-unlock.html'
 OFFER = SCREENS / 'faster-signin-offer' / 'faster-signin-offer.html'
 UNLOCK_STATES = ['fingerprint', 'face', 'screen-lock', 'pending', 'cancelled', 'platform-retry', 'unavailable']
-OFFER_STATES = ['fingerprint', 'face-id', 'enabling']
+OFFER_STATES = ['fingerprint', 'face-id', 'enabling', 'screen-lock', 'enable-failed', 'offline']   # Round 3: every offer picture
 
 def check_unlock_offer(page, errs):
     for state in UNLOCK_STATES:
@@ -260,19 +264,26 @@ def check_sources(errs):
 # ---------------------------------------------------------------------------
 PHASE_D = SCREENS / 'case' / 'case.html'   # promoted 2026-10-15 (moved from docs/concepts/2026-10-14-case-page/v2)
 D_STATES = [
-    'a-top', 'a-scrolled', 'a-order-details', 'a-rx-viewer', 'a-notes-typing', 'a-leave-sheet', 'a-releasing', 'a-back-blocked',
-    'b-calling', 'b-on-call', 'b-ended-early', 'b-missed-call', 'b-patient-unavailable', 'b-post-gate-transfer', 'b-post-gate-cat4', 'b-post-gate-forward',
-    'c-callback', 'c-callback-error', 'c-skip-ha',
-    'd-default', 'd-scrolled', 'd-error-dose', 'd-error-other', 'd-sos-on', 'd-notes-keyboard', 'd-discard-sheet', 'd-disable-sheet', 'd-header-white',
-    'e-prescription-confirmed', 'e-transferred', 'e-forwarded', 'e-callback-scheduled', 'e-patient-unavailable', 'e-availability-ended',
-    # new states (feedback-state-map.md, proposed copy) and stress cases (checklist 7b.6)
-    'b-didnt-connect', 'd-injection-default', 'd-syrup', 'd-drops', 'd-cream', 'd-every-x-hours', 'd-sos-only', 'd-weekly', 'd-duration-picker', 'd-food-selected',
-    'a-loading', 'a-load-failed', 'a-offline', 'a-confirm-busy', 'a-confirm-failed', 'a-release-failed', 'c-callback-failed',
-    'd-rx-failed', 'a-no-medicines', 'a-long-content', 's-10-medicines', 's-optional-empty',
+    # case page (ui-screens/case/): ready and chrome, calling, call outcomes, sheets, closed, stress (Round 3: current set)
+    'a-back-blocked', 'a-confirm-busy', 'a-confirm-failed', 'a-leave-sheet', 'a-load-failed', 'a-loading',
+    'a-long-content', 'a-no-medicines', 'a-notes-typing', 'a-offline', 'a-offline-action', 'a-order-details',
+    'a-release-failed', 'a-releasing', 'a-rx-viewer', 'a-scrolled', 'a-top', 'c-callback',
+    'c-callback-error', 'c-callback-failed', 'c-skip-ha', 'e-availability-ended', 'e-callback-scheduled', 'g1-generic-confirm',
+    'g2-checking-ha', 'g3b-forwarded', 's-10-medicines', 's-medicine-disabled', 's-optional-empty', 's7a-calling',
+    's7b-still-on-call', 's7c-checking', 's7d-result-missing', 's7d-unavailable-sheet', 's7e-leave-sheet', 's7f-submitted',
+    't01-ready', 't02-calling', 't03-not-through', 't04-doctor-missed', 't05-result-wait', 't06-ended-early',
+    't08a-valid-cat4', 't08b-valid-forward', 't08c-confirm-blocked', 't09-patient-unavailable', 't10a-confirmed', 't10b-forwarded',
+    't11-calling-transfer', 't12-transfer-ready', 't13-connecting-ha', 't14-transferred', 't15-ha-no-join', 't15b-end-call-first',
+    't16-transfer-missed', 't16b-transfer-missed-patient', 't16c-transfer-missed-unknown', 't17-skip-ha-wait',
+    # prescribe (ui-screens/prescribe/): one medicine, opened through the case page
+    'd-alt-days', 'd-cream', 'd-default', 'd-disable-sheet', 'd-discard-sheet', 'd-drops',
+    'd-duration-picker', 'd-error-dose', 'd-error-other', 'd-every-x-hours', 'd-food-selected', 'd-header-white',
+    'd-inhaler', 'd-injection-default', 'd-monthly', 'd-notes-keyboard', 'd-rx-failed', 'd-scrolled',
+    'd-sos-on', 'd-sos-only', 'd-syrup', 'd-weekly',
 ]
 A_SIGN = SIGN_STATES
 A_OTP = OTP_STATES
-B_OFFER = ['fingerprint', 'face-id', 'enabling']
+B_OFFER = OFFER_STATES
 B_UNLOCK = UNLOCK_STATES
 C_HOME = HOME_STATES  # includes 'active' (default)
 
@@ -635,19 +646,24 @@ def _line_for(msg):
     return '2.3' if ('title' in msg or 'L8' in msg) else '6.x'
 
 def check_coverage(errs, phases):
-    """8.1: every expected state appears exactly once in the coverage matrix (docs/renders/2026-10-15-standards/README.md)."""
-    matrix = pathlib.Path(__file__).resolve().parents[2] / 'docs' / 'renders' / '2026-10-15-standards' / 'README.md'
-    if not matrix.exists():
-        errs.append({'phase': '-', 'state': 'coverage', 'vw': 0, 'line': '8.1', 'msg': 'coverage matrix missing'})
-        return
-    ids = re.findall(r'^\| `([^`]+)` \|', matrix.read_text(), flags=re.M)
-    counts = {}
-    for i in ids: counts[i] = counts.get(i, 0) + 1
+    """8.1: every expected state has a recipe (case page) and a 390 and 360 picture in ui-screens.
+    Round 3: replaces the 2026-10-15 coverage matrix, which lists retired ids and so passed without checking the current set."""
+    case_src = (SCREENS / 'case' / 'case.html').read_text()
+    folders = {'sign-in': (SCREENS / 'sign-in', 'sign-in_'), 'otp': (SCREENS / 'otp', 'otp_'),
+               'unlock': (SCREENS / 'returning-unlock', 'unlock_'), 'offer': (SCREENS / 'faster-signin-offer', 'offer_'),
+               'home': (SCREENS / 'home', 'home_')}
     for ph in phases:
         for sub, st in EXPECTED[ph]:
             key = f'{sub}/{st}'
-            n = counts.get(key, 0)
-            if n != 1: errs.append({'phase': ph, 'state': key, 'vw': 0, 'line': '8.1', 'msg': f'state listed {n} times in coverage matrix'})
+            if sub == 'case':
+                if not re.search(r"'%s'\s*:" % re.escape(st), case_src):
+                    errs.append({'phase': ph, 'state': key, 'vw': 0, 'line': '8.1', 'msg': 'no recipe in case.html'})
+                folder, pre = ((SCREENS / 'prescribe'), '') if st.startswith('d-') else ((SCREENS / 'case'), '')
+            else:
+                folder, pre = folders[sub]
+            for vw in (390, 360):
+                if not (folder / f'{pre}{st}_w{vw}.png').exists():
+                    errs.append({'phase': ph, 'state': key, 'vw': vw, 'line': '8.1', 'msg': f'picture missing: {folder.name}/{pre}{st}_w{vw}.png'})
 
 
 # 5.12 (auto): no local restyling of a central component. Source scan of each phase's files:
