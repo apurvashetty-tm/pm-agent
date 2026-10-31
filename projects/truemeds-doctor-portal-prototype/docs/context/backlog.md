@@ -61,7 +61,11 @@ Order = the order we work in.
 ## 4b. Next design round (logged, not in this release)
 - [ ] Profile redesign (today: a page with the ported content + faster sign-in toggle, D-69/D-70); User manual link.
 - [ ] Help: what the "?" opens on Home and the case page.
+- [ ] Notifications: what the bell opens on Home (D-75).
 - [ ] App navigation for future features — bottom tab bar once a second destination is approved (D-69 point 7).
+
+## 4c. Hosting (found in the build-plan review, 2026-10-29)
+- [ ] **Current site publishes the whole project folder** — `docs/` (decision log, open questions, handoffs) is reachable on the live doctor-portal link. Apurva to decide: accept, or publish a clean folder. The new preview site publishes only `app/`.
 
 ## 5. After the final render
 - [ ] Page-by-page PRD (job to be done, use cases, screenshots, decision logic).
