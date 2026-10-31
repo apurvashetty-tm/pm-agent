@@ -815,6 +815,15 @@ From an external (ChatGPT) review, each point verified before acting.
 - **Rejected:** A (today's busy button), C (tinted status strip — reads like the script card, could still look tappable).
 - **Follow-up:** an affordance audit of every approved screen (things that look tappable but aren't, and the reverse) before the freeze.
 
+### D-75 · Affordance-audit answers; Unavailable asks for a reason — 2026-10-31
+- **Decision (Apurva):**
+  1. **Mark unavailable opens a reason sheet** (same pattern as Disable and Skip HA): title **"Mark patient unavailable"**, label "Select reason", options — **Didn't answer** · *Rang with no answer*; **Busy or switched off** · *Number busy or phone off*; **Wrong number** · *Invalid or not the patient's number*. Choosing a reason applies it at once (it is the confirmation); × backs out with no change. Only where the doctor marks it by hand (7d); an automatic leg-2 failure uses the partner's reason, no sheet. Reasons feed the Ops monitoring (D-73). "Not interested" stays out.
+  2. **Skip HA: no extra confirmation** — Skip HA → reason, then the doctor still taps Confirm prescription; enough deliberate steps.
+  3. **D-74 also behind sheets:** 7e leave sheet and the three callback sheets show the Calling status line behind them. **Home "Checking…"** (unknown request result) becomes one status line with the existing message — no busy button, no duplicate notice. "Ending…" stays a busy button (short wait after a tap).
+  4. **Closed cases: medicine rows read-only, no arrow** (app-logic §8 already says so) — pictures fixed.
+  5. Reference pages are picture references: buttons without handlers there are expected; the prototype rebuild wires them. Exception fixed: Log out in the confirm sheet.
+  6. **Help and Notifications** have no defined behaviour yet → next design round (backlog), icons stay as entry points.
+
 ## Design system changes made for this work
 
 ### D-60 · Secondary button without drop shadow (design system) — 2026-10-24 · **REVERTED same day**
