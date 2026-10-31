@@ -70,10 +70,12 @@ Shown once after the first successful OTP sign-in on a device that supports it a
 | offer.shown | None | After first successful OTP sign-in on a supported device where faster sign-in is off |
 | offer.enabling | L1 + OS prompt | One request at a time; primary shows progress |
 | offer.enabled | — | Go to Home (no toast needed; Profile shows it's on) |
-| offer.cancelled | None | OS prompt cancelled → Home, no error |
-| offer.failed | None | Enrolment failed → Home, no error; OTP next time |
-| offer.not-now | None | → Home; re-offer per OQ-023 |
-| offer.unsupported | — | Screen skipped entirely |
+| offer.cancelled | None | OS prompt cancelled → back to the offer, no message (D-61) |
+| offer.failed | Notice | Enrolment failed → stays on the offer: `offer.enableFailed` "Couldn't turn on faster sign-in." · Try again · Not now (D-61, D-65) |
+| offer.offline | Notice | `offer.offline` "You're offline. Check your connection." (D-66) |
+| offer.not-now | None | → Home; re-offer per OQ-023; can be turned on later in Profile (D-69) |
+| offer.screen-lock | None | No fingerprint or face set up → offer uses the phone's screen lock (PIN / pattern / password) (D-64) |
+| offer.unsupported | — | Phone has no screen lock at all → screen skipped entirely (D-64) |
 
 ## Returning unlock
 

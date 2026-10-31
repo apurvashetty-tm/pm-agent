@@ -830,3 +830,9 @@ User identified missing HTML/native linkage. Inspected actual sign-in and OTP HT
   3. Token inspector → PRD (open questions with polling as the assumption).
 - **Open for Apurva:** backlog 4c (live site exposes `docs/`).
 - **Done (2026-10-31):** republished the **Truemeds Design System** Claude artifact (public link) to match the final system: patched 21 `project/` files (tokens.json, components/bundle.css, icons.js, RULES.md, beyond-salt.md; README + preview for Button, StatusCard, Notice, AppBar, ActionBar, BottomSheet, Toast and the new StatusLine), then the index `lastChange`. Live version 1793448055-b0e4. Source: `design-system/scripts/build_artifact.py`.
+
+
+## 2026-10-31 (eve) · Logic-review fixes, D-79, new order of work
+- **Done:** `app-logic.md` contradictions fixed (§4 stage table, §5 Dependency, §6 failed transfer, §7 Unavailable reason sheet) and §11 test numbers added; `feedback-state-map.md` offer rows aligned; rebuild checklist row 7b.3 aligned; **D-79** recorded (P3 review link / `?demo=1`, P8 retire old link, new order of work, PRD + prototype engineering spec + test cases).
+- **Now:** five-lens audit of the frozen screens by a separate agent — findings in `docs/reviews/2026-10-31-screen-audit/`.
+- **Next:** Apurva sorts audit findings → storyboard review starting with the entry screens (backlog §2e). Calling walkthrough misses come in the calling journey.
