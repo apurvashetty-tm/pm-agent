@@ -180,16 +180,17 @@ COMPONENTS = {
     "Button": ("Actions", 330, """Four roles plus call end (RULES §9.1). One primary per screen or sheet.
 
 - **Primary** `tm-btn--primary`: the one action that moves the flow forward.
-- **Secondary** `tm-btn--secondary`: a real alternative action (white, brand border).
+- **Secondary** `tm-btn--secondary`: a real alternative action (white, grey border, brand text, subtle shadow — as SALT).
 - **Quiet** `tm-btn--quiet`: leave, cancel, dismiss, "not now" (grey text, no border). Tertiary, ghost and link-styled buttons are retired into Quiet.
 - **Destructive** `tm-btn--destructive`: removes or closes something for good. Red outline, never solid, never the primary role.
-- **Call end** `tm-btn--call-end`: solid red, only for ending a live call.
+- **Call end** `tm-btn--call-end`: solid red, only for ending a live call in apps that own the call. Not used in the doctor app, where the doctor ends the call on the phone (D-58).
+- **Busy** `tm-btn--busy`: only for a short wait right after the user's own tap ("Confirming…", "Sending OTP…"). A longer wait that isn't an action is a Status line, never a busy button (D-74).
 - **One height per group** (differ by style, not size): `--lg` 56px for action buttons in a bar, sheet or form; default 48px for compact inline buttons. Nothing tappable is under 48px (`--sm`/`--xs` only in dense desktop tools).
 - **Order:** primary → secondary (a pair may sit side by side in `tm-btn-pair`, no icons) → quiet. Labels: verb first, sentence case.
 - Links stay inside sentences (`tm-btn--link` / plain link).
 """, """<div class="row" style="margin-bottom:12px"><button class="tm-btn tm-btn--primary">Primary</button><button class="tm-btn tm-btn--secondary">Secondary</button><button class="tm-btn tm-btn--quiet">Quiet</button><button class="tm-btn tm-btn--destructive">Destructive</button><button class="tm-btn tm-btn--call-end"><span class="tm-icon" data-icon="phone-x"></span>End call</button></div>
 <div class="row" style="margin-bottom:12px"><button class="tm-btn tm-btn--primary tm-btn--lg">Action 56</button><button class="tm-btn tm-btn--secondary">Compact 48</button><button class="tm-btn tm-btn--quiet tm-btn--icon" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button><button class="tm-btn tm-btn--primary tm-btn--busy" aria-busy="true" disabled><span class="tm-spinner"></span>Sending OTP</button><button class="tm-btn tm-btn--primary" disabled>Disabled</button></div>
-<div style="display:flex;gap:16px;flex-wrap:wrap"><div style="width:360px;max-width:100%" class="tm-actionbar"><button class="tm-btn tm-btn--primary tm-btn--lg">Confirm &amp; transfer</button><div class="tm-btn-pair"><button class="tm-btn tm-btn--secondary tm-btn--lg">Schedule callback</button><button class="tm-btn tm-btn--secondary tm-btn--lg">Skip HA call</button></div></div><div style="width:360px;max-width:100%" class="tm-actionbar"><button class="tm-btn tm-btn--primary tm-btn--lg">Request next case</button><button class="tm-btn tm-btn--quiet tm-btn--lg">Back to Home</button></div></div>"""),
+<div style="display:flex;gap:16px;flex-wrap:wrap"><div style="width:360px;max-width:100%" class="tm-actionbar"><button class="tm-btn tm-btn--primary tm-btn--lg">Confirm &amp; transfer</button><div class="tm-btn-pair"><button class="tm-btn tm-btn--secondary tm-btn--lg"><span class="tm-icon" data-icon="calendar"></span>Callback</button><button class="tm-btn tm-btn--secondary tm-btn--lg"><span class="tm-icon" data-icon="player-track-next"></span>Skip HA</button></div></div><div style="width:360px;max-width:100%" class="tm-actionbar"><button class="tm-btn tm-btn--primary tm-btn--lg">Request next case</button><button class="tm-btn tm-btn--quiet tm-btn--lg">Back to Home</button></div></div>"""),
 
     "InputField": ("Forms", 210, """Labelled text entry with helper, error and success text. From SALT Input Fields.
 
@@ -236,26 +237,37 @@ COMPONENTS = {
 <div class="tm-row tm-row--tappable"><div class="tm-thumb"></div><div class="tm-row__main"><div class="tm-row__title">Metformin 500mg</div><div class="tm-row__meta">1-0-1 · Ongoing (6 months) · Qty 60</div></div><span class="tm-tag tm-tag--md tm-tag--success tm-tag--fixed">Prescribed</span><span class="tm-row__chevron tm-icon" data-icon="chevron-right"></span></div>
 <div class="tm-row tm-row--readonly"><div class="tm-thumb"></div><div class="tm-row__main"><div class="tm-row__title">Amlodipine 5mg</div><div class="tm-row__meta">Read-only: muted, no chevron</div></div><span class="tm-tag tm-tag--md tm-tag--warning tm-tag--fixed">Pending</span><span class="tm-row__chevron tm-icon" data-icon="chevron-right"></span></div></div>"""),
 
-    "StatusCard": ("Feedback", 150, """The outcome of a task (RULES §9.3): icon + title, at the top of the content, stays on screen. Not a toast.
+    "StatusCard": ("Feedback", 250, """The outcome of a task (RULES §9.3): icon + title (optional one line under it), stays on screen where the result belongs. Not a toast.
 
 - `tm-status-card` > `tm-status-card__icon`, `tm-status-card__title` (optional `__text`).
-- Success outcomes use the success icon; non-success outcomes add `tm-status-card--neutral` (info icon).
-""", """<div style="display:flex;flex-direction:column;gap:8px;max-width:420px"><div class="tm-status-card"><span class="tm-status-card__icon"><span class="tm-icon" data-icon="circle-check"></span></span><div class="tm-status-card__title">Prescription confirmed</div></div><div class="tm-status-card tm-status-card--neutral"><span class="tm-status-card__icon"><span class="tm-icon" data-icon="info-circle"></span></span><div class="tm-status-card__title">Patient unavailable</div></div></div>"""),
+- **Tinted by outcome, with a 1px edge in the tone, no drop shadow** (D-62): `--success` done (confirmed, transferred, forwarded) · `--neutral` no outcome yet or none (grey fill: patient unavailable, waiting for the call record, callback scheduled) · `--warning` done, but the user must act (amber).
+- A plain white status card is not used: the outcome must not look like another content card.
+""", """<div style="display:flex;flex-direction:column;gap:8px;max-width:420px"><div class="tm-status-card tm-status-card--success"><span class="tm-status-card__icon"><span class="tm-icon" data-icon="circle-check"></span></span><div class="tm-status-card__title">Prescription confirmed</div></div><div class="tm-status-card tm-status-card--neutral"><span class="tm-status-card__icon"><span class="tm-icon" data-icon="clock"></span></span><div><div class="tm-status-card__title">Waiting for the call record</div><div class="tm-status-card__text">Your prescription is saved. We'll confirm it once the record arrives.</div></div></div><div class="tm-status-card tm-status-card--warning"><span class="tm-status-card__icon"><span class="tm-icon" data-icon="alert-triangle"></span></span><div><div class="tm-status-card__title">Forwarded to Health Advisor</div><div class="tm-status-card__text">Health Advisor unavailable right now. Read the script, then end the call.</div></div></div></div>"""),
 
-    "Notice": ("Feedback", 170, """Inline message inside a screen. Built from SALT's Feedback tokens.
+    "Notice": ("Feedback", 230, """Inline message inside a screen. Built from SALT's Feedback tokens.
 
-- `tm-notice` (info, brand-subtle), `--warning`, `--error`; an icon first, then one or two sentences.
-- For a passing confirmation use Toast instead.
+- `tm-notice` (info, brand-subtle), `--neutral`, `--warning`, `--error`; an icon first, then one or two sentences.
+- Say what happened and what is safe; never repeat a button that is on the screen (feedback rules, D-65).
+- `tm-notice--question`: a question above two answers ("Are you still on the call?") — plain centred text, no box, so it never looks like a field (D-62).
+- For a passing confirmation after a system action use Toast instead.
 """, """<div style="display:flex;flex-direction:column;gap:8px;max-width:560px">
-<div class="tm-notice"><span class="tm-icon" data-icon="info-circle"></span><span>Closing script: confirm the order and mention tracking in the app.</span></div>
-<div class="tm-notice tm-notice--warning"><span class="tm-icon" data-icon="alert-triangle"></span><span>Health advisor call pending for this order.</span></div>
-<div class="tm-notice tm-notice--error"><span class="tm-icon" data-icon="alert-circle"></span><span>Call failed. Try again or schedule a callback.</span></div></div>"""),
+<div class="tm-notice tm-notice--neutral"><span class="tm-icon" data-icon="info-circle"></span><span>You can log out after this case is closed.</span></div>
+<div class="tm-notice tm-notice--warning"><span class="tm-icon" data-icon="alert-triangle"></span><span>We didn't get the call result.</span></div>
+<div class="tm-notice tm-notice--error"><span class="tm-icon" data-icon="alert-circle"></span><span>Couldn't confirm. Nothing was lost.</span></div>
+<div class="tm-notice tm-notice--question"><span class="tm-icon" data-icon="phone"></span><span>Are you still on the call?</span></div></div>"""),
+
+    "StatusLine": ("Feedback", 90, """A long wait that is not an action (D-74): plain centred text with a small spinner, no button shape, so nobody tries to tap it.
+
+- `tm-status-line` > `tm-spinner` + text, e.g. "Calling Ramesh…", "Getting call result…", "Checking call result…".
+- Sits where the main button would be; the real actions (e.g. Callback) stay as buttons below it.
+- A short wait right after the user's own tap keeps the busy button ("Confirming…").
+""", """<div style="max-width:360px"><div class="tm-status-line" role="status"><span class="tm-spinner" aria-hidden="true"></span>Getting call result…</div></div>"""),
 
     "Toast": ("Feedback", 80, """Brief message where nothing on the screen can show the result (RULES §9.5).
 
 - `tm-toast`: dark, 14/20, one line (two at most), just above the bottom bar. One at a time, about 4 seconds.
 - `role="status"` (polite); never takes focus; never carries an action or anything the user must do.
-- Prefer showing the outcome where it happens (a tag, a status card, a notice). Toasts are rare.
+- Prefer showing the outcome where it happens (a tag, a status card, a notice). Toasts are rare: mainly the answer to a system action with no on-screen control, e.g. the phone's back button during a call (D-77).
 """, """<div class="row" style="justify-content:center"><span class="tm-toast" role="status" style="position:static;transform:none">Finish this case first. Then you can go back to Home.</span></div>"""),
 
     "SelectionControls": ("Selection", 120, """Checkbox, radio and toggle. From SALT Checkboxes, Radio Buttons and Toggles.
@@ -273,22 +285,24 @@ COMPONENTS = {
 - Edit screen `tm-header-edit`: ✕ on the left (asks before discarding), title + subtitle, at most one action on the right.
 - Viewer `tm-header-viewer`: dark bar, ✕, title, tools (`tm-btn--on-dark`, 48px); the title truncates before it touches the tools.
 - Icon buttons are 48px with an accessible name.
+- Compact task header (`tm-header-task--compact`, e.g. the case page): on the 16px page edge; Back and Help step out so their glyphs sit on the edge (D-67).
 """, """<div style="display:flex;flex-direction:column;gap:16px;max-width:420px"><div class="tm-header-edit"><button class="tm-btn tm-btn--quiet tm-btn--icon" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button><div class="tm-header-edit__text"><div class="tm-header-edit__title">Metformin 500mg</div><div class="tm-header-edit__subtitle">Tablet</div></div><button class="tm-btn tm-btn--destructive">Disable</button></div>
 <div class="tm-header-viewer"><button class="tm-btn tm-btn--on-dark tm-btn--icon" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button><span class="tm-header-viewer__title">Prescription — Ramesh Gupta</span><span class="tm-header-viewer__tools"><button class="tm-btn tm-btn--on-dark tm-btn--icon" aria-label="Zoom out"><span class="tm-icon" data-icon="minus"></span></button><button class="tm-btn tm-btn--on-dark tm-btn--icon" aria-label="Zoom in"><span class="tm-icon" data-icon="plus"></span></button><button class="tm-btn tm-btn--on-dark tm-btn--icon" aria-label="Rotate"><span class="tm-icon" data-icon="rotate-clockwise"></span></button></span></div></div>"""),
 
-    "ActionBar": ("Navigation", 170, """Pinned bottom bar for screens without text entry (RULES §8.4, §9.1).
+    "ActionBar": ("Navigation", 200, """Pinned bottom bar for screens without text entry (RULES §8.4, §9.1).
 
-- `tm-actionbar`: primary on top, then secondary (a `tm-btn-pair` for two), then quiet. All `--lg` (56px). 24px margins and the safe-area inset. Steps aside while typing.
-""", """<div style="max-width:390px"><div class="tm-actionbar"><button class="tm-btn tm-btn--call-end tm-btn--lg"><span class="tm-icon" data-icon="phone-x"></span>End call</button><button class="tm-btn tm-btn--secondary tm-btn--lg">Schedule callback</button></div></div>"""),
+- `tm-actionbar`: primary on top, then secondary (a `tm-btn-pair` for two), then quiet. All `--lg` (56px). **16px padding on all four sides** plus the safe-area inset, a hairline top edge and an upward shadow so it separates from white cards (D-62, D-67). Steps aside while typing.
+- A long wait sits in the bar as a Status line, not a button (D-74).
+""", """<div style="display:flex;gap:16px;flex-wrap:wrap"><div style="width:360px;max-width:100%"><div class="tm-actionbar"><button class="tm-btn tm-btn--primary tm-btn--lg">Confirm prescription</button><button class="tm-btn tm-btn--secondary tm-btn--lg"><span class="tm-icon" data-icon="calendar"></span>Callback</button></div></div><div style="width:360px;max-width:100%"><div class="tm-actionbar"><div class="tm-status-line" role="status"><span class="tm-spinner" aria-hidden="true"></span>Calling Ramesh…</div><button class="tm-btn tm-btn--secondary tm-btn--lg"><span class="tm-icon" data-icon="calendar"></span>Callback</button></div></div></div>"""),
 
     "BottomSheet": ("Containers", 300, """One template for every sheet (RULES §9.4).
 
 - `tm-overlay` + `tm-sheet` > `tm-sheet__header` (`tm-sheet__title` 20/28 + `tm-sheet__close` ✕, 48px, no divider, no drag handle), optional `tm-sheet__subtitle`, `tm-sheet__body`, `tm-sheet__actions`.
-- 24px side margins; 16px header → content; 24px + safe area at the bottom. Actions follow the button rules (56px, full width).
+- 16px side margins (page margin, D-67); 16px header → content; 24px + safe area at the bottom. Actions follow the button rules (56px, full width).
 - Reason lists use `tm-option` rows (title + description); tapping applies, no extra button.
 - ✕, tap outside or swipe down = cancel, except while an action is in progress. Max 85% height; max width 640px on desktop.
 """, """<div style="display:flex;gap:16px;flex-wrap:wrap"><div style="position:relative;width:360px;max-width:100%;height:270px;overflow:hidden;border-radius:16px"><div class="tm-overlay" style="position:absolute"></div><div class="tm-sheet" style="position:absolute"><div class="tm-sheet__header"><div class="tm-sheet__title">Leave this case?</div><button class="tm-btn tm-btn--quiet tm-btn--icon tm-sheet__close" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button></div><p class="tm-sheet__subtitle">It goes back to the queue for another doctor.</p><div class="tm-sheet__actions"><button class="tm-btn tm-btn--primary tm-btn--lg">Release case</button><button class="tm-btn tm-btn--quiet tm-btn--lg">Stay on this case</button></div></div></div>
-<div style="position:relative;width:360px;max-width:100%;height:270px;overflow:hidden;border-radius:16px"><div class="tm-overlay" style="position:absolute"></div><div class="tm-sheet" style="position:absolute"><div class="tm-sheet__header"><div class="tm-sheet__title">Skip HA call</div><button class="tm-btn tm-btn--quiet tm-btn--icon tm-sheet__close" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button></div><p class="tm-sheet__subtitle">Choose a reason</p><div class="tm-sheet__body"><button class="tm-option"><span class="tm-option__title">Patient declined HA call</span><span class="tm-option__desc">Patient did not want an HA call</span></button></div></div></div></div>"""),
+<div style="position:relative;width:360px;max-width:100%;height:270px;overflow:hidden;border-radius:16px"><div class="tm-overlay" style="position:absolute"></div><div class="tm-sheet" style="position:absolute"><div class="tm-sheet__header"><div class="tm-sheet__title">Skip the Health Advisor call</div><button class="tm-btn tm-btn--quiet tm-btn--icon tm-sheet__close" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button></div><p class="tm-sheet__subtitle">Select reason</p><div class="tm-sheet__body"><button class="tm-option"><span class="tm-option__title">Patient declined the Health Advisor call</span><span class="tm-option__desc">The patient didn’t want the call</span></button></div></div></div></div>"""),
 
     "SideNav": ("Internal tools (proposed)", 220, """**Proposed — not in SALT.** Left navigation for portals and desktop tools, built from SALT tokens.
 
