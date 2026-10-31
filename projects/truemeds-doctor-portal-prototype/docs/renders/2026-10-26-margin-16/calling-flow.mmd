@@ -1,0 +1,72 @@
+%%{init: {'theme':'base','themeVariables':{'fontFamily':'Helvetica, Arial, sans-serif','fontSize':'15px','primaryColor':'#ffffff','primaryBorderColor':'#9aa4b2','lineColor':'#6b7280','primaryTextColor':'#1f2328'}}}%%
+flowchart LR
+  R["1 · Ready to call"]:::n -->|"tap Call patient"| C["2 · Calling<br/><small>script shown · Callback available</small>"]:::n
+  R -->|"Back (before patient answers)"| L["7e · Leave this case?<br/><small>Release case / Stay</small>"]:::n
+  C -->|"patient asks for later"| CB["Callback sheet"]:::n
+
+  subgraph FAIL["Call doesn't connect"]
+    NT["3 · Didn't go through<br/><small>Call again</small>"]:::err
+    DM["4 · You didn't answer<br/><small>Call again</small>"]:::warn
+    PU["9 · Patient unavailable<br/><small>auto close</small>"]:::neu
+  end
+  C -->|"request / network error"| NT
+  C -->|"doctor didn't pick up"| DM
+  C -->|"patient didn't pick up"| PU
+
+  subgraph GATE["After the call · 50-second gate (polling)"]
+    RW["5 · Getting call result"]:::n
+    EE["6 · Call too short<br/><small>Call again / Callback</small>"]:::warn
+    V4["8a · Confirm prescription<br/><small>Cat4 / HA skipped</small>"]:::n
+    BL["8c · Confirm blocked<br/><small>medicine still Pending</small>"]:::err
+    OK["10a · Prescription confirmed"]:::ok
+    VF["8b · Confirm &amp; forward<br/><small>Non-Value Meds</small>"]:::n
+    FW["10b · Forwarded to HA"]:::ok
+  end
+  C -->|"call ended"| RW
+  RW -->|"talk time under 50 s"| EE
+  RW -->|"valid · Cat4"| V4
+  V4 -->|"Confirm"| OK
+  V4 -.->|"Pending medicine"| BL
+  RW -->|"valid · Non-Value"| VF
+  VF -->|"Confirm & forward"| FW
+
+  subgraph S7["No call result"]
+    Q["7b · Are you still on the call?<br/><small>every 3 min</small>"]:::n
+    CK["7c · Checking call result"]:::n
+    RM["7d · Result not received<br/><small>Confirm · Callback · Unavailable</small>"]:::warn
+    SUB["7f · Waiting for the call record<br/><small>→ Ops queue after 30 min</small>"]:::neu
+  end
+  C -->|"3 min, no result"| Q
+  Q -->|"Yes"| C
+  Q -->|"No, call ended"| CK
+  CK -->|"nothing found"| RM
+  RM -->|"Confirm"| SUB
+
+  subgraph TR["Transfer case · Pilot Value Meds"]
+    T11["11 · Calling (transfer)"]:::n
+    T12["12 · Confirm &amp; transfer<br/><small>50 s + call live</small>"]:::n
+    T13["13 · Transferring…"]:::n
+    T14["14 · Transferred to HA"]:::ok
+    T15["15 · HA unavailable<br/><small>read script, end call</small>"]:::warn
+    T15B["15b · End the call first"]:::err
+    T16["16 · Ended before transfer<br/><small>Confirm &amp; forward / Skip HA</small>"]:::warn
+    T17["17 · Skip HA, waiting for result"]:::neu
+  end
+  C -->|"Value Meds case"| T11
+  T11 -->|"50 s since patient answered"| T12
+  T12 -->|"Confirm & transfer"| T13
+  T13 -->|"HA joins"| T14
+  T13 -->|"no HA joins"| T15
+  T15 -.->|"Request next case, still on call"| T15B
+  T12 -->|"call hung up"| T16
+  T12 -->|"Skip HA"| T17
+
+  classDef n fill:#ffffff,stroke:#9aa4b2,color:#1f2328
+  classDef ok fill:#e8f3ee,stroke:#178755,color:#10603c
+  classDef neu fill:#edeef1,stroke:#9aa4b2,color:#1f2328
+  classDef warn fill:#fff7e8,stroke:#b57d0f,color:#6b4a05
+  classDef err fill:#fdecec,stroke:#c62828,color:#8b1a1a
+  style FAIL fill:#fafbfc,stroke:#d0d5dc
+  style GATE fill:#fafbfc,stroke:#d0d5dc
+  style S7 fill:#fafbfc,stroke:#d0d5dc
+  style TR fill:#fafbfc,stroke:#d0d5dc

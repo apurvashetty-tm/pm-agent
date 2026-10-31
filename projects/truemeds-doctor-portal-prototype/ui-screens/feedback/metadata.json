@@ -51,7 +51,7 @@
     "next": "reconnect and retry",
     "clear": "new attempt",
     "retain": "number",
-    "copy": "existing"
+    "copy": "approved (Apurva, 2026-10-26, D-65 — no repeated button)"
   },
   "signin.couldntSend": {
     "pattern": "F2",
@@ -60,7 +60,7 @@
     "next": "retry",
     "clear": "new attempt",
     "retain": "number",
-    "copy": "approved (Apurva, D-54, wording changed)"
+    "copy": "approved (Apurva, 2026-10-26, D-65 — no repeated button)"
   },
   "signin.tooMany": {
     "pattern": "W1",
@@ -69,7 +69,7 @@
     "next": "wait for server eligibility",
     "clear": "authoritative unlock",
     "retain": "number",
-    "copy": "existing"
+    "copy": "approved (Apurva, 2026-10-26, D-66)"
   },
   "signin.inactive": {
     "pattern": "F2",
@@ -105,7 +105,7 @@
     "next": "enter new code",
     "clear": "new attempt",
     "retain": "opt-in",
-    "copy": "approved"
+    "copy": "approved (Apurva, 2026-10-26, D-65 — no repeated button)"
   },
   "otp.triesLeft": {
     "pattern": "F1",
@@ -126,7 +126,7 @@
     "next": "Resend code",
     "clear": "fresh challenge",
     "retain": "opt-in",
-    "copy": "approved"
+    "copy": "approved (Apurva, 2026-10-26, D-65 — no repeated button)"
   },
   "otp.newSent": {
     "pattern": "S1",
@@ -144,7 +144,7 @@
     "next": "retry",
     "clear": "new attempt",
     "retain": "code and opt-in",
-    "copy": "approved"
+    "copy": "approved (Apurva, 2026-10-26, D-65 — no repeated button)"
   },
   "otp.tooManyResends": {
     "pattern": "W1",
@@ -174,7 +174,7 @@
     "next": "retry if eligible",
     "clear": "new attempt",
     "retain": "code and opt-in",
-    "copy": "approved (Apurva, D-54, wording changed)"
+    "copy": "approved (Apurva, 2026-10-26, D-65 — no repeated button)"
   },
   "otp.expiredAndLimited": {
     "pattern": "W1 (locked treatment, D-46)",
@@ -195,7 +195,7 @@
     "next": "retry",
     "clear": "new attempt",
     "retain": "duration",
-    "copy": "approved (Apurva, D-53)"
+    "copy": "approved (Apurva, 2026-10-26, D-65 — no repeated button)"
   },
   "home.addFailed": {
     "pattern": "F2",
@@ -204,7 +204,7 @@
     "next": "retry",
     "clear": "new attempt",
     "retain": "duration and deadline",
-    "copy": "approved (Apurva, D-53)"
+    "copy": "approved (Apurva, 2026-10-26, D-65 — no repeated button)"
   },
   "home.requestFailed": {
     "pattern": "F2",
@@ -213,7 +213,7 @@
     "next": "retry",
     "clear": "new attempt",
     "retain": "availability",
-    "copy": "approved (Apurva, D-54, wording changed)"
+    "copy": "approved (Apurva, 2026-10-26, D-65 — no repeated button)"
   },
   "home.offline": {
     "pattern": "F2",
@@ -337,7 +337,7 @@
     "next": "retry when online",
     "clear": "new attempt",
     "retain": "typed notes and choices",
-    "copy": "approved (Apurva, D-53)"
+    "copy": "approved (Apurva, 2026-10-26, D-65 — no repeated button)"
   },
   "case.confirming": {
     "pattern": "L1",
@@ -355,7 +355,19 @@
     "next": "Confirm again after reconciling",
     "clear": "new attempt",
     "retain": "all case data",
-    "copy": "approved (Apurva, D-53)"
+    "copy": "approved (Apurva, 2026-10-26, D-65 — no repeated button)"
+  },
+  "case.confirmBlocked": {
+    "pattern": "W1",
+    "trigger": "tap on any confirm button while a medicine is Pending (Flag 5)",
+    "slot": "line in the action bar, above the confirm button; page scrolls to the first Pending medicine",
+    "next": "prescribe or disable the medicines, tap again",
+    "clear": "no medicine Pending",
+    "retain": "call state, notes",
+    "copy": "approved (Apurva, 2026-10-16, Flag 5)",
+    "placeholders": [
+      "n"
+    ]
   },
   "case.releaseFailed": {
     "pattern": "F2",
@@ -364,7 +376,7 @@
     "next": "Try again",
     "clear": "release succeeds or new attempt",
     "retain": "case stays open",
-    "copy": "approved (Apurva, D-53)"
+    "copy": "approved (Apurva, 2026-10-26, D-65 — no repeated button)"
   },
   "case.callbackFailed": {
     "pattern": "F2",
@@ -373,7 +385,7 @@
     "next": "Try again",
     "clear": "new attempt",
     "retain": "chosen day and time",
-    "copy": "approved (Apurva, D-53)"
+    "copy": "approved (Apurva, 2026-10-26, D-65 — no repeated button)"
   },
   "rx.loadFailed": {
     "pattern": "F2",
@@ -393,15 +405,6 @@
     "retain": "none",
     "copy": "approved (Apurva, D-53)"
   },
-  "case.callEndedEarly": {
-    "pattern": "W1",
-    "trigger": "call ended before the 50s valid-call minimum",
-    "slot": "warning notice inside the pinned bar, directly above the buttons",
-    "next": "call again or schedule a callback (buttons)",
-    "clear": "new call or case closed",
-    "retain": "case data and chosen medicines",
-    "copy": "approved (Apurva, D-54)"
-  },
   "case.noPickup": {
     "pattern": "W1",
     "trigger": "call not answered",
@@ -420,27 +423,6 @@
     "retain": "case data",
     "copy": "approved (Apurva, D-54)"
   },
-  "call.callingYou": {
-    "pattern": "B",
-    "trigger": "doctor taps Call patient; request accepted",
-    "slot": "busy main button label",
-    "next": "answer the incoming call on the phone",
-    "clear": "leg 1 answered or failed",
-    "retain": "case data",
-    "copy": "proposed (D-58, 2026-10-22) — needs Apurva approval"
-  },
-  "call.connecting": {
-    "pattern": "B",
-    "trigger": "leg 1 answered",
-    "slot": "busy main button label",
-    "next": "wait for the patient to answer",
-    "clear": "leg 2 answered or failed",
-    "retain": "case data",
-    "copy": "proposed (D-58, 2026-10-22) — needs Apurva approval",
-    "placeholders": [
-      "name"
-    ]
-  },
   "call.notThrough": {
     "pattern": "F2",
     "trigger": "request refused or leg-1 network/vendor error",
@@ -448,7 +430,7 @@
     "next": "Call again",
     "clear": "new call",
     "retain": "case data",
-    "copy": "proposed (D-58, 2026-10-22) — needs Apurva approval"
+    "copy": "approved (Apurva, 2026-10-26, D-65 — no repeated button)"
   },
   "call.doctorMissed": {
     "pattern": "W1",
@@ -457,7 +439,7 @@
     "next": "Call again",
     "clear": "new call",
     "retain": "case data",
-    "copy": "proposed (D-58, 2026-10-22) — needs Apurva approval"
+    "copy": "approved (Apurva, 2026-10-26, D-65 — no repeated button)"
   },
   "call.onCall": {
     "pattern": "B",
@@ -477,15 +459,6 @@
     "retain": "case data and notes",
     "copy": "proposed (D-58, 2026-10-22) — needs Apurva approval"
   },
-  "call.transferReady": {
-    "pattern": "N1",
-    "trigger": "our count reaches the gate time (transfer case)",
-    "slot": "neutral notice inside the pinned bar, above the buttons",
-    "next": "Confirm & transfer",
-    "clear": "transfer done or call ended",
-    "retain": "case data and notes",
-    "copy": "proposed (D-58, 2026-10-22) — needs Apurva approval"
-  },
   "call.resultWait": {
     "pattern": "B",
     "trigger": "call ended (other cases)",
@@ -502,7 +475,7 @@
     "next": "Call again, Callback or Unavailable",
     "clear": "new call or case closed",
     "retain": "case data and notes",
-    "copy": "proposed (2026-10-24, D-58 point 22) — needs Apurva approval"
+    "copy": "approved (Apurva, 2026-10-26, D-65 — no repeated button)"
   },
   "call.resultMissing": {
     "pattern": "W1",
@@ -519,15 +492,6 @@
     "slot": "neutral notice inside the pinned bar, above Confirm & forward",
     "next": "Confirm & forward",
     "clear": "case closed",
-    "retain": "case data and notes",
-    "copy": "approved (Apurva, 2026-10-24, D-58 point 23)"
-  },
-  "call.haNoJoin": {
-    "pattern": "W1",
-    "trigger": "transfer leg failed, call still live",
-    "slot": "warning notice inside the pinned bar",
-    "next": "end the call on the phone",
-    "clear": "call ended",
     "retain": "case data and notes",
     "copy": "approved (Apurva, 2026-10-24, D-58 point 23)"
   },
@@ -585,15 +549,6 @@
     "retain": "case data",
     "copy": "approved (Apurva, 2026-10-24, D-58 point 23)"
   },
-  "call.stayOnLine": {
-    "pattern": "N1",
-    "trigger": "transfer started",
-    "slot": "neutral notice inside the pinned bar, above the busy button",
-    "next": "read it to the patient",
-    "clear": "transfer done or failed",
-    "retain": "case data",
-    "copy": "proposed (2026-10-24, storyboard B — route decided at the tap) — needs Apurva approval"
-  },
   "call.forwardedTell": {
     "pattern": "N1",
     "trigger": "no HA free at the tap; forwarded",
@@ -607,28 +562,37 @@
     "pattern": "N1",
     "trigger": "3 min after the tap with no call result, repeats every 3 min",
     "slot": "neutral notice inside the pinned bar, above two answers",
-    "next": "Yes, still talking / No, call ended",
+    "next": "Still talking / Call ended",
     "clear": "result arrives or answered",
     "retain": "case data",
     "copy": "proposed (2026-10-24, state 7 — no call result) — needs Apurva approval"
   },
   "call.checkingResult": {
     "pattern": "B",
-    "trigger": "doctor tapped No, call ended; backend asks the partner",
+    "trigger": "doctor tapped Call ended; backend asks the partner",
     "slot": "busy main button label",
     "next": "wait",
     "clear": "result found or not",
     "retain": "case data",
     "copy": "proposed (2026-10-24, state 7 — no call result) — needs Apurva approval"
   },
+  "call.submittedTitle": {
+    "pattern": "N1",
+    "trigger": "Confirm tapped in 7d (no call result)",
+    "slot": "title of the grey closed card (7f)",
+    "next": "Request next case",
+    "clear": "call record arrives → card becomes \"Prescription confirmed\"",
+    "retain": "case closed",
+    "copy": "approved (Apurva, 2026-10-27, D-68)"
+  },
   "call.submittedText": {
     "pattern": "N1",
     "trigger": "Confirm prescription with no call result (state 7d)",
-    "slot": "second line of the grey closed card \"Prescription submitted\"",
+    "slot": "second line of the grey closed card \"Waiting for the call record\" (7f)",
     "next": "Request next case",
     "clear": "—",
     "retain": "—",
-    "copy": "proposed (2026-10-24, state 7 — no call result) — needs Apurva approval"
+    "copy": "approved (Apurva, 2026-10-27, D-68)"
   },
   "call.scriptCat4": {
     "pattern": "N1",
@@ -683,5 +647,95 @@
     "clear": "case closed",
     "retain": "case data",
     "copy": "approved (Apurva, 2026-10-24, D-58 point 23)"
+  },
+  "offer.screenLockSub": {
+    "pattern": "none",
+    "trigger": "faster sign-in offer (D-61, D-64)",
+    "slot": "offer subtitle, screen-lock phones (D-64)",
+    "next": "Turn on faster sign-in",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved (Apurva, 2026-10-26, D-64/D-65)"
+  },
+  "offer.screenLockLine": {
+    "pattern": "none",
+    "trigger": "faster sign-in offer (D-61, D-64)",
+    "slot": "first reassurance, second line, screen-lock phones",
+    "next": "Turn on faster sign-in",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved (Apurva, 2026-10-26, D-64/D-65)"
+  },
+  "offer.screenLockTrust": {
+    "pattern": "none",
+    "trigger": "faster sign-in offer (D-61, D-64)",
+    "slot": "second reassurance title, screen-lock phones",
+    "next": "Turn on faster sign-in",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved (Apurva, 2026-10-26, D-64/D-65)"
+  },
+  "offer.enableFailed": {
+    "pattern": "F2",
+    "trigger": "faster sign-in offer (D-61, D-64)",
+    "slot": "notice in the footer, above Try again",
+    "next": "Try again or Not now",
+    "clear": "leaving the offer, or a successful retry",
+    "retain": "—",
+    "copy": "approved (Apurva, 2026-10-26, D-64/D-65)"
+  },
+  "offer.offline": {
+    "pattern": "F2",
+    "trigger": "faster sign-in offer (D-61, D-64)",
+    "slot": "notice in the footer, after tapping Turn on while offline",
+    "next": "reconnect, tap Turn on again, or Not now",
+    "clear": "leaving the offer, or a successful retry",
+    "retain": "—",
+    "copy": "approved (Apurva, 2026-10-26, D-66)"
+  },
+  "profile.logoutBlocked": {
+    "pattern": "N1",
+    "trigger": "Profile opened while a case is open",
+    "slot": "notice in the Profile sheet, in place of Log out",
+    "next": "close the case, then Log out",
+    "clear": "case closed",
+    "retain": "—",
+    "copy": "ported from the current app (D-69); \"order\" → \"case\" to match the app's terms"
+  },
+  "profile.logoutConfirm": {
+    "pattern": "none",
+    "trigger": "Log out tapped in Profile",
+    "slot": "text of the \"Log out?\" sheet",
+    "next": "Log out (destructive) or Stay signed in",
+    "clear": "sheet closed",
+    "retain": "—",
+    "copy": "ported from the current app (D-69); \"orders\" → \"cases\""
+  },
+  "case.callbackPickBoth": {
+    "pattern": "F1",
+    "trigger": "Confirm callback tapped with the date and/or time missing",
+    "slot": "line under the time grid in the callback sheet",
+    "next": "pick the missing value",
+    "clear": "both picked",
+    "retain": "what was picked",
+    "copy": "approved as built (current app); moved into the registry 2026-10-28 (D-70)"
+  },
+  "case.callbackPickDate": {
+    "pattern": "F1",
+    "trigger": "Confirm callback tapped with the date and/or time missing",
+    "slot": "line under the time grid in the callback sheet",
+    "next": "pick the missing value",
+    "clear": "both picked",
+    "retain": "what was picked",
+    "copy": "approved as built (current app); moved into the registry 2026-10-28 (D-70)"
+  },
+  "case.callbackPickTime": {
+    "pattern": "F1",
+    "trigger": "Confirm callback tapped with the date and/or time missing",
+    "slot": "line under the time grid in the callback sheet",
+    "next": "pick the missing value",
+    "clear": "both picked",
+    "retain": "what was picked",
+    "copy": "approved as built (current app); moved into the registry 2026-10-28 (D-70)"
   }
 }

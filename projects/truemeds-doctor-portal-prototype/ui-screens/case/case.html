@@ -31,7 +31,7 @@ html.capture #main-scroll{flex:1 1 auto;min-height:0;overflow-y:auto}
 /* End-of-case card: title only (no second line). */
 #success-toast-desc{display:none !important}
 #success-toast:not(.show){display:none !important}
-#success-toast.show{position:static !important;left:auto !important;top:auto !important;bottom:auto !important;width:100% !important;transform:none !important;margin:0 0 var(--tm-space-sm);box-shadow:var(--tm-shadow-card);z-index:auto !important}
+#success-toast.show{position:static !important;left:auto !important;top:auto !important;bottom:auto !important;width:100% !important;transform:none !important;margin:0 0 var(--tm-space-sm);z-index:auto !important}
 #success-toast.show #success-toast-next{display:none !important}
 #concept-back-home{display:none}
 body.concept-closed #concept-back-home{display:flex}
@@ -44,8 +44,8 @@ body.concept-loading #case-head .tm-header-task__title,body.concept-loading #cas
 .concept-skel{display:block;background:var(--tm-border-subtle);border-radius:var(--tm-radius-md);margin-bottom:var(--tm-space-lg)}
 body.concept-load-failed #main-scroll > :not(.concept-new){display:none}
 body.concept-load-failed #case-actionbar > :not(.concept-new){display:none}
-.concept-stack{display:flex;flex-direction:column;gap:var(--tm-space-lg);width:100%;box-sizing:border-box;padding:0 var(--tm-space-xl)}
-.concept-bar-note{padding:0 var(--tm-space-xl) var(--tm-space-sm);box-sizing:border-box}
+.concept-stack{display:flex;flex-direction:column;gap:var(--tm-space-lg);width:100%;box-sizing:border-box;padding:0 var(--tm-space-page)}
+.concept-bar-note{padding:0 var(--tm-space-page) var(--tm-space-sm);box-sizing:border-box}
 .concept-gap{margin:var(--tm-space-lg) 0}
 #main-scroll > .concept-new,#case-actionbar > .concept-new{margin-top:0}
 /* Standards pass (2026-10-15): medicine and order-detail meta text lifted from 12px to 14px (RULES §8.1); tags keep 12px. */
@@ -64,6 +64,10 @@ body.concept-load-failed #case-actionbar > :not(.concept-new){display:none}
 /* Viewer header: the tools take their own row so the title is never cut (RULES §8.5 viewer header). */
 #rx-overlay-header{flex-wrap:wrap;row-gap:var(--tm-space-xs)}
 #rx-controls{flex-basis:100%;justify-content:flex-end;display:flex;align-items:center}
+/* 2026-10-24 concept: status card with a second line, and [PROPOSED] warning variant (design system, not yet in components.css) */
+#success-toast.concept-has-text #success-toast-desc{display:block !important;-webkit-line-clamp:unset;white-space:normal;font-size:var(--tm-font-size-body-md);line-height:var(--tm-font-lineheight-sm);color:var(--tm-content-secondary);margin-top:4px}
+#success-toast.concept-has-text{align-items:flex-start}
+#pcb-label{display:none !important}   /* 2026-10-24: one title — the card title says it */
 </style>
 <style id="concept-d51">
 /* D-51 (round 3). Concept layer only. */
@@ -95,12 +99,13 @@ body.concept-closed #success-toast{pointer-events:auto}
 .ps-rx-label{color:var(--tm-content-brand) !important}
 /* Duration card: label-to-field gap equals the card's own gap (24), same as the other cards. */
 #psl-duration + .ps-dur-field{margin-top:calc(var(--tm-space-xl) * -1)}
-/* RULES §8.2: 24px side margin on every mobile screen (case page, Prescribe, sheets). */
-#main-scroll{padding-left:var(--tm-space-xl) !important;padding-right:var(--tm-space-xl) !important}
-#case-actionbar{padding-left:var(--tm-space-xl) !important;padding-right:var(--tm-space-xl) !important}
-#ps-body,#ps-actionbar{padding-left:var(--tm-space-xl) !important;padding-right:var(--tm-space-xl) !important}
-.bottom-sheet{padding-left:var(--tm-space-xl) !important;padding-right:var(--tm-space-xl) !important}
-/* Closed case: View Rx and Order details look inactive (muted, no raised button). */
+/* D-67: 16px page margin (--tm-space-page) on every mobile screen (case page, Prescribe, sheets, action bar). */
+#main-scroll{padding-left:var(--tm-space-page) !important;padding-right:var(--tm-space-page) !important}
+#case-actionbar{padding-left:var(--tm-space-page) !important;padding-right:var(--tm-space-page) !important}
+#ps-body,#ps-actionbar{padding-left:var(--tm-space-page) !important;padding-right:var(--tm-space-page) !important}
+.bottom-sheet{padding-left:var(--tm-space-page) !important;padding-right:var(--tm-space-page) !important}
+/* Round 3 (D-76, D-51): View Rx keeps the open-case look and stays tappable on closed cases (the card stays live; .tm-readonly would block it). */
+#pdb-view-rx-btn{pointer-events:auto}
 /* 7. No blue outline on bottom sheets or the Prescribe screen; no glow ring on "Calling…". */
 .bottom-sheet:focus,.bottom-sheet:focus-visible,#prescribe-screen:focus,#prescribe-screen:focus-visible,#concept-leave .cl-sheet:focus,#concept-leave .cl-sheet:focus-visible{outline:none !important;box-shadow:none !important}
 .bottom-sheet,.bottom-sheet *:focus{outline:none}
@@ -424,7 +429,7 @@ body.concept-closed #success-toast{pointer-events:auto}
 
       <!-- 4. Action Zone — merged call + post-call -->
       <div id="action-zone" class="tm-card">
-        <h2 class="tm-section-title section-title--inline">Call</h2>
+        <h2 class="tm-section-title section-title--inline">End-of-call script</h2>
         <!-- Shown once the case is closed (order confirmed / callback scheduled / patient unavailable) -->
         <div id="az-closed" class="tm-notice" hidden><span class="tm-icon" data-icon="circle-check"></span><span id="az-closed-text">—</span></div>
 
@@ -625,13 +630,13 @@ body.concept-closed #success-toast{pointer-events:auto}
 
   <!-- Skip HA Sheet -->
   <div id="sheet-skip-ha" class="bottom-sheet tm-sheet">
-    <header class="tm-sheet__header"><h2 class="tm-sheet__title">Skip HA call</h2><button class="tm-btn tm-btn--quiet tm-btn--icon tm-sheet__close" onclick="closeSheet()" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button></header>
+    <header class="tm-sheet__header"><h2 class="tm-sheet__title">Skip the Health Advisor call</h2><button class="tm-btn tm-btn--quiet tm-btn--icon tm-sheet__close" onclick="closeSheet()" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button></header>
     <div class="tm-sheet__body">
       <!-- [OPEN DECISION] OQ-008: skip eligibility TBD -->
       <p class="tm-sheet__subtitle">Select reason</p>
-      <button class="tm-option" onclick="confirmSkipHA('Patient declined HA call')"><span class="tm-option__title">Patient declined HA call</span><span class="tm-option__desc">Patient explicitly did not want an HA call</span></button>
-      <button class="tm-option" onclick="confirmSkipHA('Clinically not required')"><span class="tm-option__title">Clinically not required</span><span class="tm-option__desc">Doctor assessed HA counselling is not needed</span></button>
-      <button class="tm-option" onclick="confirmSkipHA('Repeat patient — familiar with medicines')"><span class="tm-option__title">Repeat patient — familiar with medicines</span><span class="tm-option__desc">Patient was counselled in a prior order</span></button>
+      <button class="tm-option" onclick="confirmSkipHA('Patient declined HA call')"><span class="tm-option__title">Patient declined the Health Advisor call</span><span class="tm-option__desc">The patient didn’t want the call</span></button>
+      <button class="tm-option" onclick="confirmSkipHA('Clinically not required')"><span class="tm-option__title">Clinically not required</span><span class="tm-option__desc">Health Advisor counselling isn’t needed</span></button>
+      <button class="tm-option" onclick="confirmSkipHA('Repeat patient — familiar with medicines')"><span class="tm-option__title">Repeat patient, familiar with the medicines</span><span class="tm-option__desc">Counselled in an earlier order</span></button>
     </div>
   </div>
 
@@ -656,6 +661,19 @@ body.concept-closed #success-toast{pointer-events:auto}
         <button class="tm-option" onclick="confirmDisable('Duplicate medication')"><span class="tm-option__title">Duplicate medication</span><span class="tm-option__desc">Already on equivalent drug</span></button>
         <button class="tm-option" onclick="confirmDisable('Patient declined')"><span class="tm-option__title">Patient declined</span><span class="tm-option__desc">Patient refused this medicine</span></button>
         <button class="tm-option" onclick="confirmDisable('Wrong strength')"><span class="tm-option__title">Wrong strength</span><span class="tm-option__desc">The ordered strength isn't right</span></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mark patient unavailable (D-75, round 2): opened from 7d Result missing; same markup as the Disable sheet. Choosing a reason is the t09 path. -->
+  <div id="sheet-mark-unavailable" class="bottom-sheet tm-sheet">
+    <header class="tm-sheet__header"><h2 class="tm-sheet__title">Mark patient unavailable</h2><button class="tm-btn tm-btn--quiet tm-btn--icon tm-sheet__close" onclick="closeSheet()" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button></header>
+    <div class="tm-sheet__body">
+      <div class="tm-sheet__subtitle">Select reason</div>
+      <div class="reason-list">
+        <button class="tm-option" onclick="chooseUnavailableReason()"><span class="tm-option__title">Didn't answer</span><span class="tm-option__desc">Rang with no answer, or the line was busy</span></button>
+        <button class="tm-option" onclick="chooseUnavailableReason()"><span class="tm-option__title">Not reachable</span><span class="tm-option__desc">Phone switched off or out of coverage</span></button>
+        <button class="tm-option" onclick="chooseUnavailableReason()"><span class="tm-option__title">Wrong number</span><span class="tm-option__desc">Invalid or not the patient's number</span></button>
       </div>
     </div>
   </div>
@@ -816,7 +834,7 @@ body.concept-closed #success-toast{pointer-events:auto}
   back.id = 'concept-back-home'; back.type = 'button'; back.className = 'tm-btn tm-btn--lg tm-btn--block tm-btn--quiet';
   back.textContent = 'Back to Home'; back.onclick = () => goApp('home');
   $('case-actionbar').appendChild(back);
-  main.insertBefore($('success-toast'), main.firstChild);   // the outcome card is the first thing in the content (5.7)
+  $('case-tools').after($('success-toast'));   // D-58 point 16 / D-66 A: outcome card directly under Order details
   $('cl-stay').onclick = () => { leave.hidden = true; };
   $('cl-x').onclick = () => { leave.hidden = true; };
   $('cl-release').onclick = () => {
@@ -839,7 +857,7 @@ body.concept-closed #success-toast{pointer-events:auto}
   // ---- Wording (D-48), sentence case, D-50 labels; page text only, concept only ----
   const RELABEL = { 'Confirm Order': 'Confirm prescription', 'Confirm & Transfer': 'Confirm & transfer', 'Confirm & Forward': 'Confirm & forward' };
   const TEXT = { 'Call Patient': 'Call patient', 'Retry Call': 'Retry call', 'Mark as Unavailable': 'Mark as unavailable', 'Schedule Callback': 'Schedule callback', 'End Call': 'End call', 'Call Again': 'Call again', 'Skip HA Call': 'Skip HA call', 'Confirm Callback': 'Confirm callback', 'Order Created': 'Order created', 'Expected Delivery': 'Expected delivery', 'Mark Unavailable': 'Mark unavailable', 'Request Next Case': 'Request next case', 'Next Order': 'Request next case' };
-  const TITLE = { 'Order Confirmed': 'Prescription confirmed', 'Transferred to HA': 'Transferred to HA', 'Forwarded for Review': 'Forwarded to HA', 'Callback Scheduled': 'Callback scheduled', 'Patient unavailable': 'Patient unavailable' };
+  const TITLE = { 'Order Confirmed': 'Prescription confirmed', 'Transferred to HA': 'Transferred to Health Advisor', 'Forwarded for Review': 'Forwarded to Health Advisor', 'Callback Scheduled': 'Callback scheduled', 'Patient unavailable': 'Patient unavailable' };
   function relabelText(scope) {
     const w = document.createTreeWalker(scope, NodeFilter.SHOW_TEXT); let n;
     while ((n = w.nextNode())) { const t = n.nodeValue.trim(); if (TEXT[t]) n.nodeValue = n.nodeValue.replace(t, TEXT[t]); }
@@ -851,6 +869,8 @@ body.concept-closed #success-toast{pointer-events:auto}
     });
   }
   function syncConcept() {
+    // Round 3 (D-58 pt 18, D-71): the Ready state has no script card before Call; the card belongs to the attempted call
+    if (DOCTOR_STATE.consultationState === 'assigned' && !window.__attempted) { const pb = $('pre-call-brief'); pb.classList.remove('visible'); pb.style.display = 'none'; }
     const c = DOCTOR_STATE.currentCase;
     if (c) {
       $('ch-name').textContent = c.patient_name;
@@ -927,10 +947,9 @@ body.concept-closed #success-toast{pointer-events:auto}
       meta.replaceWith(line);
     });
     // Status tags in rows keep a reserved width (checklist 5.5)
-    document.querySelectorAll('#medicines-list .tm-tag').forEach(t => { if (/Prescribed|Pending|Disabled/.test(t.textContent)) t.classList.add('tm-tag--fixed'); });
+    document.querySelectorAll('#medicines-list .tm-tag').forEach(t => { if (/Prescribed|Pending|Disabled/.test(t.textContent)) t.classList.add('tm-tag--fixed'); if (/Disabled/.test(t.textContent)) t.classList.add('tm-tag--neutral'); });   // Round 3: the Disabled tag is the neutral tone (guard 5.5, D-68)
     document.querySelectorAll('.tm-notice:not([role])').forEach(n => n.setAttribute('role', 'status'));
     if ($('az-missed')) $('az-missed').style.display = 'none';   // D-54 #4: the reason is shown in the pinned bar
-    const pv = $('pdb-view-rx-btn'); if (pv) { pv.classList.toggle('tm-btn--quiet', isClosed); pv.classList.toggle('tm-btn--secondary', !isClosed); }
     const po = document.getElementById('ps-other'); if (po) { const f = po.closest('.tm-field'); const h = f && f.querySelector('.tm-field__helper'); if (h) { if (!h.id) h.id = 'ps-other-helper'; po.setAttribute('aria-describedby', h.id); po.setAttribute('aria-invalid', String(f.classList.contains('tm-field--error'))); } }
     const sc = $('success-toast'); if (sc) sc.setAttribute('role', 'status');   // outcome card is announced (RULES §9.8)
     if (typeof syncCaseActionBar === 'function') syncCaseActionBar();
@@ -947,14 +966,15 @@ body.concept-closed #success-toast{pointer-events:auto}
       title = `Callback ${day} at ${disp}`;
     }
     _toast(title, '');
-    const card = $('success-toast'), neutral = t === 'Patient unavailable';
+    const card = $('success-toast'), neutral = t === 'Patient unavailable' || t === 'Callback Scheduled';   // D-62 neutral: unavailable, callback (D-66 D: availability ended is success)
     card.classList.toggle('is-neutral', neutral);
+    card.classList.remove('tm-status-card--success', 'tm-status-card--neutral', 'tm-status-card--warning'); card.classList.add(neutral ? 'tm-status-card--neutral' : 'tm-status-card--success');   // D-62 tinted outcome
     const ic = card.querySelector('#success-toast-icon .tm-icon');
     if (ic) { ic.setAttribute('data-icon', neutral ? 'info-circle' : 'circle-check'); if (window.TMIcons) TMIcons.render(card); }
     syncConcept();
   };
   const _init = initiateCall;
-  initiateCall = function () { window.__attempted = true; return _init(); };
+  initiateCall = function () { window.__attempted = true; const az = $('action-zone'); az.hidden = false; az.style.display = ''; $('pre-call-brief').style.display = ''; return _init(); };   // Round 3: an attempted call shows its action zone and script again (the Ready rule hides them while the state is still assigned)
   // D-54 #3 (concept layer): injection doses 1 · 2 · 3 · Other; daily slots 0 · 1 · 2 · 3.
   FORM_DOSE.injection.each = [1, 2, 3];
   FORM_DOSE.injection.slot = [0, 1, 2, 3];
@@ -1006,7 +1026,7 @@ body.concept-closed #success-toast{pointer-events:auto}
   goApp = function (n) { leave.hidden = true; toast.hidden = true; return _goApp(n); };
 
   // ---- New states (2026-10-15): loading, failures, offline, busy/confirm, stress. Copy from messages.json (proposed). ----
-  const MSG = id => window.TMFeedback.msg(id);
+  const MSG = (id, v) => window.TMFeedback.msg(id, v);
   const notice = (kind, role, text, icon) => {
     const d = document.createElement('div');
     d.className = `tm-notice tm-notice--${kind} concept-new`;
@@ -1037,11 +1057,41 @@ body.concept-closed #success-toast{pointer-events:auto}
   const CAT4 = 'cat4', VALUE = 'pilot_value_meds_ha', FWD = 'pilot_nonvalue_meds_ha', SKIPPED = 'pilot_ha_skipped_customer';
   const startCall = scn => { switchScenario(scn); initiateCall(); simCallConnected(); };
   const passGate = scn => { startCall(scn); doFastForward(); };
-  const closeCase = (scn, after) => { passGate(scn); handleMainCTA(); setTimeout(() => { window.__confirmed = true; syncConcept(); if (after) after(); ready(); }, 1100); return 'wait'; };
+  const closeCase = (scn, after) => { passGate(scn); allRx(); handleMainCTA();setTimeout(() => { window.__confirmed = true; syncConcept(); if (after) after(); ready(); }, 1100); return 'wait'; };
   const ready = () => { document.body.dataset.ready = '1'; };
   const later = (fn, ms) => { setTimeout(() => { fn(); ready(); }, ms || 120); return 'wait'; };
   const openRx = () => openRxOverlay();
   const openPS = id => { openMedEdit(id); };
+  const icon = n => `<span class="tm-icon" data-icon="${n}" aria-hidden="true"></span>`;
+  const btn = (cls, html, busy) => { const b = document.createElement('button'); b.type = 'button'; b.className = 'tm-btn tm-btn--lg ' + cls; if (busy) { b.classList.add('tm-btn--busy'); b.disabled = true; b.setAttribute('aria-busy','true'); } b.innerHTML = html; return b; };
+  const pair = (a, b) => { const w = document.createElement('div'); w.className = 'tm-btn-pair'; w.style.order = getComputedStyle($('ab-secondary')).order; w.append(a, b); return w; };   // same place as the approved pair (#ab-secondary)
+  const setBar = (...els) => { const bar = $('case-actionbar'); Array.from(bar.children).forEach(c => { c.style.display = 'none'; }); bar.hidden = false; els.forEach(e => { e.classList.add('concept-new'); bar.appendChild(e); }); if (window.TMIcons) TMIcons.render(bar); };
+  const threeWays = () => [btn('tm-btn--primary tm-btn--block', icon('phone') + 'Call again'), pair(btn('tm-btn--secondary', icon('calendar') + 'Callback'), btn('tm-btn--destructive', icon('phone-off') + 'Unavailable'))];
+  const GATE = 50;
+  // ---- 2026-10-24: state 7 (no call result) ----
+  const ask = () => { const q = notice('neutral', 'status', MSG('call.stillOnCall'), 'phone'); q.classList.add('tm-notice--question'); return [q, pairOf(btn('tm-btn--secondary', 'Still talking'), btn('tm-btn--secondary', 'Call ended'))]; };
+  // ---- 2026-10-24: full calling storyboard (target A) ----
+  const pairOf = (a, b) => { const w = pair(a, b); w.style.gridTemplateColumns = 'minmax(0,1fr) minmax(0,1fr)'; return w; };   // Round 3: equal halves at 360 (D-53); long labels no longer widen one half
+  const showBack = () => { head.classList.remove('tm-header-task--no-back'); $('ch-back').style.display = ''; };
+  const showScript = txt => { const az = $('action-zone'); $('success-toast').after(az); az.hidden = false; az.style.display = ''; const b = $('pre-call-brief'); b.classList.add('visible'); b.hidden = false; b.style.display = ''; $('pcb-text').textContent = txt || SCRIPT[DOCTOR_STATE.activeScenario] || SCRIPT.cat4; const cl = $('az-closed'); if (cl) cl.hidden = true; };
+  const SCRIPT = { cat4: MSG('call.scriptCat4'), pilot_value_meds_ha: MSG('call.scriptTransfer'), pilot_nonvalue_meds_ha: MSG('call.scriptForward') };   // D-58 point 21
+  const allRx = () => { DOCTOR_STATE.currentCase.medicines.forEach(x => { x.validation_status = 'prescribed'; }); render(); };
+  const busy = label => btn('tm-btn--primary tm-btn--block', '<span class="tm-spinner" aria-hidden="true"></span>' + label, true);
+  // D-74: long waits are status text, not a busy button (the 7 states of the 2026-10-30 round; short waits keep busy())
+  const statusLine = label => { const d = document.createElement('div'); d.className = 'tm-status-line'; d.setAttribute('role', 'status'); d.innerHTML = '<span class="tm-spinner" aria-hidden="true"></span>' + label; return d; };
+  const callbackRow = () => { const w = document.createElement('div'); w.className = 'tm-btn-pair'; w.style.order = getComputedStyle($('ab-secondary')).order; w.style.gridTemplateColumns = '1fr'; w.appendChild(btn('tm-btn--secondary', icon('calendar') + 'Callback')); return w; };
+  const calling = scn => { switchScenario(scn); initiateCall(); return later(() => { setBar(statusLine('Calling ' + first() + '…'), callbackRow()); showScript(); head.classList.remove('tm-header-task--no-back'); $('ch-back').style.display = ''; }, 250); };
+  // Round 3: the Release button while the release runs (D-74: short wait, busy button)
+  const releasingBusy = () => { const b = $('cl-release'); b.classList.add('tm-btn--busy'); b.setAttribute('aria-busy', 'true'); b.disabled = true; b.innerHTML = '<span class="tm-spinner" aria-hidden="true"></span>Releasing…'; $('cl-stay').disabled = true; $('cl-x').disabled = true; };
+  // 7d bar (D-75): Unavailable opens the Mark patient unavailable sheet
+  const unavailableBtn = () => { const b = btn('tm-btn--destructive', icon('phone-off') + 'Unavailable'); b.addEventListener('click', () => openSheet('sheet-mark-unavailable')); return b; };
+  // Choosing a reason ends the call as patient unavailable: go to the t09 state. The 7d case data and bar cannot be reset in place, so the reference reloads at the t09 URL (same as opening any state).
+  window.chooseUnavailableReason = () => { location.search = '?s=t09-patient-unavailable&start=case&capture=1' + (location.search.includes('w=360') ? '&w=360' : ''); };
+  const s7dBar = () => { setBar(notice('warning', 'status', MSG('call.resultMissing'), 'alert-triangle'), btn('tm-btn--primary tm-btn--block', 'Confirm prescription'), pair(btn('tm-btn--secondary', icon('calendar') + 'Callback'), unavailableBtn())); $('pre-call-brief').style.display = 'none'; };
+  const first = () => DOCTOR_STATE.currentCase.patient_name.split(' ')[0];
+  const cardText = (text, warn) => { const c = $('success-toast'); c.classList.add('concept-has-text'); $('success-toast-desc').textContent = text; if (warn) { c.classList.remove('tm-status-card--success', 'tm-status-card--neutral'); c.classList.add('tm-status-card--warning'); const ic = c.querySelector('#success-toast-icon .tm-icon'); if (ic) { ic.setAttribute('data-icon', 'alert-triangle'); if (window.TMIcons) TMIcons.render(c); } } };
+  const scriptAfterOutcome = text => { const az = $('action-zone'); $('success-toast').after(az); az.hidden = false; az.style.display = ''; const b = $('pre-call-brief'); b.classList.add('visible'); b.hidden = false; b.style.display = ''; $('pcb-text').textContent = text; const cl = $('az-closed'); if (cl) cl.hidden = true; };
+
   const recipes = {
     // A. Case page
     'a-top':                   () => { switchScenario(CAT4); },
@@ -1050,23 +1100,9 @@ body.concept-closed #success-toast{pointer-events:auto}
     'a-rx-viewer':             () => { switchScenario(CAT4); openRx(); },
     'a-notes-typing':          () => { switchScenario(CAT4); $('symptoms-input').focus(); $('symptoms-input').value = 'Fever since 2 days'; },
     'a-leave-sheet':           () => { switchScenario(CAT4); showLeave(); },
-    'a-releasing':             () => { switchScenario(CAT4); showLeave(); $('cl-release').click(); },
-    'a-back-blocked':          () => { startCall(CAT4); caseBack(); },
+    'a-releasing':             () => { switchScenario(CAT4); initiateCall(); return later(() => { setBar(statusLine('Calling ' + first() + '…'), callbackRow()); showScript(); showBack(); showLeave(); releasingBusy(); }, 250); },   // Round 3: the s7e look with Releasing… (no click: the click navigates to Home)
+    'a-back-blocked':          () => { switchScenario(CAT4); initiateCall(); return later(() => { setBar(statusLine('Calling ' + first() + '…'), callbackRow()); showScript(); head.classList.add('tm-header-task--no-back'); $('ch-back').style.display = 'none'; caseBack(); }, 250); },   // Round 3: attempted call, no header Back (D-58), phone-back toast
     // B. Call
-    'b-calling':               () => { switchScenario(CAT4); initiateCall(); },
-    'b-on-call':               () => { startCall(CAT4); },
-    'b-ended-early':           () => { startCall(CAT4); handleCallAction(); noticeAboveBar(notice('warning', 'status', MSG('case.callEndedEarly'), 'phone-off')); },
-    'b-missed-call':           () => { switchScenario(CAT4); initiateCall(); simWebhook('no_answer'); noticeAboveBar(notice('warning', 'status', MSG('case.noPickup'), 'phone-off')); },
-    'b-didnt-connect':         () => { switchScenario(CAT4); initiateCall(); simWebhook('timeout'); noticeAboveBar(notice('warning', 'status', MSG('case.didntConnect'), 'phone-off')); },
-    'b-patient-unavailable':   () => { switchScenario(CAT4); initiateCall(); markCustomerUnavailable(); },
-    'b-post-gate-transfer':    () => { passGate(VALUE); },
-    'b-post-gate-cat4':        () => { passGate(CAT4); },
-    'b-post-gate-forward':     () => { passGate(FWD); },
-    // C. Sheets
-    'c-callback':              () => { passGate(CAT4); openSheet('sheet-callback'); },
-    'c-callback-error':        () => { passGate(CAT4); openSheet('sheet-callback'); confirmScheduleCallback(); },
-    'c-skip-ha':               () => { passGate(VALUE); openSheet('sheet-skip-ha'); },
-    // D. Prescribe screen
     'd-default':               () => { switchScenario(CAT4); openPS(1); },
     'd-scrolled':              () => { switchScenario(CAT4); openPS(1); later(() => { $('ps-body').scrollTop = 420; }, 150); return 'wait'; },
     'd-error-dose':            () => { switchScenario(CAT4); openPS(1); EDIT_STATE.interval = 'daily'; EDIT_STATE.m = 0; EDIT_STATE.a = 0; EDIT_STATE.n = 0; renderPrescribe(); confirmMedEdit(); },
@@ -1077,16 +1113,13 @@ body.concept-closed #success-toast{pointer-events:auto}
     'd-disable-sheet':         () => { switchScenario(CAT4); openPS(1); openDisableSheet(); },
     'd-header-white':          () => { switchScenario(CAT4); openPS(1); },
     // E. End of case
-    'e-prescription-confirmed':() => closeCase(CAT4),
-    'e-transferred':           () => closeCase(VALUE),
-    'e-forwarded':             () => closeCase(FWD),
     'e-callback-scheduled':    () => { passGate(CAT4); openSheet('sheet-callback'); selectCallbackDay('today'); selectCallbackTime('15:00'); confirmScheduleCallback(); setTimeout(ready, 150); return 'wait'; },
-    'e-patient-unavailable':   () => { switchScenario(CAT4); initiateCall(); markCustomerUnavailable(); setTimeout(() => { closeSheet(); showSuccessToast('Patient unavailable', ''); ready(); }, 150); return 'wait'; },
     'e-availability-ended':    () => { window.__availabilityEnded = true; return closeCase(CAT4); },
     // F. New states (2026-10-15)
     'a-loading':               () => { switchScenario(CAT4); document.body.classList.add('concept-loading'); main.insertBefore(skeleton(), tools.nextSibling); },
     'a-load-failed':           () => { switchScenario(CAT4); document.body.classList.add('concept-load-failed'); const card = document.createElement('div'); card.className = 'tm-card concept-new'; card.appendChild(notice('error', 'alert', MSG('case.loadFailed'), 'alert-circle')); main.appendChild(card); $('case-actionbar').appendChild(pinnedTryAgain()); },
     'a-offline':               () => { switchScenario(CAT4); noticeAboveBar(notice('warning', 'status', MSG('case.offline'), 'alert-triangle')); },
+    'a-offline-action':        () => { switchScenario(CAT4); noticeAboveBar(notice('error', 'alert', MSG('case.offlineAction'), 'alert-circle')); },   // fix round G12: the attempted action replaces the passive offline notice (app-logic §10, feedback-rules §4)
     'd-injection-default':     () => { switchScenario(CAT4); openPS(4); },
     // D-54 renders of the other Prescribe forms and schedules, on medicines that already exist in the scenarios
     'd-syrup':                 () => { switchScenario(CAT4); openPS(5); },
@@ -1095,17 +1128,59 @@ body.concept-closed #success-toast{pointer-events:auto}
     'd-every-x-hours':         () => { switchScenario(CAT4); const m = DOCTOR_STATE.currentCase.medicines.find(x => x.id === 1); m.interval = 'every_x_hours'; m.hours = 6; openPS(1); },
     'd-sos-only':              () => { switchScenario(CAT4); const m = DOCTOR_STATE.currentCase.medicines.find(x => x.id === 2); m.interval = 'sos'; openPS(2); },
     'd-weekly':                () => { switchScenario(CAT4); const m = DOCTOR_STATE.currentCase.medicines.find(x => x.id === 3); m.interval = 'weekly'; openPS(3); },
+    'd-alt-days':              () => { switchScenario(CAT4); const m = DOCTOR_STATE.currentCase.medicines.find(x => x.id === 1); m.interval = 'alt_days'; openPS(1); },   // fix round G3 (app-logic §8 How often)
+    'd-monthly':               () => { switchScenario(CAT4); const m = DOCTOR_STATE.currentCase.medicines.find(x => x.id === 1); m.interval = 'monthly'; openPS(1); },   // fix round G4
+    'd-inhaler':               () => { switchScenario('pilot_ha_skipped_customer'); openPS(3); },   // fix round G5: Salbutamol Inhaler fixture (form inhaler)
     'd-duration-picker':       () => { switchScenario(CAT4); openPS(1); EDIT_STATE.durOpen = true; renderPrescribe(); return later(() => { const p = document.getElementById('ps-dur-panel'); if (p) p.scrollIntoView({ block: 'center' }); }, 200); },
     'd-food-selected':         () => { switchScenario(CAT4); openPS(1); EDIT_STATE.food = 'before_food'; renderPrescribe(); },
-    'a-confirm-busy':          () => { passGate(CAT4); const b = $('main-cta-btn'); b.classList.add('tm-btn--busy'); b.disabled = true; b.setAttribute('aria-busy', 'true'); b.innerHTML = '<span class="tm-spinner" aria-hidden="true"></span>' + MSG('case.confirming'); $('ab-secondary').querySelectorAll('button').forEach(x => x.disabled = true); $('case-actionbar').querySelectorAll(':scope > button').forEach(x => { if (x !== b) x.disabled = true; }); $('pdb-view-rx-btn').disabled = true; },
-    'a-confirm-failed':        () => { passGate(CAT4); noticeAboveBar(notice('error', 'alert', MSG('case.confirmFailed'), 'alert-circle')); },
+    'a-confirm-busy':          () => { passGate(CAT4); allRx(); $('action-zone').style.display = 'none'; const b = $('main-cta-btn'); b.classList.add('tm-btn--busy'); b.disabled = true; b.setAttribute('aria-busy', 'true'); b.innerHTML = '<span class="tm-spinner" aria-hidden="true"></span>' + MSG('case.confirming'); $('ab-secondary').querySelectorAll('button').forEach(x => x.disabled = true); $('case-actionbar').querySelectorAll(':scope > button').forEach(x => { if (x !== b) x.disabled = true; }); $('pdb-view-rx-btn').disabled = true; },
+    'a-confirm-failed':        () => { passGate(CAT4); allRx(); $('action-zone').style.display = 'none'; noticeAboveBar(notice('error', 'alert', MSG('case.confirmFailed'), 'alert-circle')); },
     'a-release-failed':        () => { switchScenario(CAT4); showLeave(); const b = $('cl-release'); b.classList.add('tm-btn--busy'); b.disabled = true; b.innerHTML = '<span class="tm-spinner" aria-hidden="true"></span>Releasing…'; $('cl-stay').disabled = true; $('cl-x').disabled = true; setTimeout(() => { leave.hidden = true; b.classList.remove('tm-btn--busy'); b.disabled = false; b.textContent = 'Release case'; $('cl-stay').disabled = false; $('cl-x').disabled = false; noticeInContent(notice('error', 'alert', MSG('case.releaseFailed'), 'alert-circle')); ready(); }, 300); return 'wait'; },
-    'c-callback-failed':       () => { passGate(CAT4); openSheet('sheet-callback'); selectCallbackDay('today'); selectCallbackTime('15:00'); const a = document.querySelector('#sheet-callback .tm-sheet__actions'); const g = document.createElement('div'); g.className = 'concept-new concept-gap'; g.appendChild(notice('error', 'alert', MSG('case.callbackFailed'), 'alert-circle')); a.before(g); },
     'd-rx-failed':             () => { switchScenario(CAT4); openRxOverlay(); $('rx-doc-wrapper').style.display = 'none'; $('rx-hint').style.display = 'none'; $('rx-controls').style.display = 'none'; const f = document.createElement('div'); f.className = 'concept-new concept-stack'; f.appendChild(notice('error', 'alert', MSG('rx.loadFailed'), 'alert-circle')); $('rx-overlay-body').appendChild(f); const bar = document.createElement('div'); bar.className = 'tm-actionbar concept-new'; bar.appendChild(pinnedTryAgain()); $('rx-overlay').appendChild(bar); },
     'a-no-medicines':          () => { switchScenario(CAT4); renderMedicines([]); $('medicines-count').style.display = 'none'; const e = document.getElementById('medicines-empty'); e.hidden = false; e.innerHTML = '<div class="tm-empty"><p class="tm-empty__title">' + MSG('case.noMedicines') + '</p></div>'; },
     'a-long-content':          () => { switchScenario(CAT4); const c = DOCTOR_STATE.currentCase; c.patient_name = 'Venkataraman Ramachandran Iyer'; c.patient_age = 54; document.getElementById('case-head').classList.add('is-long'); c.medicines[0].name = 'Amoxicillin Clavulanate Dispersible'; c.medicines[0].strength = '625mg'; render(); },
     's-10-medicines':          () => { switchScenario(CAT4); const c = DOCTOR_STATE.currentCase; const base = c.medicines.slice(); for (let i = 0; i < 7; i++) { const m = Object.assign({}, base[i % base.length], { id: 100 + i, name: ['Pantoprazole', 'Cetirizine', 'Ibuprofen', 'Losartan', 'Telmisartan', 'Levocetirizine', 'Montelukast'][i], strength: ['40mg', '10mg', '400mg', '50mg', '40mg', '5mg', '10mg'][i] }); c.medicines.push(m); } render(); },
-    's-optional-empty':        () => { switchScenario(CAT4); const c = DOCTOR_STATE.currentCase; c.order_created = ''; c.order_delivery = ''; c.payment_mode = ''; render(); const n = document.getElementById('symptoms-input'); if (n) n.value = ''; $('ct-details').style.visibility = 'hidden'; }   // no order details: keep the slot, View Rx stays at the right edge (D-54 D15)
+    's-medicine-disabled':     () => { switchScenario(CAT4); const c = DOCTOR_STATE.currentCase; c.medicines[0].validation_status = 'prescribed'; c.medicines[1].disabled = true; c.medicines[1].disable_reason = 'Patient declined'; render(); },   // a Disabled row on the case page (app-logic: grey tag, removed from the order)
+    's-optional-empty':        () => { switchScenario(CAT4); const c = DOCTOR_STATE.currentCase; c.order_created = ''; c.order_delivery = ''; c.payment_mode = ''; render(); const n = document.getElementById('symptoms-input'); if (n) n.value = ''; $('ct-details').style.visibility = 'hidden'; },   // no order details: keep the slot, View Rx stays at the right edge (D-54 D15)
+    'g1-generic-confirm':      () => { passGate(VALUE); allRx(); return later(() => { $('pcb-text').textContent = MSG('call.scriptNeutral'); const b = $('main-cta-btn'); b.textContent = 'Confirm prescription'; }, 250); },
+    'g2-checking-ha':          () => { passGate(VALUE); allRx(); return later(() => { $('pcb-text').textContent = MSG('call.scriptNeutral'); setBar(statusLine(MSG('call.checkingHa'))); }, 250); },
+    'g3b-forwarded':           () => closeCase(VALUE, () => { showSuccessToast('Forwarded for Review', ''); $('success-toast-title').textContent = 'Forwarded to Health Advisor'; cardText(MSG('call.noHaFree'), true); scriptAfterOutcome(MSG('call.forwardedTell')); }),   // D-62 update: B3 amber, like 15
+    't01-ready':               () => { switchScenario(CAT4); },
+    't02-calling':             () => calling(CAT4),
+    't03-not-through':         () => { switchScenario(CAT4); return later(() => setBar(notice('error', 'alert', MSG('call.notThrough'), 'alert-circle'), btn('tm-btn--primary tm-btn--block', icon('phone') + 'Call again')), 250); },
+    't04-doctor-missed':       () => { switchScenario(CAT4); return later(() => setBar(notice('warning', 'status', MSG('call.doctorMissed'), 'phone-off'), btn('tm-btn--primary tm-btn--block', icon('phone') + 'Call again')), 250); },
+    't05-result-wait':         () => { switchScenario(CAT4); initiateCall(); return later(() => { setBar(statusLine(MSG('call.resultWait')), callbackRow()); $('pre-call-brief').style.display = 'none'; }, 250); },   // call known to have ended (state 5, §5): no script
+    't06-ended-early':         () => { startCall(CAT4); handleCallAction(); return later(() => setBar(notice('warning', 'status', MSG('call.endedEarly'), 'phone-off'), btn('tm-btn--primary tm-btn--block', icon('phone') + 'Call again'), callbackRow()), 250); },
+    't08c-confirm-blocked':    () => { passGate(CAT4); return later(() => { $('action-zone').style.display = 'none'; const n = [...document.querySelectorAll('#main-scroll .tm-tag')].filter(t => /pending/i.test(t.textContent)).length; noticeAboveBar(notice('error', 'alert', MSG('case.confirmBlocked', { n }), 'alert-circle')); }, 200); },   // Flag 5 / D-64: confirm tapped with Pending medicines
+    't08a-valid-cat4':         () => { passGate(CAT4); allRx(); return later(() => { $('action-zone').style.display = 'none'; }, 200); },
+    't08b-valid-forward':      () => { passGate(FWD); allRx(); return later(() => { $('action-zone').style.display = 'none'; }, 200); },
+    't09-patient-unavailable': () => { switchScenario(CAT4); initiateCall(); markCustomerUnavailable(); setTimeout(() => { closeSheet(); showSuccessToast('Patient unavailable', ''); ready(); }, 150); return 'wait'; },
+    't10a-confirmed':          () => { switchScenario(CAT4); allRx(); return closeCase(CAT4); },
+    't10b-forwarded':          () => { switchScenario(FWD); allRx(); return closeCase(FWD); },
+    't11-calling-transfer':    () => calling(VALUE),
+    't12-transfer-ready':      () => { passGate(VALUE); allRx(); return later(() => showScript(), 200); },
+    't13-connecting-ha':       () => { passGate(VALUE); allRx(); return later(() => { showScript(); setBar(busy(MSG('call.connectingHa'))); }, 250); },
+    't14-transferred':         () => { switchScenario(VALUE); allRx(); return closeCase(VALUE); },
+    't15b-end-call-first':     () => closeCase(VALUE, () => { showSuccessToast('Forwarded for Review', ''); cardText(MSG('call.transferFailed'), true); scriptAfterOutcome(MSG('call.forwardedTell')); noticeAboveBar(notice('error', 'alert', MSG('call.endCallFirst'), 'phone')); }),   // D-63
+    't15-ha-no-join':          () => closeCase(VALUE, () => { showSuccessToast('Forwarded for Review', ''); cardText(MSG('call.transferFailed'), true); scriptAfterOutcome(MSG('call.forwardedTell')); }),
+    't16-transfer-missed':     () => { passGate(VALUE); allRx(); return later(() => { $('action-zone').style.display = 'none';   /* call already over: nobody to read the script to */ setBar(notice('warning', 'status', MSG('call.transferMissedDoctor'), 'phone-off'), btn('tm-btn--primary tm-btn--block', 'Confirm & forward'), (() => { const w = callbackRow(); w.innerHTML = ''; w.appendChild(btn('tm-btn--secondary', icon('player-track-next') + 'Skip HA')); return w; })()); }, 250); },
+    't16b-transfer-missed-patient': () => { passGate(VALUE); allRx(); return later(() => { $('action-zone').style.display = 'none'; setBar(notice('warning', 'status', MSG('call.transferMissedPatient'), 'phone-off'), btn('tm-btn--primary tm-btn--block', 'Confirm & forward'), (() => { const w = callbackRow(); w.innerHTML = ''; w.appendChild(btn('tm-btn--secondary', icon('player-track-next') + 'Skip HA')); return w; })()); }, 250); },
+    't16c-transfer-missed-unknown': () => { passGate(VALUE); allRx(); return later(() => { $('action-zone').style.display = 'none'; setBar(notice('warning', 'status', MSG('call.transferMissed'), 'phone-off'), btn('tm-btn--primary tm-btn--block', 'Confirm & forward'), (() => { const w = callbackRow(); w.innerHTML = ''; w.appendChild(btn('tm-btn--secondary', icon('player-track-next') + 'Skip HA')); return w; })()); }, 250); },
+    't17-skip-ha-wait':        () => { passGate(VALUE); allRx(); return later(() => { showScript(SCRIPT.cat4); setBar(notice('neutral', 'status', MSG('call.skipHa'), 'info-circle'), statusLine(MSG('call.resultWait')), callbackRow()); }, 250); },
+    // S7. No call result (2026-10-24)
+    's7a-calling':             () => { switchScenario(CAT4); initiateCall(); return later(() => { setBar(statusLine('Calling ' + first() + '…'), callbackRow()); showScript(); showBack(); }, 250); },
+    's7b-still-on-call':       () => { switchScenario(CAT4); initiateCall(); return later(() => { setBar(...ask()); showScript(); showBack(); }, 250); },
+    's7c-checking':            () => { switchScenario(CAT4); initiateCall(); return later(() => { setBar(statusLine(MSG('call.checkingResult'))); $('pre-call-brief').style.display = 'none'; }, 250); },
+    's7d-result-missing':      () => { switchScenario(CAT4); initiateCall(); allRx(); return later(() => s7dBar(), 250); },
+    's7d-unavailable-sheet':   () => { switchScenario(CAT4); initiateCall(); allRx(); return later(() => { s7dBar(); openSheet('sheet-mark-unavailable'); }, 250); },
+    's7e-leave-sheet':         () => { switchScenario(CAT4); initiateCall(); return later(() => { setBar(statusLine('Calling ' + first() + '…'), callbackRow()); showScript(); showBack(); showLeave(); }, 250); },
+    's7f-submitted':           () => { switchScenario(CAT4); allRx(); return closeCase(CAT4, () => { showSuccessToast('Patient unavailable', ''); $('success-toast-title').textContent = MSG('call.submittedTitle'); $('success-toast').classList.remove('tm-status-card--success'); $('success-toast').classList.add('tm-status-card--neutral'); cardText(MSG('call.submittedText'), false); const ic = $('success-toast').querySelector('#success-toast-icon .tm-icon'); if (ic) { ic.setAttribute('data-icon', 'clock'); TMIcons.render($('success-toast')); } }); },
+    // A. Case page
+    'c-callback':              () => { switchScenario(CAT4); initiateCall(); return later(() => { setBar(statusLine('Calling ' + first() + '…'), callbackRow()); showScript(); showBack(); openSheet('sheet-callback'); }, 250); },   // D-69 fix: over 7a Calling, not the old call card
+    'c-callback-error':        () => { switchScenario(CAT4); initiateCall(); return later(() => { setBar(statusLine('Calling ' + first() + '…'), callbackRow()); showScript(); showBack(); openSheet('sheet-callback'); confirmScheduleCallback(); }, 250); },
+    'c-skip-ha':               () => { passGate(VALUE); allRx(); return later(() => { showScript(); openSheet('sheet-skip-ha'); }, 200); },   // over 12 Confirm & transfer
+    // D. Prescribe screen
+    'c-callback-failed':       () => { switchScenario(CAT4); initiateCall(); return later(() => { setBar(statusLine('Calling ' + first() + '…'), callbackRow()); showScript(); showBack(); openSheet('sheet-callback'); selectCallbackDay('today'); selectCallbackTime('15:00'); const a = document.querySelector('#sheet-callback .tm-sheet__actions'); const g = document.createElement('div'); g.className = 'concept-new concept-gap'; g.appendChild(notice('error', 'alert', MSG('case.callbackFailed'), 'alert-circle')); a.before(g); }, 250); },
   };
   resetNew();
   const run = recipes[S] || recipes['a-top'];

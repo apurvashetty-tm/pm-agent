@@ -1,0 +1,97 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Truemeds for doctors — Skip the OTP next time</title>
+<script>if(new URLSearchParams(location.search).has('capture'))document.documentElement.classList.add('capture')</script>
+<link rel="stylesheet" href="../../../../../../design-system/truemeds.css">
+<style>
+html,body{margin:0;height:100%}
+body.tm{background:var(--tm-surface-primary)}
+/* Decision D-45 (faster sign-in offer): own screen, no OTP opt-in. Task header (D-42): Back + title, no logo. */
+.screen{height:100dvh;display:flex;flex-direction:column;box-sizing:border-box;position:relative;overflow:hidden;background:var(--tm-surface-brand-subtle)}
+.top{padding:var(--tm-space-lg) var(--tm-space-page) var(--tm-space-xl)}
+.back{display:inline-flex;align-items:center;gap:var(--tm-space-xs);min-height:44px;color:var(--tm-content-secondary);font-size:var(--tm-font-size-body-lg);line-height:var(--tm-font-lineheight-md);text-decoration:none;cursor:pointer;background:none;border:0;padding:0;font-family:inherit}
+.back .tm-icon{width:20px;height:20px}
+.back:focus-visible{outline:2px solid var(--tm-border-focus);outline-offset:var(--tm-space-xs)}
+.hero-wrap{display:flex;justify-content:center;margin-bottom:var(--tm-space-lg)}
+.hero-ic{width:64px;height:64px;border-radius:var(--tm-radius-lg);background:var(--tm-surface-brand-subtle);color:var(--tm-content-brand);display:grid;place-items:center}
+.hero-ic .tm-icon{width:var(--tm-space-2xl);height:var(--tm-space-2xl)}
+.login-logo{display:block;width:174px;height:auto;margin-bottom:var(--tm-space-lg)}
+.notice-slot{margin-bottom:var(--tm-space-sm)}
+.notice-slot[hidden]{display:none!important}
+h1{margin:var(--tm-space-lg) 0 var(--tm-space-sm)}
+.sub{margin:0;font-size:var(--tm-font-size-body-md);line-height:var(--tm-font-lineheight-sm);color:var(--tm-content-secondary)}
+/* White panel; points are one group (related 16). Footer is pinned (no typing on this screen, RULES §8.4). */
+.panel{flex:1;min-height:0;display:flex;flex-direction:column;background:var(--tm-surface-primary);border-radius:var(--tm-radius-2xl) var(--tm-radius-2xl) 0 0;padding:var(--tm-space-2xl) var(--tm-space-page) var(--tm-space-xl)}
+.points{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:var(--tm-space-lg)}
+.points li{display:flex;gap:var(--tm-space-md);align-items:flex-start}
+/* Decorative icons are neutral (RULES §8.11, D-47). Blue stays for actions and the hero tile. */
+.points .tm-icon{width:24px;height:24px;flex:none;color:var(--tm-content-secondary);margin-top:0}
+.pt-t{margin:0;font-size:var(--tm-font-size-body-lg);line-height:var(--tm-font-lineheight-md);font-weight:var(--tm-font-weight-medium,500);color:var(--tm-content-primary)}
+.pt-d{margin:0;font-size:var(--tm-font-size-body-md);line-height:var(--tm-font-lineheight-sm);color:var(--tm-content-secondary)}
+.footer{margin-top:auto;padding-top:var(--tm-space-2xl);display:flex;flex-direction:column;gap:var(--tm-space-sm);padding-bottom:var(--tm-space-sm)}
+html.capture body,html.capture .screen{width:100%;overflow:hidden}
+.review-controls{max-width:390px;margin:var(--tm-space-lg) auto;font-family:var(--tm-font);color:var(--tm-content-primary)}
+.review-controls label{display:block;margin-bottom:var(--tm-space-xs)}
+.review-controls select{width:100%;padding:var(--tm-space-sm);font:inherit;border:1px solid var(--tm-border-default);border-radius:var(--tm-radius-md);background:var(--tm-surface-primary)}
+html.capture .review-controls{display:none}
+@media(min-width:768px){body.tm{display:flex;flex-direction:column;align-items:center;background:var(--tm-surface-secondary)}.screen{width:390px;height:844px;flex:none;overflow:hidden;border:1px solid var(--tm-border-subtle);border-radius:var(--tm-radius-2xl);box-shadow:var(--tm-shadow-header)}html.capture body.tm{display:block;background:var(--tm-surface-primary)}html.capture .screen{border:0;border-radius:0;box-shadow:none}}
+</style>
+<script src="../../../../../../design-system/icons/icons.js"></script>
+<script src="../../../../ui-screens/feedback/messages.js"></script>
+</head><body class="tm">
+<div class="review-controls"><label for="review-state">Reference state</label><select id="review-state" aria-label="Faster sign-in offer state"><option value="fingerprint">Shown, fingerprint</option><option value="face-id">Shown, Face ID</option><option value="enabling">Enabling (OS prompt pending)</option><option value="screen-lock">Shown, screen lock</option><option value="enable-failed">Enabling failed</option><option value="offline">Offline (after tapping Turn on)</option></select></div>
+<div class="screen">
+ <div class="top">
+  <img class="login-logo" src="../../../../brand/truemeds-for-doctors.svg" alt="truemeds for doctors">
+  <h1 class="tm-text-title-lg" id="title">Skip the OTP next time</h1>
+  <p class="sub" id="sub"></p>
+ </div>
+ <div class="panel">
+  <div class="hero-wrap"><div class="hero-ic" aria-hidden="true"><span class="tm-icon" id="hero-icon" data-icon="fingerprint"></span></div></div>
+  <ul class="points">
+   <li><span class="tm-icon" data-icon="circle-check" aria-hidden="true"></span><div><p class="pt-t">No more waiting for SMS codes</p><p class="pt-d" id="pt-d1"></p></div></li>
+   <li><span class="tm-icon" data-icon="lock" aria-hidden="true"></span><div><p class="pt-t" id="pt-t2"></p><p class="pt-d">Truemeds never sees or stores it.</p></div></li>
+   <li><span class="tm-icon" data-icon="settings" aria-hidden="true"></span><div><p class="pt-t">Change it any time</p><p class="pt-d">Turn it off from your profile.</p></div></li>
+  </ul>
+  <div class="footer">
+   <div class="tm-notice tm-notice--error notice-slot" id="offer-notice" role="status" hidden><span class="tm-icon" data-icon="alert-circle" aria-hidden="true"></span><span id="offer-notice-text"></span></div>
+   <button class="tm-btn tm-btn--primary tm-btn--lg tm-btn--block" id="turn-on" type="button"><span id="turn-on-label">Turn on faster sign-in</span></button>
+   <button class="tm-btn tm-btn--quiet tm-btn--lg tm-btn--block" id="not-now" type="button">Not now</button>
+  </div>
+ </div>
+</div>
+<script>
+// Device wording (D-45): "Face ID" on Face-ID phones, "fingerprint" on fingerprint phones. Never implies Truemeds stores biometrics.
+const M=window.TMFeedback.msg;
+const VARIANTS={
+ fingerprint:{icon:'fingerprint',sub:'Use your fingerprint instead of waiting for an OTP.',d1:'Unlock the app with one touch, not an OTP.',t2:'Your fingerprint stays on your phone'},
+ 'face-id':{icon:'face-id',sub:'Use Face ID instead of waiting for an OTP.',d1:'Unlock the app with a glance, not an OTP.',t2:'Your Face ID stays on your phone'},
+ enabling:{icon:'fingerprint',sub:'Use your fingerprint instead of waiting for an OTP.',d1:'Unlock the app with one touch, not an OTP.',t2:'Your fingerprint stays on your phone',enabling:true},
+ 'screen-lock':{icon:'lock',sub:M('offer.screenLockSub'),d1:M('offer.screenLockLine'),t2:M('offer.screenLockTrust')},
+ 'enable-failed':{icon:'fingerprint',sub:'Use your fingerprint instead of waiting for an OTP.',d1:'Unlock the app with one touch, not an OTP.',t2:'Your fingerprint stays on your phone',notice:['error','alert-circle',M('offer.enableFailed')],retry:true},
+ offline:{icon:'fingerprint',sub:'Use your fingerprint instead of waiting for an OTP.',d1:'Unlock the app with one touch, not an OTP.',t2:'Your fingerprint stays on your phone',notice:['warning','alert-triangle',M('offer.offline')]}
+};
+const params=new URLSearchParams(location.search);
+const key=params.get('capture')||params.get('state')||'fingerprint';
+const v=VARIANTS[key]||VARIANTS.fingerprint;
+const sel=document.getElementById('review-state');
+sel.value=key in VARIANTS?key:'fingerprint';
+sel.addEventListener('change',()=>{location.search='?state='+encodeURIComponent(sel.value)});
+document.getElementById('hero-icon').dataset.icon=v.icon;
+document.getElementById('sub').textContent=v.sub;
+document.getElementById('pt-d1').textContent=v.d1;
+document.getElementById('pt-t2').textContent=v.t2;
+const turnOn=document.getElementById('turn-on');
+if(v.notice){const n=document.getElementById('offer-notice');n.className='tm-notice tm-notice--'+v.notice[0]+' notice-slot';n.hidden=false;n.querySelector('.tm-icon').dataset.icon=v.notice[1];document.getElementById('offer-notice-text').textContent=v.notice[2];}
+if(v.retry){document.getElementById('turn-on-label').textContent='Try again';}
+if(v.enabling){
+ // L2: loading primary = brand fill, white label and spinner (central .tm-btn--busy)
+ turnOn.classList.add('tm-btn--busy');turnOn.setAttribute('aria-busy','true');turnOn.disabled=true;
+ document.getElementById('turn-on-label').innerHTML='<span class="tm-spinner" aria-hidden="true"></span>Turning on…';
+ document.getElementById('not-now').disabled=true;
+}
+// No Back: this screen follows sign-in, so there is nothing to go back to (D-47).
+// Phone back gesture = Not now (native). Escape stands in for it in this reference.
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!document.getElementById('not-now').disabled)document.getElementById('not-now').click();});
+// Exits (cancelled, failed, not now, enabled) all go to Home; no error is shown (D-45, D-37).
+TMIcons.render(document);
+</script>
+</body></html>

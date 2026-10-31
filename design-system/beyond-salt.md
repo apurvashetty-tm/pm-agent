@@ -1,7 +1,7 @@
 # Added beyond SALT
 
 Everything below is a **Truemeds decision on top of SALT, owned here** (approved by Apurva). Share it with the SALT
-designers so Figma can catch up; the native app team treats it as final, not as proposals. Last updated 2026-10-25.
+designers so Figma can catch up; the native app team treats it as final, not as proposals. Last updated 2026-10-31.
 
 ## Truemeds token and text-style decisions (`tokens/truemeds.json`, layout v2 · D-43)
 Applied last by `scripts/build.py`; these override SALT values on purpose.
@@ -19,7 +19,10 @@ Mobile layout rules: `RULES.md` §8 (four type levels, one side margin, three ga
 | Item | Class | Why it exists |
 |---|---|---|
 | Tinted status cards | `.tm-status-card--success / --neutral / --warning` | Decided 2026-10-25 (D-62): a plain white outcome card looked like any other content card and was easy to miss on a closed case; the tint makes the result read at a glance and keeps it apart from small green status tags. Final look (C5): tint + 1px tone edge, no shadow; neutral = grey-100 fill + grey-200 edge. |
-| Action bar edge | `.tm-actionbar` box-shadow | Decided 2026-10-25 (D-62, T3): hairline top border + soft upward shadow. SALT's shadow-primary is cast downward, so the bar merged with white cards behind it. Compared with upward shadow only and a grey bar (read as disabled). |
+| Status line | `.tm-status-line` | Decided 2026-10-30 (D-74): a busy button that stayed for a whole call looked tappable but did nothing (false affordance). Long waits show plain status text; busy buttons only for short waits after a tap. |
+| Question notice | `.tm-notice--question` | Decided 2026-10-26 (D-62 point 2): a question above two answers is plain text, not a boxed notice — a box made it read as an input field. |
+| Page margin 16 | `--tm-space-page` (= space-lg, 16) for screen, header, sheet and action-bar side margins; action bar padding 16 on all sides | Decided 2026-10-26 (D-67): the Truemeds design team's standard. Replaces the 24px side margin. Gives dense doctor screens more width at 360 (two-button pairs, scripts, long medicine names) and an even inset in the action bar. Desktop web layer (`.tm-page`) unchanged. |
+| Action bar edge | `.tm-actionbar` box-shadow | Decided 2026-10-25 (D-62, T3): hairline top border + upward shadow (0 -8px 24px, 10%) — deepened 2026-10-26 (option B) because the softer one still read as the next card. SALT's shadow-primary is cast downward, so the bar merged with white cards behind it. Compared with upward shadow only and a grey bar (read as disabled). |
 | Quiet button | `.tm-btn--quiet` | Grey text, no border: leave / cancel / dismiss / "not now" (RULES §9.1). Replaces tertiary, ghost and link-styled buttons. SALT's ghost button is brand blue and reads as the main action. |
 | On-dark button | `.tm-btn--on-dark` | Light controls on a dark surface (prescription viewer). |
 | Busy button | `.tm-btn--busy` | "Calling…", "Sending OTP": keeps the primary look while working; disabled grey reads as unavailable. |
