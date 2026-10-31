@@ -1,4 +1,4 @@
-<!-- memory path: /topics/tools.md · last updated in memory: 2026-08-20 -->
+<!-- memory path: /topics/tools.md · last updated in memory: 2026-10-29 -->
 ---
 name: tools
 description: Tooling setup, connectors, and Claude usage patterns
@@ -12,3 +12,6 @@ aliases: []
 - [stated] Uses Claude's file-reading tools (openpyxl) to extract and summarize spreadsheet data
 - [stated] Explored Claude's token consumption and usage limits after higher-than-expected usage from trying Fable and Opus models
 - [stated] Prefers clean, simple formats over granular call-outs
+- [stated] Routinely works on one project with multiple LLMs / threads in parallel; relies on handoff and decision-log files for continuity
+- [stated] Decided against splitting the pm-agent repo into separate repos (2026-10-16)
+- [stated] Has a Figma account with edit access
