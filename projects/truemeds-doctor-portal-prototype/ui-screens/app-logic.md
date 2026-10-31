@@ -1,6 +1,6 @@
 # Doctor Portal — app logic
 
-**Status:** DRAFT for Apurva's review (2026-10-16). Not approved yet. Flags 2, 3, 5, 6 answered by Apurva on 2026-10-16 (see each flag); calling screens to be redesigned in a separate thread (§5a).
+**Status:** APPROVED and frozen — Apurva, 2026-10-31 (D-78). Covers decisions up to D-77. Changes from here are either a bug (fix where it occurs) or a next-version idea (backlog). Open backend dependencies stay marked `[OPEN]` with their question.
 **What this is:** every rule the app follows, taken out of the old prototype (`index.html` + `app.js`) and checked against the locked rules (`docs/context/project_truth.md`) and the decision log (D-01 to D-55). It is the logic half of the rebuild spec; the look is in `ui-screens/` (pictures) and `design-system/RULES.md`.
 **How to read it:** `[LOCKED]` = decided, build exactly this · `[MOCK]` = prototype placeholder, the real value comes from the backend · `[OPEN]` = not decided, see the linked question · **⚠ Flag** = the old code and the decisions disagree, or a rule was never written down — needs Apurva before the rebuild.
 
@@ -42,7 +42,8 @@ Order on first use: Sign-in → OTP → (offer, once) → Home → Case. Returni
 - All OTP limits are enforced by the server; the app only shows them.
 
 **Faster sign-in** (D-45, D-47)
-- Offered once, on its own screen, after the first successful OTP sign-in on a phone that supports it and has it off. **Turn on** → phone prompt → Home. Cancel or failure → Home, no error. **Not now** → Home; offered again later `[OPEN OQ-023]`; always available in Profile.
+- Offered once, on its own screen, after the first successful OTP sign-in on a phone that supports it and has it off. **Turn on** → phone prompt → Home. **Cancelled** prompt → back to the offer, no message. **Failed** → stays on the offer with "Couldn't turn on faster sign-in." · Try again · Not now (D-61, D-65). **Offline** → "You're offline. Check your connection." (D-66). **Not now** → Home; offered again later `[OPEN OQ-023]`; can be turned on or off in Profile (D-69).
+- **Which unlock (D-64):** fingerprint or face if set up on the phone; otherwise the phone's **screen lock** (PIN / pattern / password); if the phone has no screen lock at all, the offer is skipped.
 - Returning unlock: the phone's own prompt; 3 failed tries → fall back to OTP `[MOCK]`. "Not you? Switch account" → sign-in. If unavailable: neutral notice, **Use OTP instead** becomes the main button.
 - Wording follows the phone ("Face ID" / "fingerprint"); never suggest Truemeds stores biometric data.
 
@@ -59,7 +60,9 @@ Order on first use: Sign-in → OTP → (offer, once) → Home → Case. Returni
 - **Window ends during a case:** the case is never interrupted. The ending card then offers only **Back to Home**; Home shows the ended state.
 - **Prescriptions today:** a count only, no earnings. A case counts when its prescription is confirmed. It stays visible after availability ends.
 - **No cases:** neutral notice "No cases right now. Try again in a minute." Auto re-check `[OPEN OQ-019]`.
-- Notifications bell and Help on Home; the bell never inside a case. Profile holds Wallet · Coming soon, faster sign-in and Logout.
+- Notifications bell, Help and Profile icons on Home; the bell never inside a case. Help's content is not designed yet (backlog).
+- **Profile page** (D-70: a page, not a sheet — task header with Back, no logo; content ported from the current app with design-system fixes, D-69; full redesign later): doctor name and role · today's earnings (earned, incentive) · User manual · **Faster sign-in on/off** · **Log out** (destructive). During an open case Log out is replaced by "You can log out after this case is closed." Log out is the last item in the content (not pinned). Log out asks first in a **sheet**: "Log out? — You'll stop getting cases until you sign in again." · Log out · Stay signed in.
+- **Faster sign-in toggle (D-70):** turning it **off** just switches it off (no prompt; OTP from the next sign-in). Turning it **on** opens the phone's prompt, as on the offer screen; if that fails, the toggle stays off and the page shows "Couldn't turn on faster sign-in."; cancelling leaves it off with no message. Hidden if the phone has no screen lock at all (D-64).
 - One phone active at a time. Session stays valid through an open case (no OTP over a live case).
 
 **Source:** approved screens in `ui-screens/home/`; reference behaviour in `ui-screens/home/home-reference.js`.
@@ -72,14 +75,14 @@ Order on first use: Sign-in → OTP → (offer, once) → Home → Case. Returni
 
 | Stage | What the doctor sees | Bar (top → bottom) | Header Back / phone back |
 |---|---|---|---|
-| Ready to call (`call.ready`) | Order details + View Rx, medicines, notes, Call card | **Call patient** | Back before the first attempted call: **not decided** (Release, D-48, reopened — D-58) |
+| Ready to call (`call.ready`) | Order details + View Rx, medicines, notes (no script card before Call — D-58 pt 18, D-71) | **Call patient** | Header Back → "Leave this case?" sheet: **Release case** / Stay on this case (D-58 pt 20, OQ-024) |
 | Calling and connecting (`call.calling-you`, `call.connecting`) | Same | Busy button (§5 table) | Back hidden; phone back → toast "Finish this case first. Then you can go back to Home." |
 | On call (`call.on-call`, `call.on-call-transfer`) | Call card with the end-of-call script moves above the medicines | **On call…** busy, static phone icon, no button (other cases) · or notice + **Callback** (transfer cases). **No End call** — the doctor ends the call on the phone | Blocked, as above |
 | Call not valid (`call.ended-early`, `call.result-missing`) | Call card back below the medicines | Notice · **Call again** · then **Callback** · **Unavailable** side by side | Blocked |
 | After 50 s (`call.valid`, `call.transfer-ready`) | Call card with script on top | Final button (§6) · 📅 **Callback** · ⏭ **Skip HA** (only when allowed, §6) | Blocked |
 | Closed (`completed` / `unavailable`) | Outcome card directly under Order details (where the script was, D-58 point 16); content read-only and muted | **Request next case** · Back to Home (only **Back to Home**, as primary, if availability ended) | Header Back hidden; phone back → Home |
 
-**Leaving a case:** an **attempted call** = leg 2 answered (the patient picked up) (D-58). Once a call is attempted, leaving is blocked until the case is closed (callback, unavailable, confirm). Before that, whether Back releases the case is **not decided** (D-58; OQ-024). Help stays available at every stage and is the way to reach Doctor Ops when something keeps failing. App closed or phone off mid-case → reopening goes straight back into the case `[OPEN OQ-025, backend]`.
+**Leaving a case:** an **attempted call** = leg 2 answered (the patient picked up) (D-58). Once a call is attempted, leaving is blocked until the case is closed (callback, unavailable, confirm). Before that, header **Back** opens the "Leave this case?" sheet — **Release case** (the case returns to the queue) or Stay on this case (D-58 point 20, OQ-024; also during Calling 7a and the 7b question). The unassign action itself is a backend dependency (OQ-024). Help stays available at every stage and is the way to reach Doctor Ops when something keeps failing. App closed or phone off mid-case → reopening goes straight back into the case `[OPEN OQ-025, backend]`.
 
 **End-of-call script** (D-58 points 18, 21, 24 — copy keys in `messages.json`). Shown from the tap on Call while a call may be live; **hidden once the call has ended** (no one to read it to), except after a failed transfer (15) and B3, where the doctor is still on the line:
 - Transfer (Pilot, Value Meds): `call.scriptTransfer` — "I'm writing your prescription now. Please stay on the line — I'll connect you to our Health Advisor."
@@ -102,7 +105,7 @@ Order on first use: Sign-in → OTP → (offer, once) → Home → Case. Returni
 - **Before the gate, never show:** Confirm prescription, Confirm & transfer, Confirm & forward, Skip HA.
 - **Leg 2 failed** (no answer, busy, rejected, unreachable, invalid number): the case closes as **Patient unavailable** by itself; the doctor gets **Request next case**. Busy and rejected are accepted as "no answer" to keep it simple.
 - **A call that's too short** (state 6) offers **Call again · Callback** (D-58 point 23). No retry limit. **Callback is offered in every live call until the doctor taps a confirm button** (D-58 point 24).
-- **No call result** (state 7, D-58 point 20): at 3 min the bar asks "Are you still on the call?"; after "No, call ended" and a backend check with nothing found: **Confirm prescription · Callback · Unavailable**; Confirm there shows "Prescription submitted" until the record arrives. A late result updates the screen by itself. Repeated problems → the doctor uses **Help** on the case.
+- **No call result** (state 7, D-58 point 20): at 3 min the bar asks "Are you still on the call?"; after "Call ended" and a backend check with nothing found: **Confirm prescription · Callback · Unavailable**; Confirm there shows "Waiting for the call record" until the record arrives (D-68). A late result updates the screen by itself. Repeated problems → the doctor uses **Help** on the case.
 - **Vendor terms are mapped by Engineering** to the buckets in the table (Ozonetel `CustomerStatus`, Knowlarity hangup causes — `projects/ACOM/ring-ai/reference/knowlarity-hangup-causes.pdf`).
 
 **State table (final, 2026-10-24 — D-58 points 14–22).** One row per state. Render id = recipe in `docs/renders/2026-10-22-calling/src/case.html`. Copy keys in `ui-screens/feedback/messages.json`. During every call the End-of-call script shows under Order details; Callback is offered in every call.
@@ -115,13 +118,14 @@ Order on first use: Sign-in → OTP → (offer, once) → Home → Case. Returni
 | 4 | `call.doctor-missed` | You didn't answer | Leg 1 not answered / busy / rejected | Amber notice · Call again · header Back | `t04-doctor-missed` |
 | 5 | `call.result-wait` | Getting call result | Call known to have ended, result not in yet | "Getting call result…" busy · Callback | `t05-result-wait` |
 | 6 | `call.ended-early` | Call too short | Result: total talk time on the case under the gate | Amber "Call too short…" · Call again · Callback (no Unavailable — D-58 point 23) | `t06-ended-early` |
-| 7b | `call.still-on-call` | Still on the call? | 3 min after the tap with no result (repeats every 3 min) | Grey "Are you still on the call?" · Yes, still talking + No, call ended · header Back | `s7b-still-on-call` |
-| 7c | `call.checking` | Checking call result | Doctor tapped "No, call ended" | "Checking call result…" busy | `s7c-checking` |
-| 7d | `call.result-missing` | Result not received | Backend check found nothing | Amber notice · Confirm prescription · Callback + Unavailable | `s7d-result-missing` |
+| 7b | `call.still-on-call` | Still on the call? | 3 min after the tap with no result (repeats every 3 min) | Grey "Are you still on the call?" · Still talking + Call ended · header Back | `s7b-still-on-call` |
+| 7c | `call.checking` | Checking call result | Doctor tapped "Call ended" | "Checking call result…" busy | `s7c-checking` |
+| 7d | `call.result-missing` | Result not received | Backend check found nothing | Amber notice · Confirm prescription · Callback + Unavailable (Unavailable opens the reason sheet, D-75; **the chosen reason is saved with the case** for Ops monitoring, D-73) | `s7d-result-missing` |
 | 7e | — | Leave this case? | Back in 1–4, 7a, 7b | Approved sheet: Release case / Stay on this case | `s7e-leave-sheet` |
-| 7f | `call.submitted` | Prescription submitted | Confirm in 7d | Grey card "Prescription submitted" · Request next case · Back to Home | `s7f-submitted` |
+| 7f | `call.submitted` | Waiting for the call record | Confirm in 7d | Grey card "Waiting for the call record · Your prescription is saved. We'll confirm it once the record arrives." (D-68); becomes "Prescription confirmed" when the record arrives · Request next case · Back to Home | `s7f-submitted` |
 | 8a | `call.valid` | Valid call (Cat4 / HA skipped) | Result: total talk time ≥ gate | Confirm prescription · Callback · no script (call has ended) | `t08a-valid-cat4` |
 | 8b | `call.valid` | Valid call (forward) | Same | Confirm & forward · Callback + Skip HA · no script | `t08b-valid-forward` |
+| 8c | `case.confirm-blocked` | Confirm tapped with Pending medicines | Tap on any confirm button while a medicine is Pending (Flag 5) | Same bar + red line "Prescribe or disable {n} medicines first."; page scrolls to the first Pending medicine; button stays tappable | `t08c-confirm-blocked` |
 | 9 | `call.patient-unavailable` | Patient unavailable (automatic) | Leg 2 failed | Grey card · Request next case · Back to Home | `t09-patient-unavailable` |
 | 10a | — | Prescription confirmed | Confirm (Cat4) | Green card · Request next case · Back to Home | `t10a-confirmed` |
 | 10b | — | Forwarded to HA | Confirm & forward | Green card · same | `t10b-forwarded` |
@@ -134,9 +138,9 @@ Order on first use: Sign-in → OTP → (offer, once) → Home → Case. Returni
 | 16 | `call.transfer-missed` | Ended before the transfer | Ozonetel hang-up after the gate, not transferred | Amber notice naming who ended the call (doctor / patient / unknown) · Confirm & forward · Skip HA · no script | `t16-transfer-missed` (doctor) · `t16b-…-patient` · `t16c-…-unknown` |
 | 17 | `call.skip-ha-wait` | Skip HA during a transfer call | Skip HA confirmed | Grey "Health Advisor call will be skipped." · "Getting call result…" busy · Callback | `t17-skip-ha-wait` |
 
-**Fallback B (documented, D-58 point 15):** `g1-generic-confirm` (Confirm prescription, neutral script) · `g2-checking-ha` ("Checking for a Health Advisor…") · `g3b-forwarded` (Forwarded + script; Request next case checks the call has ended, as 15b — D-63). Transfer path in B reuses 13–15.
+**Fallback B (documented, D-58 point 15):** `g1-generic-confirm` (Confirm prescription, neutral script) · `g2-checking-ha` ("Checking for a Health Advisor…") · `g3b-forwarded` (amber card "Forwarded to Health Advisor" + script; Request next case checks the call has ended, as 15b — D-63). Transfer path in B reuses 13–15.
 
-Retired: `b-missed-call`, `b-didnt-connect` (sheets) — replaced by the automatic close and the notices. `a-leave-sheet` parked while Release is not decided. The old state name **hold** for "didn't connect" is retired (old Flag 4).
+Retired: `b-missed-call`, `b-didnt-connect` (sheets) — replaced by the automatic close and the notices. `a-leave-sheet` / `s7e-leave-sheet` is the approved Release sheet (D-58 point 20). The old state name **hold** for "didn't connect" is retired (old Flag 4).
 
 **Update 2026-10-23 (D-58 point 14, temporarily approved):** no separate Connecting / On call states; the app shows the call status within about 5 s of the partner reporting it (method: Engineering). Transfer button only after the backend confirms the call is valid.
 
@@ -152,13 +156,13 @@ Retired: `b-missed-call`, `b-didnt-connect` (sheets) — replaced by the automat
 |---|---|---|---|
 | Cat4 | — | Confirm prescription | Prescription confirmed |
 | Pilot | HA skipped (by customer, system, or the doctor's Skip HA) | Confirm prescription | Prescription confirmed |
-| Pilot | Value meds, HA required | Confirm & transfer | Transferred to HA |
-| Pilot | Non-value meds, HA required | Confirm & forward | Forwarded to HA |
+| Pilot | Value meds, HA required | Confirm & transfer | Transferred to Health Advisor |
+| Pilot | Non-value meds, HA required | Confirm & forward | Forwarded to Health Advisor |
 
 - **Skip HA** only after the gate, for **both Pilot types** (Value and Non-Value Meds) whenever an HA call follows the doctor call and it isn't already skipped — no other conditions (D-59). Opens the reason sheet: Patient declined HA call · Clinically not required · Repeat patient — familiar with medicines. Choosing a reason applies it at once. On a call with a result the final button becomes **Confirm prescription**; during a live transfer call the case then waits for the call result (state 17, D-58 point 14). Skip HA is also offered after a missed transfer (state 16, D-58 point 24).
 - Cat4 never shows anything about HA. HA-skipped Pilot never shows Transfer or Forward.
 - **Transfer vs forward** (D-57): transfer = the patient is handed to an HA on the same call; forward = an HA calls the patient back separately. A failed transfer goes as a forward; the doctor sees `call.ha-no-join`, then `call.transfer-failed` (§5, D-58).
-- Confirm: button shows "Confirming…", everything else disabled, no second submit. Failure: notice in the bar "Couldn't confirm. Nothing was lost. Try again." An unclear result is checked before retrying (no double confirm).
+- Confirm: button shows "Confirming…", everything else disabled, no second submit. Failure: notice in the bar "Couldn't confirm. Nothing was lost." (D-65). **Unclear result** (no answer from the server): the button stays on "Confirming…" — the same screen as `a-confirm-busy` — while the app checks; then it shows the confirmed card or the failure notice, never a second submit (D-69). An unclear result is checked before retrying (no double confirm).
 - **Analytics:** the four rows are four different outcomes and must stay separate events — never worked out from the button text (Cat4 and HA-skipped share a label). Event names are Engineering's choice `[LOCKED D-50]`.
 - What decides case type, value vs non-value, HA required and HA-skip eligibility comes from the backend `[OPEN — see CLAUDE.md "Never silently invent"]`.
 

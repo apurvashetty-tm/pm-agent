@@ -718,12 +718,126 @@ From an external (ChatGPT) review, each point verified before acting.
 ### D-62 · Outcome cards tinted; 7b stays neutral; no overlay on closed cases — 2026-10-25
 - **Decision (Apurva):** (1) **Status cards are tinted by outcome** — success (light green: confirmed, transferred, forwarded), neutral (light grey: prescription submitted, patient unavailable), warning (amber: Health Advisor unavailable). Plain white outcome cards looked like content and were easy to miss; the tint also separates the result from the small green "Prescribed" tags. Design system: `.tm-status-card--success / --neutral / --warning` [PROPOSED], RULES §9.3, beyond-salt.md. Affects approved closed screens (`e-*`) — re-rendered in the full screen pass. (2) **7b "Are you still on the call?" stays neutral** (amber only for problems); its notice must not look like an input field — fix in the screen pass. (3) **No grey overlay behind a closed case** — content stays readable, shown read-only and muted (rebuild item: View Rx, medicines, notes read-only).
 - **Rejected:** amber for 7b (dilutes amber); overlay on closed cases (modal metaphor; doctor may review what was prescribed).
-- **Update 2026-10-25 (Apurva, after a one-screen experiment — `docs/renders/2026-10-25-card-tray-experiment/`):** (4) **Card look = C5**: tint + 1px edge in the tone colour, no drop shadow. Neutral keeps a **grey-100 fill** with a grey-200 edge (grey-50 is the page colour; grey-200 reads disabled). Rejected: tint only (success too pale on the grey page), left accent bar (weak, bends at the corner), border only (looks like a selected field — same problem as 7b), white card with icon chip (looks like content). (5) **Bottom action bar = T3**: hairline top edge + soft upward shadow; SALT's shadow points down, so the bar merged with white cards. Rejected: upward shadow only (soft), grey bar (reads disabled, buttons compete). (6) 7b question shown as plain text, no box. Research: Polaris / Atlassian / Material 3 tint + icon for status; iOS / Material bars use an edge or upward shadow.
+- **Update 2026-10-25 (Apurva, after a one-screen experiment — `docs/renders/2026-10-25-card-tray-experiment/`):** (4) **Card look = C5**: tint + 1px edge in the tone colour, no drop shadow. Neutral keeps a **grey-100 fill** with a grey-200 edge (grey-50 is the page colour; grey-200 reads disabled). Rejected: tint only (success too pale on the grey page), left accent bar (weak, bends at the corner), border only (looks like a selected field — same problem as 7b), white card with icon chip (looks like content). (5) **Bottom action bar = T3**: hairline top edge + soft upward shadow; SALT's shadow points down, so the bar merged with white cards. Rejected: upward shadow only (soft), grey bar (reads disabled, buttons compete). (6) 7b question shown as plain text, no box. (8) **Tray depth = option B** (Apurva, 2026-10-26): same hairline and shape, deeper upward shadow (0 -8px 24px, 10%). Rejected: side shadows (a full-width bar has no sides to cast from), floating bar with margins (breaks the 7b pair at 360, content shows around it, reads as a half-open sheet), square corners (no gain). `exp-tray-shape-w360.png`. (7) **B3 is amber, like 15** (Apurva, 2026-10-26): same outcome and same action for the doctor (forwarded, read the script, end the call); amber = done but you still have to act. Replaces the earlier green. Research: Polaris / Atlassian / Material 3 tint + icon for status; iOS / Material bars use an edge or upward shadow.
 
 ### D-63 · Request next case checks the call has ended (15, B3) — 2026-10-25
 - **Decision (Apurva):** on the two closed screens where the doctor is still on the line — **15** (transfer failed) and **B3** (forwarded, no Health Advisor free) — tapping **Request next case** asks the backend whether the call has finished (Ozonetel `callFinished`). Finished → the next case loads. Still live → nothing loads; a line in the action bar: "End the call to get your next case." The button stays enabled (the doctor learns why on tap). Back to Home stays available.
 - **Why only these two:** Cat4 and Non-Value Meds unlock Confirm only after the call result arrives, i.e. after the call has ended (app-logic §4); in a successful transfer (14) the doctor leaves the call. Both 15 and B3 are Ozonetel flows, so the live/finished signal exists — no Knowlarity "unknown" case.
 - **Rejected:** blocking on every closed state (not needed); disabling the button until the call ends (no reason shown).
+
+### D-64 · Round-7 answers, confirm-blocked state, faster sign-in without biometrics — 2026-10-26
+- **Decision (Apurva):**
+  1. **No Callback on 15, 15b, B3** — the doctor already tapped a confirm button; D-58 24-1 ("Callback until a confirm tap") is met, not broken.
+  2. **15b covers B3** — same line, same place; no separate B3 render.
+  3. **Medicines may be Pending before confirm** (doctors prescribe during the call). **Every confirm button checks that no medicine is Pending** (Prescribed or Disabled) — Flag 5 (2026-10-16): button stays tappable; on tap a red line in the bar "Prescribe or disable {n} medicines first." and the page scrolls to the first Pending medicine. It had no copy key and no render: added `case.confirmBlocked` and calling state **8c** (`t08c-confirm-blocked`).
+  4. **Faster sign-in offer without fingerprint / face:** offer the **phone's screen lock (PIN / pattern / password)** instead; **skip the offer only if the phone has no screen lock at all**. Returning unlock already has a screen-lock variant ("Unlock with screen lock"); the offer gets one too (`offer_screen-lock`).
+- **Why:** a prescription must not go out with unreviewed medicines; most doctors' phones have at least a screen lock, so they still get faster sign-in.
+
+### D-65 · Messages don't repeat buttons; faster sign-in offer copy — 2026-10-26
+- **Decision (Apurva):** (1) **A message says what happened (and what is safe or kept); it does not repeat a button already on screen.** Instructions only when no control does it, to explain a blocked button, or to add timing. Rule in `docs/feedback-rules.md` §4. (2) **16 messages shortened** after an audit of all 70: sign-in offline / couldn't send; OTP wrong / expired / couldn't verify / resend failed; Home set-up / add time / request failed; case offline action / confirm / release / callback failed; call didn't go through / you didn't answer / call too short. `call.transferReady` → "Stay on the call while you confirm." (3) **Kept:** "Read the script, then end the call", "End the call to get your next case", "Nothing was lost" and similar reassurance, "…or call Doctor Ops", "Try again in a minute", "Reconnect to request a case". (4) **Faster sign-in offer copy:** screen-lock variant mirrors the fingerprint / Face ID lines; enabling failed = "Couldn't turn on faster sign-in." (Try again · Not now carry the action); offline = "You're offline. Reconnect to turn on faster sign-in." Failed stays on the offer (D-61 replaces D-45 here); cancelling the phone prompt returns to the offer with no message.
+- **Why:** repeating the button doubles the reading on a busy screen and adds nothing; the doctor already sees the action.
+- **Affects approved screens:** sign-in, OTP, Home, case and calling renders that show these messages — re-rendered in the entry + design-system pass.
+
+### D-66 · Entry + design-system pass, round-1 answers — 2026-10-26
+- **Decision (Apurva):**
+  - **A. Outcome card under Order details** on every closed case (D-58 point 16 stands); the approved `e-*` file is out of date — fix.
+  - **B. Icon rule = labelled buttons only.** Header icons, the close ×, status and notice icons are out of scope; "Add time" keeps its plus (scheduling). RULES §9.1.
+  - **C. Copy:** `offer.offline` → "You're offline. Check your connection." (same as sign-in, OTP); `signin.tooMany` → "Too many attempts on this number." (the countdown button already says wait). Kept: `case.offline` (explains blocked buttons), "Couldn't confirm / release / schedule…" (naming what failed is not a repeat). Rule wording tightened in feedback-rules §4.
+  - **D. Availability-ended card is success (green)** — the case was confirmed; title stays "Prescription confirmed". The D-62 brief listed it as neutral by mistake.
+  - **E. Entry screens keep their panel footer** — no action-bar edge where nothing scrolls under the buttons. RULES action-bar row.
+  - **F. `call.transferReady` retired** — unused; 12's script asks the patient to stay on the line, 16 covers the doctor hanging up early.
+  - **G. Back controls unchanged** — case page Back before a call (opens Leave this case?), Prescribe and medicine overlays use a close ×. Only OTP lost its Back (D-61).
+  - **Returning unlock, unavailable state: "Use OTP instead" becomes the primary button** — it is the only way forward there (main-thread review of batch A, replacing the Codex batch that couldn't run).
+
+### D-67 · Page margin 16 everywhere — 2026-10-26
+- **Decision (Apurva, with the Truemeds design team):** the **page margin is 16px on every mobile screen** — content, header (patient name, back and help icons), bottom sheets — and the **action bar has 16px padding on all four sides** (plus the phone's safe area at the bottom). Cards keep their 16px inner padding. Replaces the 24px side margin (RULES §8 item 2, §9.4) and the 12px action-bar top (D-62).
+- **Why:** the design team's standard (simpler native hand-off); the action bar's top gap matched neither side (team review); at 360 the extra 16px of width helps the two-button pairs, scripts and long medicine names. Checked on 12 and 7b at 360 (`docs/renders/2026-10-25-card-tray-experiment/exp-16-everywhere-w360.png`).
+- **Rejected:** 24 on top and sides (C) — fine on its own but not the team standard; 16 on the action bar only — buttons would stick out 8px past the cards.
+- **Design system:** new token `--tm-space-page` (16); `.tm-actionbar` and `.tm-sheet` use it; RULES and beyond-salt updated. Desktop web layer (`.tm-page`) unchanged.
+- **Affects every approved and calling screen** — one mechanical re-render round before promotion; layout guards that lock 24 are updated at promotion.
+
+### D-68 · Keep "Confirm prescription"; 7f wording; disabled-medicine state — 2026-10-27
+- **Decision (Apurva):**
+  1. **The final button stays "Confirm prescription"** (and Confirm & transfer / Confirm & forward). Considered after a designer suggested "Create prescription". Ratings: Confirm 8 · Submit 7 · Create 3. "Create" reads as starting something (the doctor has already prescribed each medicine) and breaks the siblings; "Submit" works but is a new word for doctors who know "Confirm" from the current portal and would need 4–5 messages reworded.
+  2. **7f wording:** title **"Waiting for the call record"**, line **"Your prescription is saved. We'll confirm it once the record arrives."** (`call.submittedTitle`, `call.submittedText`). Names the real reason it is pending; doesn't start with "Prescription…", so it can't be mistaken for the green "Prescription confirmed". **Rejected:** "under review" — most of these confirm automatically when the record arrives; it reads like an audit of the doctor.
+  3. **New state `s-medicine-disabled`** (case page with a Disabled medicine: struck-through name, grey row and tag, arrow kept to re-enable) — it was missing from the approved set. Contrast of the greyed name to be checked at promotion (RULES item 7); darken if it fails.
+
+### D-69 · Final-audit answers; Profile ported; navigation later — 2026-10-27
+- **Decision (Apurva):**
+  1. **Amber card on 15 / B3** keeps the rendered text (D-58 points 21, 23): "Forwarded to Health Advisor · Health Advisor unavailable right now. Read the script, then end the call." Point 17's "The HA couldn't join" is superseded; `call.haNoJoin` removed (no separate state — 15 is it).
+  2. **Copy removed:** `call.callingYou`, `call.connecting` (retired by D-58 point 14), `call.stayOnLine` (no state; the transfer script covers it), `case.callEndedEarly` (retired with `b-ended-early`; contains "50") — removed **at promotion**, together with `b-ended-early`, so the old approved file never shows a missing message. **Kept:** `case.offlineAction` (the offline-action notice, G12). "Try again in a minute" stays (D-65, timing).
+  3. **Inline links** (Terms, Privacy, call Doctor Ops in a sentence) are exempt from the 48px tap rule (RULES item 6 already says so).
+  4. **No picture needed** for: cancelled faster-sign-in prompt, no-screen-lock skip (behaviour only); the **unclear confirm result** — the button stays on "Confirming…" (same as `a-confirm-busy`) while the app checks.
+  5. **Disabled medicine name** darkened to reach AA (it measured ~2.2:1) — D-68 point 3.
+  6. **Profile sheet ported as is** from the current app with design-system fixes only, **plus a Faster sign-in on/off row** (the offer promises "Turn it off from your profile"). Entry point = the profile icon on Home. Logout confirmation sheet ported as is. Proper redesign of Profile and the content of **Help** → next design round (backlog).
+  7. **Navigation:** no change now. When a second real destination is approved (e.g. diagnostic tests, consultations), use a **bottom tab bar**, not a hamburger; no navigation inside a case. Logged as a next-version idea.
+  8. `app-logic.md` §2 brought up to date with D-61 / D-64 / D-65 / D-66; §6 outcome names spell out "Health Advisor".
+
+### D-70 · Profile is a page; Skip HA sheet wording; fix-round answers — 2026-10-28
+- **Decision (Apurva):**
+  1. **Profile opens as a page**, not a bottom sheet: task header with Back and the title "Profile" (no logo); grey page with white cards at the 16 margin — name and role · Today's earnings · User manual and Faster sign-in rows · **Log out last in the content** (not pinned: not the page's main action; fewer accidental taps). Open case → the "You can log out after this case is closed." note. **Log out? stays a sheet** (confirmations are sheets). Scales to Help, settings, earnings history later.
+  2. **Log out is a text button with no icon** — icon-only buttons are kept for back, close and help; a logout icon is ambiguous and the action has a cost; §9.1 gives finalising actions no icon.
+  3. **Skip HA sheet wording** (Health Advisor spelled out, D-58 point 23; the button keeps "Skip HA"): title "Skip the Health Advisor call"; "Patient declined the Health Advisor call — The patient didn't want the call"; "Clinically not required — Health Advisor counselling isn't needed"; "Repeat patient, familiar with the medicines — Counselled in an earlier order". Reason codes sent to the backend unchanged.
+  4. **Callback and Skip HA sheets open over the new calling screens** (callback over 7a Calling, Skip HA over 12) — the old call card no longer shows behind them.
+  5. **Callback errors moved into the registry** ("Pick a date and a time." / "Pick a date." / "Pick a time."); wiring them in code is a rebuild item.
+  6. **Faster sign-in toggle behaviour** defined (app-logic §3); no extra picture.
+  7. **Dose choices stay by medicine form** (tablet ½·1·2, syrup 2.5·5·10 ml, drops 1·2·3, inhaler 1·2 puffs, injection, cream) — a fixed 7-row table keyed by form, not per-medicine logic; "Max doses a day" (1–4), "Every X hours" (4·6·8·12) and durations are already one standard list.
+  8. Mock name/role in Profile are prototype data; User manual link → backlog. Option rows may wrap at 360 (the one-line rule is for buttons).
+
+### D-71 · Promotion answers: one case page, calling markup wins — 2026-10-29
+- **Decision (Apurva, on the main thread's recommendation):**
+  1. **One case page file**, not two. The **calling markup is the approved one** (D-58 points 16, 17, 21): the live-call card is titled **"End-of-call script"** and the label inside the script box is hidden. The entry-pass "Call" heading is a leftover from before D-58.
+  2. **No script card before the doctor taps Call** (D-58 point 18). If an approved `a-*`, `d-*`, `e-*` or `s-*` picture shows a card in the ready state, that picture is stale.
+  3. **The 8px offset is a leftover 24px margin** in one of the two stylesheets; **16 is correct** (D-67). Fix the leftover, don't keep both.
+  4. Pictures that change **only** because of points 1–3 are re-rendered and the new picture replaces the approved one. Any other difference stops the round.
+  5. The callback and Skip HA sheet pictures are replaced by the new renders over 7a and 12 (D-70 point 4) — intended.
+  6. Busy / spinner differences (`a-confirm-busy`, `a-releasing`, `a-rx-viewer`): compare with animations frozen; spinner-frame-only differences are accepted.
+  7. **`g3a-connecting-ha` is not promoted** — fallback B's transfer path reuses state 13 (app-logic §5).
+
+### D-72 · After the screens: prototype first; demo and hosting; open questions in the PRD — 2026-10-29
+- **Decision (Apurva):**
+  1. **Order:** prototype rebuild → token inspector → PRD and the rest.
+  2. **The prototype covers everything**: all order types (Cat4, Pilot Value / Non-Value Meds, HA skipped, fallback B) and every state in app-logic. **Only the phone demo** (the installable UI/UX touch-and-feel test) is limited to **Cat4, happy path**: sign-in → Home → case → call → Prescription confirmed → next case. Review controls only in review mode.
+  3. **The rebuilt prototype lives at a new Netlify link alongside the current site** until Apurva approves it; installable from the link (opens full screen from the home screen).
+  4. **Open engineering / ops questions (OQ-030 → OQ-033) go into the PRD as open questions.** Until answered, **polling is the working assumption** (app requests status from the backend), clearly marked as an assumption.
+  5. **Prototype build plan** (architecture for the prototype only — not the production HLD/LLD, which is Engineering's) written in parallel with the promotion, agreed before building.
+
+### D-73 · Ops rules for calls without a record (provisional); promotion close-out — 2026-10-29
+- **Decision (Apurva):**
+  1. **Calls without a record → Ops review queue after 30 minutes** from the doctor's confirm, **configurable** (a backend setting). Approved.
+  2. **Provisionally approved (Ops SOP, to confirm after the first weeks):** Ops checks the call in the telecom partner's portal — found and ≥ 50 s → confirm; not found or unclear → Ops calls the patient: consultation happened → confirm; didn't → cancel the prescription, send the case back to the queue, Ops tells the patient. The order is held until confirmed; Ops clears the queue within 2 working hours. **Monitoring (owner: Doctor Ops):** rolling 7 days, at least 10 attempted cases — Patient unavailable rate > 2× team average, or ≥ 3 confirmed without a record → flag; first time coaching, repeat within 30 days written warning, third time new cases paused pending review. **Earnings** count only once a case is confirmed — by the record or by Ops; cancelled cases don't count.
+  3. **Health Advisor reservation** stays with Apurva's separate HA allocation work; the fallback flow applies until then.
+  4. **Promotion close-out:** guard 5.12 fixed in the design system, not as exceptions — `.tm-header-task--compact` follows the 16 page margin (D-67) and `.tm-notice--question` is the 7b question (D-62 pt 2); the case page drops its local overrides. Profile: the promoted code is the approved look (D-70 page); pictures re-baselined. Sheet labels typed in code are accepted for now (rebuild item; the error lines are already in the registry). Log out has no icon (D-70). `home/availability.html` and `home/add-availability.html` are retired — `home.html` covers the same states; NATIVE-HANDOFF points there. Captures use a fixed clock date so pictures don't change daily.
+
+### D-74 · Long waits are status text, not buttons — 2026-10-30
+- **Decision (Apurva):** a wait that lasts longer than a moment after a tap is shown as a **status line** — plain text with a small spinner, no button shape or fill (`.tm-status-line`, option B of `docs/renders/2026-10-25-card-tray-experiment/exp-busy-status.png`). Applies to **2 / 7a / 11 "Calling {name}…"**, **5 / 17 "Getting call result…"**, **7c "Checking call result…"**, **B2 "Checking for a Health Advisor…"**. Callback stays as the only button where it was. **Busy buttons stay** for short waits right after the doctor's own tap: Confirming…, Transferring…, Sending OTP…, Verifying…, Releasing…, Unlocking…, Turning on….
+- **Why:** a full blue button that stayed for a whole call looked tappable and did nothing — a false affordance on the most-used screen. Plain text = information, buttons = actions (same as the 7b question, D-62).
+- **Rejected:** A (today's busy button), C (tinted status strip — reads like the script card, could still look tappable).
+- **Follow-up:** an affordance audit of every approved screen (things that look tappable but aren't, and the reverse) before the freeze.
+
+### D-75 · Affordance-audit answers; Unavailable asks for a reason — 2026-10-31
+- **Decision (Apurva):**
+  1. **Mark unavailable opens a reason sheet** (same pattern as Disable and Skip HA): title **"Mark patient unavailable"**, label "Select reason", options — **Didn't answer** · *Rang with no answer, or the line was busy*; **Not reachable** · *Phone switched off or out of coverage*; **Wrong number** · *Invalid or not the patient's number*. (Busy counts as no answer, as in app-logic §5; switched off is a different signal for Ops.) Choosing a reason applies it at once (it is the confirmation); × backs out with no change. Only where the doctor marks it by hand (7d); an automatic leg-2 failure uses the partner's reason, no sheet. Reasons feed the Ops monitoring (D-73). "Not interested" stays out.
+  2. **Skip HA: no extra confirmation** — Skip HA → reason, then the doctor still taps Confirm prescription; enough deliberate steps.
+  3. **D-74 also behind sheets:** 7e leave sheet and the three callback sheets show the Calling status line behind them. **Home "Checking…"** (unknown request result) becomes one status line with the existing message — no busy button, no duplicate notice. "Ending…" stays a busy button (short wait after a tap).
+  4. **Closed cases: medicine rows read-only, no arrow** (app-logic §8 already says so) — pictures fixed.
+  5. Reference pages are picture references: buttons without handlers there are expected; the prototype rebuild wires them. Exception fixed: Log out in the confirm sheet.
+  6. **Help and Notifications** have no defined behaviour yet → next design round (backlog), icons stay as entry points.
+
+### D-76 · View Rx looks the same on every state — 2026-10-31
+- **Decision (Apurva):** **View Rx is the outlined button on every case state, including closed cases.** It still works after a case closes (the doctor may check the prescription), so it must not look disabled. Closed cases stay read-only for medicines and notes (D-62 point 3, D-75 point 4); View Rx only opens the viewer.
+- **Why:** found in the visual affordance pass — the same action looked active on open cases and grey (disabled-looking) on closed ones.
+
+### D-77 · 7b answer labels; back-blocked toast; "order" for the patient's order — 2026-10-31
+- **Decision (Apurva):**
+  1. **7b answers: "Still talking" / "Call ended"** (were "Yes, still talking" / "No, call ended"). Side by side at 360 (the longer label was 3 px too wide for half the bar); the question above already asks "Are you still on the call?", so "Yes"/"No" repeated it.
+  2. **Back-blocked stays a toast.** Inline notices answer an on-screen action; the back-blocked message answers a **system** action (phone back button / swipe) with no on-screen control to sit next to, and the header Back is hidden after an attempted call (D-58). A short toast is the platform pattern for that (feedback rules: toasts for brief information needing no action). Android: shown on the system back. iOS: the back swipe can be switched off during a call, so it rarely shows.
+  3. **"Order" stays where it means the patient's order**: "No medicines on this order." (`case.noMedicines`) and the Skip HA reason "Counselled in an earlier order". The case-wording rule ("case", not "order") is for the doctor's unit of work; the patient's purchase is an order, as in "Order details".
+
+### D-78 · Screens and app logic approved and frozen — 2026-10-31
+- **Decision (Apurva):** the screens in `ui-screens/` (sign-in, OTP, returning unlock, faster sign-in offer, Home + Profile, case incl. calling, `prescribe/` — 144 states, 390 and 360) and `ui-screens/app-logic.md` are **approved and frozen**, covering decisions D-56 → D-77. Evidence: promotion and close-out reports (`docs/renders/2026-10-28-promotion/REPORT.md`), status-line rounds 1–3 + D-77 (`docs/renders/2026-10-30-status-line/REPORT.md`), four guards at 0 failures over all 144 states, main-thread visual checks.
+- **From here:** anything new is a bug (fix only where it occurs) or a next-version idea (backlog §4b). Next work (D-72): prototype rebuild → token inspector → PRD.
+- **Known and accepted:** sheet labels typed in code, the reference pages' unwired buttons, the 1.1 s window after Confirm in the reference — all handled in the prototype rebuild (backlog §3).
 
 ## Design system changes made for this work
 

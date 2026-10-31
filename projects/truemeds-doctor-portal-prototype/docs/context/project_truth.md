@@ -42,7 +42,7 @@ Freelance doctors working with Truemeds, each on their own phone.
 
 These rules apply until Apurva changes them. Every change is recorded in the decision log.
 
-- **50-second call gate:** the final buttons appear only after a connected call lasting at least 50 seconds.
+- **50-second call gate:** the final buttons appear only after the backend confirms a valid call — total talk time on the case of at least 50 seconds (a setting), adding up across calls on the same case. An **attempted call** = the patient answered (D-58).
 - **Final button by case type:**
 
 | Case type | HA status | Final button |
@@ -54,12 +54,12 @@ These rules apply until Apurva changes them. Every change is recorded in the dec
 
   Skip HA appears only for Pilot cases where HA is required and not yet skipped. Cat4 cases never show anything HA-related. Each of the four rows is a separate outcome in analytics.
 - **No unreviewed medicines:** Confirm is blocked while any medicine is still Pending.
-- **No leaving mid-case:** once the first call is attempted, the case can only end through the flow (confirm, callback, patient unavailable).
+- **Leaving a case:** before the first attempted call, Back offers "Release case"; once a call is attempted, the case can only end through the flow (confirm, callback, patient unavailable) (D-58).
 - **The doctor can't add medicines or change quantity.** Quantity is shown on the case, read-only.
 
 ## 5. Calling
 
-First release: Knowlarity click-to-call. The doctor taps Call patient; the doctor's own phone rings first, then the patient's. The doctor ends the call on the phone.
+Click-to-call through one telecom partner per flow: **Knowlarity** for Cat4 (one result after the call ends) and **Ozonetel** for Pilot transfer calls (live events). The doctor taps Call patient; the doctor's phone rings first, then the patient's; the doctor ends the call on the phone (no End call button). The app learns the call status by **polling** the backend (working assumption until Engineering confirms, OQ-030). If no call result arrives, the doctor is asked "Are you still on the call?" and can still confirm; the case then waits for the call record and goes to Ops after 30 minutes (D-58, D-73). Full flow: `ui-screens/app-logic.md` §4–§6.
 
 ## 6. Where the detail lives
 

@@ -1,14 +1,15 @@
-# Terminal brief — calling states, final render and audit
+# Terminal brief — calling states, final render and audit (round 7)
 
-Owner: main Claude thread (records decisions) · Worker: terminal session (renders, checks, reports) · Date: 2026-10-24
+Owner: main Claude thread (records decisions) · Worker: terminal session (renders, checks, Codex loop, reports) · Date: 2026-10-26 (updated from round 4)
 
 ## Read first (in this order)
 1. `projects/truemeds-doctor-portal-prototype/CLAUDE.md`
 2. `ui-screens/app-logic.md` §4 and **§5 state table** — the source of truth for every state, trigger and bar.
-3. `docs/context/decision_log.md` — D-58 points 14–22, D-59, D-60 (reverted).
-4. `design-system/RULES.md` §8–§9 (incl. the 2026-10-24 icon rule in §9.1).
+3. `docs/context/decision_log.md` — D-58 points 14–25, D-59, D-60 (reverted), **D-62 (incl. points 4–8) and D-63**.
+   `docs/context/backlog.md` — section 1 is this round; section 3 lists rebuild items that are **not** render fixes.
+4. `design-system/RULES.md` §8–§9 (icon rule §9.1; status card §9.3 — tinted by outcome, tone edge, no shadow) and `beyond-salt.md` (action bar edge).
 5. `docs/feedback-rules.md`, `ui-screens/feedback/messages.json`.
-6. This folder's `README.md`, `storyboard-final-draft.png` (main thread's pre-check render) and the round-1/2/3 storyboards (review history).
+6. This folder's `README.md`, `calling-d62-d63-w390.png` / `-w360.png` (main thread's pre-check of the changed states), `../2026-10-25-card-tray-experiment/` (why C5 and tray B) and round-4/5/6 reports (history).
 
 ## Where to work
 - Folder: `pm-agent/.work/truemeds-doctor-portal-prototype` (branch `project/truemeds-doctor-portal-prototype`). Never the main pm-agent folder.
@@ -16,10 +17,16 @@ Owner: main Claude thread (records decisions) · Worker: terminal session (rende
 - All text from `messages.json` via `MSG()`. No hard-coded copy, no "50" in copy.
 
 ## What to do
+0. **New since round 6** (main thread has already applied these in `src/case.html` and the design system — verify, don't redo):
+   - Outcome cards (D-62): success = light green + green edge (10a, 10b, 14); neutral = **grey-100 fill** + grey edge (7f, 9); warning = amber + amber edge (15, **B3 `g3b-forwarded`**). No drop shadow on any outcome card.
+   - Action bar (D-62 point 8, option B): white, hairline top edge + upward shadow `0 -8px 24px` 10%, on every state.
+   - 7b: "Are you still on the call?" is plain text above the two buttons — no box.
+   - **New state 15b `t15b-end-call-first`** (D-63): 15 + red line in the bar "End the call to get your next case." above Request next case (button stays enabled).
+   - t17 keeps the Cat4 "writing" script (Skip HA = no Health Advisor call; round-6 question closed).
 1. **State 16 has three variants** — render all: `t16-transfer-missed` (doctor ended), `t16b-transfer-missed-patient`, `t16c-transfer-missed-unknown`.
    **"Yes, still talking" (7b)** is a transition, not a state: the bar returns to 7a (`s7a-calling`), the question comes back after 3 min. No extra screen.
    **7d** = Confirm prescription · Callback · Unavailable (D-58 point 20). **State 6** = Call again · Callback (D-58 point 23). **13** busy label = "Transferring…". **Skip HA** keeps "HA" (button fit at 360) — the only place "HA" is shown.
-1. **Render** every state in the §5 state table (20 states + fallback B: `g1-generic-confirm`, `g2-checking-ha`, `g3b-forwarded`) at **360 and 390** wide, 2×, into `docs/renders/2026-10-22-calling/round-4/`. Remove the superseded recipe `t07-result-missing` from the render list (replaced by 7b–7f).
+1. **Render** every state in the §5 state table (20 states + 15b + fallback B: `g1-generic-confirm`, `g2-checking-ha`, `g3b-forwarded`) at **360 and 390** wide, 2×, into `docs/renders/2026-10-22-calling/round-7/`. Remove the superseded recipe `t07-result-missing` from the render list (replaced by 7b–7f).
 2. **Check copy**: every state uses the approved script for its case (`call.scriptCat4 / scriptTransfer / scriptForward / scriptNeutral / forwardedTell`), and `call.endedEarly` = "Call too short to write a prescription. Call again to continue."
 3. **Run the checks** that apply (`ui-screens/feedback/check-locked-specs.py`, `check-sources.mjs`, `docs/layout_check.py`). If a check cannot run against the working copy, write **"not run" with the reason** — never "passed" without running it.
 4. **Full-size audit — per decision, not per screen** (learning 2026-10-16): for each line below, open every state it touches at full size, both widths. Never sign off from contact sheets.
@@ -30,13 +37,16 @@ Owner: main Claude thread (records decisions) · Worker: terminal session (rende
    - Confirm never appears before the backend says the call is valid, except 7d. Skip HA only with a final button.
    - Back (header) only in 1, 2/7a, 3, 4, 7b, 11; never after an attempted call is known or once the case is closed.
    - Icon rule §9.1: icons on call / callback / view / skip / direction; none on confirm, finalise, release, or answers.
-   - Amber only for: call too short, result not received, doctor didn't answer, hung up before transfer, HA unavailable card. Red only for "didn't go through" and Unavailable.
+   - Amber only for: call too short, result not received, doctor didn't answer, hung up before transfer, the 15 and B3 cards. Red only for "didn't go through", Unavailable and the 15b "End the call" line.
+   - Outcome cards: tone matches the table above; edge visible; no drop shadow; same slot (under Order details).
+   - Action bar: edge and upward shadow visible against the white card behind it, both widths, every state.
    - Medicines all Prescribed in any state where a confirm button is tapped or the case is closed by confirming (fixture rule, D-56).
    - Secondary buttons as built (grey border, subtle SALT shadow) — D-60 reverted.
-5. **Storyboard**: one board grouped as in `storyboard-all-states.png` + the state-7 row, saved as `docs/renders/2026-10-22-calling/storyboard-final.png`.
+5. **Codex loop (as in earlier rounds):** send the renders to Codex in batches, read-only review. Fix only blockers that break a rule in this brief or the decision log; DOM-verify each fix and re-render that state. **Cap: 2 Codex rounds.** Codex has no project context: anything it raises that conflicts with a decision, or is a taste call, goes to NEEDS-APURVA — don't apply it. Ignore the backlog's rebuild items (notes field and View Rx looking active on closed states; labels via `MSG()`) — note them as "rebuild item", not as fails.
+6. **Storyboard**: one board grouped as in `storyboard-all-states.png` + the state-7 row, saved as `docs/renders/2026-10-22-calling/storyboard-final.png`.
 
 ## Report back (do not decide)
-Write `docs/renders/2026-10-22-calling/round-4/REPORT.md`: states rendered, check results (pass / fail / not run + reason), audit table (decision × states × pass/fail), and a **NEEDS-APURVA** list for anything unclear or conflicting. Then stop.
+Write `docs/renders/2026-10-22-calling/round-7/REPORT.md`: states rendered, check results (pass / fail / not run + reason), audit table (decision × states × pass/fail), Codex findings with what you did about each (fixed + verified / NEEDS-APURVA / rebuild item / rejected + reason), and a **NEEDS-APURVA** list for anything unclear or conflicting. Then stop.
 
 ## Never
 - Write to `decision_log.md`, `open_questions.md`, `project_truth.md` or record approvals — the main thread does that after Apurva agrees.

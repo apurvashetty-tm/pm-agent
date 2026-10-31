@@ -811,3 +811,22 @@ User identified missing HTML/native linkage. Inspected actual sign-in and OTP HT
 - One-screen experiment (`docs/renders/2026-10-25-card-tray-experiment/`): Apurva chose **C5** (tint + tone edge, no shadow; neutral grey-100 fill) and **T3** (action bar hairline + upward shadow). Recorded under D-62; design system updated and rebuilt.
 - **D-63:** Request next case on 15 and B3 checks the call has ended; new copy `call.endCallFirst`; app-logic row 15b.
 - **New `docs/context/backlog.md`** — the single list of agreed-but-not-applied work, in working order. Start there next session.
+
+## 2026-10-26 → 10-29 · Final screens, promotion in progress
+- **Decisions D-64 → D-71** (all in `decision_log.md`): round-7 answers + 8c Confirm blocked + screen-lock fallback (D-64); messages don't repeat buttons (D-65); entry-pass answers (D-66); **page margin 16 everywhere** (D-67, design team standard); keep "Confirm prescription", 7f = "Waiting for the call record", disabled-medicine state (D-68); final-audit answers, Profile ported + faster sign-in toggle, bottom tabs later (D-69); **Profile is a page**, Skip HA wording, sheets over new calling screens (D-70); promotion answers — one case page, calling markup wins (D-71).
+- **Design system:** status cards C5 (tint + tone edge, no shadow), action bar 16 all sides + hairline + upward shadow, `--tm-space-page` 16.
+- **Renders:** calling `docs/renders/2026-10-22-calling/` (storyboard 31 states); entry/Home/case `docs/renders/2026-10-26-entry-ds-pass/src` + `2026-10-26-margin-16/round-1` (review page `REVIEW.html`); final audit `2026-10-27-final-audit/`; fix rounds `2026-10-27-fix-round/round-1,2`.
+- **Now:** terminal is running the promotion (`docs/renders/2026-10-28-promotion/TERMINAL-BRIEF.md` + D-71 answers). Its `candidate/` folder is work in progress — don't publish it until the report is in.
+- **Next:** check the promotion report (pixel compare, guards 0 failures) → mark frozen in the decision log → publish → open a new PR (PR #15 already merged) → Apurva merges. Then backlog §3 rebuild items, §4 engineering/ops questions, §4b next design round, §5 PRD.
+
+
+## 2026-10-31 · Screens frozen (D-78); this thread and the render terminal retired
+- **Done since 29 Oct:** status line for long waits (D-74); affordance audit + fixes, Unavailable reason sheet (D-75); View Rx same everywhere (D-76); six stale case states rebuilt from the calling helpers; guards now check all 144 states (0 failures); 7b answers "Still talking" / "Call ended", back-blocked toast, "order" wording (D-77); **screens and app logic approved and frozen (D-78)**; PR #16.
+- **Central files updated:** design system (status line, question notice, compact header on the 16 edge, page margin token; `beyond-salt.md`, `RULES.md`), project `CLAUDE.md` current state, `project_truth.md` §4–§5.
+- **Review aids:** `ui-screens/REVIEW.html` (all screens), `docs/renders/2026-10-26-margin-16/WALKTHROUGH.html` + `calling-flow.png` (calling walkthrough — note: Apurva found misses in this page; to review).
+- **Next, in new threads:**
+  1. **Logic review** — Apurva's list of misses from the walkthrough page → sort into drawing error vs real logic gap → she decides → fix `app-logic.md` in one pass → regenerate the flow diagram. Do this before building.
+  2. **Prototype rebuild** — the other chat's build plan (`docs/proposals/2026-10-29-prototype-build-plan.md`) and checklist (`docs/reviews/2026-10-29-rebuild-checklist.md`) await her answers on P1–P8; app-logic §4 Release point there is already fixed.
+  3. Token inspector → PRD (open questions with polling as the assumption).
+- **Open for Apurva:** backlog 4c (live site exposes `docs/`).
+- **Not done yet:** republish the **Truemeds Design System** Claude artifact (public link, made from the Design System type) with the new components (status line, question notice, status card tones, page margin 16, action bar). Run `python3 design-system/scripts/build_artifact.py`, read the type's SKILL.md, then patch only the changed `project/` files. Its output (139 files) doesn't match the artifact's file list one-to-one — check before sending.

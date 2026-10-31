@@ -179,7 +179,8 @@ def check_sign(page, state, errs):
 HOME = SCREENS / 'home' / 'home.html'
 HOME_STATES = ['setup-wheel', 'setting', 'setup-failed', 'active', 'requesting', 'no-cases', 'request-failed', 'offline',
                'near-expiry', 'add-wheel', 'adding', 'add-failed', 'added', 'end-confirmation', 'stop-pending', 'expired-pending',
-               'idle-expired', 'manually-ended', 'unknown-result']
+               'idle-expired', 'manually-ended', 'unknown-result',
+               'profile', 'profile-case-open', 'logout-confirm']   # Round 3: Profile pages (D-70)
 
 WHEEL_JS = r"""() => {
   const band = document.querySelector('.wheel-band');
@@ -202,13 +203,16 @@ def check_home(page, state, errs):
     page.goto(HOME.as_uri() + f'?state={state}')
     page.wait_for_timeout(120)
     gap = page.evaluate("""() => {
-      const logo = document.querySelector('.logo').getBoundingClientRect();
-      const h1 = document.querySelector('.band h1').getBoundingClientRect();
+      // Round 3: Profile is a task page with no logo (D-70), so the logo gap is measured only where both exist
+      const logoEl = document.querySelector('.logo'); const h1El = document.querySelector('.band h1');
+      const logo = logoEl ? logoEl.getBoundingClientRect() : null; const h1 = h1El ? h1El.getBoundingClientRect() : null;
       const ph = document.querySelector('.phone').getBoundingClientRect();
-      const f = document.querySelector('.footer').getBoundingClientRect();
+      // D-75: unknown-result has no footer (the status line carries the wait), so the footer check runs only where one exists
+      const fe = document.querySelector('.footer');
+      const f = fe ? fe.getBoundingClientRect() : null;
       const t = document.querySelector('.time');
       const tcs = t ? getComputedStyle(t) : null;
-      return { logoToTitle: Math.round(h1.top - logo.bottom), footerInside: f.bottom - ph.top <= ph.height - 16,
+      return { logoToTitle: logo && h1 ? Math.round(h1.top - logo.bottom) : null, footerInside: f ? f.bottom - ph.top <= ph.height - 16 : null,
                valueFs: tcs ? tcs.fontSize : null, valueFw: tcs ? tcs.fontWeight : null, valueNum: tcs ? tcs.fontVariantNumeric : null };
     }""")
     if gap.get('valueFs') is not None and (PX(gap['valueFs']) != 32 or gap['valueFw'] != '600' or 'tabular' not in (gap['valueNum'] or '')):
@@ -221,13 +225,13 @@ def check_home(page, state, errs):
         if w['bandBg'] != w['brandSubtle']: errs.append(f"{tag}: wheel band {w['bandBg']} is not the brand-subtle token {w['brandSubtle']} (D-40 approved wheel)")
         if w['selColor'] != w['brandText']: errs.append(f"{tag}: wheel selected value {w['selColor']} is not the brand text token {w['brandText']}")
         if w['greyBoxes']: errs.append(f"{tag}: {w['greyBoxes']} grey column box(es) behind the wheel (approved wheel has none)")
-    if gap['logoToTitle'] != 48: errs.append(f'{tag}: L6 logo-to-title gap {gap["logoToTitle"]}px != 48px (home-base hero gap)')
-    if not gap['footerInside']: errs.append(f'{tag}: pinned footer outside the frame')
+    if gap['logoToTitle'] is not None and gap['logoToTitle'] != 48: errs.append(f'{tag}: L6 logo-to-title gap {gap["logoToTitle"]}px != 48px (home-base hero gap)')
+    if gap['footerInside'] is False: errs.append(f'{tag}: pinned footer outside the frame')
 
 UNLOCK = SCREENS / 'returning-unlock' / 'returning-unlock.html'
 OFFER = SCREENS / 'faster-signin-offer' / 'faster-signin-offer.html'
 UNLOCK_STATES = ['fingerprint', 'face', 'screen-lock', 'pending', 'cancelled', 'platform-retry', 'unavailable']
-OFFER_STATES = ['fingerprint', 'face-id', 'enabling']
+OFFER_STATES = ['fingerprint', 'face-id', 'enabling', 'screen-lock', 'enable-failed', 'offline']   # Round 3: every offer picture
 
 def check_unlock_offer(page, errs):
     for state in UNLOCK_STATES:
@@ -260,19 +264,26 @@ def check_sources(errs):
 # ---------------------------------------------------------------------------
 PHASE_D = SCREENS / 'case' / 'case.html'   # promoted 2026-10-15 (moved from docs/concepts/2026-10-14-case-page/v2)
 D_STATES = [
-    'a-top', 'a-scrolled', 'a-order-details', 'a-rx-viewer', 'a-notes-typing', 'a-leave-sheet', 'a-releasing', 'a-back-blocked',
-    'b-calling', 'b-on-call', 'b-ended-early', 'b-missed-call', 'b-patient-unavailable', 'b-post-gate-transfer', 'b-post-gate-cat4', 'b-post-gate-forward',
-    'c-callback', 'c-callback-error', 'c-skip-ha',
-    'd-default', 'd-scrolled', 'd-error-dose', 'd-error-other', 'd-sos-on', 'd-notes-keyboard', 'd-discard-sheet', 'd-disable-sheet', 'd-header-white',
-    'e-prescription-confirmed', 'e-transferred', 'e-forwarded', 'e-callback-scheduled', 'e-patient-unavailable', 'e-availability-ended',
-    # new states (feedback-state-map.md, proposed copy) and stress cases (checklist 7b.6)
-    'b-didnt-connect', 'd-injection-default', 'd-syrup', 'd-drops', 'd-cream', 'd-every-x-hours', 'd-sos-only', 'd-weekly', 'd-duration-picker', 'd-food-selected',
-    'a-loading', 'a-load-failed', 'a-offline', 'a-confirm-busy', 'a-confirm-failed', 'a-release-failed', 'c-callback-failed',
-    'd-rx-failed', 'a-no-medicines', 'a-long-content', 's-10-medicines', 's-optional-empty',
+    # case page (ui-screens/case/): ready and chrome, calling, call outcomes, sheets, closed, stress (Round 3: current set)
+    'a-back-blocked', 'a-confirm-busy', 'a-confirm-failed', 'a-leave-sheet', 'a-load-failed', 'a-loading',
+    'a-long-content', 'a-no-medicines', 'a-notes-typing', 'a-offline', 'a-offline-action', 'a-order-details',
+    'a-release-failed', 'a-releasing', 'a-rx-viewer', 'a-scrolled', 'a-top', 'c-callback',
+    'c-callback-error', 'c-callback-failed', 'c-skip-ha', 'e-availability-ended', 'e-callback-scheduled', 'g1-generic-confirm',
+    'g2-checking-ha', 'g3b-forwarded', 's-10-medicines', 's-medicine-disabled', 's-optional-empty', 's7a-calling',
+    's7b-still-on-call', 's7c-checking', 's7d-result-missing', 's7d-unavailable-sheet', 's7e-leave-sheet', 's7f-submitted',
+    't01-ready', 't02-calling', 't03-not-through', 't04-doctor-missed', 't05-result-wait', 't06-ended-early',
+    't08a-valid-cat4', 't08b-valid-forward', 't08c-confirm-blocked', 't09-patient-unavailable', 't10a-confirmed', 't10b-forwarded',
+    't11-calling-transfer', 't12-transfer-ready', 't13-connecting-ha', 't14-transferred', 't15-ha-no-join', 't15b-end-call-first',
+    't16-transfer-missed', 't16b-transfer-missed-patient', 't16c-transfer-missed-unknown', 't17-skip-ha-wait',
+    # prescribe (ui-screens/prescribe/): one medicine, opened through the case page
+    'd-alt-days', 'd-cream', 'd-default', 'd-disable-sheet', 'd-discard-sheet', 'd-drops',
+    'd-duration-picker', 'd-error-dose', 'd-error-other', 'd-every-x-hours', 'd-food-selected', 'd-header-white',
+    'd-inhaler', 'd-injection-default', 'd-monthly', 'd-notes-keyboard', 'd-rx-failed', 'd-scrolled',
+    'd-sos-on', 'd-sos-only', 'd-syrup', 'd-weekly',
 ]
 A_SIGN = SIGN_STATES
 A_OTP = OTP_STATES
-B_OFFER = ['fingerprint', 'face-id', 'enabling']
+B_OFFER = OFFER_STATES
 B_UNLOCK = UNLOCK_STATES
 C_HOME = HOME_STATES  # includes 'active' (default)
 
@@ -340,7 +351,7 @@ STD_JS = r"""(exemptSel) => {
     if (cs.textOverflow === 'ellipsis' && el.scrollWidth > el.clientWidth + 1 && el.textContent.trim()) add('1.4', `text truncated with ellipsis: "${el.textContent.trim().slice(0, 40)}"`);
   }
 
-  // --- 1.1 side margin 24 on every top-level block (screen root = .screen, #mobile-column or the sign-in phone)
+  // --- 1.1 side margin on every top-level block (screen root = .screen, #mobile-column or the sign-in phone). D-67: page margin is 16 (was 24).
   const root = [...document.querySelectorAll('#mobile-column,.screen,#doctor-login-preview .login-phone')].find(vis) || document.body;
   const rr = root.getBoundingClientRect();
   const BLOCK = '.tm-field,.tm-notice,.tm-card,.tm-status-card,.tm-row,.tm-chip-group,.tm-chip-grid,.chip-grid,.tm-btn--block,.tm-btn-pair,#ab-secondary';
@@ -352,11 +363,11 @@ STD_JS = r"""(exemptSel) => {
         a = a.parentElement; }
       if (inset) continue; }
     const r = el.getBoundingClientRect();
-    if (Math.abs(r.left - rr.left - 24) > 0.6 || Math.abs(rr.right - r.right - 24) > 0.6) add('1.1', `${el.className.toString().split(' ')[0] || el.tagName} margins ${Math.round(r.left - rr.left)}/${Math.round(rr.right - r.right)} (need 24/24)`);
+    if (Math.abs(r.left - rr.left - 16) > 0.6 || Math.abs(rr.right - r.right - 16) > 0.6) add('1.1', `${el.className.toString().split(' ')[0] || el.tagName} margins ${Math.round(r.left - rr.left)}/${Math.round(rr.right - r.right)} (need 24/24)`);
   }
 
   // --- 2.4 sentence case on buttons and titles; 2.6 "case" not "order"; 2.7 retired labels
-  const names = new Set(['Home','Rx','HA','OTP','Doctor','Ops','Truemeds','Dr','Face','ID','Apurva','Order','Help','Help','Call','Wait']);
+  const names = new Set(['Home','Rx','HA','OTP','Doctor','Ops','Truemeds','Dr','Face','ID','Apurva','Order','Help','Help','Call','Wait','Health','Advisor']);   // 'Health Advisor' is a proper noun (D-58 pt 23, D-70 pt 3)
   const data = [...document.querySelectorAll('#ch-name,.ch-name,#ps-title,.tm-row .tm-text-body-lg,.tm-row .tm-text-body-strong,.tm-row strong')].map(e => e.textContent).join(' ');
   data.split(/\s+/).forEach(w => names.add(w.replace(/[^A-Za-z]/g, '')));
   const RETIRED = ['Confirm Order', 'Confirm & Transfer', 'Confirm & Forward', 'Skip HA Call', 'Next Order', 'Order Confirmed', 'Call Patient', 'Retry Call', 'Mark as Unavailable', 'Mark Unavailable', 'Schedule Callback', 'End Call', 'Customer unavailable', 'Request Next Case'];
@@ -475,7 +486,7 @@ STD_JS = r"""(exemptSel) => {
     if (!s.contains(document.activeElement)) add('4.7', `focus not inside open sheet "${s.id || s.className}"`);
   }
 
-  // --- 5.1 sheet template: title + close, no handle, no divider, 24 side margins, 16 header→content
+  // --- 5.1 sheet template: title + close, no handle, no divider, 16 side margins (D-67; was 24), 16 header→content
   for (const s of document.querySelectorAll('.tm-sheet,.bottom-sheet,.cl-sheet')) {
     if (!vis(s)) continue;
     const id = s.id || s.className.toString().split(' ')[0];
@@ -486,10 +497,10 @@ STD_JS = r"""(exemptSel) => {
     const cs = getComputedStyle(s);
     const body = s.querySelector('.tm-sheet__body,.sheet-body') || s;
     const bcs = getComputedStyle(body);
-    if (PX(bcs.paddingLeft) + (body === s ? 0 : 0) !== 24 && Math.abs(s.getBoundingClientRect().left - document.querySelector('#mobile-column')?.getBoundingClientRect().left || 0) < 999) {
+    if (PX(bcs.paddingLeft) + (body === s ? 0 : 0) !== 16 && Math.abs(s.getBoundingClientRect().left - document.querySelector('#mobile-column')?.getBoundingClientRect().left || 0) < 999) {
       const sheetLeft = s.getBoundingClientRect().left;
       const cLeft = (s.querySelector('.tm-sheet__title,.sheet-title span,.cl-head h2') || body).getBoundingClientRect().left;
-      if (Math.abs(cLeft - sheetLeft - 24) > 0.6) add('5.1', `sheet "${id}" content inset ${Math.round(cLeft - sheetLeft)}px (need 24)`);
+      if (Math.abs(cLeft - sheetLeft - 16) > 0.6) add('5.1', `sheet "${id}" content inset ${Math.round(cLeft - sheetLeft)}px (need 16, D-67)`);
     }
     const hdr = s.querySelector('.tm-sheet__header,.sheet-title,.cl-head');
     if (hdr && PX(getComputedStyle(hdr).borderBottomWidth) > 0) add('5.1', `sheet "${id}" header has a divider`);
@@ -543,7 +554,7 @@ STD_JS = r"""(exemptSel) => {
     if (vis(t)) add('5.8', `phone-back toast is a light notice, must be the dark .tm-toast (D-52): "${t.textContent.trim().slice(0, 40)}"`);
   }
 
-  // --- D-54 automatic checks (round 15): R1 focus outline; R2 toast; R3 side margin 24 on every top-level block; R4 Help never disabled; R6 busy labels; R7 no placeholder dash.
+  // --- D-54 automatic checks (round 15): R1 focus outline; R2 toast; R3 side margin on every top-level block (16, D-67; was 24); R4 Help never disabled; R6 busy labels; R7 no placeholder dash.
   const ae = document.activeElement;
   if (ae && ae !== document.body && ae.matches('input,textarea,[tabindex="-1"]') && vis(ae)) {
     const fcs = getComputedStyle(ae);
@@ -569,7 +580,7 @@ STD_JS = r"""(exemptSel) => {
         a = a.parentElement; }
       if (inset) continue; }
     const rr3 = root.getBoundingClientRect(), r = el.getBoundingClientRect();
-    if (Math.abs(r.left - rr3.left - 24) > 0.6 && r.width > 0) add('R3', `${el.tagName.toLowerCase()}${el.className ? '.' + String(el.className).split(' ')[0] : ''} starts at ${Math.round(r.left - rr3.left)}px (need 24)`);
+    if (Math.abs(r.left - rr3.left - 16) > 0.6 && r.width > 0) add('R3', `${el.tagName.toLowerCase()}${el.className ? '.' + String(el.className).split(' ')[0] : ''} starts at ${Math.round(r.left - rr3.left)}px (need 24)`);
   }
   const help = document.getElementById('ch-help');
   if (help && vis(help) && help.disabled) add('R4', 'Help button is disabled on the case page');
@@ -635,19 +646,24 @@ def _line_for(msg):
     return '2.3' if ('title' in msg or 'L8' in msg) else '6.x'
 
 def check_coverage(errs, phases):
-    """8.1: every expected state appears exactly once in the coverage matrix (docs/renders/2026-10-15-standards/README.md)."""
-    matrix = pathlib.Path(__file__).resolve().parents[2] / 'docs' / 'renders' / '2026-10-15-standards' / 'README.md'
-    if not matrix.exists():
-        errs.append({'phase': '-', 'state': 'coverage', 'vw': 0, 'line': '8.1', 'msg': 'coverage matrix missing'})
-        return
-    ids = re.findall(r'^\| `([^`]+)` \|', matrix.read_text(), flags=re.M)
-    counts = {}
-    for i in ids: counts[i] = counts.get(i, 0) + 1
+    """8.1: every expected state has a recipe (case page) and a 390 and 360 picture in ui-screens.
+    Round 3: replaces the 2026-10-15 coverage matrix, which lists retired ids and so passed without checking the current set."""
+    case_src = (SCREENS / 'case' / 'case.html').read_text()
+    folders = {'sign-in': (SCREENS / 'sign-in', 'sign-in_'), 'otp': (SCREENS / 'otp', 'otp_'),
+               'unlock': (SCREENS / 'returning-unlock', 'unlock_'), 'offer': (SCREENS / 'faster-signin-offer', 'offer_'),
+               'home': (SCREENS / 'home', 'home_')}
     for ph in phases:
         for sub, st in EXPECTED[ph]:
             key = f'{sub}/{st}'
-            n = counts.get(key, 0)
-            if n != 1: errs.append({'phase': ph, 'state': key, 'vw': 0, 'line': '8.1', 'msg': f'state listed {n} times in coverage matrix'})
+            if sub == 'case':
+                if not re.search(r"'%s'\s*:" % re.escape(st), case_src):
+                    errs.append({'phase': ph, 'state': key, 'vw': 0, 'line': '8.1', 'msg': 'no recipe in case.html'})
+                folder, pre = ((SCREENS / 'prescribe'), '') if st.startswith('d-') else ((SCREENS / 'case'), '')
+            else:
+                folder, pre = folders[sub]
+            for vw in (390, 360):
+                if not (folder / f'{pre}{st}_w{vw}.png').exists():
+                    errs.append({'phase': ph, 'state': key, 'vw': vw, 'line': '8.1', 'msg': f'picture missing: {folder.name}/{pre}{st}_w{vw}.png'})
 
 
 # 5.12 (auto): no local restyling of a central component. Source scan of each phase's files:
