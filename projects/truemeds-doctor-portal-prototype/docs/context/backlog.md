@@ -44,8 +44,18 @@ Order = the order we work in.
 ## 2c-done. Screens frozen 2026-10-31 (D-78)
 - [x] Promotion, close-out, status line (D-74), audit fixes (D-75–D-77), guards over all 144 states, PR #16.
 - [ ] **Logic review before the build:** Apurva's misses from the walkthrough page → fix `app-logic.md` → regenerate `calling-flow.png`.
+  - Applied, not committed (2026-10-31): three internal contradictions fixed — §4 stage table (Calling / Transfer ready / Call not valid / Valid rows), §5 Dependency, §6 failed transfer → state 15, §7 Unavailable reason sheet.
+  - Applied, not committed (2026-10-31): §11 test numbers and OTP codes (agreed).
+- [x] Recorded as D-79 (P3, P8, test numbers, new order of work, three documents).
 
-## 2d. After promotion — order agreed 2026-10-29 (Apurva)
+## 2e. New order of work (D-79, 2026-10-31) — replaces 2d's order
+1. [ ] Five-lens audit of the frozen screens (separate agent) → Apurva sorts findings.
+2. [ ] Storyboard review with Apurva, journey by journey: entry → Home → case + Prescribe → calling (incl. her walkthrough misses; then regenerate `calling-flow.png`).
+3. [ ] Per closed journey: PRD section → prototype engineering spec + test cases (agents). Spec's shared foundation may start early. Build plan → spec; rebuild checklist → test cases.
+4. [ ] Prototype rebuild from the spec, checked against the test cases (P3/P8 per D-79).
+5. [ ] Token inspector.
+
+## 2d. After promotion — order agreed 2026-10-29 (Apurva) — superseded by 2e
 1. [ ] **Prototype rebuild** from the frozen `ui-screens/` (D-56, D-72): build plan + rebuild checklist first; covers all order types and states; the phone demo alone is Cat4 happy path; new Netlify link alongside the current one; then journey by journey, checked against the pictures. Installable from the Netlify link (opens full screen from the home screen, no review controls); demo mode with one order type and the happy path.
 2. [ ] **Token inspector** page generated from the screens (which tokens each element uses) for engineering. Figma snapshot only if the design team asks.
 3. [ ] **PRD** page by page, engineering hand-off pack, then the rest of this backlog.
