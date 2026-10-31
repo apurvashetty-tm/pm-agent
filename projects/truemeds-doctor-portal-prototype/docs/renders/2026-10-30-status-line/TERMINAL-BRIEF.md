@@ -55,6 +55,8 @@ Six approved `a-*` states were promoted unchanged from before D-58. Their recipe
 | `a-long-content` | Script card before Call (below the notes) | Ready state with long content — no script card (D-58 pt 18). |
 | `a-releasing` | **Old Home design** ("Good afternoon… Get next order", "0 orders closed") | The leave sheet (`s7e` look) with **"Releasing…"** busy on Release case (short wait after a tap). After release the doctor lands on the approved Home — not a separate picture. |
 
+**Note:** the script card probably exists below the fold in every Ready state (`t01-ready`, `a-top`, `a-offline`, `a-notes-typing`, `s-*` …) and only shows when scrolled. Hide it in the Ready state itself (one place), not per recipe, and DOM-check that no Ready state has a visible script card anywhere on the page.
+
 Also check every other `a-*`, `c-*`, `e-*`, `s-*` recipe for the same old helpers or old copy ("order" for case, "I'm confirming your order", "Get next order", End call) and list any you find; fix only those that clearly break a decision, list the rest.
 
 Re-render the changed states (390/360, fixed clock), contact sheets and `REVIEW.html`; pixel-compare everything else; guards 0 failures. Append "Round 3" to REPORT.md. Stop. No commits.
