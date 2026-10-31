@@ -120,7 +120,7 @@ Order on first use: Sign-in → OTP → (offer, once) → Home → Case. Returni
 | 6 | `call.ended-early` | Call too short | Result: total talk time on the case under the gate | Amber "Call too short…" · Call again · Callback (no Unavailable — D-58 point 23) | `t06-ended-early` |
 | 7b | `call.still-on-call` | Still on the call? | 3 min after the tap with no result (repeats every 3 min) | Grey "Are you still on the call?" · Yes, still talking + No, call ended · header Back | `s7b-still-on-call` |
 | 7c | `call.checking` | Checking call result | Doctor tapped "No, call ended" | "Checking call result…" busy | `s7c-checking` |
-| 7d | `call.result-missing` | Result not received | Backend check found nothing | Amber notice · Confirm prescription · Callback + Unavailable (Unavailable opens the reason sheet, D-75) | `s7d-result-missing` |
+| 7d | `call.result-missing` | Result not received | Backend check found nothing | Amber notice · Confirm prescription · Callback + Unavailable (Unavailable opens the reason sheet, D-75; **the chosen reason is saved with the case** for Ops monitoring, D-73) | `s7d-result-missing` |
 | 7e | — | Leave this case? | Back in 1–4, 7a, 7b | Approved sheet: Release case / Stay on this case | `s7e-leave-sheet` |
 | 7f | `call.submitted` | Waiting for the call record | Confirm in 7d | Grey card "Waiting for the call record · Your prescription is saved. We'll confirm it once the record arrives." (D-68); becomes "Prescription confirmed" when the record arrives · Request next case · Back to Home | `s7f-submitted` |
 | 8a | `call.valid` | Valid call (Cat4 / HA skipped) | Result: total talk time ≥ gate | Confirm prescription · Callback · no script (call has ended) | `t08a-valid-cat4` |

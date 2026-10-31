@@ -61,4 +61,10 @@ Also check every other `a-*`, `c-*`, `e-*`, `s-*` recipe for the same old helper
 
 **View Rx (D-76):** the outlined button on every case state, including all closed states (`e-*`, `t09`, `t10a`, `t10b`, `t14`, `t15`, `t15b`, `g3b`, `s7f`) — same look as on open cases.
 
+**Also in this round (from the Round 2 report, Apurva 2026-10-31):**
+- **Guard coverage:** update `check-locked-specs.py` `D_STATES` (and any other state list) to the current set — remove retired ids, add every calling state, `s7d-unavailable-sheet`, `a-offline-action`, `s-medicine-disabled`, the `c-*` sheets, `prescribe/` ids, the Profile states. A guard that passes without checking a state is not a pass; report how many states each guard now checks.
+- **README:** `ui-screens/README.md` lists `s7d-unavailable-sheet` (and anything else added since the promotion).
+- **Reproducible pictures:** save the scripts that build the contact sheets and `REVIEW.html` (e.g. `ui-screens/_qa/build-contact-sheets.py`, `build-review.py`) and rebuild both with them.
+- Accepted, no change: Unavailable reason not stored in the reference (the real app saves it — app-logic 7d); sheet copy typed (rebuild item); the 1.1 s window after Confirm in the reference (the real app disables everything while confirming — app-logic §6).
+
 Re-render the changed states (390/360, fixed clock), contact sheets and `REVIEW.html`; pixel-compare everything else; guards 0 failures. Append "Round 3" to REPORT.md. Stop. No commits.
