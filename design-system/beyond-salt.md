@@ -1,7 +1,7 @@
 # Added beyond SALT
 
 Everything below is a **Truemeds decision on top of SALT, owned here** (approved by Apurva). Share it with the SALT
-designers so Figma can catch up; the native app team treats it as final, not as proposals. Last updated 2026-10-25.
+designers so Figma can catch up; the native app team treats it as final, not as proposals. Last updated 2026-10-31.
 
 ## Truemeds token and text-style decisions (`tokens/truemeds.json`, layout v2 · D-43)
 Applied last by `scripts/build.py`; these override SALT values on purpose.

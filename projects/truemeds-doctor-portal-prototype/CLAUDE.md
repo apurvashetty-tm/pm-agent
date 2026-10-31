@@ -43,16 +43,17 @@ Before any auth/Home UI or render work, read `docs/feedback-rules.md` and `docs/
 
 **Layout v2 — D-42 to D-45.** Read `design-system/RULES.md` §8 (type scale, spacing, button placement, header types) before any screen work. Logo only on home-base screens (sign-in, Home). OTP v2 and the faster sign-in offer screen are defined in D-44 and D-45.
 
-## Current state (2026-10-16) — read first
-- **Approved screens A–D:** `ui-screens/` (README there is the index; every state at 360 and 390). Decisions D-42–D-55.
-- **App rules:** `ui-screens/app-logic.md` (DRAFT until Apurva approves) — extracted from the old prototype; the rebuild follows it.
-- **Next:** (1) calling screens for Knowlarity click-to-call (D-56, OQ-027) in a new thread; (2) approve app-logic.md; (3) rebuild checklist; (4) build the prototype **from scratch** — do not extend `index.html` / `app.js`.
+## Current state (2026-10-31) — read first
+- **Screens and app logic are approved and frozen (D-78):** `ui-screens/` (README there is the index; 144 states at 360 and 390, incl. the calling states and `prescribe/`) and `ui-screens/app-logic.md`. Decisions up to D-77. Anything new is a bug (fix where it occurs) or a next-version idea (backlog §4b).
+- **Start here:** `docs/context/session_handoff.md` (latest entry) and `docs/context/backlog.md`.
+- **Next (D-72):** (1) logic review of the calling flow against `app-logic.md` (Apurva's list of misses from her walkthrough) — before building; (2) prototype rebuild in its own folder from the frozen screens — build plan and rebuild checklist drafted in `docs/proposals/` and `docs/reviews/`, awaiting approval; (3) token inspector; (4) PRD. Do not extend `index.html` / `app.js`.
+- **Checks:** `ui-screens/feedback/check-locked-specs.py`, `check-sources.mjs`, `docs/layout_check.py`, `brand/check_lockup.py` — all 0 failures over all 144 states. Rebuild review aids with `ui-screens/_qa/` (`build-review.py`, `build-contact-sheets.py`, `build-storyboard.py`).
 - **Sub-sessions (terminal, Codex) never write to the decision log or record approvals in Apurva's name;** they report under NEEDS-APURVA and Claude records decisions after she agrees.
 - **Audit rule:** before calling screens done, check every decision against every screen it touches at full size (360 and 390), not on contact sheets.
 
 ## Layout v2 decisions — D-42 to D-56 (2026-10-14/15)
 
-Read `design-system/RULES.md` §8 (incl. locked specs L1–L9) and **§9 (components and states: button roles, 48px targets, chips, sheet template, toast, states checklist)**, and decision log D-42–D-52, before any screen work. Doctor-portal specifics of the design system are in D-52. Key points: logo only on home-base screens; task headers in hero or compact size, Back only where there is a previous screen; case page exits by stage (D-48); compact tinted case header (D-49). **Wording: "case", never "order", for the doctor's unit of work**; the customer order ID line stays. Final CTA labels and tracking: D-50 ("Confirm prescription", "Confirm & transfer", "Confirm & forward", "Skip HA call").
+Read `design-system/RULES.md` §8 (incl. locked specs L1–L9) and **§9 (components and states: button roles, 48px targets, chips, sheet template, toast, states checklist)**, and decision log D-42–D-52, before any screen work. Doctor-portal specifics of the design system are in D-52. Key points: logo on every screen except the case page and task overlays (D-61, replaces D-42's rule); page margin 16 (D-67); task headers in hero or compact size, Back only where there is a previous screen; case page exits by stage (D-48); compact tinted case header (D-49). **Wording: "case", never "order", for the doctor's unit of work**; the customer order ID line stays. Final CTA labels and tracking: D-50 ("Confirm prescription", "Confirm & transfer", "Confirm & forward", "Skip HA call").
 
 ## Approved UI references
 

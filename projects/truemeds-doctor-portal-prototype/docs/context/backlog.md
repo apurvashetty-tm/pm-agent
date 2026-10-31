@@ -41,6 +41,10 @@ Order = the order we work in.
 - [ ] Update `ui-screens/README.md`; update the guards for D-61/62/65/66/67 and re-run them on the promoted files.
 - [ ] Freeze: mark approved in the decision log; new PR for Apurva to merge.
 
+## 2c-done. Screens frozen 2026-10-31 (D-78)
+- [x] Promotion, close-out, status line (D-74), audit fixes (D-75–D-77), guards over all 144 states, PR #16.
+- [ ] **Logic review before the build:** Apurva's misses from the walkthrough page → fix `app-logic.md` → regenerate `calling-flow.png`.
+
 ## 2d. After promotion — order agreed 2026-10-29 (Apurva)
 1. [ ] **Prototype rebuild** from the frozen `ui-screens/` (D-56, D-72): build plan + rebuild checklist first; covers all order types and states; the phone demo alone is Cat4 happy path; new Netlify link alongside the current one; then journey by journey, checked against the pictures. Installable from the Netlify link (opens full screen from the home screen, no review controls); demo mode with one order type and the happy path.
 2. [ ] **Token inspector** page generated from the screens (which tokens each element uses) for engineering. Figma snapshot only if the design team asks.
