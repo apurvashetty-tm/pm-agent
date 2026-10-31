@@ -828,6 +828,12 @@ From an external (ChatGPT) review, each point verified before acting.
 - **Decision (Apurva):** **View Rx is the outlined button on every case state, including closed cases.** It still works after a case closes (the doctor may check the prescription), so it must not look disabled. Closed cases stay read-only for medicines and notes (D-62 point 3, D-75 point 4); View Rx only opens the viewer.
 - **Why:** found in the visual affordance pass — the same action looked active on open cases and grey (disabled-looking) on closed ones.
 
+### D-77 · 7b answer labels; back-blocked toast; "order" for the patient's order — 2026-10-31
+- **Decision (Apurva):**
+  1. **7b answers: "Still talking" / "Call ended"** (were "Yes, still talking" / "No, call ended"). Side by side at 360 (the longer label was 3 px too wide for half the bar); the question above already asks "Are you still on the call?", so "Yes"/"No" repeated it.
+  2. **Back-blocked stays a toast.** Inline notices answer an on-screen action; the back-blocked message answers a **system** action (phone back button / swipe) with no on-screen control to sit next to, and the header Back is hidden after an attempted call (D-58). A short toast is the platform pattern for that (feedback rules: toasts for brief information needing no action). Android: shown on the system back. iOS: the back swipe can be switched off during a call, so it rarely shows.
+  3. **"Order" stays where it means the patient's order**: "No medicines on this order." (`case.noMedicines`) and the Skip HA reason "Counselled in an earlier order". The case-wording rule ("case", not "order") is for the doctor's unit of work; the patient's purchase is an order, as in "Order details".
+
 ## Design system changes made for this work
 
 ### D-60 · Secondary button without drop shadow (design system) — 2026-10-24 · **REVERTED same day**
