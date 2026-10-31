@@ -1,4 +1,4 @@
-<!-- memory path: /areas/ring-ai.md · last updated in memory: 2026-10-06 -->
+<!-- memory path: /areas/ring-ai.md · last updated in memory: 2026-10-14 -->
 ---
 name: ring-ai
 description: ACOM × Ring AI — AI-led lead-qualification platform PRD at Truemeds. Current state, working model, decisions, open questions, file locations, norms. Read when working on this PRD/project.
@@ -69,3 +69,6 @@ aliases: [acom, acom 2.0, ring ai, voicebot cart recovery, ai-led lead qualifica
 ## Working norms
 - See /preferences.md (product-focused PRDs, present → debate → agree → edit, never sync unless told, lean GTM, batch review comments, Truemeds funnel terms, marked review copies, omitted suggestions = rejected).
 - Whenever a stated fact changes, scan the WHOLE document for every occurrence before treating the edit as done.
+- [stated] (13 Oct) AI-led Lead Qualification has gone live; Apurva is now writing a separate frontend-changes doc (TL listing page + agent lead page AI context), DNC excluded (already handed over in its own Jira).
+- [stated] (13 Oct) Frontend doc decisions: Ring's "Non Completion Reason" and "Customer Request" are free text; the bot's script refers to our human agent as a "senior agent"; call-button gating is in scope, Hold retirement stays out; deliver in phases — must-have (little backend change) vs good-to-have (e.g. cart-changed flag).
+- [stated] (14 Oct) The bot's name is "Arjun" (portal shows "Arjun (AI)"). Apurva will check with Ring whether we can run multiple bots with different names, so the bot name is captured per lead and bot performance can be compared. Logged in docs/context/open_questions.md.
