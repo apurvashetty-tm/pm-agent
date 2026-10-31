@@ -59,4 +59,6 @@ Six approved `a-*` states were promoted unchanged from before D-58. Their recipe
 
 Also check every other `a-*`, `c-*`, `e-*`, `s-*` recipe for the same old helpers or old copy ("order" for case, "I'm confirming your order", "Get next order", End call) and list any you find; fix only those that clearly break a decision, list the rest.
 
+**View Rx (D-76):** the outlined button on every case state, including all closed states (`e-*`, `t09`, `t10a`, `t10b`, `t14`, `t15`, `t15b`, `g3b`, `s7f`) — same look as on open cases.
+
 Re-render the changed states (390/360, fixed clock), contact sheets and `REVIEW.html`; pixel-compare everything else; guards 0 failures. Append "Round 3" to REPORT.md. Stop. No commits.

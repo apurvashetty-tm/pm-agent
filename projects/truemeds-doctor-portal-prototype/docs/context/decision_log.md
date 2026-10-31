@@ -824,6 +824,10 @@ From an external (ChatGPT) review, each point verified before acting.
   5. Reference pages are picture references: buttons without handlers there are expected; the prototype rebuild wires them. Exception fixed: Log out in the confirm sheet.
   6. **Help and Notifications** have no defined behaviour yet → next design round (backlog), icons stay as entry points.
 
+### D-76 · View Rx looks the same on every state — 2026-10-31
+- **Decision (Apurva):** **View Rx is the outlined button on every case state, including closed cases.** It still works after a case closes (the doctor may check the prescription), so it must not look disabled. Closed cases stay read-only for medicines and notes (D-62 point 3, D-75 point 4); View Rx only opens the viewer.
+- **Why:** found in the visual affordance pass — the same action looked active on open cases and grey (disabled-looking) on closed ones.
+
 ## Design system changes made for this work
 
 ### D-60 · Secondary button without drop shadow (design system) — 2026-10-24 · **REVERTED same day**
