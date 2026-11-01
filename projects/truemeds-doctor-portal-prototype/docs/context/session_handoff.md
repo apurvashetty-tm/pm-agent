@@ -836,3 +836,7 @@ User identified missing HTML/native linkage. Inspected actual sign-in and OTP HT
 - **Done:** `app-logic.md` contradictions fixed (§4 stage table, §5 Dependency, §6 failed transfer, §7 Unavailable reason sheet) and §11 test numbers added; `feedback-state-map.md` offer rows aligned; rebuild checklist row 7b.3 aligned; **D-79** recorded (P3 review link / `?demo=1`, P8 retire old link, new order of work, PRD + prototype engineering spec + test cases).
 - **Now:** five-lens audit of the frozen screens by a separate agent — findings in `docs/reviews/2026-10-31-screen-audit/`.
 - **Next:** Apurva sorts audit findings → storyboard review starting with the entry screens (backlog §2e). Calling walkthrough misses come in the calling journey.
+
+## 2026-11-01 · Screen audit done; Part A decided (D-80)
+- **Done:** five-lens audit (`docs/reviews/2026-10-31-screen-audit/`, 73 findings); PR #19 merged. **D-80:** Release only before the call (backend guard), Release ≠ Hold, SOS daily total, empty cases to Ops (OQ-035). Changes are applied with their pictures in the journey passes (backlog §2f).
+- **Next:** Apurva's answer on Part B (accept as a batch?) → storyboard review, entry journey first (sign-in, OTP, faster sign-in), with Part B entry bugs and Part C entry decisions.

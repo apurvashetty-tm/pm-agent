@@ -195,6 +195,7 @@ Every entry must include:
 
 ### OQ-024 — Releasing a case [DECIDED — Apurva, 2026-10-24, D-58 point 20; backend still needed]
 Release was discussed, never agreed; parked with `a-leave-sheet`. If adopted later: D-48 described Back before the first attempted call releasing the case to the queue. Needs an unassign action that is only allowed while no call has been attempted, is safe to retry, and returns the case to the pool immediately. Who else is notified, and whether released cases go to the front of the queue, is Engineering/Ops to confirm.
+**Update 2026-11-01 (D-80):** Release only before the call (Ready, or after results 3 / 4). Backend must refuse a release once our click-to-call request for the case has been accepted by the partner, unless the result is 3 or 4. A released case with no medicines goes to Ops, not the queue. Ops to track release rate per doctor.
 
 ### OQ-025 — Restoring an open case; doctor never returns [OPEN — Engineering]
 D-48: reopening the app goes straight back into an open case. Needs the server to report the doctor's open case on launch. Also: if a case is assigned and the doctor never returns or calls (app killed, phone dead), when is it released automatically, and by whom?
@@ -278,3 +279,6 @@ D-58 point 20 depends on Ops. To lock: (1) a review queue for "Prescription subm
 
 ### OQ-034 — Icons on buttons: one rule [ANSWERED — RULES §9.1, 2026-10-24; no screen changes needed] [was OPEN — Apurva, 2026-10-24; do before the final render]
 Buttons are inconsistent today: Call patient / Call again (phone), Callback (calendar), Skip HA (track-next), Unavailable (phone-off), Request next case (arrow after) have icons; Confirm prescription / transfer / forward, Back to Home, Yes still talking / No call ended, Release case, Stay on this case have none. Needs one design-system rule (RULES §9.1) and a pass over every screen — ideally before the terminal's final render so screens aren't rendered twice.
+
+### OQ-035 — Orders with no medicines [OPEN — Engineering + Ops, 2026-11-01, D-80]
+Keep orders with no medicines out of the doctor queue and send them to Ops. If one reaches a doctor, the app offers only Release case, and the released case goes to Ops (not back to the queue). Engineering: how an empty order is detected at assignment; Ops: who handles them and what happens to the order.
