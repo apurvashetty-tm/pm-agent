@@ -840,3 +840,7 @@ User identified missing HTML/native linkage. Inspected actual sign-in and OTP HT
 ## 2026-11-01 · Screen audit done; Part A decided (D-80)
 - **Done:** five-lens audit (`docs/reviews/2026-10-31-screen-audit/`, 73 findings); PR #19 merged. **D-80:** Release only before the call (backend guard), Release ≠ Hold, SOS daily total, empty cases to Ops (OQ-035). Changes are applied with their pictures in the journey passes (backlog §2f).
 - **Next:** Apurva's answer on Part B (accept as a batch?) → storyboard review, entry journey first (sign-in, OTP, faster sign-in), with Part B entry bugs and Part C entry decisions.
+
+## 2026-11-01 (late) · Part B decided (D-81)
+- **Done:** all 24 Part B bugs agreed group by group + new keyboard rule (D-81, backlog §2g); review pictures in `docs/reviews/2026-10-31-screen-audit/b-group*.png`.
+- **Next:** fix round on the frozen screens for D-80 + D-81 (only affected pictures + new states), against a fix-round checklist (to draft and agree first) → then storyboard review, entry first.
