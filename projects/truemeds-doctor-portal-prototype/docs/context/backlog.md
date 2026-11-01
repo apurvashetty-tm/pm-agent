@@ -55,6 +55,14 @@ Order = the order we work in.
 4. [ ] Prototype rebuild from the spec, checked against the test cases (P3/P8 per D-79).
 5. [ ] Token inspector.
 
+## 2f. Screen audit — Part A answers (Apurva, 2026-11-01) — recorded as D-80; apply in the journey passes
+- [ ] **C-01:** Back whenever the screen offers a call button (Call patient / Call again: states 1, 3, 4); gone while a call is in progress and never back once the patient was reached; hidden from the tap on Call patient for every case type. Back stays on Ready (doctor took a case and has to leave = Release); not removed. **Backend guard:** Release refused once our call request is accepted by the telecom partner, unless the result is 3 or 4 (→ OQ-024). Fixes C-02. Re-capture t02, s7a, s7b, s7e, a-releasing, a-release-failed. Changes D-58 pt 20.
+- [ ] Back is not Hold: Release = "not me" (back to queue); Patient unavailable = today's 216 on hold; Callback = later. All three kept, one job each.
+- [ ] **Ops:** track release rate per doctor (with Engineering and Ops, alongside §4).
+- [ ] **P-01:** SOS limit prints the daily total in the medicine's unit — "2 puffs as needed (max 8 puffs/day)"; cream "Apply as needed (max 3 times/day)". app-logic §8 printed line + D-16; re-capture d-inhaler, d-sos-only, d-sos-on.
+- [ ] **C-06:** empty case → no Call patient; "There's nothing to prescribe on this order. Release it — Ops will check it." + Release case; released empty cases go to Ops (OQ-035). Re-capture a-no-medicines.
+- [ ] **PRD must include** the full medicine-type table: form · dose unit · dose options · printed-line examples (regular, SOS only, + SOS with daily total). Settle P-02 (capsules no ½) and P-03 (injection units) in the Prescribe review first.
+
 ## 2d. After promotion — order agreed 2026-10-29 (Apurva) — superseded by 2e
 1. [ ] **Prototype rebuild** from the frozen `ui-screens/` (D-56, D-72): build plan + rebuild checklist first; covers all order types and states; the phone demo alone is Cat4 happy path; new Netlify link alongside the current one; then journey by journey, checked against the pictures. Installable from the Netlify link (opens full screen from the home screen, no review controls); demo mode with one order type and the happy path.
 2. [ ] **Token inspector** page generated from the screens (which tokens each element uses) for engineering. Figma snapshot only if the design team asks.
