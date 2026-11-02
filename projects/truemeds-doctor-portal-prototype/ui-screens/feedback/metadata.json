@@ -403,7 +403,7 @@
     "next": "none",
     "clear": "none",
     "retain": "none",
-    "copy": "approved (Apurva, D-53)"
+    "copy": "approved (Apurva, D-80 pt 4)"
   },
   "case.noPickup": {
     "pattern": "W1",
@@ -639,15 +639,6 @@
     "retain": "case data",
     "copy": "approved (Apurva, 2026-10-24, D-58 point 23)"
   },
-  "call.noHaFree": {
-    "pattern": "W1",
-    "trigger": "call.noHaFree",
-    "slot": "notice / outcome card second line",
-    "next": "read the script, end the call",
-    "clear": "case closed",
-    "retain": "case data",
-    "copy": "approved (Apurva, 2026-10-24, D-58 point 23)"
-  },
   "offer.screenLockSub": {
     "pattern": "none",
     "trigger": "faster sign-in offer (D-61, D-64)",
@@ -737,5 +728,53 @@
     "clear": "both picked",
     "retain": "what was picked",
     "copy": "approved as built (current app); moved into the registry 2026-10-28 (D-70)"
+  },
+  "otp.triesLeftOne": {
+    "pattern": "F1",
+    "trigger": "server wrong code, one remaining try",
+    "slot": "OTP field",
+    "next": "enter new code",
+    "clear": "new attempt",
+    "retain": "opt-in",
+    "copy": "approved (Apurva, D-81)"
+  },
+  "case.confirmBlockedOne": {
+    "pattern": "F2",
+    "trigger": "confirm tapped with one Pending medicine",
+    "slot": "case action bar",
+    "next": "prescribe or disable the medicine",
+    "clear": "when no Pending medicine is left",
+    "retain": "none",
+    "copy": "approved (Apurva, D-81)"
+  },
+  "case.disabledMedicine": {
+    "pattern": "F17",
+    "trigger": "Prescribe opened on a disabled medicine",
+    "slot": "Prescribe notice",
+    "next": "prescribe to enable again",
+    "clear": "when the medicine is prescribed",
+    "retain": "none",
+    "copy": "approved (Apurva, D-81)",
+    "placeholders": [
+      "reason"
+    ]
+  },
+  "prescribe.notesLabel": {
+    "pattern": "F19",
+    "trigger": "Prescribe screen open",
+    "slot": "Additional instructions field label",
+    "next": "none",
+    "clear": "none",
+    "retain": "none",
+    "copy": "approved (Apurva, D-81)"
+  },
+  "prescribe.notesHelper": {
+    "pattern": "F19",
+    "trigger": "Prescribe screen open",
+    "slot": "Additional instructions field helper",
+    "next": "none",
+    "clear": "none",
+    "retain": "none",
+    "copy": "approved (Apurva, D-81)"
   }
 }

@@ -1,0 +1,1432 @@
+{
+ "band": [
+  {
+   "state": "a-confirm-failed",
+   "vw": 390,
+   "barTop": 647,
+   "barL": 0,
+   "barW": 390,
+   "barRad": "16px",
+   "nTop": 647,
+   "nL": 0,
+   "nW": 390,
+   "nRad": "16px",
+   "nBg": "rgb(253, 232, 232)",
+   "dTop": 0,
+   "dL": 0,
+   "dW": 0,
+   "px_x20": [
+    253,
+    232,
+    232
+   ],
+   "px_xmid": [
+    253,
+    232,
+    232
+   ],
+   "bg": [
+    253,
+    232,
+    232
+   ]
+  },
+  {
+   "state": "a-offline",
+   "vw": 390,
+   "barTop": 711,
+   "barL": 0,
+   "barW": 390,
+   "barRad": "16px",
+   "nTop": 711,
+   "nL": 0,
+   "nW": 390,
+   "nRad": "16px",
+   "nBg": "rgb(255, 237, 188)",
+   "dTop": 0,
+   "dL": 0,
+   "dW": 0,
+   "px_x20": [
+    255,
+    237,
+    188
+   ],
+   "px_xmid": [
+    255,
+    237,
+    188
+   ],
+   "bg": [
+    255,
+    237,
+    188
+   ]
+  },
+  {
+   "state": "a-offline-action",
+   "vw": 390,
+   "barTop": 711,
+   "barL": 0,
+   "barW": 390,
+   "barRad": "16px",
+   "nTop": 711,
+   "nL": 0,
+   "nW": 390,
+   "nRad": "16px",
+   "nBg": "rgb(253, 232, 232)",
+   "dTop": 0,
+   "dL": 0,
+   "dW": 0,
+   "px_x20": [
+    253,
+    232,
+    232
+   ],
+   "px_xmid": [
+    253,
+    232,
+    232
+   ],
+   "bg": [
+    253,
+    232,
+    232
+   ]
+  },
+  {
+   "state": "a-release-failed",
+   "vw": 390,
+   "barTop": 711,
+   "barL": 0,
+   "barW": 390,
+   "barRad": "16px",
+   "nTop": 711,
+   "nL": 0,
+   "nW": 390,
+   "nRad": "16px",
+   "nBg": "rgb(253, 232, 232)",
+   "dTop": 0,
+   "dL": 0,
+   "dW": 0,
+   "px_x20": [
+    253,
+    232,
+    232
+   ],
+   "px_xmid": [
+    253,
+    232,
+    232
+   ],
+   "bg": [
+    253,
+    232,
+    232
+   ]
+  },
+  {
+   "state": "s7d-result-missing",
+   "vw": 390,
+   "barTop": 647,
+   "barL": 0,
+   "barW": 390,
+   "barRad": "16px",
+   "nTop": 647,
+   "nL": 0,
+   "nW": 390,
+   "nRad": "16px",
+   "nBg": "rgb(255, 237, 188)",
+   "dTop": 0,
+   "dL": 0,
+   "dW": 0,
+   "px_x20": [
+    255,
+    237,
+    188
+   ],
+   "px_xmid": [
+    255,
+    237,
+    188
+   ],
+   "bg": [
+    255,
+    237,
+    188
+   ]
+  },
+  {
+   "state": "s7d-unavailable-sheet",
+   "vw": 390,
+   "barTop": 647,
+   "barL": 0,
+   "barW": 390,
+   "barRad": "16px",
+   "nTop": 647,
+   "nL": 0,
+   "nW": 390,
+   "nRad": "16px",
+   "nBg": "rgb(255, 237, 188)",
+   "dTop": 0,
+   "dL": 0,
+   "dW": 0,
+   "px_x20": [
+    255,
+    255,
+    255
+   ],
+   "px_xmid": [
+    255,
+    255,
+    255
+   ],
+   "bg": [
+    255,
+    237,
+    188
+   ]
+  },
+  {
+   "state": "t03-not-through",
+   "vw": 390,
+   "barTop": 711,
+   "barL": 0,
+   "barW": 390,
+   "barRad": "16px",
+   "nTop": 711,
+   "nL": 0,
+   "nW": 390,
+   "nRad": "16px",
+   "nBg": "rgb(253, 232, 232)",
+   "dTop": 0,
+   "dL": 0,
+   "dW": 0,
+   "px_x20": [
+    253,
+    232,
+    232
+   ],
+   "px_xmid": [
+    253,
+    232,
+    232
+   ],
+   "bg": [
+    253,
+    232,
+    232
+   ]
+  },
+  {
+   "state": "t04-doctor-missed",
+   "vw": 390,
+   "barTop": 711,
+   "barL": 0,
+   "barW": 390,
+   "barRad": "16px",
+   "nTop": 711,
+   "nL": 0,
+   "nW": 390,
+   "nRad": "16px",
+   "nBg": "rgb(255, 237, 188)",
+   "dTop": 0,
+   "dL": 0,
+   "dW": 0,
+   "px_x20": [
+    255,
+    237,
+    188
+   ],
+   "px_xmid": [
+    255,
+    237,
+    188
+   ],
+   "bg": [
+    255,
+    237,
+    188
+   ]
+  },
+  {
+   "state": "t06-ended-early",
+   "vw": 390,
+   "barTop": 647,
+   "barL": 0,
+   "barW": 390,
+   "barRad": "16px",
+   "nTop": 647,
+   "nL": 0,
+   "nW": 390,
+   "nRad": "16px",
+   "nBg": "rgb(255, 237, 188)",
+   "dTop": 0,
+   "dL": 0,
+   "dW": 0,
+   "px_x20": [
+    255,
+    237,
+    188
+   ],
+   "px_xmid": [
+    255,
+    237,
+    188
+   ],
+   "bg": [
+    255,
+    237,
+    188
+   ]
+  },
+  {
+   "state": "t08c-confirm-blocked",
+   "vw": 390,
+   "barTop": 647,
+   "barL": 0,
+   "barW": 390,
+   "barRad": "16px",
+   "nTop": 647,
+   "nL": 0,
+   "nW": 390,
+   "nRad": "16px",
+   "nBg": "rgb(253, 232, 232)",
+   "dTop": 0,
+   "dL": 0,
+   "dW": 0,
+   "px_x20": [
+    253,
+    232,
+    232
+   ],
+   "px_xmid": [
+    253,
+    232,
+    232
+   ],
+   "bg": [
+    253,
+    232,
+    232
+   ]
+  },
+  {
+   "state": "t15b-end-call-first",
+   "vw": 390,
+   "barTop": 647,
+   "barL": 0,
+   "barW": 390,
+   "barRad": "16px",
+   "nTop": 647,
+   "nL": 0,
+   "nW": 390,
+   "nRad": "16px",
+   "nBg": "rgb(255, 237, 188)",
+   "dTop": 0,
+   "dL": 0,
+   "dW": 0,
+   "px_x20": [
+    255,
+    237,
+    188
+   ],
+   "px_xmid": [
+    255,
+    237,
+    188
+   ],
+   "bg": [
+    255,
+    237,
+    188
+   ]
+  },
+  {
+   "state": "t16-transfer-missed",
+   "vw": 390,
+   "barTop": 607,
+   "barL": 0,
+   "barW": 390,
+   "barRad": "16px",
+   "nTop": 607,
+   "nL": 0,
+   "nW": 390,
+   "nRad": "16px",
+   "nBg": "rgb(255, 237, 188)",
+   "dTop": 0,
+   "dL": 0,
+   "dW": 0,
+   "px_x20": [
+    255,
+    237,
+    188
+   ],
+   "px_xmid": [
+    255,
+    237,
+    188
+   ],
+   "bg": [
+    255,
+    237,
+    188
+   ]
+  },
+  {
+   "state": "t16b-transfer-missed-patient",
+   "vw": 390,
+   "barTop": 627,
+   "barL": 0,
+   "barW": 390,
+   "barRad": "16px",
+   "nTop": 627,
+   "nL": 0,
+   "nW": 390,
+   "nRad": "16px",
+   "nBg": "rgb(255, 237, 188)",
+   "dTop": 0,
+   "dL": 0,
+   "dW": 0,
+   "px_x20": [
+    255,
+    237,
+    188
+   ],
+   "px_xmid": [
+    255,
+    237,
+    188
+   ],
+   "bg": [
+    255,
+    237,
+    188
+   ]
+  },
+  {
+   "state": "t16c-transfer-missed-unknown",
+   "vw": 390,
+   "barTop": 627,
+   "barL": 0,
+   "barW": 390,
+   "barRad": "16px",
+   "nTop": 627,
+   "nL": 0,
+   "nW": 390,
+   "nRad": "16px",
+   "nBg": "rgb(255, 237, 188)",
+   "dTop": 0,
+   "dL": 0,
+   "dW": 0,
+   "px_x20": [
+    255,
+    237,
+    188
+   ],
+   "px_xmid": [
+    255,
+    237,
+    188
+   ],
+   "bg": [
+    255,
+    237,
+    188
+   ]
+  },
+  {
+   "state": "t17-skip-ha-wait",
+   "vw": 390,
+   "barTop": 655,
+   "barL": 0,
+   "barW": 390,
+   "barRad": "16px",
+   "nTop": 655,
+   "nL": 0,
+   "nW": 390,
+   "nRad": "16px",
+   "nBg": "rgb(247, 248, 248)",
+   "dTop": 0,
+   "dL": 0,
+   "dW": 0,
+   "px_x20": [
+    247,
+    248,
+    248
+   ],
+   "px_xmid": [
+    247,
+    248,
+    248
+   ],
+   "bg": [
+    247,
+    248,
+    248
+   ]
+  },
+  {
+   "state": "a-confirm-failed",
+   "vw": 360,
+   "barTop": 647,
+   "barL": 0,
+   "barW": 360,
+   "barRad": "16px",
+   "nTop": 647,
+   "nL": 0,
+   "nW": 360,
+   "nRad": "16px",
+   "nBg": "rgb(253, 232, 232)",
+   "dTop": 0,
+   "dL": 0,
+   "dW": 0,
+   "px_x20": [
+    253,
+    232,
+    232
+   ],
+   "px_xmid": [
+    253,
+    232,
+    232
+   ],
+   "bg": [
+    253,
+    232,
+    232
+   ]
+  },
+  {
+   "state": "a-offline",
+   "vw": 360,
+   "barTop": 711,
+   "barL": 0,
+   "barW": 360,
+   "barRad": "16px",
+   "nTop": 711,
+   "nL": 0,
+   "nW": 360,
+   "nRad": "16px",
+   "nBg": "rgb(255, 237, 188)",
+   "dTop": 0,
+   "dL": 0,
+   "dW": 0,
+   "px_x20": [
+    255,
+    237,
+    188
+   ],
+   "px_xmid": [
+    255,
+    237,
+    188
+   ],
+   "bg": [
+    255,
+    237,
+    188
+   ]
+  },
+  {
+   "state": "a-offline-action",
+   "vw": 360,
+   "barTop": 711,
+   "barL": 0,
+   "barW": 360,
+   "barRad": "16px",
+   "nTop": 711,
+   "nL": 0,
+   "nW": 360,
+   "nRad": "16px",
+   "nBg": "rgb(253, 232, 232)",
+   "dTop": 0,
+   "dL": 0,
+   "dW": 0,
+   "px_x20": [
+    253,
+    232,
+    232
+   ],
+   "px_xmid": [
+    253,
+    232,
+    232
+   ],
+   "bg": [
+    253,
+    232,
+    232
+   ]
+  },
+  {
+   "state": "a-release-failed",
+   "vw": 360,
+   "barTop": 711,
+   "barL": 0,
+   "barW": 360,
+   "barRad": "16px",
+   "nTop": 711,
+   "nL": 0,
+   "nW": 360,
+   "nRad": "16px",
+   "nBg": "rgb(253, 232, 232)",
+   "dTop": 0,
+   "dL": 0,
+   "dW": 0,
+   "px_x20": [
+    253,
+    232,
+    232
+   ],
+   "px_xmid": [
+    253,
+    232,
+    232
+   ],
+   "bg": [
+    253,
+    232,
+    232
+   ]
+  },
+  {
+   "state": "s7d-result-missing",
+   "vw": 360,
+   "barTop": 647,
+   "barL": 0,
+   "barW": 360,
+   "barRad": "16px",
+   "nTop": 647,
+   "nL": 0,
+   "nW": 360,
+   "nRad": "16px",
+   "nBg": "rgb(255, 237, 188)",
+   "dTop": 0,
+   "dL": 0,
+   "dW": 0,
+   "px_x20": [
+    255,
+    237,
+    188
+   ],
+   "px_xmid": [
+    255,
+    237,
+    188
+   ],
+   "bg": [
+    255,
+    237,
+    188
+   ]
+  },
+  {
+   "state": "s7d-unavailable-sheet",
+   "vw": 360,
+   "barTop": 647,
+   "barL": 0,
+   "barW": 360,
+   "barRad": "16px",
+   "nTop": 647,
+   "nL": 0,
+   "nW": 360,
+   "nRad": "16px",
+   "nBg": "rgb(255, 237, 188)",
+   "dTop": 0,
+   "dL": 0,
+   "dW": 0,
+   "px_x20": [
+    255,
+    255,
+    255
+   ],
+   "px_xmid": [
+    255,
+    255,
+    255
+   ],
+   "bg": [
+    255,
+    237,
+    188
+   ]
+  },
+  {
+   "state": "t03-not-through",
+   "vw": 360,
+   "barTop": 711,
+   "barL": 0,
+   "barW": 360,
+   "barRad": "16px",
+   "nTop": 711,
+   "nL": 0,
+   "nW": 360,
+   "nRad": "16px",
+   "nBg": "rgb(253, 232, 232)",
+   "dTop": 0,
+   "dL": 0,
+   "dW": 0,
+   "px_x20": [
+    253,
+    232,
+    232
+   ],
+   "px_xmid": [
+    253,
+    232,
+    232
+   ],
+   "bg": [
+    253,
+    232,
+    232
+   ]
+  },
+  {
+   "state": "t04-doctor-missed",
+   "vw": 360,
+   "barTop": 711,
+   "barL": 0,
+   "barW": 360,
+   "barRad": "16px",
+   "nTop": 711,
+   "nL": 0,
+   "nW": 360,
+   "nRad": "16px",
+   "nBg": "rgb(255, 237, 188)",
+   "dTop": 0,
+   "dL": 0,
+   "dW": 0,
+   "px_x20": [
+    255,
+    237,
+    188
+   ],
+   "px_xmid": [
+    255,
+    237,
+    188
+   ],
+   "bg": [
+    255,
+    237,
+    188
+   ]
+  },
+  {
+   "state": "t06-ended-early",
+   "vw": 360,
+   "barTop": 647,
+   "barL": 0,
+   "barW": 360,
+   "barRad": "16px",
+   "nTop": 647,
+   "nL": 0,
+   "nW": 360,
+   "nRad": "16px",
+   "nBg": "rgb(255, 237, 188)",
+   "dTop": 0,
+   "dL": 0,
+   "dW": 0,
+   "px_x20": [
+    255,
+    237,
+    188
+   ],
+   "px_xmid": [
+    255,
+    237,
+    188
+   ],
+   "bg": [
+    255,
+    237,
+    188
+   ]
+  },
+  {
+   "state": "t08c-confirm-blocked",
+   "vw": 360,
+   "barTop": 647,
+   "barL": 0,
+   "barW": 360,
+   "barRad": "16px",
+   "nTop": 647,
+   "nL": 0,
+   "nW": 360,
+   "nRad": "16px",
+   "nBg": "rgb(253, 232, 232)",
+   "dTop": 0,
+   "dL": 0,
+   "dW": 0,
+   "px_x20": [
+    253,
+    232,
+    232
+   ],
+   "px_xmid": [
+    253,
+    232,
+    232
+   ],
+   "bg": [
+    253,
+    232,
+    232
+   ]
+  },
+  {
+   "state": "t15b-end-call-first",
+   "vw": 360,
+   "barTop": 647,
+   "barL": 0,
+   "barW": 360,
+   "barRad": "16px",
+   "nTop": 647,
+   "nL": 0,
+   "nW": 360,
+   "nRad": "16px",
+   "nBg": "rgb(255, 237, 188)",
+   "dTop": 0,
+   "dL": 0,
+   "dW": 0,
+   "px_x20": [
+    255,
+    237,
+    188
+   ],
+   "px_xmid": [
+    255,
+    237,
+    188
+   ],
+   "bg": [
+    255,
+    237,
+    188
+   ]
+  },
+  {
+   "state": "t16-transfer-missed",
+   "vw": 360,
+   "barTop": 607,
+   "barL": 0,
+   "barW": 360,
+   "barRad": "16px",
+   "nTop": 607,
+   "nL": 0,
+   "nW": 360,
+   "nRad": "16px",
+   "nBg": "rgb(255, 237, 188)",
+   "dTop": 0,
+   "dL": 0,
+   "dW": 0,
+   "px_x20": [
+    255,
+    237,
+    188
+   ],
+   "px_xmid": [
+    255,
+    237,
+    188
+   ],
+   "bg": [
+    255,
+    237,
+    188
+   ]
+  },
+  {
+   "state": "t16b-transfer-missed-patient",
+   "vw": 360,
+   "barTop": 627,
+   "barL": 0,
+   "barW": 360,
+   "barRad": "16px",
+   "nTop": 627,
+   "nL": 0,
+   "nW": 360,
+   "nRad": "16px",
+   "nBg": "rgb(255, 237, 188)",
+   "dTop": 0,
+   "dL": 0,
+   "dW": 0,
+   "px_x20": [
+    255,
+    237,
+    188
+   ],
+   "px_xmid": [
+    255,
+    237,
+    188
+   ],
+   "bg": [
+    255,
+    237,
+    188
+   ]
+  },
+  {
+   "state": "t16c-transfer-missed-unknown",
+   "vw": 360,
+   "barTop": 627,
+   "barL": 0,
+   "barW": 360,
+   "barRad": "16px",
+   "nTop": 627,
+   "nL": 0,
+   "nW": 360,
+   "nRad": "16px",
+   "nBg": "rgb(255, 237, 188)",
+   "dTop": 0,
+   "dL": 0,
+   "dW": 0,
+   "px_x20": [
+    255,
+    237,
+    188
+   ],
+   "px_xmid": [
+    255,
+    237,
+    188
+   ],
+   "bg": [
+    255,
+    237,
+    188
+   ]
+  },
+  {
+   "state": "t17-skip-ha-wait",
+   "vw": 360,
+   "barTop": 655,
+   "barL": 0,
+   "barW": 360,
+   "barRad": "16px",
+   "nTop": 655,
+   "nL": 0,
+   "nW": 360,
+   "nRad": "16px",
+   "nBg": "rgb(247, 248, 248)",
+   "dTop": 0,
+   "dL": 0,
+   "dW": 0,
+   "px_x20": [
+    247,
+    248,
+    248
+   ],
+   "px_xmid": [
+    247,
+    248,
+    248
+   ],
+   "bg": [
+    247,
+    248,
+    248
+   ]
+  }
+ ],
+ "header": [
+  {
+   "state": "a-rx-viewer",
+   "vw": 390,
+   "hdr": {
+    "glyphC": 26,
+    "titleL": 54
+   }
+  },
+  {
+   "state": "d-alt-days",
+   "vw": 390,
+   "hdr": {
+    "glyphC": 26,
+    "titleL": 54
+   }
+  },
+  {
+   "state": "d-cream",
+   "vw": 390,
+   "hdr": {
+    "glyphC": 26,
+    "titleL": 54
+   }
+  },
+  {
+   "state": "d-default",
+   "vw": 390,
+   "hdr": {
+    "glyphC": 26,
+    "titleL": 54
+   }
+  },
+  {
+   "state": "d-disable-sheet",
+   "vw": 390,
+   "hdr": {
+    "glyphC": 26,
+    "titleL": 54
+   }
+  },
+  {
+   "state": "d-disabled",
+   "vw": 390,
+   "hdr": {
+    "glyphC": 26,
+    "titleL": 54
+   }
+  },
+  {
+   "state": "d-discard-sheet",
+   "vw": 390,
+   "hdr": {
+    "glyphC": 26,
+    "titleL": 54
+   }
+  },
+  {
+   "state": "d-drops",
+   "vw": 390,
+   "hdr": {
+    "glyphC": 26,
+    "titleL": 54
+   }
+  },
+  {
+   "state": "d-duration-picker",
+   "vw": 390,
+   "hdr": {
+    "glyphC": 26,
+    "titleL": 54
+   }
+  },
+  {
+   "state": "d-error-dose",
+   "vw": 390,
+   "hdr": {
+    "glyphC": 26,
+    "titleL": 54
+   }
+  },
+  {
+   "state": "d-error-other",
+   "vw": 390,
+   "hdr": {
+    "glyphC": 26,
+    "titleL": 54
+   }
+  },
+  {
+   "state": "d-every-x-hours",
+   "vw": 390,
+   "hdr": {
+    "glyphC": 26,
+    "titleL": 54
+   }
+  },
+  {
+   "state": "d-food-selected",
+   "vw": 390,
+   "hdr": {
+    "glyphC": 26,
+    "titleL": 54
+   }
+  },
+  {
+   "state": "d-header-white",
+   "vw": 390,
+   "hdr": {
+    "glyphC": 26,
+    "titleL": 54
+   }
+  },
+  {
+   "state": "d-inhaler",
+   "vw": 390,
+   "hdr": {
+    "glyphC": 26,
+    "titleL": 54
+   }
+  },
+  {
+   "state": "d-injection-default",
+   "vw": 390,
+   "hdr": {
+    "glyphC": 26,
+    "titleL": 54
+   }
+  },
+  {
+   "state": "d-monthly",
+   "vw": 390,
+   "hdr": {
+    "glyphC": 26,
+    "titleL": 54
+   }
+  },
+  {
+   "state": "d-notes-keyboard",
+   "vw": 390,
+   "hdr": {
+    "glyphC": 26,
+    "titleL": 54
+   }
+  },
+  {
+   "state": "d-rx-failed",
+   "vw": 390,
+   "hdr": {
+    "glyphC": 26,
+    "titleL": 54
+   }
+  },
+  {
+   "state": "d-scrolled",
+   "vw": 390,
+   "hdr": {
+    "glyphC": 26,
+    "titleL": 54
+   }
+  },
+  {
+   "state": "d-sos-on",
+   "vw": 390,
+   "hdr": {
+    "glyphC": 26,
+    "titleL": 54
+   }
+  },
+  {
+   "state": "d-sos-only",
+   "vw": 390,
+   "hdr": {
+    "glyphC": 26,
+    "titleL": 54
+   }
+  },
+  {
+   "state": "d-syrup",
+   "vw": 390,
+   "hdr": {
+    "glyphC": 26,
+    "titleL": 54
+   }
+  },
+  {
+   "state": "d-weekly",
+   "vw": 390,
+   "hdr": {
+    "glyphC": 26,
+    "titleL": 54
+   }
+  },
+  {
+   "state": "a-rx-viewer",
+   "vw": 360,
+   "hdr": {
+    "glyphC": 26,
+    "titleL": 54
+   }
+  },
+  {
+   "state": "d-alt-days",
+   "vw": 360,
+   "hdr": {
+    "glyphC": 26,
+    "titleL": 54
+   }
+  },
+  {
+   "state": "d-cream",
+   "vw": 360,
+   "hdr": {
+    "glyphC": 26,
+    "titleL": 54
+   }
+  },
+  {
+   "state": "d-default",
+   "vw": 360,
+   "hdr": {
+    "glyphC": 26,
+    "titleL": 54
+   }
+  },
+  {
+   "state": "d-disable-sheet",
+   "vw": 360,
+   "hdr": {
+    "glyphC": 26,
+    "titleL": 54
+   }
+  },
+  {
+   "state": "d-disabled",
+   "vw": 360,
+   "hdr": {
+    "glyphC": 26,
+    "titleL": 54
+   }
+  },
+  {
+   "state": "d-discard-sheet",
+   "vw": 360,
+   "hdr": {
+    "glyphC": 26,
+    "titleL": 54
+   }
+  },
+  {
+   "state": "d-drops",
+   "vw": 360,
+   "hdr": {
+    "glyphC": 26,
+    "titleL": 54
+   }
+  },
+  {
+   "state": "d-duration-picker",
+   "vw": 360,
+   "hdr": {
+    "glyphC": 26,
+    "titleL": 54
+   }
+  },
+  {
+   "state": "d-error-dose",
+   "vw": 360,
+   "hdr": {
+    "glyphC": 26,
+    "titleL": 54
+   }
+  },
+  {
+   "state": "d-error-other",
+   "vw": 360,
+   "hdr": {
+    "glyphC": 26,
+    "titleL": 54
+   }
+  },
+  {
+   "state": "d-every-x-hours",
+   "vw": 360,
+   "hdr": {
+    "glyphC": 26,
+    "titleL": 54
+   }
+  },
+  {
+   "state": "d-food-selected",
+   "vw": 360,
+   "hdr": {
+    "glyphC": 26,
+    "titleL": 54
+   }
+  },
+  {
+   "state": "d-header-white",
+   "vw": 360,
+   "hdr": {
+    "glyphC": 26,
+    "titleL": 54
+   }
+  },
+  {
+   "state": "d-inhaler",
+   "vw": 360,
+   "hdr": {
+    "glyphC": 26,
+    "titleL": 54
+   }
+  },
+  {
+   "state": "d-injection-default",
+   "vw": 360,
+   "hdr": {
+    "glyphC": 26,
+    "titleL": 54
+   }
+  },
+  {
+   "state": "d-monthly",
+   "vw": 360,
+   "hdr": {
+    "glyphC": 26,
+    "titleL": 54
+   }
+  },
+  {
+   "state": "d-notes-keyboard",
+   "vw": 360,
+   "hdr": {
+    "glyphC": 26,
+    "titleL": 54
+   }
+  },
+  {
+   "state": "d-rx-failed",
+   "vw": 360,
+   "hdr": {
+    "glyphC": 26,
+    "titleL": 54
+   }
+  },
+  {
+   "state": "d-scrolled",
+   "vw": 360,
+   "hdr": {
+    "glyphC": 26,
+    "titleL": 54
+   }
+  },
+  {
+   "state": "d-sos-on",
+   "vw": 360,
+   "hdr": {
+    "glyphC": 26,
+    "titleL": 54
+   }
+  },
+  {
+   "state": "d-sos-only",
+   "vw": 360,
+   "hdr": {
+    "glyphC": 26,
+    "titleL": 54
+   }
+  },
+  {
+   "state": "d-syrup",
+   "vw": 360,
+   "hdr": {
+    "glyphC": 26,
+    "titleL": 54
+   }
+  },
+  {
+   "state": "d-weekly",
+   "vw": 360,
+   "hdr": {
+    "glyphC": 26,
+    "titleL": 54
+   }
+  }
+ ],
+ "otp": [
+  {
+   "state": "default",
+   "vw": 390,
+   "verifyTop": 476.73
+  },
+  {
+   "state": "empty-tap",
+   "vw": 390,
+   "verifyTop": 476.73
+  },
+  {
+   "state": "too-short",
+   "vw": 390,
+   "verifyTop": 476.73
+  },
+  {
+   "state": "verifying",
+   "vw": 390,
+   "verifyTop": 476.73
+  },
+  {
+   "state": "wrong-code",
+   "vw": 390,
+   "verifyTop": 476.73
+  },
+  {
+   "state": "two-tries-left",
+   "vw": 390,
+   "verifyTop": 476.73
+  },
+  {
+   "state": "resend-available",
+   "vw": 390,
+   "verifyTop": 476.73
+  },
+  {
+   "state": "new-code-sent",
+   "vw": 390,
+   "verifyTop": 476.73
+  },
+  {
+   "state": "code-expired",
+   "vw": 390,
+   "verifyTop": 476.73
+  },
+  {
+   "state": "cooldown-reconciling",
+   "vw": 390,
+   "verifyTop": 476.73
+  },
+  {
+   "state": "resending",
+   "vw": 390,
+   "verifyTop": 476.73
+  },
+  {
+   "state": "default",
+   "vw": 360,
+   "verifyTop": 476.73
+  },
+  {
+   "state": "empty-tap",
+   "vw": 360,
+   "verifyTop": 476.73
+  },
+  {
+   "state": "too-short",
+   "vw": 360,
+   "verifyTop": 476.73
+  },
+  {
+   "state": "verifying",
+   "vw": 360,
+   "verifyTop": 476.73
+  },
+  {
+   "state": "wrong-code",
+   "vw": 360,
+   "verifyTop": 476.73
+  },
+  {
+   "state": "two-tries-left",
+   "vw": 360,
+   "verifyTop": 476.73
+  },
+  {
+   "state": "resend-available",
+   "vw": 360,
+   "verifyTop": 476.73
+  },
+  {
+   "state": "new-code-sent",
+   "vw": 360,
+   "verifyTop": 476.73
+  },
+  {
+   "state": "code-expired",
+   "vw": 360,
+   "verifyTop": 476.73
+  },
+  {
+   "state": "cooldown-reconciling",
+   "vw": 360,
+   "verifyTop": 476.73
+  },
+  {
+   "state": "resending",
+   "vw": 360,
+   "verifyTop": 476.73
+  }
+ ]
+}

@@ -1,0 +1,36 @@
+flowchart TD
+  R["1 · Ready<br/>Call patient · Back"]
+  E["Empty case<br/>amber notice at top<br/>Release case"]
+  L["7e · Leave this case?<br/>Release case · Stay"]
+  RL["Releasing…"]
+  H["Home"]
+  RF["Couldn't release<br/>stays on Ready"]
+  C["2 · Calling<br/>script · 'Calling {name}…' status line<br/>no Back · no Callback"]
+  PB1["3 / 4 → path B"]
+  PB2["9 Patient unavailable → path B"]
+  PC["5 Getting call result → path C"]
+  PD["7b Still on the call? → path D"]
+  PE["11 → 12 transfer → path E<br/>12 bar: Confirm &amp; transfer · Skip HA<br/>(no Callback)"]
+  N["Callback only after the call:<br/>6 · 7d · 8a · 8b"]
+
+  R -->|Back| L
+  L -->|Stay| R
+  L -->|Release case| RL
+  E -->|Release case| RL
+  RL --> H
+  RL -.->|patient already reached| RF
+  RF -.-> R
+  R -->|Call patient| C
+  C -->|leg 1 fails| PB1
+  C -->|leg 2 fails| PB2
+  C -->|call ended| PC
+  C -->|3 min, no result| PD
+  C -->|transfer case| PE
+  PC -.-> N
+
+  classDef warn fill:#FFF4E5,stroke:#B76E00,color:#5C3A00
+  classDef grey fill:#F2F4F7,stroke:#98A2B3,color:#344054
+  classDef note fill:#FFFFFF,stroke:#98A2B3,stroke-dasharray:4 3,color:#344054
+  class E,RF warn
+  class PB1,PB2,PC,PD,PE grey
+  class N note

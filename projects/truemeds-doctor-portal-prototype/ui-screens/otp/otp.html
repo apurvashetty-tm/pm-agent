@@ -6,14 +6,15 @@ html,body{margin:0;height:100%}
 body.tm{background:var(--tm-surface-primary)}
 .screen{height:100dvh;display:flex;flex-direction:column;box-sizing:border-box;position:relative;overflow:hidden;background:var(--tm-surface-brand-subtle)}
 /* Task header (D-61): logo + title, no Back (Change and the phone back gesture cover it) */
-.login-logo{display:block;width:174px;height:auto;margin-bottom:var(--tm-space-lg)}
-.top{padding:var(--tm-space-lg) var(--tm-space-page) var(--tm-space-lg)}   /* 16 not 24 below the header: keeps the inline button 16px clear of the keyboard in the two-line notice states (1.7) */
+.login-logo{display:block;width:166px;height:auto;margin-bottom:var(--tm-space-lg)}
+.top{padding:var(--tm-space-lg) var(--tm-space-page) var(--tm-space-2xl)}   /* Round 4 A-05: header text to the white panel is 32 on every screen (was 16) */
 .back{display:inline-flex;align-items:center;gap:var(--tm-space-xs);min-height:48px;color:var(--tm-content-secondary);font-size:var(--tm-font-size-body-lg);line-height:var(--tm-font-lineheight-md);text-decoration:none;cursor:pointer}
 .back .tm-icon{width:20px;height:20px}
 .back:focus-visible{outline:2px solid var(--tm-border-focus);outline-offset:var(--tm-space-xs)}
 .head{margin-top:var(--tm-space-sm);display:flex;flex-direction:column;gap:var(--tm-space-sm)}
 .head h1{margin:0}
-.head p{margin:0;font-size:var(--tm-font-size-body-lg);line-height:var(--tm-font-lineheight-md);color:var(--tm-content-secondary)}
+/* Round 4 A-04: the subtitle is 14/20 with the 8 gap, as on the offer and unlock headers; the number stays semibold. */
+.head p{margin:0;font-size:var(--tm-font-size-body-md);line-height:var(--tm-font-lineheight-sm);color:var(--tm-content-secondary)}
 .head p b{color:var(--tm-content-primary);font-weight:var(--tm-font-weight-medium,500)}
 a.lk{color:var(--tm-content-brand);font-weight:var(--tm-font-weight-semibold);text-decoration:none;display:inline-flex;align-items:center;min-height:48px}
 /* White panel; section gap 32 between groups, related gap 16 within a group (RULES §8.3) */
@@ -26,22 +27,33 @@ body.kb .panel{padding-bottom:calc(256px + var(--tm-space-lg))}
 .tm-field__helper{margin:0}
 .tm-field__helper[hidden]{display:none}
 .tm-otp-slots{position:relative}
+/* Round 5 B (Apurva 2026-11-02): one reserved line under the boxes for the helper (wrong code, tries left, expired, empty, too short) or the new-code line,
+   so Verify & sign in sits at the same y in every state where it shows. The slot is hidden when the state shows a notice box instead (its own layout). */
+.code-slot{min-height:20px}
+.code-slot.off{display:none}
 /* Error: digits stay visible with red borders; no focus box (D-44). Central .tm-field--error and .tm-field--disabled do the look. */
 .note{display:none}.note.show{display:flex}
+/* Round 4 A-14: the notice sits 8 below the boxes (the group gap is 16; pulled up by 8). */
+.grp > .note{margin-top:calc(var(--tm-space-sm) - var(--tm-space-lg))}
 .note .tm-icon{flex-shrink:0;margin-top:1px}
 .note a{color:var(--tm-content-brand);font-weight:var(--tm-font-weight-semibold);text-decoration:none}
 /* Resend line: one centred line; timer heavier with fixed-width digits; not tappable */
-.rs{margin:0;text-align:center;font-size:var(--tm-font-size-body-md);line-height:var(--tm-font-lineheight-sm);color:var(--tm-content-secondary)}
+/* Round 4 A-03: the line is 48 tall whether it shows the wait or the Resend code link, so Verify does not drop 28 when the link appears. */
+.rs{margin:0;text-align:center;font-size:var(--tm-font-size-body-md);line-height:48px;min-height:48px;color:var(--tm-content-secondary)}
 .rs[hidden]{display:none}
 .rs .timer{font-weight:var(--tm-font-weight-semibold);font-variant-numeric:tabular-nums;color:var(--tm-content-primary)}
-.rs button{min-height:48px;min-width:48px;border:0;background:transparent;padding:0 var(--tm-space-xs);color:var(--tm-content-brand);font:inherit;font-weight:var(--tm-font-weight-semibold);cursor:pointer}
+/* Round 4 A-16: the link follows a normal word space (no padding inside the button). */
+.rs button{min-height:48px;min-width:48px;border:0;background:transparent;padding:0;vertical-align:top;color:var(--tm-content-brand);font:inherit;font-weight:var(--tm-font-weight-semibold);cursor:pointer}
 .s1{margin:0;display:none;align-items:center;justify-content:center;gap:var(--tm-space-xs);font-size:var(--tm-font-size-body-md);line-height:var(--tm-font-lineheight-sm);color:var(--tm-content-success)}
 .s1.show{display:flex}
 .s1 .tm-icon{width:16px;height:16px}
 /* Consent: L4 fine print, directly above the button, only when Verify is possible */
-.consent{margin:0 0 var(--tm-space-lg);display:none;color:var(--tm-content-secondary)}
+/* Round 4 A-01 / A-02: the terms line is centred in the panel, balanced, and "Terms & Conditions" never splits. */
+.consent{margin:0 0 var(--tm-space-lg);display:none;color:var(--tm-content-secondary);text-align:center;text-wrap:balance}
 .consent.show{display:block}
-.consent a{color:var(--tm-content-brand);font-weight:var(--tm-font-weight-semibold);text-decoration:none}
+/* Round 5 B: an expired code hides the terms but keeps their height, so Verify (disabled) does not move. */
+.consent.reserve{display:block;visibility:hidden}
+.consent a{color:var(--tm-content-brand);font-weight:var(--tm-font-weight-semibold);text-decoration:none;white-space:nowrap}
 /* Mock OS keyboard (raw colours allowed here only, as in the other screens) */
 .kbd{position:absolute;left:0;right:0;bottom:0;height:256px;background:#d4d7dd;display:none;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(4,1fr);gap:5px;padding:6px 5px 12px;box-sizing:border-box;z-index:5}
 .kbd div{background:#fff;border-radius:5px;display:flex;align-items:center;justify-content:center;font:400 23px/1 system-ui,sans-serif;color:#202124}
@@ -66,11 +78,10 @@ html.capture .review-controls{display:none}
   <div class="grp">
    <div class="tm-field code" id="f">
     <div class="tm-otp-slots" id="slots"><input class="tm-otp-slots__input" id="c" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="one-time-code" aria-label="Four-digit verification code" aria-describedby="h" aria-invalid="false"><span class="tm-otp-slots__slot" aria-hidden="true"></span><span class="tm-otp-slots__slot" aria-hidden="true"></span><span class="tm-otp-slots__slot" aria-hidden="true"></span><span class="tm-otp-slots__slot" aria-hidden="true"></span></div>
-    <div class="tm-field__helper" id="h" hidden></div>
+    <div class="code-slot" id="slot"><div class="tm-field__helper" id="h" hidden></div><p class="s1" id="s1" role="status"><span id="s1t"></span></p></div>
    </div>
    <div class="tm-notice note" id="n" role="status" aria-live="polite"><span class="tm-icon" id="ni" data-icon="info-circle" aria-hidden="true"></span><div id="nt"></div></div>
-   <p class="s1" id="s1" role="status"><span class="tm-icon" data-icon="circle-check" aria-hidden="true"></span><span id="s1t"></span></p>
-   <p class="rs" id="rs">Didn’t receive it? <span id="rr"></span></p>
+   <p class="rs" id="rs"><span id="rp">Didn’t receive it? </span><span id="rr"></span></p>
   </div>
   <div class="grp">
    <p class="consent tm-text-body-sm" id="consent">By selecting Verify &amp; sign in, you agree to the <a href="#">Terms &amp; Conditions</a> and acknowledge the <a href="#">Privacy Policy</a>.</p>
@@ -102,7 +113,7 @@ const STATES={
  'resending':{code:'4827',kb:true,rs:'sending',consent:true},
  'resend-failed':{code:'4827',kb:true,note:{k:'error',i:'alert-circle',t:M('otp.resendFailed')},rs:'available',consent:true},
  'offline':{code:'4827',kb:true,note:{k:'warning',i:'alert-triangle',t:M('signin.offline')},rs:'available',consent:true},
- 'cooldown-reconciling':{code:'',kb:true,rs:'checking',hold:true},
+ 'cooldown-reconciling':{code:'',kb:true,rs:'checking',hold:true,consent:true},
  'expired-and-resend-limited':{code:'',locked:true,note:{k:'warning',i:'clock',ops:true,t:M('otp.expiredAndLimited',{time:'9:42'})},rs:'hidden'}
 };
 function clearError(){field.classList.remove('tm-field--error');helper.hidden=true;helper.removeAttribute('role');code.setAttribute('aria-invalid','false');replaceNext=false;}
@@ -125,7 +136,7 @@ function note(n){
 }
 function resendLine(s){
  const rr=$('rr'), rs=$('rs');
- rs.hidden=s.rs==='hidden';
+ rs.hidden=s.rs==='hidden'; $('rp').hidden=s.rs==='checking';   // D-81 F7: Checking… alone
  if(s.rs==='wait') rr.innerHTML='Resend in <span class="timer">'+(s.time||'0:30')+'</span>';
  if(s.rs==='available') rr.innerHTML='<button type="button">Resend code</button>';
  if(s.rs==='sending') rr.textContent='Sending a new code…';
@@ -144,9 +155,11 @@ function state(k){
  if(s.err){field.classList.add('tm-field--error');helper.hidden=false;helper.textContent=s.err;helper.setAttribute('role','alert');code.setAttribute('aria-invalid','true');}
  replaceNext=!!s.replace;
  note(s.note);
+ $('slot').classList.toggle('off',!!s.note);   // Round 5 B: the reserved line is used only where no notice box shows
  const s1=$('s1'); s1.classList.toggle('show',!!s.s1); $('s1t').textContent=s.s1||'';
  resendLine(s);
- $('consent').classList.toggle('show',!!s.consent&&!locked&&!busy&&!s.expired&&!s.hold);
+ $('consent').classList.toggle('show',!!s.consent&&!locked&&!s.expired);   // D-81 F5: terms stay during Verifying… and Checking…
+ $('consent').classList.toggle('reserve',!!s.expired);   // Round 5 B: keep the terms' height under an expired code
  const off=locked||busy||!!s.expired||!!s.hold;
  btn.disabled=off;
  btn.classList.toggle('tm-btn--busy',busy);

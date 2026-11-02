@@ -36,7 +36,10 @@
     ============================================================ */
     :root { --phone-h: clamp(640px, calc(100vh - 2 * var(--tm-space-lg)), 800px); --phone-w: calc(var(--phone-h) * 9 / 16); }
     #layout-wrapper { display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; position: relative; }
-    #mobile-column { width: 100%; max-width: 430px; min-height: 100vh; background: var(--tm-surface-secondary); position: relative; flex-shrink: 0; }
+    /* Round 6 (sheets and pinned bar on a 360×640 phone): the phone column is the screen (one scroll area, #main-scroll), as on the desktop frame.
+       It used to grow with its content, so the transformed column anchored the fixed bar and sheets below the visible screen. */
+    #mobile-column { width: 100%; max-width: 430px; height: 100dvh; min-height: 0; overflow: hidden; display: flex; flex-direction: column; background: var(--tm-surface-secondary); position: relative; flex-shrink: 0; }
+    #main-scroll { flex: 1; min-height: 0; overflow-y: auto; }
 
     /* Demo side panel — wide screens only; positioned beside the frame, not part of its layout */
     #desktop-side-panel {
@@ -716,5 +719,36 @@
       .bottom-sheet .sheet-title { flex-shrink: 0; }
       .bottom-sheet .sheet-body { flex: 1; min-height: 0; max-height: none; }
     }
+
+    /* ============================================================
+       FIX ROUND 4, LANE C (2026-11-02): case page and Prescribe — CONSISTENCY-AUDIT B-items.
+       Selectors are scoped (#main-scroll, #ps-body, #sheet-skip-ha) so they beat the concept layers in case.html.
+    ============================================================ */
+    /* B-05: 16 between cards on the case page and on Prescribe (was 12). */
+    #main-scroll { gap: var(--tm-space-lg); }
+    #ps-body, #ps-dynamic { gap: var(--tm-space-lg); }
+    /* B-03: the empty phase-1 holder added 12 + 16 under the script card during a call. It never shows text, so it is removed. */
+    #az-phase1 { display: none !important; }
+    /* B-04: the outcome card sits 16 under Order details and 16 above the medicines (was 12 / 20). */
+    body #main-scroll #success-toast.show { margin: 0; }
+    /* B-08 / D-55: option grids in a section take the M/A/N chip width: full width less the key column (24) and its gap (12). */
+    #ps-body .ps-section > .ps-grid { width: calc(100% - var(--tm-space-xl) - var(--tm-space-md)) !important; margin-left: 0 !important; }
+    /* Grids inside the .ps-sub blocks (SOS maximums) sit 14 px narrower than a section, so they take 14 px more to match. */
+    #ps-body .ps-sub .ps-section > .ps-grid { width: calc(100% - var(--tm-space-xl) - var(--tm-space-md) + 14px) !important; }
+    /* B-09 (spacing part): 8 between the duration number rows and the unit chips. The inset part is held: see LANES.md / NEEDS-APURVA. */
+    #ps-body .ps-dur-units { margin-top: var(--tm-space-sm); }
+    /* B-24: M / A / N letters sit on the Dose label's left edge, not centred in their column. */
+    #ps-body .ps-slot-key { text-align: left; }
+    /* B-13: balanced wrap so a long title does not leave one word alone. */
+    #medicines-list .med-name, #ps-title, .rx-med-name { text-wrap: balance; }
+    /* B-15: the Skip HA reason wording is kept (D-58 point 23); only the wrap is balanced. */
+    #sheet-skip-ha .tm-option__title { text-wrap: balance; }
+    /* B-17: empty case: the card title stays left; the message is left-aligned, regular, 14 px (not centred and bold). */
+    #medicines-empty { text-align: left; padding: 0; }
+    #medicines-empty .case-empty-text { font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); font-weight: var(--tm-font-weight-regular); color: var(--tm-content-primary); }
+    /* B-18: the text keyboard's blank key is empty space, not a key. */
+    #kb-sim .kb-blank { background: none; }
+    /* B-19: the Rx-failed notice sits 16 under the viewer header (was 5). */
+    #rx-overlay-body:has(> .concept-stack) { padding-top: var(--tm-space-lg); }
 
 

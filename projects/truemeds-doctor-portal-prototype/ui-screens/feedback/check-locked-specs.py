@@ -212,7 +212,7 @@ def check_home(page, state, errs):
       const f = fe ? fe.getBoundingClientRect() : null;
       const t = document.querySelector('.time');
       const tcs = t ? getComputedStyle(t) : null;
-      return { logoToTitle: logo && h1 ? Math.round(h1.top - logo.bottom) : null, footerInside: f ? f.bottom - ph.top <= ph.height - 16 : null,
+      return { logoToTitle: logo && h1 ? Math.round(h1.top - logo.bottom) : null, footerInside: f ? f.bottom - ph.top <= ph.height + 0.6 : null,   // Round 4 item 1: the pinned bar is the real .tm-actionbar on the frame's bottom edge (as the case page); the old 16 inset is retired
                valueFs: tcs ? tcs.fontSize : null, valueFw: tcs ? tcs.fontWeight : null, valueNum: tcs ? tcs.fontVariantNumeric : null };
     }""")
     if gap.get('valueFs') is not None and (PX(gap['valueFs']) != 32 or gap['valueFw'] != '600' or 'tabular' not in (gap['valueNum'] or '')):
@@ -226,7 +226,7 @@ def check_home(page, state, errs):
         if w['selColor'] != w['brandText']: errs.append(f"{tag}: wheel selected value {w['selColor']} is not the brand text token {w['brandText']}")
         if w['greyBoxes']: errs.append(f"{tag}: {w['greyBoxes']} grey column box(es) behind the wheel (approved wheel has none)")
     if gap['logoToTitle'] is not None and gap['logoToTitle'] != 48: errs.append(f'{tag}: L6 logo-to-title gap {gap["logoToTitle"]}px != 48px (home-base hero gap)')
-    if gap['footerInside'] is False: errs.append(f'{tag}: pinned footer outside the frame')
+    if gap['footerInside'] is False: errs.append(f'{tag}: pinned footer outside the frame')   # Round 4 item 1: test is 'inside the frame', bar may sit on its bottom edge
 
 UNLOCK = SCREENS / 'returning-unlock' / 'returning-unlock.html'
 OFFER = SCREENS / 'faster-signin-offer' / 'faster-signin-offer.html'
@@ -276,7 +276,7 @@ D_STATES = [
     't11-calling-transfer', 't12-transfer-ready', 't13-connecting-ha', 't14-transferred', 't15-ha-no-join', 't15b-end-call-first',
     't16-transfer-missed', 't16b-transfer-missed-patient', 't16c-transfer-missed-unknown', 't17-skip-ha-wait',
     # prescribe (ui-screens/prescribe/): one medicine, opened through the case page
-    'd-alt-days', 'd-cream', 'd-default', 'd-disable-sheet', 'd-discard-sheet', 'd-drops',
+    'd-alt-days', 'd-cream', 'd-default', 'd-disable-sheet', 'd-disabled', 'd-discard-sheet', 'd-drops',
     'd-duration-picker', 'd-error-dose', 'd-error-other', 'd-every-x-hours', 'd-food-selected', 'd-header-white',
     'd-inhaler', 'd-injection-default', 'd-monthly', 'd-notes-keyboard', 'd-rx-failed', 'd-scrolled',
     'd-sos-on', 'd-sos-only', 'd-syrup', 'd-weekly',
@@ -362,6 +362,7 @@ STD_JS = r"""(exemptSel) => {
         if (PX(getComputedStyle(a).paddingLeft) > 0 || a.matches(BLOCK + ',.tm-card,.tm-sheet,.bottom-sheet,.cl-sheet,.tm-status-card')) { inset = true; break; }
         a = a.parentElement; }
       if (inset) continue; }
+    if (el.parentElement && el.parentElement.matches('.tm-actionbar') && el.matches('.tm-notice')) continue;   // Round 4 item 3 (RULES §9.5): the notice band inside the action bar is edge to edge by design; no other notice is exempt
     const r = el.getBoundingClientRect();
     if (Math.abs(r.left - rr.left - 16) > 0.6 || Math.abs(rr.right - r.right - 16) > 0.6) add('1.1', `${el.className.toString().split(' ')[0] || el.tagName} margins ${Math.round(r.left - rr.left)}/${Math.round(rr.right - r.right)} (need 24/24)`);
   }
@@ -697,6 +698,113 @@ def check_local_restyle(errs, phases):
                 line = text[:m.start()].count('\n') + 1
                 errs.append({'phase': ph, 'state': f'source:{rel}:{line}', 'vw': 0, 'line': '5.12', 'msg': 'inline style on a central component'})
 
+# ---------------------------------------------------------------------------
+# Round 4 item 10 (RULES §8.14, permanent): small-phone pass at 360×640, every state.
+# Fails when content the doctor needs is clipped with no way to scroll to it, or when the pinned
+# action bar covers the last content once the scroll is at its end. Counts are printed by main().
+SMALL_H = 640
+SMALL_JS = r"""(barSel) => {
+  const out = [];
+  const H = innerHeight, W = innerWidth;
+  const SKIP = '.review-controls,.review,#demo-bar,.kbd,.login-keyboard,[data-mock-kbd],.overlay,.tm-sheet,.bottom-sheet,.cl-sheet,.tm-toast,.home-toast,#concept-toast,#rx-doc-wrapper';
+  const hidden = el => { if (!el || el.closest(SKIP)) return true; const cs = getComputedStyle(el);
+    if (cs.display === 'none' || cs.visibility === 'hidden') return true; return el.getClientRects().length === 0; };
+  const scrollable = el => { const cs = getComputedStyle(el); return /(auto|scroll)/.test(cs.overflowY) && el.scrollHeight > el.clientHeight + 1; };
+  const scrollers = [...document.querySelectorAll('body *')].filter(e => !hidden(e) && scrollable(e));
+  const bars = [...document.querySelectorAll(barSel)].filter(b => !hidden(b));
+  const inBar = el => bars.some(b => b.contains(el));
+  // leaf-most content only: a card's padding under the bar is not content (its text is checked)
+  const TSEL = 'button,input,textarea,select,h1,h2,p,label,.tm-notice,.tm-status-line,.tm-card,.tm-row,.tm-field,.tm-chip,.tm-option,.tm-text-body-md,.tm-text-body-sm,.tm-text-body-lg';
+  const targets = [...document.querySelectorAll(TSEL)]
+    .filter(e => !hidden(e) && !e.closest(barSel) && !e.closest('.tm-actionbar,#case-actionbar,#ps-actionbar') && !e.querySelector(TSEL));
+  const docScroll = document.scrollingElement && document.scrollingElement.scrollHeight > H + 1;
+  // (a) reachable: content outside the viewport needs a scroller (inner or page); content clipped by a non-scrolling hidden ancestor fails
+  for (const el of targets) {
+    const r = el.getBoundingClientRect(); if (r.height === 0) continue;
+    const reachable = scrollers.some(s => s.contains(el)) || docScroll;
+    if ((r.bottom > H + 1 || r.top < -1) && !reachable && !inBar(el)) out.push({ line: '8.14', msg: `${el.tagName.toLowerCase()} "${(el.textContent || '').trim().slice(0, 30)}" outside the 360×640 viewport with no scroll` });
+    for (let a = el.parentElement; a && a !== document.body; a = a.parentElement) {
+      const cs = getComputedStyle(a);
+      if ((cs.overflowY === 'hidden' || cs.overflowY === 'clip') && !(scrollers.some(s => s.contains(el)) || docScroll)) {
+        if (scrollable(a)) break;
+        const ar = a.getBoundingClientRect();
+        if (r.bottom > ar.bottom + 1 && r.top < ar.bottom - 1 && a.getBoundingClientRect().height > 0) { out.push({ line: '8.14', msg: `${el.tagName.toLowerCase()} "${(el.textContent || '').trim().slice(0, 30)}" clipped by ${a.className.toString().split(' ')[0] || a.tagName} with no scroll` }); break; }
+      }
+    }
+  }
+  // (b) scroll to the end, then the bar must not cover any content
+  for (const s of scrollers) s.scrollTop = s.scrollHeight;
+  if (docScroll) window.scrollTo(0, document.scrollingElement.scrollHeight);
+  for (const b of bars) {
+    const br = b.getBoundingClientRect();
+    for (const el of targets) {
+      if (inBar(el)) continue;
+      const r = el.getBoundingClientRect(); if (r.height === 0) continue;
+      if (r.bottom <= 0 || r.top >= H) continue;
+      const overlap = Math.min(r.bottom, br.bottom) - Math.max(r.top, br.top);
+      const xo = Math.min(r.right, br.right) - Math.max(r.left, br.left);
+      if (overlap > 2 && xo > 2) out.push({ line: '8.14', msg: `pinned bar covers "${(el.textContent || '').trim().slice(0, 30)}" at the end of the scroll` });
+    }
+  }
+  return out;
+}"""
+
+# Round 6 (RULES §9.4): an open sheet covers the pinned bar; the sheet's buttons stay visible and tappable, also when the
+# sheet is taller than the space (scroll to the end and check again). Run at 360×640 on every state that opens a sheet.
+SHEET_JS = r"""() => {
+  const out = [];
+  const vh = innerHeight, vw = innerWidth;
+  const vis = el => { if (!el) return false; const r = el.getBoundingClientRect(); const cs = getComputedStyle(el);
+    return r.width > 0 && r.height > 0 && cs.display !== 'none' && cs.visibility !== 'hidden' && !el.closest('[hidden]'); };
+  const sheets = [...document.querySelectorAll('.tm-sheet')].filter(vis);
+  if (!sheets.length) return out;
+  const bars = [...document.querySelectorAll('.tm-actionbar, #case-actionbar')].filter(vis);
+  const hitIn = (el, x, y) => { const e = document.elementFromPoint(x, y); return !!e && (e === el || el.contains(e)); };
+  for (const bar of bars) {
+    const r = bar.getBoundingClientRect();
+    for (const [x, y] of [[r.left + 4, r.top + 4], [r.left + r.width / 2, r.top + r.height / 2], [r.right - 4, r.bottom - 4]]) {
+      const e = document.elementFromPoint(Math.min(Math.max(x, 0), vw - 1), Math.min(Math.max(y, 0), vh - 1));
+      if (e && bar.contains(e)) { out.push({ line: '9.4', msg: 'open sheet: pinned action bar is on top of the sheet scrim' }); break; }
+    }
+  }
+  for (const s of sheets) {
+    const btns = [...s.querySelectorAll('.tm-sheet__actions button')].filter(vis);
+    const sr = s.getBoundingClientRect();
+    const check = label => {
+      for (const b of btns) {
+        const br = b.getBoundingClientRect();
+        const inView = br.top >= Math.max(0, sr.top) - 0.5 && br.bottom <= Math.min(vh, sr.bottom) + 0.5;
+        const cx = br.left + br.width / 2, cy = br.top + br.height / 2;
+        const tap = cy >= 0 && cy <= vh && hitIn(b, cx, cy);
+        if (!inView || !tap) out.push({ line: '9.4', msg: label + ': sheet button "' + b.textContent.trim().slice(0, 30) + '" ' + (inView ? '' : 'off the sheet ') + (tap ? '' : 'not tappable') });
+      }
+    };
+    check('rest');
+    if (s.scrollHeight > s.clientHeight + 1) {
+      s.scrollTop = s.scrollHeight; check('scrolled to end'); s.scrollTop = 0;
+    }
+  }
+  return out;
+}"""
+
+def check_small_phone(browser, phases, errs):
+    """Round 4 item 10: every state at 360×640. Returns the number of states checked."""
+    n = 0
+    for phase in phases:
+        for sub, state in EXPECTED[phase]:
+            page = browser.new_page(viewport={'width': 360, 'height': SMALL_H})
+            page.goto(std_url(sub, state, 360).replace('&capture=1', ''))   # real 360×640 layout: the capture flag forces the 844 frame
+            page.add_style_tag(content='.review,.review-controls,#demo-bar{display:none !important}')   # demo chrome is not part of the screen (as in the pictures)
+            page.wait_for_timeout(250)
+            items = page.evaluate(SMALL_JS, '#case-actionbar,#ps-actionbar,.tm-actionbar')
+            items += page.evaluate(SHEET_JS)   # Round 6: sheets over the bar and pinned sheet buttons
+            for it in items:
+                errs.append({'phase': phase, 'state': f'{sub}/{state}', 'vw': 360, 'line': it['line'], 'msg': f"360×640: {it['msg']}"})
+            n += 1
+            page.close()
+    return n
+
+
 def main():
     import argparse, json
     ap = argparse.ArgumentParser()
@@ -704,6 +812,7 @@ def main():
     ap.add_argument('--viewports', default='390,360,430')
     ap.add_argument('--out', default='')
     ap.add_argument('--skip-locked', action='store_true')
+    ap.add_argument('--skip-small', action='store_true')
     a = ap.parse_args()
     phases = a.phases.split(',')
     vws = [int(v) for v in a.viewports.split(',')]
@@ -725,6 +834,12 @@ def main():
         for msg in locked:
             errs.append({'phase': '-', 'state': 'locked', 'vw': 390, 'line': _line_for(msg), 'msg': msg})
     run_std_all(phases, vws, errs, results)
+    if not a.skip_small:
+        with sync_playwright() as p:
+            browser = p.chromium.launch()
+            n_small = check_small_phone(browser, phases, errs)
+            browser.close()
+        print(f'small-phone pass: {n_small} states at 360×640')
     check_coverage(errs, phases)
     check_local_restyle(errs, phases)
     fails = [e for e in errs]

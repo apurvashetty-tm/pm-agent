@@ -1,0 +1,2 @@
+PASS: 12 sign-in states, 17 OTP states, local assets, four-slot OTP, Home/unlock feedback, 84 registry IDs
+exit 0

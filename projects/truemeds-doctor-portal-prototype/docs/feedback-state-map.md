@@ -4,6 +4,14 @@ Version 1.1 · 2026-10-14 · D-41, D-44, D-45 · Read [feedback-rules.md](feedba
 
 This maps current auth/Home states and known recovery conditions to reusable feedback. It is not a list of new screens to build or render. Shared copy now lives in `../ui-screens/feedback/messages.json` with behavior metadata in `metadata.json`; generated browser/native adapters consume the same text. Copy approved (D-53). Existing approved PNGs remain historical until source-derived visual review.
 
+## Placement rules (Round 4, 2026-11-02 — A-19, RULES §9.5)
+
+- **Result of an action → next to the control that did it.** On a screen with a pinned action bar, inside the bar above its button, as a band (`.tm-actionbar > .tm-notice`). On a screen without a bar, 8 below the field or button it came from (A-14).
+- **Bar's own action → inside the bar.** The result of the last tap, or why the bar's button is disabled right now: offline (case and Home), request failed, "No cases right now", ending soon, setup / add / confirm / release failures, offer enable-failed / offline, calling notices (Round 4, lane-request 7).
+- **Screen's general situation → top of the panel.** Not tied to a button; stays until the cause is gone (unlock "isn't available", Home idle-expired, manually ended, expired-pending, stop-pending).
+- Notices wrap balanced (A-22). Toasts only where no control can show the result; they sit above the pinned bar when there is one.
+- Small phones (RULES §8.14): every state at 360×640 — nothing the doctor needs is hidden without a scroll cue; the bar never covers the last content.
+
 ## Coverage notation
 
 - **R01–R09:** proposed representative capture, not yet generated or approved.
@@ -28,11 +36,14 @@ Current copy: `../ui-screens/sign-in/sign-in.html`. Native: `../ui-screens/nativ
 | signin.offline | F2 after action; N1 passive | Restore connectivity, retry; retain number; one message | R03 sibling + layout QA |
 | signin.couldnt-send | F2 | Confirmed send failure; retain number and retry | R03 sibling + layout QA |
 | signin.too-many-tries | W1 | Issuance cap; wait for server eligibility, retain number | R04 sibling + fixture |
+| signin.locked-number | W1 | Sign-in on a locked number goes to OTP in the locked state (`otp.locked`): code and Verify off, lock time and "call Doctor Ops", Change still available (D-81 F6) | R04 sibling |
 | signin.inactive | F2 access block | Server says inactive; Call Doctor Ops | Existing + notice integration QA |
 
 ## OTP
 
 Current copy: `../ui-screens/otp/otp.html`. Native: `../ui-screens/native/OtpScreen.tsx`. Decisions D-34, D-35, D-39, D-44 (layout v2). Layout v2 rows below replace the earlier OTP behaviour; all OTP rows drop "preserve opt-in" (no opt-in on OTP after D-45).
+
+**Reserved line under the code boxes (Round 5 B, Round 6 item 3, Apurva 2026-11-02):** one line is reserved under the boxes in every OTP state that can show a one-line message (helper, new-code line, wrong code, tries left, code expired, empty or too short, resend, cooldown, verifying). Verify & sign in therefore sits at the same y in those states. The line is empty when there is no message; the 8 / 16 / 32 spacing scale holds. The notice-box states (offline, locked, couldn't verify, resend failed, too many codes, expired and resend limited) keep their notice box in the flow and may move Verify & sign in; accepted, not a defect.
 
 | State / registry key | Pattern | Trigger and recovery | Visual coverage |
 |---|---|---|---|
@@ -40,8 +51,8 @@ Current copy: `../ui-screens/otp/otp.html`. Native: `../ui-screens/native/OtpScr
 | otp.empty-tap | F1 | Submit empty; focus input | R01/R02 siblings; keyboard QA |
 | otp.too-short | F1 | Submit1–3 digits; retain input, edit | R01/R02 siblings; keyboard QA |
 | otp.verifying | L1 | Verification pending; retain code, prevent duplicate | Existing + fixture |
-| otp.wrong-code | F1 | Code stays visible, red borders, no focus box; first keystroke replaces whole code; keyboard open (D-44) | Superseded: layout v2 capture pending |
-| otp.two-tries-left | F1 | Same as wrong code, with remaining-tries count (dynamic) | R02 sibling + longest-copy QA |
+| otp.wrong-code | F1 | Code stays visible, red borders, no focus box; first keystroke replaces whole code; keyboard open. Copy "Wrong code." (D-81 F1; replaces "That code isn't right.") | Superseded: layout v2 capture pending |
+| otp.two-tries-left | F1 | Same as wrong code, with the remaining-tries count (dynamic): "Wrong code. 2 tries left."; at 1 try left the singular "Wrong code. 1 try left." (D-81 F1) | R02 sibling + longest-copy QA |
 | otp.resend-available | None | "Resend code" brand link, 44pt tap area, under the notice (D-44) | Superseded: layout v2 capture pending |
 | otp.new-code-sent | S1 | Confirmed resend; restart countdown | Existing; reposition only through review |
 | otp.code-expired | F1 | Code stays visible; "Resend code" available at once; Verify of the same code blocked | R02 |
@@ -56,7 +67,7 @@ Current copy: `../ui-screens/otp/otp.html`. Native: `../ui-screens/native/OtpScr
 | otp.resending | L1 on Resend | One resend pending; keep current challenge until response; prevent duplicates | Fixture; capture only if controls/layout differ |
 | otp.resend-failed | F2 | Preserve code; retry if eligible; do not claim new code sent | R03 sibling |
 | otp.offline | F2 or N1 | Same offline rule as sign-in; do not label code wrong | R03 sibling |
-| otp.cooldown-reconciling | W1 + progress | Timer zero; wait for authoritative eligibility before enabling | Fixture |
+| otp.cooldown-reconciling | W1 + progress | Timer zero; the terms line stays and Verify & sign in does not move; the line reads "Checking…" alone; boxes stay focused (D-81 F5, F7). Wait for authoritative eligibility before enabling | Fixture |
 | otp.expired-and-resend-limited | W1 | Locked treatment (D-46): empty disabled boxes, keyboard closed, Verify disabled, no consent, no resend line. Copy: "This code has expired. Request a new code in 9:42, or call Doctor Ops." | R05 layout + longest-copy QA |
 
 Issuance window/reset policy remains existing open backend decision. Do not invent a duration from countdown fixture values. Four-code issuance and five wrong-code attempts remain separate configurable server policies.
@@ -91,6 +102,8 @@ Current copy: `../ui-screens/returning-unlock/returning-unlock.html`. Native: `.
 
 ## Availability and Home
 
+- **Setting… / Adding…** (D-81 F9): wheel, duration chips, Cancel and × disabled. **Offline** (D-81 F13): End availability greyed out; the offline notice explains. Set availability stays pinned to (inside the action bar, Round 4 item 1; the content above scrolls) the bottom in every state (D-81 F12).
+
 Current references: `../ui-screens/home/`; native `../ui-screens/native/HomeScreen.tsx`. Draft state evidence: `renders/2026-10-13-home-simplified/`. Decisions D-36, D-40. Drafts are superseded where newer decisions differ.
 
 | State / registry key | Pattern | Recovery / invariant | Coverage |
@@ -120,9 +133,9 @@ Applies to the case page (`ui-screens/case/case.html`; the old `index.html` is f
 
 | State | Pattern | Behaviour |
 |---|---|---|
-| case.back-before-call | Confirmation sheet | No call attempted yet. Back (header or phone gesture) opens "Leave this case?" · "It goes back to the queue for another doctor." · **Release case** / Stay on this case. Release → Home. |
-| case.releasing | L1 | Release pending; one request; primary shows the busy state (L2). Failure keeps the doctor on the case with an F2 notice. |
-| case.back-blocked | N1 (not an error) | Call attempted or connected, case not closed. Header Back hidden; phone back gesture shows "Finish this case first. Then you can go back to Home." Help stays available. |
+| case.back-before-call | Confirmation sheet | Only on Ready and states 3 and 4 (no call attempted). Back (header or phone gesture) opens "Leave this case?" · "It goes back to the queue for another doctor." From the Call tap the header Back is hidden for the rest of the case (D-81 F21). Sheet sits over Ready (D-81 F22). |
+| case.releasing | L1 | Release pending over Ready; one request; primary shows the busy state (L2). Failure keeps the doctor on the case with an F2 notice. Backend refuses Release once our call is accepted, unless the result is 3 or 4 (D-80). |
+| case.back-blocked | N1 (not an error) | Call attempted or connected, case not closed. Header Back hidden from the call tap on; phone back gesture shows "Finish this case first. Then you can go back to Home." (D-81 F21). |
 | case.closed | None | End of case: confirmation at the top of the content, titled by path ("Prescription confirmed" / "Transferred to HA" / "Forwarded to HA"); pinned bar **Request next case** (primary) + **Back to Home** (secondary), stacked. Header Back hidden; phone back → Home. Case content read-only and muted (D-51). |
 | case.closed-availability-ended | None | Availability ended during the case: only **Back to Home**; Home shows the expired state. |
 | case.reopened | None | App reopened with a case open → straight back into the case. |
@@ -131,16 +144,25 @@ Applies to the case page (`ui-screens/case/case.html`; the old `index.html` is f
 
 | State | Pattern | Behaviour |
 |---|---|---|
-| case.loading | L1 | Header and card outlines (skeleton) while the case loads; no text, no actions until loaded. |
+| case.loading | L1 | Skeleton shaped like the loaded page: an Order details row, Medicines and Notes blocks, in the same places; no text, no actions until loaded (D-81 F28). |
 | case.load-failed | F2 | Error notice "Couldn't load this case." + primary **Try again**; nothing else on the page. *Copy approved (Apurva, D-53).* |
 | case.offline | W1 → F2 | Warning notice (D-54: offline blocks the main action) "You're offline. Reconnect to call or confirm." while browsing; an action attempted offline fails with one error notice "No connection. Nothing was lost. Try again when you're back online." Typed notes are kept. *Copy approved (Apurva, D-53).* |
-| case.confirm-busy | L1 | Final CTA busy (L2), label **"Confirming…"**; every other action disabled; no second submit. *Copy approved (Apurva, D-53).* |
+| case.confirm-busy | L1 | Final CTA busy (L2), label **"Confirming…"**; every other action disabled; medicine rows and notes read-only and muted; View Rx stays the outlined button (D-81 F24–F25). No second submit. *Copy approved (Apurva, D-53).* |
 | case.confirm-failed | F2 | Error notice above the bar "Couldn't confirm. Nothing was lost. Try again."; CTA back to normal. An uncertain result is reconciled before retry (no duplicate confirm). *Copy approved (Apurva, D-53).* |
-| case.release-failed | F2 | Sheet closes; doctor stays on the case; error notice "Couldn't release this case. You're still on it. Try again."; Back works again. *Copy approved (Apurva, D-53).* |
+| case.release-failed | F2 | Sheet closes over Ready; doctor stays on the case; error notice "Couldn't release this case. You're still on it. Try again."; Back works again. *Copy approved (Apurva, D-53).* (D-81 F22) |
 | case.callback-failed | F2 | Error notice inside the sheet "Couldn't schedule the callback. Your time is kept. Try again."; chosen date and time kept. *Copy approved (Apurva, D-53).* |
 | rx.load-failed | F2 | Inside the viewer: notice "Couldn't load the prescription." + **Try again**; ✕ still closes. *Copy approved (Apurva, D-53).* |
-| case.no-medicines | Empty | `.tm-empty` "No medicines on this order." in the Medicines card. |
+| case.no-medicines | Empty | `.tm-empty` "There’s nothing to prescribe on this order. Release it — Ops will check it." in the Medicines card; no Call patient; main button **Release case**, which releases directly; header Back does the same (D-80 pt 4, D-81 F23). |
 | case.long-content | — | Long patient name (two lines in the header) and long medicine names, checked at 360. |
+| case.end-call-first | W1 (amber warning) | "End the call to get your next case." as an amber warning above the bar (D-81 F26; RULES §9.5). |
+
+## Prescribe (D-81)
+
+| State | Kind | What the doctor sees | Notes |
+|---|---|---|---|
+| prescribe.dose-error | F1 | "Choose a dose for at least one time of day." as field text under the M / A / N grid; the screen scrolls to the first error (D-81 F16). | No tinted box. |
+| prescribe.disabled | N1 | "Disabled: {reason}. Prescribing it will enable it again." (`d-disabled`; D-81 F17, D-20). | Prescribe re-enables it. |
+| prescribe.keyboard | none | Focused field (Other dose, Additional instructions; Chief complaints, Doctor notes on the case page) scrolls above the keyboard with its label and helper; the pinned bar hides while the keyboard is open (D-81 F20). | Keyboard rule, RULES §9. |
 
 ## First representative review batch
 
@@ -167,3 +189,26 @@ Completed in source: registry and metadata, generated browser/native adapters, s
 Still open: source-derived 390×844 captures and visual approval, 360-width and large-text/device checks, native platform autofill/accessibility, real callbacks and authoritative backend reconciliation. Future combination rows above remain integration fixtures, not approved standalone screens. See `renders/2026-10-13-feedback-review/README.md` for capture status.
 
 > **Calling states (2026-10-19, D-58):** the full list of call states, triggers, screens and actions is in `ui-screens/app-logic.md` §5 (state table). This file does not repeat it. Rows above for `case.noPickup` / `case.didntConnect` sheets are retired by D-58.
+
+## Round 4 changes (2026-11-02, consistency audit — Lane A)
+
+| Row | Change | Why |
+|---|---|---|
+| Home — failed request, add, setup, ending soon | Notice inside the action bar, above its button, band style | A-19 (Round 4 item 2) |
+| Home — "No cases right now" | Bar's own action (no cases now): notice inside the bar above Request a case | A-19, lane-request 7 |
+| Unlock — "isn't available" | Screen's general situation: notice stays at the top of the panel | A-19 |
+| Faster sign-in — failed enable | "Couldn't turn on faster sign-in." sits in the bar above Try again | A-19 |
+| Faster sign-in — subtitle | "Use your screen lock instead of an OTP." (one line) | A-06 |
+| OTP — waiting text and Resend link | Same height; Verify & sign in does not move | A-03 |
+| OTP — "New code sent." | Green text, no icon | A-21 |
+| OTP — too many resends / locked / expired and limited | "Doctor Ops" and the time never split across lines | A-17 |
+| case.confirm-failed, case.release-failed | Bar notice above its button (the bar keeps its height in busy states). case.callback-failed stays inside the sheet, 8 above its button | A-19, B-02 |
+| case.confirming / call.connectingHa (Transferring…) | Bar keeps its height; secondary row kept and greyed, not offered | B-01 |
+| case.checking (7c) and fallback B2 | Status line takes the row the buttons were on; bar keeps its height | B-02 |
+| Empty case | Card text left-aligned, 14 px normal; View Rx left-aligned when Order details is hidden | B-16, B-17 |
+| Back-blocked toast | Breaks between its two sentences | B-21 |
+| Logo (all home-base screens) | One lockup size: 166 px wide, 16 from the top | A-07 (sign-in 174 → 166 in Round 4 lane D; Apurva to confirm) |
+
+**Busy label and gap:** the spinner sits 8 from the label on every busy button (A-08, set centrally).
+**Recorded, no change:** A-18 (offer hero stays centred), B-23 (SOS toggle row), B-25 ("Order details" title regular).
+

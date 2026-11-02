@@ -21,6 +21,7 @@ Mobile layout rules: `RULES.md` §8 (four type levels, one side margin, three ga
 | Tinted status cards | `.tm-status-card--success / --neutral / --warning` | Decided 2026-10-25 (D-62): a plain white outcome card looked like any other content card and was easy to miss on a closed case; the tint makes the result read at a glance and keeps it apart from small green status tags. Final look (C5): tint + 1px tone edge, no shadow; neutral = grey-100 fill + grey-200 edge. |
 | Status line | `.tm-status-line` | Decided 2026-10-30 (D-74): a busy button that stayed for a whole call looked tappable but did nothing (false affordance). Long waits show plain status text; busy buttons only for short waits after a tap. |
 | Question notice | `.tm-notice--question` | Decided 2026-10-26 (D-62 point 2): a question above two answers is plain text, not a boxed notice — a box made it read as an input field. |
+| Button icon size by button size | `.tm-btn--lg > .tm-icon` 20px · compact `.tm-btn > .tm-icon` 16px (overrides markup sizes) | Decided 2026-11-02 (Apurva): SALT gives no icon size per button; buttons mixed 13, 16 and 20px. Icons stay on the 16/20/24 scale, one step per button size (56 → 20, 48 → 16). |
 | Page margin 16 | `--tm-space-page` (= space-lg, 16) for screen, header, sheet and action-bar side margins; action bar padding 16 on all sides | Decided 2026-10-26 (D-67): the Truemeds design team's standard. Replaces the 24px side margin. Gives dense doctor screens more width at 360 (two-button pairs, scripts, long medicine names) and an even inset in the action bar. Desktop web layer (`.tm-page`) unchanged. |
 | Action bar edge | `.tm-actionbar` box-shadow | Decided 2026-10-25 (D-62, T3): hairline top border + upward shadow (0 -8px 24px, 10%) — deepened 2026-10-26 (option B) because the softer one still read as the next card. SALT's shadow-primary is cast downward, so the bar merged with white cards behind it. Compared with upward shadow only and a grey bar (read as disabled). |
 | Quiet button | `.tm-btn--quiet` | Grey text, no border: leave / cancel / dismiss / "not now" (RULES §9.1). Replaces tertiary, ghost and link-styled buttons. SALT's ghost button is brand blue and reads as the main action. |
@@ -91,3 +92,13 @@ Implemented centrally 2026-10-15 (preview renders: `build/preview-2026-10-15/`).
 | Compact task header | `.tm-header-task--compact` (+ `__row`, `__title`, `__meta`, `--no-back`) | D-49 / §8.5 as a central component |
 | Link button height | `.tm-btn--link` min 48 | standalone link-buttons meet §8.6 |
 
+
+### Added 2026-11-02 (Round 4 of the fix round: consistency audit, Lane A) — done
+| Item | Class | Why |
+|---|---|---|
+| Notice band inside the action bar | `.tm-actionbar > .tm-notice` | RULES §9.5 (A-19, Apurva 2026-11-02): a notice that is the result of an action sits inside the pinned bar, above its button, as an edge-to-edge band (top corners follow the bar, 1px bottom edge in the tone colour, padding 12 / 16). Notices in page content keep their box. |
+| Busy spinner gap 8 | `.tm-btn--busy { gap: 0 }` + spinner margin 8 | A-08: busy buttons gave 8 or 16 depending on whether the label sat in a span; now always 8. |
+| Notice text balanced | `.tm-notice { text-wrap: balance }` | A-22 / B-20: no short orphan second line in notices. Body text keeps `pretty`. |
+| Sheet ✕ on the 16 margin | `.tm-sheet__close` margin = (20 − 48) / 2 | B-07: the glyph sits on the same 16 line as the compact task header ✕ (was 2 px further in). |
+| Sheet label | `.tm-sheet__label` | B-14: one label style for sheet fields ("Select reason", "Date", "Time") — the field-label style, 8 above the field. |
+| Toast offset hook | `.tm-toast { bottom: var(--tm-toast-offset, 24px) }` | Round 4 item 1: on screens with a pinned bar the toast sits above it (set `--tm-toast-offset` = bar height + 16). |
