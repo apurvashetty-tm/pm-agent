@@ -9,6 +9,8 @@ const get = path => readFileSync(join(screens, path), 'utf8');
 const messages = JSON.parse(readFileSync(join(here, 'messages.json'), 'utf8'));
 const metadata = JSON.parse(readFileSync(join(here, 'metadata.json'), 'utf8'));
 assert.deepEqual(Object.keys(messages).sort(), Object.keys(metadata).sort());
+// D-81 F3: every apostrophe in the copy is curly (’), never a straight '.
+for (const [id, text] of Object.entries(messages)) assert.ok(!text.includes("'"), `straight apostrophe in copy: ${id}`);
 const browserContext = { window: {} };
 runInNewContext(readFileSync(join(here, 'messages.js'), 'utf8'), browserContext);
 const detachedMessage = browserContext.window.TMFeedback.msg;

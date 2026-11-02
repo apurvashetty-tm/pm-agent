@@ -43,6 +43,8 @@ body{margin:0;background:var(--tm-surface-secondary)}
 .wheel-item{height:48px;border:0;background:transparent;font:inherit;font-size:var(--tm-font-size-title-md);line-height:var(--tm-font-lineheight-lg);color:var(--tm-content-secondary);cursor:pointer;padding:0}
 .wheel-item.is-selected{color:var(--tm-content-brand);font-size:var(--tm-font-size-title-lg);line-height:var(--tm-font-lineheight-2xl);font-weight:var(--tm-font-weight-semibold)}
 .wheel-item--empty{height:48px}
+.wheel-item:disabled{color:var(--tm-content-disabled);cursor:not-allowed}
+.wheel-item.is-selected:disabled{color:var(--tm-content-brand)}   /* the selected value keeps its brand text (guard 6.x) */   /* D-81 F9: wheel disabled while Setting… / Adding… */
 .helper{margin:0;text-align:right;flex:none;font-size:var(--tm-font-size-body-md);line-height:var(--tm-font-lineheight-sm);color:var(--tm-content-secondary)}
 /* Status slot sits between content and the pinned footer (stable position). */
 .status-slot{flex:none;padding-top:var(--tm-space-lg)}

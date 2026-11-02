@@ -378,6 +378,13 @@ h1, .tm-text-title-lg, .tm-text-h1 { text-wrap: balance; }
 /* Two secondaries side by side: equal width, no icons, label fits on one line at 360px (otherwise stack). */
 .tm-btn-pair { display: grid; grid-template-columns: 1fr 1fr; gap: var(--tm-space-sm); }
 .tm-btn-pair > .tm-btn { width: 100%; }
+/* Button icon size steps with the button size, on the icon scale (16 / 20 / 24) — RULES §9.1, Apurva 2026-11-02.
+   56px action buttons (18px label, .tm-btn--lg) → 20px · 48px compact buttons (16px label) → 16px.
+   Wins over a size variant in the markup, so a screen can't resize a button icon. Icons outside buttons keep their own sizes. */
+.tm-btn > .tm-icon, .tm-btn > .tm-icon.tm-icon--20, .tm-btn > .tm-icon.tm-icon--24 { width: 16px; height: 16px; }
+.tm-btn.tm-btn--lg > .tm-icon, .tm-btn.tm-btn--lg > .tm-icon.tm-icon--16, .tm-btn.tm-btn--lg > .tm-icon.tm-icon--24 { width: 20px; height: 20px; }
+/* Icon-only buttons (Back, Help, bell, Profile, close ×, viewer controls) are not labelled buttons: their icon stays 20px — the header layout is built on it (2026-11-02). */
+.tm-btn.tm-btn--icon > .tm-icon, .tm-btn.tm-btn--icon > .tm-icon.tm-icon--16 { width: 20px; height: 20px; }
 /* D-54: icons allowed on a pair only when both buttons carry one (e.g. 📅 Callback | ⏭ Skip HA). */
 
 /* ---------- Status card (RULES §9.3) — the outcome of a task; top of the content; stays. Not a toast. ---------- */

@@ -70,7 +70,7 @@ html.capture .review-controls{display:none}
    </div>
    <div class="tm-notice note" id="n" role="status" aria-live="polite"><span class="tm-icon" id="ni" data-icon="info-circle" aria-hidden="true"></span><div id="nt"></div></div>
    <p class="s1" id="s1" role="status"><span class="tm-icon" data-icon="circle-check" aria-hidden="true"></span><span id="s1t"></span></p>
-   <p class="rs" id="rs">Didn’t receive it? <span id="rr"></span></p>
+   <p class="rs" id="rs"><span id="rp">Didn’t receive it? </span><span id="rr"></span></p>
   </div>
   <div class="grp">
    <p class="consent tm-text-body-sm" id="consent">By selecting Verify &amp; sign in, you agree to the <a href="#">Terms &amp; Conditions</a> and acknowledge the <a href="#">Privacy Policy</a>.</p>
@@ -102,7 +102,7 @@ const STATES={
  'resending':{code:'4827',kb:true,rs:'sending',consent:true},
  'resend-failed':{code:'4827',kb:true,note:{k:'error',i:'alert-circle',t:M('otp.resendFailed')},rs:'available',consent:true},
  'offline':{code:'4827',kb:true,note:{k:'warning',i:'alert-triangle',t:M('signin.offline')},rs:'available',consent:true},
- 'cooldown-reconciling':{code:'',kb:true,rs:'checking',hold:true},
+ 'cooldown-reconciling':{code:'',kb:true,rs:'checking',hold:true,consent:true},
  'expired-and-resend-limited':{code:'',locked:true,note:{k:'warning',i:'clock',ops:true,t:M('otp.expiredAndLimited',{time:'9:42'})},rs:'hidden'}
 };
 function clearError(){field.classList.remove('tm-field--error');helper.hidden=true;helper.removeAttribute('role');code.setAttribute('aria-invalid','false');replaceNext=false;}
@@ -125,7 +125,7 @@ function note(n){
 }
 function resendLine(s){
  const rr=$('rr'), rs=$('rs');
- rs.hidden=s.rs==='hidden';
+ rs.hidden=s.rs==='hidden'; $('rp').hidden=s.rs==='checking';   // D-81 F7: Checking… alone
  if(s.rs==='wait') rr.innerHTML='Resend in <span class="timer">'+(s.time||'0:30')+'</span>';
  if(s.rs==='available') rr.innerHTML='<button type="button">Resend code</button>';
  if(s.rs==='sending') rr.textContent='Sending a new code…';
@@ -146,7 +146,7 @@ function state(k){
  note(s.note);
  const s1=$('s1'); s1.classList.toggle('show',!!s.s1); $('s1t').textContent=s.s1||'';
  resendLine(s);
- $('consent').classList.toggle('show',!!s.consent&&!locked&&!busy&&!s.expired&&!s.hold);
+ $('consent').classList.toggle('show',!!s.consent&&!locked&&!s.expired);   // D-81 F5: terms stay during Verifying… and Checking…
  const off=locked||busy||!!s.expired||!!s.hold;
  btn.disabled=off;
  btn.classList.toggle('tm-btn--busy',busy);

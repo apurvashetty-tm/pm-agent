@@ -34,11 +34,13 @@ Order on first use: Sign-in → OTP → (offer, once) → Home → Case. Returni
 
 **OTP**
 - 4 digits, keyboard opens on load and stays open while verifying. No auto-verify: the doctor taps **Verify & sign in**.
-- Wrong code: digits stay visible with red borders; the first new keystroke replaces the whole code. From 2 tries left the message counts tries ("That code isn't right. 2 tries left.").
+- The terms line stays during **Verifying…** and **Checking…**, so Verify & sign in never moves (D-81 F5, amends D-44 for those two states). The cooldown line reads "Checking…" alone, with no "Didn’t receive it?", and the boxes stay focused (D-81 F7).
+- Wrong code: digits stay visible with red borders; the first new keystroke replaces the whole code. The message is "Wrong code."; from 2 tries left it counts ("Wrong code. 2 tries left."), and at 1 try left it uses the singular ("Wrong code. 1 try left.") (D-81 F1; no next-step wording, D-53 pt 2).
 - **5** server-confirmed wrong codes lock **that mobile number** (not the account) `[LOCKED D-34]`. Lock length `[MOCK 15 min, OPEN OQ-017]`. Change number stays available; another number works only if Doctor Ops approved it for this doctor.
 - **4** codes per number per limit window (first code + 3 resends), not reset by restarting sign-in `[LOCKED D-35]`. Window length `[MOCK 10 min, OPEN OQ-017]`.
 - Resend waits `[MOCK]` 30 s, then 60 s, then 120 s. Resend line hidden when resends are used up or the number is locked.
 - Expired code: Resend is available at once; the expired code can't be verified.
+- **Sign-in on a locked number** goes straight to OTP in the locked state (`otp_locked`): code field and Verify off, the lock time and "call Doctor Ops" shown, Change still available (D-81 F6).
 - All OTP limits are enforced by the server; the app only shows them.
 
 **Faster sign-in** (D-45, D-47)
@@ -50,6 +52,11 @@ Order on first use: Sign-in → OTP → (offer, once) → Home → Case. Returni
 ---
 
 ## 3. Home and availability `[LOCKED]` (D-36, D-40, D-47, D-53)
+- **While Setting… or Adding…** the wheel, the duration chips, Cancel and × are disabled (D-81 F9).
+- **Set availability** stays pinned to the bottom of the screen in every state, with or without a notice (D-81 F12, D-43).
+- **Time added:** 5:00 + 30 min shows 35:00 (D-81 F10).
+- **End availability** is greyed out while offline; the offline notice explains (D-81 F13).
+- **Log out confirm:** "Stay signed in" is quiet text, like "Keep available" (D-81 F11, RULES §9.4).
 
 - Home answers "Am I taking cases right now, and what do I do next?" Nothing is pushed: the doctor **requests** a case (pull model).
 - **Set availability:** quick picks 15 / 30 / 45 min, 1 / 2 / 3 hours, plus the wheel (hours and minutes, 15-minute steps). Minimum **15 minutes**, any start time, no maximum (24/7). Confirm starts the countdown.
@@ -82,7 +89,10 @@ Order on first use: Sign-in → OTP → (offer, once) → Home → Case. Returni
 | Valid, call ended (`call.valid` 8a / 8b) | No script — the call has ended (D-58 pt 24) | Final button (§6) · 📅 **Callback** · ⏭ **Skip HA** (only when allowed, §6) | Blocked |
 | Closed (`completed` / `unavailable`) | Outcome card directly under Order details (where the script was, D-58 point 16); content read-only and muted | **Request next case** · Back to Home (only **Back to Home**, as primary, if availability ended) | Header Back hidden; phone back → Home |
 
-**Leaving a case:** an **attempted call** = leg 2 answered (the patient picked up) (D-58). Once a call is attempted, leaving is blocked until the case is closed (callback, unavailable, confirm). Before that, header **Back** opens the "Leave this case?" sheet — **Release case** (the case returns to the queue) or Stay on this case (D-58 point 20, OQ-024; also during Calling 7a — until the backend reports the patient answered — and the 7b question, where no result is known yet). If the patient answered just before the tap, the backend refuses the release and the doctor stays on the case (`a-release-failed`, "Couldn't release this case. You're still on it."). The unassign action itself is a backend dependency (OQ-024). Help stays available at every stage and is the way to reach Doctor Ops when something keeps failing. App closed or phone off mid-case → reopening goes straight back into the case `[OPEN OQ-025, backend]`.
+**Empty case (D-80 pt 4, D-81 F23):** no **Call patient**. The medicines card says "There’s nothing to prescribe on this order. Release it — Ops will check it."; the main button is **Release case**, which releases directly (Releasing…). Header Back does the same.
+**Call ended, outcome card (D-81 F26):** "End the call to get your next case." is an amber warning, not an error.
+
+**Leaving a case:** an **attempted call** = leg 2 answered (the patient picked up) (D-58). Once a call is attempted, leaving is blocked until the case is closed (callback, unavailable, confirm). Before that, header **Back** opens the "Leave this case?" sheet — **Release case** (the case returns to the queue) or Stay on this case (D-58 point 20, OQ-024, on Ready and states 3 and 4 only. From the **Call patient** / **Call again** tap the header Back is hidden for the rest of the case, incl. Calling 7a, the 7b question, Transfer, and the callback sheets (D-81 F21). Behind the leave sheet, Releasing… and Release failed the screen is **Ready** (D-81 F22). The backend refuses Release once our call request is accepted, unless the result is 3 or 4 (D-80).. If the patient answered just before the tap, the backend refuses the release and the doctor stays on the case (`a-release-failed`, "Couldn't release this case. You're still on it."). The unassign action itself is a backend dependency (OQ-024). Help stays available at every stage and is the way to reach Doctor Ops when something keeps failing. App closed or phone off mid-case → reopening goes straight back into the case `[OPEN OQ-025, backend]`.
 
 **End-of-call script** (D-58 points 18, 21, 24 — copy keys in `messages.json`). Shown from the tap on Call while a call may be live; **hidden once the call has ended** (no one to read it to), except after a failed transfer (15) and B3, where the doctor is still on the line:
 - Transfer (Pilot, Value Meds): `call.scriptTransfer` — "I'm writing your prescription now. Please stay on the line — I'll connect you to our Health Advisor."
@@ -113,12 +123,12 @@ Order on first use: Sign-in → OTP → (offer, once) → Home → Case. Returni
 | # | State ID | State | Trigger (from the backend, by polling) | Bar (top → bottom) | Render id |
 |---|---|---|---|---|---|
 | 1 | `call.ready` | Ready to call | Case opened | Call patient · header Back (leave sheet) | `t01-ready` |
-| 2 | `call.calling` | Calling (whole call) = 7a | Doctor taps Call; until a result | "Calling {name}…" busy · Callback · header Back | `t02-calling` / `s7a-calling` |
+| 2 | `call.calling` | Calling (whole call) = 7a | Doctor taps Call; until a result | "Calling {name}…" busy · Callback · no header Back (D-81 F21) | `t02-calling` / `s7a-calling` |
 | 3 | `call.not-through` | Didn't go through | Request refused, or leg-1 network/vendor error | Red notice · Call again · header Back | `t03-not-through` |
 | 4 | `call.doctor-missed` | You didn't answer | Leg 1 not answered / busy / rejected | Amber notice · Call again · header Back | `t04-doctor-missed` |
 | 5 | `call.result-wait` | Getting call result | Call known to have ended, result not in yet | "Getting call result…" busy · Callback | `t05-result-wait` |
 | 6 | `call.ended-early` | Call too short | Result: total talk time on the case under the gate | Amber "Call too short…" · Call again · Callback (no Unavailable — D-58 point 23) | `t06-ended-early` |
-| 7b | `call.still-on-call` | Still on the call? | 3 min after the tap with no result (repeats every 3 min) | Grey "Are you still on the call?" · Still talking + Call ended · header Back | `s7b-still-on-call` |
+| 7b | `call.still-on-call` | Still on the call? | 3 min after the tap with no result (repeats every 3 min) | Grey "Are you still on the call?" · Still talking + Call ended · no header Back (D-81 F21) | `s7b-still-on-call` |
 | 7c | `call.checking` | Checking call result | Doctor tapped "Call ended" | "Checking call result…" busy | `s7c-checking` |
 | 7d | `call.result-missing` | Result not received | Backend check found nothing | Amber notice · Confirm prescription · Callback + Unavailable (Unavailable opens the reason sheet, D-75; **the chosen reason is saved with the case** for Ops monitoring, D-73) | `s7d-result-missing` |
 | 7e | — | Leave this case? | Back in 1–4, 7a, 7b | Approved sheet: Release case / Stay on this case | `s7e-leave-sheet` |
@@ -129,7 +139,7 @@ Order on first use: Sign-in → OTP → (offer, once) → Home → Case. Returni
 | 9 | `call.patient-unavailable` | Patient unavailable (automatic) | Leg 2 failed | Grey card · Request next case · Back to Home | `t09-patient-unavailable` |
 | 10a | — | Prescription confirmed | Confirm (Cat4) | Green card · Request next case · Back to Home | `t10a-confirmed` |
 | 10b | — | Forwarded to HA | Confirm & forward | Green card · same | `t10b-forwarded` |
-| 11 | `call.calling-transfer` | Calling, transfer case | Tap on Call; until the backend confirms validity | "Calling {name}…" busy · Callback · header Back | `t11-calling-transfer` |
+| 11 | `call.calling-transfer` | Calling, transfer case | Tap on Call; until the backend confirms validity | "Calling {name}…" busy · Callback · no header Back (D-81 F21) | `t11-calling-transfer` |
 | 12 | `call.transfer-ready` | Confirm & transfer | Backend: gate time since `customerAnswered`, call live | Confirm & transfer · Callback + Skip HA | `t12-transfer-ready` |
 | 13 | — | Transferring | Tap on Confirm & transfer | "Transferring…" busy | `t13-connecting-ha` |
 | 14 | `call.transferred` | Transferred | Transfer succeeded | Green card · Request next case · Back to Home | `t14-transferred` |
@@ -151,6 +161,8 @@ Retired: `b-missed-call`, `b-didnt-connect` (sheets) — replaced by the automat
 ---
 
 ## 6. Final buttons and HA `[LOCKED]` (project_truth §4, D-50, D-54, D-57)
+- **Confirming… / Transferring… (D-81 F24–F25):** medicine rows and notes are read-only and muted, with no arrows. View Rx stays the outlined button (D-76).
+
 
 | Case type | HA status | Final button | Ending card |
 |---|---|---|---|
@@ -200,7 +212,8 @@ Retired: `b-missed-call`, `b-didnt-connect` (sheets) — replaced by the automat
 
 | Form | Daily slots (M / A / N) | Single dose options | Other |
 |---|---|---|---|
-| Tablet, capsule | 0 · ½ · 1 · 2 | ½ · 1 · 2 | — |
+| Tablet | 0 · ½ · 1 · 2 | ½ · 1 · 2 | — |
+| Capsule | 0 · 1 · 2 | 1 · 2 | — |
 | Syrup | 0 · 2.5 · 5 · 10 ml | 2.5 · 5 · 10 ml | Other (ml) |
 | Drops | 0 · 1 · 2 · 3 | 1 · 2 · 3 | — |
 | Inhaler | 0 · 1 · 2 puffs | 1 · 2 | — |
@@ -210,17 +223,21 @@ Retired: `b-missed-call`, `b-didnt-connect` (sheets) — replaced by the automat
 - Every X hours: 4 · 6 · 8 · 12 h (helper "4 times a day, round the clock").
 - SOS only: dose + **Max doses a day** 1–4. Other schedules: optional **Also as needed (SOS)** with its own dose and **Max extra doses a day** 1–4.
 - **Duration:** numbers 1–7, 10, 14, 15 + Days / Weeks / Months, or **Ongoing** (prints the backend default, `[MOCK]` 6 months). Shows "Default" or "Changed from default".
-- **Food (optional):** After food · Before food · Empty stomach (tap again to clear). **Additional instructions (optional)**, printed on the prescription.
+- **Food (optional):** After food · Before food · Empty stomach (tap again to clear). **Additional instructions (optional)**, with the helper "Printed on the prescription." (D-81 F19).
 - **Checks before Prescribe:** daily schedule with no dose at all → "Choose a dose for at least one time of day." · Other picked with no valid number → "Enter the dose in ml/units." or "Use numbers only, e.g. 7.5 units." (only plain positive numbers: 7, 7.5, .5).
+- **An error on Prescribe scrolls the screen to the first error.** The M / A / N "choose a dose" error is field text under the grid, not a tinted box; other errors sit under their field (D-81 F16).
 - **Prescribe** saves, marks the medicine Prescribed (and re-enables it if it was disabled).
+- **A disabled medicine** opens with the note "Disabled: {reason}. Prescribing it will enable it again." (state `d-disabled`, D-81 F17, D-20).
 - **✕ with changes** → "Discard changes?" sheet: **Discard** (red outline) on top, Keep editing below (D-54). No changes → closes at once.
 - **Disable** → sheet "Disable {name}" with reasons: Cannot prescribe remotely · Contraindicated for patient · Duplicate medication · Patient declined · Wrong strength. Choosing a reason disables it at once (status Disabled). A disabled medicine is **removed from the order**; the order ships without it. If no medicine is left, the order is cancelled later (ops/backend). No extra warning for the last medicine — the reason sheet is the friction (D-59).
 
-**Printed line** = schedule · duration · food (if chosen) · instructions (if written), e.g. "1-0-1 + SOS 1 tablet (max 2/day) · 6 months · After food".
+**Printed line** = schedule · duration · food (if chosen) · instructions (if written), e.g. "1-0-1 + SOS 1 tablet (max 1 tablet/day) · 6 months · After food". **SOS limit (D-80 pt 3, D-81 F14):** the daily total in the medicine's unit: "2 puffs as needed (max 8 puffs/day)"; a total of 1 is singular ("max 1 tablet/day"); cream prints "Apply as needed (max 3 times/day)".
 
 ---
 
 ## 9. Order details, Rx viewer, notes
+- **Keyboard rule (D-81):** on Prescribe (Other dose, Additional instructions) and the case page (Chief complaints, Doctor notes) the focused field scrolls into view above the keyboard with its label and helper. The pinned action bar hides while the keyboard is open and returns when it closes (same reason as D-43).
+
 
 - **Order details ⓘ** expands in its card: Order created, Expected delivery, Payment. Hidden when the order has none of these.
 - **View Rx** opens the customer's prescription full screen: zoom (50–400%), rotate, reset, pinch and drag. Load failure: notice + Try again; ✕ always closes. Disabled while confirming.
@@ -229,6 +246,7 @@ Retired: `b-missed-call`, `b-didnt-connect` (sheets) — replaced by the automat
 ---
 
 ## 10. Errors, offline, loading
+- **Loading** (case): a skeleton shaped like the loaded page: an Order details row, Medicines and Notes blocks, in the same places (D-81 F28).
 
 Follow `docs/feedback-state-map.md` exactly. Summary for the case page: loading = card outlines, no actions · load failed = notice + Try again · offline = yellow notice in the bar "You're offline. Reconnect to call or confirm." (D-54) · an action tried offline fails with one error notice, nothing lost · release failed = notice, doctor stays on the case.
 
@@ -238,6 +256,7 @@ Follow `docs/feedback-state-map.md` exactly. Summary for the case page: loading 
 
 - Demo controls: scenario switcher, call simulator (connected / no answer / didn't connect / switched off / wrong number), **fast-forward to 50 s**, reset.
 - Mock data: the five scenarios below, patient names, order IDs, prices, the demo numbers and codes for sign-in.
+- **Profile earnings (D-81 F10):** **₹20 per confirmed prescription** (Apurva, 2026-11-02), so 3 prescriptions today show Earned ₹60.00 · Incentive ₹0.00 (0 while setting availability). The app shows what the backend sends; earnings count once a case is confirmed (D-73). Incentive rules are not defined yet (₹0.00 in the prototype).
 
 **Test numbers and codes** (agreed Apurva, 2026-10-31). Prototype only — the real app gets these answers from the server. Format errors (first digit not 6–9, fewer than 10 digits) need no special number.
 

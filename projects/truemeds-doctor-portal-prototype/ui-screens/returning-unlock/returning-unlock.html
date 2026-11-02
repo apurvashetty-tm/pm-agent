@@ -8,10 +8,10 @@ body.tm{background:var(--tm-surface-brand-subtle);color:var(--tm-content-primary
 .screen{height:100dvh;box-sizing:border-box;display:flex;flex-direction:column;background:var(--tm-surface-brand-subtle);font-family:var(--tm-font);overflow:hidden;position:relative}
 .intro{padding:var(--tm-space-lg) var(--tm-space-page) var(--tm-space-2xl)}
 .login-logo{display:block;width:174px;height:auto;margin-bottom:var(--tm-space-lg)}
-.head{margin-top:var(--tm-space-2xl)}
+.head{margin-top:0}   /* D-81 F8: same logo-to-title gap as OTP and offer (16) */
 h1{margin:0 0 var(--tm-space-sm)}
 .intro p{margin:0;font-size:var(--tm-font-size-body-md);line-height:var(--tm-font-lineheight-sm);color:var(--tm-content-secondary)}
-.panel{flex:1;min-height:0;display:flex;flex-direction:column;padding:var(--tm-space-2xl) var(--tm-space-page) var(--tm-space-xl);border-radius:var(--tm-radius-2xl) var(--tm-radius-2xl) 0 0;background:var(--tm-surface-primary)}
+.panel{flex:1;min-height:0;display:flex;flex-direction:column;padding:var(--tm-space-xl) var(--tm-space-page) var(--tm-space-xl);   /* D-81 F8: tile at the offer position (199) */border-radius:var(--tm-radius-2xl) var(--tm-radius-2xl) 0 0;background:var(--tm-surface-primary)}
 .prompt{margin:0;display:flex;flex-direction:column;align-items:center;gap:var(--tm-space-lg);text-align:center}
 .prompt-icon{width:64px;height:64px;display:grid;place-items:center;border-radius:var(--tm-radius-lg);background:var(--tm-surface-brand-subtle);color:var(--tm-content-brand)}
 .prompt-icon .tm-icon{width:var(--tm-space-2xl);height:var(--tm-space-2xl)}

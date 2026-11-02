@@ -276,7 +276,7 @@ D_STATES = [
     't11-calling-transfer', 't12-transfer-ready', 't13-connecting-ha', 't14-transferred', 't15-ha-no-join', 't15b-end-call-first',
     't16-transfer-missed', 't16b-transfer-missed-patient', 't16c-transfer-missed-unknown', 't17-skip-ha-wait',
     # prescribe (ui-screens/prescribe/): one medicine, opened through the case page
-    'd-alt-days', 'd-cream', 'd-default', 'd-disable-sheet', 'd-discard-sheet', 'd-drops',
+    'd-alt-days', 'd-cream', 'd-default', 'd-disable-sheet', 'd-disabled', 'd-discard-sheet', 'd-drops',
     'd-duration-picker', 'd-error-dose', 'd-error-other', 'd-every-x-hours', 'd-food-selected', 'd-header-white',
     'd-inhaler', 'd-injection-default', 'd-monthly', 'd-notes-keyboard', 'd-rx-failed', 'd-scrolled',
     'd-sos-on', 'd-sos-only', 'd-syrup', 'd-weekly',

@@ -16,7 +16,7 @@ Each state has a 390-wide and a 360-wide picture (`_w390.png`, `_w360.png`, 2× 
 | Faster sign-in offer | `faster-signin-offer/faster-signin-offer.html` | `faster-signin-offer/` (`offer_<state>_…`) | 6 | D-45, D-61, D-64, D-65 |
 | Home (availability, add time, end, profile) | `home/home.html` (+ `home-reference.js`, `home-reference.css`) | `home/` (`home_<state>_…`) | 22 | D-36, D-40, D-47, D-53, D-69, D-70 |
 | Case page: ready, calling, call outcomes, closed cases, sheets, stress | `case/case.html` (+ `case-styles.css`) | `case/` (`<state>_…`) | 58 | D-48 to D-76 |
-| Prescribe (one medicine) | `case/case.html` (`d-*`) | `prescribe/` (`d-<state>_…`) | 22 | D-04, D-06, D-08 to D-30, D-54, D-56, D-68 |
+| Prescribe (one medicine) | `case/case.html` (`d-*`) | `prescribe/` (`d-<state>_…`) | 23 | D-04, D-06, D-08 to D-30, D-54, D-56, D-68 |
 
 Counts: pictures are 2 per state. Case page: 32 calling states (incl. `s7d-unavailable-sheet`), 4 callback/Skip-HA sheets, 16 + 1 stress/action states (`a-*`), 2 closed (`e-*`), 3 stress (`s-*`). Home: 19 states plus 3 Profile pages.
 
@@ -72,6 +72,7 @@ The calling states follow app-logic §5 (D-58 points 14–25, D-63, D-64). The r
 - Form and schedule: `d-default` (tablet/capsule daily), `d-syrup`, `d-drops`, `d-injection-default`, `d-cream`, `d-inhaler`.
 - How often: `d-every-x-hours`, `d-alt-days`, `d-weekly`, `d-monthly`, `d-sos-only`, `d-sos-on`.
 - Dose, duration and food: `d-error-dose`, `d-error-other`, `d-duration-picker`, `d-food-selected`, `d-notes-keyboard`, `d-scrolled`, `d-header-white`.
+- Disabled medicine: `d-disabled` ("Disabled: {reason}. Prescribing it will enable it again.", D-81 F17).
 - Sheets and failures: `d-disable-sheet` (reasons), `d-discard-sheet`, `d-rx-failed`.
 
 ## Home: Profile
@@ -88,6 +89,10 @@ Open the file in a browser. `capture=` (and `?capture=1`) hides the review contr
 - Offer: `faster-signin-offer/faster-signin-offer.html?capture=<fingerprint | face-id | enabling | screen-lock | enable-failed | offline>`.
 - Home: `home/home.html?state=<state>&capture=1` (e.g. `active`, `add-wheel`, `profile`, `logout-confirm`).
 - Case page and calling: `case/case.html?s=<render id>&start=case&capture=1` (add `&w=360` for the 360 width).
+
+## D-80 and D-81 fix round (2026-11-01)
+
+The screen audit fixes are applied in these pictures (checklist: `docs/renders/2026-11-01-fix-round/CHECKLIST.md`). Calling: no header Back from the call tap on; leave sheet and Releasing… over Ready; empty case → Release case; busy confirm / transfer read-only. Prescribe: SOS total in the medicine's unit, capsule doses without ½, dose error as field text, `d-disabled`, keyboard rule. Entry: terms line during Verifying / Checking, cooldown reads "Checking…", one header spacing for OTP, offer and unlock. Home: busy controls disabled, pinned Set availability, quiet "Stay signed in", 35:00 after adding time.
 
 ## Design rules applied in this set
 

@@ -844,3 +844,8 @@ User identified missing HTML/native linkage. Inspected actual sign-in and OTP HT
 ## 2026-11-01 (late) · Part B decided (D-81)
 - **Done:** all 24 Part B bugs agreed group by group + new keyboard rule (D-81, backlog §2g); review pictures in `docs/reviews/2026-10-31-screen-audit/b-group*.png`.
 - **Next:** fix round on the frozen screens for D-80 + D-81 (only affected pictures + new states), against a fix-round checklist (to draft and agree first) → then storyboard review, entry first.
+
+## 2026-11-02 (morning) · Fix round Rounds 2–4; thread handover
+- **Fix round** (`docs/renders/2026-11-01-fix-round/`): Rounds 1–3 done, 0 failures (D-80 + D-81 fixes; button icons by button size 56 → 20, 48 → 16, icon-only → 20; Profile ₹20 per prescription). **Round 4 running in the terminal** (brief "Round 4" items 0–11: action bar on Home / offer / unlock, notice band in the bar, OTP terms centred, consistency-audit fixes `CONSISTENCY-AUDIT.md`, small-phone guard, regression gate G7 against all standards and final decisions). Terminal stops after its report; no polling. Nothing committed since PR #21.
+- **Do not edit while Round 4 runs:** `ui-screens/**`, `app-logic.md`, `feedback-state-map.md`, `design-system/**`, `messages.json` — the terminal is changing them.
+- **Next:** main thread verifies Round 4 → Apurva approves → record D-82 (backlog §2f–§2h + today's icon / earnings / design-system decisions), freeze, commit, PR, merge → republish the Design System artifact + native hand-off notes (backlog). Then storyboard review (Part C) and the **calling walkthrough misses** (new thread): decisions only, recorded in a review file; applied to app-logic and pictures in one final render after Round 4 is merged.

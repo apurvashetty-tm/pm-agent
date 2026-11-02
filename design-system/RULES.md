@@ -192,6 +192,7 @@ Set once in the design system; a project never restyles them. Where `src/compone
 - **Labels:** verb first, sentence case, no full stop, never "Click" / "Tap".
 - **States:** pressed; disabled (design-system disabled style, exempt from contrast); busy (L2). A quiet action in progress shows text only ("Ending…"), no spinner. **Busy labels always end with "…"** ("Verifying…", "Sending OTP…") (D-54).
 - Links inside a sentence stay links (brand colour), not buttons.
+- **Button icon size steps with the button size** (Apurva, 2026-11-02; replaces the D-81 F27 pair-only rule): **56px action buttons (18px label) → 20px icon; 48px compact buttons (16px label) → 16px icon.** Icons stay on the icon scale (16 / 20 / 24) — like type and spacing, each size is a step on a fixed scale, never an in-between value; the icon is one step at or just above its label (as in Carbon, Atlassian and Fluent). **Icon-only buttons** (Back, Help, notifications, Profile, close ×, viewer controls) are not labelled buttons and keep a **20px** icon. Set centrally in `components.css` by button size (`.tm-btn--lg` → 20, compact → 16, `.tm-btn--icon` → 20), overriding any size in the markup; screens never size button icons. SALT's code copy states no per-button icon size; this is a Truemeds addition (`beyond-salt.md`).
 
 ### 9.2 Chips and choice grids
 - **Free-flowing chips** (e.g. frequency, food timing, date): fixed padding and font, width hugs the label, **wrap to the next row** when they don't fit. Never squeeze, clip or shrink text.
@@ -216,6 +217,7 @@ Set once in the design system; a project never restyles them. Where `src/compone
 | Actions | §9.1 order and size (56px, full width). Reason lists need no button. **Confirmation sheet** ("Leave this case?", "Discard changes?"): the action the sheet asks about on top — red outline if it can't easily be undone, primary otherwise — and the "stay" option as quiet text below. A sheet offering two real actions (e.g. Retry call / Mark as unavailable) is a choice, not a confirmation (D-54). |
 | Closing | ✕, tap outside or swipe down = cancel — **except while an action is in progress**. Unsaved input asks before closing. |
 | Size | Up to 85% of the screen height; the content scrolls, header and actions stay. Max width 640px on desktop. |
+- **Quiet text for "stay" (D-81 F11):** the option that keeps things as they are ("Stay signed in", "Keep available") is quiet text (`tm-btn--quiet`), never a secondary button.
 
 ### 9.5 Feedback
 | Surface | Rule |
@@ -226,6 +228,8 @@ Set once in the design system; a project never restyles them. Where `src/compone
 | **Toast** | **Dark** (inverse surface — the platform standard), **14/20**, 12px × 16px padding, medium radius, one line (two at most), width up to the screen minus margins. Just above the bottom bar, **one at a time**, about 4 seconds, polite screen-reader announcement, never takes focus. **Only when the result has no place on the screen**; otherwise show it where it happens. |
 | **Loading** | Busy primary (L2). |
 | **Rule** | One message per cause — never field error + notice + toast for the same thing. |
+
+**Keyboard (D-81):** when a text field is focused, the field scrolls above the keyboard with its label and helper visible (so the doctor can see what they type into). The pinned action bar hides while the keyboard is open and returns when it closes (same reason as §8 point 9, 16px clearance). Applies to Prescribe and the case page.
 
 ### 9.6 States every screen must cover
 A screen is not done until each state that applies is designed and rendered: **loading · empty · error / failed · offline · busy (in progress) · success / outcome · disabled · read-only · long content** (long names, two-line wraps at 360px wide).
