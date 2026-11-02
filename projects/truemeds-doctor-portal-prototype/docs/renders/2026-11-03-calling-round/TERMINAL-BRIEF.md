@@ -21,7 +21,9 @@ Folder: `~/src/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds
    - guards with counts of states checked; determinism; page errors
    - **NEEDS-APURVA:** the CW-F3 copy proposal, step-1 mismatches, anything the checklist doesn't settle (left as it was)
    - last line exactly: `ROUND 1 COMPLETE — failures: <n>`
-9. **Stop.** Don't wait or poll for another round. The main Claude thread reads `REPORT.md` and the pictures; if a Round 2 is needed, Apurva pastes a new prompt.
+9. **Fix and re-check by yourself — overnight loop (no waiting, no polling).** If `failures > 0`: fix only those failures (scope rule and §3 still apply), re-render only the affected states, re-run **all** gates G1–G7 (regression on everything, not just the fixes), append `## Round <n>` to `REPORT.md` ending `ROUND <n> COMPLETE — failures: <n>`. Repeat. **At most 4 rounds.** Stop early if the same failure survives two rounds — list it under NEEDS-APURVA with what you tried.
+10. **Independent check before you finish.** When failures reach 0, start a fresh subagent that has not seen your work. Give it only `CHECKLIST.md`, the expected list and the changed pictures (390 + 360). It checks each K / T item against the pictures at full size and reports PASS / FAIL. Any FAIL → back to step 9 (counts toward the 4 rounds).
+11. **Finish.** Append to `REPORT.md`: the independent check's table, the final NEEDS-APURVA list, and the last line exactly `CALLING ROUND DONE — failures: <n>, rounds: <n>`. Then stop.
 
 **Unattended:** Apurva is away. Don't stop to ask — anything the checklist doesn't settle goes under NEEDS-APURVA (left as it was) and you carry on.
 
