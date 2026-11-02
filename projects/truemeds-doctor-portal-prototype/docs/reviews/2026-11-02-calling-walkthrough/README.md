@@ -12,7 +12,7 @@
 | C · The gate | **Closed 2026-11-03** |
 | D · No result | **Closed 2026-11-03** |
 | E · Transfer | **Closed 2026-11-03** |
-| F · Fallback B | Next |
+| F · Fallback B | **Closed 2026-11-03** |
 
 ---
 
@@ -213,6 +213,8 @@ Mostly Cat4 (Knowlarity — nothing reaches the app until the result); also any 
 
 ## Path E · Transfer (Pilot Value Meds, Ozonetel) — closed 2026-11-03
 
+> **Launch note (CW-F1):** B ships first. 11 / 12 (route-labelled Confirm & transfer on the live call) belong to target A, the later version. At launch a Pilot live call uses B1 → B2 (path F); 13, 14, 15, 16, 17 and CW-E1–E3 apply to both.
+
 ### Final flow
 
 **11 · Calling, transfer case** (`t11`) — script "I'm writing your prescription now. Please stay on the line — I'll connect you to our Health Advisor."; status line "Calling {name}…"; no Back, no Callback (CW-A1). Exits: doctor's side fails → 3 / 4 · patient's side fails → 9 · call ends before the gate → 5 → 6 · gate time since the patient answered and call live → 12.
@@ -257,3 +259,59 @@ Mostly Cat4 (Knowlarity — nothing reaches the app until the result); also any 
 - **messages.json / feedback-state-map:** new "Waiting for the call to end…"; retire the 15b line for 15.
 - **Pictures:** t15 (bar: status line while live) + new state 15 after hang-up (Request next case · Back to Home); t17 (status line "Calling {name}…"); remove t15b from the set.
 - **Knowledge (`knowledge/context/`):** transfer mechanics — doctor dropped when the HA's phone rings; HA no-answer → order stays partially digitised, agent calls back.
+
+---
+
+## Path F · Fallback B — closed 2026-11-03
+
+> **B is the launch version** (CW-F1). HA reservation at call start (target A, OQ-032) comes later.
+
+### Final flow
+
+**B1 · Confirm prescription** (`g1`) — Pilot live call (Ozonetel). Neutral script "…Our Health Advisor will help you with the next steps." Status line "Calling {name}…" until the gate has passed since the patient answered and the call is live; then bar **Confirm prescription** · Skip HA (no Callback, CW-A1). Skip HA → as 17 (CW-E2). Call ends after the gate, before Confirm → **16** Confirm & forward · Skip HA, with the who-ended variants 16 / 16b / 16c (CW-F3).
+
+**B2 · Checking for a Health Advisor…** (`g2`) — status line, no buttons. HA free → 13 Transferring → 14. None free → B3.
+
+**B3 · Forwarded, no HA free** (`g3b`) — amber card "Forwarded to Health Advisor" + script `call.forwardedTell`; doctor still on the line. Bar as 15 (CW-E3): "Waiting for the call to end…" until the hang-up, then Request next case · Back to Home.
+
+### Decisions
+
+**CW-F1 · B ships first; A later** (Apurva)
+- The rebuild, PRD and test cases build **B first**. A (route known at call start, route-labelled Confirm & transfer / Confirm & forward on the live call — 11 / 12) stays documented as the later version.
+- **Changes:** D-58 pt 15 (A = target, B = documented fallback → B = launch, A = later); app-logic §5 Fallback B paragraph becomes the main Pilot flow; project CLAUDE.md / handoff "next" notes; the rebuild checklist (B states first).
+
+**CW-F2 · A forward is confirmed only on the partner's result** (bucket 3, backend — also applies to path E's 15)
+- From 15 and B3 the prescription was confirmed on our own live count, but the patient is forwarded, not transferred — no live-call check proves the gate. The forward is **confirmed only when the partner's result arrives** after the hang-up (as 7f). Result under the gate → CW-D3 (not confirmed, back through hold and retry; no ₹20; logged).
+- No screen change — the doctor still sees "Forwarded…" and moves on.
+- **Why:** same reasoning as CW-E2 — only the partner's result is proof; a transfer is safe because it needs a live call, a forward isn't.
+- **Changes:** app-logic §5 rows 15, B3; §6 transfer-vs-forward paragraph.
+
+**CW-F3 · B1 call ends after the gate, before Confirm → 16** — Confirm & forward · Skip HA, with the who-ended variants (16 doctor / 16b patient / 16c unknown) and their copy. **Copy check (settled 2026-11-03, D-83):** the current doctor line ("You ended the call before the transfer. Next time, stay on the line until the Health Advisor joins. They'll call the patient back.") is true in B too — in B the Health Advisor joins only after Confirm, so "stay on the line until the Health Advisor joins" already covers confirming. One key for A and B; no new copy.
+
+**Cross-check with A–E:** consistent — no Callback on B1 / B2 (CW-A1); Skip HA → 17 behaviour (CW-E2); B3 = 15 (CW-E1, CW-E3); 16 unchanged (CW-A3).
+
+### Apply pass for path F (after the fix round is merged)
+- **app-logic:** §5 Fallback B as the launch Pilot flow (B1 bar, B1 → 16, B3 bar per CW-E3); rows 15 / B3 confirmation on the result (CW-F2); §6.
+- **messages.json:** B3 uses "Waiting for the call to end…".
+- **Pictures:** B1 before the gate (Pilot "Calling {name}…" with the neutral script — new state, B is the launch flow), g1 (Confirm prescription · Skip HA), g2 / t13 greyed row without Callback, g3b (bar per CW-E3) + after-hang-up state.
+- **Decision log / docs:** record CW-F1 (launch order) prominently; rebuild checklist puts B first.
+
+---
+
+## Summary for the apply pass and the final audit
+
+**Rules changed (app-logic):** Callback only on 6 and 7d (CW-A1, C1, C3) · backend refuses a callback without leg 2 answered (CW-A1) · Release → Home (CW-A5) · 3 / 4 doctor-side only, patient-side → 9 (CW-B1) · Patient unavailable = hold and system retry by hangup cause (CW-B2) · 5 only after a known hang-up (CW-C2) · 7b skipped when the call is known ended (CW-D1) · 7d bar by route (CW-D2) · unproven confirm → not confirmed, hold and retry (CW-D3, D4) · 15 = transfer couldn't start (CW-E1) · 17 waits for the result (CW-E2) · 15 / B3 buttons after the hang-up (CW-E3) · forward confirmed on the result (CW-F2) · B ships first (CW-F1).
+
+**New states:** empty case with the amber notice (changed `a-no-medicines`) · B1 before the gate (Pilot calling, neutral script) · 7d Pilot (Confirm & forward · Callback + Unavailable) · 15 after hang-up · B3 after hang-up · callback-refused message (copy / state-map row).
+
+**Changed pictures:** t02, s7a, a-back-blocked, t11, t12, t17 (no Callback; 17 status-line sequence) · callback sheets (over a post-call state) · t05, t08a, t08b (bars) · t13, g2 (greyed row: Skip HA only) · t15 (status line while live), g1, g3b.
+
+**Retired:** 15b `call.end-call-first` · Callback on live states, 5, 8a, 8b · "Ops review queue" for missing records.
+
+**New copy:** callback refused · empty-case notice · "Waiting for the call to end…" · 7f Pilot wording if needed.
+
+**Old text to fix (bucket 2):** app-logic row 7e (1, 3, 4) and the §4 parenthesis · walkthrough page (Back / busy button on Calling; 15 "no HA joined").
+
+**Backlog / Engineering:** OQ-035 empty-case destination (open) · hangup-cause mapping and doctor-case retry settings · Knowlarity call-ended event? · partner for Pilot Non-Value Meds · mismatch analytics table · next version: Call again after a valid call (CW-C4), doctor trust score.
+
+**Final audit:** after the apply pass, every touched screen at 360 and 390 against `docs/renders/2026-11-03-calling-round/CHECKLIST.md`.

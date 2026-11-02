@@ -77,7 +77,7 @@ Order = the order we work in.
 - [ ] OQ-030 — polling interval, maximum call length, result wait, who ended the call.
 - [ ] OQ-031 — mobile data during a normal call.
 - [ ] OQ-032 — Health Advisor reservation and allocation.
-- [ ] OQ-033 — ops review queue for submitted cases whose record never arrives.
+- [x] OQ-033 — answered by D-83 (CW-D4): no record after a wait time → not confirmed, back through hold and retry; no Ops queue.
 - [ ] Separate discussion: a late record that shows talk time under 50 s.
 
 ## 4b. Next design round (logged, not in this release)
@@ -131,4 +131,7 @@ Brief: `docs/renders/2026-11-01-fix-round/TERMINAL-BRIEF.md` "Round 4"; audit: `
 - [x] Rounds 1–6 accepted; §2f, §2g, §2h and the Round 5 / 6 items are done (D-82).
 - [ ] Republish the Truemeds Design System artifact (`design-system/scripts/build_artifact.py`) with D-82's design-system changes.
 - [ ] Update the React Native hand-off notes (`ui-screens/*/NATIVE-HANDOFF.md`, `ui-screens/native/`, `design-system/native/`) with D-82.
-- [ ] Calling walkthrough misses (separate thread, `docs/reviews/2026-11-02-calling-walkthrough/`), then storyboard review (Part C).
+- [x] Calling walkthrough decided (paths A–F) and recorded as **D-83**.
+- [ ] **Calling round** — apply D-83 to the screens (`docs/renders/2026-11-03-calling-round/`, checklist + brief), then the DS artifact republish and native notes above in one go.
+- [ ] **Engineering (from D-83):** backend refuses a callback without leg 2 answered · hangup-cause mapping (patient-side → 9) and hold / retry settings for doctor cases · does Knowlarity send a call-ended event? · partner for Pilot Non-Value Meds · mismatch analytics table (doctor action vs call record).
+- [ ] Storyboard review (Part C).
