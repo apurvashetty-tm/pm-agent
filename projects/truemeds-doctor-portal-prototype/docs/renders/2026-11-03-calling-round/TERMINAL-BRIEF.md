@@ -23,7 +23,10 @@ Folder: `~/src/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds
    - last line exactly: `ROUND 1 COMPLETE — failures: <n>`
 9. **Fix and re-check by yourself — overnight loop (no waiting, no polling).** If `failures > 0`: fix only those failures (scope rule and §3 still apply), re-render only the affected states, re-run **all** gates G1–G7 (regression on everything, not just the fixes), append `## Round <n>` to `REPORT.md` ending `ROUND <n> COMPLETE — failures: <n>`. Repeat. **At most 4 rounds.** Stop early if the same failure survives two rounds — list it under NEEDS-APURVA with what you tried.
 10. **Independent check before you finish.** When failures reach 0, start a fresh subagent that has not seen your work. Give it only `CHECKLIST.md`, the expected list and the changed pictures (390 + 360). It checks each K / T item against the pictures at full size and reports PASS / FAIL. Any FAIL → back to step 9 (counts toward the 4 rounds).
-11. **Finish.** Append to `REPORT.md`: the independent check's table, the final NEEDS-APURVA list, and the last line exactly `CALLING ROUND DONE — failures: <n>, rounds: <n>`. Then stop.
+11. **Finish.** Append to `REPORT.md`: the independent check's table, the final NEEDS-APURVA list, and the last line exactly `CALLING ROUND DONE — failures: <n>, rounds: <n>`.
+12. **Wait for the main thread's audit (cheap wait, until 08:00 IST at most).** The main Claude thread audits your result around 04:00 IST and appends either `## MAIN-CHECK <n>` (fixes to make) or `## DONE` to this file. Wait with this one command, re-running it each time it returns without a match:
+    `for i in $(seq 1 9); do grep -q '^## MAIN-CHECK\|^## DONE' docs/renders/2026-11-03-calling-round/TERMINAL-BRIEF.md && break; sleep 60; done; grep '^## MAIN-CHECK\|^## DONE' docs/renders/2026-11-03-calling-round/TERMINAL-BRIEF.md`
+    Don't do anything else between re-runs. On a new `## MAIN-CHECK <n>`: apply it with the same rules (scope, all gates incl. G7, independent check), append `## Main-check <n>` to `REPORT.md` ending `MAIN-CHECK <n> DONE — failures: <n>`, then wait again for the next heading. On `## DONE`, or at 08:00 IST: stop.
 
 **Unattended:** Apurva is away. Don't stop to ask — anything the checklist doesn't settle goes under NEEDS-APURVA (left as it was) and you carry on.
 
