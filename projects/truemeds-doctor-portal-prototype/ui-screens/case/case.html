@@ -54,7 +54,7 @@ body.concept-load-failed #case-actionbar > :not(.concept-new){display:none}
 .concept-stack{display:flex;flex-direction:column;gap:var(--tm-space-lg);width:100%;box-sizing:border-box;padding:0 var(--tm-space-page)}
 .concept-bar-note{padding:0 var(--tm-space-page) var(--tm-space-sm);box-sizing:border-box}
 .concept-gap{margin:var(--tm-space-lg) 0}
-#main-scroll > .concept-new,#case-actionbar > .concept-new{margin-top:0}
+#main-scroll > .concept-new,#case-actionbar > .concept-new:not([class*="notice"]),#case-actionbar > .concept-new[class*="question"]{margin-top:0}   /* Round 5 item 1: notice bands in the bar keep the component's −16 top margin (their top edge is the bar's top edge); the question line keeps 0 */
 /* Standards pass (2026-10-15): medicine and order-detail meta text lifted from 12px to 14px (RULES §8.1); tags keep 12px. */
 #medicines-count,.med-detail,#pcb-label.pcb-label,.pdb-expand-label,.pdb-expand-value{font-size:14px !important;line-height:20px !important}
 /* Prescribe and Rx viewer text: L3 is 14px (RULES §8.1). Tags keep 12px. */
@@ -609,12 +609,12 @@ body.concept-closed #success-toast{pointer-events:auto}
   <div id="sheet-callback" class="bottom-sheet tm-sheet">
     <header class="tm-sheet__header"><h2 class="tm-sheet__title">Schedule callback</h2><button class="tm-btn tm-btn--quiet tm-btn--icon tm-sheet__close" onclick="closeSheet()" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button></header>
     <div class="tm-sheet__body">
-      <div class="tm-field__label sheet-section-label">Date</div>
+      <div class="tm-sheet__label sheet-section-label">Date</div>
       <div class="tm-chip-group" id="callback-day-chips">
         <button class="tm-chip tm-chip--lg" aria-pressed="false" data-day="today" onclick="selectCallbackDay('today')">Today</button>
         <button class="tm-chip tm-chip--lg" aria-pressed="false" data-day="tomorrow" onclick="selectCallbackDay('tomorrow')">Tomorrow</button>
       </div>
-      <div class="tm-field__label sheet-section-label">Time</div>
+      <div class="tm-sheet__label sheet-section-label">Time</div>
       <div class="tm-chip-grid tm-chip-grid--3" id="callback-time-chips">
         <button class="tm-chip tm-chip--lg" aria-pressed="false" data-time="09:00" onclick="selectCallbackTime('09:00')">9:00 AM</button>
         <button class="tm-chip tm-chip--lg" aria-pressed="false" data-time="09:30" onclick="selectCallbackTime('09:30')">9:30 AM</button>
@@ -630,8 +630,8 @@ body.concept-closed #success-toast{pointer-events:auto}
         <button class="tm-chip tm-chip--lg" aria-pressed="false" data-time="18:00" onclick="selectCallbackTime('18:00')">6:00 PM</button>
       </div>
       <div class="tm-field tm-field--error" id="callback-error-wrap"><div id="callback-error" class="tm-field__helper callback-error" role="alert" hidden></div></div>
-      <div class="tm-sheet__actions"><button class="tm-btn tm-btn--primary tm-btn--lg tm-btn--block" onclick="confirmScheduleCallback()">Confirm callback</button></div>
     </div>
+    <div class="tm-sheet__actions"><button class="tm-btn tm-btn--primary tm-btn--lg tm-btn--block" onclick="confirmScheduleCallback()">Confirm callback</button></div>
   </div>
 
 
@@ -640,7 +640,7 @@ body.concept-closed #success-toast{pointer-events:auto}
     <header class="tm-sheet__header"><h2 class="tm-sheet__title">Skip the Health Advisor call</h2><button class="tm-btn tm-btn--quiet tm-btn--icon tm-sheet__close" onclick="closeSheet()" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button></header>
     <div class="tm-sheet__body">
       <!-- [OPEN DECISION] OQ-008: skip eligibility TBD -->
-      <p class="tm-sheet__subtitle">Select reason</p>
+      <p class="tm-sheet__label">Select reason</p>
       <button class="tm-option" onclick="confirmSkipHA('Patient declined HA call')"><span class="tm-option__title">Patient declined the Health Advisor call</span><span class="tm-option__desc">The patient didn’t want the call</span></button>
       <button class="tm-option" onclick="confirmSkipHA('Clinically not required')"><span class="tm-option__title">Clinically not required</span><span class="tm-option__desc">Health Advisor counselling isn’t needed</span></button>
       <button class="tm-option" onclick="confirmSkipHA('Repeat patient — familiar with medicines')"><span class="tm-option__title">Repeat patient, familiar with the medicines</span><span class="tm-option__desc">Counselled in an earlier order</span></button>
@@ -652,16 +652,16 @@ body.concept-closed #success-toast{pointer-events:auto}
     <header class="tm-sheet__header"><h2 class="tm-sheet__title">Discard changes?</h2><button class="tm-btn tm-btn--quiet tm-btn--icon tm-sheet__close" onclick="closeSheet()" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button></header>
     <div class="tm-sheet__body">
       <p class="tm-sheet__subtitle">Your changes to this medicine will not be saved.</p>
-      <div class="tm-sheet__actions"><button class="tm-btn tm-btn--destructive tm-btn--lg tm-btn--block" onclick="discardPrescribe()">Discard</button>
-        <button class="tm-btn tm-btn--quiet tm-btn--lg tm-btn--block" onclick="closeSheet()">Keep editing</button></div>
     </div>
+    <div class="tm-sheet__actions"><button class="tm-btn tm-btn--destructive tm-btn--lg tm-btn--block" onclick="discardPrescribe()">Discard</button>
+      <button class="tm-btn tm-btn--quiet tm-btn--lg tm-btn--block" onclick="closeSheet()">Keep editing</button></div>
   </div>
 
   <!-- Disable Medicine Reason Sheet -->
   <div id="sheet-disable-reason" class="bottom-sheet tm-sheet">
     <header class="tm-sheet__header"><h2 class="tm-sheet__title">Disable medicine</h2><button class="tm-btn tm-btn--quiet tm-btn--icon tm-sheet__close" onclick="closeSheet()" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button></header>
     <div class="tm-sheet__body">
-      <div class="tm-sheet__subtitle" id="sheet-disable-med-label">Select reason</div>
+      <div class="tm-sheet__label" id="sheet-disable-med-label">Select reason</div>
       <div class="reason-list">
         <button class="tm-option" onclick="confirmDisable('Cannot prescribe remotely')"><span class="tm-option__title">Cannot prescribe remotely</span><span class="tm-option__desc">Requires in-person consultation</span></button>
         <button class="tm-option" onclick="confirmDisable('Contraindicated for patient')"><span class="tm-option__title">Contraindicated for patient</span><span class="tm-option__desc">Allergy or known reaction</span></button>
@@ -676,7 +676,7 @@ body.concept-closed #success-toast{pointer-events:auto}
   <div id="sheet-mark-unavailable" class="bottom-sheet tm-sheet">
     <header class="tm-sheet__header"><h2 class="tm-sheet__title">Mark patient unavailable</h2><button class="tm-btn tm-btn--quiet tm-btn--icon tm-sheet__close" onclick="closeSheet()" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button></header>
     <div class="tm-sheet__body">
-      <div class="tm-sheet__subtitle">Select reason</div>
+      <div class="tm-sheet__label">Select reason</div>
       <div class="reason-list">
         <button class="tm-option" onclick="chooseUnavailableReason()"><span class="tm-option__title">Didn't answer</span><span class="tm-option__desc">Rang with no answer, or the line was busy</span></button>
         <button class="tm-option" onclick="chooseUnavailableReason()"><span class="tm-option__title">Not reachable</span><span class="tm-option__desc">Phone switched off or out of coverage</span></button>
@@ -742,18 +742,19 @@ body.concept-closed #success-toast{pointer-events:auto}
     <header class="tm-sheet__header"><h2 class="tm-sheet__title">Log out?</h2><button class="tm-btn tm-btn--quiet tm-btn--icon tm-sheet__close" onclick="closeSheet()" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button></header>
     <div class="tm-sheet__body">
       <p class="tm-sheet__subtitle">You'll stop getting orders until you sign in again.</p>
-      <button class="tm-btn tm-btn--secondary tm-btn--block" onclick="closeSheet()">Stay signed in</button>
-      <button class="tm-btn tm-btn--destructive tm-btn--block sheet-link-margin" onclick="confirmLogout()">Log out</button>
+    </div>
+    <div class="tm-sheet__actions">
+      <button class="tm-btn tm-btn--destructive tm-btn--lg tm-btn--block" onclick="confirmLogout()">Log out</button>
+      <button class="tm-btn tm-btn--quiet tm-btn--lg tm-btn--block" onclick="closeSheet()">Stay signed in</button>
     </div>
   </div>
 
   <!-- Retry Sheet — no_answer / timeout paths -->
   <div id="sheet-retry" class="bottom-sheet tm-sheet">
     <header class="tm-sheet__header"><h2 class="tm-sheet__title" id="sheet-retry-title">Patient didn't pick up</h2><button class="tm-btn tm-btn--quiet tm-btn--icon tm-sheet__close" onclick="closeSheet()" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button></header>
-    <div class="tm-sheet__body">
-      <div class="tm-sheet__actions"><button class="tm-btn tm-btn--primary tm-btn--lg tm-btn--block" onclick="retryCall()">Retry call</button>
-        <button class="tm-btn tm-btn--destructive tm-btn--lg tm-btn--block" onclick="markCustomerUnavailable()">Mark as unavailable</button></div>
-    </div>
+    <div class="tm-sheet__body"></div>   <!-- keeps the 24 gap above the actions (same as before the actions were pinned) -->
+    <div class="tm-sheet__actions"><button class="tm-btn tm-btn--primary tm-btn--lg tm-btn--block" onclick="retryCall()">Retry call</button>
+      <button class="tm-btn tm-btn--destructive tm-btn--lg tm-btn--block" onclick="markCustomerUnavailable()">Mark as unavailable</button></div>
   </div>
 
   <!-- Customer Unavailable Sheet -->
@@ -761,8 +762,8 @@ body.concept-closed #success-toast{pointer-events:auto}
     <header class="tm-sheet__header"><h2 class="tm-sheet__title">Patient unavailable</h2><button class="tm-btn tm-btn--quiet tm-btn--icon tm-sheet__close" onclick="closeSheet()" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button></header>
     <div class="tm-sheet__body">
       <p id="unavail-desc" class="tm-sheet__subtitle">Patient could not be reached. Case will be reassigned to the queue.</p>
-      <div class="tm-sheet__actions"><button class="tm-btn tm-btn--primary tm-btn--lg tm-btn--block" onclick="requestNextOrder()">Request next case <span class="tm-icon" data-icon="arrow-right"></span></button></div>
     </div>
+    <div class="tm-sheet__actions"><button class="tm-btn tm-btn--primary tm-btn--lg tm-btn--block" onclick="requestNextOrder()">Request next case <span class="tm-icon" data-icon="arrow-right"></span></button></div>
   </div>
 </div><!-- /sheet-overlay -->
 
@@ -796,6 +797,15 @@ body.concept-closed #success-toast{pointer-events:auto}
 <script src="../feedback/messages.js"></script>
 <script src="../../app.js"></script>
 <script>
+// Round 4 lane D (item 6, 360×640 guard): syncCaseActionBar was called but never defined, so --ab-h stayed 0 and the
+// phone scroll ended under the pinned bar. It now reserves the bar's real height (mobile only; CSS owns the padding).
+function syncCaseActionBar() {
+  const b = document.getElementById('case-actionbar');
+  const h = b && getComputedStyle(b).display !== 'none' ? Math.ceil(b.getBoundingClientRect().height) : 0;
+  document.documentElement.style.setProperty('--ab-h', h + 'px');
+}
+window.addEventListener('resize', syncCaseActionBar);
+document.addEventListener('DOMContentLoaded', syncCaseActionBar);
 /* CONCEPT v4 driver: every state in the matrix (v2/README.md) reached with index.html's own functions and controls. */
 (function () {
   const q = new URLSearchParams(location.search);
@@ -835,7 +845,7 @@ body.concept-closed #success-toast{pointer-events:auto}
   frame.appendChild(leave);
   const toast = document.createElement('div');
   toast.id = 'concept-toast'; toast.hidden = true;
-  toast.innerHTML = `<div class="tm-toast" role="status">Finish this case first. Then you can go back to Home.</div>`;
+  toast.innerHTML = `<div class="tm-toast" role="status">Finish this case first. <br>Then you can go back to Home.</div>`;   // B-21: the break falls between the two sentences (the space keeps the approved text)
   frame.appendChild(toast);
   const back = document.createElement('button');
   back.id = 'concept-back-home'; back.type = 'button'; back.className = 'tm-btn tm-btn--lg tm-btn--block tm-btn--quiet';
@@ -979,7 +989,9 @@ body.concept-closed #success-toast{pointer-events:auto}
     card.classList.toggle('is-neutral', neutral);
     card.classList.remove('tm-status-card--success', 'tm-status-card--neutral', 'tm-status-card--warning'); card.classList.add(neutral ? 'tm-status-card--neutral' : 'tm-status-card--success');   // D-62 tinted outcome
     const ic = card.querySelector('#success-toast-icon .tm-icon');
-    if (ic) { ic.setAttribute('data-icon', neutral ? 'info-circle' : 'circle-check'); if (window.TMIcons) TMIcons.render(card); }
+    // B-22: the icon says what happened (calendar for a callback, phone-off for an unavailable patient); ⓘ means "more info" elsewhere
+    const outcomeIcon = t === 'Callback Scheduled' ? 'calendar' : (t === 'Patient unavailable' ? 'phone-off' : 'circle-check');
+    if (ic) { ic.setAttribute('data-icon', outcomeIcon); if (window.TMIcons) TMIcons.render(card); }
     syncConcept();
   };
   const _init = initiateCall;
@@ -996,6 +1008,8 @@ body.concept-closed #success-toast{pointer-events:auto}
       const t = el.textContent.replace(/^—\s*\S*\s*/, '').replace(/^\s*/, '');
       el.textContent = t.charAt(0).toUpperCase() + t.slice(1);
     }
+    // B-12: a number stays with its unit ("6 months", never "6 / months" across two lines)
+    if (el) el.textContent = el.textContent.replace(/(\d) (?=[A-Za-z])/g, '$1 ');
   };
   // R17-2 (D-55 item 2): duration units are words, so they are free chips that wrap; the numbers stay a grid at the shared chip size.
   function fixDurationPanel() {
@@ -1005,7 +1019,12 @@ body.concept-closed #success-toast{pointer-events:auto}
     if (grids[1]) { const grp = document.createElement('div'); grp.className = 'tm-chip-group'; grp.setAttribute('role', 'group'); grp.setAttribute('aria-label', 'Duration unit'); [...grids[1].children].forEach(c => grp.appendChild(c)); const wrap = document.createElement('div'); wrap.className = 'ps-dur-units'; wrap.appendChild(grp); grids[1].replaceWith(wrap); }
   }
   const _rp = renderPrescribe;
-  renderPrescribe = function () { _rp(); fixDurationPanel(); fixDoseError(); };
+  renderPrescribe = function () { _rp(); fixDurationPanel(); fixDoseError(); fixDoseUnitLabels(); };
+  // B-11 (Round 4 lane D, main-thread item 4): each form keeps its own unit in the heading ("Dose (ml)", "Dose (puffs)";
+  // injection heading plain "Dose", D-15). Only the injection Other entry is worded "Dose (units)".
+  function fixDoseUnitLabels() {
+    if (typeof EDIT_STATE !== 'undefined' && EDIT_STATE.form === 'injection') document.querySelectorAll('label[for="ps-other"]').forEach(l => { l.textContent = 'Dose (units)'; });
+  }
   // D-81 F16: the dose error is field text under the M / A / N grid, not a tinted box
   function fixDoseError() {
     document.querySelectorAll('#ps-dose-section .tm-notice--error').forEach(n => {
@@ -1094,6 +1113,10 @@ body.concept-closed #success-toast{pointer-events:auto}
   const busy = label => btn('tm-btn--primary tm-btn--block', '<span class="tm-spinner" aria-hidden="true"></span>' + label, true);
   // D-74: long waits are status text, not a busy button (the 7 states of the 2026-10-30 round; short waits keep busy())
   const statusLine = label => { const d = document.createElement('div'); d.className = 'tm-status-line'; d.setAttribute('role', 'status'); d.innerHTML = '<span class="tm-spinner" aria-hidden="true"></span>' + label; return d; };
+  // B-01 / B-02: a status line in a button's row is one button tall, so the bar keeps its height when it replaces the buttons
+  const statusRow = label => { const d = statusLine(label); d.style.minHeight = '56px'; d.style.justifyContent = 'center'; return d; };
+  // B-01: the secondary row stays in place, greyed, while a busy state runs (Callback and Skip HA are not offered)
+  const greyPair = () => { const w = pair(btn('tm-btn--secondary', icon('calendar') + 'Callback'), btn('tm-btn--secondary', icon('player-track-next') + 'Skip HA')); w.querySelectorAll('button').forEach(b => { b.disabled = true; }); return w; };
   const callbackRow = () => { const w = document.createElement('div'); w.className = 'tm-btn-pair'; w.style.order = getComputedStyle($('ab-secondary')).order; w.style.gridTemplateColumns = '1fr'; w.appendChild(btn('tm-btn--secondary', icon('calendar') + 'Callback')); return w; };
   const calling = scn => { switchScenario(scn); initiateCall(); return later(() => { setBar(statusLine('Calling ' + first() + '…'), callbackRow()); showScript(); }, 250); };   // D-81 F21: no header Back from the call tap on
   // Round 3: the Release button while the release runs (D-74: short wait, busy button)
@@ -1121,7 +1144,7 @@ body.concept-closed #success-toast{pointer-events:auto}
     'd-default':               () => { switchScenario(CAT4); openPS(1); },
     'd-scrolled':              () => { switchScenario(CAT4); openPS(1); later(() => { $('ps-body').scrollTop = 420; }, 150); return 'wait'; },
     'd-error-dose':            () => { switchScenario(CAT4); openPS(1); EDIT_STATE.interval = 'daily'; EDIT_STATE.m = 0; EDIT_STATE.a = 0; EDIT_STATE.n = 0; renderPrescribe(); confirmMedEdit(); },
-    'd-error-other':           () => { switchScenario(CAT4); openPS(4); EDIT_STATE.doseOther = true; EDIT_STATE.doseOtherVal = 'abc'; renderPrescribe(); confirmMedEdit(); },
+    'd-error-other':           () => { switchScenario(CAT4); openPS(4); EDIT_STATE.doseOther = true; EDIT_STATE.doseOtherVal = '7..5'; renderPrescribe(); confirmMedEdit(); },   // B-18: a typo the number pad really allows (two decimal points)
     'd-sos-on':                () => { switchScenario(CAT4); openPS(1); EDIT_STATE.sos = true; renderPrescribe(); },
     'd-notes-keyboard':        () => { switchScenario(CAT4); openPS(1); $('ps-note').focus(); },
     'd-discard-sheet':         () => { switchScenario(CAT4); openPS(1); EDIT_STATE.note = 'Take after dinner'; renderPrescribe(); requestClosePrescribe(); },
@@ -1152,15 +1175,15 @@ body.concept-closed #success-toast{pointer-events:auto}
     'd-disabled':              () => { switchScenario(CAT4); const m = DOCTOR_STATE.currentCase.medicines.find(x => x.id === 1); m.disabled = true; m.disable_reason = 'Patient declined'; openPS(1); },   // D-81 F17 (D-20)
     'a-confirm-busy':          () => { passGate(CAT4); allRx(); $('action-zone').style.display = 'none'; const b = $('main-cta-btn'); b.classList.add('tm-btn--busy'); b.disabled = true; b.setAttribute('aria-busy', 'true'); b.innerHTML = '<span class="tm-spinner" aria-hidden="true"></span>' + MSG('case.confirming'); $('ab-secondary').querySelectorAll('button').forEach(x => x.disabled = true); $('case-actionbar').querySelectorAll(':scope > button').forEach(x => { if (x !== b) x.disabled = true; }); window.__frozen = true; syncConcept(); },   // D-81 F24/F25: rows and notes read-only; View Rx stays outlined (D-76)
     'a-confirm-failed':        () => { passGate(CAT4); allRx(); $('action-zone').style.display = 'none'; noticeAboveBar(notice('error', 'alert', MSG('case.confirmFailed'), 'alert-circle')); },
-    'a-release-failed':        () => { switchScenario(CAT4); showLeave(); const b = $('cl-release'); b.classList.add('tm-btn--busy'); b.disabled = true; b.innerHTML = '<span class="tm-spinner" aria-hidden="true"></span>Releasing…'; $('cl-stay').disabled = true; $('cl-x').disabled = true; setTimeout(() => { leave.hidden = true; b.classList.remove('tm-btn--busy'); b.disabled = false; b.textContent = 'Release case'; $('cl-stay').disabled = false; $('cl-x').disabled = false; noticeInContent(notice('error', 'alert', MSG('case.releaseFailed'), 'alert-circle')); ready(); }, 300); return 'wait'; },
+    'a-release-failed':        () => { switchScenario(CAT4); showLeave(); const b = $('cl-release'); b.classList.add('tm-btn--busy'); b.disabled = true; b.innerHTML = '<span class="tm-spinner" aria-hidden="true"></span>Releasing…'; $('cl-stay').disabled = true; $('cl-x').disabled = true; setTimeout(() => { leave.hidden = true; b.classList.remove('tm-btn--busy'); b.disabled = false; b.textContent = 'Release case'; $('cl-stay').disabled = false; $('cl-x').disabled = false; noticeAboveBar(notice('error', 'alert', MSG('case.releaseFailed'), 'alert-circle')); ready(); }, 300); return 'wait'; },   // A-19: the result of an action sits in the bar, above its button
     'd-rx-failed':             () => { switchScenario(CAT4); openRxOverlay(); $('rx-doc-wrapper').style.display = 'none'; $('rx-hint').style.display = 'none'; $('rx-controls').style.display = 'none'; const f = document.createElement('div'); f.className = 'concept-new concept-stack'; f.appendChild(notice('error', 'alert', MSG('rx.loadFailed'), 'alert-circle')); $('rx-overlay-body').appendChild(f); const bar = document.createElement('div'); bar.className = 'tm-actionbar concept-new'; bar.appendChild(pinnedTryAgain()); $('rx-overlay').appendChild(bar); },
-    'a-no-medicines':          () => { switchScenario(CAT4); renderMedicines([]); $('medicines-count').style.display = 'none'; const e = document.getElementById('medicines-empty'); e.hidden = false; e.innerHTML = '<div class="tm-empty"><p class="tm-empty__title">' + MSG('case.noMedicines') + '</p></div>'; window.__emptyCase = true; $('action-zone').style.display = 'none'; const rel = btn('tm-btn--primary tm-btn--block', 'Release case'); rel.onclick = () => $('cl-release').click(); setBar(rel); },   // D-81 F23 (D-80 pt 4)
+    'a-no-medicines':          () => { switchScenario(CAT4); renderMedicines([]); $('medicines-count').style.display = 'none'; const e = document.getElementById('medicines-empty'); e.hidden = false; e.innerHTML = '<p class="case-empty-text">' + MSG('case.noMedicines') + '</p>'; window.__emptyCase = true; $('action-zone').style.display = 'none'; const rel = btn('tm-btn--primary tm-btn--block', 'Release case'); rel.onclick = () => $('cl-release').click(); setBar(rel); },   // D-81 F23 (D-80 pt 4)
     'a-long-content':          () => { switchScenario(CAT4); const c = DOCTOR_STATE.currentCase; c.patient_name = 'Venkataraman Ramachandran Iyer'; c.patient_age = 54; document.getElementById('case-head').classList.add('is-long'); c.medicines[0].name = 'Amoxicillin Clavulanate Dispersible'; c.medicines[0].strength = '625mg'; render(); },
     's-10-medicines':          () => { switchScenario(CAT4); const c = DOCTOR_STATE.currentCase; const base = c.medicines.slice(); for (let i = 0; i < 7; i++) { const m = Object.assign({}, base[i % base.length], { id: 100 + i, name: ['Pantoprazole', 'Cetirizine', 'Ibuprofen', 'Losartan', 'Telmisartan', 'Levocetirizine', 'Montelukast'][i], strength: ['40mg', '10mg', '400mg', '50mg', '40mg', '5mg', '10mg'][i] }); c.medicines.push(m); } render(); },
     's-medicine-disabled':     () => { switchScenario(CAT4); const c = DOCTOR_STATE.currentCase; c.medicines[0].validation_status = 'prescribed'; c.medicines[1].disabled = true; c.medicines[1].disable_reason = 'Patient declined'; render(); },   // a Disabled row on the case page (app-logic: grey tag, removed from the order)
-    's-optional-empty':        () => { switchScenario(CAT4); const c = DOCTOR_STATE.currentCase; c.order_created = ''; c.order_delivery = ''; c.payment_mode = ''; render(); const n = document.getElementById('symptoms-input'); if (n) n.value = ''; $('ct-details').style.visibility = 'hidden'; },   // no order details: keep the slot, View Rx stays at the right edge (D-54 D15)
-    'g1-generic-confirm':      () => { passGate(VALUE); allRx(); return later(() => { $('pcb-text').textContent = MSG('call.scriptNeutral'); const b = $('main-cta-btn'); b.textContent = 'Confirm prescription'; }, 250); },
-    'g2-checking-ha':          () => { passGate(VALUE); allRx(); return later(() => { $('pcb-text').textContent = MSG('call.scriptNeutral'); setBar(statusLine(MSG('call.checkingHa'))); }, 250); },
+    's-optional-empty':        () => { switchScenario(CAT4); const c = DOCTOR_STATE.currentCase; c.order_created = ''; c.order_delivery = ''; c.payment_mode = ''; render(); const n = document.getElementById('symptoms-input'); if (n) n.value = ''; $('ct-details').style.display = 'none'; },   // no order details: B-16 View Rx moves to the left edge of its card
+    'g1-generic-confirm':      () => { passGate(VALUE); allRx(); return later(() => { $('pcb-text').textContent = MSG('call.scriptNeutral'); setBar(btn('tm-btn--primary tm-btn--block', 'Confirm prescription')); }, 250); },   // Round 6 (G5 race): the bar is set once here, after the render settles; the secondary row (Callback / Skip HA) is not part of this state
+    'g2-checking-ha':          () => { passGate(VALUE); allRx(); return later(() => { $('pcb-text').textContent = MSG('call.scriptNeutral'); setBar(statusRow(MSG('call.checkingHa')), greyPair()); }, 250); },   // B-02 / B-01: same bar height as g1
     'g3b-forwarded':           () => closeCase(VALUE, () => { showSuccessToast('Forwarded for Review', ''); $('success-toast-title').textContent = 'Forwarded to Health Advisor'; cardText(MSG('call.transferFailed'), true); scriptAfterOutcome(MSG('call.forwardedTell')); }),   // D-62 update: B3 amber, like 15; D-81 F4: same wording as 15
     't01-ready':               () => { switchScenario(CAT4); },
     't02-calling':             () => calling(CAT4),
@@ -1176,7 +1199,7 @@ body.concept-closed #success-toast{pointer-events:auto}
     't10b-forwarded':          () => { switchScenario(FWD); allRx(); return closeCase(FWD); },
     't11-calling-transfer':    () => calling(VALUE),
     't12-transfer-ready':      () => { passGate(VALUE); allRx(); return later(() => showScript(), 200); },
-    't13-connecting-ha':       () => { passGate(VALUE); allRx(); return later(() => { showScript(); setBar(busy(MSG('call.connectingHa'))); window.__frozen = true; syncConcept(); }, 250); },   // D-81 F24
+    't13-connecting-ha':       () => { passGate(VALUE); allRx(); return later(() => { showScript(); setBar(busy(MSG('call.connectingHa')), greyPair()); window.__frozen = true; syncConcept(); }, 250); },   // D-81 F24; B-01: the secondary row stays, greyed
     't14-transferred':         () => { switchScenario(VALUE); allRx(); return closeCase(VALUE); },
     't15b-end-call-first':     () => closeCase(VALUE, () => { showSuccessToast('Forwarded for Review', ''); cardText(MSG('call.transferFailed'), true); scriptAfterOutcome(MSG('call.forwardedTell')); noticeAboveBar(notice('warning', 'status', MSG('call.endCallFirst'), 'phone')); }),   // D-63; D-81 F26: amber warning
     't15-ha-no-join':          () => closeCase(VALUE, () => { showSuccessToast('Forwarded for Review', ''); cardText(MSG('call.transferFailed'), true); scriptAfterOutcome(MSG('call.forwardedTell')); }),
@@ -1187,7 +1210,7 @@ body.concept-closed #success-toast{pointer-events:auto}
     // S7. No call result (2026-10-24)
     's7a-calling':             () => { switchScenario(CAT4); initiateCall(); return later(() => { setBar(statusLine('Calling ' + first() + '…'), callbackRow()); showScript(); }, 250); },
     's7b-still-on-call':       () => { switchScenario(CAT4); initiateCall(); return later(() => { setBar(...ask()); showScript(); }, 250); },
-    's7c-checking':            () => { switchScenario(CAT4); initiateCall(); return later(() => { setBar(statusLine(MSG('call.checkingResult'))); $('pre-call-brief').style.display = 'none'; }, 250); },
+    's7c-checking':            () => { switchScenario(CAT4); initiateCall(); return later(() => { const q = ask(); q[0].style.visibility = 'hidden'; setBar(q[0], statusRow(MSG('call.checkingResult'))); $('pre-call-brief').style.display = 'none'; }, 250); },   // B-02: the question keeps its height (hidden); the status line takes the buttons' row
     's7d-result-missing':      () => { switchScenario(CAT4); initiateCall(); allRx(); return later(() => s7dBar(), 250); },
     's7d-unavailable-sheet':   () => { switchScenario(CAT4); initiateCall(); allRx(); return later(() => { s7dBar(); openSheet('sheet-mark-unavailable'); }, 250); },
     's7e-leave-sheet':         () => { switchScenario(CAT4); return later(() => { showLeave(); }, 250); },   // D-81 F22: over Ready
@@ -1200,7 +1223,7 @@ body.concept-closed #success-toast{pointer-events:auto}
     'c-callback-failed':       () => { switchScenario(CAT4); initiateCall(); return later(() => { setBar(statusLine('Calling ' + first() + '…'), callbackRow()); showScript(); openSheet('sheet-callback'); selectCallbackDay('today'); selectCallbackTime('15:00'); const a = document.querySelector('#sheet-callback .tm-sheet__actions'); const g = document.createElement('div'); g.className = 'concept-new concept-gap'; g.appendChild(notice('error', 'alert', MSG('case.callbackFailed'), 'alert-circle')); a.before(g); }, 250); },
   };
   // ---- D-81 Prescribe and keyboard fixes ----
-  $('ps-note-label').textContent = MSG('prescribe.notesLabel');   // F19
+  $('ps-note-label').innerHTML = MSG('prescribe.notesLabel').replace('(optional)', '<span class="tm-muted">(optional)</span>');   // F19; B-10: "(optional)" grey and regular, as on Food
   $('ps-note-helper').textContent = MSG('prescribe.notesHelper');
   FORM_DOSE.capsule.each = [1, 2]; FORM_DOSE.capsule.slot = [0, 1, 2];   // F15: capsules take 1 or 2, no half
   // F14 (D-80 pt 3): the SOS limit prints the daily total in the medicine's unit
@@ -1236,11 +1259,22 @@ body.concept-closed #success-toast{pointer-events:auto}
   openMedEdit = function (id) { _omd(id); document.getElementById('ps-disabled-text').textContent = MSG('case.disabledMedicine', { reason: EDIT_STATE.disableReason || '' }); };
   // F20 keyboard rule: a focused field in the case page or Prescribe scrolls above the keyboard (label and helper stay visible); the pinned bar hides while it is open
   const kbSim = document.createElement('div'); kbSim.id = 'kb-sim'; kbSim.setAttribute('aria-hidden', 'true');
-  kbSim.innerHTML = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '', '0', '⌫'].map(k => `<div>${k}</div>`).join('');
+  // B-18: notes take a text keyboard; the Other dose keeps the number pad, with a decimal key
+  const KB_NUM = [['1'], ['2'], ['3'], ['4'], ['5'], ['6'], ['7'], ['8'], ['9'], ['.'], ['0'], ['⌫']];
+  const KB_TEXT = [...'qwertyuiop'].map(k => [k]).concat([...'asdfghjkl'].map(k => [k]), [['', 1]],
+    [['⇧', 1], ...[...'zxcvbnm'].map(k => [k]), ['⌫', 2]], [['123', 2], ['space', 6], ['return', 2]]);
+  function renderKb(mode) {
+    const text = mode === 'text';
+    kbSim.style.gridTemplateColumns = text ? 'repeat(10, minmax(0, 1fr))' : '';
+    kbSim.style.gridTemplateRows = text ? 'repeat(4, 1fr)' : '';
+    kbSim.innerHTML = (text ? KB_TEXT : KB_NUM).map(([k, span]) => `<div${k === '' ? ' class="kb-blank"' : ''}${span ? ` style="grid-column: span ${span}"` : ''}>${k}</div>`).join('');
+  }
+  renderKb('num');
   frame.appendChild(kbSim);
   const FIELD_SEL = '#main-scroll textarea, #main-scroll input, #prescribe-screen textarea, #prescribe-screen input';
   document.addEventListener('focusin', e => {
     if (!e.target.matches || !e.target.matches(FIELD_SEL)) return;
+    renderKb(e.target.id === 'ps-other' ? 'num' : 'text');
     document.body.classList.add('kb-open');
     const field = e.target.closest('.tm-field') || e.target;
     const scroller = e.target.closest('#ps-body') || main;
@@ -1255,5 +1289,6 @@ body.concept-closed #success-toast{pointer-events:auto}
   setTimeout(syncConcept, 60);
 })();
 </script>
+  <script src="../../../../design-system/src/sheet-scroll.js"></script>
 </body>
 </html>

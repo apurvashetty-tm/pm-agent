@@ -1,0 +1,10 @@
+{
+  "count": 5,
+  "errors": {
+    "home/home_setup-wheel_w360x640": [],
+    "home/home_setting_w360x640": [],
+    "home/home_setup-failed_w360x640": [],
+    "home/home_idle-expired_w360x640": [],
+    "home/home_manually-ended_w360x640": []
+  }
+}

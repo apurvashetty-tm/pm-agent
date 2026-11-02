@@ -1,0 +1,2617 @@
+{
+  "identical": [],
+  "different": [
+    {
+      "name": "case/a-back-blocked_w360.png",
+      "bbox": [
+        8,
+        39,
+        712,
+        1398
+      ]
+    },
+    {
+      "name": "case/a-back-blocked_w390.png",
+      "bbox": [
+        8,
+        39,
+        772,
+        1398
+      ]
+    },
+    {
+      "name": "case/a-confirm-busy_w360.png",
+      "bbox": [
+        0,
+        39,
+        720,
+        1656
+      ]
+    },
+    {
+      "name": "case/a-confirm-busy_w390.png",
+      "bbox": [
+        0,
+        39,
+        780,
+        1656
+      ]
+    },
+    {
+      "name": "case/a-confirm-failed_w360.png",
+      "bbox": [
+        0,
+        39,
+        720,
+        1447
+      ]
+    },
+    {
+      "name": "case/a-confirm-failed_w390.png",
+      "bbox": [
+        0,
+        39,
+        780,
+        1447
+      ]
+    },
+    {
+      "name": "case/a-leave-sheet_w360.png",
+      "bbox": [
+        8,
+        39,
+        712,
+        1236
+      ]
+    },
+    {
+      "name": "case/a-leave-sheet_w390.png",
+      "bbox": [
+        8,
+        39,
+        772,
+        1236
+      ]
+    },
+    {
+      "name": "case/a-load-failed_w360.png",
+      "bbox": [
+        38,
+        39,
+        685,
+        73
+      ]
+    },
+    {
+      "name": "case/a-load-failed_w390.png",
+      "bbox": [
+        38,
+        39,
+        745,
+        73
+      ]
+    },
+    {
+      "name": "case/a-loading_w360.png",
+      "bbox": [
+        38,
+        39,
+        685,
+        73
+      ]
+    },
+    {
+      "name": "case/a-loading_w390.png",
+      "bbox": [
+        38,
+        39,
+        745,
+        73
+      ]
+    },
+    {
+      "name": "case/a-long-content_w360.png",
+      "bbox": [
+        8,
+        47,
+        712,
+        1510
+      ]
+    },
+    {
+      "name": "case/a-long-content_w390.png",
+      "bbox": [
+        8,
+        47,
+        772,
+        1510
+      ]
+    },
+    {
+      "name": "case/a-no-medicines_w360.png",
+      "bbox": [
+        0,
+        39,
+        720,
+        1630
+      ]
+    },
+    {
+      "name": "case/a-no-medicines_w390.png",
+      "bbox": [
+        0,
+        39,
+        780,
+        1542
+      ]
+    },
+    {
+      "name": "case/a-notes-typing_w360.png",
+      "bbox": [
+        8,
+        39,
+        712,
+        1664
+      ]
+    },
+    {
+      "name": "case/a-notes-typing_w390.png",
+      "bbox": [
+        8,
+        39,
+        772,
+        1664
+      ]
+    },
+    {
+      "name": "case/a-offline-action_w360.png",
+      "bbox": [
+        0,
+        39,
+        720,
+        1575
+      ]
+    },
+    {
+      "name": "case/a-offline-action_w390.png",
+      "bbox": [
+        0,
+        39,
+        780,
+        1575
+      ]
+    },
+    {
+      "name": "case/a-offline_w360.png",
+      "bbox": [
+        0,
+        39,
+        720,
+        1563
+      ]
+    },
+    {
+      "name": "case/a-offline_w390.png",
+      "bbox": [
+        0,
+        39,
+        780,
+        1575
+      ]
+    },
+    {
+      "name": "case/a-order-details_w360.png",
+      "bbox": [
+        8,
+        39,
+        712,
+        1520
+      ]
+    },
+    {
+      "name": "case/a-order-details_w390.png",
+      "bbox": [
+        8,
+        39,
+        772,
+        1520
+      ]
+    },
+    {
+      "name": "case/a-release-failed_w360.png",
+      "bbox": [
+        0,
+        39,
+        720,
+        1563
+      ]
+    },
+    {
+      "name": "case/a-release-failed_w390.png",
+      "bbox": [
+        0,
+        39,
+        780,
+        1563
+      ]
+    },
+    {
+      "name": "case/a-releasing_w360.png",
+      "bbox": [
+        8,
+        39,
+        712,
+        1478
+      ]
+    },
+    {
+      "name": "case/a-releasing_w390.png",
+      "bbox": [
+        8,
+        39,
+        772,
+        1478
+      ]
+    },
+    {
+      "name": "case/a-rx-viewer_w360.png",
+      "bbox": [
+        68,
+        60,
+        657,
+        193
+      ]
+    },
+    {
+      "name": "case/a-rx-viewer_w390.png",
+      "bbox": [
+        68,
+        60,
+        717,
+        193
+      ]
+    },
+    {
+      "name": "case/a-scrolled_w360.png",
+      "bbox": [
+        8,
+        39,
+        712,
+        1260
+      ]
+    },
+    {
+      "name": "case/a-scrolled_w390.png",
+      "bbox": [
+        8,
+        39,
+        772,
+        1260
+      ]
+    },
+    {
+      "name": "case/a-top_w360.png",
+      "bbox": [
+        8,
+        39,
+        712,
+        1510
+      ]
+    },
+    {
+      "name": "case/a-top_w390.png",
+      "bbox": [
+        8,
+        39,
+        772,
+        1510
+      ]
+    },
+    {
+      "name": "case/c-callback-error_w360.png",
+      "bbox": [
+        8,
+        39,
+        712,
+        684
+      ]
+    },
+    {
+      "name": "case/c-callback-error_w390.png",
+      "bbox": [
+        8,
+        39,
+        772,
+        684
+      ]
+    },
+    {
+      "name": "case/c-callback-failed_w360.png",
+      "bbox": [
+        8,
+        39,
+        712,
+        1452
+      ]
+    },
+    {
+      "name": "case/c-callback-failed_w390.png",
+      "bbox": [
+        8,
+        39,
+        772,
+        1452
+      ]
+    },
+    {
+      "name": "case/c-callback_w360.png",
+      "bbox": [
+        8,
+        39,
+        712,
+        724
+      ]
+    },
+    {
+      "name": "case/c-callback_w390.png",
+      "bbox": [
+        8,
+        39,
+        772,
+        724
+      ]
+    },
+    {
+      "name": "case/c-skip-ha_w360.png",
+      "bbox": [
+        0,
+        39,
+        720,
+        1559
+      ]
+    },
+    {
+      "name": "case/c-skip-ha_w390.png",
+      "bbox": [
+        0,
+        39,
+        780,
+        1559
+      ]
+    },
+    {
+      "name": "case/e-availability-ended_w360.png",
+      "bbox": [
+        8,
+        39,
+        712,
+        1510
+      ]
+    },
+    {
+      "name": "case/e-availability-ended_w390.png",
+      "bbox": [
+        8,
+        39,
+        772,
+        1510
+      ]
+    },
+    {
+      "name": "case/e-callback-scheduled_w360.png",
+      "bbox": [
+        32,
+        39,
+        688,
+        536
+      ]
+    },
+    {
+      "name": "case/e-callback-scheduled_w390.png",
+      "bbox": [
+        32,
+        39,
+        748,
+        536
+      ]
+    },
+    {
+      "name": "case/g1-generic-confirm_w360.png",
+      "bbox": [
+        0,
+        39,
+        720,
+        1664
+      ]
+    },
+    {
+      "name": "case/g1-generic-confirm_w390.png",
+      "bbox": [
+        0,
+        39,
+        780,
+        1664
+      ]
+    },
+    {
+      "name": "case/g2-checking-ha_w360.png",
+      "bbox": [
+        0,
+        39,
+        720,
+        1656
+      ]
+    },
+    {
+      "name": "case/g2-checking-ha_w390.png",
+      "bbox": [
+        0,
+        39,
+        780,
+        1656
+      ]
+    },
+    {
+      "name": "case/g3b-forwarded_w360.png",
+      "bbox": [
+        8,
+        39,
+        712,
+        1376
+      ]
+    },
+    {
+      "name": "case/g3b-forwarded_w390.png",
+      "bbox": [
+        8,
+        39,
+        772,
+        1376
+      ]
+    },
+    {
+      "name": "case/s-10-medicines_w360.png",
+      "bbox": [
+        8,
+        39,
+        712,
+        1508
+      ]
+    },
+    {
+      "name": "case/s-10-medicines_w390.png",
+      "bbox": [
+        8,
+        39,
+        772,
+        1508
+      ]
+    },
+    {
+      "name": "case/s-medicine-disabled_w360.png",
+      "bbox": [
+        8,
+        39,
+        712,
+        1510
+      ]
+    },
+    {
+      "name": "case/s-medicine-disabled_w390.png",
+      "bbox": [
+        8,
+        39,
+        772,
+        1510
+      ]
+    },
+    {
+      "name": "case/s-optional-empty_w360.png",
+      "bbox": [
+        8,
+        39,
+        712,
+        1510
+      ]
+    },
+    {
+      "name": "case/s-optional-empty_w390.png",
+      "bbox": [
+        8,
+        39,
+        772,
+        1510
+      ]
+    },
+    {
+      "name": "case/s7a-calling_w360.png",
+      "bbox": [
+        8,
+        39,
+        712,
+        1398
+      ]
+    },
+    {
+      "name": "case/s7a-calling_w390.png",
+      "bbox": [
+        8,
+        39,
+        772,
+        1396
+      ]
+    },
+    {
+      "name": "case/s7b-still-on-call_w360.png",
+      "bbox": [
+        0,
+        39,
+        720,
+        1576
+      ]
+    },
+    {
+      "name": "case/s7b-still-on-call_w390.png",
+      "bbox": [
+        0,
+        39,
+        780,
+        1576
+      ]
+    },
+    {
+      "name": "case/s7c-checking_w360.png",
+      "bbox": [
+        0,
+        39,
+        720,
+        1628
+      ]
+    },
+    {
+      "name": "case/s7c-checking_w390.png",
+      "bbox": [
+        0,
+        39,
+        780,
+        1628
+      ]
+    },
+    {
+      "name": "case/s7d-result-missing_w360.png",
+      "bbox": [
+        0,
+        39,
+        720,
+        1447
+      ]
+    },
+    {
+      "name": "case/s7d-result-missing_w390.png",
+      "bbox": [
+        0,
+        39,
+        780,
+        1447
+      ]
+    },
+    {
+      "name": "case/s7d-unavailable-sheet_w360.png",
+      "bbox": [
+        0,
+        39,
+        720,
+        1169
+      ]
+    },
+    {
+      "name": "case/s7d-unavailable-sheet_w390.png",
+      "bbox": [
+        0,
+        39,
+        780,
+        1169
+      ]
+    },
+    {
+      "name": "case/s7e-leave-sheet_w360.png",
+      "bbox": [
+        8,
+        39,
+        712,
+        1236
+      ]
+    },
+    {
+      "name": "case/s7e-leave-sheet_w390.png",
+      "bbox": [
+        8,
+        39,
+        772,
+        1236
+      ]
+    },
+    {
+      "name": "case/s7f-submitted_w360.png",
+      "bbox": [
+        32,
+        39,
+        688,
+        624
+      ]
+    },
+    {
+      "name": "case/s7f-submitted_w390.png",
+      "bbox": [
+        32,
+        39,
+        748,
+        624
+      ]
+    },
+    {
+      "name": "case/t01-ready_w360.png",
+      "bbox": [
+        8,
+        39,
+        712,
+        1510
+      ]
+    },
+    {
+      "name": "case/t01-ready_w390.png",
+      "bbox": [
+        8,
+        39,
+        772,
+        1510
+      ]
+    },
+    {
+      "name": "case/t02-calling_w360.png",
+      "bbox": [
+        8,
+        39,
+        712,
+        1398
+      ]
+    },
+    {
+      "name": "case/t02-calling_w390.png",
+      "bbox": [
+        8,
+        39,
+        772,
+        1396
+      ]
+    },
+    {
+      "name": "case/t03-not-through_w360.png",
+      "bbox": [
+        0,
+        39,
+        720,
+        1575
+      ]
+    },
+    {
+      "name": "case/t03-not-through_w390.png",
+      "bbox": [
+        0,
+        39,
+        780,
+        1575
+      ]
+    },
+    {
+      "name": "case/t04-doctor-missed_w360.png",
+      "bbox": [
+        0,
+        39,
+        720,
+        1575
+      ]
+    },
+    {
+      "name": "case/t04-doctor-missed_w390.png",
+      "bbox": [
+        0,
+        39,
+        780,
+        1575
+      ]
+    },
+    {
+      "name": "case/t05-result-wait_w360.png",
+      "bbox": [
+        8,
+        39,
+        712,
+        1380
+      ]
+    },
+    {
+      "name": "case/t05-result-wait_w390.png",
+      "bbox": [
+        8,
+        39,
+        772,
+        1380
+      ]
+    },
+    {
+      "name": "case/t06-ended-early_w360.png",
+      "bbox": [
+        0,
+        39,
+        720,
+        1447
+      ]
+    },
+    {
+      "name": "case/t06-ended-early_w390.png",
+      "bbox": [
+        0,
+        39,
+        780,
+        1447
+      ]
+    },
+    {
+      "name": "case/t08a-valid-cat4_w360.png",
+      "bbox": [
+        0,
+        39,
+        720,
+        1664
+      ]
+    },
+    {
+      "name": "case/t08a-valid-cat4_w390.png",
+      "bbox": [
+        0,
+        39,
+        780,
+        1664
+      ]
+    },
+    {
+      "name": "case/t08b-valid-forward_w360.png",
+      "bbox": [
+        0,
+        39,
+        720,
+        1664
+      ]
+    },
+    {
+      "name": "case/t08b-valid-forward_w390.png",
+      "bbox": [
+        0,
+        39,
+        780,
+        1664
+      ]
+    },
+    {
+      "name": "case/t08c-confirm-blocked_w360.png",
+      "bbox": [
+        0,
+        39,
+        720,
+        1664
+      ]
+    },
+    {
+      "name": "case/t08c-confirm-blocked_w390.png",
+      "bbox": [
+        0,
+        39,
+        780,
+        1664
+      ]
+    },
+    {
+      "name": "case/t09-patient-unavailable_w360.png",
+      "bbox": [
+        32,
+        39,
+        688,
+        536
+      ]
+    },
+    {
+      "name": "case/t09-patient-unavailable_w390.png",
+      "bbox": [
+        32,
+        39,
+        748,
+        536
+      ]
+    },
+    {
+      "name": "case/t10a-confirmed_w360.png",
+      "bbox": [
+        32,
+        39,
+        688,
+        536
+      ]
+    },
+    {
+      "name": "case/t10a-confirmed_w390.png",
+      "bbox": [
+        32,
+        39,
+        748,
+        536
+      ]
+    },
+    {
+      "name": "case/t10b-forwarded_w360.png",
+      "bbox": [
+        8,
+        39,
+        712,
+        1378
+      ]
+    },
+    {
+      "name": "case/t10b-forwarded_w390.png",
+      "bbox": [
+        8,
+        39,
+        772,
+        1378
+      ]
+    },
+    {
+      "name": "case/t11-calling-transfer_w360.png",
+      "bbox": [
+        8,
+        39,
+        712,
+        1375
+      ]
+    },
+    {
+      "name": "case/t11-calling-transfer_w390.png",
+      "bbox": [
+        8,
+        39,
+        772,
+        1347
+      ]
+    },
+    {
+      "name": "case/t12-transfer-ready_w360.png",
+      "bbox": [
+        0,
+        39,
+        720,
+        1664
+      ]
+    },
+    {
+      "name": "case/t12-transfer-ready_w390.png",
+      "bbox": [
+        0,
+        39,
+        780,
+        1664
+      ]
+    },
+    {
+      "name": "case/t13-connecting-ha_w360.png",
+      "bbox": [
+        0,
+        39,
+        720,
+        1656
+      ]
+    },
+    {
+      "name": "case/t13-connecting-ha_w390.png",
+      "bbox": [
+        0,
+        39,
+        780,
+        1656
+      ]
+    },
+    {
+      "name": "case/t14-transferred_w360.png",
+      "bbox": [
+        8,
+        39,
+        712,
+        1381
+      ]
+    },
+    {
+      "name": "case/t14-transferred_w390.png",
+      "bbox": [
+        8,
+        39,
+        772,
+        1381
+      ]
+    },
+    {
+      "name": "case/t15-ha-no-join_w360.png",
+      "bbox": [
+        8,
+        39,
+        712,
+        1376
+      ]
+    },
+    {
+      "name": "case/t15-ha-no-join_w390.png",
+      "bbox": [
+        8,
+        39,
+        772,
+        1376
+      ]
+    },
+    {
+      "name": "case/t15b-end-call-first_w360.png",
+      "bbox": [
+        0,
+        39,
+        720,
+        1447
+      ]
+    },
+    {
+      "name": "case/t15b-end-call-first_w390.png",
+      "bbox": [
+        0,
+        39,
+        780,
+        1447
+      ]
+    },
+    {
+      "name": "case/t16-transfer-missed_w360.png",
+      "bbox": [
+        0,
+        39,
+        720,
+        1613
+      ]
+    },
+    {
+      "name": "case/t16-transfer-missed_w390.png",
+      "bbox": [
+        0,
+        39,
+        780,
+        1613
+      ]
+    },
+    {
+      "name": "case/t16b-transfer-missed-patient_w360.png",
+      "bbox": [
+        0,
+        39,
+        720,
+        1647
+      ]
+    },
+    {
+      "name": "case/t16b-transfer-missed-patient_w390.png",
+      "bbox": [
+        0,
+        39,
+        780,
+        1647
+      ]
+    },
+    {
+      "name": "case/t16c-transfer-missed-unknown_w360.png",
+      "bbox": [
+        0,
+        39,
+        720,
+        1647
+      ]
+    },
+    {
+      "name": "case/t16c-transfer-missed-unknown_w390.png",
+      "bbox": [
+        0,
+        39,
+        780,
+        1647
+      ]
+    },
+    {
+      "name": "case/t17-skip-ha-wait_w360.png",
+      "bbox": [
+        0,
+        39,
+        720,
+        1416
+      ]
+    },
+    {
+      "name": "case/t17-skip-ha-wait_w390.png",
+      "bbox": [
+        0,
+        39,
+        780,
+        1416
+      ]
+    },
+    {
+      "name": "faster-signin-offer/offer_enable-failed_w360.png",
+      "bbox": [
+        0,
+        32,
+        720,
+        1615
+      ]
+    },
+    {
+      "name": "faster-signin-offer/offer_enable-failed_w390.png",
+      "bbox": [
+        0,
+        32,
+        780,
+        1615
+      ]
+    },
+    {
+      "name": "faster-signin-offer/offer_enabling_w360.png",
+      "bbox": [
+        0,
+        32,
+        720,
+        1615
+      ]
+    },
+    {
+      "name": "faster-signin-offer/offer_enabling_w390.png",
+      "bbox": [
+        0,
+        32,
+        780,
+        1615
+      ]
+    },
+    {
+      "name": "faster-signin-offer/offer_face-id_w360.png",
+      "bbox": [
+        0,
+        32,
+        720,
+        1615
+      ]
+    },
+    {
+      "name": "faster-signin-offer/offer_face-id_w390.png",
+      "bbox": [
+        0,
+        32,
+        780,
+        1615
+      ]
+    },
+    {
+      "name": "faster-signin-offer/offer_fingerprint_w360.png",
+      "bbox": [
+        0,
+        32,
+        720,
+        1615
+      ]
+    },
+    {
+      "name": "faster-signin-offer/offer_fingerprint_w390.png",
+      "bbox": [
+        0,
+        32,
+        780,
+        1615
+      ]
+    },
+    {
+      "name": "faster-signin-offer/offer_offline_w360.png",
+      "bbox": [
+        0,
+        32,
+        720,
+        1615
+      ]
+    },
+    {
+      "name": "faster-signin-offer/offer_offline_w390.png",
+      "bbox": [
+        0,
+        32,
+        780,
+        1615
+      ]
+    },
+    {
+      "name": "faster-signin-offer/offer_screen-lock_w360.png",
+      "bbox": [
+        0,
+        32,
+        720,
+        1615
+      ]
+    },
+    {
+      "name": "faster-signin-offer/offer_screen-lock_w390.png",
+      "bbox": [
+        0,
+        32,
+        780,
+        1615
+      ]
+    },
+    {
+      "name": "home/home_active_w360.png",
+      "bbox": [
+        0,
+        32,
+        720,
+        1622
+      ]
+    },
+    {
+      "name": "home/home_active_w390.png",
+      "bbox": [
+        0,
+        32,
+        780,
+        1622
+      ]
+    },
+    {
+      "name": "home/home_add-failed_w360.png",
+      "bbox": [
+        0,
+        32,
+        720,
+        1656
+      ]
+    },
+    {
+      "name": "home/home_add-failed_w390.png",
+      "bbox": [
+        0,
+        32,
+        780,
+        1656
+      ]
+    },
+    {
+      "name": "home/home_add-wheel_w360.png",
+      "bbox": [
+        0,
+        32,
+        720,
+        1656
+      ]
+    },
+    {
+      "name": "home/home_add-wheel_w390.png",
+      "bbox": [
+        0,
+        32,
+        780,
+        1656
+      ]
+    },
+    {
+      "name": "home/home_added_w360.png",
+      "bbox": [
+        0,
+        32,
+        720,
+        1622
+      ]
+    },
+    {
+      "name": "home/home_added_w390.png",
+      "bbox": [
+        0,
+        32,
+        780,
+        1622
+      ]
+    },
+    {
+      "name": "home/home_adding_w360.png",
+      "bbox": [
+        0,
+        32,
+        720,
+        1656
+      ]
+    },
+    {
+      "name": "home/home_adding_w390.png",
+      "bbox": [
+        0,
+        32,
+        780,
+        1656
+      ]
+    },
+    {
+      "name": "home/home_end-confirmation_w360.png",
+      "bbox": [
+        0,
+        32,
+        720,
+        1656
+      ]
+    },
+    {
+      "name": "home/home_end-confirmation_w390.png",
+      "bbox": [
+        0,
+        32,
+        780,
+        1656
+      ]
+    },
+    {
+      "name": "home/home_expired-pending_w360.png",
+      "bbox": [
+        0,
+        32,
+        720,
+        1656
+      ]
+    },
+    {
+      "name": "home/home_expired-pending_w390.png",
+      "bbox": [
+        0,
+        32,
+        780,
+        1656
+      ]
+    },
+    {
+      "name": "home/home_idle-expired_w360.png",
+      "bbox": [
+        0,
+        32,
+        720,
+        1624
+      ]
+    },
+    {
+      "name": "home/home_idle-expired_w390.png",
+      "bbox": [
+        0,
+        32,
+        780,
+        1624
+      ]
+    },
+    {
+      "name": "home/home_logout-confirm_w360.png",
+      "bbox": [
+        8,
+        44,
+        712,
+        1236
+      ]
+    },
+    {
+      "name": "home/home_logout-confirm_w390.png",
+      "bbox": [
+        8,
+        44,
+        772,
+        1236
+      ]
+    },
+    {
+      "name": "home/home_manually-ended_w360.png",
+      "bbox": [
+        0,
+        32,
+        720,
+        1624
+      ]
+    },
+    {
+      "name": "home/home_manually-ended_w390.png",
+      "bbox": [
+        0,
+        32,
+        780,
+        1624
+      ]
+    },
+    {
+      "name": "home/home_near-expiry_w360.png",
+      "bbox": [
+        0,
+        32,
+        720,
+        1622
+      ]
+    },
+    {
+      "name": "home/home_near-expiry_w390.png",
+      "bbox": [
+        0,
+        32,
+        780,
+        1622
+      ]
+    },
+    {
+      "name": "home/home_no-cases_w360.png",
+      "bbox": [
+        0,
+        32,
+        720,
+        1622
+      ]
+    },
+    {
+      "name": "home/home_no-cases_w390.png",
+      "bbox": [
+        0,
+        32,
+        780,
+        1622
+      ]
+    },
+    {
+      "name": "home/home_offline_w360.png",
+      "bbox": [
+        0,
+        32,
+        720,
+        1622
+      ]
+    },
+    {
+      "name": "home/home_offline_w390.png",
+      "bbox": [
+        0,
+        32,
+        780,
+        1622
+      ]
+    },
+    {
+      "name": "home/home_profile-case-open_w360.png",
+      "bbox": [
+        8,
+        44,
+        712,
+        900
+      ]
+    },
+    {
+      "name": "home/home_profile-case-open_w390.png",
+      "bbox": [
+        8,
+        44,
+        772,
+        900
+      ]
+    },
+    {
+      "name": "home/home_profile_w360.png",
+      "bbox": [
+        8,
+        44,
+        712,
+        920
+      ]
+    },
+    {
+      "name": "home/home_profile_w390.png",
+      "bbox": [
+        8,
+        44,
+        772,
+        920
+      ]
+    },
+    {
+      "name": "home/home_request-failed_w360.png",
+      "bbox": [
+        0,
+        32,
+        720,
+        1622
+      ]
+    },
+    {
+      "name": "home/home_request-failed_w390.png",
+      "bbox": [
+        0,
+        32,
+        780,
+        1622
+      ]
+    },
+    {
+      "name": "home/home_requesting_w360.png",
+      "bbox": [
+        0,
+        32,
+        720,
+        1622
+      ]
+    },
+    {
+      "name": "home/home_requesting_w390.png",
+      "bbox": [
+        0,
+        32,
+        780,
+        1622
+      ]
+    },
+    {
+      "name": "home/home_setting_w360.png",
+      "bbox": [
+        0,
+        32,
+        720,
+        1624
+      ]
+    },
+    {
+      "name": "home/home_setting_w390.png",
+      "bbox": [
+        0,
+        32,
+        780,
+        1624
+      ]
+    },
+    {
+      "name": "home/home_setup-failed_w360.png",
+      "bbox": [
+        0,
+        32,
+        720,
+        1640
+      ]
+    },
+    {
+      "name": "home/home_setup-failed_w390.png",
+      "bbox": [
+        0,
+        32,
+        780,
+        1624
+      ]
+    },
+    {
+      "name": "home/home_setup-wheel_w360.png",
+      "bbox": [
+        0,
+        32,
+        720,
+        1624
+      ]
+    },
+    {
+      "name": "home/home_setup-wheel_w390.png",
+      "bbox": [
+        0,
+        32,
+        780,
+        1624
+      ]
+    },
+    {
+      "name": "home/home_stop-pending_w360.png",
+      "bbox": [
+        0,
+        32,
+        720,
+        1622
+      ]
+    },
+    {
+      "name": "home/home_stop-pending_w390.png",
+      "bbox": [
+        0,
+        32,
+        780,
+        1622
+      ]
+    },
+    {
+      "name": "home/home_unknown-result_w360.png",
+      "bbox": [
+        0,
+        32,
+        720,
+        1652
+      ]
+    },
+    {
+      "name": "home/home_unknown-result_w390.png",
+      "bbox": [
+        0,
+        32,
+        780,
+        1652
+      ]
+    },
+    {
+      "name": "otp/otp_code-expired_w360.png",
+      "bbox": [
+        0,
+        32,
+        720,
+        938
+      ]
+    },
+    {
+      "name": "otp/otp_code-expired_w390.png",
+      "bbox": [
+        0,
+        32,
+        780,
+        938
+      ]
+    },
+    {
+      "name": "otp/otp_cooldown-reconciling_w360.png",
+      "bbox": [
+        0,
+        32,
+        720,
+        1010
+      ]
+    },
+    {
+      "name": "otp/otp_cooldown-reconciling_w390.png",
+      "bbox": [
+        0,
+        32,
+        780,
+        1010
+      ]
+    },
+    {
+      "name": "otp/otp_couldnt-verify_w360.png",
+      "bbox": [
+        0,
+        32,
+        720,
+        1120
+      ]
+    },
+    {
+      "name": "otp/otp_couldnt-verify_w390.png",
+      "bbox": [
+        0,
+        32,
+        780,
+        1120
+      ]
+    },
+    {
+      "name": "otp/otp_default_w360.png",
+      "bbox": [
+        0,
+        32,
+        720,
+        1010
+      ]
+    },
+    {
+      "name": "otp/otp_default_w390.png",
+      "bbox": [
+        0,
+        32,
+        780,
+        1010
+      ]
+    },
+    {
+      "name": "otp/otp_empty-tap_w360.png",
+      "bbox": [
+        0,
+        32,
+        720,
+        1066
+      ]
+    },
+    {
+      "name": "otp/otp_empty-tap_w390.png",
+      "bbox": [
+        0,
+        32,
+        780,
+        1066
+      ]
+    },
+    {
+      "name": "otp/otp_expired-and-resend-limited_w360.png",
+      "bbox": [
+        0,
+        32,
+        720,
+        902
+      ]
+    },
+    {
+      "name": "otp/otp_expired-and-resend-limited_w390.png",
+      "bbox": [
+        0,
+        32,
+        780,
+        902
+      ]
+    },
+    {
+      "name": "otp/otp_locked_w360.png",
+      "bbox": [
+        0,
+        32,
+        720,
+        902
+      ]
+    },
+    {
+      "name": "otp/otp_locked_w390.png",
+      "bbox": [
+        0,
+        32,
+        780,
+        902
+      ]
+    },
+    {
+      "name": "otp/otp_new-code-sent_w360.png",
+      "bbox": [
+        0,
+        32,
+        720,
+        1082
+      ]
+    },
+    {
+      "name": "otp/otp_new-code-sent_w390.png",
+      "bbox": [
+        0,
+        32,
+        780,
+        1082
+      ]
+    },
+    {
+      "name": "otp/otp_offline_w360.png",
+      "bbox": [
+        0,
+        32,
+        720,
+        1120
+      ]
+    },
+    {
+      "name": "otp/otp_offline_w390.png",
+      "bbox": [
+        0,
+        32,
+        780,
+        1120
+      ]
+    },
+    {
+      "name": "otp/otp_resend-available_w360.png",
+      "bbox": [
+        0,
+        32,
+        720,
+        1010
+      ]
+    },
+    {
+      "name": "otp/otp_resend-available_w390.png",
+      "bbox": [
+        0,
+        32,
+        780,
+        1010
+      ]
+    },
+    {
+      "name": "otp/otp_resend-failed_w360.png",
+      "bbox": [
+        0,
+        32,
+        720,
+        1120
+      ]
+    },
+    {
+      "name": "otp/otp_resend-failed_w390.png",
+      "bbox": [
+        0,
+        32,
+        780,
+        1120
+      ]
+    },
+    {
+      "name": "otp/otp_resending_w360.png",
+      "bbox": [
+        0,
+        32,
+        720,
+        1010
+      ]
+    },
+    {
+      "name": "otp/otp_resending_w390.png",
+      "bbox": [
+        0,
+        32,
+        780,
+        1010
+      ]
+    },
+    {
+      "name": "otp/otp_too-many-resends_w360.png",
+      "bbox": [
+        0,
+        32,
+        720,
+        1030
+      ]
+    },
+    {
+      "name": "otp/otp_too-many-resends_w390.png",
+      "bbox": [
+        0,
+        32,
+        780,
+        1030
+      ]
+    },
+    {
+      "name": "otp/otp_too-short_w360.png",
+      "bbox": [
+        0,
+        32,
+        720,
+        1066
+      ]
+    },
+    {
+      "name": "otp/otp_too-short_w390.png",
+      "bbox": [
+        0,
+        32,
+        780,
+        1066
+      ]
+    },
+    {
+      "name": "otp/otp_two-tries-left_w360.png",
+      "bbox": [
+        0,
+        32,
+        720,
+        1066
+      ]
+    },
+    {
+      "name": "otp/otp_two-tries-left_w390.png",
+      "bbox": [
+        0,
+        32,
+        780,
+        1066
+      ]
+    },
+    {
+      "name": "otp/otp_verifying_w360.png",
+      "bbox": [
+        0,
+        32,
+        720,
+        1010
+      ]
+    },
+    {
+      "name": "otp/otp_verifying_w390.png",
+      "bbox": [
+        0,
+        32,
+        780,
+        1010
+      ]
+    },
+    {
+      "name": "otp/otp_wrong-code_w360.png",
+      "bbox": [
+        0,
+        32,
+        720,
+        1066
+      ]
+    },
+    {
+      "name": "otp/otp_wrong-code_w390.png",
+      "bbox": [
+        0,
+        32,
+        780,
+        1066
+      ]
+    },
+    {
+      "name": "prescribe/d-alt-days_w360.png",
+      "bbox": [
+        8,
+        52,
+        712,
+        1510
+      ]
+    },
+    {
+      "name": "prescribe/d-alt-days_w390.png",
+      "bbox": [
+        8,
+        52,
+        772,
+        1510
+      ]
+    },
+    {
+      "name": "prescribe/d-cream_w360.png",
+      "bbox": [
+        8,
+        80,
+        712,
+        1510
+      ]
+    },
+    {
+      "name": "prescribe/d-cream_w390.png",
+      "bbox": [
+        8,
+        80,
+        772,
+        1510
+      ]
+    },
+    {
+      "name": "prescribe/d-default_w360.png",
+      "bbox": [
+        8,
+        52,
+        712,
+        1510
+      ]
+    },
+    {
+      "name": "prescribe/d-default_w390.png",
+      "bbox": [
+        8,
+        52,
+        772,
+        1510
+      ]
+    },
+    {
+      "name": "prescribe/d-disable-sheet_w360.png",
+      "bbox": [
+        0,
+        52,
+        720,
+        849
+      ]
+    },
+    {
+      "name": "prescribe/d-disable-sheet_w390.png",
+      "bbox": [
+        0,
+        52,
+        780,
+        849
+      ]
+    },
+    {
+      "name": "prescribe/d-disabled_w360.png",
+      "bbox": [
+        8,
+        52,
+        712,
+        1512
+      ]
+    },
+    {
+      "name": "prescribe/d-disabled_w390.png",
+      "bbox": [
+        8,
+        52,
+        772,
+        1512
+      ]
+    },
+    {
+      "name": "prescribe/d-discard-sheet_w360.png",
+      "bbox": [
+        8,
+        52,
+        712,
+        1236
+      ]
+    },
+    {
+      "name": "prescribe/d-discard-sheet_w390.png",
+      "bbox": [
+        8,
+        52,
+        772,
+        1236
+      ]
+    },
+    {
+      "name": "prescribe/d-drops_w360.png",
+      "bbox": [
+        8,
+        80,
+        712,
+        1510
+      ]
+    },
+    {
+      "name": "prescribe/d-drops_w390.png",
+      "bbox": [
+        8,
+        30,
+        772,
+        1510
+      ]
+    },
+    {
+      "name": "prescribe/d-duration-picker_w360.png",
+      "bbox": [
+        8,
+        52,
+        712,
+        1512
+      ]
+    },
+    {
+      "name": "prescribe/d-duration-picker_w390.png",
+      "bbox": [
+        8,
+        52,
+        772,
+        1512
+      ]
+    },
+    {
+      "name": "prescribe/d-error-dose_w360.png",
+      "bbox": [
+        8,
+        52,
+        712,
+        1510
+      ]
+    },
+    {
+      "name": "prescribe/d-error-dose_w390.png",
+      "bbox": [
+        8,
+        52,
+        772,
+        1510
+      ]
+    },
+    {
+      "name": "prescribe/d-error-other_w360.png",
+      "bbox": [
+        8,
+        80,
+        712,
+        1628
+      ]
+    },
+    {
+      "name": "prescribe/d-error-other_w390.png",
+      "bbox": [
+        8,
+        52,
+        772,
+        1628
+      ]
+    },
+    {
+      "name": "prescribe/d-every-x-hours_w360.png",
+      "bbox": [
+        8,
+        52,
+        712,
+        1510
+      ]
+    },
+    {
+      "name": "prescribe/d-every-x-hours_w390.png",
+      "bbox": [
+        8,
+        52,
+        772,
+        1510
+      ]
+    },
+    {
+      "name": "prescribe/d-food-selected_w360.png",
+      "bbox": [
+        8,
+        52,
+        712,
+        1194
+      ]
+    },
+    {
+      "name": "prescribe/d-food-selected_w390.png",
+      "bbox": [
+        8,
+        52,
+        772,
+        1194
+      ]
+    },
+    {
+      "name": "prescribe/d-header-white_w360.png",
+      "bbox": [
+        8,
+        52,
+        712,
+        1510
+      ]
+    },
+    {
+      "name": "prescribe/d-header-white_w390.png",
+      "bbox": [
+        8,
+        52,
+        772,
+        1510
+      ]
+    },
+    {
+      "name": "prescribe/d-inhaler_w360.png",
+      "bbox": [
+        8,
+        29,
+        712,
+        1510
+      ]
+    },
+    {
+      "name": "prescribe/d-inhaler_w390.png",
+      "bbox": [
+        8,
+        29,
+        772,
+        1510
+      ]
+    },
+    {
+      "name": "prescribe/d-injection-default_w360.png",
+      "bbox": [
+        8,
+        80,
+        712,
+        1512
+      ]
+    },
+    {
+      "name": "prescribe/d-injection-default_w390.png",
+      "bbox": [
+        8,
+        52,
+        772,
+        1510
+      ]
+    },
+    {
+      "name": "prescribe/d-monthly_w360.png",
+      "bbox": [
+        8,
+        52,
+        712,
+        1510
+      ]
+    },
+    {
+      "name": "prescribe/d-monthly_w390.png",
+      "bbox": [
+        8,
+        52,
+        772,
+        1510
+      ]
+    },
+    {
+      "name": "prescribe/d-notes-keyboard_w360.png",
+      "bbox": [
+        8,
+        52,
+        712,
+        1664
+      ]
+    },
+    {
+      "name": "prescribe/d-notes-keyboard_w390.png",
+      "bbox": [
+        8,
+        52,
+        772,
+        1664
+      ]
+    },
+    {
+      "name": "prescribe/d-rx-failed_w360.png",
+      "bbox": [
+        32,
+        60,
+        688,
+        270
+      ]
+    },
+    {
+      "name": "prescribe/d-rx-failed_w390.png",
+      "bbox": [
+        32,
+        60,
+        748,
+        270
+      ]
+    },
+    {
+      "name": "prescribe/d-scrolled_w360.png",
+      "bbox": [
+        8,
+        52,
+        712,
+        1512
+      ]
+    },
+    {
+      "name": "prescribe/d-scrolled_w390.png",
+      "bbox": [
+        8,
+        52,
+        772,
+        1512
+      ]
+    },
+    {
+      "name": "prescribe/d-sos-on_w360.png",
+      "bbox": [
+        8,
+        52,
+        712,
+        1510
+      ]
+    },
+    {
+      "name": "prescribe/d-sos-on_w390.png",
+      "bbox": [
+        8,
+        52,
+        772,
+        1510
+      ]
+    },
+    {
+      "name": "prescribe/d-sos-only_w360.png",
+      "bbox": [
+        8,
+        52,
+        712,
+        1510
+      ]
+    },
+    {
+      "name": "prescribe/d-sos-only_w390.png",
+      "bbox": [
+        8,
+        52,
+        772,
+        1510
+      ]
+    },
+    {
+      "name": "prescribe/d-syrup_w360.png",
+      "bbox": [
+        8,
+        80,
+        712,
+        1510
+      ]
+    },
+    {
+      "name": "prescribe/d-syrup_w390.png",
+      "bbox": [
+        8,
+        29,
+        772,
+        1510
+      ]
+    },
+    {
+      "name": "prescribe/d-weekly_w360.png",
+      "bbox": [
+        8,
+        52,
+        712,
+        1510
+      ]
+    },
+    {
+      "name": "prescribe/d-weekly_w390.png",
+      "bbox": [
+        8,
+        52,
+        772,
+        1510
+      ]
+    },
+    {
+      "name": "returning-unlock/unlock_cancelled_w360.png",
+      "bbox": [
+        0,
+        32,
+        720,
+        1627
+      ]
+    },
+    {
+      "name": "returning-unlock/unlock_cancelled_w390.png",
+      "bbox": [
+        0,
+        32,
+        780,
+        1627
+      ]
+    },
+    {
+      "name": "returning-unlock/unlock_face_w360.png",
+      "bbox": [
+        0,
+        32,
+        720,
+        1627
+      ]
+    },
+    {
+      "name": "returning-unlock/unlock_face_w390.png",
+      "bbox": [
+        0,
+        32,
+        780,
+        1627
+      ]
+    },
+    {
+      "name": "returning-unlock/unlock_fingerprint_w360.png",
+      "bbox": [
+        0,
+        32,
+        720,
+        1627
+      ]
+    },
+    {
+      "name": "returning-unlock/unlock_fingerprint_w390.png",
+      "bbox": [
+        0,
+        32,
+        780,
+        1627
+      ]
+    },
+    {
+      "name": "returning-unlock/unlock_pending_w360.png",
+      "bbox": [
+        0,
+        32,
+        720,
+        1627
+      ]
+    },
+    {
+      "name": "returning-unlock/unlock_pending_w390.png",
+      "bbox": [
+        0,
+        32,
+        780,
+        1627
+      ]
+    },
+    {
+      "name": "returning-unlock/unlock_platform-retry_w360.png",
+      "bbox": [
+        0,
+        32,
+        720,
+        1627
+      ]
+    },
+    {
+      "name": "returning-unlock/unlock_platform-retry_w390.png",
+      "bbox": [
+        0,
+        32,
+        780,
+        1627
+      ]
+    },
+    {
+      "name": "returning-unlock/unlock_screen-lock_w360.png",
+      "bbox": [
+        0,
+        32,
+        720,
+        1627
+      ]
+    },
+    {
+      "name": "returning-unlock/unlock_screen-lock_w390.png",
+      "bbox": [
+        0,
+        32,
+        780,
+        1627
+      ]
+    },
+    {
+      "name": "returning-unlock/unlock_unavailable_w360.png",
+      "bbox": [
+        0,
+        32,
+        720,
+        1627
+      ]
+    },
+    {
+      "name": "returning-unlock/unlock_unavailable_w390.png",
+      "bbox": [
+        0,
+        32,
+        780,
+        1627
+      ]
+    },
+    {
+      "name": "sign-in/sign-in_couldnt-send_w360.png",
+      "bbox": [
+        0,
+        32,
+        720,
+        1639
+      ]
+    },
+    {
+      "name": "sign-in/sign-in_couldnt-send_w390.png",
+      "bbox": [
+        0,
+        32,
+        780,
+        1639
+      ]
+    },
+    {
+      "name": "sign-in/sign-in_default_w360.png",
+      "bbox": [
+        0,
+        32,
+        720,
+        1639
+      ]
+    },
+    {
+      "name": "sign-in/sign-in_default_w390.png",
+      "bbox": [
+        0,
+        32,
+        780,
+        1639
+      ]
+    },
+    {
+      "name": "sign-in/sign-in_empty-tap_w360.png",
+      "bbox": [
+        0,
+        32,
+        720,
+        1664
+      ]
+    },
+    {
+      "name": "sign-in/sign-in_empty-tap_w390.png",
+      "bbox": [
+        0,
+        32,
+        780,
+        1664
+      ]
+    },
+    {
+      "name": "sign-in/sign-in_inactive_w360.png",
+      "bbox": [
+        0,
+        32,
+        720,
+        1639
+      ]
+    },
+    {
+      "name": "sign-in/sign-in_inactive_w390.png",
+      "bbox": [
+        0,
+        32,
+        780,
+        1639
+      ]
+    },
+    {
+      "name": "sign-in/sign-in_keyboard-open_w360.png",
+      "bbox": [
+        0,
+        32,
+        720,
+        1664
+      ]
+    },
+    {
+      "name": "sign-in/sign-in_keyboard-open_w390.png",
+      "bbox": [
+        0,
+        32,
+        780,
+        1664
+      ]
+    },
+    {
+      "name": "sign-in/sign-in_not-registered_w360.png",
+      "bbox": [
+        0,
+        32,
+        720,
+        1639
+      ]
+    },
+    {
+      "name": "sign-in/sign-in_not-registered_w390.png",
+      "bbox": [
+        0,
+        32,
+        780,
+        1639
+      ]
+    },
+    {
+      "name": "sign-in/sign-in_offline_w360.png",
+      "bbox": [
+        0,
+        32,
+        720,
+        1639
+      ]
+    },
+    {
+      "name": "sign-in/sign-in_offline_w390.png",
+      "bbox": [
+        0,
+        32,
+        780,
+        1639
+      ]
+    },
+    {
+      "name": "sign-in/sign-in_pasted-cleaned_w360.png",
+      "bbox": [
+        0,
+        32,
+        720,
+        1664
+      ]
+    },
+    {
+      "name": "sign-in/sign-in_pasted-cleaned_w390.png",
+      "bbox": [
+        0,
+        32,
+        780,
+        1664
+      ]
+    },
+    {
+      "name": "sign-in/sign-in_sending_w360.png",
+      "bbox": [
+        0,
+        32,
+        720,
+        1664
+      ]
+    },
+    {
+      "name": "sign-in/sign-in_sending_w390.png",
+      "bbox": [
+        0,
+        32,
+        780,
+        1664
+      ]
+    },
+    {
+      "name": "sign-in/sign-in_too-many-tries_w360.png",
+      "bbox": [
+        0,
+        32,
+        720,
+        1639
+      ]
+    },
+    {
+      "name": "sign-in/sign-in_too-many-tries_w390.png",
+      "bbox": [
+        0,
+        32,
+        780,
+        1639
+      ]
+    },
+    {
+      "name": "sign-in/sign-in_too-short_w360.png",
+      "bbox": [
+        0,
+        32,
+        720,
+        1664
+      ]
+    },
+    {
+      "name": "sign-in/sign-in_too-short_w390.png",
+      "bbox": [
+        0,
+        32,
+        780,
+        1664
+      ]
+    },
+    {
+      "name": "sign-in/sign-in_wrong-first-digit_w360.png",
+      "bbox": [
+        0,
+        32,
+        720,
+        1664
+      ]
+    },
+    {
+      "name": "sign-in/sign-in_wrong-first-digit_w390.png",
+      "bbox": [
+        0,
+        32,
+        780,
+        1664
+      ]
+    }
+  ],
+  "only_a": [],
+  "only_b": []
+}

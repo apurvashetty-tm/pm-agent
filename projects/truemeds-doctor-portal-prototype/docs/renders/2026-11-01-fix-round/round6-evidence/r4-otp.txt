@@ -1,0 +1,45 @@
+{
+ "default": {
+  "verifyTop": 477,
+  "verifyH": 56,
+  "termsAlign": "start",
+  "termsLinkNowrap": "nowrap",
+  "termsLinkBoxes": 1
+ },
+ "verifying": {
+  "verifyTop": 477,
+  "verifyH": 56,
+  "termsAlign": "start",
+  "termsLinkNowrap": "nowrap",
+  "termsLinkBoxes": 1
+ },
+ "cooldown-reconciling": {
+  "verifyTop": 477,
+  "verifyH": 56,
+  "termsAlign": "start",
+  "termsLinkNowrap": "nowrap",
+  "termsLinkBoxes": 1
+ },
+ "resend-available": {
+  "verifyTop": 477,
+  "verifyH": 56,
+  "termsAlign": "start",
+  "termsLinkNowrap": "nowrap",
+  "termsLinkBoxes": 1
+ },
+ "wrong-code": {
+  "verifyTop": 477,
+  "verifyH": 56,
+  "termsAlign": "start",
+  "termsLinkNowrap": "nowrap",
+  "termsLinkBoxes": 1
+ },
+ "new-code-sent": {
+  "verifyTop": 477,
+  "verifyH": 56,
+  "termsAlign": "start",
+  "termsLinkNowrap": "nowrap",
+  "termsLinkBoxes": 1
+ }
+}
+exit 0

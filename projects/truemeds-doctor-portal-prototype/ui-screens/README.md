@@ -94,6 +94,10 @@ Open the file in a browser. `capture=` (and `?capture=1`) hides the review contr
 
 The screen audit fixes are applied in these pictures (checklist: `docs/renders/2026-11-01-fix-round/CHECKLIST.md`). Calling: no header Back from the call tap on; leave sheet and Releasing… over Ready; empty case → Release case; busy confirm / transfer read-only. Prescribe: SOS total in the medicine's unit, capsule doses without ½, dose error as field text, `d-disabled`, keyboard rule. Entry: terms line during Verifying / Checking, cooldown reads "Checking…", one header spacing for OTP, offer and unlock. Home: busy controls disabled, pinned Set availability, quiet "Stay signed in", 35:00 after adding time.
 
+## Round 4 (2026-11-02) — consistency audit, pending approval
+
+Round 4 is being applied in lanes (A design system and copy, B entry and Home, C case and Prescribe, D integration). Rules: `design-system/RULES.md` §3, §8.13–8.14, §9.5. Decisions and state changes: `app-logic.md` §13 and `docs/feedback-state-map.md` (Round 4 section). Pinned main actions on Home, the faster sign-in offer and the returning unlock sit in the action bar; result notices sit inside the bar above their button; the logo lockup is 166 px wide with a 16 top offset; cards that stack are 16 apart; the small-phone (360×640) pass is part of the guards. State counts are unchanged by Round 4 (no states added or removed).
+
 ## Design rules applied in this set
 
 - **Page margin 16** on every mobile screen, header, panel and sheet; cards keep 16 inner padding; the action bar has 16 on all sides plus the phone's safe area (D-67).

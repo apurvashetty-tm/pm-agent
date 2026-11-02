@@ -112,6 +112,8 @@ h1, .tm-text-title-lg, .tm-text-h1 { text-wrap: balance; }
 .tm-btn--busy, .tm-btn--busy:disabled, .tm-btn--primary[aria-busy="true"]:disabled { background: var(--tm-surface-brand-default); color: var(--tm-content-inverse); cursor: default; }
 /* Spinner is solid white with one open gap (LOCKED L2). */
 .tm-btn--busy .tm-spinner { display: inline-block; width: 16px; height: 16px; flex: none; margin-right: var(--tm-space-sm); vertical-align: -3px; box-sizing: border-box; border: 2px solid #fff; border-top-color: transparent; border-radius: 50%; animation: tm-spin 0.8s linear infinite; }
+/* A-08 (2026-11-02): spinner→label gap is the spinner's own 8 only. The button's flex gap is dropped while busy so it never stacks to 16. */
+.tm-btn--busy { gap: 0; }
 @keyframes tm-spin { to { transform: rotate(360deg); } }
 @media (prefers-reduced-motion: reduce) { .tm-btn--busy .tm-spinner { animation: none; } }
 @keyframes tm-pulse-ring {
@@ -296,7 +298,8 @@ h1, .tm-text-title-lg, .tm-text-h1 { text-wrap: balance; }
 
 /* ---------- Toast [SALT: Toasts — bottom centre, one line] ---------- */
 .tm-toast {
-  position: fixed; left: 50%; bottom: var(--tm-space-xl); transform: translateX(-50%);
+  /* Round 4 (2026-11-02): a screen with a pinned action bar sets --tm-toast-offset to the bar's height + 16 so the toast sits above the bar. */
+  position: fixed; left: 50%; bottom: var(--tm-toast-offset, var(--tm-space-xl)); transform: translateX(-50%);
   background: var(--tm-surface-inverse); color: var(--tm-content-inverse);
   /* RULES §9.5 (2026-10-15): dark, 14/20, 12×16 padding, medium radius, one line (two at most). Was 12/16 with 4×8 padding — too small to notice. */
   font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); font-weight: var(--tm-font-weight-medium);
@@ -338,21 +341,32 @@ h1, .tm-text-title-lg, .tm-text-h1 { text-wrap: balance; }
 
 /* ---------- Bottom sheet + overlay [SALT: modal sheets] ---------- */
 .tm-overlay { position: fixed; inset: 0; background: rgb(0 0 0 / calc(var(--tm-overlay-default) * 1%)); z-index: 900; }
+/* Round 6 (RULES §9.4): the sheet is the one scroller. Its header and its actions are pinned (sticky) at the top and bottom
+   edges, so the sheet's own buttons stay visible and tappable when the content is taller than the space.
+   Z-order: the sheet (901) and its scrim (900) sit above the pinned action bar (10) in every screen, so a sheet always covers the bar. */
 .tm-sheet {
   position: fixed; left: 0; right: 0; bottom: 0; z-index: 901;
   background: var(--tm-surface-primary);
   border-radius: var(--tm-radius-2xl) var(--tm-radius-2xl) 0 0;
-  /* RULES §9.4 — one template: no drag handle, page margin at the sides (16, D-67), safe area at the bottom. */
-  padding: var(--tm-space-lg) var(--tm-space-page) calc(var(--tm-space-xl) + env(safe-area-inset-bottom));
+  /* RULES §9.4 — one template: no drag handle, page margin at the sides (16, D-67). The top and bottom spacing sit in the pinned header and actions. */
+  padding: 0 var(--tm-space-page);
   max-height: 85vh; overflow: auto;
   display: flex; flex-direction: column;
 }
-.tm-sheet__header { display: flex; align-items: center; justify-content: space-between; gap: var(--tm-space-md); min-height: var(--tm-space-3xl); }
+.tm-sheet:not(:has(> .tm-sheet__actions)) { padding-bottom: calc(var(--tm-space-xl) + env(safe-area-inset-bottom)); }
+.tm-sheet__header { position: sticky; top: 0; z-index: 2; flex: none; display: flex; align-items: center; justify-content: space-between; gap: var(--tm-space-md); min-height: calc(var(--tm-space-3xl) + var(--tm-space-lg)); padding-top: var(--tm-space-lg); background: var(--tm-surface-primary); border-radius: var(--tm-radius-2xl) var(--tm-radius-2xl) 0 0; }
 .tm-sheet__title { margin: 0; font-size: var(--tm-font-size-title-sm); line-height: var(--tm-font-lineheight-lg); font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-primary); }
 .tm-sheet__subtitle { margin: var(--tm-space-xs) 0 0; font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); color: var(--tm-content-secondary); }
-.tm-sheet__close { margin-right: calc(-1 * var(--tm-space-md)); }   /* .tm-btn.tm-btn--quiet.tm-btn--icon, 48px; aligns the glyph to the margin */
-.tm-sheet__body { margin-top: var(--tm-space-lg); min-height: 0; overflow: auto; }
-.tm-sheet__actions { display: flex; flex-direction: column; gap: var(--tm-space-sm); margin-top: var(--tm-space-xl); }
+.tm-sheet__close { margin-right: calc((20px - var(--tm-space-3xl)) / 2); }   /* .tm-btn.tm-btn--quiet.tm-btn--icon, 48px; glyph sits on the 16 margin, same as the compact header (B-07, 2026-11-02) */
+/* B-14 (2026-11-02): one sheet-label style — the field-label style, 8 above the field (RULES §8.3). Used for "Select reason", "Date", "Time". */
+.tm-sheet__label { display: block; margin: 0 0 var(--tm-space-sm); font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-primary); }
+.tm-sheet__body { margin-top: var(--tm-space-lg); flex: none; overflow: auto; }   /* own block formatting context, as before (the sheet scrolls, not the body) */
+/* Pinned at the sheet's bottom edge (sticky inside the sheet scroller). Its bottom padding is the sheet's bottom spacing
+   (32 + safe area). Round 6: the hairline + soft upward shadow show only while content is scrolled under it: sheet-scroll.js
+   sets .is-stuck (the scroll-state container query is not available in the Chromium used for the renders). */
+.tm-sheet__actions { position: sticky; bottom: 0; z-index: 2; flex: none; display: flex; flex-direction: column; gap: var(--tm-space-sm); margin-top: var(--tm-space-xl);
+  padding: 0 0 calc(var(--tm-space-xl) + env(safe-area-inset-bottom)); background: var(--tm-surface-primary); }
+.tm-sheet__actions.is-stuck { box-shadow: 0 -1px 0 var(--tm-border-default), 0 -8px 24px rgba(16, 24, 40, 0.10); }
 .tm-sheet__actions > .tm-btn { width: 100%; }
 /* Option row — one style for every reason list (Skip HA, Disable, …). Tapping applies; no extra button. */
 .tm-option { display: flex; flex-direction: column; gap: var(--tm-space-2xs); width: 100%; min-height: var(--tm-space-3xl); text-align: left;
@@ -375,6 +389,15 @@ h1, .tm-text-title-lg, .tm-text-h1 { text-wrap: balance; }
   display: flex; flex-direction: column; gap: var(--tm-space-sm);
 }
 .tm-actionbar > .tm-btn { width: 100%; }
+/* A notice that is the RESULT of an action sits inside the bar, above its button (RULES §9.5, A-19; Round 4 item 3, Apurva 2026-11-02):
+   an edge-to-edge band on the bar's top edge. Top corners follow the bar's radius, 1px bottom edge in the tone colour, full tint,
+   padding 12 / 16, same icon and text. No side or top border. Gap to the button = 16 (8 bar gap + 8 margin). */
+.tm-actionbar > .tm-notice {
+  margin: calc(-1 * var(--tm-space-page)) calc(-1 * var(--tm-space-page)) var(--tm-space-sm);
+  padding: var(--tm-space-md) var(--tm-space-page);
+  border-width: 0 0 1px; border-style: solid;
+  border-radius: var(--tm-radius-lg) var(--tm-radius-lg) 0 0;
+}
 /* Two secondaries side by side: equal width, no icons, label fits on one line at 360px (otherwise stack). */
 .tm-btn-pair { display: grid; grid-template-columns: 1fr 1fr; gap: var(--tm-space-sm); }
 .tm-btn-pair > .tm-btn { width: 100%; }
@@ -414,7 +437,7 @@ h1, .tm-text-title-lg, .tm-text-h1 { text-wrap: balance; }
 .tm-header-task--no-back .tm-header-task__meta { margin-left: 0; }
 
 /* ---------- Edit-screen header (RULES §8.5) — full-screen editor over a page: ✕, title + subtitle, one action ---------- */
-.tm-header-edit { display: flex; align-items: center; gap: var(--tm-space-sm); min-height: calc(var(--tm-space-3xl) + var(--tm-space-lg)); padding: var(--tm-space-sm) var(--tm-space-lg) var(--tm-space-sm) var(--tm-space-sm); background: var(--tm-surface-primary); }
+.tm-header-edit { display: flex; align-items: center; gap: var(--tm-space-sm); min-height: calc(var(--tm-space-3xl) + var(--tm-space-lg)); padding: var(--tm-space-sm) var(--tm-space-lg); background: var(--tm-surface-primary); }   /* B-07 (Round 5): 16 page margin on both sides */
 .tm-header-edit__text { flex: 1; min-width: 0; }
 .tm-header-edit__title { margin: 0; font-size: var(--tm-font-size-title-sm); line-height: var(--tm-font-lineheight-lg); font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-primary); }
 .tm-header-edit__subtitle { font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); color: var(--tm-content-secondary); }
@@ -423,6 +446,11 @@ h1, .tm-text-title-lg, .tm-text-h1 { text-wrap: balance; }
 .tm-header-viewer { display: flex; align-items: center; gap: var(--tm-space-xs); min-height: calc(var(--tm-space-3xl) + var(--tm-space-lg)); padding: var(--tm-space-sm); background: var(--tm-surface-inverse); color: var(--tm-content-inverse); }
 .tm-header-viewer__title { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: var(--tm-font-size-body-lg); line-height: var(--tm-font-lineheight-md); font-weight: var(--tm-font-weight-semibold); }
 .tm-header-viewer__tools { display: flex; align-items: center; flex: none; }
+/* B-07 (Round 5, Apurva 2026-11-02): back / ✕ in the Prescribe header and the Rx viewer sit on the same edge as the compact header and the sheet ✕.
+   48px target; its glyph (20px) sits on the 16 page margin (margin-left −14); the title starts 4 (xs) after the target (margin-right −4 on top of the 8 header gap).
+   Probe: glyph centre x 26 and title left x 54 at 390 and 360, as in .tm-header-task--compact. */
+.tm-header-edit > .tm-btn--icon:first-child,
+.tm-header-viewer > .tm-btn--icon:first-child { margin-left: calc((20px - var(--tm-space-3xl)) / 2); margin-right: calc(var(--tm-space-xs) - var(--tm-space-sm)); }
 
 /* ---------- Accessibility (RULES §9.8) ---------- */
 /* D-54: the outline is for buttons, links and tappable rows. Text fields and the OTP code show focus with their own border
@@ -430,7 +458,9 @@ h1, .tm-text-title-lg, .tm-text-h1 { text-wrap: balance; }
 .tm :where(a, button, select, summary, [tabindex]:not([tabindex="-1"]):not(input):not(textarea)):focus-visible { outline: 2px solid var(--tm-border-focus); outline-offset: 2px; }
 .tm :where(input, textarea, [tabindex="-1"]):focus-visible { outline: none; }
 /* D-54: body text avoids a single word alone on its last line (titles already balance, L8). */
-.tm :where(p, li, .tm-notice, .tm-field__helper, .tm-option__desc) { text-wrap: pretty; }
+.tm :where(p, li, .tm-field__helper, .tm-option__desc) { text-wrap: pretty; }
+/* A-22 / B-20 (2026-11-02): notice text wraps balanced, so a notice never ends in a short orphan second line. */
+.tm :where(.tm-notice) { text-wrap: balance; }
 @media (prefers-reduced-motion: reduce) {
   .tm *, .tm *::before, .tm *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
 }

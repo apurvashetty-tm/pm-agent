@@ -112,3 +112,23 @@ Brief: `docs/renders/2026-11-01-fix-round/TERMINAL-BRIEF.md` "Round 4"; audit: `
 - [ ] Earlier today (Round 3): button icons by button size (56 → 20, 48 → 16); Profile ₹20 per prescription (₹60).
 - [ ] **Permanent small-phone guard (agreed 2026-11-02):** 360×640 pass in `docs/layout_check.py` for every state (clipped content with no scroll, bar covering the last content) — Round 4 item 10.
 - [ ] **Design system out to its readers (agreed 2026-11-02), after Round 4 is verified:** (a) republish the Truemeds Design System artifact (`design-system/scripts/build_artifact.py`) with today's three changes — button icons by button size, the pinned action bar on every pinned main action, the notice band inside the bar (+ notice placement rule); (b) update the React Native hand-off notes (`ui-screens/*/NATIVE-HANDOFF.md`, `ui-screens/native/`, `design-system/native/` where components are described) so the app team builds the same rules.
+
+## 2i. Calling walkthrough review (Apurva, 2026-11-02) — decisions in `docs/reviews/2026-11-02-calling-walkthrough/README.md`; apply in one pass after Round 4 is merged
+- [ ] **Path A closed** (CW-A1–A6): Callback only after the call (removed from 2 / 7a, 11, 12, 17; backend refuses a callback without leg 2 answered); 7d unchanged; Release → Home; empty case = amber notice at the top, Release case without a sheet. Apply list at the end of path A in the review file.
+- [ ] **Open product point:** where a released empty case goes (OQ-035) — "our Ops team will check it" is a placeholder.
+- [ ] **Path B closed** (CW-B1–B3): 3 / 4 only for the doctor's side, anything patient-side → 9; Patient unavailable = hold, retried by the system by hangup cause (invalid number not retried; doctor-case retry values are settings) — Engineering.
+- [ ] **Path C closed** (CW-C1–C3): no Callback on 5; 5 only where the partner sends a call-ended event (Ozonetel yes, Knowlarity no); after a valid call only the confirm button (+ Skip HA) — Callback only on 6 and 7d. Engineering: Knowlarity call-ended event?; partner for Pilot Non-Value Meds.
+- [ ] **Next version (CW-C4):** Call again after a valid call (8a / 8b / 16) for a call that drops after the gate — decide with call-log data on drops shortly after the gate.
+- [ ] **Path D closed** (CW-D1–D3): 7b skipped when the call is known ended (→ 7c); 7d bar by route (Pilot: Confirm & forward · Callback + Unavailable); record under the gate / no answer → not confirmed, back through hold and retry, no ₹20, nothing to Ops. Engineering: mismatch analytics table (doctor action vs call record).
+- [ ] **CW-D4 (answers OQ-033):** no call record after a wait time (setting) → prescription not confirmed, back through hold and retry; nothing to Ops.
+- [ ] **Next version:** doctor trust score + warnings built from the mismatch table.
+- [ ] **Path E closed** (CW-E1–E3): 15 = transfer couldn't start (HA not picking up is 14); 17 shows "Calling…" until the hang-up, then waits for the result; 15 shows "Waiting for the call to end…" and its buttons only after the hang-up — 15b retired.
+- [ ] **Path F closed** (CW-F1–F3): **B ships first, A later** (rebuild / PRD / tests build B first); a forward (15, B3) is confirmed only on the partner's result; B1 call ending after the gate → 16 (copy check for B).
+- [ ] **All paths closed 2026-11-03.** Apply in one pass after the fix round is merged (summary at the end of the review file); then the final audit against a checklist built from CW-A1…F3.
+- [ ] **Fix round Round 5 (Apurva, 2026-11-02):** notice band = top edge of the action bar (nothing of the bar above it; Round 4 left a white strip); B-07 back / ✕ icons and titles on one edge in case header, Prescribe, Rx viewer; OTP Verify at the same y in every state (reserved line under the boxes). Accepted from Round 4: logo 166, injection heading "Dose" (D-15), small-phone fade cue, offline in the bar, Home notice placement, 20px header icons, Skip HA wording D-70.
+
+## 2j. Fix round closed — recorded as D-82 (2026-11-03)
+- [x] Rounds 1–6 accepted; §2f, §2g, §2h and the Round 5 / 6 items are done (D-82).
+- [ ] Republish the Truemeds Design System artifact (`design-system/scripts/build_artifact.py`) with D-82's design-system changes.
+- [ ] Update the React Native hand-off notes (`ui-screens/*/NATIVE-HANDOFF.md`, `ui-screens/native/`, `design-system/native/`) with D-82.
+- [ ] Calling walkthrough misses (separate thread, `docs/reviews/2026-11-02-calling-walkthrough/`), then storyboard review (Part C).

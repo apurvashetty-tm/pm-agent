@@ -60,7 +60,8 @@ Link two files. Never copy values out of them.
 | Mobile choice / detail panel | `.tm-sheet` over `.tm-overlay`, one template — §9.4 |
 | A long wait that is not an action (calling, getting a result, checking) | `.tm-status-line` — plain text + spinner, no button shape (D-74). Busy button only for short waits right after a tap |
 | A question above two answers | `.tm-notice--question` — plain centred text, no box (D-62) |
-| Mobile sticky action | `.tm-actionbar` — white, 16px padding on all four sides (+ safe area), hairline top edge + upward shadow so it separates from white cards (D-62, D-67). Only where content scrolls under the buttons; a footer that sits on a fixed panel (sign-in, OTP, unlock, offer) keeps the panel and needs no edge |
+| Mobile sticky action | `.tm-actionbar` — white, 16px padding on all four sides (+ safe area), hairline top edge + upward shadow so it separates from white cards (D-62, D-67). **Every pinned main action sits in it** (Round 4, 2026-11-02): case page, Prescribe, Home, faster sign-in offer, returning unlock. The content above the bar scrolls. Sign-in and OTP keep their main button inline under the fields (§8.4), so they have no bar |
+| A result notice inside a bar | `.tm-actionbar > .tm-notice` — edge-to-edge band on the bar's top edge, 1px bottom edge in the tone colour (§9.5, Round 4 item 3) |
 
 Button sizes: `--lg` 56px for every full-width action button in a group (bar, sheet, form), default 48px for compact inline buttons. `--sm` 40px and `--xs` 32px are **not used for anything tappable on mobile** (below the 48px minimum, §8.6). Details in §9.1.
 
@@ -90,6 +91,7 @@ Run before calling any UI task done. Every answer must be "yes".
 - [ ] Four text levels only, from §8.1?
 - [ ] One side margin and only the three gaps from §8.3?
 - [ ] Main button placed per §8.4 (inline on typing screens, pinned otherwise)?
+- [ ] Small phone (360×640): nothing the doctor needs is hidden without a scroll cue, and the pinned bar never covers the last content (§8.14)?
 - [ ] All text passes AA contrast on its actual background (§8.7)?
 - [ ] Buttons use the four roles and one height per group (§9.1)? Every tap target at least 48px (§8.6)?
 - [ ] Chips wrap instead of squeezing; grids use one chip size per screen (§9.2)?
@@ -136,11 +138,12 @@ Mobile-first prototypes are previewed on desktop as a **9:16 phone frame**, neve
    **Small sizes:** 9–11px text tokens are never used in apps. 12px only for tags and L4 fine print. Anything the user needs to act on (clinical details, amounts, status, errors) is 14px or larger.
    The type scale applies to screen text. Component internals (OTP digits, button labels, keyboard) keep their component specs.
 2. **Side margin:** `--tm-space-page` (**16**, the design team's standard — changed from 24 on 2026-10-26, D-67) on every mobile screen, including the header, sheets and the action bar. Every block — fields, notices, cards, code boxes, buttons — shares the same left and right edges.
-3. **Three gaps only:** tight `--tm-space-sm` (8): label↔field, field↔helper · related `--tm-space-lg` (16): items within a group · section `--tm-space-2xl` (32): between groups. Spare vertical space goes between the content and a pinned button, never inside a group.
+3. **Three gaps only:** tight `--tm-space-sm` (8): label↔field, field↔helper, and a result notice ↔ the control it came from (A-14) · related `--tm-space-lg` (16): items within a group, **and cards stacked one above another — the same gap everywhere cards stack, on the case page, Prescribe and Profile (B-04, B-05, A-13, 2026-11-02)** · section `--tm-space-2xl` (32): between groups. Spare vertical space goes between the content and a pinned button, never inside a group.
    Home-base screens use 3xl (48) as the hero gap between logo and title.
 4. **Main button placement:**
    - **Screens with text entry:** the primary button sits inline directly under the content, so it stays visible above the keyboard without moving.
    - **Screens without text entry:** the primary button is pinned to the bottom with the safe-area inset; a secondary/quiet action sits below it.
+   - **Pinned bar (Round 4, 2026-11-02):** every pinned main action — case page, Prescribe, Home, faster sign-in offer, returning unlock — sits in `.tm-actionbar` (§3). The content above it scrolls; the bar never covers the last content at the end of the scroll (§8.14). Toasts sit above the bar.
 5. **Header types** (each product decides which screens use which):
    - **Home-base header:** product logo/lockup left, icon actions right.
    - **Task header:** Back + screen title, no logo. **Back only where there is a previous screen** to return to; screens that open a journey (e.g. a launch screen, a post-sign-in offer) have none. Two sizes:
@@ -148,6 +151,7 @@ Mobile-first prototypes are previewed on desktop as a **9:16 phone frame**, neve
      - **Compact** — short sticky tinted band, title `.tm-text-h1` 20/28, meta lines under it. For dense work screens. Never changes height while scrolling. When Back is hidden, the title and meta move to the left margin. Long titles wrap to at most two lines; the height is set per screen, never while scrolling.  [ENHANCED 2026-10-15]
    - **Edit screen header** [ADDED 2026-10-15] — for a full-screen editor opened over a page (e.g. Prescribe). White bar: ✕ on the left (closes; asks before discarding unsaved changes), title 20/28 with an optional one-line subtitle, at most one action on the right (destructive outline if it removes something). A pinned summary band may sit directly under it.
    - **Viewer header** [ADDED 2026-10-15] — for full-screen viewers (e.g. a prescription image). Dark bar: ✕, title, tools (zoom, rotate, fit) using `.tm-btn--on-dark`. The title never overlaps the tools; it truncates first.
+   - **Header edge (B-07, Round 5, Apurva 2026-11-02; Round 6 reading):** in the compact task header, the edit header and the viewer header, the Back / ✕ button is a 48px target whose 20px glyph starts on the 16px page margin (the target overhangs 14px to the left; glyph centre 26px from the edge), and the title starts 54px from the edge on every header type alike. The sheet ✕ uses the same edge (§9.4).
 6. **Tap targets:** **48px minimum** for everything tappable that is not a link inside a sentence: icon buttons (✕, ?, Back, zoom), buttons, chips, rows, toggles, standalone links. Enlarge the hit area, not the text. Meets Android (48dp) and iOS (44pt); WCAG 2.5.8's floor is 24px. Links inside a sentence follow WCAG 2.5.8's inline exception.  [CHANGED 2026-10-15, was 44]
 7. **Contrast:** all text meets WCAG AA (4.5:1; 3:1 for 24px+ or 18.66px+ bold) on the surface it sits on, including tinted bands and notices. Blue means "tap me" (§2.5): links are always `--tm-content-brand`, never grey-and-underlined. Disabled controls are exempt from the contrast rule (WCAG 1.4.3) and keep the design-system disabled style.
 8. **Loading primary:** brand-blue fill, white label and white spinner (`.tm-btn--busy` with `.tm-spinner`) on every screen. Never grey, pale or disabled-looking.
@@ -155,6 +159,8 @@ Mobile-first prototypes are previewed on desktop as a **9:16 phone frame**, neve
 10. **Titles:** no full stop at the end of a screen title. Titles wrap balanced (L8).
 11. **Decorative icons** (bullets, list markers) are neutral (`--tm-content-secondary`); brand blue is for actions and selection only (§2.5). An icon tile used as a screen's hero may stay brand-tinted.
 12. **Value display:** a large status value (e.g. time remaining) is a component, not screen text: 32/40 semibold, fixed-width digits (L9). Like OTP digits, it sits outside the four-level type scale.
+13. **Logo lockup size and place (A-07, 2026-11-02).** Every home-base screen with the "truemeds for doctors" lockup (`brand/truemeds-for-doctors.svg`, project level, §2.8) draws it **166px wide** (height follows the 220×54 artwork), **16px from the top**, and the logo→title gap stays as in §8.3 (L6). 166 is the largest width that fits Home at 360 wide with 16 to the first header icon: 360 − 2×16 − (3 × 48 + 2 × 8 − 14 for the actions' 14px overhang) − 16 = 166. Sign-in is 174 today and comes down to 166 (NEEDS-APURVA, Round 4). Nothing else sets the lockup size.
+14. **Small phones (Round 4, 2026-11-02).** At **360 × 640** every state of a screen is checked: nothing the doctor needs is hidden without a scroll cue (a visible edge of the next item, or a scroll area), and a pinned bar never covers the last content when the content is scrolled to its end. The check runs as a permanent guard in `ui-screens/feedback/check-locked-specs.py` (small-phone pass, every state, Round 4 item 10; `docs/layout_check.py` covers the old prototype only). Prescribe, the case page, Home, the offer and the unlock must pass it before a screen is approved.
 
 ### Locked specs (D-46, D-47) — set once in the design system, never per screen
 
@@ -190,7 +196,7 @@ Set once in the design system; a project never restyles them. Where `src/compone
 - **Order, top to bottom:** primary → secondary → quiet. Two secondaries may sit side by side (equal width, label fits on one line at 360px wide with room to spare; otherwise shorten the label or stack). (D-54)
 - **Icons in buttons:** only when they add meaning (e.g. a phone on "Call patient"). On a side-by-side pair, **both buttons or neither** carry an icon (D-54).
 - **Labels:** verb first, sentence case, no full stop, never "Click" / "Tap".
-- **States:** pressed; disabled (design-system disabled style, exempt from contrast); busy (L2). A quiet action in progress shows text only ("Ending…"), no spinner. **Busy labels always end with "…"** ("Verifying…", "Sending OTP…") (D-54).
+- **States:** pressed; disabled (design-system disabled style, exempt from contrast); busy (L2). Busy spinner → label gap is 8 on every busy button (A-08, 2026-11-02). A quiet action in progress shows text only ("Ending…"), no spinner. **Busy labels always end with "…"** ("Verifying…", "Sending OTP…") (D-54).
 - Links inside a sentence stay links (brand colour), not buttons.
 - **Button icon size steps with the button size** (Apurva, 2026-11-02; replaces the D-81 F27 pair-only rule): **56px action buttons (18px label) → 20px icon; 48px compact buttons (16px label) → 16px icon.** Icons stay on the icon scale (16 / 20 / 24) — like type and spacing, each size is a step on a fixed scale, never an in-between value; the icon is one step at or just above its label (as in Carbon, Atlassian and Fluent). **Icon-only buttons** (Back, Help, notifications, Profile, close ×, viewer controls) are not labelled buttons and keep a **20px** icon. Set centrally in `components.css` by button size (`.tm-btn--lg` → 20, compact → 16, `.tm-btn--icon` → 20), overriding any size in the markup; screens never size button icons. SALT's code copy states no per-button icon size; this is a Truemeds addition (`beyond-salt.md`).
 
@@ -211,21 +217,22 @@ Set once in the design system; a project never restyles them. Where `src/compone
 |---|---|
 | Background | Page dimmed behind the sheet (`.tm-overlay`). |
 | Top | Rounded top corners; **no drag handle** (the ✕ is always there). |
-| Header | Title 20/28 semibold, left · ✕ right (48px target) · **no divider**. Optional one-line subtitle (L3). |
+| Header | Title 20/28 semibold, left · ✕ right (48px target, glyph on the 16 margin — the same as the compact task header, B-07) · **no divider**. Optional one-line subtitle (L3). |
 | Spacing | 16px side margins (`--tm-space-page`, same as screens) · 16px header → content · 24px + safe area at the bottom. |
-| Content | Fields, chips, or **option rows** (one shared style for reason lists: title + one-line description, full width, 48px+; tapping applies). |
-| Actions | §9.1 order and size (56px, full width). Reason lists need no button. **Confirmation sheet** ("Leave this case?", "Discard changes?"): the action the sheet asks about on top — red outline if it can't easily be undone, primary otherwise — and the "stay" option as quiet text below. A sheet offering two real actions (e.g. Retry call / Mark as unavailable) is a choice, not a confirmation (D-54). |
+| Content | Fields, chips, or **option rows** (one shared style for reason lists: title + one-line description, full width, 48px+; tapping applies). Labels inside a sheet ("Select reason", "Date", "Time") use `.tm-sheet__label` — one style, 8 above the field (B-14, 2026-11-02). |
+| Actions | §9.1 order and size (56px, full width). **Pinned (Round 6, 2026-11-02):** the actions are the sheet's last part and stay on screen when the content is taller than the space — the content scrolls between the pinned header and the pinned actions. The hairline and soft upward shadow show only while content scrolls under them (`design-system/src/sheet-scroll.js` sets `.is-stuck`; screens with sheets load it). Sheet buttons stay fully visible and tappable at 390×844 and 360×640. Reason lists need no button. **Confirmation sheet** ("Leave this case?", "Discard changes?"): the action the sheet asks about on top — red outline if it can't easily be undone, primary otherwise — and the "stay" option as quiet text below. A sheet offering two real actions (e.g. Retry call / Mark as unavailable) is a choice, not a confirmation (D-54). |
 | Closing | ✕, tap outside or swipe down = cancel — **except while an action is in progress**. Unsaved input asks before closing. |
-| Size | Up to 85% of the screen height; the content scrolls, header and actions stay. Max width 640px on desktop. |
+| Size | Up to 85% of the screen height; the content scrolls, header and actions stay pinned. Max width 640px on desktop. |
+| Over the bar | **A sheet always covers the pinned action bar of the screen behind it (Round 6, 2026-11-02).** The scrim and the sheet sit above the bar in every state: no part of the bar shows or takes a tap while a sheet is open. |
 - **Quiet text for "stay" (D-81 F11):** the option that keeps things as they are ("Stay signed in", "Keep available") is quiet text (`tm-btn--quiet`), never a secondary button.
 
 ### 9.5 Feedback
 | Surface | Rule |
 |---|---|
 | **Field error** | Under the field (L4, L7). |
-| **Notice** | In the page; stays until the cause is gone. Neutral / warning / error (L5). **Warning** when something blocks the main action or runs on a timer (offline, locks, near expiry); **error** when an action failed; **neutral** only for side information (D-54). |
+| **Notice** | Neutral / warning / error (L5); stays until the cause is gone. **Warning** when something blocks the main action or runs on a timer (offline, locks, near expiry); **error** when an action failed; **neutral** only for side information (D-54). Text wraps balanced (A-22). **Placement (A-19, Round 4 item 2, 2026-11-02):** a notice that is the **result of an action** sits next to the control that did it — on a screen with a pinned bar, inside the bar above its button, in the band style of §3 (Home "ending soon", setup / add / request failures, the offer's "Couldn't turn on…", the case and calling bar notices); on a screen without a bar, 8 below the field or button it came from (A-14). A notice about **the bar's own action** — the result of the last tap, or why its button is disabled now (offline, "No cases right now") — is also in the bar. A notice about the **screen's general situation** (unlock "isn't available", Home idle-expired, manually ended, expired-pending, stop-pending) stays at the top of the panel, not tied to a button (lane-request 7, Round 4). |
 | **Status card** | The outcome of a task (§9.3). |
-| **Toast** | **Dark** (inverse surface — the platform standard), **14/20**, 12px × 16px padding, medium radius, one line (two at most), width up to the screen minus margins. Just above the bottom bar, **one at a time**, about 4 seconds, polite screen-reader announcement, never takes focus. **Only when the result has no place on the screen**; otherwise show it where it happens. |
+| **Toast** | **Dark** (inverse surface — the platform standard), **14/20**, 12px × 16px padding, medium radius, one line (two at most), width up to the screen minus margins. Just above the bottom bar (on a screen with a pinned bar, `--tm-toast-offset` = bar height + 16, Round 4), **one at a time**, about 4 seconds, polite screen-reader announcement, never takes focus. **Only when the result has no place on the screen**; otherwise show it where it happens. |
 | **Loading** | Busy primary (L2). |
 | **Rule** | One message per cause — never field error + notice + toast for the same thing. |
 

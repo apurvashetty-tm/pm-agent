@@ -1,0 +1,29 @@
+{
+ "sign-in/default": {
+  "w": 166,
+  "top": 16,
+  "logoToTitle": 48
+ },
+ "otp/default": {
+  "w": 166,
+  "top": 16,
+  "logoToTitle": 16
+ },
+ "offer/fingerprint": {
+  "w": 166,
+  "top": 16,
+  "logoToTitle": 16
+ },
+ "unlock/fingerprint": {
+  "w": 166,
+  "top": 16,
+  "logoToTitle": 16
+ },
+ "home/active": {
+  "w": 166,
+  "top": 16,
+  "logoToTitle": 48
+ },
+ "home/profile": null
+}
+exit 0

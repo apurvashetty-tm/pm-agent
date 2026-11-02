@@ -92,3 +92,13 @@ Implemented centrally 2026-10-15 (preview renders: `build/preview-2026-10-15/`).
 | Compact task header | `.tm-header-task--compact` (+ `__row`, `__title`, `__meta`, `--no-back`) | D-49 / §8.5 as a central component |
 | Link button height | `.tm-btn--link` min 48 | standalone link-buttons meet §8.6 |
 
+
+### Added 2026-11-02 (Round 4 of the fix round: consistency audit, Lane A) — done
+| Item | Class | Why |
+|---|---|---|
+| Notice band inside the action bar | `.tm-actionbar > .tm-notice` | RULES §9.5 (A-19, Apurva 2026-11-02): a notice that is the result of an action sits inside the pinned bar, above its button, as an edge-to-edge band (top corners follow the bar, 1px bottom edge in the tone colour, padding 12 / 16). Notices in page content keep their box. |
+| Busy spinner gap 8 | `.tm-btn--busy { gap: 0 }` + spinner margin 8 | A-08: busy buttons gave 8 or 16 depending on whether the label sat in a span; now always 8. |
+| Notice text balanced | `.tm-notice { text-wrap: balance }` | A-22 / B-20: no short orphan second line in notices. Body text keeps `pretty`. |
+| Sheet ✕ on the 16 margin | `.tm-sheet__close` margin = (20 − 48) / 2 | B-07: the glyph sits on the same 16 line as the compact task header ✕ (was 2 px further in). |
+| Sheet label | `.tm-sheet__label` | B-14: one label style for sheet fields ("Select reason", "Date", "Time") — the field-label style, 8 above the field. |
+| Toast offset hook | `.tm-toast { bottom: var(--tm-toast-offset, 24px) }` | Round 4 item 1: on screens with a pinned bar the toast sits above it (set `--tm-toast-offset` = bar height + 16). |

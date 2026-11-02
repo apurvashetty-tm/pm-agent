@@ -7,18 +7,24 @@ body.tm{background:var(--tm-surface-brand-subtle);color:var(--tm-content-primary
 /* Task header (D-42): title, no logo, no Back: first screen when the app opens (D-47). Pinned footer (no typing, RULES §8.4). */
 .screen{height:100dvh;box-sizing:border-box;display:flex;flex-direction:column;background:var(--tm-surface-brand-subtle);font-family:var(--tm-font);overflow:hidden;position:relative}
 .intro{padding:var(--tm-space-lg) var(--tm-space-page) var(--tm-space-2xl)}
-.login-logo{display:block;width:174px;height:auto;margin-bottom:var(--tm-space-lg)}
+.login-logo{display:block;width:166px;height:auto;margin-bottom:var(--tm-space-lg)}
 .head{margin-top:0}   /* D-81 F8: same logo-to-title gap as OTP and offer (16) */
 h1{margin:0 0 var(--tm-space-sm)}
 .intro p{margin:0;font-size:var(--tm-font-size-body-md);line-height:var(--tm-font-lineheight-sm);color:var(--tm-content-secondary)}
-.panel{flex:1;min-height:0;display:flex;flex-direction:column;padding:var(--tm-space-xl) var(--tm-space-page) var(--tm-space-xl);   /* D-81 F8: tile at the offer position (199) */border-radius:var(--tm-radius-2xl) var(--tm-radius-2xl) 0 0;background:var(--tm-surface-primary)}
+.panel{flex:1;min-height:0;display:flex;flex-direction:column;padding:var(--tm-space-2xl) var(--tm-space-page) var(--tm-space-xl);   /* D-81 F8: tile at the offer position. Round 4 A-05: panel top 32 as on the other screens */border-radius:var(--tm-radius-2xl) var(--tm-radius-2xl) 0 0;background:var(--tm-surface-primary)}
+/* Round 4 lane D (item 1, 360×640): the panel scrolls above the pinned bar when the phone is short; the bar never covers its last line. */
+.panel{overflow-y:auto}
+/* Round 4 item 1: the pinned footer is the real .tm-actionbar, edge to edge on the panel (like the case page). */
+.footer{flex:none;margin:0}   /* lane D: the bar is a sibling below the panel (not in its scroll), flush with the frame's bottom edge */
+.footer > .account{width:auto;align-self:center}
+/* Round 4 (A-19): a standing-state notice ("isn't available") sits at the top of the panel; it is not in the bar. */
+.unlock-notice{margin:0 0 var(--tm-space-lg)}
 .prompt{margin:0;display:flex;flex-direction:column;align-items:center;gap:var(--tm-space-lg);text-align:center}
 .prompt-icon{width:64px;height:64px;display:grid;place-items:center;border-radius:var(--tm-radius-lg);background:var(--tm-surface-brand-subtle);color:var(--tm-content-brand)}
 .prompt-icon .tm-icon{width:var(--tm-space-2xl);height:var(--tm-space-2xl)}
 h2{margin:0;font-size:var(--tm-font-size-body-lg);line-height:var(--tm-font-lineheight-md);font-weight:var(--tm-font-weight-semibold)}
 .unlock-notice{margin-top:0}
 .unlock-notice .tm-icon{width:20px;height:20px;flex:none}
-.footer{margin-top:auto;display:flex;flex-direction:column;align-items:stretch;gap:var(--tm-space-lg);padding-top:var(--tm-space-2xl)}
 .account{align-self:center;font-size:var(--tm-font-size-body-md)}
 .account strong{color:var(--tm-content-brand);font-weight:var(--tm-font-weight-semibold)}
 .screen [hidden]{display:none!important}
@@ -36,14 +42,14 @@ html.capture .review-controls{display:none}
 <main class="screen" aria-label="Returning doctor quick unlock">
  <header class="intro"><img class="login-logo" src="../../brand/truemeds-for-doctors.svg" alt="truemeds for doctors"><div class="head"><h1 class="tm-text-title-lg">Hello, Dr. Apurva</h1><p>Let’s check in on your patients today.</p></div></header>
  <section class="panel" aria-labelledby="ready">
-  <div class="prompt"><div class="prompt-icon" aria-hidden="true"><span class="tm-icon" id="variant-icon" data-icon="fingerprint"></span></div><h2 id="ready">Ready when you are</h2></div>
   <div class="tm-notice tm-notice--neutral unlock-notice" id="unlock-notice" role="status" hidden><span class="tm-icon" data-icon="info-circle" aria-hidden="true"></span><span id="unlock-error"></span></div>
-  <div class="footer">
-   <button class="tm-btn tm-btn--primary tm-btn--lg tm-btn--block" id="unlock-action" type="button"><span id="unlock-label">Unlock with fingerprint</span></button>
-   <button class="tm-btn tm-btn--quiet tm-btn--lg tm-btn--block" id="fallback" type="button">Use OTP instead</button>
-   <button class="tm-btn tm-btn--quiet account" type="button">Not you? <strong>Switch account</strong></button>
-  </div>
+  <div class="prompt"><div class="prompt-icon" aria-hidden="true"><span class="tm-icon" id="variant-icon" data-icon="fingerprint"></span></div><h2 id="ready">Ready when you are</h2></div>
  </section>
+ <div class="tm-actionbar footer">
+  <button class="tm-btn tm-btn--primary tm-btn--lg tm-btn--block" id="unlock-action" type="button"><span id="unlock-label">Unlock with fingerprint</span></button>
+  <button class="tm-btn tm-btn--quiet tm-btn--lg tm-btn--block" id="fallback" type="button">Use OTP instead</button>
+  <button class="tm-btn tm-btn--quiet account" type="button">Not you? <strong>Switch account</strong></button>
+ </div>
 </main>
 <script>
 const params=new URLSearchParams(location.search);

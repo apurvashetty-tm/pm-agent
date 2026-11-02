@@ -1,0 +1,1314 @@
+{
+ "home/add-wheel@390x844": {
+  "sheets": [
+   {
+    "id": "Add availability",
+    "top": 236,
+    "bottom": 844,
+    "scrollable": false,
+    "scrollTop": 0,
+    "actions": 2,
+    "titleVisible": true
+   }
+  ],
+  "bars": [
+   [
+    756,
+    844
+   ]
+  ],
+  "problems": [],
+  "errors": []
+ },
+ "home/add-wheel@390x640": {
+  "sheets": [
+   {
+    "id": "Add availability",
+    "top": 96,
+    "bottom": 640,
+    "scrollable": true,
+    "scrollTop": 0,
+    "actions": 2,
+    "titleVisible": true,
+    "scrolledTop": 64,
+    "actionsStuckBottomGap": 0,
+    "shadowWhenStuck": true,
+    "contentFirstTop": 176
+   }
+  ],
+  "bars": [
+   [
+    552,
+    640
+   ]
+  ],
+  "problems": [],
+  "errors": []
+ },
+ "home/add-wheel@360x844": {
+  "sheets": [
+   {
+    "id": "Add availability",
+    "top": 236,
+    "bottom": 844,
+    "scrollable": false,
+    "scrollTop": 0,
+    "actions": 2,
+    "titleVisible": true
+   }
+  ],
+  "bars": [
+   [
+    756,
+    844
+   ]
+  ],
+  "problems": [],
+  "errors": []
+ },
+ "home/add-wheel@360x640": {
+  "sheets": [
+   {
+    "id": "Add availability",
+    "top": 96,
+    "bottom": 640,
+    "scrollable": true,
+    "scrollTop": 0,
+    "actions": 2,
+    "titleVisible": true,
+    "scrolledTop": 64,
+    "actionsStuckBottomGap": 0,
+    "shadowWhenStuck": true,
+    "contentFirstTop": 176
+   }
+  ],
+  "bars": [
+   [
+    552,
+    640
+   ]
+  ],
+  "problems": [],
+  "errors": []
+ },
+ "home/adding@390x844": {
+  "sheets": [
+   {
+    "id": "Add availability",
+    "top": 236,
+    "bottom": 844,
+    "scrollable": false,
+    "scrollTop": 0,
+    "actions": 2,
+    "titleVisible": true
+   }
+  ],
+  "bars": [
+   [
+    756,
+    844
+   ]
+  ],
+  "problems": [],
+  "errors": []
+ },
+ "home/adding@390x640": {
+  "sheets": [
+   {
+    "id": "Add availability",
+    "top": 96,
+    "bottom": 640,
+    "scrollable": true,
+    "scrollTop": 0,
+    "actions": 2,
+    "titleVisible": true,
+    "scrolledTop": 64,
+    "actionsStuckBottomGap": 0,
+    "shadowWhenStuck": true,
+    "contentFirstTop": 176
+   }
+  ],
+  "bars": [
+   [
+    552,
+    640
+   ]
+  ],
+  "problems": [],
+  "errors": []
+ },
+ "home/adding@360x844": {
+  "sheets": [
+   {
+    "id": "Add availability",
+    "top": 236,
+    "bottom": 844,
+    "scrollable": false,
+    "scrollTop": 0,
+    "actions": 2,
+    "titleVisible": true
+   }
+  ],
+  "bars": [
+   [
+    756,
+    844
+   ]
+  ],
+  "problems": [],
+  "errors": []
+ },
+ "home/adding@360x640": {
+  "sheets": [
+   {
+    "id": "Add availability",
+    "top": 96,
+    "bottom": 640,
+    "scrollable": true,
+    "scrollTop": 0,
+    "actions": 2,
+    "titleVisible": true,
+    "scrolledTop": 64,
+    "actionsStuckBottomGap": 0,
+    "shadowWhenStuck": true,
+    "contentFirstTop": 176
+   }
+  ],
+  "bars": [
+   [
+    552,
+    640
+   ]
+  ],
+  "problems": [],
+  "errors": []
+ },
+ "home/add-failed@390x844": {
+  "sheets": [
+   {
+    "id": "Add availability",
+    "top": 158,
+    "bottom": 844,
+    "scrollable": false,
+    "scrollTop": 0,
+    "actions": 2,
+    "titleVisible": true
+   }
+  ],
+  "bars": [
+   [
+    756,
+    844
+   ]
+  ],
+  "problems": [],
+  "errors": []
+ },
+ "home/add-failed@390x640": {
+  "sheets": [
+   {
+    "id": "Add availability",
+    "top": 96,
+    "bottom": 640,
+    "scrollable": true,
+    "scrollTop": 0,
+    "actions": 2,
+    "titleVisible": true,
+    "scrolledTop": 142,
+    "actionsStuckBottomGap": 0,
+    "shadowWhenStuck": true,
+    "contentFirstTop": 176
+   }
+  ],
+  "bars": [
+   [
+    552,
+    640
+   ]
+  ],
+  "problems": [],
+  "errors": []
+ },
+ "home/add-failed@360x844": {
+  "sheets": [
+   {
+    "id": "Add availability",
+    "top": 158,
+    "bottom": 844,
+    "scrollable": false,
+    "scrollTop": 0,
+    "actions": 2,
+    "titleVisible": true
+   }
+  ],
+  "bars": [
+   [
+    756,
+    844
+   ]
+  ],
+  "problems": [],
+  "errors": []
+ },
+ "home/add-failed@360x640": {
+  "sheets": [
+   {
+    "id": "Add availability",
+    "top": 96,
+    "bottom": 640,
+    "scrollable": true,
+    "scrollTop": 0,
+    "actions": 2,
+    "titleVisible": true,
+    "scrolledTop": 142,
+    "actionsStuckBottomGap": 0,
+    "shadowWhenStuck": true,
+    "contentFirstTop": 176
+   }
+  ],
+  "bars": [
+   [
+    552,
+    640
+   ]
+  ],
+  "problems": [],
+  "errors": []
+ },
+ "home/end-confirmation@390x844": {
+  "sheets": [
+   {
+    "id": "End availability?",
+    "top": 552,
+    "bottom": 844,
+    "scrollable": false,
+    "scrollTop": 0,
+    "actions": 2,
+    "titleVisible": true
+   }
+  ],
+  "bars": [
+   [
+    756,
+    844
+   ]
+  ],
+  "problems": [],
+  "errors": []
+ },
+ "home/end-confirmation@390x640": {
+  "sheets": [
+   {
+    "id": "End availability?",
+    "top": 348,
+    "bottom": 640,
+    "scrollable": false,
+    "scrollTop": 0,
+    "actions": 2,
+    "titleVisible": true
+   }
+  ],
+  "bars": [
+   [
+    552,
+    640
+   ]
+  ],
+  "problems": [],
+  "errors": []
+ },
+ "home/end-confirmation@360x844": {
+  "sheets": [
+   {
+    "id": "End availability?",
+    "top": 552,
+    "bottom": 844,
+    "scrollable": false,
+    "scrollTop": 0,
+    "actions": 2,
+    "titleVisible": true
+   }
+  ],
+  "bars": [
+   [
+    756,
+    844
+   ]
+  ],
+  "problems": [],
+  "errors": []
+ },
+ "home/end-confirmation@360x640": {
+  "sheets": [
+   {
+    "id": "End availability?",
+    "top": 348,
+    "bottom": 640,
+    "scrollable": false,
+    "scrollTop": 0,
+    "actions": 2,
+    "titleVisible": true
+   }
+  ],
+  "bars": [
+   [
+    552,
+    640
+   ]
+  ],
+  "problems": [],
+  "errors": []
+ },
+ "home/logout-confirm@390x844": {
+  "sheets": [
+   {
+    "id": "Log out?",
+    "top": 572,
+    "bottom": 844,
+    "scrollable": false,
+    "scrollTop": 0,
+    "actions": 2,
+    "titleVisible": true
+   }
+  ],
+  "bars": [],
+  "problems": [],
+  "errors": []
+ },
+ "home/logout-confirm@390x640": {
+  "sheets": [
+   {
+    "id": "Log out?",
+    "top": 368,
+    "bottom": 640,
+    "scrollable": false,
+    "scrollTop": 0,
+    "actions": 2,
+    "titleVisible": true
+   }
+  ],
+  "bars": [],
+  "problems": [],
+  "errors": []
+ },
+ "home/logout-confirm@360x844": {
+  "sheets": [
+   {
+    "id": "Log out?",
+    "top": 572,
+    "bottom": 844,
+    "scrollable": false,
+    "scrollTop": 0,
+    "actions": 2,
+    "titleVisible": true
+   }
+  ],
+  "bars": [],
+  "problems": [],
+  "errors": []
+ },
+ "home/logout-confirm@360x640": {
+  "sheets": [
+   {
+    "id": "Log out?",
+    "top": 368,
+    "bottom": 640,
+    "scrollable": false,
+    "scrollTop": 0,
+    "actions": 2,
+    "titleVisible": true
+   }
+  ],
+  "bars": [],
+  "problems": [],
+  "errors": []
+ },
+ "case/a-leave-sheet@390x844": {
+  "sheets": [
+   {
+    "id": "cl-sheet",
+    "top": 572,
+    "bottom": 844,
+    "scrollable": false,
+    "scrollTop": 0,
+    "actions": 2,
+    "titleVisible": true
+   }
+  ],
+  "bars": [
+   [
+    756,
+    844
+   ]
+  ],
+  "problems": [],
+  "errors": []
+ },
+ "case/a-leave-sheet@390x640": {
+  "sheets": [
+   {
+    "id": "cl-sheet",
+    "top": 368,
+    "bottom": 640,
+    "scrollable": false,
+    "scrollTop": 0,
+    "actions": 2,
+    "titleVisible": true
+   }
+  ],
+  "bars": [
+   [
+    552,
+    640
+   ]
+  ],
+  "problems": [],
+  "errors": []
+ },
+ "case/a-leave-sheet@360x844": {
+  "sheets": [
+   {
+    "id": "cl-sheet",
+    "top": 572,
+    "bottom": 844,
+    "scrollable": false,
+    "scrollTop": 0,
+    "actions": 2,
+    "titleVisible": true
+   }
+  ],
+  "bars": [
+   [
+    756,
+    844
+   ]
+  ],
+  "problems": [],
+  "errors": []
+ },
+ "case/a-leave-sheet@360x640": {
+  "sheets": [
+   {
+    "id": "cl-sheet",
+    "top": 368,
+    "bottom": 640,
+    "scrollable": false,
+    "scrollTop": 0,
+    "actions": 2,
+    "titleVisible": true
+   }
+  ],
+  "bars": [
+   [
+    552,
+    640
+   ]
+  ],
+  "problems": [],
+  "errors": []
+ },
+ "case/a-releasing@390x844": {
+  "sheets": [
+   {
+    "id": "cl-sheet",
+    "top": 572,
+    "bottom": 844,
+    "scrollable": false,
+    "scrollTop": 0,
+    "actions": 2,
+    "titleVisible": true
+   }
+  ],
+  "bars": [
+   [
+    756,
+    844
+   ]
+  ],
+  "problems": [],
+  "errors": []
+ },
+ "case/a-releasing@390x640": {
+  "sheets": [
+   {
+    "id": "cl-sheet",
+    "top": 368,
+    "bottom": 640,
+    "scrollable": false,
+    "scrollTop": 0,
+    "actions": 2,
+    "titleVisible": true
+   }
+  ],
+  "bars": [
+   [
+    552,
+    640
+   ]
+  ],
+  "problems": [],
+  "errors": []
+ },
+ "case/a-releasing@360x844": {
+  "sheets": [
+   {
+    "id": "cl-sheet",
+    "top": 572,
+    "bottom": 844,
+    "scrollable": false,
+    "scrollTop": 0,
+    "actions": 2,
+    "titleVisible": true
+   }
+  ],
+  "bars": [
+   [
+    756,
+    844
+   ]
+  ],
+  "problems": [],
+  "errors": []
+ },
+ "case/a-releasing@360x640": {
+  "sheets": [
+   {
+    "id": "cl-sheet",
+    "top": 368,
+    "bottom": 640,
+    "scrollable": false,
+    "scrollTop": 0,
+    "actions": 2,
+    "titleVisible": true
+   }
+  ],
+  "bars": [
+   [
+    552,
+    640
+   ]
+  ],
+  "problems": [],
+  "errors": []
+ },
+ "case/c-callback@390x844": {
+  "sheets": [
+   {
+    "id": "sheet-callback",
+    "top": 316,
+    "bottom": 844,
+    "scrollable": false,
+    "scrollTop": 0,
+    "actions": 1,
+    "titleVisible": true
+   }
+  ],
+  "bars": [
+   [
+    700,
+    844
+   ]
+  ],
+  "problems": [],
+  "errors": []
+ },
+ "case/c-callback@390x640": {
+  "sheets": [
+   {
+    "id": "sheet-callback",
+    "top": 112,
+    "bottom": 640,
+    "scrollable": false,
+    "scrollTop": 0,
+    "actions": 1,
+    "titleVisible": true
+   }
+  ],
+  "bars": [
+   [
+    496,
+    640
+   ]
+  ],
+  "problems": [],
+  "errors": []
+ },
+ "case/c-callback@360x844": {
+  "sheets": [
+   {
+    "id": "sheet-callback",
+    "top": 316,
+    "bottom": 844,
+    "scrollable": false,
+    "scrollTop": 0,
+    "actions": 1,
+    "titleVisible": true
+   }
+  ],
+  "bars": [
+   [
+    700,
+    844
+   ]
+  ],
+  "problems": [],
+  "errors": []
+ },
+ "case/c-callback@360x640": {
+  "sheets": [
+   {
+    "id": "sheet-callback",
+    "top": 112,
+    "bottom": 640,
+    "scrollable": false,
+    "scrollTop": 0,
+    "actions": 1,
+    "titleVisible": true
+   }
+  ],
+  "bars": [
+   [
+    496,
+    640
+   ]
+  ],
+  "problems": [],
+  "errors": []
+ },
+ "case/c-callback-error@390x844": {
+  "sheets": [
+   {
+    "id": "sheet-callback",
+    "top": 296,
+    "bottom": 844,
+    "scrollable": false,
+    "scrollTop": 0,
+    "actions": 1,
+    "titleVisible": true
+   }
+  ],
+  "bars": [
+   [
+    700,
+    844
+   ]
+  ],
+  "problems": [],
+  "errors": []
+ },
+ "case/c-callback-error@390x640": {
+  "sheets": [
+   {
+    "id": "sheet-callback",
+    "top": 96,
+    "bottom": 640,
+    "scrollable": true,
+    "scrollTop": 0,
+    "actions": 1,
+    "titleVisible": true,
+    "scrolledTop": 4,
+    "actionsStuckBottomGap": 0,
+    "shadowWhenStuck": true,
+    "contentFirstTop": 176
+   }
+  ],
+  "bars": [
+   [
+    496,
+    640
+   ]
+  ],
+  "problems": [],
+  "errors": []
+ },
+ "case/c-callback-error@360x844": {
+  "sheets": [
+   {
+    "id": "sheet-callback",
+    "top": 296,
+    "bottom": 844,
+    "scrollable": false,
+    "scrollTop": 0,
+    "actions": 1,
+    "titleVisible": true
+   }
+  ],
+  "bars": [
+   [
+    700,
+    844
+   ]
+  ],
+  "problems": [],
+  "errors": []
+ },
+ "case/c-callback-error@360x640": {
+  "sheets": [
+   {
+    "id": "sheet-callback",
+    "top": 96,
+    "bottom": 640,
+    "scrollable": true,
+    "scrollTop": 0,
+    "actions": 1,
+    "titleVisible": true,
+    "scrolledTop": 4,
+    "actionsStuckBottomGap": 0,
+    "shadowWhenStuck": true,
+    "contentFirstTop": 176
+   }
+  ],
+  "bars": [
+   [
+    496,
+    640
+   ]
+  ],
+  "problems": [],
+  "errors": []
+ },
+ "case/c-callback-failed@390x844": {
+  "sheets": [
+   {
+    "id": "sheet-callback",
+    "top": 234,
+    "bottom": 844,
+    "scrollable": false,
+    "scrollTop": 0,
+    "actions": 1,
+    "titleVisible": true
+   }
+  ],
+  "bars": [
+   [
+    700,
+    844
+   ]
+  ],
+  "problems": [],
+  "errors": []
+ },
+ "case/c-callback-failed@390x640": {
+  "sheets": [
+   {
+    "id": "sheet-callback",
+    "top": 96,
+    "bottom": 640,
+    "scrollable": true,
+    "scrollTop": 0,
+    "actions": 1,
+    "titleVisible": true,
+    "scrolledTop": 66,
+    "actionsStuckBottomGap": 0,
+    "shadowWhenStuck": true,
+    "contentFirstTop": 176
+   }
+  ],
+  "bars": [
+   [
+    496,
+    640
+   ]
+  ],
+  "problems": [],
+  "errors": []
+ },
+ "case/c-callback-failed@360x844": {
+  "sheets": [
+   {
+    "id": "sheet-callback",
+    "top": 234,
+    "bottom": 844,
+    "scrollable": false,
+    "scrollTop": 0,
+    "actions": 1,
+    "titleVisible": true
+   }
+  ],
+  "bars": [
+   [
+    700,
+    844
+   ]
+  ],
+  "problems": [],
+  "errors": []
+ },
+ "case/c-callback-failed@360x640": {
+  "sheets": [
+   {
+    "id": "sheet-callback",
+    "top": 96,
+    "bottom": 640,
+    "scrollable": true,
+    "scrollTop": 0,
+    "actions": 1,
+    "titleVisible": true,
+    "scrolledTop": 66,
+    "actionsStuckBottomGap": 0,
+    "shadowWhenStuck": true,
+    "contentFirstTop": 176
+   }
+  ],
+  "bars": [
+   [
+    496,
+    640
+   ]
+  ],
+  "problems": [],
+  "errors": []
+ },
+ "case/c-skip-ha@390x844": {
+  "sheets": [
+   {
+    "id": "sheet-skip-ha",
+    "top": 456,
+    "bottom": 844,
+    "scrollable": false,
+    "scrollTop": 0,
+    "actions": 0,
+    "titleVisible": true
+   }
+  ],
+  "bars": [
+   [
+    692,
+    844
+   ]
+  ],
+  "problems": [],
+  "errors": []
+ },
+ "case/c-skip-ha@390x640": {
+  "sheets": [
+   {
+    "id": "sheet-skip-ha",
+    "top": 252,
+    "bottom": 640,
+    "scrollable": false,
+    "scrollTop": 0,
+    "actions": 0,
+    "titleVisible": true
+   }
+  ],
+  "bars": [
+   [
+    552,
+    640
+   ]
+  ],
+  "problems": [],
+  "errors": []
+ },
+ "case/c-skip-ha@360x844": {
+  "sheets": [
+   {
+    "id": "sheet-skip-ha",
+    "top": 432,
+    "bottom": 844,
+    "scrollable": false,
+    "scrollTop": 0,
+    "actions": 0,
+    "titleVisible": true
+   }
+  ],
+  "bars": [
+   [
+    756,
+    844
+   ]
+  ],
+  "problems": [],
+  "errors": []
+ },
+ "case/c-skip-ha@360x640": {
+  "sheets": [
+   {
+    "id": "sheet-skip-ha",
+    "top": 228,
+    "bottom": 640,
+    "scrollable": false,
+    "scrollTop": 0,
+    "actions": 0,
+    "titleVisible": true
+   }
+  ],
+  "bars": [
+   [
+    552,
+    640
+   ]
+  ],
+  "problems": [],
+  "errors": []
+ },
+ "case/s7d-unavailable-sheet@390x844": {
+  "sheets": [
+   {
+    "id": "sheet-mark-unavailable",
+    "top": 480,
+    "bottom": 844,
+    "scrollable": false,
+    "scrollTop": 0,
+    "actions": 0,
+    "titleVisible": true
+   }
+  ],
+  "bars": [
+   [
+    647,
+    844
+   ]
+  ],
+  "problems": [],
+  "errors": []
+ },
+ "case/s7d-unavailable-sheet@390x640": {
+  "sheets": [
+   {
+    "id": "sheet-mark-unavailable",
+    "top": 276,
+    "bottom": 640,
+    "scrollable": false,
+    "scrollTop": 0,
+    "actions": 0,
+    "titleVisible": true
+   }
+  ],
+  "bars": [
+   [
+    443,
+    640
+   ]
+  ],
+  "problems": [],
+  "errors": []
+ },
+ "case/s7d-unavailable-sheet@360x844": {
+  "sheets": [
+   {
+    "id": "sheet-mark-unavailable",
+    "top": 480,
+    "bottom": 844,
+    "scrollable": false,
+    "scrollTop": 0,
+    "actions": 0,
+    "titleVisible": true
+   }
+  ],
+  "bars": [
+   [
+    647,
+    844
+   ]
+  ],
+  "problems": [],
+  "errors": []
+ },
+ "case/s7d-unavailable-sheet@360x640": {
+  "sheets": [
+   {
+    "id": "sheet-mark-unavailable",
+    "top": 276,
+    "bottom": 640,
+    "scrollable": false,
+    "scrollTop": 0,
+    "actions": 0,
+    "titleVisible": true
+   }
+  ],
+  "bars": [
+   [
+    443,
+    640
+   ]
+  ],
+  "problems": [],
+  "errors": []
+ },
+ "case/s7e-leave-sheet@390x844": {
+  "sheets": [
+   {
+    "id": "cl-sheet",
+    "top": 572,
+    "bottom": 844,
+    "scrollable": false,
+    "scrollTop": 0,
+    "actions": 2,
+    "titleVisible": true
+   }
+  ],
+  "bars": [
+   [
+    756,
+    844
+   ]
+  ],
+  "problems": [],
+  "errors": []
+ },
+ "case/s7e-leave-sheet@390x640": {
+  "sheets": [
+   {
+    "id": "cl-sheet",
+    "top": 368,
+    "bottom": 640,
+    "scrollable": false,
+    "scrollTop": 0,
+    "actions": 2,
+    "titleVisible": true
+   }
+  ],
+  "bars": [
+   [
+    552,
+    640
+   ]
+  ],
+  "problems": [],
+  "errors": []
+ },
+ "case/s7e-leave-sheet@360x844": {
+  "sheets": [
+   {
+    "id": "cl-sheet",
+    "top": 572,
+    "bottom": 844,
+    "scrollable": false,
+    "scrollTop": 0,
+    "actions": 2,
+    "titleVisible": true
+   }
+  ],
+  "bars": [
+   [
+    756,
+    844
+   ]
+  ],
+  "problems": [],
+  "errors": []
+ },
+ "case/s7e-leave-sheet@360x640": {
+  "sheets": [
+   {
+    "id": "cl-sheet",
+    "top": 368,
+    "bottom": 640,
+    "scrollable": false,
+    "scrollTop": 0,
+    "actions": 2,
+    "titleVisible": true
+   }
+  ],
+  "bars": [
+   [
+    552,
+    640
+   ]
+  ],
+  "problems": [],
+  "errors": []
+ },
+ "case/d-disable-sheet@390x844": {
+  "sheets": [
+   {
+    "id": "sheet-disable-reason",
+    "top": 320,
+    "bottom": 844,
+    "scrollable": false,
+    "scrollTop": 0,
+    "actions": 0,
+    "titleVisible": true
+   }
+  ],
+  "bars": [
+   [
+    756,
+    844
+   ],
+   [
+    756,
+    844
+   ]
+  ],
+  "problems": [],
+  "errors": []
+ },
+ "case/d-disable-sheet@390x640": {
+  "sheets": [
+   {
+    "id": "sheet-disable-reason",
+    "top": 116,
+    "bottom": 640,
+    "scrollable": false,
+    "scrollTop": 0,
+    "actions": 0,
+    "titleVisible": true
+   }
+  ],
+  "bars": [
+   [
+    552,
+    640
+   ],
+   [
+    552,
+    640
+   ]
+  ],
+  "problems": [],
+  "errors": []
+ },
+ "case/d-disable-sheet@360x844": {
+  "sheets": [
+   {
+    "id": "sheet-disable-reason",
+    "top": 320,
+    "bottom": 844,
+    "scrollable": false,
+    "scrollTop": 0,
+    "actions": 0,
+    "titleVisible": true
+   }
+  ],
+  "bars": [
+   [
+    756,
+    844
+   ],
+   [
+    756,
+    844
+   ]
+  ],
+  "problems": [],
+  "errors": []
+ },
+ "case/d-disable-sheet@360x640": {
+  "sheets": [
+   {
+    "id": "sheet-disable-reason",
+    "top": 116,
+    "bottom": 640,
+    "scrollable": false,
+    "scrollTop": 0,
+    "actions": 0,
+    "titleVisible": true
+   }
+  ],
+  "bars": [
+   [
+    552,
+    640
+   ],
+   [
+    552,
+    640
+   ]
+  ],
+  "problems": [],
+  "errors": []
+ },
+ "case/d-discard-sheet@390x844": {
+  "sheets": [
+   {
+    "id": "sheet-discard",
+    "top": 572,
+    "bottom": 844,
+    "scrollable": false,
+    "scrollTop": 0,
+    "actions": 2,
+    "titleVisible": true
+   }
+  ],
+  "bars": [
+   [
+    756,
+    844
+   ],
+   [
+    756,
+    844
+   ]
+  ],
+  "problems": [],
+  "errors": []
+ },
+ "case/d-discard-sheet@390x640": {
+  "sheets": [
+   {
+    "id": "sheet-discard",
+    "top": 368,
+    "bottom": 640,
+    "scrollable": false,
+    "scrollTop": 0,
+    "actions": 2,
+    "titleVisible": true
+   }
+  ],
+  "bars": [
+   [
+    552,
+    640
+   ],
+   [
+    552,
+    640
+   ]
+  ],
+  "problems": [],
+  "errors": []
+ },
+ "case/d-discard-sheet@360x844": {
+  "sheets": [
+   {
+    "id": "sheet-discard",
+    "top": 572,
+    "bottom": 844,
+    "scrollable": false,
+    "scrollTop": 0,
+    "actions": 2,
+    "titleVisible": true
+   }
+  ],
+  "bars": [
+   [
+    756,
+    844
+   ],
+   [
+    756,
+    844
+   ]
+  ],
+  "problems": [],
+  "errors": []
+ },
+ "case/d-discard-sheet@360x640": {
+  "sheets": [
+   {
+    "id": "sheet-discard",
+    "top": 368,
+    "bottom": 640,
+    "scrollable": false,
+    "scrollTop": 0,
+    "actions": 2,
+    "titleVisible": true
+   }
+  ],
+  "bars": [
+   [
+    552,
+    640
+   ],
+   [
+    552,
+    640
+   ]
+  ],
+  "problems": [],
+  "errors": []
+ }
+}

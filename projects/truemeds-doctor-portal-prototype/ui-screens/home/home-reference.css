@@ -11,7 +11,8 @@ body{margin:0;background:var(--tm-surface-secondary)}
 @media (min-width:768px){.phone{width:390px;height:844px;margin:auto}}
 /* Home-base header (D-42): logo left, actions right. */
 .header{flex:none;display:flex;align-items:center;justify-content:space-between;padding:var(--tm-space-lg) var(--tm-space-lg) 0 var(--tm-space-page)}
-.logo{width:149px;height:auto}
+/* A-07 (Round 4): one lockup size (166, Round 4 lane D: Home fits at 360) and one top offset (16) on every screen with the logo. */
+.logo{width:166px;height:auto;align-self:flex-start}
 .header-actions{display:flex;gap:var(--tm-space-xs);margin:-9px -14px -9px 0}   /* D-67 margin 16: 48px targets step out 14px so the last glyph sits on the 16 edge */   /* 48px icon targets keep the header at logo height: logo-to-title stays 48 (L6) */
 /* LOCKED L6 (D-46): home-base hero gap, logo to title, is 48 (--tm-space-3xl). */
 .band{flex:none;padding:var(--tm-space-3xl) var(--tm-space-page) var(--tm-space-2xl)}
@@ -19,10 +20,11 @@ body{margin:0;background:var(--tm-surface-secondary)}
 .sub{margin:var(--tm-space-sm) 0 0;font-size:var(--tm-font-size-body-md);line-height:var(--tm-font-lineheight-sm);color:var(--tm-content-secondary)}
 .panel{flex:1;min-height:0;display:flex;flex-direction:column;background:var(--tm-surface-primary);border-radius:var(--tm-radius-2xl) var(--tm-radius-2xl) 0 0;padding:var(--tm-space-2xl) var(--tm-space-page) var(--tm-space-xl)}
 .scroll{flex:1 1 auto;min-height:0;overflow-y:auto}
-.rx{display:flex;align-items:center;justify-content:space-between;min-height:48px;border-bottom:1px solid var(--tm-border-default);font-size:var(--tm-font-size-body-lg);line-height:var(--tm-font-lineheight-md);color:var(--tm-content-secondary)}
-.rx strong{font-weight:var(--tm-font-weight-semibold);color:var(--tm-content-primary)}
-.timer-row{margin-top:var(--tm-space-lg);display:flex;align-items:center;justify-content:space-between}
-.timer-row:has(.add-link){min-height:48px}
+/* A-10 (Round 4): the label is 14 grey like "Time remaining"; the value keeps the 16 key-content size. */
+.rx{display:flex;align-items:center;justify-content:space-between;min-height:48px;border-bottom:1px solid var(--tm-border-default);font-size:var(--tm-font-size-body-md);line-height:var(--tm-font-lineheight-sm);color:var(--tm-content-secondary)}
+.rx strong{font-size:var(--tm-font-size-body-lg);line-height:var(--tm-font-lineheight-md);font-weight:var(--tm-font-weight-semibold);color:var(--tm-content-primary)}
+/* A-09 (Round 4): the row is always 48 tall, so "Time remaining" and the timer do not move when + Add time appears. */
+.timer-row{margin-top:var(--tm-space-lg);display:flex;align-items:center;justify-content:space-between;min-height:48px}
 .timer-label{font-size:var(--tm-font-size-body-md);line-height:var(--tm-font-lineheight-sm);color:var(--tm-content-secondary)}
 /* Time value is key content (L2, 16/24). Flagged to Apurva: may read small as the hero of the screen. */
 /* Time remaining is a value display (L9, RULES §8.12): 32/40 semibold, fixed-width digits, from the central component. */
@@ -46,32 +48,41 @@ body{margin:0;background:var(--tm-surface-secondary)}
 .wheel-item:disabled{color:var(--tm-content-disabled);cursor:not-allowed}
 .wheel-item.is-selected:disabled{color:var(--tm-content-brand)}   /* the selected value keeps its brand text (guard 6.x) */   /* D-81 F9: wheel disabled while Setting… / Adding… */
 .helper{margin:0;text-align:right;flex:none;font-size:var(--tm-font-size-body-md);line-height:var(--tm-font-lineheight-sm);color:var(--tm-content-secondary)}
-/* Status slot sits between content and the pinned footer (stable position). */
-.status-slot{flex:none;padding-top:var(--tm-space-lg)}
+/* Round 4 (A-19): a standing-state notice sits at the top of the panel, outside the scroll. */
+.panel > .status{flex:none;margin:0 0 var(--tm-space-lg)}
 .status{margin:0}
-.status-slot:empty{display:none}
-.footer{flex:none;padding-top:var(--tm-space-lg);display:flex;flex-direction:column;gap:var(--tm-space-sm);padding-bottom:var(--tm-space-sm)}
+.status-text{text-align:center;text-wrap:balance}   /* A-11: the Checking… line is centred like the case page */
+/* Round 4 item 1: the pinned footer is the real .tm-actionbar, edge to edge on the panel (like the case page).
+   The panel's side padding (16) is cancelled and its bottom padding (24) too, so the bar sits on the phone's bottom edge. */
+.footer{flex:none;margin:0 calc(-1 * var(--tm-space-page)) calc(-1 * var(--tm-space-xl))}
+/* A-19 / A-12: the bar notice gap (16) is owned by the component (.tm-actionbar > .tm-notice), no local rule. */
+.footer > .tm-status-line{margin-bottom:0}
+/* Toast sits above the pinned bar; its bottom is set from the bar's top edge in home-reference.js. */
 .home-toast{position:absolute;left:50%;transform:translateX(-50%);white-space:nowrap;bottom:calc(var(--tm-space-sm) + 56px + var(--tm-space-lg));z-index:4}
-/* Sheets sit inside the frame and keep the bottom-sheet behaviour. */
-.overlay{position:absolute;inset:0;background:rgba(0,0,0,.32);z-index:5;display:flex;flex-direction:column;justify-content:flex-end}
+/* Sheets sit inside the frame and keep the bottom-sheet behaviour. Round 6 (sheets cover the pinned bar): no z-index here,
+   so the scrim takes the central .tm-overlay layer (900), above the pinned .tm-actionbar (10). */
+.overlay{position:absolute;inset:0;background:rgba(0,0,0,.32);display:flex;flex-direction:column;justify-content:flex-end}
 [hidden]{display:none!important}
 @media(min-width:768px){.phone{border:1px solid var(--tm-border-subtle);border-radius:var(--tm-radius-2xl);box-shadow:var(--tm-shadow-header)}}
 
 /* D-70 Profile page (tokens only): task header with Back, grey page, white cards at the 16 page margin, Log out last. */
 .profile-page{flex:1;min-height:0;display:flex;flex-direction:column;background:var(--tm-surface-secondary)}
 .profile-header{flex:none;background:var(--tm-surface-brand-subtle);padding:var(--tm-space-xs) var(--tm-space-page) var(--tm-space-xs) var(--tm-space-xs)}
-.profile-body{flex:1;overflow:auto;padding:var(--tm-space-lg) var(--tm-space-page) calc(var(--tm-space-xl) + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:var(--tm-space-md)}
+/* A-13 (Round 4): cards 16 apart and 16 to Log out (allowed gaps 8 / 16 / 32). */
+.profile-body{flex:1;overflow:auto;padding:var(--tm-space-lg) var(--tm-space-page) calc(var(--tm-space-xl) + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:var(--tm-space-lg)}
 .profile-identity{display:flex;align-items:center;gap:var(--tm-space-md);padding:var(--tm-space-lg)}
 .profile-avatar{flex:none;width:var(--tm-space-3xl);height:var(--tm-space-3xl);border-radius:var(--tm-radius-full);background:var(--tm-surface-brand-subtle);color:var(--tm-content-brand);display:flex;align-items:center;justify-content:center;font-weight:var(--tm-font-weight-semibold)}
 .profile-page .pt-t{margin:0;font-size:var(--tm-font-size-body-lg);line-height:var(--tm-font-lineheight-md);font-weight:var(--tm-font-weight-semibold);color:var(--tm-content-primary)}
 .profile-page .pt-d{margin:0;font-size:var(--tm-font-size-body-md);line-height:var(--tm-font-lineheight-sm);color:var(--tm-content-secondary)}
 .profile-earnings{padding:var(--tm-space-lg)}
-.profile-label{margin:0 0 var(--tm-space-sm);font-size:var(--tm-font-size-body-md);line-height:var(--tm-font-lineheight-sm);font-weight:var(--tm-font-weight-semibold);color:var(--tm-content-primary)}
+/* A-20 (Round 4): group label 16 semibold, same as "Adjust duration" and the card titles. */
+.profile-label{margin:0 0 var(--tm-space-sm);font-size:var(--tm-font-size-body-lg);line-height:var(--tm-font-lineheight-md);font-weight:var(--tm-font-weight-semibold);color:var(--tm-content-primary)}
 .profile-earnings-row{display:flex;gap:var(--tm-space-2xl)}
 .profile-rows{padding:0 var(--tm-space-lg)}
 .profile-row{display:flex;align-items:center;justify-content:space-between;width:100%;min-height:var(--tm-space-3xl);padding:var(--tm-space-sm) 0;background:none;border:0;font:inherit;color:var(--tm-content-primary);cursor:pointer;text-align:left}
 .profile-row + .profile-row{border-top:1px solid var(--tm-border-subtle)}
 .profile-row-label{display:flex;align-items:center;gap:var(--tm-space-sm);font-size:var(--tm-font-size-body-lg);line-height:var(--tm-font-lineheight-md)}
 .profile-row .tm-toggle{flex:none}
-.profile-logout{margin-top:var(--tm-space-sm)}
-.sheet-feedback{margin-bottom:var(--tm-space-sm)}
+.profile-logout{margin-top:0}
+/* A-12 (Round 4): the add-time error sits 16 below the picker and 16 above the Add button, as the page notice does. */
+.sheet-feedback{margin:var(--tm-space-lg) 0}

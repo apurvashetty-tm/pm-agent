@@ -1,0 +1,16 @@
+home/profile: Earned ₹60.00 present
+home/offline: End availability disabled=true
+home/adding: :en | :en | :en | Adding…:dis | :dis | 15 min:dis | 30 min:dis | 45 min:dis | 1 hour:dis | 2 hours:dis | 3 hours:dis | 0:dis | 1:dis | 15:dis | 30:dis | 45:dis | Adding…:dis | Cancel:dis
+case/t02-calling: back buttons visible on calling state: 0
+case/a-no-medicines: Call patient visible=false · Release case visible=true
+case/t15b-end-call-first: warning text found; class=tm-notice tm-notice--warning concept-new
+case/a-loading: first block top=116 cards=1
+prescribe/d-syrup: Dose (ml)
+prescribe/d-injection-default: Dose
+prescribe/d-inhaler: Dose (puffs)
+prescribe/d-disabled: d-disabled text ok
+prescribe/d-weekly: 1,2
+case/a-confirm-busy:  | Order details | View Rx | Confirming…
+case/t13-connecting-ha:  | Order details | View Rx | Transferring… | Callback | Skip HA
+sign-in/default: rgb(255, 255, 255) rgb(255, 255, 255) rgb(255, 255, 255) rgb(255, 255, 255) rgb(255, 255, 255) rgb(255, 255, 255) rgb(255, 255, 255) rgb(255, 255, 255) rgb(255, 255, 255) rgb(255, 255, 255) rgb(255, 255, 255) rgb(255, 255, 255)
+exit 0

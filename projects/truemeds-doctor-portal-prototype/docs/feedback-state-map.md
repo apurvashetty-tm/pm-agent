@@ -4,6 +4,14 @@ Version 1.1 · 2026-10-14 · D-41, D-44, D-45 · Read [feedback-rules.md](feedba
 
 This maps current auth/Home states and known recovery conditions to reusable feedback. It is not a list of new screens to build or render. Shared copy now lives in `../ui-screens/feedback/messages.json` with behavior metadata in `metadata.json`; generated browser/native adapters consume the same text. Copy approved (D-53). Existing approved PNGs remain historical until source-derived visual review.
 
+## Placement rules (Round 4, 2026-11-02 — A-19, RULES §9.5)
+
+- **Result of an action → next to the control that did it.** On a screen with a pinned action bar, inside the bar above its button, as a band (`.tm-actionbar > .tm-notice`). On a screen without a bar, 8 below the field or button it came from (A-14).
+- **Bar's own action → inside the bar.** The result of the last tap, or why the bar's button is disabled right now: offline (case and Home), request failed, "No cases right now", ending soon, setup / add / confirm / release failures, offer enable-failed / offline, calling notices (Round 4, lane-request 7).
+- **Screen's general situation → top of the panel.** Not tied to a button; stays until the cause is gone (unlock "isn't available", Home idle-expired, manually ended, expired-pending, stop-pending).
+- Notices wrap balanced (A-22). Toasts only where no control can show the result; they sit above the pinned bar when there is one.
+- Small phones (RULES §8.14): every state at 360×640 — nothing the doctor needs is hidden without a scroll cue; the bar never covers the last content.
+
 ## Coverage notation
 
 - **R01–R09:** proposed representative capture, not yet generated or approved.
@@ -34,6 +42,8 @@ Current copy: `../ui-screens/sign-in/sign-in.html`. Native: `../ui-screens/nativ
 ## OTP
 
 Current copy: `../ui-screens/otp/otp.html`. Native: `../ui-screens/native/OtpScreen.tsx`. Decisions D-34, D-35, D-39, D-44 (layout v2). Layout v2 rows below replace the earlier OTP behaviour; all OTP rows drop "preserve opt-in" (no opt-in on OTP after D-45).
+
+**Reserved line under the code boxes (Round 5 B, Round 6 item 3, Apurva 2026-11-02):** one line is reserved under the boxes in every OTP state that can show a one-line message (helper, new-code line, wrong code, tries left, code expired, empty or too short, resend, cooldown, verifying). Verify & sign in therefore sits at the same y in those states. The line is empty when there is no message; the 8 / 16 / 32 spacing scale holds. The notice-box states (offline, locked, couldn't verify, resend failed, too many codes, expired and resend limited) keep their notice box in the flow and may move Verify & sign in; accepted, not a defect.
 
 | State / registry key | Pattern | Trigger and recovery | Visual coverage |
 |---|---|---|---|
@@ -92,7 +102,7 @@ Current copy: `../ui-screens/returning-unlock/returning-unlock.html`. Native: `.
 
 ## Availability and Home
 
-- **Setting… / Adding…** (D-81 F9): wheel, duration chips, Cancel and × disabled. **Offline** (D-81 F13): End availability greyed out; the offline notice explains. Set availability stays pinned to the bottom in every state (D-81 F12).
+- **Setting… / Adding…** (D-81 F9): wheel, duration chips, Cancel and × disabled. **Offline** (D-81 F13): End availability greyed out; the offline notice explains. Set availability stays pinned to (inside the action bar, Round 4 item 1; the content above scrolls) the bottom in every state (D-81 F12).
 
 Current references: `../ui-screens/home/`; native `../ui-screens/native/HomeScreen.tsx`. Draft state evidence: `renders/2026-10-13-home-simplified/`. Decisions D-36, D-40. Drafts are superseded where newer decisions differ.
 
@@ -179,3 +189,26 @@ Completed in source: registry and metadata, generated browser/native adapters, s
 Still open: source-derived 390×844 captures and visual approval, 360-width and large-text/device checks, native platform autofill/accessibility, real callbacks and authoritative backend reconciliation. Future combination rows above remain integration fixtures, not approved standalone screens. See `renders/2026-10-13-feedback-review/README.md` for capture status.
 
 > **Calling states (2026-10-19, D-58):** the full list of call states, triggers, screens and actions is in `ui-screens/app-logic.md` §5 (state table). This file does not repeat it. Rows above for `case.noPickup` / `case.didntConnect` sheets are retired by D-58.
+
+## Round 4 changes (2026-11-02, consistency audit — Lane A)
+
+| Row | Change | Why |
+|---|---|---|
+| Home — failed request, add, setup, ending soon | Notice inside the action bar, above its button, band style | A-19 (Round 4 item 2) |
+| Home — "No cases right now" | Bar's own action (no cases now): notice inside the bar above Request a case | A-19, lane-request 7 |
+| Unlock — "isn't available" | Screen's general situation: notice stays at the top of the panel | A-19 |
+| Faster sign-in — failed enable | "Couldn't turn on faster sign-in." sits in the bar above Try again | A-19 |
+| Faster sign-in — subtitle | "Use your screen lock instead of an OTP." (one line) | A-06 |
+| OTP — waiting text and Resend link | Same height; Verify & sign in does not move | A-03 |
+| OTP — "New code sent." | Green text, no icon | A-21 |
+| OTP — too many resends / locked / expired and limited | "Doctor Ops" and the time never split across lines | A-17 |
+| case.confirm-failed, case.release-failed | Bar notice above its button (the bar keeps its height in busy states). case.callback-failed stays inside the sheet, 8 above its button | A-19, B-02 |
+| case.confirming / call.connectingHa (Transferring…) | Bar keeps its height; secondary row kept and greyed, not offered | B-01 |
+| case.checking (7c) and fallback B2 | Status line takes the row the buttons were on; bar keeps its height | B-02 |
+| Empty case | Card text left-aligned, 14 px normal; View Rx left-aligned when Order details is hidden | B-16, B-17 |
+| Back-blocked toast | Breaks between its two sentences | B-21 |
+| Logo (all home-base screens) | One lockup size: 166 px wide, 16 from the top | A-07 (sign-in 174 → 166 in Round 4 lane D; Apurva to confirm) |
+
+**Busy label and gap:** the spinner sits 8 from the label on every busy button (A-08, set centrally).
+**Recorded, no change:** A-18 (offer hero stays centred), B-23 (SOS toggle row), B-25 ("Order details" title regular).
+

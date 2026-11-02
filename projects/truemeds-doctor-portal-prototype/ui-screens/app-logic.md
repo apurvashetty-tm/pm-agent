@@ -1,6 +1,6 @@
 # Doctor Portal — app logic
 
-**Status:** APPROVED and frozen — Apurva, 2026-10-31 (D-78). Covers decisions up to D-77. Changes from here are either a bug (fix where it occurs) or a next-version idea (backlog). Open backend dependencies stay marked `[OPEN]` with their question.
+**Status:** APPROVED and frozen — Apurva, 2026-10-31 (D-78). Covers decisions up to D-77. Round 4 of the fix round (2026-11-02, §13) is not yet approved. Changes from here are either a bug (fix where it occurs) or a next-version idea (backlog). Open backend dependencies stay marked `[OPEN]` with their question.
 **What this is:** every rule the app follows, taken out of the old prototype (`index.html` + `app.js`) and checked against the locked rules (`docs/context/project_truth.md`) and the decision log (D-01 to D-55). It is the logic half of the rebuild spec; the look is in `ui-screens/` (pictures) and `design-system/RULES.md`.
 **How to read it:** `[LOCKED]` = decided, build exactly this · `[MOCK]` = prototype placeholder, the real value comes from the backend · `[OPEN]` = not decided, see the linked question · **⚠ Flag** = the old code and the decisions disagree, or a rule was never written down — needs Apurva before the rebuild.
 
@@ -35,6 +35,8 @@ Order on first use: Sign-in → OTP → (offer, once) → Home → Case. Returni
 **OTP**
 - 4 digits, keyboard opens on load and stays open while verifying. No auto-verify: the doctor taps **Verify & sign in**.
 - The terms line stays during **Verifying…** and **Checking…**, so Verify & sign in never moves (D-81 F5, amends D-44 for those two states). The cooldown line reads "Checking…" alone, with no "Didn’t receive it?", and the boxes stay focused (D-81 F7).
+- **Verify never moves (Round 5 B, Round 6 item 3):** one line is reserved under the code boxes. Every state with a one-line message (wrong code, tries left, new code sent, code expired, empty or too short, resend, cooldown) shows its message there, or nothing; Verify & sign in keeps the same place. Notice-box states (offline, locked, couldn't verify, resend failed, too many codes) may move it; accepted.
+- Waiting text ("Resend in 0:30") and the Resend code link share one height, so Verify & sign in never moves when the link appears (A-03). The terms line is centred and "Terms & Conditions" never splits (A-01, A-02). "Doctor Ops" and the timer never split across lines (A-17). "New code sent." is green text with no icon, like the errors (A-21).
 - Wrong code: digits stay visible with red borders; the first new keystroke replaces the whole code. The message is "Wrong code."; from 2 tries left it counts ("Wrong code. 2 tries left."), and at 1 try left it uses the singular ("Wrong code. 1 try left.") (D-81 F1; no next-step wording, D-53 pt 2).
 - **5** server-confirmed wrong codes lock **that mobile number** (not the account) `[LOCKED D-34]`. Lock length `[MOCK 15 min, OPEN OQ-017]`. Change number stays available; another number works only if Doctor Ops approved it for this doctor.
 - **4** codes per number per limit window (first code + 3 resends), not reset by restarting sign-in `[LOCKED D-35]`. Window length `[MOCK 10 min, OPEN OQ-017]`.
@@ -44,31 +46,33 @@ Order on first use: Sign-in → OTP → (offer, once) → Home → Case. Returni
 - All OTP limits are enforced by the server; the app only shows them.
 
 **Faster sign-in** (D-45, D-47)
-- Offered once, on its own screen, after the first successful OTP sign-in on a phone that supports it and has it off. **Turn on** → phone prompt → Home. **Cancelled** prompt → back to the offer, no message. **Failed** → stays on the offer with "Couldn't turn on faster sign-in." · Try again · Not now (D-61, D-65). **Offline** → "You're offline. Check your connection." (D-66). **Not now** → Home; offered again later `[OPEN OQ-023]`; can be turned on or off in Profile (D-69).
+- Offered once, on its own screen, after the first successful OTP sign-in on a phone that supports it and has it off. The footer is the action bar (Round 4, item 1); the content above it scrolls. Subtitle on one line: "Use your screen lock instead of an OTP." (A-06). **Turn on** → phone prompt → Home. **Cancelled** prompt → back to the offer, no message. **Failed** → stays on the offer; "Couldn't turn on faster sign-in." sits in the bar above Try again (A-19) · Try again · Not now (D-61, D-65). **Offline** → "You're offline. Check your connection." (D-66). **Not now** → Home; offered again later `[OPEN OQ-023]`; can be turned on or off in Profile (D-69).
 - **Which unlock (D-64):** fingerprint or face if set up on the phone; otherwise the phone's **screen lock** (PIN / pattern / password); if the phone has no screen lock at all, the offer is skipped.
-- Returning unlock: the phone's own prompt; 3 failed tries → fall back to OTP `[MOCK]`. "Not you? Switch account" → sign-in. If unavailable: neutral notice, **Use OTP instead** becomes the main button.
+- Returning unlock: the phone's own prompt; 3 failed tries → fall back to OTP `[MOCK]`. "Not you? Switch account" → sign-in. The footer is the action bar (Round 4, item 1); the content above it scrolls. If unavailable: "Faster sign-in isn't available on this phone right now." is a standing state, so the neutral notice stays at the top of the panel; **Use OTP instead** is the main button in the bar (A-19).
 - Wording follows the phone ("Face ID" / "fingerprint"); never suggest Truemeds stores biometric data.
 
 ---
 
 ## 3. Home and availability `[LOCKED]` (D-36, D-40, D-47, D-53)
 - **While Setting… or Adding…** the wheel, the duration chips, Cancel and × are disabled (D-81 F9).
-- **Set availability** stays pinned to the bottom of the screen in every state, with or without a notice (D-81 F12, D-43).
+- **Set availability** stays pinned to the bottom of the screen in every state, with or without a notice (D-81 F12, D-43), **inside the action bar** (Round 4, 2026-11-02, item 1). The content above the bar scrolls on short phones (at 360×640 the timer and the wheel are never clipped); the bar never covers the last content; toasts sit above the bar.
 - **Time added:** 5:00 + 30 min shows 35:00 (D-81 F10).
 - **End availability** is greyed out while offline; the offline notice explains (D-81 F13).
 - **Log out confirm:** "Stay signed in" is quiet text, like "Keep available" (D-81 F11, RULES §9.4).
 
 - Home answers "Am I taking cases right now, and what do I do next?" Nothing is pushed: the doctor **requests** a case (pull model).
 - **Set availability:** quick picks 15 / 30 / 45 min, 1 / 2 / 3 hours, plus the wheel (hours and minutes, 15-minute steps). Minimum **15 minutes**, any start time, no maximum (24/7). Confirm starts the countdown.
-- **Time remaining:** h:mm:ss from one hour up (1:00:00), m:ss below (9:42). Shows 0:00 when it has ended (D-53, 2026-10-15).
+- **Time remaining:** h:mm:ss from one hour up (1:00:00), m:ss below (9:42). Shows 0:00 when it has ended (D-53, 2026-10-15). The label and the timer do not move when **+ Add time** appears; Add time sits on the value row (A-09). Labels are 14 px grey (A-10).
 - **Request a case** while time remains. A request made before the window ends is honoured even if the case arrives after.
-- **Add time:** shown when time is running low (near expiry, `[MOCK]` 5 min); same picker in a sheet; "Time added" toast.
+- **Add time:** shown when time is running low (near expiry, `[MOCK]` 5 min); same picker in a sheet; "Time added" toast. An error in the add-time sheet sits 16 above its button, as on the page (A-12).
 - **End availability:** confirmation sheet. If a request is pending: no new requests, the pending one is honoured, availability ends after it resolves and any assigned case closes ("Ending availability", no time row).
 - **Window ends during a case:** the case is never interrupted. The ending card then offers only **Back to Home**; Home shows the ended state.
 - **Prescriptions today:** a count only, no earnings. A case counts when its prescription is confirmed. It stays visible after availability ends.
+- **Result notices on Home** ("Availability ends soon", setup / add / request failures) sit inside the action bar, above its button (RULES §9.5, A-19). "No cases right now" and offline are the bar's own action, so they sit inside the bar above the button (lane-request 7). Screen-wide standing notices (idle-expired, manually ended, expired-pending, stop-pending) stay at the top of the panel.
+- **Checking…** status line in the bar is centred in the button's slot, as on the case page (A-11).
 - **No cases:** neutral notice "No cases right now. Try again in a minute." Auto re-check `[OPEN OQ-019]`.
 - Notifications bell, Help and Profile icons on Home; the bell never inside a case. Help's content is not designed yet (backlog).
-- **Profile page** (D-70: a page, not a sheet — task header with Back, no logo; content ported from the current app with design-system fixes, D-69; full redesign later): doctor name and role · today's earnings (earned, incentive) · User manual · **Faster sign-in on/off** · **Log out** (destructive). During an open case Log out is replaced by "You can log out after this case is closed." Log out is the last item in the content (not pinned). Log out asks first in a **sheet**: "Log out? — You'll stop getting cases until you sign in again." · Log out · Stay signed in.
+- **Profile page** (D-70: a page, not a sheet — task header with Back, no logo; content ported from the current app with design-system fixes, D-69; full redesign later): doctor name and role · today's earnings (earned, incentive) · User manual · **Faster sign-in on/off** · **Log out** (destructive). During an open case Log out is replaced by "You can log out after this case is closed." Log out is the last item in the content (not pinned). Cards are 16 apart and Log out is 16 below the last card (A-13). The group label "Today's earnings" is 16 semibold, like the other group labels (A-20). Log out asks first in a **sheet**: "Log out? — You'll stop getting cases until you sign in again." · Log out · Stay signed in.
 - **Faster sign-in toggle (D-70):** turning it **off** just switches it off (no prompt; OTP from the next sign-in). Turning it **on** opens the phone's prompt, as on the offer screen; if that fails, the toggle stays off and the page shows "Couldn't turn on faster sign-in."; cancelling leaves it off with no message. Hidden if the phone has no screen lock at all (D-64).
 - One phone active at a time. Session stays valid through an open case (no OTP over a live case).
 
@@ -89,10 +93,11 @@ Order on first use: Sign-in → OTP → (offer, once) → Home → Case. Returni
 | Valid, call ended (`call.valid` 8a / 8b) | No script — the call has ended (D-58 pt 24) | Final button (§6) · 📅 **Callback** · ⏭ **Skip HA** (only when allowed, §6) | Blocked |
 | Closed (`completed` / `unavailable`) | Outcome card directly under Order details (where the script was, D-58 point 16); content read-only and muted | **Request next case** · Back to Home (only **Back to Home**, as primary, if availability ended) | Header Back hidden; phone back → Home |
 
-**Empty case (D-80 pt 4, D-81 F23):** no **Call patient**. The medicines card says "There’s nothing to prescribe on this order. Release it — Ops will check it."; the main button is **Release case**, which releases directly (Releasing…). Header Back does the same.
+**Empty case (D-80 pt 4, D-81 F23):** no **Call patient**. The medicines card says "There’s nothing to prescribe on this order. Release it — Ops will check it."; the main button is **Release case**, which releases directly (Releasing…). Header Back does the same. The card text is left-aligned, normal 14 px, like other card text (B-17); when Order details is hidden, View Rx is left-aligned (B-16).
 **Call ended, outcome card (D-81 F26):** "End the call to get your next case." is an amber warning, not an error.
+**Bar and card rules (Round 4, 2026-11-02):** a bar notice that is the result of an action ("Couldn't confirm…", "Prescribe or disable…", "End the call…") sits inside the action bar above its button (RULES §9.5, A-19). Cards on the case page and Prescribe are 16 apart; the end-of-call script card has 16 padding below in every state (B-03, B-04, B-05). The callback-scheduled card uses the calendar icon and the patient-unavailable card the phone-off icon, the same icons as their buttons (B-22). A two-line patient name makes the header taller, not tighter (B-06). Long medicine titles wrap balanced (B-13).
 
-**Leaving a case:** an **attempted call** = leg 2 answered (the patient picked up) (D-58). Once a call is attempted, leaving is blocked until the case is closed (callback, unavailable, confirm). Before that, header **Back** opens the "Leave this case?" sheet — **Release case** (the case returns to the queue) or Stay on this case (D-58 point 20, OQ-024, on Ready and states 3 and 4 only. From the **Call patient** / **Call again** tap the header Back is hidden for the rest of the case, incl. Calling 7a, the 7b question, Transfer, and the callback sheets (D-81 F21). Behind the leave sheet, Releasing… and Release failed the screen is **Ready** (D-81 F22). The backend refuses Release once our call request is accepted, unless the result is 3 or 4 (D-80).. If the patient answered just before the tap, the backend refuses the release and the doctor stays on the case (`a-release-failed`, "Couldn't release this case. You're still on it."). The unassign action itself is a backend dependency (OQ-024). Help stays available at every stage and is the way to reach Doctor Ops when something keeps failing. App closed or phone off mid-case → reopening goes straight back into the case `[OPEN OQ-025, backend]`.
+**Leaving a case:** the back-blocked toast breaks between its two sentences (B-21). An **attempted call** = leg 2 answered (the patient picked up) (D-58). Once a call is attempted, leaving is blocked until the case is closed (callback, unavailable, confirm). Before that, header **Back** opens the "Leave this case?" sheet — **Release case** (the case returns to the queue) or Stay on this case (D-58 point 20, OQ-024, on Ready and states 3 and 4 only. From the **Call patient** / **Call again** tap the header Back is hidden for the rest of the case, incl. Calling 7a, the 7b question, Transfer, and the callback sheets (D-81 F21). Behind the leave sheet, Releasing… and Release failed the screen is **Ready** (D-81 F22). The backend refuses Release once our call request is accepted, unless the result is 3 or 4 (D-80).. If the patient answered just before the tap, the backend refuses the release and the doctor stays on the case (`a-release-failed`, "Couldn't release this case. You're still on it."). The unassign action itself is a backend dependency (OQ-024). Help stays available at every stage and is the way to reach Doctor Ops when something keeps failing. App closed or phone off mid-case → reopening goes straight back into the case `[OPEN OQ-025, backend]`.
 
 **End-of-call script** (D-58 points 18, 21, 24 — copy keys in `messages.json`). Shown from the tap on Call while a call may be live; **hidden once the call has ended** (no one to read it to), except after a failed transfer (15) and B3, where the doctor is still on the line:
 - Transfer (Pilot, Value Meds): `call.scriptTransfer` — "I'm writing your prescription now. Please stay on the line — I'll connect you to our Health Advisor."
@@ -171,7 +176,7 @@ Retired: `b-missed-call`, `b-didnt-connect` (sheets) — replaced by the automat
 | Pilot | Value meds, HA required | Confirm & transfer | Transferred to Health Advisor |
 | Pilot | Non-value meds, HA required | Confirm & forward | Forwarded to Health Advisor |
 
-- **Skip HA** only after the gate, for **both Pilot types** (Value and Non-Value Meds) whenever an HA call follows the doctor call and it isn't already skipped — no other conditions (D-59). Opens the reason sheet: Patient declined HA call · Clinically not required · Repeat patient — familiar with medicines. Choosing a reason applies it at once. On a call with a result the final button becomes **Confirm prescription**; during a live transfer call the case then waits for the call result (state 17, D-58 point 14). Skip HA is also offered after a missed transfer (state 16, D-58 point 24).
+- **Skip HA** only after the gate, for **both Pilot types** (Value and Non-Value Meds) whenever an HA call follows the doctor call and it isn't already skipped — no other conditions (D-59). Opens the reason sheet: Patient declined HA call · Clinically not required · Repeat patient, familiar with the medicines — Counselled in an earlier order (D-70 item 3; title and sub-line). Choosing a reason applies it at once. On a call with a result the final button becomes **Confirm prescription**; during a live transfer call the case then waits for the call result (state 17, D-58 point 14). Skip HA is also offered after a missed transfer (state 16, D-58 point 24).
 - Cat4 never shows anything about HA. HA-skipped Pilot never shows Transfer or Forward.
 - **Transfer vs forward** (D-57): transfer = the patient is handed to an HA on the same call; forward = an HA calls the patient back separately. A failed transfer goes as a forward; after Transferring (13) the doctor sees state 15 `call.transfer-failed` — amber card "Health Advisor unavailable right now" + script `call.forwardedTell` (§5, D-58 pts 17, 21, 23). No separate "HA didn't join" notice (D-58 pt 8 replaced by pts 15–17); the render id `t15-ha-no-join` is only a file name.
 - Confirm: button shows "Confirming…", everything else disabled, no second submit. Failure: notice in the bar "Couldn't confirm. Nothing was lost." (D-65). **Unclear result** (no answer from the server): the button stays on "Confirming…" — the same screen as `a-confirm-busy` — while the app checks; then it shows the confirmed card or the failure notice, never a second submit (D-69). An unclear result is checked before retrying (no double confirm).
@@ -220,7 +225,11 @@ Retired: `b-missed-call`, `b-didnt-connect` (sheets) — replaced by the automat
 | Injection | 0 · 1 · 2 · 3 | 1 · 2 · 3 (D-54) | Other (units) |
 | Cream | — / Apply | Apply | — |
 
-- Every X hours: 4 · 6 · 8 · 12 h (helper "4 times a day, round the clock").
+- **Dose grids (Round 4):** a single-row dose grid uses the M / A / N column width, so every option grid on the screen has one chip size (B-08, D-55). The M / A / N letters sit on the "Dose" label's left edge (B-24). The unit label is "Dose (units)" for every form that counts units (B-11).
+- **Duration picker (Round 4):** number and unit chips sit inside the same inset as the field text, with 8 between the two rows (B-09). The "On prescription" band keeps a number and its unit together: "6 months" never splits (B-12).
+- **Option labels:** "(optional)" is grey regular on Food and on Additional instructions (B-10).
+- **Rx failed notice:** 16 below the header, as elsewhere (B-19).
+- **Every X hours:** 4 · 6 · 8 · 12 h (helper "4 times a day, round the clock").
 - SOS only: dose + **Max doses a day** 1–4. Other schedules: optional **Also as needed (SOS)** with its own dose and **Max extra doses a day** 1–4.
 - **Duration:** numbers 1–7, 10, 14, 15 + Days / Weeks / Months, or **Ongoing** (prints the backend default, `[MOCK]` 6 months). Shows "Default" or "Changed from default".
 - **Food (optional):** After food · Before food · Empty stomach (tap again to clear). **Additional instructions (optional)**, with the helper "Printed on the prescription." (D-81 F19).
@@ -237,6 +246,7 @@ Retired: `b-missed-call`, `b-didnt-connect` (sheets) — replaced by the automat
 
 ## 9. Order details, Rx viewer, notes
 - **Keyboard rule (D-81):** on Prescribe (Other dose, Additional instructions) and the case page (Chief complaints, Doctor notes) the focused field scrolls into view above the keyboard with its label and helper. The pinned action bar hides while the keyboard is open and returns when it closes (same reason as D-43).
+- **Keyboard type (B-18, Round 4):** notes fields (Chief complaints, Doctor notes, Additional instructions) open the text keyboard. The Other dose field keeps the number pad with a decimal key, and its error shows a mistake a doctor can really make on that pad.
 
 
 - **Order details ⓘ** expands in its card: Order created, Expected delivery, Payment. Hidden when the order has none of these.
@@ -247,6 +257,7 @@ Retired: `b-missed-call`, `b-didnt-connect` (sheets) — replaced by the automat
 
 ## 10. Errors, offline, loading
 - **Loading** (case): a skeleton shaped like the loaded page: an Order details row, Medicines and Notes blocks, in the same places (D-81 F28).
+- **Notices** wrap balanced, set centrally (A-22).
 
 Follow `docs/feedback-state-map.md` exactly. Summary for the case page: loading = card outlines, no actions · load failed = notice + Try again · offline = yellow notice in the bar "You're offline. Reconnect to call or confirm." (D-54) · an action tried offline fails with one error notice, nothing lost · release failed = notice, doctor stays on the case.
 
@@ -290,3 +301,39 @@ Offline, and the phone-unlock outcomes for faster sign-in (success / cancelled /
 ## 12. Open questions (not for the rebuild to invent)
 
 OQ-017 OTP lock and window lengths · OQ-019 no-cases auto re-check · OQ-023 when to re-offer faster sign-in · OQ-024 release backend · OQ-025 restoring an open case · timer behaviour on hold (OQ-001) · transfer-failed screen (OQ-021 note) · doctor volume figures (OQ-029) · Flags 2, 3, 5, 6 above.
+
+---
+
+## 13. Round 4 — consistency audit and pinned bar (2026-11-02, Apurva's decisions)
+
+Not yet approved; Apurva reviews the before/after sheets. Standing decisions (D-42 to D-81) are unchanged; where a line above was edited for Round 4 the edited line governs. Rules live in `design-system/RULES.md` §3, §8, §9.5; the audit is `docs/renders/2026-11-01-fix-round/CONSISTENCY-AUDIT.md`.
+
+**Pinned action bar (item 1).** Every pinned main action sits in the action bar: case page, Prescribe, Home, faster sign-in offer, returning unlock. The content above the bar scrolls on short phones; the bar never covers the last content at the end of the scroll; toasts sit above the bar. Sign-in and OTP keep their main button inline under the fields (RULES §8.4).
+
+**Notice placement (A-19, item 2).** A notice that is the **result of an action** sits inside the bar, above its button (Home "Availability ends soon", setup / add / request failures, the offer's "Couldn't turn on…", the case and calling bar notices). A notice about the **bar's own action** (offline, "No cases right now", the results above) sits inside the bar. A notice about the **screen's general situation** (unlock "isn't available", Home idle-expired, manually ended, expired-pending, stop-pending) stays at the top of the panel (lane-request 7). On a screen without a bar, a result notice sits 8 below the field or button it came from (A-14).
+
+**Bar notice band (item 3).** A bar notice is an edge-to-edge band on the bar's top edge: full tint, 1px bottom edge in its tone, same icon and text. Page-content notices keep their box.
+
+**OTP (item 4, A-01 to A-03, A-17, A-21).** Terms line centred, "Terms & Conditions" on one line; the waiting text and the Resend code link share one height, so Verify & sign in does not move.
+
+**Logo (A-07).** One lockup size and one top offset on every home-base screen: 166px wide, 16 from the top (RULES §8.13). Sign-in came down from 174 to 166 in Round 4 (lane D, lane request 1); Apurva to confirm (NEEDS-APURVA).
+
+**Small phones (item 6, RULES §8.14).** Every state at 360×640: nothing the doctor needs is hidden without a scroll cue; the pinned bar never covers the last content at the end of the scroll.
+
+**Gaps and cards.** Cards that stack are 16 apart on the case page, Prescribe and Profile (B-05, A-13, B-04). Notices and their controls: 8 (A-14).
+
+**Busy states (B-01, B-02, B-03).** Busy bars keep their height and the button's place: Transferring… keeps the Callback and Skip HA row, greyed, not offered; Confirming… keeps its row. The status line takes the buttons' row in the call-ended check (7c) and the confirm fallback (B2). The end-of-call script card has 16 padding below in every state.
+
+**Back and calling (unchanged).** Back is hidden from the Call tap on, as in D-81 F21; the leave sheet, Releasing… and Release failed sit over Ready (F22).
+
+**Copy (messages.json).** "Use your screen lock instead of an OTP." (A-06). The three OTP messages with "Doctor Ops" and a time keep the phrase on one line (A-17). Balanced notice wrap is set centrally (A-22, B-20).
+
+**Other audit items (B-07, B-08, B-09 … B-24, A-08, A-10, A-11, A-12, A-15, A-16, A-20)** are in the sections above where they apply: Home, Prescribe and the case page. A-08 (spinner gap) is 8 on every busy button, set centrally.
+
+**No change (recorded).** A-18 (offer hero stays centred over the list), B-23 (SOS toggle row), B-25 ("Order details" title stays regular), A-23 to A-25 and B-26 to B-27 (as recorded in the audit).
+
+**Small-phone check and Round 4 items for Prescribe:** `d-default`, `t01-ready`, `s7d-result-missing`, `t12-transfer-ready`, offer and unlock at 360×640 (see the Round 4 report).
+
+**Header edge (B-07, Round 5).** In the compact task header, the edit header (Prescribe) and the viewer header (Rx), Back / ✕ is a 48px target whose glyph starts on the 16px margin; the title starts 54px from the edge on all three, the same as the sheet ✕ and the compact header.
+
+**Sheets over the bar and pinned actions (Round 6).** A sheet always covers the pinned action bar of the screen behind it; the bar takes no tap while a sheet is open. When a sheet is taller than the space, its header and its buttons stay pinned and the content between them scrolls (RULES §9.4). Buttons stay fully visible and tappable at 390×844 and 360×640.

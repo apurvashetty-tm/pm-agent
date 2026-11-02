@@ -23,12 +23,18 @@ function wheel(name, values, current) {
 }
 function picker() {
   const hours = Math.floor(duration / 60), minutes = duration % 60;
-  return `<div class="picker"><div class="presets">${[15,30,45,60,120,180].map(n => `<button type="button" class="tm-chip tm-chip--lg" data-minutes="${n}" aria-pressed="${duration === n}" ${busyNow() ? 'disabled' : ''}>${n < 60 ? n + ' min' : n / 60 + (n === 60 ? ' hour' : ' hours')}</button>`).join('')}</div><div class="adjust-row"><p class="adjust">Adjust duration</p>${state === 'setup-wheel' || state === 'setup-failed' || state === 'setting' || state === 'idle-expired' || state === 'manually-ended' ? '<p class="helper">Minimum 15 minutes</p>' : ''}</div><div class="col-heads"><span>Hours</span><span>Minutes</span></div><div class="columns"><div class="wheel-band" aria-hidden="true"></div>${['Hours','Minutes'].map((name, i) => wheel(name, i ? (hours === 0 ? [15,30,45] : [0,15,30,45]) : Array.from({length: Math.max(hourRange + 1, hours + 12)}, (_, v) => v), i ? minutes : hours)).join('')}</div>`;
+  return `<div class="picker"><div class="presets">${[15,30,45,60,120,180].map(n => `<button type="button" class="tm-chip tm-chip--lg" data-minutes="${n}" aria-pressed="${duration === n}" ${busyNow() ? 'disabled' : ''}>${n < 60 ? n + ' min' : n / 60 + (n === 60 ? ' hour' : ' hours')}</button>`).join('')}</div><div class="adjust-row"><p class="adjust">Adjust duration</p>${state === 'setup-wheel' || state === 'setup-failed' || state === 'setting' || state === 'idle-expired' || state === 'manually-ended' ? '<p class="helper">Minimum 15 minutes</p>' : ''}</div><div class="col-heads"><span>Hours</span><span>Minutes</span></div><div class="columns"><div class="wheel-band" aria-hidden="true"></div>${['Hours','Minutes'].map((name, i) => wheel(name, i ? (hours === 0 ? [15,30,45] : [0,15,30,45]) : Array.from({length: Math.max(hourRange + 1, hours + 12)}, (_, v) => v), i ? minutes : hours)).join('')}</div></div>`;   // Round 4 lane D: .picker was never closed, so the pinned bar (footer) landed inside .scroll (lane-request 1 / item 1)
 }
 // Status slot: one notice above the footer. Copy from the registry or a labelled screen string.
-function statusNotice() {
-  // D-75: unknown-result is one status line (spinner + copy) in place of the notice and the Checking… button.
-  if (state === 'unknown-result') return `<div class="tm-status-line status" role="status"><span class="tm-spinner" aria-hidden="true"></span>${M('home.unknownResult')}</div>`;
+// Round 4 (A-19): a notice that is the result of an action sits inside the pinned bar, above its button ('bar');
+// a notice that describes a standing state sits at the top of the panel, outside the scroll ('top').
+// Round 4 lane D (lane-request 7): a notice about the bar's own action — the result of the last tap, or why the
+// button is disabled now (offline, no cases right now) — sits in the bar. Screen-wide standing states stay at the top.
+const BAR_NOTICE_STATES = ['near-expiry', 'setup-failed', 'request-failed', 'offline', 'no-cases'];
+function statusNotice(where = 'top') {
+  // D-75: unknown-result is one status line (spinner + copy) in place of the notice and the Checking… button (inside the bar).
+  if (state === 'unknown-result') return where === 'bar' ? `<div class="tm-status-line status" role="status"><span class="tm-spinner" aria-hidden="true"></span><span class="status-text">${M('home.unknownResult')}</span></div>` : '';
+  if (BAR_NOTICE_STATES.includes(state) !== (where === 'bar')) return '';
   const map = {
     'setup-failed': ['tm-notice--error', 'alert-circle', M('home.setupFailed')],
     'request-failed': ['tm-notice--error', 'alert-circle', M('home.requestFailed')],
@@ -46,7 +52,8 @@ function statusNotice() {
 }
 // Footer (pinned, RULES §8.4). Loading primary = brand fill, white label and spinner (LOCKED L2).
 function footer() {
-  if (state === 'unknown-result') return '';   // D-75: the status line above carries the wait; no busy button
+  // Round 4 item 1: the pinned footer is the real .tm-actionbar (all Home states with bottom buttons).
+  if (state === 'unknown-result') return `<div class="tm-actionbar footer">${statusNotice('bar')}</div>`;   // D-75: the status line above carries the wait; no busy button
   const busyLabel = { setting: 'Setting…', requesting: 'Requesting…', adding: 'Adding…' }[state];
   let primary = isSetup() ? 'Set availability' : 'Request a case';
   let disabled = state === 'offline' || state === 'expired-pending' || state === 'stop-pending';
@@ -56,7 +63,7 @@ function footer() {
   const primaryHtml = busy
     ? `<button class="tm-btn tm-btn--primary tm-btn--lg tm-btn--block tm-btn--busy" aria-busy="true" disabled><span class="tm-spinner" aria-hidden="true"></span>${primary}</button>`
     : `<button class="tm-btn tm-btn--primary tm-btn--lg tm-btn--block" data-confirm ${disabled ? 'disabled' : ''}>${primary}</button>`;
-  return `<div class="footer">${primaryHtml}${secondary ? `<button class="tm-btn tm-btn--quiet tm-btn--lg tm-btn--block" data-secondary ${state === 'offline' ? 'disabled' : ''}>${secondary}</button>` : ''}</div>`;   // D-81 F13: End availability greyed out offline
+  return `<div class="tm-actionbar footer">${statusNotice('bar')}${primaryHtml}${secondary ? `<button class="tm-btn tm-btn--quiet tm-btn--lg tm-btn--block" data-secondary ${state === 'offline' ? 'disabled' : ''}>${secondary}</button>` : ''}</div>`;   // D-81 F13: End availability greyed out offline
 }
 function timeBlock() {
   // Ending availability (stop-pending) has no time row: the title and notice already explain (D-47).
@@ -100,7 +107,7 @@ function profilePage() {
   </div>`;
 }
 function logoutContent() {
-  return `<section role="dialog" aria-modal="true" aria-labelledby="sheet-title" class="tm-sheet"><header class="tm-sheet__header"><h2 id="sheet-title" class="tm-sheet__title">Log out?</h2><button id="close" class="tm-btn tm-btn--quiet tm-btn--icon tm-sheet__close" aria-label="Close" type="button">${icon('x')}</button></header><div class="tm-sheet__body"><p class="tm-sheet__subtitle">${M('profile.logoutConfirm')}</p><div class="tm-sheet__actions"><button class="tm-btn tm-btn--destructive tm-btn--lg tm-btn--block" data-confirm>Log out</button><button class="tm-btn tm-btn--quiet tm-btn--lg tm-btn--block" data-secondary>Stay signed in</button></div></div></section>`;
+  return `<section role="dialog" aria-modal="true" aria-labelledby="sheet-title" class="tm-sheet"><header class="tm-sheet__header"><h2 id="sheet-title" class="tm-sheet__title">Log out?</h2><button id="close" class="tm-btn tm-btn--quiet tm-btn--icon tm-sheet__close" aria-label="Close" type="button">${icon('x')}</button></header><div class="tm-sheet__body"><p class="tm-sheet__subtitle">${M('profile.logoutConfirm')}</p></div><div class="tm-sheet__actions"><button class="tm-btn tm-btn--destructive tm-btn--lg tm-btn--block" data-confirm>Log out</button><button class="tm-btn tm-btn--quiet tm-btn--lg tm-btn--block" data-secondary>Stay signed in</button></div></section>`;
 }
 function render() {
   const setup = isSetup();
@@ -125,11 +132,11 @@ function render() {
     <header class="header"><img class="logo" src="../../brand/truemeds-for-doctors.svg" alt="Truemeds for doctors"><div class="header-actions">${[['bell','Notifications'],['help-circle','Help'],['user-circle','Profile']].map(([i,l]) => `<button class="tm-btn tm-btn--quiet tm-btn--icon" aria-label="${l}" type="button">${icon(i)}</button>`).join('')}</div></header>
     <section class="band"><h1 class="tm-text-title-lg">${heroTitle}</h1><p class="sub">${heroSub}</p></section>
     <div class="panel">
+      ${statusNotice('top')}
       <div class="scroll">
         <div class="rx"><span>Prescriptions today</span><strong>${['setup-wheel', 'setting', 'setup-failed'].includes(state) ? '0' : '3'}</strong></div>
-        ${setup ? picker() + '</div>' : timeBlock()}
+        ${setup ? picker() : timeBlock()}
       </div>
-      <div class="status-slot">${statusNotice()}</div>
       ${footer()}
     </div>
     ${toast}
