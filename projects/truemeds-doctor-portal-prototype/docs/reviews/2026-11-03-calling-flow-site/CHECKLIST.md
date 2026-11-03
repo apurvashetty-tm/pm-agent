@@ -21,6 +21,7 @@
 | U2 | Move around | Zoom and pan; "fit to screen"; tab switch keeps the selected state. |
 | U3 | Filters | A on/off switch; case type filter (Cat4 · Pilot B · HA skipped). |
 | U4 | Link to a state | `#state=<id>` opens the page on that state, so a link can go in a Jira ticket or meeting note. |
+| U6 | Happy path and step-through (Apurva, 2026-11-03) | Happy path drawn thick brand-blue in every view (Cat4 / HA skipped → 10a; Pilot → 14 Transferred, not the forward); solid / dashed still means action / event. Highlighting a case type numbers its happy path, mutes its side branches and fades other case types; Previous / Next steps box by box with the panel open. |
 | U5 | Screens | Readable on a laptop (1366 px and up, Chrome and Safari); usable on a phone (scroll and zoom, panel full width). |
 
 ## Look
@@ -58,3 +59,6 @@ Built: `calling-flow/` (`index.html`, `flow.css`, `flow.js`, `data.js`, `check-c
 - **Use:** panel opens below the header (zoom buttons stay usable); first view opens readable (≥ 60 %), Fit shows everything.
 - Rejected: none. Not checkable here: Safari (U5).
 `node calling-flow/check-coverage.mjs` → PASS (44 states, 55 arrows, 53 of 62 case pictures; 9 are case-page states, not calling). No console errors.
+
+## Change — 2026-11-03 (evening): happy path and step-through (U6)
+Built as agreed: thick blue happy path; highlight shows numbered steps, muted branches, faded other types; Previous / Next stepper. Overview picture updated to match. Checked: coverage script PASS, no console errors, Pilot stepper reaches "Step 7 of 7" (14 Transferred).

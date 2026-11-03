@@ -27,12 +27,22 @@
     const h = (ui.tab === "screens" && (s.span || s.style === "join")) ? Math.min(g.H, 150) : g.H;
     return { x, y, w, h, mid: y + (ui.tab === "screens" ? Math.min(g.H, 150) / 2 : g.H / 2) };
   }
+  const typeKey = { cat4: "C", skipped: "K", pilot: "P" };
+  const activePaths = () => ui.filter === "all" ? Object.values(F.paths) : [F.paths[ui.filter]];
+  const onHappy = (a, b) => activePaths().some(p => p.some((x, i) => x === a && p[i + 1] === b));
+  const stepNo = id => ui.filter === "all" ? 0 : F.paths[ui.filter].indexOf(id) + 1;
+  // node emphasis when a case type is highlighted: path (full + number) · branch of that type (muted) · other types (faded)
+  function emph(id) {
+    if (ui.filter === "all") return "";
+    if (F.paths[ui.filter].includes(id)) return " is-path";
+    return inFilter(id) ? " is-branch" : " is-dim";
+  }
   const isVisible = id => { const s = F.states[id]; if (s.types === "A" && !s.hideWhenA) return ui.aOn; if (s.hideWhenA) return !ui.aOn; return true; };
   function inFilter(id) {
     const t = F.states[id].types;
     if (ui.filter === "all") return true;
     if (t.includes("S")) return true;
-    return { cat4: "C", skipped: "K", pilot: "P" }[ui.filter] && t.includes({ cat4: "C", skipped: "K", pilot: "P" }[ui.filter]);
+    return t.includes(typeKey[ui.filter]);
   }
 
   // ---------- svg helpers ----------
@@ -63,6 +73,8 @@
     const defs = el("defs", {}, svg);
     const m = el("marker", { id: "arr", viewBox: "0 0 10 10", refX: 9, refY: 5, markerWidth: 7, markerHeight: 7, orient: "auto-start-reverse" }, defs);
     el("path", { d: "M0,0 L10,5 L0,10 z", class: "arrowhead" }, m);
+    const mh = el("marker", { id: "arrH", viewBox: "0 0 10 10", refX: 9, refY: 5, markerWidth: 5, markerHeight: 5, orient: "auto-start-reverse" }, defs);
+    el("path", { d: "M0,0 L10,5 L0,10 z", class: "arrowhead arrowhead--happy" }, mh);
     world = el("g", { id: "world" }, svg);
 
     const maxCol = 7, right = g.X0 + maxCol * (g.W + g.gap) + g.W;
@@ -81,7 +93,8 @@
     // edges
     const drawEdge = (from, to, label, kind, trunk) => {
       if (!isVisible(from) || !isVisible(to)) return;
-      const a = box(g, from), b = box(g, to), dim = !(inFilter(from) && inFilter(to));
+      const a = box(g, from), b = box(g, to), happy = onHappy(from, to);
+      const dim = !(inFilter(from) && inFilter(to)), branch = ui.filter !== "all" && !happy && !dim;
       const sa = F.states[from], sb = F.states[to];
       let pts, lx, ly, anchor = "start";
       const lines = label.split("\n"), lh = 13;
@@ -99,8 +112,8 @@
         pts = [[a.x + a.w, a.mid], [mx, a.mid], [mx, b.mid], [b.x - 2, b.mid]]; lx = mx + 6; ly = b.mid - 8 - (lines.length - 1) * lh;
       }
       const d = "M" + pts.map(p => p.join(",")).join(" L");
-      const grp = el("g", { class: "edge edge--" + kind + (dim ? " is-dim" : "") + (ui.selEdge && ui.selEdge[0] === from && ui.selEdge[1] === to ? " is-sel" : ""), tabindex: 0 }, edgesG);
-      el("path", { d, class: "edge-line", "marker-end": "url(#arr)" }, grp);
+      const grp = el("g", { class: "edge edge--" + kind + (happy ? " is-happy" : "") + (dim ? " is-dim" : "") + (branch ? " is-branch" : "") + (ui.selEdge && ui.selEdge[0] === from && ui.selEdge[1] === to ? " is-sel" : ""), tabindex: 0 }, edgesG);
+      el("path", { d, class: "edge-line", "marker-end": happy ? "url(#arrH)" : "url(#arr)" }, grp);
       el("path", { d, class: "edge-hit" }, grp);
       textBlock(grp, lx, ly, lines, "edge-label", lh).setAttribute("text-anchor", anchor);
       grp.addEventListener("click", ev => { ev.stopPropagation(); selectEdge([from, to, label, kind]); });
@@ -111,8 +124,8 @@
     // nodes
     for (const id of Object.keys(F.states)) {
       if (!isVisible(id)) continue;
-      const s = F.states[id], b = box(g, id), dim = !inFilter(id);
-      const grp = el("g", { class: `node node--${s.style}${dim ? " is-dim" : ""}${ui.sel === id ? " is-sel" : ""}`, tabindex: 0, "data-id": id }, nodesG);
+      const s = F.states[id], b = box(g, id);
+      const grp = el("g", { class: `node node--${s.style}${emph(id)}${ui.sel === id ? " is-sel" : ""}`, tabindex: 0, "data-id": id }, nodesG);
       const usePic = ui.tab === "screens" && s.pics && s.pics.length && !s.span;
       if (usePic) {
         const tl = s.title.split("\n");
@@ -126,6 +139,12 @@
         textBlock(grp, b.x + 12, b.y + 22, tl, "node-title", 16);
         const per = Math.floor((b.w - 24) / 6.3);
         textBlock(grp, b.x + 12, b.y + 22 + tl.length * 16 + 2, wrap(s.sub, per).slice(0, ui.tab === "screens" ? 9 : 3), "node-sub", 14);
+      }
+      const n = stepNo(id);
+      if (n) {
+        const cx = b.x + b.w - 4, cy = (ui.tab === "screens" && s.pics && s.pics.length ? b.y : b.y) - 4;
+        el("circle", { cx, cy, r: ui.tab === "screens" ? 16 : 13, class: "step-badge" }, grp);
+        const t = el("text", { x: cx, y: cy + 5, class: "step-no", "text-anchor": "middle" }, grp); t.textContent = n;
       }
       grp.addEventListener("click", ev => { ev.stopPropagation(); select(id); });
       grp.addEventListener("keydown", ev => { if (ev.key === "Enter") select(id); });
@@ -209,7 +228,7 @@
       ${sec("Open questions", s.open && s.open.length ? `<ul class="open">${s.open.map(x => `<li>${md(x)}</li>`).join("")}</ul>` : "")}
       ${sec("Arrows in", ins.length ? `<ul class="arrows">${ins.map(e => arrowLi(e, e[0])).join("")}</ul>` : "")}
       ${sec("Arrows out", outs.length ? `<ul class="arrows">${outs.map(e => arrowLi(e, e[1])).join("")}</ul>` : "")}`;
-    openPanel(); history.replaceState(null, "", "#state=" + id);
+    openPanel(); history.replaceState(null, "", "#state=" + id); syncStepper();
     if (!opts.noCenter) requestAnimationFrame(() => centerOn(id));
   }
   function selectEdge(e) {
@@ -240,10 +259,28 @@
     draw(); if (ui.sel) centerOn(ui.sel);
   }));
   document.querySelectorAll("[data-filter]").forEach(b => b.addEventListener("click", () => {
-    ui.filter = b.dataset.filter;
+    ui.filter = b.dataset.filter; ui.step = 0;
     document.querySelectorAll("[data-filter]").forEach(x => x.setAttribute("aria-pressed", x === b));
-    draw();
+    draw(); syncStepper();
   }));
+  // ---------- step through the happy path ----------
+  const stepBox = document.getElementById("stepper"), stepLbl = document.getElementById("step-label");
+  function syncStepper() {
+    const p = ui.filter === "all" ? null : F.paths[ui.filter];
+    stepBox.hidden = !p;
+    if (!p) return;
+    const i = p.indexOf(ui.sel);
+    stepLbl.textContent = i >= 0 ? `Step ${i + 1} of ${p.length}` : `${p.length} steps — press Next`;
+    document.getElementById("step-prev").disabled = i <= 0;
+    document.getElementById("step-next").disabled = i === p.length - 1;
+  }
+  function stepBy(dir) {
+    const p = F.paths[ui.filter]; if (!p) return;
+    const i = p.indexOf(ui.sel), j = i < 0 ? 0 : Math.max(0, Math.min(p.length - 1, i + dir));
+    select(p[j]);
+  }
+  document.getElementById("step-prev").addEventListener("click", () => stepBy(-1));
+  document.getElementById("step-next").addEventListener("click", () => stepBy(1));
   document.getElementById("toggle-a").addEventListener("change", e => { ui.aOn = e.target.checked; view.overview = view.screens = null; draw(); });
   document.getElementById("zoom-in").addEventListener("click", () => { const r = svg.getBoundingClientRect(); zoomAt(1.25, r.width / 2, r.height / 2); });
   document.getElementById("zoom-out").addEventListener("click", () => { const r = svg.getBoundingClientRect(); zoomAt(0.8, r.width / 2, r.height / 2); });
@@ -252,7 +289,7 @@
   document.getElementById("version").textContent = F.version;
   document.getElementById("notes").innerHTML = F.notes.map(n => `<li>${esc(n)}</li>`).join("");
 
-  draw();
+  draw(); syncStepper();
   const m = location.hash.match(/state=([\w-]+)/);
   if (m && F.states[m[1]]) { if (F.states[m[1]].types === "A") { ui.aOn = true; document.getElementById("toggle-a").checked = true; draw(); } select(m[1]); }
   window.__flowReady = true;

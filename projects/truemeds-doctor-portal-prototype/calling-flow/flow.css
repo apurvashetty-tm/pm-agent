@@ -52,14 +52,26 @@ footer ul { margin: 0; padding-left: var(--tm-space-lg); }
 .pic-id { font-size: 10px; fill: var(--tm-content-tertiary); }
 .node.is-sel .node-box, .node.is-sel .node-frame { stroke: var(--tm-border-focus); stroke-width: 4; }
 .node:focus { outline: none; } .node:focus-visible .node-box, .node:focus-visible .node-frame { stroke: var(--tm-border-focus); stroke-width: 4; }
-.is-dim { opacity: .18; }
-.edge-line { fill: none; stroke: var(--tm-content-primary); stroke-width: 1.6; }
+.is-dim { opacity: .12; }
+.edge-line { fill: none; stroke: var(--tm-content-tertiary); stroke-width: 1.4; }
 .edge--e .edge-line { stroke-dasharray: 6 4; }
 .edge-hit { fill: none; stroke: transparent; stroke-width: 14; cursor: pointer; }
 .edge-label { font-size: 11px; fill: var(--tm-content-primary); pointer-events: none; }
 .edge.is-sel .edge-line { stroke: var(--tm-border-focus); stroke-width: 3; }
 .edge:hover .edge-line { stroke-width: 2.6; }
-.arrowhead { fill: var(--tm-content-primary); }
+.arrowhead { fill: var(--tm-content-tertiary); }
+.arrowhead--happy { fill: var(--tm-surface-brand-default); }
+.edge.is-happy .edge-line { stroke: var(--tm-surface-brand-default); stroke-width: 4; }
+.edge.is-happy .edge-label { fill: var(--tm-content-brand); font-weight: 700; }
+.edge.is-branch { opacity: .55; }
+.node.is-branch { opacity: .55; }
+.node.is-path .node-box, .node.is-path .node-frame { stroke: var(--tm-surface-brand-default); stroke-width: 3.5; }
+.step-badge { fill: var(--tm-surface-brand-default); stroke: var(--tm-surface-primary); stroke-width: 2; }
+.step-no { fill: var(--tm-content-inverse); font-size: 13px; font-weight: 700; }
+.stepper { display: flex; gap: var(--tm-space-xs); align-items: center; }
+.stepper[hidden] { display: none; }
+.stepper span { font-size: var(--tm-font-size-body-xs); color: var(--tm-content-secondary); min-width: 120px; }
+.legend i.happy { border-top: 4px solid var(--tm-surface-brand-default); }
 
 /* panel */
 #panel { position: fixed; top: 0; right: 0; bottom: 0; width: 440px; max-width: 100%; background: var(--tm-surface-primary); border-left: 1px solid var(--tm-border-default); box-shadow: -8px 0 24px rgba(0,0,0,.08); display: flex; flex-direction: column; z-index: 5; }
