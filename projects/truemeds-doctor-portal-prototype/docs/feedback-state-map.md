@@ -1,6 +1,6 @@
 # Feedback state mapping
 
-Version 1.1 · 2026-10-14 · D-41, D-44, D-45 · Read [feedback-rules.md](feedback-rules.md) first.
+Version 1.2 · 2026-11-03 · D-41, D-44, D-45, D-83 (calling round) · Read [feedback-rules.md](feedback-rules.md) first.
 
 This maps current auth/Home states and known recovery conditions to reusable feedback. It is not a list of new screens to build or render. Shared copy now lives in `../ui-screens/feedback/messages.json` with behavior metadata in `metadata.json`; generated browser/native adapters consume the same text. Copy approved (D-53). Existing approved PNGs remain historical until source-derived visual review.
 
@@ -152,9 +152,13 @@ Applies to the case page (`ui-screens/case/case.html`; the old `index.html` is f
 | case.release-failed | F2 | Sheet closes over Ready; doctor stays on the case; error notice "Couldn't release this case. You're still on it. Try again."; Back works again. *Copy approved (Apurva, D-53).* (D-81 F22) |
 | case.callback-failed | F2 | Error notice inside the sheet "Couldn't schedule the callback. Your time is kept. Try again."; chosen date and time kept. *Copy approved (Apurva, D-53).* |
 | rx.load-failed | F2 | Inside the viewer: notice "Couldn't load the prescription." + **Try again**; ✕ still closes. *Copy approved (Apurva, D-53).* |
-| case.no-medicines | Empty | `.tm-empty` "There’s nothing to prescribe on this order. Release it — Ops will check it." in the Medicines card; no Call patient; main button **Release case**, which releases directly; header Back does the same (D-80 pt 4, D-81 F23). |
+| case.no-medicines | Standing state (top of the panel) | Amber notice "This order has no medicines. Release it — our Ops team will check it." (`case.noMedicines`) above the medicines card, which shows no text; no Call patient; main button **Release case**, which releases directly (no sheet) and returns to Home; header Back does the same (D-80 pt 4, D-81 F23; D-83 CW-A6, K4). |
 | case.long-content | — | Long patient name (two lines in the header) and long medicine names, checked at 360. |
-| case.end-call-first | W1 (amber warning) | "End the call to get your next case." as an amber warning above the bar (D-81 F26; RULES §9.5). |
+| case.end-call-first | retired (D-83, CW-E3) | Retired with state 15b (`call.endCallFirst` removed). |
+| call.waiting-for-hangup | Status line | "Waiting for the call to end…" (`call.waitingForHangup`) in the bar, where the buttons would be, while a forward or a failed transfer is still live (15, B3; D-83 K8, K9). After the hang-up: Request next case · Back to Home. |
+| call.forwarded-after-hangup | Card body | "Health Advisor unavailable right now. They’ll call the patient back." (`call.forwardedAfterHangup`) in the amber outcome card under "Forwarded to Health Advisor", after the hang-up on 15 and B3; no script card (D-83 CW-E3, main-check 1 M1). |
+| case.callback-refused | F2 | Error notice inside the Schedule callback sheet "Couldn’t schedule a callback. The patient wasn’t reached." (`callback.notReached`) when the backend refuses a callback without leg 2 answered (D-83 K3, CW-A1). Choices kept. |
+| case.result-missing-pilot | Same as 7d | Pilot 7d: "We didn’t get the call result." notice; **Confirm & forward** · Callback + Unavailable; no Skip HA (D-83 K6, CW-D2). |
 
 ## Prescribe (D-81)
 
@@ -203,7 +207,7 @@ Still open: source-derived 390×844 captures and visual approval, 360-width and 
 | OTP — "New code sent." | Green text, no icon | A-21 |
 | OTP — too many resends / locked / expired and limited | "Doctor Ops" and the time never split across lines | A-17 |
 | case.confirm-failed, case.release-failed | Bar notice above its button (the bar keeps its height in busy states). case.callback-failed stays inside the sheet, 8 above its button | A-19, B-02 |
-| case.confirming / call.connectingHa (Transferring…) | Bar keeps its height; secondary row kept and greyed, not offered | B-01 |
+| case.confirming / call.connectingHa (Transferring…) | Bar keeps its height; Skip HA alone, full width, greyed and disabled; no Callback (D-83 K13) | B-01 |
 | case.checking (7c) and fallback B2 | Status line takes the row the buttons were on; bar keeps its height | B-02 |
 | Empty case | Card text left-aligned, 14 px normal; View Rx left-aligned when Order details is hidden | B-16, B-17 |
 | Back-blocked toast | Breaks between its two sentences | B-21 |

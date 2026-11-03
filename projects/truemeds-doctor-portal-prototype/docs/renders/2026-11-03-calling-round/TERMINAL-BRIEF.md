@@ -32,3 +32,19 @@ Folder: `~/src/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds
 
 ## Never
 Touch anything in `CHECKLIST.md` §3 — decision log, backlog, open questions, project truth, `docs/reviews/**`, the design system, the old prototype, any state not named in §1. Record decisions or approvals in Apurva's name. Commit, push, open PRs, or run git commands other than `git status` / `git diff`. Read or print credentials.
+
+## MAIN-CHECK 1
+
+Main-thread audit, 04:00 IST: the round is good. Three fixes, same rules as before (scope, all gates G1–G7 incl. the small-phone pass, determinism, independent check on the changed pictures only). Standing rule beats K8's "same card": app-logic §4 line "End-of-call script … hidden once the call has ended (no one to read it to)"; 15 / B3 are the exception only **while the doctor is still on the line**.
+
+| # | State(s) | What's wrong | Fix | Pass when |
+|---|---|---|---|---|
+| M1 | `t15-after-hangup`, `g3b-after-hangup` (390 + 360) | After the hang-up the screen still shows the end-of-call script and the card says "Read the script, then end the call." — the call is over. | Hide the script card (as `t16` does). Card keeps title "Forwarded to Health Advisor", amber; body = new key `call.forwardedAfterHangup` = "Health Advisor unavailable right now. They’ll call the patient back." (curly apostrophe; via `messages.json` → `build-messages.mjs`; feedback-state-map row; app-logic §5 row "15 after hang-up" and the B3 line say: script hidden, this card text). | No script card; card text as above; Medicines card moves up under the outcome card; bar unchanged (Request next case · Back to Home). Live states `t15-ha-no-join` and `g3b-forwarded` unchanged. |
+| M2 | `t05-result-wait` (390 + 360) | Uses the Cat4 fixture (Ramesh). Per D-83 (CW-C2) state 5 happens only on Pilot / Ozonetel; Cat4 stays on Calling. | Render with the Pilot fixture (`VALUE`, Sunita), everything else as now (no script, status line "Getting call result…" only). | Header shows the Pilot patient; bar unchanged; no script. |
+| M3 | `ui-screens/app-logic.md` §4 "Bar and card rules" paragraph | Example list still names "End the call…" (15b, retired). | Remove "End the call…" from the example list. | No mention of "End the call" as a live notice anywhere in app-logic except the 15b retired row. |
+
+After the fixes append `## Main-check 1` to `REPORT.md` ending `MAIN-CHECK 1 DONE — failures: <n>`, then wait again (step 12).
+
+## DONE
+
+Main-thread re-audit 05:36 IST: M1–M3 pass (pictures checked at 390 and 360), guards 0, no unexpected differences. Stop now.
