@@ -916,12 +916,20 @@ From an external (ChatGPT) review, each point verified before acting.
   2. **The result decides the next screen**, the normal path: over the gate → **8a Confirm prescription** → 10a; too short → **6** (Call again · Callback); patient side failed → **9**; no result in 3 min → 7c / 7d (CW-D1).
   3. Skip HA on 16 is unchanged (call already over → reason → Confirm prescription → 10a).
 - **Replaces** CW-E2's two-step status line ("Calling {name}…" until the hang-up, then "Getting call result…"): one line is simpler, and the note tells the doctor to end the call. An earlier draft of D-85 (confirm at once → "Waiting for the call record") was **rejected**: a call that turned out too short would be silently unconfirmed and the doctor couldn't recover it with Call again; confirming on the result routes every outcome to the right screen and needs no new state.
-- **Still open in the readiness thread (not part of this):** A-only screens (11, 12, 8b) in the first build; Non-Value Meds in B.
+- **Still open in the readiness thread:** answered 2026-11-03 — see D-87.
 
 ### D-86 · The notice band inside the action bar is centred — 2026-11-03
 - **Decision (Apurva, after a side-by-side render, `docs/reviews/2026-11-03-copy-audit/bar-notice-alignment.png`):** the result notice inside the pinned bar (`.tm-actionbar > .tm-notice`, D-82) is centred: icon and text centred as a group, wrapped lines centred and balanced. All other notices (top of the page, inside sheets, in content) stay left-aligned.
 - **Why:** everything else in the bar is centred (button labels, status lines). The bar messages are short and fit on one line at 360, and balanced wrapping keeps a rare second line even. The band is already a bar-only variant, so the Notice component's alignment elsewhere doesn't change.
 - **Applied:** one central CSS rule, RULES §9.5, beyond-salt, re-render of the states with a band in the bar (`docs/renders/2026-11-03-bar-notice-centre/`), then the Design System artifact.
+
+### D-87 · Fallback B is the one Pilot flow; A-only screens later; calling-flow page for Engineering — 2026-11-03
+- **Decision (Apurva, prototype-readiness thread):**
+  1. **B is the one Pilot flow** for every Pilot case, Non-Value Meds included: the doctor confirms on the live call (B1), B2 checks for an HA → free: transfer (13 → 14), none: forward (B3). No separate Value / Non-Value Meds scenario at the start of the call.
+  2. **A-only screens (11, 12, 8b) are left out of the first build**; built later as version A.
+  3. **Calling-flow page** for Engineering (`calling-flow/`, live on the doctor-portal site at `/calling-flow/`): every calling state, trigger, button, event and rule from app-logic; solid = doctor action, dashed = backend event; **happy path** per case type (Cat4 / HA skipped → 10a; Pilot → 14 Transferred, not the forward) drawn blue, happy-path boxes filled (primary), others white (secondary); highlighting a case type numbers its happy path with Previous / Next. Checklist and results `docs/reviews/2026-11-03-calling-flow-site/CHECKLIST.md`.
+- **Why:** B is what launches; one Pilot flow means one set of screens and tests. Engineering needs the whole flow, with actions and events apart, to agree the app ↔ backend contract.
+- **Rejected:** happy path shown as solid vs dotted lines (would lose action vs event); greyed-out side branches (reads as "not applicable"); "no HA free → forwarded" as a second happy path.
 
 ## Design system changes made for this work
 

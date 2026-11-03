@@ -4,6 +4,8 @@ What this file is: changes Apurva has agreed but that are not on the screens or 
 
 Order = the order we work in.
 
+> **Status 2026-11-03:** §1 – §2j are done (screens frozen D-78 / D-82; calling D-83; copy D-84; 17 D-85; D-86; D-87) — unticked lines there are history. **Next: §2l prototype build.**
+
 ## 1. Calling screens — close the work
 - [ ] **D-62 / D-63 on the calling screens** — C5 cards, T3 action bar, grey neutral card, 7b question as plain text; new state 15b "End the call to get your next case." (also on B3). Render the changed states myself (7b, 7f, 9, 10a, 10b, 14, 15, 15b, B3), self-audit, Apurva reviews.
 - [x] **B3 colour: amber, like 15** — decided 2026-10-26 (D-62 point 7).
@@ -129,13 +131,13 @@ Brief: `docs/renders/2026-11-01-fix-round/TERMINAL-BRIEF.md` "Round 4"; audit: `
 
 ## 2j. Fix round closed — recorded as D-82 (2026-11-03)
 - [x] Rounds 1–6 accepted; §2f, §2g, §2h and the Round 5 / 6 items are done (D-82).
-- [ ] Republish the Truemeds Design System artifact (`design-system/scripts/build_artifact.py`) with D-82's design-system changes.
-- [ ] Update the React Native hand-off notes (`ui-screens/*/NATIVE-HANDOFF.md`, `ui-screens/native/`, `design-system/native/`) with D-82.
+- [x] Republish the Truemeds Design System artifact — done 2026-11-03 with D-82–D-85 (see below).
+- [x] React Native: status note `ui-screens/native/NATIVE-STATUS.md` (2026-11-03); the full refresh comes from the built prototype.
 - [x] Calling walkthrough decided (paths A–F) and recorded as **D-83**.
 - [x] **Calling round** — D-83 applied (149 states, guards 0), 2026-11-03.
 - [x] **Copy standard** — copy rules v2 approved (D-84), `docs/reviews/2026-11-03-copy-audit/COPY-RULES.md`.
 - [x] **Copy round done (2026-11-03):** audit run 2 on v2, fixes applied and re-rendered (main round + MAIN-CHECK 1 + 2), copy checks in `check-sources.mjs`, D-85 (17) applied. Guards 0, 149 states. Record: `COPY-ANNEX.md` (goes to the PRD as the copy annex), report `docs/renders/2026-11-03-copy-round/REPORT.md`.
-- [ ] Then: DS artifact republish and React Native notes.
+- [x] Then: DS artifact republish and React Native notes (2026-11-03).
 - [ ] **Engineering (from D-83):** backend refuses a callback without leg 2 answered · hangup-cause mapping (patient-side → 9) and hold / retry settings for doctor cases · does Knowlarity send a call-ended event? · partner for Pilot Non-Value Meds · mismatch analytics table (doctor action vs call record).
 - [ ] Storyboard review (Part C).
 - [ ] **Prototype build — accessibility and fit items from the copy round (D-84; not visible in the frozen pictures):** live regions for progress / result messages (F24); medicine-row accessible names (F25); non-breaking "4 h" style units (F26); dose and date field errors tied to their fields (F28); two-up button rows stack at large text (CA-20). Plus: Engineering to confirm "Truemeds never sees or stores it." (faster sign-in) before launch.
@@ -143,6 +145,12 @@ Brief: `docs/renders/2026-11-01-fix-round/TERMINAL-BRIEF.md` "Round 4"; audit: `
 - [ ] **React Native refresh — after the prototype build:** `ui-screens/native/NATIVE-STATUS.md` lists the gaps since 2026-10-15 (entry screens, Home, notices, buttons, sheets, Profile) and the screens not yet in native (case, calling, Prescribe). Rewrite the components from the built prototype in one pass.
 
 ## 2k. app-logic drift found by the calling-flow audit (2026-11-03) — fix in the next app-logic pass
-- [ ] §4 stage table, row "Calling": says header Back works "until the backend reports the patient answered" — D-80 / D-81 F21 hide it from the tap on Call patient (the "Leaving a case" paragraph in §4 already says so). Fix the table row.
-- [ ] §5 state-table lead-in: "Callback is offered in every call" — D-83 CW-A1: Callback only on 6 and 7d. Fix the sentence.
-- [ ] D-85 entry says "Non-Value Meds in B" is still open — Apurva settled it (2026-11-03): B is the one Pilot flow, Non-Value Meds go through the HA check too. Record when the decision log is next edited.
+- [x] (fixed 2026-11-03) §4 stage table, row "Calling": says header Back works "until the backend reports the patient answered" — D-80 / D-81 F21 hide it from the tap on Call patient (the "Leaving a case" paragraph in §4 already says so). Fix the table row.
+- [x] (fixed 2026-11-03) §5 state-table lead-in: "Callback is offered in every call" — D-83 CW-A1: Callback only on 6 and 7d. Fix the sentence.
+- [x] (recorded as D-87) D-85 entry said "Non-Value Meds in B" was still open — Apurva settled it (2026-11-03): B is the one Pilot flow, Non-Value Meds go through the HA check too. Record when the decision log is next edited.
+- [x] (fixed 2026-11-03) app-logic §6 and §11: launch (Fallback B) flow and scenarios added above the version-A tables.
+
+## 2l. Prototype build — next (new thread)
+- [ ] Start from `docs/proposals/2026-11-03-prototype-build-readiness.md` §11; answer Q1, Q3, Q4, Q5.
+- [ ] Build plan + rebuild checklist **v3** (Fallback B first, A-only screens later, calling-flow page as the calling reference) → Apurva approves → step 0.
+- [ ] Calling-flow live page: redeploy when Apurva asks (`[deploy]`); the live copy may predate the happy-path view.
