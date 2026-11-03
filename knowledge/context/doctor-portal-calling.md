@@ -8,3 +8,6 @@ Reusable facts about how doctor calls work, from the doctor-portal calling revie
 - [USER-PROVIDED] Launch order: "Fallback B" (route decided after the doctor confirms) ships first; reserving an HA at call start ("target A") comes later.
 - [USER-PROVIDED] A patient who can't be reached goes on hold and is retried by the system by hangup cause (pattern from the Ring AI PRD §6); invalid numbers aren't retried. Nothing goes to Ops.
 - [UNVERIFIED] Whether Knowlarity sends any call-ended event, and which partner handles Pilot Non-Value Meds — open with Engineering.
+- [USER-PROVIDED] Fallback B is the one Pilot flow (2026-11-03, D-87): every Pilot case, Non-Value Meds included, is confirmed on the live call; after Confirm the system checks for a free Health Advisor — free → transfer, none → forward.
+- [USER-PROVIDED] Skip HA on a live call (D-85): the doctor waits for the call result ("Getting call result…") and confirms on the result; no confirm on the live call without a transfer, because only the call record proves the 50-second gate.
+- Full calling flow with triggers, buttons and events per state: `projects/truemeds-doctor-portal-prototype/calling-flow/` (data in `data.js`).

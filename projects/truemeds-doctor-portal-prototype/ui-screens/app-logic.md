@@ -87,7 +87,7 @@ Order on first use: Sign-in → OTP → (offer, once) → Home → Case. Returni
 | Stage | What the doctor sees | Bar (top → bottom) | Header Back / phone back |
 |---|---|---|---|
 | Ready to call (`call.ready`) | Order details + View Rx, medicines, notes (no script card before Call — D-58 pt 18, D-71) | **Call patient** | Header Back → "Leave this case?" sheet: **Release case** / Stay on this case (D-58 pt 20, OQ-024) |
-| Calling — the whole call (`call.calling` 2 / 7a, `call.calling-transfer` 11) | End-of-call script in the slot under Order details, above the medicines, from the tap (D-58 pt 18) | Status line "Calling {name}…" (D-74) **only — no Callback on a live call** (CW-A1, D-83). No separate Connecting / On call states (D-58 pt 14). **No End call** — the doctor ends the call on the phone | Header Back → leave sheet **until the backend reports the patient answered**; then Back hides and phone back → toast "Finish this case first. Then you can go back to Home." (`a-back-blocked`) |
+| Calling — the whole call (`call.calling` 2 / 7a, `call.calling-transfer` 11) | End-of-call script in the slot under Order details, above the medicines, from the tap (D-58 pt 18) | Status line "Calling {name}…" (D-74) **only — no Callback on a live call** (CW-A1, D-83). No separate Connecting / On call states (D-58 pt 14). **No End call** — the doctor ends the call on the phone | Header Back hidden from the tap on Call patient / Call again (D-80, D-81 F21); phone back → toast "Finish this case first. Then you can go back to Home." (`a-back-blocked`) |
 | Transfer ready (`call.transfer-ready` 12) | Script stays (call still live) | **Confirm & transfer** · Skip HA (full width, under it; no Callback, CW-A1) — shown only once the backend confirms gate time since the patient answered and the call is live (D-58 pt 14) | Blocked |
 | Call not valid (`call.ended-early` 6, `call.result-missing` 7d) | No script — the call has ended (D-58 pt 24) | 6: notice · **Call again** · Callback (no Unavailable, D-58 pt 23) · 7d (Cat4): notice · **Confirm prescription** · Callback + Unavailable (reason sheet, D-75) · 7d (Pilot): **Confirm & forward** · Callback + Unavailable, no Skip HA (CW-D2) | Blocked |
 | Valid, call ended (`call.valid` 8a / 8b) | No script — the call has ended (D-58 pt 24) | 8a: **Confirm prescription** only · 8b: **Confirm & forward** · ⏭ **Skip HA** full width (only when allowed, §6). No Callback (CW-C3) | Blocked |
@@ -125,7 +125,7 @@ Order on first use: Sign-in → OTP → (offer, once) → Home → Case. Returni
 - **Callback on a live call is refused by the backend** unless the patient answered (leg 2); the sheet then shows "Couldn’t schedule a callback. The patient wasn’t reached." (CW-A1, K3).
 - **Vendor terms are mapped by Engineering** to the buckets in the table (Ozonetel `CustomerStatus`, Knowlarity hangup causes — `projects/ACOM/ring-ai/reference/knowlarity-hangup-causes.pdf`).
 
-**State table (final, 2026-10-24 — D-58 points 14–22; rows changed by the calling round are per D-83, see §14).** One row per state. Render id = recipe in `docs/renders/2026-10-22-calling/src/case.html`. Copy keys in `ui-screens/feedback/messages.json`. During every call the End-of-call script shows under Order details; Callback is offered in every call.
+**State table (final, 2026-10-24 — D-58 points 14–22; rows changed by the calling round are per D-83, see §14).** One row per state. Render id = recipe in `docs/renders/2026-10-22-calling/src/case.html`. Copy keys in `ui-screens/feedback/messages.json`. During every call the End-of-call script shows under Order details. Callback is offered only on 6 and 7d (D-83 CW-A1).
 
 | # | State ID | State | Trigger (from the backend, by polling) | Bar (top → bottom) | Render id |
 |---|---|---|---|---|---|
@@ -171,6 +171,8 @@ Retired: `b-missed-call`, `b-didnt-connect` (sheets) — replaced by the automat
 ## 6. Final buttons and HA `[LOCKED]` (project_truth §4, D-50, D-54, D-57)
 - **Confirming… / Transferring… (D-81 F24–F25):** medicine rows and notes are read-only and muted, with no arrows. View Rx stays the outlined button (D-76).
 
+
+**Launch = Fallback B (D-83 CW-F1, D-85; Apurva 2026-11-03: the one Pilot flow).** Pilot live call → **Confirm prescription** (B1) → B2 checks for an HA → free: Transferring → **Transferred** (14) · none: **Forwarded** (B3). Pilot call ended before Confirm (16) or 7d → **Confirm & forward**. Skip HA → 17 → result path → Confirm prescription. Non-Value Meds go through the same HA check. The table below is **version A (later)**, where the route is known at call start.
 
 | Case type | HA status | Final button | Ending card |
 |---|---|---|---|
@@ -290,6 +292,8 @@ Follow `docs/feedback-state-map.md` exactly. Summary for the case page: loading 
 | Any other OTP | Wrong code; tries count down; the 5th locks the number |
 
 Offline, and the phone-unlock outcomes for faster sign-in (success / cancelled / failed / unavailable), are switches in the review panel, not numbers.
+
+**Launch scenarios (Fallback B):** `cat4` (Confirm prescription → 10a) · `pilot_ha_free` (B1 Confirm prescription → B2 → 13 → 14) · `pilot_no_ha_free` (B1 → B2 → B3) · `pilot_ha_skipped_customer` / `pilot_ha_skipped_system` (Cat4-style ending, Ozonetel). The table below is the earlier list, kept for **version A (later)**.
 
 | Scenario | Case type | HA | Final button |
 |---|---|---|---|
