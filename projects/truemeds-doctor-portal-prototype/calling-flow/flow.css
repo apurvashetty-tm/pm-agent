@@ -53,18 +53,19 @@ footer ul { margin: 0; padding-left: var(--tm-space-lg); }
 .node.is-sel .node-box, .node.is-sel .node-frame { stroke: var(--tm-border-focus); stroke-width: 4; }
 .node:focus { outline: none; } .node:focus-visible .node-box, .node:focus-visible .node-frame { stroke: var(--tm-border-focus); stroke-width: 4; }
 .is-dim { opacity: .12; }
-.edge-line { fill: none; stroke: var(--tm-content-tertiary); stroke-width: 1.4; }
+.edge-line { fill: none; stroke: var(--tm-content-secondary); stroke-width: 1.6; }
 .edge--e .edge-line { stroke-dasharray: 6 4; }
 .edge-hit { fill: none; stroke: transparent; stroke-width: 14; cursor: pointer; }
 .edge-label { font-size: 11px; fill: var(--tm-content-primary); pointer-events: none; }
 .edge.is-sel .edge-line { stroke: var(--tm-border-focus); stroke-width: 3; }
 .edge:hover .edge-line { stroke-width: 2.6; }
-.arrowhead { fill: var(--tm-content-tertiary); }
+.arrowhead { fill: var(--tm-content-secondary); }
 .arrowhead--happy { fill: var(--tm-surface-brand-default); }
 .edge.is-happy .edge-line { stroke: var(--tm-surface-brand-default); stroke-width: 4; }
 .edge.is-happy .edge-label { fill: var(--tm-content-brand); font-weight: 700; }
-.edge.is-branch { opacity: .55; }
-.node.is-branch { opacity: .55; }
+/* side branches of the highlighted case = "secondary": full strength, own colours, no fading (Apurva, 2026-11-03) */
+.edge.is-branch .edge-line { stroke: var(--tm-content-primary); }
+.node.is-branch { opacity: 1; }
 .node.is-path .node-box, .node.is-path .node-frame { stroke: var(--tm-surface-brand-default); stroke-width: 3.5; }
 .step-badge { fill: var(--tm-surface-brand-default); stroke: var(--tm-surface-primary); stroke-width: 2; }
 .step-no { fill: var(--tm-content-inverse); font-size: 13px; font-weight: 700; }
