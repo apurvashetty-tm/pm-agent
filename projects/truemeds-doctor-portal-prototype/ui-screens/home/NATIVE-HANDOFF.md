@@ -2,6 +2,8 @@
 
 # Home — React Native handoff
 
+> **Out of date (2026-11-03):** written against the screens of 2026-10-15. Read `ui-screens/native/NATIVE-STATUS.md` first. The pictures in `ui-screens/` and `app-logic.md` win where this differs.
+
 ## What exists, and what this package means
 
 Sign-in/OTP already have editable HTML references, approved PNGs and native behavior notes. Shared React Native exports exist in `../../../../design-system/native/`: tokens.ts, tokens.json and icons.ts. They contain the same SALT values as web styles. They do not contain native Button, Sheet or Picker components.
