@@ -1,5 +1,7 @@
 # Doctor app — React Native screen components
 
+> **Out of date (2026-11-03):** written against the screens of 2026-10-15. Read `ui-screens/native/NATIVE-STATUS.md` first. The pictures in `ui-screens/` and `app-logic.md` win where this differs.
+
 ## Scope
 
 Actual TSX components using React Native View/Text/TextInput/Pressable/Modal/FlatList and react-native-svg. No WebView or CSS runtime. These are editable reference components, not a finished authenticated application.

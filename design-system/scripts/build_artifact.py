@@ -185,8 +185,9 @@ COMPONENTS = {
 - **Destructive** `tm-btn--destructive`: removes or closes something for good. Red outline, never solid, never the primary role.
 - **Call end** `tm-btn--call-end`: solid red, only for ending a live call in apps that own the call. Not used in the doctor app, where the doctor ends the call on the phone (D-58).
 - **Busy** `tm-btn--busy`: only for a short wait right after the user's own tap ("Confirming…", "Sending OTP…"). A longer wait that isn't an action is a Status line, never a busy button (D-74).
+- **Icon size follows the button size** (D-82): 56px `--lg` buttons → 20px icon; 48px compact buttons → 16px; icon-only buttons (Back, Help, ✕) → 20px. Set centrally in `components.css`; screens never size button icons.
 - **One height per group** (differ by style, not size): `--lg` 56px for action buttons in a bar, sheet or form; default 48px for compact inline buttons. Nothing tappable is under 48px (`--sm`/`--xs` only in dense desktop tools).
-- **Order:** primary → secondary (a pair may sit side by side in `tm-btn-pair`, no icons) → quiet. Labels: verb first, sentence case.
+- **Order:** primary → secondary (a pair may sit side by side in `tm-btn-pair`) → quiet. Labels: verb first, sentence case.
 - Links stay inside sentences (`tm-btn--link` / plain link).
 """, """<div class="row" style="margin-bottom:12px"><button class="tm-btn tm-btn--primary">Primary</button><button class="tm-btn tm-btn--secondary">Secondary</button><button class="tm-btn tm-btn--quiet">Quiet</button><button class="tm-btn tm-btn--destructive">Destructive</button><button class="tm-btn tm-btn--call-end"><span class="tm-icon" data-icon="phone-x"></span>End call</button></div>
 <div class="row" style="margin-bottom:12px"><button class="tm-btn tm-btn--primary tm-btn--lg">Action 56</button><button class="tm-btn tm-btn--secondary">Compact 48</button><button class="tm-btn tm-btn--quiet tm-btn--icon" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button><button class="tm-btn tm-btn--primary tm-btn--busy" aria-busy="true" disabled><span class="tm-spinner"></span>Sending OTP</button><button class="tm-btn tm-btn--primary" disabled>Disabled</button></div>
@@ -240,7 +241,7 @@ COMPONENTS = {
     "StatusCard": ("Feedback", 250, """The outcome of a task (RULES §9.3): icon + title (optional one line under it), stays on screen where the result belongs. Not a toast.
 
 - `tm-status-card` > `tm-status-card__icon`, `tm-status-card__title` (optional `__text`).
-- **Tinted by outcome, with a 1px edge in the tone, no drop shadow** (D-62): `--success` done (confirmed, transferred, forwarded) · `--neutral` no outcome yet or none (grey fill: patient unavailable, waiting for the call record, callback scheduled) · `--warning` done, but the user must act (amber).
+- **Tinted by outcome, with a 1px edge in the tone, no drop shadow** (D-62): `--success` done (confirmed, transferred, forwarded) · `--neutral` no outcome yet or none (grey fill: patient unavailable, waiting for the call record, callback scheduled, forwarded after the hang-up while the result is pending) · `--warning` done, but the user must act (amber).
 - A plain white status card is not used: the outcome must not look like another content card.
 """, """<div style="display:flex;flex-direction:column;gap:8px;max-width:420px"><div class="tm-status-card tm-status-card--success"><span class="tm-status-card__icon"><span class="tm-icon" data-icon="circle-check"></span></span><div class="tm-status-card__title">Prescription confirmed</div></div><div class="tm-status-card tm-status-card--neutral"><span class="tm-status-card__icon"><span class="tm-icon" data-icon="clock"></span></span><div><div class="tm-status-card__title">Waiting for the call record</div><div class="tm-status-card__text">Your prescription is saved. We'll confirm it once the record arrives.</div></div></div><div class="tm-status-card tm-status-card--warning"><span class="tm-status-card__icon"><span class="tm-icon" data-icon="alert-triangle"></span></span><div><div class="tm-status-card__title">Forwarded to Health Advisor</div><div class="tm-status-card__text">Health Advisor unavailable right now. Read the script, then end the call.</div></div></div></div>"""),
 
@@ -249,6 +250,7 @@ COMPONENTS = {
 - `tm-notice` (info, brand-subtle), `--neutral`, `--warning`, `--error`; an icon first, then one or two sentences.
 - Say what happened and what is safe; never repeat a button that is on the screen (feedback rules, D-65).
 - `tm-notice--question`: a question above two answers ("Are you still on the call?") — plain centred text, no box, so it never looks like a field (D-62).
+- **Where it goes** (D-82): about the bar's action (the result of the last tap, or why a button is disabled) → inside the Action bar as a band; the screen's general situation → top of the page; inside a sheet → a normal notice box directly above the sheet's button.
 - For a passing confirmation after a system action use Toast instead.
 """, """<div style="display:flex;flex-direction:column;gap:8px;max-width:560px">
 <div class="tm-notice tm-notice--neutral"><span class="tm-icon" data-icon="info-circle"></span><span>You can log out after this case is closed.</span></div>
@@ -293,6 +295,8 @@ COMPONENTS = {
 
 - `tm-actionbar`: primary on top, then secondary (a `tm-btn-pair` for two), then quiet. All `--lg` (56px). **16px padding on all four sides** plus the safe-area inset, a hairline top edge and an upward shadow so it separates from white cards (D-62, D-67). Steps aside while typing.
 - A long wait sits in the bar as a Status line, not a button (D-74).
+- **Every pinned main action uses the bar** (D-82), entry screens included; content above it scrolls on short phones.
+- **A notice about the bar's own action sits in the bar** as an edge-to-edge band on its top edge, in the tone colour (D-82, RULES §9.5). The screen's general situation goes at the top of the page instead.
 """, """<div style="display:flex;gap:16px;flex-wrap:wrap"><div style="width:360px;max-width:100%"><div class="tm-actionbar"><button class="tm-btn tm-btn--primary tm-btn--lg">Confirm prescription</button><button class="tm-btn tm-btn--secondary tm-btn--lg"><span class="tm-icon" data-icon="calendar"></span>Callback</button></div></div><div style="width:360px;max-width:100%"><div class="tm-actionbar"><div class="tm-status-line" role="status"><span class="tm-spinner" aria-hidden="true"></span>Calling Ramesh…</div><button class="tm-btn tm-btn--secondary tm-btn--lg"><span class="tm-icon" data-icon="calendar"></span>Callback</button></div></div></div>"""),
 
     "BottomSheet": ("Containers", 300, """One template for every sheet (RULES §9.4).
@@ -300,7 +304,7 @@ COMPONENTS = {
 - `tm-overlay` + `tm-sheet` > `tm-sheet__header` (`tm-sheet__title` 20/28 + `tm-sheet__close` ✕, 48px, no divider, no drag handle), optional `tm-sheet__subtitle`, `tm-sheet__body`, `tm-sheet__actions`.
 - 16px side margins (page margin, D-67); 16px header → content; 24px + safe area at the bottom. Actions follow the button rules (56px, full width).
 - Reason lists use `tm-option` rows (title + description); tapping applies, no extra button.
-- ✕, tap outside or swipe down = cancel, except while an action is in progress. Max 85% height; max width 640px on desktop.
+- ✕, tap outside or swipe down = cancel, except while an action is in progress. **A sheet always covers the pinned bar** (D-82); on a tall sheet the header and actions stay pinned while the body scrolls. Max 85% height; max width 640px on desktop.
 """, """<div style="display:flex;gap:16px;flex-wrap:wrap"><div style="position:relative;width:360px;max-width:100%;height:270px;overflow:hidden;border-radius:16px"><div class="tm-overlay" style="position:absolute"></div><div class="tm-sheet" style="position:absolute"><div class="tm-sheet__header"><div class="tm-sheet__title">Leave this case?</div><button class="tm-btn tm-btn--quiet tm-btn--icon tm-sheet__close" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button></div><p class="tm-sheet__subtitle">It goes back to the queue for another doctor.</p><div class="tm-sheet__actions"><button class="tm-btn tm-btn--primary tm-btn--lg">Release case</button><button class="tm-btn tm-btn--quiet tm-btn--lg">Stay on this case</button></div></div></div>
 <div style="position:relative;width:360px;max-width:100%;height:270px;overflow:hidden;border-radius:16px"><div class="tm-overlay" style="position:absolute"></div><div class="tm-sheet" style="position:absolute"><div class="tm-sheet__header"><div class="tm-sheet__title">Skip the Health Advisor call</div><button class="tm-btn tm-btn--quiet tm-btn--icon tm-sheet__close" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button></div><p class="tm-sheet__subtitle">Select reason</p><div class="tm-sheet__body"><button class="tm-option"><span class="tm-option__title">Patient declined the Health Advisor call</span><span class="tm-option__desc">The patient didn’t want the call</span></button></div></div></div></div>"""),
 

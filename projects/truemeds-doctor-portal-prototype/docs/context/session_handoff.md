@@ -883,3 +883,7 @@ User identified missing HTML/native linkage. Inspected actual sign-in and OTP HT
 ## 2026-11-03 (12:50) · Copy round done; D-85; screens frozen again
 - **Done:** copy rules v2.1 (D-84), audit run 2, all copy fixes applied and re-rendered (main round + MAIN-CHECK 1 + 2): no "unavailable" wording to patient or doctor on 15 / B3, after-hang-up and t09 cards title only, 17 = note "…End the call when you’re done." + "Getting call result…" then confirm on the result (D-85). Copy checks now part of `check-sources.mjs`. 149 states, guards 0. Committed and merged.
 - **Next:** (1) republish the Design System artifact + React Native hand-off notes (backlog); (2) prototype build in the readiness thread (`docs/proposals/2026-11-03-prototype-build-readiness.md`; open there: A-only screens in the first build, Non-Value Meds in B).
+
+## 2026-11-03 (13:00) · Design System republished; native status note
+- **Done:** Truemeds Design System artifact republished with D-82–D-85 (version 1793690601-476a; lastChange note set). Component guide text updated in `design-system/scripts/build_artifact.py`. React Native: `ui-screens/native/NATIVE-STATUS.md` (gap list since 2026-10-15; the full refresh comes from the built prototype) with "out of date" banners on the native README and the Home hand-off.
+- **Apurva:** build starts with Fallback B (A-only screens later). Prototype build continues in the readiness thread.
