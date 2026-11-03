@@ -874,3 +874,8 @@ User identified missing HTML/native linkage. Inspected actual sign-in and OTP HT
 - **Done:** terminal calling round, 1 round + MAIN-CHECK 1 (script hidden after the hang-up on 15 / B3, new key `call.forwardedAfterHangup`; t05 on the Pilot fixture; 15b mention removed). 149 states, guards 0, independent check 0. Report: `docs/renders/2026-11-03-calling-round/REPORT.md`. Committed and merged.
 - **Apurva (07:14):** empty-case screen stays as it is (medicines card with title only is fine). Agreed two copy fixes: `callback.notReached` → "Couldn’t schedule the callback. The patient wasn’t reached."; `case.noMedicines` → "No medicines on this order. Our Ops team will check it." — **not applied yet**, folded into the copy audit round.
 - **Next:** (1) write a copy standard ("Copy rules" in `docs/feedback-rules.md`) → Apurva approves; (2) audit every piece of text in the app against it (messages, button labels, titles, sheet text, scripts) → one decisions list; (3) one terminal round applies all copy changes + the two above; (4) Design System artifact republish + React Native notes.
+
+## 2026-11-03 (08:05) · Copy rules v2 approved (D-84); copy audit running
+- **Done:** copy rules drafted, researched (Atlassian, Polaris, Apple, Material), critiqued by Codex (`codex-report.md`), v2 approved → `docs/reviews/2026-11-03-copy-audit/COPY-RULES.md`; pointer in feedback-rules §11; D-84 recorded.
+- **D-84:** audit only — fails + fixes logged in `COPY-AUDIT.md`, decided by Apurva, attached to the PRD as the copy annex, applied in the prototype build. Frozen pictures not re-rendered for copy; annex wins.
+- **Next:** terminal runs `AUDIT-BRIEF.md` → main thread reviews `COPY-AUDIT.md` → Apurva decides → commit → DS artifact + native notes.
