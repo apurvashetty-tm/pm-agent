@@ -895,3 +895,8 @@ User identified missing HTML/native linkage. Inspected actual sign-in and OTP HT
 
 ## 2026-11-03 (14:50) · D-86 bar notice centred
 - **Done:** the notice band inside the action bar is centred (D-86); other notices stay left. 46 pictures re-rendered (28 states with a band), guards 0, rest pixel-identical. Design System artifact republished with it. Note: `t06-ended-early` is state 6 "Call too short" (historic id), not a mismatch.
+
+## 2026-11-03 (evening) · Calling-flow page final; next = prototype build (new thread)
+- **Done:** calling-flow page finished — happy path per case type (Cat4 / HA skipped → 10a, Pilot → 14), primary (filled blue) vs secondary (white) boxes, numbered step-through with Previous / Next; checklist line U6. Merged to main (deploy only when Apurva asks — the live page may still show the earlier version).
+- **Not ours, left uncommitted in the folder:** another session's D-86 work (design-system centring, re-rendered pictures, decision log D-86).
+- **Next (new thread):** prototype build. Read `docs/proposals/2026-11-03-prototype-build-readiness.md` **§11 first** (answers so far + still-open Q1, Q3–Q5), then write build plan + rebuild checklist **v3** (Fallback B first, A later), get them approved, then step 0.
