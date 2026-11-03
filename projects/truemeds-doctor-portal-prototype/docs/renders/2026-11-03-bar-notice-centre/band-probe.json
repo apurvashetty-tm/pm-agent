@@ -1,0 +1,338 @@
+{
+ "offer/enable-failed/w390": [
+  {
+   "text": "Couldn’t turn on faster sign-in.",
+   "h": 45
+  }
+ ],
+ "offer/enable-failed/w360": [
+  {
+   "text": "Couldn’t turn on faster sign-in.",
+   "h": 45
+  }
+ ],
+ "offer/offline/w390": [
+  {
+   "text": "You’re offline. Check your connection.",
+   "h": 45
+  }
+ ],
+ "offer/offline/w360": [
+  {
+   "text": "You’re offline. Check your connection.",
+   "h": 45
+  }
+ ],
+ "home/setup-failed/w390": [
+  {
+   "text": "Couldn’t set availability. Your selection is saved.",
+   "h": 45
+  }
+ ],
+ "home/setup-failed/w360": [
+  {
+   "text": "Couldn’t set availability. Your selection is saved.",
+   "h": 65
+  }
+ ],
+ "home/no-cases/w390": [
+  {
+   "text": "No cases right now. Try again in a minute.",
+   "h": 45
+  }
+ ],
+ "home/no-cases/w360": [
+  {
+   "text": "No cases right now. Try again in a minute.",
+   "h": 45
+  }
+ ],
+ "home/request-failed/w390": [
+  {
+   "text": "Couldn’t request a case.",
+   "h": 45
+  }
+ ],
+ "home/request-failed/w360": [
+  {
+   "text": "Couldn’t request a case.",
+   "h": 45
+  }
+ ],
+ "home/offline/w390": [
+  {
+   "text": "You’re offline. Reconnect to request a case.",
+   "h": 45
+  }
+ ],
+ "home/offline/w360": [
+  {
+   "text": "You’re offline. Reconnect to request a case.",
+   "h": 45
+  }
+ ],
+ "home/near-expiry/w390": [
+  {
+   "text": "Availability ends soon. You can still request a case.",
+   "h": 45
+  }
+ ],
+ "home/near-expiry/w360": [
+  {
+   "text": "Availability ends soon. You can still request a case.",
+   "h": 65
+  }
+ ],
+ "case/a-confirm-failed/w390": [
+  {
+   "text": "Couldn’t confirm. Nothing was lost.",
+   "h": 45
+  }
+ ],
+ "case/a-confirm-failed/w360": [
+  {
+   "text": "Couldn’t confirm. Nothing was lost.",
+   "h": 45
+  }
+ ],
+ "case/a-offline/w390": [
+  {
+   "text": "You’re offline. Reconnect to call or confirm.",
+   "h": 45
+  }
+ ],
+ "case/a-offline/w360": [
+  {
+   "text": "You’re offline. Reconnect to call or confirm.",
+   "h": 45
+  }
+ ],
+ "case/a-offline-action/w390": [
+  {
+   "text": "No connection. Nothing was lost.",
+   "h": 45
+  }
+ ],
+ "case/a-offline-action/w360": [
+  {
+   "text": "No connection. Nothing was lost.",
+   "h": 45
+  }
+ ],
+ "case/a-release-failed/w390": [
+  {
+   "text": "Couldn’t release this case. You’re still on it.",
+   "h": 45
+  }
+ ],
+ "case/a-release-failed/w360": [
+  {
+   "text": "Couldn’t release this case. You’re still on it.",
+   "h": 45
+  }
+ ],
+ "case/c-callback/w390": [
+  {
+   "text": "Call too short to write a prescription.",
+   "h": 45
+  }
+ ],
+ "case/c-callback/w360": [
+  {
+   "text": "Call too short to write a prescription.",
+   "h": 45
+  }
+ ],
+ "case/c-callback-error/w390": [
+  {
+   "text": "Call too short to write a prescription.",
+   "h": 45
+  }
+ ],
+ "case/c-callback-error/w360": [
+  {
+   "text": "Call too short to write a prescription.",
+   "h": 45
+  }
+ ],
+ "case/c-callback-failed/w390": [
+  {
+   "text": "Call too short to write a prescription.",
+   "h": 45
+  }
+ ],
+ "case/c-callback-failed/w360": [
+  {
+   "text": "Call too short to write a prescription.",
+   "h": 45
+  }
+ ],
+ "case/c-callback-refused/w390": [
+  {
+   "text": "Call too short to write a prescription.",
+   "h": 45
+  }
+ ],
+ "case/c-callback-refused/w360": [
+  {
+   "text": "Call too short to write a prescription.",
+   "h": 45
+  }
+ ],
+ "case/s7b-still-on-call/w390": [
+  {
+   "text": "Are you still on the call?",
+   "h": 45
+  }
+ ],
+ "case/s7b-still-on-call/w360": [
+  {
+   "text": "Are you still on the call?",
+   "h": 45
+  }
+ ],
+ "case/s7c-checking/w390": [
+  {
+   "text": "Are you still on the call?",
+   "h": 45
+  }
+ ],
+ "case/s7c-checking/w360": [
+  {
+   "text": "Are you still on the call?",
+   "h": 45
+  }
+ ],
+ "case/s7d-result-missing/w390": [
+  {
+   "text": "Couldn’t get the call result.",
+   "h": 45
+  }
+ ],
+ "case/s7d-result-missing/w360": [
+  {
+   "text": "Couldn’t get the call result.",
+   "h": 45
+  }
+ ],
+ "case/s7d-result-missing-pilot/w390": [
+  {
+   "text": "Couldn’t get the call result.",
+   "h": 45
+  }
+ ],
+ "case/s7d-result-missing-pilot/w360": [
+  {
+   "text": "Couldn’t get the call result.",
+   "h": 45
+  }
+ ],
+ "case/s7d-unavailable-sheet/w390": [
+  {
+   "text": "Couldn’t get the call result.",
+   "h": 45
+  }
+ ],
+ "case/s7d-unavailable-sheet/w360": [
+  {
+   "text": "Couldn’t get the call result.",
+   "h": 45
+  }
+ ],
+ "case/t03-not-through/w390": [
+  {
+   "text": "Call didn’t go through.",
+   "h": 45
+  }
+ ],
+ "case/t03-not-through/w360": [
+  {
+   "text": "Call didn’t go through.",
+   "h": 45
+  }
+ ],
+ "case/t04-doctor-missed/w390": [
+  {
+   "text": "You didn’t answer the call.",
+   "h": 45
+  }
+ ],
+ "case/t04-doctor-missed/w360": [
+  {
+   "text": "You didn’t answer the call.",
+   "h": 45
+  }
+ ],
+ "case/t06-ended-early/w390": [
+  {
+   "text": "Call too short to write a prescription.",
+   "h": 45
+  }
+ ],
+ "case/t06-ended-early/w360": [
+  {
+   "text": "Call too short to write a prescription.",
+   "h": 45
+  }
+ ],
+ "case/t08c-confirm-blocked/w390": [
+  {
+   "text": "Prescribe or disable 4 medicines first.",
+   "h": 45
+  }
+ ],
+ "case/t08c-confirm-blocked/w360": [
+  {
+   "text": "Prescribe or disable 4 medicines first.",
+   "h": 45
+  }
+ ],
+ "case/t16-transfer-missed/w390": [
+  {
+   "text": "You ended the call before the transfer. Next time, stay on the line until the He",
+   "h": 85
+  }
+ ],
+ "case/t16-transfer-missed/w360": [
+  {
+   "text": "You ended the call before the transfer. Next time, stay on the line until the He",
+   "h": 85
+  }
+ ],
+ "case/t16b-transfer-missed-patient/w390": [
+  {
+   "text": "The patient ended the call before the transfer. The Health Advisor will call the",
+   "h": 65
+  }
+ ],
+ "case/t16b-transfer-missed-patient/w360": [
+  {
+   "text": "The patient ended the call before the transfer. The Health Advisor will call the",
+   "h": 65
+  }
+ ],
+ "case/t16c-transfer-missed-unknown/w390": [
+  {
+   "text": "The call ended before the transfer. The Health Advisor will call the patient bac",
+   "h": 65
+  }
+ ],
+ "case/t16c-transfer-missed-unknown/w360": [
+  {
+   "text": "The call ended before the transfer. The Health Advisor will call the patient bac",
+   "h": 65
+  }
+ ],
+ "case/t17-skip-ha-wait/w390": [
+  {
+   "text": "Health Advisor call will be skipped. End the call when you’re done.",
+   "h": 65
+  }
+ ],
+ "case/t17-skip-ha-wait/w360": [
+  {
+   "text": "Health Advisor call will be skipped. End the call when you’re done.",
+   "h": 65
+  }
+ ]
+}
