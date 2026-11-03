@@ -1,0 +1,9393 @@
+[
+ {
+  "kind": "aria-label",
+  "text": "4-digit verification code",
+  "cls": "tm-otp-slots__input",
+  "tag": "input",
+  "states": [
+   "otp/code-expired",
+   "otp/cooldown-reconciling",
+   "otp/couldnt-verify",
+   "otp/default",
+   "otp/empty-tap",
+   "otp/expired-and-resend-limited",
+   "otp/locked",
+   "otp/new-code-sent",
+   "otp/offline",
+   "otp/resend-available",
+   "otp/resend-failed",
+   "otp/resending",
+   "otp/too-many-resends",
+   "otp/too-short",
+   "otp/two-tries-left",
+   "otp/verifying",
+   "otp/wrong-code"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Afternoon",
+  "cls": "ps-grid",
+  "tag": "div",
+  "states": [
+   "case/d-cream",
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-discard-sheet",
+   "case/d-drops",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-notes-keyboard",
+   "case/d-scrolled",
+   "case/d-sos-on",
+   "case/d-syrup"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Afternoon: 1 drop",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/d-drops"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Afternoon: 1 tablet",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-discard-sheet",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-notes-keyboard",
+   "case/d-scrolled",
+   "case/d-sos-on"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Afternoon: 10 ml",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/d-syrup"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Afternoon: 2 drops",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/d-drops"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Afternoon: 2 tablets",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-discard-sheet",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-notes-keyboard",
+   "case/d-scrolled",
+   "case/d-sos-on"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Afternoon: 2.5 ml",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/d-syrup"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Afternoon: 3 drops",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/d-drops"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Afternoon: 5 ml",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/d-syrup"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Afternoon: Apply",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/d-cream"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Afternoon: none",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/d-cream",
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-discard-sheet",
+   "case/d-drops",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-notes-keyboard",
+   "case/d-scrolled",
+   "case/d-sos-on",
+   "case/d-syrup"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Afternoon: ½ tablet",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-discard-sheet",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-notes-keyboard",
+   "case/d-scrolled",
+   "case/d-sos-on"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Back",
+  "cls": "tm-btn tm-btn--quiet tm-btn--icon",
+  "tag": "button",
+  "states": [
+   "case/a-leave-sheet",
+   "case/a-load-failed",
+   "case/a-loading",
+   "case/a-long-content",
+   "case/a-no-medicines",
+   "case/a-notes-typing",
+   "case/a-offline",
+   "case/a-offline-action",
+   "case/a-order-details",
+   "case/a-release-failed",
+   "case/a-releasing",
+   "case/a-rx-viewer",
+   "case/a-scrolled",
+   "case/a-top",
+   "case/d-alt-days",
+   "case/d-cream",
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-discard-sheet",
+   "case/d-drops",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-error-other",
+   "case/d-every-x-hours",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-inhaler",
+   "case/d-injection-default",
+   "case/d-monthly",
+   "case/d-notes-keyboard",
+   "case/d-rx-failed",
+   "case/d-scrolled",
+   "case/d-sos-on",
+   "case/d-sos-only",
+   "case/d-syrup",
+   "case/d-weekly",
+   "case/s-10-medicines",
+   "case/s-medicine-disabled",
+   "case/s-optional-empty",
+   "case/s7e-leave-sheet",
+   "case/t01-ready",
+   "case/t03-not-through",
+   "case/t04-doctor-missed",
+   "home/logout-confirm",
+   "home/profile",
+   "home/profile-case-open"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Close",
+  "cls": "tm-btn tm-btn--quiet tm-btn--icon tm-sheet__close",
+  "tag": "button",
+  "states": [
+   "case/a-leave-sheet",
+   "case/a-releasing",
+   "case/c-callback",
+   "case/c-callback-error",
+   "case/c-callback-failed",
+   "case/c-callback-refused",
+   "case/c-skip-ha",
+   "case/d-disable-sheet",
+   "case/d-discard-sheet",
+   "case/s7d-unavailable-sheet",
+   "case/s7e-leave-sheet",
+   "home/add-failed",
+   "home/add-wheel",
+   "home/adding",
+   "home/end-confirmation",
+   "home/logout-confirm"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Close",
+  "cls": "tm-btn tm-btn--on-dark tm-btn--icon",
+  "tag": "button",
+  "states": [
+   "case/a-rx-viewer",
+   "case/d-rx-failed"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Close",
+  "cls": "tm-btn tm-btn--quiet tm-btn--icon",
+  "tag": "button",
+  "states": [
+   "case/d-alt-days",
+   "case/d-cream",
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-discard-sheet",
+   "case/d-drops",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-error-other",
+   "case/d-every-x-hours",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-inhaler",
+   "case/d-injection-default",
+   "case/d-monthly",
+   "case/d-notes-keyboard",
+   "case/d-scrolled",
+   "case/d-sos-on",
+   "case/d-sos-only",
+   "case/d-syrup",
+   "case/d-weekly"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Duration number",
+  "cls": "ps-grid",
+  "tag": "div",
+  "states": [
+   "case/d-duration-picker"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Duration unit",
+  "cls": "tm-chip-group",
+  "tag": "div",
+  "states": [
+   "case/d-duration-picker"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Edit Amlodipine",
+  "cls": "tm-row medicine-item",
+  "tag": "div",
+  "states": [
+   "case/a-back-blocked",
+   "case/a-confirm-failed",
+   "case/a-leave-sheet",
+   "case/a-long-content",
+   "case/a-notes-typing",
+   "case/a-offline",
+   "case/a-offline-action",
+   "case/a-order-details",
+   "case/a-release-failed",
+   "case/a-releasing",
+   "case/a-rx-viewer",
+   "case/a-scrolled",
+   "case/a-top",
+   "case/c-callback",
+   "case/c-callback-error",
+   "case/c-callback-failed",
+   "case/c-callback-refused",
+   "case/d-alt-days",
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-discard-sheet",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-error-other",
+   "case/d-every-x-hours",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-injection-default",
+   "case/d-monthly",
+   "case/d-notes-keyboard",
+   "case/d-rx-failed",
+   "case/d-scrolled",
+   "case/d-sos-on",
+   "case/d-sos-only",
+   "case/d-syrup",
+   "case/d-weekly",
+   "case/s-10-medicines",
+   "case/s-optional-empty",
+   "case/s7a-calling",
+   "case/s7b-still-on-call",
+   "case/s7c-checking",
+   "case/s7d-result-missing",
+   "case/s7d-unavailable-sheet",
+   "case/s7e-leave-sheet",
+   "case/t01-ready",
+   "case/t02-calling",
+   "case/t03-not-through",
+   "case/t04-doctor-missed",
+   "case/t06-ended-early",
+   "case/t08a-valid-cat4",
+   "case/t08c-confirm-blocked"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Edit Amlodipine",
+  "cls": "tm-row medicine-item tm-row--readonly",
+  "tag": "div",
+  "states": [
+   "case/a-confirm-busy",
+   "case/e-availability-ended",
+   "case/e-callback-scheduled",
+   "case/s7f-submitted",
+   "case/t09-patient-unavailable",
+   "case/t10a-confirmed"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Edit Amlodipine",
+  "cls": "tm-row medicine-item disabled",
+  "tag": "div",
+  "states": [
+   "case/s-medicine-disabled"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Edit Amoxicillin Clavulanate Dispersible",
+  "cls": "tm-row medicine-item",
+  "tag": "div",
+  "states": [
+   "case/a-long-content"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Edit Antacid Suspension",
+  "cls": "tm-row medicine-item",
+  "tag": "div",
+  "states": [
+   "case/a-back-blocked",
+   "case/a-confirm-failed",
+   "case/a-leave-sheet",
+   "case/a-long-content",
+   "case/a-notes-typing",
+   "case/a-offline",
+   "case/a-offline-action",
+   "case/a-order-details",
+   "case/a-release-failed",
+   "case/a-releasing",
+   "case/a-rx-viewer",
+   "case/a-scrolled",
+   "case/a-top",
+   "case/c-callback",
+   "case/c-callback-error",
+   "case/c-callback-failed",
+   "case/c-callback-refused",
+   "case/d-alt-days",
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-discard-sheet",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-error-other",
+   "case/d-every-x-hours",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-injection-default",
+   "case/d-monthly",
+   "case/d-notes-keyboard",
+   "case/d-rx-failed",
+   "case/d-scrolled",
+   "case/d-sos-on",
+   "case/d-sos-only",
+   "case/d-syrup",
+   "case/d-weekly",
+   "case/s-10-medicines",
+   "case/s-medicine-disabled",
+   "case/s-optional-empty",
+   "case/s7a-calling",
+   "case/s7b-still-on-call",
+   "case/s7c-checking",
+   "case/s7d-result-missing",
+   "case/s7d-unavailable-sheet",
+   "case/s7e-leave-sheet",
+   "case/t01-ready",
+   "case/t02-calling",
+   "case/t03-not-through",
+   "case/t04-doctor-missed",
+   "case/t06-ended-early",
+   "case/t08a-valid-cat4",
+   "case/t08c-confirm-blocked"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Edit Antacid Suspension",
+  "cls": "tm-row medicine-item tm-row--readonly",
+  "tag": "div",
+  "states": [
+   "case/a-confirm-busy",
+   "case/e-availability-ended",
+   "case/e-callback-scheduled",
+   "case/s7f-submitted",
+   "case/t09-patient-unavailable",
+   "case/t10a-confirmed"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Edit Aspirin",
+  "cls": "tm-row medicine-item",
+  "tag": "div",
+  "states": [
+   "case/d-cream",
+   "case/t08b-valid-forward"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Edit Aspirin",
+  "cls": "tm-row medicine-item tm-row--readonly",
+  "tag": "div",
+  "states": [
+   "case/t10b-forwarded"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Edit Atorvastatin",
+  "cls": "tm-row medicine-item",
+  "tag": "div",
+  "states": [
+   "case/a-back-blocked",
+   "case/a-confirm-failed",
+   "case/a-leave-sheet",
+   "case/a-long-content",
+   "case/a-notes-typing",
+   "case/a-offline",
+   "case/a-offline-action",
+   "case/a-order-details",
+   "case/a-release-failed",
+   "case/a-releasing",
+   "case/a-rx-viewer",
+   "case/a-scrolled",
+   "case/a-top",
+   "case/c-callback",
+   "case/c-callback-error",
+   "case/c-callback-failed",
+   "case/c-callback-refused",
+   "case/d-alt-days",
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-discard-sheet",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-error-other",
+   "case/d-every-x-hours",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-injection-default",
+   "case/d-monthly",
+   "case/d-notes-keyboard",
+   "case/d-rx-failed",
+   "case/d-scrolled",
+   "case/d-sos-on",
+   "case/d-sos-only",
+   "case/d-syrup",
+   "case/d-weekly",
+   "case/s-10-medicines",
+   "case/s-medicine-disabled",
+   "case/s-optional-empty",
+   "case/s7a-calling",
+   "case/s7b-still-on-call",
+   "case/s7c-checking",
+   "case/s7d-result-missing",
+   "case/s7d-unavailable-sheet",
+   "case/s7e-leave-sheet",
+   "case/t01-ready",
+   "case/t02-calling",
+   "case/t03-not-through",
+   "case/t04-doctor-missed",
+   "case/t06-ended-early",
+   "case/t08a-valid-cat4",
+   "case/t08c-confirm-blocked"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Edit Atorvastatin",
+  "cls": "tm-row medicine-item tm-row--readonly",
+  "tag": "div",
+  "states": [
+   "case/a-confirm-busy",
+   "case/e-availability-ended",
+   "case/e-callback-scheduled",
+   "case/s7f-submitted",
+   "case/t09-patient-unavailable",
+   "case/t10a-confirmed"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Edit Betamethasone Cream",
+  "cls": "tm-row medicine-item",
+  "tag": "div",
+  "states": [
+   "case/d-cream",
+   "case/t08b-valid-forward"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Edit Betamethasone Cream",
+  "cls": "tm-row medicine-item tm-row--readonly",
+  "tag": "div",
+  "states": [
+   "case/t10b-forwarded"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Edit Calcium + Vit D3",
+  "cls": "tm-row medicine-item",
+  "tag": "div",
+  "states": [
+   "case/c-skip-ha",
+   "case/d-drops",
+   "case/g0-calling-pilot",
+   "case/g1-generic-confirm",
+   "case/g2-checking-ha",
+   "case/s7d-result-missing-pilot",
+   "case/t05-result-wait",
+   "case/t11-calling-transfer",
+   "case/t12-transfer-ready",
+   "case/t16-transfer-missed",
+   "case/t16b-transfer-missed-patient",
+   "case/t16c-transfer-missed-unknown",
+   "case/t17-skip-ha-wait"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Edit Calcium + Vit D3",
+  "cls": "tm-row medicine-item tm-row--readonly",
+  "tag": "div",
+  "states": [
+   "case/g3b-after-hangup",
+   "case/g3b-forwarded",
+   "case/t13-connecting-ha",
+   "case/t14-transferred",
+   "case/t15-after-hangup",
+   "case/t15-ha-no-join"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Edit Cetirizine",
+  "cls": "tm-row medicine-item",
+  "tag": "div",
+  "states": [
+   "case/s-10-medicines"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Edit Ferrous Sulphate",
+  "cls": "tm-row medicine-item",
+  "tag": "div",
+  "states": [
+   "case/d-inhaler"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Edit Folic Acid",
+  "cls": "tm-row medicine-item",
+  "tag": "div",
+  "states": [
+   "case/d-inhaler"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Edit Hydrochlorothiazide",
+  "cls": "tm-row medicine-item",
+  "tag": "div",
+  "states": [
+   "case/d-cream",
+   "case/t08b-valid-forward"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Edit Hydrochlorothiazide",
+  "cls": "tm-row medicine-item tm-row--readonly",
+  "tag": "div",
+  "states": [
+   "case/t10b-forwarded"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Edit Ibuprofen",
+  "cls": "tm-row medicine-item",
+  "tag": "div",
+  "states": [
+   "case/s-10-medicines"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Edit Levocetirizine",
+  "cls": "tm-row medicine-item",
+  "tag": "div",
+  "states": [
+   "case/s-10-medicines"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Edit Levothyroxine",
+  "cls": "tm-row medicine-item",
+  "tag": "div",
+  "states": [
+   "case/c-skip-ha",
+   "case/d-drops",
+   "case/g0-calling-pilot",
+   "case/g1-generic-confirm",
+   "case/g2-checking-ha",
+   "case/s7d-result-missing-pilot",
+   "case/t05-result-wait",
+   "case/t11-calling-transfer",
+   "case/t12-transfer-ready",
+   "case/t16-transfer-missed",
+   "case/t16b-transfer-missed-patient",
+   "case/t16c-transfer-missed-unknown",
+   "case/t17-skip-ha-wait"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Edit Levothyroxine",
+  "cls": "tm-row medicine-item tm-row--readonly",
+  "tag": "div",
+  "states": [
+   "case/g3b-after-hangup",
+   "case/g3b-forwarded",
+   "case/t13-connecting-ha",
+   "case/t14-transferred",
+   "case/t15-after-hangup",
+   "case/t15-ha-no-join"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Edit Losartan",
+  "cls": "tm-row medicine-item",
+  "tag": "div",
+  "states": [
+   "case/d-cream",
+   "case/s-10-medicines",
+   "case/t08b-valid-forward"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Edit Losartan",
+  "cls": "tm-row medicine-item tm-row--readonly",
+  "tag": "div",
+  "states": [
+   "case/t10b-forwarded"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Edit Metformin",
+  "cls": "tm-row medicine-item",
+  "tag": "div",
+  "states": [
+   "case/a-back-blocked",
+   "case/a-confirm-failed",
+   "case/a-leave-sheet",
+   "case/a-notes-typing",
+   "case/a-offline",
+   "case/a-offline-action",
+   "case/a-order-details",
+   "case/a-release-failed",
+   "case/a-releasing",
+   "case/a-rx-viewer",
+   "case/a-scrolled",
+   "case/a-top",
+   "case/c-callback",
+   "case/c-callback-error",
+   "case/c-callback-failed",
+   "case/c-callback-refused",
+   "case/d-alt-days",
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-discard-sheet",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-error-other",
+   "case/d-every-x-hours",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-injection-default",
+   "case/d-monthly",
+   "case/d-notes-keyboard",
+   "case/d-rx-failed",
+   "case/d-scrolled",
+   "case/d-sos-on",
+   "case/d-sos-only",
+   "case/d-syrup",
+   "case/d-weekly",
+   "case/s-10-medicines",
+   "case/s-medicine-disabled",
+   "case/s-optional-empty",
+   "case/s7a-calling",
+   "case/s7b-still-on-call",
+   "case/s7c-checking",
+   "case/s7d-result-missing",
+   "case/s7d-unavailable-sheet",
+   "case/s7e-leave-sheet",
+   "case/t01-ready",
+   "case/t02-calling",
+   "case/t03-not-through",
+   "case/t04-doctor-missed",
+   "case/t06-ended-early",
+   "case/t08a-valid-cat4",
+   "case/t08c-confirm-blocked"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Edit Metformin",
+  "cls": "tm-row medicine-item tm-row--readonly",
+  "tag": "div",
+  "states": [
+   "case/a-confirm-busy",
+   "case/e-availability-ended",
+   "case/e-callback-scheduled",
+   "case/s7f-submitted",
+   "case/t09-patient-unavailable",
+   "case/t10a-confirmed"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Edit Montelukast",
+  "cls": "tm-row medicine-item",
+  "tag": "div",
+  "states": [
+   "case/s-10-medicines"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Edit Pantoprazole",
+  "cls": "tm-row medicine-item",
+  "tag": "div",
+  "states": [
+   "case/s-10-medicines"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Edit Salbutamol Inhaler",
+  "cls": "tm-row medicine-item",
+  "tag": "div",
+  "states": [
+   "case/d-inhaler"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Edit Sodium Chloride Eye Drops",
+  "cls": "tm-row medicine-item",
+  "tag": "div",
+  "states": [
+   "case/c-skip-ha",
+   "case/d-drops",
+   "case/g0-calling-pilot",
+   "case/g1-generic-confirm",
+   "case/g2-checking-ha",
+   "case/s7d-result-missing-pilot",
+   "case/t05-result-wait",
+   "case/t11-calling-transfer",
+   "case/t12-transfer-ready",
+   "case/t16-transfer-missed",
+   "case/t16b-transfer-missed-patient",
+   "case/t16c-transfer-missed-unknown",
+   "case/t17-skip-ha-wait"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Edit Sodium Chloride Eye Drops",
+  "cls": "tm-row medicine-item tm-row--readonly",
+  "tag": "div",
+  "states": [
+   "case/g3b-after-hangup",
+   "case/g3b-forwarded",
+   "case/t13-connecting-ha",
+   "case/t14-transferred",
+   "case/t15-after-hangup",
+   "case/t15-ha-no-join"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Edit Telmisartan",
+  "cls": "tm-row medicine-item",
+  "tag": "div",
+  "states": [
+   "case/s-10-medicines"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Edit Vitamin B12",
+  "cls": "tm-row medicine-item",
+  "tag": "div",
+  "states": [
+   "case/a-back-blocked",
+   "case/a-confirm-failed",
+   "case/a-leave-sheet",
+   "case/a-long-content",
+   "case/a-notes-typing",
+   "case/a-offline",
+   "case/a-offline-action",
+   "case/a-order-details",
+   "case/a-release-failed",
+   "case/a-releasing",
+   "case/a-rx-viewer",
+   "case/a-scrolled",
+   "case/a-top",
+   "case/c-callback",
+   "case/c-callback-error",
+   "case/c-callback-failed",
+   "case/c-callback-refused",
+   "case/d-alt-days",
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-discard-sheet",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-error-other",
+   "case/d-every-x-hours",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-injection-default",
+   "case/d-monthly",
+   "case/d-notes-keyboard",
+   "case/d-rx-failed",
+   "case/d-scrolled",
+   "case/d-sos-on",
+   "case/d-sos-only",
+   "case/d-syrup",
+   "case/d-weekly",
+   "case/s-10-medicines",
+   "case/s-medicine-disabled",
+   "case/s-optional-empty",
+   "case/s7a-calling",
+   "case/s7b-still-on-call",
+   "case/s7c-checking",
+   "case/s7d-result-missing",
+   "case/s7d-unavailable-sheet",
+   "case/s7e-leave-sheet",
+   "case/t01-ready",
+   "case/t02-calling",
+   "case/t03-not-through",
+   "case/t04-doctor-missed",
+   "case/t06-ended-early",
+   "case/t08a-valid-cat4",
+   "case/t08c-confirm-blocked"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Edit Vitamin B12",
+  "cls": "tm-row medicine-item tm-row--readonly",
+  "tag": "div",
+  "states": [
+   "case/a-confirm-busy",
+   "case/e-availability-ended",
+   "case/e-callback-scheduled",
+   "case/s7f-submitted",
+   "case/t09-patient-unavailable",
+   "case/t10a-confirmed"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Every 12 hours",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/d-every-x-hours"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Every 4 hours",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/d-every-x-hours"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Every 6 hours",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/d-every-x-hours"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Every 8 hours",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/d-every-x-hours"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Faster sign-in",
+  "cls": "tm-toggle",
+  "tag": "input",
+  "states": [
+   "home/logout-confirm",
+   "home/profile",
+   "home/profile-case-open"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Help",
+  "cls": "tm-btn tm-btn--quiet tm-btn--icon",
+  "tag": "button",
+  "states": [
+   "case/a-back-blocked",
+   "case/a-confirm-busy",
+   "case/a-confirm-failed",
+   "case/a-leave-sheet",
+   "case/a-load-failed",
+   "case/a-loading",
+   "case/a-long-content",
+   "case/a-no-medicines",
+   "case/a-notes-typing",
+   "case/a-offline",
+   "case/a-offline-action",
+   "case/a-order-details",
+   "case/a-release-failed",
+   "case/a-releasing",
+   "case/a-rx-viewer",
+   "case/a-scrolled",
+   "case/a-top",
+   "case/c-callback",
+   "case/c-callback-error",
+   "case/c-callback-failed",
+   "case/c-callback-refused",
+   "case/c-skip-ha",
+   "case/d-alt-days",
+   "case/d-cream",
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-discard-sheet",
+   "case/d-drops",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-error-other",
+   "case/d-every-x-hours",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-inhaler",
+   "case/d-injection-default",
+   "case/d-monthly",
+   "case/d-notes-keyboard",
+   "case/d-rx-failed",
+   "case/d-scrolled",
+   "case/d-sos-on",
+   "case/d-sos-only",
+   "case/d-syrup",
+   "case/d-weekly",
+   "case/e-availability-ended",
+   "case/e-callback-scheduled",
+   "case/g0-calling-pilot",
+   "case/g1-generic-confirm",
+   "case/g2-checking-ha",
+   "case/g3b-after-hangup",
+   "case/g3b-forwarded",
+   "case/s-10-medicines",
+   "case/s-medicine-disabled",
+   "case/s-optional-empty",
+   "case/s7a-calling",
+   "case/s7b-still-on-call",
+   "case/s7c-checking",
+   "case/s7d-result-missing",
+   "case/s7d-result-missing-pilot",
+   "case/s7d-unavailable-sheet",
+   "case/s7e-leave-sheet",
+   "case/s7f-submitted",
+   "case/t01-ready",
+   "case/t02-calling",
+   "case/t03-not-through",
+   "case/t04-doctor-missed",
+   "case/t05-result-wait",
+   "case/t06-ended-early",
+   "case/t08a-valid-cat4",
+   "case/t08b-valid-forward",
+   "case/t08c-confirm-blocked",
+   "case/t09-patient-unavailable",
+   "case/t10a-confirmed",
+   "case/t10b-forwarded",
+   "case/t11-calling-transfer",
+   "case/t12-transfer-ready",
+   "case/t13-connecting-ha",
+   "case/t14-transferred",
+   "case/t15-after-hangup",
+   "case/t15-ha-no-join",
+   "case/t16-transfer-missed",
+   "case/t16b-transfer-missed-patient",
+   "case/t16c-transfer-missed-unknown",
+   "case/t17-skip-ha-wait",
+   "home/active",
+   "home/add-failed",
+   "home/add-wheel",
+   "home/added",
+   "home/adding",
+   "home/end-confirmation",
+   "home/expired-pending",
+   "home/idle-expired",
+   "home/manually-ended",
+   "home/near-expiry",
+   "home/no-cases",
+   "home/offline",
+   "home/request-failed",
+   "home/requesting",
+   "home/setting",
+   "home/setup-failed",
+   "home/setup-wheel",
+   "home/stop-pending",
+   "home/unknown-result"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Hours",
+  "cls": "wheel",
+  "tag": "div",
+  "states": [
+   "home/add-failed",
+   "home/add-wheel",
+   "home/adding",
+   "home/idle-expired",
+   "home/manually-ended",
+   "home/setting",
+   "home/setup-failed",
+   "home/setup-wheel"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Loading case",
+  "cls": "concept-new",
+  "tag": "div",
+  "states": [
+   "case/a-loading"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Minutes",
+  "cls": "wheel",
+  "tag": "div",
+  "states": [
+   "home/add-failed",
+   "home/add-wheel",
+   "home/adding",
+   "home/idle-expired",
+   "home/manually-ended",
+   "home/setting",
+   "home/setup-failed",
+   "home/setup-wheel"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Morning",
+  "cls": "ps-grid",
+  "tag": "div",
+  "states": [
+   "case/d-cream",
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-discard-sheet",
+   "case/d-drops",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-notes-keyboard",
+   "case/d-scrolled",
+   "case/d-sos-on",
+   "case/d-syrup"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Morning: 1 drop",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/d-drops"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Morning: 1 tablet",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-discard-sheet",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-notes-keyboard",
+   "case/d-scrolled",
+   "case/d-sos-on"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Morning: 10 ml",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/d-syrup"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Morning: 2 drops",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/d-drops"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Morning: 2 tablets",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-discard-sheet",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-notes-keyboard",
+   "case/d-scrolled",
+   "case/d-sos-on"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Morning: 2.5 ml",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/d-syrup"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Morning: 3 drops",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/d-drops"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Morning: 5 ml",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/d-syrup"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Morning: Apply",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/d-cream"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Morning: none",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/d-cream",
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-discard-sheet",
+   "case/d-drops",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-notes-keyboard",
+   "case/d-scrolled",
+   "case/d-sos-on",
+   "case/d-syrup"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Morning: ½ tablet",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-discard-sheet",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-notes-keyboard",
+   "case/d-scrolled",
+   "case/d-sos-on"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Night",
+  "cls": "ps-grid",
+  "tag": "div",
+  "states": [
+   "case/d-cream",
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-discard-sheet",
+   "case/d-drops",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-notes-keyboard",
+   "case/d-scrolled",
+   "case/d-sos-on",
+   "case/d-syrup"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Night: 1 drop",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/d-drops"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Night: 1 tablet",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-discard-sheet",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-notes-keyboard",
+   "case/d-scrolled",
+   "case/d-sos-on"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Night: 10 ml",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/d-syrup"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Night: 2 drops",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/d-drops"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Night: 2 tablets",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-discard-sheet",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-notes-keyboard",
+   "case/d-scrolled",
+   "case/d-sos-on"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Night: 2.5 ml",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/d-syrup"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Night: 3 drops",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/d-drops"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Night: 5 ml",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/d-syrup"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Night: Apply",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/d-cream"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Night: none",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/d-cream",
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-discard-sheet",
+   "case/d-drops",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-notes-keyboard",
+   "case/d-scrolled",
+   "case/d-sos-on",
+   "case/d-syrup"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Night: ½ tablet",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-discard-sheet",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-notes-keyboard",
+   "case/d-scrolled",
+   "case/d-sos-on"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Notifications",
+  "cls": "tm-btn tm-btn--quiet tm-btn--icon",
+  "tag": "button",
+  "states": [
+   "home/active",
+   "home/add-failed",
+   "home/add-wheel",
+   "home/added",
+   "home/adding",
+   "home/end-confirmation",
+   "home/expired-pending",
+   "home/idle-expired",
+   "home/manually-ended",
+   "home/near-expiry",
+   "home/no-cases",
+   "home/offline",
+   "home/request-failed",
+   "home/requesting",
+   "home/setting",
+   "home/setup-failed",
+   "home/setup-wheel",
+   "home/stop-pending",
+   "home/unknown-result"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Ongoing, 6 months",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/d-duration-picker"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Profile",
+  "cls": "tm-btn tm-btn--quiet tm-btn--icon",
+  "tag": "button",
+  "states": [
+   "home/active",
+   "home/add-failed",
+   "home/add-wheel",
+   "home/added",
+   "home/adding",
+   "home/end-confirmation",
+   "home/expired-pending",
+   "home/idle-expired",
+   "home/manually-ended",
+   "home/near-expiry",
+   "home/no-cases",
+   "home/offline",
+   "home/request-failed",
+   "home/requesting",
+   "home/setting",
+   "home/setup-failed",
+   "home/setup-wheel",
+   "home/stop-pending",
+   "home/unknown-result"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Returning doctor quick unlock",
+  "cls": "screen",
+  "tag": "main",
+  "states": [
+   "unlock/cancelled",
+   "unlock/face",
+   "unlock/fingerprint",
+   "unlock/pending",
+   "unlock/platform-retry",
+   "unlock/screen-lock",
+   "unlock/unavailable"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Truemeds doctor sign-in screen",
+  "cls": "login-phone tm",
+  "tag": "section",
+  "states": [
+   "sign-in/couldnt-send",
+   "sign-in/default",
+   "sign-in/empty-tap",
+   "sign-in/inactive",
+   "sign-in/keyboard-open",
+   "sign-in/not-registered",
+   "sign-in/offline",
+   "sign-in/pasted-cleaned",
+   "sign-in/sending",
+   "sign-in/too-many-tries",
+   "sign-in/too-short",
+   "sign-in/wrong-first-digit"
+  ]
+ },
+ {
+  "kind": "placeholder",
+  "text": "Clinical observations, instructions, internal notes…",
+  "cls": "",
+  "tag": "textarea",
+  "states": [
+   "case/a-back-blocked",
+   "case/a-confirm-busy",
+   "case/a-confirm-failed",
+   "case/a-leave-sheet",
+   "case/a-long-content",
+   "case/a-no-medicines",
+   "case/a-notes-typing",
+   "case/a-offline",
+   "case/a-offline-action",
+   "case/a-order-details",
+   "case/a-release-failed",
+   "case/a-releasing",
+   "case/a-rx-viewer",
+   "case/a-scrolled",
+   "case/a-top",
+   "case/c-callback",
+   "case/c-callback-error",
+   "case/c-callback-failed",
+   "case/c-callback-refused",
+   "case/c-skip-ha",
+   "case/d-alt-days",
+   "case/d-cream",
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-discard-sheet",
+   "case/d-drops",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-error-other",
+   "case/d-every-x-hours",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-inhaler",
+   "case/d-injection-default",
+   "case/d-monthly",
+   "case/d-notes-keyboard",
+   "case/d-rx-failed",
+   "case/d-scrolled",
+   "case/d-sos-on",
+   "case/d-sos-only",
+   "case/d-syrup",
+   "case/d-weekly",
+   "case/e-availability-ended",
+   "case/e-callback-scheduled",
+   "case/g0-calling-pilot",
+   "case/g1-generic-confirm",
+   "case/g2-checking-ha",
+   "case/g3b-after-hangup",
+   "case/g3b-forwarded",
+   "case/s-10-medicines",
+   "case/s-medicine-disabled",
+   "case/s-optional-empty",
+   "case/s7a-calling",
+   "case/s7b-still-on-call",
+   "case/s7c-checking",
+   "case/s7d-result-missing",
+   "case/s7d-result-missing-pilot",
+   "case/s7d-unavailable-sheet",
+   "case/s7e-leave-sheet",
+   "case/s7f-submitted",
+   "case/t01-ready",
+   "case/t02-calling",
+   "case/t03-not-through",
+   "case/t04-doctor-missed",
+   "case/t05-result-wait",
+   "case/t06-ended-early",
+   "case/t08a-valid-cat4",
+   "case/t08b-valid-forward",
+   "case/t08c-confirm-blocked",
+   "case/t09-patient-unavailable",
+   "case/t10a-confirmed",
+   "case/t10b-forwarded",
+   "case/t11-calling-transfer",
+   "case/t12-transfer-ready",
+   "case/t13-connecting-ha",
+   "case/t14-transferred",
+   "case/t15-after-hangup",
+   "case/t15-ha-no-join",
+   "case/t16-transfer-missed",
+   "case/t16b-transfer-missed-patient",
+   "case/t16c-transfer-missed-unknown",
+   "case/t17-skip-ha-wait"
+  ]
+ },
+ {
+  "kind": "placeholder",
+  "text": "e.g. 7.5",
+  "cls": "",
+  "tag": "input",
+  "states": [
+   "case/d-error-other"
+  ]
+ },
+ {
+  "kind": "placeholder",
+  "text": "e.g. 98765 43210",
+  "cls": "",
+  "tag": "input",
+  "states": [
+   "sign-in/couldnt-send",
+   "sign-in/default",
+   "sign-in/empty-tap",
+   "sign-in/inactive",
+   "sign-in/keyboard-open",
+   "sign-in/not-registered",
+   "sign-in/offline",
+   "sign-in/pasted-cleaned",
+   "sign-in/sending",
+   "sign-in/too-many-tries",
+   "sign-in/too-short",
+   "sign-in/wrong-first-digit"
+  ]
+ },
+ {
+  "kind": "placeholder",
+  "text": "e.g. Stop if rash appears",
+  "cls": "",
+  "tag": "textarea",
+  "states": [
+   "case/d-alt-days",
+   "case/d-cream",
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-discard-sheet",
+   "case/d-drops",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-error-other",
+   "case/d-every-x-hours",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-inhaler",
+   "case/d-injection-default",
+   "case/d-monthly",
+   "case/d-notes-keyboard",
+   "case/d-scrolled",
+   "case/d-sos-on",
+   "case/d-sos-only",
+   "case/d-syrup",
+   "case/d-weekly"
+  ]
+ },
+ {
+  "kind": "placeholder",
+  "text": "e.g., Fever since 2 days, sore throat, mild cough…",
+  "cls": "",
+  "tag": "textarea",
+  "states": [
+   "case/a-back-blocked",
+   "case/a-confirm-busy",
+   "case/a-confirm-failed",
+   "case/a-leave-sheet",
+   "case/a-long-content",
+   "case/a-no-medicines",
+   "case/a-notes-typing",
+   "case/a-offline",
+   "case/a-offline-action",
+   "case/a-order-details",
+   "case/a-release-failed",
+   "case/a-releasing",
+   "case/a-rx-viewer",
+   "case/a-scrolled",
+   "case/a-top",
+   "case/c-callback",
+   "case/c-callback-error",
+   "case/c-callback-failed",
+   "case/c-callback-refused",
+   "case/c-skip-ha",
+   "case/d-alt-days",
+   "case/d-cream",
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-discard-sheet",
+   "case/d-drops",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-error-other",
+   "case/d-every-x-hours",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-inhaler",
+   "case/d-injection-default",
+   "case/d-monthly",
+   "case/d-notes-keyboard",
+   "case/d-rx-failed",
+   "case/d-scrolled",
+   "case/d-sos-on",
+   "case/d-sos-only",
+   "case/d-syrup",
+   "case/d-weekly",
+   "case/e-availability-ended",
+   "case/e-callback-scheduled",
+   "case/g0-calling-pilot",
+   "case/g1-generic-confirm",
+   "case/g2-checking-ha",
+   "case/g3b-after-hangup",
+   "case/g3b-forwarded",
+   "case/s-10-medicines",
+   "case/s-medicine-disabled",
+   "case/s-optional-empty",
+   "case/s7a-calling",
+   "case/s7b-still-on-call",
+   "case/s7c-checking",
+   "case/s7d-result-missing",
+   "case/s7d-result-missing-pilot",
+   "case/s7d-unavailable-sheet",
+   "case/s7e-leave-sheet",
+   "case/s7f-submitted",
+   "case/t01-ready",
+   "case/t02-calling",
+   "case/t03-not-through",
+   "case/t04-doctor-missed",
+   "case/t05-result-wait",
+   "case/t06-ended-early",
+   "case/t08a-valid-cat4",
+   "case/t08b-valid-forward",
+   "case/t08c-confirm-blocked",
+   "case/t09-patient-unavailable",
+   "case/t10a-confirmed",
+   "case/t10b-forwarded",
+   "case/t11-calling-transfer",
+   "case/t12-transfer-ready",
+   "case/t13-connecting-ha",
+   "case/t14-transferred",
+   "case/t15-after-hangup",
+   "case/t15-ha-no-join",
+   "case/t16-transfer-missed",
+   "case/t16b-transfer-missed-patient",
+   "case/t16c-transfer-missed-unknown",
+   "case/t17-skip-ha-wait"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "(ml)",
+  "cls": "tm-muted",
+  "tag": "span",
+  "states": [
+   "case/d-syrup"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "(optional)",
+  "cls": "tm-muted",
+  "tag": "span",
+  "states": [
+   "case/d-alt-days",
+   "case/d-cream",
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-discard-sheet",
+   "case/d-drops",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-error-other",
+   "case/d-every-x-hours",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-inhaler",
+   "case/d-injection-default",
+   "case/d-monthly",
+   "case/d-notes-keyboard",
+   "case/d-scrolled",
+   "case/d-sos-on",
+   "case/d-sos-only",
+   "case/d-syrup",
+   "case/d-weekly"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "(puffs)",
+  "cls": "tm-muted",
+  "tag": "span",
+  "states": [
+   "case/d-inhaler"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "+ Add time",
+  "cls": "tm-btn tm-btn--secondary add-link",
+  "tag": "button",
+  "states": [
+   "home/near-expiry"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "+91",
+  "cls": "login-prefix",
+  "tag": "span",
+  "states": [
+   "sign-in/couldnt-send",
+   "sign-in/default",
+   "sign-in/empty-tap",
+   "sign-in/inactive",
+   "sign-in/keyboard-open",
+   "sign-in/not-registered",
+   "sign-in/offline",
+   "sign-in/pasted-cleaned",
+   "sign-in/sending",
+   "sign-in/too-many-tries",
+   "sign-in/too-short",
+   "sign-in/wrong-first-digit"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "+91 98765 43210",
+  "cls": "",
+  "tag": "b",
+  "states": [
+   "otp/code-expired",
+   "otp/cooldown-reconciling",
+   "otp/couldnt-verify",
+   "otp/default",
+   "otp/empty-tap",
+   "otp/expired-and-resend-limited",
+   "otp/locked",
+   "otp/new-code-sent",
+   "otp/offline",
+   "otp/resend-available",
+   "otp/resend-failed",
+   "otp/resending",
+   "otp/too-many-resends",
+   "otp/too-short",
+   "otp/two-tries-left",
+   "otp/verifying",
+   "otp/wrong-code"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": ".",
+  "cls": "consent tm-text-body-sm show",
+  "tag": "p",
+  "states": [
+   "otp/cooldown-reconciling",
+   "otp/couldnt-verify",
+   "otp/default",
+   "otp/empty-tap",
+   "otp/new-code-sent",
+   "otp/offline",
+   "otp/resend-available",
+   "otp/resend-failed",
+   "otp/resending",
+   "otp/too-many-resends",
+   "otp/too-short",
+   "otp/two-tries-left",
+   "otp/verifying",
+   "otp/wrong-code"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": ".",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "case/d-error-other"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "0",
+  "cls": "login-key",
+  "tag": "span",
+  "states": [
+   "sign-in/empty-tap",
+   "sign-in/keyboard-open",
+   "sign-in/pasted-cleaned",
+   "sign-in/sending",
+   "sign-in/too-short",
+   "sign-in/wrong-first-digit"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "0",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "case/d-error-other",
+   "home/setting",
+   "home/setup-failed",
+   "home/setup-wheel",
+   "otp/code-expired",
+   "otp/cooldown-reconciling",
+   "otp/couldnt-verify",
+   "otp/default",
+   "otp/empty-tap",
+   "otp/new-code-sent",
+   "otp/offline",
+   "otp/resend-available",
+   "otp/resend-failed",
+   "otp/resending",
+   "otp/too-many-resends",
+   "otp/too-short",
+   "otp/two-tries-left",
+   "otp/verifying",
+   "otp/wrong-code"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "0",
+  "cls": "wheel-item is-selected",
+  "tag": "button",
+  "states": [
+   "home/add-failed",
+   "home/add-wheel",
+   "home/adding",
+   "home/idle-expired",
+   "home/manually-ended",
+   "home/setting",
+   "home/setup-failed",
+   "home/setup-wheel"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "0",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-discard-sheet",
+   "case/d-drops",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-notes-keyboard",
+   "case/d-scrolled",
+   "case/d-sos-on",
+   "case/d-syrup"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "0-0-0 · 6 months",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "case/d-error-dose"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "0-1-1 drops · 7 days",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "case/d-drops"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "0-10-10 ml · 7 days",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "case/d-syrup"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "0:00",
+  "cls": "tm-value-display time",
+  "tag": "p",
+  "states": [
+   "home/expired-pending"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "0:30",
+  "cls": "timer",
+  "tag": "span",
+  "states": [
+   "otp/couldnt-verify",
+   "otp/default",
+   "otp/empty-tap",
+   "otp/too-short",
+   "otp/two-tries-left",
+   "otp/verifying",
+   "otp/wrong-code"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "1",
+  "cls": "login-key",
+  "tag": "span",
+  "states": [
+   "sign-in/empty-tap",
+   "sign-in/keyboard-open",
+   "sign-in/pasted-cleaned",
+   "sign-in/sending",
+   "sign-in/too-short",
+   "sign-in/wrong-first-digit"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "1",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "case/d-error-other",
+   "otp/code-expired",
+   "otp/cooldown-reconciling",
+   "otp/couldnt-verify",
+   "otp/default",
+   "otp/empty-tap",
+   "otp/new-code-sent",
+   "otp/offline",
+   "otp/resend-available",
+   "otp/resend-failed",
+   "otp/resending",
+   "otp/too-many-resends",
+   "otp/too-short",
+   "otp/two-tries-left",
+   "otp/verifying",
+   "otp/wrong-code"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "1",
+  "cls": "wheel-item",
+  "tag": "button",
+  "states": [
+   "home/add-failed",
+   "home/add-wheel",
+   "home/adding",
+   "home/idle-expired",
+   "home/manually-ended",
+   "home/setting",
+   "home/setup-failed",
+   "home/setup-wheel"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "1",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/d-alt-days",
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-discard-sheet",
+   "case/d-drops",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-error-other",
+   "case/d-every-x-hours",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-inhaler",
+   "case/d-injection-default",
+   "case/d-monthly",
+   "case/d-notes-keyboard",
+   "case/d-scrolled",
+   "case/d-sos-on",
+   "case/d-sos-only",
+   "case/d-weekly"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "1 dose once a month · 3 months",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "case/d-injection-default"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "1 hour",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "home/add-failed",
+   "home/add-wheel",
+   "home/adding",
+   "home/idle-expired",
+   "home/manually-ended",
+   "home/setting",
+   "home/setup-failed",
+   "home/setup-wheel"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "1 tablet as needed (max 1 tablet/day) · 6 months",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "case/d-sos-only"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "1 tablet every 6 hours · 6 months",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "case/d-every-x-hours"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "1 tablet on alternate days · 6 months",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "case/d-alt-days"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "1 tablet once a month · 6 months",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "case/d-monthly"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "1-0-1 + SOS 1 tablet (max 1 tablet/day) · 6 months",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "case/d-sos-on"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "1-0-1 · 6 months",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-duration-picker",
+   "case/d-header-white",
+   "case/d-notes-keyboard",
+   "case/d-scrolled"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "1-0-1 · 6 months · Before food",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "case/d-food-selected"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "1-0-1 · 6 months · Take after dinner",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "case/d-discard-sheet"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "10",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/d-duration-picker",
+   "case/d-syrup"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "100%",
+  "cls": "",
+  "tag": "span",
+  "states": [
+   "case/a-rx-viewer"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "10:00 AM",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/c-callback",
+   "case/c-callback-error",
+   "case/c-callback-failed",
+   "case/c-callback-refused"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "10:30 AM",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/c-callback",
+   "case/c-callback-error",
+   "case/c-callback-failed",
+   "case/c-callback-refused"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "11:00 AM",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/c-callback",
+   "case/c-callback-error",
+   "case/c-callback-failed",
+   "case/c-callback-refused"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "11:30 AM",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/c-callback",
+   "case/c-callback-error",
+   "case/c-callback-failed",
+   "case/c-callback-refused"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "12 h",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/d-every-x-hours"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "12 medicines",
+  "cls": "",
+  "tag": "span",
+  "states": [
+   "case/s-10-medicines"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "123",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "case/a-notes-typing",
+   "case/d-notes-keyboard"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "12:00 PM",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/c-callback",
+   "case/c-callback-error",
+   "case/c-callback-failed",
+   "case/c-callback-refused"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "14",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/d-duration-picker"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "14 Oct 2026",
+  "cls": "pdb-expand-value",
+  "tag": "span",
+  "states": [
+   "case/a-order-details"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "15",
+  "cls": "wheel-item",
+  "tag": "button",
+  "states": [
+   "home/add-failed",
+   "home/add-wheel",
+   "home/adding",
+   "home/idle-expired",
+   "home/manually-ended",
+   "home/setting",
+   "home/setup-failed",
+   "home/setup-wheel"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "15",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/d-duration-picker"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "15 min",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "home/add-failed",
+   "home/add-wheel",
+   "home/adding",
+   "home/idle-expired",
+   "home/manually-ended",
+   "home/setting",
+   "home/setup-failed",
+   "home/setup-wheel"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "17 Oct 2026",
+  "cls": "pdb-expand-value",
+  "tag": "span",
+  "states": [
+   "case/a-order-details"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "1:00",
+  "cls": "timer",
+  "tag": "span",
+  "states": [
+   "otp/new-code-sent"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "2",
+  "cls": "login-key",
+  "tag": "span",
+  "states": [
+   "sign-in/empty-tap",
+   "sign-in/keyboard-open",
+   "sign-in/pasted-cleaned",
+   "sign-in/sending",
+   "sign-in/too-short",
+   "sign-in/wrong-first-digit"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "2",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "case/d-error-other",
+   "otp/code-expired",
+   "otp/cooldown-reconciling",
+   "otp/couldnt-verify",
+   "otp/default",
+   "otp/empty-tap",
+   "otp/new-code-sent",
+   "otp/offline",
+   "otp/resend-available",
+   "otp/resend-failed",
+   "otp/resending",
+   "otp/too-many-resends",
+   "otp/too-short",
+   "otp/two-tries-left",
+   "otp/verifying",
+   "otp/wrong-code"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "2",
+  "cls": "tm-otp-slots__slot",
+  "tag": "span",
+  "states": [
+   "otp/code-expired",
+   "otp/couldnt-verify",
+   "otp/offline",
+   "otp/resend-failed",
+   "otp/resending",
+   "otp/two-tries-left",
+   "otp/verifying",
+   "otp/wrong-code"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "2",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/d-alt-days",
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-discard-sheet",
+   "case/d-drops",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-error-other",
+   "case/d-every-x-hours",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-inhaler",
+   "case/d-injection-default",
+   "case/d-monthly",
+   "case/d-notes-keyboard",
+   "case/d-scrolled",
+   "case/d-sos-on",
+   "case/d-sos-only",
+   "case/d-weekly"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "2 capsules once a week · 6 months",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "case/d-weekly"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "2 hours",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "home/add-failed",
+   "home/add-wheel",
+   "home/adding",
+   "home/idle-expired",
+   "home/manually-ended",
+   "home/setting",
+   "home/setup-failed",
+   "home/setup-wheel"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "2 puffs as needed (max 8 puffs/day) · 6 months",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "case/d-inhaler"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "2.5",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/d-syrup"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "29 · Female",
+  "cls": "tm-header-task__meta",
+  "tag": "p",
+  "states": [
+   "case/d-inhaler"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "2:00 PM",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/c-callback",
+   "case/c-callback-error",
+   "case/c-callback-failed",
+   "case/c-callback-refused"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "3",
+  "cls": "login-key",
+  "tag": "span",
+  "states": [
+   "sign-in/empty-tap",
+   "sign-in/keyboard-open",
+   "sign-in/pasted-cleaned",
+   "sign-in/sending",
+   "sign-in/too-short",
+   "sign-in/wrong-first-digit"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "3",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "case/d-error-other",
+   "home/active",
+   "home/add-failed",
+   "home/add-wheel",
+   "home/added",
+   "home/adding",
+   "home/end-confirmation",
+   "home/expired-pending",
+   "home/idle-expired",
+   "home/manually-ended",
+   "home/near-expiry",
+   "home/no-cases",
+   "home/offline",
+   "home/request-failed",
+   "home/requesting",
+   "home/stop-pending",
+   "home/unknown-result",
+   "otp/code-expired",
+   "otp/cooldown-reconciling",
+   "otp/couldnt-verify",
+   "otp/default",
+   "otp/empty-tap",
+   "otp/new-code-sent",
+   "otp/offline",
+   "otp/resend-available",
+   "otp/resend-failed",
+   "otp/resending",
+   "otp/too-many-resends",
+   "otp/too-short",
+   "otp/two-tries-left",
+   "otp/verifying",
+   "otp/wrong-code"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "3",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/d-drops",
+   "case/d-duration-picker",
+   "case/d-error-other",
+   "case/d-inhaler",
+   "case/d-injection-default",
+   "case/d-sos-on",
+   "case/d-sos-only"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "3 hours",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "home/add-failed",
+   "home/add-wheel",
+   "home/adding",
+   "home/idle-expired",
+   "home/manually-ended",
+   "home/setting",
+   "home/setup-failed",
+   "home/setup-wheel"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "3 medicines",
+  "cls": "",
+  "tag": "span",
+  "states": [
+   "case/c-skip-ha",
+   "case/d-drops",
+   "case/d-inhaler",
+   "case/g0-calling-pilot",
+   "case/g1-generic-confirm",
+   "case/g2-checking-ha",
+   "case/g3b-after-hangup",
+   "case/g3b-forwarded",
+   "case/s7d-result-missing-pilot",
+   "case/t05-result-wait",
+   "case/t11-calling-transfer",
+   "case/t12-transfer-ready",
+   "case/t13-connecting-ha",
+   "case/t14-transferred",
+   "case/t15-after-hangup",
+   "case/t15-ha-no-join",
+   "case/t16-transfer-missed",
+   "case/t16b-transfer-missed-patient",
+   "case/t16c-transfer-missed-unknown",
+   "case/t17-skip-ha-wait"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "3 months",
+  "cls": "ps-dur-val",
+  "tag": "span",
+  "states": [
+   "case/d-error-other",
+   "case/d-injection-default"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "30",
+  "cls": "wheel-item is-selected",
+  "tag": "button",
+  "states": [
+   "home/add-failed",
+   "home/add-wheel",
+   "home/adding",
+   "home/idle-expired",
+   "home/manually-ended",
+   "home/setting",
+   "home/setup-failed",
+   "home/setup-wheel"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "30 min",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "home/add-failed",
+   "home/add-wheel",
+   "home/adding",
+   "home/idle-expired",
+   "home/manually-ended",
+   "home/setting",
+   "home/setup-failed",
+   "home/setup-wheel"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "30:00",
+  "cls": "tm-value-display time",
+  "tag": "p",
+  "states": [
+   "home/active",
+   "home/add-failed",
+   "home/add-wheel",
+   "home/adding",
+   "home/end-confirmation",
+   "home/no-cases",
+   "home/offline",
+   "home/request-failed",
+   "home/requesting",
+   "home/unknown-result"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "35:00",
+  "cls": "tm-value-display time",
+  "tag": "p",
+  "states": [
+   "home/added"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "38 · Female",
+  "cls": "tm-header-task__meta",
+  "tag": "p",
+  "states": [
+   "case/c-skip-ha",
+   "case/d-drops",
+   "case/g0-calling-pilot",
+   "case/g1-generic-confirm",
+   "case/g2-checking-ha",
+   "case/g3b-after-hangup",
+   "case/g3b-forwarded",
+   "case/s7d-result-missing-pilot",
+   "case/t05-result-wait",
+   "case/t11-calling-transfer",
+   "case/t12-transfer-ready",
+   "case/t13-connecting-ha",
+   "case/t14-transferred",
+   "case/t15-after-hangup",
+   "case/t15-ha-no-join",
+   "case/t16-transfer-missed",
+   "case/t16b-transfer-missed-patient",
+   "case/t16c-transfer-missed-unknown",
+   "case/t17-skip-ha-wait"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "3:00 PM",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/c-callback",
+   "case/c-callback-error",
+   "case/c-callback-failed",
+   "case/c-callback-refused"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "4",
+  "cls": "login-key",
+  "tag": "span",
+  "states": [
+   "sign-in/empty-tap",
+   "sign-in/keyboard-open",
+   "sign-in/pasted-cleaned",
+   "sign-in/sending",
+   "sign-in/too-short",
+   "sign-in/wrong-first-digit"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "4",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "case/d-error-other",
+   "otp/code-expired",
+   "otp/cooldown-reconciling",
+   "otp/couldnt-verify",
+   "otp/default",
+   "otp/empty-tap",
+   "otp/new-code-sent",
+   "otp/offline",
+   "otp/resend-available",
+   "otp/resend-failed",
+   "otp/resending",
+   "otp/too-many-resends",
+   "otp/too-short",
+   "otp/two-tries-left",
+   "otp/verifying",
+   "otp/wrong-code"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "4",
+  "cls": "tm-otp-slots__slot",
+  "tag": "span",
+  "states": [
+   "otp/code-expired",
+   "otp/couldnt-verify",
+   "otp/offline",
+   "otp/resend-failed",
+   "otp/resending",
+   "otp/too-short",
+   "otp/two-tries-left",
+   "otp/verifying",
+   "otp/wrong-code"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "4",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/d-duration-picker",
+   "case/d-inhaler",
+   "case/d-sos-on",
+   "case/d-sos-only"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "4 h",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/d-every-x-hours"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "4 medicines",
+  "cls": "",
+  "tag": "span",
+  "states": [
+   "case/d-cream",
+   "case/t08b-valid-forward",
+   "case/t10b-forwarded"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "4 times a day, round the clock",
+  "cls": "ps-helper",
+  "tag": "div",
+  "states": [
+   "case/d-every-x-hours"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "45",
+  "cls": "wheel-item",
+  "tag": "button",
+  "states": [
+   "home/add-failed",
+   "home/add-wheel",
+   "home/adding",
+   "home/idle-expired",
+   "home/manually-ended",
+   "home/setting",
+   "home/setup-failed",
+   "home/setup-wheel"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "45 min",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "home/add-failed",
+   "home/add-wheel",
+   "home/adding",
+   "home/idle-expired",
+   "home/manually-ended",
+   "home/setting",
+   "home/setup-failed",
+   "home/setup-wheel"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "4:00 PM",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/c-callback",
+   "case/c-callback-error",
+   "case/c-callback-failed",
+   "case/c-callback-refused"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "5",
+  "cls": "login-key",
+  "tag": "span",
+  "states": [
+   "sign-in/empty-tap",
+   "sign-in/keyboard-open",
+   "sign-in/pasted-cleaned",
+   "sign-in/sending",
+   "sign-in/too-short",
+   "sign-in/wrong-first-digit"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "5",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "case/d-error-other",
+   "otp/code-expired",
+   "otp/cooldown-reconciling",
+   "otp/couldnt-verify",
+   "otp/default",
+   "otp/empty-tap",
+   "otp/new-code-sent",
+   "otp/offline",
+   "otp/resend-available",
+   "otp/resend-failed",
+   "otp/resending",
+   "otp/too-many-resends",
+   "otp/too-short",
+   "otp/two-tries-left",
+   "otp/verifying",
+   "otp/wrong-code"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "5",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/d-duration-picker",
+   "case/d-syrup"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "5 medicines",
+  "cls": "",
+  "tag": "span",
+  "states": [
+   "case/a-back-blocked",
+   "case/a-confirm-busy",
+   "case/a-confirm-failed",
+   "case/a-leave-sheet",
+   "case/a-long-content",
+   "case/a-notes-typing",
+   "case/a-offline",
+   "case/a-offline-action",
+   "case/a-order-details",
+   "case/a-release-failed",
+   "case/a-releasing",
+   "case/a-rx-viewer",
+   "case/a-scrolled",
+   "case/a-top",
+   "case/c-callback",
+   "case/c-callback-error",
+   "case/c-callback-failed",
+   "case/c-callback-refused",
+   "case/d-alt-days",
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-discard-sheet",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-error-other",
+   "case/d-every-x-hours",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-injection-default",
+   "case/d-monthly",
+   "case/d-notes-keyboard",
+   "case/d-rx-failed",
+   "case/d-scrolled",
+   "case/d-sos-on",
+   "case/d-sos-only",
+   "case/d-syrup",
+   "case/d-weekly",
+   "case/e-availability-ended",
+   "case/e-callback-scheduled",
+   "case/s-medicine-disabled",
+   "case/s-optional-empty",
+   "case/s7a-calling",
+   "case/s7b-still-on-call",
+   "case/s7c-checking",
+   "case/s7d-result-missing",
+   "case/s7d-unavailable-sheet",
+   "case/s7e-leave-sheet",
+   "case/s7f-submitted",
+   "case/t01-ready",
+   "case/t02-calling",
+   "case/t03-not-through",
+   "case/t04-doctor-missed",
+   "case/t06-ended-early",
+   "case/t08a-valid-cat4",
+   "case/t08c-confirm-blocked",
+   "case/t09-patient-unavailable",
+   "case/t10a-confirmed"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "54 · Male",
+  "cls": "tm-header-task__meta",
+  "tag": "p",
+  "states": [
+   "case/a-back-blocked",
+   "case/a-confirm-busy",
+   "case/a-confirm-failed",
+   "case/a-leave-sheet",
+   "case/a-load-failed",
+   "case/a-long-content",
+   "case/a-no-medicines",
+   "case/a-notes-typing",
+   "case/a-offline",
+   "case/a-offline-action",
+   "case/a-order-details",
+   "case/a-release-failed",
+   "case/a-releasing",
+   "case/a-rx-viewer",
+   "case/a-scrolled",
+   "case/a-top",
+   "case/c-callback",
+   "case/c-callback-error",
+   "case/c-callback-failed",
+   "case/c-callback-refused",
+   "case/d-alt-days",
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-discard-sheet",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-error-other",
+   "case/d-every-x-hours",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-injection-default",
+   "case/d-monthly",
+   "case/d-notes-keyboard",
+   "case/d-rx-failed",
+   "case/d-scrolled",
+   "case/d-sos-on",
+   "case/d-sos-only",
+   "case/d-syrup",
+   "case/d-weekly",
+   "case/e-availability-ended",
+   "case/e-callback-scheduled",
+   "case/s-10-medicines",
+   "case/s-medicine-disabled",
+   "case/s-optional-empty",
+   "case/s7a-calling",
+   "case/s7b-still-on-call",
+   "case/s7c-checking",
+   "case/s7d-result-missing",
+   "case/s7d-unavailable-sheet",
+   "case/s7e-leave-sheet",
+   "case/s7f-submitted",
+   "case/t01-ready",
+   "case/t02-calling",
+   "case/t03-not-through",
+   "case/t04-doctor-missed",
+   "case/t06-ended-early",
+   "case/t08a-valid-cat4",
+   "case/t08c-confirm-blocked",
+   "case/t09-patient-unavailable",
+   "case/t10a-confirmed"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "5:00",
+  "cls": "tm-value-display time time--warning",
+  "tag": "p",
+  "states": [
+   "home/near-expiry"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "5:00 PM",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/c-callback",
+   "case/c-callback-error",
+   "case/c-callback-failed",
+   "case/c-callback-refused"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "6",
+  "cls": "login-key",
+  "tag": "span",
+  "states": [
+   "sign-in/empty-tap",
+   "sign-in/keyboard-open",
+   "sign-in/pasted-cleaned",
+   "sign-in/sending",
+   "sign-in/too-short",
+   "sign-in/wrong-first-digit"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "6",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "case/d-error-other",
+   "otp/code-expired",
+   "otp/cooldown-reconciling",
+   "otp/couldnt-verify",
+   "otp/default",
+   "otp/empty-tap",
+   "otp/new-code-sent",
+   "otp/offline",
+   "otp/resend-available",
+   "otp/resend-failed",
+   "otp/resending",
+   "otp/too-many-resends",
+   "otp/too-short",
+   "otp/two-tries-left",
+   "otp/verifying",
+   "otp/wrong-code"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "6",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/d-duration-picker"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "6 h",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/d-every-x-hours"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "62 · Male",
+  "cls": "tm-header-task__meta",
+  "tag": "p",
+  "states": [
+   "case/d-cream",
+   "case/t08b-valid-forward",
+   "case/t10b-forwarded"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "6:00 PM",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/c-callback",
+   "case/c-callback-error",
+   "case/c-callback-failed",
+   "case/c-callback-refused"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "7",
+  "cls": "login-key",
+  "tag": "span",
+  "states": [
+   "sign-in/empty-tap",
+   "sign-in/keyboard-open",
+   "sign-in/pasted-cleaned",
+   "sign-in/sending",
+   "sign-in/too-short",
+   "sign-in/wrong-first-digit"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "7",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "case/d-error-other",
+   "otp/code-expired",
+   "otp/cooldown-reconciling",
+   "otp/couldnt-verify",
+   "otp/default",
+   "otp/empty-tap",
+   "otp/new-code-sent",
+   "otp/offline",
+   "otp/resend-available",
+   "otp/resend-failed",
+   "otp/resending",
+   "otp/too-many-resends",
+   "otp/too-short",
+   "otp/two-tries-left",
+   "otp/verifying",
+   "otp/wrong-code"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "7",
+  "cls": "tm-otp-slots__slot is-current",
+  "tag": "span",
+  "states": [
+   "otp/couldnt-verify",
+   "otp/offline",
+   "otp/resend-failed",
+   "otp/resending",
+   "otp/verifying"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "7",
+  "cls": "tm-otp-slots__slot",
+  "tag": "span",
+  "states": [
+   "otp/code-expired",
+   "otp/two-tries-left",
+   "otp/wrong-code"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "7",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/d-duration-picker"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "7 days",
+  "cls": "ps-dur-val",
+  "tag": "span",
+  "states": [
+   "case/d-cream",
+   "case/d-drops",
+   "case/d-syrup"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "8",
+  "cls": "login-key",
+  "tag": "span",
+  "states": [
+   "sign-in/empty-tap",
+   "sign-in/keyboard-open",
+   "sign-in/pasted-cleaned",
+   "sign-in/sending",
+   "sign-in/too-short",
+   "sign-in/wrong-first-digit"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "8",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "case/d-error-other",
+   "otp/code-expired",
+   "otp/cooldown-reconciling",
+   "otp/couldnt-verify",
+   "otp/default",
+   "otp/empty-tap",
+   "otp/new-code-sent",
+   "otp/offline",
+   "otp/resend-available",
+   "otp/resend-failed",
+   "otp/resending",
+   "otp/too-many-resends",
+   "otp/too-short",
+   "otp/two-tries-left",
+   "otp/verifying",
+   "otp/wrong-code"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "8",
+  "cls": "tm-otp-slots__slot",
+  "tag": "span",
+  "states": [
+   "otp/code-expired",
+   "otp/couldnt-verify",
+   "otp/offline",
+   "otp/resend-failed",
+   "otp/resending",
+   "otp/too-short",
+   "otp/two-tries-left",
+   "otp/verifying",
+   "otp/wrong-code"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "8 h",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/d-every-x-hours"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "9",
+  "cls": "login-key",
+  "tag": "span",
+  "states": [
+   "sign-in/empty-tap",
+   "sign-in/keyboard-open",
+   "sign-in/pasted-cleaned",
+   "sign-in/sending",
+   "sign-in/too-short",
+   "sign-in/wrong-first-digit"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "9",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "case/d-error-other",
+   "otp/code-expired",
+   "otp/cooldown-reconciling",
+   "otp/couldnt-verify",
+   "otp/default",
+   "otp/empty-tap",
+   "otp/new-code-sent",
+   "otp/offline",
+   "otp/resend-available",
+   "otp/resend-failed",
+   "otp/resending",
+   "otp/too-many-resends",
+   "otp/too-short",
+   "otp/two-tries-left",
+   "otp/verifying",
+   "otp/wrong-code"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "9:00 AM",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/c-callback",
+   "case/c-callback-error",
+   "case/c-callback-failed",
+   "case/c-callback-refused"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "9:30 AM",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/c-callback",
+   "case/c-callback-error",
+   "case/c-callback-failed",
+   "case/c-callback-refused"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "A",
+  "cls": "ps-slot-key",
+  "tag": "span",
+  "states": [
+   "case/d-cream",
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-discard-sheet",
+   "case/d-drops",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-notes-keyboard",
+   "case/d-scrolled",
+   "case/d-sos-on",
+   "case/d-syrup"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "AS",
+  "cls": "profile-avatar",
+  "tag": "div",
+  "states": [
+   "home/logout-confirm",
+   "home/profile",
+   "home/profile-case-open"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Add 30 minutes",
+  "cls": "tm-btn tm-btn--primary tm-btn--lg tm-btn--block",
+  "tag": "button",
+  "states": [
+   "home/add-failed",
+   "home/add-wheel"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Add availability",
+  "cls": "tm-sheet__title",
+  "tag": "h2",
+  "states": [
+   "home/add-failed",
+   "home/add-wheel",
+   "home/adding"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Adding…",
+  "cls": "tm-btn tm-btn--primary tm-btn--lg tm-btn--block tm-btn--busy",
+  "tag": "button",
+  "states": [
+   "home/adding"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Additional instructions",
+  "cls": "tm-field__label",
+  "tag": "label",
+  "states": [
+   "case/d-alt-days",
+   "case/d-cream",
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-discard-sheet",
+   "case/d-drops",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-error-other",
+   "case/d-every-x-hours",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-inhaler",
+   "case/d-injection-default",
+   "case/d-monthly",
+   "case/d-notes-keyboard",
+   "case/d-scrolled",
+   "case/d-sos-on",
+   "case/d-sos-only",
+   "case/d-syrup",
+   "case/d-weekly"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Adjust duration",
+  "cls": "adjust",
+  "tag": "p",
+  "states": [
+   "home/add-failed",
+   "home/add-wheel",
+   "home/adding",
+   "home/idle-expired",
+   "home/manually-ended",
+   "home/setting",
+   "home/setup-failed",
+   "home/setup-wheel"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "After food",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/d-alt-days",
+   "case/d-cream",
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-discard-sheet",
+   "case/d-drops",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-error-other",
+   "case/d-every-x-hours",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-inhaler",
+   "case/d-injection-default",
+   "case/d-monthly",
+   "case/d-notes-keyboard",
+   "case/d-scrolled",
+   "case/d-sos-on",
+   "case/d-sos-only",
+   "case/d-syrup",
+   "case/d-weekly"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Allergy or known reaction",
+  "cls": "tm-option__desc",
+  "tag": "span",
+  "states": [
+   "case/d-disable-sheet"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Already on equivalent drug",
+  "cls": "tm-option__desc",
+  "tag": "span",
+  "states": [
+   "case/d-disable-sheet"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Also as needed (SOS)",
+  "cls": "tm-check",
+  "tag": "label",
+  "states": [
+   "case/d-alt-days",
+   "case/d-cream",
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-discard-sheet",
+   "case/d-drops",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-error-other",
+   "case/d-every-x-hours",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-injection-default",
+   "case/d-monthly",
+   "case/d-notes-keyboard",
+   "case/d-scrolled",
+   "case/d-sos-on",
+   "case/d-syrup",
+   "case/d-weekly"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Alt days",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/d-alt-days",
+   "case/d-cream",
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-discard-sheet",
+   "case/d-drops",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-error-other",
+   "case/d-every-x-hours",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-inhaler",
+   "case/d-injection-default",
+   "case/d-monthly",
+   "case/d-notes-keyboard",
+   "case/d-scrolled",
+   "case/d-sos-on",
+   "case/d-sos-only",
+   "case/d-syrup",
+   "case/d-weekly"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Amlodipine 5mg",
+  "cls": "tm-row__title med-name",
+  "tag": "div",
+  "states": [
+   "case/a-back-blocked",
+   "case/a-confirm-busy",
+   "case/a-confirm-failed",
+   "case/a-leave-sheet",
+   "case/a-long-content",
+   "case/a-notes-typing",
+   "case/a-offline",
+   "case/a-offline-action",
+   "case/a-order-details",
+   "case/a-release-failed",
+   "case/a-releasing",
+   "case/a-rx-viewer",
+   "case/a-scrolled",
+   "case/a-top",
+   "case/c-callback",
+   "case/c-callback-error",
+   "case/c-callback-failed",
+   "case/c-callback-refused",
+   "case/d-alt-days",
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-discard-sheet",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-error-other",
+   "case/d-every-x-hours",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-injection-default",
+   "case/d-monthly",
+   "case/d-notes-keyboard",
+   "case/d-rx-failed",
+   "case/d-scrolled",
+   "case/d-sos-on",
+   "case/d-sos-only",
+   "case/d-syrup",
+   "case/d-weekly",
+   "case/e-availability-ended",
+   "case/e-callback-scheduled",
+   "case/s-10-medicines",
+   "case/s-medicine-disabled",
+   "case/s-optional-empty",
+   "case/s7a-calling",
+   "case/s7b-still-on-call",
+   "case/s7c-checking",
+   "case/s7d-result-missing",
+   "case/s7d-unavailable-sheet",
+   "case/s7e-leave-sheet",
+   "case/s7f-submitted",
+   "case/t01-ready",
+   "case/t02-calling",
+   "case/t03-not-through",
+   "case/t04-doctor-missed",
+   "case/t06-ended-early",
+   "case/t08a-valid-cat4",
+   "case/t08c-confirm-blocked",
+   "case/t09-patient-unavailable",
+   "case/t10a-confirmed"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Amlodipine 5mg",
+  "cls": "tm-header-edit__title",
+  "tag": "h2",
+  "states": [
+   "case/d-sos-only"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Amoxicillin Clavulanate Dispersible 625mg",
+  "cls": "tm-row__title med-name",
+  "tag": "div",
+  "states": [
+   "case/a-long-content"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Ananya Krishnan",
+  "cls": "tm-header-task__title",
+  "tag": "h1",
+  "states": [
+   "case/d-inhaler"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Antacid Suspension 10ml",
+  "cls": "tm-row__title med-name",
+  "tag": "div",
+  "states": [
+   "case/a-back-blocked",
+   "case/a-confirm-busy",
+   "case/a-confirm-failed",
+   "case/a-leave-sheet",
+   "case/a-long-content",
+   "case/a-notes-typing",
+   "case/a-offline",
+   "case/a-offline-action",
+   "case/a-order-details",
+   "case/a-release-failed",
+   "case/a-releasing",
+   "case/a-rx-viewer",
+   "case/a-scrolled",
+   "case/a-top",
+   "case/c-callback",
+   "case/c-callback-error",
+   "case/c-callback-failed",
+   "case/c-callback-refused",
+   "case/d-alt-days",
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-discard-sheet",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-error-other",
+   "case/d-every-x-hours",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-injection-default",
+   "case/d-monthly",
+   "case/d-notes-keyboard",
+   "case/d-rx-failed",
+   "case/d-scrolled",
+   "case/d-sos-on",
+   "case/d-sos-only",
+   "case/d-syrup",
+   "case/d-weekly",
+   "case/e-availability-ended",
+   "case/e-callback-scheduled",
+   "case/s-10-medicines",
+   "case/s-medicine-disabled",
+   "case/s-optional-empty",
+   "case/s7a-calling",
+   "case/s7b-still-on-call",
+   "case/s7c-checking",
+   "case/s7d-result-missing",
+   "case/s7d-unavailable-sheet",
+   "case/s7e-leave-sheet",
+   "case/s7f-submitted",
+   "case/t01-ready",
+   "case/t02-calling",
+   "case/t03-not-through",
+   "case/t04-doctor-missed",
+   "case/t06-ended-early",
+   "case/t08a-valid-cat4",
+   "case/t08c-confirm-blocked",
+   "case/t09-patient-unavailable",
+   "case/t10a-confirmed"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Antacid Suspension 10ml",
+  "cls": "tm-header-edit__title",
+  "tag": "h2",
+  "states": [
+   "case/d-syrup"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Apply",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/d-cream"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Apply 0-1-1 · 7 days",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "case/d-cream"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Are you still on the call?",
+  "cls": "",
+  "tag": "span",
+  "states": [
+   "case/s7b-still-on-call"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Aspirin 75mg",
+  "cls": "tm-row__title med-name",
+  "tag": "div",
+  "states": [
+   "case/d-cream",
+   "case/t08b-valid-forward",
+   "case/t10b-forwarded"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Atorvastatin 10mg",
+  "cls": "tm-row__title med-name",
+  "tag": "div",
+  "states": [
+   "case/a-back-blocked",
+   "case/a-confirm-busy",
+   "case/a-confirm-failed",
+   "case/a-leave-sheet",
+   "case/a-long-content",
+   "case/a-notes-typing",
+   "case/a-offline",
+   "case/a-offline-action",
+   "case/a-order-details",
+   "case/a-release-failed",
+   "case/a-releasing",
+   "case/a-rx-viewer",
+   "case/a-scrolled",
+   "case/a-top",
+   "case/c-callback",
+   "case/c-callback-error",
+   "case/c-callback-failed",
+   "case/c-callback-refused",
+   "case/d-alt-days",
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-discard-sheet",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-error-other",
+   "case/d-every-x-hours",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-injection-default",
+   "case/d-monthly",
+   "case/d-notes-keyboard",
+   "case/d-rx-failed",
+   "case/d-scrolled",
+   "case/d-sos-on",
+   "case/d-sos-only",
+   "case/d-syrup",
+   "case/d-weekly",
+   "case/e-availability-ended",
+   "case/e-callback-scheduled",
+   "case/s-10-medicines",
+   "case/s-medicine-disabled",
+   "case/s-optional-empty",
+   "case/s7a-calling",
+   "case/s7b-still-on-call",
+   "case/s7c-checking",
+   "case/s7d-result-missing",
+   "case/s7d-unavailable-sheet",
+   "case/s7e-leave-sheet",
+   "case/s7f-submitted",
+   "case/t01-ready",
+   "case/t02-calling",
+   "case/t03-not-through",
+   "case/t04-doctor-missed",
+   "case/t06-ended-early",
+   "case/t08a-valid-cat4",
+   "case/t08c-confirm-blocked",
+   "case/t09-patient-unavailable",
+   "case/t10a-confirmed"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Atorvastatin 10mg",
+  "cls": "tm-header-edit__title",
+  "tag": "h2",
+  "states": [
+   "case/d-weekly"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Availability ends soon. You can still request a case.",
+  "cls": "",
+  "tag": "span",
+  "states": [
+   "home/near-expiry"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Back to Home",
+  "cls": "tm-btn tm-btn--lg tm-btn--block tm-btn--primary",
+  "tag": "button",
+  "states": [
+   "case/e-availability-ended"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Back to Home",
+  "cls": "tm-btn tm-btn--lg tm-btn--block tm-btn--quiet",
+  "tag": "button",
+  "states": [
+   "case/e-callback-scheduled",
+   "case/g3b-after-hangup",
+   "case/s7f-submitted",
+   "case/t09-patient-unavailable",
+   "case/t10a-confirmed",
+   "case/t10b-forwarded",
+   "case/t14-transferred",
+   "case/t15-after-hangup"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Before food",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/d-alt-days",
+   "case/d-cream",
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-discard-sheet",
+   "case/d-drops",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-error-other",
+   "case/d-every-x-hours",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-inhaler",
+   "case/d-injection-default",
+   "case/d-monthly",
+   "case/d-notes-keyboard",
+   "case/d-scrolled",
+   "case/d-sos-on",
+   "case/d-sos-only",
+   "case/d-syrup",
+   "case/d-weekly"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Betamethasone Cream 0.1%",
+  "cls": "tm-row__title med-name",
+  "tag": "div",
+  "states": [
+   "case/d-cream",
+   "case/t08b-valid-forward",
+   "case/t10b-forwarded"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Betamethasone Cream 0.1%",
+  "cls": "tm-header-edit__title",
+  "tag": "h2",
+  "states": [
+   "case/d-cream"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "By selecting Verify & sign in, you agree to the",
+  "cls": "consent tm-text-body-sm show",
+  "tag": "p",
+  "states": [
+   "otp/cooldown-reconciling",
+   "otp/couldnt-verify",
+   "otp/default",
+   "otp/empty-tap",
+   "otp/new-code-sent",
+   "otp/offline",
+   "otp/resend-available",
+   "otp/resend-failed",
+   "otp/resending",
+   "otp/too-many-resends",
+   "otp/too-short",
+   "otp/two-tries-left",
+   "otp/verifying",
+   "otp/wrong-code"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Calcium + Vit D3 500mg",
+  "cls": "tm-row__title med-name",
+  "tag": "div",
+  "states": [
+   "case/c-skip-ha",
+   "case/d-drops",
+   "case/g0-calling-pilot",
+   "case/g1-generic-confirm",
+   "case/g2-checking-ha",
+   "case/g3b-after-hangup",
+   "case/g3b-forwarded",
+   "case/s7d-result-missing-pilot",
+   "case/t05-result-wait",
+   "case/t11-calling-transfer",
+   "case/t12-transfer-ready",
+   "case/t13-connecting-ha",
+   "case/t14-transferred",
+   "case/t15-after-hangup",
+   "case/t15-ha-no-join",
+   "case/t16-transfer-missed",
+   "case/t16b-transfer-missed-patient",
+   "case/t16c-transfer-missed-unknown",
+   "case/t17-skip-ha-wait"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Call Doctor Ops",
+  "cls": "login-submit-label",
+  "tag": "span",
+  "states": [
+   "sign-in/inactive"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Call again",
+  "cls": "tm-btn tm-btn--lg tm-btn--primary tm-btn--block concept-new",
+  "tag": "button",
+  "states": [
+   "case/c-callback",
+   "case/c-callback-error",
+   "case/c-callback-failed",
+   "case/c-callback-refused",
+   "case/t03-not-through",
+   "case/t04-doctor-missed",
+   "case/t06-ended-early"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Call didn’t go through.",
+  "cls": "",
+  "tag": "span",
+  "states": [
+   "case/t03-not-through"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Call ended",
+  "cls": "tm-btn tm-btn--lg tm-btn--secondary",
+  "tag": "button",
+  "states": [
+   "case/s7b-still-on-call"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Call patient",
+  "cls": "",
+  "tag": "span",
+  "states": [
+   "case/a-leave-sheet",
+   "case/a-long-content",
+   "case/a-offline",
+   "case/a-offline-action",
+   "case/a-order-details",
+   "case/a-release-failed",
+   "case/a-releasing",
+   "case/a-rx-viewer",
+   "case/a-scrolled",
+   "case/a-top",
+   "case/d-alt-days",
+   "case/d-cream",
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-discard-sheet",
+   "case/d-drops",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-every-x-hours",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-inhaler",
+   "case/d-injection-default",
+   "case/d-monthly",
+   "case/d-rx-failed",
+   "case/d-scrolled",
+   "case/d-sos-on",
+   "case/d-sos-only",
+   "case/d-syrup",
+   "case/d-weekly",
+   "case/s-10-medicines",
+   "case/s-medicine-disabled",
+   "case/s-optional-empty",
+   "case/s7e-leave-sheet",
+   "case/t01-ready"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Call too short to write a prescription.",
+  "cls": "",
+  "tag": "span",
+  "states": [
+   "case/c-callback",
+   "case/c-callback-error",
+   "case/c-callback-failed",
+   "case/c-callback-refused",
+   "case/t06-ended-early"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Callback",
+  "cls": "",
+  "tag": "span",
+  "states": [
+   "case/a-confirm-failed"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Callback",
+  "cls": "tm-btn tm-btn--lg tm-btn--secondary",
+  "tag": "button",
+  "states": [
+   "case/c-callback",
+   "case/c-callback-error",
+   "case/c-callback-failed",
+   "case/c-callback-refused",
+   "case/s7d-result-missing",
+   "case/s7d-result-missing-pilot",
+   "case/s7d-unavailable-sheet",
+   "case/t06-ended-early"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Callback today at 3:00 PM",
+  "cls": "tm-status-card__title",
+  "tag": "div",
+  "states": [
+   "case/e-callback-scheduled"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Calling Ramesh…",
+  "cls": "tm-status-line concept-new",
+  "tag": "div",
+  "states": [
+   "case/a-back-blocked",
+   "case/s7a-calling",
+   "case/t02-calling"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Calling Sunita…",
+  "cls": "tm-status-line concept-new",
+  "tag": "div",
+  "states": [
+   "case/g0-calling-pilot",
+   "case/t11-calling-transfer"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Cancel",
+  "cls": "tm-btn tm-btn--quiet tm-btn--lg tm-btn--block",
+  "tag": "button",
+  "states": [
+   "home/add-failed",
+   "home/add-wheel",
+   "home/adding"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Can’t prescribe remotely",
+  "cls": "tm-option__title",
+  "tag": "span",
+  "states": [
+   "case/d-disable-sheet"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Capsule",
+  "cls": "tm-header-edit__subtitle",
+  "tag": "p",
+  "states": [
+   "case/d-weekly"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Cetirizine 10mg",
+  "cls": "tm-row__title med-name",
+  "tag": "div",
+  "states": [
+   "case/s-10-medicines"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Change",
+  "cls": "lk",
+  "tag": "a",
+  "states": [
+   "otp/code-expired",
+   "otp/cooldown-reconciling",
+   "otp/couldnt-verify",
+   "otp/default",
+   "otp/empty-tap",
+   "otp/expired-and-resend-limited",
+   "otp/locked",
+   "otp/new-code-sent",
+   "otp/offline",
+   "otp/resend-available",
+   "otp/resend-failed",
+   "otp/resending",
+   "otp/too-many-resends",
+   "otp/too-short",
+   "otp/two-tries-left",
+   "otp/verifying",
+   "otp/wrong-code"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Change it any time",
+  "cls": "pt-t",
+  "tag": "p",
+  "states": [
+   "offer/enable-failed",
+   "offer/enabling",
+   "offer/face-id",
+   "offer/fingerprint",
+   "offer/offline",
+   "offer/screen-lock"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Checking call result…",
+  "cls": "tm-status-line concept-new",
+  "tag": "div",
+  "states": [
+   "case/s7c-checking"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Checking for a Health Advisor…",
+  "cls": "tm-status-line concept-new",
+  "tag": "div",
+  "states": [
+   "case/g2-checking-ha"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Checking whether your case request went through…",
+  "cls": "status-text",
+  "tag": "span",
+  "states": [
+   "home/unknown-result"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Checking…",
+  "cls": "",
+  "tag": "span",
+  "states": [
+   "otp/cooldown-reconciling"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Chief complaints / symptoms",
+  "cls": "tm-field__label",
+  "tag": "label",
+  "states": [
+   "case/a-back-blocked",
+   "case/a-confirm-busy",
+   "case/a-confirm-failed",
+   "case/a-leave-sheet",
+   "case/a-long-content",
+   "case/a-no-medicines",
+   "case/a-notes-typing",
+   "case/a-offline",
+   "case/a-offline-action",
+   "case/a-order-details",
+   "case/a-release-failed",
+   "case/a-releasing",
+   "case/a-rx-viewer",
+   "case/a-scrolled",
+   "case/a-top",
+   "case/c-callback",
+   "case/c-callback-error",
+   "case/c-callback-failed",
+   "case/c-callback-refused",
+   "case/c-skip-ha",
+   "case/d-alt-days",
+   "case/d-cream",
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-discard-sheet",
+   "case/d-drops",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-error-other",
+   "case/d-every-x-hours",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-inhaler",
+   "case/d-injection-default",
+   "case/d-monthly",
+   "case/d-notes-keyboard",
+   "case/d-rx-failed",
+   "case/d-scrolled",
+   "case/d-sos-on",
+   "case/d-sos-only",
+   "case/d-syrup",
+   "case/d-weekly",
+   "case/e-availability-ended",
+   "case/e-callback-scheduled",
+   "case/g0-calling-pilot",
+   "case/g1-generic-confirm",
+   "case/g2-checking-ha",
+   "case/g3b-after-hangup",
+   "case/g3b-forwarded",
+   "case/s-10-medicines",
+   "case/s-medicine-disabled",
+   "case/s-optional-empty",
+   "case/s7a-calling",
+   "case/s7b-still-on-call",
+   "case/s7c-checking",
+   "case/s7d-result-missing",
+   "case/s7d-result-missing-pilot",
+   "case/s7d-unavailable-sheet",
+   "case/s7e-leave-sheet",
+   "case/s7f-submitted",
+   "case/t01-ready",
+   "case/t02-calling",
+   "case/t03-not-through",
+   "case/t04-doctor-missed",
+   "case/t05-result-wait",
+   "case/t06-ended-early",
+   "case/t08a-valid-cat4",
+   "case/t08b-valid-forward",
+   "case/t08c-confirm-blocked",
+   "case/t09-patient-unavailable",
+   "case/t10a-confirmed",
+   "case/t10b-forwarded",
+   "case/t11-calling-transfer",
+   "case/t12-transfer-ready",
+   "case/t13-connecting-ha",
+   "case/t14-transferred",
+   "case/t15-after-hangup",
+   "case/t15-ha-no-join",
+   "case/t16-transfer-missed",
+   "case/t16b-transfer-missed-patient",
+   "case/t16c-transfer-missed-unknown",
+   "case/t17-skip-ha-wait"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Choose a dose for at least one time of day.",
+  "cls": "tm-field__helper ps-dose-error",
+  "tag": "p",
+  "states": [
+   "case/d-error-dose"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Choose how long you’re available today.",
+  "cls": "sub",
+  "tag": "p",
+  "states": [
+   "home/idle-expired",
+   "home/manually-ended",
+   "home/setting",
+   "home/setup-failed",
+   "home/setup-wheel"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Choose how much time to add.",
+  "cls": "tm-sheet__subtitle",
+  "tag": "p",
+  "states": [
+   "home/add-failed",
+   "home/add-wheel",
+   "home/adding"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Clinically not required",
+  "cls": "tm-option__title",
+  "tag": "span",
+  "states": [
+   "case/c-skip-ha"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Confirm & forward",
+  "cls": "tm-btn tm-btn--lg tm-btn--primary tm-btn--block concept-new",
+  "tag": "button",
+  "states": [
+   "case/s7d-result-missing-pilot",
+   "case/t08b-valid-forward",
+   "case/t16-transfer-missed",
+   "case/t16b-transfer-missed-patient",
+   "case/t16c-transfer-missed-unknown"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Confirm & transfer",
+  "cls": "tm-btn tm-btn--lg tm-btn--primary tm-btn--block concept-new",
+  "tag": "button",
+  "states": [
+   "case/c-skip-ha",
+   "case/t12-transfer-ready"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Confirm callback",
+  "cls": "tm-btn tm-btn--primary tm-btn--lg tm-btn--block",
+  "tag": "button",
+  "states": [
+   "case/c-callback",
+   "case/c-callback-error",
+   "case/c-callback-failed",
+   "case/c-callback-refused"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Confirm prescription",
+  "cls": "",
+  "tag": "span",
+  "states": [
+   "case/a-confirm-failed",
+   "case/t08a-valid-cat4",
+   "case/t08c-confirm-blocked"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Confirm prescription",
+  "cls": "tm-btn tm-btn--lg tm-btn--primary tm-btn--block concept-new",
+  "tag": "button",
+  "states": [
+   "case/g1-generic-confirm",
+   "case/s7d-result-missing",
+   "case/s7d-unavailable-sheet"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Confirming…",
+  "cls": "tm-btn tm-btn--lg tm-btn--primary tm-btn--block tm-btn--busy",
+  "tag": "button",
+  "states": [
+   "case/a-confirm-busy"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Consult on your schedule",
+  "cls": "tm-text-title-lg",
+  "tag": "h1",
+  "states": [
+   "home/idle-expired",
+   "home/manually-ended",
+   "home/setting",
+   "home/setup-failed",
+   "home/setup-wheel"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Contraindicated for patient",
+  "cls": "tm-option__title",
+  "tag": "span",
+  "states": [
+   "case/d-disable-sheet"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Couldn’t add time.",
+  "cls": "",
+  "tag": "span",
+  "states": [
+   "home/add-failed"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Couldn’t check the code.",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "otp/couldnt-verify"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Couldn’t confirm. Nothing was lost.",
+  "cls": "",
+  "tag": "span",
+  "states": [
+   "case/a-confirm-failed"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Couldn’t get the call result.",
+  "cls": "",
+  "tag": "span",
+  "states": [
+   "case/s7d-result-missing",
+   "case/s7d-result-missing-pilot",
+   "case/s7d-unavailable-sheet"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Couldn’t load the prescription.",
+  "cls": "",
+  "tag": "span",
+  "states": [
+   "case/d-rx-failed"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Couldn’t load this case.",
+  "cls": "",
+  "tag": "span",
+  "states": [
+   "case/a-load-failed"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Couldn’t release this case. You’re still on it.",
+  "cls": "",
+  "tag": "span",
+  "states": [
+   "case/a-release-failed"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Couldn’t request a case.",
+  "cls": "",
+  "tag": "span",
+  "states": [
+   "home/request-failed"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Couldn’t schedule the callback. The patient wasn’t reached.",
+  "cls": "",
+  "tag": "span",
+  "states": [
+   "case/c-callback-refused"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Couldn’t schedule the callback. Your time is kept.",
+  "cls": "",
+  "tag": "span",
+  "states": [
+   "case/c-callback-failed"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Couldn’t send a new code.",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "otp/resend-failed"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Couldn’t send the code.",
+  "cls": "",
+  "tag": "span",
+  "states": [
+   "sign-in/couldnt-send"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Couldn’t set availability. Your selection is saved.",
+  "cls": "",
+  "tag": "span",
+  "states": [
+   "home/setup-failed"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Couldn’t turn on faster sign-in.",
+  "cls": "",
+  "tag": "span",
+  "states": [
+   "offer/enable-failed"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Counselled in an earlier order",
+  "cls": "tm-option__desc",
+  "tag": "span",
+  "states": [
+   "case/c-skip-ha"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Cream",
+  "cls": "tm-header-edit__subtitle",
+  "tag": "p",
+  "states": [
+   "case/d-cream"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Daily",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/d-alt-days",
+   "case/d-cream",
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-discard-sheet",
+   "case/d-drops",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-error-other",
+   "case/d-every-x-hours",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-inhaler",
+   "case/d-injection-default",
+   "case/d-monthly",
+   "case/d-notes-keyboard",
+   "case/d-scrolled",
+   "case/d-sos-on",
+   "case/d-sos-only",
+   "case/d-syrup",
+   "case/d-weekly"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Date",
+  "cls": "tm-sheet__label sheet-section-label",
+  "tag": "div",
+  "states": [
+   "case/c-callback",
+   "case/c-callback-error",
+   "case/c-callback-failed",
+   "case/c-callback-refused"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Days",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/d-duration-picker"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Default",
+  "cls": "",
+  "tag": "span",
+  "states": [
+   "case/d-alt-days",
+   "case/d-cream",
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-discard-sheet",
+   "case/d-drops",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-error-other",
+   "case/d-every-x-hours",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-inhaler",
+   "case/d-injection-default",
+   "case/d-monthly",
+   "case/d-notes-keyboard",
+   "case/d-scrolled",
+   "case/d-sos-on",
+   "case/d-sos-only",
+   "case/d-syrup",
+   "case/d-weekly"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Didn’t answer",
+  "cls": "tm-option__title",
+  "tag": "span",
+  "states": [
+   "case/s7d-unavailable-sheet"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Didn’t receive it?",
+  "cls": "",
+  "tag": "span",
+  "states": [
+   "otp/code-expired",
+   "otp/couldnt-verify",
+   "otp/default",
+   "otp/empty-tap",
+   "otp/new-code-sent",
+   "otp/offline",
+   "otp/resend-available",
+   "otp/resend-failed",
+   "otp/resending",
+   "otp/too-short",
+   "otp/two-tries-left",
+   "otp/verifying",
+   "otp/wrong-code"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Disable",
+  "cls": "tm-btn tm-btn--destructive",
+  "tag": "button",
+  "states": [
+   "case/d-alt-days",
+   "case/d-cream",
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-discard-sheet",
+   "case/d-drops",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-error-other",
+   "case/d-every-x-hours",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-inhaler",
+   "case/d-injection-default",
+   "case/d-monthly",
+   "case/d-notes-keyboard",
+   "case/d-scrolled",
+   "case/d-sos-on",
+   "case/d-sos-only",
+   "case/d-syrup",
+   "case/d-weekly"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Disable Metformin 500mg",
+  "cls": "tm-sheet__title",
+  "tag": "h2",
+  "states": [
+   "case/d-disable-sheet"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Disabled",
+  "cls": "tm-tag tm-tag--md tm-tag--fixed tm-tag--neutral",
+  "tag": "span",
+  "states": [
+   "case/s-medicine-disabled"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Disabled: Patient declined. Prescribing it will enable it again.",
+  "cls": "",
+  "tag": "span",
+  "states": [
+   "case/d-disabled"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Discard",
+  "cls": "tm-btn tm-btn--destructive tm-btn--lg tm-btn--block",
+  "tag": "button",
+  "states": [
+   "case/d-discard-sheet"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Discard changes?",
+  "cls": "tm-sheet__title",
+  "tag": "h2",
+  "states": [
+   "case/d-discard-sheet"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Doctor notes",
+  "cls": "tm-field__label",
+  "tag": "label",
+  "states": [
+   "case/a-back-blocked",
+   "case/a-confirm-busy",
+   "case/a-confirm-failed",
+   "case/a-leave-sheet",
+   "case/a-long-content",
+   "case/a-no-medicines",
+   "case/a-notes-typing",
+   "case/a-offline",
+   "case/a-offline-action",
+   "case/a-order-details",
+   "case/a-release-failed",
+   "case/a-releasing",
+   "case/a-rx-viewer",
+   "case/a-scrolled",
+   "case/a-top",
+   "case/c-callback",
+   "case/c-callback-error",
+   "case/c-callback-failed",
+   "case/c-callback-refused",
+   "case/c-skip-ha",
+   "case/d-alt-days",
+   "case/d-cream",
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-discard-sheet",
+   "case/d-drops",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-error-other",
+   "case/d-every-x-hours",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-inhaler",
+   "case/d-injection-default",
+   "case/d-monthly",
+   "case/d-notes-keyboard",
+   "case/d-rx-failed",
+   "case/d-scrolled",
+   "case/d-sos-on",
+   "case/d-sos-only",
+   "case/d-syrup",
+   "case/d-weekly",
+   "case/e-availability-ended",
+   "case/e-callback-scheduled",
+   "case/g0-calling-pilot",
+   "case/g1-generic-confirm",
+   "case/g2-checking-ha",
+   "case/g3b-after-hangup",
+   "case/g3b-forwarded",
+   "case/s-10-medicines",
+   "case/s-medicine-disabled",
+   "case/s-optional-empty",
+   "case/s7a-calling",
+   "case/s7b-still-on-call",
+   "case/s7c-checking",
+   "case/s7d-result-missing",
+   "case/s7d-result-missing-pilot",
+   "case/s7d-unavailable-sheet",
+   "case/s7e-leave-sheet",
+   "case/s7f-submitted",
+   "case/t01-ready",
+   "case/t02-calling",
+   "case/t03-not-through",
+   "case/t04-doctor-missed",
+   "case/t05-result-wait",
+   "case/t06-ended-early",
+   "case/t08a-valid-cat4",
+   "case/t08b-valid-forward",
+   "case/t08c-confirm-blocked",
+   "case/t09-patient-unavailable",
+   "case/t10a-confirmed",
+   "case/t10b-forwarded",
+   "case/t11-calling-transfer",
+   "case/t12-transfer-ready",
+   "case/t13-connecting-ha",
+   "case/t14-transferred",
+   "case/t15-after-hangup",
+   "case/t15-ha-no-join",
+   "case/t16-transfer-missed",
+   "case/t16b-transfer-missed-patient",
+   "case/t16c-transfer-missed-unknown",
+   "case/t17-skip-ha-wait"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Dose",
+  "cls": "tm-field__label ps-label",
+  "tag": "div",
+  "states": [
+   "case/d-alt-days",
+   "case/d-cream",
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-discard-sheet",
+   "case/d-drops",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-error-other",
+   "case/d-every-x-hours",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-inhaler",
+   "case/d-injection-default",
+   "case/d-monthly",
+   "case/d-notes-keyboard",
+   "case/d-scrolled",
+   "case/d-sos-on",
+   "case/d-sos-only",
+   "case/d-syrup",
+   "case/d-weekly"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Dose (units)",
+  "cls": "tm-field__label",
+  "tag": "label",
+  "states": [
+   "case/d-error-other"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Double-tap to zoom · Pinch to zoom · Drag to pan",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "case/a-rx-viewer"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Dr. Apurva Shetty",
+  "cls": "pt-t",
+  "tag": "p",
+  "states": [
+   "home/logout-confirm",
+   "home/profile",
+   "home/profile-case-open"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Drops",
+  "cls": "tm-header-edit__subtitle",
+  "tag": "p",
+  "states": [
+   "case/d-drops"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Duplicate medication",
+  "cls": "tm-option__title",
+  "tag": "span",
+  "states": [
+   "case/d-disable-sheet"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Duration",
+  "cls": "tm-field__label ps-label",
+  "tag": "div",
+  "states": [
+   "case/d-alt-days",
+   "case/d-cream",
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-discard-sheet",
+   "case/d-drops",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-error-other",
+   "case/d-every-x-hours",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-inhaler",
+   "case/d-injection-default",
+   "case/d-monthly",
+   "case/d-notes-keyboard",
+   "case/d-scrolled",
+   "case/d-sos-on",
+   "case/d-sos-only",
+   "case/d-syrup",
+   "case/d-weekly"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Earned",
+  "cls": "pt-d",
+  "tag": "p",
+  "states": [
+   "home/logout-confirm",
+   "home/profile",
+   "home/profile-case-open"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Empty stomach",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/d-alt-days",
+   "case/d-cream",
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-discard-sheet",
+   "case/d-drops",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-error-other",
+   "case/d-every-x-hours",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-inhaler",
+   "case/d-injection-default",
+   "case/d-monthly",
+   "case/d-notes-keyboard",
+   "case/d-scrolled",
+   "case/d-sos-on",
+   "case/d-sos-only",
+   "case/d-syrup",
+   "case/d-weekly"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "End availability",
+  "cls": "tm-btn tm-btn--quiet tm-btn--lg tm-btn--block",
+  "tag": "button",
+  "states": [
+   "home/active",
+   "home/added",
+   "home/near-expiry",
+   "home/no-cases",
+   "home/offline",
+   "home/request-failed",
+   "home/requesting"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "End availability",
+  "cls": "tm-btn tm-btn--destructive tm-btn--lg tm-btn--block",
+  "tag": "button",
+  "states": [
+   "home/end-confirmation"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "End availability?",
+  "cls": "tm-sheet__title",
+  "tag": "h2",
+  "states": [
+   "home/end-confirmation"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "End-of-call script",
+  "cls": "tm-section-title section-title--inline",
+  "tag": "h2",
+  "states": [
+   "case/a-back-blocked",
+   "case/c-skip-ha",
+   "case/g0-calling-pilot",
+   "case/g1-generic-confirm",
+   "case/g2-checking-ha",
+   "case/g3b-forwarded",
+   "case/s7a-calling",
+   "case/s7b-still-on-call",
+   "case/s7c-checking",
+   "case/s7d-result-missing",
+   "case/s7d-result-missing-pilot",
+   "case/s7d-unavailable-sheet",
+   "case/t02-calling",
+   "case/t05-result-wait",
+   "case/t11-calling-transfer",
+   "case/t12-transfer-ready",
+   "case/t13-connecting-ha",
+   "case/t15-ha-no-join",
+   "case/t17-skip-ha-wait"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Ending availability",
+  "cls": "tm-text-title-lg",
+  "tag": "h1",
+  "states": [
+   "home/stop-pending"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Ending…",
+  "cls": "tm-btn tm-btn--quiet tm-btn--lg tm-btn--block",
+  "tag": "button",
+  "states": [
+   "home/stop-pending"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Enter all 10 digits.",
+  "cls": "tm-field__helper",
+  "tag": "div",
+  "states": [
+   "sign-in/too-short"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Enter all 4 digits.",
+  "cls": "tm-field__helper",
+  "tag": "div",
+  "states": [
+   "otp/too-short"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Enter the 4-digit code.",
+  "cls": "tm-field__helper",
+  "tag": "div",
+  "states": [
+   "otp/empty-tap"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Enter your mobile number.",
+  "cls": "tm-field__helper",
+  "tag": "div",
+  "states": [
+   "sign-in/empty-tap"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Every",
+  "cls": "tm-field__label ps-label",
+  "tag": "div",
+  "states": [
+   "case/d-every-x-hours"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Every X hours",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/d-alt-days",
+   "case/d-cream",
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-discard-sheet",
+   "case/d-drops",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-error-other",
+   "case/d-every-x-hours",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-inhaler",
+   "case/d-injection-default",
+   "case/d-monthly",
+   "case/d-notes-keyboard",
+   "case/d-scrolled",
+   "case/d-sos-on",
+   "case/d-sos-only",
+   "case/d-syrup",
+   "case/d-weekly"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Expected delivery",
+  "cls": "pdb-expand-label",
+  "tag": "span",
+  "states": [
+   "case/a-order-details"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Extra doses only when needed, on top of the schedule above.",
+  "cls": "ps-helper",
+  "tag": "div",
+  "states": [
+   "case/d-alt-days",
+   "case/d-cream",
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-discard-sheet",
+   "case/d-drops",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-error-other",
+   "case/d-every-x-hours",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-injection-default",
+   "case/d-monthly",
+   "case/d-notes-keyboard",
+   "case/d-scrolled",
+   "case/d-sos-on",
+   "case/d-syrup",
+   "case/d-weekly"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Faster sign-in",
+  "cls": "profile-row-label",
+  "tag": "span",
+  "states": [
+   "home/logout-confirm",
+   "home/profile",
+   "home/profile-case-open"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Faster sign-in isn’t available on this phone right now.",
+  "cls": "",
+  "tag": "span",
+  "states": [
+   "unlock/unavailable"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Ferrous Sulphate 200mg",
+  "cls": "tm-row__title med-name",
+  "tag": "div",
+  "states": [
+   "case/d-inhaler"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Finish this case first.",
+  "cls": "tm-toast",
+  "tag": "div",
+  "states": [
+   "case/a-back-blocked"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Finishing your last request. Availability ends after that.",
+  "cls": "",
+  "tag": "span",
+  "states": [
+   "home/stop-pending"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Folic Acid 5mg",
+  "cls": "tm-row__title med-name",
+  "tag": "div",
+  "states": [
+   "case/d-inhaler"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Food",
+  "cls": "tm-field__label ps-label",
+  "tag": "div",
+  "states": [
+   "case/d-alt-days",
+   "case/d-cream",
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-discard-sheet",
+   "case/d-drops",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-error-other",
+   "case/d-every-x-hours",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-inhaler",
+   "case/d-injection-default",
+   "case/d-monthly",
+   "case/d-notes-keyboard",
+   "case/d-scrolled",
+   "case/d-sos-on",
+   "case/d-sos-only",
+   "case/d-syrup",
+   "case/d-weekly"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Forwarded to Health Advisor",
+  "cls": "tm-status-card__title",
+  "tag": "div",
+  "states": [
+   "case/g3b-after-hangup",
+   "case/g3b-forwarded",
+   "case/t10b-forwarded",
+   "case/t15-after-hangup",
+   "case/t15-ha-no-join"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "General Physician",
+  "cls": "pt-d",
+  "tag": "p",
+  "states": [
+   "home/logout-confirm",
+   "home/profile",
+   "home/profile-case-open"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Getting call result…",
+  "cls": "tm-status-line concept-new",
+  "tag": "div",
+  "states": [
+   "case/t05-result-wait",
+   "case/t17-skip-ha-wait"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Health Advisor call will be skipped. End the call when you’re done.",
+  "cls": "",
+  "tag": "span",
+  "states": [
+   "case/t17-skip-ha-wait"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Health Advisor counselling isn’t needed",
+  "cls": "tm-option__desc",
+  "tag": "span",
+  "states": [
+   "case/c-skip-ha"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Hello, Dr. Apurva",
+  "cls": "tm-text-title-lg",
+  "tag": "h1",
+  "states": [
+   "unlock/cancelled",
+   "unlock/face",
+   "unlock/fingerprint",
+   "unlock/pending",
+   "unlock/platform-retry",
+   "unlock/screen-lock",
+   "unlock/unavailable"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Hours",
+  "cls": "",
+  "tag": "span",
+  "states": [
+   "home/add-failed",
+   "home/add-wheel",
+   "home/adding",
+   "home/idle-expired",
+   "home/manually-ended",
+   "home/setting",
+   "home/setup-failed",
+   "home/setup-wheel"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "How often",
+  "cls": "tm-field__label ps-label",
+  "tag": "div",
+  "states": [
+   "case/d-alt-days",
+   "case/d-cream",
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-discard-sheet",
+   "case/d-drops",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-error-other",
+   "case/d-every-x-hours",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-inhaler",
+   "case/d-injection-default",
+   "case/d-monthly",
+   "case/d-notes-keyboard",
+   "case/d-scrolled",
+   "case/d-sos-on",
+   "case/d-sos-only",
+   "case/d-syrup",
+   "case/d-weekly"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Hydrochlorothiazide 12.5mg",
+  "cls": "tm-row__title med-name",
+  "tag": "div",
+  "states": [
+   "case/d-cream",
+   "case/t08b-valid-forward",
+   "case/t10b-forwarded"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Ibuprofen 400mg",
+  "cls": "tm-row__title med-name",
+  "tag": "div",
+  "states": [
+   "case/s-10-medicines"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Incentive",
+  "cls": "pt-d",
+  "tag": "p",
+  "states": [
+   "home/logout-confirm",
+   "home/profile",
+   "home/profile-case-open"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Inhaler",
+  "cls": "tm-header-edit__subtitle",
+  "tag": "p",
+  "states": [
+   "case/d-inhaler"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Injection",
+  "cls": "tm-header-edit__subtitle",
+  "tag": "p",
+  "states": [
+   "case/d-error-other",
+   "case/d-injection-default"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Invalid or not the patient’s number",
+  "cls": "tm-option__desc",
+  "tag": "span",
+  "states": [
+   "case/s7d-unavailable-sheet"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "It goes back to the queue for another doctor.",
+  "cls": "tm-sheet__subtitle",
+  "tag": "p",
+  "states": [
+   "case/a-leave-sheet",
+   "case/a-releasing",
+   "case/s7e-leave-sheet"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Keep available",
+  "cls": "tm-btn tm-btn--quiet tm-btn--lg tm-btn--block",
+  "tag": "button",
+  "states": [
+   "home/end-confirmation"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Keep editing",
+  "cls": "tm-btn tm-btn--quiet tm-btn--lg tm-btn--block",
+  "tag": "button",
+  "states": [
+   "case/d-discard-sheet"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Leave this case?",
+  "cls": "tm-sheet__title",
+  "tag": "h2",
+  "states": [
+   "case/a-leave-sheet",
+   "case/a-releasing",
+   "case/s7e-leave-sheet"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Let’s check in on your patients today.",
+  "cls": "",
+  "tag": "p",
+  "states": [
+   "unlock/cancelled",
+   "unlock/face",
+   "unlock/fingerprint",
+   "unlock/pending",
+   "unlock/platform-retry",
+   "unlock/screen-lock",
+   "unlock/unavailable"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Levocetirizine 5mg",
+  "cls": "tm-row__title med-name",
+  "tag": "div",
+  "states": [
+   "case/s-10-medicines"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Levothyroxine 50mcg",
+  "cls": "tm-row__title med-name",
+  "tag": "div",
+  "states": [
+   "case/c-skip-ha",
+   "case/d-drops",
+   "case/g0-calling-pilot",
+   "case/g1-generic-confirm",
+   "case/g2-checking-ha",
+   "case/g3b-after-hangup",
+   "case/g3b-forwarded",
+   "case/s7d-result-missing-pilot",
+   "case/t05-result-wait",
+   "case/t11-calling-transfer",
+   "case/t12-transfer-ready",
+   "case/t13-connecting-ha",
+   "case/t14-transferred",
+   "case/t15-after-hangup",
+   "case/t15-ha-no-join",
+   "case/t16-transfer-missed",
+   "case/t16b-transfer-missed-patient",
+   "case/t16c-transfer-missed-unknown",
+   "case/t17-skip-ha-wait"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Log out",
+  "cls": "tm-btn tm-btn--destructive tm-btn--lg tm-btn--block",
+  "tag": "button",
+  "states": [
+   "home/logout-confirm",
+   "home/profile"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Log out?",
+  "cls": "tm-sheet__title",
+  "tag": "h2",
+  "states": [
+   "home/logout-confirm"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Losartan 50mg",
+  "cls": "tm-row__title med-name",
+  "tag": "div",
+  "states": [
+   "case/d-cream",
+   "case/s-10-medicines",
+   "case/t08b-valid-forward",
+   "case/t10b-forwarded"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "M",
+  "cls": "ps-slot-key",
+  "tag": "span",
+  "states": [
+   "case/d-cream",
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-discard-sheet",
+   "case/d-drops",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-notes-keyboard",
+   "case/d-scrolled",
+   "case/d-sos-on",
+   "case/d-syrup"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Mark patient unavailable",
+  "cls": "tm-sheet__title",
+  "tag": "h2",
+  "states": [
+   "case/s7d-unavailable-sheet"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Max doses a day",
+  "cls": "tm-field__label ps-label",
+  "tag": "div",
+  "states": [
+   "case/d-inhaler",
+   "case/d-sos-only"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Max extra doses a day",
+  "cls": "tm-field__label ps-label",
+  "tag": "div",
+  "states": [
+   "case/d-sos-on"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Medicines",
+  "cls": "tm-section-title section-title--inline",
+  "tag": "h2",
+  "states": [
+   "case/e-availability-ended",
+   "case/e-callback-scheduled",
+   "case/g3b-after-hangup",
+   "case/g3b-forwarded",
+   "case/s7f-submitted",
+   "case/t09-patient-unavailable",
+   "case/t10a-confirmed",
+   "case/t10b-forwarded",
+   "case/t14-transferred",
+   "case/t15-after-hangup",
+   "case/t15-ha-no-join"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Medicines to prescribe",
+  "cls": "tm-section-title section-title--inline",
+  "tag": "h2",
+  "states": [
+   "case/a-back-blocked",
+   "case/a-confirm-busy",
+   "case/a-confirm-failed",
+   "case/a-leave-sheet",
+   "case/a-long-content",
+   "case/a-no-medicines",
+   "case/a-notes-typing",
+   "case/a-offline",
+   "case/a-offline-action",
+   "case/a-order-details",
+   "case/a-release-failed",
+   "case/a-releasing",
+   "case/a-rx-viewer",
+   "case/a-scrolled",
+   "case/a-top",
+   "case/c-callback",
+   "case/c-callback-error",
+   "case/c-callback-failed",
+   "case/c-callback-refused",
+   "case/c-skip-ha",
+   "case/d-alt-days",
+   "case/d-cream",
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-discard-sheet",
+   "case/d-drops",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-error-other",
+   "case/d-every-x-hours",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-inhaler",
+   "case/d-injection-default",
+   "case/d-monthly",
+   "case/d-notes-keyboard",
+   "case/d-rx-failed",
+   "case/d-scrolled",
+   "case/d-sos-on",
+   "case/d-sos-only",
+   "case/d-syrup",
+   "case/d-weekly",
+   "case/g0-calling-pilot",
+   "case/g1-generic-confirm",
+   "case/g2-checking-ha",
+   "case/s-10-medicines",
+   "case/s-medicine-disabled",
+   "case/s-optional-empty",
+   "case/s7a-calling",
+   "case/s7b-still-on-call",
+   "case/s7c-checking",
+   "case/s7d-result-missing",
+   "case/s7d-result-missing-pilot",
+   "case/s7d-unavailable-sheet",
+   "case/s7e-leave-sheet",
+   "case/t01-ready",
+   "case/t02-calling",
+   "case/t03-not-through",
+   "case/t04-doctor-missed",
+   "case/t05-result-wait",
+   "case/t06-ended-early",
+   "case/t08a-valid-cat4",
+   "case/t08b-valid-forward",
+   "case/t08c-confirm-blocked",
+   "case/t11-calling-transfer",
+   "case/t12-transfer-ready",
+   "case/t13-connecting-ha",
+   "case/t16-transfer-missed",
+   "case/t16b-transfer-missed-patient",
+   "case/t16c-transfer-missed-unknown",
+   "case/t17-skip-ha-wait"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Metformin 500mg",
+  "cls": "tm-row__title med-name",
+  "tag": "div",
+  "states": [
+   "case/a-back-blocked",
+   "case/a-confirm-busy",
+   "case/a-confirm-failed",
+   "case/a-leave-sheet",
+   "case/a-notes-typing",
+   "case/a-offline",
+   "case/a-offline-action",
+   "case/a-order-details",
+   "case/a-release-failed",
+   "case/a-releasing",
+   "case/a-rx-viewer",
+   "case/a-scrolled",
+   "case/a-top",
+   "case/c-callback",
+   "case/c-callback-error",
+   "case/c-callback-failed",
+   "case/c-callback-refused",
+   "case/d-alt-days",
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-discard-sheet",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-error-other",
+   "case/d-every-x-hours",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-injection-default",
+   "case/d-monthly",
+   "case/d-notes-keyboard",
+   "case/d-rx-failed",
+   "case/d-scrolled",
+   "case/d-sos-on",
+   "case/d-sos-only",
+   "case/d-syrup",
+   "case/d-weekly",
+   "case/e-availability-ended",
+   "case/e-callback-scheduled",
+   "case/s-10-medicines",
+   "case/s-medicine-disabled",
+   "case/s-optional-empty",
+   "case/s7a-calling",
+   "case/s7b-still-on-call",
+   "case/s7c-checking",
+   "case/s7d-result-missing",
+   "case/s7d-unavailable-sheet",
+   "case/s7e-leave-sheet",
+   "case/s7f-submitted",
+   "case/t01-ready",
+   "case/t02-calling",
+   "case/t03-not-through",
+   "case/t04-doctor-missed",
+   "case/t06-ended-early",
+   "case/t08a-valid-cat4",
+   "case/t08c-confirm-blocked",
+   "case/t09-patient-unavailable",
+   "case/t10a-confirmed"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Metformin 500mg",
+  "cls": "tm-header-edit__title",
+  "tag": "h2",
+  "states": [
+   "case/d-alt-days",
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-discard-sheet",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-every-x-hours",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-monthly",
+   "case/d-notes-keyboard",
+   "case/d-scrolled",
+   "case/d-sos-on"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Minimum 15 minutes",
+  "cls": "helper",
+  "tag": "p",
+  "states": [
+   "home/idle-expired",
+   "home/manually-ended",
+   "home/setting",
+   "home/setup-failed",
+   "home/setup-wheel"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Minutes",
+  "cls": "",
+  "tag": "span",
+  "states": [
+   "home/add-failed",
+   "home/add-wheel",
+   "home/adding",
+   "home/idle-expired",
+   "home/manually-ended",
+   "home/setting",
+   "home/setup-failed",
+   "home/setup-wheel"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Mobile number",
+  "cls": "tm-field__label",
+  "tag": "label",
+  "states": [
+   "sign-in/couldnt-send",
+   "sign-in/default",
+   "sign-in/empty-tap",
+   "sign-in/inactive",
+   "sign-in/keyboard-open",
+   "sign-in/not-registered",
+   "sign-in/offline",
+   "sign-in/pasted-cleaned",
+   "sign-in/sending",
+   "sign-in/too-many-tries",
+   "sign-in/too-short",
+   "sign-in/wrong-first-digit"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Mobile numbers start with 6, 7, 8 or 9.",
+  "cls": "tm-field__helper",
+  "tag": "div",
+  "states": [
+   "sign-in/wrong-first-digit"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Montelukast 10mg",
+  "cls": "tm-row__title med-name",
+  "tag": "div",
+  "states": [
+   "case/s-10-medicines"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Monthly",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/d-alt-days",
+   "case/d-cream",
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-discard-sheet",
+   "case/d-drops",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-error-other",
+   "case/d-every-x-hours",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-inhaler",
+   "case/d-injection-default",
+   "case/d-monthly",
+   "case/d-notes-keyboard",
+   "case/d-scrolled",
+   "case/d-sos-on",
+   "case/d-sos-only",
+   "case/d-syrup",
+   "case/d-weekly"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Months",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/d-duration-picker"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "N",
+  "cls": "ps-slot-key",
+  "tag": "span",
+  "states": [
+   "case/d-cream",
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-discard-sheet",
+   "case/d-drops",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-notes-keyboard",
+   "case/d-scrolled",
+   "case/d-sos-on",
+   "case/d-syrup"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "New code sent",
+  "cls": "",
+  "tag": "span",
+  "states": [
+   "otp/new-code-sent"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "New to Truemeds?",
+  "cls": "login-signup",
+  "tag": "div",
+  "states": [
+   "sign-in/couldnt-send",
+   "sign-in/default",
+   "sign-in/inactive",
+   "sign-in/not-registered",
+   "sign-in/offline",
+   "sign-in/too-many-tries"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "No cases right now. Try again in a minute.",
+  "cls": "",
+  "tag": "span",
+  "states": [
+   "home/no-cases"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "No connection. Nothing was lost.",
+  "cls": "",
+  "tag": "span",
+  "states": [
+   "case/a-offline-action"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "No medicines on this order. Our Ops team will check it.",
+  "cls": "",
+  "tag": "span",
+  "states": [
+   "case/a-no-medicines"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "No more waiting for SMS codes",
+  "cls": "pt-t",
+  "tag": "p",
+  "states": [
+   "offer/enable-failed",
+   "offer/enabling",
+   "offer/face-id",
+   "offer/fingerprint",
+   "offer/offline",
+   "offer/screen-lock"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "None",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/d-cream"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Not now",
+  "cls": "tm-btn tm-btn--quiet tm-btn--lg tm-btn--block",
+  "tag": "button",
+  "states": [
+   "offer/enable-failed",
+   "offer/enabling",
+   "offer/face-id",
+   "offer/fingerprint",
+   "offer/offline",
+   "offer/screen-lock"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Not reachable",
+  "cls": "tm-option__title",
+  "tag": "span",
+  "states": [
+   "case/s7d-unavailable-sheet"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Not you?",
+  "cls": "tm-btn tm-btn--quiet account",
+  "tag": "button",
+  "states": [
+   "unlock/cancelled",
+   "unlock/face",
+   "unlock/fingerprint",
+   "unlock/pending",
+   "unlock/platform-retry",
+   "unlock/screen-lock",
+   "unlock/unavailable"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Notes & symptoms",
+  "cls": "tm-section-title",
+  "tag": "h2",
+  "states": [
+   "case/a-back-blocked",
+   "case/a-confirm-busy",
+   "case/a-confirm-failed",
+   "case/a-leave-sheet",
+   "case/a-long-content",
+   "case/a-no-medicines",
+   "case/a-notes-typing",
+   "case/a-offline",
+   "case/a-offline-action",
+   "case/a-order-details",
+   "case/a-release-failed",
+   "case/a-releasing",
+   "case/a-rx-viewer",
+   "case/a-scrolled",
+   "case/a-top",
+   "case/c-callback",
+   "case/c-callback-error",
+   "case/c-callback-failed",
+   "case/c-callback-refused",
+   "case/c-skip-ha",
+   "case/d-alt-days",
+   "case/d-cream",
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-discard-sheet",
+   "case/d-drops",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-error-other",
+   "case/d-every-x-hours",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-inhaler",
+   "case/d-injection-default",
+   "case/d-monthly",
+   "case/d-notes-keyboard",
+   "case/d-rx-failed",
+   "case/d-scrolled",
+   "case/d-sos-on",
+   "case/d-sos-only",
+   "case/d-syrup",
+   "case/d-weekly",
+   "case/e-availability-ended",
+   "case/e-callback-scheduled",
+   "case/g0-calling-pilot",
+   "case/g1-generic-confirm",
+   "case/g2-checking-ha",
+   "case/g3b-after-hangup",
+   "case/g3b-forwarded",
+   "case/s-10-medicines",
+   "case/s-medicine-disabled",
+   "case/s-optional-empty",
+   "case/s7a-calling",
+   "case/s7b-still-on-call",
+   "case/s7c-checking",
+   "case/s7d-result-missing",
+   "case/s7d-result-missing-pilot",
+   "case/s7d-unavailable-sheet",
+   "case/s7e-leave-sheet",
+   "case/s7f-submitted",
+   "case/t01-ready",
+   "case/t02-calling",
+   "case/t03-not-through",
+   "case/t04-doctor-missed",
+   "case/t05-result-wait",
+   "case/t06-ended-early",
+   "case/t08a-valid-cat4",
+   "case/t08b-valid-forward",
+   "case/t08c-confirm-blocked",
+   "case/t09-patient-unavailable",
+   "case/t10a-confirmed",
+   "case/t10b-forwarded",
+   "case/t11-calling-transfer",
+   "case/t12-transfer-ready",
+   "case/t13-connecting-ha",
+   "case/t14-transferred",
+   "case/t15-after-hangup",
+   "case/t15-ha-no-join",
+   "case/t16-transfer-missed",
+   "case/t16b-transfer-missed-patient",
+   "case/t16c-transfer-missed-unknown",
+   "case/t17-skip-ha-wait"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Number not registered with Truemeds. Already applied? We’ll contact you after approval.",
+  "cls": "",
+  "tag": "span",
+  "states": [
+   "sign-in/not-registered"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Once a month · 3 months",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "case/d-error-other"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Ongoing",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/d-duration-picker"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Ongoing (6 months)",
+  "cls": "ps-dur-val",
+  "tag": "span",
+  "states": [
+   "case/d-alt-days",
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-discard-sheet",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-every-x-hours",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-inhaler",
+   "case/d-monthly",
+   "case/d-notes-keyboard",
+   "case/d-scrolled",
+   "case/d-sos-on",
+   "case/d-sos-only",
+   "case/d-weekly"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Online",
+  "cls": "pdb-expand-value",
+  "tag": "span",
+  "states": [
+   "case/a-order-details"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Order TM-ORD-20240812 · ₹1,240",
+  "cls": "tm-header-task__meta",
+  "tag": "p",
+  "states": [
+   "case/a-back-blocked",
+   "case/a-confirm-busy",
+   "case/a-confirm-failed",
+   "case/a-leave-sheet",
+   "case/a-load-failed",
+   "case/a-long-content",
+   "case/a-no-medicines",
+   "case/a-notes-typing",
+   "case/a-offline",
+   "case/a-offline-action",
+   "case/a-order-details",
+   "case/a-release-failed",
+   "case/a-releasing",
+   "case/a-rx-viewer",
+   "case/a-scrolled",
+   "case/a-top",
+   "case/c-callback",
+   "case/c-callback-error",
+   "case/c-callback-failed",
+   "case/c-callback-refused",
+   "case/d-alt-days",
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-discard-sheet",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-error-other",
+   "case/d-every-x-hours",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-injection-default",
+   "case/d-monthly",
+   "case/d-notes-keyboard",
+   "case/d-rx-failed",
+   "case/d-scrolled",
+   "case/d-sos-on",
+   "case/d-sos-only",
+   "case/d-syrup",
+   "case/d-weekly",
+   "case/e-availability-ended",
+   "case/e-callback-scheduled",
+   "case/s-10-medicines",
+   "case/s-medicine-disabled",
+   "case/s-optional-empty",
+   "case/s7a-calling",
+   "case/s7b-still-on-call",
+   "case/s7c-checking",
+   "case/s7d-result-missing",
+   "case/s7d-unavailable-sheet",
+   "case/s7e-leave-sheet",
+   "case/s7f-submitted",
+   "case/t01-ready",
+   "case/t02-calling",
+   "case/t03-not-through",
+   "case/t04-doctor-missed",
+   "case/t06-ended-early",
+   "case/t08a-valid-cat4",
+   "case/t08c-confirm-blocked",
+   "case/t09-patient-unavailable",
+   "case/t10a-confirmed"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Order TM-ORD-20240891 · ₹890",
+  "cls": "tm-header-task__meta",
+  "tag": "p",
+  "states": [
+   "case/c-skip-ha",
+   "case/d-drops",
+   "case/g0-calling-pilot",
+   "case/g1-generic-confirm",
+   "case/g2-checking-ha",
+   "case/g3b-after-hangup",
+   "case/g3b-forwarded",
+   "case/s7d-result-missing-pilot",
+   "case/t05-result-wait",
+   "case/t11-calling-transfer",
+   "case/t12-transfer-ready",
+   "case/t13-connecting-ha",
+   "case/t14-transferred",
+   "case/t15-after-hangup",
+   "case/t15-ha-no-join",
+   "case/t16-transfer-missed",
+   "case/t16b-transfer-missed-patient",
+   "case/t16c-transfer-missed-unknown",
+   "case/t17-skip-ha-wait"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Order TM-ORD-20240953 · ₹560",
+  "cls": "tm-header-task__meta",
+  "tag": "p",
+  "states": [
+   "case/d-cream",
+   "case/t08b-valid-forward",
+   "case/t10b-forwarded"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Order TM-ORD-20241034 · ₹430",
+  "cls": "tm-header-task__meta",
+  "tag": "p",
+  "states": [
+   "case/d-inhaler"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Order created",
+  "cls": "pdb-expand-label",
+  "tag": "span",
+  "states": [
+   "case/a-order-details"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Order details",
+  "cls": "",
+  "tag": "span",
+  "states": [
+   "case/a-back-blocked",
+   "case/a-confirm-busy",
+   "case/a-confirm-failed",
+   "case/a-leave-sheet",
+   "case/a-long-content",
+   "case/a-no-medicines",
+   "case/a-notes-typing",
+   "case/a-offline",
+   "case/a-offline-action",
+   "case/a-order-details",
+   "case/a-release-failed",
+   "case/a-releasing",
+   "case/a-rx-viewer",
+   "case/a-scrolled",
+   "case/a-top",
+   "case/c-callback",
+   "case/c-callback-error",
+   "case/c-callback-failed",
+   "case/c-callback-refused",
+   "case/c-skip-ha",
+   "case/d-alt-days",
+   "case/d-cream",
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-discard-sheet",
+   "case/d-drops",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-error-other",
+   "case/d-every-x-hours",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-inhaler",
+   "case/d-injection-default",
+   "case/d-monthly",
+   "case/d-notes-keyboard",
+   "case/d-rx-failed",
+   "case/d-scrolled",
+   "case/d-sos-on",
+   "case/d-sos-only",
+   "case/d-syrup",
+   "case/d-weekly",
+   "case/e-availability-ended",
+   "case/e-callback-scheduled",
+   "case/g0-calling-pilot",
+   "case/g1-generic-confirm",
+   "case/g2-checking-ha",
+   "case/g3b-after-hangup",
+   "case/g3b-forwarded",
+   "case/s-10-medicines",
+   "case/s-medicine-disabled",
+   "case/s7a-calling",
+   "case/s7b-still-on-call",
+   "case/s7c-checking",
+   "case/s7d-result-missing",
+   "case/s7d-result-missing-pilot",
+   "case/s7d-unavailable-sheet",
+   "case/s7e-leave-sheet",
+   "case/s7f-submitted",
+   "case/t01-ready",
+   "case/t02-calling",
+   "case/t03-not-through",
+   "case/t04-doctor-missed",
+   "case/t05-result-wait",
+   "case/t06-ended-early",
+   "case/t08a-valid-cat4",
+   "case/t08b-valid-forward",
+   "case/t08c-confirm-blocked",
+   "case/t09-patient-unavailable",
+   "case/t10a-confirmed",
+   "case/t10b-forwarded",
+   "case/t11-calling-transfer",
+   "case/t12-transfer-ready",
+   "case/t13-connecting-ha",
+   "case/t14-transferred",
+   "case/t15-after-hangup",
+   "case/t15-ha-no-join",
+   "case/t16-transfer-missed",
+   "case/t16b-transfer-missed-patient",
+   "case/t16c-transfer-missed-unknown",
+   "case/t17-skip-ha-wait"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Other",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/d-error-other",
+   "case/d-injection-default"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Pantoprazole 40mg",
+  "cls": "tm-row__title med-name",
+  "tag": "div",
+  "states": [
+   "case/s-10-medicines"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Patient declined",
+  "cls": "tm-option__title",
+  "tag": "span",
+  "states": [
+   "case/d-disable-sheet"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Patient declined the Health Advisor call",
+  "cls": "tm-option__title",
+  "tag": "span",
+  "states": [
+   "case/c-skip-ha"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Patient refused this medicine",
+  "cls": "tm-option__desc",
+  "tag": "span",
+  "states": [
+   "case/d-disable-sheet"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Patient unavailable",
+  "cls": "tm-status-card__title",
+  "tag": "div",
+  "states": [
+   "case/t09-patient-unavailable"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Payment",
+  "cls": "pdb-expand-label",
+  "tag": "span",
+  "states": [
+   "case/a-order-details"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Pending",
+  "cls": "tm-tag tm-tag--md tm-tag--warning tm-tag--fixed",
+  "tag": "span",
+  "states": [
+   "case/a-back-blocked",
+   "case/a-leave-sheet",
+   "case/a-long-content",
+   "case/a-notes-typing",
+   "case/a-offline",
+   "case/a-offline-action",
+   "case/a-order-details",
+   "case/a-release-failed",
+   "case/a-releasing",
+   "case/a-rx-viewer",
+   "case/a-scrolled",
+   "case/a-top",
+   "case/c-callback",
+   "case/c-callback-error",
+   "case/c-callback-failed",
+   "case/c-callback-refused",
+   "case/d-alt-days",
+   "case/d-cream",
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-discard-sheet",
+   "case/d-drops",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-error-other",
+   "case/d-every-x-hours",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-inhaler",
+   "case/d-injection-default",
+   "case/d-monthly",
+   "case/d-notes-keyboard",
+   "case/d-rx-failed",
+   "case/d-scrolled",
+   "case/d-sos-on",
+   "case/d-sos-only",
+   "case/d-syrup",
+   "case/d-weekly",
+   "case/e-callback-scheduled",
+   "case/g0-calling-pilot",
+   "case/s-10-medicines",
+   "case/s-medicine-disabled",
+   "case/s-optional-empty",
+   "case/s7a-calling",
+   "case/s7b-still-on-call",
+   "case/s7c-checking",
+   "case/s7e-leave-sheet",
+   "case/t01-ready",
+   "case/t02-calling",
+   "case/t03-not-through",
+   "case/t04-doctor-missed",
+   "case/t05-result-wait",
+   "case/t06-ended-early",
+   "case/t08c-confirm-blocked",
+   "case/t09-patient-unavailable",
+   "case/t11-calling-transfer"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Phone switched off or out of coverage",
+  "cls": "tm-option__desc",
+  "tag": "span",
+  "states": [
+   "case/s7d-unavailable-sheet"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Pick a date and a time.",
+  "cls": "tm-field__helper callback-error",
+  "tag": "div",
+  "states": [
+   "case/c-callback-error"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Prescribe",
+  "cls": "tm-btn tm-btn--lg tm-btn--primary tm-btn--block",
+  "tag": "button",
+  "states": [
+   "case/d-alt-days",
+   "case/d-cream",
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-discard-sheet",
+   "case/d-drops",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-every-x-hours",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-inhaler",
+   "case/d-injection-default",
+   "case/d-monthly",
+   "case/d-scrolled",
+   "case/d-sos-on",
+   "case/d-sos-only",
+   "case/d-syrup",
+   "case/d-weekly"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Prescribe or disable 4 medicines first.",
+  "cls": "",
+  "tag": "span",
+  "states": [
+   "case/t08c-confirm-blocked"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Prescribed",
+  "cls": "tm-tag tm-tag--md tm-tag--success tm-tag--fixed",
+  "tag": "span",
+  "states": [
+   "case/a-back-blocked",
+   "case/a-confirm-busy",
+   "case/a-confirm-failed",
+   "case/a-leave-sheet",
+   "case/a-long-content",
+   "case/a-notes-typing",
+   "case/a-offline",
+   "case/a-offline-action",
+   "case/a-order-details",
+   "case/a-release-failed",
+   "case/a-releasing",
+   "case/a-rx-viewer",
+   "case/a-scrolled",
+   "case/a-top",
+   "case/c-callback",
+   "case/c-callback-error",
+   "case/c-callback-failed",
+   "case/c-callback-refused",
+   "case/c-skip-ha",
+   "case/d-alt-days",
+   "case/d-cream",
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-discard-sheet",
+   "case/d-drops",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-error-other",
+   "case/d-every-x-hours",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-inhaler",
+   "case/d-injection-default",
+   "case/d-monthly",
+   "case/d-notes-keyboard",
+   "case/d-rx-failed",
+   "case/d-scrolled",
+   "case/d-sos-on",
+   "case/d-sos-only",
+   "case/d-syrup",
+   "case/d-weekly",
+   "case/e-availability-ended",
+   "case/e-callback-scheduled",
+   "case/g0-calling-pilot",
+   "case/g1-generic-confirm",
+   "case/g2-checking-ha",
+   "case/g3b-after-hangup",
+   "case/g3b-forwarded",
+   "case/s-10-medicines",
+   "case/s-medicine-disabled",
+   "case/s-optional-empty",
+   "case/s7a-calling",
+   "case/s7b-still-on-call",
+   "case/s7c-checking",
+   "case/s7d-result-missing",
+   "case/s7d-result-missing-pilot",
+   "case/s7d-unavailable-sheet",
+   "case/s7e-leave-sheet",
+   "case/s7f-submitted",
+   "case/t01-ready",
+   "case/t02-calling",
+   "case/t03-not-through",
+   "case/t04-doctor-missed",
+   "case/t05-result-wait",
+   "case/t06-ended-early",
+   "case/t08a-valid-cat4",
+   "case/t08b-valid-forward",
+   "case/t08c-confirm-blocked",
+   "case/t09-patient-unavailable",
+   "case/t10a-confirmed",
+   "case/t10b-forwarded",
+   "case/t11-calling-transfer",
+   "case/t12-transfer-ready",
+   "case/t13-connecting-ha",
+   "case/t14-transferred",
+   "case/t15-after-hangup",
+   "case/t15-ha-no-join",
+   "case/t16-transfer-missed",
+   "case/t16b-transfer-missed-patient",
+   "case/t16c-transfer-missed-unknown",
+   "case/t17-skip-ha-wait"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Prescription",
+  "cls": "tm-header-viewer__title",
+  "tag": "div",
+  "states": [
+   "case/a-rx-viewer",
+   "case/d-rx-failed"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Prescription confirmed",
+  "cls": "tm-status-card__title",
+  "tag": "div",
+  "states": [
+   "case/e-availability-ended",
+   "case/t10a-confirmed"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Prescriptions today",
+  "cls": "",
+  "tag": "span",
+  "states": [
+   "home/active",
+   "home/add-failed",
+   "home/add-wheel",
+   "home/added",
+   "home/adding",
+   "home/end-confirmation",
+   "home/expired-pending",
+   "home/idle-expired",
+   "home/manually-ended",
+   "home/near-expiry",
+   "home/no-cases",
+   "home/offline",
+   "home/request-failed",
+   "home/requesting",
+   "home/setting",
+   "home/setup-failed",
+   "home/setup-wheel",
+   "home/stop-pending",
+   "home/unknown-result"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Printed on the prescription.",
+  "cls": "tm-field__helper",
+  "tag": "div",
+  "states": [
+   "case/d-alt-days",
+   "case/d-cream",
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-discard-sheet",
+   "case/d-drops",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-error-other",
+   "case/d-every-x-hours",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-inhaler",
+   "case/d-injection-default",
+   "case/d-monthly",
+   "case/d-notes-keyboard",
+   "case/d-scrolled",
+   "case/d-sos-on",
+   "case/d-sos-only",
+   "case/d-syrup",
+   "case/d-weekly"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Privacy Policy",
+  "cls": "",
+  "tag": "a",
+  "states": [
+   "otp/cooldown-reconciling",
+   "otp/couldnt-verify",
+   "otp/default",
+   "otp/empty-tap",
+   "otp/new-code-sent",
+   "otp/offline",
+   "otp/resend-available",
+   "otp/resend-failed",
+   "otp/resending",
+   "otp/too-many-resends",
+   "otp/too-short",
+   "otp/two-tries-left",
+   "otp/verifying",
+   "otp/wrong-code"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Profile",
+  "cls": "tm-header-task__title",
+  "tag": "h1",
+  "states": [
+   "home/logout-confirm",
+   "home/profile",
+   "home/profile-case-open"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Qty 1",
+  "cls": "tm-row__fact",
+  "tag": "span",
+  "states": [
+   "case/a-back-blocked",
+   "case/a-confirm-busy",
+   "case/a-confirm-failed",
+   "case/a-leave-sheet",
+   "case/a-long-content",
+   "case/a-notes-typing",
+   "case/a-offline",
+   "case/a-offline-action",
+   "case/a-order-details",
+   "case/a-release-failed",
+   "case/a-releasing",
+   "case/a-rx-viewer",
+   "case/a-scrolled",
+   "case/a-top",
+   "case/c-callback",
+   "case/c-callback-error",
+   "case/c-callback-failed",
+   "case/c-callback-refused",
+   "case/c-skip-ha",
+   "case/d-alt-days",
+   "case/d-cream",
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-discard-sheet",
+   "case/d-drops",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-error-other",
+   "case/d-every-x-hours",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-inhaler",
+   "case/d-injection-default",
+   "case/d-monthly",
+   "case/d-notes-keyboard",
+   "case/d-rx-failed",
+   "case/d-scrolled",
+   "case/d-sos-on",
+   "case/d-sos-only",
+   "case/d-syrup",
+   "case/d-weekly",
+   "case/e-availability-ended",
+   "case/e-callback-scheduled",
+   "case/g0-calling-pilot",
+   "case/g1-generic-confirm",
+   "case/g2-checking-ha",
+   "case/g3b-after-hangup",
+   "case/g3b-forwarded",
+   "case/s-10-medicines",
+   "case/s-medicine-disabled",
+   "case/s-optional-empty",
+   "case/s7a-calling",
+   "case/s7b-still-on-call",
+   "case/s7c-checking",
+   "case/s7d-result-missing",
+   "case/s7d-result-missing-pilot",
+   "case/s7d-unavailable-sheet",
+   "case/s7e-leave-sheet",
+   "case/s7f-submitted",
+   "case/t01-ready",
+   "case/t02-calling",
+   "case/t03-not-through",
+   "case/t04-doctor-missed",
+   "case/t05-result-wait",
+   "case/t06-ended-early",
+   "case/t08a-valid-cat4",
+   "case/t08b-valid-forward",
+   "case/t08c-confirm-blocked",
+   "case/t09-patient-unavailable",
+   "case/t10a-confirmed",
+   "case/t10b-forwarded",
+   "case/t11-calling-transfer",
+   "case/t12-transfer-ready",
+   "case/t13-connecting-ha",
+   "case/t14-transferred",
+   "case/t15-after-hangup",
+   "case/t15-ha-no-join",
+   "case/t16-transfer-missed",
+   "case/t16b-transfer-missed-patient",
+   "case/t16c-transfer-missed-unknown",
+   "case/t17-skip-ha-wait"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Qty 30",
+  "cls": "tm-row__fact",
+  "tag": "span",
+  "states": [
+   "case/a-back-blocked",
+   "case/a-confirm-busy",
+   "case/a-confirm-failed",
+   "case/a-leave-sheet",
+   "case/a-long-content",
+   "case/a-notes-typing",
+   "case/a-offline",
+   "case/a-offline-action",
+   "case/a-order-details",
+   "case/a-release-failed",
+   "case/a-releasing",
+   "case/a-rx-viewer",
+   "case/a-scrolled",
+   "case/a-top",
+   "case/c-callback",
+   "case/c-callback-error",
+   "case/c-callback-failed",
+   "case/c-callback-refused",
+   "case/c-skip-ha",
+   "case/d-alt-days",
+   "case/d-cream",
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-discard-sheet",
+   "case/d-drops",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-error-other",
+   "case/d-every-x-hours",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-inhaler",
+   "case/d-injection-default",
+   "case/d-monthly",
+   "case/d-notes-keyboard",
+   "case/d-rx-failed",
+   "case/d-scrolled",
+   "case/d-sos-on",
+   "case/d-sos-only",
+   "case/d-syrup",
+   "case/d-weekly",
+   "case/e-availability-ended",
+   "case/e-callback-scheduled",
+   "case/g0-calling-pilot",
+   "case/g1-generic-confirm",
+   "case/g2-checking-ha",
+   "case/g3b-after-hangup",
+   "case/g3b-forwarded",
+   "case/s-10-medicines",
+   "case/s-medicine-disabled",
+   "case/s-optional-empty",
+   "case/s7a-calling",
+   "case/s7b-still-on-call",
+   "case/s7c-checking",
+   "case/s7d-result-missing",
+   "case/s7d-result-missing-pilot",
+   "case/s7d-unavailable-sheet",
+   "case/s7e-leave-sheet",
+   "case/s7f-submitted",
+   "case/t01-ready",
+   "case/t02-calling",
+   "case/t03-not-through",
+   "case/t04-doctor-missed",
+   "case/t05-result-wait",
+   "case/t06-ended-early",
+   "case/t08a-valid-cat4",
+   "case/t08b-valid-forward",
+   "case/t08c-confirm-blocked",
+   "case/t09-patient-unavailable",
+   "case/t10a-confirmed",
+   "case/t10b-forwarded",
+   "case/t11-calling-transfer",
+   "case/t12-transfer-ready",
+   "case/t13-connecting-ha",
+   "case/t14-transferred",
+   "case/t15-after-hangup",
+   "case/t15-ha-no-join",
+   "case/t16-transfer-missed",
+   "case/t16b-transfer-missed-patient",
+   "case/t16c-transfer-missed-unknown",
+   "case/t17-skip-ha-wait"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Qty 4",
+  "cls": "tm-row__fact",
+  "tag": "span",
+  "states": [
+   "case/a-back-blocked",
+   "case/a-confirm-busy",
+   "case/a-confirm-failed",
+   "case/a-leave-sheet",
+   "case/a-long-content",
+   "case/a-notes-typing",
+   "case/a-offline",
+   "case/a-offline-action",
+   "case/a-order-details",
+   "case/a-release-failed",
+   "case/a-releasing",
+   "case/a-rx-viewer",
+   "case/a-scrolled",
+   "case/a-top",
+   "case/c-callback",
+   "case/c-callback-error",
+   "case/c-callback-failed",
+   "case/c-callback-refused",
+   "case/d-alt-days",
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-discard-sheet",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-error-other",
+   "case/d-every-x-hours",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-injection-default",
+   "case/d-monthly",
+   "case/d-notes-keyboard",
+   "case/d-rx-failed",
+   "case/d-scrolled",
+   "case/d-sos-on",
+   "case/d-sos-only",
+   "case/d-syrup",
+   "case/d-weekly",
+   "case/e-availability-ended",
+   "case/e-callback-scheduled",
+   "case/s-10-medicines",
+   "case/s-medicine-disabled",
+   "case/s-optional-empty",
+   "case/s7a-calling",
+   "case/s7b-still-on-call",
+   "case/s7c-checking",
+   "case/s7d-result-missing",
+   "case/s7d-unavailable-sheet",
+   "case/s7e-leave-sheet",
+   "case/s7f-submitted",
+   "case/t01-ready",
+   "case/t02-calling",
+   "case/t03-not-through",
+   "case/t04-doctor-missed",
+   "case/t06-ended-early",
+   "case/t08a-valid-cat4",
+   "case/t08c-confirm-blocked",
+   "case/t09-patient-unavailable",
+   "case/t10a-confirmed"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Qty 60",
+  "cls": "tm-row__fact",
+  "tag": "span",
+  "states": [
+   "case/a-back-blocked",
+   "case/a-confirm-busy",
+   "case/a-confirm-failed",
+   "case/a-leave-sheet",
+   "case/a-long-content",
+   "case/a-notes-typing",
+   "case/a-offline",
+   "case/a-offline-action",
+   "case/a-order-details",
+   "case/a-release-failed",
+   "case/a-releasing",
+   "case/a-rx-viewer",
+   "case/a-scrolled",
+   "case/a-top",
+   "case/c-callback",
+   "case/c-callback-error",
+   "case/c-callback-failed",
+   "case/c-callback-refused",
+   "case/c-skip-ha",
+   "case/d-alt-days",
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-discard-sheet",
+   "case/d-drops",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-error-other",
+   "case/d-every-x-hours",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-injection-default",
+   "case/d-monthly",
+   "case/d-notes-keyboard",
+   "case/d-rx-failed",
+   "case/d-scrolled",
+   "case/d-sos-on",
+   "case/d-sos-only",
+   "case/d-syrup",
+   "case/d-weekly",
+   "case/e-availability-ended",
+   "case/e-callback-scheduled",
+   "case/g0-calling-pilot",
+   "case/g1-generic-confirm",
+   "case/g2-checking-ha",
+   "case/g3b-after-hangup",
+   "case/g3b-forwarded",
+   "case/s-10-medicines",
+   "case/s-medicine-disabled",
+   "case/s-optional-empty",
+   "case/s7a-calling",
+   "case/s7b-still-on-call",
+   "case/s7c-checking",
+   "case/s7d-result-missing",
+   "case/s7d-result-missing-pilot",
+   "case/s7d-unavailable-sheet",
+   "case/s7e-leave-sheet",
+   "case/s7f-submitted",
+   "case/t01-ready",
+   "case/t02-calling",
+   "case/t03-not-through",
+   "case/t04-doctor-missed",
+   "case/t05-result-wait",
+   "case/t06-ended-early",
+   "case/t08a-valid-cat4",
+   "case/t08c-confirm-blocked",
+   "case/t09-patient-unavailable",
+   "case/t10a-confirmed",
+   "case/t11-calling-transfer",
+   "case/t12-transfer-ready",
+   "case/t13-connecting-ha",
+   "case/t14-transferred",
+   "case/t15-after-hangup",
+   "case/t15-ha-no-join",
+   "case/t16-transfer-missed",
+   "case/t16b-transfer-missed-patient",
+   "case/t16c-transfer-missed-unknown",
+   "case/t17-skip-ha-wait"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Ramesh Gupta",
+  "cls": "tm-header-task__title",
+  "tag": "h1",
+  "states": [
+   "case/a-back-blocked",
+   "case/a-confirm-busy",
+   "case/a-confirm-failed",
+   "case/a-leave-sheet",
+   "case/a-load-failed",
+   "case/a-no-medicines",
+   "case/a-notes-typing",
+   "case/a-offline",
+   "case/a-offline-action",
+   "case/a-order-details",
+   "case/a-release-failed",
+   "case/a-releasing",
+   "case/a-rx-viewer",
+   "case/a-scrolled",
+   "case/a-top",
+   "case/c-callback",
+   "case/c-callback-error",
+   "case/c-callback-failed",
+   "case/c-callback-refused",
+   "case/d-alt-days",
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-discard-sheet",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-error-other",
+   "case/d-every-x-hours",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-injection-default",
+   "case/d-monthly",
+   "case/d-notes-keyboard",
+   "case/d-rx-failed",
+   "case/d-scrolled",
+   "case/d-sos-on",
+   "case/d-sos-only",
+   "case/d-syrup",
+   "case/d-weekly",
+   "case/e-availability-ended",
+   "case/e-callback-scheduled",
+   "case/s-10-medicines",
+   "case/s-medicine-disabled",
+   "case/s-optional-empty",
+   "case/s7a-calling",
+   "case/s7b-still-on-call",
+   "case/s7c-checking",
+   "case/s7d-result-missing",
+   "case/s7d-unavailable-sheet",
+   "case/s7e-leave-sheet",
+   "case/s7f-submitted",
+   "case/t01-ready",
+   "case/t02-calling",
+   "case/t03-not-through",
+   "case/t04-doctor-missed",
+   "case/t06-ended-early",
+   "case/t08a-valid-cat4",
+   "case/t08c-confirm-blocked",
+   "case/t09-patient-unavailable",
+   "case/t10a-confirmed"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Rang with no answer, or the line was busy",
+  "cls": "tm-option__desc",
+  "tag": "span",
+  "states": [
+   "case/s7d-unavailable-sheet"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Read the script, then end the call.",
+  "cls": "tm-status-card__text",
+  "tag": "div",
+  "states": [
+   "case/g3b-forwarded",
+   "case/t15-ha-no-join"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Ready when you are",
+  "cls": "",
+  "tag": "h2",
+  "states": [
+   "unlock/cancelled",
+   "unlock/face",
+   "unlock/fingerprint",
+   "unlock/pending",
+   "unlock/platform-retry",
+   "unlock/screen-lock"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Release case",
+  "cls": "tm-btn tm-btn--primary tm-btn--lg tm-btn--block",
+  "tag": "button",
+  "states": [
+   "case/a-leave-sheet",
+   "case/s7e-leave-sheet"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Release case",
+  "cls": "tm-btn tm-btn--lg tm-btn--primary tm-btn--block concept-new",
+  "tag": "button",
+  "states": [
+   "case/a-no-medicines"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Releasing…",
+  "cls": "tm-btn tm-btn--primary tm-btn--lg tm-btn--block tm-btn--busy",
+  "tag": "button",
+  "states": [
+   "case/a-releasing"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Repeat patient, familiar with the medicines",
+  "cls": "tm-option__title",
+  "tag": "span",
+  "states": [
+   "case/c-skip-ha"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Request a case",
+  "cls": "tm-btn tm-btn--primary tm-btn--lg tm-btn--block",
+  "tag": "button",
+  "states": [
+   "home/active",
+   "home/add-failed",
+   "home/add-wheel",
+   "home/added",
+   "home/end-confirmation",
+   "home/expired-pending",
+   "home/near-expiry",
+   "home/no-cases",
+   "home/offline",
+   "home/request-failed",
+   "home/stop-pending"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Request a case whenever you have a moment.",
+  "cls": "sub",
+  "tag": "p",
+  "states": [
+   "home/active",
+   "home/add-failed",
+   "home/add-wheel",
+   "home/added",
+   "home/adding",
+   "home/end-confirmation",
+   "home/near-expiry",
+   "home/no-cases",
+   "home/offline",
+   "home/request-failed",
+   "home/requesting",
+   "home/unknown-result"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Request next case",
+  "cls": "tm-btn tm-btn--lg tm-btn--primary tm-btn--block",
+  "tag": "button",
+  "states": [
+   "case/e-callback-scheduled",
+   "case/g3b-after-hangup",
+   "case/s7f-submitted",
+   "case/t09-patient-unavailable",
+   "case/t10a-confirmed",
+   "case/t10b-forwarded",
+   "case/t14-transferred",
+   "case/t15-after-hangup"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Requesting…",
+  "cls": "tm-btn tm-btn--primary tm-btn--lg tm-btn--block tm-btn--busy",
+  "tag": "button",
+  "states": [
+   "home/requesting"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Requires in-person consultation",
+  "cls": "tm-option__desc",
+  "tag": "span",
+  "states": [
+   "case/d-disable-sheet"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Resend code",
+  "cls": "",
+  "tag": "button",
+  "states": [
+   "otp/code-expired",
+   "otp/offline",
+   "otp/resend-available",
+   "otp/resend-failed"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Resend in",
+  "cls": "",
+  "tag": "span",
+  "states": [
+   "otp/couldnt-verify",
+   "otp/default",
+   "otp/empty-tap",
+   "otp/new-code-sent",
+   "otp/too-short",
+   "otp/two-tries-left",
+   "otp/verifying",
+   "otp/wrong-code"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "SOS only",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/d-alt-days",
+   "case/d-cream",
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-discard-sheet",
+   "case/d-drops",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-error-other",
+   "case/d-every-x-hours",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-inhaler",
+   "case/d-injection-default",
+   "case/d-monthly",
+   "case/d-notes-keyboard",
+   "case/d-scrolled",
+   "case/d-sos-on",
+   "case/d-sos-only",
+   "case/d-syrup",
+   "case/d-weekly"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Salbutamol Inhaler 100mcg",
+  "cls": "tm-row__title med-name",
+  "tag": "div",
+  "states": [
+   "case/d-inhaler"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Salbutamol Inhaler 100mcg",
+  "cls": "tm-header-edit__title",
+  "tag": "h2",
+  "states": [
+   "case/d-inhaler"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Schedule callback",
+  "cls": "tm-sheet__title",
+  "tag": "h2",
+  "states": [
+   "case/c-callback",
+   "case/c-callback-error",
+   "case/c-callback-failed",
+   "case/c-callback-refused"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Select reason",
+  "cls": "tm-sheet__label",
+  "tag": "p",
+  "states": [
+   "case/c-skip-ha",
+   "case/d-disable-sheet",
+   "case/s7d-unavailable-sheet"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Send OTP",
+  "cls": "login-submit-label",
+  "tag": "span",
+  "states": [
+   "sign-in/couldnt-send",
+   "sign-in/default",
+   "sign-in/empty-tap",
+   "sign-in/keyboard-open",
+   "sign-in/not-registered",
+   "sign-in/offline",
+   "sign-in/pasted-cleaned",
+   "sign-in/too-short",
+   "sign-in/wrong-first-digit"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Sending OTP…",
+  "cls": "login-submit-label",
+  "tag": "span",
+  "states": [
+   "sign-in/sending"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Sending a new code…",
+  "cls": "",
+  "tag": "span",
+  "states": [
+   "otp/resending"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Sent to",
+  "cls": "",
+  "tag": "p",
+  "states": [
+   "otp/code-expired",
+   "otp/cooldown-reconciling",
+   "otp/couldnt-verify",
+   "otp/default",
+   "otp/empty-tap",
+   "otp/expired-and-resend-limited",
+   "otp/locked",
+   "otp/new-code-sent",
+   "otp/offline",
+   "otp/resend-available",
+   "otp/resend-failed",
+   "otp/resending",
+   "otp/too-many-resends",
+   "otp/too-short",
+   "otp/two-tries-left",
+   "otp/verifying",
+   "otp/wrong-code"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Set availability",
+  "cls": "tm-btn tm-btn--primary tm-btn--lg tm-btn--block",
+  "tag": "button",
+  "states": [
+   "home/idle-expired",
+   "home/manually-ended",
+   "home/setup-failed",
+   "home/setup-wheel"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Setting…",
+  "cls": "tm-btn tm-btn--primary tm-btn--lg tm-btn--block tm-btn--busy",
+  "tag": "button",
+  "states": [
+   "home/setting"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Sign up",
+  "cls": "login-signup-label",
+  "tag": "span",
+  "states": [
+   "sign-in/couldnt-send",
+   "sign-in/default",
+   "sign-in/inactive",
+   "sign-in/not-registered",
+   "sign-in/offline",
+   "sign-in/too-many-tries"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Skip HA",
+  "cls": "tm-btn tm-btn--lg tm-btn--secondary",
+  "tag": "button",
+  "states": [
+   "case/c-skip-ha",
+   "case/g1-generic-confirm",
+   "case/g2-checking-ha",
+   "case/t08b-valid-forward",
+   "case/t12-transfer-ready",
+   "case/t13-connecting-ha",
+   "case/t16-transfer-missed",
+   "case/t16b-transfer-missed-patient",
+   "case/t16c-transfer-missed-unknown"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Skip the Health Advisor call",
+  "cls": "tm-sheet__title",
+  "tag": "h2",
+  "states": [
+   "case/c-skip-ha"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Skip the OTP next time",
+  "cls": "tm-text-title-lg",
+  "tag": "h1",
+  "states": [
+   "offer/enable-failed",
+   "offer/enabling",
+   "offer/face-id",
+   "offer/fingerprint",
+   "offer/offline",
+   "offer/screen-lock"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Sodium Chloride Eye Drops 0.9%",
+  "cls": "tm-row__title med-name",
+  "tag": "div",
+  "states": [
+   "case/c-skip-ha",
+   "case/d-drops",
+   "case/g0-calling-pilot",
+   "case/g1-generic-confirm",
+   "case/g2-checking-ha",
+   "case/g3b-after-hangup",
+   "case/g3b-forwarded",
+   "case/s7d-result-missing-pilot",
+   "case/t05-result-wait",
+   "case/t11-calling-transfer",
+   "case/t12-transfer-ready",
+   "case/t13-connecting-ha",
+   "case/t14-transferred",
+   "case/t15-after-hangup",
+   "case/t15-ha-no-join",
+   "case/t16-transfer-missed",
+   "case/t16b-transfer-missed-patient",
+   "case/t16c-transfer-missed-unknown",
+   "case/t17-skip-ha-wait"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Sodium Chloride Eye Drops 0.9%",
+  "cls": "tm-header-edit__title",
+  "tag": "h2",
+  "states": [
+   "case/d-drops"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Stay",
+  "cls": "tm-btn tm-btn--quiet tm-btn--lg tm-btn--block",
+  "tag": "button",
+  "states": [
+   "case/a-leave-sheet",
+   "case/a-releasing",
+   "case/s7e-leave-sheet"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Stay signed in",
+  "cls": "tm-btn tm-btn--quiet tm-btn--lg tm-btn--block",
+  "tag": "button",
+  "states": [
+   "home/logout-confirm"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Still talking",
+  "cls": "tm-btn tm-btn--lg tm-btn--secondary",
+  "tag": "button",
+  "states": [
+   "case/s7b-still-on-call"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Sunita Patel",
+  "cls": "tm-header-task__title",
+  "tag": "h1",
+  "states": [
+   "case/c-skip-ha",
+   "case/d-drops",
+   "case/g0-calling-pilot",
+   "case/g1-generic-confirm",
+   "case/g2-checking-ha",
+   "case/g3b-after-hangup",
+   "case/g3b-forwarded",
+   "case/s7d-result-missing-pilot",
+   "case/t05-result-wait",
+   "case/t11-calling-transfer",
+   "case/t12-transfer-ready",
+   "case/t13-connecting-ha",
+   "case/t14-transferred",
+   "case/t15-after-hangup",
+   "case/t15-ha-no-join",
+   "case/t16-transfer-missed",
+   "case/t16b-transfer-missed-patient",
+   "case/t16c-transfer-missed-unknown",
+   "case/t17-skip-ha-wait"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Switch account",
+  "cls": "",
+  "tag": "strong",
+  "states": [
+   "unlock/cancelled",
+   "unlock/face",
+   "unlock/fingerprint",
+   "unlock/pending",
+   "unlock/platform-retry",
+   "unlock/screen-lock",
+   "unlock/unavailable"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Syrup",
+  "cls": "tm-header-edit__subtitle",
+  "tag": "p",
+  "states": [
+   "case/d-syrup"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Tablet",
+  "cls": "tm-header-edit__subtitle",
+  "tag": "p",
+  "states": [
+   "case/d-alt-days",
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-discard-sheet",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-every-x-hours",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-monthly",
+   "case/d-notes-keyboard",
+   "case/d-scrolled",
+   "case/d-sos-on",
+   "case/d-sos-only"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Telmisartan 40mg",
+  "cls": "tm-row__title med-name",
+  "tag": "div",
+  "states": [
+   "case/s-10-medicines"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Terms & Conditions",
+  "cls": "",
+  "tag": "a",
+  "states": [
+   "otp/cooldown-reconciling",
+   "otp/couldnt-verify",
+   "otp/default",
+   "otp/empty-tap",
+   "otp/new-code-sent",
+   "otp/offline",
+   "otp/resend-available",
+   "otp/resend-failed",
+   "otp/resending",
+   "otp/too-many-resends",
+   "otp/too-short",
+   "otp/two-tries-left",
+   "otp/verifying",
+   "otp/wrong-code"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "The call ended before the transfer. The Health Advisor will call the patient back.",
+  "cls": "",
+  "tag": "span",
+  "states": [
+   "case/t16c-transfer-missed-unknown"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "The ordered strength isn’t right",
+  "cls": "tm-option__desc",
+  "tag": "span",
+  "states": [
+   "case/d-disable-sheet"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "The patient didn’t want the call",
+  "cls": "tm-option__desc",
+  "tag": "span",
+  "states": [
+   "case/c-skip-ha"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "The patient ended the call before the transfer. The Health Advisor will call them back.",
+  "cls": "",
+  "tag": "span",
+  "states": [
+   "case/t16b-transfer-missed-patient"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Then you can go back to Home.",
+  "cls": "tm-toast",
+  "tag": "div",
+  "states": [
+   "case/a-back-blocked"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "This account is inactive.",
+  "cls": "",
+  "tag": "span",
+  "states": [
+   "sign-in/inactive"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "This code has expired.",
+  "cls": "tm-field__helper",
+  "tag": "div",
+  "states": [
+   "otp/code-expired"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "This code has expired. Request a new code in 9:42, or call Doctor Ops.",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "otp/expired-and-resend-limited"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Time",
+  "cls": "tm-sheet__label sheet-section-label",
+  "tag": "div",
+  "states": [
+   "case/c-callback",
+   "case/c-callback-error",
+   "case/c-callback-failed",
+   "case/c-callback-refused"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Time added",
+  "cls": "tm-toast home-toast",
+  "tag": "div",
+  "states": [
+   "home/added"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Time remaining",
+  "cls": "timer-label",
+  "tag": "span",
+  "states": [
+   "home/active",
+   "home/add-failed",
+   "home/add-wheel",
+   "home/added",
+   "home/adding",
+   "home/end-confirmation",
+   "home/expired-pending",
+   "home/near-expiry",
+   "home/no-cases",
+   "home/offline",
+   "home/request-failed",
+   "home/requesting",
+   "home/unknown-result"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Today",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/c-callback",
+   "case/c-callback-error",
+   "case/c-callback-failed",
+   "case/c-callback-refused"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Today’s earnings",
+  "cls": "profile-label",
+  "tag": "p",
+  "states": [
+   "home/logout-confirm",
+   "home/profile",
+   "home/profile-case-open"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Tomorrow",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/c-callback",
+   "case/c-callback-error",
+   "case/c-callback-failed",
+   "case/c-callback-refused"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Too many attempts on this number.",
+  "cls": "",
+  "tag": "span",
+  "states": [
+   "sign-in/too-many-tries"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Too many wrong tries. Try again in 14:52, or call Doctor Ops.",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "otp/locked"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Transferred to Health Advisor",
+  "cls": "tm-status-card__title",
+  "tag": "div",
+  "states": [
+   "case/t14-transferred"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Transferring…",
+  "cls": "tm-btn tm-btn--lg tm-btn--primary tm-btn--block tm-btn--busy concept-new",
+  "tag": "button",
+  "states": [
+   "case/t13-connecting-ha"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Truemeds never sees or stores it.",
+  "cls": "pt-d",
+  "tag": "p",
+  "states": [
+   "offer/enable-failed",
+   "offer/enabling",
+   "offer/face-id",
+   "offer/fingerprint",
+   "offer/offline",
+   "offer/screen-lock"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Try again",
+  "cls": "",
+  "tag": "span",
+  "states": [
+   "offer/enable-failed"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Try again",
+  "cls": "tm-btn tm-btn--primary tm-btn--lg tm-btn--block concept-new",
+  "tag": "button",
+  "states": [
+   "case/a-load-failed",
+   "case/d-rx-failed"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Try again in 9:42",
+  "cls": "login-submit-label",
+  "tag": "span",
+  "states": [
+   "sign-in/too-many-tries"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Turn it off from your profile.",
+  "cls": "pt-d",
+  "tag": "p",
+  "states": [
+   "offer/enable-failed",
+   "offer/enabling",
+   "offer/face-id",
+   "offer/fingerprint",
+   "offer/offline",
+   "offer/screen-lock"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Turn on faster sign-in",
+  "cls": "",
+  "tag": "span",
+  "states": [
+   "offer/face-id",
+   "offer/fingerprint",
+   "offer/offline",
+   "offer/screen-lock"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Turning on…",
+  "cls": "",
+  "tag": "span",
+  "states": [
+   "offer/enabling"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Unavailable",
+  "cls": "tm-btn tm-btn--lg tm-btn--destructive",
+  "tag": "button",
+  "states": [
+   "case/s7d-result-missing",
+   "case/s7d-result-missing-pilot",
+   "case/s7d-unavailable-sheet"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Unlock the app with a glance, not an OTP.",
+  "cls": "pt-d",
+  "tag": "p",
+  "states": [
+   "offer/face-id"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Unlock the app with one touch, not an OTP.",
+  "cls": "pt-d",
+  "tag": "p",
+  "states": [
+   "offer/enable-failed",
+   "offer/enabling",
+   "offer/fingerprint",
+   "offer/offline"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Unlock the app with your PIN or pattern, not an OTP.",
+  "cls": "pt-d",
+  "tag": "p",
+  "states": [
+   "offer/screen-lock"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Unlock with Face ID",
+  "cls": "",
+  "tag": "span",
+  "states": [
+   "unlock/face"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Unlock with fingerprint",
+  "cls": "",
+  "tag": "span",
+  "states": [
+   "unlock/cancelled",
+   "unlock/fingerprint",
+   "unlock/platform-retry"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Unlock with screen lock",
+  "cls": "",
+  "tag": "span",
+  "states": [
+   "unlock/screen-lock"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Unlocking…",
+  "cls": "",
+  "tag": "span",
+  "states": [
+   "unlock/pending"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Use Face ID instead of waiting for an OTP.",
+  "cls": "sub",
+  "tag": "p",
+  "states": [
+   "offer/face-id"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Use OTP instead",
+  "cls": "tm-btn tm-btn--quiet tm-btn--lg tm-btn--block",
+  "tag": "button",
+  "states": [
+   "unlock/cancelled",
+   "unlock/face",
+   "unlock/fingerprint",
+   "unlock/pending",
+   "unlock/platform-retry",
+   "unlock/screen-lock"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Use OTP instead",
+  "cls": "tm-btn tm-btn--lg tm-btn--block tm-btn--primary",
+  "tag": "button",
+  "states": [
+   "unlock/unavailable"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Use numbers only, e.g. 7.5 units.",
+  "cls": "tm-field__helper",
+  "tag": "div",
+  "states": [
+   "case/d-error-other"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Use your fingerprint instead of waiting for an OTP.",
+  "cls": "sub",
+  "tag": "p",
+  "states": [
+   "offer/enable-failed",
+   "offer/enabling",
+   "offer/fingerprint",
+   "offer/offline"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Use your screen lock instead of an OTP.",
+  "cls": "sub",
+  "tag": "p",
+  "states": [
+   "offer/screen-lock"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "User manual",
+  "cls": "profile-row-label",
+  "tag": "span",
+  "states": [
+   "home/logout-confirm",
+   "home/profile",
+   "home/profile-case-open"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Venkataraman Ramachandran Iyer",
+  "cls": "tm-header-task__title",
+  "tag": "h1",
+  "states": [
+   "case/a-long-content"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Verify & sign in",
+  "cls": "tm-btn tm-btn--lg tm-btn--primary tm-btn--block",
+  "tag": "button",
+  "states": [
+   "otp/code-expired",
+   "otp/cooldown-reconciling",
+   "otp/couldnt-verify",
+   "otp/default",
+   "otp/empty-tap",
+   "otp/expired-and-resend-limited",
+   "otp/locked",
+   "otp/new-code-sent",
+   "otp/offline",
+   "otp/resend-available",
+   "otp/resend-failed",
+   "otp/resending",
+   "otp/too-many-resends",
+   "otp/too-short",
+   "otp/two-tries-left",
+   "otp/wrong-code"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Verify your number",
+  "cls": "tm-text-title-lg",
+  "tag": "h1",
+  "states": [
+   "otp/code-expired",
+   "otp/cooldown-reconciling",
+   "otp/couldnt-verify",
+   "otp/default",
+   "otp/empty-tap",
+   "otp/expired-and-resend-limited",
+   "otp/locked",
+   "otp/new-code-sent",
+   "otp/offline",
+   "otp/resend-available",
+   "otp/resend-failed",
+   "otp/resending",
+   "otp/too-many-resends",
+   "otp/too-short",
+   "otp/two-tries-left",
+   "otp/verifying",
+   "otp/wrong-code"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Verifying…",
+  "cls": "tm-btn tm-btn--lg tm-btn--primary tm-btn--block tm-btn--busy",
+  "tag": "button",
+  "states": [
+   "otp/verifying"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "View Rx",
+  "cls": "tm-btn tm-btn--secondary",
+  "tag": "button",
+  "states": [
+   "case/a-back-blocked",
+   "case/a-confirm-busy",
+   "case/a-confirm-failed",
+   "case/a-leave-sheet",
+   "case/a-long-content",
+   "case/a-no-medicines",
+   "case/a-notes-typing",
+   "case/a-offline",
+   "case/a-offline-action",
+   "case/a-order-details",
+   "case/a-release-failed",
+   "case/a-releasing",
+   "case/a-rx-viewer",
+   "case/a-scrolled",
+   "case/a-top",
+   "case/c-callback",
+   "case/c-callback-error",
+   "case/c-callback-failed",
+   "case/c-callback-refused",
+   "case/c-skip-ha",
+   "case/d-alt-days",
+   "case/d-cream",
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-discard-sheet",
+   "case/d-drops",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-error-other",
+   "case/d-every-x-hours",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-inhaler",
+   "case/d-injection-default",
+   "case/d-monthly",
+   "case/d-notes-keyboard",
+   "case/d-rx-failed",
+   "case/d-scrolled",
+   "case/d-sos-on",
+   "case/d-sos-only",
+   "case/d-syrup",
+   "case/d-weekly",
+   "case/e-availability-ended",
+   "case/e-callback-scheduled",
+   "case/g0-calling-pilot",
+   "case/g1-generic-confirm",
+   "case/g2-checking-ha",
+   "case/g3b-after-hangup",
+   "case/g3b-forwarded",
+   "case/s-10-medicines",
+   "case/s-medicine-disabled",
+   "case/s-optional-empty",
+   "case/s7a-calling",
+   "case/s7b-still-on-call",
+   "case/s7c-checking",
+   "case/s7d-result-missing",
+   "case/s7d-result-missing-pilot",
+   "case/s7d-unavailable-sheet",
+   "case/s7e-leave-sheet",
+   "case/s7f-submitted",
+   "case/t01-ready",
+   "case/t02-calling",
+   "case/t03-not-through",
+   "case/t04-doctor-missed",
+   "case/t05-result-wait",
+   "case/t06-ended-early",
+   "case/t08a-valid-cat4",
+   "case/t08b-valid-forward",
+   "case/t08c-confirm-blocked",
+   "case/t09-patient-unavailable",
+   "case/t10a-confirmed",
+   "case/t10b-forwarded",
+   "case/t11-calling-transfer",
+   "case/t12-transfer-ready",
+   "case/t13-connecting-ha",
+   "case/t14-transferred",
+   "case/t15-after-hangup",
+   "case/t15-ha-no-join",
+   "case/t16-transfer-missed",
+   "case/t16b-transfer-missed-patient",
+   "case/t16c-transfer-missed-unknown",
+   "case/t17-skip-ha-wait"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Vikram Nair",
+  "cls": "tm-header-task__title",
+  "tag": "h1",
+  "states": [
+   "case/d-cream",
+   "case/t08b-valid-forward",
+   "case/t10b-forwarded"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Vitamin B12 1000mcg",
+  "cls": "tm-row__title med-name",
+  "tag": "div",
+  "states": [
+   "case/a-back-blocked",
+   "case/a-confirm-busy",
+   "case/a-confirm-failed",
+   "case/a-leave-sheet",
+   "case/a-long-content",
+   "case/a-notes-typing",
+   "case/a-offline",
+   "case/a-offline-action",
+   "case/a-order-details",
+   "case/a-release-failed",
+   "case/a-releasing",
+   "case/a-rx-viewer",
+   "case/a-scrolled",
+   "case/a-top",
+   "case/c-callback",
+   "case/c-callback-error",
+   "case/c-callback-failed",
+   "case/c-callback-refused",
+   "case/d-alt-days",
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-discard-sheet",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-error-other",
+   "case/d-every-x-hours",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-injection-default",
+   "case/d-monthly",
+   "case/d-notes-keyboard",
+   "case/d-rx-failed",
+   "case/d-scrolled",
+   "case/d-sos-on",
+   "case/d-sos-only",
+   "case/d-syrup",
+   "case/d-weekly",
+   "case/e-availability-ended",
+   "case/e-callback-scheduled",
+   "case/s-10-medicines",
+   "case/s-medicine-disabled",
+   "case/s-optional-empty",
+   "case/s7a-calling",
+   "case/s7b-still-on-call",
+   "case/s7c-checking",
+   "case/s7d-result-missing",
+   "case/s7d-unavailable-sheet",
+   "case/s7e-leave-sheet",
+   "case/s7f-submitted",
+   "case/t01-ready",
+   "case/t02-calling",
+   "case/t03-not-through",
+   "case/t04-doctor-missed",
+   "case/t06-ended-early",
+   "case/t08a-valid-cat4",
+   "case/t08c-confirm-blocked",
+   "case/t09-patient-unavailable",
+   "case/t10a-confirmed"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Vitamin B12 1000mcg",
+  "cls": "tm-header-edit__title",
+  "tag": "h2",
+  "states": [
+   "case/d-error-other",
+   "case/d-injection-default"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Waiting for the call record",
+  "cls": "tm-status-card__title",
+  "tag": "div",
+  "states": [
+   "case/s7f-submitted"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Waiting for the call to end…",
+  "cls": "tm-status-line concept-new",
+  "tag": "div",
+  "states": [
+   "case/g3b-forwarded",
+   "case/t15-ha-no-join"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Weekly",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/d-alt-days",
+   "case/d-cream",
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-discard-sheet",
+   "case/d-drops",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-error-other",
+   "case/d-every-x-hours",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-inhaler",
+   "case/d-injection-default",
+   "case/d-monthly",
+   "case/d-notes-keyboard",
+   "case/d-scrolled",
+   "case/d-sos-on",
+   "case/d-sos-only",
+   "case/d-syrup",
+   "case/d-weekly"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Weeks",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/d-duration-picker"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Welcome, Doctor",
+  "cls": "",
+  "tag": "h1",
+  "states": [
+   "sign-in/couldnt-send",
+   "sign-in/default",
+   "sign-in/empty-tap",
+   "sign-in/inactive",
+   "sign-in/keyboard-open",
+   "sign-in/not-registered",
+   "sign-in/offline",
+   "sign-in/pasted-cleaned",
+   "sign-in/sending",
+   "sign-in/too-many-tries",
+   "sign-in/too-short",
+   "sign-in/wrong-first-digit"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "We’ll send you a verification code by SMS.",
+  "cls": "tm-field__helper",
+  "tag": "div",
+  "states": [
+   "sign-in/default",
+   "sign-in/keyboard-open",
+   "sign-in/pasted-cleaned",
+   "sign-in/sending"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Wrong code.",
+  "cls": "tm-field__helper",
+  "tag": "div",
+  "states": [
+   "otp/wrong-code"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Wrong code. 2 tries left.",
+  "cls": "tm-field__helper",
+  "tag": "div",
+  "states": [
+   "otp/two-tries-left"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Wrong number",
+  "cls": "tm-option__title",
+  "tag": "span",
+  "states": [
+   "case/s7d-unavailable-sheet"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Wrong strength",
+  "cls": "tm-option__title",
+  "tag": "span",
+  "states": [
+   "case/d-disable-sheet"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "You can log out after this case is closed.",
+  "cls": "",
+  "tag": "span",
+  "states": [
+   "home/profile-case-open"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "You didn’t answer the call.",
+  "cls": "",
+  "tag": "span",
+  "states": [
+   "case/t04-doctor-missed"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "You ended the call before the transfer. Next time, stay on the line until the Health Advisor joins. They’ll call the patient back.",
+  "cls": "",
+  "tag": "span",
+  "states": [
+   "case/t16-transfer-missed"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "You ended your availability. You won’t get new cases.",
+  "cls": "",
+  "tag": "span",
+  "states": [
+   "home/manually-ended"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "You won’t get new cases.",
+  "cls": "sub",
+  "tag": "p",
+  "states": [
+   "home/expired-pending",
+   "home/stop-pending"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "You won’t receive new cases after this. A case already assigned to you stays with you.",
+  "cls": "tm-sheet__subtitle",
+  "tag": "p",
+  "states": [
+   "home/end-confirmation"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Your Face ID stays on your phone",
+  "cls": "pt-t",
+  "tag": "p",
+  "states": [
+   "offer/face-id"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Your availability ended. You won’t get new cases.",
+  "cls": "",
+  "tag": "span",
+  "states": [
+   "home/idle-expired"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Your availability has ended",
+  "cls": "tm-text-title-lg",
+  "tag": "h1",
+  "states": [
+   "home/expired-pending"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Your changes to this medicine won’t be saved.",
+  "cls": "tm-sheet__subtitle",
+  "tag": "p",
+  "states": [
+   "case/d-discard-sheet"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Your fingerprint stays on your phone",
+  "cls": "pt-t",
+  "tag": "p",
+  "states": [
+   "offer/enable-failed",
+   "offer/enabling",
+   "offer/fingerprint",
+   "offer/offline"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Your last request is still active.",
+  "cls": "",
+  "tag": "span",
+  "states": [
+   "home/expired-pending"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Your partner in thoughtful, affordable care.",
+  "cls": "",
+  "tag": "p",
+  "states": [
+   "sign-in/couldnt-send",
+   "sign-in/default",
+   "sign-in/empty-tap",
+   "sign-in/inactive",
+   "sign-in/keyboard-open",
+   "sign-in/not-registered",
+   "sign-in/offline",
+   "sign-in/pasted-cleaned",
+   "sign-in/sending",
+   "sign-in/too-many-tries",
+   "sign-in/too-short",
+   "sign-in/wrong-first-digit"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Your prescription is saved. It isn’t confirmed until the call record arrives.",
+  "cls": "tm-status-card__text",
+  "tag": "div",
+  "states": [
+   "case/s7f-submitted"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Your screen lock stays on your phone",
+  "cls": "pt-t",
+  "tag": "p",
+  "states": [
+   "offer/screen-lock"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "You’ll stop getting cases until you sign in again.",
+  "cls": "tm-sheet__subtitle",
+  "tag": "p",
+  "states": [
+   "home/logout-confirm"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "You’re available for consultations",
+  "cls": "tm-text-title-lg",
+  "tag": "h1",
+  "states": [
+   "home/active",
+   "home/add-failed",
+   "home/add-wheel",
+   "home/added",
+   "home/adding",
+   "home/end-confirmation",
+   "home/near-expiry",
+   "home/no-cases",
+   "home/offline",
+   "home/request-failed",
+   "home/requesting",
+   "home/unknown-result"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "You’re offline. Check your connection.",
+  "cls": "",
+  "tag": "span",
+  "states": [
+   "offer/offline",
+   "otp/offline",
+   "sign-in/offline"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "You’re offline. Reconnect to call or confirm.",
+  "cls": "",
+  "tag": "span",
+  "states": [
+   "case/a-offline"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "You’re offline. Reconnect to request a case.",
+  "cls": "",
+  "tag": "span",
+  "states": [
+   "home/offline"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "You’ve asked for too many codes. Use the last one, or call Doctor Ops.",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "otp/too-many-resends"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "a",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "case/a-notes-typing",
+   "case/d-notes-keyboard"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "and acknowledge the",
+  "cls": "consent tm-text-body-sm show",
+  "tag": "p",
+  "states": [
+   "otp/cooldown-reconciling",
+   "otp/couldnt-verify",
+   "otp/default",
+   "otp/empty-tap",
+   "otp/new-code-sent",
+   "otp/offline",
+   "otp/resend-available",
+   "otp/resend-failed",
+   "otp/resending",
+   "otp/too-many-resends",
+   "otp/too-short",
+   "otp/two-tries-left",
+   "otp/verifying",
+   "otp/wrong-code"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "b",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "case/a-notes-typing",
+   "case/d-notes-keyboard"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "c",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "case/a-notes-typing",
+   "case/d-notes-keyboard"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "d",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "case/a-notes-typing",
+   "case/d-notes-keyboard"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "e",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "case/a-notes-typing",
+   "case/d-notes-keyboard"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "f",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "case/a-notes-typing",
+   "case/d-notes-keyboard"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "g",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "case/a-notes-typing",
+   "case/d-notes-keyboard"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "h",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "case/a-notes-typing",
+   "case/d-notes-keyboard"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "i",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "case/a-notes-typing",
+   "case/d-notes-keyboard"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "j",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "case/a-notes-typing",
+   "case/d-notes-keyboard"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "k",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "case/a-notes-typing",
+   "case/d-notes-keyboard"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "l",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "case/a-notes-typing",
+   "case/d-notes-keyboard"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "m",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "case/a-notes-typing",
+   "case/d-notes-keyboard"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "n",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "case/a-notes-typing",
+   "case/d-notes-keyboard"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "o",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "case/a-notes-typing",
+   "case/d-notes-keyboard"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "p",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "case/a-notes-typing",
+   "case/d-notes-keyboard"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "q",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "case/a-notes-typing",
+   "case/d-notes-keyboard"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "r",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "case/a-notes-typing",
+   "case/d-notes-keyboard"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "return",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "case/a-notes-typing",
+   "case/d-notes-keyboard"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "s",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "case/a-notes-typing",
+   "case/d-notes-keyboard"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "space",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "case/a-notes-typing",
+   "case/d-notes-keyboard"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "t",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "case/a-notes-typing",
+   "case/d-notes-keyboard"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "u",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "case/a-notes-typing",
+   "case/d-notes-keyboard"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "units",
+  "cls": "ps-unit",
+  "tag": "span",
+  "states": [
+   "case/d-error-other"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "v",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "case/a-notes-typing",
+   "case/d-notes-keyboard"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "w",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "case/a-notes-typing",
+   "case/d-notes-keyboard"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "x",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "case/a-notes-typing",
+   "case/d-notes-keyboard"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "y",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "case/a-notes-typing",
+   "case/d-notes-keyboard"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "z",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "case/a-notes-typing",
+   "case/d-notes-keyboard"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "·",
+  "cls": "",
+  "tag": "p",
+  "states": [
+   "otp/code-expired",
+   "otp/cooldown-reconciling",
+   "otp/couldnt-verify",
+   "otp/default",
+   "otp/empty-tap",
+   "otp/expired-and-resend-limited",
+   "otp/locked",
+   "otp/new-code-sent",
+   "otp/offline",
+   "otp/resend-available",
+   "otp/resend-failed",
+   "otp/resending",
+   "otp/too-many-resends",
+   "otp/too-short",
+   "otp/two-tries-left",
+   "otp/verifying",
+   "otp/wrong-code"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "½",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/d-alt-days",
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-discard-sheet",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-every-x-hours",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-monthly",
+   "case/d-notes-keyboard",
+   "case/d-scrolled",
+   "case/d-sos-on",
+   "case/d-sos-only"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "“I’m writing your prescription now. Our Health Advisor will help you with the next steps.”",
+  "cls": "pcb-text",
+  "tag": "div",
+  "states": [
+   "case/g0-calling-pilot",
+   "case/g1-generic-confirm",
+   "case/g2-checking-ha"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "“I’m writing your prescription now. Please stay on the line — I’ll connect you to our Health Advisor.”",
+  "cls": "pcb-text",
+  "tag": "div",
+  "states": [
+   "case/c-skip-ha",
+   "case/t11-calling-transfer",
+   "case/t12-transfer-ready",
+   "case/t13-connecting-ha"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "“I’m writing your prescription now. You can track your order in the Truemeds app.”",
+  "cls": "pcb-text",
+  "tag": "div",
+  "states": [
+   "case/a-back-blocked",
+   "case/s7a-calling",
+   "case/s7b-still-on-call",
+   "case/t02-calling",
+   "case/t17-skip-ha-wait"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "“I’ve written your prescription. Our Health Advisor will call you back to help with the next steps.”",
+  "cls": "pcb-text",
+  "tag": "div",
+  "states": [
+   "case/g3b-forwarded",
+   "case/t15-ha-no-join"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "₹0.00",
+  "cls": "pt-t",
+  "tag": "p",
+  "states": [
+   "home/logout-confirm",
+   "home/profile",
+   "home/profile-case-open"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "₹60.00",
+  "cls": "pt-t",
+  "tag": "p",
+  "states": [
+   "home/logout-confirm",
+   "home/profile",
+   "home/profile-case-open"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "⇧",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "case/a-notes-typing",
+   "case/d-notes-keyboard"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "⌫",
+  "cls": "login-key login-key--quiet",
+  "tag": "span",
+  "states": [
+   "sign-in/empty-tap",
+   "sign-in/keyboard-open",
+   "sign-in/pasted-cleaned",
+   "sign-in/sending",
+   "sign-in/too-short",
+   "sign-in/wrong-first-digit"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "⌫",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "case/a-notes-typing",
+   "case/d-error-other",
+   "case/d-notes-keyboard",
+   "otp/code-expired",
+   "otp/cooldown-reconciling",
+   "otp/couldnt-verify",
+   "otp/default",
+   "otp/empty-tap",
+   "otp/new-code-sent",
+   "otp/offline",
+   "otp/resend-available",
+   "otp/resend-failed",
+   "otp/resending",
+   "otp/too-many-resends",
+   "otp/too-short",
+   "otp/two-tries-left",
+   "otp/verifying",
+   "otp/wrong-code"
+  ]
+ }
+]

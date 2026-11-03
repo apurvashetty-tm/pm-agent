@@ -292,7 +292,7 @@ body.concept-closed #success-toast{pointer-events:auto}
         <form class="auth-form" id="signin-form" novalidate onsubmit="event.preventDefault(); requestOtp();">
           <div class="tm-field" id="signin-field">
             <label class="tm-field__label" for="signin-phone">Mobile number</label>
-            <div class="tm-field__control"><span class="tm-field__prefix">+91</span><input id="signin-phone" type="tel" inputmode="tel" autocomplete="tel-national" placeholder="10-digit mobile number" aria-describedby="signin-help"></div>
+            <div class="tm-field__control"><span class="tm-field__prefix">+91</span><input id="signin-phone" type="tel" inputmode="tel" autocomplete="tel-national" placeholder="e.g. 98765 43210" aria-describedby="signin-help"></div>
             <div class="tm-field__helper" id="signin-help">We’ll send you a verification code by SMS.</div>
           </div>
           <div class="auth-notice" id="signin-notice" hidden><span class="tm-icon" id="signin-notice-icon" data-icon="info-circle" aria-hidden="true"></span><div id="signin-notice-text"></div></div>
@@ -651,7 +651,7 @@ body.concept-closed #success-toast{pointer-events:auto}
   <div id="sheet-discard" class="bottom-sheet tm-sheet">
     <header class="tm-sheet__header"><h2 class="tm-sheet__title">Discard changes?</h2><button class="tm-btn tm-btn--quiet tm-btn--icon tm-sheet__close" onclick="closeSheet()" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button></header>
     <div class="tm-sheet__body">
-      <p class="tm-sheet__subtitle">Your changes to this medicine will not be saved.</p>
+      <p class="tm-sheet__subtitle">Your changes to this medicine won’t be saved.</p>
     </div>
     <div class="tm-sheet__actions"><button class="tm-btn tm-btn--destructive tm-btn--lg tm-btn--block" onclick="discardPrescribe()">Discard</button>
       <button class="tm-btn tm-btn--quiet tm-btn--lg tm-btn--block" onclick="closeSheet()">Keep editing</button></div>
@@ -663,11 +663,11 @@ body.concept-closed #success-toast{pointer-events:auto}
     <div class="tm-sheet__body">
       <div class="tm-sheet__label" id="sheet-disable-med-label">Select reason</div>
       <div class="reason-list">
-        <button class="tm-option" onclick="confirmDisable('Cannot prescribe remotely')"><span class="tm-option__title">Cannot prescribe remotely</span><span class="tm-option__desc">Requires in-person consultation</span></button>
+        <button class="tm-option" onclick="confirmDisable('Can’t prescribe remotely')"><span class="tm-option__title">Can’t prescribe remotely</span><span class="tm-option__desc">Requires in-person consultation</span></button>
         <button class="tm-option" onclick="confirmDisable('Contraindicated for patient')"><span class="tm-option__title">Contraindicated for patient</span><span class="tm-option__desc">Allergy or known reaction</span></button>
         <button class="tm-option" onclick="confirmDisable('Duplicate medication')"><span class="tm-option__title">Duplicate medication</span><span class="tm-option__desc">Already on equivalent drug</span></button>
         <button class="tm-option" onclick="confirmDisable('Patient declined')"><span class="tm-option__title">Patient declined</span><span class="tm-option__desc">Patient refused this medicine</span></button>
-        <button class="tm-option" onclick="confirmDisable('Wrong strength')"><span class="tm-option__title">Wrong strength</span><span class="tm-option__desc">The ordered strength isn't right</span></button>
+        <button class="tm-option" onclick="confirmDisable('Wrong strength')"><span class="tm-option__title">Wrong strength</span><span class="tm-option__desc">The ordered strength isn’t right</span></button>
       </div>
     </div>
   </div>
@@ -678,9 +678,9 @@ body.concept-closed #success-toast{pointer-events:auto}
     <div class="tm-sheet__body">
       <div class="tm-sheet__label">Select reason</div>
       <div class="reason-list">
-        <button class="tm-option" onclick="chooseUnavailableReason()"><span class="tm-option__title">Didn't answer</span><span class="tm-option__desc">Rang with no answer, or the line was busy</span></button>
+        <button class="tm-option" onclick="chooseUnavailableReason()"><span class="tm-option__title">Didn’t answer</span><span class="tm-option__desc">Rang with no answer, or the line was busy</span></button>
         <button class="tm-option" onclick="chooseUnavailableReason()"><span class="tm-option__title">Not reachable</span><span class="tm-option__desc">Phone switched off or out of coverage</span></button>
-        <button class="tm-option" onclick="chooseUnavailableReason()"><span class="tm-option__title">Wrong number</span><span class="tm-option__desc">Invalid or not the patient's number</span></button>
+        <button class="tm-option" onclick="chooseUnavailableReason()"><span class="tm-option__title">Wrong number</span><span class="tm-option__desc">Invalid or not the patient’s number</span></button>
       </div>
     </div>
   </div>
@@ -840,7 +840,7 @@ document.addEventListener('DOMContentLoaded', syncCaseActionBar);
   const leave = document.createElement('div');
   leave.id = 'concept-leave'; leave.hidden = true;
   leave.className = 'tm-overlay';
-  leave.innerHTML = `<section class="tm-sheet" id="cl-sheet" role="dialog" aria-modal="true" aria-labelledby="cl-t" tabindex="-1"><header class="tm-sheet__header"><h2 class="tm-sheet__title" id="cl-t">Leave this case?</h2><button class="tm-btn tm-btn--quiet tm-btn--icon tm-sheet__close" id="cl-x" type="button" aria-label="Close"><span class="tm-icon" data-icon="x" aria-hidden="true"></span></button></header><div class="tm-sheet__body"><p class="tm-sheet__subtitle">It goes back to the queue for another doctor.</p></div><div class="tm-sheet__actions"><button class="tm-btn tm-btn--primary tm-btn--lg tm-btn--block" id="cl-release" type="button">Release case</button><button class="tm-btn tm-btn--quiet tm-btn--lg tm-btn--block" id="cl-stay" type="button">Stay on this case</button></div></section>`;
+  leave.innerHTML = `<section class="tm-sheet" id="cl-sheet" role="dialog" aria-modal="true" aria-labelledby="cl-t" tabindex="-1"><header class="tm-sheet__header"><h2 class="tm-sheet__title" id="cl-t">Leave this case?</h2><button class="tm-btn tm-btn--quiet tm-btn--icon tm-sheet__close" id="cl-x" type="button" aria-label="Close"><span class="tm-icon" data-icon="x" aria-hidden="true"></span></button></header><div class="tm-sheet__body"><p class="tm-sheet__subtitle">It goes back to the queue for another doctor.</p></div><div class="tm-sheet__actions"><button class="tm-btn tm-btn--primary tm-btn--lg tm-btn--block" id="cl-release" type="button">Release case</button><button class="tm-btn tm-btn--quiet tm-btn--lg tm-btn--block" id="cl-stay" type="button">Stay</button></div></section>`;
   const showLeave = () => { leave.hidden = false; document.getElementById('cl-sheet').focus({ preventScroll: true }); };
   frame.appendChild(leave);
   const toast = document.createElement('div');
@@ -974,7 +974,19 @@ document.addEventListener('DOMContentLoaded', syncCaseActionBar);
     if (typeof syncCaseActionBar === 'function') syncCaseActionBar();
   }
   const _render = render;
-  render = function () { _render(); syncConcept(); };
+  // D-84 main-thread (FIX-BRIEF MAIN-CHECK 1): outcome lines and the empty cream dose chip are fixed here, in the case page's layer; the frozen app.js is not edited.
+  // MAIN-CHECK 2 4b: the t09 line is removed (the title says it); no visible line, no picture change.
+  const CLOSED_REMOVE = /^(Order Confirmed\.|Forwarded for Review\.|Transferred to HA\.|Callback scheduled — |Patient unavailable — )/;
+  function fixOutcomeCopy() {
+    const box = $('az-closed'), txt = $('az-closed-text');
+    if (box && txt) {
+      const t = txt.textContent.trim();
+      if (CLOSED_REMOVE.test(t)) { box.hidden = true; txt.textContent = ''; }
+    }
+    document.querySelectorAll('.tm-chip').forEach(c => { if (c.textContent.trim() === '—') c.textContent = 'None'; });
+  }
+  render = function () { _render(); syncConcept(); fixOutcomeCopy(); };
+  new MutationObserver(fixOutcomeCopy).observe(document.body, { childList: true, subtree: true, characterData: true });   // the prescribe overlay renders its chips outside render()
   const _toast = showSuccessToast;
   showSuccessToast = function (t, d) {
     let title = TITLE[t] || t;
@@ -1123,8 +1135,8 @@ document.addEventListener('DOMContentLoaded', syncCaseActionBar);
   const six = () => setBar(notice('warning', 'status', MSG('call.endedEarly'), 'phone-off'), btn('tm-btn--primary tm-btn--block', icon('phone') + 'Call again'), callbackRow());
   // K8 / K9: a live forward or transfer-failed call waits for the hang-up; the buttons come after it
   const waitingBar = () => setBar(statusLine(MSG('call.waitingForHangup')));
-  // M1 (main-check 1): after the hang-up the call is over: no script, the card says so, the buttons come
-  const afterHangupCard = () => { showSuccessToast('Forwarded for Review', ''); $('success-toast-title').textContent = 'Forwarded to Health Advisor'; cardText(MSG('call.forwardedAfterHangup'), true); $('action-zone').style.display = 'none'; };
+  // M1 (main-check 1) + MAIN-CHECK 2 (D-85 item 3): after the hang-up the card is title only, neutral (grey, info icon): nothing left to act on, the forward is not confirmed until the result. No script, the buttons come.
+  const afterHangupCard = () => { showSuccessToast('Forwarded for Review', ''); $('success-toast-title').textContent = 'Forwarded to Health Advisor'; const c = $('success-toast'); c.classList.remove('tm-status-card--success', 'tm-status-card--warning'); c.classList.add('tm-status-card--neutral'); const ic = c.querySelector('#success-toast-icon .tm-icon'); if (ic) { ic.setAttribute('data-icon', 'info-circle'); if (window.TMIcons) TMIcons.render(c); } $('action-zone').style.display = 'none'; };
   const calling = scn => { switchScenario(scn); initiateCall(); return later(() => { setBar(statusLine('Calling ' + first() + '…')); showScript(); }, 250); };   // D-81 F21: no header Back from the call tap on; K1 (CW-A1): no Callback on a live call
   // Round 3: the Release button while the release runs (D-74: short wait, busy button)
   const releasingBusy = () => { const b = $('cl-release'); b.classList.add('tm-btn--busy'); b.setAttribute('aria-busy', 'true'); b.disabled = true; b.innerHTML = '<span class="tm-spinner" aria-hidden="true"></span>Releasing…'; $('cl-stay').disabled = true; $('cl-x').disabled = true; };
@@ -1215,7 +1227,7 @@ document.addEventListener('DOMContentLoaded', syncCaseActionBar);
     't16-transfer-missed':     () => { passGate(VALUE); allRx(); return later(() => { $('action-zone').style.display = 'none';   /* call already over: nobody to read the script to */ setBar(notice('warning', 'status', MSG('call.transferMissedDoctor'), 'phone-off'), btn('tm-btn--primary tm-btn--block', 'Confirm & forward'), (() => { const w = callbackRow(); w.innerHTML = ''; w.appendChild(btn('tm-btn--secondary', icon('player-track-next') + 'Skip HA')); return w; })()); }, 250); },
     't16b-transfer-missed-patient': () => { passGate(VALUE); allRx(); return later(() => { $('action-zone').style.display = 'none'; setBar(notice('warning', 'status', MSG('call.transferMissedPatient'), 'phone-off'), btn('tm-btn--primary tm-btn--block', 'Confirm & forward'), (() => { const w = callbackRow(); w.innerHTML = ''; w.appendChild(btn('tm-btn--secondary', icon('player-track-next') + 'Skip HA')); return w; })()); }, 250); },
     't16c-transfer-missed-unknown': () => { passGate(VALUE); allRx(); return later(() => { $('action-zone').style.display = 'none'; setBar(notice('warning', 'status', MSG('call.transferMissed'), 'phone-off'), btn('tm-btn--primary tm-btn--block', 'Confirm & forward'), (() => { const w = callbackRow(); w.innerHTML = ''; w.appendChild(btn('tm-btn--secondary', icon('player-track-next') + 'Skip HA')); return w; })()); }, 250); },
-    't17-skip-ha-wait':        () => { passGate(VALUE); allRx(); return later(() => { showScript(SCRIPT.cat4); setBar(notice('neutral', 'status', MSG('call.skipHa'), 'info-circle'), statusLine('Calling ' + first() + '…')); }, 250); },   // K7 (CW-E2): live: "Calling {name}…" until the hang-up, then "Getting call result…"; no Callback
+    't17-skip-ha-wait':        () => { passGate(VALUE); allRx(); return later(() => { showScript(SCRIPT.cat4); setBar(notice('neutral', 'status', MSG('call.skipHa'), 'info-circle'), statusLine(MSG('call.resultWait'))); }, 250); },   // K7 (CW-E2) + MAIN-CHECK 2 (D-85): grey note + "Getting call result…" only; no "Calling {name}…", no Callback, no buttons
     // S7. No call result (2026-10-24)
     's7a-calling':             () => { switchScenario(CAT4); initiateCall(); return later(() => { setBar(statusLine('Calling ' + first() + '…')); showScript(); }, 250); },   // K1: no Callback on a live call
     's7b-still-on-call':       () => { switchScenario(CAT4); initiateCall(); return later(() => { setBar(...ask()); showScript(); }, 250); },

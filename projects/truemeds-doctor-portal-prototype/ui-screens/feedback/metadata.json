@@ -784,15 +784,6 @@
     "next": "doctor picks another time or closes the sheet",
     "clear": "next confirm attempt",
     "retain": "choices kept",
-    "copy": "decided (D-83 pt 2, CW-A1); wording per CHECKLIST K3"
-  },
-  "call.forwardedAfterHangup": {
-    "pattern": "amber card body",
-    "trigger": "hang-up reported after a forward or failed transfer (15 and B3, after the hang-up)",
-    "slot": "outcome card body, under the title Forwarded to Health Advisor; no script card",
-    "next": "none",
-    "clear": "none",
-    "retain": "case closed state",
-    "copy": "decided (D-83 CW-E3; main-check 1 M1)"
+    "copy": "decided (D-83 pt 2, CW-A1); wording per CHECKLIST K3; main-check 2 (D-85): End the call when you’re done."
   }
 }
