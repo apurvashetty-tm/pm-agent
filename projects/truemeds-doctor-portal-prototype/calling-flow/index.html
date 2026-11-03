@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Doctor app — calling flow</title>
+  <link rel="stylesheet" href="../../../design-system/truemeds.css" />
+  <link rel="stylesheet" href="flow.css" />
+</head>
+<body>
+  <header>
+    <h1>Doctor app — calling flow</h1>
+    <p class="sub">Launch version: Cat4 + Pilot Fallback B. Click any box for its logic; click an arrow for its event. <span id="version"></span></p>
+    <div class="bar">
+      <div class="group" role="group" aria-label="View">
+        <button class="tm-chip" data-tab="overview" aria-pressed="true">Overview</button>
+        <button class="tm-chip" data-tab="screens" aria-pressed="false">Screens</button>
+      </div>
+      <div class="group" role="group" aria-label="Highlight case type">
+        <span class="lbl">Highlight</span>
+        <button class="tm-chip" data-filter="all" aria-pressed="true">All</button>
+        <button class="tm-chip" data-filter="cat4" aria-pressed="false">Cat4</button>
+        <button class="tm-chip" data-filter="skipped" aria-pressed="false">Pilot, HA skipped</button>
+        <button class="tm-chip" data-filter="pilot" aria-pressed="false">Pilot (Fallback B)</button>
+      </div>
+      <label class="switch"><input type="checkbox" id="toggle-a" /> Show version A (later)</label>
+      <div class="zoom">
+        <button class="tm-btn tm-btn--secondary tm-btn--xs" id="zoom-out" aria-label="Zoom out">−</button>
+        <button class="tm-btn tm-btn--secondary tm-btn--xs" id="zoom-fit">Fit</button>
+        <button class="tm-btn tm-btn--secondary tm-btn--xs" id="zoom-in" aria-label="Zoom in">+</button>
+      </div>
+    </div>
+    <div class="legend">
+      <span><i></i>Doctor action — the app sends a request</span>
+      <span><i class="dash"></i>Backend event — the app learns it by polling</span>
+      <span><b class="lg-n"></b>State</span><span><b class="lg-end"></b>Ending</span><span><b class="lg-warn"></b>Hold / not confirmed</span><span><b class="lg-join"></b>Continues elsewhere</span>
+    </div>
+  </header>
+  <main>
+    <svg id="canvas" role="img" aria-label="Calling flow diagram"></svg>
+  </main>
+  <footer><ul id="notes"></ul></footer>
+  <aside id="panel" hidden>
+    <div class="head"><button class="tm-btn tm-btn--quiet tm-btn--xs" id="panel-close" aria-label="Close">✕ Close</button></div>
+    <div id="panel-body"></div>
+  </aside>
+  <div id="lightbox" hidden><figure><img alt="" /><figcaption></figcaption></figure></div>
+  <script src="../ui-screens/feedback/messages.js"></script>
+  <script src="data.js"></script>
+  <script src="flow.js"></script>
+</body>
+</html>
