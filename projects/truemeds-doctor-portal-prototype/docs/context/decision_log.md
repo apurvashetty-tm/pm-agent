@@ -918,6 +918,11 @@ From an external (ChatGPT) review, each point verified before acting.
 - **Replaces** CW-E2's two-step status line ("Calling {name}…" until the hang-up, then "Getting call result…"): one line is simpler, and the note tells the doctor to end the call. An earlier draft of D-85 (confirm at once → "Waiting for the call record") was **rejected**: a call that turned out too short would be silently unconfirmed and the doctor couldn't recover it with Call again; confirming on the result routes every outcome to the right screen and needs no new state.
 - **Still open in the readiness thread (not part of this):** A-only screens (11, 12, 8b) in the first build; Non-Value Meds in B.
 
+### D-86 · The notice band inside the action bar is centred — 2026-11-03
+- **Decision (Apurva, after a side-by-side render, `docs/reviews/2026-11-03-copy-audit/bar-notice-alignment.png`):** the result notice inside the pinned bar (`.tm-actionbar > .tm-notice`, D-82) is centred: icon and text centred as a group, wrapped lines centred and balanced. All other notices (top of the page, inside sheets, in content) stay left-aligned.
+- **Why:** everything else in the bar is centred (button labels, status lines). The bar messages are short and fit on one line at 360, and balanced wrapping keeps a rare second line even. The band is already a bar-only variant, so the Notice component's alignment elsewhere doesn't change.
+- **Applied:** one central CSS rule, RULES §9.5, beyond-salt, re-render of the states with a band in the bar (`docs/renders/2026-11-03-bar-notice-centre/`), then the Design System artifact.
+
 ## Design system changes made for this work
 
 ### D-60 · Secondary button without drop shadow (design system) — 2026-10-24 · **REVERTED same day**

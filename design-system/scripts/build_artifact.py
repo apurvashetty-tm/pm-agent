@@ -250,7 +250,7 @@ COMPONENTS = {
 - `tm-notice` (info, brand-subtle), `--neutral`, `--warning`, `--error`; an icon first, then one or two sentences.
 - Say what happened and what is safe; never repeat a button that is on the screen (feedback rules, D-65).
 - `tm-notice--question`: a question above two answers ("Are you still on the call?") — plain centred text, no box, so it never looks like a field (D-62).
-- **Where it goes** (D-82): about the bar's action (the result of the last tap, or why a button is disabled) → inside the Action bar as a band; the screen's general situation → top of the page; inside a sheet → a normal notice box directly above the sheet's button.
+- **Where it goes** (D-82): about the bar's action (the result of the last tap, or why a button is disabled) → inside the Action bar as a centred band (D-86); the screen's general situation → top of the page; inside a sheet → a normal notice box directly above the sheet's button.
 - For a passing confirmation after a system action use Toast instead.
 """, """<div style="display:flex;flex-direction:column;gap:8px;max-width:560px">
 <div class="tm-notice tm-notice--neutral"><span class="tm-icon" data-icon="info-circle"></span><span>You can log out after this case is closed.</span></div>
@@ -296,7 +296,7 @@ COMPONENTS = {
 - `tm-actionbar`: primary on top, then secondary (a `tm-btn-pair` for two), then quiet. All `--lg` (56px). **16px padding on all four sides** plus the safe-area inset, a hairline top edge and an upward shadow so it separates from white cards (D-62, D-67). Steps aside while typing.
 - A long wait sits in the bar as a Status line, not a button (D-74).
 - **Every pinned main action uses the bar** (D-82), entry screens included; content above it scrolls on short phones.
-- **A notice about the bar's own action sits in the bar** as an edge-to-edge band on its top edge, in the tone colour (D-82, RULES §9.5). The screen's general situation goes at the top of the page instead.
+- **A notice about the bar's own action sits in the bar** as an edge-to-edge band on its top edge, in the tone colour, centred (D-86; other notices stay left-aligned) (D-82, RULES §9.5). The screen's general situation goes at the top of the page instead.
 """, """<div style="display:flex;gap:16px;flex-wrap:wrap"><div style="width:360px;max-width:100%"><div class="tm-actionbar"><button class="tm-btn tm-btn--primary tm-btn--lg">Confirm prescription</button><button class="tm-btn tm-btn--secondary tm-btn--lg"><span class="tm-icon" data-icon="calendar"></span>Callback</button></div></div><div style="width:360px;max-width:100%"><div class="tm-actionbar"><div class="tm-status-line" role="status"><span class="tm-spinner" aria-hidden="true"></span>Calling Ramesh…</div><button class="tm-btn tm-btn--secondary tm-btn--lg"><span class="tm-icon" data-icon="calendar"></span>Callback</button></div></div></div>"""),
 
     "BottomSheet": ("Containers", 300, """One template for every sheet (RULES §9.4).

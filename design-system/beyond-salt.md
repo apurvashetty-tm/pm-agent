@@ -102,3 +102,8 @@ Implemented centrally 2026-10-15 (preview renders: `build/preview-2026-10-15/`).
 | Sheet ✕ on the 16 margin | `.tm-sheet__close` margin = (20 − 48) / 2 | B-07: the glyph sits on the same 16 line as the compact task header ✕ (was 2 px further in). |
 | Sheet label | `.tm-sheet__label` | B-14: one label style for sheet fields ("Select reason", "Date", "Time") — the field-label style, 8 above the field. |
 | Toast offset hook | `.tm-toast { bottom: var(--tm-toast-offset, 24px) }` | Round 4 item 1: on screens with a pinned bar the toast sits above it (set `--tm-toast-offset` = bar height + 16). |
+
+### Added 2026-11-03 (D-86: notice band centred in the action bar) — done
+| Item | Class | Why |
+|---|---|---|
+| Notice band centred | `.tm-actionbar > .tm-notice` `justify-content: center; text-align: center` | RULES §9.5 (D-86, Apurva 2026-11-03): the result band inside the pinned bar is centred as a group with balanced wrapped lines; notices elsewhere stay left-aligned. |

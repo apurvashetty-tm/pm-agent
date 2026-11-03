@@ -397,7 +397,9 @@ h1, .tm-text-title-lg, .tm-text-h1 { text-wrap: balance; }
   padding: var(--tm-space-md) var(--tm-space-page);
   border-width: 0 0 1px; border-style: solid;
   border-radius: var(--tm-radius-lg) var(--tm-radius-lg) 0 0;
+  display: block; text-align: center;   /* D-86: the band in the bar is centred: inline flow, so the icon sits beside the first line and every line is centred */
 }
+.tm-actionbar > .tm-notice .tm-icon { display: inline-block; vertical-align: middle; margin-right: var(--tm-space-sm); }
 /* Two secondaries side by side: equal width, no icons, label fits on one line at 360px (otherwise stack). */
 .tm-btn-pair { display: grid; grid-template-columns: 1fr 1fr; gap: var(--tm-space-sm); }
 .tm-btn-pair > .tm-btn { width: 100%; }
