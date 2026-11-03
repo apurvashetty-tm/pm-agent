@@ -887,3 +887,8 @@ User identified missing HTML/native linkage. Inspected actual sign-in and OTP HT
 ## 2026-11-03 (13:00) · Design System republished; native status note
 - **Done:** Truemeds Design System artifact republished with D-82–D-85 (version 1793690601-476a; lastChange note set). Component guide text updated in `design-system/scripts/build_artifact.py`. React Native: `ui-screens/native/NATIVE-STATUS.md` (gap list since 2026-10-15; the full refresh comes from the built prototype) with "out of date" banners on the native README and the Home hand-off.
 - **Apurva:** build starts with Fallback B (A-only screens later). Prototype build continues in the readiness thread.
+
+## 2026-11-03 (afternoon) · Calling-flow page for Engineering — published
+- **Done:** readiness checklist `docs/proposals/2026-11-03-prototype-build-readiness.md`; Pilot flow charts (B final, A later) in `docs/reviews/2026-11-03-pilot-flow-decision/`; Apurva fixed B as the one Pilot flow (Non-Value Meds go through the HA check). **Calling-flow page** `calling-flow/` — Overview (approved block diagram, `docs/reviews/2026-11-03-calling-flow-site/calling-flow-blocks.png`) + Screens tab, click any box for its logic; content only in `calling-flow/data.js`; checklist + results `docs/reviews/2026-11-03-calling-flow-site/CHECKLIST.md`; independent check done, findings fixed.
+- **Final audit (13:40):** data.js re-checked against app-logic §4–§7 and D-80–D-86 — no drift (D-86 is visual only). Two stale lines found **inside app-logic** (backlog §2j). Apurva approved the page's look; committed + PR with `[deploy]` → live at `doctor-portal-prototype.netlify.app/calling-flow/` once she merges.
+- **Next:** plan + checklist v3 for the prototype build (Fallback B first, A-only screens later — decided).
