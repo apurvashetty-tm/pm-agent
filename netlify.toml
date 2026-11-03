@@ -5,7 +5,9 @@
 # The Price Lock site has its own settings in projects/truemeds-price-lock/netlify.toml.
 
 [build]
-  # Rebuild only when the doctor portal, the design system or this file changes (ACOM docs etc. never trigger it).
-  ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF -- projects/truemeds-doctor-portal-prototype design-system netlify.toml"
+  # Deploy ON DEMAND only (Apurva, 2026-11-03): every production deploy costs credits, so merges to main do NOT
+  # deploy by default. To deploy, put [deploy] in the pull request title (it lands in the merge commit message).
+  # Netlify skips the build when this command exits 0 and builds when it exits 1. Skipped builds cost nothing.
+  ignore = "git log -1 --pretty=%B | grep -qF '[deploy]' && exit 1 || exit 0"
   publish = "projects/truemeds-doctor-portal-prototype"
   command = "rm -rf projects/truemeds-doctor-portal-prototype/design-system && cp -R design-system projects/truemeds-doctor-portal-prototype/design-system && rm -rf projects/truemeds-doctor-portal-prototype/design-system/build"

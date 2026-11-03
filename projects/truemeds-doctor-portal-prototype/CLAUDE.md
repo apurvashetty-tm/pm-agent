@@ -187,3 +187,6 @@ Desktop = centred 9:16 phone frame, one scroll area, sheets/Rx/toasts inside the
 
 ## Logo (do not change without Apurva)
 The header logo is the approved "truemeds for doctors" lockup in `brand/truemeds-for-doctors.svg` (project level, not in the design system). It embeds the canonical logo unchanged. Never redraw or recolour it. `python3 brand/check_lockup.py` must pass before any commit that touches `brand/`.
+
+## Netlify deploys are on demand
+Merges to `main` don't deploy the doctor-portal site (each production deploy costs Netlify credits). To deploy, put `[deploy]` in the pull request title; see the root `netlify.toml`. Only do this when Apurva asks for a deploy.
