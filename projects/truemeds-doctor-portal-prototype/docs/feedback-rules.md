@@ -136,6 +136,10 @@ Before handoff: HTML/native message-ID and copy parity; component geometry/token
 
 If render tooling is blocked, record the block and stop claiming visual verification. Never rebuild screenshot independently and claim it came from HTML/native source.
 
+## 11. Copy rules
+
+All app text follows `docs/reviews/2026-11-03-copy-audit/COPY-RULES.md` (v2, D-84). Copy that breaks a rule is logged in the copy annex (`docs/reviews/2026-11-03-copy-audit/COPY-AUDIT.md`) and fixed in the prototype build, not by re-rendering the frozen pictures. Where a frozen picture and the annex disagree, the annex wins.
+
 ## Change control
 
 Update this document and state map first when a rule changes. Update shared components/registry next, then only affected representatives. Link change in decision log and batch README. Do not quietly change central design-system tokens to make one screenshot fit.

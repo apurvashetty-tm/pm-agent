@@ -900,6 +900,13 @@ From an external (ChatGPT) review, each point verified before acting.
 - **Why:** each button keeps one meaning; nothing lets a doctor close a case without speaking to the patient; only the partner's record proves the gate; patient-side failures are handled by the system, not Ops.
 - **Engineering (backlog):** callback refusal without leg 2; hangup-cause mapping and doctor-case retry settings; does Knowlarity send a call-ended event; partner for Pilot Non-Value Meds; mismatch analytics table.
 
+### D-84 · Copy standard adopted; copy fixes go to a PRD annex, not to the frozen pictures — 2026-11-03
+- **Decision (Apurva):**
+  1. **Copy rules v2** (`docs/reviews/2026-11-03-copy-audit/COPY-RULES.md`, 26 rules) are the standard for all app text. They were drafted from D-48 / D-65 / D-66 / D-77 / D-81 / D-83, checked against the Atlassian, Polaris, Apple HIG and Material writing guides, and revised after a Codex critique (`codex-report.md`). Pointer in `docs/feedback-rules.md` §11.
+  2. **Audit only, no screen changes now.** A terminal audit logs every string that fails a rule, with the rule and a proposed fix, in `COPY-AUDIT.md`. Apurva decides the fixes there. They are applied while building the prototype (copy comes from `messages.json`), and the table is attached to the PRD as the copy annex. The frozen pictures are not re-rendered for copy; where they differ, the annex wins.
+  3. The two fixes already agreed go into the annex: `callback.notReached` → "Couldn’t schedule the callback. The patient wasn’t reached."; `case.noMedicines` → "No medicines on this order. Our Ops team will check it."
+- **Why:** copy fixes are one-line changes in the copy file; re-rendering 149 frozen states for wording would cost a full round each time. The prototype build touches every string anyway.
+
 ## Design system changes made for this work
 
 ### D-60 · Secondary button without drop shadow (design system) — 2026-10-24 · **REVERTED same day**

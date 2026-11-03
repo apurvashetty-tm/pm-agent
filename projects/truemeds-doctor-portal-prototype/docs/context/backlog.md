@@ -133,6 +133,8 @@ Brief: `docs/renders/2026-11-01-fix-round/TERMINAL-BRIEF.md` "Round 4"; audit: `
 - [ ] Update the React Native hand-off notes (`ui-screens/*/NATIVE-HANDOFF.md`, `ui-screens/native/`, `design-system/native/`) with D-82.
 - [x] Calling walkthrough decided (paths A–F) and recorded as **D-83**.
 - [x] **Calling round** — D-83 applied (149 states, guards 0), 2026-11-03.
-- [ ] **Copy standard + full copy audit** — write "Copy rules" in `docs/feedback-rules.md`, audit all app text, one round; includes the two agreed fixes (`callback.notReached` article, `case.noMedicines` without the button repeat). Then DS artifact republish and native notes.
+- [x] **Copy standard** — copy rules v2 approved (D-84), `docs/reviews/2026-11-03-copy-audit/COPY-RULES.md`.
+- [ ] **Copy audit** (terminal, audit only, `AUDIT-BRIEF.md`) → Apurva decides fixes in `COPY-AUDIT.md` → becomes the PRD copy annex; fixes applied in the prototype build with the ⚙ script checks (D-84). No re-render.
+- [ ] Then: DS artifact republish and React Native notes.
 - [ ] **Engineering (from D-83):** backend refuses a callback without leg 2 answered · hangup-cause mapping (patient-side → 9) and hold / retry settings for doctor cases · does Knowlarity send a call-ended event? · partner for Pilot Non-Value Meds · mismatch analytics table (doctor action vs call record).
 - [ ] Storyboard review (Part C).
