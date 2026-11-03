@@ -14,9 +14,10 @@ header .sub { margin: var(--tm-space-2xs) 0 var(--tm-space-md); color: var(--tm-
 .legend i { display: inline-block; width: 28px; height: 0; border-top: 2px solid var(--tm-content-primary); vertical-align: middle; margin-right: var(--tm-space-xs); }
 .legend i.dash { border-top-style: dashed; }
 .legend b { display: inline-block; width: 14px; height: 14px; border-radius: 4px; vertical-align: middle; margin-right: var(--tm-space-xs); border: 2px solid; }
-.lg-n { background: var(--tm-surface-brand-subtle); border-color: var(--tm-border-brand-strong) !important; }
-.lg-end { background: var(--tm-surface-success-subtle); border-color: var(--tm-border-success-strong) !important; }
-.lg-warn { background: var(--tm-surface-warning-subtle); border-color: var(--tm-border-warning-strong) !important; }
+.lg-path { background: var(--tm-surface-brand-default); border-color: var(--tm-surface-brand-default) !important; }
+.lg-n { background: var(--tm-surface-primary); border-color: var(--tm-border-brand-strong) !important; }
+.lg-end { background: var(--tm-surface-primary); border-color: var(--tm-border-success-strong) !important; }
+.lg-warn { background: var(--tm-surface-primary); border-color: var(--tm-border-warning-strong) !important; }
 .lg-join { background: var(--tm-surface-primary); border-color: var(--tm-border-strong) !important; }
 main { position: relative; flex: 1; min-height: 0; }
 #canvas { width: 100%; height: 100%; display: block; cursor: grab; touch-action: none; background: var(--tm-surface-primary); }
@@ -34,9 +35,9 @@ footer ul { margin: 0; padding-left: var(--tm-space-lg); }
 .endings-title { font-size: 15px; font-weight: 700; fill: var(--tm-content-success); }
 .node { cursor: pointer; }
 .node-box { stroke-width: 2; }
-.node--n .node-box { fill: var(--tm-surface-brand-subtle); stroke: var(--tm-border-brand-strong); }
-.node--end .node-box { fill: var(--tm-surface-success-subtle); stroke: var(--tm-border-success-strong); }
-.node--warn .node-box { fill: var(--tm-surface-warning-subtle); stroke: var(--tm-border-warning-strong); }
+.node--n .node-box { fill: var(--tm-surface-primary); stroke: var(--tm-border-brand-strong); }
+.node--end .node-box { fill: var(--tm-surface-primary); stroke: var(--tm-border-success-strong); }
+.node--warn .node-box { fill: var(--tm-surface-primary); stroke: var(--tm-border-warning-strong); }
 .node--join .node-box { fill: var(--tm-surface-primary); stroke: var(--tm-border-strong); stroke-dasharray: 5 3; }
 .node--note .node-box { fill: var(--tm-surface-primary); stroke: var(--tm-border-default); }
 .node--later .node-box { fill: var(--tm-surface-secondary); stroke: var(--tm-border-strong); stroke-dasharray: 5 3; }
@@ -50,16 +51,33 @@ footer ul { margin: 0; padding-left: var(--tm-space-lg); }
 .node--later .node-frame { stroke: var(--tm-border-disabled); stroke-dasharray: 5 3; }
 .pic-title { font-size: 12px; font-weight: 700; fill: var(--tm-content-primary); }
 .pic-id { font-size: 10px; fill: var(--tm-content-tertiary); }
-.node.is-sel .node-box, .node.is-sel .node-frame { stroke: var(--tm-border-focus); stroke-width: 4; }
+.node.is-sel .node-box, .node.is-sel .node-frame { stroke: var(--tm-content-primary); stroke-width: 4; }
 .node:focus { outline: none; } .node:focus-visible .node-box, .node:focus-visible .node-frame { stroke: var(--tm-border-focus); stroke-width: 4; }
-.is-dim { opacity: .18; }
-.edge-line { fill: none; stroke: var(--tm-content-primary); stroke-width: 1.6; }
+.is-dim { opacity: .12; }
+.edge-line { fill: none; stroke: var(--tm-content-secondary); stroke-width: 1.6; }
 .edge--e .edge-line { stroke-dasharray: 6 4; }
 .edge-hit { fill: none; stroke: transparent; stroke-width: 14; cursor: pointer; }
 .edge-label { font-size: 11px; fill: var(--tm-content-primary); pointer-events: none; }
 .edge.is-sel .edge-line { stroke: var(--tm-border-focus); stroke-width: 3; }
 .edge:hover .edge-line { stroke-width: 2.6; }
-.arrowhead { fill: var(--tm-content-primary); }
+.arrowhead { fill: var(--tm-content-secondary); }
+.arrowhead--happy { fill: var(--tm-surface-brand-default); }
+.edge.is-happy .edge-line { stroke: var(--tm-surface-brand-default); stroke-width: 4; }
+.edge.is-happy .edge-label { fill: var(--tm-content-brand); font-weight: 700; }
+/* side branches of the highlighted case = "secondary": full strength, own colours, no fading (Apurva, 2026-11-03) */
+.edge.is-branch .edge-line { stroke: var(--tm-content-primary); }
+.node.is-branch { opacity: 1; }
+/* happy path = primary (filled brand blue, white text); everything else = secondary (white, coloured border) */
+.node.is-path .node-box { fill: var(--tm-surface-brand-default); stroke: var(--tm-surface-brand-default); }
+.node.is-path .node-title, .node.is-path .node-sub { fill: var(--tm-content-inverse); }
+.node.is-path .node-frame { stroke: var(--tm-surface-brand-default); stroke-width: 5; }
+.node.is-path .pic-title { fill: var(--tm-content-brand); }
+.step-badge { fill: var(--tm-surface-brand-default); stroke: var(--tm-surface-primary); stroke-width: 2; }
+.step-no { fill: var(--tm-content-inverse); font-size: 13px; font-weight: 700; }
+.stepper { display: flex; gap: var(--tm-space-xs); align-items: center; }
+.stepper[hidden] { display: none; }
+.stepper span { font-size: var(--tm-font-size-body-xs); color: var(--tm-content-secondary); min-width: 120px; }
+.legend i.happy { border-top: 4px solid var(--tm-surface-brand-default); }
 
 /* panel */
 #panel { position: fixed; top: 0; right: 0; bottom: 0; width: 440px; max-width: 100%; background: var(--tm-surface-primary); border-left: 1px solid var(--tm-border-default); box-shadow: -8px 0 24px rgba(0,0,0,.08); display: flex; flex-direction: column; z-index: 5; }
@@ -100,3 +118,6 @@ code { font-size: .92em; background: var(--tm-surface-secondary); padding: 0 4px
 .ak { display: inline-block; font-size: 10px; font-weight: 600; padding: 0 6px; border-radius: 99px; border: 1px solid var(--tm-border-strong); }
 .ak--e { border-style: dashed; }
 @media (max-width: 760px) { #panel { top: 0 !important; } }
+
+/* selected box: dark ring, also on blue happy-path boxes */
+.node.is-sel .node-box, .node.is-sel .node-frame { stroke: var(--tm-content-primary) !important; stroke-width: 4 !important; }

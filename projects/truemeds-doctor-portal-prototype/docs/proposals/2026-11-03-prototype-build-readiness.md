@@ -1,6 +1,6 @@
 # Doctor portal — prototype build readiness
 
-**Status:** DRAFT for Apurva, 2026-11-03. Read-only check; nothing else was changed.
+**Status:** DRAFT for Apurva, 2026-11-03 — **answers so far in §11** (read first). Read-only check; nothing else was changed.
 **Checked against:** project `CLAUDE.md`, `session_handoff.md` (latest: 2026-11-03 08:05), `backlog.md` (incl. the uncommitted D-84 amendment), `decision_log.md` D-79 → D-84 (incl. "amended 08:33"), `docs/proposals/2026-10-29-prototype-build-plan.md` (v2), `docs/reviews/2026-10-29-rebuild-checklist.md` (v2), plus `ui-screens/README.md`, `app-logic.md`, `open_questions.md`, root `netlify.toml`.
 **Copy round:** the terminal copy round is changing `ui-screens/`, `messages.json`, `app-logic.md`, `feedback-state-map.md` and the copy-audit files now. Rows on those files are judged on today's text and must be re-checked once it is merged.
 
@@ -162,3 +162,14 @@
 No edits to `ui-screens/`, `messages.json`, `app-logic.md`, the state map, the copy-audit files, the plan, the checklist, the decision log or the backlog. No commits. After the copy round merges: re-check every ⏳ row, then fix §6/§11/§12 of app-logic and write plan + checklist v3 from your answers.
 
 Also noticed (housekeeping, no decision needed): `backlog.md` §1 – §2c still show unticked items that D-78/D-82 closed; `CLAUDE.md` "Current state" says 145 states (now 149).
+
+## 11. Answers so far (2026-11-03, evening) — start here in the build thread
+
+| Q | Answer | Source |
+|---|---|---|
+| Q2 Pilot scenarios in B | **B is the one Pilot flow.** Non-Value Meds also go through the HA check (B2): HA free → transfer, none → forward (B3). `t08b`, `t11`, `t12` are A-only. Demo scenarios: Cat4 · Pilot HA free · Pilot no HA free · HA skipped (customer / system). | Apurva in chat; backlog §2k (record in the decision log) |
+| A-only screens | **Left out of the first build** (built later, as version A). | Apurva; handoff 13:00 |
+| Skip HA on a live call | **D-85:** 17 shows the note + "Getting call result…", then the normal result path (8a / 6 / 9 / 7c–7d). | D-85 |
+| Copy round | Merged (D-84, commit 427dab5). All ⏳ rows in §2 – §4 are now ✅ — re-check against the merged files at the start of the build thread. | commit 427dab5 |
+| Calling flow for Engineering | Live page `calling-flow/` (doctor-portal site `/calling-flow/`): every calling state, trigger, button, event and rule, with the happy path per case type. Use it as the calling-flow reference for the build. | `docs/reviews/2026-11-03-calling-flow-site/` |
+| **Still open** | **Q1** build now (step 0 shell) vs after PRD / spec / test cases (rec: plan + checklist v3 now, shell first) · **Q3** preview-site deploy rule (rec: `[deploy]` only, as today) · **Q4** icon background white, Help / bell placeholder · **Q5** storyboard review Part C scope. Also app-logic §6 / §11 tables still describe A (fix with backlog §2k). | — |

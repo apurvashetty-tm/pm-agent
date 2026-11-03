@@ -277,6 +277,14 @@ window.FLOW = {
     AJ10b: { pos: [4, 14], title: "→ 10b Forwarded to HA", sub: "(endings)", style: "join", types: "A", ref: "E10b" }
   },
 
+  // Happy path per case type (Apurva, 2026-11-03): drawn thick brand-blue; step numbers when a case type is highlighted.
+  // Pilot's happy path is the transfer (HA free → 14), not the forward.
+  paths: {
+    cat4: ["R1", "CALL", "C0", "RES", "C8", "E10a"],
+    skipped: ["R1", "CALL", "C0", "RES", "C8", "E10a"],
+    pilot: ["R1", "CALL", "B0", "B1", "B2", "T13", "E14"]
+  },
+
   // [from, to, label, kind, "text"?] — a = doctor action (app sends a request), e = backend event (app learns it by polling); "text" = written on the box, not drawn
   edges: [
     ["R1", "CALL", "Call patient", "a"], ["R1", "LEAVE", "Back", "a"],

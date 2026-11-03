@@ -11,7 +11,7 @@
 <body>
   <header>
     <h1>Doctor app — calling flow</h1>
-    <p class="sub">Launch version: Cat4 + Pilot Fallback B. Click any box for its logic; click an arrow for its event. <span id="version"></span></p>
+    <p class="sub">Launch version: Cat4 + Pilot Fallback B. Click any box for its logic; click an arrow for its event. Highlight a case type to step through its happy path. <span id="version"></span></p>
     <div class="bar">
       <div class="group" role="group" aria-label="View">
         <button class="tm-chip" data-tab="overview" aria-pressed="true">Overview</button>
@@ -24,6 +24,11 @@
         <button class="tm-chip" data-filter="skipped" aria-pressed="false">Pilot, HA skipped</button>
         <button class="tm-chip" data-filter="pilot" aria-pressed="false">Pilot (Fallback B)</button>
       </div>
+      <div class="stepper" id="stepper" hidden>
+        <button class="tm-btn tm-btn--secondary tm-btn--xs" id="step-prev">◀ Previous</button>
+        <button class="tm-btn tm-btn--primary tm-btn--xs" id="step-next">Next ▶</button>
+        <span id="step-label"></span>
+      </div>
       <label class="switch"><input type="checkbox" id="toggle-a" /> Show version A (later)</label>
       <div class="zoom">
         <button class="tm-btn tm-btn--secondary tm-btn--xs" id="zoom-out" aria-label="Zoom out">−</button>
@@ -32,9 +37,10 @@
       </div>
     </div>
     <div class="legend">
+      <span><i class="happy"></i>Happy path line</span>
       <span><i></i>Doctor action — the app sends a request</span>
       <span><i class="dash"></i>Backend event — the app learns it by polling</span>
-      <span><b class="lg-n"></b>State</span><span><b class="lg-end"></b>Ending</span><span><b class="lg-warn"></b>Hold / not confirmed</span><span><b class="lg-join"></b>Continues elsewhere</span>
+      <span><b class="lg-path"></b>Happy path</span><span><b class="lg-n"></b>Other state</span><span><b class="lg-end"></b>Ending</span><span><b class="lg-warn"></b>Hold / not confirmed</span><span><b class="lg-join"></b>Continues elsewhere</span>
     </div>
   </header>
   <main>
