@@ -33,7 +33,7 @@
   const stepNo = id => ui.filter === "all" ? 0 : F.paths[ui.filter].indexOf(id) + 1;
   // node emphasis when a case type is highlighted: path (full + number) · branch of that type (muted) · other types (faded)
   function emph(id) {
-    if (ui.filter === "all") return "";
+    if (ui.filter === "all") return activePaths().some(p => p.includes(id)) ? " is-path" : "";
     if (F.paths[ui.filter].includes(id)) return " is-path";
     return inFilter(id) ? " is-branch" : " is-dim";
   }

@@ -63,3 +63,4 @@ Built: `calling-flow/` (`index.html`, `flow.css`, `flow.js`, `data.js`, `check-c
 ## Change — 2026-11-03 (evening): happy path and step-through (U6)
 Built as agreed: thick blue happy path; highlight shows numbered steps, muted branches, faded other types; Previous / Next stepper. Overview picture updated to match. Checked: coverage script PASS, no console errors, Pilot stepper reaches "Step 7 of 7" (14 Transferred).
 Follow-up (Apurva): side branches were too washed out → now full strength, like a secondary button next to the primary one.
+Follow-up 2 (Apurva): happy-path boxes filled brand blue with white text (primary) in every view; all other boxes white with their coloured border (secondary).
