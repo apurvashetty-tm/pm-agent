@@ -138,7 +138,7 @@ If render tooling is blocked, record the block and stop claiming visual verifica
 
 ## 11. Copy rules
 
-All app text follows `docs/reviews/2026-11-03-copy-audit/COPY-RULES.md` (v2, D-84). Copy that breaks a rule is logged in the copy annex (`docs/reviews/2026-11-03-copy-audit/COPY-AUDIT.md`) and fixed in the prototype build, not by re-rendering the frozen pictures. Where a frozen picture and the annex disagree, the annex wins.
+All app text follows `docs/reviews/2026-11-03-copy-audit/COPY-RULES.md` (v2, D-84). Copy that breaks a rule is logged in the copy annex (`docs/reviews/2026-11-03-copy-audit/COPY-ANNEX.md`), decided by Apurva, then applied to the screens and re-rendered (D-84, amended). The pictures stay the source of truth.
 
 ## Change control
 

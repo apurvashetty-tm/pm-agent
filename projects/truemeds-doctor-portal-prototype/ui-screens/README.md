@@ -50,9 +50,9 @@ The calling states follow app-logic §5 (D-58 points 14–25, D-63, D-64). The r
 | 13 Transferring | `t13-connecting-ha` | No Callback (D-58 pt 25) |
 | 14 Transferred | `t14-transferred` | |
 | 15 Health Advisor unavailable (live) | `t15-ha-no-join` | Amber card; bar "Waiting for the call to end…" while live (D-83 CW-E3) |
-| 15 after the hang-up (K8) | `t15-after-hangup` | Same card; Request next case · Back to Home |
+| 15 after the hang-up (K8) | `t15-after-hangup` | Neutral grey card, title only (MAIN-CHECK 2); Request next case · Back to Home |
 | 16 Ended before the transfer | `t16-transfer-missed` (doctor), `t16b-transfer-missed-patient`, `t16c-transfer-missed-unknown` | Skip HA shown (D-58 pt 24) |
-| 17 Skip HA, waiting | `t17-skip-ha-wait` | Keeps the script; "Calling {name}…" until the hang-up, then "Getting call result…" (D-83 CW-E2) |
+| 17 Skip HA, waiting | `t17-skip-ha-wait` | Keeps the script; grey note + "Getting call result…" only (D-85, replaces CW-E2's two-step line) |
 | Fallback B = launch Pilot flow (D-83 CW-F1) | `g0-calling-pilot` (B1 before the gate, K12), `g1-generic-confirm`, `g2-checking-ha`, `g3b-forwarded`, `g3b-after-hangup` (K9) | |
 | Callback sheet | `c-callback`, `c-callback-error`, `c-callback-failed`, `c-callback-refused` | Over 6 Call too short (D-83 K2); refused: `callback.notReached` (K3) |
 | Skip HA reason sheet | `c-skip-ha` | Over 12 Confirm & transfer (D-70 pt 4) |

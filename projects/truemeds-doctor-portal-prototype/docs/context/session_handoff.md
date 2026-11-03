@@ -879,3 +879,7 @@ User identified missing HTML/native linkage. Inspected actual sign-in and OTP HT
 - **Done:** copy rules drafted, researched (Atlassian, Polaris, Apple, Material), critiqued by Codex (`codex-report.md`), v2 approved → `docs/reviews/2026-11-03-copy-audit/COPY-RULES.md`; pointer in feedback-rules §11; D-84 recorded.
 - **D-84:** audit only — fails + fixes logged in `COPY-AUDIT.md`, decided by Apurva, attached to the PRD as the copy annex, applied in the prototype build. Frozen pictures not re-rendered for copy; annex wins.
 - **Next:** terminal runs `AUDIT-BRIEF.md` → main thread reviews `COPY-AUDIT.md` → Apurva decides → commit → DS artifact + native notes.
+
+## 2026-11-03 (12:50) · Copy round done; D-85; screens frozen again
+- **Done:** copy rules v2.1 (D-84), audit run 2, all copy fixes applied and re-rendered (main round + MAIN-CHECK 1 + 2): no "unavailable" wording to patient or doctor on 15 / B3, after-hang-up and t09 cards title only, 17 = note "…End the call when you’re done." + "Getting call result…" then confirm on the result (D-85). Copy checks now part of `check-sources.mjs`. 149 states, guards 0. Committed and merged.
+- **Next:** (1) republish the Design System artifact + React Native hand-off notes (backlog); (2) prototype build in the readiness thread (`docs/proposals/2026-11-03-prototype-build-readiness.md`; open there: A-only screens in the first build, Non-Value Meds in B).

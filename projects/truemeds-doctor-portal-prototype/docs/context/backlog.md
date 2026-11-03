@@ -134,7 +134,8 @@ Brief: `docs/renders/2026-11-01-fix-round/TERMINAL-BRIEF.md` "Round 4"; audit: `
 - [x] Calling walkthrough decided (paths A–F) and recorded as **D-83**.
 - [x] **Calling round** — D-83 applied (149 states, guards 0), 2026-11-03.
 - [x] **Copy standard** — copy rules v2 approved (D-84), `docs/reviews/2026-11-03-copy-audit/COPY-RULES.md`.
-- [ ] **Copy audit** (terminal, audit only, `AUDIT-BRIEF.md`) → Apurva decides fixes in `COPY-AUDIT.md` → becomes the PRD copy annex; fixes applied in the prototype build with the ⚙ script checks (D-84). No re-render.
+- [x] **Copy round done (2026-11-03):** audit run 2 on v2, fixes applied and re-rendered (main round + MAIN-CHECK 1 + 2), copy checks in `check-sources.mjs`, D-85 (17) applied. Guards 0, 149 states. Record: `COPY-ANNEX.md` (goes to the PRD as the copy annex), report `docs/renders/2026-11-03-copy-round/REPORT.md`.
 - [ ] Then: DS artifact republish and React Native notes.
 - [ ] **Engineering (from D-83):** backend refuses a callback without leg 2 answered · hangup-cause mapping (patient-side → 9) and hold / retry settings for doctor cases · does Knowlarity send a call-ended event? · partner for Pilot Non-Value Meds · mismatch analytics table (doctor action vs call record).
 - [ ] Storyboard review (Part C).
+- [ ] **Prototype build — accessibility and fit items from the copy round (D-84; not visible in the frozen pictures):** live regions for progress / result messages (F24); medicine-row accessible names (F25); non-breaking "4 h" style units (F26); dose and date field errors tied to their fields (F28); two-up button rows stack at large text (CA-20). Plus: Engineering to confirm "Truemeds never sees or stores it." (faster sign-in) before launch.

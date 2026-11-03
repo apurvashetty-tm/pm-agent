@@ -1,9 +1,17 @@
-# Terminal brief: copy audit against the copy rules v2 (audit only)
+# Terminal brief: copy audit against the copy rules v2 (audit only) — RUN 2
 
 Owner: main Claude thread · Worker: terminal session · Date: 2026-11-03
 Folder: `~/src/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype` (branch `project/truemeds-doctor-portal-prototype`).
 
-**This is an audit, not a fix round (D-84).** Change nothing in `ui-screens/`, `messages.json`, the docs or the design system. Re-render nothing into `ui-screens/`. The only file you write is `docs/reviews/2026-11-03-copy-audit/COPY-AUDIT.md`, plus scratch files in `docs/reviews/2026-11-03-copy-audit/_work/`.
+**This is an audit, not a fix round (D-84).** Change nothing in `ui-screens/`, `messages.json`, the docs or the design system. Re-render nothing into `ui-screens/`. The only file you write is `docs/reviews/2026-11-03-copy-audit/COPY-AUDIT-v2.md`, plus scratch files in `docs/reviews/2026-11-03-copy-audit/_work/`.
+
+## Run 2 (2026-11-03): why
+Run 1 (`COPY-AUDIT.md`) checked the v1 rule file by mistake. `COPY-RULES.md` on disk is now **v2: 26 rules** (header says v2, approved). Re-use run 1's inventory (`_work/inventory.csv`, `_work/dom-390.json`) if it's still complete; don't re-extract unless something is missing. The main thread has already re-mapped run 1's findings to v2 in `COPY-ANNEX.md`.
+
+**Extra jobs for run 2:**
+- For every row in `COPY-ANNEX.md` (fixes and dropped), say **AGREE** or **DISPUTE**, with a reason and the v2 rule.
+- Find **new** fails under the rules v1 didn't have: 6 (true to the current state; check against app-logic §4–§7 and D-83), 11 (status lines), 15 (empty states), 16 (confirmation sheets), 17 (placeholders), 24 (fit at 360 **and** at large text: render the at-risk states at 360 with root font size 130% into `_work/large-text/`, no promotion), 25 (accessible names, field errors tied to fields, announced messages).
+- For each fix, say whether it **changes layout** (a line removed or added, a label length change that alters wrapping or button width) or is **text only**, and list the states whose picture would change.
 
 ## Read first
 - `docs/reviews/2026-11-03-copy-audit/COPY-RULES.md`: the standard (26 rules). Its approved exceptions are not failures.
@@ -15,7 +23,7 @@ Folder: `~/src/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds
 2. **Check each unique string against every rule that applies to its element type.** Rule 24 (fit): flag text that wraps badly or is truncated in the 360 pictures. Look at the picture; don't guess.
 3. **Self-review the fails.** Drop false positives and approved exceptions. For each real fail, propose a fix that passes **all** rules, keeps the meaning, fits at 360, and doesn't contradict a decision. If the right wording depends on product facts you don't have, write `NEEDS-APURVA` instead of guessing.
 4. **Independent check.** Start a fresh subagent that hasn't seen your work. Give it only `COPY-RULES.md` and your fail table, and have it re-check each fail and each proposed fix. Where it disagrees, keep both views in the note column.
-5. **Write `COPY-AUDIT.md`:**
+5. **Write `COPY-AUDIT-v2.md`** (same format as run 1, plus three sections: the AGREE / DISPUTE table for `COPY-ANNEX.md`, new fails (IDs from CA-30), and a layout-impact table: ID · layout or text only · states affected):
    - **Summary:** strings inventoried · unique · passing · failing, with fails counted by rule and by screen.
    - **Fail table, grouped by screen** (Sign-in, OTP, Faster sign-in offer, Returning unlock, Home + Profile, Case, Calling, Prescribe, Sheets, Scripts, Accessible names):
      `ID | Where (key or element + states) | Current text | Rule(s) | Problem | Proposed fix | Priority | Note`
@@ -23,7 +31,7 @@ Folder: `~/src/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds
    - **Already agreed (D-84 pt 3):** list the two agreed fixes first, as CA-01 and CA-02, marked "Agreed".
    - **Script checks to add during the build:** for each ⚙ / ◐ rule, how `check-sources.mjs` would check it and how many current strings it would flag.
    - **NEEDS-APURVA:** product-fact questions only.
-   - Last line exactly: `COPY AUDIT DONE — fails: <n> (P1 <n>, P2 <n>, P3 <n>)`
+   - Last line exactly: `COPY AUDIT v2 DONE — annex agreed <n>, disputed <n>, new fails <n>`
 6. **Stop.** Don't wait or poll.
 
 ## Never
