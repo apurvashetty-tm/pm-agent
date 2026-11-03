@@ -399,11 +399,11 @@
   "case.noMedicines": {
     "pattern": "empty",
     "trigger": "order has no medicines",
-    "slot": "medicines card",
-    "next": "none",
+    "slot": "top of the panel (amber notice; Release case in the bar)",
+    "next": "none (Release case releases directly; Home)",
     "clear": "none",
     "retain": "none",
-    "copy": "approved (Apurva, D-80 pt 4)"
+    "copy": "decided (D-83 pt 4, CW-A6)"
   },
   "case.noPickup": {
     "pattern": "W1",
@@ -503,15 +503,6 @@
     "clear": "—",
     "retain": "—",
     "copy": "approved (Apurva, 2026-10-24, D-58 point 23)"
-  },
-  "call.endCallFirst": {
-    "pattern": "W1",
-    "trigger": "tap on Request next case on 15 or B3 while the call is still live (D-63)",
-    "slot": "line in the action bar, above Request next case",
-    "next": "doctor ends the call, taps again",
-    "clear": "next tap after the call has ended",
-    "retain": "case closed state",
-    "copy": "approved (Apurva, 2026-10-25, D-63)"
   },
   "call.skipHa": {
     "pattern": "N1",
@@ -776,5 +767,32 @@
     "clear": "none",
     "retain": "none",
     "copy": "approved (Apurva, D-81)"
+  },
+  "call.waitingForHangup": {
+    "pattern": "status line",
+    "trigger": "call is still live on 15, B3 or 17-after-skip: no button until the partner reports the hang-up",
+    "slot": "action bar, status line where the buttons would be",
+    "next": "hang-up reported: Request next case · Back to Home appear",
+    "clear": "hang-up reported (state after the call)",
+    "retain": "case open, call live",
+    "copy": "decided (D-83 pt 10, CW-E3)"
+  },
+  "callback.notReached": {
+    "pattern": "error",
+    "trigger": "backend refuses a callback: the patient did not answer (leg 2) on this case",
+    "slot": "error notice in the Schedule callback sheet, above the confirm button",
+    "next": "doctor picks another time or closes the sheet",
+    "clear": "next confirm attempt",
+    "retain": "choices kept",
+    "copy": "decided (D-83 pt 2, CW-A1); wording per CHECKLIST K3"
+  },
+  "call.forwardedAfterHangup": {
+    "pattern": "amber card body",
+    "trigger": "hang-up reported after a forward or failed transfer (15 and B3, after the hang-up)",
+    "slot": "outcome card body, under the title Forwarded to Health Advisor; no script card",
+    "next": "none",
+    "clear": "none",
+    "retain": "case closed state",
+    "copy": "decided (D-83 CW-E3; main-check 1 M1)"
   }
 }

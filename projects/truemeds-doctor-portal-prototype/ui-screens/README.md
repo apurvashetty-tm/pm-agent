@@ -2,7 +2,7 @@
 
 The approved screens for the Truemeds Doctor Portal, with their pictures. Promoted from the working copies after Apurva's approval (decisions D-58 → D-71). Design system: `design-system/` (rules in `design-system/RULES.md` §8–9). Copy registry and checks: `feedback/`. Native handoff: `native/` (native team).
 
-**Read with the screens:** app rules `app-logic.md` · decisions `../docs/context/decision_log.md` (D-58 → D-72) · what we're building and current rules `../docs/context/project_truth.md` · every error, offline and busy state `../docs/feedback-state-map.md` · open questions `../docs/context/open_questions.md` · what is next `../docs/context/backlog.md`.
+**Read with the screens:** app rules `app-logic.md` · decisions `../docs/context/decision_log.md` (D-58 → D-83) · what we're building and current rules `../docs/context/project_truth.md` · every error, offline and busy state `../docs/feedback-state-map.md` · open questions `../docs/context/open_questions.md` · what is next `../docs/context/backlog.md`.
 
 Each state has a 390-wide and a 360-wide picture (`_w390.png`, `_w360.png`, 2× density). Contact sheets per folder (`contact-*.png`) show the 390 pictures.
 
@@ -15,10 +15,10 @@ Each state has a 390-wide and a 360-wide picture (`_w390.png`, `_w360.png`, 2× 
 | Returning unlock | `returning-unlock/returning-unlock.html` | `returning-unlock/` (`unlock_<state>_…`) | 7 | D-45, D-47, D-61, D-66 |
 | Faster sign-in offer | `faster-signin-offer/faster-signin-offer.html` | `faster-signin-offer/` (`offer_<state>_…`) | 6 | D-45, D-61, D-64, D-65 |
 | Home (availability, add time, end, profile) | `home/home.html` (+ `home-reference.js`, `home-reference.css`) | `home/` (`home_<state>_…`) | 22 | D-36, D-40, D-47, D-53, D-69, D-70 |
-| Case page: ready, calling, call outcomes, closed cases, sheets, stress | `case/case.html` (+ `case-styles.css`) | `case/` (`<state>_…`) | 58 | D-48 to D-76 |
+| Case page: ready, calling, call outcomes, closed cases, sheets, stress | `case/case.html` (+ `case-styles.css`) | `case/` (`<state>_…`) | 62 | D-48 to D-83 |
 | Prescribe (one medicine) | `case/case.html` (`d-*`) | `prescribe/` (`d-<state>_…`) | 23 | D-04, D-06, D-08 to D-30, D-54, D-56, D-68 |
 
-Counts: pictures are 2 per state. Case page: 32 calling states (incl. `s7d-unavailable-sheet`), 4 callback/Skip-HA sheets, 16 + 1 stress/action states (`a-*`), 2 closed (`e-*`), 3 stress (`s-*`). Home: 19 states plus 3 Profile pages.
+Counts: pictures are 2 per state. Case page: 43 calling and call-outcome states (incl. `s7d-unavailable-sheet`, the callback sheets and the Skip-HA sheet), 16 + 1 stress/action states (`a-*`), 2 closed (`e-*`), 3 stress (`s-*`). Home: 19 states plus 3 Profile pages.
 
 ## Case page: calling render ids
 
@@ -27,7 +27,7 @@ The calling states follow app-logic §5 (D-58 points 14–25, D-63, D-64). The r
 | State | Render id | Note |
 |---|---|---|
 | 1 Ready | `t01-ready` | Call patient; no script card (D-58 pt 18) |
-| 2 Calling (7a) | `t02-calling`, `s7a-calling` | Callback in the bar; script under Order details |
+| 2 Calling (7a) | `t02-calling`, `s7a-calling` | Status line only, no Callback (D-83 CW-A1); script under Order details |
 | 3 Didn't go through | `t03-not-through` | |
 | 4 You didn't answer | `t04-doctor-missed` | |
 | 5 Getting call result | `t05-result-wait` | Script hidden (call has ended) |
@@ -35,6 +35,7 @@ The calling states follow app-logic §5 (D-58 points 14–25, D-63, D-64). The r
 | 7b Still on the call? | `s7b-still-on-call` | Question as plain text, no box (D-62) |
 | 7c Checking | `s7c-checking` | |
 | 7d Result not received | `s7d-result-missing` | Confirm prescription · Callback · Unavailable |
+| 7d Pilot (D-83 K6) | `s7d-result-missing-pilot` | Confirm & forward · Callback · Unavailable; no Skip HA (CW-D2) |
 | 7d Unavailable sheet (D-75) | `s7d-unavailable-sheet` | Sheet "Mark patient unavailable" with three reasons; a reason goes to `t09-patient-unavailable` |
 | 7e Leave this case? | `s7e-leave-sheet` | Release case / Stay on this case |
 | 7f Waiting for the call record | `s7f-submitted` | D-68 wording |
@@ -45,15 +46,15 @@ The calling states follow app-logic §5 (D-58 points 14–25, D-63, D-64). The r
 | 10a Prescription confirmed | `t10a-confirmed` | |
 | 10b Forwarded to HA | `t10b-forwarded` | |
 | 11 Calling (transfer case) | `t11-calling-transfer` | |
-| 12 Confirm & transfer | `t12-transfer-ready` | Skip HA with final button |
+| 12 Confirm & transfer | `t12-transfer-ready` | Skip HA full width under it; no Callback (D-83 CW-A1) |
 | 13 Transferring | `t13-connecting-ha` | No Callback (D-58 pt 25) |
 | 14 Transferred | `t14-transferred` | |
-| 15 Health Advisor unavailable | `t15-ha-no-join` | Amber card; end the call (D-58 pt 23) |
-| 15b End the call to get your next case (also B3) | `t15b-end-call-first` | D-63 |
+| 15 Health Advisor unavailable (live) | `t15-ha-no-join` | Amber card; bar "Waiting for the call to end…" while live (D-83 CW-E3) |
+| 15 after the hang-up (K8) | `t15-after-hangup` | Same card; Request next case · Back to Home |
 | 16 Ended before the transfer | `t16-transfer-missed` (doctor), `t16b-transfer-missed-patient`, `t16c-transfer-missed-unknown` | Skip HA shown (D-58 pt 24) |
-| 17 Skip HA, waiting | `t17-skip-ha-wait` | Keeps the script (D-58 pt 25) |
-| Fallback B | `g1-generic-confirm`, `g2-checking-ha`, `g3b-forwarded` | |
-| Callback sheet | `c-callback`, `c-callback-error`, `c-callback-failed` | Over 7a Calling (D-70 pt 4) |
+| 17 Skip HA, waiting | `t17-skip-ha-wait` | Keeps the script; "Calling {name}…" until the hang-up, then "Getting call result…" (D-83 CW-E2) |
+| Fallback B = launch Pilot flow (D-83 CW-F1) | `g0-calling-pilot` (B1 before the gate, K12), `g1-generic-confirm`, `g2-checking-ha`, `g3b-forwarded`, `g3b-after-hangup` (K9) | |
+| Callback sheet | `c-callback`, `c-callback-error`, `c-callback-failed`, `c-callback-refused` | Over 6 Call too short (D-83 K2); refused: `callback.notReached` (K3) |
 | Skip HA reason sheet | `c-skip-ha` | Over 12 Confirm & transfer (D-70 pt 4) |
 
 ## Other case-page states

@@ -9,7 +9,7 @@ import pathlib
 import re
 
 UI = pathlib.Path(__file__).resolve().parents[1]          # ui-screens/
-TITLE = 'Doctor portal — approved screens (promoted 2026-10-29; status line 2026-10-30; audit fixes 2026-10-31; stale case states 2026-10-31)'
+TITLE = 'Doctor portal — approved screens (promoted 2026-10-29; status line 2026-10-30; audit fixes 2026-10-31; stale case states 2026-10-31; calling walkthrough decisions 2026-11-03)'
 
 STYLE = (
     "body{font-family:-apple-system,Segoe UI,sans-serif;margin:0;background:#f4f5f7;color:#1f2328}"

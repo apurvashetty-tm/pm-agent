@@ -1,0 +1,45 @@
+a-back-blocked {"bar": 80, "items": ["STATUS[Calling Ramesh…]"], "script": "\"I’m writing your prescription now. You can track ", "back": "none"}
+a-no-medicines {"bar": 88, "items": ["BTN[Release case] w358"], "script": null, "back": "flex"}
+a-notes-typing {"bar": 0, "items": [], "script": null, "back": "flex"}
+c-callback {"bar": 197, "items": ["NOTICE[Call too short to write a prescription.]", "BTN[Call again] w358", "ROW", "pair:BTN[Callback] w358"], "script": null, "back": "none"}
+c-callback-error {"bar": 197, "items": ["NOTICE[Call too short to write a prescription.]", "BTN[Call again] w358", "ROW", "pair:BTN[Callback] w358"], "script": null, "back": "none"}
+c-callback-failed {"bar": 197, "items": ["NOTICE[Call too short to write a prescription.]", "BTN[Call again] w358", "ROW", "pair:BTN[Callback] w358"], "script": null, "back": "none"}
+c-callback-refused {"bar": 197, "items": ["NOTICE[Call too short to write a prescription.]", "BTN[Call again] w358", "ROW", "pair:BTN[Callback] w358"], "script": null, "back": "none"}
+c-skip-ha {"bar": 152, "items": ["BTN[Confirm & transfer] w358", "ROW", "pair:BTN[Skip HA] w358"], "script": "\"I’m writing your prescription now. Please stay on", "back": "none"}
+e-availability-ended {"bar": 88, "items": ["BTN[Back to Home] w358"], "script": null, "back": "none"}
+e-callback-scheduled {"bar": 152, "items": ["BTN[Request next case] w358", "BTN[Back to Home] w358"], "script": null, "back": "none"}
+g0-calling-pilot {"bar": 80, "items": ["STATUS[Calling Sunita…]"], "script": "\"I’m writing your prescription now. Our Health Adv", "back": "none"}
+g1-generic-confirm {"bar": 152, "items": ["BTN[Confirm prescription] w358", "ROW", "pair:BTN[Skip HA] w358"], "script": "\"I’m writing your prescription now. Our Health Adv", "back": "none"}
+g2-checking-ha {"bar": 152, "items": ["STATUS[Checking for a Health Advisor…]", "ROW", "pair:BTN[Skip HA](dis) w358"], "script": "\"I’m writing your prescription now. Our Health Adv", "back": "none"}
+g3b-forwarded {"bar": 80, "items": ["STATUS[Waiting for the call to end…]"], "script": "\"I’ve written your prescription. Our Health Adviso", "back": "none"}
+g3b-after-hangup {"bar": 152, "items": ["BTN[Request next case] w358", "BTN[Back to Home] w358"], "script": null, "back": "none"}
+s7a-calling {"bar": 80, "items": ["STATUS[Calling Ramesh…]"], "script": "\"I’m writing your prescription now. You can track ", "back": "none"}
+s7b-still-on-call {"bar": 149, "items": ["NOTICE[Are you still on the call?]", "ROW", "pair:BTN[Still talking] w175", "pair:BTN[Call ended] w175"], "script": "\"I’m writing your prescription now. You can track ", "back": "none"}
+s7c-checking {"bar": 149, "items": ["NOTICE[Are you still on the call?]", "STATUS[Checking call result…]"], "script": null, "back": "none"}
+s7d-result-missing {"bar": 197, "items": ["NOTICE[We didn’t get the call result.]", "BTN[Confirm prescription] w358", "ROW", "pair:BTN[Callback] w175", "pair:BTN[Unavailable] w175"], "script": null, "back": "none"}
+s7d-result-missing-pilot {"bar": 197, "items": ["NOTICE[We didn’t get the call result.]", "BTN[Confirm & forward] w358", "ROW", "pair:BTN[Callback] w175", "pair:BTN[Unavailable] w175"], "script": null, "back": "none"}
+s7d-unavailable-sheet {"bar": 197, "items": ["NOTICE[We didn’t get the call result.]", "BTN[Confirm prescription] w358", "ROW", "pair:BTN[Callback] w175", "pair:BTN[Unavailable] w175"], "script": null, "back": "none"}
+s7e-leave-sheet {"bar": 88, "items": ["BTN[Call patient] w358"], "script": null, "back": "flex"}
+s7f-submitted {"bar": 152, "items": ["BTN[Request next case] w358", "BTN[Back to Home] w358"], "script": null, "back": "none"}
+t01-ready {"bar": 88, "items": ["BTN[Call patient] w358"], "script": null, "back": "flex"}
+t02-calling {"bar": 80, "items": ["STATUS[Calling Ramesh…]"], "script": "\"I’m writing your prescription now. You can track ", "back": "none"}
+t03-not-through {"bar": 133, "items": ["NOTICE[Call didn’t go through.]", "BTN[Call again] w358"], "script": null, "back": "flex"}
+t04-doctor-missed {"bar": 133, "items": ["NOTICE[You didn’t answer the call.]", "BTN[Call again] w358"], "script": null, "back": "flex"}
+t05-result-wait {"bar": 80, "items": ["STATUS[Getting call result…]"], "script": null, "back": "none"}
+t06-ended-early {"bar": 197, "items": ["NOTICE[Call too short to write a prescription.]", "BTN[Call again] w358", "ROW", "pair:BTN[Callback] w358"], "script": null, "back": "none"}
+t08a-valid-cat4 {"bar": 88, "items": ["BTN[Confirm prescription] w358"], "script": null, "back": "none"}
+t08b-valid-forward {"bar": 152, "items": ["BTN[Confirm & forward] w358", "ROW", "pair:BTN[Skip HA] w358"], "script": null, "back": "none"}
+t08c-confirm-blocked {"bar": 133, "items": ["NOTICE[Prescribe or disable 4 medicines first.]", "BTN[Confirm prescription] w358"], "script": null, "back": "none"}
+t09-patient-unavailable {"bar": 152, "items": ["BTN[Request next case] w358", "BTN[Back to Home] w358"], "script": null, "back": "none"}
+t10a-confirmed {"bar": 152, "items": ["BTN[Request next case] w358", "BTN[Back to Home] w358"], "script": null, "back": "none"}
+t10b-forwarded {"bar": 152, "items": ["BTN[Request next case] w358", "BTN[Back to Home] w358"], "script": null, "back": "none"}
+t11-calling-transfer {"bar": 80, "items": ["STATUS[Calling Sunita…]"], "script": "\"I’m writing your prescription now. Please stay on", "back": "none"}
+t12-transfer-ready {"bar": 152, "items": ["BTN[Confirm & transfer] w358", "ROW", "pair:BTN[Skip HA] w358"], "script": "\"I’m writing your prescription now. Please stay on", "back": "none"}
+t13-connecting-ha {"bar": 152, "items": ["BTN[Transferring…](dis) w358", "ROW", "pair:BTN[Skip HA](dis) w358"], "script": "\"I’m writing your prescription now. Please stay on", "back": "none"}
+t14-transferred {"bar": 152, "items": ["BTN[Request next case] w358", "BTN[Back to Home] w358"], "script": null, "back": "none"}
+t15-ha-no-join {"bar": 80, "items": ["STATUS[Waiting for the call to end…]"], "script": "\"I’ve written your prescription. Our Health Adviso", "back": "none"}
+t15-after-hangup {"bar": 152, "items": ["BTN[Request next case] w358", "BTN[Back to Home] w358"], "script": null, "back": "none"}
+t16-transfer-missed {"bar": 237, "items": ["NOTICE[You ended the call before the transfer. Next time, stay on the line un]", "BTN[Confirm & forward] w358", "ROW", "pair:BTN[Skip HA] w358"], "script": null, "back": "none"}
+t16b-transfer-missed-patient {"bar": 217, "items": ["NOTICE[The patient ended the call before the transfer. The Health Advisor wil]", "BTN[Confirm & forward] w358", "ROW", "pair:BTN[Skip HA] w358"], "script": null, "back": "none"}
+t16c-transfer-missed-unknown {"bar": 217, "items": ["NOTICE[The call ended before the transfer. The Health Advisor will call the p]", "BTN[Confirm & forward] w358", "ROW", "pair:BTN[Skip HA] w358"], "script": null, "back": "none"}
+t17-skip-ha-wait {"bar": 125, "items": ["NOTICE[Health Advisor call will be skipped.]", "STATUS[Calling Sunita…]"], "script": "\"I’m writing your prescription now. You can track ", "back": "none"}

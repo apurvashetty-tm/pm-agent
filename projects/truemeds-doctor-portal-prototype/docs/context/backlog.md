@@ -132,6 +132,7 @@ Brief: `docs/renders/2026-11-01-fix-round/TERMINAL-BRIEF.md` "Round 4"; audit: `
 - [ ] Republish the Truemeds Design System artifact (`design-system/scripts/build_artifact.py`) with D-82's design-system changes.
 - [ ] Update the React Native hand-off notes (`ui-screens/*/NATIVE-HANDOFF.md`, `ui-screens/native/`, `design-system/native/`) with D-82.
 - [x] Calling walkthrough decided (paths A–F) and recorded as **D-83**.
-- [ ] **Calling round** — apply D-83 to the screens (`docs/renders/2026-11-03-calling-round/`, checklist + brief), then the DS artifact republish and native notes above in one go.
+- [x] **Calling round** — D-83 applied (149 states, guards 0), 2026-11-03.
+- [ ] **Copy standard + full copy audit** — write "Copy rules" in `docs/feedback-rules.md`, audit all app text, one round; includes the two agreed fixes (`callback.notReached` article, `case.noMedicines` without the button repeat). Then DS artifact republish and native notes.
 - [ ] **Engineering (from D-83):** backend refuses a callback without leg 2 answered · hangup-cause mapping (patient-side → 9) and hold / retry settings for doctor cases · does Knowlarity send a call-ended event? · partner for Pilot Non-Value Meds · mismatch analytics table (doctor action vs call record).
 - [ ] Storyboard review (Part C).
