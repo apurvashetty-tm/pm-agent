@@ -907,3 +907,8 @@ User identified missing HTML/native linkage. Inspected actual sign-in and OTP HT
 - **Next:** Apurva approves plan + checklist v3 (§8 P1–P5) → step 0 (shell). Nothing built yet.
 - **Review (23:40):** Claude Code + Codex reviewed plan / checklist v3 independently (`docs/reviews/2026-11-05-plan-v3-review/`); merged in `MERGE.md` and applied in one pass (v3.1, marked [R]): one owner per picture, behaviour-only states, Prescribe / Rx / entry / Home test lines, call simulator and settings completed, hosting spelled out, step column. Build map (every step as its real screens) in `build-map/`, script `ui-screens/_qa/build-map.py`. Open for Apurva: **Q-A** Pilot 7d ending (rec. 10b), **Q-B** phone check at step 6 (rec. yes), then approve P1–P5. Step 0 starts with the stale-line fixes in MERGE.md §4.
 - **23:56 — D-89:** Q-A Pilot 7d → 10b; Q-B phone check at step 6; phone testing = play link (QR) + hidden drawer, live remote in backlog. Plan / checklist v3.2. Waiting: Apurva's approval of plan v3.2 → step 0.
+
+## 2026-11-06 · Plan v3.2 approved (D-90); a-confirm-failed fixed
+- **Done:** `a-confirm-failed` (390 + 360) re-rendered without Callback (recipe fix in `case.html`, terminal render on the Mac, guards 0, contact sheet + build map rebuilt; `docs/renders/2026-11-06-confirm-failed-fix/`). Backlog line ticked. Plan + checklist v3.2 approved (D-90).
+- **Next:** step 0 — first the stale-line fixes (MERGE.md §4), then the shell, per plan §5. Brief for the terminal from the main thread.
+

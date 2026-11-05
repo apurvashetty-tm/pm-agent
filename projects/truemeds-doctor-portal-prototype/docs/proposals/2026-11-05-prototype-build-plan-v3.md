@@ -1,6 +1,6 @@
 # Doctor portal — prototype build plan v3
 
-**Status:** DRAFT v3.2 for Apurva's approval (2026-11-05). Nothing is built until this plan and rebuild checklist v3 (`docs/reviews/2026-11-05-rebuild-checklist-v3.md`) are approved.
+**Status:** **APPROVED v3.2** (Apurva, 2026-11-06, D-90) together with rebuild checklist v3.2 (`docs/reviews/2026-11-05-rebuild-checklist-v3.md`). Changes from here on: bug (fix where it occurs) or next version (backlog).
 **Replaces:** `docs/proposals/2026-10-29-prototype-build-plan.md` (v2). **[v3]** = changed from v2 · **[R]** = changed after the independent review · **[R2]** = Apurva's answers after the review (D-89) (`docs/reviews/2026-11-05-plan-v3-review/`: Claude Code + Codex reports, merged in `MERGE.md`).
 **Scope:** how the *prototype* is built. Not the production HLD/LLD — that is Engineering's.
 **Inputs (frozen):** `ui-screens/` (149 states, re-frozen at D-85) · `ui-screens/app-logic.md` · `ui-screens/feedback/messages.json` · `docs/feedback-state-map.md` · `design-system/` (RULES §7–9) · decision log D-01 – D-88 · calling-flow page `calling-flow/` (`data.js`) as the calling reference **[v3]**.
@@ -44,7 +44,7 @@ The old `index.html` / `app.js` / `styles.css` stay frozen; the current site kee
 
 1. ✅ Screens frozen (D-85) · ✅ copy round merged (D-84) · ✅ Part C closed (D-88).
 2. ✅ `app-logic.md` approved (launch B flow above the version-A tables).
-3. **This plan and rebuild checklist v3 approved.**
+3. ✅ This plan and rebuild checklist v3.2 approved (D-90).
 
 ## 3. How it's built
 

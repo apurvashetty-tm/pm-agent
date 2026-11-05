@@ -948,6 +948,11 @@ From an external (ChatGPT) review, each point verified before acting.
 - **Why:** each ending names what happened and D-50 keeps forward and confirm as separate outcomes; Pilot is the most changed journey; controls on top of the app make the phone test stop feeling like the real app.
 - **Rejected:** "Prescription confirmed" for both 7d routes (counts a forward as a confirm); phone checks only at steps 5 and 8; review panel stacked above the app on a phone; live remote now (needs a relay — Netlify function credits or a third-party service — and more to build).
 
+### D-90 · Build plan and rebuild checklist v3.2 approved; build starts at step 0 — 2026-11-06
+- **Decision (Apurva):** `docs/proposals/2026-11-05-prototype-build-plan-v3.md` and `docs/reviews/2026-11-05-rebuild-checklist-v3.md` (v3.2, incl. D-88, D-89 and the independent review merged in `docs/reviews/2026-11-05-plan-v3-review/MERGE.md`) approved as the definition of done for the prototype build. P1–P6 as written. Build starts at step 0 (shell + the stale-line fixes in MERGE.md §4). Frozen from here: new findings are bugs or next-version ideas.
+- Also done before approval: `a-confirm-failed` re-rendered without Callback (D-83 CW-C3; bug, backlog 2026-11-05).
+- **Why:** inputs are frozen and both reviews' findings are applied; the checklist is the test-case base.
+
 ## Design system changes made for this work
 
 ### D-60 · Secondary button without drop shadow (design system) — 2026-10-24 · **REVERTED same day**

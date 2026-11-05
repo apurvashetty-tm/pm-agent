@@ -1,6 +1,6 @@
 # Doctor portal — prototype rebuild checklist v3
 
-**Status:** DRAFT v3.2 for Apurva's approval (2026-11-05). Goes with `docs/proposals/2026-11-05-prototype-build-plan-v3.md`.
+**Status:** **APPROVED v3.2** (Apurva, 2026-11-06, D-90). Goes with `docs/proposals/2026-11-05-prototype-build-plan-v3.md`.
 **Replaces:** `docs/reviews/2026-10-29-rebuild-checklist.md` (v2). **[v3]** = changed from v2 · **[R]** = changed after the independent review (`docs/reviews/2026-11-05-plan-v3-review/MERGE.md`).
 **Use:** every build step is reviewed against this list, not taste. A step passes only when every line whose **Step** column names it passes. Results recorded per step: line ID × state × width, pass / fail / not run, with the build version and source versions. This list is the first draft of the QA test cases (D-79, D-88); each line ID becomes a test ID.
 **How:** **auto** = script on every state (360 and 390 compared with pictures; 430 and 360 × 640 layout only) · **compare** = screenshot vs approved picture · **eye** = self-audit + reviewer · **device** = Apurva's phones · **run** = journey played end to end by a test, with its starting state and expected result written in the state map.
