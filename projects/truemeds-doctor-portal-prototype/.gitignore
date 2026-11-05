@@ -17,3 +17,12 @@ node_modules/
 
 # Netlify build copy of the central design system (created at deploy time, never committed)
 /design-system/
+
+# Step 0 shell: copies made by scripts/copy-shared.sh (never committed)
+/app/design-system/
+/app/brand/
+/app/feedback/
+/app/pictures/
+
+# Test tooling: installed packages stay here, never inside app/
+tests/node_modules/

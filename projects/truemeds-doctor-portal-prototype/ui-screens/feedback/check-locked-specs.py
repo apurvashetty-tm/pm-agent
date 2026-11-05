@@ -270,7 +270,7 @@ D_STATES = [
     'a-release-failed', 'a-releasing', 'a-rx-viewer', 'a-scrolled', 'a-top', 'c-callback',
     'c-callback-error', 'c-callback-failed', 'c-callback-refused', 'c-skip-ha', 'e-availability-ended', 'e-callback-scheduled', 'g0-calling-pilot', 'g1-generic-confirm',
     'g2-checking-ha', 'g3b-forwarded', 'g3b-after-hangup', 's-10-medicines', 's-medicine-disabled', 's-optional-empty', 's7a-calling',
-    's7b-still-on-call', 's7c-checking', 's7d-result-missing', 's7d-result-missing-pilot', 's7d-unavailable-sheet', 's7e-leave-sheet', 's7f-submitted',
+    's7b-still-on-call', 's7d-result-missing', 's7d-result-missing-pilot', 's7d-unavailable-sheet', 's7e-leave-sheet', 's7f-submitted',
     't01-ready', 't02-calling', 't03-not-through', 't04-doctor-missed', 't05-result-wait', 't06-ended-early',
     't08a-valid-cat4', 't08b-valid-forward', 't08c-confirm-blocked', 't09-patient-unavailable', 't10a-confirmed', 't10b-forwarded',
     't11-calling-transfer', 't12-transfer-ready', 't13-connecting-ha', 't14-transferred', 't15-ha-no-join', 't15-after-hangup',

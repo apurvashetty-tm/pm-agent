@@ -3,7 +3,7 @@
 // decision log D-58 → D-85, open_questions.md. Copy text is read live from messages.js (keys below).
 // Types: S shared · C Cat4 · K Pilot with HA skipped (customer/system) · P Pilot Fallback B · A version A (later)
 window.FLOW = {
-  version: "2026-11-03 · screens frozen at D-85 (commit 427dab5)",
+  version: "2026-11-06 · decisions up to D-90",
   lanes: [
     { id: "L1", rows: [0, 1], title: "① Shared start — every case" },
     { id: "L2", rows: [2, 4], title: "② Cat4 · Pilot with HA skipped — doctor confirms after the call (result from the partner)" },
@@ -133,10 +133,10 @@ window.FLOW = {
       dec: ["D-58 pt 20", "D-62", "D-77", "D-83 CW-D1"] },
 
     C7c: { pos: [3, 4], title: "7c Checking call result", sub: "straight here if hang-up\nwas reported", style: "n", types: "CKP",
-      stateId: "call.checking", pics: ["s7c-checking"],
+      stateId: "call.checking", pics: ["t05-result-wait"],
       how: "Doctor tapped Call ended on 7b — or the 3-min timeout when the partner already reported the hang-up.",
-      sees: "Busy status line.", copy: ["call.checkingResult"],
-      events: [["Result found", "normal result path (8a / 6 / 9)"], ["Nothing found", "7d Result not received"]], dec: ["D-83 CW-D1"] },
+      sees: "Same screen as 5: \"Getting call result…\" status line, normal bar height, no script, no buttons. The app asks the backend for the call record.", copy: ["call.resultWait"],
+      events: [["Result found", "normal result path (8a / 6 / 9)"], ["Nothing found", "7d Result not received"]], dec: ["D-83 CW-D1", "D-91"] },
 
     C7d: { pos: [4, 4], title: "7d Result not received", sub: "Confirm · Callback · Unavailable\n(Unavailable → 9)", style: "n", types: "CKP",
       stateId: "call.result-missing", pics: ["s7d-result-missing", "s7d-unavailable-sheet"],
@@ -151,9 +151,9 @@ window.FLOW = {
       stateId: "call.submitted", pics: ["s7f-submitted"],
       how: "Confirm on 7d (Cat4 route) or Confirm & forward on 7d (Pilot route).",
       sees: "Grey card.", bar: "Request next case · Back to Home", copy: ["call.submittedTitle", "call.submittedText"],
-      events: [["Call record over the gate", "Prescription confirmed"], ["Record under the gate, patient never answered, or no record within the wait time", "Not confirmed → hold and retry"]],
-      rules: ["An unproven confirm is not a confirm. A late result updates the screen by itself."],
-      dec: ["D-68", "D-83 CW-D3, CW-D4"], open: ["Record wait time is a setting — value to agree (was 30 min in D-73)"] },
+      events: [["Call record over the gate · Cat4 route", "Prescription confirmed (10a)"], ["Call record over the gate · Pilot route", "Forwarded to Health Advisor (10b)"], ["Record under the gate, patient never answered, or no record within the wait time", "Not confirmed → hold and retry"]],
+      rules: ["An unproven confirm is not a confirm. A late result updates the screen by itself.", "Pilot route ends on 10b, not 10a: Confirm & forward is a forward, and D-50 keeps forward and confirm apart."],
+      dec: ["D-68", "D-83 CW-D3, CW-D4", "D-89 Q-A"], open: ["Record wait time is a setting — value to agree (was 30 min in D-73)"] },
 
     HOLD: { pos: [7, 4], title: "Not confirmed", sub: "hold and retry, no ₹20", style: "warn", types: "CKP",
       stateId: "— (backend outcome, no screen)", pics: [],
@@ -236,7 +236,7 @@ window.FLOW = {
       dec: ["D-58 pt 24", "D-83 CW-F3"] },
 
     E10b: { pos: [7, 9], title: "10b Forwarded to HA", sub: "", style: "end", types: "P", stateId: "—", pics: ["t10b-forwarded"],
-      sees: "Green card.", bar: "Request next case · Back to Home", dec: ["D-50"] },
+      sees: "Green card.", bar: "Request next case · Back to Home", dec: ["D-50", "D-89 Q-A"] },
 
     B7d: { pos: [2, 10], title: "7d Result not received\n(Pilot)", sub: "Confirm & forward ·\nCallback · Unavailable", style: "n", types: "P",
       stateId: "call.result-missing (Pilot)", pics: ["s7d-result-missing-pilot"],
@@ -245,7 +245,7 @@ window.FLOW = {
       actions: [["Confirm & forward", "Confirm (held until the call record arrives)", "7f Waiting for the call record"], ["Callback", "—", "Callback sheet"], ["Unavailable", "— (reason sheet)", "9 Patient unavailable"]],
       rules: ["The transfer is no longer possible once the call has ended, so the route is forward."], dec: ["D-83 CW-D2"] },
 
-    J2: { pos: [3, 10], title: "→ 7f Waiting for the\ncall record", sub: "(lane ②)", style: "join", types: "P", ref: "C7f" },
+    J2: { pos: [3, 10], title: "→ 7f Waiting for the\ncall record", sub: "(lane ②) · record over the gate → 10b", style: "join", types: "P", ref: "C7f" },
 
     ANY: { pos: [0, 15], span: 3, title: "Side panel — can happen almost anywhere", style: "note", types: "S",
       sub: "Offline · Loading / load failed · Confirming… · Confirm failed · Release refused · Phone back blocked (toast)",
@@ -293,6 +293,7 @@ window.FLOW = {
     ["RES", "C6", "too short", "e"], ["C6", "CB", "Callback", "a"], ["CB", "ECB", "time chosen", "a"],
     ["C0", "C7b", "3 min,\nno result", "e"], ["C7b", "C7c", "Call ended", "a"], ["C7c", "C7d", "nothing\nfound", "e"],
     ["C7d", "C7f", "Confirm", "a"], ["C7f", "E10a", "record over\nthe gate", "e"], ["C7f", "HOLD", "record under the gate\nor none in time", "e"],
+    ["J2", "E10b", "record over the gate (Pilot)", "e", "text"],
     ["B0", "B1", "gate passed,\ncall live", "e"], ["B1", "B2", "Confirm\nprescription", "a"], ["B2", "T13", "HA free", "e"],
     ["T13", "E14", "HA joins", "e"], ["T13", "T15", "couldn't\nstart", "e"], ["T15", "E15", "hang-up", "e"],
     ["B2", "B3", "no HA\nfree", "e"], ["B3", "EB3", "hang-up", "e"],

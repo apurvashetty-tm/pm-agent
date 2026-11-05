@@ -18,6 +18,52 @@ def check(name, ok, detail=""):
 def frame(pg):
     return pg.evaluate("(()=>{const q=document.getElementById('mobile-column').getBoundingClientRect();return {l:q.left,t:q.top,w:q.width,h:q.height,r:q.right,b:q.bottom}})()")
 
+
+def run_app():
+    """Layout check for the step 0 shell in app/ (plan v3 B15, checklist 2.3, 5.3, 5.11). Run the app on a local server first:
+    sh projects/truemeds-doctor-portal-prototype/scripts/copy-shared.sh && python3 -m http.server 8765 --directory app
+    Then: python3 docs/layout_check.py --app   (APP_URL overrides http://localhost:8765/)"""
+    base = os.environ.get("APP_URL", "http://localhost:8765/")
+    fails_app = []
+    def ok(name, cond, detail=""):
+        print(("PASS " if cond else "FAIL ") + name + (f"  [{detail}]" if detail else ""))
+        if not cond: fails_app.append(name)
+    with sync_playwright() as p:
+        kw = {"executable_path": EXE} if os.path.exists(EXE) else {}
+        b = p.chromium.launch(**kw)
+        for (w, h) in [(1280, 800), (1440, 900), (1024, 768), (430, 932), (390, 844), (360, 640)]:
+            tag = f"{w}x{h}"
+            pg = b.new_page(viewport={"width": w, "height": h}); errs = []
+            pg.on("pageerror", lambda e: errs.append(str(e)))
+            pg.goto(base + "?s=t01-ready"); pg.wait_for_timeout(400)
+            f = pg.evaluate("(()=>{const q=document.getElementById('frame').getBoundingClientRect();return {l:q.left,t:q.top,w:q.width,h:q.height,r:q.right,b:q.bottom}})()")
+            panel = pg.evaluate("(()=>{const p=document.getElementById('review-panel').getBoundingClientRect();const cs=getComputedStyle(document.getElementById('review-panel'));return {ov:cs.overflowY, inside: !!document.getElementById('frame').contains(document.getElementById('review-panel')), l:p.left, r:p.right}})()")
+            if w >= 768:
+                ok(f"{tag} frame is 9:16", abs(f["w"] / f["h"] - 9 / 16) < 0.01, f"{f['w']:.0f}x{f['h']:.0f}")
+                ok(f"{tag} frame centred", abs((f["l"] + f["r"]) / 2 - w / 2) < 2)
+                ok(f"{tag} frame fits viewport height", f["b"] <= h)
+                ok(f"{tag} panel beside the frame, not inside it, on screen", not panel["inside"] and (panel["l"] >= f["r"] - 1) and panel["r"] <= w, f"panel {panel['l']:.0f}-{panel['r']:.0f}, frame {f['l']:.0f}-{f['r']:.0f}")
+            else:
+                ok(f"{tag} phone: frame is the screen", abs(f["w"] - w) < 2 and abs(f["h"] - h) < 2, f"{f['w']:.0f}x{f['h']:.0f}")
+            if w >= 768:
+                ok(f"{tag} review panel is not a scroll container", panel["ov"] not in ("auto", "scroll"), panel["ov"])
+            else:
+                ok(f"{tag} phone drawer scrolls internally so every control is reachable", panel["ov"] in ("auto", "visible"), panel["ov"])
+            ok(f"{tag} no sideways scroll", pg.evaluate("document.documentElement.scrollWidth <= innerWidth + 1"))
+            ok(f"{tag} picture fits the frame", pg.evaluate("(()=>{const i=document.querySelector('#screen img').getBoundingClientRect();const q=document.getElementById('frame').getBoundingClientRect();return i.top>=q.top-1&&i.bottom<=q.bottom+1&&i.left>=q.left-1&&i.right<=q.right+1})()"))
+            if w < 768:
+                hd = pg.evaluate("(()=>{const hd=document.getElementById('drawer-handle');if(hd.hidden)return {shown:false};const r=hd.getBoundingClientRect();const hdr=document.getElementById('app-header').getBoundingClientRect();const n=document.getElementById('notice-host').getBoundingClientRect();return {shown:true,overlapHeader:r.top<hdr.bottom&&r.bottom>hdr.top&&r.right>hdr.left&&r.left<hdr.right,overlapNotice:!document.getElementById('notice-host').hidden&&r.top<n.bottom&&r.bottom>n.top}})()")
+                ok(f"{tag} drawer handle never covers the header", not (hd["shown"] and hd["overlapHeader"]))
+                ok(f"{tag} drawer handle never covers the notice band", not (hd["shown"] and hd.get("overlapNotice")))
+            ok(f"{tag} no page errors", not errs, "; ".join(errs))
+            pg.close()
+        b.close()
+    print("\nALL PASS" if not fails_app else f"\n{len(fails_app)} FAILED: {fails_app}")
+    return 1 if fails_app else 0
+
+if "--app" in sys.argv:
+    sys.exit(run_app())
+
 with sync_playwright() as p:
     kw = {"executable_path": EXE} if os.path.exists(EXE) else {}
     b = p.chromium.launch(**kw)

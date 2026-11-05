@@ -931,6 +931,33 @@ From an external (ChatGPT) review, each point verified before acting.
 - **Why:** B is what launches; one Pilot flow means one set of screens and tests. Engineering needs the whole flow, with actions and events apart, to agree the app ↔ backend contract.
 - **Rejected:** happy path shown as solid vs dotted lines (would lose action vs event); greyed-out side branches (reads as "not applicable"); "no HA free → forwarded" as a second happy path.
 
+### D-88 · Build readiness answered: v3 now, shell first; Part C closed; deploy on request; Help / bell placeholder — 2026-11-05
+- **Decision (Apurva, prototype-build thread):**
+  1. **Build order (Q1):** build plan + rebuild checklist **v3** now; they are the base of the engineering spec and the first draft of the test cases. Step 0 (shell) first, then one journey at a time, Fallback B before version A. PRD, engineering spec and test cases are not a gate for the build (replaces D-79 (c)–(d) order for the prototype).
+  2. **Storyboard review Part C (Q5): closed.** Every journey was walked through; only the calling flow needed the long review (D-83). The open entries in the backlog and the readiness check were stale.
+  3. **Preview site deploys (Q3):** `truemeds-doctor-app-preview` deploys only when Apurva asks (`[deploy]` in the PR title), as the current site.
+  4. **Help and the bell (Q4, P9):** stay active where the pictures show them; tapping opens a blank placeholder page (`[OPEN DECISION]`). **Icon background (P6b):** no preference — white used as the default (the blue mark would disappear on a blue tile); change on request.
+- **Why:** screens, app logic and the calling flow are frozen, so the plan and checklist won't be rewritten by the documents; deploys cost Netlify credits.
+- **Rejected:** keeping D-79's documents-first gate (blocks a build whose inputs are already frozen); building all journeys at once; deploying on every push.
+
+### D-89 · Pilot 7d ends on Forwarded; phone check at step 6; testing on a phone — 2026-11-05
+- **Decision (Apurva, after the plan v3 review):**
+  1. **Pilot 7d (Q-A):** after Confirm & forward on 7d and a call record over the gate, 7f ends on **10b Forwarded to Health Advisor**, not "Prescription confirmed". Cat4 7d still ends on 10a. No new picture. Fixes app-logic §5 row 7f and `calling-flow/data.js` C7f (step 0 staleness fixes).
+  2. **Phone check at step 6 (Q-B):** yes — one preview deploy; Apurva plays the Pilot scenarios on her phone before step 7.
+  3. **Testing on a phone** (clarified 2026-11-06: covers every journey — sign-in, OTP, unlock, Home, case, Prescribe and calling — and the drawer shows the controls for the current screen): the phone shows only the app. The story is set on the desktop review panel and sent by **QR code / play link** (no server); a small **hidden drawer** on the phone changes things mid-flow. A **live desktop remote** is a later option (backlog §4b).
+- **Why:** each ending names what happened and D-50 keeps forward and confirm as separate outcomes; Pilot is the most changed journey; controls on top of the app make the phone test stop feeling like the real app.
+- **Rejected:** "Prescription confirmed" for both 7d routes (counts a forward as a confirm); phone checks only at steps 5 and 8; review panel stacked above the app on a phone; live remote now (needs a relay — Netlify function credits or a third-party service — and more to build).
+
+### D-90 · Build plan and rebuild checklist v3.2 approved; build starts at step 0 — 2026-11-06
+- **Decision (Apurva):** `docs/proposals/2026-11-05-prototype-build-plan-v3.md` and `docs/reviews/2026-11-05-rebuild-checklist-v3.md` (v3.2, incl. D-88, D-89 and the independent review merged in `docs/reviews/2026-11-05-plan-v3-review/MERGE.md`) approved as the definition of done for the prototype build. P1–P6 as written. Build starts at step 0 (shell + the stale-line fixes in MERGE.md §4). Frozen from here: new findings are bugs or next-version ideas.
+- Also done before approval: `a-confirm-failed` re-rendered without Callback (D-83 CW-C3; bug, backlog 2026-11-05).
+- **Why:** inputs are frozen and both reviews' findings are applied; the checklist is the test-case base.
+
+### D-91 · 7c "Checking call result" shows the same screen as 5 — 2026-11-06
+- **Decision (Apurva):** 7c stays its own logic step — the app asks the backend for the call record; found → the normal result path, nothing found → 7d — but the doctor sees **the same screen as 5**: "Getting call result…" status line (`call.resultWait`), normal bar height, no script, no buttons. The `s7c-checking` pictures (390 + 360) are retired; 7c uses `t05-result-wait`. Copy key `call.checkingResult` retired. Replaces B-02 for 7c (B2 keeps it).
+- **Why:** the old 7c picture kept the hidden 7b question for height and showed an empty half tray; the doctor has nothing to do on either screen, so one waiting screen is clearer.
+- **Rejected:** keeping a separate "Checking call result…" screen; keeping the tall bar for height.
+
 ## Design system changes made for this work
 
 ### D-60 · Secondary button without drop shadow (design system) — 2026-10-24 · **REVERTED same day**

@@ -18,7 +18,7 @@
 | # | Check | Pass when |
 |---|---|---|
 | U1 | Click | Box click opens the panel; Esc or × closes it; arrow click shows its event or action (good to have). |
-| U2 | Move around | Zoom and pan; "fit to screen"; tab switch keeps the selected state. |
+| U2 | Move around | Scroll / swipe moves the page (Shift + scroll sideways), pinch or ⌘ / Ctrl + scroll zooms, drag pans; opens at 100 % top-left; zoom % shown with 50 % / 100 % / Fit; jump-to-lane buttons; tab switch keeps the selected state. (Updated 2026-11-05.) |
 | U3 | Filters | A on/off switch; case type filter (Cat4 · Pilot B · HA skipped). |
 | U4 | Link to a state | `#state=<id>` opens the page on that state, so a link can go in a Jira ticket or meeting note. |
 | U6 | Happy path and step-through (Apurva, 2026-11-03) | Happy path drawn thick brand-blue in every view (Cat4 / HA skipped → 10a; Pilot → 14 Transferred, not the forward); solid / dashed still means action / event. Highlighting a case type numbers its happy path (primary: thick blue), keeps its side branches at full strength in their own colours (secondary — never greyed, they are real outcomes) and fades only the other case types; Previous / Next steps box by box with the panel open. |

@@ -157,10 +157,8 @@
 
   // ---------- pan / zoom ----------
   const view = { overview: null, screens: null };
-  function firstView() {
-    fit(); const v = view[ui.tab];
-    if (v.k < 0.6) { v.k = 0.6; v.x = 8; v.y = 8; applyView(); }
-  }
+  function firstView() { view[ui.tab] = { k: 1, x: 8, y: 8 }; applyView(); }
+  function setZoom(k) { const r = svg.getBoundingClientRect(); const v = view[ui.tab]; zoomAt(k / v.k, r.width / 2, r.height / 2); }
   function fit() {
     const vp = svg.getBoundingClientRect(), w = +svg.dataset.w, h = +svg.dataset.h;
     // Overview: whole diagram. Screens: fit the width and start at the top (it is tall).
@@ -172,12 +170,21 @@
     if (!view[ui.tab]) return firstView();
     const v = view[ui.tab];
     world.setAttribute("transform", `translate(${v.x},${v.y}) scale(${v.k})`);
+    const zl = document.getElementById("zoom-level"); if (zl) zl.textContent = Math.round(v.k * 100) + " %";
   }
   function zoomAt(f, cx, cy) {
     const v = view[ui.tab], k = Math.max(0.1, Math.min(3, v.k * f));
     v.x = cx - (cx - v.x) * (k / v.k); v.y = cy - (cy - v.y) * (k / v.k); v.k = k; applyView();
   }
-  svg.addEventListener("wheel", e => { e.preventDefault(); const r = svg.getBoundingClientRect(); zoomAt(e.deltaY < 0 ? 1.12 : 1 / 1.12, e.clientX - r.left, e.clientY - r.top); }, { passive: false });
+  // Scroll / two-finger swipe moves the page; pinch (sent as ctrl + wheel) or Cmd / Ctrl + scroll zooms — as in Figma or Maps.
+  svg.addEventListener("wheel", e => {
+    e.preventDefault(); const r = svg.getBoundingClientRect(), v = view[ui.tab];
+    if (e.ctrlKey || e.metaKey) { zoomAt(Math.exp(-e.deltaY * (e.deltaMode ? 0.05 : 0.0025)), e.clientX - r.left, e.clientY - r.top); return; }
+    const line = e.deltaMode === 1 ? 16 : 1;
+    let dx = e.deltaX * line, dy = e.deltaY * line;
+    if (e.shiftKey && !dx) { dx = dy; dy = 0; }
+    v.x -= dx; v.y -= dy; applyView();
+  }, { passive: false });
   let drag = null;
   svg.addEventListener("pointerdown", e => { drag = { x: e.clientX, y: e.clientY, moved: false }; });
   window.addEventListener("pointermove", e => {
@@ -281,16 +288,27 @@
   }
   document.getElementById("step-prev").addEventListener("click", () => stepBy(-1));
   document.getElementById("step-next").addEventListener("click", () => stepBy(1));
-  document.getElementById("toggle-a").addEventListener("change", e => { ui.aOn = e.target.checked; view.overview = view.screens = null; draw(); });
+  document.getElementById("toggle-a").addEventListener("change", e => { ui.aOn = e.target.checked; draw(); syncLaneJumps(); });
   document.getElementById("zoom-in").addEventListener("click", () => { const r = svg.getBoundingClientRect(); zoomAt(1.25, r.width / 2, r.height / 2); });
   document.getElementById("zoom-out").addEventListener("click", () => { const r = svg.getBoundingClientRect(); zoomAt(0.8, r.width / 2, r.height / 2); });
   document.getElementById("zoom-fit").addEventListener("click", fit);
+  document.getElementById("zoom-50").addEventListener("click", () => setZoom(0.5));
+  document.getElementById("zoom-100").addEventListener("click", () => setZoom(1));
+  function jumpLane(laneId) {
+    const l = F.lanes.find(x => x.id === laneId); if (!l || (l.later && !ui.aOn)) return;
+    const g = G[ui.tab], v = view[ui.tab], top = rowY(g, l.rows[0]) - g.LH;
+    v.x = 8 - (g.X0 - 24) * v.k; v.y = 8 - top * v.k; applyView();
+  }
+  function syncLaneJumps() {
+    document.querySelectorAll("[data-lane]").forEach(b => { b.hidden = b.dataset.lane === "LA" && !ui.aOn; });
+  }
+  document.querySelectorAll("[data-lane]").forEach(b => b.addEventListener("click", () => jumpLane(b.dataset.lane)));
   window.addEventListener("resize", () => applyView());
   document.getElementById("version").textContent = F.version;
   document.getElementById("notes").innerHTML = F.notes.map(n => `<li>${esc(n)}</li>`).join("");
 
-  draw(); syncStepper();
+  draw(); syncStepper(); syncLaneJumps();
   const m = location.hash.match(/state=([\w-]+)/);
-  if (m && F.states[m[1]]) { if (F.states[m[1]].types === "A") { ui.aOn = true; document.getElementById("toggle-a").checked = true; draw(); } select(m[1]); }
+  if (m && F.states[m[1]]) { if (F.states[m[1]].types === "A") { ui.aOn = true; document.getElementById("toggle-a").checked = true; draw(); syncLaneJumps(); } select(m[1]); }
   window.__flowReady = true;
 })();

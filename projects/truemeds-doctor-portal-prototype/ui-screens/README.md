@@ -33,7 +33,7 @@ The calling states follow app-logic §5 (D-58 points 14–25, D-63, D-64). The r
 | 5 Getting call result | `t05-result-wait` | Script hidden (call has ended) |
 | 6 Call too short | `t06-ended-early` | Call again · Callback (D-58 pt 23) |
 | 7b Still on the call? | `s7b-still-on-call` | Question as plain text, no box (D-62) |
-| 7c Checking | `s7c-checking` | |
+| 7c Checking | `t05-result-wait` | Same screen as 5 (D-91); `s7c-checking` retired |
 | 7d Result not received | `s7d-result-missing` | Confirm prescription · Callback · Unavailable |
 | 7d Pilot (D-83 K6) | `s7d-result-missing-pilot` | Confirm & forward · Callback · Unavailable; no Skip HA (CW-D2) |
 | 7d Unavailable sheet (D-75) | `s7d-unavailable-sheet` | Sheet "Mark patient unavailable" with three reasons; a reason goes to `t09-patient-unavailable` |
@@ -95,7 +95,7 @@ Open the file in a browser. `capture=` (and `?capture=1`) hides the review contr
 
 The screen audit fixes are applied in these pictures (checklist: `docs/renders/2026-11-01-fix-round/CHECKLIST.md`). Calling: no header Back from the call tap on; leave sheet and Releasing… over Ready; empty case → Release case; busy confirm / transfer read-only. Prescribe: SOS total in the medicine's unit, capsule doses without ½, dose error as field text, `d-disabled`, keyboard rule. Entry: terms line during Verifying / Checking, cooldown reads "Checking…", one header spacing for OTP, offer and unlock. Home: busy controls disabled, pinned Set availability, quiet "Stay signed in", 35:00 after adding time.
 
-## Round 4 (2026-11-02) — consistency audit, pending approval
+## Round 4 (2026-11-02) — consistency audit, applied and frozen (D-82)
 
 Round 4 is being applied in lanes (A design system and copy, B entry and Home, C case and Prescribe, D integration). Rules: `design-system/RULES.md` §3, §8.13–8.14, §9.5. Decisions and state changes: `app-logic.md` §13 and `docs/feedback-state-map.md` (Round 4 section). Pinned main actions on Home, the faster sign-in offer and the returning unlock sit in the action bar; result notices sit inside the bar above their button; the logo lockup is 166 px wide with a 16 top offset; cards that stack are 16 apart; the small-phone (360×640) pass is part of the guards. State counts are unchanged by Round 4 (no states added or removed).
 
@@ -104,7 +104,7 @@ Round 4 is being applied in lanes (A design system and copy, B entry and Home, C
 - **Page margin 16** on every mobile screen, header, panel and sheet; cards keep 16 inner padding; the action bar has 16 on all sides plus the phone's safe area (D-67).
 - **Logo** on sign-in, OTP, unlock, offer and Home; not on the case page, Prescribe, sheets or overlays (D-61).
 - **No header Back on OTP** (Change and the phone's back gesture cover it) (D-61).
-- **Status cards** are tinted by outcome with a 1px edge and no drop shadow: success (green) for 10a, 10b, 14 and availability ended; neutral (grey) for 7f, 9 and callback scheduled; warning (amber) for 15 and 15b (D-62, D-66).
+- **Status cards** are tinted by outcome with a 1px edge and no drop shadow: success (green) for 10a, 10b, 14 and availability ended; neutral (grey) for 7f, 9 and callback scheduled; warning (amber) for 15 (D-62, D-66). State 15b is retired (D-83) and has no card.
 - **Icons** only on labelled call, callback, view, skip and direction controls, and the phone-off icon on Unavailable (D-66 B). Log out has no icon (D-70 pt 2).
 - **Health Advisor** is spelled out everywhere except the Skip HA button (D-58 pt 23, D-70 pt 3).
 - **Script card (D-58 pt 18, D-71, Round 3):** the Ready state shows no script card, anywhere on the page. The card belongs to an attempted call (calling, outcome and transfer states).
