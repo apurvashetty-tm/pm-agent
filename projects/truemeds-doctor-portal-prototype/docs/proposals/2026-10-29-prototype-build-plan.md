@@ -1,6 +1,6 @@
 # Doctor portal — prototype build plan
 
-> **⚠ To be replaced by v3 (2026-11-03).** Outdated by D-79 → D-87 (Fallback B first, A later, D-80 Back rules, bare link = review). What changed and what is still open: `docs/proposals/2026-11-03-prototype-build-readiness.md` (§7 – §8, §11).
+> **⚠ Superseded by v3 (2026-11-05):** `docs/proposals/2026-11-05-prototype-build-plan-v3.md` and `docs/reviews/2026-11-05-rebuild-checklist-v3.md`. Kept as history. Outdated by D-79 → D-87 (Fallback B first, A later, D-80 Back rules, bare link = review). What changed and what is still open: `docs/proposals/2026-11-03-prototype-build-readiness.md` (§7 – §8, §11).
 
 **Status:** DRAFT v2 for Apurva's approval (2026-10-29). Nothing is built until this plan and the rebuild checklist (`docs/reviews/2026-10-29-rebuild-checklist.md`) are agreed.
 **Scope of this document:** how the *prototype* is built (D-72 point 5). Not the production HLD/LLD — that is Engineering's.

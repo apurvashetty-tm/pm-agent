@@ -931,6 +931,15 @@ From an external (ChatGPT) review, each point verified before acting.
 - **Why:** B is what launches; one Pilot flow means one set of screens and tests. Engineering needs the whole flow, with actions and events apart, to agree the app ↔ backend contract.
 - **Rejected:** happy path shown as solid vs dotted lines (would lose action vs event); greyed-out side branches (reads as "not applicable"); "no HA free → forwarded" as a second happy path.
 
+### D-88 · Build readiness answered: v3 now, shell first; Part C closed; deploy on request; Help / bell placeholder — 2026-11-05
+- **Decision (Apurva, prototype-build thread):**
+  1. **Build order (Q1):** build plan + rebuild checklist **v3** now; they are the base of the engineering spec and the first draft of the test cases. Step 0 (shell) first, then one journey at a time, Fallback B before version A. PRD, engineering spec and test cases are not a gate for the build (replaces D-79 (c)–(d) order for the prototype).
+  2. **Storyboard review Part C (Q5): closed.** Every journey was walked through; only the calling flow needed the long review (D-83). The open entries in the backlog and the readiness check were stale.
+  3. **Preview site deploys (Q3):** `truemeds-doctor-app-preview` deploys only when Apurva asks (`[deploy]` in the PR title), as the current site.
+  4. **Help and the bell (Q4, P9):** stay active where the pictures show them; tapping opens a blank placeholder page (`[OPEN DECISION]`). **Icon background (P6b):** no preference — white used as the default (the blue mark would disappear on a blue tile); change on request.
+- **Why:** screens, app logic and the calling flow are frozen, so the plan and checklist won't be rewritten by the documents; deploys cost Netlify credits.
+- **Rejected:** keeping D-79's documents-first gate (blocks a build whose inputs are already frozen); building all journeys at once; deploying on every push.
+
 ## Design system changes made for this work
 
 ### D-60 · Secondary button without drop shadow (design system) — 2026-10-24 · **REVERTED same day**

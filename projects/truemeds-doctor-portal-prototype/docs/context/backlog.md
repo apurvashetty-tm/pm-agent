@@ -52,9 +52,9 @@ Order = the order we work in.
 
 ## 2e. New order of work (D-79, 2026-10-31) — replaces 2d's order
 1. [ ] Five-lens audit of the frozen screens (separate agent) → Apurva sorts findings.
-2. [ ] Storyboard review with Apurva, journey by journey: entry → Home → case + Prescribe → calling (incl. her walkthrough misses; then regenerate `calling-flow.png`).
+2. [x] (closed, D-88) Storyboard review with Apurva, journey by journey: entry → Home → case + Prescribe → calling (incl. her walkthrough misses; then regenerate `calling-flow.png`).
 3. [ ] Per closed journey: PRD section → prototype engineering spec + test cases (agents). Spec's shared foundation may start early. Build plan → spec; rebuild checklist → test cases.
-4. [ ] Prototype rebuild from the spec, checked against the test cases (P3/P8 per D-79).
+4. [ ] Prototype rebuild — **D-88:** from build plan v3 + rebuild checklist v3 (`docs/proposals/2026-11-05-prototype-build-plan-v3.md`, `docs/reviews/2026-11-05-rebuild-checklist-v3.md`); PRD / spec / test cases are not a gate.
 5. [ ] Token inspector.
 
 ## 2f. Screen audit — Part A answers (Apurva, 2026-11-01) — recorded as D-80; apply in the journey passes
@@ -139,7 +139,7 @@ Brief: `docs/renders/2026-11-01-fix-round/TERMINAL-BRIEF.md` "Round 4"; audit: `
 - [x] **Copy round done (2026-11-03):** audit run 2 on v2, fixes applied and re-rendered (main round + MAIN-CHECK 1 + 2), copy checks in `check-sources.mjs`, D-85 (17) applied. Guards 0, 149 states. Record: `COPY-ANNEX.md` (goes to the PRD as the copy annex), report `docs/renders/2026-11-03-copy-round/REPORT.md`.
 - [x] Then: DS artifact republish and React Native notes (2026-11-03).
 - [ ] **Engineering (from D-83):** backend refuses a callback without leg 2 answered · hangup-cause mapping (patient-side → 9) and hold / retry settings for doctor cases · does Knowlarity send a call-ended event? · partner for Pilot Non-Value Meds · mismatch analytics table (doctor action vs call record).
-- [ ] Storyboard review (Part C).
+- [x] Storyboard review (Part C) — **closed** (Apurva, 2026-11-05, D-88): every journey was walked through; only calling needed the long review (D-83).
 - [ ] **Prototype build — accessibility and fit items from the copy round (D-84; not visible in the frozen pictures):** live regions for progress / result messages (F24); medicine-row accessible names (F25); non-breaking "4 h" style units (F26); dose and date field errors tied to their fields (F28); two-up button rows stack at large text (CA-20). Plus: Engineering to confirm "Truemeds never sees or stores it." (faster sign-in) before launch.
 - [x] **Design System artifact republished (2026-11-03)** with D-82–D-85 (RULES, beyond-salt, bundle.css, tokens, component guides for Button, Action bar, Notice, Bottom sheet, Status card, App bar, List row). Live version 1793690601-476a. Component guide text now lives in `design-system/scripts/build_artifact.py`.
 - [ ] **React Native refresh — after the prototype build:** `ui-screens/native/NATIVE-STATUS.md` lists the gaps since 2026-10-15 (entry screens, Home, notices, buttons, sheets, Profile) and the screens not yet in native (case, calling, Prescribe). Rewrite the components from the built prototype in one pass.

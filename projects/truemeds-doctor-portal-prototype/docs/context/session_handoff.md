@@ -901,3 +901,8 @@ User identified missing HTML/native linkage. Inspected actual sign-in and OTP HT
 - **Not ours, left uncommitted in the folder:** another session's D-86 work (design-system centring, re-rendered pictures, decision log D-86).
 - **Next (new thread):** prototype build. Read `docs/proposals/2026-11-03-prototype-build-readiness.md` **§11 first** (answers so far + still-open Q1, Q3–Q5), then write build plan + rebuild checklist **v3** (Fallback B first, A later), get them approved, then step 0.
 - **Staleness sweep (20:55):** CLAUDE.md current state (149 states, D-83–D-87, next = build), D-87 recorded (B is the one Pilot flow; A-only later; calling-flow page), app-logic §4 / §5 stale lines fixed and §6 / §11 given the launch (B) flow above the version-A tables, backlog §2l, v2 build plan / checklist marked "to be replaced by v3", knowledge note `knowledge/context/doctor-portal-calling.md` updated.
+
+## 2026-11-05 · Readiness answered (D-88); build plan + rebuild checklist v3 drafted
+- **Done:** Q1 / Q3 / Q4 / Q5 answered and recorded as D-88 (Part C closed; v3 now, shell first; deploy on request; Help / bell blank placeholder; icon on white). Wrote `docs/proposals/2026-11-05-prototype-build-plan-v3.md` and `docs/reviews/2026-11-05-rebuild-checklist-v3.md` (Fallback B first, A as step 9, calling rows of the state map generated from `calling-flow/data.js`). v2 files marked superseded; backlog Part C ticked; readiness §11 updated.
+- **Next:** Apurva approves plan + checklist v3 (§8 P1–P5) → step 0 (shell). Nothing built yet.
+
