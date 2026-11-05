@@ -51,7 +51,7 @@ footer ul { margin: 0; padding-left: var(--tm-space-lg); }
 .node--later .node-frame { stroke: var(--tm-border-disabled); stroke-dasharray: 5 3; }
 .pic-title { font-size: 12px; font-weight: 700; fill: var(--tm-content-primary); }
 .pic-id { font-size: 10px; fill: var(--tm-content-tertiary); }
-.node.is-sel .node-box, .node.is-sel .node-frame { stroke: var(--tm-content-primary); stroke-width: 4; }
+.node.is-last .node-box, .node.is-last .node-frame { stroke: var(--tm-content-primary); stroke-width: 4; }
 .node:focus { outline: none; } .node:focus-visible .node-box, .node:focus-visible .node-frame { stroke: var(--tm-border-focus); stroke-width: 4; }
 .is-dim { opacity: .12; }
 .edge-line { fill: none; stroke: var(--tm-content-secondary); stroke-width: 1.6; }
@@ -119,8 +119,16 @@ code { font-size: .92em; background: var(--tm-surface-secondary); padding: 0 4px
 .ak--e { border-style: dashed; }
 @media (max-width: 760px) { #panel { top: 0 !important; } }
 
-/* selected box: dark ring, also on blue happy-path boxes */
-.node.is-sel .node-box, .node.is-sel .node-frame { stroke: var(--tm-content-primary) !important; stroke-width: 4 !important; }
+/* last selected box (panel closed): dark ring, also on blue happy-path boxes */
+.node.is-last .node-box, .node.is-last .node-frame { stroke: var(--tm-content-primary) !important; stroke-width: 4 !important; }
+/* selected box (panel open): green, lifted and bigger (flow.js popSel) — Apurva, 2026-11-06 */
+.node.is-sel { filter: drop-shadow(0 6px 14px rgba(0, 0, 0, .22)); }
+.node.is-sel .node-box { fill: var(--tm-surface-success-subtle) !important; stroke: var(--tm-border-success-strong) !important; stroke-width: 3 !important; }
+.node.is-sel .node-frame { stroke: var(--tm-border-success-strong) !important; stroke-width: 5 !important; }
+.node.is-sel .node-title, .node.is-sel .node-sub { fill: var(--tm-content-primary) !important; }
+.node.is-sel .pic-title { fill: var(--tm-content-success) !important; }
+/* only the diagram zooms: the page itself never pinch-zooms */
+html, body { touch-action: pan-x pan-y; }
 
 /* navigation (Apurva, 2026-11-05): scroll moves, pinch / ⌘ + scroll zooms, lane jumps */
 .zoom { align-items: center; }

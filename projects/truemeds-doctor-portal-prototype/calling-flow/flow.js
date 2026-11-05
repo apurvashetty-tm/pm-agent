@@ -4,7 +4,7 @@
   const MSG = (window.TMFeedback && window.TMFeedback.messages) || {};
   const PIC = id => `../ui-screens/case/${id}_w390.png`;
   const SVGNS = "http://www.w3.org/2000/svg";
-  const ui = { tab: "overview", aOn: false, filter: "all", sel: null, selEdge: null };
+  const ui = { tab: "overview", aOn: false, filter: "all", sel: null, selEdge: null, last: null };
 
   // ---------- geometry ----------
   const G = {
@@ -125,7 +125,7 @@
     for (const id of Object.keys(F.states)) {
       if (!isVisible(id)) continue;
       const s = F.states[id], b = box(g, id);
-      const grp = el("g", { class: `node node--${s.style}${emph(id)}${ui.sel === id ? " is-sel" : ""}`, tabindex: 0, "data-id": id }, nodesG);
+      const grp = el("g", { class: `node node--${s.style}${emph(id)}${ui.sel === id ? " is-sel" : ui.last === id ? " is-last" : ""}`, tabindex: 0, "data-id": id }, nodesG);
       const usePic = ui.tab === "screens" && s.pics && s.pics.length && !s.span;
       if (usePic) {
         const tl = s.title.split("\n");
@@ -152,6 +152,7 @@
     for (const tg of laneTitles) { const r = tg.querySelector("rect"), w = tg.querySelector("text").getBBox().width; r.setAttribute("width", w + 12); }
     const vbW = right + 60, vbH = bottom + 40;
     svg.dataset.w = vbW; svg.dataset.h = vbH;
+    const selG = ui.sel && nodesG.querySelector(`[data-id="${ui.sel}"]`); if (selG) nodesG.appendChild(selG);   // selected box drawn on top
     applyView();
   }
 
@@ -170,6 +171,7 @@
     if (!view[ui.tab]) return firstView();
     const v = view[ui.tab];
     world.setAttribute("transform", `translate(${v.x},${v.y}) scale(${v.k})`);
+    popSel(v.k);
     const zl = document.getElementById("zoom-level"); if (zl) zl.textContent = Math.round(v.k * 100) + " %";
   }
   function zoomAt(f, cx, cy) {
@@ -194,6 +196,20 @@
   });
   window.addEventListener("pointerup", () => { setTimeout(() => (drag = null), 0); });
   svg.addEventListener("click", () => { if (!drag || !drag.moved) closePanel(); }, true);
+  // Selected box: fit the whole flow, then lift the box (green, bigger) so it reads at any zoom (Apurva, 2026-11-06).
+  function popSel(k) {
+    const n = ui.sel && svg.querySelector(`.node[data-id="${ui.sel}"]`); if (!n) return;
+    const b = box(G[ui.tab], ui.sel), cx = b.x + b.w / 2, cy = b.y + b.h / 2;
+    const s = Math.max(1.15, Math.min(2.6, (ui.tab === "screens" ? 0.75 : 0.95) / k));
+    n.setAttribute("transform", `translate(${cx},${cy}) scale(${s}) translate(${-cx},${-cy})`);
+  }
+  function focusBox(id) {
+    fit();
+    if (ui.tab === "screens" && id) {   // tall tab: fit the width, scroll so the box is in the middle
+      const b = box(G[ui.tab], id), vp = svg.getBoundingClientRect(), v = view[ui.tab];
+      v.y = vp.height / 2 - (b.y + b.h / 2) * v.k; applyView();
+    }
+  }
   function centerOn(id) {
     const g = G[ui.tab], b = box(g, id), vp = svg.getBoundingClientRect(), v = view[ui.tab];
     const k = Math.max(v.k, ui.tab === "screens" ? 0.7 : 1);
@@ -212,7 +228,7 @@
   function select(id, opts = {}) {
     let s = F.states[id]; if (!s) return;
     if (s.ref && !opts.noRef) { /* join box: show its target */ }
-    ui.sel = id; ui.selEdge = null; draw();
+    ui.sel = id; ui.last = null; ui.selEdge = null; draw();
     const ins = [...F.edges, ...F.trunk].filter(e => e[1] === id && isVisible(e[0]));
     const outs = [...F.edges, ...F.trunk].filter(e => e[0] === id && isVisible(e[1]));
     const pics = (s.pics || []).map(p => `<figure><img src="${PIC(p)}" alt="${p}" loading="lazy" data-full="${p}"><figcaption>${p}</figcaption></figure>`).join("");
@@ -236,7 +252,7 @@
       ${sec("Arrows in", ins.length ? `<ul class="arrows">${ins.map(e => arrowLi(e, e[0])).join("")}</ul>` : "")}
       ${sec("Arrows out", outs.length ? `<ul class="arrows">${outs.map(e => arrowLi(e, e[1])).join("")}</ul>` : "")}`;
     openPanel(); history.replaceState(null, "", "#state=" + id); syncStepper();
-    if (!opts.noCenter) requestAnimationFrame(() => centerOn(id));
+    if (!opts.noCenter) requestAnimationFrame(() => focusBox(id));
   }
   function selectEdge(e) {
     ui.selEdge = e; ui.sel = null; draw();
@@ -249,7 +265,12 @@
     openPanel(); history.replaceState(null, "", "#");
   }
   function openPanel() { panel.style.top = document.querySelector("header").offsetHeight + "px"; panel.hidden = false; document.body.classList.add("has-panel"); }
-  function closePanel() { panel.hidden = true; document.body.classList.remove("has-panel"); if (ui.sel || ui.selEdge) { ui.sel = null; ui.selEdge = null; draw(); history.replaceState(null, "", "#"); } }
+  // Closing keeps the box marked (dark border, normal size) and refits the flow to the full width.
+  function closePanel() {
+    const wasOpen = !panel.hidden; panel.hidden = true; document.body.classList.remove("has-panel");
+    if (ui.sel || ui.selEdge) { ui.last = ui.sel || ui.last; ui.sel = null; ui.selEdge = null; draw(); history.replaceState(null, "", "#"); }
+    if (wasOpen) requestAnimationFrame(() => focusBox(ui.last));
+  }
   document.getElementById("panel-close").addEventListener("click", closePanel);
   document.addEventListener("keydown", e => { if (e.key === "Escape") { if (!lightbox.hidden) lightbox.hidden = true; else closePanel(); } });
   body.addEventListener("click", e => {
@@ -263,7 +284,7 @@
   document.querySelectorAll("[data-tab]").forEach(b => b.addEventListener("click", () => {
     ui.tab = b.dataset.tab;
     document.querySelectorAll("[data-tab]").forEach(x => x.setAttribute("aria-pressed", x === b));
-    draw(); if (ui.sel) centerOn(ui.sel);
+    draw(); if (ui.sel || ui.last) requestAnimationFrame(() => focusBox(ui.sel || ui.last));
   }));
   document.querySelectorAll("[data-filter]").forEach(b => b.addEventListener("click", () => {
     ui.filter = b.dataset.filter; ui.step = 0;
@@ -304,6 +325,9 @@
   }
   document.querySelectorAll("[data-lane]").forEach(b => b.addEventListener("click", () => jumpLane(b.dataset.lane)));
   window.addEventListener("resize", () => applyView());
+  // Only the diagram zooms. Pinch or ⌘ + scroll anywhere else (header, side panel) must not zoom the whole page (Apurva, 2026-11-06).
+  window.addEventListener("wheel", e => { if ((e.ctrlKey || e.metaKey) && !svg.contains(e.target)) e.preventDefault(); }, { passive: false, capture: true });
+  for (const t of ["gesturestart", "gesturechange", "gestureend"]) document.addEventListener(t, e => e.preventDefault(), { passive: false });
   document.getElementById("version").textContent = F.version;
   document.getElementById("notes").innerHTML = F.notes.map(n => `<li>${esc(n)}</li>`).join("");
 
