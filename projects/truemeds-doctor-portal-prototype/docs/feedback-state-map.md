@@ -208,7 +208,8 @@ Still open: source-derived 390×844 captures and visual approval, 360-width and 
 | OTP — too many resends / locked / expired and limited | "Doctor Ops" and the time never split across lines | A-17 |
 | case.confirm-failed, case.release-failed | Bar notice above its button (the bar keeps its height in busy states). case.callback-failed stays inside the sheet, 8 above its button | A-19, B-02 |
 | case.confirming / call.connectingHa (Transferring…) | Bar keeps its height; Skip HA alone, full width, greyed and disabled; no Callback (D-83 K13) | B-01 |
-| case.checking (7c) and fallback B2 | Status line takes the row the buttons were on; bar keeps its height | B-02 |
+| fallback B2 | Status line takes the row the buttons were on; bar keeps its height | B-02 |
+| case.checking (7c) | Same screen as 5: "Getting call result…" (`call.resultWait`), normal bar height, no script, no buttons; picture `t05-result-wait` | D-91 (replaces B-02 for 7c) |
 | Empty case | Card text left-aligned, 14 px normal; View Rx left-aligned when Order details is hidden | B-16, B-17 |
 | Back-blocked toast | Breaks between its two sentences | B-21 |
 | Logo (all home-base screens) | One lockup size: 166 px wide, 16 from the top | A-07 (sign-in 174 → 166 in Round 4 lane D; Apurva to confirm) |

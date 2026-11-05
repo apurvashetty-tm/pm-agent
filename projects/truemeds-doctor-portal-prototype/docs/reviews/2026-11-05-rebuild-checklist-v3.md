@@ -31,7 +31,7 @@ Step 0 confirms no other earlier line conflicts with a decision; any found is ad
 
 | # | Check | How | Step |
 |---|---|---|---|
-| 1.1 | Every approved picture in `ui-screens/` (149) is in the state map with one owning step and opens with `?s=<render-id>` | auto | 0, all |
+| 1.1 | Every approved picture in `ui-screens/` (148; `s7c-checking` retired D-91) is in the state map with one owning step and opens with `?s=<render-id>` | auto | 0, all |
 | 1.2 **[R]** | Every behaviour-only state (`feedback-state-map.md`, e.g. `offer.cancelled`, `offer.not-now`, `offer.unsupported`, `offer.enabled`, `rx.load-failed`, `case.reopened`, hold / mismatch) is in the state map with an ID and a step; retired keys are not | auto | 0 |
 | 1.3 **[R]** | Calling rows match `calling-flow/data.js` after normalising (plan B4); drift check passes. Map checked once against app-logic §5 before step 1. If `data.js` and app-logic disagree, app-logic wins and the page is fixed | auto / eye | 0 |
 | 1.4 **[R]** | Stale source lines listed in `MERGE.md` §4 fixed before the state map is generated | eye | 0 |

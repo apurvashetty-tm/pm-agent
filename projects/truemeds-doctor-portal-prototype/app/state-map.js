@@ -1336,19 +1336,6 @@ window.TM_STATE_MAP = {
    ]
   },
   {
-   "id": "s7c-checking",
-   "kind": "picture",
-   "picture": "case/s7c-checking",
-   "step": 5,
-   "lookAhead": [],
-   "version": "B",
-   "calling": [
-    "C7c"
-   ],
-   "behaviour": null,
-   "notes": []
-  },
-  {
    "id": "s7d-result-missing",
    "kind": "picture",
    "picture": "case/s7d-result-missing",
@@ -1447,7 +1434,8 @@ window.TM_STATE_MAP = {
    "lookAhead": [],
    "version": "B",
    "calling": [
-    "RES"
+    "RES",
+    "C7c"
    ],
    "behaviour": null,
    "notes": []

@@ -6,6 +6,9 @@ Definition of done: plan v3.2 (`docs/proposals/2026-11-05-prototype-build-plan-v
 
 ---
 
+## Part A0 — first, check D-91 (applied by the main thread, 2026-11-06)
+`s7c-checking` is retired (7c now uses `t05-result-wait`; D-91); 148 approved pictures. Run the four guards — `python3 ui-screens/feedback/check-locked-specs.py`, `node ui-screens/feedback/check-sources.mjs`, `python3 docs/layout_check.py` (and `--app`), `python3 brand/check_lockup.py` — and `node tests/run-checks.mjs`. All must pass; fix any count or list that still expects 149 (scripts / tests only — never re-add the picture). Report the results.
+
 ## Part A — step 0 follow-ups (main-thread review)
 
 The shell works; the review panel is hard to use. Fix before building screens:

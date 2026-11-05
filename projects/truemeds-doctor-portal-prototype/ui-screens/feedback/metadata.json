@@ -558,15 +558,6 @@
     "retain": "case data",
     "copy": "proposed (2026-10-24, state 7 — no call result) — needs Apurva approval"
   },
-  "call.checkingResult": {
-    "pattern": "B",
-    "trigger": "doctor tapped Call ended; backend asks the partner",
-    "slot": "busy main button label",
-    "next": "wait",
-    "clear": "result found or not",
-    "retain": "case data",
-    "copy": "proposed (2026-10-24, state 7 — no call result) — needs Apurva approval"
-  },
   "call.submittedTitle": {
     "pattern": "N1",
     "trigger": "Confirm tapped in 7d (no call result)",

@@ -29,8 +29,8 @@ for (const r of shipped.pictures) {
   if (!r.id.length) fail(`1.1 empty id: ${r.picture}`);
 }
 for (const p of onDisk) if (!rowsByPic.has(p)) fail(`1.1 picture on disk not in the map: ${p}`);
-if (onDisk.length !== 149) fail(`1.1 expected 149 pictures on disk, found ${onDisk.length}`);
-if (shipped.pictures.length !== 149) fail(`1.1 expected 149 map rows, found ${shipped.pictures.length}`);
+if (onDisk.length !== 148) fail(`1.1 expected 148 pictures on disk, found ${onDisk.length}`);
+if (shipped.pictures.length !== 148) fail(`1.1 expected 148 map rows, found ${shipped.pictures.length}`);
 const ids = shipped.pictures.map((r) => r.id);
 if (new Set(ids).size !== ids.length) fail("1.1 render IDs not unique");
 

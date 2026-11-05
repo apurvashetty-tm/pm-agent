@@ -77,7 +77,7 @@ check("U5", "play link: unreadable or unknown values decode to null", decodeStor
 // ---------- drift and deploy gate ----------
 {
   const out = execFileSync("node", [path.join(PROJECT, "scripts/check-state-map.mjs")], { encoding: "utf8" });
-  check("S1", "state map: 149 pictures, one owner each, calling rows match data.js, no drift", /PASS/.test(out), out.split("\n").slice(-2).join(" "));
+  check("S1", "state map: 148 pictures, one owner each, calling rows match data.js, no drift", /PASS/.test(out), out.split("\n").slice(-2).join(" "));
   const scan = execFileSync("node", [path.join(HERE, "scan.mjs")], { encoding: "utf8" });
   check("S2", "scan: no hard-coded time values, hex colours, emoji or phone-number patterns in app/", /PASS/.test(scan));
 }

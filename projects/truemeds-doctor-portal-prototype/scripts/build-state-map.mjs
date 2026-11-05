@@ -23,7 +23,7 @@ const STEP_BY_PICTURE = {
 };
 const STEP5 = ["t01-ready", "t02-calling", "t03-not-through", "t04-doctor-missed", "t05-result-wait", "t06-ended-early",
   "t08a-valid-cat4", "t08c-confirm-blocked", "t09-patient-unavailable", "t10a-confirmed", "s7a-calling", "s7b-still-on-call",
-  "s7c-checking", "s7d-result-missing", "s7d-unavailable-sheet", "s7f-submitted", "c-callback", "c-callback-error",
+  "s7d-result-missing", "s7d-unavailable-sheet", "s7f-submitted", "c-callback", "c-callback-error",
   "c-callback-failed", "c-callback-refused", "e-callback-scheduled", "e-availability-ended"];
 const STEP6 = ["g0-calling-pilot", "g1-generic-confirm", "g2-checking-ha", "t13-connecting-ha", "t14-transferred",
   "t15-ha-no-join", "t15-after-hangup", "g3b-forwarded", "g3b-after-hangup", "t16-transfer-missed", "t16b-transfer-missed-patient",

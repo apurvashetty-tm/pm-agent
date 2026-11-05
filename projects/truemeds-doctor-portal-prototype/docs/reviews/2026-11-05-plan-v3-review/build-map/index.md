@@ -9,7 +9,7 @@ Review aid for Apurva (approve from screens, not state names). Each image: appro
 | 2 | Home, availability, Profile, Log out, Help / bell placeholder | 22 | Home -> set availability -> Active -> Request a case -> Requesting. | [step-2.png](step-2.png) |
 | 3 | Case page (incl. empty case, leave sheet, release failed, Rx failed) | 22 | Case opened -> Ready (Call patient starts step 5). | [step-3.png](step-3.png) |
 | 4 | Prescribe and Disable | 22 | Case -> tap a medicine -> Prescribe (schedule, dose) -> Prescribed. | [step-4.png](step-4.png) |
-| 5 | Calling - Cat4 and Pilot with HA skipped | 22 | Call patient -> Calling. | [step-5.png](step-5.png) |
+| 5 | Calling - Cat4 and Pilot with HA skipped | 21 | Call patient -> Calling. | [step-5.png](step-5.png) |
 | 6 | Pilot - Fallback B (launch) | 14 | Pilot: Calling (B1, before gate) -> gate -> Confirm prescription -> Checking for an HA -> free: Transferring -> Transferred; none: Forwarded (after hang-up: title only). | [step-6.png](step-6.png) |
 | 9 (LATER) | LATER - Version A (not in the first build) | 3 | Calling (transfer case) -> Confirm & transfer -> Transferring -> Transferred. | [step-9.png](step-9.png) |
 | 7 | Across journeys: availability ends mid-case, reopen into an open case, app backgrounded during a call | none (app-logic 3 - 4) | - | - |
@@ -25,7 +25,7 @@ Review aid for Apurva (approve from screens, not state names). Each image: appro
 
 ## Self-check
 
-- Every approved picture in this map appears once: 147 placed, 147 unique, pictures on disk 149.
+- Every approved picture in this map appears once: 146 placed, 146 unique, pictures on disk 148.
 - Labels: taken from ui-screens/README.md, calling-flow/data.js, app-logic.md and feedback-state-map.md. Readable at phone width: checked by eye only at the sizes built (see note below).
 - No screen cropped: thumbnails are the full 390 x 844 picture scaled to 40 %.
 - Note: the labels and flow lines were written from the sources above; if a source changes, rerun the script after editing LABELS / FLOW.

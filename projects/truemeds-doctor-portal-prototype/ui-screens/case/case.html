@@ -1231,7 +1231,7 @@ document.addEventListener('DOMContentLoaded', syncCaseActionBar);
     // S7. No call result (2026-10-24)
     's7a-calling':             () => { switchScenario(CAT4); initiateCall(); return later(() => { setBar(statusLine('Calling ' + first() + '…')); showScript(); }, 250); },   // K1: no Callback on a live call
     's7b-still-on-call':       () => { switchScenario(CAT4); initiateCall(); return later(() => { setBar(...ask()); showScript(); }, 250); },
-    's7c-checking':            () => { switchScenario(CAT4); initiateCall(); return later(() => { const q = ask(); q[0].style.visibility = 'hidden'; setBar(q[0], statusRow(MSG('call.checkingResult'))); $('pre-call-brief').style.display = 'none'; }, 250); },   // B-02: the question keeps its height (hidden); the status line takes the buttons' row
+    // 's7c-checking' retired (D-91): 7c uses the same screen as 5 (t05-result-wait).
     's7d-result-missing':      () => { switchScenario(CAT4); initiateCall(); allRx(); return later(() => s7dBar(), 250); },
     's7d-result-missing-pilot': () => { switchScenario(VALUE); initiateCall(); allRx(); return later(() => s7dBar('Confirm & forward'), 250); },   // K6 (CW-D2): Pilot route: Confirm & forward · Callback + Unavailable; no Skip HA
     's7d-unavailable-sheet':   () => { switchScenario(CAT4); initiateCall(); allRx(); return later(() => { s7dBar(); openSheet('sheet-mark-unavailable'); }, 250); },

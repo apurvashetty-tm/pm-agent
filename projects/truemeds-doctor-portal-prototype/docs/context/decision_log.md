@@ -953,6 +953,11 @@ From an external (ChatGPT) review, each point verified before acting.
 - Also done before approval: `a-confirm-failed` re-rendered without Callback (D-83 CW-C3; bug, backlog 2026-11-05).
 - **Why:** inputs are frozen and both reviews' findings are applied; the checklist is the test-case base.
 
+### D-91 · 7c "Checking call result" shows the same screen as 5 — 2026-11-06
+- **Decision (Apurva):** 7c stays its own logic step — the app asks the backend for the call record; found → the normal result path, nothing found → 7d — but the doctor sees **the same screen as 5**: "Getting call result…" status line (`call.resultWait`), normal bar height, no script, no buttons. The `s7c-checking` pictures (390 + 360) are retired; 7c uses `t05-result-wait`. Copy key `call.checkingResult` retired. Replaces B-02 for 7c (B2 keeps it).
+- **Why:** the old 7c picture kept the hidden 7b question for height and showed an empty half tray; the doctor has nothing to do on either screen, so one waiting screen is clearer.
+- **Rejected:** keeping a separate "Checking call result…" screen; keeping the tall bar for height.
+
 ## Design system changes made for this work
 
 ### D-60 · Secondary button without drop shadow (design system) — 2026-10-24 · **REVERTED same day**

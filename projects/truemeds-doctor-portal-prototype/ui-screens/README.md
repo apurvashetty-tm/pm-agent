@@ -33,7 +33,7 @@ The calling states follow app-logic §5 (D-58 points 14–25, D-63, D-64). The r
 | 5 Getting call result | `t05-result-wait` | Script hidden (call has ended) |
 | 6 Call too short | `t06-ended-early` | Call again · Callback (D-58 pt 23) |
 | 7b Still on the call? | `s7b-still-on-call` | Question as plain text, no box (D-62) |
-| 7c Checking | `s7c-checking` | |
+| 7c Checking | `t05-result-wait` | Same screen as 5 (D-91); `s7c-checking` retired |
 | 7d Result not received | `s7d-result-missing` | Confirm prescription · Callback · Unavailable |
 | 7d Pilot (D-83 K6) | `s7d-result-missing-pilot` | Confirm & forward · Callback · Unavailable; no Skip HA (CW-D2) |
 | 7d Unavailable sheet (D-75) | `s7d-unavailable-sheet` | Sheet "Mark patient unavailable" with three reasons; a reason goes to `t09-patient-unavailable` |

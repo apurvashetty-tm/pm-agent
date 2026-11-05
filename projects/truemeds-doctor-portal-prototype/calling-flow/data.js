@@ -133,10 +133,10 @@ window.FLOW = {
       dec: ["D-58 pt 20", "D-62", "D-77", "D-83 CW-D1"] },
 
     C7c: { pos: [3, 4], title: "7c Checking call result", sub: "straight here if hang-up\nwas reported", style: "n", types: "CKP",
-      stateId: "call.checking", pics: ["s7c-checking"],
+      stateId: "call.checking", pics: ["t05-result-wait"],
       how: "Doctor tapped Call ended on 7b — or the 3-min timeout when the partner already reported the hang-up.",
-      sees: "Busy status line.", copy: ["call.checkingResult"],
-      events: [["Result found", "normal result path (8a / 6 / 9)"], ["Nothing found", "7d Result not received"]], dec: ["D-83 CW-D1"] },
+      sees: "Same screen as 5: \"Getting call result…\" status line, normal bar height, no script, no buttons. The app asks the backend for the call record.", copy: ["call.resultWait"],
+      events: [["Result found", "normal result path (8a / 6 / 9)"], ["Nothing found", "7d Result not received"]], dec: ["D-83 CW-D1", "D-91"] },
 
     C7d: { pos: [4, 4], title: "7d Result not received", sub: "Confirm · Callback · Unavailable\n(Unavailable → 9)", style: "n", types: "CKP",
       stateId: "call.result-missing", pics: ["s7d-result-missing", "s7d-unavailable-sheet"],
