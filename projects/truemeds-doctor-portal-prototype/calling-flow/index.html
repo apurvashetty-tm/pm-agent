@@ -30,11 +30,23 @@
         <span id="step-label"></span>
       </div>
       <label class="switch"><input type="checkbox" id="toggle-a" /> Show version A (later)</label>
-      <div class="zoom">
+      <div class="zoom" role="group" aria-label="Zoom">
         <button class="tm-btn tm-btn--secondary tm-btn--xs" id="zoom-out" aria-label="Zoom out">−</button>
-        <button class="tm-btn tm-btn--secondary tm-btn--xs" id="zoom-fit">Fit</button>
+        <span class="zoom-level" id="zoom-level" aria-live="polite">100 %</span>
         <button class="tm-btn tm-btn--secondary tm-btn--xs" id="zoom-in" aria-label="Zoom in">+</button>
+        <button class="tm-btn tm-btn--quiet tm-btn--xs" id="zoom-50">50 %</button>
+        <button class="tm-btn tm-btn--quiet tm-btn--xs" id="zoom-100">100 %</button>
+        <button class="tm-btn tm-btn--quiet tm-btn--xs" id="zoom-fit">Fit</button>
       </div>
+    </div>
+    <div class="jumps" role="group" aria-label="Jump to a lane">
+      <span class="lbl">Jump to</span>
+      <button class="tm-chip" data-lane="L1">① Shared start</button>
+      <button class="tm-chip" data-lane="L2">② Cat4 · HA skipped</button>
+      <button class="tm-chip" data-lane="L3">③ Pilot (Fallback B)</button>
+      <button class="tm-chip" data-lane="LA" hidden>Version A</button>
+      <button class="tm-chip" data-lane="L5">⑤ Other</button>
+      <span class="hint">Scroll or swipe to move · pinch or ⌘ + scroll to zoom · drag works too</span>
     </div>
     <div class="legend">
       <span><i class="happy"></i>Happy path line</span>

@@ -154,3 +154,5 @@ Brief: `docs/renders/2026-11-01-fix-round/TERMINAL-BRIEF.md` "Round 4"; audit: `
 - [ ] Start from `docs/proposals/2026-11-03-prototype-build-readiness.md` §11; answer Q1, Q3, Q4, Q5.
 - [ ] Build plan + rebuild checklist **v3** (Fallback B first, A-only screens later, calling-flow page as the calling reference) → Apurva approves → step 0.
 - [ ] Calling-flow live page: redeploy when Apurva asks (`[deploy]`); the live copy may predate the happy-path view.
+- [x] Calling-flow page navigation (Apurva, 2026-11-05): scroll / swipe moves, pinch or ⌘ + scroll zooms, opens at 100 %, zoom % with 50 % / 100 % / Fit, jump-to-lane buttons.
+- [ ] **Later (logged, not built):** calling-flow page mini-map (where you are in the whole flow) and a "Find a state" box (type "17" or "Transferring" to jump there).

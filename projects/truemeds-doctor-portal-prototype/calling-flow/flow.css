@@ -121,3 +121,13 @@ code { font-size: .92em; background: var(--tm-surface-secondary); padding: 0 4px
 
 /* selected box: dark ring, also on blue happy-path boxes */
 .node.is-sel .node-box, .node.is-sel .node-frame { stroke: var(--tm-content-primary) !important; stroke-width: 4 !important; }
+
+/* navigation (Apurva, 2026-11-05): scroll moves, pinch / ⌘ + scroll zooms, lane jumps */
+.zoom { align-items: center; }
+.zoom-level { min-width: 52px; text-align: center; font-size: var(--tm-font-size-body-xs); color: var(--tm-content-secondary); font-variant-numeric: tabular-nums; }
+.jumps { display: flex; flex-wrap: wrap; gap: var(--tm-space-sm); align-items: center; margin-top: var(--tm-space-md); }
+.jumps .lbl { color: var(--tm-content-secondary); font-size: var(--tm-font-size-body-xs); }
+.jumps .hint { color: var(--tm-content-tertiary); font-size: var(--tm-font-size-body-xs); margin-left: auto; }
+.jumps [hidden] { display: none; }
+#canvas { cursor: default; } #canvas:active { cursor: grabbing; }
+@media (max-width: 760px) { .jumps .hint { display: none; } }
