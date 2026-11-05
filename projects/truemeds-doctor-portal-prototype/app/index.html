@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en-IN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="noindex, nofollow">
+  <title>truemeds for doctors</title>
+  <meta name="theme-color" content="#FFFFFF">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="truemeds for doctors">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="icons/icon-180.png">
+  <link rel="stylesheet" href="design-system/truemeds.css">
+  <link rel="stylesheet" href="shell/shell.css">
+</head>
+<body data-mode="review">
+  <div id="stage">
+    <section id="frame" class="shell-frame" aria-label="Doctor app">
+      <header id="app-header" class="shell-header">
+        <img id="lockup" src="brand/truemeds-for-doctors.svg" alt="truemeds for doctors" width="166" height="auto">
+      </header>
+      <main id="main-scroll" class="shell-main">
+        <div id="screen" class="shell-screen"></div>
+      </main>
+      <div id="notice-host" class="shell-notice" role="status" aria-live="polite" hidden></div>
+    </section>
+  </div>
+
+  <!-- Review controls: beside the frame on desktop; a hidden drawer on a narrow screen (plan §4). Never a scroll container. -->
+  <section id="review-panel" class="review-panel" aria-label="Review controls" hidden></section>
+  <button id="drawer-handle" class="drawer-handle" type="button" aria-controls="review-panel" aria-expanded="false" hidden>
+    <span class="tm-icon" data-icon="dots-vertical" aria-hidden="true"></span><span class="visually-hidden">Review controls</span>
+  </button>
+  <div id="drawer-backdrop" class="drawer-backdrop" hidden></div>
+
+  <script src="design-system/icons/icons.js"></script>
+  <script src="feedback/messages.js"></script>
+  <script src="state-map.js"></script>
+  <script src="review/vendor/qrcode-generator.js"></script>
+  <script type="module" src="core/boot.js"></script>
+</body>
+</html>

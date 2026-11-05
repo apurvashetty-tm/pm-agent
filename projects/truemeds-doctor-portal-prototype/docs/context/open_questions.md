@@ -37,7 +37,7 @@ Every entry must include:
 
 **Safe placeholder:** No-pickup marks a single attempt. Hold is manual with no auto-return. `[MOCK ASSUMPTION]`
 
-**Status:** Answered by D-58 (2026-10-19) — a patient who doesn't answer closes the case as Patient unavailable automatically; no hold.
+**Status:** Answered by D-58 (2026-10-19) — a patient who doesn't answer closes the case as Patient unavailable automatically. **Superseded by D-83 pt 6 (CW-B2):** Patient unavailable is a hold, retried by the system by hangup cause (busy / no answer / switched off / network → retried; unknown → plain hold; invalid number → not retried, flagged). Nothing goes to Ops. The "no hold" wording above is history only.
 
 ---
 

@@ -151,9 +151,9 @@ window.FLOW = {
       stateId: "call.submitted", pics: ["s7f-submitted"],
       how: "Confirm on 7d (Cat4 route) or Confirm & forward on 7d (Pilot route).",
       sees: "Grey card.", bar: "Request next case · Back to Home", copy: ["call.submittedTitle", "call.submittedText"],
-      events: [["Call record over the gate", "Prescription confirmed"], ["Record under the gate, patient never answered, or no record within the wait time", "Not confirmed → hold and retry"]],
-      rules: ["An unproven confirm is not a confirm. A late result updates the screen by itself."],
-      dec: ["D-68", "D-83 CW-D3, CW-D4"], open: ["Record wait time is a setting — value to agree (was 30 min in D-73)"] },
+      events: [["Call record over the gate · Cat4 route", "Prescription confirmed (10a)"], ["Call record over the gate · Pilot route", "Forwarded to Health Advisor (10b)"], ["Record under the gate, patient never answered, or no record within the wait time", "Not confirmed → hold and retry"]],
+      rules: ["An unproven confirm is not a confirm. A late result updates the screen by itself.", "Pilot route ends on 10b, not 10a: Confirm & forward is a forward, and D-50 keeps forward and confirm apart."],
+      dec: ["D-68", "D-83 CW-D3, CW-D4", "D-89 Q-A"], open: ["Record wait time is a setting — value to agree (was 30 min in D-73)"] },
 
     HOLD: { pos: [7, 4], title: "Not confirmed", sub: "hold and retry, no ₹20", style: "warn", types: "CKP",
       stateId: "— (backend outcome, no screen)", pics: [],
@@ -236,7 +236,7 @@ window.FLOW = {
       dec: ["D-58 pt 24", "D-83 CW-F3"] },
 
     E10b: { pos: [7, 9], title: "10b Forwarded to HA", sub: "", style: "end", types: "P", stateId: "—", pics: ["t10b-forwarded"],
-      sees: "Green card.", bar: "Request next case · Back to Home", dec: ["D-50"] },
+      sees: "Green card.", bar: "Request next case · Back to Home", dec: ["D-50", "D-89 Q-A"] },
 
     B7d: { pos: [2, 10], title: "7d Result not received\n(Pilot)", sub: "Confirm & forward ·\nCallback · Unavailable", style: "n", types: "P",
       stateId: "call.result-missing (Pilot)", pics: ["s7d-result-missing-pilot"],
@@ -293,6 +293,7 @@ window.FLOW = {
     ["RES", "C6", "too short", "e"], ["C6", "CB", "Callback", "a"], ["CB", "ECB", "time chosen", "a"],
     ["C0", "C7b", "3 min,\nno result", "e"], ["C7b", "C7c", "Call ended", "a"], ["C7c", "C7d", "nothing\nfound", "e"],
     ["C7d", "C7f", "Confirm", "a"], ["C7f", "E10a", "record over\nthe gate", "e"], ["C7f", "HOLD", "record under the gate\nor none in time", "e"],
+    ["J2", "E10b", "record over\nthe gate (Pilot)", "e"],
     ["B0", "B1", "gate passed,\ncall live", "e"], ["B1", "B2", "Confirm\nprescription", "a"], ["B2", "T13", "HA free", "e"],
     ["T13", "E14", "HA joins", "e"], ["T13", "T15", "couldn't\nstart", "e"], ["T15", "E15", "hang-up", "e"],
     ["B2", "B3", "no HA\nfree", "e"], ["B3", "EB3", "hang-up", "e"],

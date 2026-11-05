@@ -1,0 +1,13 @@
+{
+  "name": "truemeds-doctor-app-step0-tests",
+  "private": true,
+  "description": "Checks and tests for app/ (plan v3 B15). node_modules stays here, never inside app/.",
+  "type": "module",
+  "scripts": {
+    "test": "node run-checks.mjs",
+    "scan": "node scan.mjs"
+  },
+  "devDependencies": {
+    "playwright": "^1.58.2"
+  }
+}

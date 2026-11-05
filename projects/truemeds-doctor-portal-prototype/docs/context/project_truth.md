@@ -32,8 +32,8 @@ Freelance doctors working with Truemeds, each on their own phone.
 5. **Review each medicine:** prescribe it or disable it.
 6. **Finish the case**, in one of these ways:
    - **Confirm prescription:** Cat4 cases, and Pilot cases where HA is skipped.
-   - **Confirm & transfer:** Pilot, Value Meds, HA required. The prescription is confirmed and the patient is handed to an HA on the same call. If the transfer fails, the case is forwarded instead.
-   - **Confirm & forward:** Pilot, Non-Value Meds, HA required. The prescription is confirmed and an HA calls the patient back separately.
+   - **Confirm & transfer:** Pilot, Value Meds, HA required — **version A, later.** The prescription is confirmed and the patient is handed to an HA on the same call. If the transfer fails, the case is forwarded instead. Launch (Fallback B, D-83 CW-F1): a Pilot live call shows **Confirm prescription**, then the HA check (B2 → transferring or forwarded).
+   - **Confirm & forward:** Pilot, HA required, when the call ended before Confirm or there was no result (D-83 CW-F3, D-89). The prescription is confirmed on the partner's result and an HA calls the patient back separately.
    - **Skip HA:** the doctor decides HA isn't needed; the button then becomes Confirm prescription.
    - **Callback** or **Patient unavailable:** the case ends without a prescription.
 7. **Next:** request the next case, or go back to Home.
@@ -49,17 +49,17 @@ These rules apply until Apurva changes them. Every change is recorded in the dec
 |---|---|---|
 | Cat4 | — | Confirm prescription |
 | Pilot | HA skipped (by customer, system or doctor) | Confirm prescription |
-| Pilot | Value Meds + HA required | Confirm & transfer |
-| Pilot | Non-Value Meds + HA required | Confirm & forward |
+| Pilot | Value Meds + HA required | Confirm & transfer (version A, later; launch: Confirm prescription on the live call, then HA check) |
+| Pilot | Non-Value Meds + HA required | Confirm & forward (only after the call has ended, no result or 16 / 7d). Launch: a live call shows Confirm prescription (B1) and then the HA check, the same as Value Meds |
 
   Skip HA appears only for Pilot cases where HA is required and not yet skipped. Cat4 cases never show anything HA-related. Each of the four rows is a separate outcome in analytics.
 - **No unreviewed medicines:** Confirm is blocked while any medicine is still Pending.
-- **Leaving a case:** before the first attempted call, Back offers "Release case"; once a call is attempted, the case can only end through the flow (confirm, callback, patient unavailable) (D-58).
+- **Leaving a case:** header Back (on 1, 3 and 4 while the patient has never been reached) offers "Release case"; Back is hidden from the Call tap and never returns once the patient answered; once a call is attempted, the case can only end through the flow (confirm, callback, patient unavailable) (D-80 pt 1, D-58).
 - **The doctor can't add medicines or change quantity.** Quantity is shown on the case, read-only.
 
 ## 5. Calling
 
-Click-to-call through one telecom partner per flow: **Knowlarity** for Cat4 (one result after the call ends) and **Ozonetel** for Pilot transfer calls (live events). The doctor taps Call patient; the doctor's phone rings first, then the patient's; the doctor ends the call on the phone (no End call button). The app learns the call status by **polling** the backend (working assumption until Engineering confirms, OQ-030). If no call result arrives, the doctor is asked "Are you still on the call?" and can still confirm; the case then waits for the call record and goes to Ops after 30 minutes (D-58, D-73). Full flow: `ui-screens/app-logic.md` §4–§6.
+Click-to-call through one telecom partner per flow: **Knowlarity** for Cat4 (one result after the call ends) and **Ozonetel** for Pilot transfer calls (live events). The doctor taps Call patient; the doctor's phone rings first, then the patient's; the doctor ends the call on the phone (no End call button). The app learns the call status by **polling** the backend (working assumption until Engineering confirms, OQ-030). If no call result arrives, the doctor is asked "Are you still on the call?" and can still confirm; the case then waits for the call record. A record under the gate, or none within the wait time, means the prescription is not confirmed → hold and retry; nothing goes to Ops (D-58, D-83 CW-D3/D4). Full flow: `ui-screens/app-logic.md` §4–§6.
 
 ## 6. Where the detail lives
 

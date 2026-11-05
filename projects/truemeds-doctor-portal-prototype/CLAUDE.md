@@ -53,7 +53,7 @@ Before any auth/Home UI or render work, read `docs/feedback-rules.md` and `docs/
 
 ## Layout v2 decisions — D-42 to D-56 (2026-10-14/15)
 
-Read `design-system/RULES.md` §8 (incl. locked specs L1–L9) and **§9 (components and states: button roles, 48px targets, chips, sheet template, toast, states checklist)**, and decision log D-42–D-52, before any screen work. Doctor-portal specifics of the design system are in D-52. Key points: logo on every screen except the case page and task overlays (D-61, replaces D-42's rule); page margin 16 (D-67); task headers in hero or compact size, Back only where there is a previous screen; case page exits by stage (D-48); compact tinted case header (D-49). **Wording: "case", never "order", for the doctor's unit of work**; the customer order ID line stays. Final CTA labels and tracking: D-50 ("Confirm prescription", "Confirm & transfer", "Confirm & forward", "Skip HA call").
+Read `design-system/RULES.md` §8 (incl. locked specs L1–L9) and **§9 (components and states: button roles, 48px targets, chips, sheet template, toast, states checklist)**, and decision log D-42–D-52, before any screen work. Doctor-portal specifics of the design system are in D-52. Key points: logo on every screen except the case page and task overlays (D-61, replaces D-42's rule); page margin 16 (D-67); task headers in hero or compact size, Back only where there is a previous screen; case page exits by stage (D-48); compact tinted case header (D-49). **Wording: "case", never "order", for the doctor's unit of work**; the customer order ID line stays. Final CTA labels and tracking: D-50 ("Confirm prescription", "Confirm & transfer", "Confirm & forward", "Skip HA").
 
 ## Approved UI references
 

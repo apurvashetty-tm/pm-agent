@@ -1,0 +1,12 @@
+# Preview site for the doctor app prototype (plan v3 §4, checklist 5.10). Site: truemeds-doctor-app-preview.
+# Base directory = this app/ folder (set in Netlify). Build = copy the shared files in (copy-shared.sh), then publish app/ only.
+# Deploy gate: the same rule as the root netlify.toml — the site builds only when the latest commit message contains [deploy].
+[build]
+  command = "sh ../scripts/copy-shared.sh"
+  publish = "."
+  ignore = "git log -1 --pretty=%B | grep -qF '[deploy]' && exit 1 || exit 0"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"

@@ -1,0 +1,141 @@
+/* Shell styles (plan v3 B5, RULES §7). Tokens only: --tm-* from design-system/truemeds.css. No hex colours, no emoji. */
+
+/* ---- base ---- */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; }
+body {
+  font-family: var(--tm-font-family-plus-jakarta-sans), system-ui, sans-serif;
+  font-size: var(--tm-font-size-body-md);
+  line-height: var(--tm-font-lineheight-md);
+  color: var(--tm-content-primary);
+  background: var(--tm-surface-secondary);
+}
+.visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+[hidden] { display: none !important; }
+
+/* ---- stage and frame ---- */
+/* Below 768px the app is the screen. From 768px it sits in a centred 9:16 frame (RULES §7.2). */
+#stage { position: fixed; inset: 0; }
+.shell-frame {
+  position: fixed; inset: 0;
+  display: flex; flex-direction: column;
+  background: var(--tm-surface-primary);
+  overflow: hidden;
+  transform: translateZ(0);
+}
+.shell-header {
+  flex: none;
+  display: flex; align-items: center;
+  padding: var(--tm-space-sm) var(--tm-space-page);
+  padding-top: max(var(--tm-space-sm), env(safe-area-inset-top));
+  background: var(--tm-surface-primary);
+}
+.shell-header img { display: block; height: auto; width: 166px; max-width: 100%; }
+.shell-main { flex: 1 1 auto; min-height: 0; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+.shell-screen { min-height: 100%; padding: var(--tm-space-page); padding-bottom: max(var(--tm-space-page), env(safe-area-inset-bottom)); }
+.shell-notice {
+  position: absolute; left: 0; right: 0; bottom: 0;
+  padding: var(--tm-space-sm) var(--tm-space-page);
+  background: var(--tm-surface-info-subtle);
+  color: var(--tm-content-primary);
+  border-top: 1px solid var(--tm-border-info-strong);
+}
+.shell-empty { color: var(--tm-content-secondary); margin: 0; }
+
+/* A picture fills the frame. Pictures carry their own header, so the shell header is hidden on picture views. */
+.shell-picture { position: relative; margin: 0; height: 100%; display: flex; justify-content: center; background: var(--tm-surface-primary); }
+.shell-picture img { display: block; height: 100%; width: auto; max-width: 100%; object-fit: contain; }
+.shell-label {
+  position: absolute; top: var(--tm-space-xs); left: 50%; transform: translateX(-50%);
+  margin: 0; padding: var(--tm-space-2xs) var(--tm-space-sm);
+  border-radius: var(--tm-core-radius-full);
+  background: var(--tm-surface-warning-subtle); color: var(--tm-content-primary);
+  font-size: var(--tm-font-size-body-xs); white-space: nowrap; z-index: 5;
+}
+.shell-picture--card { flex-direction: column; justify-content: flex-start; padding: var(--tm-space-page); overflow: auto; }
+.shell-picture--card h2 { margin: 0 0 var(--tm-space-sm); font-size: var(--tm-font-size-title-md); }
+
+/* ---- review controls ---- */
+body { position: relative; }
+.review-panel {
+  position: absolute; z-index: 50; /* desktop: scrolls with the page, never its own scroll area (RULES §7.5) */
+  background: var(--tm-surface-primary);
+  border: 1px solid var(--tm-border-default);
+  border-radius: var(--tm-core-radius-16);
+  padding: var(--tm-space-sm);
+  font-size: var(--tm-font-size-body-xs);
+  line-height: var(--tm-font-lineheight-xs);
+  overflow: visible;
+}
+.review-panel h2 { margin: 0 0 var(--tm-space-xs); font-size: var(--tm-font-size-body-md); }
+.review-panel h3 { margin: var(--tm-space-sm) 0 var(--tm-space-2xs); font-size: var(--tm-font-size-body-xs); color: var(--tm-content-secondary); }
+.review-panel details { border-top: 1px solid var(--tm-border-subtle); padding-top: var(--tm-space-2xs); margin-top: var(--tm-space-2xs); }
+.review-panel summary { cursor: pointer; font-weight: 600; min-height: 32px; display: flex; align-items: center; }
+.review-panel label { display: flex; flex-direction: column; gap: 2px; margin: var(--tm-space-2xs) 0; }
+.review-panel select { min-height: 32px; font: inherit; color: inherit; background: var(--tm-surface-primary); border: 1px solid var(--tm-border-default); padding: 2px var(--tm-space-2xs); }
+.review-panel ol, .review-panel ul { margin: 0; padding-left: var(--tm-space-md); max-height: none; }
+.review-panel .log { font-size: var(--tm-font-size-body-xs); color: var(--tm-content-secondary); }
+.review-panel .tm-btn { margin: var(--tm-space-2xs) var(--tm-space-2xs) var(--tm-space-2xs) 0; }
+.review-panel .qr-box { display: block; width: 180px; height: 180px; margin: var(--tm-space-2xs) 0; }
+.review-panel .qr-box svg { width: 100%; height: 100%; display: block; }
+.review-panel code { word-break: break-all; font-size: var(--tm-font-size-body-xs); }
+.review-panel .missing { color: var(--tm-content-error); }
+
+.drawer-handle {
+  position: fixed; right: 0; top: 96px; z-index: 40;
+  width: 48px; height: 56px; padding: 0;
+  display: none; align-items: center; justify-content: center;
+  background: var(--tm-surface-primary);
+  border: 1px solid var(--tm-border-default); border-right: 0;
+  border-radius: var(--tm-core-radius-16) 0 0 var(--tm-core-radius-16);
+  color: var(--tm-content-secondary); cursor: pointer;
+}
+.drawer-backdrop { position: fixed; inset: 0; z-index: 45; background: var(--tm-surface-inverse); opacity: .35; }
+
+/* ---- desktop: frame + panel beside it ---- */
+@media (min-width: 768px) {
+  :root { --frame-h: clamp(640px, calc(100vh - 48px), 800px); --frame-w: calc(var(--frame-h) * 9 / 16); }
+  #stage { display: flex; align-items: center; justify-content: center; }
+  .shell-frame {
+    position: relative; inset: auto;
+    height: var(--frame-h); width: var(--frame-w);
+    border-radius: var(--tm-core-radius-32);
+    border: 1px solid var(--tm-border-default);
+  }
+  .review-panel { top: 24px; left: calc(50% + var(--frame-w) / 2 + 24px); width: min(300px, calc(50vw - var(--frame-w) / 2 - 36px)); max-height: none; }
+  .drawer-handle, .drawer-backdrop { display: none !important; }
+  .shell-notice { position: absolute; }
+}
+
+/* ---- phone: the panel is a hidden drawer that slides up from the bottom (plan §4) ---- */
+@media (max-width: 767px) {
+  .review-panel {
+    left: 0; right: 0; bottom: 0; top: auto;
+    position: fixed;
+    max-height: 80vh; overflow-y: auto; /* phone drawer: the one place controls scroll, so every control stays reachable */
+    border-radius: var(--tm-core-radius-16) var(--tm-core-radius-16) 0 0;
+    transform: translateY(100%);
+    transition: transform .2s ease;
+    box-shadow: none;
+  }
+  body.drawer-open .review-panel { transform: translateY(0); }
+  /* phone: every control in the drawer is a 48px target (RULES §9) */
+  .review-panel select, .review-panel .tm-btn { min-height: 48px; }
+  body[data-mode="review"] .drawer-handle, body[data-mode="play"] .drawer-handle { display: flex; }
+  body.drawer-open .drawer-backdrop { display: block; }
+  body.drawer-open .drawer-handle { display: none; }
+}
+
+/* ---- modes ---- */
+body[data-mode="demo"] .review-panel, body[data-mode="demo"] .drawer-handle, body[data-mode="demo"] .drawer-backdrop,
+body[data-mode="capture"] .review-panel, body[data-mode="capture"] .drawer-handle, body[data-mode="capture"] .drawer-backdrop { display: none !important; }
+body[data-mode="capture"] .shell-label { display: none; }
+/* capture: animations frozen (checklist 2.1) */
+body[data-mode="capture"] *, body[data-mode="capture"] *::before, body[data-mode="capture"] *::after { animation: none !important; transition: none !important; caret-color: transparent !important; }
+body[data-mode="capture"] #stage { position: fixed; inset: 0; display: block; }
+body[data-mode="capture"] .shell-frame { position: fixed; inset: 0; width: auto; height: auto; border: 0; border-radius: 0; }
+body.picture-only .shell-header { display: none; }
+/* picture views: the picture fills the frame; its own header is the header */
+body.picture-only .shell-header { display: none; }
+body.picture-only .shell-main, body.picture-only .shell-screen { height: 100%; padding: 0; min-height: 0; }
+body.picture-only .shell-picture { height: 100%; }
