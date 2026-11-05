@@ -1,6 +1,6 @@
 # Doctor portal — prototype rebuild checklist v3
 
-**Status:** DRAFT v3.1 for Apurva's approval (2026-11-05). Goes with `docs/proposals/2026-11-05-prototype-build-plan-v3.md`.
+**Status:** DRAFT v3.2 for Apurva's approval (2026-11-05). Goes with `docs/proposals/2026-11-05-prototype-build-plan-v3.md`.
 **Replaces:** `docs/reviews/2026-10-29-rebuild-checklist.md` (v2). **[v3]** = changed from v2 · **[R]** = changed after the independent review (`docs/reviews/2026-11-05-plan-v3-review/MERGE.md`).
 **Use:** every build step is reviewed against this list, not taste. A step passes only when every line whose **Step** column names it passes. Results recorded per step: line ID × state × width, pass / fail / not run, with the build version and source versions. This list is the first draft of the QA test cases (D-79, D-88); each line ID becomes a test ID.
 **How:** **auto** = script on every state (360 and 390 compared with pictures; 430 and 360 × 640 layout only) · **compare** = screenshot vs approved picture · **eye** = self-audit + reviewer · **device** = Apurva's phones · **run** = journey played end to end by a test, with its starting state and expected result written in the state map.
@@ -99,7 +99,7 @@ Step 0 confirms no other earlier line conflicts with a decision; any found is ad
 |---|---|---|---|
 | 4.20 **[R]** | Every edge of the calling flow (state map, from `data.js`, non-A) is played as a journey test from its starting state to its expected state | run | 5, 6 |
 | 4.21 | Before the gate, no Confirm prescription, Confirm & forward or Skip HA in any scenario | run | 5, 6 |
-| 4.22 **[R]** | Endings: Cat4 / HA skipped → 8a Confirm prescription → 10a · Pilot live call → B1 Confirm prescription → B2 → HA free: 13 → 14 · none: B3 · 16 → Confirm & forward → 10b at once, or Skip HA + reason → Confirm prescription → 10a · Cat4 7d → Confirm prescription → 7f · Pilot 7d → Confirm & forward → 7f · 7f → record over the gate → 10a (Cat4) / **Q-A** (Pilot) | run | 5, 6 |
+| 4.22 **[R]** | Endings: Cat4 / HA skipped → 8a Confirm prescription → 10a · Pilot live call → B1 Confirm prescription → B2 → HA free: 13 → 14 · none: B3 · 16 → Confirm & forward → 10b at once, or Skip HA + reason → Confirm prescription → 10a · Cat4 7d → Confirm prescription → 7f · Pilot 7d → Confirm & forward → 7f · 7f → record over the gate → 10a (Cat4) / **10b (Pilot, D-89)** | run | 5, 6 |
 | 4.23 **[R]** | Unproven confirm (7f, and forwards from 15 and B3): record under the gate, patient never answered, or no record within the wait → not confirmed, hold and retry, no ₹20, mismatch event logged; a forward from 15 / B3 after the hang-up goes the same way in the background | run | 5, 6 |
 | 4.24 | Cat4 never shows anything about the Health Advisor; HA-skipped Pilot never shows transfer or forward | run | 5, 6 |
 | 4.25 **[R]** | Skip HA only for Pilot, after the gate, when an HA call follows and isn't skipped: on B1 and on 16, never on 7d; greyed on B2 and 13. On B1 (live call) → 17 note + status line → then each result branch separately: 8a · 6 · 9 · 7c → 7d | run | 6 |
@@ -131,6 +131,8 @@ Step 0 confirms no other earlier line conflicts with a decision; any found is ad
 | 5.7 **[R]** | Reopening resumes: unlock → Home, or back into the open case with medicines, notes, deadlines and call stage kept; a late record for an earlier case never changes the open one | run / device | 7 |
 | 5.8 | Safe areas respected; bottom bar never cut by browser bars; OTP keyboard leaves code boxes, error line and Verify visible at 360 | device | 1, 5 |
 | 5.9 | After a new deploy, the installed app shows the new version on next open | device | 5 |
+| 5.11 **[R2]** | Phone (narrow screen) in review or play: the app is full screen; no control sits over the app except the small handle, which never covers the header controls, the action bar or a sheet; the drawer opens from the handle and closes on a tap outside; no handle in demo or capture | auto / device | 0, 5 |
+| 5.12 **[R2]** | Play link: every launch scenario and simulator outcome can be written into a link and QR from the desktop panel; scanned on a phone it plays to the same end state as the same story run in the desktop panel; an unreadable code opens review with a notice; the QR library is vendored, not loaded from another site | run / device | 0, 5, 6 |
 | 5.10 **[R]** | Preview site: commit without `[deploy]` → build skipped; with `[deploy]` → deployed; design-system styles, icons and fonts load; only `app/` served, `docs/` not reachable; hidden from search engines; current site unchanged | auto / eye | 0 |
 
 ## 6. Quality

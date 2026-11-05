@@ -1,7 +1,7 @@
 # Doctor portal — prototype build plan v3
 
-**Status:** DRAFT v3.1 for Apurva's approval (2026-11-05). Nothing is built until this plan and rebuild checklist v3 (`docs/reviews/2026-11-05-rebuild-checklist-v3.md`) are approved.
-**Replaces:** `docs/proposals/2026-10-29-prototype-build-plan.md` (v2). **[v3]** = changed from v2 · **[R]** = changed after the independent review (`docs/reviews/2026-11-05-plan-v3-review/`: Claude Code + Codex reports, merged in `MERGE.md`).
+**Status:** DRAFT v3.2 for Apurva's approval (2026-11-05). Nothing is built until this plan and rebuild checklist v3 (`docs/reviews/2026-11-05-rebuild-checklist-v3.md`) are approved.
+**Replaces:** `docs/proposals/2026-10-29-prototype-build-plan.md` (v2). **[v3]** = changed from v2 · **[R]** = changed after the independent review · **[R2]** = Apurva's answers after the review (D-89) (`docs/reviews/2026-11-05-plan-v3-review/`: Claude Code + Codex reports, merged in `MERGE.md`).
 **Scope:** how the *prototype* is built. Not the production HLD/LLD — that is Engineering's.
 **Inputs (frozen):** `ui-screens/` (149 states, re-frozen at D-85) · `ui-screens/app-logic.md` · `ui-screens/feedback/messages.json` · `docs/feedback-state-map.md` · `design-system/` (RULES §7–9) · decision log D-01 – D-88 · calling-flow page `calling-flow/` (`data.js`) as the calling reference **[v3]**.
 **Picture version:** `docs/reviews/2026-11-05-plan-v3-review/build-map/` — every step below as its real screens **[R]**.
@@ -21,7 +21,9 @@
 | What the bare link opens | Review; demo via `?demo=1`; the installed app always opens demo | D-79 P3 |
 | PRD, engineering spec, test cases | Not a gate for the build | D-88 (Q1) |
 | Back on a case **[R]** | Header Back on 1, 3 and 4 only, while the patient has never been reached; hidden from the tap on Call; never returns once the patient answered; closed case → phone back goes Home | D-80 pt 1, app-logic §4 table (one stale sentence fixed as a bug in step 0) |
-| Pilot 7d ending **[R]** | **OPEN — Apurva (Q-A).** Recommended: 7f → **10b Forwarded to Health Advisor** when the record arrives | Gap: app-logic §5 row 7f and `data.js` say "Prescription confirmed" for both routes |
+| Pilot 7d ending **[R2]** | 7f → **10b Forwarded to Health Advisor** when the record arrives (the doctor tapped Confirm & forward; D-50 keeps forward and confirm apart). Cat4 7d still ends on 10a | D-89 (Q-A) |
+| Phone check at step 6 **[R2]** | Yes — one deploy, Apurva plays the Pilot scenarios on her phone | D-89 (Q-B) |
+| Testing on a phone **[R2]** | The phone shows only the app. Scenarios are set on the desktop and sent to the phone by QR code (play link); a small hidden drawer on the phone changes things mid-flow. A live desktop remote is a later option (backlog) | D-89 |
 
 ## 1. What we're building
 
@@ -32,7 +34,7 @@ A clean, modular rebuild of the doctor app prototype from the approved screens, 
 | Who it's for | Apurva, design team, Engineering | Anyone trying touch and feel on a phone |
 | Case types | Cat4 · Pilot HA free · Pilot no HA free · Pilot HA skipped (customer / system) | Cat4 only |
 | States | Every launch state in app-logic and every approved picture (A-only left out) | Happy path: sign-in → OTP → Home → case → prescribe → call → Prescription confirmed → next case |
-| Controls | Review panel beside the phone frame | None |
+| Controls | Desktop: review panel beside the phone frame. Phone: app full screen, play link (QR) + hidden drawer **[R2]** | None |
 | Call gate | Real 50 s (a setting), with fast-forward | Whole clock runs faster (see B10), so the call still counts as valid **[R]** |
 | Installable | — | Yes: Add to Home Screen, opens full screen |
 
@@ -42,7 +44,7 @@ The old `index.html` / `app.js` / `styles.css` stay frozen; the current site kee
 
 1. ✅ Screens frozen (D-85) · ✅ copy round merged (D-84) · ✅ Part C closed (D-88).
 2. ✅ `app-logic.md` approved (launch B flow above the version-A tables).
-3. **This plan and rebuild checklist v3 approved; Q-A answered.**
+3. **This plan and rebuild checklist v3 approved.**
 
 ## 3. How it's built
 
@@ -62,11 +64,15 @@ The old `index.html` / `app.js` / `styles.css` stay frozen; the current site kee
 | B12 | Remembering **[R]** | The installed app remembers sign-in, faster sign-in, availability and an open case: medicines reviewed, notes typed, deadlines, call stage. Session stays valid through an open case (no OTP over a live case). Demo and review keep separate storage; capture writes nothing; Reset and Log out clear it | Reopening must feel real (production: OQ-025) |
 | B13 | Phone back **[R]** | Every screen and sheet is a step in the app's history. In a case: header Back per §0 "Back on a case"; during a call phone back shows the toast; on a closed case phone back goes Home; never closes the app mid-case | Otherwise back closes the installed app |
 | B14 | Phone unlock | Mock: the review panel picks success / cancelled / failed / unavailable; the demo succeeds | A browser can't use the phone's unlock like the native app |
-| B15 | Checks | Playwright. Step 0 points `layout_check.py` at `app/` on a local server; adds the screenshot compare (390 + 360, fixed clock, frozen animations, spinner mask) and journey tests, incl. one test per calling-flow edge generated from the state map. Every step runs G7 | The current layout check tests the old `index.html` |
+| B15 | Checks | Playwright. Step 0 points `layout_check.py` at `app/` on a local server; adds the screenshot compare (390 + 360, fixed clock, frozen animations, spinner mask) and journey tests, incl. one test per calling-flow edge generated from the state map, and a play-link test for each launch scenario (the same story through the link and through the desktop panel ends in the same state) **[R2]**. Every step runs G7 | The current layout check tests the old `index.html` |
 
 ## 4. Modes, install and hosting [R]
 
 - **Review mode (bare link):** panel beside the frame (RULES §7.5) — scenario, call simulator (B9), phone-unlock outcome, jump to any state, fast-forward, offline / failure switches, width 360 / 390, reset, event log (four confirm outcomes as separate events, once per completed confirm, D-50; mismatch events).
+- **Phone testing [R2]:** on a phone the review panel never sits on top of the app.
+  - **Play link (QR):** the desktop review panel has a "Test on phone" section — choose the scenario and the story (call outcome per attempt, partner, who ends the call, HA free or not, call record, phone-unlock outcome). It shows a QR code and a short link (`?play=<code>`, the story written into the link; no server). Scanned on the phone, the app opens full screen and plays that story as the tester taps through — outcomes arrive by themselves at realistic times. Opens in the phone's browser (the installed app stays demo-only). An unreadable code opens review with a notice.
+  - **Hidden drawer:** in review or play on a narrow screen, a small control handle sits at the screen edge — never over the header controls, the action bar or a sheet. Tapping it slides the same controls up from the bottom; tapping outside closes it. Not shown in demo or capture.
+  - **Later (backlog):** live remote, where the desktop drives the phone in real time — needs a message relay (Netlify function credits or a third-party service).
 - **Demo mode (`?demo=1`; the installed app always):** Cat4 happy path, no review controls; the installed app ignores review or capture settings in a link.
 - **Capture mode (`?capture=1`):** no panel, screen width only, fixed clock, animations frozen.
 - **Folder layout (same locally and deployed):** `app/` holds the app. The deploy step copies in `design-system/` (styles, icons, fonts, logo), the "truemeds for doctors" lockup and the copy registry, so all shared paths resolve inside `app/`; these copies are git-ignored, never committed. Locally: `python3 -m http.server` from the project folder.
@@ -79,7 +85,7 @@ Each step: build → automatic checks + G7 → self-audit against the pictures a
 
 | Step | Journey | Pictures (owner) | Done when |
 |---|---|---|---|
-| 0 | Shell + staleness fixes **[R]**: frame, navigation + phone back, state, storage, clock, settings, `MSG()`, mock server + call simulator, mock unlock, state map, review panel, install, checks, preview site. **Before generating the state map:** fix the stale source lines found by the review (MERGE.md §4) | — | Layout check passes on `app/`; state map lists 149 pictures + behaviour-only states; drift check passes; deploy gate tested both ways |
+| 0 | Shell + staleness fixes **[R]**: frame, navigation + phone back, state, storage, clock, settings, `MSG()`, mock server + call simulator, mock unlock, state map, review panel + phone drawer + play link (QR) **[R2]**, install, checks, preview site. **Before generating the state map:** fix the stale source lines found by the review (MERGE.md §4) | — | Layout check passes on `app/`; state map lists 149 pictures + behaviour-only states; drift check passes; deploy gate tested both ways |
 | 1 | Sign-in, OTP, faster sign-in offer, returning unlock | `sign-in/*`, `otp/*`, `faster-signin-offer/*`, `returning-unlock/*` + behaviour-only offer states | Every state matches; "→ Home" checked against a stub until step 2 |
 | 2 | Home, availability, Profile, Log out, Help / bell placeholder | `home/*` (↗ `home_profile-case-open`: open case from step 3) | Every state matches |
 | 3 | Case page incl. empty case, leave sheet, release failed, Rx viewer and Rx failed | `case/a-*` (↗ `a-back-blocked`, `a-confirm-busy`, `a-confirm-failed` → step 5), `case/s-*` (↗ `s-medicine-disabled` → step 4), `s7e-leave-sheet`, `prescribe/d-rx-failed`, `rx.load-failed` | Every state matches |
@@ -110,6 +116,5 @@ Production architecture · real backend or telecom partner · in-app calling (Vo
 | P2 | Plain HTML/JS, no framework (B1) | Yes (both reviewers agree) |
 | P3 | Calling rows generated from `data.js`, normalised, drift check + one check against app-logic (B4) | Yes (both reviewers agree with the normalising step) |
 | P4 | Settings and mock values, demo scales all time values (B10) | As listed |
-| P5 | Review points: step 5 (phone demo), step 6 (Pilot phone check, if Q-B yes), step 8 (final); other steps run autonomously | Yes |
-| **Q-A** | Pilot 7d confirm: after the record arrives, which ending? | **10b "Forwarded to Health Advisor"** — the doctor tapped Confirm & forward, and D-50 keeps forward and confirm as separate outcomes. No new picture: 7f stays as is, then `t10b-forwarded` |
-| **Q-B** | Add your phone check at step 6 (Pilot)? | **Yes** — the most changed journey (D-83, D-85, D-87); about 10 minutes |
+| P5 | Review points: step 5 (phone demo), step 6 (Pilot phone check), step 8 (final); other steps run autonomously | Yes |
+| P6 **[R2]** | Phone testing: play link (QR) + hidden drawer; live remote later | As agreed (D-89) |

@@ -49,6 +49,6 @@ Inputs: `claude-report.md` (Claude Code, terminal), `codex-report.md` (Codex), m
 9. Project `CLAUDE.md` "Skip HA call" → "Skip HA".
 10. `project_truth.md` §3 – 5: A routing, pre-D-80 release wording, Ops escalation for missing records.
 11. `open_questions.md` OQ-002 "no hold" vs D-83 pt 6.
-12. After Q-A: app-logic §5 row 7f and `data.js` C7f Pilot ending.
+12. app-logic §5 row 7f and `data.js` C7f: Pilot route ends on 10b Forwarded to Health Advisor (Q-A answered, D-89).
 
 None of these changes a rule or a picture; each brings a line in line with a decision already taken.

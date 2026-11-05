@@ -940,6 +940,14 @@ From an external (ChatGPT) review, each point verified before acting.
 - **Why:** screens, app logic and the calling flow are frozen, so the plan and checklist won't be rewritten by the documents; deploys cost Netlify credits.
 - **Rejected:** keeping D-79's documents-first gate (blocks a build whose inputs are already frozen); building all journeys at once; deploying on every push.
 
+### D-89 · Pilot 7d ends on Forwarded; phone check at step 6; testing on a phone — 2026-11-05
+- **Decision (Apurva, after the plan v3 review):**
+  1. **Pilot 7d (Q-A):** after Confirm & forward on 7d and a call record over the gate, 7f ends on **10b Forwarded to Health Advisor**, not "Prescription confirmed". Cat4 7d still ends on 10a. No new picture. Fixes app-logic §5 row 7f and `calling-flow/data.js` C7f (step 0 staleness fixes).
+  2. **Phone check at step 6 (Q-B):** yes — one preview deploy; Apurva plays the Pilot scenarios on her phone before step 7.
+  3. **Testing on a phone:** the phone shows only the app. The story is set on the desktop review panel and sent by **QR code / play link** (no server); a small **hidden drawer** on the phone changes things mid-flow. A **live desktop remote** is a later option (backlog §4b).
+- **Why:** each ending names what happened and D-50 keeps forward and confirm as separate outcomes; Pilot is the most changed journey; controls on top of the app make the phone test stop feeling like the real app.
+- **Rejected:** "Prescription confirmed" for both 7d routes (counts a forward as a confirm); phone checks only at steps 5 and 8; review panel stacked above the app on a phone; live remote now (needs a relay — Netlify function credits or a third-party service — and more to build).
+
 ## Design system changes made for this work
 
 ### D-60 · Secondary button without drop shadow (design system) — 2026-10-24 · **REVERTED same day**
