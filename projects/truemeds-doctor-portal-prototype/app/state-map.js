@@ -2234,7 +2234,7 @@ window.TM_STATE_MAP = {
    ],
    "label": "record over the gate (Pilot)",
    "kind": "e",
-   "drawn": true,
+   "drawn": false,
    "route": "pilot"
   },
   {

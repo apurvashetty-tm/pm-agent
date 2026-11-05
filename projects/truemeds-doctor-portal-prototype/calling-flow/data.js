@@ -3,7 +3,7 @@
 // decision log D-58 → D-85, open_questions.md. Copy text is read live from messages.js (keys below).
 // Types: S shared · C Cat4 · K Pilot with HA skipped (customer/system) · P Pilot Fallback B · A version A (later)
 window.FLOW = {
-  version: "2026-11-03 · screens frozen at D-85 (commit 427dab5)",
+  version: "2026-11-06 · decisions up to D-90",
   lanes: [
     { id: "L1", rows: [0, 1], title: "① Shared start — every case" },
     { id: "L2", rows: [2, 4], title: "② Cat4 · Pilot with HA skipped — doctor confirms after the call (result from the partner)" },
@@ -245,7 +245,7 @@ window.FLOW = {
       actions: [["Confirm & forward", "Confirm (held until the call record arrives)", "7f Waiting for the call record"], ["Callback", "—", "Callback sheet"], ["Unavailable", "— (reason sheet)", "9 Patient unavailable"]],
       rules: ["The transfer is no longer possible once the call has ended, so the route is forward."], dec: ["D-83 CW-D2"] },
 
-    J2: { pos: [3, 10], title: "→ 7f Waiting for the\ncall record", sub: "(lane ②)", style: "join", types: "P", ref: "C7f" },
+    J2: { pos: [3, 10], title: "→ 7f Waiting for the\ncall record", sub: "(lane ②) · record over the gate → 10b", style: "join", types: "P", ref: "C7f" },
 
     ANY: { pos: [0, 15], span: 3, title: "Side panel — can happen almost anywhere", style: "note", types: "S",
       sub: "Offline · Loading / load failed · Confirming… · Confirm failed · Release refused · Phone back blocked (toast)",
@@ -293,7 +293,7 @@ window.FLOW = {
     ["RES", "C6", "too short", "e"], ["C6", "CB", "Callback", "a"], ["CB", "ECB", "time chosen", "a"],
     ["C0", "C7b", "3 min,\nno result", "e"], ["C7b", "C7c", "Call ended", "a"], ["C7c", "C7d", "nothing\nfound", "e"],
     ["C7d", "C7f", "Confirm", "a"], ["C7f", "E10a", "record over\nthe gate", "e"], ["C7f", "HOLD", "record under the gate\nor none in time", "e"],
-    ["J2", "E10b", "record over\nthe gate (Pilot)", "e"],
+    ["J2", "E10b", "record over the gate (Pilot)", "e", "text"],
     ["B0", "B1", "gate passed,\ncall live", "e"], ["B1", "B2", "Confirm\nprescription", "a"], ["B2", "T13", "HA free", "e"],
     ["T13", "E14", "HA joins", "e"], ["T13", "T15", "couldn't\nstart", "e"], ["T15", "E15", "hang-up", "e"],
     ["B2", "B3", "no HA\nfree", "e"], ["B3", "EB3", "hang-up", "e"],
