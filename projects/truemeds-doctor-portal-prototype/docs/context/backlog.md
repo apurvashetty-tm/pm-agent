@@ -153,7 +153,7 @@ Brief: `docs/renders/2026-11-01-fix-round/TERMINAL-BRIEF.md` "Round 4"; audit: `
 ## 2l. Prototype build — next (new thread)
 - [ ] Start from `docs/proposals/2026-11-03-prototype-build-readiness.md` §11; answer Q1, Q3, Q4, Q5.
 - [ ] Build plan + rebuild checklist **v3** (Fallback B first, A-only screens later, calling-flow page as the calling reference) → Apurva approves → step 0.
-- [ ] Calling-flow live page: redeploy when Apurva asks (`[deploy]`); the live copy may predate the happy-path view.
+- [ ] Calling-flow live page: **deploy with the next approved merge of this branch** (Apurva, 2026-11-05 — wait until the build plan v3 is approved, then put `[deploy]` in that PR title). The live copy is still the 3 Nov version (no happy path, old zoom).
 - [x] Calling-flow page navigation (Apurva, 2026-11-05): scroll / swipe moves, pinch or ⌘ + scroll zooms, opens at 100 %, zoom % with 50 % / 100 % / Fit, jump-to-lane buttons.
 - [ ] **Later (logged, not built):** calling-flow page mini-map (where you are in the whole flow) and a "Find a state" box (type "17" or "Transferring" to jump there).
 - [ ] **Bug (Apurva, 2026-11-05):** `ui-screens/case/a-confirm-failed` (390 + 360) still shows **Callback** under Confirm prescription — after a valid call only the confirm button (D-83 CW-C3). Cause: the recipe in `case.html` uses `passGate(CAT4)`, whose old bar keeps Callback (`a-confirm-busy` hides it, so it is fine). Fix the recipe, re-render the two pictures only; the calling-flow page picks them up by itself.
