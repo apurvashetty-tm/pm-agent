@@ -8,9 +8,18 @@ Codex reviews **before** your report exists, so the two stay independent.
    `codex exec --sandbox read-only --output-last-message docs/reviews/2026-11-05-plan-v3-review/codex-report.md "Read docs/reviews/2026-11-05-plan-v3-review/BRIEF.md and do exactly what it says. You are the Codex reviewer. Your final message is your report in the brief's format; it is saved for you, so write no files. Do not read claude-report.md."`
    If a flag is rejected, check `codex exec --help` and use the equivalent; if `codex` isn't installed or signed in, stop and tell Apurva.
 2. While it runs, do your own review and write `claude-report.md`. Don't open `codex-report.md` until yours is written.
-3. When Codex finishes, check `codex-report.md` exists and follows the brief's format (don't edit it). Tell Apurva both reports are ready, and stop. The main thread merges them.
+3. When Codex finishes, check `codex-report.md` exists and follows the brief's format (don't edit it).
+4. Then do **Part 2 — build map** (below, Claude Code only). Tell Apurva the two reports and the build map are ready, and stop. The main thread merges the reports and does the final review.
 
 Apurva wants an independent check before she approves. **The main risk is a flow, state, rule or decision that the plan or checklist leaves out or gets wrong** — she can't verify that from state names and decision numbers herself. You review; you do not decide.
+
+## Part 2 — build map (Claude Code, after both reports)
+A picture version of plan v3 §5, so Apurva can approve from screens instead of state names and decision numbers.
+- **What:** one image per build step 1 – 6 (step 0 has no screens; step 7 – 8 as one line of text; step 9 version A as its own image marked "LATER"). Each image: title "Step n — journey"; the step's approved 390 pictures in flow order (happy path first, then side branches), each labelled `render id — one short line of what the doctor sees or does` (from app-logic / `calling-flow/data.js`, not invented); a one-line flow under the title (for example "Call patient → Calling… → result → Confirm prescription → Prescription confirmed"). Steps 5 – 6: group by path like the calling-flow page (shared start · Cat4 / HA skipped · Pilot HA free · Pilot no HA free · side branches).
+- **How:** a script `ui-screens/_qa/build-map.py` (reuse `build-storyboard.py`'s thumbnail style), reading the step → picture list from plan v3 §5. Only approved pictures from `ui-screens/`; no new renders, no mock-ups. Any picture in §5 that doesn't exist, or any `ui-screens/` state that no step uses, goes in a "Gaps" line on the index — don't fix the plan.
+- **Out:** `docs/reviews/2026-11-05-plan-v3-review/build-map/step-<n>.png` + `index.md` (one line per step: journey, picture count, flow line, link to the image).
+- **Self-check before saying done:** every §5 picture appears exactly once; labels readable at phone width; no screen cropped.
+- Writes only the script and the `build-map/` folder. No commits.
 
 ## Already settled — don't flag
 - **D-87:** Fallback B is the one Pilot flow (Non-Value Meds included); A-only screens (11, 12, 8b) are built later (step 9).
@@ -37,7 +46,7 @@ Project `CLAUDE.md` · `docs/context/decision_log.md` D-56, D-58, D-73, D-79 →
 7. **P1 – P5:** agree / disagree / can't judge, one line why.
 
 ## Rules
-- **Read-only.** Write only your report file. No edits, commits, pushes or PRs.
+- **Read-only** for the review: write only your report file (and, for Claude Code, the Part 2 files). No other edits, no commits, pushes or PRs.
 - Stay in scope: the prototype build. Out-of-scope ideas go in "Parked".
 - Every finding cites the file and section it relies on. Say "unverified" when you couldn't check.
 - Never write decisions or approvals in Apurva's name.
