@@ -4,7 +4,7 @@
   const MSG = (window.TMFeedback && window.TMFeedback.messages) || {};
   const PIC = id => `../ui-screens/case/${id}_w390.png`;
   const SVGNS = "http://www.w3.org/2000/svg";
-  const ui = { tab: "overview", aOn: false, filter: "all", sel: null, selEdge: null };
+  const ui = { tab: "overview", aOn: false, filter: "all", sel: null, selEdge: null, last: null, pop: null };
 
   // ---------- geometry ----------
   const G = {
@@ -125,10 +125,11 @@
     for (const id of Object.keys(F.states)) {
       if (!isVisible(id)) continue;
       const s = F.states[id], b = box(g, id);
-      const grp = el("g", { class: `node node--${s.style}${emph(id)}${ui.sel === id ? " is-sel" : ""}`, tabindex: 0, "data-id": id }, nodesG);
+      const grp = el("g", { class: `node node--${s.style}${emph(id)}${ui.sel === id ? " is-sel" : ui.last === id ? " is-last" : ""}`, tabindex: 0, "data-id": id }, nodesG);
       const usePic = ui.tab === "screens" && s.pics && s.pics.length && !s.span;
       if (usePic) {
         const tl = s.title.split("\n");
+        if (ui.sel === id) el("rect", { x: b.x - 12, y: b.y - 14 - tl.length * 15 - 6, width: b.w + 24, height: b.h + 14 + tl.length * 15 + 36, rx: 12, class: "pop-card" }, grp);
         textBlock(grp, b.x, b.y - 10 - (tl.length - 1) * 15, tl, "pic-title", 15);
         el("rect", { x: b.x - 3, y: b.y - 3, width: b.w + 6, height: b.h + 6, rx: 6, class: "node-frame" }, grp);
         el("image", { href: PIC(s.pics[0]), x: b.x, y: b.y, width: b.w, height: b.h, preserveAspectRatio: "xMidYMin slice" }, grp);
@@ -152,6 +153,10 @@
     for (const tg of laneTitles) { const r = tg.querySelector("rect"), w = tg.querySelector("text").getBBox().width; r.setAttribute("width", w + 12); }
     const vbW = right + 60, vbH = bottom + 40;
     svg.dataset.w = vbW; svg.dataset.h = vbH;
+    const selG = ui.sel && nodesG.querySelector(`[data-id="${ui.sel}"]`); if (selG) {   // selected box drawn above everything, lane titles included
+      if (ui.tab === "screens" && selG.querySelector("image")) el("rect", { x: -5000, y: -5000, width: 20000, height: 20000, class: "pop-scrim" }, world);
+      world.appendChild(selG);
+    }
     applyView();
   }
 
@@ -170,6 +175,7 @@
     if (!view[ui.tab]) return firstView();
     const v = view[ui.tab];
     world.setAttribute("transform", `translate(${v.x},${v.y}) scale(${v.k})`);
+    popSel(v.k);
     const zl = document.getElementById("zoom-level"); if (zl) zl.textContent = Math.round(v.k * 100) + " %";
   }
   function zoomAt(f, cx, cy) {
@@ -194,6 +200,36 @@
   });
   window.addEventListener("pointerup", () => { setTimeout(() => (drag = null), 0); });
   svg.addEventListener("click", () => { if (!drag || !drag.moved) closePanel(); }, true);
+  // Selected box: fit the whole flow, then lift the box (green, bigger) so it reads at any zoom (Apurva, 2026-11-06).
+  function popSel(k) {
+    const n = ui.sel && svg.querySelector(`.node[data-id="${ui.sel}"]`); if (!n) return;
+    const b = box(G[ui.tab], ui.sel), cx = b.x + b.w / 2;
+    if (ui.tab === "screens" && ui.pop) {   // Screens: the picture opens at phone size in the middle of the canvas (Apurva, 2026-11-06)
+      const cy = b.y + b.h / 2 - 8;          // centre of title + picture + id line
+      n.setAttribute("transform", `translate(${ui.pop.x},${ui.pop.y}) scale(${ui.pop.s}) translate(${-cx},${-cy})`);
+      return;
+    }
+    const cy = b.y + b.h / 2, s = Math.max(1.15, Math.min(2.6, 0.95 / k));
+    // keep the lifted box fully on screen (boxes at the edge of the flow would be cut off)
+    const v = view[ui.tab], vp = svg.getBoundingClientRect(), hw = b.w * s * k / 2 + 12, hh = b.h * s * k / 2 + 12;
+    const sx = Math.max(hw, Math.min(vp.width - hw, v.x + cx * k)), sy = Math.max(hh, Math.min(vp.height - hh, v.y + cy * k));
+    const tx = (sx - v.x) / k, ty = (sy - v.y) / k;
+    n.setAttribute("transform", `translate(${tx},${ty}) scale(${s}) translate(${-cx},${-cy})`);
+  }
+  function focusBox(id) {
+    ui.pop = null; fit();
+    if (ui.tab === "screens" && id) {   // tall tab: fit the width, scroll so the box is in the middle
+      const b = box(G[ui.tab], id), vp = svg.getBoundingClientRect(), v = view[ui.tab];
+      v.y = vp.height / 2 - (b.y + b.h / 2) * v.k;
+      const s = F.states[id];
+      if (ui.sel === id && s && s.pics && s.pics.length && !s.span) {
+        // phone size: up to 390 px wide, never taller than the canvas (title + id line included)
+        const sc = Math.min(390 / b.w, (vp.height - 24) / (b.h + 56), (vp.width - 24) / (b.w + 12)) / v.k;
+        ui.pop = { x: (vp.width / 2 - v.x) / v.k, y: (vp.height / 2 - v.y) / v.k, s: Math.max(sc, 1) };
+      }
+      applyView();
+    }
+  }
   function centerOn(id) {
     const g = G[ui.tab], b = box(g, id), vp = svg.getBoundingClientRect(), v = view[ui.tab];
     const k = Math.max(v.k, ui.tab === "screens" ? 0.7 : 1);
@@ -212,7 +248,7 @@
   function select(id, opts = {}) {
     let s = F.states[id]; if (!s) return;
     if (s.ref && !opts.noRef) { /* join box: show its target */ }
-    ui.sel = id; ui.selEdge = null; draw();
+    ui.sel = id; ui.last = null; ui.selEdge = null; draw();
     const ins = [...F.edges, ...F.trunk].filter(e => e[1] === id && isVisible(e[0]));
     const outs = [...F.edges, ...F.trunk].filter(e => e[0] === id && isVisible(e[1]));
     const pics = (s.pics || []).map(p => `<figure><img src="${PIC(p)}" alt="${p}" loading="lazy" data-full="${p}"><figcaption>${p}</figcaption></figure>`).join("");
@@ -236,7 +272,7 @@
       ${sec("Arrows in", ins.length ? `<ul class="arrows">${ins.map(e => arrowLi(e, e[0])).join("")}</ul>` : "")}
       ${sec("Arrows out", outs.length ? `<ul class="arrows">${outs.map(e => arrowLi(e, e[1])).join("")}</ul>` : "")}`;
     openPanel(); history.replaceState(null, "", "#state=" + id); syncStepper();
-    if (!opts.noCenter) requestAnimationFrame(() => centerOn(id));
+    if (!opts.noCenter) requestAnimationFrame(() => focusBox(id));
   }
   function selectEdge(e) {
     ui.selEdge = e; ui.sel = null; draw();
@@ -249,21 +285,49 @@
     openPanel(); history.replaceState(null, "", "#");
   }
   function openPanel() { panel.style.top = document.querySelector("header").offsetHeight + "px"; panel.hidden = false; document.body.classList.add("has-panel"); }
-  function closePanel() { panel.hidden = true; document.body.classList.remove("has-panel"); if (ui.sel || ui.selEdge) { ui.sel = null; ui.selEdge = null; draw(); history.replaceState(null, "", "#"); } }
+  // Closing keeps the box marked (dark border, normal size) and refits the flow to the full width.
+  function closePanel() {
+    const wasOpen = !panel.hidden; panel.hidden = true; ui.pop = null; document.body.classList.remove("has-panel");
+    if (ui.sel || ui.selEdge) { ui.last = ui.sel || ui.last; ui.sel = null; ui.selEdge = null; draw(); history.replaceState(null, "", "#"); }
+    if (wasOpen) requestAnimationFrame(() => focusBox(ui.last));
+  }
   document.getElementById("panel-close").addEventListener("click", closePanel);
-  document.addEventListener("keydown", e => { if (e.key === "Escape") { if (!lightbox.hidden) lightbox.hidden = true; else closePanel(); } });
+  document.addEventListener("keydown", e => {
+    if (!lightbox.hidden && (e.key === "ArrowRight" || e.key === "ArrowLeft")) { e.preventDefault(); lbGo(e.key === "ArrowRight" ? 1 : -1); return; }
+    if (e.key === "Escape") { if (!lightbox.hidden) lightbox.hidden = true; else closePanel(); }
+  });
   body.addEventListener("click", e => {
     const j = e.target.closest("[data-jump]"); if (j) return select(j.dataset.jump);
-    const im = e.target.closest("img[data-full]"); if (im) { lbImg.src = PIC(im.dataset.full); lbCap.textContent = im.dataset.full; lightbox.hidden = false; }
+    const im = e.target.closest("img[data-full]");
+    if (im) { lb.list = [...body.querySelectorAll("img[data-full]")].map(x => x.dataset.full); lbShow(lb.list.indexOf(im.dataset.full)); lightbox.hidden = false; }
   });
   const lightbox = document.getElementById("lightbox"), lbImg = lightbox.querySelector("img"), lbCap = lightbox.querySelector("figcaption");
-  lightbox.addEventListener("click", () => (lightbox.hidden = true));
+  // Large view = slideshow through all screens of the box: arrows, ← →, swipe, trackpad (Apurva, 2026-11-06)
+  const lb = { list: [], i: 0 }, lbPrev = document.getElementById("lb-prev"), lbNext = document.getElementById("lb-next");
+  function lbShow(i) {
+    lb.i = Math.max(0, Math.min(lb.list.length - 1, i)); const id = lb.list[lb.i];
+    lbImg.src = PIC(id); lbCap.textContent = lb.list.length > 1 ? `${id} · ${lb.i + 1} of ${lb.list.length}` : id;
+    lbPrev.hidden = lbNext.hidden = lb.list.length < 2; lbPrev.disabled = lb.i === 0; lbNext.disabled = lb.i === lb.list.length - 1;
+  }
+  const lbGo = d => lbShow(lb.i + d);
+  lbPrev.addEventListener("click", e => { e.stopPropagation(); lbGo(-1); });
+  lbNext.addEventListener("click", e => { e.stopPropagation(); lbGo(1); });
+  document.getElementById("lb-close").addEventListener("click", e => { e.stopPropagation(); lightbox.hidden = true; });
+  lightbox.addEventListener("click", e => { if (e.target === lightbox || e.target.tagName === "FIGURE") lightbox.hidden = true; });   // click outside the screen closes
+  let lbX = null;
+  lightbox.addEventListener("pointerdown", e => { lbX = e.clientX; });
+  lightbox.addEventListener("pointerup", e => { if (lbX !== null && Math.abs(e.clientX - lbX) > 40) lbGo(e.clientX < lbX ? 1 : -1); lbX = null; });
+  let lbWheel = 0, lbLock = false;
+  lightbox.addEventListener("wheel", e => {
+    e.preventDefault(); if (lbLock || Math.abs(e.deltaX) < Math.abs(e.deltaY)) return;
+    lbWheel += e.deltaX; if (Math.abs(lbWheel) > 60) { lbGo(lbWheel > 0 ? 1 : -1); lbWheel = 0; lbLock = true; setTimeout(() => (lbLock = false), 450); }
+  }, { passive: false });
 
   // ---------- controls ----------
   document.querySelectorAll("[data-tab]").forEach(b => b.addEventListener("click", () => {
     ui.tab = b.dataset.tab;
     document.querySelectorAll("[data-tab]").forEach(x => x.setAttribute("aria-pressed", x === b));
-    draw(); if (ui.sel) centerOn(ui.sel);
+    draw(); if (ui.sel || ui.last) requestAnimationFrame(() => focusBox(ui.sel || ui.last));
   }));
   document.querySelectorAll("[data-filter]").forEach(b => b.addEventListener("click", () => {
     ui.filter = b.dataset.filter; ui.step = 0;
@@ -304,6 +368,9 @@
   }
   document.querySelectorAll("[data-lane]").forEach(b => b.addEventListener("click", () => jumpLane(b.dataset.lane)));
   window.addEventListener("resize", () => applyView());
+  // Only the diagram zooms. Pinch or ⌘ + scroll anywhere else (header, side panel) must not zoom the whole page (Apurva, 2026-11-06).
+  window.addEventListener("wheel", e => { if ((e.ctrlKey || e.metaKey) && !svg.contains(e.target)) e.preventDefault(); }, { passive: false, capture: true });
+  for (const t of ["gesturestart", "gesturechange", "gestureend"]) document.addEventListener(t, e => e.preventDefault(), { passive: false });
   document.getElementById("version").textContent = F.version;
   document.getElementById("notes").innerHTML = F.notes.map(n => `<li>${esc(n)}</li>`).join("");
 
