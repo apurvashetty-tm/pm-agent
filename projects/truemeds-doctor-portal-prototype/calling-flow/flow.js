@@ -4,7 +4,7 @@
   const MSG = (window.TMFeedback && window.TMFeedback.messages) || {};
   const PIC = id => `../ui-screens/case/${id}_w390.png`;
   const SVGNS = "http://www.w3.org/2000/svg";
-  const ui = { tab: "overview", aOn: false, filter: "all", sel: null, selEdge: null, last: null };
+  const ui = { tab: "overview", aOn: false, filter: "all", sel: null, selEdge: null, last: null, pop: null };
 
   // ---------- geometry ----------
   const G = {
@@ -129,6 +129,7 @@
       const usePic = ui.tab === "screens" && s.pics && s.pics.length && !s.span;
       if (usePic) {
         const tl = s.title.split("\n");
+        if (ui.sel === id) el("rect", { x: b.x - 12, y: b.y - 14 - tl.length * 15 - 6, width: b.w + 24, height: b.h + 14 + tl.length * 15 + 36, rx: 12, class: "pop-card" }, grp);
         textBlock(grp, b.x, b.y - 10 - (tl.length - 1) * 15, tl, "pic-title", 15);
         el("rect", { x: b.x - 3, y: b.y - 3, width: b.w + 6, height: b.h + 6, rx: 6, class: "node-frame" }, grp);
         el("image", { href: PIC(s.pics[0]), x: b.x, y: b.y, width: b.w, height: b.h, preserveAspectRatio: "xMidYMin slice" }, grp);
@@ -152,7 +153,10 @@
     for (const tg of laneTitles) { const r = tg.querySelector("rect"), w = tg.querySelector("text").getBBox().width; r.setAttribute("width", w + 12); }
     const vbW = right + 60, vbH = bottom + 40;
     svg.dataset.w = vbW; svg.dataset.h = vbH;
-    const selG = ui.sel && nodesG.querySelector(`[data-id="${ui.sel}"]`); if (selG) world.appendChild(selG);   // selected box drawn above everything, lane titles included
+    const selG = ui.sel && nodesG.querySelector(`[data-id="${ui.sel}"]`); if (selG) {   // selected box drawn above everything, lane titles included
+      if (ui.tab === "screens" && selG.querySelector("image")) el("rect", { x: -5000, y: -5000, width: 20000, height: 20000, class: "pop-scrim" }, world);
+      world.appendChild(selG);
+    }
     applyView();
   }
 
@@ -199,15 +203,27 @@
   // Selected box: fit the whole flow, then lift the box (green, bigger) so it reads at any zoom (Apurva, 2026-11-06).
   function popSel(k) {
     const n = ui.sel && svg.querySelector(`.node[data-id="${ui.sel}"]`); if (!n) return;
-    const b = box(G[ui.tab], ui.sel), cx = b.x + b.w / 2, cy = b.y + b.h / 2;
-    const s = Math.max(1.15, Math.min(2.6, (ui.tab === "screens" ? 0.75 : 0.95) / k));
+    const b = box(G[ui.tab], ui.sel), cx = b.x + b.w / 2;
+    if (ui.tab === "screens" && ui.pop) {   // Screens: the picture opens at phone size in the middle of the canvas (Apurva, 2026-11-06)
+      const cy = b.y + b.h / 2 - 8;          // centre of title + picture + id line
+      n.setAttribute("transform", `translate(${ui.pop.x},${ui.pop.y}) scale(${ui.pop.s}) translate(${-cx},${-cy})`);
+      return;
+    }
+    const cy = b.y + b.h / 2, s = Math.max(1.15, Math.min(2.6, 0.95 / k));
     n.setAttribute("transform", `translate(${cx},${cy}) scale(${s}) translate(${-cx},${-cy})`);
   }
   function focusBox(id) {
-    fit();
+    ui.pop = null; fit();
     if (ui.tab === "screens" && id) {   // tall tab: fit the width, scroll so the box is in the middle
       const b = box(G[ui.tab], id), vp = svg.getBoundingClientRect(), v = view[ui.tab];
-      v.y = vp.height / 2 - (b.y + b.h / 2) * v.k; applyView();
+      v.y = vp.height / 2 - (b.y + b.h / 2) * v.k;
+      const s = F.states[id];
+      if (ui.sel === id && s && s.pics && s.pics.length && !s.span) {
+        // phone size: up to 390 px wide, never taller than the canvas (title + id line included)
+        const sc = Math.min(390 / b.w, (vp.height - 24) / (b.h + 56), (vp.width - 24) / (b.w + 12)) / v.k;
+        ui.pop = { x: (vp.width / 2 - v.x) / v.k, y: (vp.height / 2 - v.y) / v.k, s: Math.max(sc, 1) };
+      }
+      applyView();
     }
   }
   function centerOn(id) {
@@ -267,7 +283,7 @@
   function openPanel() { panel.style.top = document.querySelector("header").offsetHeight + "px"; panel.hidden = false; document.body.classList.add("has-panel"); }
   // Closing keeps the box marked (dark border, normal size) and refits the flow to the full width.
   function closePanel() {
-    const wasOpen = !panel.hidden; panel.hidden = true; document.body.classList.remove("has-panel");
+    const wasOpen = !panel.hidden; panel.hidden = true; ui.pop = null; document.body.classList.remove("has-panel");
     if (ui.sel || ui.selEdge) { ui.last = ui.sel || ui.last; ui.sel = null; ui.selEdge = null; draw(); history.replaceState(null, "", "#"); }
     if (wasOpen) requestAnimationFrame(() => focusBox(ui.last));
   }
