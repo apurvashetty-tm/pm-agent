@@ -152,7 +152,7 @@
     for (const tg of laneTitles) { const r = tg.querySelector("rect"), w = tg.querySelector("text").getBBox().width; r.setAttribute("width", w + 12); }
     const vbW = right + 60, vbH = bottom + 40;
     svg.dataset.w = vbW; svg.dataset.h = vbH;
-    const selG = ui.sel && nodesG.querySelector(`[data-id="${ui.sel}"]`); if (selG) nodesG.appendChild(selG);   // selected box drawn on top
+    const selG = ui.sel && nodesG.querySelector(`[data-id="${ui.sel}"]`); if (selG) world.appendChild(selG);   // selected box drawn above everything, lane titles included
     applyView();
   }
 
