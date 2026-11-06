@@ -142,4 +142,12 @@ html, body { touch-action: pan-x pan-y; }
 /* Screens tab: the open screen sits on a white card over a softened diagram (Apurva, 2026-11-06) */
 .pop-scrim { fill: var(--tm-surface-primary); opacity: .72; }
 .pop-card { fill: var(--tm-surface-primary); stroke: none; }
+/* large view: slideshow controls */
+#lightbox img { user-select: none; -webkit-user-drag: none; }
+.lb-nav { position: fixed; top: 50%; transform: translateY(-50%); width: 52px; height: 52px; border-radius: 50%; border: none; background: var(--tm-surface-primary); color: var(--tm-content-primary); font-size: 30px; line-height: 1; cursor: pointer; box-shadow: 0 4px 14px rgba(0, 0, 0, .25); }
+.lb-prev { left: 24px; } .lb-next { right: 24px; }
+.lb-nav:disabled { opacity: .3; cursor: default; }
+.lb-nav[hidden] { display: none; }
+.lb-close { position: fixed; top: 16px; right: 24px; border: none; background: var(--tm-surface-primary); color: var(--tm-content-primary); border-radius: 99px; padding: 8px 14px; font: inherit; font-size: var(--tm-font-size-body-sm); cursor: pointer; }
+#lightbox figcaption { margin-top: var(--tm-space-sm); font-size: var(--tm-font-size-body-sm); }
 

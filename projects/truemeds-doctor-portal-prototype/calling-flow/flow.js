@@ -210,7 +210,11 @@
       return;
     }
     const cy = b.y + b.h / 2, s = Math.max(1.15, Math.min(2.6, 0.95 / k));
-    n.setAttribute("transform", `translate(${cx},${cy}) scale(${s}) translate(${-cx},${-cy})`);
+    // keep the lifted box fully on screen (boxes at the edge of the flow would be cut off)
+    const v = view[ui.tab], vp = svg.getBoundingClientRect(), hw = b.w * s * k / 2 + 12, hh = b.h * s * k / 2 + 12;
+    const sx = Math.max(hw, Math.min(vp.width - hw, v.x + cx * k)), sy = Math.max(hh, Math.min(vp.height - hh, v.y + cy * k));
+    const tx = (sx - v.x) / k, ty = (sy - v.y) / k;
+    n.setAttribute("transform", `translate(${tx},${ty}) scale(${s}) translate(${-cx},${-cy})`);
   }
   function focusBox(id) {
     ui.pop = null; fit();
@@ -288,13 +292,36 @@
     if (wasOpen) requestAnimationFrame(() => focusBox(ui.last));
   }
   document.getElementById("panel-close").addEventListener("click", closePanel);
-  document.addEventListener("keydown", e => { if (e.key === "Escape") { if (!lightbox.hidden) lightbox.hidden = true; else closePanel(); } });
+  document.addEventListener("keydown", e => {
+    if (!lightbox.hidden && (e.key === "ArrowRight" || e.key === "ArrowLeft")) { e.preventDefault(); lbGo(e.key === "ArrowRight" ? 1 : -1); return; }
+    if (e.key === "Escape") { if (!lightbox.hidden) lightbox.hidden = true; else closePanel(); }
+  });
   body.addEventListener("click", e => {
     const j = e.target.closest("[data-jump]"); if (j) return select(j.dataset.jump);
-    const im = e.target.closest("img[data-full]"); if (im) { lbImg.src = PIC(im.dataset.full); lbCap.textContent = im.dataset.full; lightbox.hidden = false; }
+    const im = e.target.closest("img[data-full]");
+    if (im) { lb.list = [...body.querySelectorAll("img[data-full]")].map(x => x.dataset.full); lbShow(lb.list.indexOf(im.dataset.full)); lightbox.hidden = false; }
   });
   const lightbox = document.getElementById("lightbox"), lbImg = lightbox.querySelector("img"), lbCap = lightbox.querySelector("figcaption");
-  lightbox.addEventListener("click", () => (lightbox.hidden = true));
+  // Large view = slideshow through all screens of the box: arrows, ← →, swipe, trackpad (Apurva, 2026-11-06)
+  const lb = { list: [], i: 0 }, lbPrev = document.getElementById("lb-prev"), lbNext = document.getElementById("lb-next");
+  function lbShow(i) {
+    lb.i = Math.max(0, Math.min(lb.list.length - 1, i)); const id = lb.list[lb.i];
+    lbImg.src = PIC(id); lbCap.textContent = lb.list.length > 1 ? `${id} · ${lb.i + 1} of ${lb.list.length}` : id;
+    lbPrev.hidden = lbNext.hidden = lb.list.length < 2; lbPrev.disabled = lb.i === 0; lbNext.disabled = lb.i === lb.list.length - 1;
+  }
+  const lbGo = d => lbShow(lb.i + d);
+  lbPrev.addEventListener("click", e => { e.stopPropagation(); lbGo(-1); });
+  lbNext.addEventListener("click", e => { e.stopPropagation(); lbGo(1); });
+  document.getElementById("lb-close").addEventListener("click", e => { e.stopPropagation(); lightbox.hidden = true; });
+  lightbox.addEventListener("click", e => { if (e.target === lightbox || e.target.tagName === "FIGURE") lightbox.hidden = true; });   // click outside the screen closes
+  let lbX = null;
+  lightbox.addEventListener("pointerdown", e => { lbX = e.clientX; });
+  lightbox.addEventListener("pointerup", e => { if (lbX !== null && Math.abs(e.clientX - lbX) > 40) lbGo(e.clientX < lbX ? 1 : -1); lbX = null; });
+  let lbWheel = 0, lbLock = false;
+  lightbox.addEventListener("wheel", e => {
+    e.preventDefault(); if (lbLock || Math.abs(e.deltaX) < Math.abs(e.deltaY)) return;
+    lbWheel += e.deltaX; if (Math.abs(lbWheel) > 60) { lbGo(lbWheel > 0 ? 1 : -1); lbWheel = 0; lbLock = true; setTimeout(() => (lbLock = false), 450); }
+  }, { passive: false });
 
   // ---------- controls ----------
   document.querySelectorAll("[data-tab]").forEach(b => b.addEventListener("click", () => {

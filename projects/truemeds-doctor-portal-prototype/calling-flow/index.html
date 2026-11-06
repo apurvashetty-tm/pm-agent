@@ -63,7 +63,12 @@
     <div class="head"><button class="tm-btn tm-btn--quiet tm-btn--xs" id="panel-close" aria-label="Close">✕ Close</button></div>
     <div id="panel-body"></div>
   </aside>
-  <div id="lightbox" hidden><figure><img alt="" /><figcaption></figcaption></figure></div>
+  <div id="lightbox" hidden role="dialog" aria-label="Screens">
+    <button class="lb-nav lb-prev" id="lb-prev" aria-label="Previous screen">‹</button>
+    <figure><img alt="" /><figcaption></figcaption></figure>
+    <button class="lb-nav lb-next" id="lb-next" aria-label="Next screen">›</button>
+    <button class="lb-close" id="lb-close" aria-label="Close">✕</button>
+  </div>
   <script src="../ui-screens/feedback/messages.js"></script>
   <script src="data.js"></script>
   <script src="flow.js"></script>
