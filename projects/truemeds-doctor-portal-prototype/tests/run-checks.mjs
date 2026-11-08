@@ -14,7 +14,7 @@ const APP = path.join(PROJECT, "app");
 const SHOTS = path.join(PROJECT, "docs/renders/2026-11-06-step0");
 const PORT = 8766;
 const BASE = `http://localhost:${PORT}/`;
-const CHROME = process.env.CHROME || "/Users/mac/Library/Caches/ms-playwright/chromium-1248/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing";
+const CHROME = process.env.CHROME;
 
 const results = [];
 const check = (id, name, ok, detail = "") => { results.push({ id, name, ok: !!ok, detail }); console.log(`${ok ? "PASS" : "FAIL"} ${id} ${name}${detail ? "  [" + detail + "]" : ""}`); };

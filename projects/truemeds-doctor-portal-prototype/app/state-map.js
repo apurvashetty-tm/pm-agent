@@ -2083,7 +2083,7 @@ window.TM_STATE_MAP = {
    "from": "C0",
    "to": "C7b",
    "via": [],
-   "label": "3 min, no result",
+   "label": "3 min, no result, end not known",
    "kind": "e",
    "drawn": true,
    "route": "cat4"
@@ -2382,7 +2382,7 @@ window.TM_STATE_MAP = {
    "from": "T13",
    "to": "E14",
    "via": [],
-   "label": "HA joins",
+   "label": "HA rung (joins or doesn't pick up)",
    "kind": "e",
    "drawn": true,
    "route": "pilot"

@@ -180,7 +180,7 @@ Pictures: 148 (each has one owning step) · behaviour-only and calling boxes: 20
 | B7d | C7f | Confirm & forward | a | pilot | J2 |
 | B7d | CB | Callback | a | pilot | — |
 | B7d | P9 | Unavailable + reason | a | pilot | — |
-| C0 | C7b | 3 min, no result | e | cat4 | — |
+| C0 | C7b | 3 min, no result, end not known | e | cat4 | — |
 | C0 | C7c | 3 min, no result, hang-up reported | e | cat4 | — |
 | C0 | RES | result | e | cat4 | — |
 | C6 | B0 | Call again (Pilot context kept) | a | pilot | — |
@@ -213,7 +213,7 @@ Pictures: 148 (each has one owning step) · behaviour-only and calling boxes: 20
 | R1 | LEAVE | Back | a | cat4 | — |
 | RES | C6 | too short | e | shared | — |
 | RES | C8 | over the gate | e | shared | — |
-| T13 | E14 | HA joins | e | pilot | — |
+| T13 | E14 | HA rung (joins or doesn't pick up) | e | pilot | — |
 | T13 | T15 | couldn't start | e | pilot | — |
 | T15 | E15 | hang-up | e | pilot | — |
 | T16 | E10a | Skip HA + reason → Confirm prescription | a | pilot | — |
