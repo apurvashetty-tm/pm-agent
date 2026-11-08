@@ -958,6 +958,12 @@ From an external (ChatGPT) review, each point verified before acting.
 - **Why:** the old 7c picture kept the hidden 7b question for height and showed an empty half tray; the doctor has nothing to do on either screen, so one waiting screen is clearer.
 - **Rejected:** keeping a separate "Checking call result…" screen; keeping the tall bar for height.
 
+### D-92 · Sample doctor is "Dr. Kunal" (unlock greeting, Profile) — 2026-11-06
+- **Decision (Apurva):** the sample doctor is **Dr. Kunal** — the returning-unlock greeting reads "Hello, Dr. Kunal" (was "Hello, Dr. Apurva") and the Profile page shows "Dr. Kunal Wani" with initials "KW" (was "Dr. Apurva Shetty", "AS"; Dr. Kunal Wani, Truemeds COO, who agreed (Apurva, 2026-11-06)). Re-rendered: returning-unlock (7 states) and the Home Profile pictures (3 states), 390 / 360; nothing else on them changes.
+- **Why:** the sample doctor should not carry the product owner's name. His photo as the Profile avatar is a separate design change: render for approval after step 1 (backlog).
+- **Rejected:** "Dr. Sachin" (either was fine; one name used everywhere).
+- **Restored 2026-11-09** from the build thread's chat after the old Mac died before this entry was committed; the re-rendered pictures were lost too and are redone in the step 1 recovery round.
+
 ## Design system changes made for this work
 
 ### D-60 · Secondary button without drop shadow (design system) — 2026-10-24 · **REVERTED same day**
