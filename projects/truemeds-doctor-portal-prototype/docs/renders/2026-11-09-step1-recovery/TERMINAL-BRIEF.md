@@ -46,7 +46,7 @@ Everything in the original brief, plus these, all of which Codex or the compare 
 After each of these passes its checks, publish **only your own files**, named explicitly:
 `scripts/publish.sh -m "Doctor portal: step 1 recovery — <part>" <files>`
 Checkpoints: (a) set-up fixes, (b) Part A panel, (c) the four journeys + tests, (d) compare harness + results, (e) D-92 pictures, (f) Codex fixes + report.
-This pushes the project branch only. **No pull request, no `[deploy]`, never `main`.** Never `git add -A`. Leave `docs/prd/`, `docs/context/`, `calling-flow/data.js` and anything else you didn't change alone. If `publish.sh` refuses, stop and report why — don't work around it.
+This pushes the project branch only. **No pull request, no `[deploy]`, never `main`.** Never `git add -A`. Leave `docs/prd/`, `docs/context/`, `calling-flow/data.js` and anything else you didn't change alone. **Another terminal tab (the PRD loop) works in this same folder and also commits.** If git or `publish.sh` fails because a `.lock` file exists, the other tab is mid-commit: wait 60 s and retry, up to 5 times. Never delete a `.lock` file. If `publish.sh` refuses for any other reason, stop and report why — don't work around it.
 
 ## 4 · Codex
 
