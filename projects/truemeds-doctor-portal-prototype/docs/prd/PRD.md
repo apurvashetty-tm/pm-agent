@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| Status | Draft for review · v0.1 · 6 Nov 2026 |
+| Status | Draft for review · v0.3 · 9 Nov 2026 |
 | Owner | Apurva Shetty (Product) |
 | Release | Launch release (first version of the doctor app) |
 | Calling flow, every state | [Calling-flow page](https://doctor-portal-prototype.netlify.app/calling-flow/) |
@@ -11,7 +11,7 @@
 
 ## 1. Executive summary
 
-Truemeds doctors are freelance doctors who call patients who ordered prescription medicines, review each medicine and issue the prescription. Today they do this on a portal page that also carries pricing, substitutes, billing and cross-selling, and the call itself happens outside the page with no status inside it. The doctor app gives the doctor one job per screen: say when they're available, request a case, call the patient, prescribe or disable each medicine, and close the case the one right way for its case type. The system, not the doctor, decides which final button appears, and a prescription only counts once the telecom partner's call record proves a real consultation. Open items are mainly with Engineering (live call events, call-record timing, releasing and restoring cases) and a few product calls, listed in §10.
+Truemeds doctors are freelance doctors who call patients who ordered prescription medicines, review each medicine and issue the prescription. Today they do this on a portal page that also carries pricing, substitutes, billing and cross-selling, and the call itself happens outside the page with no status inside it. The doctor app gives the doctor one job per screen: say when they're available, request a case, call the patient, prescribe or disable each medicine, and close the case the one right way for its case type. The system, not the doctor, decides which final button appears, and a prescription only counts once the call is proven to be a real consultation. Open items are mainly with Engineering (live call events, call-record timing, releasing and restoring cases) and a few product calls, listed in §10.
 
 ## 2. The problem
 
@@ -21,7 +21,7 @@ This causes three problems for the doctor and for Truemeds:
 
 - **The doctor's screen does other teams' work.** Prices, substitutes, quantities, cross-selling and the bill belong to pricing and customer service. A price beside each medicine invites cost-based clinical choices and can look like selling, on the same page where the doctor approves the prescription.
 - **The call has no status on the page.** The doctor taps Call Patient and the call happens outside the page. Nothing on it shows whether the patient was reached or how long they talked.
-- **Handing the patient to a Health Advisor often fails.** Of the Pilot cases meant to end in one call, about 35% end as two separate calls today `[APPROX (Apurva)]`.
+- **Handing the patient to a Health Advisor often fails.** Cat4 cases need only the doctor's call; Pilot cases also need a Health Advisor (HA) call, ideally on the same call. Of the Pilot cases meant to end in one call, about 35% end as two separate calls today `[APPROX (Apurva)]`.
 
 Scale: roughly 12,000 orders handled by about 300 active doctors `[NEED: confirm both numbers and the period, OQ-029 (Apurva)]`.
 
@@ -31,7 +31,7 @@ A mobile app for Truemeds doctors, built in React Native for Android and iOS by 
 
 - **Doctors request cases; nothing is pushed.** Freelance doctors choose when they work, so they set how long they're available and pull one case at a time.
 - **Click-to-call through a telecom partner, ended on the doctor's phone.** The partner rings the doctor's phone first, then the patient. Truemeds uses Knowlarity for Cat4 cases and Ozonetel for Pilot cases. There is no End call button in the app, because the app doesn't control the call.
-- **The partner's call record proves the consultation.** The final buttons appear only after a valid call, and a prescription confirmed without proof isn't counted. This keeps every prescription tied to a real conversation with the patient.
+- **A prescription counts only after a proven call.** This keeps every prescription tied to a real conversation with the patient (rules in §5.7).
 - **The case type picks the final button, never the doctor.** Each case type has one right ending, so the doctor can't route a case the wrong way.
 - **One flow for every Pilot case.** The doctor confirms the prescription on the live call, then the system checks for a free Health Advisor and transfers the patient or forwards the case. The doctor never has to know which Pilot variant a case is.
 - **The doctor prescribes or disables; nothing else.** No adding medicines, no quantity, no prices, no substitutes. Quantity and price are the backend's and other teams' work.
@@ -259,8 +259,9 @@ Each screen opens with the job the doctor is trying to get done, then why it's b
 
 **Rules for every call:**
 - **Valid call.** A call is valid when total talk time on the case reaches the gate time (§7). Talk time adds up across connected calls on the same case. The doctor is never shown the count.
+- Who decides the call is valid: on a live Pilot call, the app's own count from the moment the patient answered, so Confirm prescription can appear while the patient is still on the line (the partner's duration is kept for reporting). On every other call, the telecom partner's call result after the call ends.
 - Attempted call: a call is attempted only when the patient's leg connects (the patient answered). A failed request or a doctor who didn't answer isn't an attempted call.
-- Before the call is valid, the app never shows Confirm prescription, Confirm & transfer, Confirm & forward or Skip HA.
+- Before the call is valid, the app never shows Confirm prescription, Confirm & transfer, Confirm & forward or Skip HA. The one exception is when no call result came at all: the doctor can then confirm, and the confirm waits for the call record (next rule).
 - **Final button by case type.** The system picks it:
 
 | Case type | Health Advisor (HA) | Final button | Ending |
@@ -277,7 +278,7 @@ Each screen opens with the job the doctor is trying to get done, then why it's b
 - From the tap on Call patient, while a call may be live, an end-of-call script for the patient shows on the case page. It hides once the call has ended.
 - The app shows a change in the call's status soon after the partner reports it (§7).
 
-**What the doctor can do:** Call patient; Call again when the call didn't go through, the doctor missed it or it was too short; answer "Are you still on the call?"; Confirm prescription once the call is valid; Callback or Unavailable when the call was too short or no result came (§5.9).
+**What the doctor can do:** Call patient; Call again when the call didn't go through, the doctor missed it or it was too short; answer "Are you still on the call?"; Confirm prescription once the call is valid; Callback when the call was too short or no result came; Patient unavailable when no result came (§5.9).
 
 **Every state of the call** (calling, didn't go through, you didn't answer, getting the result, too short, still on the call, result not received, waiting for the call record): see the [calling-flow page](https://doctor-portal-prototype.netlify.app/calling-flow/).
 
@@ -349,6 +350,7 @@ Each screen opens with the job the doctor is trying to get done, then why it's b
 **What the doctor can do:** choose how often (Daily, Every X hours, Alt days, Weekly, Monthly, SOS only); set the dose; add an extra as-needed (SOS) dose with a daily cap; set the duration or Ongoing; optionally choose food timing and write additional instructions; Prescribe; Disable with a reason; close.
 
 **Rules:**
+- Choices: Every X hours is 4, 6, 8 or 12 hours; SOS allows 1 to 4 doses a day; duration is 1–7, 10, 14 or 15 days, weeks or months, or Ongoing; food timing is after food, before food or empty stomach (optional).
 - Every section opens filled with the backend's defaults. Duration marks whether the doctor kept the default; Ongoing prints the backend's default length (§7).
 - SOS limits print the daily total in the medicine's unit (see the table), so the patient never has to multiply.
 - Prescribe saves the medicine as Prescribed, and re-enables it if it was disabled.
@@ -410,12 +412,12 @@ The printed line is the schedule, then the duration, then food timing and instru
 - The focused field scrolls above the keyboard with its label; the pinned action bar hides while the keyboard is open.
 - Everything the doctor needs works on a 360-wide phone; the pinned bar never covers the last content.
 - Words: case for the doctor's unit of work (the customer's order ID stays as is); patient, never customer; Health Advisor in full, except on the Skip HA button. All text comes from one copy file and follows the copy standard (Annex B).
-- Help is on Home and the case page, and is how a doctor reaches Doctor Ops when something keeps failing.
+- Help is on Home and the case page. In this release it opens a blank placeholder (§9); it is meant to become how a doctor reaches Doctor Ops.
 - The app uses the central Truemeds design system; the screens in `ui-screens/` are the reference.
 
 ## 7. Settings
 
-Every value below is a starting value, set by its owner and changeable without an app release.
+Every value below is a starting value, changeable without an app release. Owners are proposed until confirmed `[Proposed (Apurva)]`.
 
 | Setting | Starting value | Owner |
 |---|---|---|
@@ -426,12 +428,12 @@ Every value below is a starting value, set by its owner and changeable without a
 | Call-record wait time after a confirm without a result | `[NEED]` | Product + Engineering |
 | Patient unavailable: retry gaps and attempts, by failure reason | `[NEED]` | Doctor Ops + Engineering |
 | Minimum availability | 15 minutes | Product |
-| "Availability ends soon" shown when time left is under | 5 minutes `[working default]` | Product |
+| "Availability ends soon" shown when time left is under | `[NEED]` | Product |
 | OTP: wrong codes before a number is locked | 5 | Product |
 | OTP: codes per number per limit window (first code + resends) | 4 | Product |
-| OTP: lock length, limit window, code life | `[NEED, OQ-017]` (prototype uses 15 min, 10 min) | Product + Engineering |
-| OTP: resend waits | 30 s, then 60 s, then 120 s `[working default]` | Product |
-| Failed phone unlocks before falling back to OTP | 3 `[working default]` | Product |
+| OTP: lock length, limit window, code life | `[NEED, OQ-017]` | Product + Engineering |
+| OTP: resend waits (each longer than the last) | `[NEED, OQ-017]` | Product |
+| Failed phone unlocks before falling back to OTP | `[NEED]` | Product |
 | Ongoing duration prints as | 6 months | Product |
 | Doctor earnings per confirmed prescription | ₹20 | Doctor Ops |
 | Callback time slots | sent by the backend | Doctor Ops |
@@ -442,7 +444,7 @@ Every value below is a starting value, set by its owner and changeable without a
 - As a doctor, I set how long I'm free and request cases one at a time, so I work when it suits me.
 - As a doctor, I see on every screen what the call is doing and what I can do next, so I never tap something that does nothing.
 - As a doctor, I can leave a case I took by mistake before I call, without it counting against me.
-- As a doctor, I know a prescription counts only when the call record proves the consultation, so I don't need to argue about calls.
+- As a doctor, I know a prescription counts only when the call is proven, so I don't need to argue about calls.
 - As Doctor Ops, I see release and patient-unavailable rates per doctor, and the reason for each manual "unavailable", so I can spot misuse.
 - As Doctor Ops, I never receive a case with no medicines through a doctor; empty orders come to me directly.
 - As a Health Advisor, I receive Pilot patients with the prescription already confirmed, either live on the call or as a callback.
@@ -460,13 +462,14 @@ Every value below is a starting value, set by its owner and changeable without a
 - What Help and the notifications bell open (blank placeholder for now), the Profile redesign, the User manual content, and a bottom tab bar for future destinations.
 - Earnings beyond today's total in Profile (a wallet), and incentive rules.
 - A per-medicine detail view (price, image), orders with several patients, diagnostic tests, and the patient's order history.
+- A senior-doctor (Super Doctor) role and its permissions.
 
 ## 10. Decided vs open
 
 **Decided** (each stated once, in its section):
 - Doctors request cases; nothing is pushed (§3, §5.5).
 - Click-to-call with the doctor's phone ringing first; no End call in the app (§3).
-- Valid-call gate, attempted call, final button by case type, unproven confirms not counted (§5.7).
+- Valid-call gate, attempted call, final button by case type, unproven confirms not counted (§5.7). A call record that arrives late and shows talk time under the gate counts as an unproven confirm (§5.7).
 - One Pilot flow: confirm on the call, then the Health Advisor check (§5.8).
 - Release, Patient unavailable and Callback, one job each (§5.9).
 - No adding medicines, no quantity, no prices on the doctor's screens (§5.10).
@@ -490,7 +493,6 @@ Every value below is a starting value, set by its owner and changeable without a
 - How an empty order is kept out of the doctor queue, and who in Ops handles it. (OQ-035) [Engineering + Ops]
 - Should Home keep checking for a case after "No cases right now", and how often? (OQ-019) [Apurva + Engineering]
 - Does the doctor who picks up a callback from the pool see the earlier doctor's notes? (OQ-020) [Apurva]
-- A call record that arrives late and shows under the gate: what happens to a case already shown as waiting. [Apurva + Doctor Ops]
 - The table where unproven confirms are logged for analytics. [Engineering]
 
 *Health Advisors*
@@ -513,6 +515,7 @@ Every value below is a starting value, set by its owner and changeable without a
 - Structured diagnosis and allergy fields before Confirm.
 - A review step showing the full prescription before Confirm.
 - A line telling the doctor why the case needs them (e.g. "No prescription attached").
+- Is the patient's number hidden from the doctor in the app, and are consultation calls recorded (and if so, with what consent and retention)? [Apurva + Legal]
 
 *Support*
 - What a crash or help report contains and where it goes. (OQ-022) [App team]
@@ -523,13 +526,13 @@ Every value below is a starting value, set by its owner and changeable without a
 
 | Measure | Definition | Source | Baseline |
 |---|---|---|---|
-| **Primary:** confirmed prescriptions per available doctor-hour | prescriptions confirmed by the call record ÷ hours doctors were available | backend case outcomes, availability windows | `[NEED (Doctor Ops)]` |
+| **Primary:** confirmed prescriptions per available doctor-hour | prescriptions confirmed (proven call) ÷ hours doctors were available | backend case outcomes, availability windows | `[NEED (Doctor Ops)]` |
 | Requested cases that end confirmed | share of requested cases ending in any of the four confirmed outcomes | backend case outcomes | `[NEED (Doctor Ops)]` |
-| Time to outcome | from Request a case to the case's ending | app events | `[NEED (Doctor Ops)]` |
+| Time to outcome | from Request a case to the ending the doctor sees (waiting for the call record counts as the doctor's ending; final confirmation is tracked by Unproven confirms) | app events | `[NEED (Doctor Ops)]` |
 | Unproven confirms | share of confirms not proven by the call record | mismatch table | new |
 | Pilot transfers | share of Pilot cases ending Transferred rather than Forwarded | backend case outcomes | `[NEED (Doctor Ops)]`, see §2 |
-| Release and patient-unavailable rates | per doctor, per week | backend case outcomes | `[NEED (Doctor Ops)]` |
-| Faster sign-in adoption | share of sign-ins without an SMS code | app events, SMS logs | new |
+| Release and patient-unavailable rates | releases ÷ cases the doctor opened; Patient unavailable endings ÷ cases where the doctor tapped Call patient; per doctor, per week | backend case outcomes | `[NEED (Doctor Ops)]` |
+| Faster sign-in adoption | share of returning sign-ins done with the phone's unlock rather than an SMS code | app events | new |
 
 **Tracking rule:** the four endings (Cat4 confirmed, Pilot with HA skipped confirmed, transferred, forwarded) are separate outcomes and can never be worked out from the button text, because two of them share the label Confirm prescription. Renaming a button never renames an event. Release, Callback, Patient unavailable (automatic or by the doctor, with reason) and Skip HA (with reason) are tracked too. Event names are Engineering's choice. Calls are counted in Truemeds' funnel terms: a call is *attempted* when the patient's leg is *connected*.
 

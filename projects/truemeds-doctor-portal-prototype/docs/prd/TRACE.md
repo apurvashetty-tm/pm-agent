@@ -45,7 +45,8 @@ Links each rule in `PRD.md` to its source, so the PRD body carries no decision n
 | 5.7 | No buttons that do nothing; waits are status text | D-56, D-74 |
 | 5.7 | Gate is total talk time, adds up, never shown | AL §5, D-58 pt 22 |
 | 5.7 | Attempted = patient's leg connected | D-58, project_truth §4 |
-| 5.7 | Nothing before the gate | AL §5 |
+| 5.7 | Who decides validity: own count on a live Pilot call, partner result otherwise | AL §5 (Launch B rule, All other cases), data.js B0 rules |
+| 5.7 | Nothing before the gate, except confirm with no result (waits for the record) | AL §5, D-83 CW-D2/D3, data.js 7d |
 | 5.7 | Final button table | AL §6 (launch B), project_truth §4, D-83 CW-D2, CW-F3 |
 | 5.7 | Unproven confirm not confirmed; no Ops queue | D-83 pt 9 (CW-D3, D4, F2) |
 | 5.7 | Pending medicines block confirm | AL §6 Flag 5, D-64 |
@@ -67,6 +68,7 @@ Links each rule in `PRD.md` to its source, so the PRD body carries no decision n
 | 5.10 | SOS daily total in unit | D-80 pt 3, D-81 F14 |
 | 5.10 | Disable reasons; removed from order; last one → cancelled later | AL §8, D-59 |
 | 5.10 | Discard sheet; errors scroll to first | D-54, D-81 F16 |
+| 5.10 | Choice lists (Every X hours, SOS max, duration, food) | AL §8 |
 | 5.10 | Printed-line examples | `visible-strings.json` (d-* pictures); cream SOS from AL §8 |
 | 5.11 | Rx viewer controls; same on closed cases; disabled while confirming | AL §9, D-76 |
 | 5.11 | Notes editable until Confirm, saved on Confirm, symptoms printed | D-59 |
@@ -81,10 +83,11 @@ Links each rule in `PRD.md` to its source, so the PRD body carries no decision n
 | 7 | 3 unlock tries [MOCK] | AL §2 |
 | 7 | Ongoing 6 months | D-04, AL §8 |
 | 7 | ₹20 | D-82 pt 2 |
-| 7 | Owners | **Proposed by Claude** (Product = Apurva); to confirm |
-| 9 | Out list | project_truth §1, D-87, D-88 pt 4, backlog §4b, OQ-015, OQ-028, old PRD §11.2 and R4 |
+| 7 | Owners | **Proposed by Claude** (Product = Apurva); marked Proposed in §7, to confirm |
+| 7 | Prototype [MOCK] values (ending-soon 5 min, OTP lock/window/resend, unlock tries) | left as `[NEED]`, numbers not carried into the PRD |
+| 9 | Out list | project_truth §1, D-87, D-88 pt 4, backlog §4b, OQ-015, OQ-028, old PRD §11.2 (incl. Super Doctor role) and R4 |
 | 10 | Open items | open_questions.md, backlog §4, D-83 Engineering list, D-73 (monitoring), AL §11 (incentive) |
-| 10 | Not decided since 8 Oct | old PRD R1, R2, R3, R6 (no later decision mentions them) |
+| 10 | Not decided since 8 Oct | old PRD R1, R2, R3, R6, §10.5 masking and call recording (no later decision mentions them) |
 | 11 | Four outcomes tracked apart; renaming never renames events | D-50, AL §6 |
 | 11 | Measures | **Proposed** (Q1 open with Apurva) |
 | A | Version A | AL §5–6, D-83 CW-F1, D-87 pt 2 |
