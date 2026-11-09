@@ -4,13 +4,13 @@ import { clock } from "./clock.js";
 import { store } from "./store.js";
 import { storageFor } from "./storage.js";
 import { setRenderer, attachPhoneBack, push, start } from "./nav.js";
-import { decodeStory, defaultStory } from "./play-link.js";
+import { decodeStory, defaultStory, encodeStory } from "./play-link.js";
 import { timeline } from "./call-sim.js";
 import { createServer, createPoller } from "./mock-server.js";
 import { setUnlockOutcome } from "./unlock.js";
 import { value } from "./settings.js";
 import { renderState, renderShellIntro } from "../shell/screen-host.js";
-import { onOpen, unlockState, fasterState } from "./faster-signin.js";
+import { onOpen, unlockState } from "./faster-signin.js";
 import { authCtx } from "../screens/entry-ctx.js";
 import { mountPanel, focusJourney, logLine } from "../review/panel.js";
 import { mountDrawer } from "../review/drawer.js";
@@ -34,7 +34,13 @@ const mode = unreadable ? "review" : q.mode;
 clock.setMode(mode);
 document.body.dataset.mode = mode;
 const storage = storageFor(mode);
+// Review: the panel's story is the simulated phone and server, so it survives reopening the app (a reload) like the phone does;
+// Reset clears it. Play keeps the link's story; capture writes nothing.
+if (mode === "review") { const kept = storage.get("story"); const ok = kept && decodeStory(encodeStory(kept)); if (ok) story = ok; }
+const keepStory = (s) => { if (mode === "review" && s) storage.set("story", s); };
 store.set({ mode, s: q.s, w: q.w, installed: q.installed, story, scenario: story.scenario, offline: story.offline, unlock: story.unlock });
+let keptStory = story;
+store.subscribe((st) => { if (st.story !== keptStory) { keptStory = st.story; keepStory(st.story); } });   // every story change, panel or test
 setUnlockOutcome(story.unlock);
 if (unreadable) { notice.hidden = false; notice.textContent = T.playUnreadable; }
 
@@ -77,7 +83,7 @@ document.addEventListener("visibilitychange", () => { if (!document.hidden) poll
 // faster sign-in on → returning unlock; signed in without it → Home; else sign-in. Restart story always goes to the story's start.
 function startState(opening) {
   const ctx = authCtx(mode);
-  if (story.start === "unlock") { const a = ctx.db.get("auth"); return unlockState(ctx, a ? fasterState(a.number, ctx).method : null); }
+  if (story.start === "unlock") return unlockState(ctx);
   if (story.start !== "sign-in") return null;
   return (opening && mode !== "capture" && onOpen(ctx)) || "sign-in_default";
 }

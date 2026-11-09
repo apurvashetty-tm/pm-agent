@@ -482,6 +482,19 @@ async function signInFull(p, n) { await send(p, n); await verify(p, "1234"); }
   for (const x of [face, none, sl]) await x.r.ctx.close();
 }
 
+{ // F6c: returning unlock follows what the phone can do now (D-64): fingerprint turned on, phone now screen lock only → screen lock;
+  // no screen lock any more → unavailable. The review story (the simulated phone) survives reopening the app.
+  const r = await open(""); const p = r.p;
+  await signInFull(p, "7012345618"); await p.click("#turn-on"); await p.waitForTimeout(PROMPT);
+  await setStory(p, { device: "screen-lock" }); await p.reload(); await p.waitForTimeout(400);
+  const sl = await p.evaluate(() => ({ s: window.__tm.store.get().s, panel: document.getElementById("rp-device").value }));
+  await setStory(p, { device: "none" }); await p.reload(); await p.waitForTimeout(400);
+  const none = await sNow(p);
+  check("F6c", "fingerprint turned on, phone changed to screen lock only → unlock asks for the screen lock; no screen lock → unavailable; panel story kept across reopen",
+    sl.s === "unlock_screen-lock" && sl.panel === "screen-lock" && none === "unlock_unavailable" && r.errors.length === 0, JSON.stringify({ sl, none, e: r.errors }));
+  await r.ctx.close();
+}
+
 // A returning doctor: faster sign-in on, app reopened on unlock.
 async function returning(story = {}, n = "7012345620") {
   const r = await open(""); const p = r.p;
@@ -531,7 +544,7 @@ async function returning(story = {}, n = "7012345620") {
   await w.ctx.close();
 }
 
-{ // F8: story start "unlock" and the panel applies to the running unlock (next prompt answer); demo always succeeds
+{ // F8: story start "unlock" and the panel applies to the running unlock (next prompt answer) — review mode
   const r = await open(""); const p = r.p;
   await p.selectOption("#rp-start", "unlock"); await p.selectOption("#rp-device", "face");
   await p.evaluate(() => document.getElementById("rp-restart").click()); await p.waitForTimeout(300);

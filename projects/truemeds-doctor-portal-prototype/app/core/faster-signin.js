@@ -12,17 +12,17 @@ const key = (n) => `faster:${n}`;
 export function fasterState(n, ctx) { return { offered: false, enabled: false, ...(ctx.db.get(key(n)) || {}) }; }
 function put(n, ctx, patch) { ctx.db.set(key(n), { ...fasterState(n, ctx), ...patch }); }
 export function markOffered(n, ctx) { put(n, ctx, { offered: true }); }
-// The method turned on (fingerprint / face / screen lock) is remembered with it: the next open asks for that method.
+// The method turned on is stored as a record; the next open asks for what the phone can do then (unlockState).
 export function setEnabled(n, ctx, on) { put(n, ctx, { offered: true, enabled: !!on, method: on ? deviceOf(ctx.story, ctx.mode) : null }); }
 
 // The offer's look follows the phone (D-64): fingerprint or face if set up, otherwise the phone's screen lock.
 export function offerState(ctx) { return OFFER_STATE[deviceOf(ctx.story, ctx.mode)] || null; }
-// Returning unlock: the method turned on (else what the phone has); unavailable if the phone has no screen lock any more or the
-// story says the prompt is unavailable.
-export function unlockState(ctx, method = null) {
+// Returning unlock follows what the phone can do now (D-64): fingerprint or face if set up, else its screen lock; unavailable if
+// it has no screen lock any more or the story says the prompt is unavailable. (The method turned on is kept only as a record.)
+export function unlockState(ctx) {
   const d = deviceOf(ctx.story, ctx.mode);
   if (d === "none" || (ctx.mode !== "demo" && ctx.story.unlock === "unavailable")) return "unlock_unavailable";
-  return UNLOCK_STATE[method] || UNLOCK_STATE[d];
+  return UNLOCK_STATE[d];
 }
 
 // After a successful OTP sign-in: the offer, once, on a phone that has a screen lock and has faster sign-in off; else Home.
@@ -38,6 +38,5 @@ export function afterSignIn(n, ctx) {
 export function onOpen(ctx) {
   const a = ctx.db.get("auth");
   if (!a || !a.number) return null;
-  const f = fasterState(a.number, ctx);
-  return f.enabled ? unlockState(ctx, f.method) : HOME_STUB;
+  return fasterState(a.number, ctx).enabled ? unlockState(ctx) : HOME_STUB;
 }
