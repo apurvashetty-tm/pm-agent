@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| Status | Draft for review · v0.3 · 9 Nov 2026 |
+| Status | Draft for review · v0.4 · 9 Nov 2026 |
 | Owner | Apurva Shetty (Product) |
 | Release | Launch release (first version of the doctor app) |
 | Calling flow, every state | [Calling-flow page](https://doctor-portal-prototype.netlify.app/calling-flow/) |
@@ -43,9 +43,13 @@ A Cat4 case, on the clean path: the doctor sets their availability on Home and t
 
 Pilot cases differ at the end: Confirm prescription appears on the live call, and after it the patient is transferred to a Health Advisor on the same call.
 
+![Cat4 case, start to finish](images/happy-path-cat4.png)
+
+*A Cat4 case on the clean path, from the approved screens (`home_active`, `t01-ready`, `t02-calling`, `t08a-valid-cat4`, `t10a-confirmed`)*
+
 ![Calling flow overview](../reviews/2026-11-03-calling-flow-site/calling-flow-blocks.png)
 
-*Calling flow, high level. Every calling state, trigger, button and backend event is on the [calling-flow page](https://doctor-portal-prototype.netlify.app/calling-flow/); this PRD doesn't repeat them.*
+*Every calling path, high level (`calling-flow-blocks`). Every calling state, trigger, button and backend event is on the [calling-flow page](https://doctor-portal-prototype.netlify.app/calling-flow/); this PRD doesn't repeat them.*
 
 ## 5. Screen by screen
 
@@ -145,6 +149,7 @@ Each screen opens with the job the doctor is trying to get done, then why it's b
 - Turning on → "Turning on…".
 - Prompt cancelled → back on the offer, no message.
 - Failed → "Couldn’t turn on faster sign-in." with Try again and Not now.
+- The phone can't turn it on at the tap (e.g. fingerprints removed meanwhile) → the screen stays, the bar shows "Faster sign-in isn’t available on this phone right now." with Continue (goes to Home). Faster sign-in stays off and the offer counts as shown.
 - Offline → "You’re offline. Check your connection."
 
 ### 5.4 Returning unlock
@@ -417,7 +422,7 @@ The printed line is the schedule, then the duration, then food timing and instru
 
 ## 7. Settings
 
-Every value below is a starting value, changeable without an app release. Owners are proposed until confirmed `[Proposed (Apurva)]`.
+Every value below is a starting value, set by its owner and changeable without an app release.
 
 | Setting | Starting value | Owner |
 |---|---|---|
@@ -463,6 +468,8 @@ Every value below is a starting value, changeable without an app release. Owners
 - Earnings beyond today's total in Profile (a wallet), and incentive rules.
 - A per-medicine detail view (price, image), orders with several patients, diagnostic tests, and the patient's order history.
 - A senior-doctor (Super Doctor) role and its permissions.
+- A clinical "I won't prescribe this case" path with escalation. Today the doctor can disable each medicine with a reason (§5.10).
+- Structured diagnosis and allergy fields, a review step showing the full prescription before Confirm, and a line telling the doctor why the case needs them.
 
 ## 10. Decided vs open
 
@@ -510,24 +517,22 @@ Every value below is a starting value, changeable without an app release. Owners
 *Legal*
 - Telemedicine Practice Guidelines need recorded patient consent when the doctor starts a consultation. Does the patient's order count? (OQ-018) [Legal]
 
-*Not decided since the 8 Oct draft* [Apurva]
-- A clinical "I won't prescribe this case" path, with escalation to a senior doctor. Today the doctor can disable each medicine with a reason (§5.10).
-- Structured diagnosis and allergy fields before Confirm.
-- A review step showing the full prescription before Confirm.
-- A line telling the doctor why the case needs them (e.g. "No prescription attached").
-- Is the patient's number hidden from the doctor in the app, and are consultation calls recorded (and if so, with what consent and retention)? [Apurva + Legal]
+*Privacy*
+- Is the patient's number hidden from the doctor in the app, and are consultation calls recorded (and if so, with what consent and retention)? [Legal + Apurva]
 
 *Support*
 - What a crash or help report contains and where it goes. (OQ-022) [App team]
 
 ## 11. How we'll know it worked
 
-`[Proposed: confirm the primary measure and targets (Apurva)]`
+The goal is a better experience for doctors, so that patients get a better consultation. Doctor satisfaction (NPS) and ease of use are the signal for that; the numbers below show whether it reaches patients and orders.
 
 | Measure | Definition | Source | Baseline |
 |---|---|---|---|
-| **Primary:** confirmed prescriptions per available doctor-hour | prescriptions confirmed (proven call) ÷ hours doctors were available | backend case outcomes, availability windows | `[NEED (Doctor Ops)]` |
-| Requested cases that end confirmed | share of requested cases ending in any of the four confirmed outcomes | backend case outcomes | `[NEED (Doctor Ops)]` |
+| **Primary:** doctor-handled orders that end confirmed | orders ending in any of the four confirmed endings with a proven call ÷ orders a doctor opened (each order counted once, even if released to another doctor) | backend case outcomes | `[NEED (Doctor Ops)]` |
+| **Guardrail:** discards on doctor-handled orders | orders a doctor opened that end with the order status DISCARD ÷ orders a doctor opened; should go down | order status | `[NEED (Doctor Ops)]` |
+| Doctor satisfaction and ease of use | doctor NPS and an ease-of-use score from a short in-app or periodic survey | survey | `[NEED: survey and cadence (Doctor Ops)]` |
+| Confirmed prescriptions per available doctor-hour | prescriptions confirmed (proven call) ÷ hours doctors were available | backend case outcomes, availability windows | `[NEED (Doctor Ops)]` |
 | Time to outcome | from Request a case to the ending the doctor sees (waiting for the call record counts as the doctor's ending; final confirmation is tracked by Unproven confirms) | app events | `[NEED (Doctor Ops)]` |
 | Unproven confirms | share of confirms not proven by the call record | mismatch table | new |
 | Pilot transfers | share of Pilot cases ending Transferred rather than Forwarded | backend case outcomes | `[NEED (Doctor Ops)]`, see §2 |

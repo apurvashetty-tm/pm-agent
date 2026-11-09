@@ -1,6 +1,6 @@
 # PRD done-checklist: evidence
 
-Checklist approved in `PRD-PLAN.md` §4 (28 lines). **auto** = `node docs/prd/check-prd.mjs` (run from the project folder). Status after the Codex round (v0.2) and the main-thread final pass (v0.3), 9 Nov 2026.
+Checklist approved in `PRD-PLAN.md` §4 (28 lines). **auto** = `node docs/prd/check-prd.mjs` (run from the project folder). Status at v0.4 (Apurva's answers applied, 9 Nov 2026), before the Codex confirmation round.
 
 | # | Check | How | Status | Evidence |
 |---|---|---|---|---|
@@ -27,8 +27,8 @@ Checklist approved in `PRD-PLAN.md` §4 (28 lines). **auto** = `node docs/prd/ch
 | 21 | Every one of the 148 states maps to a section or the flow page | auto | PASS | check 21; mapping in `TRACE.md` §2 |
 | 22 | Each case type's outcome stated | eye | PASS | §5.7 table, §5.8 |
 | 23 | Medicine-type table covers every form | eye | PASS | §5.10, 7 forms; printed lines from the pictures |
-| 24 | Every 8 Oct PRD item placed | eye | PASS | R1, R2, R3, R6, masking and recording → §10 "Not decided since the 8 Oct draft"; R4 substitution, R5 in-app calling, Super Doctor role → §9 Out; Phase 2 items → §9 Out |
-| 25 | Metrics defined with source; baselines marked | eye | PASS, open | §11 denominators tightened after Codex P1; still Proposed (Q1 open) |
+| 24 | Every 8 Oct PRD item placed | eye | PASS | R1, R2, R3, R6, R4 substitution, R5 in-app calling, Super Doctor role, Phase 2 items → §9 Out; masking and recording → §10 open [Legal] |
+| 25 | Metrics defined with source; baselines marked | eye | PASS | §11: goal, primary and guardrail set by Apurva; baselines `[NEED (Doctor Ops)]` |
 | 26 | Codex review once, `review-prd` rubrics | Codex + eye | PASS | `reviews/codex-round-1.md` (2 P0, 9 P1, 1 P2), `merge-round-1.md`, `FINAL-PASS.md`: 0 P0 open |
 | 27 | Pictures render in the markdown viewer | eye | PENDING | open `PRD.md` in VS Code / GitHub preview (relative paths) |
 | 28 | Only `docs/prd/` written by this thread | eye | PASS | every write went to `docs/prd/`; check 28 lists 31 `ui-screens/` changes from the build thread (D-92 re-renders, copy keys) |

@@ -1,6 +1,6 @@
 # PRD trace (review aid, not for readers)
 
-Links each rule in `PRD.md` to its source, so the PRD body carries no decision numbers. Sources are the frozen inputs as of 6 Nov 2026: `ui-screens/` (148 states), `ui-screens/app-logic.md` (AL), `docs/feedback-state-map.md` (FSM), decision log up to D-92, `calling-flow/data.js`, `ui-screens/feedback/messages.json` and `visible-strings.json` (copy). Latest decision wins.
+Links each rule in `PRD.md` to its source, so the PRD body carries no decision numbers. Sources are the frozen inputs as of 6 Nov 2026, plus decisions D-93 to D-96 (9 Nov): `ui-screens/` (148 states), `ui-screens/app-logic.md` (AL), `docs/feedback-state-map.md` (FSM), decision log up to D-92, `calling-flow/data.js`, `ui-screens/feedback/messages.json` and `visible-strings.json` (copy). Latest decision wins.
 
 ## 1. Rules → sources
 
@@ -19,6 +19,7 @@ Links each rule in `PRD.md` to its source, so the PRD body carries no decision n
 | 3 | OTP then phone unlock, cuts SMS cost | D-45, D-64 |
 | 3 | React Native, app team | project memory; session_handoff 2026-10-12 |
 | 4 | Clean Cat4 path; Pilot transfer | data.js happy path, D-87 |
+| 4 | Happy-path strip | approved pictures only (`images/happy-path-cat4.png`); added at Apurva's request, 9 Nov |
 | 5.1 | Cleaning, error order, re-check, server limits | AL §2, D-39 |
 | 5.1 | Send OTP under the field | D-43 (no pinned button on typing screens), RULES §8.4 |
 | 5.1 | Links configurable | OQ-021 |
@@ -28,6 +29,7 @@ Links each rule in `PRD.md` to its source, so the PRD body carries no decision n
 | 5.3 | Own screen after first sign-in, SMS cost, no sneaky opt-in | D-45 |
 | 5.3 | Unlock by phone capability; skip if no screen lock | D-64 |
 | 5.3 | Toggle in Profile; back gesture = Not now | D-69, D-47 |
+| 5.3 | Phone can't turn it on at the tap: screen stays, bar notice, Continue | D-93 (picture `offer_unavailable` not yet in `ui-screens/`) |
 | 5.4 | Fallback to OTP; unavailable notice; no Back | AL §2, D-47, D-61 |
 | 5.5 | Home's question; taking cases = may request | D-36, home JTBD (2026-10-12) |
 | 5.5 | Quick picks, wheel, minimum, no maximum | AL §3, D-36, D-40 |
@@ -83,13 +85,14 @@ Links each rule in `PRD.md` to its source, so the PRD body carries no decision n
 | 7 | 3 unlock tries [MOCK] | AL §2 |
 | 7 | Ongoing 6 months | D-04, AL §8 |
 | 7 | ₹20 | D-82 pt 2 |
-| 7 | Owners | **Proposed by Claude** (Product = Apurva); marked Proposed in §7, to confirm |
+| 7 | Owners | Confirmed by Apurva, 9 Nov 2026 |
 | 7 | Prototype [MOCK] values (ending-soon 5 min, OTP lock/window/resend, unlock tries) | left as `[NEED]`, numbers not carried into the PRD |
 | 9 | Out list | project_truth §1, D-87, D-88 pt 4, backlog §4b, OQ-015, OQ-028, old PRD §11.2 (incl. Super Doctor role) and R4 |
 | 10 | Open items | open_questions.md, backlog §4, D-83 Engineering list, D-73 (monitoring), AL §11 (incentive) |
-| 10 | Not decided since 8 Oct | old PRD R1, R2, R3, R6, §10.5 masking and call recording (no later decision mentions them) |
+| 9 | Old-PRD R1, R2, R3, R6 out of this release | Apurva, 9 Nov 2026 |
+| 10 | Masking and call recording stay open for Legal | old PRD §10.5; Apurva, 9 Nov 2026 |
 | 11 | Four outcomes tracked apart; renaming never renames events | D-50, AL §6 |
-| 11 | Measures | **Proposed** (Q1 open with Apurva) |
+| 11 | Goal = doctor experience (NPS, ease of use); primary = doctor-handled orders ending confirmed; guardrail = discards | Apurva, 9 Nov 2026; DISCARD order status per tm-chotu definitions |
 | A | Version A | AL §5–6, D-83 CW-F1, D-87 pt 2 |
 | B | Copy | D-84, COPY-ANNEX.md |
 
