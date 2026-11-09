@@ -979,6 +979,11 @@ From an external (ChatGPT) review, each point verified before acting.
 - **Why:** a new team on a new app. A token list says what exists but not where to use it; a PRD alone makes the engineers' AI ask questions that are already answered, because it can't tell decided from open. We are not on the same Claude account, so the kit travels as files in the repo, which their Claude, Codex or Cursor read on their own. Hand-written RN screens went stale within three weeks; generated files can't.
 - **Rejected:** Figma Dev Mode (not our source of truth, no React Native names, paid seats); a Style Dictionary pipeline (native tokens are already generated); writing their RN components or screens; a per-screen token list alone (doesn't cover the components, which aren't exported to RN); shared Claude artifacts or projects (different accounts).
 
+### D-95 · Fast build for steps 2–8: lift the approved HTML, test the logic, picture compare as a report — 2026-11-09
+- **Decision (Apurva):** steps 2–8 are built in two terminal runs (A: steps 2–5, B: steps 6–8), aiming to finish today. The approved, audited HTML for every state is lifted into the app. The plan v3.2 build rules (B1–B14) stay. **Cut:** the per-state pixel gate (the compare runs once per run as a report, and only states over 1% different are looked at); per-session Codex loops (one blockers-only critique per run); per-state tests for screens that only display (tests stay for gates, routing, outcomes, hold / retry, refusals, reopen); per-session screenshots. Brief: `docs/renders/2026-11-09-build-fast/TERMINAL-BRIEF.md`. Amends D-90 (plan v3.2 §5 and B15) for steps 2–8.
+- **Why:** the screens are frozen and audited as HTML, so lifting the markup makes them right by construction. A prototype breaks in its wiring, not its pixels. Step 1's verification load (one session per journey, Codex each session, region-by-region compare) would put the rest at days, which is close to Engineering's own build time.
+- **Rejected:** keeping v3.2's full verification for every step; a code-to-code (DOM) comparison (more work than lifting the markup, and lifting it is that check).
+
 ## Design system changes made for this work
 
 ### D-60 · Secondary button without drop shadow (design system) — 2026-10-24 · **REVERTED same day**
