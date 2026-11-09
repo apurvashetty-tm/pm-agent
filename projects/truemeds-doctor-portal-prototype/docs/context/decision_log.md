@@ -995,6 +995,11 @@ From an external (ChatGPT) review, each point verified before acting.
 - **Why:** a one-time foundation fix serves every later screen and keeps engineers from inventing their own constants; a finished wait should leave the screen ready to try again.
 - **Rejected:** one "named constants" file for token-less values (engineers would copy it as a pattern); keeping the notice until the number changes (the screen would keep reporting a wait that's over).
 
+### D-99 · Design-system token pass: every size, border, timing and layer gets a name — 2026-11-09
+- **Decision (Apurva):** the design system gets the token families SALT never had — sizes, border widths, timing, layering, a bar shadow, disabled / pressed opacity, and web-only layout widths — all `[PROPOSED]` in `beyond-salt.md` (a section Apurva shares with the design team). Every raw value in `src/components.css` and `app/screens/` is replaced; what may stay raw carries a `raw-ok` marker or is a listed exception. RULES §2 rule 1 is widened to these kinds of value; §5 gains "Would the native app need a name for this value?". A guard (`design-system/scripts/check_tokens.py`) fails on any new raw value. No visual change (all approved pictures re-captured identical). Run A1 waits until this is done, and Runs A1 / A2 lift Home, Case and Prescribe with tokens only. Brief: `docs/renders/2026-11-09-token-pass/TERMINAL-BRIEF.md`; audit: `docs/reviews/2026-11-09-design-system-token-audit.md`. Target: under an hour.
+- **Why:** the hand-off kit (D-98) found typed sizes; the audit found ~150 more. Root cause: RULES §2 only covered colour, spacing, radius and shadow (SALT's families), so typed sizes passed every review, and no one asked what native needs when `native/tokens.ts` was created (2026-10-30). Fixing before Home, Case and Prescribe are built avoids building them with typed values and redoing them.
+- **Rejected:** fixing after the build (rework); a "constants file" per app (D-98); a 2–3 hour run (the token table was settled in the main thread, so the run only applies it).
+
 ## Design system changes made for this work
 
 ### D-60 · Secondary button without drop shadow (design system) — 2026-10-24 · **REVERTED same day**

@@ -27,6 +27,8 @@ Before Run A0 (first thing): if `docs/renders/2026-11-09-step1-recovery/SESSION-
 - **Commit and push after every step** (`scripts/publish.sh`, own files only, named). "Pushed to …" is the checkpoint. Never `main`, no PR, no deploy. Wait and retry on `.lock` files (the PRD tab works in this folder too).
 - On this Mac: `CHROME=` / `CHROMIUM=` (installed Chrome) for tests; `< /dev/null` on `codex exec`; `git -C`, never `cd && git`.
 
+**Tokens only (D-99, applies to A1, A2 and B):** every size, colour, border width, spacing, radius, shadow, timing, layer and opacity in `app/` CSS comes from a `--tm-*` token (D-99 added sizes, borders, timing, layering). When lifting Home, Case and Prescribe, replace the reference files' raw values with tokens (e.g. off-scale 6 / 18 / −9 / −14px spacing → the nearest token by meaning; `rgba(0,0,0,.32)` → the overlay token; ad-hoc z-index → `--tm-layer-*`; 0.25 / 0.28 / 0.3s → `--tm-duration-medium` with `--tm-easing-sheet` for sheets). `design-system/scripts/check_tokens.py` must pass. A value with no token: don't type it; list it in the run's REPORT for the main thread. Mock Rx paper and prototype chrome stay exempt.
+
 ## Cut (decided by Apurva, D-95)
 
 - **No per-state pixel gate.** Run `tests/compare-step1.mjs` (extend its state list to the new steps) **once at the end of each run, as a report**: list states whose changed area is over 1% of the picture, with the side-by-side sheet. Fix those only if the cause is wrong markup, a missing element or the wrong state. Anti-aliasing, retries and region explanations are not needed.
@@ -79,6 +81,6 @@ Codex wrote both runs' tests ahead: `tests/codex/run-A/` (one set for A1 + A2; r
 
 ## Run status
 - Run A0: ✅ done — main-thread review passed 2026-11-09 18:35 (rulings on its test disputes below)
-- Run A1: not started
+- Run A1: **on hold until the token pass (D-99) is done** (`docs/renders/2026-11-09-token-pass/REPORT.md` exists). Then start.
 - Run A2: not started
 - Run B: not started
