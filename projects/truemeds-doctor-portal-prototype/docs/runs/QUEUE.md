@@ -8,4 +8,5 @@ Main thread edits this file; the runner only ticks lines.
 - [x] Run docs/renders/2026-11-09-build-fast/TERMINAL-BRIEF.md (do the first run not marked done: A1)
 - [x] Run docs/renders/2026-11-09-build-fast/TERMINAL-BRIEF.md (do the first run not marked done: A2)
 - [ ] Run docs/renders/2026-11-09-build-fast/TERMINAL-BRIEF.md (do the first run not marked done: B)
+- [ ] Run docs/renders/2026-11-09-signin-d101/TERMINAL-BRIEF.md
 - [ ] Run docs/renders/2026-11-09-handoff-kit-all/TERMINAL-BRIEF.md

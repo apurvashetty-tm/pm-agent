@@ -952,3 +952,11 @@ User identified missing HTML/native linkage. Inspected actual sign-in and OTP HT
 - **Netlify (22:10):** deploy previews off for both sites; production deploys only with `[deploy]`. Logged in `docs/TEAM_GIT_WORKFLOW.md`.
 - **Open for Apurva:** Product answers for the kit's OPEN list (10 items); phone walkthrough after the chain (incl. A1 eye checks); FE engineer walkthrough of the Sign-in kit.
 - **Next main thread:** review A2 / B as they finish; add the "kit for all journeys" queue line before B ends; then §2m and the shared PR.
+
+## 2026-11-09 (23:05) · New main thread — A2 reviewed (passed); D-101; queue extended
+- **Chain:** A2 done and reviewed (passed; A0-happy-path test fixed, see RULINGS 23:05). B running. Queue after B: `signin-d101` (D-101 prototype bits: o04, o10, o11, o25), then `handoff-kit-all` (kit for every journey; moves the ten D-101 items to DECIDED).
+- **D-101:** Apurva's answers to the Sign-in kit's ten Product questions (Terms / Privacy placeholder URLs included).
+- **Archive tag:** only after Apurva approves everything (backlog §2m point 1 changed).
+- **Logged:** review panel simplification, separate session (backlog §4b); keep the tray button in the installed app.
+- **Installable demo:** the manifest already exists (standalone, `?demo=1`); install needs https (Netlify) or Chrome's insecure-origins flag for the LAN link.
+- **Open:** FE delivery via GitLab (copy of the kit pushed to a GitLab repo; details pending with Apurva).

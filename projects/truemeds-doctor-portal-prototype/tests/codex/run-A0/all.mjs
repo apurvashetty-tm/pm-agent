@@ -126,8 +126,8 @@ test('A0-happy-path',async p=>{
  await p.locator('#c').fill('1234');await p.getByRole('button',{name:'Verify & sign in',exact:true}).click();
  // Public role adapters only. No story/store mutation: defaults are the behavior being tested.
  const notNow=p.getByRole('button',{name:'Not now',exact:true});await notNow.waitFor();await notNow.click();
- await p.getByRole('button',{name:/Set availability/i}).click();await p.getByRole('button',{name:/Start availability|Save|Confirm/i}).last().click();
- await p.getByRole('button',{name:/Request (next )?case/i}).click();
+ await p.getByRole('button',{name:/Set availability/i}).click(); // main-thread ruling 2026-11-09: Set availability is the confirm (app-logic §3), no second button
+ await p.getByRole('button',{name:/Request (a |next )?case/i}).click();
  const medicines=p.locator('#medicines-list');await medicines.waitFor();
  for(let i=0;i<20;i++){const pending=medicines.getByText('Pending',{exact:true});if(!await pending.count())break;await pending.first().click();await p.getByRole('button',{name:'Prescribe',exact:true}).click();}
  await p.getByRole('button',{name:/Call patient/i}).click();

@@ -2,6 +2,18 @@
 
 Every run reads this first. Rulings override briefs where they conflict. Newest at the top.
 
+## 2026-11-09 23:05 (after run A2 — main thread review: passed)
+- **A2 passed.** A0-happy-path dispute: test bug (Set availability *is* the confirm, app-logic §3; the approved label is "Request a case"). Fixed by the main thread in `tests/codex/run-A0/all.mjs` (no second availability click; `/Request (a |next )?case/`). **Run B: run `tests/codex/run-A0/` once and confirm A0-happy-path passes.**
+- A2's extra builds (scheduled hold retries, ring time / `answeredAt`) stay. **B's live Pilot gate counts from `answeredAt`.**
+- **D-101 (Apurva):** Product answers for the Sign-in kit items o04, o05, o07, o08, o10, o11, o17, o18, o25, o26 — read D-101 in the decision log. Queue: `signin-d101` (small prototype run) after B, then the kit run.
+- **Kit run (handoff-kit-all):** move o04, o05, o07, o08, o10, o11, o17, o18, o25, o26 from OPEN to DECIDED with D-101 (in `scripts/build-handoff.mjs`'s list, generated as before). This replaces the brief's "these stay OPEN" line for these ten; any new Product question still stays OPEN.
+- **Archive tag:** none when the chain ends — only after Apurva approves everything (backlog §2m point 1).
+
+## 2026-11-09 22:35 (for run B and later — main thread, new thread)
+- **A2 Codex critique, pre-ruled:** blockers 1–3 are valid (unclear confirm must reconcile and never resubmit, D-69; everything else disabled while Confirming, incl. Callback / Unavailable on 7d; a late result closes or revokes a sheet the new stage doesn't allow, and the Callback / Unavailable handlers check the stage). Should-fix 4 (scheduled retries / attempt counts) is backend behaviour the doctor never sees — **not needed in the prototype**; a log line is enough. Should-fix 5 (time anchored to the patient's answer) is **run B's**: the Pilot live-call gate counts from the patient answering (app-logic §5, Launch B), so B's simulator needs a separate answer time and ring interval.
+- **Lighter evidence from run B on (backlog §2m point 4):** commit proof (REPORT, JSON, test logs, compare report, one sheet) and only pictures that **differ** from what's committed; no identical re-captures.
+- **Queue:** a hand-off-kit run for all journeys runs after B (`docs/renders/2026-11-09-handoff-kit-all/TERMINAL-BRIEF.md`). B doesn't touch `handoff/`.
+
 ## 2026-11-09 21:50 (after run A1 — main thread review: passed)
 - **A1 test disputes (4): all test bugs, app follows the approved pictures.** Fixed in `tests/codex/run-A/` by the main thread: A-C01 clicks **Stay** (D-84 CA-22); A-P07 picks **Weekly** before **Other** (Other is single-dose only); A-OPTIONS-d-every-x-hours matches the accessible names **Every 4 hours…**; `a-loading` accepts the skeleton's status region (text-free by design, D-81 F28). Syntax and inventory checked; **A2: run the whole run-A suite once and confirm these four pass.**
 - **app-logic §4** stale "Stay on this case" lines corrected to **Stay**.
