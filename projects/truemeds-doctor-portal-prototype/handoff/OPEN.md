@@ -17,6 +17,12 @@ Generated from the product rules — do not edit by hand.
 | [o10](#o10) | Coming back from OTP (Change): is the number kept, and does the first typed digit replace it? | Product |
 | [o11](#o11) | Terms, Privacy and support links: final URLs, and where are they configured? | Product + Ops |
 | [o13](#o13) | The busy spinner's ring is drawn in a raw white (#fff) in the design system. Which token? | Design |
+| [o14](#o14) | The logo file embeds the Truemeds logo as an image inside the SVG (needed to keep it unchanged). react-native-svg may not draw embedded images. Is there a native-ready version? | Design |
+| [o15](#o15) | Send OTP API: endpoint, request and the shape of each answer (sent, locked, not registered, couldn't send, too many attempts, inactive). Does "too many attempts" return an end time or seconds left? | Backend |
+| [o16](#o16) | How long does the app wait for Send OTP before showing "Couldn't send the code."? | Backend + Product |
+| [o17](#o17) | On the phone, does Sign up open the system browser or a browser inside the app? | Product |
+| [o18](#o18) | If the doctor changes the number and then types the old one back, should its earlier answer (too many attempts, inactive) show again without a new Send OTP? | Product |
+| [o19](#o19) | Some web styles have no native equivalent: balanced line breaks for titles and notices (iOS), the subtitle's 31-character width limit, and the 2px focus ring for hardware keyboards. Drop or approximate? | Design |
 | [o12](#o12) | How long does a signed-in session last before OTP is asked again? | Backend + Product |
 
 <a id="o01"></a>
@@ -87,7 +93,7 @@ Generated from the product rules — do not edit by hand.
 <a id="o11"></a>
 ### o11 · Terms, Privacy and support links: final URLs, and where are they configured?
 
-- **Current assumption:** **Safe placeholder:** Terms/Privacy point to a "link pending" page. `[MOCK ASSUMPTION]` — *OQ-021*
+- **Current assumption:** Sign-up URL and the Doctor Ops number are answered (d11, d12); only Terms and Privacy are open, and all links must be configurable. **Safe placeholder:** Terms/Privacy point to a "link pending" page. `[MOCK ASSUMPTION]` — *OQ-021*
 - **Who answers:** Product + Ops
 - **References:** OQ-021
 
@@ -97,6 +103,46 @@ Generated from the product rules — do not edit by hand.
 - **Current assumption:** Assumption [RECOMMENDED]: tokens.color.content.inverse, the token the busy button's label uses (white). The ring's open quarter is transparent. L2 — Loading primary buttons: brand-blue fill, white label, white spinner, on every screen (sign-in "Sending OTP", OTP "Verifying", any future loading primary). — *Design rules L2*
 - **Who answers:** Design
 - **References:** D-46
+
+<a id="o14"></a>
+### o14 · The logo file embeds the Truemeds logo as an image inside the SVG (needed to keep it unchanged). react-native-svg may not draw embedded images. Is there a native-ready version?
+
+- **Current assumption:** Only foundation/logo/truemeds-for-doctors.svg exists. Check it on a device first; never redraw or recolour it (d19). — *Kit*
+- **Who answers:** Design
+- **References:** D-02
+
+<a id="o15"></a>
+### o15 · Send OTP API: endpoint, request and the shape of each answer (sent, locked, not registered, couldn't send, too many attempts, inactive). Does "too many attempts" return an end time or seconds left?
+
+- **Current assumption:** The web build fakes the server; it receives an end time for the wait. No contract exists yet. — *Sign-in build*
+- **Who answers:** Backend
+- **References:** D-35
+
+<a id="o16"></a>
+### o16 · How long does the app wait for Send OTP before showing "Couldn't send the code."?
+
+- **Current assumption:** No timeout is defined; the web build answers at once. — *Sign-in build*
+- **Who answers:** Backend + Product
+
+<a id="o17"></a>
+### o17 · On the phone, does Sign up open the system browser or a browser inside the app?
+
+- **Current assumption:** On the web it opens a new tab. signin.signupLink: onboarding page, new tab (OQ-021) — *Message rules*
+- **Who answers:** Product
+- **References:** OQ-021
+
+<a id="o18"></a>
+### o18 · If the doctor changes the number and then types the old one back, should its earlier answer (too many attempts, inactive) show again without a new Send OTP?
+
+- **Current assumption:** No: the build remembers nothing per number; the answer shows again only after Send OTP (the server answers again). — *Sign-in build*
+- **Who answers:** Product
+
+<a id="o19"></a>
+### o19 · Some web styles have no native equivalent: balanced line breaks for titles and notices (iOS), the subtitle's 31-character width limit, and the 2px focus ring for hardware keyboards. Drop or approximate?
+
+- **Current assumption:** Titles and notices wrap balanced (L8, d26); focus ring on buttons and links (d21). — *Design rules*
+- **Who answers:** Design
+- **References:** D-47
 
 <a id="o12"></a>
 ### o12 · How long does a signed-in session last before OTP is asked again?

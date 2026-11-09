@@ -11,6 +11,7 @@ Generated from the product rules — do not edit by hand.
 | [d04](#d04) | Errors | Where do errors show, and what does the field look like in error? |
 | [d05](#d05) | Server answers | What can the server answer after Send OTP, and how is each answer shown? |
 | [d06](#d06) | Server answers | Does a server answer stay when the doctor edits the number? |
+| [d27](#d27) | Errors | Can a field error and a server notice show at the same time? |
 | [d07](#d07) | Sending | What happens to the button and the field while the code is being sent? |
 | [d08](#d08) | Limits | Too many attempts: what does the button show, and how long is the wait? |
 | [d09](#d09) | Limits | Which limits are enforced on the server and which in the app? |
@@ -74,6 +75,15 @@ Decisions: D-39
 
 Decisions: D-33, D-46, D-47
 
+<a id="d27"></a>
+### d27 · Can a field error and a server notice show at the same time?
+
+- **Errors:** typing problems turn the field red and replace the helper line (empty, under 10 digits, first digit not 6–9). Problems after sending show a notice in the same spot and leave the field neutral: not registered (info), offline (warning), couldn't send (error), too many requests (warning + button counts down), inactive account (error + Call Doctor Ops). No toasts. Pasted or autofilled numbers are cleaned to 10 digits. — *D-33*
+- **Rule** — One message per cause — never field error + notice + toast for the same thing. — *Design rules 9.5*
+- No. The notice and the helper / error line share one spot; typing a different number removes the notice first, then the format check runs: `helper.hidden = !!m.notice;` — *Sign-in build*
+
+Decisions: D-33
+
 ## Server answers
 
 <a id="d05"></a>
@@ -89,7 +99,7 @@ Decisions: D-33, D-54
 ### d06 · Does a server answer stay when the doctor edits the number?
 
 - signin.notRegistered: clears on new number · signin.offline: clears on new attempt · signin.couldntSend: clears on new attempt · signin.tooMany: clears on authoritative unlock · signin.inactive: clears on Ops resolution — *Message rules*
-- A server answer belongs to the number it was for — *Sign-in screen*
+- Changing the number clears the server notice and the button goes back to Send OTP (an answer belongs to the number it was for); nothing is remembered per number on the phone: `if (changed && m.notice) { m.notice = null; m.button = "default"; }` — *Sign-in build*
 
 Decisions: D-33
 
@@ -160,7 +170,7 @@ Decisions: D-33
 <a id="d13"></a>
 ### d13 · Does the keyboard open by itself on Sign-in, and where is Send OTP when it is open?
 
-- **Rejected:** pinned bottom button on sign-in/OTP; auto-opening the keyboard on sign-in (D-33 layout kept as approved). — *D-43*
+- On sign-in the keyboard does not open by itself, and the main button is not pinned to the bottom. — *D-43*
 - **Button placement:** on screens where the doctor types (sign-in, OTP), the main button sits **inline, directly under the content**, so it stays visible above the keyboard without moving. On screens without typing (faster sign-in offer, Home), the main button is **pinned to the bottom**. — *D-43*
 - **Keyboard clearance:** keep at least 16px between the inline main button and an open keyboard. If the content does not fit, the content scrolls. — *Design rules 8.9*
 

@@ -24,7 +24,7 @@ const CHECK = process.argv.includes("--check");
 const rel = (p) => path.relative(ROOT, p).split(path.sep).join("/");
 const read = (p) => fs.readFileSync(p, "utf8");
 const sha = (b) => crypto.createHash("sha256").update(b).digest("hex");
-const die = (msg) => { console.error(`build-handoff: ${msg}`); process.exit(1); };
+const die = (msg) => { console.error(`build-handoff: ${CHECK ? "handoff/ is OUT OF DATE (a quoted source moved or changed): " : ""}${msg}`); process.exit(1); };
 
 // ---------------------------------------------------------------------------------------------------------------------
 // Sources. Whole-file hashes for files the kit copies or measures; snippet hashes for the big documents (only the
@@ -48,6 +48,11 @@ const FILES = {
   tokenBuildNative: path.join(DS, "scripts/build_native.py"),
   dsTokens: [path.join(DS, "tokens/Core.tokens.json"), path.join(DS, "tokens/Default.tokens.json"), path.join(DS, "tokens/extras.json"), path.join(DS, "tokens/truemeds.json"), path.join(DS, "src/components.css")],
   builder: [path.join(ROOT, "scripts/build-handoff.mjs"), path.join(ROOT, "scripts/build-handoff.py")],
+  // everything the capture loads that can move or restyle Sign-in (shell frame, routing, keyboard drawing, fonts, copy)
+  capture: ["app/index.html", "app/shell/shell.css", "app/shell/screen-host.js", "app/shell/mock-keyboard.js", "app/shell/mock-keyboard.css",
+    "app/core/boot.js", "app/core/modes.js", "app/core/dom.js", "app/core/msg.js", "app/core/nav.js", "app/core/store.js", "app/core/clock.js",
+    "app/core/storage.js", "app/core/settings.js", "app/screens/entry-ctx.js", "app/data/test-numbers.js", "app/data/links.js", "app/feedback/messages.js",
+    "app/brand/truemeds-for-doctors.svg"].map((f) => path.join(ROOT, f)),
 };
 const DOCS = {
   appLogic: path.join(ROOT, "ui-screens/app-logic.md"),
@@ -100,7 +105,7 @@ function section(k, heading) {   // "### D-39 ·" or "## 2. Sign-in" -> text unt
 const INTERNAL = /\bpicture|Apurva|\bRound\s*\d|\blane\b|Codex|\brender|Netlify|\bgit\b|\bbrief\b|\.py\b|\.md\b|\.html\b|\.png\b|\bA-\d\d\b|\bB-\d\d\b|\bCW-|beyond-salt|NEEDS-|\brecovery\b|\bplan v|\bplan B\d|fix round|check-locked|Mangesh|Kunal|Swapnil|Claude Code/i;
 const PATHS = [[/`?ui-screens\/feedback\/messages\.json`?/g, "`foundation/messages.ts`"], [/`?docs\/feedback-state-map\.md`?/g, "the feedback map (quoted in DECIDED.md)"],
   [/`?brand\/truemeds-for-doctors\.svg`?/g, "`foundation/logo/truemeds-for-doctors.svg`"], [/`?truemeds\.css`?/g, "the design system"]];
-const REPLACE = [[/: "New here\? Sign up below\. Already applied\? Our team will call you once you're approved\."/, " (copy: `signin.notRegistered`)."]];
+const REPLACE = [[/^\*\*Rejected:\*\* pinned bottom button on sign-in\/OTP; auto-opening the keyboard on sign-in \(D-33 layout kept as approved\)\./, "On sign-in the keyboard does not open by itself, and the main button is not pinned to the bottom."], [/: "New here\? Sign up below\. Already applied\? Our team will call you once you're approved\."/, " (copy: `signin.notRegistered`)."]];
 const DROP = [/^\(Try again · Not now/, /^Reconnect to turn on faster/, /^\(2\) \*\*16 messages/, /^\(3\) \*\*Kept/, /^\(4\) \*\*Faster sign-in offer copy/, /^`call\.transferReady`/, /^Failed stays on the offer/, /Sign-in is 174 today/, /166 is the largest width that fits Home/, /"New here\? Sign up below/, /Rule in §4\./, /^\(2\) \*\*16 messages shortened/];
 function clean(s) {
   let t = s.trim();
@@ -555,7 +560,8 @@ function decided(T) {
     { id: "d03", topic: "Validation", q: "When does an error clear?", a: [DEC("D-39", /format errors follow one pattern/), { src: "Message rules", text: ["signin.empty", "signin.short", "signin.prefix"].map((k) => `${k}: clears on ${metadata[k].clear}; keeps the ${metadata[k].retain}`).join(" · ") }], refs: ["D-39"] },
     { id: "d04", topic: "Errors", q: "Where do errors show, and what does the field look like in error?", a: [DEC("D-33", /\*\*Errors:\*\*/), RUL("9.5", /^\| \*\*Field error\*\*/), RUL("L4", /^\| L4 \|/), RUL("L7", /^\| L7 \|/)], refs: ["D-33", "D-46", "D-47"] },
     { id: "d05", topic: "Server answers", q: "What can the server answer after Send OTP, and how is each answer shown?", a: [AL(/After sending, server results show as a notice/), { src: "Sign-in screen", text: notices.map((n) => `${n.answer}: ${n.tone} notice, icon \`${n.icon}\`, copy \`${n.copyKey}\`, role="${n.role}"`).join(" · ") }, RUL("9.5", /^\| \*\*Notice\*\*/)], refs: ["D-33", "D-54"] },
-    { id: "d06", topic: "Server answers", q: "Does a server answer stay when the doctor edits the number?", a: [{ src: "Message rules", text: notices.map((n) => `${n.copyKey}: clears on ${metadata[n.copyKey].clear}`).join(" · ") }, CODE("Sign-in screen", FILES.signInJs, /a server answer belongs to the number it was for/)], refs: ["D-33"] },
+    { id: "d06", topic: "Server answers", q: "Does a server answer stay when the doctor edits the number?", a: [{ src: "Message rules", text: notices.map((n) => `${n.copyKey}: clears on ${metadata[n.copyKey].clear}`).join(" · ") }, CODE("Sign-in build", FILES.signInJs, /if \(changed && m\.notice\) \{ m\.notice = null; m\.button = "default"; \}/, "Changing the number clears the server notice and the button goes back to Send OTP (an answer belongs to the number it was for); nothing is remembered per number on the phone:")], refs: ["D-33"] },
+    { id: "d27", topic: "Errors", q: "Can a field error and a server notice show at the same time?", a: [DEC("D-33", /\*\*Errors:\*\*/), RUL("9.5", /^\| \*\*Rule\*\*/), CODE("Sign-in build", FILES.signInJs, /helper\.hidden = !!m\.notice;/, "No. The notice and the helper / error line share one spot; typing a different number removes the notice first, then the format check runs:")], refs: ["D-33"] },
     { id: "d07", topic: "Sending", q: "What happens to the button and the field while the code is being sent?", a: [RUL("L2", /^\| L2 \|/), RUL("9.1", /^- \*\*States:\*\*/), FM("signin.sending")], refs: ["D-46", "D-54"] },
     { id: "d08", topic: "Limits", q: "Too many attempts: what does the button show, and how long is the wait?", a: [AL(/After sending, server results show as a notice/), DEC("D-35", /Keep wait time server-driven/), DEC("D-46", /Timer format is m:ss/), FM("signin.too-many-tries")], refs: ["D-35", "D-46"] },
     { id: "d09", topic: "Limits", q: "Which limits are enforced on the server and which in the app?", a: [AL(/All OTP limits are enforced by the server/), DEC("D-35", /OTP issue cap is configurable/), DEC("D-34", /5 server-confirmed wrong OTP submissions/)], refs: ["D-34", "D-35"] },
@@ -587,8 +593,16 @@ const MOCKS = [
   { file: "settings", re: /resendWaits:.*MOCK ASSUMPTION/, id: "o02" },
   { file: "keyboard", re: /\[MOCK ASSUMPTION\]/, id: "o09" },
 ];
+const MOCK_SCAN = ["app/screens/sign-in.js", "app/screens/sign-in.css", "app/screens/entry-ctx.js", "app/core/auth.js", "app/data/links.js", "app/data/test-numbers.js", "app/shell/mock-keyboard.js"];
+const MOCK_KEY = { "app/core/auth.js": "auth", "app/shell/mock-keyboard.js": "keyboard" };
 function open() {
   for (const m of MOCKS) lineOf(m.file, m.re);
+  // every [MOCK ASSUMPTION] in the sign-in build, and every mock setting the sign-in rules read, must map to an OPEN entry
+  for (const f of MOCK_SCAN) for (const l of read(path.join(ROOT, f)).split("\n").filter((x) => /MOCK ASSUMPTION/.test(x)))
+    if (!MOCKS.some((m) => MOCK_KEY[f] === m.file && m.re.test(l))) die(`${f}: [MOCK ASSUMPTION] not mapped to OPEN.md: ${l.trim()}`);
+  const settingsUsed = [...new Set([...doc("auth").matchAll(/value\("(\w+)"\)/g)].map((x) => x[1]))];
+  for (const k of settingsUsed) { const l = doc("settings").split("\n").find((x) => x.trim().startsWith(k + ":"));
+    if (l && /MOCK ASSUMPTION/.test(l) && !MOCKS.some((m) => m.file === "settings" && m.re.test(l))) die(`settings ${k}: mock value not mapped to OPEN.md`); }
   const signInSettings = doc("settings").split("\n").filter((l) => /MOCK ASSUMPTION/.test(l) && /OQ-017/.test(l));
   return [
     { id: "o01", topic: "Limits", q: "How long are the OTP issue window, the number lock and the code life in production?", now: OQ("OQ-017", /^\*\*Safe placeholder:\*\*/), who: "Backend + Product", refs: ["OQ-017", "D-34", "D-35"] },
@@ -601,8 +615,14 @@ function open() {
     { id: "o08", topic: "Navigation", q: "Android back gesture on Sign-in (the first screen): leave the app, or stay?", now: CODE("Sign-in build", FILES.signInJs, /setScreenBack\(null\);.*$/), who: "Product", refs: [] },
     { id: "o09", topic: "Keyboard", q: "The prototype draws a number keyboard in its pictures. Do we draw one?", now: { src: "Sign-in build", text: "No: the pictures show the phone's own number keyboard; the app uses the system keyboard (type tel)." }, who: "— (prototype only; no action)", refs: [] },
     { id: "o10", topic: "Edit after return", q: "Coming back from OTP (Change): is the number kept, and does the first typed digit replace it?", now: CODE("Sign-in build", FILES.signInJs, /A pasted or pre-filled number .* is replaced by the first typed digit/), who: "Product", refs: [] },
-    { id: "o11", topic: "Links", q: "Terms, Privacy and support links: final URLs, and where are they configured?", now: OQ("OQ-021", /^\*\*Safe placeholder:\*\*/), who: "Product + Ops", refs: ["OQ-021"] },
+    { id: "o11", topic: "Links", q: "Terms, Privacy and support links: final URLs, and where are they configured?", now: OQ("OQ-021", /^\*\*Safe placeholder:\*\*/), who: "Product + Ops", refs: ["OQ-021"], noteNow: "Sign-up URL and the Doctor Ops number are answered (d11, d12); only Terms and Privacy are open, and all links must be configurable." },
     { id: "o13", topic: "Tokens", q: "The busy spinner's ring is drawn in a raw white (#fff) in the design system. Which token?", now: RUL("L2", /^\| L2 \|/), who: "Design", refs: ["D-46"], noteNow: "Assumption [RECOMMENDED]: tokens.color.content.inverse, the token the busy button's label uses (white). The ring's open quarter is transparent." },
+    { id: "o14", topic: "Logo", q: "The logo file embeds the Truemeds logo as an image inside the SVG (needed to keep it unchanged). react-native-svg may not draw embedded images. Is there a native-ready version?", now: { src: "Kit", text: "Only foundation/logo/truemeds-for-doctors.svg exists. Check it on a device first; never redraw or recolour it (d19)." }, who: "Design", refs: ["D-02"] },
+    { id: "o15", topic: "Server answers", q: "Send OTP API: endpoint, request and the shape of each answer (sent, locked, not registered, couldn't send, too many attempts, inactive). Does \"too many attempts\" return an end time or seconds left?", now: { src: "Sign-in build", text: "The web build fakes the server; it receives an end time for the wait. No contract exists yet." }, who: "Backend", refs: ["D-35"] },
+    { id: "o16", topic: "Server answers", q: "How long does the app wait for Send OTP before showing \"Couldn't send the code.\"?", now: { src: "Sign-in build", text: "No timeout is defined; the web build answers at once." }, who: "Backend + Product", refs: [] },
+    { id: "o17", topic: "Sign-up", q: "On the phone, does Sign up open the system browser or a browser inside the app?", now: { src: "Message rules", text: `signin.signupLink: ${metadata["signin.signupLink"].next}` }, who: "Product", refs: ["OQ-021"], noteNow: "On the web it opens a new tab." },
+    { id: "o18", topic: "Server answers", q: "If the doctor changes the number and then types the old one back, should its earlier answer (too many attempts, inactive) show again without a new Send OTP?", now: { src: "Sign-in build", text: "No: the build remembers nothing per number; the answer shows again only after Send OTP (the server answers again)." }, who: "Product", refs: [] },
+    { id: "o19", topic: "Platform", q: "Some web styles have no native equivalent: balanced line breaks for titles and notices (iOS), the subtitle's 31-character width limit, and the 2px focus ring for hardware keyboards. Drop or approximate?", now: { src: "Design rules", text: "Titles and notices wrap balanced (L8, d26); focus ring on buttons and links (d21)." }, who: "Design", refs: ["D-47"] },
     { id: "o12", topic: "Session", q: "How long does a signed-in session last before OTP is asked again?", now: OQ("OQ-017", /^\*\*Confirmed 2026-10-12:\*\*/), who: "Backend + Product", refs: ["OQ-017"] },
   ];
 }
@@ -757,7 +777,8 @@ function behaviourFor(e, state) {
 // ---------------------------------------------------------------------------------------------------------------------
 function inputsHash() {
   const files = [FILES.tokensTs, FILES.tokensJson, FILES.iconsTs, FILES.messagesTs, FILES.messagesJson, FILES.metadataJson, FILES.approvedHtml,
-    FILES.signInJs, FILES.signInCss, FILES.appCss, FILES.logo, FILES.dsCss, FILES.tokenBuild, FILES.tokenBuildNative, ...FILES.dsTokens, ...FILES.builder,
+    FILES.signInJs, FILES.signInCss, FILES.appCss, FILES.logo, FILES.dsCss, FILES.tokenBuild, FILES.tokenBuildNative, ...FILES.dsTokens, ...FILES.builder, ...FILES.capture,
+    ...fs.readdirSync(path.join(ROOT, "app/design-system/fonts")).map((f) => path.join(ROOT, "app/design-system/fonts", f)),
     ...STATES.flatMap((s) => [PICTURE(s, 360), PICTURE(s, 390)])];
   const out = {};
   for (const f of files) out[rel(f)] = sha(fs.readFileSync(f));
@@ -776,7 +797,7 @@ function listFiles(dir, base = dir) {
   if (!fs.existsSync(dir)) return [];
   return fs.readdirSync(dir, { withFileTypes: true }).flatMap((e) => e.isDirectory() ? listFiles(path.join(dir, e.name), base) : [path.relative(base, path.join(dir, e.name)).split(path.sep).join("/")]);
 }
-const HAND = new Set(["README.md", "AGENTS.md", "CLAUDE.md", ".claude/skills/truemeds-native-ui/SKILL.md", "foundation/fonts/FONTS.md"]);
+const HAND = new Set([".gitignore", "README.md", "AGENTS.md", "CLAUDE.md", ".claude/skills/truemeds-native-ui/SKILL.md", "foundation/fonts/FONTS.md"]);
 const FONTS = { "PlusJakartaSans-Regular.ttf": "bd6276d4060e3b1ebc45047469e0bb86b08f301ba681cdf1ceb6245ea10478d2", "PlusJakartaSans-Medium.ttf": "c77bab757d7402ec6d9341d5f7ddaafb2474e17026792697ba4624c7dc89caf7",
   "PlusJakartaSans-SemiBold.ttf": "65dbcedb6596a41c30869729eb31cb57d1f5edfe365684314bba8a1994eaa4cb", "PlusJakartaSans-Bold.ttf": "5f5342ef76862b5b5365d1dff1a667629dfa484e388dd602552f647219c3870f",
   "OFL.txt": "995c7199cab65954f545996326755daee7b63cc6b42b06c13da1f9502ab08a99" };
@@ -1011,7 +1032,8 @@ const VIEWER_JS = String.raw`// Hand-off kit viewer. Static: reads window.KIT fr
     const chips = $('<div class="chips"></div>'); main.append(chips);
     for (const s of S.states) { const c = $('<button type="button">' + esc(s.name) + "</button>"); c.setAttribute("aria-pressed", String(s === st)); c.onclick = () => { location.hash = "screens/" + s.id; }; chips.append(c); }
     const stage = $('<div class="stage"></div>');
-    const shot = $('<figure class="shot" style="margin:0"><img alt="' + esc(st.name) + ' at 390, built app" src="../' + esc(st.pictures.built390) + '"><figcaption>390 · built app · inspectable</figcaption></figure>');
+    const shot = $('<figure class="shot" style="margin:0"><div class="frame" style="position:relative"><img alt="' + esc(st.name) + ' at 390, built app" src="../' + esc(st.pictures.built390) + '"></div><figcaption>390 · built app · inspectable</figcaption></figure>');
+    const frame = shot.querySelector(".frame");
     const ref = $('<figure class="ref" style="margin:0"><img alt="' + esc(st.name) + ' at 360, approved" src="../' + esc(st.pictures.w360) + '"><figcaption>360 · approved picture</figcaption><br><img alt="' + esc(st.name) + ' at 390, approved" src="../' + esc(st.pictures.w390) + '"><figcaption>390 · approved picture</figcaption></figure>');
     const panel = $('<div class="panel"></div>');
     const order = [...st.elements].sort((a, b) => b.box.w * b.box.h - a.box.w * a.box.h);
@@ -1019,7 +1041,7 @@ const VIEWER_JS = String.raw`// Hand-off kit viewer. Static: reads window.KIT fr
     for (const e of order) {
       const h = $('<button type="button" class="hit" aria-label="' + esc(e.id) + '"></button>');
       Object.assign(h.style, { left: e.box.x / 3.9 + "%", top: e.box.y / 8.44 + "%", width: e.box.w / 3.9 + "%", height: e.box.h / 8.44 + "%" });
-      h.onclick = (ev) => { ev.stopPropagation(); pick(e); }; h.dataset.id = e.id; shot.append(h);
+      h.onclick = (ev) => { ev.stopPropagation(); pick(e); }; h.dataset.id = e.id; frame.append(h);
     }
     stage.append(shot, panel, ref); main.append(stage);
     const list = $('<div class="ellist"></div>');
@@ -1045,7 +1067,7 @@ const VIEWER_JS = String.raw`// Hand-off kit viewer. Static: reads window.KIT fr
       const used = {}; for (const e of st.elements) for (const s of e.styles) for (const t of s["tokens"]) if (t.native) (used[t.native] ??= { t, els: new Set() }).els.add(e.id);
       panel.append($('<div class="card"><h3 style="margin-top:0">Tokens used in this state (' + Object.keys(used).length + ')</h3><div class="tblwrap"><table><thead><tr><th>Native</th><th>Web</th><th>Value</th><th>Elements</th></tr></thead><tbody>' +
         Object.values(used).sort((a, b) => a.t.native.localeCompare(b.t.native)).map(({ t, els }) => "<tr><td><code>" + esc(t.native) + "</code></td><td><code>" + esc(t.web) + "</code></td><td>" + sw(t.value) + esc(val(t.value)) + "</td><td>" + esc([...els].join(", ")) + "</td></tr>").join("") + "</tbody></table></div></div>"));
-      const raws = S.rawValues.builtApp.filter((x) => x.states.includes(st.id.replace("sign-in_", "")) || x.states.includes(st.id.replace("sign-in_", "")));
+      const raws = S.rawValues.builtApp.filter((x) => x.states.includes(st.id.replace("sign-in_", "")));
       panel.append($('<div class="card"><h3 style="margin-top:0" class="raw">Not tokens in this state (' + raws.length + ')</h3><div class="tblwrap"><table><thead><tr><th>Value</th><th>Where</th><th>Elements</th></tr></thead><tbody>' +
         raws.map((x) => '<tr class="raw"><td><code>' + esc(x.property + ": " + x.value) + "</code> (" + esc(x.kind) + ")</td><td>" + esc(x.file + ":" + x.line) + "</td><td>" + esc(x.elements.join(", ")) + "</td></tr>").join("") + "</tbody></table></div></div>"));
     }

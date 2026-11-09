@@ -1,0 +1,2 @@
+# Keep the AI skill in version control (some repos ignore .claude/ folders).
+!.claude/

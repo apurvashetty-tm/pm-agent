@@ -49,7 +49,8 @@
     const chips = $('<div class="chips"></div>'); main.append(chips);
     for (const s of S.states) { const c = $('<button type="button">' + esc(s.name) + "</button>"); c.setAttribute("aria-pressed", String(s === st)); c.onclick = () => { location.hash = "screens/" + s.id; }; chips.append(c); }
     const stage = $('<div class="stage"></div>');
-    const shot = $('<figure class="shot" style="margin:0"><img alt="' + esc(st.name) + ' at 390, built app" src="../' + esc(st.pictures.built390) + '"><figcaption>390 · built app · inspectable</figcaption></figure>');
+    const shot = $('<figure class="shot" style="margin:0"><div class="frame" style="position:relative"><img alt="' + esc(st.name) + ' at 390, built app" src="../' + esc(st.pictures.built390) + '"></div><figcaption>390 · built app · inspectable</figcaption></figure>');
+    const frame = shot.querySelector(".frame");
     const ref = $('<figure class="ref" style="margin:0"><img alt="' + esc(st.name) + ' at 360, approved" src="../' + esc(st.pictures.w360) + '"><figcaption>360 · approved picture</figcaption><br><img alt="' + esc(st.name) + ' at 390, approved" src="../' + esc(st.pictures.w390) + '"><figcaption>390 · approved picture</figcaption></figure>');
     const panel = $('<div class="panel"></div>');
     const order = [...st.elements].sort((a, b) => b.box.w * b.box.h - a.box.w * a.box.h);
@@ -57,7 +58,7 @@
     for (const e of order) {
       const h = $('<button type="button" class="hit" aria-label="' + esc(e.id) + '"></button>');
       Object.assign(h.style, { left: e.box.x / 3.9 + "%", top: e.box.y / 8.44 + "%", width: e.box.w / 3.9 + "%", height: e.box.h / 8.44 + "%" });
-      h.onclick = (ev) => { ev.stopPropagation(); pick(e); }; h.dataset.id = e.id; shot.append(h);
+      h.onclick = (ev) => { ev.stopPropagation(); pick(e); }; h.dataset.id = e.id; frame.append(h);
     }
     stage.append(shot, panel, ref); main.append(stage);
     const list = $('<div class="ellist"></div>');
@@ -83,7 +84,7 @@
       const used = {}; for (const e of st.elements) for (const s of e.styles) for (const t of s["tokens"]) if (t.native) (used[t.native] ??= { t, els: new Set() }).els.add(e.id);
       panel.append($('<div class="card"><h3 style="margin-top:0">Tokens used in this state (' + Object.keys(used).length + ')</h3><div class="tblwrap"><table><thead><tr><th>Native</th><th>Web</th><th>Value</th><th>Elements</th></tr></thead><tbody>' +
         Object.values(used).sort((a, b) => a.t.native.localeCompare(b.t.native)).map(({ t, els }) => "<tr><td><code>" + esc(t.native) + "</code></td><td><code>" + esc(t.web) + "</code></td><td>" + sw(t.value) + esc(val(t.value)) + "</td><td>" + esc([...els].join(", ")) + "</td></tr>").join("") + "</tbody></table></div></div>"));
-      const raws = S.rawValues.builtApp.filter((x) => x.states.includes(st.id.replace("sign-in_", "")) || x.states.includes(st.id.replace("sign-in_", "")));
+      const raws = S.rawValues.builtApp.filter((x) => x.states.includes(st.id.replace("sign-in_", "")));
       panel.append($('<div class="card"><h3 style="margin-top:0" class="raw">Not tokens in this state (' + raws.length + ')</h3><div class="tblwrap"><table><thead><tr><th>Value</th><th>Where</th><th>Elements</th></tr></thead><tbody>' +
         raws.map((x) => '<tr class="raw"><td><code>' + esc(x.property + ": " + x.value) + "</code> (" + esc(x.kind) + ")</td><td>" + esc(x.file + ":" + x.line) + "</td><td>" + esc(x.elements.join(", ")) + "</td></tr>").join("") + "</tbody></table></div></div>"));
     }
