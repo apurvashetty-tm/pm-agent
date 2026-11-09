@@ -7,6 +7,7 @@ Every run reads this first. Rulings override briefs where they conflict. Newest 
 - A2's extra builds (scheduled hold retries, ring time / `answeredAt`) stay. **B's live Pilot gate counts from `answeredAt`.**
 - **D-101 (Apurva):** Product answers for the Sign-in kit items o04, o05, o07, o08, o10, o11, o17, o18, o25, o26 — read D-101 in the decision log. Queue: `signin-d101` (small prototype run) after B, then the kit run.
 - **Kit run (handoff-kit-all):** move o04, o05, o07, o08, o10, o11, o17, o18, o25, o26 from OPEN to DECIDED with D-101 (in `scripts/build-handoff.mjs`'s list, generated as before). This replaces the brief's "these stay OPEN" line for these ten; any new Product question still stays OPEN.
+- **Kit = prototype hand-off with a fake backend (D-101 amended):** move o01, o02, o03, o12, o15, o16, o19, o21, o22, o24 to DECIDED too, each with the prototype's current mock value / behaviour (from the build and `open_questions.md`), labelled `[MOCK]` and "keep configurable". o23 → stated as the app team's choice. o09 → prototype-only note. For the other journeys, do the same: a backend or design gap gets the prototype's mock answer, not an OPEN line; only genuinely undecided **Product** questions stay OPEN.
 - **Archive tag:** none when the chain ends — only after Apurva approves everything (backlog §2m point 1).
 
 ## 2026-11-09 22:35 (for run B and later — main thread, new thread)
