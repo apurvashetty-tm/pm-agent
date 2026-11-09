@@ -11,7 +11,8 @@ import assert from "assert/strict";
 const HERE = path.dirname(url.fileURLToPath(import.meta.url));
 const PROJECT = path.resolve(HERE, "..");
 const APP = path.join(PROJECT, "app");
-const SHOTS = path.join(PROJECT, "docs/renders/2026-11-06-step0");
+const SHOTS = path.join(PROJECT, "docs/renders/2026-11-09-step1-recovery/session-4/panel");   // step 0 screenshots stay as they were
+fs.mkdirSync(SHOTS, { recursive: true });
 const PORT = 8766;
 const BASE = `http://localhost:${PORT}/`;
 const CHROME = process.env.CHROME;
@@ -117,6 +118,11 @@ const srv = http.createServer((req, res) => {
 await new Promise((r) => srv.listen(PORT, r));
 const browser = await chromium.launch({ executablePath: CHROME });
 fs.mkdirSync(SHOTS, { recursive: true });
+// Panel rows fold (Part A item 2): open the row that holds a control before using it, as a reviewer would.
+async function choose(p, field, v) {
+  await p.evaluate((f) => { const el = document.getElementById("rp-" + f); const d = el && el.closest("details"); if (d) d.open = true; }, field);
+  await p.selectOption("#rp-" + field, v);
+}
 async function open(qs, { w = 1280, h = 800 } = {}) {
   const ctx = await browser.newContext({ viewport: { width: w, height: h } });
   const p = await ctx.newPage();
@@ -189,14 +195,14 @@ async function open(qs, { w = 1280, h = 800 } = {}) {
 
 { // QR and play link: story from the panel, decoded in a second page, same story (plan "same end state")
   const r = await open("", { w: 1280, h: 800 });
-  await r.p.selectOption("#rp-start", "case").catch(() => {});
-  await r.p.selectOption("#rp-scenario", "pilot_ha_free");
-  await r.p.selectOption("#rp-caseKind", "long-names");
-  await r.p.selectOption("#rp-record", "over-gate");
-  await r.p.selectOption("#rp-prescribe", "pending-blocks-confirm");
-  await r.p.click("#rp-make-qr"); await r.p.waitForTimeout(200);
+  await choose(r.p, "start", "case").catch(() => {});
+  await choose(r.p, "scenario", "pilot_ha_free");
+  await choose(r.p, "caseKind", "long-names");
+  await choose(r.p, "record", "over-gate");
+  await choose(r.p, "prescribe", "pending-blocks-confirm");
+  await r.p.waitForTimeout(200);   // no "Make QR" button: the QR follows every change (Part A item 3)
   const qrOk = await r.p.evaluate(() => { const b = document.getElementById("rp-qr"); return !b.hidden && b.querySelector("svg") !== null; });
-  check("Q1", "Test on phone: QR code drawn from the vendored library", qrOk);
+  check("Q1", "Test on phone: QR code drawn from the vendored library, current without a button", qrOk && !(await r.p.$("#rp-make-qr")));
   const link = await r.p.evaluate(() => document.getElementById("rp-link").textContent);
   const panelStory = await r.p.evaluate(() => { const out = {}; document.querySelectorAll("#review-panel select[data-field]").forEach((s) => { out[s.dataset.field] = s.value; }); return out; });
   await r.p.screenshot({ path: path.join(SHOTS, "review-test-on-phone-qr.png"), fullPage: false });
@@ -231,18 +237,92 @@ async function open(qs, { w = 1280, h = 800 } = {}) {
 
 { // jump goes through navigation and sets picture layout; restart resets the shell; both from the panel
   const r = await open("", { w: 1280, h: 800 });
-  await r.p.selectOption("#rp-jump", "t10b-forwarded");
+  await choose(r.p, "jump", "t10b-forwarded");
   await r.p.click("#rp-jump-go"); await r.p.waitForTimeout(200);
   const j = await r.p.evaluate(() => ({ img: document.querySelector("#screen img")?.getAttribute("src") || "", picOnly: document.body.classList.contains("picture-only") }));
   check("N1", "panel Jump opens the chosen state through navigation, picture layout set", j.img.includes("t10b-forwarded") && j.picOnly, JSON.stringify(j));
   await r.p.click("#rp-restart"); await r.p.waitForTimeout(200);
   const rs = await r.p.evaluate(() => ({ img: !!document.querySelector("#screen figure img"), signIn: !!document.querySelector("#screen .signin-screen") }));
   check("N2", "Restart story returns to the story's start screen (sign-in, built in step 1), no picture left", !rs.img && rs.signIn, JSON.stringify(rs));
-  await r.p.selectOption("#rp-attempt", "0");
+  await choose(r.p, "attempt", "0");
   await r.p.click("#rp-add-attempt"); await r.p.waitForTimeout(200);
   const attempts = await r.p.evaluate(() => document.querySelectorAll("#rp-attempt option").length);
   check("N3", "call attempts: add an attempt gives a second attempt in the story", attempts === 2, `attempts ${attempts}`);
   await r.ctx.close();
+}
+
+{ // Part A (step 1 recovery session 4): plain words, two-card layout at 1280 x 800, QR always current and scannable, drawer
+  const { VALUE_LABEL } = await import(path.join(APP, "review/labels.js"));
+  const { STATE_NAME } = await import(path.join(APP, "review/state-names.js"));
+  const { encodeShort } = await import(path.join(APP, "core/play-link.js"));
+  const missingVal = [];
+  for (const [k, o] of [...Object.entries(STORY_FIELDS), ...Object.entries(CC)]) for (const v of o) if (!VALUE_LABEL[k] || !VALUE_LABEL[k][v]) missingVal.push(`${k}=${v}`);
+  check("P1", "every story and call value has plain words (no codes shown)", missingVal.length === 0, missingVal.join(", "));
+  globalThis.window = {}; await import(path.join(APP, "state-map.js") + "?p2"); const map = globalThis.window.TM_STATE_MAP;
+  const ids = [...map.pictures, ...map.others].map((r) => r.id);
+  // mechanical = an id fragment left in (underscore, two-hyphen token like enable-failed-x, a dotted id) or a word with its
+  // apostrophe dropped by a generator ("Couldnt verify")
+  const noName = ids.filter((id) => { const n = STATE_NAME[id]; return !n || n === id || /_|\b[a-z]+-[a-z]+-[a-z]+|\b[a-z]+\.[a-z]/.test(n) || /\b(couldnt|didnt|isnt|cant|wont|wasnt)\b/i.test(n); });
+  check("P2", `every state id (${ids.length}) has a plain jump-list name`, noName.length === 0, noName.join(", "));
+  const typical = { ...defaultStory(), scenario: "pilot_ha_free", calls: [{ ...defaultStory().calls[0], connected: "over-gate", whoEnded: "patient" }] };
+  const link = "https://truemeds-doctor-app-preview.netlify.app/?play=" + encodeShort(typical);
+  check("P3", "short play link: default story is '3', typical story link ≤ 100 characters, both decode back",
+    encodeShort(defaultStory()) === "3" && link.length <= 100 && JSON.stringify(decodeStory(encodeShort(typical))) === JSON.stringify({ ...typical, v: 2 }) && JSON.stringify(decodeStory("3")) === JSON.stringify(defaultStory()),
+    `${link.length} chars: ${link}`);
+  const r = await open("?s=sign-in_default", { w: 1280, h: 800 });
+  const texts = await r.p.evaluate(() => [...document.querySelectorAll("#review-panel option")].map((o) => o.textContent));
+  const codeLike = texts.filter((t) => /^[a-z0-9]+([-_][a-z0-9]+)+$/.test(t) || /^\d+ · /.test(t));
+  check("P4", "panel options read as words (no ids like over-gate, 1 · offer_enable-failed)", codeLike.length === 0, codeLike.slice(0, 5).join(", "));
+  const geo = [];
+  for (const row of ["story", "jump", "entry", "work", "call", "settings", "log"]) {
+    await r.p.evaluate((k) => { const d = document.querySelector(`details[data-row=${k}]`); d.open = true; }, row); await r.p.waitForTimeout(80);
+    geo.push(await r.p.evaluate((k) => { const g = (id) => document.getElementById(id).getBoundingClientRect(); const a = g("rp-review"), c = g("rp-phone"), f = g("frame");
+      return { k, open: [...document.querySelectorAll("details.rp-row[open]")].length, reviewOn: a.bottom <= innerHeight && a.left >= f.right, phoneOn: c.top >= 0 && c.bottom <= innerHeight && c.right <= f.left,
+        noScroll: document.documentElement.scrollHeight <= innerHeight + 1 }; }, row));
+  }
+  check("P5", "1280 x 800: opening any row keeps one row open, the Review panel and the Test on phone card on screen, no page scroll",
+    geo.every((g) => g.open === 1 && g.reviewOn && g.phoneOn && g.noScroll), JSON.stringify(geo.filter((g) => !(g.open === 1 && g.reviewOn && g.phoneOn && g.noScroll))));
+  await r.p.evaluate(() => { document.querySelector("details[data-row=story]").open = true; });
+  const before = await r.p.evaluate(() => document.getElementById("rp-link").textContent);
+  await choose(r.p, "scenario", "pilot_ha_free");
+  const after = await r.p.evaluate(() => ({ link: document.getElementById("rp-link").textContent, steps: [...document.querySelectorAll("#rp-steps li")].map((l) => l.textContent), value: document.querySelector("[data-value=story]").textContent }));
+  check("P6", "QR, link, steps and the row's value follow a change at once (3–6 plain steps; OTP and offer answers in the default steps)",
+    after.link !== before && after.steps.length >= 3 && after.steps.length <= 6 && after.steps.some((t) => t.startsWith("OTP")) && after.steps.some((t) => t.startsWith("Faster sign-in")) && after.value.includes("Pilot · HA free"), JSON.stringify(after));
+  // Decode the QR back from a 160 px screenshot (the size on screen) — a phone-camera stand-in.
+  const { default: jsQR } = await import("jsqr"); const { PNG } = await import("pngjs");
+  const qrBox = await r.p.$("#rp-qr");
+  const shot = PNG.sync.read(await qrBox.screenshot({ path: path.join(SHOTS, "qr-160.png") }));
+  const decoded = jsQR(new Uint8ClampedArray(shot.data), shot.width, shot.height);
+  const qrSize = await r.p.evaluate(() => Math.round(document.getElementById("rp-qr").getBoundingClientRect().width));
+  check("P7", "QR at 160 px decodes back to the link shown, and that link plays the same story", qrSize === 160 && decoded && decoded.data === after.link && decodeStory(new URL(decoded.data).searchParams.get("play"))?.scenario === "pilot_ha_free",
+    decoded ? decoded.data : "not decoded");
+  await r.p.evaluate(() => { document.querySelector("details[data-row=story]").open = true; });
+  await r.p.screenshot({ path: path.join(SHOTS, "panel-1280-story.png") });
+  await r.p.evaluate(() => { document.querySelector("details[data-row=call]").open = true; });
+  await r.p.screenshot({ path: path.join(SHOTS, "panel-1280-call.png") });
+  check("P8", "panel at 1280: 0 console errors", r.errors.length === 0, r.errors.join(" | "));
+  await r.ctx.close();
+  // Phone drawer: handle centred vertically (not in the top 200 px); current screen's controls first, then Jump, Story, Restart;
+  // the drawer follows a transition.
+  const d = await open("?s=sign-in_default", { w: 390, h: 844 });
+  const hd = await d.p.evaluate(() => { const b = document.getElementById("drawer-handle").getBoundingClientRect(); return { top: b.top, mid: (b.top + b.bottom) / 2 }; });
+  const order = async () => d.p.evaluate(() => [...document.querySelectorAll("#rp-review > details, #rp-review > .rp-bar")].filter((x) => !x.hidden)
+    .map((x) => (x.dataset.row || "bar") + ":" + [...x.querySelectorAll("label")].filter((l) => !l.hidden).map((l) => l.querySelector("select").id.slice(3)).join("+")));
+  const o1 = await order();
+  await d.p.click("#drawer-handle"); await d.p.waitForTimeout(300);
+  await d.p.screenshot({ path: path.join(SHOTS, "drawer-390-sign-in.png") });
+  await d.p.mouse.click(200, 30); await d.p.waitForTimeout(300);
+  await d.p.evaluate(() => { document.getElementById("tm-login-mobile").value = ""; });
+  await d.p.fill("#tm-login-mobile", "9876543210"); await d.p.click(".login-submit"); await d.p.waitForTimeout(1800);
+  const o2 = await order();
+  await d.p.click("#drawer-handle"); await d.p.waitForTimeout(300);
+  await d.p.screenshot({ path: path.join(SHOTS, "drawer-390-otp.png") });
+  const testCard = await d.p.evaluate(() => getComputedStyle(document.getElementById("rp-phone")).display);
+  check("P9", "drawer (390): handle vertically centred; current screen's controls first, then Jump, Story, Restart; follows sign-in → OTP; no QR card on the phone",
+    hd.top > 200 && Math.abs(hd.mid - 422) < 2 && o1[0] === "entry:signIn" && o1.slice(1).map((x) => x.split(":")[0]).join(",") === "jump,story,bar" && o2[0] === "entry:otp" && testCard === "none",
+    JSON.stringify({ hd, o1, o2, testCard }));
+  check("P10", "drawer: 0 console errors", d.errors.length === 0, d.errors.join(" | "));
+  await d.ctx.close();
 }
 
 await browser.close();

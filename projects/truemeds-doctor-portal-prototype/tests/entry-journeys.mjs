@@ -121,6 +121,11 @@ const text = (p, sel) => p.evaluate((s) => document.querySelector(s)?.textConten
 const visible = (p, sel) => p.evaluate((s) => { const e = document.querySelector(s); return !!e && e.getClientRects().length > 0 && getComputedStyle(e).visibility !== "hidden"; }, sel);
 const ff = (p, ms) => p.evaluate((x) => window.__tm.clock.fastForward(x), ms);
 const setStory = (p, patch) => p.evaluate((x) => { const s = { ...window.__tm.store.get().story, ...x }; window.__tm.store.set({ story: s, offline: s.offline }); }, patch);
+// Panel rows fold (Part A item 2): open the row that holds a control before using it, as a reviewer would.
+async function choose(p, field, v) {
+  await p.evaluate((f) => { const el = document.getElementById("rp-" + f); const d = el && el.closest("details"); if (d) d.open = true; }, field);
+  await p.selectOption("#rp-" + field, v);
+}
 async function typeNumber(p, n) { await p.fill("#tm-login-mobile", ""); await p.type("#tm-login-mobile", n); }
 async function send(p, n) { await typeNumber(p, n); await p.click(".login-submit"); await p.waitForTimeout(ANSWER); }
 async function enterCode(p, code) { await p.focus("#c"); for (const d of code) await p.keyboard.press(d); }
@@ -545,11 +550,11 @@ async function returning(story = {}, n = "7012345620") {
 }
 
 { // F8: story start "unlock" and the panel applies to the running unlock (next prompt answer) — review mode
-  const r = await open(""); const p = r.p;
-  await p.selectOption("#rp-start", "unlock"); await p.selectOption("#rp-device", "face");
+  const r = await open("", { w: 1280, h: 800 }); const p = r.p;   // desktop review: every panel row is there
+  await choose(p, "start", "unlock"); await choose(p, "device", "face");
   await p.evaluate(() => document.getElementById("rp-restart").click()); await p.waitForTimeout(300);
   const st = await p.evaluate(() => ({ s: window.__tm.store.get().s, btn: document.getElementById("unlock-label").textContent }));
-  await p.selectOption("#rp-unlock", "unavailable");
+  await choose(p, "unlock", "unavailable");
   await p.click("#unlock-action"); await p.waitForTimeout(PROMPT);
   const un = await p.evaluate(() => !document.getElementById("unlock-notice").hidden);
   check("F8", "story start = returning unlock (Face ID phone); a panel change applies at the next prompt answer", st.s === "unlock_face" && st.btn === "Unlock with Face ID" && un, JSON.stringify({ st, un }));

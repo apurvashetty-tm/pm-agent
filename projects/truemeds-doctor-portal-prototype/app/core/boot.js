@@ -98,7 +98,8 @@ function renderScreen(id, params = {}) {
   }
   const r = renderState(host, id, { mode, w: store.get().w, params });
   store.set({ s: id, journey: r.journey });
-  if (panelRoot && r.journey) focusJourney(panelRoot, r.journey);
+  if (panelRoot) focusJourney(panelRoot, r.journey);   // drawer follows every transition (Part A item 4)
+  if (controls) controls.setCurrent(id === "placeholder" ? null : id);
 }
 const START_JOURNEY = { "sign-in": "signIn", unlock: "unlock", home: "home", case: "caseView" };
 setRenderer((screen, params) => renderScreen(params.s ?? null, params));
@@ -117,9 +118,10 @@ function restart(s) {
   logLine(panelRoot, `restart at ${s.start}`);
   start(null, startParams(null));
 }
+let controls = null;
 if (mode === "review" || mode === "play") {
   panelRoot.hidden = false;
-  const controls = mountPanel(panelRoot, {
+  controls = mountPanel(panelRoot, {
     story,
     stateIds: window.TM_STATE_MAP.pictures.map((r) => ({ id: r.id, step: r.step })),
     handlers: {
@@ -134,7 +136,7 @@ if (mode === "review" || mode === "play") {
       onReset: () => { storage.clear(); clock.reset(); pending = []; location.reload(); },
       onRestart: (s) => restart(s),
       onJump: (id) => { push("state", { s: id }); logLine(panelRoot, `jump to ${id}`); },
-      onPhone: (url) => logLine(panelRoot, `play link made (${url.length} chars)`),
+      onPhone: () => {},
     },
   });
   mountDrawer({ mode, panel: panelRoot, handle: document.getElementById("drawer-handle"), backdrop: document.getElementById("drawer-backdrop") });
