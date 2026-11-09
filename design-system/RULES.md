@@ -27,7 +27,7 @@ Link two files. Never copy values out of them.
 
 ## 2. Hard rules
 
-1. **No raw values.** No hex codes, no `rgb()`, no ad-hoc px for colour, radius, spacing or shadow in project code. If a value isn't a token, it isn't allowed.
+1. **No raw values.** No hex codes, no `rgb()`, no typed numbers for colour, spacing, radius, shadow, **sizes, border widths, timing, layering (z-index) or opacity** in component or project code (D-99). If a value isn't a token, it isn't allowed. Use a token by meaning, not by value (a 20px text line is `--tm-font-lineheight-sm`, not an icon size). The guard `python3 design-system/scripts/check_tokens.py` enforces this after every CSS edit and at every commit. Allowed exceptions carry a same-line `/* raw-ok: <reason> */` marker: geometry (`50%` centring, `100%`, `100vh`, `rotate(360deg)`, `line-height: 1`), optical nudges of 1–3px, the 31ch text measure, the hidden OTP input's 16px (stops iPhone zoom), reduced-motion `0.01ms`, `@media` widths, and prototype-only drawings (the drawn keyboard). Not scanned: `app/shell/`, `app/review/`, the mock Rx paper, `ui-screens/` reference files and the `[DEPRECATED]` legacy `.tm-otp` block.
 2. **Semantic tokens only.** Use `--tm-content-*`, `--tm-surface-*`, `--tm-border-*`, `--tm-feedback-*`, `--tm-space-*`, `--tm-radius-*`. Never use `--tm-core-*` (the raw palette) in a project.
 3. **One font:** Plus Jakarta Sans (comes with `truemeds.css`). No system-font stacks, no second typeface.
 4. **One icon set:** Tabler outline via `icons.js`. Icons are monochrome and inherit text colour (default `--tm-content-secondary` or `--tm-content-primary`). **No emoji in UI.** No illustrated, multicolour or 3D icons (no shading, gradients or rendered depth; a one-colour line drawing of an object at an angle, like the `tablet` glyph, is fine). Glyphs Tabler lacks are drawn on its grid in `scripts/build-icons.mjs`, marked [PROPOSED]. Product images are real photos (`.tm-thumb`), never illustrations.
@@ -79,7 +79,8 @@ For **portals, desktop and internal tools**, use the same tokens and components 
 
 Run before calling any UI task done. Every answer must be "yes".
 
-- [ ] Only `truemeds.css` tokens/components — no hex, no raw px for colour/radius/spacing/shadow?
+- [ ] Only `truemeds.css` tokens/components — no hex, no raw values for colour/spacing/radius/shadow/size/border width/timing/layering/opacity (`check_tokens.py` passes)?
+- [ ] Would the native app need a name for this value? If yes, it's a token.
 - [ ] Plus Jakarta Sans only?
 - [ ] All icons from `icons.js`, monochrome? Zero emoji?
 - [ ] Colour used only for state (brand = action/selection, green/amber/red = status)?

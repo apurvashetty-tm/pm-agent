@@ -81,6 +81,11 @@ check("U5", "play link: unreadable or unknown values decode to null", decodeStor
   check("S1", "state map: 149 pictures, one owner each, calling rows match data.js, no drift", /PASS/.test(out), out.split("\n").slice(-2).join(" "));
   const scan = execFileSync("node", [path.join(HERE, "scan.mjs")], { encoding: "utf8" });
   check("S2", "scan: no hard-coded time values, hex colours, emoji or phone-number patterns in app/", /PASS/.test(scan));
+  // D-99 / D-100: token guard over components.css and app/screens/*.css (raw-ok markers honoured)
+  let tok = { status: 0, out: "" };
+  try { tok.out = execFileSync("python3", [path.join(PROJECT, "../../design-system/scripts/check_tokens.py")], { encoding: "utf8", stdio: ["ignore", "pipe", "pipe"] }); }
+  catch (e) { tok = { status: e.status, out: String(e.stdout || "") + String(e.stderr || "") }; }
+  check("S3", "token guard: no raw design values in components.css or app/screens/*.css (check_tokens.py)", tok.status === 0, tok.status ? tok.out.trim().split("\n").slice(-3).join(" ") : "");
 }
 {
   // Deploy gate (plan §4, checklist 5.10): the same ignore rule as the root netlify.toml, tested both ways in a throwaway repo.

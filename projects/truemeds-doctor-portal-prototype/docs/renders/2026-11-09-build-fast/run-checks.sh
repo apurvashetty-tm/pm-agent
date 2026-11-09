@@ -16,6 +16,7 @@ kill $SRV
 run python3 ui-screens/feedback/check-locked-specs.py
 run node ui-screens/feedback/check-sources.mjs
 run python3 brand/check_lockup.py
+run python3 ../../design-system/scripts/check_tokens.py   # D-99 / D-100 token guard
 run node tests/scan.mjs
 run node scripts/check-state-map.mjs
 run node tests/compare-step1.mjs
