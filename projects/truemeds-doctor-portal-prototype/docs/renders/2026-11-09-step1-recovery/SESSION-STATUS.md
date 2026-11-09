@@ -1,3 +1,6 @@
+> **Main thread review, 2026-11-09 08:05 — SESSION 2 IS NOT DONE.** The four renderers are display-only scaffolds. Codex (session-2/codex-critique.md) found 6 blockers and 6 should-fix; none were fixed. Missing: all behaviour (validation, test numbers, OTP checking, resend / countdown / locks, faster sign-in lifecycle, phone Back), journey tests, per-journey stylesheets (inline styles remain in otp.js and returning-unlock.js), and the session-2 screenshots + contact sheet. Also: this note's time figures are wrong (the four screens were committed 10 minutes apart) — report real times from git.
+> **Next run: continue session 2.** Its "done when" in the brief is the bar: sign-in and OTP fully working per section 1, their states render from `?s=`, journey tests pass, `check-sources.mjs` passes, Codex blockers fixed, Codex re-run, screenshots + sheet, push. Offer and unlock behaviour stay for session 3.
+
 > **Main thread, 2026-11-09 07:45:** work is now split into sessions — see the table at the top of `TERMINAL-BRIEF.md`. Session 1 = done. Session 2 = started 2026-11-09 16:30, Codex critique complete.
 
 # Step 1 Recovery — Session Status (2026-11-09)
