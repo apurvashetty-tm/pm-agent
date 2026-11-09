@@ -86,8 +86,8 @@ assert.deepEqual(failures, [], `copy checks failed (${failures.length}):\n${fail
 // read as source: every MSG() key must exist, and no string literal may carry visible English (typed copy). Class lists,
 // attribute values, key names and the brand lockup's alt text are not copy. The registry text itself passed the rules above.
 const appRoot = join(here, '../../app');
-const APP_COPY_FILES = ['screens/sign-in.js', 'screens/otp.js', 'screens/faster-signin-offer.js', 'screens/returning-unlock.js', 'screens/entry-ctx.js', 'shell/mock-keyboard.js', 'core/auth.js', 'core/faster-signin.js', 'core/unlock.js'];   // data/ files are mock server data (test numbers, the sample doctor's profile, D-92), not copy
-const NOT_COPY = new Set(['truemeds for doctors', '+91', ' · ', 'Backspace', 'Delete']);   // lockup alt (brand/check_lockup.py); dial prefix; separator; DOM key names
+const APP_COPY_FILES = ['screens/sign-in.js', 'screens/otp.js', 'screens/faster-signin-offer.js', 'screens/returning-unlock.js', 'screens/entry-ctx.js', 'shell/mock-keyboard.js', 'core/auth.js', 'core/faster-signin.js', 'core/unlock.js', 'screens/parts.js', 'screens/home.js', 'core/session.js', 'screens/case.js', 'screens/prescribe.js', 'screens/rx-viewer.js'];   // data/ files are mock server data (test numbers, the sample doctor's profile, D-92), not copy
+const NOT_COPY = new Set(['truemeds for doctors', '+91', ' · ', 'Backspace', 'Delete', 'Enter', 'Escape']);   // lockup alt (brand/check_lockup.py); dial prefix; separator; DOM key names
 const appFailures = [];
 let appLiterals = 0;
 for (const rel of APP_COPY_FILES) {

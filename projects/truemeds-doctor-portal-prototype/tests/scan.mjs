@@ -6,7 +6,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../app");
-const SKIP = [/shell\/mock-keyboard\.css$/, /design-system/, /feedback/, /pictures/, /icons/, /vendor/, /state-map\.js$/, /core\/settings\.js$/, /data\/test-numbers\.js$/, /data\/scenarios\.js$/];
+const SKIP = [/shell\/mock-keyboard\.css$/, /screens\/rx-paper\.css$/, /design-system/, /feedback/, /pictures/, /icons/, /vendor/, /state-map\.js$/, /core\/settings\.js$/, /data\/test-numbers\.js$/, /data\/scenarios\.js$/];
 const fails = [];
 function walk(dir, out = []) {
   for (const f of fs.readdirSync(dir)) {

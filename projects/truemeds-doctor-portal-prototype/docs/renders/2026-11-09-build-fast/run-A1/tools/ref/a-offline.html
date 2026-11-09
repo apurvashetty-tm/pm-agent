@@ -1,0 +1,114 @@
+<body class="tm" data-app="case" data-ready="1">
+<div id="layout-wrapper">
+  <!-- ============================================================
+       DESKTOP SIDE PANEL — visible on wide screens only
+  ============================================================ -->
+  <!-- DESKTOP APP PANEL (left of the frame) — demo controls for sign-in, home and "orders available" -->
+  <!-- /desktop-side-panel -->
+  <!-- ============================================================
+       MOBILE COLUMN
+  ============================================================ -->
+  <div id="mobile-column">
+    <!-- STICKY TOP WRAPPER — portal header + demo bar + compact strip -->
+    <div id="sticky-top-wrapper"><header id="case-head" class="tm-header-task--compact"><div class="tm-header-task__row"><button class="tm-btn tm-btn--quiet tm-btn--icon" id="ch-back" type="button" aria-label="Back"><span class="tm-icon" data-icon="arrow-left" aria-hidden="true"></span></button><h1 class="tm-header-task__title" id="ch-name">Ramesh Gupta</h1><button class="tm-btn tm-btn--quiet tm-btn--icon" id="ch-help" type="button" aria-label="Help"><span class="tm-icon" data-icon="help-circle" aria-hidden="true"></span></button></div><p class="tm-header-task__meta" id="ch-meta1">54 · Male</p><p class="tm-header-task__meta" id="ch-meta2">Order TM-ORD-20240812 · ₹1,240</p></header>
+      <!-- PORTAL HEADER — always visible -->
+      <!-- DEMO BAR — [MOCK ASSUMPTION] dev-only -->
+      <!-- COMPACT STRIP — hidden until patient block scrolls out of view -->
+    </div><!-- /sticky-top-wrapper -->
+    <!-- ============================================================
+         APP SCREENS — sign in, OTP, returning-doctor unlock, home (D-31, D-33 … D-37).
+         Sign in, OTP and unlock follow the approved screens in ui-screens/ (sign-in, otp, returning-unlock).
+         One screen shows at a time, chosen by body[data-app] (goApp in app.js). The order page is #main-scroll.
+    ============================================================ -->
+    <!-- MAIN SCROLL -->
+    <div id="main-scroll"><div id="case-tools" class="tm-card"><div class="ct-row"><button class="ct-details" id="ct-details" type="button" aria-expanded="false"><span>Order details</span><span class="tm-icon" data-icon="info-circle" aria-hidden="true"></span></button><span id="ct-actions"><button id="pdb-view-rx-btn" class="tm-btn tm-btn--secondary" onclick="openRxOverlay()"><span class="tm-icon tm-icon--16" data-icon="clipboard-text"></span>View Rx</button></span></div></div>
+      <!-- 1. Patient Detail Block — non-sticky, no badge row -->
+      <!-- 2. Medicines to Validate -->
+      <div id="medicines-section">
+        <div id="medicines-header">
+          <h2 class="tm-section-title section-title--inline">Medicines to prescribe</h2>
+          <span id="medicines-count">5 medicines</span>
+        </div>
+        <div id="medicines-list"><div class="tm-row medicine-item" role="button" tabindex="0" aria-label="Edit Metformin" data-med-id="1">
+      <div class="tm-thumb med-icon"><span class="tm-icon tm-icon--24"></span></div>
+      <div class="tm-row__main med-info">
+        <div class="tm-row__title med-name">Metformin 500mg</div>
+        <div class="tm-row__line"><span class="tm-row__fact">Qty 60</span><span class="tm-tag tm-tag--md tm-tag--success tm-tag--fixed">Prescribed</span></div>
+      </div>
+      <span class="tm-icon tm-icon--16"></span>
+    </div><div class="tm-row medicine-item" role="button" tabindex="0" aria-label="Edit Amlodipine" data-med-id="2">
+      <div class="tm-thumb med-icon"><span class="tm-icon tm-icon--24"></span></div>
+      <div class="tm-row__main med-info">
+        <div class="tm-row__title med-name">Amlodipine 5mg</div>
+        <div class="tm-row__line"><span class="tm-row__fact">Qty 30</span><span class="tm-tag tm-tag--md tm-tag--warning tm-tag--fixed">Pending</span></div>
+      </div>
+      <span class="tm-icon tm-icon--16"></span>
+    </div><div class="tm-row medicine-item" role="button" tabindex="0" aria-label="Edit Atorvastatin" data-med-id="3">
+      <div class="tm-thumb med-icon"><span class="tm-icon tm-icon--24"></span></div>
+      <div class="tm-row__main med-info">
+        <div class="tm-row__title med-name">Atorvastatin 10mg</div>
+        <div class="tm-row__line"><span class="tm-row__fact">Qty 30</span><span class="tm-tag tm-tag--md tm-tag--warning tm-tag--fixed">Pending</span></div>
+      </div>
+      <span class="tm-icon tm-icon--16"></span>
+    </div><div class="tm-row medicine-item" role="button" tabindex="0" aria-label="Edit Vitamin B12" data-med-id="4">
+      <div class="tm-thumb med-icon"><span class="tm-icon tm-icon--24"></span></div>
+      <div class="tm-row__main med-info">
+        <div class="tm-row__title med-name">Vitamin B12 1000mcg</div>
+        <div class="tm-row__line"><span class="tm-row__fact">Qty 4</span><span class="tm-tag tm-tag--md tm-tag--warning tm-tag--fixed">Pending</span></div>
+      </div>
+      <span class="tm-icon tm-icon--16"></span>
+    </div><div class="tm-row medicine-item" role="button" tabindex="0" aria-label="Edit Antacid Suspension" data-med-id="5">
+      <div class="tm-thumb med-icon"><span class="tm-icon tm-icon--24"></span></div>
+      <div class="tm-row__main med-info">
+        <div class="tm-row__title med-name">Antacid Suspension 10ml</div>
+        <div class="tm-row__line"><span class="tm-row__fact">Qty 1</span><span class="tm-tag tm-tag--md tm-tag--warning tm-tag--fixed">Pending</span></div>
+      </div>
+      <span class="tm-icon tm-icon--16"></span>
+    </div></div>
+      </div>
+      <!-- 3. Notes + Symptoms — [OPEN DECISION] OQ-006 -->
+      <div id="notes-section">
+        <h2 class="tm-section-title">Notes &amp; symptoms</h2>
+        <div class="tm-field">
+          <label class="tm-field__label" for="symptoms-input">Chief complaints / symptoms</label>
+          <div class="tm-field__control"><textarea id="symptoms-input" placeholder="e.g., Fever since 2 days, sore throat, mild cough…" rows="3"></textarea></div>
+        </div>
+        <div class="tm-field">
+          <label class="tm-field__label" for="doctor-notes-input">Doctor notes</label>
+          <div class="tm-field__control"><textarea id="doctor-notes-input" placeholder="Clinical observations, instructions, internal notes…" rows="3"></textarea></div>
+        </div>
+      </div>
+      <!-- 4. Action Zone — merged call + post-call -->
+      <!-- /action-zone -->
+    </div><!-- /main-scroll -->
+    <!-- CASE ACTION BAR — the one main action, pinned to the bottom (agreed 2026-10-08, decision log D-22).
+         Call Patient / Calling… / End Call / Call Again before the gate; Confirm Order / Transfer / Forward after it.
+         Secondary actions sit in the same bar (D-28); the Call card keeps only status and the script. -->
+    <div id="case-actionbar" class="tm-actionbar"><div class="tm-notice tm-notice--warning concept-new" role="status"><span class="tm-icon" data-icon="alert-triangle" aria-hidden="true"></span><span>You’re offline. Reconnect to call or confirm.</span></div>
+      <!-- Secondary call actions, pinned above the main one (D-28): nothing the doctor can do needs a scroll -->
+      <button id="call-initiate-btn" class="tm-btn tm-btn--lg tm-btn--primary tm-btn--block" onclick="handleCallAction()">
+        <span id="call-btn-icon" class="tm-icon" data-icon="phone"></span>
+        <span id="call-btn-label">Call patient</span>
+      </button>
+    </div>
+<!-- ============================================================
+     RX FULL-SCREEN OVERLAY (dark viewer — intentional for doc readability)
+============================================================ -->
+<!-- ============================================================
+     PRESCRIBE SCREEN — full-screen view over the case (like the Rx viewer), inside the phone frame.
+     Agreed 2026-10-07: every section open with backend defaults. Prescribe is pinned to the bottom and always active (D-22, which replaced "Prescribe at the end, not pinned");
+     Disable is a small action in the app bar. The "On prescription" line is pinned under the app bar (D-25); the sections above the note are rendered by app.js.
+============================================================ -->
+<!-- ============================================================
+     BOTTOM SHEETS
+============================================================ -->
+<!-- /sheet-overlay -->
+<!-- TOAST -->
+<!-- COMPLETED OVERLAY -->
+<!-- Success toast — non-blocking completion confirmation with Next Order fallback -->
+  </div><!-- /mobile-column (phone frame: overlays live inside it) -->
+</div><!-- /layout-wrapper -->
+<!-- ============================================================
+     JAVASCRIPT
+============================================================ -->
+</body>

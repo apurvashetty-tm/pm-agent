@@ -1,0 +1,4 @@
+PASS A-SOS-d-sos-only SOS total dose and unit: tablet
+PASS A-SOS-d-inhaler SOS total dose and unit: puffs
+PASS A-SOS-d-cream SOS total dose and unit: times
+3/3 passed

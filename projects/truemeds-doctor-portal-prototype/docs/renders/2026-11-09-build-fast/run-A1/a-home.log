@@ -1,0 +1,127 @@
+FAIL A-H01 availability starts only on confirmation, then requests a case
+  source: ui-screens/app-logic.md:64-66
+  AssertionError [ERR_ASSERTION]: Visible CTA Call patient
+    at Driver.buttons (file:///Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype/tests/codex/run-A/harness.mjs:79:33)
+    at async Object.test (file:///Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype/tests/codex/run-A/journeys.mjs:8:54)
+    at async run (file:///Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype/tests/codex/run-A/harness.mjs:103:73)
+    at async file:///Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype/tests/codex/run-A/all.mjs:6:1
+FAIL A-H02 request failure stays on Home and retry succeeds
+  source: ui-screens/app-logic.md:66-73
+  AssertionError [ERR_ASSERTION]: Visible CTA Call patient
+    at Driver.buttons (file:///Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype/tests/codex/run-A/harness.mjs:79:33)
+    at async Object.test (file:///Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype/tests/codex/run-A/journeys.mjs:12:93)
+    at async run (file:///Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype/tests/codex/run-A/harness.mjs:103:73)
+    at async file:///Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype/tests/codex/run-A/all.mjs:6:1
+PASS A-H03 no cases preserves availability and allows manual retry
+PASS A-H04 Home offline blocks request and End availability
+PASS A-H05 near expiry adds selected time and dismisses sheet
+PASS A-H06 failed add retains duration; closing does not add time
+PASS A-H07 cancel end keeps availability; confirm end returns to setup
+FAIL A-H08 pending request honoured after availability ends
+  source: ui-screens/app-logic.md:66,68-69
+  AssertionError [ERR_ASSERTION]: Visible CTA Call patient
+    at Driver.buttons (file:///Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype/tests/codex/run-A/harness.mjs:79:33)
+    at async Object.test (file:///Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype/tests/codex/run-A/journeys.mjs:39:84)
+    at async run (file:///Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype/tests/codex/run-A/harness.mjs:103:73)
+    at async file:///Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype/tests/codex/run-A/all.mjs:6:1
+PASS A-H09 idle timer expiry keeps prescription count and setup
+PASS A-H10 Profile logout cancelled then confirmed returns to sign-in
+FAIL A-HOLD-no-answer patient failure closes and applies hold policy: no-answer
+  source: ui-screens/app-logic.md:122,207
+  AssertionError [ERR_ASSERTION]: Exactly one visible app button: Call patient
+
+0 !== 1
+
+    at Driver.click (file:///Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype/tests/codex/run-A/harness.mjs:59:59)
+    at async Object.test (file:///Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype/tests/codex/run-A/journeys.mjs:148:44)
+    at async run (file:///Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype/tests/codex/run-A/harness.mjs:103:73)
+    at async file:///Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype/tests/codex/run-A/all.mjs:6:1
+FAIL A-HOLD-busy patient failure closes and applies hold policy: busy
+  source: ui-screens/app-logic.md:122,207
+  AssertionError [ERR_ASSERTION]: Exactly one visible app button: Call patient
+
+0 !== 1
+
+    at Driver.click (file:///Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype/tests/codex/run-A/harness.mjs:59:59)
+    at async Object.test (file:///Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype/tests/codex/run-A/journeys.mjs:148:44)
+    at async run (file:///Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype/tests/codex/run-A/harness.mjs:103:73)
+    at async file:///Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype/tests/codex/run-A/all.mjs:6:1
+FAIL A-HOLD-rejected patient failure closes and applies hold policy: rejected
+  source: ui-screens/app-logic.md:122,207
+  locator.selectOption: Timeout 2500ms exceeded.
+Call log:
+[2m  - waiting for locator('#rp-patientFailure')[22m
+[2m    - locator resolved to <select id="rp-patientFailure" data-field="patientFailure">…</select>[22m
+[2m  - attempting select option action[22m
+[2m    2 × waiting for element to be visible and enabled[22m
+[2m      - did not find some options[22m
+[2m    - retrying select option action[22m
+[2m    - waiting 20ms[22m
+[2m    2 × waiting for element to be visible and enabled[22m
+[2m      - did not find some options[22m
+[2m    - retrying select option action[22m
+[2m      - waiting 100ms[22m
+[2m    5 × waiting for element to be visible and enabled[22m
+[2m      - did not find some options[22m
+[2m    - retrying select option action[22m
+[2m      - waiting 500ms[22m
+
+    at Driver.choose (/Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype/tests/codex/run-A/harness.mjs:65:13)
+    at async Object.test (/Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype/tests/codex/run-A/journeys.mjs:148:3)
+    at async run (/Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype/tests/codex/run-A/harness.mjs:103:73)
+    at async file:///Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype/tests/codex/run-A/all.mjs:6:1
+FAIL A-HOLD-switched-off patient failure closes and applies hold policy: switched-off
+  source: ui-screens/app-logic.md:122,207
+  AssertionError [ERR_ASSERTION]: Exactly one visible app button: Call patient
+
+0 !== 1
+
+    at Driver.click (file:///Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype/tests/codex/run-A/harness.mjs:59:59)
+    at async Object.test (file:///Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype/tests/codex/run-A/journeys.mjs:148:44)
+    at async run (file:///Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype/tests/codex/run-A/harness.mjs:103:73)
+    at async file:///Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype/tests/codex/run-A/all.mjs:6:1
+FAIL A-HOLD-unreachable patient failure closes and applies hold policy: unreachable
+  source: ui-screens/app-logic.md:122,207
+  locator.selectOption: Timeout 2500ms exceeded.
+Call log:
+[2m  - waiting for locator('#rp-patientFailure')[22m
+[2m    - locator resolved to <select id="rp-patientFailure" data-field="patientFailure">…</select>[22m
+[2m  - attempting select option action[22m
+[2m    2 × waiting for element to be visible and enabled[22m
+[2m      - did not find some options[22m
+[2m    - retrying select option action[22m
+[2m    - waiting 20ms[22m
+[2m    2 × waiting for element to be visible and enabled[22m
+[2m      - did not find some options[22m
+[2m    - retrying select option action[22m
+[2m      - waiting 100ms[22m
+[2m    5 × waiting for element to be visible and enabled[22m
+[2m      - did not find some options[22m
+[2m    - retrying select option action[22m
+[2m      - waiting 500ms[22m
+
+    at Driver.choose (/Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype/tests/codex/run-A/harness.mjs:65:13)
+    at async Object.test (/Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype/tests/codex/run-A/journeys.mjs:148:3)
+    at async run (/Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype/tests/codex/run-A/harness.mjs:103:73)
+    at async file:///Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype/tests/codex/run-A/all.mjs:6:1
+FAIL A-HOLD-invalid-number patient failure closes and applies hold policy: invalid-number
+  source: ui-screens/app-logic.md:122,207
+  AssertionError [ERR_ASSERTION]: Exactly one visible app button: Call patient
+
+0 !== 1
+
+    at Driver.click (file:///Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype/tests/codex/run-A/harness.mjs:59:59)
+    at async Object.test (file:///Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype/tests/codex/run-A/journeys.mjs:148:44)
+    at async run (file:///Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype/tests/codex/run-A/harness.mjs:103:73)
+    at async file:///Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype/tests/codex/run-A/all.mjs:6:1
+FAIL A-HOLD-unknown patient failure closes and applies hold policy: unknown
+  source: ui-screens/app-logic.md:122,207
+  AssertionError [ERR_ASSERTION]: Exactly one visible app button: Call patient
+
+0 !== 1
+
+    at Driver.click (file:///Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype/tests/codex/run-A/harness.mjs:59:59)
+    at async Object.test (file:///Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype/tests/codex/run-A/journeys.mjs:148:44)
+    at async run (file:///Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype/tests/codex/run-A/harness.mjs:103:73)
+    at async file:///Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype/tests/codex/run-A/all.mjs:6:1
+7/17 passed

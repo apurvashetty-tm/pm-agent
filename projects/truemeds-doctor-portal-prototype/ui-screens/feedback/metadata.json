@@ -1296,5 +1296,1895 @@
     "clear": "—",
     "retain": "—",
     "copy": "approved picture label (plan B6, step 1 recovery 2026-11-09)"
+  },
+  "common.back": {
+    "pattern": "none",
+    "trigger": "Home screen label",
+    "slot": "Home label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "common.close": {
+    "pattern": "none",
+    "trigger": "Home screen label",
+    "slot": "Home label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "common.help": {
+    "pattern": "none",
+    "trigger": "Home screen label",
+    "slot": "Home label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "common.tryAgain": {
+    "pattern": "none",
+    "trigger": "Home screen label",
+    "slot": "Home label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "home.notifications": {
+    "pattern": "none",
+    "trigger": "Home screen label",
+    "slot": "Home label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "home.profile": {
+    "pattern": "none",
+    "trigger": "Home screen label",
+    "slot": "Home label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "home.titleSetup": {
+    "pattern": "none",
+    "trigger": "Home screen label",
+    "slot": "Home label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "home.subSetup": {
+    "pattern": "none",
+    "trigger": "Home screen label",
+    "slot": "Home label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "home.titleActive": {
+    "pattern": "none",
+    "trigger": "Home screen label",
+    "slot": "Home label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "home.subActive": {
+    "pattern": "none",
+    "trigger": "Home screen label",
+    "slot": "Home label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "home.titleEnded": {
+    "pattern": "none",
+    "trigger": "Home screen label",
+    "slot": "Home label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "home.titleStopping": {
+    "pattern": "none",
+    "trigger": "Home screen label",
+    "slot": "Home label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "home.subNoNewCases": {
+    "pattern": "none",
+    "trigger": "Home screen label",
+    "slot": "Home label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "home.rxToday": {
+    "pattern": "none",
+    "trigger": "Home screen label",
+    "slot": "Home label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "home.timeRemaining": {
+    "pattern": "none",
+    "trigger": "Home screen label",
+    "slot": "Home label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "home.addTime": {
+    "pattern": "none",
+    "trigger": "Home screen label",
+    "slot": "Home label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "home.adjust": {
+    "pattern": "none",
+    "trigger": "Home screen label",
+    "slot": "Home label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "home.minimum": {
+    "pattern": "none",
+    "trigger": "Home screen label",
+    "slot": "Home label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "home.hours": {
+    "pattern": "none",
+    "trigger": "Home screen label",
+    "slot": "Home label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "home.minutes": {
+    "pattern": "none",
+    "trigger": "Home screen label",
+    "slot": "Home label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "home.presetMinutes": {
+    "pattern": "none",
+    "trigger": "Home screen label",
+    "slot": "Home label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)",
+    "placeholders": [
+      "n"
+    ]
+  },
+  "home.presetHour": {
+    "pattern": "none",
+    "trigger": "Home screen label",
+    "slot": "Home label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "home.presetHours": {
+    "pattern": "none",
+    "trigger": "Home screen label",
+    "slot": "Home label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)",
+    "placeholders": [
+      "n"
+    ]
+  },
+  "home.setAvailability": {
+    "pattern": "none",
+    "trigger": "Home screen label",
+    "slot": "Home label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "home.setting": {
+    "pattern": "none",
+    "trigger": "Home screen label",
+    "slot": "Home label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "home.requestCase": {
+    "pattern": "none",
+    "trigger": "Home screen label",
+    "slot": "Home label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "home.requesting": {
+    "pattern": "none",
+    "trigger": "Home screen label",
+    "slot": "Home label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "home.endAvailability": {
+    "pattern": "none",
+    "trigger": "Home screen label",
+    "slot": "Home label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "home.ending": {
+    "pattern": "none",
+    "trigger": "Home screen label",
+    "slot": "Home label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "home.addTitle": {
+    "pattern": "none",
+    "trigger": "Home screen label",
+    "slot": "Home label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "home.addSub": {
+    "pattern": "none",
+    "trigger": "Home screen label",
+    "slot": "Home label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "home.addConfirm": {
+    "pattern": "none",
+    "trigger": "Home screen label",
+    "slot": "Home label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)",
+    "placeholders": [
+      "n"
+    ]
+  },
+  "home.adding": {
+    "pattern": "none",
+    "trigger": "Home screen label",
+    "slot": "Home label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "home.cancel": {
+    "pattern": "none",
+    "trigger": "Home screen label",
+    "slot": "Home label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "home.endTitle": {
+    "pattern": "none",
+    "trigger": "Home screen label",
+    "slot": "Home label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "home.endSub": {
+    "pattern": "none",
+    "trigger": "Home screen label",
+    "slot": "Home label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "home.keepAvailable": {
+    "pattern": "none",
+    "trigger": "Home screen label",
+    "slot": "Home label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "profile.title": {
+    "pattern": "none",
+    "trigger": "Profile screen label",
+    "slot": "Profile label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "profile.doctorName": {
+    "pattern": "none",
+    "trigger": "Profile screen label",
+    "slot": "Profile label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)",
+    "placeholders": [
+      "name"
+    ]
+  },
+  "profile.earnings": {
+    "pattern": "none",
+    "trigger": "Profile screen label",
+    "slot": "Profile label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "profile.earned": {
+    "pattern": "none",
+    "trigger": "Profile screen label",
+    "slot": "Profile label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "profile.incentive": {
+    "pattern": "none",
+    "trigger": "Profile screen label",
+    "slot": "Profile label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "profile.amount": {
+    "pattern": "none",
+    "trigger": "Profile screen label",
+    "slot": "Profile label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)",
+    "placeholders": [
+      "amount"
+    ]
+  },
+  "profile.userManual": {
+    "pattern": "none",
+    "trigger": "Profile screen label",
+    "slot": "Profile label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "profile.fasterSignIn": {
+    "pattern": "none",
+    "trigger": "Profile screen label",
+    "slot": "Profile label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "profile.logout": {
+    "pattern": "none",
+    "trigger": "Profile screen label",
+    "slot": "Profile label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "profile.logoutTitle": {
+    "pattern": "none",
+    "trigger": "Profile screen label",
+    "slot": "Profile label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "profile.staySignedIn": {
+    "pattern": "none",
+    "trigger": "Profile screen label",
+    "slot": "Profile label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "case.patientMeta": {
+    "pattern": "none",
+    "trigger": "Case page screen label",
+    "slot": "case page label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)",
+    "placeholders": [
+      "age",
+      "gender"
+    ]
+  },
+  "case.orderMeta": {
+    "pattern": "none",
+    "trigger": "Case page screen label",
+    "slot": "case page label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)",
+    "placeholders": [
+      "id",
+      "total"
+    ]
+  },
+  "case.orderDetails": {
+    "pattern": "none",
+    "trigger": "Case page screen label",
+    "slot": "case page label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "case.viewRx": {
+    "pattern": "none",
+    "trigger": "Case page screen label",
+    "slot": "case page label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "case.orderCreated": {
+    "pattern": "none",
+    "trigger": "Case page screen label",
+    "slot": "case page label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "case.expectedDelivery": {
+    "pattern": "none",
+    "trigger": "Case page screen label",
+    "slot": "case page label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "case.payment": {
+    "pattern": "none",
+    "trigger": "Case page screen label",
+    "slot": "case page label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "case.medicinesTitle": {
+    "pattern": "none",
+    "trigger": "Case page screen label",
+    "slot": "case page label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "case.medicinesCount": {
+    "pattern": "none",
+    "trigger": "Case page screen label",
+    "slot": "case page label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)",
+    "placeholders": [
+      "n"
+    ]
+  },
+  "case.medicinesCountOne": {
+    "pattern": "none",
+    "trigger": "Case page screen label",
+    "slot": "case page label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "case.qty": {
+    "pattern": "none",
+    "trigger": "Case page screen label",
+    "slot": "case page label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)",
+    "placeholders": [
+      "n"
+    ]
+  },
+  "case.statusPrescribed": {
+    "pattern": "none",
+    "trigger": "Case page screen label",
+    "slot": "case page label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "case.statusPending": {
+    "pattern": "none",
+    "trigger": "Case page screen label",
+    "slot": "case page label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "case.statusDisabled": {
+    "pattern": "none",
+    "trigger": "Case page screen label",
+    "slot": "case page label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "case.editMedicine": {
+    "pattern": "none",
+    "trigger": "Case page screen label",
+    "slot": "case page label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)",
+    "placeholders": [
+      "name"
+    ]
+  },
+  "case.notesTitle": {
+    "pattern": "none",
+    "trigger": "Case page screen label",
+    "slot": "case page label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "case.symptomsLabel": {
+    "pattern": "none",
+    "trigger": "Case page screen label",
+    "slot": "case page label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "case.symptomsPlaceholder": {
+    "pattern": "none",
+    "trigger": "Case page screen label",
+    "slot": "case page label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "case.doctorNotesLabel": {
+    "pattern": "none",
+    "trigger": "Case page screen label",
+    "slot": "case page label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "case.doctorNotesPlaceholder": {
+    "pattern": "none",
+    "trigger": "Case page screen label",
+    "slot": "case page label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "case.callPatient": {
+    "pattern": "none",
+    "trigger": "Case page screen label",
+    "slot": "case page label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "case.releaseCase": {
+    "pattern": "none",
+    "trigger": "Case page screen label",
+    "slot": "case page label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "case.releasing": {
+    "pattern": "none",
+    "trigger": "Case page screen label",
+    "slot": "case page label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "case.leaveTitle": {
+    "pattern": "none",
+    "trigger": "Case page screen label",
+    "slot": "case page label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "case.leaveSub": {
+    "pattern": "none",
+    "trigger": "Case page screen label",
+    "slot": "case page label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "case.stay": {
+    "pattern": "none",
+    "trigger": "Case page screen label",
+    "slot": "case page label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "case.loadingLabel": {
+    "pattern": "none",
+    "trigger": "Case page screen label",
+    "slot": "case page label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "case.backBlocked": {
+    "pattern": "none",
+    "trigger": "Case page screen label",
+    "slot": "case page label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "case.scriptTitle": {
+    "pattern": "none",
+    "trigger": "Case page screen label",
+    "slot": "case page label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "call.calling": {
+    "pattern": "none",
+    "trigger": "Case page screen label",
+    "slot": "case page label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)",
+    "placeholders": [
+      "name"
+    ]
+  },
+  "case.confirmPrescription": {
+    "pattern": "none",
+    "trigger": "Case page screen label",
+    "slot": "case page label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "case.requestNext": {
+    "pattern": "none",
+    "trigger": "Case page screen label",
+    "slot": "case page label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "case.backToHome": {
+    "pattern": "none",
+    "trigger": "Case page screen label",
+    "slot": "case page label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "case.confirmedTitle": {
+    "pattern": "none",
+    "trigger": "Case page screen label",
+    "slot": "case page label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "rx.title": {
+    "pattern": "none",
+    "trigger": "Case page screen label",
+    "slot": "case page label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "rx.zoomOut": {
+    "pattern": "none",
+    "trigger": "Case page screen label",
+    "slot": "case page label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "rx.zoomIn": {
+    "pattern": "none",
+    "trigger": "Case page screen label",
+    "slot": "case page label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "rx.rotate": {
+    "pattern": "none",
+    "trigger": "Case page screen label",
+    "slot": "case page label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "rx.reset": {
+    "pattern": "none",
+    "trigger": "Case page screen label",
+    "slot": "case page label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "rx.hint": {
+    "pattern": "none",
+    "trigger": "Case page screen label",
+    "slot": "case page label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "rx.zoom": {
+    "pattern": "none",
+    "trigger": "Case page screen label",
+    "slot": "case page label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)",
+    "placeholders": [
+      "n"
+    ]
+  },
+  "prescribe.disable": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "Prescribe label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "prescribe.onPrescription": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "Prescribe label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "prescribe.howOften": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "Prescribe label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "prescribe.daily": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "Prescribe label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "prescribe.everyXHours": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "Prescribe label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "prescribe.altDays": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "Prescribe label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "prescribe.weekly": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "Prescribe label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "prescribe.monthly": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "Prescribe label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "prescribe.sosOnly": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "Prescribe label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "prescribe.dose": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "Prescribe label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "prescribe.unitHint": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "Prescribe label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)",
+    "placeholders": [
+      "unit"
+    ]
+  },
+  "prescribe.doseUnits": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "Prescribe label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "prescribe.doseIn": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "Prescribe label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)",
+    "placeholders": [
+      "unit"
+    ]
+  },
+  "prescribe.other": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "Prescribe label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "prescribe.otherPlaceholder": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "Prescribe label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "prescribe.morning": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "Prescribe label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "prescribe.afternoon": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "Prescribe label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "prescribe.night": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "Prescribe label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "prescribe.keyMorning": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "Prescribe label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "prescribe.keyAfternoon": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "Prescribe label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "prescribe.keyNight": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "Prescribe label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "prescribe.slotNone": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "Prescribe label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "prescribe.slotAria": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "Prescribe label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)",
+    "placeholders": [
+      "dose",
+      "slot"
+    ]
+  },
+  "prescribe.none": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "Prescribe label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "prescribe.apply": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "Prescribe label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "prescribe.every": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "Prescribe label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "prescribe.hoursChip": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "Prescribe label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)",
+    "placeholders": [
+      "n"
+    ]
+  },
+  "prescribe.hoursAria": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "Prescribe label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)",
+    "placeholders": [
+      "n"
+    ]
+  },
+  "prescribe.timesADay": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "Prescribe label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)",
+    "placeholders": [
+      "n"
+    ]
+  },
+  "prescribe.maxDoses": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "Prescribe label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "prescribe.alsoSos": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "Prescribe label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "prescribe.sosHelp": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "Prescribe label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "prescribe.maxExtra": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "Prescribe label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "prescribe.duration": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "Prescribe label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "prescribe.default": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "Prescribe label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "prescribe.changed": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "Prescribe label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "prescribe.ongoing": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "Prescribe label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "prescribe.ongoingValue": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "Prescribe label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)",
+    "placeholders": [
+      "period"
+    ]
+  },
+  "prescribe.ongoingAria": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "Prescribe label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)",
+    "placeholders": [
+      "period"
+    ]
+  },
+  "prescribe.days": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "Prescribe label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "prescribe.weeks": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "Prescribe label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "prescribe.months": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "Prescribe label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "prescribe.durationNumber": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "Prescribe label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "prescribe.durationUnit": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "Prescribe label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "prescribe.food": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "Prescribe label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "prescribe.optional": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "Prescribe label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "prescribe.afterFood": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "Prescribe label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "prescribe.beforeFood": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "Prescribe label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "prescribe.emptyStomach": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "Prescribe label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "prescribe.notesPlaceholder": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "Prescribe label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "prescribe.prescribe": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "Prescribe label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "prescribe.doseError": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "Prescribe label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "prescribe.otherEmpty": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "Prescribe label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)",
+    "placeholders": [
+      "unit"
+    ]
+  },
+  "prescribe.otherInvalid": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "Prescribe label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)",
+    "placeholders": [
+      "unit"
+    ]
+  },
+  "prescribe.disableTitle": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "Prescribe label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)",
+    "placeholders": [
+      "name"
+    ]
+  },
+  "prescribe.disableSub": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "Prescribe label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "prescribe.reasonRemote": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "Prescribe label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "prescribe.reasonRemoteDesc": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "Prescribe label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "prescribe.reasonContra": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "Prescribe label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "prescribe.reasonContraDesc": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "Prescribe label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "prescribe.reasonDuplicate": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "Prescribe label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "prescribe.reasonDuplicateDesc": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "Prescribe label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "prescribe.reasonDeclined": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "Prescribe label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "prescribe.reasonDeclinedDesc": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "Prescribe label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "prescribe.reasonStrength": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "Prescribe label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "prescribe.reasonStrengthDesc": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "Prescribe label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "prescribe.discardTitle": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "Prescribe label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "prescribe.discardSub": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "Prescribe label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "prescribe.discard": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "Prescribe label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "prescribe.keepEditing": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "Prescribe label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "form.tablet": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "Prescribe label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "form.capsule": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "Prescribe label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "form.syrup": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "Prescribe label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "form.drops": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "Prescribe label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "form.inhaler": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "Prescribe label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "form.injection": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "Prescribe label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "form.cream": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "Prescribe label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "print.unit.tablet": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "On prescription line (printed words)",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "print.unit.tablets": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "On prescription line (printed words)",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "print.unit.capsule": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "On prescription line (printed words)",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "print.unit.capsules": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "On prescription line (printed words)",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "print.unit.ml": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "On prescription line (printed words)",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "print.unit.drop": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "On prescription line (printed words)",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "print.unit.drops": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "On prescription line (printed words)",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "print.unit.puff": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "On prescription line (printed words)",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "print.unit.puffs": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "On prescription line (printed words)",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "print.unit.dose": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "On prescription line (printed words)",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "print.unit.doses": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "On prescription line (printed words)",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "print.unit.units": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "On prescription line (printed words)",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "print.unit.time": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "On prescription line (printed words)",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "print.unit.times": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "On prescription line (printed words)",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "print.amount": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "On prescription line (printed words)",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)",
+    "placeholders": [
+      "n",
+      "unit"
+    ]
+  },
+  "print.applyMAN": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "On prescription line (printed words)",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)",
+    "placeholders": [
+      "man"
+    ]
+  },
+  "print.everyHours": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "On prescription line (printed words)",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)",
+    "placeholders": [
+      "dose",
+      "n"
+    ]
+  },
+  "print.altDays": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "On prescription line (printed words)",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)",
+    "placeholders": [
+      "dose"
+    ]
+  },
+  "print.weekly": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "On prescription line (printed words)",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)",
+    "placeholders": [
+      "dose"
+    ]
+  },
+  "print.monthly": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "On prescription line (printed words)",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)",
+    "placeholders": [
+      "dose"
+    ]
+  },
+  "print.asNeeded": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "On prescription line (printed words)",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)",
+    "placeholders": [
+      "dose",
+      "max"
+    ]
+  },
+  "print.plusSos": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "On prescription line (printed words)",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)",
+    "placeholders": [
+      "dose",
+      "max",
+      "schedule"
+    ]
+  },
+  "print.applyAsNeeded": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "On prescription line (printed words)",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)",
+    "placeholders": [
+      "max"
+    ]
+  },
+  "print.day": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "On prescription line (printed words)",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "print.days": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "On prescription line (printed words)",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "print.week": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "On prescription line (printed words)",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "print.weeks": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "On prescription line (printed words)",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "print.month": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "On prescription line (printed words)",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "print.months": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "On prescription line (printed words)",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "print.duration": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "On prescription line (printed words)",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)",
+    "placeholders": [
+      "n",
+      "unit"
+    ]
+  },
+  "print.sep": {
+    "pattern": "none",
+    "trigger": "Prescribe screen label",
+    "slot": "On prescription line (printed words)",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "case.medicinesTitleClosed": {
+    "pattern": "none",
+    "trigger": "Case page screen label",
+    "slot": "case page label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
   }
 }

@@ -87,7 +87,14 @@ function startState(opening) {
   if (story.start !== "sign-in") return null;
   return (opening && mode !== "capture" && onOpen(ctx)) || "sign-in_default";
 }
-function startParams(s, opening = false) { if (s) return { s }; const id = startState(opening); return id ? { s: id, live: true } : { s }; }
+// Story starts at Home or straight in a case (plan §4 play link): the picture moment for the story's availability answer, then live.
+const HOME_START = { normal: "home_active", "near-expiry": "home_near-expiry", ending: "home_near-expiry", "ended-with-request": "home_expired-pending" };
+function startParams(s, opening = false) {
+  if (s) return { s };
+  if (story.start === "home") return { s: HOME_START[story.availability] || "home_active" };
+  if (story.start === "case") return { s: "t01-ready" };
+  const id = startState(opening); return id ? { s: id, live: true } : { s };
+}
 // Behaviour-only step-1 states have no picture: Jump opens the screen where the behaviour shows (app-logic §2,
 // feedback-state-map rows). Later steps' behaviour states keep their card until their step builds them.
 const BEHAVIOUR_SCREEN = {
@@ -98,6 +105,13 @@ const BEHAVIOUR_SCREEN = {
   "offer.unsupported": "home_setup-wheel",   // no screen lock → offer skipped → Home
   "offer.unavailable": "offer_unavailable",  // D-93: phone answers unavailable at Turn on (picture in ui-screens/ since D-94 step 5)
   "signin.locked-number": "otp_locked",      // sign-in on a locked number → OTP locked
+  "home.setup": "home_setup-wheel",          // step 2: set availability (wheel + presets)
+  "home.add-open": "home_add-wheel",         // step 2: the Add time sheet
+  "case.back-before-call": "a-leave-sheet",  // step 3: Back before a call → "Leave this case?"
+  "case.closed": "t10a-confirmed",           // step 3: closed case (outcome card, Request next case · Back to Home)
+  "case.closed-availability-ended": "e-availability-ended",   // step 3: closed after availability ended → Back to Home only
+  "rx.load-failed": "d-rx-failed",           // step 3: Rx viewer couldn't load
+  "prescribe.dose-error": "d-error-dose",    // step 4: no dose on a daily schedule
 };
 function renderScreen(id, params = {}) {
   if (id && BEHAVIOUR_SCREEN[id]) id = BEHAVIOUR_SCREEN[id];

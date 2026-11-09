@@ -1,0 +1,260 @@
+/* all */
+*, ::before, ::after { box-sizing: border-box; margin: 0px; padding: 0px; }
+/* all */
+html { font-size: 16px; }
+/* all */
+body { font-family: var(--tm-font); background: var(--tm-surface-secondary); color: var(--tm-content-primary); min-height: 100vh; }
+/* all */
+button { font-family: var(--tm-font); cursor: pointer; border-width: medium; border-style: none; border-color: currentcolor; border-image: none; background: none; color: inherit; font-size: inherit; -webkit-tap-highlight-color: transparent; }
+/* t01-ready a-top a-loading a-no-medicines a-leave-sheet a-releasing a-release-failed a-rx-viewer a-order-details a-offline a-offline-action a-notes-typing s-medicine-disabled a-back-blocked a-confirm-busy a-confirm-failed */
+textarea, input { font-family: var(--tm-font); }
+/* all */
+:root { --phone-h: clamp(640px, calc(100vh - 48px), 844px); --phone-w: calc(var(--phone-h) * 390 / 844); }
+/* all */
+#layout-wrapper { display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; position: relative; }
+/* all */
+#mobile-column { width: 100%; max-width: 430px; height: 100dvh; min-height: 0px; overflow: hidden; display: flex; flex-direction: column; background: var(--tm-surface-secondary); position: relative; flex-shrink: 0; }
+/* all */
+#main-scroll { flex: 1 1 0%; min-height: 0px; overflow-y: auto; }
+/* all */
+#sticky-top-wrapper { position: sticky; top: 0px; z-index: 200; }
+/* a-order-details */
+#pdb-order-expand { margin-top: var(--tm-space-md); padding-top: var(--tm-space-md); border-top: 1px solid var(--tm-border-subtle); display: flex; flex-direction: column; gap: var(--tm-space-sm); }
+/* a-order-details */
+.pdb-expand-item { display: flex; justify-content: space-between; align-items: center; gap: var(--tm-space-md); }
+/* a-order-details */
+.pdb-expand-label { font-size: var(--tm-font-size-body-xs); line-height: var(--tm-font-lineheight-xs); color: var(--tm-content-secondary); }
+/* a-order-details */
+.pdb-expand-value { font-size: var(--tm-font-size-body-xs); line-height: var(--tm-font-lineheight-xs); font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-primary); text-align: right; }
+/* a-back-blocked */
+#action-zone { display: flex; flex-direction: column; gap: var(--tm-space-md); }
+/* t01-ready a-top a-leave-sheet a-releasing a-release-failed a-rx-viewer a-order-details a-offline a-offline-action s-medicine-disabled */
+#call-btn-icon { display: inline-flex; align-items: center; }
+/* a-back-blocked */
+#action-zone > .tm-section-title { margin-bottom: 0px; }
+/* a-back-blocked */
+#pre-call-brief { display: none; }
+/* a-back-blocked */
+#pre-call-brief.visible { display: flex; }
+/* a-back-blocked */
+.pcb-body { display: flex; flex-direction: column; gap: var(--tm-space-2xs); min-width: 0px; }
+/* a-back-blocked */
+.pcb-text { font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); color: var(--tm-content-primary); }
+/* all */
+#main-scroll { padding: var(--tm-space-lg) var(--tm-space-lg) var(--tm-space-2xl); display: flex; flex-direction: column; gap: var(--tm-space-md); }
+/* t01-ready a-top a-load-failed a-no-medicines a-leave-sheet a-releasing a-release-failed a-rx-viewer a-order-details a-offline a-offline-action s-medicine-disabled a-back-blocked a-confirm-busy a-confirm-failed */
+#case-actionbar { gap: var(--tm-space-sm); }
+/* t01-ready a-top a-load-failed a-no-medicines a-leave-sheet a-releasing a-release-failed a-rx-viewer a-order-details a-offline a-offline-action s-medicine-disabled a-back-blocked a-confirm-busy a-confirm-failed */
+#case-actionbar { position: fixed; bottom: 0px; left: 50%; transform: translateX(-50%); width: 100%; max-width: 430px; z-index: 150; display: flex; flex-direction: column; }
+/* all */
+@media (max-width: 767px) #main-scroll { padding-bottom: calc(var(--ab-h, 0px) + var(--tm-space-2xl)); }
+/* all */
+@media (max-width: 767px) and (pointer: coarse) body:has(#main-scroll textarea:focus, #main-scroll input:focus) #case-actionbar { display: none; }
+/* t01-ready a-top a-loading a-no-medicines a-leave-sheet a-releasing a-release-failed a-rx-viewer a-order-details a-offline a-offline-action a-notes-typing s-medicine-disabled a-back-blocked a-confirm-busy a-confirm-failed */
+.tm-field__control textarea { resize: none; min-height: calc(var(--tm-space-2xl) * 2); }
+/* a-rx-viewer */
+#rx-overlay { display: none; position: fixed; top: 0px; bottom: 0px; left: 50%; width: 100%; max-width: 430px; transform: translateX(-50%); z-index: 800; flex-direction: column; background: var(--tm-surface-brand-dark); }
+/* a-rx-viewer */
+#rx-overlay.open { display: flex; }
+/* a-rx-viewer */
+#rx-overlay-header { display: flex; align-items: center; gap: var(--tm-space-sm); flex-shrink: 0; padding: var(--tm-space-md) var(--tm-space-lg); border-bottom: 1px solid var(--tm-surface-brand-strong); }
+/* a-rx-viewer */
+#rx-overlay-title { flex: 1 1 0%; min-width: 0px; font-size: var(--tm-font-size-body-lg); line-height: var(--tm-font-lineheight-md); font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-inverse); }
+/* a-rx-viewer */
+#rx-controls { display: flex; gap: var(--tm-space-xs); align-items: center; margin-left: auto; }
+/* a-rx-viewer */
+#rx-zoom-label { min-width: var(--tm-space-2xl); text-align: center; font-size: var(--tm-font-size-body-xs); line-height: var(--tm-font-lineheight-xs); font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-inverse); }
+/* a-rx-viewer */
+#rx-overlay-body { flex: 1 1 0%; overflow: hidden; display: flex; align-items: center; justify-content: center; position: relative; touch-action: none; }
+/* a-rx-viewer */
+#rx-doc-wrapper { position: relative; transform-origin: center center; transition: transform 0.15s; cursor: grab; user-select: none; }
+/* a-rx-viewer */
+#rx-doc-wrapper:active { cursor: grabbing; }
+/* a-rx-viewer */
+#rx-hint { position: absolute; bottom: var(--tm-space-md); left: 0px; right: 0px; text-align: center; font-size: var(--tm-font-size-body-xs); line-height: var(--tm-font-lineheight-xs); color: var(--tm-content-disabled); pointer-events: none; }
+/* a-rx-viewer */
+#rx-doc { width: 320px; background: rgb(255, 255, 255); border-radius: 4px; box-shadow: rgba(0, 0, 0, 0.4) 0px 8px 32px; overflow: hidden; font-family: Georgia, serif; color: rgb(26, 26, 26); }
+/* a-rx-viewer */
+.rx-letterhead { background: linear-gradient(135deg, rgb(27, 105, 222) 0%, rgb(21, 88, 192) 100%); padding: 16px 18px 14px; color: rgb(255, 255, 255); }
+/* a-rx-viewer */
+.rx-clinic-name { font-size: 16px; font-weight: 700; font-family: var(--tm-font); letter-spacing: 0.02em; }
+/* a-rx-viewer */
+.rx-doctor-name { font-size: 13px; font-weight: 600; font-family: var(--tm-font); margin-top: 2px; opacity: 0.92; }
+/* a-rx-viewer */
+.rx-doctor-quals { font-size: 11px; font-family: var(--tm-font); opacity: 0.7; margin-top: 1px; }
+/* a-rx-viewer */
+.rx-clinic-address { font-size: 10px; font-family: var(--tm-font); opacity: 0.65; margin-top: 6px; line-height: 1.5; }
+/* a-rx-viewer */
+.rx-body { padding: 14px 18px; }
+/* a-rx-viewer */
+.rx-patient-row { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid rgb(229, 231, 235); gap: 8px; }
+/* a-rx-viewer */
+.rx-patient-info { flex: 1 1 0%; }
+/* a-rx-viewer */
+.rx-patient-label { font-size: 10px; color: rgb(107, 114, 128); font-family: var(--tm-font); text-transform: uppercase; letter-spacing: 0.05em; }
+/* a-rx-viewer */
+.rx-patient-value { font-size: 12px; font-weight: 600; font-family: var(--tm-font); color: rgb(26, 26, 26); margin-top: 1px; }
+/* a-rx-viewer */
+.rx-symbol { font-size: 28px; font-weight: 700; color: rgb(27, 105, 222); line-height: 1; font-family: Georgia, serif; flex-shrink: 0; }
+/* a-rx-viewer */
+.rx-medicines { margin-bottom: 14px; }
+/* a-rx-viewer */
+.rx-med-item { padding: 10px 0px; border-bottom: 1px dashed rgb(229, 231, 235); }
+/* a-rx-viewer */
+.rx-med-item:last-child { border-bottom-width: medium; border-bottom-style: none; border-bottom-color: currentcolor; }
+/* a-rx-viewer */
+.rx-med-number { font-size: 11px; font-weight: 700; color: rgb(27, 105, 222); font-family: var(--tm-font); margin-bottom: 2px; }
+/* a-rx-viewer */
+.rx-med-name { font-size: 13px; font-weight: 700; color: rgb(17, 24, 39); font-family: var(--tm-font); }
+/* a-rx-viewer */
+.rx-med-details { font-size: 11px; color: rgb(55, 65, 81); font-family: var(--tm-font); margin-top: 2px; }
+/* a-rx-viewer */
+.rx-med-note { font-size: 10px; color: rgb(107, 114, 128); font-family: var(--tm-font); margin-top: 2px; font-style: italic; }
+/* a-rx-viewer */
+.rx-footer { border-top: 1px solid rgb(229, 231, 235); padding-top: 12px; display: flex; justify-content: space-between; align-items: flex-end; }
+/* a-rx-viewer */
+.rx-advice { flex: 1 1 0%; }
+/* a-rx-viewer */
+.rx-advice-label { font-size: 10px; color: rgb(107, 114, 128); font-family: var(--tm-font); font-weight: 600; margin-bottom: 3px; }
+/* a-rx-viewer */
+.rx-advice-text { font-size: 10px; color: rgb(55, 65, 81); font-family: var(--tm-font); line-height: 1.5; }
+/* a-rx-viewer */
+.rx-signature { text-align: right; }
+/* a-rx-viewer */
+.rx-sig-line { width: 90px; border-bottom: 1px solid rgb(55, 65, 81); margin-bottom: 4px; margin-left: auto; }
+/* a-rx-viewer */
+.rx-sig-name { font-size: 10px; font-weight: 600; color: rgb(55, 65, 81); font-family: var(--tm-font); }
+/* a-rx-viewer */
+.rx-sig-reg { font-size: 9px; color: rgb(156, 163, 175); font-family: var(--tm-font); }
+/* a-rx-viewer */
+.rx-stamp { margin-top: 8px; padding: 6px 10px; border: 2px solid rgb(27, 105, 222); border-radius: 4px; text-align: center; display: inline-block; }
+/* a-rx-viewer */
+.rx-stamp-text { font-size: 9px; font-weight: 700; color: rgb(27, 105, 222); font-family: var(--tm-font); letter-spacing: 0.05em; }
+/* a-rx-viewer */
+.rx-label-gap { margin-top: 6px; }
+/* a-rx-viewer */
+.rx-align-right { text-align: right; margin-bottom: 8px; }
+/* a-rx-viewer */
+.rx-stamp-gap { margin-top: 10px; }
+/* t01-ready a-top a-loading a-no-medicines a-leave-sheet a-releasing a-release-failed a-rx-viewer a-order-details a-offline a-offline-action a-notes-typing s-medicine-disabled a-back-blocked a-confirm-busy a-confirm-failed */
+#medicines-section { background: var(--tm-surface-primary); border-radius: var(--tm-radius-lg); box-shadow: var(--tm-shadow-card); padding: var(--tm-space-lg); }
+/* t01-ready a-top a-loading a-no-medicines a-leave-sheet a-releasing a-release-failed a-rx-viewer a-order-details a-offline a-offline-action a-notes-typing s-medicine-disabled a-back-blocked a-confirm-busy a-confirm-failed */
+#medicines-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--tm-space-xs); }
+/* t01-ready a-top a-loading a-no-medicines a-leave-sheet a-releasing a-release-failed a-rx-viewer a-order-details a-offline a-offline-action a-notes-typing s-medicine-disabled a-back-blocked a-confirm-busy a-confirm-failed */
+.section-title--inline { margin: 0px; }
+/* t01-ready a-top a-loading a-leave-sheet a-releasing a-release-failed a-rx-viewer a-order-details a-offline a-offline-action a-notes-typing s-medicine-disabled a-back-blocked a-confirm-busy a-confirm-failed */
+#medicines-count { font-size: var(--tm-font-size-body-xs); line-height: var(--tm-font-lineheight-xs); font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-secondary); }
+/* t01-ready a-top a-loading a-no-medicines a-leave-sheet a-releasing a-release-failed a-rx-viewer a-order-details a-offline a-offline-action a-notes-typing s-medicine-disabled a-back-blocked a-confirm-busy a-confirm-failed */
+#medicines-list { display: flex; flex-direction: column; }
+/* t01-ready a-top a-loading a-leave-sheet a-releasing a-release-failed a-rx-viewer a-order-details a-offline a-offline-action a-notes-typing s-medicine-disabled a-back-blocked a-confirm-busy a-confirm-failed */
+.medicine-item { cursor: pointer; user-select: none; transition: opacity 150ms; }
+/* t01-ready a-top a-loading a-leave-sheet a-releasing a-release-failed a-rx-viewer a-order-details a-offline a-offline-action a-notes-typing s-medicine-disabled a-back-blocked a-confirm-busy a-confirm-failed */
+.medicine-item:active { background: var(--tm-surface-secondary); }
+/* s-medicine-disabled */
+.medicine-item.disabled .med-icon { opacity: 0.5; }
+/* s-medicine-disabled */
+.medicine-item.disabled .med-name { text-decoration: line-through; color: var(--tm-content-secondary); }
+/* s-medicine-disabled */
+.medicine-item.disabled .tm-row__fact { color: var(--tm-content-secondary); }
+/* t01-ready a-top a-loading a-leave-sheet a-releasing a-release-failed a-rx-viewer a-order-details a-offline a-offline-action a-notes-typing s-medicine-disabled a-back-blocked a-confirm-busy a-confirm-failed */
+.med-icon { display: flex; align-items: center; justify-content: center; color: var(--tm-content-secondary); }
+/* t01-ready a-top a-loading a-leave-sheet a-releasing a-release-failed a-rx-viewer a-order-details a-offline a-offline-action a-notes-typing s-medicine-disabled a-back-blocked a-confirm-failed */
+.medicine-item > .tm-icon:last-child { color: var(--tm-content-tertiary); }
+/* t01-ready a-top a-loading a-no-medicines a-leave-sheet a-releasing a-release-failed a-rx-viewer a-order-details a-offline a-offline-action a-notes-typing s-medicine-disabled a-back-blocked a-confirm-busy a-confirm-failed */
+#notes-section { background: var(--tm-surface-primary); border-radius: var(--tm-radius-lg); box-shadow: var(--tm-shadow-card); padding: var(--tm-space-lg); display: flex; flex-direction: column; gap: var(--tm-space-md); }
+/* t01-ready a-top a-loading a-no-medicines a-leave-sheet a-releasing a-release-failed a-rx-viewer a-order-details a-offline a-offline-action a-notes-typing s-medicine-disabled a-back-blocked a-confirm-busy a-confirm-failed */
+#notes-section .tm-section-title { margin: 0px; }
+/* t01-ready a-top a-loading a-no-medicines a-leave-sheet a-releasing a-release-failed a-rx-viewer a-order-details a-offline a-offline-action a-notes-typing s-medicine-disabled a-back-blocked a-confirm-busy a-confirm-failed */
+#notes-section textarea { min-height: calc(var(--tm-space-3xl) + var(--tm-space-lg)); resize: none; }
+/* a-rx-viewer */
+@media (max-width: 767px) body:has(#sheet-overlay.open), body:has(#rx-overlay.open), body:has(#prescribe-screen.open) { overflow: hidden; }
+/* t01-ready a-top a-load-failed a-no-medicines a-leave-sheet a-releasing a-release-failed a-rx-viewer a-order-details a-offline a-offline-action s-medicine-disabled a-back-blocked a-confirm-busy a-confirm-failed */
+body:not([data-app="case"]) :is(#main-scroll, #case-actionbar, #compact-strip, #demo-bar-scenarios, #demo-call-sim, #demo-bar-row2) { display: none !important; }
+/* all */
+@media (min-width: 768px) html { scrollbar-gutter: stable both-edges; }
+/* all */
+@media (min-width: 768px) #layout-wrapper { padding: var(--tm-space-lg) 0; }
+/* all */
+@media (min-width: 768px) #mobile-column { width: var(--phone-w); height: var(--phone-h); min-height: 0px; max-width: none; display: flex; flex-direction: column; overflow: hidden; border: 1px solid var(--tm-border-default); border-radius: var(--tm-radius-2xl); box-shadow: var(--tm-shadow-header); transform: translateZ(0px); }
+/* all */
+@media (min-width: 768px) #sticky-top-wrapper { position: relative; flex-shrink: 0; }
+/* all */
+@media (min-width: 768px) #main-scroll { flex: 1 1 0%; min-height: 0px; overflow-y: auto; }
+/* a-rx-viewer */
+@media (min-width: 768px) #rx-overlay { left: 0px; width: 100%; max-width: none; transform: none; }
+/* t01-ready a-top a-load-failed a-no-medicines a-leave-sheet a-releasing a-release-failed a-rx-viewer a-order-details a-offline a-offline-action s-medicine-disabled a-back-blocked a-confirm-busy a-confirm-failed */
+@media (min-width: 768px) #case-actionbar { position: relative; left: auto; transform: none; max-width: none; flex-shrink: 0; }
+/* all */
+#main-scroll { gap: var(--tm-space-lg); }
+/* t01-ready a-top a-loading a-leave-sheet a-releasing a-release-failed a-rx-viewer a-order-details a-offline a-offline-action a-notes-typing s-medicine-disabled a-back-blocked a-confirm-busy a-confirm-failed */
+#medicines-list .med-name, #ps-title, .rx-med-name { text-wrap: balance; }
+/* a-notes-typing */
+#kb-sim .kb-blank { background: none; }
+/* all */
+html.capture body { background: var(--tm-surface-secondary); }
+/* all */
+#mobile-column { transform: translateZ(0px); }
+/* all */
+html.capture #mobile-column { height: 844px; max-height: 844px; overflow: hidden; display: flex; flex-direction: column; margin: 0px auto; width: 390px; }
+/* all */
+html.capture #main-scroll { flex: 1 1 auto; min-height: 0px; overflow-y: auto; }
+/* t01-ready a-top a-loading a-no-medicines a-leave-sheet a-releasing a-release-failed a-rx-viewer a-order-details a-offline a-offline-action a-notes-typing s-medicine-disabled a-back-blocked a-confirm-busy a-confirm-failed */
+#case-tools { display: flex; flex-direction: column; gap: var(--tm-space-sm); }
+/* t01-ready a-top a-loading a-no-medicines a-leave-sheet a-releasing a-release-failed a-rx-viewer a-order-details a-offline a-offline-action a-notes-typing s-medicine-disabled a-back-blocked a-confirm-busy a-confirm-failed */
+#case-tools .ct-row { display: flex; align-items: center; justify-content: space-between; gap: var(--tm-space-sm); min-height: 48px; }
+/* t01-ready a-top a-loading a-no-medicines a-leave-sheet a-releasing a-release-failed a-rx-viewer a-order-details a-offline a-offline-action a-notes-typing s-medicine-disabled a-back-blocked a-confirm-busy a-confirm-failed */
+#case-tools .ct-details { display: inline-flex; align-items: center; gap: var(--tm-space-xs); min-height: 48px; border: 0px; background: transparent; padding: 0 var(--tm-space-xs) 0 0; font-style: inherit; font-variant: inherit; font-weight: inherit; font-stretch: inherit; font-family: inherit; font-optical-sizing: inherit; font-size-adjust: inherit; font-kerning: inherit; font-feature-settings: inherit; font-variation-settings: inherit; font-language-override: inherit; font-size: var(--tm-font-size-body-lg); line-height: var(--tm-font-lineheight-md); color: var(--tm-content-primary); cursor: pointer; }
+/* t01-ready a-top a-loading a-no-medicines a-leave-sheet a-releasing a-release-failed a-rx-viewer a-order-details a-offline a-offline-action a-notes-typing s-medicine-disabled a-back-blocked a-confirm-busy a-confirm-failed */
+#case-tools .ct-details .tm-icon { width: 20px; height: 20px; color: var(--tm-content-secondary); }
+/* a-order-details */
+#case-tools #pdb-order-expand { margin: 0px; }
+/* a-leave-sheet a-releasing */
+#concept-leave { position: absolute; inset: 0px; z-index: 500; display: flex; flex-direction: column; justify-content: flex-end; }
+/* a-back-blocked */
+#concept-toast { position: absolute; left: var(--tm-space-xl); right: var(--tm-space-xl); bottom: calc(var(--concept-bar-h,0px) + var(--tm-space-sm)); z-index: 55; display: flex; justify-content: center; pointer-events: none; }
+/* a-back-blocked */
+#concept-toast > .tm-toast { position: relative; left: auto; right: auto; bottom: auto; transform: none; text-align: center; }
+/* a-loading */
+body.concept-loading #main-scroll > :not(.concept-new) { visibility: hidden; }
+/* a-notes-typing */
+#kb-sim { display: none; position: absolute; left: 0px; right: 0px; bottom: 0px; height: 256px; background: rgb(212, 215, 221); grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(4, 1fr); gap: 5px; padding: 6px 5px 12px; box-sizing: border-box; z-index: 1000; }
+/* a-notes-typing */
+#kb-sim div { background: rgb(255, 255, 255); border-radius: 5px; display: flex; align-items: center; justify-content: center; font-family: inherit; font-size: var(--tm-font-size-title-md); line-height: var(--tm-font-lineheight-lg); color: var(--tm-content-primary); }
+/* a-notes-typing */
+body.kb-open #kb-sim { display: grid; }
+/* a-notes-typing */
+body.kb-open #main-scroll, body.kb-open #ps-body { padding-bottom: 256px; }
+/* a-loading */
+body.concept-loading #case-head .tm-header-task__title, body.concept-loading #case-head .tm-header-task__meta { visibility: hidden; }
+/* a-loading */
+.concept-skel { display: block; background: var(--tm-border-subtle); border-radius: var(--tm-radius-md); margin-bottom: var(--tm-space-lg); }
+/* a-loading a-load-failed a-no-medicines a-back-blocked */
+#main-scroll > .concept-new, #case-actionbar > .concept-new:not([class*="notice"]), #case-actionbar > .concept-new[class*="question"] { margin-top: 0px; }
+/* t01-ready a-top a-loading a-leave-sheet a-releasing a-release-failed a-rx-viewer a-order-details a-offline a-offline-action a-notes-typing s-medicine-disabled a-back-blocked a-confirm-busy a-confirm-failed */
+#medicines-count, .med-detail, #pcb-label.pcb-label, .pdb-expand-label, .pdb-expand-value { font-size: 14px !important; line-height: 20px !important; }
+/* a-rx-viewer */
+#ps-form, .ps-rx-label, #ps-dur-val, #ps-sos-help, #rx-zoom-label, #rx-hint { font-size: 14px !important; line-height: 20px !important; }
+/* a-rx-viewer */
+#rx-overlay-header { flex-wrap: wrap; row-gap: var(--tm-space-xs); }
+/* a-rx-viewer */
+#rx-controls { flex-basis: 100%; justify-content: flex-end; display: flex; align-items: center; }
+/* t01-ready a-top a-load-failed a-no-medicines a-leave-sheet a-releasing a-release-failed a-rx-viewer a-order-details a-offline a-offline-action s-medicine-disabled a-back-blocked a-confirm-busy a-confirm-failed */
+#case-actionbar { display: flex; flex-direction: column; gap: var(--tm-space-sm); }
+/* t01-ready a-top a-load-failed a-no-medicines a-leave-sheet a-releasing a-release-failed a-rx-viewer a-order-details a-offline a-offline-action s-medicine-disabled a-back-blocked a-confirm-busy a-confirm-failed */
+#case-actionbar[hidden], body:has(#main-scroll textarea:focus) #case-actionbar, body:has(#ps-body textarea:focus) #case-actionbar { display: none !important; }
+/* t01-ready a-top a-load-failed a-no-medicines a-leave-sheet a-releasing a-release-failed a-rx-viewer a-order-details a-offline a-offline-action s-medicine-disabled a-confirm-busy a-confirm-failed */
+#case-actionbar > .tm-btn--lg { order: 1; }
+/* a-rx-viewer */
+#rx-overlay-body { flex-direction: column; justify-content: flex-start; padding-top: var(--tm-space-xs); }
+/* a-rx-viewer */
+#rx-hint { position: static; flex: 0 0 auto; display: block; text-align: center; padding: var(--tm-space-xs) var(--tm-space-md); font-size: var(--tm-font-size-body-xs); line-height: var(--tm-font-lineheight-xs); color: var(--tm-content-inverse); }
+/* a-rx-viewer */
+#rx-doc-wrapper { flex: 0 0 auto; }
+/* all */
+#main-scroll { padding-left: var(--tm-space-page) !important; padding-right: var(--tm-space-page) !important; }
+/* t01-ready a-top a-load-failed a-no-medicines a-leave-sheet a-releasing a-release-failed a-rx-viewer a-order-details a-offline a-offline-action s-medicine-disabled a-back-blocked a-confirm-busy a-confirm-failed */
+#case-actionbar { padding-left: var(--tm-space-page) !important; padding-right: var(--tm-space-page) !important; }
+/* t01-ready a-top a-loading a-no-medicines a-leave-sheet a-releasing a-release-failed a-rx-viewer a-order-details a-offline a-offline-action a-notes-typing s-medicine-disabled a-back-blocked a-confirm-busy a-confirm-failed */
+#pdb-view-rx-btn { pointer-events: auto; }
+/* t01-ready a-top a-leave-sheet a-releasing a-release-failed a-rx-viewer a-order-details a-offline a-offline-action s-medicine-disabled */
+#call-initiate-btn, #call-initiate-btn *, .pulsing, .pulsing * { animation: auto ease 0s 1 normal none running none !important; }

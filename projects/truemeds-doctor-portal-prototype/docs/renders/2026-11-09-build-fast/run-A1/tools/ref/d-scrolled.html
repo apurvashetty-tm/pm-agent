@@ -1,0 +1,147 @@
+<body class="tm" data-app="case" data-ready="1">
+<div id="layout-wrapper">
+  <!-- ============================================================
+       DESKTOP SIDE PANEL — visible on wide screens only
+  ============================================================ -->
+  <!-- DESKTOP APP PANEL (left of the frame) — demo controls for sign-in, home and "orders available" -->
+  <!-- /desktop-side-panel -->
+  <!-- ============================================================
+       MOBILE COLUMN
+  ============================================================ -->
+  <div id="mobile-column">
+    <!-- STICKY TOP WRAPPER — portal header + demo bar + compact strip -->
+    <div id="sticky-top-wrapper"><header id="case-head" class="tm-header-task--compact"><div class="tm-header-task__row"><button class="tm-btn tm-btn--quiet tm-btn--icon" id="ch-back" type="button" aria-label="Back"><span class="tm-icon" data-icon="arrow-left" aria-hidden="true"></span></button><h1 class="tm-header-task__title" id="ch-name">Ramesh Gupta</h1><button class="tm-btn tm-btn--quiet tm-btn--icon" id="ch-help" type="button" aria-label="Help"><span class="tm-icon" data-icon="help-circle" aria-hidden="true"></span></button></div><p class="tm-header-task__meta" id="ch-meta1">54 · Male</p><p class="tm-header-task__meta" id="ch-meta2">Order TM-ORD-20240812 · ₹1,240</p></header>
+      <!-- PORTAL HEADER — always visible -->
+      <!-- DEMO BAR — [MOCK ASSUMPTION] dev-only -->
+      <!-- COMPACT STRIP — hidden until patient block scrolls out of view -->
+    </div><!-- /sticky-top-wrapper -->
+    <!-- ============================================================
+         APP SCREENS — sign in, OTP, returning-doctor unlock, home (D-31, D-33 … D-37).
+         Sign in, OTP and unlock follow the approved screens in ui-screens/ (sign-in, otp, returning-unlock).
+         One screen shows at a time, chosen by body[data-app] (goApp in app.js). The order page is #main-scroll.
+    ============================================================ -->
+    <!-- MAIN SCROLL -->
+    <div id="main-scroll"><div id="case-tools" class="tm-card"><div class="ct-row"><button class="ct-details" id="ct-details" type="button" aria-expanded="false"><span>Order details</span><span class="tm-icon" data-icon="info-circle" aria-hidden="true"></span></button><span id="ct-actions"><button id="pdb-view-rx-btn" class="tm-btn tm-btn--secondary" onclick="openRxOverlay()"><span class="tm-icon tm-icon--16" data-icon="clipboard-text"></span>View Rx</button></span></div></div>
+      <!-- 1. Patient Detail Block — non-sticky, no badge row -->
+      <!-- 2. Medicines to Validate -->
+      <div id="medicines-section">
+        <div id="medicines-header">
+          <h2 class="tm-section-title section-title--inline">Medicines to prescribe</h2>
+          <span id="medicines-count">5 medicines</span>
+        </div>
+        <div id="medicines-list"><div class="tm-row medicine-item" role="button" tabindex="0" aria-label="Edit Metformin" data-med-id="1">
+      <div class="tm-thumb med-icon"><span class="tm-icon tm-icon--24"></span></div>
+      <div class="tm-row__main med-info">
+        <div class="tm-row__title med-name">Metformin 500mg</div>
+        <div class="tm-row__line"><span class="tm-row__fact">Qty 60</span><span class="tm-tag tm-tag--md tm-tag--success tm-tag--fixed">Prescribed</span></div>
+      </div>
+      <span class="tm-icon tm-icon--16"></span>
+    </div><div class="tm-row medicine-item" role="button" tabindex="0" aria-label="Edit Amlodipine" data-med-id="2">
+      <div class="tm-thumb med-icon"><span class="tm-icon tm-icon--24"></span></div>
+      <div class="tm-row__main med-info">
+        <div class="tm-row__title med-name">Amlodipine 5mg</div>
+        <div class="tm-row__line"><span class="tm-row__fact">Qty 30</span><span class="tm-tag tm-tag--md tm-tag--warning tm-tag--fixed">Pending</span></div>
+      </div>
+      <span class="tm-icon tm-icon--16"></span>
+    </div><div class="tm-row medicine-item" role="button" tabindex="0" aria-label="Edit Atorvastatin" data-med-id="3">
+      <div class="tm-thumb med-icon"><span class="tm-icon tm-icon--24"></span></div>
+      <div class="tm-row__main med-info">
+        <div class="tm-row__title med-name">Atorvastatin 10mg</div>
+        <div class="tm-row__line"><span class="tm-row__fact">Qty 30</span><span class="tm-tag tm-tag--md tm-tag--warning tm-tag--fixed">Pending</span></div>
+      </div>
+      <span class="tm-icon tm-icon--16"></span>
+    </div><div class="tm-row medicine-item" role="button" tabindex="0" aria-label="Edit Vitamin B12" data-med-id="4">
+      <div class="tm-thumb med-icon"><span class="tm-icon tm-icon--24"></span></div>
+      <div class="tm-row__main med-info">
+        <div class="tm-row__title med-name">Vitamin B12 1000mcg</div>
+        <div class="tm-row__line"><span class="tm-row__fact">Qty 4</span><span class="tm-tag tm-tag--md tm-tag--warning tm-tag--fixed">Pending</span></div>
+      </div>
+      <span class="tm-icon tm-icon--16"></span>
+    </div><div class="tm-row medicine-item" role="button" tabindex="0" aria-label="Edit Antacid Suspension" data-med-id="5">
+      <div class="tm-thumb med-icon"><span class="tm-icon tm-icon--24"></span></div>
+      <div class="tm-row__main med-info">
+        <div class="tm-row__title med-name">Antacid Suspension 10ml</div>
+        <div class="tm-row__line"><span class="tm-row__fact">Qty 1</span><span class="tm-tag tm-tag--md tm-tag--warning tm-tag--fixed">Pending</span></div>
+      </div>
+      <span class="tm-icon tm-icon--16"></span>
+    </div></div>
+      </div>
+      <!-- 3. Notes + Symptoms — [OPEN DECISION] OQ-006 -->
+      <div id="notes-section">
+        <h2 class="tm-section-title">Notes &amp; symptoms</h2>
+        <div class="tm-field">
+          <label class="tm-field__label" for="symptoms-input">Chief complaints / symptoms</label>
+          <div class="tm-field__control"><textarea id="symptoms-input" placeholder="e.g., Fever since 2 days, sore throat, mild cough…" rows="3"></textarea></div>
+        </div>
+        <div class="tm-field">
+          <label class="tm-field__label" for="doctor-notes-input">Doctor notes</label>
+          <div class="tm-field__control"><textarea id="doctor-notes-input" placeholder="Clinical observations, instructions, internal notes…" rows="3"></textarea></div>
+        </div>
+      </div>
+      <!-- 4. Action Zone — merged call + post-call -->
+      <!-- /action-zone -->
+    </div><!-- /main-scroll -->
+    <!-- CASE ACTION BAR — the one main action, pinned to the bottom (agreed 2026-10-08, decision log D-22).
+         Call Patient / Calling… / End Call / Call Again before the gate; Confirm Order / Transfer / Forward after it.
+         Secondary actions sit in the same bar (D-28); the Call card keeps only status and the script. -->
+    <div id="case-actionbar" class="tm-actionbar">
+      <!-- Secondary call actions, pinned above the main one (D-28): nothing the doctor can do needs a scroll -->
+      <button id="call-initiate-btn" class="tm-btn tm-btn--lg tm-btn--primary tm-btn--block" onclick="handleCallAction()">
+        <span id="call-btn-icon" class="tm-icon" data-icon="phone"></span>
+        <span id="call-btn-label">Call patient</span>
+      </button>
+    </div>
+<!-- ============================================================
+     RX FULL-SCREEN OVERLAY (dark viewer — intentional for doc readability)
+============================================================ -->
+<!-- ============================================================
+     PRESCRIBE SCREEN — full-screen view over the case (like the Rx viewer), inside the phone frame.
+     Agreed 2026-10-07: every section open with backend defaults. Prescribe is pinned to the bottom and always active (D-22, which replaced "Prescribe at the end, not pinned");
+     Disable is a small action in the app bar. The "On prescription" line is pinned under the app bar (D-25); the sections above the note are rendered by app.js.
+============================================================ -->
+<div id="prescribe-screen" role="dialog" aria-modal="true" aria-labelledby="ps-title" aria-hidden="false" tabindex="-1" class="open">
+  <!-- Header group: app bar + the live prescription line, pinned together (never scrolls) — decision log D-25 -->
+  <div id="ps-top">
+  <div id="ps-bar" class="tm-header-edit">
+    <button class="tm-btn tm-btn--quiet tm-btn--icon" onclick="requestClosePrescribe()" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button>
+    <div id="ps-heading" class="tm-header-edit__text"><h2 id="ps-title" class="tm-header-edit__title">Metformin 500mg</h2><p id="ps-form" class="tm-header-edit__subtitle">Tablet</p></div>
+    <button id="ps-disable-btn" class="tm-btn tm-btn--destructive" onclick="openDisableSheet()">Disable</button>
+  </div>
+  <div id="ps-rx">
+    <div class="ps-rx-label" id="ps-rx-label"><span class="tm-icon tm-icon--16" data-icon="prescription"></span>On prescription</div>
+    <div id="ps-prints-text" aria-live="polite" aria-labelledby="ps-rx-label">1-0-1 · 6&nbsp;months</div>
+  </div>
+  </div><!-- /ps-top -->
+  <div id="ps-body">
+    <div id="ps-dynamic"><div class="tm-card ps-card" id="ps-card-schedule"><div class="ps-section"><div class="tm-field__label ps-label" id="psl-how-often-j458">How often</div><div class="ps-chips" role="group" aria-labelledby="psl-how-often-j458"><button type="button" class="tm-chip tm-chip--lg" data-k="int:daily" aria-pressed="true">Daily</button><button type="button" class="tm-chip tm-chip--lg" data-k="int:every_x_hours" aria-pressed="false">Every X hours</button><button type="button" class="tm-chip tm-chip--lg" data-k="int:alt_days" aria-pressed="false">Alt days</button><button type="button" class="tm-chip tm-chip--lg" data-k="int:weekly" aria-pressed="false">Weekly</button><button type="button" class="tm-chip tm-chip--lg" data-k="int:monthly" aria-pressed="false">Monthly</button><button type="button" class="tm-chip tm-chip--lg" data-k="int:sos" aria-pressed="false">SOS only</button></div></div><div class="ps-section" id="ps-dose-section"><div class="tm-field__label ps-label">Dose <span class="tm-muted"></span></div><div class="ps-slots"><div class="ps-slot"><span class="ps-slot-key" aria-hidden="true">M</span><div class="ps-grid" role="group" aria-label="Morning" style="--cols:4"><button type="button" class="tm-chip tm-chip--lg" data-k="slot:m:0" aria-pressed="false" aria-label="Morning: none">0</button><button type="button" class="tm-chip tm-chip--lg" data-k="slot:m:0.5" aria-pressed="false" aria-label="Morning: ½ tablet">½</button><button type="button" class="tm-chip tm-chip--lg" data-k="slot:m:1" aria-pressed="true" aria-label="Morning: 1 tablet">1</button><button type="button" class="tm-chip tm-chip--lg" data-k="slot:m:2" aria-pressed="false" aria-label="Morning: 2 tablets">2</button></div></div><div class="ps-slot"><span class="ps-slot-key" aria-hidden="true">A</span><div class="ps-grid" role="group" aria-label="Afternoon" style="--cols:4"><button type="button" class="tm-chip tm-chip--lg" data-k="slot:a:0" aria-pressed="true" aria-label="Afternoon: none">0</button><button type="button" class="tm-chip tm-chip--lg" data-k="slot:a:0.5" aria-pressed="false" aria-label="Afternoon: ½ tablet">½</button><button type="button" class="tm-chip tm-chip--lg" data-k="slot:a:1" aria-pressed="false" aria-label="Afternoon: 1 tablet">1</button><button type="button" class="tm-chip tm-chip--lg" data-k="slot:a:2" aria-pressed="false" aria-label="Afternoon: 2 tablets">2</button></div></div><div class="ps-slot"><span class="ps-slot-key" aria-hidden="true">N</span><div class="ps-grid" role="group" aria-label="Night" style="--cols:4"><button type="button" class="tm-chip tm-chip--lg" data-k="slot:n:0" aria-pressed="false" aria-label="Night: none">0</button><button type="button" class="tm-chip tm-chip--lg" data-k="slot:n:0.5" aria-pressed="false" aria-label="Night: ½ tablet">½</button><button type="button" class="tm-chip tm-chip--lg" data-k="slot:n:1" aria-pressed="true" aria-label="Night: 1 tablet">1</button><button type="button" class="tm-chip tm-chip--lg" data-k="slot:n:2" aria-pressed="false" aria-label="Night: 2 tablets">2</button></div></div></div></div></div><div class="ps-section tm-card ps-card"><div><label class="tm-check"><input type="checkbox" class="tm-toggle" id="ps-sos" aria-describedby="ps-sos-help"> Also as needed (SOS)</label>
+          <div class="ps-helper" id="ps-sos-help">Extra doses only when needed, on top of the schedule above.</div></div></div><div class="ps-section tm-card ps-card"><div class="tm-field__label ps-label" id="psl-duration">Duration</div>
+        <div class="ps-dur-field">
+          <button type="button" class="ps-dur-toggle" data-k="dur:toggle" aria-expanded="false" aria-controls="ps-dur-panel" aria-labelledby="psl-duration ps-dur-value">
+            <span class="ps-dur-val" id="ps-dur-value">Ongoing (6 months)<span>Default</span></span>
+            <span class="tm-icon tm-icon--24"></span>
+          </button>
+        </div></div><div class="tm-card ps-card"><div class="ps-section"><div class="tm-field__label ps-label" id="psl-food-yrvd">Food <span class="tm-muted">(optional)</span></div><div class="ps-chips ps-chips-fill" role="group" aria-labelledby="psl-food-yrvd"><button type="button" class="tm-chip tm-chip--lg" data-k="food:after_food" aria-pressed="false">After food</button><button type="button" class="tm-chip tm-chip--lg" data-k="food:before_food" aria-pressed="false">Before food</button><button type="button" class="tm-chip tm-chip--lg" data-k="food:empty_stomach" aria-pressed="false">Empty stomach</button></div></div></div></div>
+    <div class="tm-card ps-card"><div class="tm-field ps-section">
+      <label class="tm-field__label" for="ps-note" id="ps-note-label">Additional instructions <span class="tm-muted">(optional)</span></label>
+      <div class="tm-field__control"><textarea id="ps-note" rows="3" placeholder="e.g. Stop if rash appears"></textarea></div>
+      <div class="tm-field__helper" id="ps-note-helper">Printed on the prescription.</div>
+    </div></div>
+  </div>
+  <!-- Prescribe pinned to the bottom, always active (agreed 2026-10-08, decision log D-22) -->
+  <div id="ps-actionbar" class="tm-actionbar">
+    <button id="ps-prescribe" class="tm-btn tm-btn--lg tm-btn--primary tm-btn--block" onclick="confirmMedEdit()">Prescribe</button>
+  </div>
+</div>
+<!-- ============================================================
+     BOTTOM SHEETS
+============================================================ -->
+<!-- /sheet-overlay -->
+<!-- TOAST -->
+<!-- COMPLETED OVERLAY -->
+<!-- Success toast — non-blocking completion confirmation with Next Order fallback -->
+  </div><!-- /mobile-column (phone frame: overlays live inside it) -->
+</div><!-- /layout-wrapper -->
+<!-- ============================================================
+     JAVASCRIPT
+============================================================ -->
+</body>

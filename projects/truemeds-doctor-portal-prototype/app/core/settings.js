@@ -41,6 +41,9 @@ export const SETTINGS = {
   phonePromptDelay:     { value: 1200, time: true, source: "review tool", ref: "mock phone prompt (B14): time before it answers" },
   // Review tool only (not a product rule): size of one fast-forward step in the review panel
   fastForwardStep:      { value: 60 * SEC, time: true, source: "review tool", ref: "panel button" },
+  // On-screen feedback (RULES §9.5): a toast shows about 4 s. Rx viewer: two taps within this window zoom (app-logic §9).
+  toastDuration:        { value: 4000, source: "rule", ref: "RULES §9.5 (about 4 s)" },
+  doubleTapWindow:      { value: 300, source: "MOCK ASSUMPTION", ref: "Rx viewer double-tap (app-logic §9)" },
   // Earnings (app-logic §11, D-81 F10)
   earningsPerConfirmedRx: { value: 20, source: "rule", ref: "D-81 F10, Apurva 2026-11-02" },
 };

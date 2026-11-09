@@ -1,0 +1,9 @@
+PASS A-OPTIONS-d-default approved schedule/duration choices: d-default
+FAIL A-OPTIONS-d-every-x-hours approved schedule/duration choices: d-every-x-hours
+  source: ui-screens/app-logic.md:223,240-243
+  AssertionError [ERR_ASSERTION]: Choice 4
+    at Object.test (file:///Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype/tests/codex/run-A/options.mjs:8:36)
+    at async run (file:///Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype/tests/codex/run-A/harness.mjs:103:73)
+    at async file:///Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype/tests/codex/run-A/all.mjs:6:1
+PASS A-OPTIONS-d-duration-picker approved schedule/duration choices: d-duration-picker
+2/3 passed

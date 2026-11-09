@@ -6,6 +6,8 @@ import * as signInScreen from "../screens/sign-in.js";
 import * as otpScreen from "../screens/otp.js";
 import * as offerScreen from "../screens/faster-signin-offer.js";
 import * as unlockScreen from "../screens/returning-unlock.js";
+import * as homeScreen from "../screens/home.js";
+import * as caseScreen from "../screens/case.js";
 
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 export const FOLDER_JOURNEY = { "sign-in": "signIn", otp: "otp", "faster-signin-offer": "offer", "returning-unlock": "unlock", home: "home", case: "caseView", prescribe: "prescribe" };
@@ -16,6 +18,9 @@ const renderers = {
   "otp": otpScreen.render,
   "faster-signin-offer": offerScreen.render,
   "returning-unlock": unlockScreen.render,
+  "home": homeScreen.render,
+  "case": caseScreen.render,
+  "prescribe": caseScreen.render,   // Prescribe opens over the case page (step 4)
 };
 
 

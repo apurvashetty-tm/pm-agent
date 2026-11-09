@@ -1,0 +1,270 @@
+/* all */
+*, ::before, ::after { box-sizing: border-box; margin: 0px; padding: 0px; }
+/* all */
+html { font-size: 16px; }
+/* all */
+body { font-family: var(--tm-font); background: var(--tm-surface-secondary); color: var(--tm-content-primary); min-height: 100vh; }
+/* all */
+button { font-family: var(--tm-font); cursor: pointer; border-width: medium; border-style: none; border-color: currentcolor; border-image: none; background: none; color: inherit; font-size: inherit; -webkit-tap-highlight-color: transparent; }
+/* all */
+textarea, input { font-family: var(--tm-font); }
+/* all */
+:root { --phone-h: clamp(640px, calc(100vh - 48px), 844px); --phone-w: calc(var(--phone-h) * 390 / 844); }
+/* all */
+#layout-wrapper { display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; position: relative; }
+/* all */
+#mobile-column { width: 100%; max-width: 430px; height: 100dvh; min-height: 0px; overflow: hidden; display: flex; flex-direction: column; background: var(--tm-surface-secondary); position: relative; flex-shrink: 0; }
+/* all */
+#main-scroll { flex: 1 1 0%; min-height: 0px; overflow-y: auto; }
+/* all */
+#sticky-top-wrapper { position: sticky; top: 0px; z-index: 200; }
+/* d-default d-rx-failed d-disable-sheet d-discard-sheet d-error-dose d-syrup d-sos-only d-sos-on d-duration-picker d-disabled d-every-x-hours d-cream d-inhaler d-injection-default d-drops d-weekly d-food-selected d-scrolled d-header-white */
+#call-btn-icon { display: inline-flex; align-items: center; }
+/* all */
+#main-scroll { padding: var(--tm-space-lg) var(--tm-space-lg) var(--tm-space-2xl); display: flex; flex-direction: column; gap: var(--tm-space-md); }
+/* d-default d-rx-failed d-disable-sheet d-discard-sheet d-error-dose d-syrup d-sos-only d-sos-on d-duration-picker d-disabled d-every-x-hours d-cream d-inhaler d-injection-default d-drops d-weekly d-food-selected d-scrolled d-header-white */
+#case-actionbar { gap: var(--tm-space-sm); }
+/* d-default d-rx-failed d-disable-sheet d-discard-sheet d-error-dose d-syrup d-sos-only d-sos-on d-duration-picker d-disabled d-every-x-hours d-cream d-inhaler d-injection-default d-drops d-weekly d-food-selected d-scrolled d-header-white */
+#case-actionbar { position: fixed; bottom: 0px; left: 50%; transform: translateX(-50%); width: 100%; max-width: 430px; z-index: 150; display: flex; flex-direction: column; }
+/* all */
+@media (max-width: 767px) #main-scroll { padding-bottom: calc(var(--ab-h, 0px) + var(--tm-space-2xl)); }
+/* all */
+@media (max-width: 767px) and (pointer: coarse) body:has(#main-scroll textarea:focus, #main-scroll input:focus) #case-actionbar { display: none; }
+/* d-default d-disable-sheet d-discard-sheet d-error-dose d-error-other d-syrup d-sos-only d-sos-on d-duration-picker d-disabled d-every-x-hours d-cream d-inhaler d-injection-default d-drops d-weekly d-food-selected d-notes-keyboard d-scrolled d-header-white */
+@media (max-width: 767px) and (pointer: coarse) #prescribe-screen:has(textarea:focus, input:focus) #ps-actionbar { display: none; }
+/* d-default d-disable-sheet d-discard-sheet d-error-dose d-error-other d-syrup d-sos-only d-sos-on d-duration-picker d-disabled d-every-x-hours d-cream d-inhaler d-injection-default d-drops d-weekly d-food-selected d-notes-keyboard d-scrolled d-header-white */
+#prescribe-screen { display: none; position: fixed; top: 0px; bottom: 0px; left: 50%; width: 100%; max-width: 430px; transform: translateX(-50%); z-index: 800; flex-direction: column; background: var(--tm-surface-primary); }
+/* d-default d-disable-sheet d-discard-sheet d-error-dose d-error-other d-syrup d-sos-only d-sos-on d-duration-picker d-disabled d-every-x-hours d-cream d-inhaler d-injection-default d-drops d-weekly d-food-selected d-notes-keyboard d-scrolled d-header-white */
+#prescribe-screen.open { display: flex; }
+/* d-default d-disable-sheet d-discard-sheet d-error-dose d-error-other d-syrup d-sos-only d-sos-on d-duration-picker d-disabled d-every-x-hours d-cream d-inhaler d-injection-default d-drops d-weekly d-food-selected d-notes-keyboard d-scrolled d-header-white */
+#prescribe-screen:focus { outline: none; }
+/* d-default d-disable-sheet d-discard-sheet d-error-dose d-error-other d-syrup d-sos-only d-sos-on d-duration-picker d-disabled d-every-x-hours d-cream d-inhaler d-injection-default d-drops d-weekly d-food-selected d-notes-keyboard d-scrolled d-header-white */
+#ps-top { flex-shrink: 0; position: relative; z-index: 2; background: var(--tm-surface-primary); box-shadow: var(--tm-shadow-header); }
+/* d-default d-disable-sheet d-discard-sheet d-error-dose d-error-other d-syrup d-sos-only d-sos-on d-duration-picker d-disabled d-every-x-hours d-cream d-inhaler d-injection-default d-drops d-weekly d-food-selected d-notes-keyboard d-scrolled d-header-white */
+#ps-bar { position: relative; box-shadow: none; }
+/* d-default d-disable-sheet d-discard-sheet d-error-dose d-error-other d-syrup d-sos-only d-sos-on d-duration-picker d-disabled d-every-x-hours d-cream d-inhaler d-injection-default d-drops d-weekly d-food-selected d-notes-keyboard d-scrolled d-header-white */
+#ps-rx { background: var(--tm-surface-brand-subtle); padding: var(--tm-space-sm) var(--tm-space-lg) var(--tm-space-md); transition: background-color 0.3s; }
+/* d-default d-disable-sheet d-discard-sheet d-error-dose d-error-other d-syrup d-sos-only d-sos-on d-duration-picker d-disabled d-every-x-hours d-cream d-inhaler d-injection-default d-drops d-weekly d-food-selected d-notes-keyboard d-scrolled d-header-white */
+.ps-rx-label { display: flex; align-items: center; gap: var(--tm-space-xs); margin-bottom: var(--tm-space-2xs); font-size: var(--tm-font-size-body-xs); line-height: var(--tm-font-lineheight-xs); font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-brand); }
+/* d-default d-disable-sheet d-discard-sheet d-error-dose d-error-other d-syrup d-sos-only d-sos-on d-duration-picker d-disabled d-every-x-hours d-cream d-inhaler d-injection-default d-drops d-weekly d-food-selected d-notes-keyboard d-scrolled d-header-white */
+#ps-prints-text { font-size: var(--tm-font-size-body-lg); line-height: var(--tm-font-lineheight-md); font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-primary); display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; overflow-wrap: anywhere; }
+/* d-default d-disable-sheet d-discard-sheet d-error-dose d-error-other d-syrup d-sos-only d-sos-on d-duration-picker d-disabled d-every-x-hours d-cream d-inhaler d-injection-default d-drops d-weekly d-food-selected d-notes-keyboard d-scrolled d-header-white */
+@media (prefers-reduced-motion: reduce) #ps-rx { transition: none; }
+/* d-default d-disable-sheet d-discard-sheet d-error-dose d-error-other d-syrup d-sos-only d-sos-on d-duration-picker d-disabled d-every-x-hours d-cream d-inhaler d-injection-default d-drops d-weekly d-food-selected d-notes-keyboard d-scrolled d-header-white */
+#ps-heading { flex: 1 1 0%; min-width: 0px; }
+/* d-default d-disable-sheet d-discard-sheet d-error-dose d-error-other d-syrup d-sos-only d-sos-on d-duration-picker d-disabled d-every-x-hours d-cream d-inhaler d-injection-default d-drops d-weekly d-food-selected d-notes-keyboard d-scrolled d-header-white */
+#ps-form { display: block; font-size: var(--tm-font-size-body-xs); line-height: var(--tm-font-lineheight-xs); color: var(--tm-content-secondary); }
+/* d-default d-disable-sheet d-discard-sheet d-error-dose d-error-other d-syrup d-sos-only d-sos-on d-duration-picker d-disabled d-every-x-hours d-cream d-inhaler d-injection-default d-drops d-weekly d-food-selected d-notes-keyboard d-scrolled d-header-white */
+#ps-body { flex: 1 1 0%; min-height: 0px; overflow-y: auto; overscroll-behavior: contain; background: var(--tm-surface-secondary); padding: var(--tm-space-lg); display: flex; flex-direction: column; gap: var(--tm-space-md); }
+/* d-default d-disable-sheet d-discard-sheet d-error-dose d-error-other d-syrup d-sos-only d-sos-on d-duration-picker d-disabled d-every-x-hours d-cream d-inhaler d-injection-default d-drops d-weekly d-food-selected d-notes-keyboard d-scrolled d-header-white */
+#ps-dynamic { display: flex; flex-direction: column; gap: var(--tm-space-md); }
+/* d-default d-disable-sheet d-discard-sheet d-error-dose d-error-other d-syrup d-sos-only d-sos-on d-duration-picker d-disabled d-every-x-hours d-cream d-inhaler d-injection-default d-drops d-weekly d-food-selected d-notes-keyboard d-scrolled d-header-white */
+.ps-card { display: flex; flex-direction: column; gap: var(--tm-space-xl); }
+/* d-sos-on */
+.ps-card > .ps-sub { margin-top: 0px; }
+/* d-default d-disable-sheet d-discard-sheet d-error-dose d-syrup d-sos-only d-sos-on d-duration-picker d-disabled d-every-x-hours d-cream d-inhaler d-injection-default d-drops d-weekly d-food-selected d-scrolled d-header-white */
+#ps-actionbar { flex-shrink: 0; position: relative; }
+/* d-default d-disable-sheet d-discard-sheet d-error-dose d-error-other d-syrup d-sos-only d-sos-on d-duration-picker d-disabled d-every-x-hours d-cream d-inhaler d-injection-default d-drops d-weekly d-food-selected d-notes-keyboard d-scrolled d-header-white */
+.ps-label { display: block; margin-bottom: var(--tm-space-sm); }
+/* d-default d-disable-sheet d-discard-sheet d-error-dose d-error-other d-syrup d-sos-only d-sos-on d-duration-picker d-disabled d-every-x-hours d-cream d-inhaler d-injection-default d-drops d-weekly d-food-selected d-notes-keyboard d-scrolled d-header-white */
+.ps-label .tm-muted, .tm-field__label .tm-muted { font-weight: var(--tm-font-weight-regular); }
+/* d-default d-disable-sheet d-discard-sheet d-error-dose d-error-other d-syrup d-sos-only d-sos-on d-duration-picker d-disabled d-every-x-hours d-cream d-inhaler d-injection-default d-drops d-weekly d-food-selected d-notes-keyboard d-scrolled d-header-white */
+.ps-chips { display: flex; flex-wrap: wrap; gap: var(--tm-space-sm); }
+/* d-default d-disable-sheet d-discard-sheet d-error-dose d-error-other d-syrup d-sos-only d-sos-on d-duration-picker d-disabled d-every-x-hours d-cream d-inhaler d-injection-default d-drops d-weekly d-food-selected d-notes-keyboard d-scrolled d-header-white */
+.ps-chips .tm-chip { white-space: nowrap; }
+/* d-default d-disable-sheet d-discard-sheet d-error-dose d-error-other d-syrup d-sos-only d-sos-on d-duration-picker d-disabled d-every-x-hours d-cream d-inhaler d-injection-default d-drops d-weekly d-food-selected d-notes-keyboard d-scrolled d-header-white */
+.ps-grid { display: grid; grid-template-columns: repeat(var(--cols, 4), minmax(0, 1fr)); gap: var(--tm-space-sm); }
+/* d-default d-disable-sheet d-discard-sheet d-error-dose d-syrup d-sos-on d-duration-picker d-disabled d-cream d-drops d-food-selected d-notes-keyboard d-scrolled d-header-white */
+.ps-slots { display: flex; flex-direction: column; gap: var(--tm-space-sm); }
+/* d-default d-disable-sheet d-discard-sheet d-error-dose d-syrup d-sos-on d-duration-picker d-disabled d-cream d-drops d-food-selected d-notes-keyboard d-scrolled d-header-white */
+.ps-slot { display: grid; grid-template-columns: var(--tm-space-xl) 1fr; align-items: center; gap: var(--tm-space-md); }
+/* d-default d-disable-sheet d-discard-sheet d-error-dose d-syrup d-sos-on d-duration-picker d-disabled d-cream d-drops d-food-selected d-notes-keyboard d-scrolled d-header-white */
+.ps-slot-key { text-align: center; font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-secondary); }
+/* d-default d-disable-sheet d-discard-sheet d-error-dose d-error-other d-syrup d-sos-on d-duration-picker d-disabled d-every-x-hours d-cream d-injection-default d-drops d-weekly d-food-selected d-notes-keyboard d-scrolled d-header-white */
+.ps-helper { font-size: var(--tm-font-size-body-xs); line-height: var(--tm-font-lineheight-xs); color: var(--tm-content-secondary); margin-top: var(--tm-space-sm); }
+/* d-error-other d-sos-on */
+.ps-gap { margin-top: var(--tm-space-md); }
+/* d-default d-disable-sheet d-discard-sheet d-error-dose d-error-other d-syrup d-sos-only d-sos-on d-duration-picker d-disabled d-every-x-hours d-cream d-inhaler d-injection-default d-drops d-weekly d-food-selected d-notes-keyboard d-scrolled d-header-white */
+.ps-dur-field { background: var(--tm-surface-primary); border: 1px solid var(--tm-border-default); border-radius: var(--tm-radius-md); }
+/* d-duration-picker */
+.ps-dur-field.is-open { border-color: var(--tm-border-focus); }
+/* d-default d-disable-sheet d-discard-sheet d-error-dose d-error-other d-syrup d-sos-only d-sos-on d-duration-picker d-disabled d-every-x-hours d-cream d-inhaler d-injection-default d-drops d-weekly d-food-selected d-notes-keyboard d-scrolled d-header-white */
+.ps-dur-toggle { display: flex; align-items: center; justify-content: space-between; gap: var(--tm-space-md); width: 100%; text-align: left; padding: var(--tm-space-md); border-radius: var(--tm-radius-md); }
+/* d-default d-disable-sheet d-discard-sheet d-error-dose d-error-other d-syrup d-sos-only d-sos-on d-duration-picker d-disabled d-every-x-hours d-cream d-inhaler d-injection-default d-drops d-weekly d-food-selected d-notes-keyboard d-scrolled d-header-white */
+.ps-dur-toggle .tm-icon { color: var(--tm-content-secondary); flex-shrink: 0; }
+/* d-duration-picker */
+.ps-dur-panel { padding: 0 var(--tm-space-md) var(--tm-space-md); }
+/* d-sos-on */
+.ps-sub { margin-top: var(--tm-space-md); padding-left: var(--tm-space-md); border-left: 2px solid var(--tm-border-subtle); display: flex; flex-direction: column; }
+/* d-default d-disable-sheet d-discard-sheet d-error-dose d-error-other d-syrup d-sos-only d-sos-on d-duration-picker d-disabled d-every-x-hours d-cream d-inhaler d-injection-default d-drops d-weekly d-food-selected d-notes-keyboard d-scrolled d-header-white */
+.ps-dur-val { font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-primary); }
+/* d-default d-disable-sheet d-discard-sheet d-error-dose d-error-other d-syrup d-sos-only d-sos-on d-duration-picker d-disabled d-every-x-hours d-cream d-inhaler d-injection-default d-drops d-weekly d-food-selected d-notes-keyboard d-scrolled d-header-white */
+.ps-dur-val span { display: block; font-size: var(--tm-font-size-body-xs); line-height: var(--tm-font-lineheight-xs); font-weight: var(--tm-font-weight-regular); color: var(--tm-content-secondary); }
+/* d-error-other */
+.ps-unit { font-size: var(--tm-font-size-body-md); color: var(--tm-content-secondary); }
+/* all */
+.tm-field__control textarea { resize: none; min-height: calc(var(--tm-space-2xl) * 2); }
+/* d-rx-failed */
+#rx-overlay { display: none; position: fixed; top: 0px; bottom: 0px; left: 50%; width: 100%; max-width: 430px; transform: translateX(-50%); z-index: 800; flex-direction: column; background: var(--tm-surface-brand-dark); }
+/* d-rx-failed */
+#rx-overlay.open { display: flex; }
+/* d-rx-failed */
+#rx-overlay-header { display: flex; align-items: center; gap: var(--tm-space-sm); flex-shrink: 0; padding: var(--tm-space-md) var(--tm-space-lg); border-bottom: 1px solid var(--tm-surface-brand-strong); }
+/* d-rx-failed */
+#rx-overlay-title { flex: 1 1 0%; min-width: 0px; font-size: var(--tm-font-size-body-lg); line-height: var(--tm-font-lineheight-md); font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-inverse); }
+/* d-rx-failed */
+#rx-overlay-body { flex: 1 1 0%; overflow: hidden; display: flex; align-items: center; justify-content: center; position: relative; touch-action: none; }
+/* all */
+#medicines-section { background: var(--tm-surface-primary); border-radius: var(--tm-radius-lg); box-shadow: var(--tm-shadow-card); padding: var(--tm-space-lg); }
+/* all */
+#medicines-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--tm-space-xs); }
+/* all */
+.section-title--inline { margin: 0px; }
+/* all */
+#medicines-count { font-size: var(--tm-font-size-body-xs); line-height: var(--tm-font-lineheight-xs); font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-secondary); }
+/* all */
+#medicines-list { display: flex; flex-direction: column; }
+/* all */
+.medicine-item { cursor: pointer; user-select: none; transition: opacity 150ms; }
+/* all */
+.medicine-item:active { background: var(--tm-surface-secondary); }
+/* all */
+.med-icon { display: flex; align-items: center; justify-content: center; color: var(--tm-content-secondary); }
+/* all */
+.medicine-item > .tm-icon:last-child { color: var(--tm-content-tertiary); }
+/* all */
+#notes-section { background: var(--tm-surface-primary); border-radius: var(--tm-radius-lg); box-shadow: var(--tm-shadow-card); padding: var(--tm-space-lg); display: flex; flex-direction: column; gap: var(--tm-space-md); }
+/* all */
+#notes-section .tm-section-title { margin: 0px; }
+/* all */
+#notes-section textarea { min-height: calc(var(--tm-space-3xl) + var(--tm-space-lg)); resize: none; }
+/* d-disable-sheet d-discard-sheet */
+#sheet-overlay { display: none; position: fixed; top: 0px; bottom: 0px; background: rgb(0 0 0 / calc(var(--tm-overlay-default) * 1%)); z-index: 900; align-items: flex-end; justify-content: center; }
+/* d-disable-sheet d-discard-sheet */
+#sheet-overlay.open { display: flex; }
+/* d-disable-sheet d-discard-sheet */
+.bottom-sheet { display: none; width: 100%; max-width: 430px; max-height: 85vh; background: var(--tm-surface-primary); border-radius: var(--tm-radius-2xl) var(--tm-radius-2xl) 0 0; transform: translateY(100%); transition: transform 0.28s cubic-bezier(0.32, 0.72, 0, 1); }
+/* d-disable-sheet d-discard-sheet */
+.bottom-sheet.open { display: block; transform: translateY(0px); }
+/* all */
+@media (max-width: 767px) body:has(#sheet-overlay.open), body:has(#rx-overlay.open), body:has(#prescribe-screen.open) { overflow: hidden; }
+/* d-disable-sheet */
+.reason-list { display: flex; flex-direction: column; }
+/* d-default d-rx-failed d-disable-sheet d-discard-sheet d-error-dose d-syrup d-sos-only d-sos-on d-duration-picker d-disabled d-every-x-hours d-cream d-inhaler d-injection-default d-drops d-weekly d-food-selected d-scrolled d-header-white */
+body:not([data-app="case"]) :is(#main-scroll, #case-actionbar, #compact-strip, #demo-bar-scenarios, #demo-call-sim, #demo-bar-row2) { display: none !important; }
+/* all */
+@media (min-width: 768px) html { scrollbar-gutter: stable both-edges; }
+/* all */
+@media (min-width: 768px) #layout-wrapper { padding: var(--tm-space-lg) 0; }
+/* all */
+@media (min-width: 768px) #mobile-column { width: var(--phone-w); height: var(--phone-h); min-height: 0px; max-width: none; display: flex; flex-direction: column; overflow: hidden; border: 1px solid var(--tm-border-default); border-radius: var(--tm-radius-2xl); box-shadow: var(--tm-shadow-header); transform: translateZ(0px); }
+/* all */
+@media (min-width: 768px) #sticky-top-wrapper { position: relative; flex-shrink: 0; }
+/* all */
+@media (min-width: 768px) #main-scroll { flex: 1 1 0%; min-height: 0px; overflow-y: auto; }
+/* d-disable-sheet d-discard-sheet */
+@media (min-width: 768px) #sheet-overlay { left: 0px !important; width: 100% !important; }
+/* d-rx-failed */
+@media (min-width: 768px) #rx-overlay { left: 0px; width: 100%; max-width: none; transform: none; }
+/* d-default d-disable-sheet d-discard-sheet d-error-dose d-error-other d-syrup d-sos-only d-sos-on d-duration-picker d-disabled d-every-x-hours d-cream d-inhaler d-injection-default d-drops d-weekly d-food-selected d-notes-keyboard d-scrolled d-header-white */
+@media (min-width: 768px) #prescribe-screen { left: 0px; width: 100%; max-width: none; transform: none; }
+/* d-default d-rx-failed d-disable-sheet d-discard-sheet d-error-dose d-syrup d-sos-only d-sos-on d-duration-picker d-disabled d-every-x-hours d-cream d-inhaler d-injection-default d-drops d-weekly d-food-selected d-scrolled d-header-white */
+@media (min-width: 768px) #case-actionbar { position: relative; left: auto; transform: none; max-width: none; flex-shrink: 0; }
+/* d-disable-sheet d-discard-sheet */
+@media (min-width: 768px) .bottom-sheet { max-width: none; max-height: 85%; }
+/* d-disable-sheet d-discard-sheet */
+@media (min-width: 768px) .bottom-sheet.open { display: flex; flex-direction: column; }
+/* all */
+#main-scroll { gap: var(--tm-space-lg); }
+/* d-default d-disable-sheet d-discard-sheet d-error-dose d-error-other d-syrup d-sos-only d-sos-on d-duration-picker d-disabled d-every-x-hours d-cream d-inhaler d-injection-default d-drops d-weekly d-food-selected d-notes-keyboard d-scrolled d-header-white */
+#ps-body, #ps-dynamic { gap: var(--tm-space-lg); }
+/* d-error-other d-sos-only d-sos-on d-every-x-hours d-inhaler d-injection-default d-weekly */
+#ps-body .ps-section > .ps-grid { width: calc(100% - var(--tm-space-xl) - var(--tm-space-md)) !important; margin-left: 0px !important; }
+/* d-sos-on */
+#ps-body .ps-sub .ps-section > .ps-grid { width: calc(100% - var(--tm-space-xl) - var(--tm-space-md) + 14px) !important; }
+/* d-duration-picker */
+#ps-body .ps-dur-units { margin-top: var(--tm-space-sm); }
+/* d-default d-disable-sheet d-discard-sheet d-error-dose d-syrup d-sos-on d-duration-picker d-disabled d-cream d-drops d-food-selected d-notes-keyboard d-scrolled d-header-white */
+#ps-body .ps-slot-key { text-align: left; }
+/* all */
+#medicines-list .med-name, #ps-title, .rx-med-name { text-wrap: balance; }
+/* d-notes-keyboard */
+#kb-sim .kb-blank { background: none; }
+/* d-rx-failed */
+#rx-overlay-body:has(> .concept-stack) { padding-top: var(--tm-space-lg); }
+/* all */
+html.capture body { background: var(--tm-surface-secondary); }
+/* all */
+#mobile-column { transform: translateZ(0px); }
+/* all */
+html.capture #mobile-column { height: 844px; max-height: 844px; overflow: hidden; display: flex; flex-direction: column; margin: 0px auto; width: 390px; }
+/* all */
+html.capture #main-scroll { flex: 1 1 auto; min-height: 0px; overflow-y: auto; }
+/* all */
+#case-tools { display: flex; flex-direction: column; gap: var(--tm-space-sm); }
+/* all */
+#case-tools .ct-row { display: flex; align-items: center; justify-content: space-between; gap: var(--tm-space-sm); min-height: 48px; }
+/* all */
+#case-tools .ct-details { display: inline-flex; align-items: center; gap: var(--tm-space-xs); min-height: 48px; border: 0px; background: transparent; padding: 0 var(--tm-space-xs) 0 0; font-style: inherit; font-variant: inherit; font-weight: inherit; font-stretch: inherit; font-family: inherit; font-optical-sizing: inherit; font-size-adjust: inherit; font-kerning: inherit; font-feature-settings: inherit; font-variation-settings: inherit; font-language-override: inherit; font-size: var(--tm-font-size-body-lg); line-height: var(--tm-font-lineheight-md); color: var(--tm-content-primary); cursor: pointer; }
+/* all */
+#case-tools .ct-details .tm-icon { width: 20px; height: 20px; color: var(--tm-content-secondary); }
+/* d-error-other d-notes-keyboard */
+#kb-sim { display: none; position: absolute; left: 0px; right: 0px; bottom: 0px; height: 256px; background: rgb(212, 215, 221); grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(4, 1fr); gap: 5px; padding: 6px 5px 12px; box-sizing: border-box; z-index: 1000; }
+/* d-error-other d-notes-keyboard */
+#kb-sim div { background: rgb(255, 255, 255); border-radius: 5px; display: flex; align-items: center; justify-content: center; font-family: inherit; font-size: var(--tm-font-size-title-md); line-height: var(--tm-font-lineheight-lg); color: var(--tm-content-primary); }
+/* d-error-other d-notes-keyboard */
+body.kb-open #kb-sim { display: grid; }
+/* d-error-other d-notes-keyboard */
+body.kb-open #main-scroll, body.kb-open #ps-body { padding-bottom: 256px; }
+/* d-error-dose */
+.ps-dose-error { margin-top: var(--tm-space-xs); color: var(--tm-feedback-error-content); }
+/* d-duration-picker */
+.ps-dur-units { margin-left: calc(-1 * var(--tm-space-md)); width: calc(100% + var(--tm-space-md)); }
+/* d-rx-failed */
+.concept-stack { display: flex; flex-direction: column; gap: var(--tm-space-lg); width: 100%; box-sizing: border-box; padding: 0 var(--tm-space-page); }
+/* all */
+#medicines-count, .med-detail, #pcb-label.pcb-label, .pdb-expand-label, .pdb-expand-value { font-size: 14px !important; line-height: 20px !important; }
+/* d-default d-disable-sheet d-discard-sheet d-error-dose d-error-other d-syrup d-sos-only d-sos-on d-duration-picker d-disabled d-every-x-hours d-cream d-inhaler d-injection-default d-drops d-weekly d-food-selected d-notes-keyboard d-scrolled d-header-white */
+#ps-form, .ps-rx-label, #ps-dur-val, #ps-sos-help, #rx-zoom-label, #rx-hint { font-size: 14px !important; line-height: 20px !important; }
+/* d-default d-disable-sheet d-discard-sheet d-error-dose d-error-other d-syrup d-sos-only d-sos-on d-duration-picker d-disabled d-every-x-hours d-cream d-inhaler d-injection-default d-drops d-weekly d-food-selected d-notes-keyboard d-scrolled d-header-white */
+#ps-dur-val, #ps-dur-val *, #ps-dur-value, #ps-dur-value * { font-size: 14px !important; line-height: 20px !important; }
+/* d-default d-disable-sheet d-discard-sheet d-error-dose d-error-other d-syrup d-sos-on d-duration-picker d-disabled d-every-x-hours d-cream d-injection-default d-drops d-weekly d-food-selected d-notes-keyboard d-scrolled d-header-white */
+.ps-helper { font-size: 14px !important; line-height: 20px !important; }
+/* d-default d-disable-sheet d-discard-sheet d-error-dose d-error-other d-syrup d-sos-only d-sos-on d-duration-picker d-disabled d-every-x-hours d-cream d-inhaler d-injection-default d-drops d-weekly d-food-selected d-notes-keyboard d-scrolled d-header-white */
+.ps-grid { width: 100%; box-sizing: border-box; grid-template-columns: repeat(4, minmax(0px, 1fr)) !important; gap: var(--tm-space-sm) !important; }
+/* d-error-other d-sos-only d-sos-on d-every-x-hours d-inhaler d-injection-default d-weekly */
+.ps-section > .ps-grid { width: calc(100% - var(--tm-space-xl) + var(--tm-space-2xs)) !important; margin-left: 0px !important; }
+/* d-duration-picker */
+.ps-dur-panel > .ps-grid { width: calc(100% - var(--tm-space-md) + var(--tm-space-2xs)) !important; margin-left: calc(-1 * var(--tm-space-md)) !important; }
+/* d-rx-failed */
+#rx-overlay-header { flex-wrap: wrap; row-gap: var(--tm-space-xs); }
+/* d-default d-rx-failed d-disable-sheet d-discard-sheet d-error-dose d-syrup d-sos-only d-sos-on d-duration-picker d-disabled d-every-x-hours d-cream d-inhaler d-injection-default d-drops d-weekly d-food-selected d-scrolled d-header-white */
+#case-actionbar { display: flex; flex-direction: column; gap: var(--tm-space-sm); }
+/* d-default d-rx-failed d-disable-sheet d-discard-sheet d-error-dose d-syrup d-sos-only d-sos-on d-duration-picker d-disabled d-every-x-hours d-cream d-inhaler d-injection-default d-drops d-weekly d-food-selected d-scrolled d-header-white */
+#case-actionbar[hidden], body:has(#main-scroll textarea:focus) #case-actionbar, body:has(#ps-body textarea:focus) #case-actionbar { display: none !important; }
+/* d-default d-rx-failed d-disable-sheet d-discard-sheet d-error-dose d-syrup d-sos-only d-sos-on d-duration-picker d-disabled d-every-x-hours d-cream d-inhaler d-injection-default d-drops d-weekly d-food-selected d-scrolled d-header-white */
+#case-actionbar > .tm-btn--lg { order: 1; }
+/* d-rx-failed */
+#rx-overlay-body { flex-direction: column; justify-content: flex-start; padding-top: var(--tm-space-xs); }
+/* d-default d-disable-sheet d-discard-sheet d-error-dose d-error-other d-syrup d-sos-only d-sos-on d-duration-picker d-disabled d-every-x-hours d-cream d-inhaler d-injection-default d-drops d-weekly d-food-selected d-notes-keyboard d-scrolled d-header-white */
+#ps-rx, #ps-rx.is-updated { background: var(--tm-surface-brand-subtle) !important; }
+/* d-default d-disable-sheet d-discard-sheet d-error-dose d-error-other d-syrup d-sos-only d-sos-on d-duration-picker d-disabled d-every-x-hours d-cream d-inhaler d-injection-default d-drops d-weekly d-food-selected d-notes-keyboard d-scrolled d-header-white */
+.ps-rx-label { color: var(--tm-content-brand) !important; }
+/* d-default d-disable-sheet d-discard-sheet d-error-dose d-error-other d-syrup d-sos-only d-sos-on d-duration-picker d-disabled d-every-x-hours d-cream d-inhaler d-injection-default d-drops d-weekly d-food-selected d-notes-keyboard d-scrolled d-header-white */
+#psl-duration + .ps-dur-field { margin-top: calc(var(--tm-space-xl) * -1); }
+/* all */
+#main-scroll { padding-left: var(--tm-space-page) !important; padding-right: var(--tm-space-page) !important; }
+/* d-default d-rx-failed d-disable-sheet d-discard-sheet d-error-dose d-syrup d-sos-only d-sos-on d-duration-picker d-disabled d-every-x-hours d-cream d-inhaler d-injection-default d-drops d-weekly d-food-selected d-scrolled d-header-white */
+#case-actionbar { padding-left: var(--tm-space-page) !important; padding-right: var(--tm-space-page) !important; }
+/* d-default d-disable-sheet d-discard-sheet d-error-dose d-error-other d-syrup d-sos-only d-sos-on d-duration-picker d-disabled d-every-x-hours d-cream d-inhaler d-injection-default d-drops d-weekly d-food-selected d-notes-keyboard d-scrolled d-header-white */
+#ps-body, #ps-actionbar { padding-left: var(--tm-space-page) !important; padding-right: var(--tm-space-page) !important; }
+/* d-disable-sheet d-discard-sheet */
+.bottom-sheet { padding-left: var(--tm-space-page) !important; padding-right: var(--tm-space-page) !important; }
+/* all */
+#pdb-view-rx-btn { pointer-events: auto; }
+/* d-default d-disable-sheet d-discard-sheet d-error-dose d-error-other d-syrup d-sos-only d-sos-on d-duration-picker d-disabled d-every-x-hours d-cream d-inhaler d-injection-default d-drops d-weekly d-food-selected d-notes-keyboard d-scrolled d-header-white */
+.bottom-sheet:focus, .bottom-sheet:focus-visible, #prescribe-screen:focus, #prescribe-screen:focus-visible, #concept-leave .cl-sheet:focus, #concept-leave .cl-sheet:focus-visible { outline: none !important; box-shadow: none !important; }
+/* d-disable-sheet d-discard-sheet */
+.bottom-sheet, .bottom-sheet :focus { outline: none; }
+/* d-default d-rx-failed d-disable-sheet d-discard-sheet d-error-dose d-syrup d-sos-only d-sos-on d-duration-picker d-disabled d-every-x-hours d-cream d-inhaler d-injection-default d-drops d-weekly d-food-selected d-scrolled d-header-white */
+#call-initiate-btn, #call-initiate-btn *, .pulsing, .pulsing * { animation: auto ease 0s 1 normal none running none !important; }

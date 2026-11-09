@@ -1,0 +1,146 @@
+/* all */
+*, ::before, ::after { box-sizing: border-box; margin: 0px; padding: 0px; }
+/* all */
+html { font-size: 16px; }
+/* all */
+body { font-family: var(--tm-font); background: var(--tm-surface-secondary); color: var(--tm-content-primary); min-height: 100vh; }
+/* all */
+button { font-family: var(--tm-font); cursor: pointer; border-width: medium; border-style: none; border-color: currentcolor; border-image: none; background: none; color: inherit; font-size: inherit; -webkit-tap-highlight-color: transparent; }
+/* all */
+textarea, input { font-family: var(--tm-font); }
+/* all */
+:root { --phone-h: clamp(640px, calc(100vh - 48px), 844px); --phone-w: calc(var(--phone-h) * 390 / 844); }
+/* all */
+#layout-wrapper { display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; position: relative; }
+/* all */
+#mobile-column { width: 100%; max-width: 430px; height: 100dvh; min-height: 0px; overflow: hidden; display: flex; flex-direction: column; background: var(--tm-surface-secondary); position: relative; flex-shrink: 0; }
+/* all */
+#main-scroll { flex: 1 1 0%; min-height: 0px; overflow-y: auto; }
+/* all */
+#sticky-top-wrapper { position: sticky; top: 0px; z-index: 200; }
+/* a-back-blocked t02-calling */
+#action-zone { display: flex; flex-direction: column; gap: var(--tm-space-md); }
+/* a-back-blocked t02-calling */
+#action-zone > .tm-section-title { margin-bottom: 0px; }
+/* a-back-blocked t02-calling */
+#pre-call-brief { display: none; }
+/* a-back-blocked t02-calling */
+#pre-call-brief.visible { display: flex; }
+/* a-back-blocked t02-calling */
+.pcb-body { display: flex; flex-direction: column; gap: var(--tm-space-2xs); min-width: 0px; }
+/* a-back-blocked t02-calling */
+.pcb-text { font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); color: var(--tm-content-primary); }
+/* all */
+#main-scroll { padding: var(--tm-space-lg) var(--tm-space-lg) var(--tm-space-2xl); display: flex; flex-direction: column; gap: var(--tm-space-md); }
+/* t10a-confirmed e-availability-ended */
+body:has(#success-toast.show) #main-scroll { padding-bottom: calc(var(--tm-space-3xl) * 3); }
+/* all */
+#case-actionbar { gap: var(--tm-space-sm); }
+/* all */
+#case-actionbar { position: fixed; bottom: 0px; left: 50%; transform: translateX(-50%); width: 100%; max-width: 430px; z-index: 150; display: flex; flex-direction: column; }
+/* all */
+@media (max-width: 767px) #main-scroll { padding-bottom: calc(var(--ab-h, 0px) + var(--tm-space-2xl)); }
+/* all */
+@media (max-width: 767px) and (pointer: coarse) body:has(#main-scroll textarea:focus, #main-scroll input:focus) #case-actionbar { display: none; }
+/* all */
+.tm-field__control textarea { resize: none; min-height: calc(var(--tm-space-2xl) * 2); }
+/* all */
+#medicines-section { background: var(--tm-surface-primary); border-radius: var(--tm-radius-lg); box-shadow: var(--tm-shadow-card); padding: var(--tm-space-lg); }
+/* all */
+#medicines-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--tm-space-xs); }
+/* all */
+.section-title--inline { margin: 0px; }
+/* all */
+#medicines-count { font-size: var(--tm-font-size-body-xs); line-height: var(--tm-font-lineheight-xs); font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-secondary); }
+/* all */
+#medicines-list { display: flex; flex-direction: column; }
+/* all */
+.medicine-item { cursor: pointer; user-select: none; transition: opacity 150ms; }
+/* all */
+.medicine-item:active { background: var(--tm-surface-secondary); }
+/* all */
+.med-icon { display: flex; align-items: center; justify-content: center; color: var(--tm-content-secondary); }
+/* a-back-blocked t02-calling */
+.medicine-item > .tm-icon:last-child { color: var(--tm-content-tertiary); }
+/* all */
+#notes-section { background: var(--tm-surface-primary); border-radius: var(--tm-radius-lg); box-shadow: var(--tm-shadow-card); padding: var(--tm-space-lg); display: flex; flex-direction: column; gap: var(--tm-space-md); }
+/* all */
+#notes-section .tm-section-title { margin: 0px; }
+/* all */
+#notes-section textarea { min-height: calc(var(--tm-space-3xl) + var(--tm-space-lg)); resize: none; }
+/* t10a-confirmed e-availability-ended */
+#success-toast { bottom: var(--tm-space-lg); opacity: 0; transform: translateY(120%); transition: opacity 0.25s, transform 0.3s cubic-bezier(0.22, 1, 0.36, 1); pointer-events: none; }
+/* t10a-confirmed e-availability-ended */
+#success-toast.show { opacity: 1; transform: translateY(0px); pointer-events: auto; }
+/* t10a-confirmed e-availability-ended */
+#success-toast-title { white-space: nowrap; }
+/* all */
+body:not([data-app="case"]) :is(#main-scroll, #case-actionbar, #compact-strip, #demo-bar-scenarios, #demo-call-sim, #demo-bar-row2) { display: none !important; }
+/* all */
+@media (min-width: 768px) html { scrollbar-gutter: stable both-edges; }
+/* all */
+@media (min-width: 768px) #layout-wrapper { padding: var(--tm-space-lg) 0; }
+/* all */
+@media (min-width: 768px) #mobile-column { width: var(--phone-w); height: var(--phone-h); min-height: 0px; max-width: none; display: flex; flex-direction: column; overflow: hidden; border: 1px solid var(--tm-border-default); border-radius: var(--tm-radius-2xl); box-shadow: var(--tm-shadow-header); transform: translateZ(0px); }
+/* all */
+@media (min-width: 768px) #sticky-top-wrapper { position: relative; flex-shrink: 0; }
+/* all */
+@media (min-width: 768px) #main-scroll { flex: 1 1 0%; min-height: 0px; overflow-y: auto; }
+/* all */
+@media (min-width: 768px) #case-actionbar { position: relative; left: auto; transform: none; max-width: none; flex-shrink: 0; }
+/* t10a-confirmed e-availability-ended */
+@media (min-width: 768px) #success-toast { left: var(--tm-space-lg) !important; width: calc(100% - 2 * var(--tm-space-lg)) !important; }
+/* all */
+#main-scroll { gap: var(--tm-space-lg); }
+/* t10a-confirmed e-availability-ended */
+body #main-scroll #success-toast.show { margin: 0px; }
+/* all */
+#medicines-list .med-name, #ps-title, .rx-med-name { text-wrap: balance; }
+/* all */
+html.capture body { background: var(--tm-surface-secondary); }
+/* all */
+#mobile-column { transform: translateZ(0px); }
+/* all */
+html.capture #mobile-column { height: 844px; max-height: 844px; overflow: hidden; display: flex; flex-direction: column; margin: 0px auto; width: 390px; }
+/* all */
+html.capture #main-scroll { flex: 1 1 auto; min-height: 0px; overflow-y: auto; }
+/* all */
+#case-tools { display: flex; flex-direction: column; gap: var(--tm-space-sm); }
+/* all */
+#case-tools .ct-row { display: flex; align-items: center; justify-content: space-between; gap: var(--tm-space-sm); min-height: 48px; }
+/* all */
+#case-tools .ct-details { display: inline-flex; align-items: center; gap: var(--tm-space-xs); min-height: 48px; border: 0px; background: transparent; padding: 0 var(--tm-space-xs) 0 0; font-style: inherit; font-variant: inherit; font-weight: inherit; font-stretch: inherit; font-family: inherit; font-optical-sizing: inherit; font-size-adjust: inherit; font-kerning: inherit; font-feature-settings: inherit; font-variation-settings: inherit; font-language-override: inherit; font-size: var(--tm-font-size-body-lg); line-height: var(--tm-font-lineheight-md); color: var(--tm-content-primary); cursor: pointer; }
+/* all */
+#case-tools .ct-details .tm-icon { width: 20px; height: 20px; color: var(--tm-content-secondary); }
+/* a-back-blocked */
+#concept-toast { position: absolute; left: var(--tm-space-xl); right: var(--tm-space-xl); bottom: calc(var(--concept-bar-h,0px) + var(--tm-space-sm)); z-index: 55; display: flex; justify-content: center; pointer-events: none; }
+/* a-back-blocked */
+#concept-toast > .tm-toast { position: relative; left: auto; right: auto; bottom: auto; transform: none; text-align: center; }
+/* t10a-confirmed e-availability-ended */
+#success-toast.show { margin: 0 0 var(--tm-space-sm); position: static !important; left: auto !important; top: auto !important; bottom: auto !important; width: 100% !important; transform: none !important; z-index: auto !important; }
+/* t10a-confirmed e-availability-ended */
+#concept-back-home { display: none; }
+/* t10a-confirmed e-availability-ended */
+body.concept-closed #concept-back-home { display: flex; }
+/* a-back-blocked t02-calling */
+#main-scroll > .concept-new, #case-actionbar > .concept-new:not([class*="notice"]), #case-actionbar > .concept-new[class*="question"] { margin-top: 0px; }
+/* all */
+#medicines-count, .med-detail, #pcb-label.pcb-label, .pdb-expand-label, .pdb-expand-value { font-size: 14px !important; line-height: 20px !important; }
+/* all */
+#case-actionbar { display: flex; flex-direction: column; gap: var(--tm-space-sm); }
+/* all */
+#case-actionbar[hidden], body:has(#main-scroll textarea:focus) #case-actionbar, body:has(#ps-body textarea:focus) #case-actionbar { display: none !important; }
+/* t10a-confirmed e-availability-ended */
+#case-actionbar > .tm-btn--lg { order: 1; }
+/* t10a-confirmed e-availability-ended */
+#concept-back-home { order: 2; }
+/* t10a-confirmed e-availability-ended */
+body.concept-closed #main-scroll { pointer-events: none; }
+/* t10a-confirmed e-availability-ended */
+body.concept-closed #success-toast { pointer-events: auto; }
+/* all */
+#main-scroll { padding-left: var(--tm-space-page) !important; padding-right: var(--tm-space-page) !important; }
+/* all */
+#case-actionbar { padding-left: var(--tm-space-page) !important; padding-right: var(--tm-space-page) !important; }
+/* all */
+#pdb-view-rx-btn { pointer-events: auto; }
