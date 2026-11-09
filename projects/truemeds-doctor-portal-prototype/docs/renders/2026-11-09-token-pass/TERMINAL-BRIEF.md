@@ -4,6 +4,10 @@ Owner: main Claude thread · Runner: Claude Code (terminal), Codex as tester and
 Folder: `~/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype` (project branch).
 Why: `docs/reviews/2026-11-09-design-system-token-audit.md`. Decision: `docs/context/decision_log.md` D-99.
 **Target: under an hour.** The thinking is done: the token table below is final. Apply it; don't redesign it.
+**Lean checks (Apurva, 2026-11-09):** this is a mechanical change. During the work run only the one check that
+covers what you just changed. Run the full check suite and the picture proof **once, at the end**. No Codex
+critique: the Codex tests from section 0 plus the guard are the review. No screenshots or sheet. Don't loop:
+if something can't be fixed in one try, list it in the report and move on.
 
 ## How to run
 
@@ -99,8 +103,7 @@ checklist: add **"Would the native app need a name for this value? If yes, it's 
 2. `node scripts/build-handoff.mjs`, then `--check`: Sign-in still zero red; the new tokens show by native name.
 3. Codex tests (section 0) pass.
 
-## 6 · Codex critique, report, stop
+## 6 · Report, stop
 
-`codex exec --sandbox read-only --output-last-message docs/renders/2026-11-09-token-pass/codex-critique.md "Critic for docs/renders/2026-11-09-token-pass/TERMINAL-BRIEF.md (D-99). Review the design-system diff, app/screens CSS, check_tokens.py and RULES.md against the brief and the audit. Report blockers, should-fix, nice-to-have with file and line; list CASES.md checks with no passing test. Read-only." < /dev/null`
-Fix valid blockers and should-fix (`codex-response.md`). `REPORT.md`, short: tokens added, values replaced (count),
-`raw-ok` lines (count and reasons), picture proof, checks, Codex. Don't write `docs/context/`. Publish, stop.
+`REPORT.md`, short (half a page): tokens added, values replaced (count),
+`raw-ok` lines (count and reasons), picture proof, checks, Codex tests pass / disputed, anything not fixed. Don't write `docs/context/`. Publish, stop.
