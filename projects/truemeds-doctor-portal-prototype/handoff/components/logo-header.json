@@ -1,0 +1,132 @@
+{
+ "block": "logo-header",
+ "name": "LogoHeader",
+ "rn": "<LogoHeader />  [RECOMMENDED]",
+ "web": ".login-logo (home-base header)",
+ "parts": {
+  "lockup": {
+   "states": {
+    "default": {
+     "seenIn": "sign-in_default",
+     "styles": [
+      {
+       "property": "display",
+       "value": "block",
+       "tokens": [],
+       "raw": true,
+       "kind": "keyword",
+       "file": "app/screens/sign-in.css",
+       "line": 6
+      },
+      {
+       "property": "width",
+       "value": "166px",
+       "tokens": [],
+       "raw": true,
+       "kind": "size",
+       "file": "app/screens/sign-in.css",
+       "line": 6
+      },
+      {
+       "property": "height",
+       "value": "auto",
+       "tokens": [],
+       "raw": true,
+       "kind": "keyword",
+       "file": "app/screens/sign-in.css",
+       "line": 6
+      },
+      {
+       "property": "color",
+       "value": "var(--tm-content-primary)",
+       "tokens": [
+        {
+         "native": "tokens.color.content.primary",
+         "web": "--tm-content-primary",
+         "value": "#383A42"
+        }
+       ],
+       "inherited": true
+      },
+      {
+       "property": "font-family",
+       "value": "var(--tm-font)",
+       "tokens": [
+        {
+         "native": "tokens.font.family",
+         "web": "--tm-font",
+         "value": "Plus Jakarta Sans"
+        }
+       ],
+       "inherited": true
+      },
+      {
+       "property": "font-size",
+       "value": "var(--tm-font-size-body-md)",
+       "tokens": [
+        {
+         "native": "tokens.font.size.body.md",
+         "web": "--tm-font-size-body-md",
+         "value": 14
+        }
+       ],
+       "inherited": true
+      },
+      {
+       "property": "line-height",
+       "value": "var(--tm-font-lineheight-sm)",
+       "tokens": [
+        {
+         "native": "tokens.font.lineHeight.sm",
+         "web": "--tm-font-lineheight-sm",
+         "value": 20
+        }
+       ],
+       "inherited": true
+      }
+     ],
+     "size": "166×40.7"
+    }
+   }
+  }
+ },
+ "rules": [
+  {
+   "section": "Design rules 8.5",
+   "text": "**Home-base header:** product logo/lockup left, icon actions right."
+  },
+  {
+   "section": "Design rules 8.13",
+   "text": "**Logo lockup size and place.** Every home-base screen with the \"truemeds for doctors\" lockup (`foundation/logo/truemeds-for-doctors.svg`, project level, §2.8) draws it **166px wide** (height follows the 220×54 artwork), **16px from the top**, and the logo→title gap stays as in §8.3 (L6). Nothing else sets the lockup size."
+  },
+  {
+   "section": "Design rules L6",
+   "text": "L6 — Sign-in logo-to-title gap: 48 (`--tm-space-3xl`), home-base hero gap."
+  },
+  {
+   "section": "Design rules 2.8",
+   "text": "**Logo: LOCKED. Use the official files in; never redraw, recolour, stretch, crop or hotlink them.** `truemeds-logo.svg` is the full logo and is the primary logo; Product-specific lockups (for example the Doctor app's \"truemeds for doctors\") are NOT design-system files: they live in their own project, must embed `truemeds-logo.svg` unchanged, and carry their own lock check. `truemeds-icon.svg` is the icon-only mark (70x70, shape from the Truemeds-LOGO Figma file, https://www.figma.com/design/nD1pPa1SMzuZKnJIZxCdKa/Truemeds-LOGO) for favicons, avatars and tight spaces. **Colours are fixed: logo blue `#1B69DE` and logo green `#22B573`, in every logo file.** (The Figma file's older blue `#0071BC` is not used.) These are logo colours only; UI colour still comes from tokens. Reference with. Lock: holds each file's sha256; must pass before any commit that touches."
+  }
+ ],
+ "pictures": [
+  {
+   "state": "default",
+   "file": "components/pictures/logo-header_default.png",
+   "croppedFrom": "sign-in_default_w390.png"
+  }
+ ],
+ "usedIn": [
+  "sign-in_default",
+  "sign-in_keyboard-open",
+  "sign-in_empty-tap",
+  "sign-in_too-short",
+  "sign-in_wrong-first-digit",
+  "sign-in_pasted-cleaned",
+  "sign-in_sending",
+  "sign-in_not-registered",
+  "sign-in_offline",
+  "sign-in_couldnt-send",
+  "sign-in_too-many-tries",
+  "sign-in_inactive"
+ ]
+}

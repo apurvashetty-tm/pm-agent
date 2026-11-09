@@ -1,0 +1,130 @@
+{
+ "block": "spinner",
+ "name": "Spinner",
+ "rn": "<Spinner /> (inside a busy Button)  [RECOMMENDED]",
+ "web": ".tm-btn--busy .tm-spinner",
+ "parts": {
+  "ring": {
+   "states": {
+    "default": {
+     "seenIn": "sign-in_sending",
+     "styles": [
+      {
+       "property": "display",
+       "value": "inline-block",
+       "tokens": [],
+       "raw": true,
+       "kind": "keyword",
+       "file": "design-system/truemeds.css",
+       "line": 420
+      },
+      {
+       "property": "width",
+       "value": "16px",
+       "tokens": [],
+       "raw": true,
+       "kind": "size",
+       "file": "design-system/truemeds.css",
+       "line": 420
+      },
+      {
+       "property": "height",
+       "value": "16px",
+       "tokens": [],
+       "raw": true,
+       "kind": "size",
+       "file": "design-system/truemeds.css",
+       "line": 420
+      },
+      {
+       "property": "flex",
+       "value": "none",
+       "tokens": [],
+       "raw": true,
+       "kind": "keyword",
+       "file": "design-system/truemeds.css",
+       "line": 420
+      },
+      {
+       "property": "margin-right",
+       "value": "var(--tm-space-sm)",
+       "tokens": [
+        {
+         "native": "tokens.space.sm",
+         "web": "--tm-space-sm",
+         "value": 8
+        }
+       ]
+      },
+      {
+       "property": "vertical-align",
+       "value": "-3px",
+       "tokens": [],
+       "raw": true,
+       "kind": "size",
+       "file": "design-system/truemeds.css",
+       "line": 420
+      },
+      {
+       "property": "border",
+       "value": "2px solid #fff",
+       "tokens": [],
+       "raw": true,
+       "kind": "colour",
+       "file": "design-system/truemeds.css",
+       "line": 420
+      },
+      {
+       "property": "border-top-color",
+       "value": "transparent",
+       "tokens": [],
+       "raw": true,
+       "kind": "keyword",
+       "file": "design-system/truemeds.css",
+       "line": 420
+      },
+      {
+       "property": "border-radius",
+       "value": "50%",
+       "tokens": [],
+       "raw": true,
+       "kind": "keyword",
+       "file": "design-system/truemeds.css",
+       "line": 420
+      },
+      {
+       "property": "animation",
+       "value": "tm-spin 0.8s linear infinite",
+       "tokens": [],
+       "raw": true,
+       "kind": "keyword",
+       "file": "design-system/truemeds.css",
+       "line": 420
+      }
+     ],
+     "size": "16×16"
+    }
+   }
+  }
+ },
+ "rules": [
+  {
+   "section": "Design rules L2",
+   "text": "L2 — Loading primary buttons: brand-blue fill, white label, white spinner, on every screen (sign-in \"Sending OTP\", OTP \"Verifying\", any future loading primary)."
+  },
+  {
+   "section": "Design rules 8.8",
+   "text": "**Loading primary:** brand-blue fill, white label and white spinner (`.tm-btn--busy` with `.tm-spinner`) on every screen. Never grey, pale or disabled-looking."
+  }
+ ],
+ "pictures": [
+  {
+   "state": "busy",
+   "file": "components/pictures/spinner_busy.png",
+   "croppedFrom": "sign-in_sending_w390.png"
+  }
+ ],
+ "usedIn": [
+  "sign-in_sending"
+ ]
+}

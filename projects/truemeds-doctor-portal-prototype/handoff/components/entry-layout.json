@@ -1,0 +1,500 @@
+{
+ "block": "entry-layout",
+ "name": "EntryLayout",
+ "rn": "<EntryLayout title=… subtitle=…>{panel}</EntryLayout>  [RECOMMENDED]",
+ "web": ".signin-screen (blue top + white panel)",
+ "parts": {
+  "screen": {
+   "states": {
+    "default": {
+     "seenIn": "sign-in_default",
+     "styles": [
+      {
+       "property": "font-family",
+       "value": "var(--tm-font)",
+       "tokens": [
+        {
+         "native": "tokens.font.family",
+         "web": "--tm-font",
+         "value": "Plus Jakarta Sans"
+        }
+       ]
+      },
+      {
+       "property": "font-size",
+       "value": "var(--tm-font-size-body-md)",
+       "tokens": [
+        {
+         "native": "tokens.font.size.body.md",
+         "web": "--tm-font-size-body-md",
+         "value": 14
+        }
+       ]
+      },
+      {
+       "property": "line-height",
+       "value": "var(--tm-font-lineheight-sm)",
+       "tokens": [
+        {
+         "native": "tokens.font.lineHeight.sm",
+         "web": "--tm-font-lineheight-sm",
+         "value": 20
+        }
+       ]
+      },
+      {
+       "property": "color",
+       "value": "var(--tm-content-primary)",
+       "tokens": [
+        {
+         "native": "tokens.color.content.primary",
+         "web": "--tm-content-primary",
+         "value": "#383A42"
+        }
+       ]
+      },
+      {
+       "property": "background",
+       "value": "var(--tm-surface-brand-subtle)",
+       "tokens": [
+        {
+         "native": "tokens.color.surface.brand.subtle",
+         "web": "--tm-surface-brand-subtle",
+         "value": "#EBF8FF"
+        }
+       ]
+      },
+      {
+       "property": "position",
+       "value": "relative",
+       "tokens": [],
+       "raw": true,
+       "kind": "keyword",
+       "file": "app/screens/sign-in.css",
+       "line": 3
+      },
+      {
+       "property": "min-height",
+       "value": "100%",
+       "tokens": [],
+       "raw": true,
+       "kind": "keyword",
+       "file": "app/screens/sign-in.css",
+       "line": 3
+      },
+      {
+       "property": "display",
+       "value": "flex",
+       "tokens": [],
+       "raw": true,
+       "kind": "keyword",
+       "file": "app/screens/sign-in.css",
+       "line": 3
+      },
+      {
+       "property": "flex-direction",
+       "value": "column",
+       "tokens": [],
+       "raw": true,
+       "kind": "keyword",
+       "file": "app/screens/sign-in.css",
+       "line": 3
+      },
+      {
+       "property": "overflow",
+       "value": "hidden",
+       "tokens": [],
+       "raw": true,
+       "kind": "keyword",
+       "file": "app/screens/sign-in.css",
+       "line": 3
+      },
+      {
+       "property": "padding",
+       "value": "var(--tm-space-lg) var(--tm-space-page) 0",
+       "tokens": [
+        {
+         "native": "tokens.space.lg",
+         "web": "--tm-space-lg",
+         "value": 16
+        },
+        {
+         "native": "tokens.space.lg",
+         "web": "--tm-space-page",
+         "value": 16
+        }
+       ],
+       "raw": true,
+       "kind": "zero",
+       "file": "app/screens/sign-in.css",
+       "line": 4
+      }
+     ],
+     "size": "390×844"
+    }
+   }
+  },
+  "hero": {
+   "states": {
+    "default": {
+     "seenIn": "sign-in_default",
+     "styles": [
+      {
+       "property": "flex",
+       "value": "1",
+       "tokens": [],
+       "raw": true,
+       "kind": "keyword",
+       "file": "app/screens/sign-in.css",
+       "line": 8
+      },
+      {
+       "property": "display",
+       "value": "flex",
+       "tokens": [],
+       "raw": true,
+       "kind": "keyword",
+       "file": "app/screens/sign-in.css",
+       "line": 8
+      },
+      {
+       "property": "flex-direction",
+       "value": "column",
+       "tokens": [],
+       "raw": true,
+       "kind": "keyword",
+       "file": "app/screens/sign-in.css",
+       "line": 8
+      },
+      {
+       "property": "padding-top",
+       "value": "var(--tm-space-3xl)",
+       "tokens": [
+        {
+         "native": "tokens.space.3xl",
+         "web": "--tm-space-3xl",
+         "value": 48
+        }
+       ]
+      }
+     ],
+     "size": "358×743.3"
+    }
+   }
+  },
+  "title": {
+   "states": {
+    "default": {
+     "seenIn": "sign-in_default",
+     "styles": [
+      {
+       "property": "text-wrap",
+       "value": "balance",
+       "tokens": [],
+       "raw": true,
+       "kind": "keyword",
+       "file": "design-system/truemeds.css",
+       "line": 338
+      },
+      {
+       "property": "font-family",
+       "value": "var(--tm-font)",
+       "tokens": [
+        {
+         "native": "tokens.font.family",
+         "web": "--tm-font",
+         "value": "Plus Jakarta Sans"
+        }
+       ]
+      },
+      {
+       "property": "color",
+       "value": "var(--tm-content-primary)",
+       "tokens": [
+        {
+         "native": "tokens.color.content.primary",
+         "web": "--tm-content-primary",
+         "value": "#383A42"
+        }
+       ]
+      },
+      {
+       "property": "font-size",
+       "value": "var(--tm-font-size-title-lg)",
+       "tokens": [
+        {
+         "native": "tokens.font.size.title.lg",
+         "web": "--tm-font-size-title-lg",
+         "value": 32
+        }
+       ]
+      },
+      {
+       "property": "line-height",
+       "value": "var(--tm-font-lineheight-2xl)",
+       "tokens": [
+        {
+         "native": "tokens.font.lineHeight.2xl",
+         "web": "--tm-font-lineheight-2xl",
+         "value": 40
+        }
+       ]
+      },
+      {
+       "property": "font-weight",
+       "value": "var(--tm-font-weight-semibold)",
+       "tokens": [
+        {
+         "native": "tokens.font.weight.semibold",
+         "web": "--tm-font-weight-semibold",
+         "value": "600"
+        }
+       ]
+      },
+      {
+       "property": "margin",
+       "value": "0 0 var(--tm-space-sm)",
+       "tokens": [
+        {
+         "native": "tokens.space.sm",
+         "web": "--tm-space-sm",
+         "value": 8
+        }
+       ],
+       "raw": true,
+       "kind": "zero",
+       "file": "app/screens/sign-in.css",
+       "line": 10
+      },
+      {
+       "property": "letter-spacing",
+       "value": "normal",
+       "tokens": [],
+       "raw": true,
+       "kind": "keyword",
+       "file": "app/screens/sign-in.css",
+       "line": 10
+      }
+     ],
+     "size": "358×40"
+    }
+   }
+  },
+  "subtitle": {
+   "states": {
+    "default": {
+     "seenIn": "sign-in_default",
+     "styles": [
+      {
+       "property": "text-wrap",
+       "value": "pretty",
+       "tokens": [],
+       "raw": true,
+       "kind": "keyword",
+       "file": "design-system/truemeds.css",
+       "line": 769
+      },
+      {
+       "property": "color",
+       "value": "var(--tm-content-secondary)",
+       "tokens": [
+        {
+         "native": "tokens.color.content.secondary",
+         "web": "--tm-content-secondary",
+         "value": "#5B616E"
+        }
+       ]
+      },
+      {
+       "property": "font-size",
+       "value": "var(--tm-font-size-body-md)",
+       "tokens": [
+        {
+         "native": "tokens.font.size.body.md",
+         "web": "--tm-font-size-body-md",
+         "value": 14
+        }
+       ]
+      },
+      {
+       "property": "line-height",
+       "value": "var(--tm-font-lineheight-sm)",
+       "tokens": [
+        {
+         "native": "tokens.font.lineHeight.sm",
+         "web": "--tm-font-lineheight-sm",
+         "value": 20
+        }
+       ]
+      },
+      {
+       "property": "margin",
+       "value": "0",
+       "tokens": [],
+       "raw": true,
+       "kind": "zero",
+       "file": "app/screens/sign-in.css",
+       "line": 11
+      },
+      {
+       "property": "max-width",
+       "value": "31ch",
+       "tokens": [],
+       "raw": true,
+       "kind": "size",
+       "file": "app/screens/sign-in.css",
+       "line": 12
+      },
+      {
+       "property": "font-family",
+       "value": "var(--tm-font)",
+       "tokens": [
+        {
+         "native": "tokens.font.family",
+         "web": "--tm-font",
+         "value": "Plus Jakarta Sans"
+        }
+       ],
+       "inherited": true
+      }
+     ],
+     "size": "317.7×20"
+    }
+   }
+  },
+  "panel": {
+   "states": {
+    "default": {
+     "seenIn": "sign-in_default",
+     "styles": [
+      {
+       "property": "flex",
+       "value": "1",
+       "tokens": [],
+       "raw": true,
+       "kind": "keyword",
+       "file": "app/screens/sign-in.css",
+       "line": 14
+      },
+      {
+       "property": "margin",
+       "value": "var(--tm-space-2xl) calc(-1 * var(--tm-space-page)) 0",
+       "tokens": [
+        {
+         "native": "tokens.space.2xl",
+         "web": "--tm-space-2xl",
+         "value": 32
+        },
+        {
+         "native": "tokens.space.lg",
+         "web": "--tm-space-page",
+         "value": 16
+        }
+       ],
+       "raw": true,
+       "kind": "keyword",
+       "file": "app/screens/sign-in.css",
+       "line": 14
+      },
+      {
+       "property": "padding",
+       "value": "var(--tm-space-2xl) var(--tm-space-page) var(--tm-space-xl)",
+       "tokens": [
+        {
+         "native": "tokens.space.2xl",
+         "web": "--tm-space-2xl",
+         "value": 32
+        },
+        {
+         "native": "tokens.space.lg",
+         "web": "--tm-space-page",
+         "value": 16
+        },
+        {
+         "native": "tokens.space.xl",
+         "web": "--tm-space-xl",
+         "value": 24
+        }
+       ]
+      },
+      {
+       "property": "background",
+       "value": "var(--tm-surface-primary)",
+       "tokens": [
+        {
+         "native": "tokens.color.surface.primary",
+         "web": "--tm-surface-primary",
+         "value": "#FFFFFF"
+        }
+       ]
+      },
+      {
+       "property": "border-radius",
+       "value": "var(--tm-radius-2xl) var(--tm-radius-2xl) 0 0",
+       "tokens": [
+        {
+         "native": "tokens.radius.2xl",
+         "web": "--tm-radius-2xl",
+         "value": 24
+        },
+        {
+         "native": "tokens.radius.2xl",
+         "web": "--tm-radius-2xl",
+         "value": 24
+        }
+       ],
+       "raw": true,
+       "kind": "zero",
+       "file": "app/screens/sign-in.css",
+       "line": 16
+      }
+     ],
+     "size": "390×595.3"
+    }
+   }
+  }
+ },
+ "rules": [
+  {
+   "section": "Design rules 8.2",
+   "text": "**Side margin:** `--tm-space-page` (**16**, the design team's standard — changed from 24 on 2026-10-26, D-67) on every mobile screen, including the header, sheets and the action bar. Every block — fields, notices, cards, code boxes, buttons — shares the same left and right edges."
+  },
+  {
+   "section": "Design rules 8.3",
+   "text": "**Three gaps only:** tight `--tm-space-sm` (8): label↔field, field↔helper, and a result notice ↔ the control it came from · related `--tm-space-lg` (16): items within a group, **and cards stacked one above another — the same gap everywhere cards stack, on the case page, Prescribe and Profile** · section `--tm-space-2xl` (32): between groups. Spare vertical space goes between the content and a pinned button, never inside a group. Home-base screens use 3xl (48) as the hero gap between logo and title."
+  },
+  {
+   "section": "Design rules 8.4",
+   "text": "**Screens with text entry:** the primary button sits inline directly under the content, so it stays visible above the keyboard without moving."
+  },
+  {
+   "section": "Design rules 8.10",
+   "text": "**Titles:** no full stop at the end of a screen title. Titles wrap balanced (L8)."
+  },
+  {
+   "section": "Design rules L8",
+   "text": "L8 — Screen titles wrap balanced — never a single word alone on the last line (D-47)."
+  }
+ ],
+ "pictures": [
+  {
+   "state": "default",
+   "file": "components/pictures/entry-layout_default.png",
+   "croppedFrom": "sign-in_default_w390.png"
+  }
+ ],
+ "usedIn": [
+  "sign-in_default",
+  "sign-in_keyboard-open",
+  "sign-in_empty-tap",
+  "sign-in_too-short",
+  "sign-in_wrong-first-digit",
+  "sign-in_pasted-cleaned",
+  "sign-in_sending",
+  "sign-in_not-registered",
+  "sign-in_offline",
+  "sign-in_couldnt-send",
+  "sign-in_too-many-tries",
+  "sign-in_inactive"
+ ]
+}

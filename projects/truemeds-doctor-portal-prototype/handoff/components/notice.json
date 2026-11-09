@@ -1,0 +1,1015 @@
+{
+ "block": "notice",
+ "name": "Notice",
+ "rn": "<Notice tone=\"neutral\" | \"warning\" | \"error\" icon=… />  [RECOMMENDED]",
+ "web": ".tm-notice.tm-notice--{tone}",
+ "parts": {
+  "container": {
+   "states": {
+    "neutral": {
+     "seenIn": "sign-in_not-registered",
+     "styles": [
+      {
+       "property": "display",
+       "value": "flex",
+       "tokens": [],
+       "raw": true,
+       "kind": "keyword",
+       "file": "design-system/truemeds.css",
+       "line": 581
+      },
+      {
+       "property": "gap",
+       "value": "var(--tm-space-sm)",
+       "tokens": [
+        {
+         "native": "tokens.space.sm",
+         "web": "--tm-space-sm",
+         "value": 8
+        }
+       ]
+      },
+      {
+       "property": "align-items",
+       "value": "flex-start",
+       "tokens": [],
+       "raw": true,
+       "kind": "keyword",
+       "file": "design-system/truemeds.css",
+       "line": 581
+      },
+      {
+       "property": "padding",
+       "value": "var(--tm-space-md)",
+       "tokens": [
+        {
+         "native": "tokens.space.md",
+         "web": "--tm-space-md",
+         "value": 12
+        }
+       ]
+      },
+      {
+       "property": "border-radius",
+       "value": "var(--tm-radius-md)",
+       "tokens": [
+        {
+         "native": "tokens.radius.md",
+         "web": "--tm-radius-md",
+         "value": 12
+        }
+       ]
+      },
+      {
+       "property": "border",
+       "value": "1px solid var(--tm-border-brand-subtle)",
+       "tokens": [
+        {
+         "native": "tokens.color.border.brand.subtle",
+         "web": "--tm-border-brand-subtle",
+         "value": "#98D2FD"
+        }
+       ],
+       "raw": true,
+       "kind": "size",
+       "file": "design-system/truemeds.css",
+       "line": 583
+      },
+      {
+       "property": "border-color",
+       "value": "var(--tm-border-default)",
+       "tokens": [
+        {
+         "native": "tokens.color.border.default",
+         "web": "--tm-border-default",
+         "value": "#D8DBDF"
+        }
+       ]
+      },
+      {
+       "property": "background",
+       "value": "var(--tm-surface-secondary)",
+       "tokens": [
+        {
+         "native": "tokens.color.surface.secondary",
+         "web": "--tm-surface-secondary",
+         "value": "#F7F8F8"
+        }
+       ]
+      },
+      {
+       "property": "color",
+       "value": "var(--tm-content-primary)",
+       "tokens": [
+        {
+         "native": "tokens.color.content.primary",
+         "web": "--tm-content-primary",
+         "value": "#383A42"
+        }
+       ]
+      },
+      {
+       "property": "font-size",
+       "value": "var(--tm-font-size-body-md)",
+       "tokens": [
+        {
+         "native": "tokens.font.size.body.md",
+         "web": "--tm-font-size-body-md",
+         "value": 14
+        }
+       ]
+      },
+      {
+       "property": "line-height",
+       "value": "var(--tm-font-lineheight-sm)",
+       "tokens": [
+        {
+         "native": "tokens.font.lineHeight.sm",
+         "web": "--tm-font-lineheight-sm",
+         "value": 20
+        }
+       ]
+      },
+      {
+       "property": "text-wrap",
+       "value": "balance",
+       "tokens": [],
+       "raw": true,
+       "kind": "keyword",
+       "file": "design-system/truemeds.css",
+       "line": 771
+      },
+      {
+       "property": "margin-top",
+       "value": "var(--tm-space-sm)",
+       "tokens": [
+        {
+         "native": "tokens.space.sm",
+         "web": "--tm-space-sm",
+         "value": 8
+        }
+       ]
+      }
+     ],
+     "size": "358×86"
+    },
+    "warning": {
+     "seenIn": "sign-in_offline",
+     "styles": [
+      {
+       "property": "display",
+       "value": "flex",
+       "tokens": [],
+       "raw": true,
+       "kind": "keyword",
+       "file": "design-system/truemeds.css",
+       "line": 581
+      },
+      {
+       "property": "gap",
+       "value": "var(--tm-space-sm)",
+       "tokens": [
+        {
+         "native": "tokens.space.sm",
+         "web": "--tm-space-sm",
+         "value": 8
+        }
+       ]
+      },
+      {
+       "property": "align-items",
+       "value": "flex-start",
+       "tokens": [],
+       "raw": true,
+       "kind": "keyword",
+       "file": "design-system/truemeds.css",
+       "line": 581
+      },
+      {
+       "property": "padding",
+       "value": "var(--tm-space-md)",
+       "tokens": [
+        {
+         "native": "tokens.space.md",
+         "web": "--tm-space-md",
+         "value": 12
+        }
+       ]
+      },
+      {
+       "property": "border-radius",
+       "value": "var(--tm-radius-md)",
+       "tokens": [
+        {
+         "native": "tokens.radius.md",
+         "web": "--tm-radius-md",
+         "value": 12
+        }
+       ]
+      },
+      {
+       "property": "border",
+       "value": "1px solid var(--tm-border-brand-subtle)",
+       "tokens": [
+        {
+         "native": "tokens.color.border.brand.subtle",
+         "web": "--tm-border-brand-subtle",
+         "value": "#98D2FD"
+        }
+       ],
+       "raw": true,
+       "kind": "size",
+       "file": "design-system/truemeds.css",
+       "line": 583
+      },
+      {
+       "property": "border-color",
+       "value": "var(--tm-feedback-warning-border)",
+       "tokens": [
+        {
+         "native": "tokens.color.feedback.warning.border",
+         "web": "--tm-feedback-warning-border",
+         "value": "#FFDB93"
+        }
+       ]
+      },
+      {
+       "property": "background",
+       "value": "var(--tm-feedback-warning-surface)",
+       "tokens": [
+        {
+         "native": "tokens.color.feedback.warning.surface",
+         "web": "--tm-feedback-warning-surface",
+         "value": "#FFEDBC"
+        }
+       ]
+      },
+      {
+       "property": "color",
+       "value": "var(--tm-content-primary)",
+       "tokens": [
+        {
+         "native": "tokens.color.content.primary",
+         "web": "--tm-content-primary",
+         "value": "#383A42"
+        }
+       ]
+      },
+      {
+       "property": "font-size",
+       "value": "var(--tm-font-size-body-md)",
+       "tokens": [
+        {
+         "native": "tokens.font.size.body.md",
+         "web": "--tm-font-size-body-md",
+         "value": 14
+        }
+       ]
+      },
+      {
+       "property": "line-height",
+       "value": "var(--tm-font-lineheight-sm)",
+       "tokens": [
+        {
+         "native": "tokens.font.lineHeight.sm",
+         "web": "--tm-font-lineheight-sm",
+         "value": 20
+        }
+       ]
+      },
+      {
+       "property": "text-wrap",
+       "value": "balance",
+       "tokens": [],
+       "raw": true,
+       "kind": "keyword",
+       "file": "design-system/truemeds.css",
+       "line": 771
+      },
+      {
+       "property": "margin-top",
+       "value": "var(--tm-space-sm)",
+       "tokens": [
+        {
+         "native": "tokens.space.sm",
+         "web": "--tm-space-sm",
+         "value": 8
+        }
+       ]
+      }
+     ],
+     "size": "358×46"
+    },
+    "error": {
+     "seenIn": "sign-in_couldnt-send",
+     "styles": [
+      {
+       "property": "display",
+       "value": "flex",
+       "tokens": [],
+       "raw": true,
+       "kind": "keyword",
+       "file": "design-system/truemeds.css",
+       "line": 581
+      },
+      {
+       "property": "gap",
+       "value": "var(--tm-space-sm)",
+       "tokens": [
+        {
+         "native": "tokens.space.sm",
+         "web": "--tm-space-sm",
+         "value": 8
+        }
+       ]
+      },
+      {
+       "property": "align-items",
+       "value": "flex-start",
+       "tokens": [],
+       "raw": true,
+       "kind": "keyword",
+       "file": "design-system/truemeds.css",
+       "line": 581
+      },
+      {
+       "property": "padding",
+       "value": "var(--tm-space-md)",
+       "tokens": [
+        {
+         "native": "tokens.space.md",
+         "web": "--tm-space-md",
+         "value": 12
+        }
+       ]
+      },
+      {
+       "property": "border-radius",
+       "value": "var(--tm-radius-md)",
+       "tokens": [
+        {
+         "native": "tokens.radius.md",
+         "web": "--tm-radius-md",
+         "value": 12
+        }
+       ]
+      },
+      {
+       "property": "border",
+       "value": "1px solid var(--tm-border-brand-subtle)",
+       "tokens": [
+        {
+         "native": "tokens.color.border.brand.subtle",
+         "web": "--tm-border-brand-subtle",
+         "value": "#98D2FD"
+        }
+       ],
+       "raw": true,
+       "kind": "size",
+       "file": "design-system/truemeds.css",
+       "line": 583
+      },
+      {
+       "property": "border-color",
+       "value": "var(--tm-feedback-error-border)",
+       "tokens": [
+        {
+         "native": "tokens.color.feedback.error.border",
+         "web": "--tm-feedback-error-border",
+         "value": "#F9B6B6"
+        }
+       ]
+      },
+      {
+       "property": "background",
+       "value": "var(--tm-feedback-error-surface)",
+       "tokens": [
+        {
+         "native": "tokens.color.feedback.error.surface",
+         "web": "--tm-feedback-error-surface",
+         "value": "#FDE8E8"
+        }
+       ]
+      },
+      {
+       "property": "color",
+       "value": "var(--tm-content-primary)",
+       "tokens": [
+        {
+         "native": "tokens.color.content.primary",
+         "web": "--tm-content-primary",
+         "value": "#383A42"
+        }
+       ]
+      },
+      {
+       "property": "font-size",
+       "value": "var(--tm-font-size-body-md)",
+       "tokens": [
+        {
+         "native": "tokens.font.size.body.md",
+         "web": "--tm-font-size-body-md",
+         "value": 14
+        }
+       ]
+      },
+      {
+       "property": "line-height",
+       "value": "var(--tm-font-lineheight-sm)",
+       "tokens": [
+        {
+         "native": "tokens.font.lineHeight.sm",
+         "web": "--tm-font-lineheight-sm",
+         "value": 20
+        }
+       ]
+      },
+      {
+       "property": "text-wrap",
+       "value": "balance",
+       "tokens": [],
+       "raw": true,
+       "kind": "keyword",
+       "file": "design-system/truemeds.css",
+       "line": 771
+      },
+      {
+       "property": "margin-top",
+       "value": "var(--tm-space-sm)",
+       "tokens": [
+        {
+         "native": "tokens.space.sm",
+         "web": "--tm-space-sm",
+         "value": 8
+        }
+       ]
+      }
+     ],
+     "size": "358×46"
+    }
+   }
+  },
+  "icon": {
+   "states": {
+    "neutral": {
+     "seenIn": "sign-in_not-registered",
+     "styles": [
+      {
+       "property": "width",
+       "value": "20px",
+       "tokens": [],
+       "raw": true,
+       "kind": "size",
+       "file": "design-system/truemeds.css",
+       "line": 593
+      },
+      {
+       "property": "height",
+       "value": "20px",
+       "tokens": [],
+       "raw": true,
+       "kind": "size",
+       "file": "design-system/truemeds.css",
+       "line": 593
+      },
+      {
+       "property": "flex",
+       "value": "none",
+       "tokens": [],
+       "raw": true,
+       "kind": "keyword",
+       "file": "design-system/truemeds.css",
+       "line": 593
+      },
+      {
+       "property": "display",
+       "value": "inline-block",
+       "tokens": [],
+       "raw": true,
+       "kind": "keyword",
+       "file": "design-system/truemeds.css",
+       "line": 349
+      },
+      {
+       "property": "vertical-align",
+       "value": "middle",
+       "tokens": [],
+       "raw": true,
+       "kind": "keyword",
+       "file": "design-system/truemeds.css",
+       "line": 349
+      },
+      {
+       "property": "color",
+       "value": "var(--tm-content-secondary)",
+       "tokens": [
+        {
+         "native": "tokens.color.content.secondary",
+         "web": "--tm-content-secondary",
+         "value": "#5B616E"
+        }
+       ]
+      },
+      {
+       "property": "font-family",
+       "value": "var(--tm-font)",
+       "tokens": [
+        {
+         "native": "tokens.font.family",
+         "web": "--tm-font",
+         "value": "Plus Jakarta Sans"
+        }
+       ],
+       "inherited": true
+      },
+      {
+       "property": "font-size",
+       "value": "var(--tm-font-size-body-md)",
+       "tokens": [
+        {
+         "native": "tokens.font.size.body.md",
+         "web": "--tm-font-size-body-md",
+         "value": 14
+        }
+       ],
+       "inherited": true
+      },
+      {
+       "property": "line-height",
+       "value": "var(--tm-font-lineheight-sm)",
+       "tokens": [
+        {
+         "native": "tokens.font.lineHeight.sm",
+         "web": "--tm-font-lineheight-sm",
+         "value": 20
+        }
+       ],
+       "inherited": true
+      },
+      {
+       "property": "text-wrap",
+       "value": "balance",
+       "tokens": [],
+       "raw": true,
+       "kind": "keyword",
+       "file": "design-system/truemeds.css",
+       "line": 771,
+       "inherited": true
+      }
+     ],
+     "size": "20×20"
+    },
+    "warning": {
+     "seenIn": "sign-in_offline",
+     "styles": [
+      {
+       "property": "width",
+       "value": "20px",
+       "tokens": [],
+       "raw": true,
+       "kind": "size",
+       "file": "design-system/truemeds.css",
+       "line": 593
+      },
+      {
+       "property": "height",
+       "value": "20px",
+       "tokens": [],
+       "raw": true,
+       "kind": "size",
+       "file": "design-system/truemeds.css",
+       "line": 593
+      },
+      {
+       "property": "flex",
+       "value": "none",
+       "tokens": [],
+       "raw": true,
+       "kind": "keyword",
+       "file": "design-system/truemeds.css",
+       "line": 593
+      },
+      {
+       "property": "display",
+       "value": "inline-block",
+       "tokens": [],
+       "raw": true,
+       "kind": "keyword",
+       "file": "design-system/truemeds.css",
+       "line": 349
+      },
+      {
+       "property": "vertical-align",
+       "value": "middle",
+       "tokens": [],
+       "raw": true,
+       "kind": "keyword",
+       "file": "design-system/truemeds.css",
+       "line": 349
+      },
+      {
+       "property": "color",
+       "value": "var(--tm-feedback-warning-content)",
+       "tokens": [
+        {
+         "native": "tokens.color.feedback.warning.content",
+         "web": "--tm-feedback-warning-content",
+         "value": "#8C610C"
+        }
+       ]
+      },
+      {
+       "property": "font-family",
+       "value": "var(--tm-font)",
+       "tokens": [
+        {
+         "native": "tokens.font.family",
+         "web": "--tm-font",
+         "value": "Plus Jakarta Sans"
+        }
+       ],
+       "inherited": true
+      },
+      {
+       "property": "font-size",
+       "value": "var(--tm-font-size-body-md)",
+       "tokens": [
+        {
+         "native": "tokens.font.size.body.md",
+         "web": "--tm-font-size-body-md",
+         "value": 14
+        }
+       ],
+       "inherited": true
+      },
+      {
+       "property": "line-height",
+       "value": "var(--tm-font-lineheight-sm)",
+       "tokens": [
+        {
+         "native": "tokens.font.lineHeight.sm",
+         "web": "--tm-font-lineheight-sm",
+         "value": 20
+        }
+       ],
+       "inherited": true
+      },
+      {
+       "property": "text-wrap",
+       "value": "balance",
+       "tokens": [],
+       "raw": true,
+       "kind": "keyword",
+       "file": "design-system/truemeds.css",
+       "line": 771,
+       "inherited": true
+      }
+     ],
+     "size": "20×20"
+    },
+    "error": {
+     "seenIn": "sign-in_couldnt-send",
+     "styles": [
+      {
+       "property": "width",
+       "value": "20px",
+       "tokens": [],
+       "raw": true,
+       "kind": "size",
+       "file": "design-system/truemeds.css",
+       "line": 593
+      },
+      {
+       "property": "height",
+       "value": "20px",
+       "tokens": [],
+       "raw": true,
+       "kind": "size",
+       "file": "design-system/truemeds.css",
+       "line": 593
+      },
+      {
+       "property": "flex",
+       "value": "none",
+       "tokens": [],
+       "raw": true,
+       "kind": "keyword",
+       "file": "design-system/truemeds.css",
+       "line": 593
+      },
+      {
+       "property": "display",
+       "value": "inline-block",
+       "tokens": [],
+       "raw": true,
+       "kind": "keyword",
+       "file": "design-system/truemeds.css",
+       "line": 349
+      },
+      {
+       "property": "vertical-align",
+       "value": "middle",
+       "tokens": [],
+       "raw": true,
+       "kind": "keyword",
+       "file": "design-system/truemeds.css",
+       "line": 349
+      },
+      {
+       "property": "color",
+       "value": "var(--tm-feedback-error-content)",
+       "tokens": [
+        {
+         "native": "tokens.color.feedback.error.content",
+         "web": "--tm-feedback-error-content",
+         "value": "#D61212"
+        }
+       ]
+      },
+      {
+       "property": "font-family",
+       "value": "var(--tm-font)",
+       "tokens": [
+        {
+         "native": "tokens.font.family",
+         "web": "--tm-font",
+         "value": "Plus Jakarta Sans"
+        }
+       ],
+       "inherited": true
+      },
+      {
+       "property": "font-size",
+       "value": "var(--tm-font-size-body-md)",
+       "tokens": [
+        {
+         "native": "tokens.font.size.body.md",
+         "web": "--tm-font-size-body-md",
+         "value": 14
+        }
+       ],
+       "inherited": true
+      },
+      {
+       "property": "line-height",
+       "value": "var(--tm-font-lineheight-sm)",
+       "tokens": [
+        {
+         "native": "tokens.font.lineHeight.sm",
+         "web": "--tm-font-lineheight-sm",
+         "value": 20
+        }
+       ],
+       "inherited": true
+      },
+      {
+       "property": "text-wrap",
+       "value": "balance",
+       "tokens": [],
+       "raw": true,
+       "kind": "keyword",
+       "file": "design-system/truemeds.css",
+       "line": 771,
+       "inherited": true
+      }
+     ],
+     "size": "20×20"
+    }
+   }
+  },
+  "text": {
+   "states": {
+    "neutral": {
+     "seenIn": "sign-in_not-registered",
+     "styles": [
+      {
+       "property": "color",
+       "value": "var(--tm-content-primary)",
+       "tokens": [
+        {
+         "native": "tokens.color.content.primary",
+         "web": "--tm-content-primary",
+         "value": "#383A42"
+        }
+       ],
+       "inherited": true
+      },
+      {
+       "property": "font-family",
+       "value": "var(--tm-font)",
+       "tokens": [
+        {
+         "native": "tokens.font.family",
+         "web": "--tm-font",
+         "value": "Plus Jakarta Sans"
+        }
+       ],
+       "inherited": true
+      },
+      {
+       "property": "font-size",
+       "value": "var(--tm-font-size-body-md)",
+       "tokens": [
+        {
+         "native": "tokens.font.size.body.md",
+         "web": "--tm-font-size-body-md",
+         "value": 14
+        }
+       ],
+       "inherited": true
+      },
+      {
+       "property": "line-height",
+       "value": "var(--tm-font-lineheight-sm)",
+       "tokens": [
+        {
+         "native": "tokens.font.lineHeight.sm",
+         "web": "--tm-font-lineheight-sm",
+         "value": 20
+        }
+       ],
+       "inherited": true
+      },
+      {
+       "property": "text-wrap",
+       "value": "balance",
+       "tokens": [],
+       "raw": true,
+       "kind": "keyword",
+       "file": "design-system/truemeds.css",
+       "line": 771,
+       "inherited": true
+      }
+     ],
+     "size": "304×60"
+    },
+    "warning": {
+     "seenIn": "sign-in_offline",
+     "styles": [
+      {
+       "property": "color",
+       "value": "var(--tm-content-primary)",
+       "tokens": [
+        {
+         "native": "tokens.color.content.primary",
+         "web": "--tm-content-primary",
+         "value": "#383A42"
+        }
+       ],
+       "inherited": true
+      },
+      {
+       "property": "font-family",
+       "value": "var(--tm-font)",
+       "tokens": [
+        {
+         "native": "tokens.font.family",
+         "web": "--tm-font",
+         "value": "Plus Jakarta Sans"
+        }
+       ],
+       "inherited": true
+      },
+      {
+       "property": "font-size",
+       "value": "var(--tm-font-size-body-md)",
+       "tokens": [
+        {
+         "native": "tokens.font.size.body.md",
+         "web": "--tm-font-size-body-md",
+         "value": 14
+        }
+       ],
+       "inherited": true
+      },
+      {
+       "property": "line-height",
+       "value": "var(--tm-font-lineheight-sm)",
+       "tokens": [
+        {
+         "native": "tokens.font.lineHeight.sm",
+         "web": "--tm-font-lineheight-sm",
+         "value": 20
+        }
+       ],
+       "inherited": true
+      },
+      {
+       "property": "text-wrap",
+       "value": "balance",
+       "tokens": [],
+       "raw": true,
+       "kind": "keyword",
+       "file": "design-system/truemeds.css",
+       "line": 771,
+       "inherited": true
+      }
+     ],
+     "size": "251.3×20"
+    },
+    "error": {
+     "seenIn": "sign-in_couldnt-send",
+     "styles": [
+      {
+       "property": "color",
+       "value": "var(--tm-content-primary)",
+       "tokens": [
+        {
+         "native": "tokens.color.content.primary",
+         "web": "--tm-content-primary",
+         "value": "#383A42"
+        }
+       ],
+       "inherited": true
+      },
+      {
+       "property": "font-family",
+       "value": "var(--tm-font)",
+       "tokens": [
+        {
+         "native": "tokens.font.family",
+         "web": "--tm-font",
+         "value": "Plus Jakarta Sans"
+        }
+       ],
+       "inherited": true
+      },
+      {
+       "property": "font-size",
+       "value": "var(--tm-font-size-body-md)",
+       "tokens": [
+        {
+         "native": "tokens.font.size.body.md",
+         "web": "--tm-font-size-body-md",
+         "value": 14
+        }
+       ],
+       "inherited": true
+      },
+      {
+       "property": "line-height",
+       "value": "var(--tm-font-lineheight-sm)",
+       "tokens": [
+        {
+         "native": "tokens.font.lineHeight.sm",
+         "web": "--tm-font-lineheight-sm",
+         "value": 20
+        }
+       ],
+       "inherited": true
+      },
+      {
+       "property": "text-wrap",
+       "value": "balance",
+       "tokens": [],
+       "raw": true,
+       "kind": "keyword",
+       "file": "design-system/truemeds.css",
+       "line": 771,
+       "inherited": true
+      }
+     ],
+     "size": "159.6×20"
+    }
+   }
+  }
+ },
+ "rules": [
+  {
+   "section": "Design rules 9.5",
+   "text": "**Notice** — Neutral / warning / error (L5); stays until the cause is gone. **Warning** when something blocks the main action or runs on a timer (offline, locks, near expiry); **error** when an action failed; **neutral** only for side information (D-54). Text wraps balanced. **Placement:** a notice that is the **result of an action** sits next to the control that did it — on a screen with a pinned bar, inside the bar above its button, in the band style of §3 (Home \"ending soon\", setup / add / request failures, the offer's \"Couldn't turn on…\", the case and calling bar notices); on a screen without a bar, 8 below the field or button it came from. A notice about **the bar's own action** — the result of the last tap, or why its button is disabled now (offline, \"No cases right now\") — is also in the bar. A notice about the **screen's general situation** (unlock \"isn't available\", Home idle-expired, manually ended, expired-pending, stop-pending) stays at the top of the panel, not tied to a button. **Alignment (D-86, 2026-11-03):** the band inside the bar is centred (icon and text as a group, wrapped lines centred, balanced breaks kept); every other notice (top of page, inside sheets, in content) stays left-aligned."
+  },
+  {
+   "section": "Design rules L5",
+   "text": "L5 — Notice text (`.tm-notice`): 14/20."
+  },
+  {
+   "section": "Design rules 9.5",
+   "text": "**Rule** — One message per cause — never field error + notice + toast for the same thing."
+  }
+ ],
+ "pictures": [
+  {
+   "state": "neutral",
+   "file": "components/pictures/notice_neutral.png",
+   "croppedFrom": "sign-in_not-registered_w390.png"
+  },
+  {
+   "state": "warning",
+   "file": "components/pictures/notice_warning.png",
+   "croppedFrom": "sign-in_offline_w390.png"
+  },
+  {
+   "state": "error",
+   "file": "components/pictures/notice_error.png",
+   "croppedFrom": "sign-in_couldnt-send_w390.png"
+  }
+ ],
+ "usedIn": [
+  "sign-in_not-registered",
+  "sign-in_offline",
+  "sign-in_couldnt-send",
+  "sign-in_too-many-tries",
+  "sign-in_inactive"
+ ]
+}
