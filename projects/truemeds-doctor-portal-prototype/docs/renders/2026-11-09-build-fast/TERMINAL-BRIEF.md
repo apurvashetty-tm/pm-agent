@@ -46,7 +46,7 @@ Codex writes the tests **from the spec, before the build**, so the build isn't g
    **If `tests/codex/run-<X>/CASES.md` already exists** (Codex was run ahead in another tab), skip writing. Commit and push what's there, then go on.
 2. **Build** (the steps above). Run the Codex tests as you go. A failing test means fixing the app, **unless** the test contradicts the spec. Then don't edit Codex's test: list it in `run-<X>/test-disputes.md` with the spec line for the main thread to rule on.
 3. **Full critique at the end.**
-   `codex exec --sandbox read-only --output-last-message docs/renders/2026-11-09-build-fast/run-<X>/codex-critique.md "Critic for run <X> of docs/renders/2026-11-09-build-fast/TERMINAL-BRIEF.md. Review the built app/ for steps <n–m> against ui-screens/app-logic.md, the approved ui-screens/ HTML, plan v3.2 and tests/codex/run-<X>/CASES.md. Report blockers, should-fix and nice-to-have with file, line and spec line; also list CASES.md scenarios with no passing test. Read-only." < /dev/null`
+   `codex exec --sandbox read-only --output-last-message docs/renders/2026-11-09-build-fast/run-<X>/codex-critique.md "Critic for run <X> of docs/renders/2026-11-09-build-fast/TERMINAL-BRIEF.md. Review the built app/ for steps <n–m> against ui-screens/app-logic.md, the approved ui-screens/ HTML, plan v3.2 and tests/codex/run-<X>/CASES.md. Report only gaps that affect correctness against the spec (behaviour, routing, gates, copy, tokens), as blockers or should-fix with file, line and spec line; skip style and preferences; also list CASES.md scenarios with no passing test. Read-only." < /dev/null`
    Fix every blocker and should-fix (say why in `run-<X>/codex-response.md` for any not adopted). If there were blockers, re-run once (`codex-critique-2.md`).
 4. If Codex hits its usage limit, write that in REPORT.md and carry on; the main thread decides what to do.
 
@@ -82,6 +82,9 @@ Codex wrote both runs' tests ahead: `tests/codex/run-A/` (one set for A1 + A2; r
 ## End of each run
 
 `run-<A|B>/REPORT.md`, short: what plays end to end, Codex tests (written / passing / disputed), the compare report (flagged states and what was done), the tests, Codex blockers and fixes, commits, `[OPEN DECISION]`s / `[MOCK ASSUMPTION]`s added (with the `open_questions.md` lines for the main thread to record; don't write `docs/context/`), what's left. Mark the run done below, push, stop.
+
+## Runner contract (D-100)
+This brief may be started by `scripts/run-chain.sh` in a fresh headless session. Before starting, read `docs/runs/RULINGS.md` (main-thread rulings; they override this brief where they conflict). Do one run, then: append `DONE build-fast run-<X>` to `docs/runs/STATUS.md`, publish it with the run's files, stop. If the run can't finish, append `STOPPED build-fast run-<X>: <one-line reason>` instead, publish, stop. Fix every open bug in `docs/context/feedback-log.md` that belongs to this run first, as before.
 
 ## Run status
 - Run A0: ✅ done — main-thread review passed 2026-11-09 18:35 (rulings on its test disputes below)

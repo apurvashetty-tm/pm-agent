@@ -6,7 +6,7 @@ This maps current auth/Home states and known recovery conditions to reusable fee
 
 ## Placement rules (Round 4, 2026-11-02 — A-19, RULES §9.5)
 
-- **Result of an action → next to the control that did it.** On a screen with a pinned action bar, inside the bar above its button, as a band (`.tm-actionbar > .tm-notice`). On a screen without a bar, 8 below the field or button it came from (A-14).
+- **Result of an action → next to the control that did it.** On a screen with a pinned action bar, inside the bar above its button, as a band (`.tm-actionbar > .tm-notice`). On a screen without a bar, 16 below the field it came from (D-98) or 8 below the button (A-14).
 - **Bar's own action → inside the bar.** The result of the last tap, or why the bar's button is disabled right now: offline (case and Home), request failed, "No cases right now", ending soon, setup / add / confirm / release failures, offer enable-failed / offline, calling notices (Round 4, lane-request 7).
 - **Screen's general situation → top of the panel.** Not tied to a button; stays until the cause is gone (unlock "isn't available", Home idle-expired, manually ended, expired-pending, stop-pending).
 - Notices wrap balanced (A-22). Toasts only where no control can show the result; they sit above the pinned bar when there is one.

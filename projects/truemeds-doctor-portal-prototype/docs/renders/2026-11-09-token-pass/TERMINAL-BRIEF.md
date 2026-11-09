@@ -85,9 +85,11 @@ reference files (frozen; Run A1 / A2 tokenise them when lifting).
 
 ## 3 · Guard
 
-`design-system/scripts/check_tokens.py`: scans `src/components.css` and `projects/*/app/screens/*.css`, fails on any
-raw size, colour, border width, z-index, opacity or duration without a `raw-ok` marker. Add it to the build-fast
-`run-checks.sh` and to `tests/run-checks.mjs`' list. Prove it fails on a planted raw value (temp copy).
+The rails run (D-100, `docs/renders/2026-11-09-rails/TERMINAL-BRIEF.md`) installed `design-system/scripts/check_tokens.py`
+(stylelint-based, honours `raw-ok` markers), the after-edit hook and the commit gate. Here: run it over everything,
+fix what it reports, confirm it passes. Add it to the build-fast `run-checks.sh` and `tests/run-checks.mjs` if the rails
+run hasn't. After §5: one fresh-AI check of the kit, **Codex only**, same prompt as before (`handoff-kit/fresh-ai/round-5/`);
+pass = no DECIDED questions and no typed values. Don't loop: list anything left.
 
 ## 4 · Rules
 
@@ -104,6 +106,9 @@ checklist: add **"Would the native app need a name for this value? If yes, it's 
 3. Codex tests (section 0) pass.
 
 ## 6 · Report, stop
+
+Runner contract (D-100): read `docs/runs/RULINGS.md` before starting. At the end append `DONE token-pass` (or
+`STOPPED token-pass: <reason>`) to `docs/runs/STATUS.md` and publish it with the report.
 
 `REPORT.md`, short (half a page): tokens added, values replaced (count),
 `raw-ok` lines (count and reasons), picture proof, checks, Codex tests pass / disputed, anything not fixed. Don't write `docs/context/`. Publish, stop.
