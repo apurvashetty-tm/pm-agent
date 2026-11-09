@@ -1,6 +1,6 @@
 # Kit viewer clean-up and downloads: proposal
 
-2026-11-10 · For Apurva's agreement before anything changes. Applied in one pass by the kit run (all journeys), before Netlify deploy 1.
+2026-11-10 · **Agreed by Apurva 00:45 (D-103)**, after a working preview with three extra changes: a tab per screen; phone fixed left with details on the right (no 360 picture; behaviour as answered questions in "When this shows"); "Where it's used" on each building block. Applied in one pass by the kit run (all journeys), before Netlify deploy 1.
 
 **Test for every item:** does it help an engineer build the screen right, or help Apurva walk them through it? If neither, cut it.
 

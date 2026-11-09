@@ -1,0 +1,31 @@
+/* Preview clean-up styles */
+.lede { font-size: 16px; color: var(--tm-content-primary) !important; }
+ul.plain { padding-left: 18px; margin: 0; } ul.plain li { margin: 6px 0; }
+.small { font-size: 13px; }
+.dls { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: var(--tm-space-sm); margin: var(--tm-space-sm) 0; }
+a.dl { display: flex; flex-direction: column; gap: 2px; padding: 12px; border: 1px solid var(--tm-border-default); border-radius: var(--tm-radius-md); text-decoration: none; color: var(--tm-content-primary); background: var(--tm-surface-primary); }
+a.dl span { font-size: 12px; color: var(--tm-content-secondary); }
+a.dl-main { grid-column: 1 / -1; border-color: var(--tm-border-selected); background: var(--tm-surface-brand-subtle); }
+a.dl-main b { color: var(--tm-content-brand); }
+label.only { display: block; margin: 0 0 8px; font-size: 14px; color: var(--tm-content-secondary); }
+details.elfold { margin-bottom: var(--tm-space-sm); } details.elfold summary { cursor: pointer; font-size: 13px; color: var(--tm-content-secondary); padding: 6px 0; }
+.card.when { border-left: 4px solid var(--tm-border-selected); }
+
+/* round 2: phone fixed left, details right */
+.scrtabs { display: flex; gap: 6px; flex-wrap: wrap; margin: 0 0 var(--tm-space-sm); border-bottom: 1px solid var(--tm-border-subtle); padding-bottom: var(--tm-space-sm); }
+.scrtabs button { font: inherit; font-weight: var(--tm-font-weight-semibold); border: 0; background: none; padding: 8px 12px; border-radius: var(--tm-radius-md); color: var(--tm-content-secondary); min-height: 40px; cursor: pointer; }
+.scrtabs button[aria-current="true"] { background: var(--tm-surface-brand-subtle); color: var(--tm-content-brand); }
+.scrtabs button:disabled { opacity: .45; cursor: not-allowed; }
+.stage { display: grid !important; grid-template-columns: 390px minmax(0, 1fr); gap: var(--tm-space-lg); align-items: start; }
+.shot { position: sticky; top: 64px; }
+.panel { position: sticky; top: 64px; max-height: calc(100vh - 80px); overflow-y: auto; padding-right: 4px; }
+.panel .card { margin-top: 0; }
+.card.hint p { margin: 0; }
+details.ans summary { cursor: pointer; font-size: 13px; color: var(--tm-content-secondary); }
+details.ans ul { margin: 6px 0 0; padding-left: 18px; font-size: 13px; }
+@media (max-width: 860px) { .stage { grid-template-columns: 1fr; } .shot, .panel { position: static; max-height: none; } }
+
+/* round 3: where a block is used */
+.usedon { margin: var(--tm-space-sm) 0 var(--tm-space-lg); padding: var(--tm-space-md); background: var(--tm-surface-secondary); border-radius: var(--tm-radius-md); }
+.usedon p { margin: 6px 0; }
+a.uchip { display: inline-block; margin: 4px 6px 0 0; padding: 4px 10px; border: 1px solid var(--tm-border-default); border-radius: 999px; font-size: 13px; text-decoration: none; color: var(--tm-content-brand); background: var(--tm-surface-primary); }

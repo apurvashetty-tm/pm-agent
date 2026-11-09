@@ -1018,6 +1018,11 @@ From an external (ChatGPT) review, each point verified before acting.
 - **Ruling (main thread, inside D-83 / D-85; run B review):** in launch B (Fallback B), 13 Transferring… keeps the neutral Pilot script `call.scriptNeutral`; `call.scriptTransfer` ("Please stay on the line…") is version A only (app-logic §4 script list; §5 "Transfer path in B reuses 13–15"). The approved `t13-connecting-ha` picture at 390 shows the version-A script and is re-rendered from the build (backlog §2l).
 - **Why:** the build follows app-logic; the picture predates the Fallback B launch decision.
 
+### D-103 · Hand-off kit viewer redesign and in-site downloads — 2026-11-10
+- **Decision (Apurva, after reviewing a working preview):** the viewer is cut down to what helps an engineer build or helps Apurva walk them through it. Screens get a tab per screen, the phone fixed on the left and a right panel with "When this shows" (plain words) and the tapped element's details; Building blocks get "Where it's used" across screens, linked both ways; internal labels and section numbers go; duplicate tables and the extra pictures go; downloads (whole kit zip and key single files) live inside the site, not Google Drive. Proposal: `docs/proposals/2026-11-10-kit-viewer-cleanup.md`; reference: `docs/renders/2026-11-10-kit-cleanup/preview/`.
+- **Why:** the pilot viewer overwhelmed on first open; an outside team can't use our internal codes; in-site downloads always match the viewer's version, Drive would fall behind and need per-person sharing.
+- **Rejected:** a separate "components" tab (Building blocks already is that; it gains "Where it's used" instead); keeping the 360 picture (the 360 limit is stated instead); a "Behaviour" list of decision numbers per element (replaced by answered questions in plain words, once per state); Google Drive for downloads.
+
 ## Design system changes made for this work
 
 ### D-60 · Secondary button without drop shadow (design system) — 2026-10-24 · **REVERTED same day**
