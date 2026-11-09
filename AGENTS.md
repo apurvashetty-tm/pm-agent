@@ -133,7 +133,8 @@ Apurva's standing rule (2026-10-15). Never discover the standard while reviewing
 3. **Decisions before building:** record agreed decisions in the project's decision
    log / project files, then build or prompt. Never the other way round.
 4. **Review against the checklist, not taste.** Claude, Codex and any reviewer get the
-   checklist. Reviewer feedback is vetted: adopt what's valid, log what's out of scope,
+   checklist, report only what affects correctness (style skipped), and all findings are
+   fixed in one pass (see `workflows/core/build-with-agents.md`). Reviewer feedback is vetted: adopt what's valid, log what's out of scope,
    flag doubts. Keep an evidence record (item × checklist line × pass/fail).
 5. **Fix shared things first,** then individual items; compare with the last approved
    version so a fix can't silently break approved work.
@@ -141,6 +142,15 @@ Apurva's standing rule (2026-10-15). Never discover the standard while reviewing
    Apurva approves. After that the work is **frozen**: anything new is either a **bug**
    (fixed only where it occurs) or a **next-version idea** (logged, not applied).
    New ideas never reopen finished work.
+
+## How we build and verify — all projects (2026-11-09)
+
+Read `workflows/core/build-with-agents.md` before any build or review. In short: size the job
+(small fixes done directly, builds in terminal runs); foundation check ("who uses this next, and
+what will they need?") before building on anything shared; rules with no exceptions enforced by
+tools (linters, hooks, commit gates), not instructions; fast checks always, slow checks once at the
+end; one review against the spec, correctness only, one fix pass; Apurva's walkthrough for looks;
+every bug gets its smallest test; time-boxed runs with half-page reports.
 
 ## Writing or editing a PRD
 
