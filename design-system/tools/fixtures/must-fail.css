@@ -8,3 +8,4 @@
 .f7 { opacity: 0.5; }
 .f8 { padding: var(--tm-space-sm) 4px; }
 .f9 { width: 37px; } /* raw-ok: */
+.f10 { transition: color var(--tm-duration-fast), opacity 150ms; }

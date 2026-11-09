@@ -7,12 +7,13 @@ const NAMED_COLOURS = 'aliceblue antiquewhite aqua aquamarine azure beige bisque
 
 // A --tm-* token, optionally with a --tm-* token as its fallback.
 const VAR = 'var\\(--tm-[\\w-]+(?:,\\s*var\\(--tm-[\\w-]+\\))?\\)';
-const TOKEN = `/^${VAR}$/`;
+// A trailing comma is a list separator (transition / box-shadow lists), not part of the value (D-99).
+const TOKEN = `/^${VAR},?$/`;
 const BASE_KEYWORDS = ['0', 'auto', 'none', 'inherit', 'initial', 'unset', 'revert', 'currentColor', 'currentcolor', 'transparent', '100%'];
 // calc()/min()/max()/clamp() built only from --tm-* tokens, unitless numbers, 100%, env() safe areas and operators.
 const TOKEN_MATH = `/^(?:calc|min|max|clamp)\\((?:\\s|,|${VAR}|env\\([\\w-]+\\)|100%|-?\\d*\\.?\\d+(?![\\w%.])|[-+*/()]|calc\\()*\\)$/`;
 // Layout / style keywords (solid, inset, flex, fit-content, ease-in, opacity, …) but never a named colour.
-const KEYWORD = `/^(?!(?:${NAMED_COLOURS.join('|')})$)-?[a-zA-Z][\\w-]*$/i`;
+const KEYWORD = `/^(?!(?:${NAMED_COLOURS.join('|')})$)-?[a-zA-Z][\\w-]*,?$/i`;
 const URL = '/^url\\(/';
 
 const COLOUR_ONLY = [TOKEN, ...BASE_KEYWORDS];

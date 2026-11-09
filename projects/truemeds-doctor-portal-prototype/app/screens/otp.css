@@ -1,38 +1,38 @@
 /* OTP — lifted from ui-screens/otp/otp.html. Tokens only (--tm-*); the drawn phone keyboard is in shell/mock-keyboard.css.
    The screen fills the app frame (RULES §7). */
-.otp-screen { height: 100%; display: flex; flex-direction: column; box-sizing: border-box; position: relative; overflow: hidden;
+.otp-screen { height: 100%; display: flex; flex-direction: column; box-sizing: border-box; position: relative; overflow: hidden;   /* raw-ok: 100% fill (geometry) */
   background: var(--tm-surface-brand-subtle); font-family: var(--tm-font); color: var(--tm-content-primary); }
 /* Task header (D-61): logo + title, no Back (Change and the phone back gesture cover it) */
-.otp-screen .login-logo { display: block; width: 166px; height: auto; margin-bottom: var(--tm-space-lg); }
+.otp-screen .login-logo { display: block; width: var(--tm-logo-lockup-width); height: auto; margin-bottom: var(--tm-space-lg); }
 .otp-screen .top { padding: var(--tm-space-lg) var(--tm-space-page) var(--tm-space-2xl); }   /* A-05 */
 .otp-screen .head { margin-top: var(--tm-space-sm); display: flex; flex-direction: column; gap: var(--tm-space-sm); }
 .otp-screen .head h1 { margin: 0; }
 /* A-04: subtitle 14/20; the number is semibold-weight per the approved file */
 .otp-screen .head p { margin: 0; font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); color: var(--tm-content-secondary); }
 .otp-screen .head p b { color: var(--tm-content-primary); font-weight: var(--tm-font-weight-medium, 500); }
-.otp-screen a.lk { color: var(--tm-content-brand); font-weight: var(--tm-font-weight-semibold); text-decoration: none; display: inline-flex; align-items: center; min-height: 48px; }
+.otp-screen a.lk { color: var(--tm-content-brand); font-weight: var(--tm-font-weight-semibold); text-decoration: none; display: inline-flex; align-items: center; min-height: var(--tm-target-min); }
 /* White panel; section gap 32 between groups, related gap 16 within a group (RULES §8.3). Scrolls when it does not fit. */
 .otp-screen .panel { flex: 1; min-height: 0; overflow-y: auto; background: var(--tm-surface-primary);
   border-radius: var(--tm-radius-2xl) var(--tm-radius-2xl) 0 0; padding: var(--tm-space-2xl) var(--tm-space-page) var(--tm-space-xl);
   display: flex; flex-direction: column; }
-.otp-screen.kb .panel { padding-bottom: calc(256px + var(--tm-space-lg)); }   /* D-46: clears the keyboard by 16 */
+.otp-screen.kb .panel { padding-bottom: calc(256px + var(--tm-space-lg)); }   /* raw-ok: drawn keyboard height (prototype only). D-46: clears the keyboard by 16 */
 .otp-screen .grp { display: flex; flex-direction: column; gap: var(--tm-space-lg); }
 .otp-screen .grp + .grp { margin-top: var(--tm-space-2xl); }
 .otp-screen .code { display: flex; flex-direction: column; gap: var(--tm-space-sm); }
 .otp-screen .tm-field__helper { margin: 0; }
 .otp-screen .tm-otp-slots { position: relative; }
 /* Round 5 B: one reserved line under the boxes (helper or new-code line), hidden when a notice box shows */
-.otp-screen .code-slot { min-height: 20px; }
+.otp-screen .code-slot { min-height: var(--tm-font-lineheight-sm); }   /* one 20px text line */
 .otp-screen .code-slot.off { display: none; }
 .otp-screen .note { display: none; }
 .otp-screen .note.show { display: flex; }
 .otp-screen .grp > .note { margin-top: calc(var(--tm-space-sm) - var(--tm-space-lg)); }   /* A-14 */
-.otp-screen .note .tm-icon { flex-shrink: 0; margin-top: 1px; }
+.otp-screen .note .tm-icon { flex-shrink: 0; margin-top: 1px; }   /* raw-ok: optical nudge (icon on the first text line) */
 .otp-screen .note a { color: var(--tm-content-brand); font-weight: var(--tm-font-weight-semibold); text-decoration: none; }
 /* Resend line: one centred line, 48 tall in every form (A-03); timer semibold with fixed-width digits */
-.otp-screen .rs { margin: 0; text-align: center; font-size: var(--tm-font-size-body-md); line-height: 48px; min-height: 48px; color: var(--tm-content-secondary); }
+.otp-screen .rs { margin: 0; text-align: center; font-size: var(--tm-font-size-body-md); line-height: var(--tm-target-min); min-height: var(--tm-target-min); color: var(--tm-content-secondary); }
 .otp-screen .rs .timer { font-weight: var(--tm-font-weight-semibold); font-variant-numeric: tabular-nums; color: var(--tm-content-primary); white-space: nowrap; }
-.otp-screen .rs button { min-height: 48px; min-width: 48px; border: 0; background: transparent; padding: 0; vertical-align: top;
+.otp-screen .rs button { min-height: var(--tm-target-min); min-width: var(--tm-target-min); border: 0; background: transparent; padding: 0; vertical-align: top;
   color: var(--tm-content-brand); font: inherit; font-weight: var(--tm-font-weight-semibold); cursor: pointer; }
 /* A-21: "New code sent" is green text, no icon */
 .otp-screen .s1 { margin: 0; display: none; align-items: center; justify-content: center; gap: var(--tm-space-xs);

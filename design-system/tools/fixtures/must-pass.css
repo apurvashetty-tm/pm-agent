@@ -9,6 +9,7 @@
 .p8 { color: currentColor; background: transparent; padding: 0 var(--tm-space-md); }
 .p9 { padding-bottom: calc(var(--tm-space-xl) + env(safe-area-inset-bottom)); max-width: calc(100% - 2 * var(--tm-space-xl)); }
 .p10 { bottom: var(--tm-toast-offset, var(--tm-space-xl)); }
+.p11 { transition: color var(--tm-duration-fast) ease, opacity var(--tm-duration-fast) var(--tm-easing-standard); box-shadow: 0 0 0 var(--tm-border-width-default) var(--tm-border-default), var(--tm-shadow-bar); }
 /* [DEPRECATED] legacy OTP boxes, no project uses them */
 .tm-otp__box { width: 44px; height: 52px; }
 .mock-rx-paper { color: #222; font-size: 11px; }
