@@ -4,16 +4,18 @@ import { REVIEW_TEXT as T } from "../review/labels.js";
 import { MSG } from "../core/msg.js";
 import * as signInScreen from "../screens/sign-in.js";
 import * as otpScreen from "../screens/otp.js";
+import * as offerScreen from "../screens/faster-signin-offer.js";
+import * as unlockScreen from "../screens/returning-unlock.js";
 
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 export const FOLDER_JOURNEY = { "sign-in": "signIn", otp: "otp", "faster-signin-offer": "offer", "returning-unlock": "unlock", home: "home", case: "caseView", prescribe: "prescribe" };
 
-// Built screen renderers (step 1+). Faster sign-in offer and returning unlock are rebuilt in session 3 (step 1 recovery):
-// their session-1 scaffolds (screens/faster-signin-offer.js, screens/returning-unlock.js) are display-only with inline styles,
-// so until then those states show the approved picture with the "Not built yet" label.
+// Built screen renderers (step 1+): the four entry journeys. Other folders show the approved picture until their step.
 const renderers = {
   "sign-in": signInScreen.render,
   "otp": otpScreen.render,
+  "faster-signin-offer": offerScreen.render,
+  "returning-unlock": unlockScreen.render,
 };
 
 export function findState(id) {

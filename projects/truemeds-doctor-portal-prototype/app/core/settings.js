@@ -38,6 +38,7 @@ export const SETTINGS = {
   // Review tool only (not a product rule): how long the simulated server takes to answer (sign-in, OTP, resend)
   mockServerDelay:      { value: 1200, time: true, source: "review tool", ref: "simulated server answer time" },
   reconcileDelay:       { value: 800, time: true, source: "review tool", ref: "simulated cooldown check when the app comes back" },
+  phonePromptDelay:     { value: 1200, time: true, source: "review tool", ref: "mock phone prompt (B14): time before it answers" },
   // Review tool only (not a product rule): size of one fast-forward step in the review panel
   fastForwardStep:      { value: 60 * SEC, time: true, source: "review tool", ref: "panel button" },
   // Earnings (app-logic §11, D-81 F10)

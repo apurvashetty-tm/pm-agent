@@ -1,4 +1,4 @@
-// Step 1 journey tests — sign-in and OTP (session 2). Run: cd tests && node entry-journeys.mjs
+// Step 1 journey tests — sign-in and OTP (session 2), faster sign-in offer and returning unlock (session 3). Run: cd tests && node entry-journeys.mjs
 // Unit: app/core/auth.js (rules of app-logic §2, test numbers and codes §11). Browser: every ?s= state renders the built screen,
 // and the journeys behave (validation, every test number and code, wrong-code count and lock, resend waits and caps,
 // expiry on the clock, limits surviving a restart, Change / phone Back, placeholder links, story changes mid-journey).
@@ -343,6 +343,216 @@ const signInNotice = (p) => p.evaluate(() => [...document.querySelectorAll(".log
     await r.ctx.close();
   }
   check("B8", "frame: sign-in and OTP fill the frame at 360 / 390 / 430 / desktop; no horizontal page scroll", !bad.length, bad.join(" ; "));
+}
+
+// ---------------- session 3: faster sign-in offer and returning unlock ----------------
+{ // F1 unit: core/faster-signin.js (offered once, enabled, device, app open)
+  const fs = await import(path.join(APP, "core/faster-signin.js"));
+  const mk = (story = {}) => { const c = fakeCtx(story); c.mode = "review"; return c; };
+  const c = mk({ device: "fingerprint" }); const n = "7012345601";
+  const first = fs.afterSignIn(n, c); fs.markOffered(n, c); const second = fs.afterSignIn(n, c);
+  const open0 = fs.onOpen(c); c.db.set("auth", { number: n }); const open1 = fs.onOpen(c);
+  fs.setEnabled(n, c, true); const open2 = fs.onOpen(c);
+  const dev = (d) => fs.afterSignIn("7012345602", mk({ device: d }));
+  const un = fs.unlockState(mk({ device: "fingerprint", unlock: "unavailable" }));
+  check("F1", "offer once per number (then Home); device picks fingerprint / Face ID / screen lock, none skips; app open: nobody → sign-in, signed in → Home, faster sign-in on → unlock",
+    first === "offer_fingerprint" && second === "home_setup-wheel" && open0 === null && open1 === "home_setup-wheel" && open2 === "unlock_fingerprint" &&
+    dev("face") === "offer_face-id" && dev("screen-lock") === "offer_screen-lock" && dev("none") === "home_setup-wheel" && un === "unlock_unavailable" &&
+    fs.unlockState(mk({ device: "screen-lock" })) === "unlock_screen-lock" && fs.unlockState(mk({ device: "face" })) === "unlock_face",
+    JSON.stringify({ first, second, open0, open1, open2 }));
+}
+const sNow = (p) => p.evaluate(() => window.__tm.store.get().s);
+const PROMPT = value("phonePromptDelay", "review") + 300;
+async function signInFull(p, n) { await send(p, n); await verify(p, "1234"); }
+
+{ // F2: every offer / unlock state opened by ?s= renders the built screen, from the registry, no inline styles, 0 errors
+  const ids = (await (await open("")).p.evaluate(() => window.TM_STATE_MAP.pictures.map((r) => r.id).filter((i) => /^(offer|unlock)_/.test(i))));
+  const bad = [];
+  for (const id of ids) {
+    const r = await open(`?capture=1&s=${id}`);
+    const info = await r.p.evaluate(() => ({
+      built: !!document.querySelector("#screen .offer-screen, #screen .unlock-screen"), img: !!document.querySelector("#screen figure"),
+      inline: document.querySelectorAll("#screen [style]").length, missing: document.getElementById("screen").textContent.includes("[missing:"),
+    }));
+    if (!info.built || info.img || info.inline || info.missing || r.errors.length) bad.push(`${id} ${JSON.stringify(info)} ${r.errors.join("|")}`);
+    await r.ctx.close();
+  }
+  check("F2", `all ${ids.length} offer / unlock states render the built screen (registry copy, no inline styles, 0 console errors)`, ids.length === 13 && !bad.length, bad.join(" ; "));
+}
+
+{ // F3: full chain sign-in → OTP → offer → Turn on → Home; Back never returns; app restart → unlock (Dr. Kunal) → Home
+  const r = await open(""); const p = r.p;
+  await signInFull(p, "7012345610");
+  const offer = await p.evaluate(() => ({ s: window.__tm.store.get().s, title: document.querySelector(".offer-screen h1")?.textContent, btn: document.getElementById("turn-on")?.textContent, back: !!document.querySelector(".offer-screen .back") }));
+  await p.click("#turn-on"); await p.waitForTimeout(100);
+  const busy = await p.evaluate(() => ({ t: document.getElementById("turn-on").textContent, spin: !!document.querySelector("#turn-on .tm-spinner"), nn: document.getElementById("not-now").disabled }));
+  await p.waitForTimeout(PROMPT);
+  const home = await sNow(p);
+  const stored = await p.evaluate(() => JSON.parse(localStorage.getItem("tm-doctor-app:review:faster:7012345610")));
+  await p.goBack(); await p.waitForTimeout(300); const afterBack = await sNow(p);
+  check("F3", "sign-in → OTP 1234 → offer (fingerprint, no Back) → Turn on: Turning on… with spinner, Not now off → Home; enabled remembered; phone Back stays on Home",
+    offer.s === "offer_fingerprint" && offer.title === "Skip the OTP next time" && offer.btn === "Turn on faster sign-in" && !offer.back &&
+    busy.t === "Turning on…" && busy.spin && busy.nn && home === "home_setup-wheel" && stored?.enabled === true && stored?.offered === true && afterBack === "home_setup-wheel",
+    JSON.stringify({ offer, busy, home, stored, afterBack }));
+  await p.reload(); await p.waitForTimeout(400);
+  const unlock = await p.evaluate(() => ({ s: window.__tm.store.get().s, h1: document.querySelector(".unlock-screen h1")?.textContent, btn: document.getElementById("unlock-label")?.textContent }));
+  await p.click("#unlock-action"); await p.waitForTimeout(100);
+  const ub = await p.evaluate(() => ({ t: document.getElementById("unlock-action").textContent, spin: !!document.querySelector("#unlock-action .tm-spinner") }));
+  await p.waitForTimeout(PROMPT); const home2 = await sNow(p);
+  check("F3b", "app restart with faster sign-in on → returning unlock \"Hello, Dr. Kunal\" (name from mock profile data) → Unlocking… → Home",
+    unlock.s === "unlock_fingerprint" && unlock.h1 === "Hello, Dr. Kunal" && unlock.btn === "Unlock with fingerprint" && ub.t === "Unlocking…" && ub.spin && home2 === "home_setup-wheel",
+    JSON.stringify({ unlock, ub, home2 }));
+  check("F3c", "chain: 0 console errors", r.errors.length === 0, r.errors.join("|"));
+  await r.ctx.close();
+}
+
+{ // F4: offered once; Not now → Home; phone Back on the offer = Not now; restart → sign-in again → no offer
+  const r = await open(""); const p = r.p;
+  await signInFull(p, "7012345611");
+  const shown = await sNow(p);
+  await p.click("#not-now"); await p.waitForTimeout(200); const nn = await sNow(p);
+  await p.evaluate(() => document.getElementById("rp-restart").click()); await p.waitForTimeout(300);
+  await signInFull(p, "7012345611"); const again = await sNow(p);
+  await p.reload(); await p.waitForTimeout(400); const reopened = await sNow(p);   // signed in, faster sign-in off → Home
+  check("F4", "offer shown once: Not now → Home; signing in again (story restarted) skips the offer; reopening the app (faster sign-in off) → Home",
+    shown === "offer_fingerprint" && nn === "home_setup-wheel" && again === "home_setup-wheel" && reopened === "home_setup-wheel", JSON.stringify({ shown, nn, again, reopened }));
+  const r2 = await open(""); const p2 = r2.p;
+  await signInFull(p2, "7012345612");
+  await p2.goBack(); await p2.waitForTimeout(300); const viaBack = await sNow(p2);
+  const st = await p2.evaluate(() => JSON.parse(localStorage.getItem("tm-doctor-app:review:faster:7012345612")));
+  check("F4b", "phone Back on the offer = Not now (→ Home, offered, not enabled)", viaBack === "home_setup-wheel" && st.offered && !st.enabled, JSON.stringify({ viaBack, st }));
+  check("F4c", "offer once / Back: 0 console errors", r.errors.length + r2.errors.length === 0, [...r.errors, ...r2.errors].join("|"));
+  await r.ctx.close(); await r2.ctx.close();
+}
+
+{ // F5: failed → notice in the bar + Try again; Try again re-runs the prompt; cancelled → as it was; offline; unavailable [OPEN DECISION]
+  const r = await open(""); const p = r.p;
+  await setStory(p, { offer: "enable-failed" });
+  await signInFull(p, "7012345613");
+  await p.click("#turn-on"); await p.waitForTimeout(PROMPT);
+  const failed = await p.evaluate(() => ({ s: window.__tm.store.get().s, n: document.querySelector("#offer-notice:not([hidden])")?.textContent, inBar: !!document.querySelector(".tm-actionbar > #offer-notice:not([hidden])"), err: document.getElementById("offer-notice").classList.contains("tm-notice--error"), btn: document.getElementById("turn-on").textContent }));
+  await setStory(p, { offer: "cancelled" });
+  await p.click("#turn-on"); await p.waitForTimeout(100);
+  const retryBusy = await p.evaluate(() => ({ t: document.getElementById("turn-on").textContent, notice: !document.getElementById("offer-notice").hidden }));
+  await p.waitForTimeout(PROMPT);
+  const cancelled = await p.evaluate(() => ({ s: window.__tm.store.get().s, n: document.querySelector("#offer-notice:not([hidden])")?.textContent ?? null, btn: document.getElementById("turn-on").textContent, nn: document.getElementById("not-now").disabled }));
+  await setStory(p, { offer: "unavailable" });
+  await p.click("#turn-on"); await p.waitForTimeout(PROMPT);
+  const unav = await p.evaluate(() => document.querySelector("#offer-notice:not([hidden])")?.textContent);
+  await setStory(p, { offline: "yes", offer: "enabled" });
+  await p.click("#turn-on"); await p.waitForTimeout(100);
+  const off = await p.evaluate(() => ({ n: document.querySelector("#offer-notice:not([hidden])")?.textContent, warn: document.getElementById("offer-notice").classList.contains("tm-notice--warning"), busy: document.getElementById("turn-on").disabled }));
+  await setStory(p, { offline: "no" });
+  await p.click("#turn-on"); await p.waitForTimeout(PROMPT); const done = await sNow(p);
+  check("F5", "failed: \"Couldn't turn on faster sign-in.\" in the bar (error) above Try again; Try again re-runs the prompt (Turning on…, notice cleared); cancelled → back as it was, no new message; unavailable handled as failed [OPEN DECISION]; offline notice (warning, no prompt); then Turn on → Home",
+    failed.s === "offer_fingerprint" && failed.n === "Couldn’t turn on faster sign-in." && failed.inBar && failed.err && failed.btn === "Try again" &&
+    retryBusy.t === "Turning on…" && !retryBusy.notice && cancelled.s === "offer_fingerprint" && cancelled.btn === "Try again" && cancelled.n === "Couldn’t turn on faster sign-in." && !cancelled.nn &&
+    unav === "Couldn’t turn on faster sign-in." && off.n === "You’re offline. Check your connection." && off.warn && !off.busy && done === "home_setup-wheel",
+    JSON.stringify({ failed, retryBusy, cancelled, unav, off, done }));
+  // a first-time cancel: plain offer, no message
+  const r2 = await open(""); const p2 = r2.p;
+  await setStory(p2, { offer: "cancelled" }); await signInFull(p2, "7012345614");
+  await p2.click("#turn-on"); await p2.waitForTimeout(PROMPT);
+  const c1 = await p2.evaluate(() => ({ s: window.__tm.store.get().s, notice: !document.getElementById("offer-notice").hidden, btn: document.getElementById("turn-on").textContent }));
+  check("F5b", "cancelled prompt → back to the offer, no message (offer.cancelled)", c1.s === "offer_fingerprint" && !c1.notice && c1.btn === "Turn on faster sign-in", JSON.stringify(c1));
+  check("F5c", "offer outcomes: 0 console errors", r.errors.length + r2.errors.length === 0, [...r.errors, ...r2.errors].join("|"));
+  await r.ctx.close(); await r2.ctx.close();
+}
+
+{ // F6: the phone decides the offer (D-64): Face ID, screen lock only (fallback reachable end to end), no screen lock → skipped
+  const look = async (device, n) => {
+    const r = await open(""); const p = r.p; await setStory(p, { device }); await signInFull(p, n);
+    const v = await p.evaluate(() => ({ s: window.__tm.store.get().s, sub: document.querySelector(".offer-screen .sub")?.textContent, icon: document.querySelector(".hero-ic .tm-icon")?.dataset.icon, trust: document.querySelectorAll(".pt-t")[1]?.textContent }));
+    return { r, p, v };
+  };
+  const face = await look("face", "7012345615");
+  const none = await look("none", "7012345616");
+  const sl = await look("screen-lock", "7012345617");
+  await sl.p.click("#turn-on"); await sl.p.waitForTimeout(PROMPT); const slHome = await sNow(sl.p);
+  await sl.p.reload(); await sl.p.waitForTimeout(400);
+  const slUnlock = await sl.p.evaluate(() => ({ s: window.__tm.store.get().s, btn: document.getElementById("unlock-label").textContent, icon: document.getElementById("variant-icon").dataset.icon }));
+  await sl.p.click("#unlock-action"); await sl.p.waitForTimeout(PROMPT); const slDone = await sNow(sl.p);
+  check("F6", "device: Face ID wording; no screen lock → offer skipped (Home); screen lock only → offer \"Use your screen lock instead of an OTP.\" → Turn on → restart → \"Unlock with screen lock\" → Home",
+    face.v.s === "offer_face-id" && face.v.sub === "Use Face ID instead of waiting for an OTP." && face.v.trust === "Your Face ID stays on your phone" && none.v.s === "home_setup-wheel" &&
+    sl.v.s === "offer_screen-lock" && sl.v.sub === "Use your screen lock instead of an OTP." && sl.v.icon === "lock" && slHome === "home_setup-wheel" &&
+    slUnlock.s === "unlock_screen-lock" && slUnlock.btn === "Unlock with screen lock" && slUnlock.icon === "lock" && slDone === "home_setup-wheel",
+    JSON.stringify({ face: face.v, none: none.v, sl: sl.v, slHome, slUnlock, slDone }));
+  const errs = [...face.r.errors, ...none.r.errors, ...sl.r.errors];
+  check("F6b", "device variants: 0 console errors", errs.length === 0, errs.join("|"));
+  for (const x of [face, none, sl]) await x.r.ctx.close();
+}
+
+// A returning doctor: faster sign-in on, app reopened on unlock.
+async function returning(story = {}, n = "7012345620") {
+  const r = await open(""); const p = r.p;
+  await signInFull(p, n); await p.click("#turn-on"); await p.waitForTimeout(PROMPT);
+  await p.reload(); await p.waitForTimeout(400);
+  if (Object.keys(story).length) await setStory(p, story);
+  return r;
+}
+{ // F7: returning unlock — cancelled unchanged; 3 failed tries → OTP; unavailable; Use OTP instead; Switch account; phone Back stays
+  const r = await returning({ unlock: "cancelled" }); const p = r.p;
+  const before = await p.evaluate(() => document.querySelector(".unlock-screen").innerHTML);
+  await p.click("#unlock-action"); await p.waitForTimeout(PROMPT);
+  const after = await p.evaluate(() => document.querySelector(".unlock-screen").innerHTML);
+  await p.goBack(); await p.waitForTimeout(300); const backStays = await sNow(p);
+  await setStory(p, { unlock: "failed" });
+  const tries = [];
+  for (let i = 0; i < 3; i++) { await p.click("#unlock-action"); await p.waitForTimeout(PROMPT); tries.push(await sNow(p)); }
+  const otp = await p.evaluate(() => ({ num: document.querySelector(".otp-screen .head b")?.textContent, focused: document.activeElement?.id }));
+  check("F7", "unlock: cancelled → unchanged, no message; phone Back stays on unlock; failed tries 1–2 stay (phone owns retry), the 3rd → OTP for the remembered number",
+    before === after && backStays === "unlock_fingerprint" && tries[0] === "unlock_fingerprint" && tries[1] === "unlock_fingerprint" && tries[2] === "otp_default" && otp.num === "+91 70123 45620" && otp.focused === "c",
+    JSON.stringify({ same: before === after, backStays, tries, otp }));
+  await verify(p, "1234"); const signed = await sNow(p);
+  check("F7b", "OTP after unlock fallback: 1234 → Home (faster sign-in already on, no offer)", signed === "home_setup-wheel", signed);
+  await r.ctx.close();
+
+  const u = await returning({ unlock: "unavailable" }, "7012345621"); const q = u.p;
+  await q.click("#unlock-action");   // the story changed after the app opened: the prompt answers "unavailable" at the tap
+  await q.waitForTimeout(PROMPT);
+  const un = await q.evaluate(() => ({ n: document.querySelector("#unlock-notice:not([hidden])")?.textContent, neutral: document.getElementById("unlock-notice").classList.contains("tm-notice--neutral"),
+    act: document.getElementById("unlock-action").hidden, prompt: document.querySelector(".prompt").hidden, primary: document.getElementById("fallback").classList.contains("tm-btn--primary") }));
+  await q.reload(); await q.waitForTimeout(400);
+  const opened = await q.evaluate(() => ({ s: window.__tm.store.get().s }));
+  await q.click("#fallback"); await q.waitForTimeout(300); const useOtp = await sNow(q);
+  await q.goBack(); await q.waitForTimeout(300); const otpBack = await sNow(q);   // OTP Back = Change → sign-in
+  check("F7c", "unavailable: neutral notice at the top of the panel, prompt and Unlock hidden, Use OTP instead primary; Use OTP instead → OTP (Back = Change → sign-in)",
+    un.n === "Faster sign-in isn’t available on this phone right now." && un.neutral && un.act && un.prompt && un.primary && useOtp === "otp_default" && otpBack === "sign-in_default",
+    JSON.stringify({ un, opened, useOtp, otpBack }));
+  await u.ctx.close();
+
+  const w = await returning({}, "7012345622"); const s = w.p;
+  await s.click("#switch-account"); await s.waitForTimeout(300);
+  const sw = await s.evaluate(() => ({ s: window.__tm.store.get().s, n: document.getElementById("tm-login-mobile")?.value }));
+  await s.goBack(); await s.waitForTimeout(300); const swBack = await sNow(s);
+  check("F7d", "Not you? Switch account → sign-in with an empty number; phone Back returns to unlock", sw.s === "sign-in_default" && sw.n === "" && swBack === "unlock_fingerprint", JSON.stringify({ sw, swBack }));
+  const errs = [...r.errors, ...u.errors, ...w.errors];
+  check("F7e", "unlock journeys: 0 console errors", errs.length === 0, errs.join("|"));
+  await w.ctx.close();
+}
+
+{ // F8: story start "unlock" and the panel applies to the running unlock (next prompt answer); demo always succeeds
+  const r = await open(""); const p = r.p;
+  await p.selectOption("#rp-start", "unlock"); await p.selectOption("#rp-device", "face");
+  await p.evaluate(() => document.getElementById("rp-restart").click()); await p.waitForTimeout(300);
+  const st = await p.evaluate(() => ({ s: window.__tm.store.get().s, btn: document.getElementById("unlock-label").textContent }));
+  await p.selectOption("#rp-unlock", "unavailable");
+  await p.click("#unlock-action"); await p.waitForTimeout(PROMPT);
+  const un = await p.evaluate(() => !document.getElementById("unlock-notice").hidden);
+  check("F8", "story start = returning unlock (Face ID phone); a panel change applies at the next prompt answer", st.s === "unlock_face" && st.btn === "Unlock with Face ID" && un, JSON.stringify({ st, un }));
+  await r.ctx.close();
+}
+
+{ // F9: frame — offer and unlock fill the app frame at 360 / 390 / 430 / desktop; the bar is at the frame's bottom edge
+  const bad = [];
+  for (const [w, h] of [[360, 640], [360, 780], [390, 844], [430, 932], [1280, 800]]) for (const s of ["offer_screen-lock", "offer_enable-failed", "unlock_fingerprint", "unlock_unavailable"]) {
+    const r = await open(`?s=${s}`, { w, h });
+    const g = await r.p.evaluate(() => { const fe = document.getElementById("frame"); const f = fe.getBoundingClientRect(); const sc = document.querySelector(".offer-screen, .unlock-screen"); const b = sc.getBoundingClientRect(); const bar = sc.querySelector(".tm-actionbar").getBoundingClientRect();
+      return { fw: fe.clientWidth, sw: b.width, dx: Math.abs(f.left + fe.clientLeft - b.left), barGap: Math.round(f.bottom - fe.clientTop - bar.bottom), pageScroll: document.documentElement.scrollWidth > innerWidth }; });
+    if (Math.abs(g.fw - g.sw) > 1 || g.dx > 1 || Math.abs(g.barGap) > 1 || g.pageScroll) bad.push(`${s}@${w}x${h} ${JSON.stringify(g)}`);
+    await r.ctx.close();
+  }
+  check("F9", "frame: offer and unlock fill the frame (360×640 / 360 / 390 / 430 / desktop), bar flush with the bottom, no page scroll", !bad.length, bad.join(" ; "));
 }
 
 await browser.close();

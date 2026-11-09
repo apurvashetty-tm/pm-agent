@@ -12,6 +12,7 @@ import { checkCode, verifyCode, resendCode, status, formatNumber, formatWait, si
 import { OTP_LENGTH, PICTURE_NUMBER, PICTURE_CODE } from "../data/test-numbers.js";
 import { PLACEHOLDER } from "../data/links.js";
 import { mockKeyboard, drawsKeyboard } from "../shell/mock-keyboard.js";
+import { afterSignIn } from "../core/faster-signin.js";
 import { authCtx, newLife } from "./entry-ctx.js";
 
 const C = PICTURE_CODE;
@@ -197,10 +198,10 @@ export function render(host, id, { mode, params = {} }) {
     if (r.outcome === "correct") {
       signIn(number, ctx());
       store.set({ entryNumber: number });
-      // Signed in: the entry journey leaves history (Back never returns to OTP). Faster sign-in offer once (session 3), else Home.
-      const offer = (store.get().story || {}).offer === "unsupported" ? "home_default" : "offer_fingerprint";
+      // Signed in: the entry journey leaves history (Back never returns to OTP). The faster sign-in offer once, on a phone with a
+      // screen lock and faster sign-in off; else Home (D-45, D-64).
       resetNav();
-      push(null, { s: offer, live: true });
+      push(null, { s: afterSignIn(number, ctx()), live: true, number });
       return;
     }
     if (r.outcome === "wrong") { m.err = { key: r.key, values: r.values }; m.replace = true; }

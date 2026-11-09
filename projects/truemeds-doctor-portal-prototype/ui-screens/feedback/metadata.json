@@ -1095,5 +1095,179 @@
     "clear": "—",
     "retain": "—",
     "copy": "step 1 recovery brief 2026-11-09 (main thread)"
+  },
+  "offer.title": {
+    "pattern": "none",
+    "trigger": "entry screen label",
+    "slot": "faster sign-in offer title",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, step 1 recovery 2026-11-09)"
+  },
+  "offer.pointNoWait": {
+    "pattern": "none",
+    "trigger": "entry screen label",
+    "slot": "offer point 1 title",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, step 1 recovery 2026-11-09)"
+  },
+  "offer.pointStored": {
+    "pattern": "none",
+    "trigger": "entry screen label",
+    "slot": "offer point 2 line",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, step 1 recovery 2026-11-09)"
+  },
+  "offer.pointChange": {
+    "pattern": "none",
+    "trigger": "entry screen label",
+    "slot": "offer point 3 title",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, step 1 recovery 2026-11-09)"
+  },
+  "offer.pointChangeLine": {
+    "pattern": "none",
+    "trigger": "entry screen label",
+    "slot": "offer point 3 line",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, step 1 recovery 2026-11-09)"
+  },
+  "offer.submit": {
+    "pattern": "none",
+    "trigger": "entry screen label",
+    "slot": "main button",
+    "next": "phone prompt",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, step 1 recovery 2026-11-09)"
+  },
+  "offer.submitBusy": {
+    "pattern": "none",
+    "trigger": "entry screen label",
+    "slot": "main button while the phone prompt is open",
+    "next": "phone answer",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, step 1 recovery 2026-11-09)"
+  },
+  "offer.retry": {
+    "pattern": "none",
+    "trigger": "entry screen label",
+    "slot": "main button after a failed turn-on",
+    "next": "phone prompt",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, step 1 recovery 2026-11-09)"
+  },
+  "offer.notNow": {
+    "pattern": "none",
+    "trigger": "entry screen label",
+    "slot": "quiet button",
+    "next": "Home",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, step 1 recovery 2026-11-09)"
+  },
+  "unlock.greeting": {
+    "pattern": "none",
+    "trigger": "entry screen label",
+    "slot": "returning unlock title (name from the doctor's profile, D-92)",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, step 1 recovery 2026-11-09)",
+    "placeholders": [
+      "name"
+    ]
+  },
+  "unlock.subtitle": {
+    "pattern": "none",
+    "trigger": "entry screen label",
+    "slot": "returning unlock subtitle",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, step 1 recovery 2026-11-09)"
+  },
+  "unlock.ready": {
+    "pattern": "none",
+    "trigger": "entry screen label",
+    "slot": "returning unlock prompt line",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, step 1 recovery 2026-11-09)"
+  },
+  "unlock.submitFingerprint": {
+    "pattern": "none",
+    "trigger": "entry screen label",
+    "slot": "main button (fingerprint phone)",
+    "next": "phone prompt",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, step 1 recovery 2026-11-09)"
+  },
+  "unlock.submitFace": {
+    "pattern": "none",
+    "trigger": "entry screen label",
+    "slot": "main button (Face ID phone)",
+    "next": "phone prompt",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, step 1 recovery 2026-11-09)"
+  },
+  "unlock.submitScreenLock": {
+    "pattern": "none",
+    "trigger": "entry screen label",
+    "slot": "main button (screen lock only)",
+    "next": "phone prompt",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, step 1 recovery 2026-11-09)"
+  },
+  "unlock.submitBusy": {
+    "pattern": "none",
+    "trigger": "entry screen label",
+    "slot": "main button while the phone prompt is open",
+    "next": "phone answer",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, step 1 recovery 2026-11-09)"
+  },
+  "unlock.useOtp": {
+    "pattern": "none",
+    "trigger": "entry screen label",
+    "slot": "quiet button (primary when unlock is unavailable)",
+    "next": "OTP",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, step 1 recovery 2026-11-09)"
+  },
+  "unlock.notYou": {
+    "pattern": "none",
+    "trigger": "entry screen label",
+    "slot": "switch-account line lead",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, step 1 recovery 2026-11-09)"
+  },
+  "unlock.switchAccount": {
+    "pattern": "none",
+    "trigger": "entry screen label",
+    "slot": "switch-account button",
+    "next": "sign-in",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, step 1 recovery 2026-11-09)"
   }
 }

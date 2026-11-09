@@ -58,11 +58,12 @@ def run_app():
             ok(f"{tag} no page errors", not errs, "; ".join(errs))
             pg.close()
             # Step 1 entry screens (built): fill the frame, no nested phone, no sideways scroll, main button on screen
-            for sid, btn in [("sign-in_default", ".login-submit"), ("sign-in_keyboard-open", ".login-submit"), ("otp_default", "#b"), ("otp_locked", "#b")]:
+            for sid, btn in [("sign-in_default", ".login-submit"), ("sign-in_keyboard-open", ".login-submit"), ("otp_default", "#b"), ("otp_locked", "#b"),
+                             ("offer_fingerprint", "#turn-on"), ("offer_enable-failed", "#turn-on"), ("unlock_fingerprint", "#unlock-action"), ("unlock_unavailable", "#fallback")]:
                 pg = b.new_page(viewport={"width": w, "height": h}); errs = []
                 pg.on("pageerror", lambda e: errs.append(str(e)))
                 pg.goto(base + "?s=" + sid); pg.wait_for_timeout(400)
-                g = pg.evaluate("""(sel)=>{const fe=document.getElementById('frame');const f=fe.getBoundingClientRect();const sc=document.querySelector('.signin-screen,.otp-screen');if(!sc)return null;const r=sc.getBoundingClientRect();const bt=document.querySelector(sel).getBoundingClientRect();
+                g = pg.evaluate("""(sel)=>{const fe=document.getElementById('frame');const f=fe.getBoundingClientRect();const sc=document.querySelector('.signin-screen,.otp-screen,.offer-screen,.unlock-screen');if(!sc)return null;const r=sc.getBoundingClientRect();const bt=document.querySelector(sel).getBoundingClientRect();
                   return {fill:Math.abs(fe.clientWidth-r.width)<=1&&Math.abs(f.left+fe.clientLeft-r.left)<=1&&r.top<=f.top+fe.clientTop+1, side:document.documentElement.scrollWidth<=innerWidth+1, btn:bt.top>=f.top&&bt.bottom<=f.bottom}}""", btn)
                 ok(f"{tag} {sid}: screen fills the frame, no sideways scroll, main button inside the frame", bool(g) and g["fill"] and g["side"] and g["btn"], str(g))
                 ok(f"{tag} {sid}: no page errors", not errs, "; ".join(errs))

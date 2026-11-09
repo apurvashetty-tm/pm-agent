@@ -118,7 +118,26 @@
   "case.callbackPickDate": "Pick a date.",
   "case.callbackPickTime": "Pick a time.",
   "prescribe.notesLabel": "Additional instructions (optional)",
-  "prescribe.notesHelper": "Printed on the prescription."
+  "prescribe.notesHelper": "Printed on the prescription.",
+  "offer.title": "Skip the OTP next time",
+  "offer.pointNoWait": "No more waiting for SMS codes",
+  "offer.pointStored": "Truemeds never sees or stores it.",
+  "offer.pointChange": "Change it any time",
+  "offer.pointChangeLine": "Turn it off from your profile.",
+  "offer.submit": "Turn on faster sign-in",
+  "offer.submitBusy": "Turning on…",
+  "offer.retry": "Try again",
+  "offer.notNow": "Not now",
+  "unlock.greeting": "Hello, Dr. {name}",
+  "unlock.subtitle": "Let’s check in on your patients today.",
+  "unlock.ready": "Ready when you are",
+  "unlock.submitFingerprint": "Unlock with fingerprint",
+  "unlock.submitFace": "Unlock with Face ID",
+  "unlock.submitScreenLock": "Unlock with screen lock",
+  "unlock.submitBusy": "Unlocking…",
+  "unlock.useOtp": "Use OTP instead",
+  "unlock.notYou": "Not you?",
+  "unlock.switchAccount": "Switch account"
 });
   window.TMFeedback = Object.freeze({
     messages,

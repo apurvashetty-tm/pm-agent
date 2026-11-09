@@ -10,6 +10,8 @@ import { createServer, createPoller } from "./mock-server.js";
 import { setUnlockOutcome } from "./unlock.js";
 import { value } from "./settings.js";
 import { renderState, renderShellIntro } from "../shell/screen-host.js";
+import { onOpen, unlockState, fasterState } from "./faster-signin.js";
+import { authCtx } from "../screens/entry-ctx.js";
 import { mountPanel, focusJourney, logLine } from "../review/panel.js";
 import { mountDrawer } from "../review/drawer.js";
 import { REVIEW_TEXT as T } from "../review/labels.js";
@@ -70,9 +72,16 @@ document.addEventListener("visibilitychange", () => { if (!document.hidden) poll
 
 // 4. Screens (one renderer for every route; picture layout set on every render).
 // The story's start screen when no state is named: sign-in is built (step 1); the others show the shell until their step.
-const START_STATE = { "sign-in": "sign-in_default" };
 // The first step names its state, so later steps (OTP Change, phone Back) can find it in the history.
-function startParams(s) { return !s && START_STATE[story.start] ? { s: START_STATE[story.start], live: true } : { s }; }
+// Opening the app (first start, story start "sign-in", not capture) follows what this phone remembers (plan B12): a doctor with
+// faster sign-in on → returning unlock; signed in without it → Home; else sign-in. Restart story always goes to the story's start.
+function startState(opening) {
+  const ctx = authCtx(mode);
+  if (story.start === "unlock") { const a = ctx.db.get("auth"); return unlockState(ctx, a ? fasterState(a.number, ctx).method : null); }
+  if (story.start !== "sign-in") return null;
+  return (opening && mode !== "capture" && onOpen(ctx)) || "sign-in_default";
+}
+function startParams(s, opening = false) { if (s) return { s }; const id = startState(opening); return id ? { s: id, live: true } : { s }; }
 function renderScreen(id, params = {}) {
   document.body.classList.toggle("picture-only", !!id);
   if (!id) {
@@ -125,5 +134,5 @@ if (mode === "review" || mode === "play") {
   mountDrawer({ mode, panel: panelRoot, handle: document.getElementById("drawer-handle"), backdrop: document.getElementById("drawer-backdrop") });
 }
 attachPhoneBack();
-start(null, startParams(q.s));
+start(null, startParams(q.s, true));
 window.__tm = { store, get server() { return server; }, runCalls, clock, story: () => story };

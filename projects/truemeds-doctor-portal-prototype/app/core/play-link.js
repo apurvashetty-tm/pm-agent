@@ -23,6 +23,7 @@ export function decodeStory(code) {
     if (!o || o.v !== 2) return null;
     const story = { v: 2 };
     for (const [key, options] of Object.entries(STORY_FIELDS)) {
+      if (!(key in o) && key === "device") { story[key] = DEFAULT_STORY[key]; continue; }   // links made before the field existed
       if (!options.includes(o[key])) return null;
       story[key] = o[key];
     }

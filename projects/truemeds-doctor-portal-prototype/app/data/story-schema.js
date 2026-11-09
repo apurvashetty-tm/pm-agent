@@ -22,7 +22,11 @@ export const STORY_FIELDS = {
   signIn:      ["sent", "not-registered", "inactive", "too-many-tries", "couldnt-send", "locked-number"],
   // OTP: 1234 correct · 0000 expired · 9999 couldn't verify · any other = wrong (5th locks)
   otp:         ["correct", "wrong", "two-tries-left", "expired", "couldnt-verify", "locked", "resend-ok", "resend-failed"],
-  offer:       ["shown", "enabled", "enable-failed", "cancelled", "not-now", "unsupported"],
+  // the phone (mock unlock, B14): what it has — fingerprint, face, screen lock only (D-64 fallback), or no screen lock (offer skipped)
+  device:      ["fingerprint", "face", "screen-lock", "none"],
+  // the phone prompt's answer on the faster sign-in offer (Turn on / Try again). "unavailable" = [OPEN DECISION] (app-logic §2 silent)
+  offer:       ["enabled", "cancelled", "enable-failed", "unavailable"],
+  // the phone prompt's answer on returning unlock; "failed" = one failed try (3 → OTP)
   unlock:      ["success", "cancelled", "failed", "unavailable"],
   availability:["normal", "near-expiry", "ending", "ended-with-request"],
   request:     ["accepted", "failed", "no-cases"],
@@ -38,7 +42,7 @@ export const defaultAttempt = () => Object.fromEntries(CALL_KEYS.map((k) => [k, 
 export const DEFAULT_STORY = {
   v: 2,
   start: "sign-in", scenario: "cat4", offline: "no",
-  signIn: "sent", otp: "correct", offer: "shown", unlock: "success",
+  signIn: "sent", otp: "correct", device: "fingerprint", offer: "enabled", unlock: "success",
   availability: "normal", request: "accepted", caseKind: "normal", prescribe: "saved",
   calls: [defaultAttempt()],
 };

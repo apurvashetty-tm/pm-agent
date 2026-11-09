@@ -1,214 +1,128 @@
-// Returning unlock screen (entry journey). States: fingerprint, face, screen-lock, pending, cancelled, platform-retry, unavailable.
-// First screen when app opens for a returning doctor with biometric/screen-lock enabled. 3 failed tries → fall back to OTP.
-// Doctor name from mock data (D-92: "Dr. Kunal").
+// Returning unlock (entry journey, step 1). Markup and classes lifted from ui-screens/returning-unlock/returning-unlock.html;
+// styles in returning-unlock.css. Every word through MSG(); the doctor's name comes from mock profile data (D-92), never typed here.
+// Behaviour: app-logic §2 "Faster sign-in", feedback-state-map "Returning unlock", D-45, D-47, D-64, D-66 A1, A-19; plan B12, B14.
+//   The prompt opens when the doctor taps Unlock (no automatic prompt) · success → Home (the open case from step 2 on) ·
+//   cancelled → the screen returns unchanged, not counted · failed → the phone owns the retry (screen unchanged); after 3 failed
+//   tries (setting, [MOCK]) → OTP · unavailable → standing neutral notice at the top of the panel, Use OTP instead is the primary ·
+//   Use OTP instead → OTP · "Not you? Switch account" → sign-in · phone Back stays (first screen when the app opens, D-47).
+//   [MOCK ASSUMPTION] Use OTP instead sends a code to the remembered number at the tap and opens OTP (no picture for a busy state);
+//   if the server refuses (too many, offline, …) sign-in opens with the number and that answer.
 import { MSG } from "../core/msg.js";
-import { push } from "../core/nav.js";
+import { push, setScreenBack, saveCurrent, reset as resetNav } from "../core/nav.js";
+import { h } from "../core/dom.js";
+import { signedIn, signIn, requestCode } from "../core/auth.js";
+import { promptAnswer } from "../core/unlock.js";
+import { HOME_STUB } from "../core/faster-signin.js";
+import { doctorFor } from "../data/doctor.js";
+import { authCtx, newLife } from "./entry-ctx.js";
 
-const STATES = {
-  "unlock_fingerprint": "fingerprint",
-  "unlock_face": "face",
-  "unlock_screen-lock": "screen-lock",
-  "unlock_pending": "pending",
-  "unlock_cancelled": "cancelled",
-  "unlock_platform-retry": "platform-retry",
-  "unlock_unavailable": "unavailable",
+const VARIANT = {
+  fingerprint:   { icon: "fingerprint", label: "unlock.submitFingerprint" },
+  face:          { icon: "face-id", label: "unlock.submitFace" },
+  "screen-lock": { icon: "lock", label: "unlock.submitScreenLock" },
 };
-
-const VARIANTS = {
-  fingerprint: { icon: "fingerprint", label: "Unlock with fingerprint", busy: false, unavailable: false },
-  face: { icon: "face-id", label: "Unlock with Face ID", busy: false, unavailable: false },
-  "screen-lock": { icon: "lock", label: "Unlock with screen lock", busy: false, unavailable: false },
-  pending: { icon: "fingerprint", label: "Unlocking…", busy: true, unavailable: false },
-  cancelled: { icon: "fingerprint", label: "Unlock with fingerprint", busy: false, unavailable: false },
-  "platform-retry": { icon: "fingerprint", label: "Unlock with fingerprint", busy: false, unavailable: false },
-  unavailable: { icon: "fingerprint", label: "Unlock with fingerprint", busy: false, unavailable: true },
+// Picture moments (same table as the approved file). cancelled / platform-retry look like the fingerprint screen: the phone owns
+// the retry guidance, the app shows nothing new (feedback-state-map: "do not invent OS mock").
+const FIXTURES = {
+  fingerprint:      { variant: "fingerprint" },
+  face:             { variant: "face" },
+  "screen-lock":    { variant: "screen-lock" },
+  pending:          { variant: "fingerprint", busy: true },
+  cancelled:        { variant: "fingerprint" },
+  "platform-retry": { variant: "fingerprint" },
+  unavailable:      { variant: "fingerprint", unavailable: true },
 };
+export const STATES = Object.keys(FIXTURES).map((k) => `unlock_${k}`);
 
-export function render(host, id, { mode, w }) {
-  const stateKey = STATES[id];
-  if (!stateKey) return null;
+export function render(host, id, { mode, params = {} }) {
+  const fx = FIXTURES[id.replace(/^unlock_/, "")];
+  if (!fx) return null;
+  const life = newLife(host, mode);
+  const ctx = () => authCtx(mode);
+  const live = !!params.live;
+  const auth = signedIn(ctx());
+  const number = auth ? auth.number : null;
+  const m = { variant: fx.variant, busy: !live && !!fx.busy, unavailable: !!fx.unavailable, fails: 0 };
+  if (params.saved) Object.assign(m, params.saved, { busy: false });   // back from sign-in: as it was (a pending prompt is dropped)
 
-  const variant = VARIANTS[stateKey];
-  if (!variant) return null;
+  // ---- markup (approved hierarchy: .screen > header.intro (logo, .head) · section.panel (notice, .prompt) · .tm-actionbar.footer) ----
+  const icon = h("span", { class: "tm-icon", id: "variant-icon", "data-icon": "fingerprint" });
+  const prompt = h("div", { class: "prompt" }, h("div", { class: "prompt-icon", "aria-hidden": "true" }, icon), h("h2", { id: "ready", text: MSG("unlock.ready") }));
+  const notice = h("div", { class: "tm-notice tm-notice--neutral unlock-notice", id: "unlock-notice", role: "status", hidden: true },
+    h("span", { class: "tm-icon", "data-icon": "info-circle", "aria-hidden": "true" }), h("span", { id: "unlock-error", text: MSG("unlock.unavailable") }));
+  const label = h("span", { id: "unlock-label" });
+  const action = h("button", { class: "tm-btn tm-btn--primary tm-btn--lg tm-btn--block", id: "unlock-action", type: "button", onclick: onUnlock }, label);
+  const fallback = h("button", { class: "tm-btn tm-btn--quiet tm-btn--lg tm-btn--block", id: "fallback", type: "button", onclick: onUseOtp, text: MSG("unlock.useOtp") });
+  const account = h("button", { class: "tm-btn tm-btn--quiet account", id: "switch-account", type: "button", onclick: onSwitch },
+    `${MSG("unlock.notYou")} `, h("strong", { text: MSG("unlock.switchAccount") }));
+  const root = h("main", { class: "unlock-screen tm", "aria-label": MSG("unlock.greeting", { name: doctorFor(number).firstName }) },
+    h("header", { class: "intro" },
+      h("img", { class: "login-logo", src: "brand/truemeds-for-doctors.svg", alt: "truemeds for doctors" }),
+      h("div", { class: "head" },
+        h("h1", { class: "tm-text-title-lg", text: MSG("unlock.greeting", { name: doctorFor(number).firstName }) }),
+        h("p", { text: MSG("unlock.subtitle") }))),
+    h("section", { class: "panel", "aria-labelledby": "ready" }, notice, prompt),
+    h("div", { class: "tm-actionbar footer" }, action, fallback, account));
+  host.replaceChildren(root);
 
-  host.innerHTML = "";
-  const main = document.createElement("main");
-  main.className = "tm shell-screen";
-  main.style.display = "flex";
-  main.style.flexDirection = "column";
-  main.style.height = "100%";
-  main.setAttribute("aria-label", "Returning doctor quick unlock");
-
-  // Header: logo, title, subtitle
-  const header = document.createElement("header");
-  header.style.padding = "var(--tm-space-lg) var(--tm-space-page) var(--tm-space-2xl)";
-  header.style.background = "var(--tm-surface-brand-subtle)";
-  header.style.flexShrink = 0;
-
-  const logo = document.createElement("img");
-  logo.src = "brand/truemeds-for-doctors.svg";
-  logo.alt = "truemeds for doctors";
-  logo.style.width = "166px";
-  logo.style.height = "auto";
-  logo.style.display = "block";
-  logo.style.marginBottom = "var(--tm-space-lg)";
-  header.appendChild(logo);
-
-  const head = document.createElement("div");
-  head.style.marginTop = "0";
-
-  const h1 = document.createElement("h1");
-  h1.className = "tm-font-title-lg";
-  h1.style.margin = "0 0 var(--tm-space-sm)";
-  h1.textContent = "Hello, Dr. Kunal";
-  head.appendChild(h1);
-
-  const subtitle = document.createElement("p");
-  subtitle.style.margin = "0";
-  subtitle.style.fontSize = "var(--tm-font-size-body-md)";
-  subtitle.style.lineHeight = "var(--tm-font-lineheight-sm)";
-  subtitle.style.color = "var(--tm-content-secondary)";
-  subtitle.textContent = "Let's check in on your patients today.";
-  head.appendChild(subtitle);
-  header.appendChild(head);
-  main.appendChild(header);
-
-  // Panel: scrollable content
-  const panel = document.createElement("section");
-  panel.style.flex = "1";
-  panel.style.minHeight = "0";
-  panel.style.display = "flex";
-  panel.style.flexDirection = "column";
-  panel.style.padding = "var(--tm-space-2xl) var(--tm-space-page) var(--tm-space-xl)";
-  panel.style.borderRadius = "var(--tm-radius-2xl) var(--tm-radius-2xl) 0 0";
-  panel.style.background = "var(--tm-surface-primary)";
-  panel.style.overflowY = "auto";
-  panel.setAttribute("aria-labelledby", "ready");
-
-  // Notice (shown only in unavailable state)
-  const notice = document.createElement("div");
-  notice.className = "tm-notice tm-notice--neutral";
-  notice.style.margin = "0 0 var(--tm-space-lg)";
-  notice.setAttribute("role", "status");
-  notice.hidden = !variant.unavailable;
-
-  if (variant.unavailable) {
-    const noticeIcon = document.createElement("span");
-    noticeIcon.className = "tm-icon";
-    noticeIcon.setAttribute("data-icon", "info-circle");
-    noticeIcon.setAttribute("aria-hidden", "true");
-    notice.appendChild(noticeIcon);
-
-    const noticeText = document.createElement("span");
-    noticeText.textContent = MSG("unlock.unavailable");
-    notice.appendChild(noticeText);
-  }
-  panel.appendChild(notice);
-
-  // Prompt (hidden in unavailable state)
-  const prompt = document.createElement("div");
-  prompt.style.margin = "0";
-  prompt.style.display = "flex";
-  prompt.style.flexDirection = "column";
-  prompt.style.alignItems = "center";
-  prompt.style.gap = "var(--tm-space-lg)";
-  prompt.style.textAlign = "center";
-  prompt.hidden = variant.unavailable;
-
-  const promptIcon = document.createElement("div");
-  promptIcon.style.width = "64px";
-  promptIcon.style.height = "64px";
-  promptIcon.style.display = "grid";
-  promptIcon.style.placeItems = "center";
-  promptIcon.style.borderRadius = "var(--tm-radius-lg)";
-  promptIcon.style.background = "var(--tm-surface-brand-subtle)";
-  promptIcon.style.color = "var(--tm-content-brand)";
-  promptIcon.setAttribute("aria-hidden", "true");
-
-  const icon = document.createElement("span");
-  icon.className = "tm-icon";
-  icon.setAttribute("data-icon", variant.icon);
-  icon.style.width = "32px";
-  icon.style.height = "32px";
-  promptIcon.appendChild(icon);
-  prompt.appendChild(promptIcon);
-
-  const h2 = document.createElement("h2");
-  h2.id = "ready";
-  h2.style.margin = "0";
-  h2.style.fontSize = "var(--tm-font-size-body-lg)";
-  h2.style.lineHeight = "var(--tm-font-lineheight-md)";
-  h2.style.fontWeight = "600";
-  h2.textContent = "Ready when you are";
-  prompt.appendChild(h2);
-
-  panel.appendChild(prompt);
-  main.appendChild(panel);
-
-  // Footer action bar
-  const footer = document.createElement("div");
-  footer.className = "tm-actionbar";
-  footer.style.flexShrink = 0;
-  footer.style.padding = "var(--tm-space-lg) var(--tm-space-page) var(--tm-space-xl)";
-  footer.style.borderTop = "1px solid var(--tm-border-subtle)";
-  footer.style.backgroundColor = "var(--tm-surface-primary)";
-  footer.style.display = "flex";
-  footer.style.flexDirection = "column";
-  footer.style.gap = "var(--tm-space-md)";
-
-  const unlockBtn = document.createElement("button");
-  unlockBtn.className = "tm-btn tm-btn--primary tm-btn--lg tm-btn--block";
-  unlockBtn.type = "button";
-  unlockBtn.id = "unlock-action";
-  unlockBtn.hidden = variant.unavailable;
-
-  if (variant.busy) {
-    unlockBtn.classList.add("tm-btn--busy");
-    unlockBtn.setAttribute("aria-busy", "true");
-    unlockBtn.disabled = true;
-
-    const spinner = document.createElement("span");
-    spinner.className = "tm-spinner";
-    spinner.setAttribute("aria-hidden", "true");
-    spinner.style.marginRight = "var(--tm-space-xs)";
-    unlockBtn.appendChild(spinner);
-
-    const label = document.createElement("span");
-    label.textContent = variant.label;
-    unlockBtn.appendChild(label);
-  } else {
-    unlockBtn.textContent = variant.label;
+  // ---- paint ----
+  function paint() {
+    const v = VARIANT[m.variant];
+    icon.setAttribute("data-icon", v.icon);
+    action.classList.toggle("tm-btn--busy", m.busy);
+    action.disabled = m.busy;
+    action.setAttribute("aria-busy", String(m.busy));
+    label.replaceChildren(...(m.busy ? [h("span", { class: "tm-spinner", "aria-hidden": "true" }), MSG("unlock.submitBusy")] : [MSG(v.label)]));
+    // Unavailable (F2 → N1 neutral, D-47): only the notice speaks; "Use OTP instead" is the one way forward, so primary (D-66 A1).
+    notice.hidden = !m.unavailable;
+    prompt.hidden = m.unavailable;
+    action.hidden = m.unavailable;
+    fallback.classList.toggle("tm-btn--primary", m.unavailable);
+    fallback.classList.toggle("tm-btn--quiet", !m.unavailable);
+    if (window.TMIcons) window.TMIcons.render(root);
   }
 
-  unlockBtn.addEventListener("click", () => {
-    push(null, { s: "home_default" });
-  });
-  footer.appendChild(unlockBtn);
+  // ---- behaviour ----
+  function onUnlock() {
+    if (m.busy || m.unavailable) return;   // one prompt at a time
+    m.busy = true; paint();
+    life.later(() => {
+      m.busy = false;
+      const answer = promptAnswer("unlock", ctx().story, mode);
+      if (answer === "success") {
+        if (number) signIn(number, ctx());
+        resetNav(); push(null, { s: HOME_STUB, live: true });   // Home; the open case once step 2 builds it (D-48)
+        return;
+      }
+      if (answer === "unavailable") m.unavailable = true;
+      if (answer === "failed") {
+        m.fails += 1;   // the phone shows its own retry guidance; cancelled is not a failure
+        if (m.fails >= ctx().value("returningUnlockFallbackAfter")) { m.fails = 0; paint(); toOtp(); return; }
+      }
+      paint();
+    }, "phonePromptDelay");
+  }
+  function onUseOtp() { if (!m.busy) toOtp(); }
+  function toOtp() {
+    saveCurrent({ saved: { ...m } });
+    if (!number) { push(null, { s: "sign-in_default", live: true, number: "" }); return; }
+    const r = requestCode(number, ctx());
+    if (r.outcome === "sent" || r.outcome === "locked") {
+      push(null, { s: r.outcome === "sent" ? "otp_default" : "otp_locked", live: true, number, resendAt: r.resendAt, until: r.until });
+      return;
+    }
+    const button = r.outcome === "too-many-tries" ? "wait" : r.outcome === "inactive" ? "inactive" : "default";
+    push(null, { s: "sign-in_default", live: true, number,
+      saved: { number, notice: r.outcome, button, until: r.until || 0, error: null, kb: false, focused: false, replace: false } });
+  }
+  function onSwitch() {
+    if (m.busy) return;
+    saveCurrent({ saved: { ...m } });
+    push(null, { s: "sign-in_default", live: true, number: "" });   // another doctor signs in from an empty number
+  }
 
-  const fallbackBtn = document.createElement("button");
-  fallbackBtn.className = variant.unavailable ? "tm-btn tm-btn--primary tm-btn--lg tm-btn--block" : "tm-btn tm-btn--quiet tm-btn--lg tm-btn--block";
-  fallbackBtn.type = "button";
-  fallbackBtn.id = "fallback";
-  fallbackBtn.textContent = "Use OTP instead";
-
-  fallbackBtn.addEventListener("click", () => {
-    push(null, { s: "sign-in_default" });
-  });
-  footer.appendChild(fallbackBtn);
-
-  const switchBtn = document.createElement("button");
-  switchBtn.className = "tm-btn tm-btn--quiet tm-btn--lg tm-btn--block";
-  switchBtn.type = "button";
-  switchBtn.style.marginTop = "var(--tm-space-md)";
-  switchBtn.innerHTML = "Not you? <strong style=\"color:var(--tm-content-brand);font-weight:600\">Switch account</strong>";
-
-  switchBtn.addEventListener("click", () => {
-    push(null, { s: "sign-in_default" });
-  });
-  footer.appendChild(switchBtn);
-
-  main.appendChild(footer);
-  host.appendChild(main);
-
+  // First screen when the app opens: no Back control, and the phone's back gesture stays here (D-47).
+  setScreenBack(() => {});
+  paint();
   return { journey: "unlock" };
 }

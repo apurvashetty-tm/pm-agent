@@ -11,6 +11,7 @@ export function authCtx(mode) {
     now: () => clock.now(),
     value: (k) => value(k, mode),
     db: storageFor(mode),
+    mode,
     story: st.story || {},
     offline: st.offline === "yes",
   };

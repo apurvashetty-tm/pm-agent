@@ -9,7 +9,7 @@ import { qrSvg } from "./qr.js";
 
 const LABELS = {
   start: "Start point", scenario: "Scenario", offline: "Offline", signIn: "Sign-in result", otp: "OTP result", offer: "Faster sign-in offer",
-  unlock: "Phone unlock", availability: "Availability", request: "Request", caseKind: "Case", prescribe: "Prescribe / confirm",
+  device: "Phone has (mock unlock)", unlock: "Phone unlock", availability: "Availability", request: "Request", caseKind: "Case", prescribe: "Prescribe / confirm",
 };
 const CALL_LABELS = {
   connected: "Talk length (boundaries)", doctorFailure: "Doctor-side failure", patientFailure: "Patient-side failure", partner: "Partner",
@@ -44,6 +44,7 @@ export function mountPanel(root, { story, handlers, stateIds }) {
       ${sel("start", T.start, STORY_FIELDS.start, story.start)}
       ${sel("scenario", T.scenario, STORY_FIELDS.scenario, story.scenario)}
       ${sel("offline", T.offline, STORY_FIELDS.offline, story.offline)}
+      ${sel("device", LABELS.device, STORY_FIELDS.device, story.device)}
       ${btn("rp-restart", T.restart, "tm-btn--secondary")} ${btn("rp-ff", T.fastForward, "tm-btn--secondary")} ${btn("rp-reset", T.reset, "tm-btn--secondary")}
     </details>
     <details data-journey="always" open>
