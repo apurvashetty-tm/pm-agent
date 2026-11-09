@@ -174,7 +174,7 @@ the reasoning is kept so nobody re-opens a settled question without new informat
   their own, fake buttons get tapped, and the 9:16 frame already reads as a phone.
 
 ### D-23 · UI audit fixes — 2026-10-08
-Own audit of both screens against the design system; Apurva asked to fix everything except the tablet icon (#11, her call).
+Own audit of both screens against the design system; Apurva asked to fix everything except the tablet icon (#11, his call).
 - **Sheets:** one template everywhere — title + grey cross (close) on the right, no drag handle; optional grey subtitle;
   labels use `tm-field__label`. Discard sheet: Keep editing first, Discard (red) second. Skip HA sheet gets a
   "Select reason" subtitle. Customer-unavailable sheet uses the same template (no big icon).
@@ -885,7 +885,7 @@ From an external (ChatGPT) review, each point verified before acting.
 - **Still open (not part of this freeze):** the calling walkthrough misses (separate review); screen-audit Part C (storyboard review); republish the Design System artifact and update the React Native hand-off notes (backlog).
 
 ### D-83 · Calling walkthrough decisions (CW-A1 … CW-F3) — 2026-11-03
-- **Decision (Apurva):** her misses from the calling walkthrough were reviewed path by path and decided in `docs/reviews/2026-11-02-calling-walkthrough/README.md` (full reasons and rejected options there). Applied to the frozen screens by the calling round (`docs/renders/2026-11-03-calling-round/`). Latest wins over D-58, D-63, D-75 pt 3 and D-81 F26 where named.
+- **Decision (Apurva):** his misses from the calling walkthrough were reviewed path by path and decided in `docs/reviews/2026-11-02-calling-walkthrough/README.md` (full reasons and rejected options there). Applied to the frozen screens by the calling round (`docs/renders/2026-11-03-calling-round/`). Latest wins over D-58, D-63, D-75 pt 3 and D-81 F26 where named.
   1. **Fallback B ships first; A later (CW-F1).** Rebuild, PRD and test cases build B first: a Pilot live call shows B1 Confirm prescription (neutral script) → B2 checking for an HA → 13 / 14 or B3. A (route-labelled Confirm & transfer on the live call, 11 / 12) stays documented as the later version. Changes D-58 pt 15.
   2. **Callback only after the call, and only on 6 Call too short and 7d Result not received (CW-A1, A2, C1, C3).** Removed from every live state (2 / 7a, 11, 12, 17, B1), from 5 and from 8a / 8b. Callback sheets open over a post-call state. **Backend refuses a callback unless the patient answered (leg 2)**; copy "Couldn't schedule a callback. The patient wasn't reached." On 7d Callback is judged by the call record. Changes D-58 pts 18, 24, 25 and D-75 pt 3.
   3. **After a valid call only the confirm button:** 8a Confirm prescription; 8b Confirm & forward · Skip HA; 12 Confirm & transfer · Skip HA; 16 Confirm & forward · Skip HA (no Callback, CW-A3). Call again after a valid call is a next-version idea, decided with call-log data (CW-C4).
@@ -943,7 +943,7 @@ From an external (ChatGPT) review, each point verified before acting.
 ### D-89 · Pilot 7d ends on Forwarded; phone check at step 6; testing on a phone — 2026-11-05
 - **Decision (Apurva, after the plan v3 review):**
   1. **Pilot 7d (Q-A):** after Confirm & forward on 7d and a call record over the gate, 7f ends on **10b Forwarded to Health Advisor**, not "Prescription confirmed". Cat4 7d still ends on 10a. No new picture. Fixes app-logic §5 row 7f and `calling-flow/data.js` C7f (step 0 staleness fixes).
-  2. **Phone check at step 6 (Q-B):** yes — one preview deploy; Apurva plays the Pilot scenarios on her phone before step 7.
+  2. **Phone check at step 6 (Q-B):** yes — one preview deploy; Apurva plays the Pilot scenarios on his phone before step 7.
   3. **Testing on a phone** (clarified 2026-11-06: covers every journey — sign-in, OTP, unlock, Home, case, Prescribe and calling — and the drawer shows the controls for the current screen): the phone shows only the app. The story is set on the desktop review panel and sent by **QR code / play link** (no server); a small **hidden drawer** on the phone changes things mid-flow. A **live desktop remote** is a later option (backlog §4b).
 - **Why:** each ending names what happened and D-50 keeps forward and confirm as separate outcomes; Pilot is the most changed journey; controls on top of the app make the phone test stop feeling like the real app.
 - **Rejected:** "Prescription confirmed" for both 7d routes (counts a forward as a confirm); phone checks only at steps 5 and 8; review panel stacked above the app on a phone; live remote now (needs a relay — Netlify function credits or a third-party service — and more to build).
