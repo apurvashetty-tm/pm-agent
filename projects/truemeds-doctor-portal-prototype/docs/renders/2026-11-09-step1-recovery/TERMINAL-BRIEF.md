@@ -15,7 +15,7 @@ Session 1 (overnight) did set-up and started sign-in, then ended on its own afte
 | 4 | Part A panel + checklist 1.3 table + compare harness | Panel / drawer / QR per Part A; harness built; compare run on all 42 step-1 states with every region explained; `layout_check.py --app` passes |
 | 5 | Codex + report | Section 4 and "Report and stop" |
 
-**Every session ends the same way:** push with `scripts/publish.sh` (it must print "Pushed to …" — a local `git commit` alone is not a checkpoint), then update `SESSION-STATUS.md` (mark the session ✅, list anything left), publish that too, and stop.
+**Every session ends the same way:** save screenshots of what it built — each new state at 390, next to its approved picture — in `docs/renders/2026-11-09-step1-recovery/session-<n>/` with a contact sheet `session-<n>/sheet.png`; then push with `scripts/publish.sh` (it must print "Pushed to …" — a local `git commit` alone is not a checkpoint), then update `SESSION-STATUS.md` (mark the session ✅, list anything left), publish that too, and stop.
 
 **Quality rules the sign-in start broke — fix in session 2:**
 - **No inline styles.** Lift the approved screen's markup and classes from `ui-screens/<journey>/<journey>.html`; its CSS goes into one stylesheet per journey under `app/screens/` using only `--tm-*` tokens and `.tm-*` classes. Replace the inline CSS already in `app/screens/sign-in.js`.
