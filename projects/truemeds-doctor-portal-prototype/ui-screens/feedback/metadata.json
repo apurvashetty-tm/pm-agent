@@ -1177,6 +1177,15 @@
     "retain": "—",
     "copy": "approved picture label (plan B6, step 1 recovery 2026-11-09)"
   },
+  "offer.continue": {
+    "pattern": "none",
+    "trigger": "faster sign-in offer, phone answered unavailable at Turn on (offer_unavailable)",
+    "slot": "primary button (only action)",
+    "next": "Home",
+    "clear": "—",
+    "retain": "—",
+    "copy": "D-93 (Apurva, 2026-11-09)"
+  },
   "unlock.greeting": {
     "pattern": "none",
     "trigger": "entry screen label",

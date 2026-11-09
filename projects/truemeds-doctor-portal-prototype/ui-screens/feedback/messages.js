@@ -128,6 +128,7 @@
   "offer.submitBusy": "Turning on…",
   "offer.retry": "Try again",
   "offer.notNow": "Not now",
+  "offer.continue": "Continue",
   "unlock.greeting": "Hello, Dr. {name}",
   "unlock.subtitle": "Let’s check in on your patients today.",
   "unlock.ready": "Ready when you are",

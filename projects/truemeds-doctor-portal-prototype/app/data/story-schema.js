@@ -24,7 +24,7 @@ export const STORY_FIELDS = {
   otp:         ["correct", "wrong", "two-tries-left", "expired", "couldnt-verify", "locked", "resend-ok", "resend-failed"],
   // the phone (mock unlock, B14): what it has — fingerprint, face, screen lock only (D-64 fallback), or no screen lock (offer skipped)
   device:      ["fingerprint", "face", "screen-lock", "none"],
-  // the phone prompt's answer on the faster sign-in offer (Turn on / Try again). "unavailable" = [OPEN DECISION] (app-logic §2 silent)
+  // the phone prompt's answer on the faster sign-in offer (Turn on / Try again). "unavailable" → offer_unavailable (D-93)
   offer:       ["enabled", "cancelled", "enable-failed", "unavailable"],
   // the phone prompt's answer on returning unlock; "failed" = one failed try (3 → OTP)
   unlock:      ["success", "cancelled", "failed", "unavailable"],

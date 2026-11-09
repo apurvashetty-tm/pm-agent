@@ -49,6 +49,7 @@ export const STATE_GROUPS = [
     "offer.cancelled": "Offer prompt cancelled → back, no message (behaviour)",
     "offer.not-now": "Offer · Not now → Home (behaviour)",
     "offer.unsupported": "Phone has no screen lock → offer skipped (behaviour)",
+    "offer.unavailable": "Offer · not available on this phone (D-93, picture pending approval)",
   } },
   { title: "Returning unlock", ids: {
     "unlock_fingerprint": "Unlock · fingerprint",

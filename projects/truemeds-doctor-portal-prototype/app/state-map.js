@@ -1780,6 +1780,13 @@ window.TM_STATE_MAP = {
    "version": "B"
   },
   {
+   "id": "offer.unavailable",
+   "kind": "behaviour",
+   "step": 1,
+   "picture": null,
+   "version": "B"
+  },
+  {
    "id": "offer.unsupported",
    "kind": "behaviour",
    "step": 1,

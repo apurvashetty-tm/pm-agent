@@ -1,0 +1,97 @@
+PASS 1280x800 frame is 9:16  [432x768]
+PASS 1280x800 frame centred
+PASS 1280x800 frame fits viewport height
+PASS 1280x800 wheel over frame scrolls its content  [scrollTop=400]
+PASS 1280x800 compact strip appears when scrolled
+PASS 1280x800 no scroll jump when the patient strip appears/hides  [max step 20px]
+PASS 1280x800 scroll ends right after the last card, clear of the pinned bar  [gap 32px]
+PASS 1280x800 main action pinned to the frame bottom  [{'t': 695, 'b': 783, 'l': 425, 'r': 855}]
+PASS 1280x800 Prescribe screen fills the frame  [{'l': 425, 'r': 855, 't': 17, 'b': 783}]
+PASS 1280x800 wheel scrolls the Prescribe screen
+PASS 1280x800 Prescribe pinned and visible without scrolling
+PASS 1280x800 sheet sits at the FRAME bottom  [gap=1.0]
+PASS 1280x800 Rx viewer fills the frame
+PASS 1280x800 after the gate the page did not scroll by itself
+PASS 1280x800 after the gate all call actions are on screen without scrolling  [[True, True, True]]
+PASS 1280x800 after the gate the header stays in view  [frame scrollTop=0, header top=17]
+PASS 1280x800 signin: white panel reaches the bottom of the frame  [{'bar': 783, 'lim': 784, 'wide': True, 'caseHidden': True}]
+PASS 1280x800 signin: no sideways scroll, order page hidden
+PASS 1280x800 otp: white panel reaches the bottom of the frame  [{'bar': 783, 'lim': 784, 'wide': True, 'caseHidden': True}]
+PASS 1280x800 otp: no sideways scroll, order page hidden
+PASS 1280x800 unlock: white panel reaches the bottom of the frame  [{'bar': 783, 'lim': 784, 'wide': True, 'caseHidden': True}]
+PASS 1280x800 unlock: no sideways scroll, order page hidden
+PASS 1280x800 home: button pinned the bottom of the frame  [{'bar': 783, 'lim': 784, 'wide': True, 'caseHidden': True}]
+PASS 1280x800 home: no sideways scroll, order page hidden
+PASS 1280x800 no page errors
+PASS 1440x900 frame is 9:16  [450x800]
+PASS 1440x900 frame centred
+PASS 1440x900 frame fits viewport height
+PASS 1440x900 wheel over frame scrolls its content  [scrollTop=400]
+PASS 1440x900 compact strip appears when scrolled
+PASS 1440x900 no scroll jump when the patient strip appears/hides  [max step 20px]
+PASS 1440x900 scroll ends right after the last card, clear of the pinned bar  [gap 32px]
+PASS 1440x900 main action pinned to the frame bottom  [{'t': 727, 'b': 815, 'l': 496, 'r': 944}]
+PASS 1440x900 Prescribe screen fills the frame  [{'l': 496, 'r': 944, 't': 17, 'b': 815}]
+PASS 1440x900 wheel scrolls the Prescribe screen
+PASS 1440x900 Prescribe pinned and visible without scrolling
+PASS 1440x900 sheet sits at the FRAME bottom  [gap=1.0]
+PASS 1440x900 Rx viewer fills the frame
+PASS 1440x900 after the gate the page did not scroll by itself
+PASS 1440x900 after the gate all call actions are on screen without scrolling  [[True, True, True]]
+PASS 1440x900 after the gate the header stays in view  [frame scrollTop=0, header top=17]
+PASS 1440x900 signin: white panel reaches the bottom of the frame  [{'bar': 815, 'lim': 816, 'wide': True, 'caseHidden': True}]
+PASS 1440x900 signin: no sideways scroll, order page hidden
+PASS 1440x900 otp: white panel reaches the bottom of the frame  [{'bar': 815, 'lim': 816, 'wide': True, 'caseHidden': True}]
+PASS 1440x900 otp: no sideways scroll, order page hidden
+PASS 1440x900 unlock: white panel reaches the bottom of the frame  [{'bar': 815, 'lim': 816, 'wide': True, 'caseHidden': True}]
+PASS 1440x900 unlock: no sideways scroll, order page hidden
+PASS 1440x900 home: button pinned the bottom of the frame  [{'bar': 815, 'lim': 816, 'wide': True, 'caseHidden': True}]
+PASS 1440x900 home: no sideways scroll, order page hidden
+PASS 1440x900 no page errors
+PASS 1024x768 frame is 9:16  [414x736]
+PASS 1024x768 frame centred
+PASS 1024x768 frame fits viewport height
+PASS 1024x768 wheel over frame scrolls its content  [scrollTop=400]
+PASS 1024x768 compact strip appears when scrolled
+PASS 1024x768 no scroll jump when the patient strip appears/hides  [max step 20px]
+PASS 1024x768 scroll ends right after the last card, clear of the pinned bar  [gap 32px]
+PASS 1024x768 main action pinned to the frame bottom  [{'t': 663, 'b': 751, 'l': 306, 'r': 718}]
+PASS 1024x768 Prescribe screen fills the frame  [{'l': 306, 'r': 718, 't': 17, 'b': 751}]
+PASS 1024x768 wheel scrolls the Prescribe screen
+PASS 1024x768 Prescribe pinned and visible without scrolling
+PASS 1024x768 sheet sits at the FRAME bottom  [gap=1.0]
+PASS 1024x768 Rx viewer fills the frame
+PASS 1024x768 after the gate the page did not scroll by itself
+PASS 1024x768 after the gate all call actions are on screen without scrolling  [[True, True, True]]
+PASS 1024x768 after the gate the header stays in view  [frame scrollTop=0, header top=17]
+PASS 1024x768 signin: white panel reaches the bottom of the frame  [{'bar': 751, 'lim': 752, 'wide': True, 'caseHidden': True}]
+PASS 1024x768 signin: no sideways scroll, order page hidden
+PASS 1024x768 otp: white panel reaches the bottom of the frame  [{'bar': 811.234375, 'lim': 752, 'wide': True, 'caseHidden': True}]
+PASS 1024x768 otp: no sideways scroll, order page hidden
+PASS 1024x768 unlock: white panel reaches the bottom of the frame  [{'bar': 792.703125, 'lim': 752, 'wide': True, 'caseHidden': True}]
+PASS 1024x768 unlock: no sideways scroll, order page hidden
+PASS 1024x768 home: button pinned the bottom of the frame  [{'bar': 751, 'lim': 752, 'wide': True, 'caseHidden': True}]
+PASS 1024x768 home: no sideways scroll, order page hidden
+PASS 1024x768 no page errors
+PASS 390x844 mobile: window scrolls
+PASS 390x844 no scroll jump when the patient strip appears/hides  [max step 20px]
+PASS 390x844 scroll ends right after the last card, clear of the pinned bar  [gap 32px]
+PASS 390x844 main action pinned to the screen bottom  [{'t': 756, 'b': 844, 'l': 0, 'r': 390}]
+PASS 390x844 Prescribe screen fills the screen  [{'l': 0, 'r': 390, 't': 0, 'b': 844}]
+PASS 390x844 Prescribe pinned and visible without scrolling
+PASS 390x844 sheet sits at the SCREEN bottom
+PASS 390x844 Rx viewer fills the screen
+PASS 390x844 after the gate the page did not scroll by itself
+PASS 390x844 after the gate all call actions are on screen without scrolling  [[True, True, True]]
+PASS 390x844 after the gate the header stays in view  [frame scrollTop=0, header top=0]
+PASS 390x844 signin: white panel reaches the bottom of the screen  [{'bar': 844, 'lim': 844, 'wide': True, 'caseHidden': True}]
+PASS 390x844 signin: no sideways scroll, order page hidden
+PASS 390x844 otp: white panel reaches the bottom of the screen  [{'bar': 844, 'lim': 844, 'wide': True, 'caseHidden': True}]
+PASS 390x844 otp: no sideways scroll, order page hidden
+PASS 390x844 unlock: white panel reaches the bottom of the screen  [{'bar': 844, 'lim': 844, 'wide': True, 'caseHidden': True}]
+PASS 390x844 unlock: no sideways scroll, order page hidden
+PASS 390x844 home: button pinned the bottom of the screen  [{'bar': 844, 'lim': 844, 'wide': True, 'caseHidden': True}]
+PASS 390x844 home: no sideways scroll, order page hidden
+PASS 390x844 no page errors
+
+ALL PASS
