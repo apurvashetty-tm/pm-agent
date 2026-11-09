@@ -29,12 +29,27 @@ Before Run A: if `docs/renders/2026-11-09-step1-recovery/SESSION-STATUS.md` says
 
 - **No per-state pixel gate.** Run `tests/compare-step1.mjs` (extend its state list to the new steps) **once at the end of each run, as a report**: list states whose changed area is over 1% of the picture, with the side-by-side sheet. Fix those only if the cause is wrong markup, a missing element or the wrong state. Anti-aliasing, retries and region explanations are not needed.
 - **Tests only where the logic is real:** valid-call gate (50 s, talk time across calls, fast-forward), call outcomes → screen (one test per calling-flow edge from the state map, as B15 already asks), Confirm routing (prescription / transfer / forward / Skip HA), hold and retry, callback refused, release refused, availability ends mid-case, reopen into an open case. Screens that only display a state need no test of their own; opening from `?s=` is enough (one loop over all ids).
-- **One Codex critique per run, at the end**, blockers only: `codex exec --sandbox read-only --output-last-message docs/renders/2026-11-09-build-fast/run-<A|B>/codex.md "Read docs/renders/2026-11-09-build-fast/TERMINAL-BRIEF.md (run <A|B>) and plan v3.2 steps <n–m>. Critic: report only blockers — a flow, gate, routing or CTA that differs from ui-screens/app-logic.md, a state that doesn't open, or invented logic. File and line. Read-only." < /dev/null`. Fix the blockers. No re-run unless a fix was large.
+- **Codex is the tester and the critic (see "Codex in each run" below).** Spend freely on it; don't skip or shorten its steps to save time.
 - No per-session screenshots or contact sheets. One sheet per run (`run-<A|B>/sheet.png`: the demo path at 390, one picture per screen).
+
+## Codex in each run (D-95, Apurva: use Codex fully)
+
+Codex writes the tests **from the spec, before the build**, so the build isn't grading itself.
+
+1. **Tests first (start of the run, before any build).**
+   `codex exec --sandbox workspace-write --output-last-message docs/renders/2026-11-09-build-fast/run-<X>/codex-tests.md "You are the tester for run <X> of docs/renders/2026-11-09-build-fast/TERMINAL-BRIEF.md (plan v3.2 steps <n–m>). From the spec only — ui-screens/app-logic.md, ui-screens/README.md, docs/feedback-state-map.md, the approved ui-screens/*.html, app/state-map.js, settings and test data — write (a) tests/codex/run-<X>/CASES.md: every scenario, rule and edge for these steps (each with its source line), incl. the valid-call gate, routing, CTAs per state, phone Back, offline, refusals, timers, remembering; and (b) Playwright tests in tests/codex/run-<X>/*.mjs that drive the app the way tests/entry-journeys.mjs does (?s=, play links, review-panel story / call simulator) and assert visible text from messages.json. Don't read or change app/ code. Write only under tests/codex/run-<X>/." < /dev/null`
+   Commit and push them as they are (checkpoint "run <X> Codex tests").
+2. **Build** (the steps above). Run the Codex tests as you go. A failing test means fixing the app, **unless** the test contradicts the spec. Then don't edit Codex's test: list it in `run-<X>/test-disputes.md` with the spec line for the main thread to rule on.
+3. **Full critique at the end.**
+   `codex exec --sandbox read-only --output-last-message docs/renders/2026-11-09-build-fast/run-<X>/codex-critique.md "Critic for run <X> of docs/renders/2026-11-09-build-fast/TERMINAL-BRIEF.md. Review the built app/ for steps <n–m> against ui-screens/app-logic.md, the approved ui-screens/ HTML, plan v3.2 and tests/codex/run-<X>/CASES.md. Report blockers, should-fix and nice-to-have with file, line and spec line; also list CASES.md scenarios with no passing test. Read-only." < /dev/null`
+   Fix every blocker and should-fix (say why in `run-<X>/codex-response.md` for any not adopted). If there were blockers, re-run once (`codex-critique-2.md`).
+4. If Codex hits its usage limit, write that in REPORT.md and carry on; the main thread decides what to do.
+
+The run is done when all Codex tests pass (except disputed ones), the existing checks pass, and no blocker is open.
 
 ## End of each run
 
-`run-<A|B>/REPORT.md`, short: what plays end to end, the compare report (flagged states and what was done), the tests, Codex blockers and fixes, commits, `[OPEN DECISION]`s / `[MOCK ASSUMPTION]`s added (with the `open_questions.md` lines for the main thread to record; don't write `docs/context/`), what's left. Mark the run done below, push, stop.
+`run-<A|B>/REPORT.md`, short: what plays end to end, Codex tests (written / passing / disputed), the compare report (flagged states and what was done), the tests, Codex blockers and fixes, commits, `[OPEN DECISION]`s / `[MOCK ASSUMPTION]`s added (with the `open_questions.md` lines for the main thread to record; don't write `docs/context/`), what's left. Mark the run done below, push, stop.
 
 ## Run status
 - Run A: not started
