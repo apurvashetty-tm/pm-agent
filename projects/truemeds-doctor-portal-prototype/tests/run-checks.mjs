@@ -109,6 +109,7 @@ check("U5", "play link: unreadable or unknown values decode to null", decodeStor
     manifest.orientation === "portrait" && manifest.start_url.includes("demo=1") && iconsOk);
   check("D4", "QR library is vendored (no CDN reference in app/)", !/https?:\/\/(cdn|unpkg|jsdelivr|cdnjs)/.test(fs2(path.join(APP, "index.html"))) && fs.existsSync(path.join(APP, "review/vendor/qrcode-generator.js")));
   check("D5", "robots: hidden from search engines (meta + robots.txt)", /noindex/.test(fs2(path.join(APP, "index.html"))) && /Disallow: \//.test(fs2(path.join(APP, "robots.txt"))));
+  check("D6", "F-02: viewport resizes the page for the phone keyboard (interactive-widget=resizes-content)", /<meta name="viewport"[^>]*interactive-widget=resizes-content/.test(fs2(path.join(APP, "index.html"))));
 }
 
 // ---------- browser ----------

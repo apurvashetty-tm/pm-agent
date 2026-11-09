@@ -35,12 +35,13 @@ for(const [w,h] of [[1280,800],[1440,900],[1920,1080]]) test(`A0-layout-${w}`,as
   assert(Math.abs(f.height-expected)<2,JSON.stringify(f));
   assert(Math.abs(f.width-f.height*390/844)<2,JSON.stringify(f));
   assert(Math.abs(f.x+f.width/2-w/2)<2,'frame stays centred');
-  const first=await bounds(summary(p,rows[0]));assert(Math.abs(first.y-f.y)<3,'column top aligns with frame');
+  const panel=await bounds(p.locator('.review-panel'));assert(Math.abs(panel.y-f.y)<3,'panel card top aligns with frame');
+  const first=await bounds(summary(p,rows[0]));
   assert(first.x>=f.x+f.width,'controls on right');
   assert(await summary(p,rows[0]).evaluate(e=>e.parentElement.open),'phone row defaults open');
   const phone=await fold(p,rows[0]);await phone.getByText('Phone and Mac on the same Wi-Fi',{exact:true}).waitFor();
   await phone.getByRole('button',{name:/Copy link/i}).waitFor();
-  assert(await phone.locator('img,canvas,svg').count()>0,'QR visible');
+  assert(await phone.locator('#rp-qr svg').count()>0,'QR visible');
   await fold(p,rows[0],false);await fold(p,rows[0],true);
   for(const active of ['Story','Call simulator',...rows]){
     await fold(p,active);
@@ -67,11 +68,11 @@ for(const mobile of [false,true])for(const [state,data]of [['sign-in_default',SI
  const row=await fold(p,'Sign-in answers');
  // Both lists must be present on either auth screen, including phone drawer.
  for(const [n,outcome]of Object.entries({...SIGN_IN_NUMBERS,...OTP_CODES})){
- const line=row.getByRole('button',{name:new RegExp(n)});await line.waitFor({state:'visible'});assert.match(await line.innerText(),results[outcome]);
+ const line=row.getByRole('button',{name:new RegExp(`^${n}\\b`)});await line.waitFor({state:'visible'});assert.match(await line.innerText(),results[outcome]);
  }
  assert.match(await row.innerText(),/any other.*(number|mobile)/i);assert.match(await row.innerText(),/any other.*(OTP|code)/i);
  for(const n of Object.keys(data)){
- await row.getByRole('button',{name:new RegExp(n)}).click();
+ await row.getByRole('button',{name:new RegExp(`^${n}\\b`)}).click();
  const field=p.locator(state.startsWith('otp')?'#c':'#tm-login-mobile');await field.waitFor();assert.equal(await field.inputValue(),n);
  // A fill may close the phone drawer. Reopen via public visible control if necessary.
  if(!await summary(p,'Sign-in answers').isVisible())await p.getByRole('button',{name:/review|demo|controls/i}).first().click();await fold(p,'Sign-in answers');
@@ -104,7 +105,7 @@ test('A0-network-link',async p=>{
  const raw=await l.evaluate(e=>e.href||e.value||e.textContent.trim());const link=new URL(raw);
  assert(!['localhost','127.0.0.1','::1','[::1]'].includes(link.hostname));assert.equal(link.hostname,process.env.A0_NETWORK_HOST);
  assert.equal(link.port,new URL(base).port,'preserve serving port');
- const decoded=await row.locator('img,canvas,svg').first().evaluate(async e=>{
+ const decoded=await row.locator('#rp-qr svg').evaluate(async e=>{
    if(!globalThis.BarcodeDetector)throw Error('QR decoder unavailable: run Chrome with BarcodeDetector support or supply a test decoder adapter; do not count href as decoded QR');
    const detector=new BarcodeDetector({formats:['qr_code']});
    const canvas=document.createElement('canvas');const r=e.getBoundingClientRect();canvas.width=r.width;canvas.height=r.height;
@@ -121,8 +122,8 @@ test('A0-network-link',async p=>{
 });
 test('A0-happy-path',async p=>{
  await open(p);const row=await fold(p,'Test on phone');const raw=await row.locator('#rp-link').evaluate(e=>e.href||e.value||e.textContent.trim());
- await p.goto(raw);await p.locator('#tm-login-mobile').fill('9876543210');await p.getByRole('button',{name:/Send code/i}).click();
- await p.locator('#c').fill('1234');await p.getByRole('button',{name:/Verify.*sign in/i}).click();
+ await p.goto(raw);await p.locator('#tm-login-mobile').fill('9876543210');await p.getByRole('button',{name:'Send OTP',exact:true}).click();
+ await p.locator('#c').fill('1234');await p.getByRole('button',{name:'Verify & sign in',exact:true}).click();
  // Public role adapters only. No story/store mutation: defaults are the behavior being tested.
  const notNow=p.getByRole('button',{name:'Not now',exact:true});await notNow.waitFor();await notNow.click();
  await p.getByRole('button',{name:/Set availability/i}).click();await p.getByRole('button',{name:/Start availability|Save|Confirm/i}).last().click();
@@ -140,6 +141,7 @@ let server;let browser;let base=process.env.CODEX_BASE_URL;
 try{
  if(!base){const app=path.join(root,'app');server=http.createServer((req,res)=>{const f=path.resolve(app,'.'+decodeURIComponent(new URL(req.url,'http://localhost').pathname).replace(/\/$/,'/index.html'));if(!f.startsWith(app+path.sep)||!fs.existsSync(f)||!fs.statSync(f).isFile()){res.writeHead(404);res.end();return;}res.setHeader('Content-Type',({'.html':'text/html','.js':'text/javascript','.css':'text/css','.svg':'image/svg+xml','.png':'image/png'})[path.extname(f)]||'application/octet-stream');fs.createReadStream(f).pipe(res);});await new Promise((ok,no)=>{server.once('error',no);server.listen(0,'127.0.0.1',ok);});base=`http://localhost:${server.address().port}/`;}
  browser=await chromium.launch({executablePath:process.env.CHROME||undefined});let failures=0;
- for(const t of tests.filter(t=>!process.env.CODEX_FILTER||t.id.includes(process.env.CODEX_FILTER))){const ctx=await browser.newContext({viewport:{width:1440,height:900}});try{const p=await ctx.newPage();p.setDefaultTimeout(8000);await t.fn(p);console.log('PASS',t.id);}catch(e){failures++;console.error('FAIL',t.id,e.message);}finally{await ctx.close();}}
+ // Main-thread ruling: happy-path acceptance runs at the end of A2, explicitly selected by its ID.
+ for(const t of tests.filter(t=>(t.id!=='A0-happy-path'||process.env.CODEX_FILTER==='A0-happy-path')&&(!process.env.CODEX_FILTER||t.id.includes(process.env.CODEX_FILTER)))){const ctx=await browser.newContext({viewport:{width:1440,height:900}});try{const p=await ctx.newPage();p.setDefaultTimeout(8000);await t.fn(p);console.log('PASS',t.id);}catch(e){failures++;console.error('FAIL',t.id,e.message);}finally{await ctx.close();}}
  if(failures)process.exitCode=1;
 }finally{await browser?.close();if(server)await new Promise(r=>server.close(r));}
