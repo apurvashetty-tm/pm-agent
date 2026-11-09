@@ -15,6 +15,10 @@ Session 1 (overnight) did set-up and started sign-in, then ended on its own afte
 | 4 | Part A panel + checklist 1.3 table + compare harness | Panel / drawer / QR per Part A; harness built; compare run on all 42 step-1 states with every region explained; `layout_check.py --app` passes |
 | 5 | Codex + report | Section 4 and "Report and stop" |
 
+**Every session runs a Codex critique before it ends** (Apurva's standard: terminal builds, Codex critiques, Claude fixes). When the session's checks pass:
+`codex exec --sandbox read-only --output-last-message docs/renders/2026-11-09-step1-recovery/session-<n>/codex-critique.md "Read docs/renders/2026-11-09-step1-recovery/TERMINAL-BRIEF.md (session <n>) and docs/renders/2026-11-06-step1/BRIEF.md. You are the critic. Review only what session <n> built against both briefs, plan v3.2, checklist v3.2 lines with Step 1, and the approved pictures. Report blockers, should-fix, nice-to-have with file, line and checklist line. Read-only; write no files."`
+Fix every valid blocker and should-fix (note why for any not adopted, in `session-<n>/codex-response.md`); re-run Codex once if it raised blockers. If Codex hits its usage limit, write that in SESSION-STATUS.md and finish the session without it — the next session runs the missed critique first. Session 5 is then the final whole-step critique.
+
 **Every session ends the same way:** save screenshots of what it built — each new state at 390, next to its approved picture — in `docs/renders/2026-11-09-step1-recovery/session-<n>/` with a contact sheet `session-<n>/sheet.png`; then push with `scripts/publish.sh` (it must print "Pushed to …" — a local `git commit` alone is not a checkpoint), then update `SESSION-STATUS.md` (mark the session ✅, list anything left), publish that too, and stop.
 
 **Quality rules the sign-in start broke — fix in session 2:**
