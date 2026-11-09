@@ -1,0 +1,44 @@
+{
+  "_about": "Accepted differences for tests/compare-step1.mjs (step 1). Boxes are in picture pixels (2x), [x0, y0, x1, y1]. A region passes only when it lies wholly inside a listed box and is not a shifted row. Anti-aliasing entries apply to pictures rendered on the old Mac and only where the built app equals the approved source re-rendered on this Mac.",
+  "antiAliasing": [
+    {
+      "match": "^(sign-in|otp|offer)_",
+      "maxDelta": 110,
+      "maxPx": 3000,
+      "reason": "Picture rendered on the old Mac; this Mac anti-aliases text, the logo and icons slightly differently. Inside the region the built app is identical to the approved source rendered on this Mac.",
+      "evidence": "Session 4 run (2026-11-09): the same approved source files rendered on this Mac vs their old-Mac pictures differ by at most 2,846 px over 8/255 per picture, strongest channel difference 103, no shifted row or moved box (offer pictures carry more icon edges than the D-92 pictures the main thread measured at ~1,700 px / 93). The built app equals the source rendered on this Mac in every accepted region (0 px over 8/255). Limits = measured maximum plus about 5%. New-Mac pictures (returning unlock, D-92) are exact. Heatmaps: docs/renders/2026-11-09-step1-recovery/compare/<state>_w<width>.png; numbers: compare/results.md."
+    }
+  ],
+  "regions": [
+    {
+      "state": "^otp_locked$",
+      "box": [
+        240,
+        654,
+        486,
+        714
+      ],
+      "reason": "\"call Doctor Ops\" is a blue link in the built app (required: Call Doctor Ops opens the placeholder page, OQ-021). The approved file's phrase search missed the non-breaking spaces, so the picture shows plain text (session 2 finding)."
+    },
+    {
+      "state": "^otp_expired-and-resend-limited$",
+      "box": [
+        366,
+        654,
+        612,
+        714
+      ],
+      "reason": "\"call Doctor Ops\" is a blue link in the built app (OQ-021); the approved picture shows plain text (session 2 finding)."
+    },
+    {
+      "state": "^otp_too-many-resends$",
+      "box": [
+        354,
+        654,
+        600,
+        714
+      ],
+      "reason": "\"call Doctor Ops\" is a blue link in the built app (OQ-021); the approved picture shows plain text (session 2 finding)."
+    }
+  ]
+}
