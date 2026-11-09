@@ -2,6 +2,15 @@
 
 Every run reads this first. Rulings override briefs where they conflict. Newest at the top.
 
+## 2026-11-10 00:35 (after run B — main thread review: passed)
+- **B passed.** Evidence checked: run B 94 / 99 with the 5 disputed cases passing 5 / 5 via `textContent`; run A 303 / 303; A0-happy-path PASS; own tests 23 / 23; compare steps 2–6, 206 pictures, 2 over 1 %. Critique: 1 blocker + 2 should-fix adopted, critique-2 no blockers.
+- **Dispute #1 (B-play-*, 5 cases): test bug.** The Story row folds Test on phone (D-97 item 2), so `innerText` is empty. Fixed by the main thread in `tests/codex/run-B/journeys.mjs` (link read with `textContent`). No app change. The drawer `visibility: hidden` fix stays.
+- **t13-connecting-ha @390 (16 %): the build is right.** In launch B, 13 Transferring… keeps the neutral Pilot script; `call.scriptTransfer` is version A only (app-logic §4 script list, §5 "Transfer path in B reuses 13–15"; D-83 / D-85). The 390 picture is stale (version-A script; the 360 picture is 0.67 %). Accept the diff; re-render `t13-connecting-ha_w390` from the build when pictures are next re-rendered (backlog §2l). Don't change the app.
+- **c-skip-ha @390 (2.5 %): accepted** (background is version-A screen 12 in the picture, B1 in the build; plan v3.2 §5). The `c-skip-ha-b1` / `c-skip-ha-16` re-renders are logged in backlog §2l, not for the kit run.
+- **B's ten `[MOCK ASSUMPTION]`s accepted** (OQ-038 in `open_questions.md`); all consistent with app-logic §4–§5. Setting `pilotTalkAfterGate` (60 s, stand-in) stays.
+- **Not automated** (B-R07 every ending type, B-R09 every background deadline, B-R10 storage isolation, B-R11 desktop / phone parity to the final card): no new test run; they go to Apurva's phone walkthrough. A parity-to-final-card Codex test is optional, logged in backlog.
+- **signin-d101 and handoff-kit-all:** unchanged by this review. Kit run: t13 in launch B is documented with the neutral script.
+
 ## 2026-11-09 23:05 (after run A2 — main thread review: passed)
 - **A2 passed.** A0-happy-path dispute: test bug (Set availability *is* the confirm, app-logic §3; the approved label is "Request a case"). Fixed by the main thread in `tests/codex/run-A0/all.mjs` (no second availability click; `/Request (a |next )?case/`). **Run B: run `tests/codex/run-A0/` once and confirm A0-happy-path passes.**
 - A2's extra builds (scheduled hold retries, ring time / `answeredAt`) stay. **B's live Pilot gate counts from `answeredAt`.**

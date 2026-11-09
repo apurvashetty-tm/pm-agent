@@ -85,7 +85,7 @@ add('B-demo', 'demo goes sign-in through prescribing and valid call to next case
 });
 // Every launch story must produce an equivalent route on a phone through the actual panel-generated play link.
 for (const scenario of ['cat4','pilot_ha_free','pilot_no_ha_free','pilot_ha_skipped_customer','pilot_ha_skipped_system']) add('B-play-' + scenario, 'desktop and phone play-link route parity', 't01-ready', '297; plan v3.2 B15', async (d, app) => {
-  await d.choose('start','case'); const link = await d.p.locator('#rp-link').innerText();
+  await d.choose('start','case'); const link = (await d.p.locator('#rp-link').textContent() || '').trim(); // main thread 2026-11-10: Story folds Test on phone (D-97), so innerText is empty
   const phone = await app.open('', {}, 390);
   try {
     await phone.p.goto(link.replace(/^https?:\/\/[^/]+\//, d.base)); await phone.p.waitForTimeout(200);

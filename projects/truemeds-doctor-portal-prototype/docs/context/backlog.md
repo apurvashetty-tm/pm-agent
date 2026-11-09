@@ -70,6 +70,8 @@ Order = the order we work in.
 1. [ ] **Prototype rebuild** from the frozen `ui-screens/` (D-56, D-72): build plan + rebuild checklist first; covers all order types and states; the phone demo alone is Cat4 happy path; new Netlify link alongside the current one; then journey by journey, checked against the pictures. Installable from the Netlify link (opens full screen from the home screen, no review controls); demo mode with one order type and the happy path.
 2. [ ] **Token inspector** page generated from the screens (which tokens each element uses) for engineering. Figma snapshot only if the design team asks.
 3. [ ] **PRD** page by page, engineering hand-off pack, then the rest of this backlog.
+- [ ] **Re-renders after run B (main thread, 2026-11-10):** `ui-screens/case/t13-connecting-ha_w390` from the build (neutral script, D-102; the 390 picture still shows the version-A transfer script); `c-skip-ha-b1` and `c-skip-ha-16` (the Skip HA sheet over B1 / 16, plan v3.2 §5). Pictures only, no app change.
+- [ ] **Optional test (Codex critique, run B):** desktop / phone parity to the final card (B-R11); the B-play cases stop at the CTA. Until then, covered by Apurva's phone walkthrough.
 
 ## 2m. After the build chain — git and `main` (agreed with Apurva 2026-11-09; other thread "Git connector sign-in issue" + main-thread review)
 Nothing goes to `main` while the chain runs (`publish.sh` pulls `main` into this branch on every publish). PR #36 (whole branch → `main`) was closed unmerged on purpose. PR #37 (central playbook, docs only) was merged at 21:44 by mistake while the chain ran; reviewed, harmless, left in place.

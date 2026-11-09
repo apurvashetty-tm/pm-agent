@@ -960,3 +960,9 @@ User identified missing HTML/native linkage. Inspected actual sign-in and OTP HT
 - **Logged:** review panel simplification, separate session (backlog §4b); keep the tray button in the installed app.
 - **Installable demo:** the manifest already exists (standalone, `?demo=1`); install needs https (Netlify) or Chrome's insecure-origins flag for the LAN link.
 - **Open:** FE delivery via GitLab (copy of the kit pushed to a GitLab repo; details pending with Apurva).
+
+## 2026-11-10 (00:35) · Scheduled check-in — run B reviewed (passed)
+- **Chain:** B done and reviewed (passed): Pilot Fallback B plays end to end (B0/B1 gate from the answer, B2, 13 → 14, B3 / 15, 16 / 16b / 16c, 17, Pilot 7d) plus the step-7 cross-journey cases; final pass (copy parity 373 keys, all checks). `signin-d101` running since 00:12; then `handoff-kit-all`.
+- **Rulings (RULINGS 00:35):** B-play dispute = test bug, fixed in `tests/codex/run-B/journeys.mjs`; t13 @390 diff accepted (13 keeps the neutral script in launch B, D-102); c-skip-ha diff accepted; B's mock assumptions → OQ-038.
+- **Open:** re-render `t13-connecting-ha_w390`, `c-skip-ha-b1`, `c-skip-ha-16` (backlog §2l); Apurva's phone walkthrough (A1 eye checks + B-R07/09/10/11 + Q-B).
+- **Next:** review `signin-d101`, then the kit run; then SUMMARY and the walkthrough.

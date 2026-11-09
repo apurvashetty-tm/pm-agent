@@ -1014,6 +1014,10 @@ From an external (ChatGPT) review, each point verified before acting.
 - **Rejected:** keeping the current build's assumptions for o04, o08 and o10.
 - **Applied by:** the sign-in follow-up run (`docs/renders/2026-11-09-signin-d101/TERMINAL-BRIEF.md`) for o04, o10, o11, o25 in the prototype; the kit run moves all ten to DECIDED. o07, o08, o17, o26 are native-only (the web prototype has no status bar, app back, in-app browser or call capability).
 
+### D-102 · Launch B: Transferring… (13) keeps the neutral script — 2026-11-10
+- **Ruling (main thread, inside D-83 / D-85; run B review):** in launch B (Fallback B), 13 Transferring… keeps the neutral Pilot script `call.scriptNeutral`; `call.scriptTransfer` ("Please stay on the line…") is version A only (app-logic §4 script list; §5 "Transfer path in B reuses 13–15"). The approved `t13-connecting-ha` picture at 390 shows the version-A script and is re-rendered from the build (backlog §2l).
+- **Why:** the build follows app-logic; the picture predates the Fallback B launch decision.
+
 ## Design system changes made for this work
 
 ### D-60 · Secondary button without drop shadow (design system) — 2026-10-24 · **REVERTED same day**
