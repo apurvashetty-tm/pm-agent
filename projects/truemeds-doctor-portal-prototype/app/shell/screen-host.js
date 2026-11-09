@@ -18,17 +18,9 @@ const renderers = {
   "returning-unlock": unlockScreen.render,
 };
 
-// Built states whose picture is waiting for Apurva's approval (not in ui-screens/ yet, so not a picture row): shown by the
-// screen's own renderer under their behaviour row. Removed when the picture is promoted (the state map then links it).
-const PENDING_PICTURE = { "offer_unavailable": { folder: "faster-signin-offer", behaviour: "offer.unavailable" } };   // D-93
 
 export function findState(id) {
   const map = window.TM_STATE_MAP;
-  const pending = PENDING_PICTURE[id];
-  if (pending && !map.pictures.some((r) => r.id === id)) {
-    const other = map.others.find((o) => o.id === pending.behaviour);
-    if (other) return { kind: "picture", row: { ...other, id, picture: `${pending.folder}/${id}`, calling: [], pending: true } };
-  }
   const row = map.pictures.find((r) => r.id === id);
   if (row) return { kind: "picture", row };
   const other = map.others.find((o) => o.id === id);

@@ -413,7 +413,7 @@ async function signInFull(p, n) { await send(p, n); await verify(p, "1234"); }
     if (!info.built || info.img || info.inline || info.missing || r.errors.length) bad.push(`${id} ${JSON.stringify(info)} ${r.errors.join("|")}`);
     await r.ctx.close();
   }
-  check("F2", `all ${ids.length} offer / unlock states render the built screen (registry copy, no inline styles, 0 console errors)`, ids.length === 13 && !bad.length, bad.join(" ; "));
+  check("F2", `all ${ids.length} offer / unlock states render the built screen (registry copy, no inline styles, 0 console errors)`, ids.length === 14 && !bad.length, bad.join(" ; "));
 }
 
 { // F3: full chain sign-in → OTP → offer → Turn on → Home; Back never returns; app restart → unlock (Dr. Kunal) → Home

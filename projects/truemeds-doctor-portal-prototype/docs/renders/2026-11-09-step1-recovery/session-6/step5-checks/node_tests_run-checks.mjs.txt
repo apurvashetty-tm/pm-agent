@@ -1,0 +1,80 @@
+PASS U1 modes: bare=review, ?demo=1=demo, ?capture=1=capture, ?play=x=play, standalone always demo
+PASS U2 settings: demo scales time values by one factor; non-time values unchanged
+PASS U3 settings: every value has a source (rule or MOCK ASSUMPTION or review tool)
+PASS U4 play link: 300 random stories (every journey's answers) round-trip exactly
+PASS U5 play link: unreadable or unknown values decode to null
+PASS U6 call simulator: doctor failure, patient failure by cause, connected path produce the B9 events
+PASS U7 demo: the scaled gate is at most 8 s, so an 8 s demo call passes (checklist 5.2)  [gate demo 7500 ms]
+PASS U8 poller: applies events in order once; a late answer for another case never updates the open case  [["one","two"]]
+PASS U9 poller: monotonic — no re-apply on repeated ticks; order kept  [["first","second","third"]]
+PASS S1 state map: 149 pictures, one owner each, calling rows match data.js, no drift  [PASS — 0 drift failures ]
+PASS S2 scan: no hard-coded time values, hex colours, emoji or phone-number patterns in app/
+PASS D1 deploy gate: commit without [deploy] → build skipped; with [deploy] → built  [skip / build]
+PASS D2 app netlify.toml: publish is app/ only, copy step, same ignore rule
+PASS D3 manifest: name, short name, standalone, portrait, demo start, icons 180/192/512
+PASS D4 QR library is vendored (no CDN reference in app/)
+PASS D5 robots: hidden from search engines (meta + robots.txt)
+PASS B1 bare link opens review with the panel
+PASS B2 ?demo=1: no review panel, no drawer handle
+PASS B3 demo: 0 console errors
+PASS B4 ?capture=1: no panel, no label, picture shown
+PASS B5 capture: 0 console errors
+PASS B6 capture writes nothing to storage  [localStorage keys 0]
+PASS R-sign-in_default-390 ?s=sign-in_default at 390: built screen shown (step 1)
+PASS R-offer_fingerprint-390 ?s=offer_fingerprint at 390: built screen shown (step 1)
+PASS R-unlock_face-390 ?s=unlock_face at 390: built screen shown (step 1)
+PASS R-home_active-390 ?s=home_active at 390: picture loads, label says not built yet
+PASS R-t01-ready-390 ?s=t01-ready at 390: picture loads, label says not built yet
+PASS R-s7f-submitted-390 ?s=s7f-submitted at 390: picture loads, label says not built yet
+PASS R-t10b-forwarded-390 ?s=t10b-forwarded at 390: picture loads, label says not built yet
+PASS R-g1-generic-confirm-390 ?s=g1-generic-confirm at 390: picture loads, label says not built yet
+PASS R-d-default-390 ?s=d-default at 390: picture loads, label says not built yet
+PASS R-a-no-medicines-390 ?s=a-no-medicines at 390: picture loads, label says not built yet
+PASS R-sign-in_default-360 ?s=sign-in_default at 360: built screen shown (step 1)
+PASS R-offer_fingerprint-360 ?s=offer_fingerprint at 360: built screen shown (step 1)
+PASS R-unlock_face-360 ?s=unlock_face at 360: built screen shown (step 1)
+PASS R-home_active-360 ?s=home_active at 360: picture loads, label says not built yet
+PASS R-t01-ready-360 ?s=t01-ready at 360: picture loads, label says not built yet
+PASS R-s7f-submitted-360 ?s=s7f-submitted at 360: picture loads, label says not built yet
+PASS R-t10b-forwarded-360 ?s=t10b-forwarded at 360: picture loads, label says not built yet
+PASS R-g1-generic-confirm-360 ?s=g1-generic-confirm at 360: picture loads, label says not built yet
+PASS R-d-default-360 ?s=d-default at 360: picture loads, label says not built yet
+PASS R-a-no-medicines-360 ?s=a-no-medicines at 360: picture loads, label says not built yet
+PASS R-sign-in_default-1280 ?s=sign-in_default at 1280: built screen shown (step 1)
+PASS R-offer_fingerprint-1280 ?s=offer_fingerprint at 1280: built screen shown (step 1)
+PASS R-unlock_face-1280 ?s=unlock_face at 1280: built screen shown (step 1)
+PASS R-home_active-1280 ?s=home_active at 1280: picture loads, label says not built yet
+PASS R-t01-ready-1280 ?s=t01-ready at 1280: picture loads, label says not built yet
+PASS R-s7f-submitted-1280 ?s=s7f-submitted at 1280: picture loads, label says not built yet
+PASS R-t10b-forwarded-1280 ?s=t10b-forwarded at 1280: picture loads, label says not built yet
+PASS R-g1-generic-confirm-1280 ?s=g1-generic-confirm at 1280: picture loads, label says not built yet
+PASS R-d-default-1280 ?s=d-default at 1280: picture loads, label says not built yet
+PASS R-a-no-medicines-1280 ?s=a-no-medicines at 1280: picture loads, label says not built yet
+PASS H1 phone (390): drawer handle shown in review
+PASS H2 phone: handle opens the drawer with the controls
+PASS H3 phone: tapping outside closes the drawer  [sections 3]
+PASS H4 phone: 0 console errors (review)
+PASS Q1 Test on phone: QR code drawn from the vendored library, current without a button
+PASS Q2 play link: opens in play mode and the phone story equals the desktop panel story (every journey field)  [mode play]
+PASS Q3 play link: phone shows the drawer handle, not a panel over the app
+PASS Q4 play link: 0 console errors
+PASS Q5 unreadable play code → review with a notice  [{"shown":true,"text":"This play link can't be read. Opened review instead.","mode":"review"}]
+PASS T1 Reset clears review storage only; demo storage untouched  [review keys 0, demo 1]
+PASS N1 panel Jump opens the chosen state through navigation, picture layout set  [{"img":"pictures/case/t10b-forwarded_w390.png","picOnly":true}]
+PASS N2 Restart story returns to the story's start screen (sign-in, built in step 1), no picture left  [{"img":false,"signIn":true}]
+PASS N3 call attempts: add an attempt gives a second attempt in the story  [attempts 2]
+PASS P1 every story and call value has plain words (no codes shown)
+PASS P2 every state id (169) has a plain jump-list name
+PASS P3 short play link: default story is '3', typical story link ≤ 100 characters, both decode back  [62 chars: https://truemeds-doctor-app-preview.netlify.app/?play=3b1~A4G1]
+PASS P4 panel options read as words (no ids like over-gate, 1 · offer_enable-failed)
+PASS P2b Jump to a state lists every picture and behaviour-only state (169) by its plain name, grouped by journey  [169 options]
+PASS P2c Jump to a behaviour-only step-1 state opens its screen (offer.cancelled → offer, signin.locked-number → OTP locked, offer.not-now → Home), not a card  [{"bc":{"s":"offer_fingerprint","j":"offer","card":false},"bl":{"s":"otp_locked","j":"otp","card":false},"bn":{"s":"home_setup-wheel","j":"home","card":false}}]
+PASS P5 1280 x 800: opening any row keeps one row open, the Review panel and the Test on phone card on screen, no page scroll  [[]]
+PASS P6 QR, link, steps and the row's value follow a change at once (3–6 plain steps; OTP and offer answers in the default steps)  [{"link":"http://localhost:8766/?play=3b1","steps":["Opens at sign-in","Sign-in: Code sent","OTP: Correct code","Faster sign-in (fingerprint): turns on","Pilot · HA free case","Call: Patient didn't answer"],"value":"Sign-in · Pilot · HA free"}]
+PASS P7 QR at 160 px decodes back to the link shown, and that link plays the same story  [http://localhost:8766/?play=3b1]
+PASS P8 panel at 1280: 0 console errors
+PASS P8b resize: drawer filtering follows the width (390: sign-in controls, Jump, Story; 1280: all 7 rows)  [{"narrowRows":["entry","jump","story"],"wideRows":["story","jump","entry","work","call","settings","log"]}]
+PASS P9 drawer (390): handle vertically centred; current screen's controls first, then Jump, Story, Restart; follows sign-in → OTP; no QR card on the phone  [{"hd":{"top":394,"mid":422},"o1":["entry:signIn","jump:jump","story:start+scenario+offline","bar:"],"o2":["entry:otp","jump:jump","story:start+scenario+offline","bar:"],"testCard":"none"}]
+PASS P10 drawer: 0 console errors
+
+78/78 passed

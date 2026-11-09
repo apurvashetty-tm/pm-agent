@@ -4200,15 +4200,6 @@
  },
  {
   "kind": "text",
-  "text": "Callback",
-  "cls": "",
-  "tag": "span",
-  "states": [
-   "case/t08a-valid-cat4"
-  ]
- },
- {
-  "kind": "text",
   "text": "Callback today at 3:00 PM",
   "cls": "tm-status-card__title",
   "tag": "div",
@@ -4311,7 +4302,8 @@
    "offer/face-id",
    "offer/fingerprint",
    "offer/offline",
-   "offer/screen-lock"
+   "offer/screen-lock",
+   "offer/unavailable"
   ]
  },
  {
@@ -4550,6 +4542,15 @@
    "home/setting",
    "home/setup-failed",
    "home/setup-wheel"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Continue",
+  "cls": "",
+  "tag": "span",
+  "states": [
+   "offer/unavailable"
   ]
  },
  {
@@ -5336,6 +5337,7 @@
   "cls": "",
   "tag": "span",
   "states": [
+   "offer/unavailable",
    "unlock/unavailable"
   ]
  },
@@ -6134,7 +6136,8 @@
    "offer/face-id",
    "offer/fingerprint",
    "offer/offline",
-   "offer/screen-lock"
+   "offer/screen-lock",
+   "offer/unavailable"
   ]
  },
  {
@@ -7700,7 +7703,8 @@
    "offer/face-id",
    "offer/fingerprint",
    "offer/offline",
-   "offer/screen-lock"
+   "offer/screen-lock",
+   "offer/unavailable"
   ]
  },
  {
@@ -8069,7 +8073,8 @@
    "offer/face-id",
    "offer/fingerprint",
    "offer/offline",
-   "offer/screen-lock"
+   "offer/screen-lock",
+   "offer/unavailable"
   ]
  },
  {
@@ -8111,7 +8116,8 @@
    "offer/face-id",
    "offer/fingerprint",
    "offer/offline",
-   "offer/screen-lock"
+   "offer/screen-lock",
+   "offer/unavailable"
   ]
  },
  {
@@ -8164,7 +8170,8 @@
    "offer/enable-failed",
    "offer/enabling",
    "offer/fingerprint",
-   "offer/offline"
+   "offer/offline",
+   "offer/unavailable"
   ]
  },
  {
@@ -8264,7 +8271,8 @@
    "offer/enable-failed",
    "offer/enabling",
    "offer/fingerprint",
-   "offer/offline"
+   "offer/offline",
+   "offer/unavailable"
   ]
  },
  {
@@ -8757,7 +8765,8 @@
    "offer/enable-failed",
    "offer/enabling",
    "offer/fingerprint",
-   "offer/offline"
+   "offer/offline",
+   "offer/unavailable"
   ]
  },
  {

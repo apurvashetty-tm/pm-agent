@@ -232,7 +232,7 @@ def check_home(page, state, errs):
 UNLOCK = SCREENS / 'returning-unlock' / 'returning-unlock.html'
 OFFER = SCREENS / 'faster-signin-offer' / 'faster-signin-offer.html'
 UNLOCK_STATES = ['fingerprint', 'face', 'screen-lock', 'pending', 'cancelled', 'platform-retry', 'unavailable']
-OFFER_STATES = ['fingerprint', 'face-id', 'enabling', 'screen-lock', 'enable-failed', 'offline']   # Round 3: every offer picture
+OFFER_STATES = ['fingerprint', 'face-id', 'enabling', 'screen-lock', 'enable-failed', 'offline', 'unavailable']   # Round 3 (+ unavailable, D-93): every offer picture
 
 def check_unlock_offer(page, errs):
     for state in UNLOCK_STATES:

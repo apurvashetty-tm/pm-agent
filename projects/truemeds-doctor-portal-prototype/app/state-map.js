@@ -68,6 +68,17 @@ window.TM_STATE_MAP = {
    "notes": []
   },
   {
+   "id": "offer_unavailable",
+   "kind": "picture",
+   "picture": "faster-signin-offer/offer_unavailable",
+   "step": 1,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": "offer.unavailable",
+   "notes": []
+  },
+  {
    "id": "otp_code-expired",
    "kind": "picture",
    "picture": "otp/otp_code-expired",
@@ -1774,13 +1785,6 @@ window.TM_STATE_MAP = {
   },
   {
    "id": "offer.shown",
-   "kind": "behaviour",
-   "step": 1,
-   "picture": null,
-   "version": "B"
-  },
-  {
-   "id": "offer.unavailable",
    "kind": "behaviour",
    "step": 1,
    "picture": null,

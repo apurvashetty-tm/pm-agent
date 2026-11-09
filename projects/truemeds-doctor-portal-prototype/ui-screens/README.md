@@ -13,12 +13,12 @@ Each state has a 390-wide and a 360-wide picture (`_w390.png`, `_w360.png`, 2× 
 | Sign-in | `sign-in/sign-in.html` | `sign-in/` (`sign-in_<state>_…`) | 12 | D-42 to D-47, D-61, D-65 |
 | OTP | `otp/otp.html` | `otp/` (`otp_<state>_…`) | 17 | D-42 to D-47, D-61 (no Back), D-65 |
 | Returning unlock | `returning-unlock/returning-unlock.html` | `returning-unlock/` (`unlock_<state>_…`) | 7 | D-45, D-47, D-61, D-66 |
-| Faster sign-in offer | `faster-signin-offer/faster-signin-offer.html` | `faster-signin-offer/` (`offer_<state>_…`) | 6 | D-45, D-61, D-64, D-65 |
+| Faster sign-in offer | `faster-signin-offer/faster-signin-offer.html` | `faster-signin-offer/` (`offer_<state>_…`) | 7 | D-45, D-61, D-64, D-65, D-93 |
 | Home (availability, add time, end, profile) | `home/home.html` (+ `home-reference.js`, `home-reference.css`) | `home/` (`home_<state>_…`) | 22 | D-36, D-40, D-47, D-53, D-69, D-70 |
-| Case page: ready, calling, call outcomes, closed cases, sheets, stress | `case/case.html` (+ `case-styles.css`) | `case/` (`<state>_…`) | 62 | D-48 to D-83 |
+| Case page: ready, calling, call outcomes, closed cases, sheets, stress | `case/case.html` (+ `case-styles.css`) | `case/` (`<state>_…`) | 61 | D-48 to D-83 |
 | Prescribe (one medicine) | `case/case.html` (`d-*`) | `prescribe/` (`d-<state>_…`) | 23 | D-04, D-06, D-08 to D-30, D-54, D-56, D-68 |
 
-Counts: pictures are 2 per state. Case page: 43 calling and call-outcome states (incl. `s7d-unavailable-sheet`, the callback sheets and the Skip-HA sheet), 16 + 1 stress/action states (`a-*`), 2 closed (`e-*`), 3 stress (`s-*`). Home: 19 states plus 3 Profile pages.
+Counts: pictures are 2 per state. Case page: 39 calling and call-outcome states (incl. `s7d-unavailable-sheet`, the callback sheets and the Skip-HA sheet), 16 + 1 stress/action states (`a-*`), 2 closed (`e-*`), 3 stress (`s-*`). Home: 19 states plus 3 Profile pages.
 
 ## Case page: calling render ids
 
@@ -87,7 +87,7 @@ Open the file in a browser. `capture=` (and `?capture=1`) hides the review contr
 - Sign-in: `sign-in/sign-in.html?capture=<state>` (`default`, `keyboard-open`, `empty-tap`, `too-short`, `wrong-first-digit`, `pasted-cleaned`, `sending`, `not-registered`, `offline`, `couldnt-send`, `too-many-tries`, `inactive`).
 - OTP: `otp/otp.html?capture=<state>` (17 states, e.g. `verifying`, `locked`).
 - Unlock: `returning-unlock/returning-unlock.html?capture=<fingerprint | face | screen-lock | pending | cancelled | platform-retry | unavailable>`.
-- Offer: `faster-signin-offer/faster-signin-offer.html?capture=<fingerprint | face-id | enabling | screen-lock | enable-failed | offline>`.
+- Offer: `faster-signin-offer/faster-signin-offer.html?capture=<fingerprint | face-id | enabling | screen-lock | enable-failed | offline | unavailable>`.
 - Home: `home/home.html?state=<state>&capture=1` (e.g. `active`, `add-wheel`, `profile`, `logout-confirm`).
 - Case page and calling: `case/case.html?s=<render id>&start=case&capture=1` (add `&w=360` for the 360 width).
 

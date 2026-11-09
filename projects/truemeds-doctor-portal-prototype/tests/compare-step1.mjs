@@ -161,7 +161,7 @@ for (const id of ids) {
     const builtVsSource = (box) => { if (!sameSize) return Infinity; let n = 0; const [x0, y0, x1, y1] = box;
       for (let y = y0; y < y1; y++) for (let x = x0; x < x1; x++) if (!eff.some(([a, b, c, d]) => x >= a && x < c && y >= b && y < d) && delta(S, B, x, y) > THRESH) n++; return n; };
     if (sameSize) { let n = 0, m = 0; for (let y = 0; y < A.height; y++) for (let x = 0; x < A.width; x++) { const d = delta(A, S, x, y); if (d > THRESH) n++; if (d > m) m = d; } row.macDiff = { px: n, maxDelta: m }; }
-    const aa = process.env.NO_AA ? null : ALLOW.antiAliasing.find((e) => new RegExp(e.match).test(id));   // NO_AA=1: preview without the rule (D-94)
+    const aa = process.env.NO_AA ? null : (ALLOW.antiAliasing || []).find((e) => new RegExp(e.match).test(id));   // NO_AA=1: preview without the rule (D-94)
     let aaPx = 0;
     for (const r of regions) {
       r.builtVsSource = builtVsSource(r.box);

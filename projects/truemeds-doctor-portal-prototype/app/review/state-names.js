@@ -44,12 +44,12 @@ export const STATE_GROUPS = [
     "offer_enabling": "Offer · turning on (phone prompt)",
     "offer_enable-failed": "Offer · couldn't turn on",
     "offer_offline": "Offer · offline",
+    "offer_unavailable": "Offer · not available on this phone (D-93)",
     "offer.shown": "Offer shown once after first sign-in (behaviour)",
     "offer.enabled": "Offer turned on → Home (behaviour)",
     "offer.cancelled": "Offer prompt cancelled → back, no message (behaviour)",
     "offer.not-now": "Offer · Not now → Home (behaviour)",
     "offer.unsupported": "Phone has no screen lock → offer skipped (behaviour)",
-    "offer.unavailable": "Offer · not available on this phone (D-93)",
   } },
   { title: "Returning unlock", ids: {
     "unlock_fingerprint": "Unlock · fingerprint",
