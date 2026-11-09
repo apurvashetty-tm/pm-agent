@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 """Token linter (D-100): no raw design values in component or screen CSS.
 
-Usage:  python3 design-system/scripts/check_tokens.py [files...]
+Usage:  python3 design-system/scripts/check_tokens.py [--scoped] [files...]
 With no files it scans design-system/src/components.css and projects/*/app/screens/*.css.
+--scoped keeps only files in lint scope (design-system/src/**.css, projects/*/app/**.css minus
+app/shell, app/review and the copy-shared build copies); the edit hook and commit gate use it.
 Runs stylelint (design-system/stylelint.config.mjs) and drops findings that are
   - on a line carrying  /* raw-ok: <non-empty reason> */  (same line only), or
   - inside a legacy .tm-otp block after a [DEPRECATED] comment, or
@@ -35,6 +37,17 @@ def default_files():
     return [f for f in files if os.path.isfile(f)]
 
 
+SCOPE = re.compile(r"^(?:design-system/src/|projects/[^/]+/app/)[^\0]*\.css$")
+# File-level exceptions (token pass brief §2): shell and review chrome, plus build copies made by copy-shared.sh.
+UNSCANNED = re.compile(r"^projects/[^/]+/app/(?:shell|review|design-system|brand|feedback|pictures)/")
+
+
+def in_scope(path):
+    """True if the file is component or app CSS that the hook and the commit gate must lint."""
+    rel = os.path.relpath(os.path.abspath(path), ROOT).replace(os.sep, "/")
+    return bool(SCOPE.match(rel)) and not UNSCANNED.match(rel)
+
+
 def exempt_lines(text):
     """1-based line numbers whose findings are dropped (raw-ok lines and exempt blocks)."""
     lines = text.split("\n")
@@ -63,8 +76,18 @@ def exempt_lines(text):
 
 
 def main(argv):
+    scoped = "--scoped" in argv
+    argv = [a for a in argv if a != "--scoped"]
     files = [os.path.abspath(f) for f in argv] or default_files()
-    files = [f for f in files if f.endswith(".css")]
+    # Commit gate: TM_STAGED_ROOT holds the staged copies at their repo paths; lint those, report repo paths.
+    staged = os.environ.get("TM_STAGED_ROOT")
+    if staged:
+        files = [os.path.join(staged, os.path.relpath(f, ROOT)) for f in files if f.endswith(".css") and (not scoped or in_scope(f))]
+        base = os.path.abspath(staged)
+    else:
+        files = [f for f in files if f.endswith(".css") and (not scoped or in_scope(f))]
+        base = ROOT
+    files = [f for f in files if os.path.isfile(f)]
     if not files:
         return 0
     if not os.path.isfile(STYLELINT):
@@ -89,7 +112,7 @@ def main(argv):
                 skip = exempt_lines(fh.read())
         except OSError:
             skip = set()
-        rel = os.path.relpath(path, ROOT)
+        rel = os.path.relpath(os.path.realpath(path), os.path.realpath(base))
         for w in result.get("warnings", []):
             if w.get("rule") != "scale-unlimited/declaration-strict-value":
                 findings.append((rel, w.get("line") or 0, f"{rel}:{w.get('line')}: {w.get('text')}"))

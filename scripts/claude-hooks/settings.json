@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$(git -C \"$CLAUDE_PROJECT_DIR\" rev-parse --show-toplevel)/scripts/claude-hooks/lint-css.sh\"",
+            "timeout": 60
+          }
+        ]
+      }
+    ]
+  }
+}
