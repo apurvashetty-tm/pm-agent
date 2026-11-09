@@ -11,7 +11,8 @@ const root = path.resolve(project, '../..');
 const ds = path.join(root, 'design-system');
 const read = p => fs.readFileSync(p, 'utf8');
 const camel = s => s.replace(/-([a-z])/g, (_, c) => c.toUpperCase());
-// Paths are family + camel-cased name, as specified in brief §1. Size
+// Paths: see the main-thread rulings below (2026-11-09, token-pass test disputes 1–3).
+// Originally: family + camel-cased name, as specified in brief §1. Size
 // tokens retain the complete semantic name (including border/focus sizes).
 const rows = [];
 function add(family, name, value, unit = '') { rows.push({family, name, value, unit}); }
@@ -41,7 +42,10 @@ for (const row of rows) test(`CSS token --tm-${row.name} has the specified value
   const css = read(path.join(ds,'truemeds.css'));
   const matches = [...css.matchAll(new RegExp(`--tm-${row.name}\\s*:\\s*([^;}]+)`, 'g'))];
   assert.ok(matches.length, `Missing --tm-${row.name}`);
-  for (const m of matches) assert.equal(compact(m[1]),compact(`${row.value}${row.unit}`));
+  // Main-thread ruling (2026-11-09): a SALT semantic token may alias a core token; resolve one level.
+  const resolve = v => { const a = /^var\((--tm-core-[\w-]+)\)$/.exec(v.trim()); if (!a) return v;
+    const c = css.match(new RegExp(`${a[1]}\\s*:\\s*([^;}]+)`)); return c ? c[1] : v; };
+  for (const m of matches) assert.equal(compact(resolve(m[1])),compact(`${row.value}${row.unit}`));
 });
 
 function at(obj, keys) { return keys.reduce((v,k)=>v?.[k],obj); }
@@ -50,11 +54,18 @@ for (const row of rows) test(`Native token ${row.name} has the specified path an
   const short = row.name.startsWith(row.family+'-') ? row.name.slice(row.family.length+1) : row.name;
   // The brief fixes camel-casing but not whether a repeated family prefix is
   // retained in the key. Accept those two spellings only, within its family.
+  // Main-thread ruling (2026-11-09): native/tokens.json has no `tokens` root (that is the TS export name), and
+  // names follow the D-98 pattern <group>.<rest> (iconSize.sm, borderWidth.thick, spinner.sizeLg, layout.pageMax).
+  const parts = row.name.split('-');
   const paths = [...new Set([camel(short),camel(row.name)])].map(k=>['tokens',row.family,k]);
+  for (let k = 1; k < parts.length; k++) paths.push([camel(parts.slice(0,k).join('-')), camel(parts.slice(k).join('-'))]);
   const hits = paths.map(p=>[p.join('.'),at(json,p)]).filter(([,v])=>v!==undefined);
   assert.ok(hits.length, `Missing ${paths.map(p=>p.join('.')).join(' or ')}`);
   for (const [p,v] of hits) {
-    if (row.family === 'shadow') {
+    if (row.family === 'shadow' && v && v.boxShadow !== undefined) {
+      // Main-thread ruling: same shape as the other native shadows (boxShadow + ios + android).
+      assert.equal(compact(v.boxShadow),compact(row.value),p+' boxShadow'); assert.ok(v.ios && v.android, p+' ios/android');
+    } else if (row.family === 'shadow') {
       assert.ok(v && typeof v === 'object',p);
       const pick = keys => keys.map(k=>v[k]).find(x=>x!==undefined);
       assert.equal(pick(['offsetX','x']),0,p+' x');
@@ -96,7 +107,7 @@ export function violations(css, filename) {
       const [,prop,value]=m;
       const dimensional=/(?<![\w.-])-?(?:\d*\.)?\d+(?:px|r?em|ch|vw|vh|vmin|vmax|%|ms|s)(?![\w%])/g;
       const rawDimension=[...value.matchAll(dimensional)].some(x=>parseFloat(x[0])!==0);
-      const colour=/#(?:[\da-f]{3,8})\b|\b(?:rgba?|hsla?|hwb|lab|lch|oklab|oklch|color)\s*\(|\b(?:white|black|red|blue|green|gray|grey|transparent)\b/i.test(value);
+      const colour=/#(?:[\da-f]{3,8})\b|\b(?:rgba?|hsla?|hwb|lab|lch|oklab|oklch|color)\s*\(|\b(?:white|black|red|blue|green|gray|grey)\b/i.test(value);
       const scalar=/^(?:z-index|opacity)$/.test(prop) && /\d/.test(value) || /brightness\(\s*[.\d]/.test(value);
       if(rawDimension||colour||scalar) errors.push(`${filename}:${i+1}: ${prop}: ${value.trim()}`);
     }

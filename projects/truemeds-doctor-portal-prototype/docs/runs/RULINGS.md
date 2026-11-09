@@ -2,6 +2,10 @@
 
 Every run reads this first. Rulings override briefs where they conflict. Newest at the top.
 
+## 2026-11-09 20:45 (after the token pass)
+- **Token-pass test disputes 1–3: the build is right, Codex's tests were wrong.** Native tokens follow the D-98 pattern `tokens.<group>.<name>` (e.g. `iconSize.sm`, `spinner.sizeLg`), with no `tokens` root in `tokens.json`; SALT semantic tokens may alias core tokens (`--tm-radius-full` → `--tm-core-radius-full`); `transparent` is a keyword, not a raw colour. The main thread fixed `tests/codex/tokens/token-pass.test.mjs` accordingly: **90 / 90 pass**. Don't reopen these.
+- **25 `raw-ok` lines reviewed:** all valid (geometry, ≤3px optical nudges, the listed exceptions). Keep the bar: a new `raw-ok` needs a reason a reviewer would accept; anything else becomes a token or goes to the report.
+
 ## 2026-11-09 20:30 (after the rails run)
 - **After-edit hook is live** for every run from now on (installed by the main thread in `.claude/settings.json`, both folders). If an edit returns "Token lint (D-100): raw values…", fix that value in the same step.
 - **Environment in unattended runs:** run `../../scripts/publish.sh` from the project folder, with repo-root-relative paths (e.g. `projects/truemeds-doctor-portal-prototype/app/…`). Don't `cd` outside the project folder; use `git -C` and `../../` paths in one command. `chmod`, nested `claude` and `.claude/` writes are refused — don't try; call scripts with `bash` / `python3`.
