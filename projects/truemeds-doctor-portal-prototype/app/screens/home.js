@@ -328,7 +328,7 @@ export function render(host, id, { mode, params = {} }) {
   }
   function toProfile() { saveCurrent({ saved: snapshot() }); push(null, { s: work().openCase ? "home_profile-case-open" : "home_profile", live: true }); }
   function toPlaceholder() { saveCurrent({ saved: snapshot() }); push(null, { s: "placeholder", text: "placeholder.linkPending" }); }   // Help / bell / User manual: blank page [OPEN DECISION] (D-88)
-  function profileBack() { if (depth() > 1) navBack(); else { resetNav(); push(null, { s: "home_active", live: true }); } }
+  function profileBack() { if (depth() > 1) { setScreenBack(null); navBack(); } else { resetNav(); push(null, { s: "home_active", live: true }); } }
 
   // A request in flight (opened on Requesting…, Ending…, expired-pending, Checking…) gets its answer.
   if (work().request && !ui.busy && !fx.page && !ui.unknown && ["active", "near"].includes(availability().state)) ui.busy = "requesting";

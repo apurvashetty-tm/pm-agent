@@ -55,7 +55,7 @@ Order = the order we work in.
 2. [x] (closed, D-88) Storyboard review with Apurva, journey by journey: entry → Home → case + Prescribe → calling (incl. her walkthrough misses; then regenerate `calling-flow.png`).
 3. [ ] Per closed journey: PRD section → prototype engineering spec + test cases (agents). Spec's shared foundation may start early. Build plan → spec; rebuild checklist → test cases.
 4. [ ] Prototype rebuild — **D-88:** from build plan v3 + rebuild checklist v3 (`docs/proposals/2026-11-05-prototype-build-plan-v3.md`, `docs/reviews/2026-11-05-rebuild-checklist-v3.md`); PRD / spec / test cases are not a gate.
-5. [ ] Token inspector → widened to the **native hand-off kit (D-96)**. Pilot on Sign-in: `docs/renders/2026-11-09-handoff-kit/TERMINAL-BRIEF.md` (runs in parallel with the prototype build). Then FE walkthrough with one engineer; then add each journey as the rebuild finishes it.
+5. [ ] Token inspector → widened to the **native hand-off kit (D-96)**. Pilot on Sign-in: `docs/renders/2026-11-09-handoff-kit/TERMINAL-BRIEF.md` (runs in parallel with the prototype build). Then FE walkthrough with one engineer; then add each journey as the rebuild finishes it. **Delivery (Apurva 2026-11-09): a copy of the kit + built app pushed to Truemeds' own GitLab — the last step, after Apurva has seen the kit and walked Engineering through it.**
 6. [ ] After the kit pilot is approved: mark `ui-screens/native/` (October TSX) and `ui-screens/home/NATIVE-HANDOFF.md` / `home.native.ts` "don't use — see `handoff/`" (D-96 pt 2).
 
 ## 2f. Screen audit — Part A answers (Apurva, 2026-11-01) — recorded as D-80; apply in the journey passes
