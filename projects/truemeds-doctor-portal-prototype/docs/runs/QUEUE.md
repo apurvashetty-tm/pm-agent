@@ -4,7 +4,7 @@
 Main thread edits this file; the runner only ticks lines.
 
 - [x] Run docs/renders/2026-11-09-rails/TERMINAL-BRIEF.md
-- [ ] Run docs/renders/2026-11-09-token-pass/TERMINAL-BRIEF.md
+- [x] Run docs/renders/2026-11-09-token-pass/TERMINAL-BRIEF.md
 - [ ] Run docs/renders/2026-11-09-build-fast/TERMINAL-BRIEF.md (do the first run not marked done: A1)
 - [ ] Run docs/renders/2026-11-09-build-fast/TERMINAL-BRIEF.md (do the first run not marked done: A2)
 - [ ] Run docs/renders/2026-11-09-build-fast/TERMINAL-BRIEF.md (do the first run not marked done: B)
