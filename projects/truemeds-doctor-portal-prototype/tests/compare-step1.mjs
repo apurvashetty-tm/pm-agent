@@ -22,7 +22,9 @@ const HERE = path.dirname(url.fileURLToPath(import.meta.url));
 const PROJECT = path.resolve(HERE, "..");
 const APP = path.join(PROJECT, "app");
 const UI = path.join(PROJECT, "ui-screens");
-const OUT = path.join(PROJECT, "docs/renders/2026-11-09-step1-recovery/compare");
+// PICTURES / OUT: optional overrides (D-94 preview: compare against session-6/new/ before it replaces ui-screens/).
+const PICS = process.env.PICTURES ? path.resolve(process.env.PICTURES) : UI;
+const OUT = process.env.OUT ? path.resolve(process.env.OUT) : path.join(PROJECT, "docs/renders/2026-11-09-step1-recovery/compare");
 const ALLOW = JSON.parse(fs.readFileSync(path.join(HERE, "compare-allow.json"), "utf8"));
 const FLT = process.argv[2] ? new RegExp(process.argv[2]) : null;
 const PORT = 8798;
@@ -45,7 +47,11 @@ await import(path.join(APP, "state-map.js"));
 const ids = window.TM_STATE_MAP.pictures.filter((r) => r.step === 1).map((r) => r.id).filter((id) => !FLT || FLT.test(id));
 fs.mkdirSync(OUT, { recursive: true });
 
-const browser = await chromium.launch({ executablePath: process.env.CHROME || undefined });
+// D-94: repeatable capture — the same fixed rasterisation flags as capture-method-cap.py (no GPU, no LCD / sub-pixel text,
+// no hinting, sRGB; DPR 2 from the page, never --force-device-scale-factor). The same page captured twice gives identical pixels, so a picture is captured once (no retries).
+const FLAGS = ["--font-render-hinting=none", "--disable-gpu", "--disable-lcd-text", "--force-color-profile=srgb",
+  "--disable-font-subpixel-positioning", "--disable-partial-raster", "--disable-skia-runtime-opts", "--hide-scrollbars"];
+const browser = await chromium.launch({ executablePath: process.env.CHROME || undefined, args: FLAGS });
 // Only spinners that are drawn: laid out, not hidden, visibility visible, opacity above 0 on the spinner and its ancestors.
 const SPIN_JS = "() => [...document.querySelectorAll('.tm-spinner')].filter(e => e.getClientRects().length && !e.hidden && e.checkVisibility({ opacityProperty: true, visibilityProperty: true, contentVisibilityAuto: true })).map(e => { const r = e.getBoundingClientRect(); return [r.x, r.y, r.width, r.height]; })";
 async function shoot(target, w, { capture, source = false }) {
@@ -57,6 +63,7 @@ async function shoot(target, w, { capture, source = false }) {
   await pg.addStyleTag({ content: (source ? ".review,.review-controls,#demo-bar{display:none !important}" : "") + FREEZE });
   await pg.evaluate(() => document.fonts && document.fonts.ready);
   await pg.waitForTimeout(350);
+  await pg.evaluate(() => document.fonts.ready.then(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)))));
   const spin = await pg.evaluate(`(${SPIN_JS})()`);
   const buf = capture ? await pg.screenshot() : null;
   await pg.close();
@@ -133,18 +140,15 @@ const results = [];
 for (const id of ids) {
   const sub = id.split("_")[0], state = id.slice(sub.length + 1);
   for (const w of [390, 360]) {
-   // Capture noise: on this Mac the renderer sometimes anti-aliases a few button-corner pixels differently between two captures of
-   // the same page (busy states; session 3 saw the same). A picture that fails is captured again, up to 3 tries; the number of
-   // tries is recorded and reported. A real difference fails every try.
    let row;
-   for (let attempt = 1; attempt <= 3; attempt++) {
-    const approvedFile = path.join(UI, FOLDER[sub], `${id}_w${w}.png`);
+   do {   // one capture per picture (D-94: repeatable capture, no retries)
+    const approvedFile = path.join(PICS, FOLDER[sub], `${id}_w${w}.png`);
     const A = PNG.sync.read(fs.readFileSync(approvedFile));
     const built = await shoot(`http://localhost:${PORT}/?capture=1&s=${id}&w=${w}`, w, { capture: true });
     const src = await shoot(url.pathToFileURL(path.join(UI, SOURCE[sub])).href + `?capture=${state}`, w, { capture: true, source: true });
     const B = built.png;
-    row = { id, w, attempt, size: [A.width, A.height], builtSize: [B.width, B.height], errors: built.errs, regions: [] };
-    if (A.width !== B.width || A.height !== B.height) { row.result = "failed"; row.reason = "size differs"; continue; }
+    row = { id, w, size: [A.width, A.height], builtSize: [B.width, B.height], errors: built.errs, regions: [] };
+    if (A.width !== B.width || A.height !== B.height) { row.result = "failed"; row.reason = "size differs"; break; }
     // spinner: union of the built rect and the approved source rect, both sides, in picture px (+2 px margin)
     const masks = [...built.spin, ...src.spin].map(([x, y, ww, hh]) => [Math.floor((x - 2) * 2), Math.floor((y - 2) * 2), Math.ceil((x + ww + 2) * 2), Math.ceil((y + hh + 2) * 2)]);
     // The mask hides only the spinner's drawing: both sides must show a spinner, the same number, in the same box (1 css px).
@@ -157,7 +161,7 @@ for (const id of ids) {
     const builtVsSource = (box) => { if (!sameSize) return Infinity; let n = 0; const [x0, y0, x1, y1] = box;
       for (let y = y0; y < y1; y++) for (let x = x0; x < x1; x++) if (!eff.some(([a, b, c, d]) => x >= a && x < c && y >= b && y < d) && delta(S, B, x, y) > THRESH) n++; return n; };
     if (sameSize) { let n = 0, m = 0; for (let y = 0; y < A.height; y++) for (let x = 0; x < A.width; x++) { const d = delta(A, S, x, y); if (d > THRESH) n++; if (d > m) m = d; } row.macDiff = { px: n, maxDelta: m }; }
-    const aa = ALLOW.antiAliasing.find((e) => new RegExp(e.match).test(id));
+    const aa = process.env.NO_AA ? null : ALLOW.antiAliasing.find((e) => new RegExp(e.match).test(id));   // NO_AA=1: preview without the rule (D-94)
     let aaPx = 0;
     for (const r of regions) {
       r.builtVsSource = builtVsSource(r.box);
@@ -173,11 +177,10 @@ for (const id of ids) {
     const bad = regions.filter((r) => r.why === "unexplained");
     row.result = built.errs.length ? "failed" : bad.length ? "failed" : total === 0 ? "exact" : "accepted";
     sheet(A, B, regions, path.join(OUT, `${id}_w${w}.png`));
-    if (row.result !== "failed" || attempt === 3) break;
-   }
+   } while (false);
     results.push(row);
     const { regions, changedPx: total } = row;
-    console.log(`${row.result.padEnd(9)} ${id} @${w}${row.attempt > 1 ? ` (try ${row.attempt})` : ""}  changed ${total} px  regions ${regions.map((r) => `${r.why}${r.why === "unexplained" ? "(" + r.reason + " " + r.box + ")" : ""}`).join(", ") || "none"}`);
+    console.log(`${row.result.padEnd(9)} ${id} @${w}  changed ${total} px  regions ${regions.map((r) => `${r.why}${r.why === "unexplained" ? "(" + r.reason + " " + r.box + ")" : ""}`).join(", ") || "none"}`);
   }
 }
 await browser.close(); srv.close();
@@ -186,8 +189,8 @@ const count = (k) => results.filter((r) => r.result === k).length;
 fs.writeFileSync(path.join(OUT, "results.json"), JSON.stringify({ thresholdPerChannel: THRESH, states: ids.length, pictures: results.length, exact: count("exact"), accepted: count("accepted"), failed: count("failed"), results }, null, 1));
 const md = ["# Step 1 compare — approved picture vs built app", "", `Generated by \`tests/compare-step1.mjs\` (threshold: any channel > ${THRESH}/255). Allow list: \`tests/compare-allow.json\`.`, "",
   `States ${ids.length} · pictures ${results.length} · **exact ${count("exact")} · accepted ${count("accepted")} · failed ${count("failed")}**`, "",
-  "| State | Width | Result (try) |  Changed px | Old Mac vs this Mac (same source) | Regions (why) |", "|---|---|---|---|---|---|",
-  ...results.map((r) => `| \`${r.id}\` | ${r.w} | ${r.result}${r.attempt > 1 ? ` (try ${r.attempt})` : ""} | ${r.changedPx ?? "—"} | ${r.macDiff ? `${r.macDiff.px} px, max ${r.macDiff.maxDelta}` : "—"} | ${r.regions.map((g) => `${g.why}${g.why === "listed" || g.why === "unexplained" ? ": " + g.reason : ""} [${g.box.join(",")}]${g.px ? ` ${g.px} px, max ${g.maxDelta}` : ""}`).join("<br>") || (r.reason || "—")} |`)];
+  "| State | Width | Result |  Changed px | Old Mac vs this Mac (same source) | Regions (why) |", "|---|---|---|---|---|---|",
+  ...results.map((r) => `| \`${r.id}\` | ${r.w} | ${r.result} | ${r.changedPx ?? "—"} | ${r.macDiff ? `${r.macDiff.px} px, max ${r.macDiff.maxDelta}` : "—"} | ${r.regions.map((g) => `${g.why}${g.why === "listed" || g.why === "unexplained" ? ": " + g.reason : ""} [${g.box.join(",")}]${g.px ? ` ${g.px} px, max ${g.maxDelta}` : ""}`).join("<br>") || (r.reason || "—")} |`)];
 fs.writeFileSync(path.join(OUT, "results.md"), md.join("\n") + "\n");
 console.log(`\n${ids.length} states, ${results.length} pictures: exact ${count("exact")}, accepted ${count("accepted")}, failed ${count("failed")}`);
 process.exit(count("failed") ? 1 : 0);

@@ -1,0 +1,1986 @@
+{
+ "thresholdPerChannel": 8,
+ "states": 42,
+ "pictures": 84,
+ "exact": 78,
+ "accepted": 6,
+ "failed": 0,
+ "results": [
+  {
+   "id": "offer_enable-failed",
+   "w": 390,
+   "size": [
+    780,
+    1688
+   ],
+   "builtSize": [
+    780,
+    1688
+   ],
+   "errors": [],
+   "regions": [],
+   "changedPx": 0,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "exact"
+  },
+  {
+   "id": "offer_enable-failed",
+   "w": 360,
+   "size": [
+    720,
+    1688
+   ],
+   "builtSize": [
+    720,
+    1688
+   ],
+   "errors": [],
+   "regions": [],
+   "changedPx": 0,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "exact"
+  },
+  {
+   "id": "offer_enabling",
+   "w": 390,
+   "size": [
+    780,
+    1688
+   ],
+   "builtSize": [
+    780,
+    1688
+   ],
+   "errors": [],
+   "regions": [
+    {
+     "box": [
+      259,
+      1456,
+      300,
+      1496
+     ],
+     "why": "spinner",
+     "reason": "busy spinner masked on both sides",
+     "px": 0,
+     "maxDelta": 0
+    },
+    {
+     "box": [
+      259,
+      1456,
+      300,
+      1496
+     ],
+     "why": "spinner",
+     "reason": "busy spinner masked on both sides",
+     "px": 0,
+     "maxDelta": 0
+    }
+   ],
+   "changedPx": 0,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "exact"
+  },
+  {
+   "id": "offer_enabling",
+   "w": 360,
+   "size": [
+    720,
+    1688
+   ],
+   "builtSize": [
+    720,
+    1688
+   ],
+   "errors": [],
+   "regions": [
+    {
+     "box": [
+      229,
+      1456,
+      270,
+      1496
+     ],
+     "why": "spinner",
+     "reason": "busy spinner masked on both sides",
+     "px": 0,
+     "maxDelta": 0
+    },
+    {
+     "box": [
+      229,
+      1456,
+      270,
+      1496
+     ],
+     "why": "spinner",
+     "reason": "busy spinner masked on both sides",
+     "px": 0,
+     "maxDelta": 0
+    }
+   ],
+   "changedPx": 0,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "exact"
+  },
+  {
+   "id": "offer_face-id",
+   "w": 390,
+   "size": [
+    780,
+    1688
+   ],
+   "builtSize": [
+    780,
+    1688
+   ],
+   "errors": [],
+   "regions": [],
+   "changedPx": 0,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "exact"
+  },
+  {
+   "id": "offer_face-id",
+   "w": 360,
+   "size": [
+    720,
+    1688
+   ],
+   "builtSize": [
+    720,
+    1688
+   ],
+   "errors": [],
+   "regions": [],
+   "changedPx": 0,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "exact"
+  },
+  {
+   "id": "offer_fingerprint",
+   "w": 390,
+   "size": [
+    780,
+    1688
+   ],
+   "builtSize": [
+    780,
+    1688
+   ],
+   "errors": [],
+   "regions": [],
+   "changedPx": 0,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "exact"
+  },
+  {
+   "id": "offer_fingerprint",
+   "w": 360,
+   "size": [
+    720,
+    1688
+   ],
+   "builtSize": [
+    720,
+    1688
+   ],
+   "errors": [],
+   "regions": [],
+   "changedPx": 0,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "exact"
+  },
+  {
+   "id": "offer_offline",
+   "w": 390,
+   "size": [
+    780,
+    1688
+   ],
+   "builtSize": [
+    780,
+    1688
+   ],
+   "errors": [],
+   "regions": [],
+   "changedPx": 0,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "exact"
+  },
+  {
+   "id": "offer_offline",
+   "w": 360,
+   "size": [
+    720,
+    1688
+   ],
+   "builtSize": [
+    720,
+    1688
+   ],
+   "errors": [],
+   "regions": [],
+   "changedPx": 0,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "exact"
+  },
+  {
+   "id": "offer_screen-lock",
+   "w": 390,
+   "size": [
+    780,
+    1688
+   ],
+   "builtSize": [
+    780,
+    1688
+   ],
+   "errors": [],
+   "regions": [],
+   "changedPx": 0,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "exact"
+  },
+  {
+   "id": "offer_screen-lock",
+   "w": 360,
+   "size": [
+    720,
+    1688
+   ],
+   "builtSize": [
+    720,
+    1688
+   ],
+   "errors": [],
+   "regions": [],
+   "changedPx": 0,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "exact"
+  },
+  {
+   "id": "otp_code-expired",
+   "w": 390,
+   "size": [
+    780,
+    1688
+   ],
+   "builtSize": [
+    780,
+    1688
+   ],
+   "errors": [],
+   "regions": [],
+   "changedPx": 0,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "exact"
+  },
+  {
+   "id": "otp_code-expired",
+   "w": 360,
+   "size": [
+    720,
+    1688
+   ],
+   "builtSize": [
+    720,
+    1688
+   ],
+   "errors": [],
+   "regions": [],
+   "changedPx": 0,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "exact"
+  },
+  {
+   "id": "otp_cooldown-reconciling",
+   "w": 390,
+   "size": [
+    780,
+    1688
+   ],
+   "builtSize": [
+    780,
+    1688
+   ],
+   "errors": [],
+   "regions": [],
+   "changedPx": 0,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "exact"
+  },
+  {
+   "id": "otp_cooldown-reconciling",
+   "w": 360,
+   "size": [
+    720,
+    1688
+   ],
+   "builtSize": [
+    720,
+    1688
+   ],
+   "errors": [],
+   "regions": [],
+   "changedPx": 0,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "exact"
+  },
+  {
+   "id": "otp_couldnt-verify",
+   "w": 390,
+   "size": [
+    780,
+    1688
+   ],
+   "builtSize": [
+    780,
+    1688
+   ],
+   "errors": [],
+   "regions": [],
+   "changedPx": 0,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "exact"
+  },
+  {
+   "id": "otp_couldnt-verify",
+   "w": 360,
+   "size": [
+    720,
+    1688
+   ],
+   "builtSize": [
+    720,
+    1688
+   ],
+   "errors": [],
+   "regions": [],
+   "changedPx": 0,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "exact"
+  },
+  {
+   "id": "otp_default",
+   "w": 390,
+   "size": [
+    780,
+    1688
+   ],
+   "builtSize": [
+    780,
+    1688
+   ],
+   "errors": [],
+   "regions": [],
+   "changedPx": 0,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "exact"
+  },
+  {
+   "id": "otp_default",
+   "w": 360,
+   "size": [
+    720,
+    1688
+   ],
+   "builtSize": [
+    720,
+    1688
+   ],
+   "errors": [],
+   "regions": [],
+   "changedPx": 0,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "exact"
+  },
+  {
+   "id": "otp_empty-tap",
+   "w": 390,
+   "size": [
+    780,
+    1688
+   ],
+   "builtSize": [
+    780,
+    1688
+   ],
+   "errors": [],
+   "regions": [],
+   "changedPx": 0,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "exact"
+  },
+  {
+   "id": "otp_empty-tap",
+   "w": 360,
+   "size": [
+    720,
+    1688
+   ],
+   "builtSize": [
+    720,
+    1688
+   ],
+   "errors": [],
+   "regions": [],
+   "changedPx": 0,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "exact"
+  },
+  {
+   "id": "otp_expired-and-resend-limited",
+   "w": 390,
+   "size": [
+    780,
+    1688
+   ],
+   "builtSize": [
+    780,
+    1688
+   ],
+   "errors": [],
+   "regions": [
+    {
+     "box": [
+      378,
+      666,
+      600,
+      702
+     ],
+     "px": 2380,
+     "maxDelta": 226,
+     "shifted": false,
+     "shift": null,
+     "builtVsSource": 2380,
+     "why": "listed",
+     "reason": "\"call Doctor Ops\" is a blue link in the built app (OQ-021); the approved picture shows plain text (session 2 finding)."
+    }
+   ],
+   "changedPx": 2380,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "accepted"
+  },
+  {
+   "id": "otp_expired-and-resend-limited",
+   "w": 360,
+   "size": [
+    720,
+    1688
+   ],
+   "builtSize": [
+    720,
+    1688
+   ],
+   "errors": [],
+   "regions": [
+    {
+     "box": [
+      378,
+      666,
+      600,
+      702
+     ],
+     "px": 2380,
+     "maxDelta": 226,
+     "shifted": false,
+     "shift": null,
+     "builtVsSource": 2380,
+     "why": "listed",
+     "reason": "\"call Doctor Ops\" is a blue link in the built app (OQ-021); the approved picture shows plain text (session 2 finding)."
+    }
+   ],
+   "changedPx": 2380,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "accepted"
+  },
+  {
+   "id": "otp_locked",
+   "w": 390,
+   "size": [
+    780,
+    1688
+   ],
+   "builtSize": [
+    780,
+    1688
+   ],
+   "errors": [],
+   "regions": [
+    {
+     "box": [
+      252,
+      666,
+      474,
+      702
+     ],
+     "px": 2418,
+     "maxDelta": 226,
+     "shifted": false,
+     "shift": null,
+     "builtVsSource": 2418,
+     "why": "listed",
+     "reason": "\"call Doctor Ops\" is a blue link in the built app (required: Call Doctor Ops opens the placeholder page, OQ-021). The approved file's phrase search missed the non-breaking spaces, so the picture shows plain text (session 2 finding)."
+    }
+   ],
+   "changedPx": 2418,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "accepted"
+  },
+  {
+   "id": "otp_locked",
+   "w": 360,
+   "size": [
+    720,
+    1688
+   ],
+   "builtSize": [
+    720,
+    1688
+   ],
+   "errors": [],
+   "regions": [
+    {
+     "box": [
+      252,
+      666,
+      474,
+      702
+     ],
+     "px": 2418,
+     "maxDelta": 226,
+     "shifted": false,
+     "shift": null,
+     "builtVsSource": 2418,
+     "why": "listed",
+     "reason": "\"call Doctor Ops\" is a blue link in the built app (required: Call Doctor Ops opens the placeholder page, OQ-021). The approved file's phrase search missed the non-breaking spaces, so the picture shows plain text (session 2 finding)."
+    }
+   ],
+   "changedPx": 2418,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "accepted"
+  },
+  {
+   "id": "otp_new-code-sent",
+   "w": 390,
+   "size": [
+    780,
+    1688
+   ],
+   "builtSize": [
+    780,
+    1688
+   ],
+   "errors": [],
+   "regions": [],
+   "changedPx": 0,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "exact"
+  },
+  {
+   "id": "otp_new-code-sent",
+   "w": 360,
+   "size": [
+    720,
+    1688
+   ],
+   "builtSize": [
+    720,
+    1688
+   ],
+   "errors": [],
+   "regions": [],
+   "changedPx": 0,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "exact"
+  },
+  {
+   "id": "otp_offline",
+   "w": 390,
+   "size": [
+    780,
+    1688
+   ],
+   "builtSize": [
+    780,
+    1688
+   ],
+   "errors": [],
+   "regions": [],
+   "changedPx": 0,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "exact"
+  },
+  {
+   "id": "otp_offline",
+   "w": 360,
+   "size": [
+    720,
+    1688
+   ],
+   "builtSize": [
+    720,
+    1688
+   ],
+   "errors": [],
+   "regions": [],
+   "changedPx": 0,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "exact"
+  },
+  {
+   "id": "otp_resend-available",
+   "w": 390,
+   "size": [
+    780,
+    1688
+   ],
+   "builtSize": [
+    780,
+    1688
+   ],
+   "errors": [],
+   "regions": [],
+   "changedPx": 0,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "exact"
+  },
+  {
+   "id": "otp_resend-available",
+   "w": 360,
+   "size": [
+    720,
+    1688
+   ],
+   "builtSize": [
+    720,
+    1688
+   ],
+   "errors": [],
+   "regions": [],
+   "changedPx": 0,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "exact"
+  },
+  {
+   "id": "otp_resend-failed",
+   "w": 390,
+   "size": [
+    780,
+    1688
+   ],
+   "builtSize": [
+    780,
+    1688
+   ],
+   "errors": [],
+   "regions": [],
+   "changedPx": 0,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "exact"
+  },
+  {
+   "id": "otp_resend-failed",
+   "w": 360,
+   "size": [
+    720,
+    1688
+   ],
+   "builtSize": [
+    720,
+    1688
+   ],
+   "errors": [],
+   "regions": [],
+   "changedPx": 0,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "exact"
+  },
+  {
+   "id": "otp_resending",
+   "w": 390,
+   "size": [
+    780,
+    1688
+   ],
+   "builtSize": [
+    780,
+    1688
+   ],
+   "errors": [],
+   "regions": [],
+   "changedPx": 0,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "exact"
+  },
+  {
+   "id": "otp_resending",
+   "w": 360,
+   "size": [
+    720,
+    1688
+   ],
+   "builtSize": [
+    720,
+    1688
+   ],
+   "errors": [],
+   "regions": [],
+   "changedPx": 0,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "exact"
+  },
+  {
+   "id": "otp_too-many-resends",
+   "w": 390,
+   "size": [
+    780,
+    1688
+   ],
+   "builtSize": [
+    780,
+    1688
+   ],
+   "errors": [],
+   "regions": [
+    {
+     "box": [
+      366,
+      666,
+      588,
+      702
+     ],
+     "px": 2384,
+     "maxDelta": 226,
+     "shifted": false,
+     "shift": null,
+     "builtVsSource": 2384,
+     "why": "listed",
+     "reason": "\"call Doctor Ops\" is a blue link in the built app (OQ-021); the approved picture shows plain text (session 2 finding)."
+    }
+   ],
+   "changedPx": 2384,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "accepted"
+  },
+  {
+   "id": "otp_too-many-resends",
+   "w": 360,
+   "size": [
+    720,
+    1688
+   ],
+   "builtSize": [
+    720,
+    1688
+   ],
+   "errors": [],
+   "regions": [
+    {
+     "box": [
+      366,
+      666,
+      588,
+      702
+     ],
+     "px": 2384,
+     "maxDelta": 226,
+     "shifted": false,
+     "shift": null,
+     "builtVsSource": 2384,
+     "why": "listed",
+     "reason": "\"call Doctor Ops\" is a blue link in the built app (OQ-021); the approved picture shows plain text (session 2 finding)."
+    }
+   ],
+   "changedPx": 2384,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "accepted"
+  },
+  {
+   "id": "otp_too-short",
+   "w": 390,
+   "size": [
+    780,
+    1688
+   ],
+   "builtSize": [
+    780,
+    1688
+   ],
+   "errors": [],
+   "regions": [],
+   "changedPx": 0,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "exact"
+  },
+  {
+   "id": "otp_too-short",
+   "w": 360,
+   "size": [
+    720,
+    1688
+   ],
+   "builtSize": [
+    720,
+    1688
+   ],
+   "errors": [],
+   "regions": [],
+   "changedPx": 0,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "exact"
+  },
+  {
+   "id": "otp_two-tries-left",
+   "w": 390,
+   "size": [
+    780,
+    1688
+   ],
+   "builtSize": [
+    780,
+    1688
+   ],
+   "errors": [],
+   "regions": [],
+   "changedPx": 0,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "exact"
+  },
+  {
+   "id": "otp_two-tries-left",
+   "w": 360,
+   "size": [
+    720,
+    1688
+   ],
+   "builtSize": [
+    720,
+    1688
+   ],
+   "errors": [],
+   "regions": [],
+   "changedPx": 0,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "exact"
+  },
+  {
+   "id": "otp_verifying",
+   "w": 390,
+   "size": [
+    780,
+    1688
+   ],
+   "builtSize": [
+    780,
+    1688
+   ],
+   "errors": [],
+   "regions": [
+    {
+     "box": [
+      271,
+      989,
+      311,
+      1030
+     ],
+     "why": "spinner",
+     "reason": "busy spinner masked on both sides",
+     "px": 0,
+     "maxDelta": 0
+    },
+    {
+     "box": [
+      271,
+      989,
+      311,
+      1030
+     ],
+     "why": "spinner",
+     "reason": "busy spinner masked on both sides",
+     "px": 0,
+     "maxDelta": 0
+    }
+   ],
+   "changedPx": 0,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "exact"
+  },
+  {
+   "id": "otp_verifying",
+   "w": 360,
+   "size": [
+    720,
+    1688
+   ],
+   "builtSize": [
+    720,
+    1688
+   ],
+   "errors": [],
+   "regions": [
+    {
+     "box": [
+      241,
+      989,
+      281,
+      1030
+     ],
+     "why": "spinner",
+     "reason": "busy spinner masked on both sides",
+     "px": 0,
+     "maxDelta": 0
+    },
+    {
+     "box": [
+      241,
+      989,
+      281,
+      1030
+     ],
+     "why": "spinner",
+     "reason": "busy spinner masked on both sides",
+     "px": 0,
+     "maxDelta": 0
+    }
+   ],
+   "changedPx": 0,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "exact"
+  },
+  {
+   "id": "otp_wrong-code",
+   "w": 390,
+   "size": [
+    780,
+    1688
+   ],
+   "builtSize": [
+    780,
+    1688
+   ],
+   "errors": [],
+   "regions": [],
+   "changedPx": 0,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "exact"
+  },
+  {
+   "id": "otp_wrong-code",
+   "w": 360,
+   "size": [
+    720,
+    1688
+   ],
+   "builtSize": [
+    720,
+    1688
+   ],
+   "errors": [],
+   "regions": [],
+   "changedPx": 0,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "exact"
+  },
+  {
+   "id": "sign-in_couldnt-send",
+   "w": 390,
+   "size": [
+    780,
+    1688
+   ],
+   "builtSize": [
+    780,
+    1688
+   ],
+   "errors": [],
+   "regions": [],
+   "changedPx": 0,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "exact"
+  },
+  {
+   "id": "sign-in_couldnt-send",
+   "w": 360,
+   "size": [
+    720,
+    1688
+   ],
+   "builtSize": [
+    720,
+    1688
+   ],
+   "errors": [],
+   "regions": [],
+   "changedPx": 0,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "exact"
+  },
+  {
+   "id": "sign-in_default",
+   "w": 390,
+   "size": [
+    780,
+    1688
+   ],
+   "builtSize": [
+    780,
+    1688
+   ],
+   "errors": [],
+   "regions": [],
+   "changedPx": 0,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "exact"
+  },
+  {
+   "id": "sign-in_default",
+   "w": 360,
+   "size": [
+    720,
+    1688
+   ],
+   "builtSize": [
+    720,
+    1688
+   ],
+   "errors": [],
+   "regions": [],
+   "changedPx": 0,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "exact"
+  },
+  {
+   "id": "sign-in_empty-tap",
+   "w": 390,
+   "size": [
+    780,
+    1688
+   ],
+   "builtSize": [
+    780,
+    1688
+   ],
+   "errors": [],
+   "regions": [],
+   "changedPx": 0,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "exact"
+  },
+  {
+   "id": "sign-in_empty-tap",
+   "w": 360,
+   "size": [
+    720,
+    1688
+   ],
+   "builtSize": [
+    720,
+    1688
+   ],
+   "errors": [],
+   "regions": [],
+   "changedPx": 0,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "exact"
+  },
+  {
+   "id": "sign-in_inactive",
+   "w": 390,
+   "size": [
+    780,
+    1688
+   ],
+   "builtSize": [
+    780,
+    1688
+   ],
+   "errors": [],
+   "regions": [],
+   "changedPx": 0,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "exact"
+  },
+  {
+   "id": "sign-in_inactive",
+   "w": 360,
+   "size": [
+    720,
+    1688
+   ],
+   "builtSize": [
+    720,
+    1688
+   ],
+   "errors": [],
+   "regions": [],
+   "changedPx": 0,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "exact"
+  },
+  {
+   "id": "sign-in_keyboard-open",
+   "w": 390,
+   "size": [
+    780,
+    1688
+   ],
+   "builtSize": [
+    780,
+    1688
+   ],
+   "errors": [],
+   "regions": [],
+   "changedPx": 0,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "exact"
+  },
+  {
+   "id": "sign-in_keyboard-open",
+   "w": 360,
+   "size": [
+    720,
+    1688
+   ],
+   "builtSize": [
+    720,
+    1688
+   ],
+   "errors": [],
+   "regions": [],
+   "changedPx": 0,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "exact"
+  },
+  {
+   "id": "sign-in_not-registered",
+   "w": 390,
+   "size": [
+    780,
+    1688
+   ],
+   "builtSize": [
+    780,
+    1688
+   ],
+   "errors": [],
+   "regions": [],
+   "changedPx": 0,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "exact"
+  },
+  {
+   "id": "sign-in_not-registered",
+   "w": 360,
+   "size": [
+    720,
+    1688
+   ],
+   "builtSize": [
+    720,
+    1688
+   ],
+   "errors": [],
+   "regions": [],
+   "changedPx": 0,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "exact"
+  },
+  {
+   "id": "sign-in_offline",
+   "w": 390,
+   "size": [
+    780,
+    1688
+   ],
+   "builtSize": [
+    780,
+    1688
+   ],
+   "errors": [],
+   "regions": [],
+   "changedPx": 0,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "exact"
+  },
+  {
+   "id": "sign-in_offline",
+   "w": 360,
+   "size": [
+    720,
+    1688
+   ],
+   "builtSize": [
+    720,
+    1688
+   ],
+   "errors": [],
+   "regions": [],
+   "changedPx": 0,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "exact"
+  },
+  {
+   "id": "sign-in_pasted-cleaned",
+   "w": 390,
+   "size": [
+    780,
+    1688
+   ],
+   "builtSize": [
+    780,
+    1688
+   ],
+   "errors": [],
+   "regions": [],
+   "changedPx": 0,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "exact"
+  },
+  {
+   "id": "sign-in_pasted-cleaned",
+   "w": 360,
+   "size": [
+    720,
+    1688
+   ],
+   "builtSize": [
+    720,
+    1688
+   ],
+   "errors": [],
+   "regions": [],
+   "changedPx": 0,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "exact"
+  },
+  {
+   "id": "sign-in_sending",
+   "w": 390,
+   "size": [
+    780,
+    1688
+   ],
+   "builtSize": [
+    780,
+    1688
+   ],
+   "errors": [],
+   "regions": [
+    {
+     "box": [
+      238,
+      753,
+      279,
+      794
+     ],
+     "why": "spinner",
+     "reason": "busy spinner masked on both sides",
+     "px": 0,
+     "maxDelta": 0
+    },
+    {
+     "box": [
+      238,
+      753,
+      279,
+      794
+     ],
+     "why": "spinner",
+     "reason": "busy spinner masked on both sides",
+     "px": 0,
+     "maxDelta": 0
+    }
+   ],
+   "changedPx": 0,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "exact"
+  },
+  {
+   "id": "sign-in_sending",
+   "w": 360,
+   "size": [
+    720,
+    1688
+   ],
+   "builtSize": [
+    720,
+    1688
+   ],
+   "errors": [],
+   "regions": [
+    {
+     "box": [
+      208,
+      753,
+      249,
+      794
+     ],
+     "why": "spinner",
+     "reason": "busy spinner masked on both sides",
+     "px": 0,
+     "maxDelta": 0
+    },
+    {
+     "box": [
+      208,
+      753,
+      249,
+      794
+     ],
+     "why": "spinner",
+     "reason": "busy spinner masked on both sides",
+     "px": 0,
+     "maxDelta": 0
+    }
+   ],
+   "changedPx": 0,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "exact"
+  },
+  {
+   "id": "sign-in_too-many-tries",
+   "w": 390,
+   "size": [
+    780,
+    1688
+   ],
+   "builtSize": [
+    780,
+    1688
+   ],
+   "errors": [],
+   "regions": [],
+   "changedPx": 0,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "exact"
+  },
+  {
+   "id": "sign-in_too-many-tries",
+   "w": 360,
+   "size": [
+    720,
+    1688
+   ],
+   "builtSize": [
+    720,
+    1688
+   ],
+   "errors": [],
+   "regions": [],
+   "changedPx": 0,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "exact"
+  },
+  {
+   "id": "sign-in_too-short",
+   "w": 390,
+   "size": [
+    780,
+    1688
+   ],
+   "builtSize": [
+    780,
+    1688
+   ],
+   "errors": [],
+   "regions": [],
+   "changedPx": 0,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "exact"
+  },
+  {
+   "id": "sign-in_too-short",
+   "w": 360,
+   "size": [
+    720,
+    1688
+   ],
+   "builtSize": [
+    720,
+    1688
+   ],
+   "errors": [],
+   "regions": [],
+   "changedPx": 0,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "exact"
+  },
+  {
+   "id": "sign-in_wrong-first-digit",
+   "w": 390,
+   "size": [
+    780,
+    1688
+   ],
+   "builtSize": [
+    780,
+    1688
+   ],
+   "errors": [],
+   "regions": [],
+   "changedPx": 0,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "exact"
+  },
+  {
+   "id": "sign-in_wrong-first-digit",
+   "w": 360,
+   "size": [
+    720,
+    1688
+   ],
+   "builtSize": [
+    720,
+    1688
+   ],
+   "errors": [],
+   "regions": [],
+   "changedPx": 0,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "exact"
+  },
+  {
+   "id": "unlock_cancelled",
+   "w": 390,
+   "size": [
+    780,
+    1688
+   ],
+   "builtSize": [
+    780,
+    1688
+   ],
+   "errors": [],
+   "regions": [],
+   "changedPx": 0,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "exact"
+  },
+  {
+   "id": "unlock_cancelled",
+   "w": 360,
+   "size": [
+    720,
+    1688
+   ],
+   "builtSize": [
+    720,
+    1688
+   ],
+   "errors": [],
+   "regions": [],
+   "changedPx": 0,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "exact"
+  },
+  {
+   "id": "unlock_face",
+   "w": 390,
+   "size": [
+    780,
+    1688
+   ],
+   "builtSize": [
+    780,
+    1688
+   ],
+   "errors": [],
+   "regions": [],
+   "changedPx": 0,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "exact"
+  },
+  {
+   "id": "unlock_face",
+   "w": 360,
+   "size": [
+    720,
+    1688
+   ],
+   "builtSize": [
+    720,
+    1688
+   ],
+   "errors": [],
+   "regions": [],
+   "changedPx": 0,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "exact"
+  },
+  {
+   "id": "unlock_fingerprint",
+   "w": 390,
+   "size": [
+    780,
+    1688
+   ],
+   "builtSize": [
+    780,
+    1688
+   ],
+   "errors": [],
+   "regions": [],
+   "changedPx": 0,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "exact"
+  },
+  {
+   "id": "unlock_fingerprint",
+   "w": 360,
+   "size": [
+    720,
+    1688
+   ],
+   "builtSize": [
+    720,
+    1688
+   ],
+   "errors": [],
+   "regions": [],
+   "changedPx": 0,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "exact"
+  },
+  {
+   "id": "unlock_pending",
+   "w": 390,
+   "size": [
+    780,
+    1688
+   ],
+   "builtSize": [
+    780,
+    1688
+   ],
+   "errors": [],
+   "regions": [
+    {
+     "box": [
+      261,
+      1344,
+      302,
+      1384
+     ],
+     "why": "spinner",
+     "reason": "busy spinner masked on both sides",
+     "px": 0,
+     "maxDelta": 0
+    },
+    {
+     "box": [
+      261,
+      1344,
+      302,
+      1384
+     ],
+     "why": "spinner",
+     "reason": "busy spinner masked on both sides",
+     "px": 0,
+     "maxDelta": 0
+    }
+   ],
+   "changedPx": 0,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "exact"
+  },
+  {
+   "id": "unlock_pending",
+   "w": 360,
+   "size": [
+    720,
+    1688
+   ],
+   "builtSize": [
+    720,
+    1688
+   ],
+   "errors": [],
+   "regions": [
+    {
+     "box": [
+      231,
+      1344,
+      272,
+      1384
+     ],
+     "why": "spinner",
+     "reason": "busy spinner masked on both sides",
+     "px": 0,
+     "maxDelta": 0
+    },
+    {
+     "box": [
+      231,
+      1344,
+      272,
+      1384
+     ],
+     "why": "spinner",
+     "reason": "busy spinner masked on both sides",
+     "px": 0,
+     "maxDelta": 0
+    }
+   ],
+   "changedPx": 0,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "exact"
+  },
+  {
+   "id": "unlock_platform-retry",
+   "w": 390,
+   "size": [
+    780,
+    1688
+   ],
+   "builtSize": [
+    780,
+    1688
+   ],
+   "errors": [],
+   "regions": [],
+   "changedPx": 0,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "exact"
+  },
+  {
+   "id": "unlock_platform-retry",
+   "w": 360,
+   "size": [
+    720,
+    1688
+   ],
+   "builtSize": [
+    720,
+    1688
+   ],
+   "errors": [],
+   "regions": [],
+   "changedPx": 0,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "exact"
+  },
+  {
+   "id": "unlock_screen-lock",
+   "w": 390,
+   "size": [
+    780,
+    1688
+   ],
+   "builtSize": [
+    780,
+    1688
+   ],
+   "errors": [],
+   "regions": [],
+   "changedPx": 0,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "exact"
+  },
+  {
+   "id": "unlock_screen-lock",
+   "w": 360,
+   "size": [
+    720,
+    1688
+   ],
+   "builtSize": [
+    720,
+    1688
+   ],
+   "errors": [],
+   "regions": [],
+   "changedPx": 0,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "exact"
+  },
+  {
+   "id": "unlock_unavailable",
+   "w": 390,
+   "size": [
+    780,
+    1688
+   ],
+   "builtSize": [
+    780,
+    1688
+   ],
+   "errors": [],
+   "regions": [],
+   "changedPx": 0,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "exact"
+  },
+  {
+   "id": "unlock_unavailable",
+   "w": 360,
+   "size": [
+    720,
+    1688
+   ],
+   "builtSize": [
+    720,
+    1688
+   ],
+   "errors": [],
+   "regions": [],
+   "changedPx": 0,
+   "macDiff": {
+    "px": 0,
+    "maxDelta": 0
+   },
+   "result": "exact"
+  }
+ ]
+}

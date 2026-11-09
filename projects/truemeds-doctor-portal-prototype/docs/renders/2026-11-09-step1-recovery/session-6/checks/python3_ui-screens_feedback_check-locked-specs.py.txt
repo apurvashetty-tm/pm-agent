@@ -1,0 +1,2 @@
+small-phone pass: 148 states at 360×640
+STANDARDS GUARD: PASS — 0 failure(s) across 148 states × 3 viewport(s)

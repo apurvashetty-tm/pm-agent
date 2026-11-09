@@ -22,8 +22,15 @@ for ph in ['A', 'B', 'C', 'D']:
         jobs.append((sub, state, folder, stem))
 log = {'count': 0, 'errors': {}}
 SPIN = {}
+# D-94: repeatable capture. Fixed rasterisation flags (no GPU, no LCD / sub-pixel text, no hinting, sRGB); DPR 2 comes from the page
+# (device_scale_factor) — never --force-device-scale-factor, which re-scales text and moves every glyph (session 6 flag test);
+# fonts loaded and two frames painted before the shot. The same page captured twice gives identical pixels.
+FLAGS = ['--font-render-hinting=none', '--disable-gpu', '--disable-lcd-text', '--force-color-profile=srgb',
+         '--disable-font-subpixel-positioning', '--disable-partial-raster', '--disable-skia-runtime-opts',
+         '--hide-scrollbars']
+if os.environ.get('D94_FLAGS') is not None: FLAGS = [f for f in os.environ['D94_FLAGS'].split(',') if f]   # flag experiments (session 6)
 with sync_playwright() as p:
-    br = p.chromium.launch(executable_path=os.environ.get('CHROMIUM') or None)   # installed Chrome on this Mac, else Playwright's
+    br = p.chromium.launch(executable_path=os.environ.get('CHROMIUM') or None, args=FLAGS)   # installed Chrome on this Mac, else Playwright's
     for sub, state, folder, stem in jobs:
         for vw in (390, 360):
             (out / folder).mkdir(parents=True, exist_ok=True)
@@ -38,6 +45,7 @@ with sync_playwright() as p:
             if sub == 'case':
                 pg.wait_for_function("() => document.body.dataset.ready === '1'", timeout=15000)
             pg.wait_for_timeout(350)
+            pg.evaluate('() => document.fonts.ready.then(() => new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r))))')
             rects = pg.evaluate("() => [...document.querySelectorAll('.tm-spinner')].filter(e => e.getClientRects().length).map(e => { const r = e.getBoundingClientRect(); return [r.x, r.y, r.width, r.height]; })")
             SPIN[f'{folder}/{stem}_w{vw}.png'] = rects
             fn = out / folder / f'{stem}_w{vw}.png'

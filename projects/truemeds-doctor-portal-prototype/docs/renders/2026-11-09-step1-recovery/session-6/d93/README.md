@@ -11,7 +11,7 @@ Approved by Apurva (D-93, placement revised). Not in `ui-screens/` yet: the pict
 |---|---|
 | Built app vs new picture, 390 and 360 (`compare-d93.json`, `pair_*.png`) | **0 px** at both widths |
 | Six other offer states: pre-edit source (git HEAD) vs edited source (`regress-head/`, `regress/`, `regress.json`) | **12 / 12 identical** |
-| New picture vs approved concept at 390 (`concept-vs-render.json`, `concept-vs-render_w390.png`) | same size · 0 shifted rows · 0 colour bands · max channel 102 · 11,396 px over 8/255 (1,915 in the bar, 9,481 above it) · **every one on a glyph or corner edge** (0 changed pixels in flat areas on either side) |
+| New picture vs approved concept at 390 (`concept-vs-render.json`, `concept-vs-render_w390.png`) | same size · 0 shifted rows · 0 colour bands · 0 moved regions · max channel 102 · 11,396 px over 8/255 (1,915 in the bar, 9,481 above it) · **every one on a glyph or corner edge** (0 pixels changed away from an edge both pictures share; `picdiff.py` with the checks tightened after Codex rounds 1–2) |
 
 **Difference to list (brief 6a.3):** the edge-smoothing count against the concept (11,396 px) is above the session-4 limit (3,000 px). It is spread over the whole screen, including the unchanged title and points, and it is edge-only with no shift and no band. So it comes from how the concept was captured (route not recorded; not the D-94 settings), not from the design. For comparison, the approved `offer_fingerprint` vs its D-94 re-render differs by 111 px. No other difference: same layout, notice, icon, wrap ("Faster sign-in isn't available / on this phone right now."), button and colours.
 
