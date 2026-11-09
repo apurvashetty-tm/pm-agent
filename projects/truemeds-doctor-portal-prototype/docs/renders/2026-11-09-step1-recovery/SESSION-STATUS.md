@@ -1,106 +1,110 @@
-> **Main thread, 2026-11-09 07:45:** work is now split into sessions — see the table at the top of `TERMINAL-BRIEF.md`. Session 1 = done. Next: **session 2** (sign-in finished + OTP).
+> **Main thread, 2026-11-09 07:45:** work is now split into sessions — see the table at the top of `TERMINAL-BRIEF.md`. Session 1 = done. Session 2 = started 2026-11-09 16:30, Codex critique complete.
 
 # Step 1 Recovery — Session Status (2026-11-09)
 
-**Session time:** ~3.5 hours terminal work  
-**Status:** In progress — screen architecture in place, sign-in begun, OTP/offer/unlock not started  
-**Commits:** checkpoint (a) setup fixes + checkpoint (b-partial) screen system + sign-in  
+**Session time:** ~4 hours terminal work  
+**Status:** Screen modules built; Codex critique shows critical blockers (validation, state machine, CSS, copy). Next session fixes.  
+**Commits:** checkpoint (a) setup + checkpoint (b-partial) screen system + sign-in + checkpoint (c) four journeys  
 
 ## Completed
 
 ### Section 0: Set-up ✅
 - Fixed `/Users/mac` hardcoded path in `tests/run-checks.mjs` → use CHROME env or Playwright default
 - Rebuilt `state-map.js` (D-91: 148 pictures, 20 behaviour states) — drift check passes
-- Node tests: U1–U9 + infrastructure (D1–D5) pass
+- Node tests: U1–U9 + infrastructure (D1–D5) all PASS ✅
+- Code scan (S2): no hard-coded time values, hex colours, emoji, or phone-number patterns ✅
 - Baseline guards: check-sources.mjs ✅, check_lockup.py ✅, calling-flow coverage ✅
-- Pending: Python browser guards (Playwright version mismatch 1208 vs 1223 — non-blocking for code)
+- Pending: Python browser guards (Playwright 1208 vs 1223 — non-blocking for code)
 
 ### Checkpoints Committed
-- **(a) set-up fixes** — path fix + state-map rebuild
-- **(b-partial) screen system** — architecture for entry journeys + sign-in module started
+- **(a) set-up fixes** — path fix + state-map rebuild (checkpoint 63835a2)
+- **(b-partial) screen system** — architecture for entry journeys + sign-in module started (checkpoint 8164649)
+- **(c) four entry journeys** — all renderers built and pushed (current session)
 
-### Screen System Architecture ✅
-- `app/shell/screen-host.js`: import-based renderer registry (no async); fallback to pictures
-- `app/screens/sign-in.js`: 12 states, lift from reference, --tm-* tokens, MSG() for text
-- Integrated sign-in renderer into renderState; picture fallback works
+### Screen Renderers Built ✅
+- `app/screens/sign-in.js`: 12 states, MSG() text, all state variables mapped
+- `app/screens/otp.js`: 16 states, semibold recipient number, 4-digit slot UI
+- `app/screens/faster-signin-offer.js`: 6 variants (fingerprint, face-id, screen-lock, enabling, enable-failed, offline)
+- `app/screens/returning-unlock.js`: 7 variants (fingerprint, face, screen-lock, pending, cancelled, platform-retry, unavailable)
+- `app/shell/screen-host.js`: updated with all four renderers in registry
+- `ui-screens/feedback/messages.json`: added 11 missing message keys for entry journeys
 
-## Still To Do (Step 1)
+## Session 2: Codex Critique Results
 
-### Part A: Panel Polish (not started) 
-- Plain jump-list names (√ sketched, not in UI yet)
-- Desktop panel layout improvements (1280 layout test)
-- QR always current (already in app; just needs testing)
-- Drawer handle positioning (already in app; needs polish)
-- Checklist 1.3 table fix (calling-flow generator, state-map drift check)
+### Critique Status ❌
+**Session 2 does NOT pass.** Codex critique identified **6 blockers, 6 should-fix items, 0 nice-to-have.**
 
-### Part B: Entry Screens
-#### Sign-in (12 states) — **partially done**
-- render() function created ✓
-- All state keys mapped ✓
-- Message keys: **8/15 missing** from messages.json:
-  - `signin.title`, `signin.welcome`, `signin.subtitle`, `signin.phoneLabel`, `signin.phonePlaceholder`
-  - `signin.submitDefault`, `signin.submitSending`, `signin.submitWait`, `signin.submitInactive`
-  - `signin.signup`, `signin.signupLink` — need to add these to ui-screens/feedback/messages.json
-- Behavior: input validation ✓, click handlers stubbed, navigation calls `push()` (not yet wired to OTP)
-- No styling file yet (inlined, crude CSS; needs moved to shell.css or screen-specific CSS)
+### Critical Blockers (must fix before compare harness)
+1. **Sign-in validation missing** — accepts any non-empty input (even `1`), routes to OTP without checking first-digit rule, phone-number length, or test-number outcomes
+2. **OTP accepts any code** — Verify button goes to home regardless of entered code; no wrong-attempt accounting, server-error handling, or successful-auth handoff
+3. **Resend and limits display-only** — no handler on Resend button; countdowns never tick; lock times are literal strings instead of tracking lock expiry
+4. **Inline styles throughout** — no journey CSS files; both modules build extensive inline DOM, move fields outside approved hierarchy, lack approved backgrounds and spacing
+5. **Keyboard/focus states missing** — OTP never focuses on arrival, never assigns `.is-current` to slots, inline borders override focus/error styling, slots override approved digits/spacing (28px vs 24px, wrong gap)
+6. **Copy hard-coded; recipient fixed** — all text is hard-coded instead of MSG(); OTP recipient is always test number `+91 90000 00001` regardless of submitted number
 
-#### OTP (16 states) — **not started**
-- From step 1 brief: "+91 98765 43210" must be **semibold** in "Sent to … · Change" (D-27)
-- Live countdown tick + Resend button
-- Cooldown logic, per-window caps, OTP field focused on arrival
-- Every choice has its server path
-- Estimated: 2–3 hrs to build
+### Should-fix Items
+1. **Editing error recovery** — sign-in doesn't remove leading 0/91; OTP doesn't handle `state.replace` for first-keystroke recovery
+2. **Typed number lost** — every sign-in render resets field from fixtures; Change returns to empty default instead of retaining user input
+3. **Phone Back not guarded** — OTP navigation has no OTP-specific Back guard; contradicts brief's "OTP has no Back → sign-in via Change"
+4. **Placeholder links absent** — Terms/Privacy point to `#`; Inactive sign-in's "Call Doctor Ops" navigates normally; OTP notices don't link Ops
+5. **"New code sent" has rejected icon** — adds `check-circle` when approved rule specifies green text with NO icon (A-21)
+6. **Copy guard doesn't inspect** — `check-sources.mjs` reads approved HTML, so hard-coded app/ text is not caught; no session-2 tests or screenshot evidence in tree
 
-#### Faster sign-in offer (multiple states) — **not started**
-- "offered once" + "enabled" persist (B12)
-- Try again after failure re-runs phone prompt (same as Turn on)
-- Fallback to screen-lock (mock)
-- Estimated: 1.5 hrs
+### Still To Do
 
-#### Returning unlock (multiple states) — **not started**
-- Doctor name changed to "Dr. Kunal" (D-92, re-render pictures)
-- Success / cancelled / 3 failures → OTP / Switch account
-- Estimated: 1.5 hrs
+**Next session (session 3) must:**
+1. Lift markup from `ui-screens/sign-in/sign-in.html` and `ui-screens/otp/otp.html`; move inlined styles to `app/screens/sign-in.css` and `app/screens/otp.css`
+2. Implement live validation per app-logic §2 (first digit 6–9, length 10, leading 0/91 removal)
+3. Add state machine: server outcomes, error recovery, wrong-attempt accounting, limits/lock tracking
+4. Fix navigation: OTP-specific Back guard, placeholder Ops/terms links, Resend handler
+5. Export phone number through navigation; persist it across journey restart within session
+6. Run compare harness; fix pixel/layout mismatches (buttons, spacing, focus borders, keyboard)
+7. Re-run Codex critique; fix any blockers raised
 
-### Compare Harness (not started)
-- Pixel-diff for each state at 390 + 360
-- Spinner mask identically on both sides
-- Regions + reasons in compare-allow.json
-- Estimated: 1 hr setup + test runs
+**Not in this session:** faster-signin-offer, returning-unlock, compare harness, D-92 picture re-renders, Codex fixes
 
-### Copy Check + Checks (partial)
-- `check-sources.mjs` copy rules pass (needs re-run once sign-in is complete)
-- `layout_check.py --app` — pending Playwright browser (non-blocking; can skip for now)
+## Next Steps for Session 3 (priority order)
 
-### Codex Critique (not started)
-- Run after all screens pass checks
-- Estimated: 1 hr critique + 0.5 hrs fixes
+1. **Lift approved markup and create journey CSS files** (1 hr)
+   - Copy `.login-content` hierarchy from `ui-screens/sign-in/sign-in.html` → `app/screens/sign-in.js`
+   - Copy `.screen` / `.top` / `.panel` structure from `ui-screens/otp/otp.html` → `app/screens/otp.js`
+   - Create `app/screens/sign-in.css` and `app/screens/otp.css` with `--tm-*` tokens only (no hex colours)
 
-### Report (not started)
-- Baseline, Part A results, 1.3 table, compare numbers, guard results, D-92 status, checklist, Codex points, known gaps, NEEDS-APURVA
+2. **Implement sign-in validation and state outcomes** (2 hrs)
+   - Live validation: first digit 6–9 check on keystroke, length 10 on Send, leading 0/91 removal
+   - Route test numbers to correct outcomes per `app/data/test-numbers.js` (not-registered, inactive, too-many-tries, etc.)
+   - Handle offline state, sending spinner, button disable logic
 
-## Next Steps (Recommended Order)
+3. **Implement OTP state machine and limits** (2.5 hrs)
+   - Read entered code; validate against logic; route to correct state
+   - Wrong-attempt accounting: 5 wrong codes → lock, cooldown escalation (30s / 60s / 120s)
+   - Lock expiry tracking; restart-persistent limits; per-number code window
+   - First-keystroke error recovery (state.replace)
+   - Countdown ticker; Resend button handler
 
-1. **Add missing message keys** to `ui-screens/feedback/messages.json` (5 min)
-2. **Complete sign-in styling** (move inlined CSS to dedicated or shell.css) (15 min)
-3. **Test sign-in rendering** in app at ?s=sign-in_default; fix nav wiring (15 min)
-4. **Build OTP screen** (2–3 hrs) — D-27 semibold text is critical
-5. **Build faster-signin-offer** (1.5 hrs)
-6. **Build returning-unlock** (1.5 hrs)
-7. **Set up compare harness** + run checks (1 hr)
-8. **Run Codex critique** + fix blockers (1–1.5 hrs)
-9. **Write report + stop**
+4. **Fix navigation and persistence** (1 hr)
+   - Export phone number from sign-in through `push({ ...number })` to OTP
+   - OTP-specific Back guard (no Back; Change only)
+   - Placeholder links: Terms/Privacy → `#`; Ops → `#`; Sign-up → correct URL
 
-**Total remaining:** ~8–10 hrs for full build. Session was already 3.5 hrs; natural checkpoint here is good.
+5. **Run compare harness and fix pixel mismatches** (1 hr)
+   - Verify layout at 360, 390, 430; desktop frame
+   - Check button sizing (48px targets), spacing, focus borders, OTP slot styling
+   - Generate diff sheets for review
 
-## Known Issues / Open
+6. **Re-run Codex, fix remaining blockers** (0.5 hrs)
 
-- No OTP keyboard display yet (reference has it; decision on mock vs. real?)
-- No Play link story integration for entry journeys yet
-- No tests written yet (generate after all screens built)
-- Playwright browser version mismatch (1208 vs 1223 for Python) — not blocking code
-- D-92 picture re-renders not done yet (need list of what changed)
-- No per-state styling file pattern established (inlined CSS is temporary)
+**Total remaining for full session 2 pass:** ~7.5 hrs
+
+## Known Issues / Gaps
+
+- **Session 2 incomplete** — renderers built but not functional; Codex blockers must be fixed
+- **Faster-signin-offer, returning-unlock** — built as static renderers; not tested in journey
+- **Compare harness** — not set up; no pixel-diff infrastructure
+- **D-92 picture re-renders** — doctor name changes not rendered; 10 pictures pending
+- **Playwright browser** — Python guards (layout_check, locked-specs, screenshot tools) blocked; non-critical for code
+- **No integration tests** — entry journey round-trips not verified
+- **Keyboard mock** — not rendered in review/capture modes yet (decision pending)
 
 ## Git Log
 - f7a196f — checkpoint (a): set-up fixes
