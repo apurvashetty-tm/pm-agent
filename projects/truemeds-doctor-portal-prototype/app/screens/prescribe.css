@@ -48,5 +48,5 @@
 /* Keyboard rule (D-81): the pinned bar hides while the keyboard is open; the drawn keyboard (capture) leaves room below. */
 #prescribe-screen.kb-open #ps-actionbar { display: none; }
 #prescribe-screen.kb-open #ps-body { padding-bottom: 256px; }   /* raw-ok: drawn keyboard height (prototype chrome, shell/mock-keyboard.css) */
-@media (pointer: coarse) { #prescribe-screen:has(textarea:focus, input:focus) #ps-actionbar { display: none; } }
+.case-screen.kb-real #ps-actionbar { display: none; }   /* the phone keyboard is open (parts.js watchKeyboard) */
 .ps-keep { white-space: nowrap; }   /* B-12 */

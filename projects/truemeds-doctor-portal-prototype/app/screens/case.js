@@ -12,7 +12,7 @@ import { h } from "../core/dom.js";
 import { clock } from "../core/clock.js";
 import { value } from "../core/settings.js";
 import { work, saveWork, currentCase, openCase, updateCase, updateMedicine, releaseCase, countConfirmed, availability } from "../core/session.js";
-import { icon, paint, btn, busyBtn, notice, statusLine, actionBar, sheet, toast, caseHeader, medicineRow, focusSheet, revealAboveKeyboard } from "./parts.js";
+import { icon, paint, btn, busyBtn, notice, statusLine, actionBar, sheet, toast, caseHeader, medicineRow, focusSheet, revealAboveKeyboard, watchKeyboard } from "./parts.js";
 import { newLife } from "./entry-ctx.js";
 import { prescribeScreen } from "./prescribe.js";
 import { rxViewer } from "./rx-viewer.js";
@@ -278,8 +278,10 @@ export function render(host, id, { mode, params = {} }) {
     if (backAllowed()) { onBack(); return; }
     ui.toastUntil = Date.now() + v("toastDuration"); draw();
   });
-  const unsub = store.subscribe(() => {
+  let lastSwitch = store.get().offline;
+  const unsub = store.subscribe((st) => {
     if (!life.alive()) { unsub(); return; }
+    if (st.offline !== lastSwitch) { lastSwitch = st.offline; ui.offlineFx = false; }   // the reviewer's switch replaces the picture moment
     const off = offline();
     if (off !== lastOffline) { lastOffline = off; if (!off && ui.bar === "offline-action") ui.bar = null; if (ui.overlay !== "prescribe") draw(); }
   });
@@ -288,6 +290,7 @@ export function render(host, id, { mode, params = {} }) {
   if (ui.releasing && !capture) { ui.releasing = false; onRelease(false); }   // a-releasing opened live: the request is in flight
   if (ui.confirming && !capture) { ui.confirming = false; onConfirm(); }
 
+  watchKeyboard(root, life.alive);
   draw();
   if (!live && fx.scroll) requestAnimationFrame(() => { scroller.scrollTop = 420; });   // a-scrolled: the picture's scroll position (case.html: 420)
   if (ui.typing === "symptoms") { symptoms.focus({ preventScroll: true }); requestAnimationFrame(() => revealAboveKeyboard(scroller, symptoms.closest(".tm-field"), root.querySelector(".mock-kbd"))); }

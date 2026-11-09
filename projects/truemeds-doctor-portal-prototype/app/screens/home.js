@@ -76,6 +76,7 @@ export function render(host, id, { mode, params = {} }) {
   if (live && work().openCase && !fx.page) { queueMicrotask(() => replace(null, { s: "t01-ready", live: true })); return { journey: "caseView" }; }
 
   const story = () => store.get().story || {};
+  const v = (k) => value(k, mode);
   const ui = {
     page: fx.page || "home",
     sheet: live ? null : fx.sheet || null,
@@ -90,7 +91,6 @@ export function render(host, id, { mode, params = {} }) {
     ...(params.saved || {}),
   };
   const offline = () => ui.offlineFx || store.get().offline === "yes";
-  const v = (k) => value(k, mode);
 
   const root = h("div", { class: "home-screen tm" });
   host.replaceChildren(root);
@@ -156,7 +156,8 @@ export function render(host, id, { mode, params = {} }) {
     const setup = a.state === "none";
     const busyLabel = { setting: "home.setting", requesting: "home.requesting", adding: "home.adding" }[ui.busy];
     let primary;
-    if (busyLabel && ui.busy !== "adding") primary = busyBtn(MSG(busyLabel), `tm-btn--primary ${lg}`);
+    const waiting = a.state === "stopping" || a.state === "expired-pending";   // the open request is honoured; no new one (stop-pending picture: disabled)
+    if (busyLabel && ui.busy !== "adding" && !waiting) primary = busyBtn(MSG(busyLabel), `tm-btn--primary ${lg}`);
     else if (setup) primary = btn(MSG("home.setAvailability"), `tm-btn--primary ${lg}`, onSet, { "data-confirm": "" });
     else primary = btn(MSG("home.requestCase"), `tm-btn--primary ${lg}`, onRequest, { "data-confirm": "", disabled: offline() || a.state === "stopping" || a.state === "expired-pending" || !!ui.busy });
     let secondary = null;
@@ -265,7 +266,11 @@ export function render(host, id, { mode, params = {} }) {
   function onSet() {
     if (ui.busy) return;
     ui.busy = "setting"; ui.bar = null; draw();
-    life.later(() => { ui.busy = null; setAvailability(ui.duration * MIN); draw(); });
+    life.later(() => {
+      ui.busy = null;
+      if (offline()) { ui.bar = "setup-failed"; draw(); return; }   // known failure: the selection is kept (feedback-state-map home.setup-failed)
+      setAvailability(ui.duration * MIN); draw();
+    });
   }
   function onRequest() {
     if (ui.busy || offline()) return;
@@ -295,7 +300,9 @@ export function render(host, id, { mode, params = {} }) {
     if (ui.busy) return;
     ui.busy = "adding"; ui.addFailed = false; draw();
     life.later(() => {
-      ui.busy = null; addTime(ui.addDuration * MIN); ui.sheet = null;
+      ui.busy = null;
+      if (offline()) { ui.addFailed = true; draw(); return; }   // home.add-failed: sheet and selection kept, deadline unchanged
+      addTime(ui.addDuration * MIN); ui.sheet = null;
       ui.toastUntil = Date.now() + v("toastDuration");   // about 4 s (RULES §9.5 toast)
       draw();
     });
@@ -332,9 +339,17 @@ export function render(host, id, { mode, params = {} }) {
     const t = root.querySelector("#home-time");
     if (drawKey(a) !== lastKey) draw(); else if (t) t.textContent = formatLeft(a.left);
   }, 250);
-  const unsub = store.subscribe(() => { if (!life.alive()) { unsub(); return; } if (drawKey(availability()) !== lastKey) draw(); });
+  let lastOffline = store.get().offline;
+  const unsub = store.subscribe((st) => {
+    if (!life.alive()) { unsub(); return; }
+    if (st.offline !== lastOffline) { lastOffline = st.offline; ui.offlineFx = false; }   // the reviewer's switch replaces the picture moment
+    if (drawKey(availability()) !== lastKey) draw();
+  });
 
-  setScreenBack(ui.page === "profile" ? profileBack : null);   // Home is a root: phone back stays in the app; Profile goes back
+  // Phone back (B13): an open sheet closes first; then Profile goes back; Home is a root (phone back stays in the app).
+  setScreenBack(() => { if (ui.sheet) { closeSheet(); return; } if (ui.page === "profile") profileBack(); });
   draw();
+  // "Request next case" on a closed case: Home asks for the next case straight away (app-logic §4 closed stage).
+  if (live && params.request && !capture && ["active", "near"].includes(availability().state)) onRequest();
   return { journey: "home" };
 }

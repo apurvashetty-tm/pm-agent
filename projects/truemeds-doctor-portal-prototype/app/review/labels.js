@@ -81,14 +81,12 @@ export const SETTING_NAME = {
   availabilityMinimum: "Shortest availability", availabilityStep: "Availability step", attemptGap: "Gap between simulated calls",
   mockServerDelay: "Simulated server answer", reconcileDelay: "Simulated cooldown check", phonePromptDelay: "Simulated phone prompt",
   fastForwardStep: "Fast-forward step", earningsPerConfirmedRx: "Earnings per confirmed prescription",
-  toastDuration: "Toast shows for", doubleTapWindow: "Rx viewer double-tap window",
 };
 // Value in plain units: whole minutes as "min", anything shorter in seconds; counts as plain numbers; money in rupees.
 const MS_PER_MIN = 60 * 1000;   // unit conversion for display, not a setting
 const dur = (ms) => (ms >= MS_PER_MIN && ms % MS_PER_MIN === 0 ? `${ms / MS_PER_MIN} min` : `${Math.round(ms / 100) / 10} s`);
 export function settingValue({ key, value, time }) {
   if (key === "earningsPerConfirmedRx") return `\u20b9${value}`;
-  if (key === "toastDuration" || key === "doubleTapWindow") return dur(value);   // milliseconds, not demo-scaled
   if (!time) return String(value);
   return Array.isArray(value) ? value.map(dur).join(", ") : dur(value);
 }

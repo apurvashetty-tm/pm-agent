@@ -41,15 +41,17 @@ export const SETTINGS = {
   phonePromptDelay:     { value: 1200, time: true, source: "review tool", ref: "mock phone prompt (B14): time before it answers" },
   // Review tool only (not a product rule): size of one fast-forward step in the review panel
   fastForwardStep:      { value: 60 * SEC, time: true, source: "review tool", ref: "panel button" },
-  // On-screen feedback (RULES §9.5): a toast shows about 4 s. Rx viewer: two taps within this window zoom (app-logic §9).
-  toastDuration:        { value: 4000, source: "rule", ref: "RULES §9.5 (about 4 s)" },
-  doubleTapWindow:      { value: 300, source: "MOCK ASSUMPTION", ref: "Rx viewer double-tap (app-logic §9)" },
   // Earnings (app-logic §11, D-81 F10)
   earningsPerConfirmedRx: { value: 20, source: "rule", ref: "D-81 F10, Apurva 2026-11-02" },
 };
 
+// Interaction timings (not product rules, so not in the review panel's Timings and limits): a toast shows about 4 s
+// (RULES §9.5); two taps within the window zoom the Rx viewer (app-logic §9).
+export const UI_TIMING = { toastDuration: 4000, doubleTapWindow: 300 };
+
 // Value for the current mode. Demo scales every time value by one factor; review, capture and play use real values.
 export function value(key, mode = "review") {
+  if (key in UI_TIMING) return UI_TIMING[key];
   const s = SETTINGS[key];
   if (!s) throw new Error(`settings: unknown key ${key}`);
   if (!s.time || mode !== "demo") return s.value;

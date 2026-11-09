@@ -51,7 +51,7 @@ def run_app():
             else:
                 ok(f"{tag} phone drawer scrolls internally so every control is reachable", panel["ov"] in ("auto", "visible"), panel["ov"])
             ok(f"{tag} no sideways scroll", pg.evaluate("document.documentElement.scrollWidth <= innerWidth + 1"))
-            ok(f"{tag} picture fits the frame", pg.evaluate("(()=>{const i=document.querySelector('#screen img').getBoundingClientRect();const q=document.getElementById('frame').getBoundingClientRect();return i.top>=q.top-1&&i.bottom<=q.bottom+1&&i.left>=q.left-1&&i.right<=q.right+1})()"))
+            ok(f"{tag} screen fits the frame", pg.evaluate("(()=>{const i=document.querySelector('#screen > *').getBoundingClientRect();const q=document.getElementById('frame').getBoundingClientRect();return i.top>=q.top-1&&i.bottom<=q.bottom+1&&i.left>=q.left-1&&i.right<=q.right+1})()"))
             if w < 768:
                 hd = pg.evaluate("(()=>{const hd=document.getElementById('drawer-handle');if(hd.hidden)return {shown:false};const r=hd.getBoundingClientRect();const hdr=document.getElementById('app-header').getBoundingClientRect();const n=document.getElementById('notice-host').getBoundingClientRect();return {shown:true,overlapHeader:r.top<hdr.bottom&&r.bottom>hdr.top&&r.right>hdr.left&&r.left<hdr.right,overlapNotice:!document.getElementById('notice-host').hidden&&r.top<n.bottom&&r.bottom>n.top}})()")
                 ok(f"{tag} drawer handle never covers the header", not (hd["shown"] and hd["overlapHeader"]))

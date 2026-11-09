@@ -93,3 +93,17 @@ export function revealAboveKeyboard(scroller, field, keyboard) {
   const d = field.getBoundingClientRect().bottom + gap - keyboard.getBoundingClientRect().top;
   if (d > 0) scroller.scrollTop += d;
 }
+
+// Keyboard rule (D-81) on a phone: the pinned bar hides while the keyboard is open and returns when it closes. The keyboard is
+// "open" when a text field has focus and the visual viewport is clearly shorter than the tallest seen (the keyboard took it).
+export function watchKeyboard(root, alive) {
+  const vv = window.visualViewport; if (!vv) return;
+  let tallest = vv.height;
+  const check = () => {
+    if (!alive()) { vv.removeEventListener("resize", check); return; }
+    tallest = Math.max(tallest, vv.height);
+    const field = document.activeElement && root.contains(document.activeElement) && /^(TEXTAREA|INPUT)$/.test(document.activeElement.tagName);
+    root.classList.toggle("kb-real", !!field && vv.height < tallest * 0.8);
+  };
+  vv.addEventListener("resize", check); root.addEventListener("focusin", check); root.addEventListener("focusout", () => setTimeout(check, 0));
+}

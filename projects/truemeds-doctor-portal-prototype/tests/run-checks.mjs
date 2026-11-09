@@ -152,7 +152,7 @@ async function open(qs, { w = 1280, h = 800 } = {}) {
   check("B3", "demo: 0 console errors", d.errors.length === 0, d.errors.join(" | "));
   await d.ctx.close();
 
-  const c = await open("?capture=1&s=t01-ready");
+  const c = await open("?capture=1&s=t10b-forwarded");   // a state still shown as its picture (step 6)
   const cinfo = await c.p.evaluate(() => ({ panel: !document.getElementById("review-panel").hidden, label: !!document.querySelector(".shell-label") && getComputedStyle(document.querySelector(".shell-label")).display !== "none" }));
   check("B4", "?capture=1: no panel, no label, picture shown", !cinfo.panel && !cinfo.label && (await c.p.$("#screen img")) !== null);
   check("B5", "capture: 0 console errors", c.errors.length === 0, c.errors.join(" | "));
@@ -171,8 +171,8 @@ async function open(qs, { w = 1280, h = 800 } = {}) {
   for (const w of [390, 360, 1280]) {
     for (const id of states) {
       const r = await open(`?s=${id}`, { w, h: w === 1280 ? 800 : 844 });
-      if (/^(sign-in|otp|offer|unlock|home)_|^(a|s|d)-/.test(id)) { // built in steps 1–4: the screen itself, no picture and no "not built yet" label
-        const built = await r.p.evaluate(() => !!document.querySelector("#screen .signin-screen, #screen .otp-screen, #screen .offer-screen, #screen .unlock-screen, #screen .home-screen, #screen .case-screen") && !document.querySelector("#screen img, .shell-label"));
+      if (/^(sign-in|otp|offer|unlock|home)_|^(a|s|d)-|^t01-ready$/.test(id)) { // built in steps 1–4: the screen itself, no picture and no "not built yet" label
+        const built = await r.p.evaluate(() => !!document.querySelector("#screen .signin-screen, #screen .otp-screen, #screen .offer-screen, #screen .unlock-screen, #screen .home-screen, #screen .case-screen") && !document.querySelector("#screen .shell-picture, .shell-label"));
         check(`R-${id}-${w}`, `?s=${id} at ${w}: built screen shown (steps 1–4)`, built && r.errors.length === 0, r.errors.join(" | "));
         await r.ctx.close(); continue;
       }

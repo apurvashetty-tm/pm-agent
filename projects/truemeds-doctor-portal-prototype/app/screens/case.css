@@ -66,7 +66,7 @@
 /* Keyboard rule (D-81): the pinned bar hides while the keyboard is open; the drawn keyboard (capture) leaves room below. */
 .case-screen.kb-open .case-bar { display: none; }
 .case-screen.kb-open .case-scroll { padding-bottom: 256px; }   /* raw-ok: drawn keyboard height (prototype chrome, shell/mock-keyboard.css) */
-@media (pointer: coarse) { .case-screen:has(.case-scroll textarea:focus) .case-bar { display: none; } }
+.case-screen.kb-real .case-bar { display: none; }   /* the phone keyboard is open (parts.js watchKeyboard) */
 
 /* ---------- Rx viewer (app-logic §9, D-51): full screen inside the frame, dark ---------- */
 #rx-overlay { position: absolute; inset: 0; z-index: var(--tm-layer-overlay); display: flex; flex-direction: column; background: var(--tm-surface-brand-dark); }

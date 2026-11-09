@@ -1,0 +1,16 @@
+PASS R03-a timer: h:mm:ss from one hour, m:ss below, set only on confirmation
+PASS R03-b Add 30 minutes to 5:00 gives 35:00
+PASS R03-c expiry shows the ended state; a request made just before is honoured
+PASS R03-d End availability with a request open: honours that request, no new ones, then ends
+PASS R03-e 0:00 when availability ran out with a request still open
+PASS R04-a a confirmed prescription counts once; earnings = count × setting
+PASS R04-c Request next case asks for the next case at once
+PASS R04-b release does not count
+PASS R05-a Help, bell and User manual open the blank placeholder and Back returns
+PASS R05-b Faster sign-in toggle: on with a successful prompt; off with no prompt
+PASS R06-a Order details expands Created / Delivery / Payment; none → control hidden, View Rx left
+PASS R06-b View Rx: zoom clamps 50–400 %, reset; ✕ closes
+PASS R12-a closing the Disable sheet changes nothing; re-prescribing a disabled medicine enables it
+PASS R13-a phone Back closes Prescribe (asks first after a change), then opens Leave on Ready
+PASS R10-a Other dose (single-dose schedule): only plain positive numbers; 7, 7.5 and .5 accepted; error in the form's unit
+15/15 passed
