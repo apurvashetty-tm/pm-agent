@@ -11,6 +11,7 @@ Generated from the product rules — do not edit by hand.
 | [d04](#d04) | Errors | Where do errors show, and what does the field look like in error? |
 | [d05](#d05) | Server answers | What can the server answer after Send OTP, and how is each answer shown? |
 | [d06](#d06) | Server answers | Does a server answer stay when the doctor edits the number? |
+| [d28](#d28) | Errors | What colour is the placeholder text in the field? |
 | [d27](#d27) | Errors | Can a field error and a server notice show at the same time? |
 | [d07](#d07) | Sending | What happens to the button and the field while the code is being sent? |
 | [d08](#d08) | Limits | Too many attempts: what does the button show, and how long is the wait? |
@@ -41,6 +42,7 @@ Generated from the product rules — do not edit by hand.
 - Typing and pasting are cleaned: "+91 98765-43210", "098765 43210" → `9876543210`. A leading 0 or 91 is dropped. — *App logic §2*
 - Format errors follow one pattern. Impossible input is blocked silently (digits only, maximum length). A value that can still become right shows no error while typing; it is checked on Send OTP / Verify. A value that can never be right (mobile number starting 1–5) shows its error at once. When two things are wrong, the more basic one shows first (first digit before length). Once an error shows, it is re-checked on every keystroke and stays until the value is valid. — *D-39*
 - **Leading 0** is a dialling habit, not an error; it is dropped once all 10 digits are in ("0 + 9 digits" → "Enter all 10 digits."). — *D-39*
+- A leading 91 is dropped only when more than 10 digits were entered (a 10-digit number starting 91 is kept): `if (d.length > MOBILE_LENGTH && d.startsWith("91")) d = d.slice(2);` — *Sign-in build*
 - At most 10 digits are kept: `return d.slice(0, MOBILE_LENGTH);` — *Sign-in build*
 
 Decisions: D-33, D-39
@@ -74,6 +76,11 @@ Decisions: D-39
 - L7 — Field helper/error text aligns with its field: left under full-width fields, centred under the centred OTP code boxes (D-47). — *Design rules L7*
 
 Decisions: D-33, D-46, D-47
+
+<a id="d28"></a>
+### d28 · What colour is the placeholder text in the field?
+
+- tokens.color.content.placeholder (web --tm-content-placeholder): `.tm-field__control ::placeholder { color: var(--tm-content-placeholder); }` — *Design system*
 
 <a id="d27"></a>
 ### d27 · Can a field error and a server notice show at the same time?
@@ -122,6 +129,7 @@ Decisions: D-46, D-54
 - After sending, server results show as a notice: not registered (with the sign-up route), offline, couldn't send, too many attempts (button counts down "Try again in m:ss"), account inactive (button becomes **Call Doctor Ops**). — *App logic §2*
 - **Open implementation detail:** Set limit-window length and reset rule with backend/ops. Keep wait time server-driven; the 09:42 screen timer is illustrative. — *D-35*
 - Timer format is m:ss with no leading zero (9:42, never 09:42), everywhere. — *D-46*
+- Minutes are not capped, so 75 minutes shows 75:00; the time is rounded up, so it never shows 0:00 while waiting: `return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`;` — *Sign-in build*
 - signin.too-many-tries: W1 — Issuance cap; wait for server eligibility, retain number — *Feedback state map: signin.too-many-tries*
 
 Decisions: D-35, D-46

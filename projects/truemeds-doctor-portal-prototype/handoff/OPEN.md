@@ -23,6 +23,10 @@ Generated from the product rules — do not edit by hand.
 | [o17](#o17) | On the phone, does Sign up open the system browser or a browser inside the app? | Product |
 | [o18](#o18) | If the doctor changes the number and then types the old one back, should its earlier answer (too many attempts, inactive) show again without a new Send OTP? | Product |
 | [o19](#o19) | Some web styles have no native equivalent: balanced line breaks for titles and notices (iOS), the subtitle's 31-character width limit, and the 2px focus ring for hardware keyboards. Drop or approximate? | Design |
+| [o20](#o20) | A server notice sits 8 below the field by the rule, but the approved pictures and the build measure 16 (the field's 8 gap plus the notice's own 8 margin). Which is right? | Design |
+| [o21](#o21) | Is "New to Truemeds? Sign up" a link inside a sentence (exempt from the 48 tap target) or a standalone link (48 tall)? | Design |
+| [o22](#o22) | Should text grow with the phone's font-size setting (dynamic type), and is there a dark mode? | Design + Product |
+| [o23](#o23) | Expo or bare React Native CLI, and which navigation library? | App team |
 | [o12](#o12) | How long does a signed-in session last before OTP is asked again? | Backend + Product |
 
 <a id="o01"></a>
@@ -143,6 +147,30 @@ Generated from the product rules — do not edit by hand.
 - **Current assumption:** Titles and notices wrap balanced (L8, d26); focus ring on buttons and links (d21). — *Design rules*
 - **Who answers:** Design
 - **References:** D-47
+
+<a id="o20"></a>
+### o20 · A server notice sits 8 below the field by the rule, but the approved pictures and the build measure 16 (the field's 8 gap plus the notice's own 8 margin). Which is right?
+
+- **Current assumption:** Build and approved pictures: 16 (see screens/sign-in.json, element notice, spacing.above). **Three gaps only:** tight `--tm-space-sm` (8): label↔field, field↔helper, and a result notice ↔ the control it came from · related `--tm-space-lg` (16): items within a group, **and cards stacked one above another — the same gap everywhere cards stack, on the case page, Prescribe and Profile** · section `--tm-space-2xl` (32): between groups. Spare vertical space goes between the content and a pinned button, never inside a group. Home-base screens use 3xl (48) as the hero gap between logo and title. — *Design rules 8.3*
+- **Who answers:** Design
+
+<a id="o21"></a>
+### o21 · Is "New to Truemeds? Sign up" a link inside a sentence (exempt from the 48 tap target) or a standalone link (48 tall)?
+
+- **Current assumption:** Build: the link is about 20 tall; the visual must not change either way. **Tap targets:** **48px minimum** for everything tappable that is not a link inside a sentence: icon buttons (✕, ?, Back, zoom), buttons, chips, rows, toggles, standalone links. Enlarge the hit area, not the text. Meets Android (48dp) and iOS (44pt); WCAG 2.5.8's floor is 24px. Links inside a sentence follow WCAG 2.5.8's inline exception. — *Design rules 8.6*
+- **Who answers:** Design
+
+<a id="o22"></a>
+### o22 · Should text grow with the phone's font-size setting (dynamic type), and is there a dark mode?
+
+- **Current assumption:** Out of scope for the design system unless the project opts in; tokens are light only and fixed sizes. Dark mode · large text / dynamic type (tested in the native app) · haptics and animation detail (native) · desktop layouts beyond §7. — *Design rules 9.9*
+- **Who answers:** Design + Product
+
+<a id="o23"></a>
+### o23 · Expo or bare React Native CLI, and which navigation library?
+
+- **Current assumption:** Not set by the kit: the app team owns the components, screens and project set-up. Sign-in hands off to OTP (or locked OTP) after Send OTP (d10, d25). — *Kit*
+- **Who answers:** App team
 
 <a id="o12"></a>
 ### o12 · How long does a signed-in session last before OTP is asked again?

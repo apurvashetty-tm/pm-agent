@@ -1923,6 +1923,9 @@
       ],
       "color": [
        "tokens.color.content.primary"
+      ],
+      "::placeholder color": [
+       "tokens.color.content.placeholder"
       ]
      },
      "styles": [
@@ -2134,6 +2137,23 @@
         "file": "design-system/truemeds.css",
         "line": 451
        }
+      },
+      {
+       "property": "::placeholder color",
+       "value": "var(--tm-content-placeholder)",
+       "tokens": [
+        {
+         "web": "--tm-content-placeholder",
+         "native": "tokens.color.content.placeholder",
+         "ts": "tokens.color.content.placeholder",
+         "value": "#6B7280"
+        }
+       ],
+       "from": {
+        "selector": ".tm-field__control ::placeholder",
+        "file": "design-system/truemeds.css",
+        "line": 453
+       }
       }
      ],
      "spacing": {
@@ -2185,7 +2205,8 @@
       "decided": [
        "DECIDED.md#d01",
        "DECIDED.md#d02",
-       "DECIDED.md#d14"
+       "DECIDED.md#d14",
+       "DECIDED.md#d28"
       ],
       "state": "sign-in_default"
      },
@@ -3384,6 +3405,7 @@
     "tokens.color.border.default",
     "tokens.color.content.brand",
     "tokens.color.content.inverse",
+    "tokens.color.content.placeholder",
     "tokens.color.content.primary",
     "tokens.color.content.secondary",
     "tokens.color.surface.brand.default",
@@ -5359,6 +5381,9 @@
       ],
       "color": [
        "tokens.color.content.primary"
+      ],
+      "::placeholder color": [
+       "tokens.color.content.placeholder"
       ]
      },
      "styles": [
@@ -5570,6 +5595,23 @@
         "file": "design-system/truemeds.css",
         "line": 451
        }
+      },
+      {
+       "property": "::placeholder color",
+       "value": "var(--tm-content-placeholder)",
+       "tokens": [
+        {
+         "web": "--tm-content-placeholder",
+         "native": "tokens.color.content.placeholder",
+         "ts": "tokens.color.content.placeholder",
+         "value": "#6B7280"
+        }
+       ],
+       "from": {
+        "selector": ".tm-field__control ::placeholder",
+        "file": "design-system/truemeds.css",
+        "line": 453
+       }
       }
      ],
      "spacing": {
@@ -5626,7 +5668,8 @@
       "decided": [
        "DECIDED.md#d01",
        "DECIDED.md#d02",
-       "DECIDED.md#d14"
+       "DECIDED.md#d14",
+       "DECIDED.md#d28"
       ],
       "state": "sign-in_keyboard-open"
      },
@@ -6428,6 +6471,7 @@
     "tokens.color.border.default",
     "tokens.color.border.focus",
     "tokens.color.content.inverse",
+    "tokens.color.content.placeholder",
     "tokens.color.content.primary",
     "tokens.color.content.secondary",
     "tokens.color.surface.brand.default",
@@ -8403,6 +8447,9 @@
       ],
       "color": [
        "tokens.color.content.primary"
+      ],
+      "::placeholder color": [
+       "tokens.color.content.placeholder"
       ]
      },
      "styles": [
@@ -8614,6 +8661,23 @@
         "file": "design-system/truemeds.css",
         "line": 451
        }
+      },
+      {
+       "property": "::placeholder color",
+       "value": "var(--tm-content-placeholder)",
+       "tokens": [
+        {
+         "web": "--tm-content-placeholder",
+         "native": "tokens.color.content.placeholder",
+         "ts": "tokens.color.content.placeholder",
+         "value": "#6B7280"
+        }
+       ],
+       "from": {
+        "selector": ".tm-field__control ::placeholder",
+        "file": "design-system/truemeds.css",
+        "line": 453
+       }
       }
      ],
      "spacing": {
@@ -8665,7 +8729,8 @@
       "decided": [
        "DECIDED.md#d01",
        "DECIDED.md#d02",
-       "DECIDED.md#d14"
+       "DECIDED.md#d14",
+       "DECIDED.md#d28"
       ],
       "state": "sign-in_empty-tap"
      },
@@ -9469,6 +9534,7 @@
     "tokens.color.border.error.strong",
     "tokens.color.content.error",
     "tokens.color.content.inverse",
+    "tokens.color.content.placeholder",
     "tokens.color.content.primary",
     "tokens.color.content.secondary",
     "tokens.color.surface.brand.default",
@@ -11444,6 +11510,9 @@
       ],
       "color": [
        "tokens.color.content.primary"
+      ],
+      "::placeholder color": [
+       "tokens.color.content.placeholder"
       ]
      },
      "styles": [
@@ -11655,6 +11724,23 @@
         "file": "design-system/truemeds.css",
         "line": 451
        }
+      },
+      {
+       "property": "::placeholder color",
+       "value": "var(--tm-content-placeholder)",
+       "tokens": [
+        {
+         "web": "--tm-content-placeholder",
+         "native": "tokens.color.content.placeholder",
+         "ts": "tokens.color.content.placeholder",
+         "value": "#6B7280"
+        }
+       ],
+       "from": {
+        "selector": ".tm-field__control ::placeholder",
+        "file": "design-system/truemeds.css",
+        "line": 453
+       }
       }
      ],
      "spacing": {
@@ -11711,7 +11797,8 @@
       "decided": [
        "DECIDED.md#d01",
        "DECIDED.md#d02",
-       "DECIDED.md#d14"
+       "DECIDED.md#d14",
+       "DECIDED.md#d28"
       ],
       "state": "sign-in_too-short"
      },
@@ -12515,6 +12602,7 @@
     "tokens.color.border.error.strong",
     "tokens.color.content.error",
     "tokens.color.content.inverse",
+    "tokens.color.content.placeholder",
     "tokens.color.content.primary",
     "tokens.color.content.secondary",
     "tokens.color.surface.brand.default",
@@ -14490,6 +14578,9 @@
       ],
       "color": [
        "tokens.color.content.primary"
+      ],
+      "::placeholder color": [
+       "tokens.color.content.placeholder"
       ]
      },
      "styles": [
@@ -14701,6 +14792,23 @@
         "file": "design-system/truemeds.css",
         "line": 451
        }
+      },
+      {
+       "property": "::placeholder color",
+       "value": "var(--tm-content-placeholder)",
+       "tokens": [
+        {
+         "web": "--tm-content-placeholder",
+         "native": "tokens.color.content.placeholder",
+         "ts": "tokens.color.content.placeholder",
+         "value": "#6B7280"
+        }
+       ],
+       "from": {
+        "selector": ".tm-field__control ::placeholder",
+        "file": "design-system/truemeds.css",
+        "line": 453
+       }
       }
      ],
      "spacing": {
@@ -14757,7 +14865,8 @@
       "decided": [
        "DECIDED.md#d01",
        "DECIDED.md#d02",
-       "DECIDED.md#d14"
+       "DECIDED.md#d14",
+       "DECIDED.md#d28"
       ],
       "state": "sign-in_wrong-first-digit"
      },
@@ -15561,6 +15670,7 @@
     "tokens.color.border.error.strong",
     "tokens.color.content.error",
     "tokens.color.content.inverse",
+    "tokens.color.content.placeholder",
     "tokens.color.content.primary",
     "tokens.color.content.secondary",
     "tokens.color.surface.brand.default",
@@ -17534,6 +17644,9 @@
       ],
       "color": [
        "tokens.color.content.primary"
+      ],
+      "::placeholder color": [
+       "tokens.color.content.placeholder"
       ]
      },
      "styles": [
@@ -17745,6 +17858,23 @@
         "file": "design-system/truemeds.css",
         "line": 451
        }
+      },
+      {
+       "property": "::placeholder color",
+       "value": "var(--tm-content-placeholder)",
+       "tokens": [
+        {
+         "web": "--tm-content-placeholder",
+         "native": "tokens.color.content.placeholder",
+         "ts": "tokens.color.content.placeholder",
+         "value": "#6B7280"
+        }
+       ],
+       "from": {
+        "selector": ".tm-field__control ::placeholder",
+        "file": "design-system/truemeds.css",
+        "line": 453
+       }
       }
      ],
      "spacing": {
@@ -17801,7 +17931,8 @@
       "decided": [
        "DECIDED.md#d01",
        "DECIDED.md#d02",
-       "DECIDED.md#d14"
+       "DECIDED.md#d14",
+       "DECIDED.md#d28"
       ],
       "state": "sign-in_pasted-cleaned"
      },
@@ -18603,6 +18734,7 @@
     "tokens.color.border.default",
     "tokens.color.border.focus",
     "tokens.color.content.inverse",
+    "tokens.color.content.placeholder",
     "tokens.color.content.primary",
     "tokens.color.content.secondary",
     "tokens.color.surface.brand.default",
@@ -20576,6 +20708,9 @@
       ],
       "color": [
        "tokens.color.content.primary"
+      ],
+      "::placeholder color": [
+       "tokens.color.content.placeholder"
       ]
      },
      "styles": [
@@ -20787,6 +20922,23 @@
         "file": "design-system/truemeds.css",
         "line": 451
        }
+      },
+      {
+       "property": "::placeholder color",
+       "value": "var(--tm-content-placeholder)",
+       "tokens": [
+        {
+         "web": "--tm-content-placeholder",
+         "native": "tokens.color.content.placeholder",
+         "ts": "tokens.color.content.placeholder",
+         "value": "#6B7280"
+        }
+       ],
+       "from": {
+        "selector": ".tm-field__control ::placeholder",
+        "file": "design-system/truemeds.css",
+        "line": 453
+       }
       }
      ],
      "spacing": {
@@ -20843,7 +20995,8 @@
       "decided": [
        "DECIDED.md#d01",
        "DECIDED.md#d02",
-       "DECIDED.md#d14"
+       "DECIDED.md#d14",
+       "DECIDED.md#d28"
       ],
       "state": "sign-in_sending"
      },
@@ -21863,6 +22016,7 @@
     "tokens.color.border.default",
     "tokens.color.border.focus",
     "tokens.color.content.inverse",
+    "tokens.color.content.placeholder",
     "tokens.color.content.primary",
     "tokens.color.content.secondary",
     "tokens.color.surface.brand.default",
@@ -23808,6 +23962,9 @@
       ],
       "color": [
        "tokens.color.content.primary"
+      ],
+      "::placeholder color": [
+       "tokens.color.content.placeholder"
       ]
      },
      "styles": [
@@ -24019,6 +24176,23 @@
         "file": "design-system/truemeds.css",
         "line": 451
        }
+      },
+      {
+       "property": "::placeholder color",
+       "value": "var(--tm-content-placeholder)",
+       "tokens": [
+        {
+         "web": "--tm-content-placeholder",
+         "native": "tokens.color.content.placeholder",
+         "ts": "tokens.color.content.placeholder",
+         "value": "#6B7280"
+        }
+       ],
+       "from": {
+        "selector": ".tm-field__control ::placeholder",
+        "file": "design-system/truemeds.css",
+        "line": 453
+       }
       }
      ],
      "spacing": {
@@ -24075,7 +24249,8 @@
       "decided": [
        "DECIDED.md#d01",
        "DECIDED.md#d02",
-       "DECIDED.md#d14"
+       "DECIDED.md#d14",
+       "DECIDED.md#d28"
       ],
       "state": "sign-in_not-registered"
      },
@@ -24415,7 +24590,8 @@
       "decided": [
        "DECIDED.md#d05",
        "DECIDED.md#d06",
-       "DECIDED.md#d26"
+       "DECIDED.md#d26",
+       "DECIDED.md#d27"
       ],
       "state": "sign-in_not-registered"
      },
@@ -25824,6 +26000,7 @@
     "tokens.color.border.default",
     "tokens.color.content.brand",
     "tokens.color.content.inverse",
+    "tokens.color.content.placeholder",
     "tokens.color.content.primary",
     "tokens.color.content.secondary",
     "tokens.color.surface.brand.default",
@@ -27769,6 +27946,9 @@
       ],
       "color": [
        "tokens.color.content.primary"
+      ],
+      "::placeholder color": [
+       "tokens.color.content.placeholder"
       ]
      },
      "styles": [
@@ -27980,6 +28160,23 @@
         "file": "design-system/truemeds.css",
         "line": 451
        }
+      },
+      {
+       "property": "::placeholder color",
+       "value": "var(--tm-content-placeholder)",
+       "tokens": [
+        {
+         "web": "--tm-content-placeholder",
+         "native": "tokens.color.content.placeholder",
+         "ts": "tokens.color.content.placeholder",
+         "value": "#6B7280"
+        }
+       ],
+       "from": {
+        "selector": ".tm-field__control ::placeholder",
+        "file": "design-system/truemeds.css",
+        "line": 453
+       }
       }
      ],
      "spacing": {
@@ -28036,7 +28233,8 @@
       "decided": [
        "DECIDED.md#d01",
        "DECIDED.md#d02",
-       "DECIDED.md#d14"
+       "DECIDED.md#d14",
+       "DECIDED.md#d28"
       ],
       "state": "sign-in_offline"
      },
@@ -28376,7 +28574,8 @@
       "decided": [
        "DECIDED.md#d05",
        "DECIDED.md#d06",
-       "DECIDED.md#d26"
+       "DECIDED.md#d26",
+       "DECIDED.md#d27"
       ],
       "state": "sign-in_offline"
      },
@@ -29785,6 +29984,7 @@
     "tokens.color.border.default",
     "tokens.color.content.brand",
     "tokens.color.content.inverse",
+    "tokens.color.content.placeholder",
     "tokens.color.content.primary",
     "tokens.color.content.secondary",
     "tokens.color.feedback.warning.border",
@@ -31732,6 +31932,9 @@
       ],
       "color": [
        "tokens.color.content.primary"
+      ],
+      "::placeholder color": [
+       "tokens.color.content.placeholder"
       ]
      },
      "styles": [
@@ -31943,6 +32146,23 @@
         "file": "design-system/truemeds.css",
         "line": 451
        }
+      },
+      {
+       "property": "::placeholder color",
+       "value": "var(--tm-content-placeholder)",
+       "tokens": [
+        {
+         "web": "--tm-content-placeholder",
+         "native": "tokens.color.content.placeholder",
+         "ts": "tokens.color.content.placeholder",
+         "value": "#6B7280"
+        }
+       ],
+       "from": {
+        "selector": ".tm-field__control ::placeholder",
+        "file": "design-system/truemeds.css",
+        "line": 453
+       }
       }
      ],
      "spacing": {
@@ -31999,7 +32219,8 @@
       "decided": [
        "DECIDED.md#d01",
        "DECIDED.md#d02",
-       "DECIDED.md#d14"
+       "DECIDED.md#d14",
+       "DECIDED.md#d28"
       ],
       "state": "sign-in_couldnt-send"
      },
@@ -32339,7 +32560,8 @@
       "decided": [
        "DECIDED.md#d05",
        "DECIDED.md#d06",
-       "DECIDED.md#d26"
+       "DECIDED.md#d26",
+       "DECIDED.md#d27"
       ],
       "state": "sign-in_couldnt-send"
      },
@@ -33748,6 +33970,7 @@
     "tokens.color.border.default",
     "tokens.color.content.brand",
     "tokens.color.content.inverse",
+    "tokens.color.content.placeholder",
     "tokens.color.content.primary",
     "tokens.color.content.secondary",
     "tokens.color.feedback.error.border",
@@ -35696,6 +35919,9 @@
       ],
       "color": [
        "tokens.color.content.primary"
+      ],
+      "::placeholder color": [
+       "tokens.color.content.placeholder"
       ]
      },
      "styles": [
@@ -35907,6 +36133,23 @@
         "file": "design-system/truemeds.css",
         "line": 451
        }
+      },
+      {
+       "property": "::placeholder color",
+       "value": "var(--tm-content-placeholder)",
+       "tokens": [
+        {
+         "web": "--tm-content-placeholder",
+         "native": "tokens.color.content.placeholder",
+         "ts": "tokens.color.content.placeholder",
+         "value": "#6B7280"
+        }
+       ],
+       "from": {
+        "selector": ".tm-field__control ::placeholder",
+        "file": "design-system/truemeds.css",
+        "line": 453
+       }
       }
      ],
      "spacing": {
@@ -35963,7 +36206,8 @@
       "decided": [
        "DECIDED.md#d01",
        "DECIDED.md#d02",
-       "DECIDED.md#d14"
+       "DECIDED.md#d14",
+       "DECIDED.md#d28"
       ],
       "state": "sign-in_too-many-tries"
      },
@@ -36303,7 +36547,8 @@
       "decided": [
        "DECIDED.md#d05",
        "DECIDED.md#d06",
-       "DECIDED.md#d26"
+       "DECIDED.md#d26",
+       "DECIDED.md#d27"
       ],
       "state": "sign-in_too-many-tries"
      },
@@ -37729,6 +37974,7 @@
     "tokens.color.border.default",
     "tokens.color.content.brand",
     "tokens.color.content.disabled",
+    "tokens.color.content.placeholder",
     "tokens.color.content.primary",
     "tokens.color.content.secondary",
     "tokens.color.feedback.warning.border",
@@ -39676,6 +39922,9 @@
       ],
       "color": [
        "tokens.color.content.primary"
+      ],
+      "::placeholder color": [
+       "tokens.color.content.placeholder"
       ]
      },
      "styles": [
@@ -39887,6 +40136,23 @@
         "file": "design-system/truemeds.css",
         "line": 451
        }
+      },
+      {
+       "property": "::placeholder color",
+       "value": "var(--tm-content-placeholder)",
+       "tokens": [
+        {
+         "web": "--tm-content-placeholder",
+         "native": "tokens.color.content.placeholder",
+         "ts": "tokens.color.content.placeholder",
+         "value": "#6B7280"
+        }
+       ],
+       "from": {
+        "selector": ".tm-field__control ::placeholder",
+        "file": "design-system/truemeds.css",
+        "line": 453
+       }
       }
      ],
      "spacing": {
@@ -39943,7 +40209,8 @@
       "decided": [
        "DECIDED.md#d01",
        "DECIDED.md#d02",
-       "DECIDED.md#d14"
+       "DECIDED.md#d14",
+       "DECIDED.md#d28"
       ],
       "state": "sign-in_inactive"
      },
@@ -40283,7 +40550,8 @@
       "decided": [
        "DECIDED.md#d05",
        "DECIDED.md#d06",
-       "DECIDED.md#d26"
+       "DECIDED.md#d26",
+       "DECIDED.md#d27"
       ],
       "state": "sign-in_inactive"
      },
@@ -41692,6 +41960,7 @@
     "tokens.color.border.default",
     "tokens.color.content.brand",
     "tokens.color.content.inverse",
+    "tokens.color.content.placeholder",
     "tokens.color.content.primary",
     "tokens.color.content.secondary",
     "tokens.color.feedback.error.border",
@@ -41859,6 +42128,18 @@
    "elements": [
     "submit",
     "submit-label"
+   ]
+  },
+  {
+   "native": "tokens.color.content.placeholder",
+   "ts": "tokens.color.content.placeholder",
+   "web": [
+    "--tm-content-placeholder"
+   ],
+   "value": "#6B7280",
+   "states": "all",
+   "elements": [
+    "field-input"
    ]
   },
   {
@@ -44067,7 +44348,7 @@
     "line": 13,
     "selector": "#doctor-login-preview .login-phone",
     "property": "aspect-ratio",
-    "value": "9/16",
+    "value": "390/844",
     "kind": "keyword"
    },
    {

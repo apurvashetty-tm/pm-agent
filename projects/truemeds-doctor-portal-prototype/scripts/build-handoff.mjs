@@ -52,7 +52,9 @@ const FILES = {
   capture: ["app/index.html", "app/shell/shell.css", "app/shell/screen-host.js", "app/shell/mock-keyboard.js", "app/shell/mock-keyboard.css",
     "app/core/boot.js", "app/core/modes.js", "app/core/dom.js", "app/core/msg.js", "app/core/nav.js", "app/core/store.js", "app/core/clock.js",
     "app/core/storage.js", "app/core/settings.js", "app/screens/entry-ctx.js", "app/data/test-numbers.js", "app/data/links.js", "app/feedback/messages.js",
-    "app/brand/truemeds-for-doctors.svg"].map((f) => path.join(ROOT, f)),
+    "app/brand/truemeds-for-doctors.svg", "app/state-map.js", "app/design-system/icons/icons.js",
+    // every other stylesheet index.html loads globally (a stray selector there could restyle Sign-in)
+    "app/screens/otp.css", "app/screens/faster-signin-offer.css", "app/screens/returning-unlock.css"].map((f) => path.join(ROOT, f)),
 };
 const DOCS = {
   appLogic: path.join(ROOT, "ui-screens/app-logic.md"),
@@ -385,6 +387,13 @@ async function capture(T) {
         if (t.id !== "keyboard") {
           const m = await cdp.send("CSS.getMatchedStylesForNode", { nodeId });
           styles = cascade(m.matchedCSSRules, sheetFile, m.inlineStyle);
+          // ::placeholder rules (DevTools doesn't report them as matched): find them in the two stylesheets and test their base selector
+          if (t.tag === "input") for (const [file, src] of [["design-system/truemeds.css", FILES.appCss], ["app/screens/sign-in.css", FILES.signInCss]])
+            for (const [i, l] of read(src).split("\n").entries()) for (const r of l.matchAll(/([^{}]*::placeholder)\s*\{([^}]*)\}/g)) {
+              const sel = r[1].trim(), base = sel.replace(/\s+::placeholder$/, " *").replace(/::placeholder$/, "");
+              if (!(await pg.evaluate(([b, id]) => document.querySelector(`[data-kit="${id}"]`).matches(b), [base, t.id]))) continue;
+              for (const d of r[2].matchAll(/([\w-]+)\s*:\s*([^;]+)/g)) styles.push({ property: "::placeholder " + d[1], value: d[2].trim(), selector: sel, file, line: i + 1 });
+            }
           // inherited text styles for elements that show text or an icon
           if (t.text || t.tag === "input" || t.icon || t.tag === "img") {
             for (const prop of TEXT_PROPS) {
@@ -555,15 +564,16 @@ function weightsUsed(T) {
 function decided(T) {
   const notices = noticeTable();
   return [
-    { id: "d01", topic: "Input and paste", q: "What does the mobile field accept, and how are typed or pasted numbers cleaned?", a: [AL(/Typing and pasting are cleaned/), DEC("D-39", /Impossible input is blocked silently/), DEC("D-39", /\*\*Leading 0\*\*/), CODE("Sign-in build", DOCS.auth, /return d\.slice\(0, MOBILE_LENGTH\);/, "At most 10 digits are kept:")], refs: ["D-33", "D-39"] },
+    { id: "d01", topic: "Input and paste", q: "What does the mobile field accept, and how are typed or pasted numbers cleaned?", a: [AL(/Typing and pasting are cleaned/), DEC("D-39", /Impossible input is blocked silently/), DEC("D-39", /\*\*Leading 0\*\*/), CODE("Sign-in build", DOCS.auth, /if \(d\.length > MOBILE_LENGTH && d\.startsWith\("91"\)\) d = d\.slice\(2\);/, "A leading 91 is dropped only when more than 10 digits were entered (a 10-digit number starting 91 is kept):"), CODE("Sign-in build", DOCS.auth, /return d\.slice\(0, MOBILE_LENGTH\);/, "At most 10 digits are kept:")], refs: ["D-33", "D-39"] },
     { id: "d02", topic: "Validation", q: "Which checks run, in what order, and when does each error appear?", a: [AL(/Checks, most basic first/), DEC("D-39", /format errors follow one pattern/)], refs: ["D-39"] },
     { id: "d03", topic: "Validation", q: "When does an error clear?", a: [DEC("D-39", /format errors follow one pattern/), { src: "Message rules", text: ["signin.empty", "signin.short", "signin.prefix"].map((k) => `${k}: clears on ${metadata[k].clear}; keeps the ${metadata[k].retain}`).join(" · ") }], refs: ["D-39"] },
     { id: "d04", topic: "Errors", q: "Where do errors show, and what does the field look like in error?", a: [DEC("D-33", /\*\*Errors:\*\*/), RUL("9.5", /^\| \*\*Field error\*\*/), RUL("L4", /^\| L4 \|/), RUL("L7", /^\| L7 \|/)], refs: ["D-33", "D-46", "D-47"] },
     { id: "d05", topic: "Server answers", q: "What can the server answer after Send OTP, and how is each answer shown?", a: [AL(/After sending, server results show as a notice/), { src: "Sign-in screen", text: notices.map((n) => `${n.answer}: ${n.tone} notice, icon \`${n.icon}\`, copy \`${n.copyKey}\`, role="${n.role}"`).join(" · ") }, RUL("9.5", /^\| \*\*Notice\*\*/)], refs: ["D-33", "D-54"] },
     { id: "d06", topic: "Server answers", q: "Does a server answer stay when the doctor edits the number?", a: [{ src: "Message rules", text: notices.map((n) => `${n.copyKey}: clears on ${metadata[n.copyKey].clear}`).join(" · ") }, CODE("Sign-in build", FILES.signInJs, /if \(changed && m\.notice\) \{ m\.notice = null; m\.button = "default"; \}/, "Changing the number clears the server notice and the button goes back to Send OTP (an answer belongs to the number it was for); nothing is remembered per number on the phone:")], refs: ["D-33"] },
+    { id: "d28", topic: "Errors", q: "What colour is the placeholder text in the field?", a: [CODE("Design system", FILES.dsCss, /\.tm-field__control ::placeholder \{ color: var\(--tm-content-placeholder\); \}/, "tokens.color.content.placeholder (web --tm-content-placeholder):")], refs: [] },
     { id: "d27", topic: "Errors", q: "Can a field error and a server notice show at the same time?", a: [DEC("D-33", /\*\*Errors:\*\*/), RUL("9.5", /^\| \*\*Rule\*\*/), CODE("Sign-in build", FILES.signInJs, /helper\.hidden = !!m\.notice;/, "No. The notice and the helper / error line share one spot; typing a different number removes the notice first, then the format check runs:")], refs: ["D-33"] },
     { id: "d07", topic: "Sending", q: "What happens to the button and the field while the code is being sent?", a: [RUL("L2", /^\| L2 \|/), RUL("9.1", /^- \*\*States:\*\*/), FM("signin.sending")], refs: ["D-46", "D-54"] },
-    { id: "d08", topic: "Limits", q: "Too many attempts: what does the button show, and how long is the wait?", a: [AL(/After sending, server results show as a notice/), DEC("D-35", /Keep wait time server-driven/), DEC("D-46", /Timer format is m:ss/), FM("signin.too-many-tries")], refs: ["D-35", "D-46"] },
+    { id: "d08", topic: "Limits", q: "Too many attempts: what does the button show, and how long is the wait?", a: [AL(/After sending, server results show as a notice/), DEC("D-35", /Keep wait time server-driven/), DEC("D-46", /Timer format is m:ss/), CODE("Sign-in build", DOCS.auth, /return `\$\{Math\.floor\(s \/ 60\)\}:\$\{String\(s % 60\)\.padStart\(2, "0"\)\}`;/, "Minutes are not capped, so 75 minutes shows 75:00; the time is rounded up, so it never shows 0:00 while waiting:"), FM("signin.too-many-tries")], refs: ["D-35", "D-46"] },
     { id: "d09", topic: "Limits", q: "Which limits are enforced on the server and which in the app?", a: [AL(/All OTP limits are enforced by the server/), DEC("D-35", /OTP issue cap is configurable/), DEC("D-34", /5 server-confirmed wrong OTP submissions/)], refs: ["D-34", "D-35"] },
     { id: "d10", topic: "Limits", q: "What happens when the doctor signs in with a number that is locked?", a: [AL(/Sign-in on a locked number/), FM("signin.locked-number")], refs: ["D-81"] },
     { id: "d11", topic: "Inactive account", q: "The account is inactive: what does the doctor see and what does the button do?", a: [AL(/After sending, server results show as a notice/), FM("signin.inactive"), OQ("OQ-021", /^\*\*Answered 2026-10-12/)], refs: ["D-33"] },
@@ -591,7 +601,7 @@ const MOCKS = [
   { file: "settings", re: /otpWindow:.*MOCK ASSUMPTION/, id: "o02" },
   { file: "settings", re: /otpLock:.*MOCK ASSUMPTION/, id: "o02" },
   { file: "settings", re: /resendWaits:.*MOCK ASSUMPTION/, id: "o02" },
-  { file: "keyboard", re: /\[MOCK ASSUMPTION\]/, id: "o09" },
+  { file: "keyboard", re: /demo and play use the phone's real keyboard\. \[MOCK ASSUMPTION\]/, id: "o09" },
 ];
 const MOCK_SCAN = ["app/screens/sign-in.js", "app/screens/sign-in.css", "app/screens/entry-ctx.js", "app/core/auth.js", "app/data/links.js", "app/data/test-numbers.js", "app/shell/mock-keyboard.js"];
 const MOCK_KEY = { "app/core/auth.js": "auth", "app/shell/mock-keyboard.js": "keyboard" };
@@ -603,8 +613,9 @@ function open() {
   const settingsUsed = [...new Set([...doc("auth").matchAll(/value\("(\w+)"\)/g)].map((x) => x[1]))];
   for (const k of settingsUsed) { const l = doc("settings").split("\n").find((x) => x.trim().startsWith(k + ":"));
     if (l && /MOCK ASSUMPTION/.test(l) && !MOCKS.some((m) => m.file === "settings" && m.re.test(l))) die(`settings ${k}: mock value not mapped to OPEN.md`); }
+  const checkIds = (items) => { for (const m of MOCKS) if (!items.some((o) => o.id === m.id)) die(`MOCK mapped to ${m.id}, which is not in OPEN.md`); return items; };
   const signInSettings = doc("settings").split("\n").filter((l) => /MOCK ASSUMPTION/.test(l) && /OQ-017/.test(l));
-  return [
+  return checkIds([
     { id: "o01", topic: "Limits", q: "How long are the OTP issue window, the number lock and the code life in production?", now: OQ("OQ-017", /^\*\*Safe placeholder:\*\*/), who: "Backend + Product", refs: ["OQ-017", "D-34", "D-35"] },
     { id: "o02", topic: "Limits", q: "How long is the \"Try again in m:ss\" wait after too many attempts?", now: { src: "Sign-in build", text: `The server sends the time the wait ends; the prototype uses ${signInSettings.map((l) => l.trim().split(":")[0]).join(", ")} as stand-ins (mock values, not product promises).` }, who: "Backend", refs: ["OQ-017", "D-35"] },
     { id: "o03", topic: "Server answers", q: "Send OTP again for the same number while the resend wait is still running: what does the server answer?", now: { src: "Sign-in build", text: "Assumed: no new code is sent; OTP opens on the running wait and the code already sent stays valid." }, who: "Backend", refs: [] },
@@ -623,8 +634,12 @@ function open() {
     { id: "o17", topic: "Sign-up", q: "On the phone, does Sign up open the system browser or a browser inside the app?", now: { src: "Message rules", text: `signin.signupLink: ${metadata["signin.signupLink"].next}` }, who: "Product", refs: ["OQ-021"], noteNow: "On the web it opens a new tab." },
     { id: "o18", topic: "Server answers", q: "If the doctor changes the number and then types the old one back, should its earlier answer (too many attempts, inactive) show again without a new Send OTP?", now: { src: "Sign-in build", text: "No: the build remembers nothing per number; the answer shows again only after Send OTP (the server answers again)." }, who: "Product", refs: [] },
     { id: "o19", topic: "Platform", q: "Some web styles have no native equivalent: balanced line breaks for titles and notices (iOS), the subtitle's 31-character width limit, and the 2px focus ring for hardware keyboards. Drop or approximate?", now: { src: "Design rules", text: "Titles and notices wrap balanced (L8, d26); focus ring on buttons and links (d21)." }, who: "Design", refs: ["D-47"] },
+    { id: "o20", topic: "Layout", q: "A server notice sits 8 below the field by the rule, but the approved pictures and the build measure 16 (the field's 8 gap plus the notice's own 8 margin). Which is right?", now: RUL("8.3", /^3\. \*\*Three gaps only:\*\*/), who: "Design", refs: [], noteNow: "Build and approved pictures: 16 (see screens/sign-in.json, element notice, spacing.above)." },
+    { id: "o21", topic: "Accessibility", q: "Is \"New to Truemeds? Sign up\" a link inside a sentence (exempt from the 48 tap target) or a standalone link (48 tall)?", now: RUL("8.6", /^6\. \*\*Tap targets:\*\*/), who: "Design", refs: [], noteNow: "Build: the link is about 20 tall; the visual must not change either way." },
+    { id: "o22", topic: "Platform", q: "Should text grow with the phone's font-size setting (dynamic type), and is there a dark mode?", now: RUL("9.9", /^Dark mode · large text/), who: "Design + Product", refs: [] , noteNow: "Out of scope for the design system unless the project opts in; tokens are light only and fixed sizes." },
+    { id: "o23", topic: "Platform", q: "Expo or bare React Native CLI, and which navigation library?", now: { src: "Kit", text: "Not set by the kit: the app team owns the components, screens and project set-up. Sign-in hands off to OTP (or locked OTP) after Send OTP (d10, d25)." }, who: "App team", refs: [] },
     { id: "o12", topic: "Session", q: "How long does a signed-in session last before OTP is asked again?", now: OQ("OQ-017", /^\*\*Confirmed 2026-10-12:\*\*/), who: "Backend + Product", refs: ["OQ-017"] },
-  ];
+  ]);
 }
 const APPLOGIC_MUST = [/Typing and pasting are cleaned/, /Checks, most basic first/, /After sending, server results show/, /Sign-in on a locked number/, /All OTP limits are enforced/, /^\| Sign-in \|/, /^Order on first use/, /\*\*Notices\*\* wrap balanced/];
 
@@ -765,7 +780,7 @@ const STATE_RULE = { "keyboard-open": /Checks, most basic first/, "empty-tap": /
 const STATE_DECIDED = { default: ["d13", "d19", "d20"], "keyboard-open": ["d02", "d13", "d15"], "empty-tap": ["d02", "d03", "d04"], "too-short": ["d02", "d03", "d04"],
   "wrong-first-digit": ["d02", "d03", "d04"], "pasted-cleaned": ["d01"], sending: ["d07"], "not-registered": ["d05", "d06", "d12"], offline: ["d05", "d16"],
   "couldnt-send": ["d05", "d06"], "too-many-tries": ["d05", "d08", "d09"], inactive: ["d05", "d11"] };
-const EL_DECIDED = { "field-input": ["d01", "d02", "d14"], "field-helper": ["d03", "d04"], "field-control": ["d04"], notice: ["d05", "d06", "d26"], "notice-text": ["d05"], "notice-icon": ["d05"],
+const EL_DECIDED = { "field-input": ["d01", "d02", "d14", "d28"], "field-helper": ["d03", "d04"], "field-control": ["d04"], notice: ["d05", "d06", "d26", "d27"], "notice-text": ["d05"], "notice-icon": ["d05"],
   submit: ["d07", "d08", "d11", "d24"], "submit-label": ["d07", "d08"], "submit-spinner": ["d07"], signup: ["d12", "d15"], "signup-link": ["d12"], logo: ["d19"], title: ["d17", "d20"], subtitle: ["d20"],
   keyboard: ["d13", "d14"], screen: ["d19"], hero: ["d19"], panel: ["d19"], field: ["d04"], "field-label": ["d20"], "field-prefix": ["d01"] };
 function behaviourFor(e, state) {
@@ -948,6 +963,8 @@ main.v { max-width: 1100px; margin: 0 auto; padding: var(--tm-space-lg) var(--tm
 .tblwrap { overflow-x: auto; }
 .raw, .raw code { color: var(--tm-content-error) !important; }
 tr.raw td { background: var(--tm-feedback-error-surface); }
+tr.raw.soft td { background: none; }
+tr.raw.soft, tr.raw.soft code { color: var(--tm-content-error) !important; opacity: .75; }
 .swatch { display: inline-block; width: 14px; height: 14px; border-radius: 3px; vertical-align: -2px; margin-right: 4px; box-shadow: inset 0 0 0 1px rgba(0,0,0,.15); }
 .card { background: var(--tm-surface-primary); border-radius: var(--tm-radius-lg); padding: var(--tm-space-lg); margin: var(--tm-space-sm) 0; box-shadow: var(--tm-shadow-card); }
 .chips { display: flex; flex-wrap: wrap; gap: 6px; margin: var(--tm-space-sm) 0; }
@@ -988,7 +1005,8 @@ const VIEWER_JS = String.raw`// Hand-off kit viewer. Static: reads window.KIT fr
   const sw = (v) => typeof v === "string" && /^(#|rgb)/.test(v) ? '<span class="swatch" style="background:' + esc(v) + '"></span>' : "";
   const val = (v) => typeof v === "object" ? (v.boxShadow ? v.boxShadow : JSON.stringify(v)) : v;
   const tokCell = (t) => t.native ? sw(t.value) + "<code>" + esc(t.native) + "</code><br><span class=muted>" + esc(t.web) + (t.via && t.via.length ? " (via " + esc(t.via.join(", ")) + ")" : "") + " · " + esc(val(t.value)) + "</span>" : '<span class="raw">' + esc(t.web) + " — not a native token</span>";
-  const styleRows = (styles) => styles.map((s) => '<tr class="' + (s.raw ? "raw" : "") + '"><td><code>' + esc(s.property) + "</code>" + (s.inherited ? " <span class=muted>(inherited)</span>" : "") + (s.appliesTo ? "<br><span class=muted>" + esc(s.appliesTo.join(", ")) + "</span>" : "") + "</td><td>" + (s["tokens"].length ? s["tokens"].map(tokCell).join("<br>") : "—") +
+  const soft = (k) => k === "keyword" || k === "zero";
+  const styleRows = (styles) => styles.map((s) => '<tr class="' + (s.raw ? "raw" + (soft(s.kind) ? " soft" : "") : "") + '"><td><code>' + esc(s.property) + "</code>" + (s.inherited ? " <span class=muted>(inherited)</span>" : "") + (s.appliesTo ? "<br><span class=muted>" + esc(s.appliesTo.join(", ")) + "</span>" : "") + "</td><td>" + (s["tokens"].length ? s["tokens"].map(tokCell).join("<br>") : "—") +
     (s.raw ? '<br><span class="raw">not a token: <code>' + esc(s.value) + "</code> (" + esc(s.kind || "") + ") " + esc((s.file || (s.from && s.from.file)) + ":" + (s.line || (s.from && s.from.line))) + "</span>" : "") + "</td></tr>").join("");
   const nav = document.querySelector(".v-top"), main = document.getElementById("v");
   const tabs = { start: "Start here", foundation: "Foundation", blocks: "Building blocks", screens: "Screens" };
@@ -1004,8 +1022,8 @@ const VIEWER_JS = String.raw`// Hand-off kit viewer. Static: reads window.KIT fr
     main.append($('<section><h1>Sign-in — hand-off kit</h1><p>Everything the React Native team needs to build the Truemeds doctor app\'s Sign-in screen from the same tokens, copy and rules as the approved design.</p>' +
       '<div class="card"><h3>What is here</h3><ul><li><b>Foundation</b>: tokens (native names beside the web names), icons, copy, fonts.</li><li><b>Building blocks</b>: each block on the screen, its parts and states, the token for each, sizes and rules.</li><li><b>Screens</b>: all ' + S.states.length + ' Sign-in states. Tap any element for its block, tokens, spacing, copy key and behaviour.</li><li><b>Red</b> = a value that is not a token.</li></ul></div>' +
       '<div class="card"><h3>Files</h3><ul><li><code>../AGENTS.md</code> — for your AI coding tool.</li><li><code>../DECIDED.md</code> — questions already answered (' + K.decided.length + ').</li><li><code>../OPEN.md</code> — still open, with who answers (' + K.open.length + ').</li><li><code>../screens/sign-in.json</code>, <code>../components/*.json</code> — the same facts as data.</li><li><code>../CHANGES.md</code> — what moved since the last drop.</li></ul></div>' +
-      '<div class="card"><h3>Tokens used on Sign-in (' + S.tokensUsed.length + ')</h3><div class="tblwrap"><table><thead><tr><th>Native</th><th>Web</th><th>Value</th><th>States</th></tr></thead><tbody>' +
-      S.tokensUsed.map((t) => "<tr><td><code>" + esc(t.native) + "</code></td><td><code>" + esc(t.web.join(", ")) + "</code></td><td>" + sw(t.value) + esc(val(t.value)) + "</td><td>" + (t.states === "all" ? "all" : esc(t.states.map((x) => x.replace("sign-in_", "")).join(", "))) + "</td></tr>").join("") + "</tbody></table></div></div></section>"));
+      '<div class="card"><h3>Tokens used on Sign-in (' + S.tokensUsed.length + ')</h3><div class="tblwrap"><table><thead><tr><th>Native · web</th><th>Value</th><th>States</th></tr></thead><tbody>' +
+      S.tokensUsed.map((t) => "<tr><td><code>" + esc(t.native) + "</code><br><span class=muted>" + esc(t.web.join(", ")) + "</span></td><td>" + sw(t.value) + esc(val(t.value)) + "</td><td>" + (t.states === "all" ? "all" : esc(t.states.map((x) => x.replace("sign-in_", "")).join(", "))) + "</td></tr>").join("") + "</tbody></table></div></div></section>"));
   }
   function foundation() {
     main.append($('<section><h1>Foundation</h1><p>Files in <code>../foundation/</code>: <code>tokens.ts</code>, <code>tokens.json</code>, <code>icons.ts</code>, <code>messages.ts</code>, <code>token-map.json</code>, <code>fonts/</code> (see <code>fonts/FONTS.md</code>), <code>logo/</code>.</p></section>'));
@@ -1065,11 +1083,11 @@ const VIEWER_JS = String.raw`// Hand-off kit viewer. Static: reads window.KIT fr
       const r = st.rule;
       panel.append($('<div class="card"><h3 style="margin-top:0">Rule for this state</h3><p>' + esc(r.pattern) + "</p><p>" + esc(r.appLogic) + "</p><p>" + r.decided.map((d) => '<a href="../DECIDED.md#' + d + '">DECIDED ' + d + "</a>").join(" · ") + "</p></div>"));
       const used = {}; for (const e of st.elements) for (const s of e.styles) for (const t of s["tokens"]) if (t.native) (used[t.native] ??= { t, els: new Set() }).els.add(e.id);
-      panel.append($('<div class="card"><h3 style="margin-top:0">Tokens used in this state (' + Object.keys(used).length + ')</h3><div class="tblwrap"><table><thead><tr><th>Native</th><th>Web</th><th>Value</th><th>Elements</th></tr></thead><tbody>' +
-        Object.values(used).sort((a, b) => a.t.native.localeCompare(b.t.native)).map(({ t, els }) => "<tr><td><code>" + esc(t.native) + "</code></td><td><code>" + esc(t.web) + "</code></td><td>" + sw(t.value) + esc(val(t.value)) + "</td><td>" + esc([...els].join(", ")) + "</td></tr>").join("") + "</tbody></table></div></div>"));
-      const raws = S.rawValues.builtApp.filter((x) => x.states.includes(st.id.replace("sign-in_", "")));
-      panel.append($('<div class="card"><h3 style="margin-top:0" class="raw">Not tokens in this state (' + raws.length + ')</h3><div class="tblwrap"><table><thead><tr><th>Value</th><th>Where</th><th>Elements</th></tr></thead><tbody>' +
-        raws.map((x) => '<tr class="raw"><td><code>' + esc(x.property + ": " + x.value) + "</code> (" + esc(x.kind) + ")</td><td>" + esc(x.file + ":" + x.line) + "</td><td>" + esc(x.elements.join(", ")) + "</td></tr>").join("") + "</tbody></table></div></div>"));
+      panel.append($('<div class="card"><h3 style="margin-top:0">Tokens used in this state (' + Object.keys(used).length + ')</h3><div class="tblwrap"><table><thead><tr><th>Native · web</th><th>Value</th><th>Elements</th></tr></thead><tbody>' +
+        Object.values(used).sort((a, b) => a.t.native.localeCompare(b.t.native)).map(({ t, els }) => "<tr><td><code>" + esc(t.native) + "</code><br><span class=muted>" + esc(t.web) + "</span></td><td>" + sw(t.value) + esc(val(t.value)) + "</td><td>" + esc([...els].join(", ")) + "</td></tr>").join("") + "</tbody></table></div></div>"));
+      const raws = S.rawValues.builtApp.filter((x) => x.states.includes(st.id.replace("sign-in_", ""))).sort((a, b) => soft(a.kind) - soft(b.kind));
+      panel.append($('<div class="card"><h3 style="margin-top:0" class="raw">Not tokens in this state (' + raws.filter((x) => !soft(x.kind)).length + ' sizes, colours or typed text; ' + raws.filter((x) => soft(x.kind)).length + ' layout keywords or zeros, lighter)</h3><div class="tblwrap"><table><thead><tr><th>Value</th><th>Where</th><th>Elements</th></tr></thead><tbody>' +
+        raws.map((x) => '<tr class="raw' + (soft(x.kind) ? " soft" : "") + '"><td><code>' + esc(x.property + ": " + x.value) + "</code> (" + esc(x.kind) + ")</td><td>" + esc(x.file + ":" + x.line) + "</td><td>" + esc(x.elements.join(", ")) + "</td></tr>").join("") + "</tbody></table></div></div>"));
     }
     drawPanel();
     const all = $('<details class="card"><summary><b>Approved reference file: values that are not tokens (' + S.rawValues.approvedReference.length + ')</b></summary><div class="tblwrap"><table><tbody>' + S.rawValues.approvedReference.map((x) => '<tr class="raw"><td><code>' + esc(x.property + ": " + x.value) + "</code> (" + esc(x.kind) + ")</td><td>" + esc(x.file + ":" + x.line) + "</td><td><code>" + esc(x.selector) + "</code></td></tr>").join("") + "</tbody></table></div></details>");

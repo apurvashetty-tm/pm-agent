@@ -4,6 +4,38 @@ What moved in the kit since the previous generation: tokens used, building block
 
 ## 2026-11-09
 
+- Token added: tokens.color.content.placeholder
+- Block changed: field
+- Screen state changed: sign-in_default
+- Screen state changed: sign-in_keyboard-open
+- Screen state changed: sign-in_empty-tap
+- Screen state changed: sign-in_too-short
+- Screen state changed: sign-in_wrong-first-digit
+- Screen state changed: sign-in_pasted-cleaned
+- Screen state changed: sign-in_sending
+- Screen state changed: sign-in_not-registered
+- Screen state changed: sign-in_offline
+- Screen state changed: sign-in_couldnt-send
+- Screen state changed: sign-in_too-many-tries
+- Screen state changed: sign-in_inactive
+
+## 2026-11-09
+
+- Screen state changed: sign-in_default
+- Screen state changed: sign-in_keyboard-open
+- Screen state changed: sign-in_empty-tap
+- Screen state changed: sign-in_too-short
+- Screen state changed: sign-in_wrong-first-digit
+- Screen state changed: sign-in_pasted-cleaned
+- Screen state changed: sign-in_sending
+- Screen state changed: sign-in_not-registered
+- Screen state changed: sign-in_offline
+- Screen state changed: sign-in_couldnt-send
+- Screen state changed: sign-in_too-many-tries
+- Screen state changed: sign-in_inactive
+
+## 2026-11-09
+
 - Screen state changed: sign-in_not-registered
 - Screen state changed: sign-in_offline
 - Screen state changed: sign-in_couldnt-send
