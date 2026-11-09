@@ -11,7 +11,7 @@ Session 1 (overnight) did set-up and started sign-in, then ended on its own afte
 |---|---|---|
 | 1 | Set-up + screen host | ✅ done (checkpoint a, screen system) |
 | 2 | Sign-in finished + OTP | ✅ done (34 journey tests, Codex clean on 3rd pass) |
-| 3 | Faster sign-in offer + returning unlock + D-92 (section 2) | Both journeys built and tested; the 20 D-92 pictures re-rendered, name-only diff checked; all guards pass |
+| 3 | Faster sign-in offer + returning unlock + D-92 (section 2) | ✅ done (55 journey tests, D-92 name-only checked, Codex 0 blockers) |
 | 4 | Part A panel + checklist 1.3 table + compare harness | Panel / drawer / QR per Part A; harness built; compare run on all 42 step-1 states with every region explained; `layout_check.py --app` passes |
 | 5 | Codex + report | Section 4 and "Report and stop" |
 
@@ -28,6 +28,12 @@ Fix every valid blocker and should-fix (note why for any not adopted, in `sessio
 - D-92 (section 2): the name in the built app comes from mock data, never typed in a screen. For the re-render check, list the changed pixel region per picture and confirm that only the name / initials changed.
 - On this Mac, use `CHROME=` / `CHROMIUM=` (installed Chrome) for the tests and guards, and `< /dev/null` on every `codex exec`.
 - Screenshots: every offer and unlock state at 390 next to its approved picture, plus the 20 D-92 pictures before and after, in `session-3/` with `sheet.png`.
+
+**Session 4 notes (main thread, 2026-11-09 12:25):**
+- Picture sources: the 20 D-92 pictures were rendered on this Mac. The other approved pictures were rendered on the old Mac. Expect anti-aliasing-only differences of about 0.05% on old-Mac pictures (offer, sign-in, OTP). The main thread measured old-Mac vs new-Mac renders of the D-92 pictures outside the name box: at most ~1,700 px over 8/255, max channel difference 93, no shifted rows. Put anti-aliasing regions in `compare-allow.json` with that evidence. Any shifted row, moved box, or colour band is a real difference and must not be allowed.
+- Already-known explained regions: "call Doctor Ops" link in `otp_locked`, `otp_too-many-resends`, `otp_expired-and-resend-limited` (session 2).
+- The offer's `unavailable` answer is now OQ-036 in `open_questions.md`. Keep the placeholder; don't change it.
+- In the panel, show the Faster sign-in offer and Unlock story values in words, the same as the other rows.
 
 **Quality rules the sign-in start broke — fix in session 2:**
 - **No inline styles.** Lift the approved screen's markup and classes from `ui-screens/<journey>/<journey>.html`; its CSS goes into one stylesheet per journey under `app/screens/` using only `--tm-*` tokens and `.tm-*` classes. Replace the inline CSS already in `app/screens/sign-in.js`.
