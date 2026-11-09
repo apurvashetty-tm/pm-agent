@@ -14,7 +14,7 @@ import { onOpen, unlockState } from "./faster-signin.js";
 import { authCtx } from "../screens/entry-ctx.js";
 import { mountPanel, focusJourney, logLine, setLogKeeper } from "../review/panel.js";
 import { setEventSink, event } from "./events.js";
-import { work, settleRecords } from "./session.js";
+import { work, settleRecords, settleHolds, addHold } from "./session.js";
 import { recordOutcome } from "./call-engine.js";
 import { CALL_KEYS } from "../data/story-schema.js";
 import { mountDrawer } from "../review/drawer.js";
@@ -66,7 +66,13 @@ if (mode !== "capture") {
 setInterval(() => settleRecords(clock.now(), {
   outcome: (r, now) => recordOutcome(r.attempts[r.attempts.length - 1], r.choices, { call: { attempts: r.attempts } }, now, (k) => value(k, mode), r.submittedAt),
   onProven: (r) => event(`confirm completed: ${r.route === "cat4" ? "Cat4" : "HA skipped"} — prescription confirmed (order ${r.order}, after the doctor left)`),
-  onUnproven: (r, why) => event(`call record ${why}: prescription not confirmed (mismatch, order ${r.order}) → case on hold, retry`),
+  onUnproven: (r, why) => { event(`call record ${why}: prescription not confirmed (mismatch, order ${r.order}) → case on hold, retry`); addHold({ order: r.order, cause: "unproven confirm", policy: "by-cause", at: clock.now() }); },
+}), 250);
+// Held cases are retried by the backend (hold-retry gap and attempts from settings); the log shows each retry and the end.
+setInterval(() => settleHolds(clock.now(), {
+  gap: value("holdRetryGap", mode), attempts: value("holdRetryAttempts", mode),
+  onRetry: (x, n, of) => event(`hold: retry ${n} of ${of} (order ${x.order}, ${x.cause}) — the case goes back to the queue`),
+  onExhausted: (x) => event(`hold: ${value("holdRetryAttempts", mode)} retries used, plain hold (order ${x.order}, ${x.cause})`),
 }), 250);
 const newPoller = () => createPoller({ server, caseId: CASE_ID, apply: logEvent });
 poller = newPoller();

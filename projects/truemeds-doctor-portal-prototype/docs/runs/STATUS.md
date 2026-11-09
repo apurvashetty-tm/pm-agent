@@ -7,3 +7,5 @@ DONE rails — linter + commit gate live (111 findings today); edit hook needs A
 DONE token-pass — 111 raw values -> 0 (25 raw-ok), pictures 298/298 identical, all checks pass, fresh-AI Codex strict PASS; 45 Codex tests disputed (see docs/renders/2026-11-09-token-pass/REPORT.md)
 
 DONE build-fast run-A1 — Home, case page, Prescribe / Disable built; 132 step 2–4 pictures all under 1 % changed; Codex A1 tests pass except 4 disputed; critique-2 no blockers; all checks pass (see docs/renders/2026-11-09-build-fast/run-A1/REPORT.md)
+
+DONE build-fast run-A2 — calling for Cat4 / Pilot HA skipped built; full Cat4 demo plays sign-in → call → Prescription confirmed → next case; Codex run A 303/303 (A0 10/10, happy path disputed on 2 labels); own tests 26/26; 42 step-5 pictures 0 over 1 %; critique 3 blockers fixed, critique-2 no blockers; all checks pass (see docs/renders/2026-11-09-build-fast/run-A2/REPORT.md)

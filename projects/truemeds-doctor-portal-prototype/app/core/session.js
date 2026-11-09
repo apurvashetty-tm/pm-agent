@@ -64,6 +64,21 @@ export function countConfirmed() { saveWork({ rxToday: work().rxToday + 1 }); }
 // 7f left before the call record arrived (app-logic §5 7f, CW-D3, CW-D4): the backend still settles it. Proven → counts as a
 // confirmed prescription (earnings, D-73); unproven → hold and retry, mismatch logged. Never touches the open case (B7).
 // entry: { order, attempt, choices, attempts, submittedAt, label } — the simulator's choices as they were when the doctor left.
+// Hold and retry (CW-B2, CW-D3; plan B9): a held case is retried by the backend every holdRetryGap, up to holdRetryAttempts
+// times, then stays on plain hold. Plain hold and invalid numbers are not retried. Nothing goes to Ops; the doctor isn't told.
+export function addHold(entry) { saveWork({ holds: [...(work().holds || []), { ...entry, done: 0 }] }); }
+export function settleHolds(now, { gap, attempts, onRetry, onExhausted }) {
+  const list = work().holds || [];
+  if (!list.length) return;
+  let changed = false;
+  const left = list.filter((x) => {
+    if (x.policy !== "by-cause") { changed = true; return false; }
+    while (x.done < attempts && now >= x.at + (x.done + 1) * gap) { x.done += 1; changed = true; onRetry(x, x.done, attempts); }
+    if (x.done >= attempts) { changed = true; onExhausted(x); return false; }
+    return true;
+  });
+  if (changed) saveWork({ holds: left });
+}
 export function keepRecord(entry) { saveWork({ records: [...(work().records || []), entry] }); }
 export function settleRecords(now, { outcome, onProven, onUnproven }) {
   const list = work().records || [];

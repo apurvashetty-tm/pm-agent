@@ -24,9 +24,15 @@ add("R16-a", "a call of exactly the counted minimum counts toward the gate", "t0
   await d.clickControl("#rp-add-attempt"); await call(d, (ms("gate") - ms("minCountedCall")) / 1000, "Call again");
   await d.buttons(["Confirm prescription"], ["Call again", "Callback"]);
 });
-add("R16-b", "the gate counts talk time, not time since the tap: a long ring before the answer never unlocks", "t01-ready", "app-logic.md:116-121", async (d) => {
-  await d.choose("record", "under-gate"); await call(d, 600); await d.ff(10 * 60 * 1000);   // ten minutes on the clock, talk under the gate
-  await d.msg("call.endedEarly"); await d.buttons(["Call again"], ["Confirm prescription"]);
+add("R16-b", "the gate counts from the patient's answer: 45 s ringing + 20 s talk is too short", "t01-ready", "app-logic.md:116-121 (D-58: attempted = leg 2 answered)", async (d) => {
+  await prescribeAll(d); await d.choose("ring", "45"); await length(d, 20); await d.click("Call patient");
+  await d.ff(ms("gate") + 2000); await d.buttons([], ["Confirm prescription"]);   // 52 s after the tap: still ringing / talking
+  await d.ff(30000); await d.msg("call.endedEarly"); await d.buttons(["Call again"], ["Confirm prescription"]);
+});
+add("R16-b2", "45 s ringing + 50 s talk: valid only once 50 s after the answer have passed", "t01-ready", "app-logic.md:116-121", async (d) => {
+  await prescribeAll(d); await d.choose("ring", "45"); await length(d, ms("gate") / 1000); await d.click("Call patient");
+  await d.ff(ms("gate") + ms("pollingInterval") * 2); await d.buttons([], ["Confirm prescription"]);   // a tap-anchored count would unlock here
+  await d.ff(45000); await d.buttons(["Confirm prescription"]);
 });
 add("R16-c", "a new case starts its own talk-time count", "c-callback", "app-logic.md:118; plan v3.2 B8", async (d) => {
   await d.click("Today"); await d.click("3:00 PM"); await d.click("Confirm callback"); await d.settle(); await d.text("Callback today at 3:00 PM");
@@ -63,6 +69,16 @@ add("R18-d", "hold policy: retried by cause with the configured gap and attempts
   await d.choose("patientFailure", "switched-off"); await d.click("Call patient"); await d.ff(ms("pollingInterval"));
   await d.text("Patient unavailable"); await d.log(new RegExp(`every ${ms("holdRetryGap") / 60000} min, up to ${ms("holdRetryAttempts")} times`));
 });
+add("R18-e", "hold: retried every gap up to the attempts, then plain hold; invalid number never retried", "t01-ready", "app-logic.md:123,208 (CW-B2); settings holdRetryGap / holdRetryAttempts", async (d) => {
+  await d.choose("patientFailure", "busy"); await d.click("Call patient"); await d.ff(ms("pollingInterval")); await d.text("Patient unavailable");
+  await d.ff(ms("holdRetryGap") - 5000); await d.p.waitForTimeout(400); assert.ok(!/hold: retry 1/.test(await logText(d)), "no retry before the gap");
+  for (let n = 1; n <= ms("holdRetryAttempts"); n++) { await d.ff(n === 1 ? 5000 : ms("holdRetryGap")); await d.p.waitForTimeout(400); await d.log(new RegExp(`hold: retry ${n} of ${ms("holdRetryAttempts")}`)); }
+  await d.log(/retries used, plain hold/);
+});
+add("R18-f", "7f unproven: the held case is retried too", "s7f-submitted", "app-logic.md:144 (CW-D3: hold and retry)", async (d) => {
+  await d.choose("record", "under-gate"); await d.ff(ms("pollingInterval")); await d.log(/mismatch/);
+  await d.ff(ms("holdRetryGap")); await d.p.waitForTimeout(400); await d.log(/hold: retry 1 of \d \(order .*unproven confirm\)/);
+});
 add("R19-a", "callback: only a time picked → Pick a date.; only a date → Pick a time.", "t06-ended-early", "app-logic.md:203", async (d) => {
   await d.click("Callback"); await d.click("3:00 PM"); await d.click("Confirm callback"); await d.msg("case.callbackPickDate");
   await d.click("Today"); await d.noText(copy("case.callbackPickDate"));   // fixing the choice clears the error
@@ -97,6 +113,26 @@ add("R20-b", "Confirming…: one submit only; the page is frozen until the answe
   assert.equal(await d.root().locator("#medicines-list [role=button]").count(), 0, "rows not tappable");
   await d.settle(); await d.text("Prescription confirmed");
   const lines = (await logText(d)).split("\n").filter((l) => /confirm completed/i.test(l)); assert.equal(lines.length, 1);
+});
+add("R20-c", "unclear confirm: stays Confirming… and checks again; resolves to the confirmed card, one submit", "t08a-valid-cat4", "app-logic.md:191 (D-69)", async (d) => {
+  await d.choose("prescribe", "confirm-busy"); await d.click("Confirm prescription"); await d.settle(); await d.msg("case.confirming");
+  await d.choose("prescribe", "saved"); await d.p.waitForTimeout(ms("reconcileDelay") + 400); await d.text("Prescription confirmed");
+  const lines = (await logText(d)).split("\n").filter((l) => /confirm completed/i.test(l)); assert.equal(lines.length, 1);
+});
+add("R20-d", "unclear confirm survives a reopen: still Confirming…, no second submit, then the failure notice", "t08a-valid-cat4", "app-logic.md:191 (D-69); plan B12", async (d) => {
+  await d.choose("prescribe", "confirm-busy"); await d.click("Confirm prescription"); await d.settle();
+  await d.p.reload(); await d.p.waitForTimeout(400); await d.msg("case.confirming"); await d.buttons([], ["Confirm prescription"]);
+  await d.choose("prescribe", "confirm-failed"); await d.p.waitForTimeout(ms("reconcileDelay") + 400); await d.msg("case.confirmFailed");
+  await d.buttons(["Confirm prescription"]);
+});
+add("R20-e", "7d Confirming…: Callback and Unavailable are disabled", "s7d-result-missing", "app-logic.md:191 (everything else disabled)", async (d) => {
+  await d.choose("prescribe", "confirm-busy"); await d.click("Confirm prescription"); await d.settle(); await d.msg("case.confirming");
+  assert.ok(await d.button("Callback").isDisabled()); assert.ok(await d.button("Unavailable").isDisabled());
+});
+add("R17-c", "a late result closes a sheet the new stage doesn't offer", "s7d-result-missing", "app-logic.md:145,205,209", async (d) => {
+  await d.click("Callback"); await d.text("Schedule callback");
+  await d.choose("record", "delayed"); await d.ff(ms("callRecordWait") / 2 + ms("pollingInterval"));
+  await d.noText("Schedule callback"); await d.buttons(["Confirm prescription"], ["Callback", "Unavailable"]);
 });
 add("R13-a", "phone Back closes the callback and unavailable sheets; the case stays", "s7d-result-missing", "app-logic.md:205,209; plan v3.2 B13", async (d) => {
   await d.click("Callback"); await d.text("Schedule callback"); await d.back(); await d.noText("Schedule callback"); await d.msg("call.resultMissing");

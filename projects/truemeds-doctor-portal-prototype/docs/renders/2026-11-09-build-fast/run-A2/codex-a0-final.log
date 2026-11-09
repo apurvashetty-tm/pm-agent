@@ -1,0 +1,19 @@
+FAIL A0-layout-1280 locator.waitFor: Timeout 8000ms exceeded.
+Call log:
+[2m  - waiting for locator('summary').filter({ hasText: /^Test on phone(?:\s|$)/ }).first().locator('..').getByText('Phone and Mac on the same Wi-Fi', { exact: true }) to be visible[22m
+
+FAIL A0-layout-1440 locator.waitFor: Timeout 8000ms exceeded.
+Call log:
+[2m  - waiting for locator('summary').filter({ hasText: /^Test on phone(?:\s|$)/ }).first().locator('..').getByText('Phone and Mac on the same Wi-Fi', { exact: true }) to be visible[22m
+
+FAIL A0-layout-1920 locator.waitFor: Timeout 8000ms exceeded.
+Call log:
+[2m  - waiting for locator('summary').filter({ hasText: /^Test on phone(?:\s|$)/ }).first().locator('..').getByText('Phone and Mac on the same Wi-Fi', { exact: true }) to be visible[22m
+
+PASS A0-summaries
+PASS A0-inputs-desktop-sign-in_default
+PASS A0-inputs-desktop-otp_default
+PASS A0-inputs-phone-sign-in_default
+PASS A0-inputs-phone-otp_default
+PASS A0-settings
+FAIL A0-network-link Set A0_NETWORK_HOST to the host already configured by the build server; no undocumented injection

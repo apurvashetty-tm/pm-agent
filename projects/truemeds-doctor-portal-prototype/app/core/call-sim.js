@@ -19,6 +19,8 @@ export const CALL_CHOICES = {
   recordDelay:    ["prompt", "late"],                           // late: the record arrives after half the call-record wait
   // per-call talk length in seconds (B9 "length"); "auto" = the length the "Patient answers" choice implies
   length:         ["auto", ...Array.from({ length: 120 }, (_, i) => String(i + 1)), "150", "180", "240", "300", "600"],
+  // seconds the phones ring (doctor's leg, then the patient's) before the patient answers; talk time counts from the answer (D-58)
+  ring:           ["0", "5", "20", "45", "90"],
 };
 const RETRIED = ["busy", "no-answer", "switched-off", "network", "rejected", "unreachable"];
 export const holdPolicy = (cause) => (RETRIED.includes(cause) ? "by-cause" : cause === "invalid-number" ? "not-retried-flagged" : "plain-hold");
@@ -28,6 +30,8 @@ export const holdPolicy = (cause) => (RETRIED.includes(cause) ? "by-cause" : cau
 // result), so a missing result asks "Are you still on the call?" (CW-D1). Every other value: the first in its list.
 export const DEFAULT_CHOICES = { ...Object.fromEntries(Object.entries(CALL_CHOICES).map(([k, o]) => [k, o[0]])), connected: "over-gate", hangup: "not-reported" };
 
+// Ringing before the patient answers, in ms (leg 1 then leg 2). Talk time counts from the answer, never from the tap (D-58).
+export const ringTime = (c) => Number(c.ring || 0) * 1000;
 // Talk length of one attempt in ms: the length control in seconds, else the "Patient answers" choice around the gate.
 export function talkLength(c, gate) {
   if (c.length && c.length !== "auto") return Number(c.length) * 1000;
@@ -46,11 +50,12 @@ export function timeline(choices, mode = "review") {
     return out;
   }
   if (c.connected === "none") { push(0, "no-answer-doctor-leg"); return out; }
-  const talk = talkLength(c, gate);
-  push(0, "leg2-answered", { partner: c.partner, callId: c.callId });
+  const ring = ringTime(c);
+  const talk = ring + talkLength(c, gate);   // event times after the answer (talk time itself is talkLength)
+  push(ring, "leg2-answered", { partner: c.partner, callId: c.callId });
   push(talk, "hangup-reported-by-partner-" + (c.hangup === "reported" ? "yes" : "no"), { ended: c.whoEnded });
   if (c.callEndedEvent === "event" && c.hangup === "reported") push(talk + pollingLag, "call-ended-event", {});
-  push(talk + pollingLag * 2, "talk-time", { seconds: Math.round(talk / 1000), counted: talk >= value("minCountedCall", mode) });
+  push(talk + pollingLag * 2, "talk-time", { seconds: Math.round((talk - ring) / 1000), counted: talk - ring >= value("minCountedCall", mode) });
   if (c.record !== "never" && c.record !== "no-answer") {
     const delay = c.record === "delayed" || c.recordDelay === "late" ? value("callRecordWait", mode) / 2 : pollingLag * 4;
     push(talk + delay, "call-record", { kind: c.record });

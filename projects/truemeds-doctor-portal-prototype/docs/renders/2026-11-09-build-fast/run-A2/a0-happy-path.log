@@ -1,0 +1,4 @@
+FAIL A0-happy-path locator.click: Timeout 8000ms exceeded.
+Call log:
+[2m  - waiting for getByRole('button', { name: /Start availability|Save|Confirm/i }).last()[22m
+

@@ -91,6 +91,7 @@ body { position: relative; }
 .rp-row[open] .rp-row__chev { transform: rotate(180deg); }
 .rp-row__body { padding-bottom: var(--tm-space-xs); }
 .rp-grid { display: grid; grid-template-columns: 1fr 1fr; column-gap: var(--tm-space-xs); }
+#rp-call-body .rp-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }   /* 14 call choices: three columns keep the open row inside 1280 × 800 (RULES §7.3) */
 .review-panel label { display: flex; flex-direction: column; gap: 2px; margin: var(--tm-space-2xs) 0; min-width: 0; color: var(--tm-content-secondary); }
 .review-panel select { min-height: 28px; width: 100%; font: inherit; color: var(--tm-content-primary); background: var(--tm-surface-primary); border: 1px solid var(--tm-border-default); border-radius: var(--tm-radius-xs); padding: 2px var(--tm-space-2xs); }
 .review-panel ol, .review-panel ul { margin: 0; padding-left: var(--tm-space-md); }

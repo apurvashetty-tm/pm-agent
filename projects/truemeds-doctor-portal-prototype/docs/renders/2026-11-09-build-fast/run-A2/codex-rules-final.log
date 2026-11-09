@@ -1,0 +1,16 @@
+PASS A-GATE--1 partner result at gate minus 1 second
+PASS A-GATE-0 partner result at gate plus 0 second
+PASS A-GATE-1 partner result at gate plus 1 second
+PASS A-GATE-live-cat4 Cat4 cannot unlock from local live time alone
+PASS A-GATE-sum counted talk time adds across calls on same case
+PASS A-GATE-min sub-minimum call is excluded from accumulated talk time
+PASS A-GATE-window old talk time outside window cannot unlock next short call
+PASS A-GATE-retry short calls have no doctor retry cap
+PASS A-RECORD-under-gate submitted prescription unproven: under-gate
+PASS A-RECORD-never submitted prescription unproven: never
+PASS A-RECORD-no-answer submitted prescription unproven: no-answer
+PASS A-ROUTE-cat4 Cat4-style route: cat4
+PASS A-ROUTE-pilot_ha_skipped_customer Cat4-style route: pilot_ha_skipped_customer
+PASS A-ROUTE-pilot_ha_skipped_system Cat4-style route: pilot_ha_skipped_system
+PASS A-COUNT-once one successful confirm logs exactly once after reload
+15/15 passed

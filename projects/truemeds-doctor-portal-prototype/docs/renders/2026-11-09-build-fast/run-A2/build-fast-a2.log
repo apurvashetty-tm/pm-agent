@@ -1,5 +1,6 @@
 PASS R16-a a call of exactly the counted minimum counts toward the gate
-PASS R16-b the gate counts talk time, not time since the tap: a long ring before the answer never unlocks
+PASS R16-b the gate counts from the patient's answer: 45 s ringing + 20 s talk is too short
+PASS R16-b2 45 s ringing + 50 s talk: valid only once 50 s after the answer have passed
 PASS R16-c a new case starts its own talk-time count
 PASS R17-a Cat4, hang-up known: the timeout skips 7b and checks the record (7c → 7d)
 PASS R17-b a late result replaces 7d by itself
@@ -7,14 +8,20 @@ PASS R18-a 7f: no hold before the record wait ends; then mismatch, hold, no earn
 PASS R18-b 7f: the record over the gate confirms and counts once
 PASS R18-c 7f left before the record: it still settles, counted after the doctor left
 PASS R18-d hold policy: retried by cause with the configured gap and attempts
+PASS R18-e hold: retried every gap up to the attempts, then plain hold; invalid number never retried
+PASS R18-f 7f unproven: the held case is retried too
 PASS R19-a callback: only a time picked → Pick a date.; only a date → Pick a time.
 PASS R19-b callback refused / failed: the exact date and time are kept; the case stays open
 PASS R19-c unavailable: the chosen reason is stored exactly; callback / unavailable / 7f never count
 PASS R20-a Pending block: count in words, scroll to the first Pending, no request sent
 PASS R20-b Confirming…: one submit only; the page is frozen until the answer
+PASS R20-c unclear confirm: stays Confirming… and checks again; resolves to the confirmed card, one submit
+PASS R20-d unclear confirm survives a reopen: still Confirming…, no second submit, then the failure notice
+PASS R20-e 7d Confirming…: Callback and Unavailable are disabled
+PASS R17-c a late result closes a sheet the new stage doesn't offer
 PASS R13-a phone Back closes the callback and unavailable sheets; the case stays
 PASS R13-b after the patient answered, a later 3 never brings Back
 PASS R13-c 3 before the patient was ever reached keeps Back and the leave sheet
 PASS R-offline offline: Call and Callback fail with one notice, nothing lost; polling pauses
 PASS R-demo demo: sign-in → prescribe → call → Prescription confirmed → next case
-19/19 passed
+26/26 passed

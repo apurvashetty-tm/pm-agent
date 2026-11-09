@@ -6,7 +6,7 @@
 // Stages on c.stage: ready (1) · calling (2 / 7a) · not-through (3) · doctor-missed (4) · result-wait (5, and 7c with a check
 // time) · ended-early (6) · still-on-call (7b) · result-missing (7d) · valid (8a) · closed, with c.outcome = confirmed (10a) ·
 // submitted (7f) · unavailable (9) · callback (scheduled).
-import { talkLength, holdPolicy } from "./call-sim.js";
+import { talkLength, holdPolicy, ringTime } from "./call-sim.js";
 
 const LIVE = ["calling", "result-wait", "still-on-call", "result-missing"];
 const MS_PER_MIN = 60 * 1000;   // unit conversion for the event log, not a setting
@@ -24,11 +24,12 @@ const secs = (ms) => Math.round(ms / 1000);
 function facts(a, ch, v) {
   const L = talkLength(ch, v("gate"));
   const lag = v("pollingInterval");   // the app sees a partner event at its next poll
-  const endsAt = a.at + L;
+  const answeredAt = a.at + ringTime(ch);   // leg 2 answered: the talk time counts from here, never from the tap (D-58)
+  const endsAt = answeredAt + L;
   const late = ch.record === "delayed" || ch.recordDelay === "late";
   const resultAt = ch.record === "never" ? null : endsAt + (late ? v("callRecordWait") / 2 : lag);
   const known = ch.hangup === "reported" || (ch.partner === "knowlarity" && ch.callEndedEvent === "event");
-  return { L, lag, endsAt, resultAt, known };
+  return { L, lag, answeredAt, endsAt, resultAt, known };
 }
 // Talk time on the case (D-58 pt 22): connected calls of at least the counted minimum, within the talk-time window, add up.
 export function totalTalk(c, now, v) {
@@ -51,7 +52,7 @@ export function callEnded(c, now, v) { c.stage = "result-wait"; c.call.checkAt =
 export function submitConfirm(c, now) { c.stage = "closed"; c.outcome = "submitted"; c.call.submit = { at: now, done: false }; }
 
 // Patient side failed (leg 2), whenever detected: the case closes as Patient unavailable by itself and goes on hold (CW-B1, CW-B2).
-export function closeUnavailable(c, cause, { event, v, by = "auto" }) {
+export function closeUnavailable(c, cause, { event, v, by = "auto", hold }) {
   c.stage = "closed"; c.outcome = "unavailable"; c.unavailable = { by, cause };
   c.notes = { symptoms: "", doctor: "" };   // consultation notes are saved only on confirm (D-59)
   if (by === "doctor") { event(`patient unavailable, reason saved with the case: ${cause}`); return; }   // D-73, D-75
@@ -59,6 +60,7 @@ export function closeUnavailable(c, cause, { event, v, by = "auto" }) {
   const gapMin = Math.round(v("holdRetryGap") / MS_PER_MIN);
   event(`patient unavailable (${cause}): case on hold — ` + (p === "by-cause" ? `retry by cause, every ${gapMin} min, up to ${v("holdRetryAttempts")} times`
     : p === "not-retried-flagged" ? "invalid number: not retried, flagged" : "plain hold, no retry by cause"));
+  if (hold) hold(c, cause, p);   // the backend runs the retries (B9: gap and attempts from settings)
 }
 
 // One poll of the backend (B7) for the open case. ctx: { now, v, choices(i), event, onProven(c) }. Returns true when the screen changes.
@@ -73,13 +75,14 @@ export function stepCall(c, ctx) {
   const f = facts(a, ch, v);
   if (now < a.at + f.lag) return false;   // nothing reported yet
   if (c.stage === "calling" && !a.polled) {
-    a.polled = true;
     if (ch.doctorFailure !== "none") {   // doctor side (3 / 4): stays on the case; Back again only if the patient was never reached
-      a.done = true; c.stage = ch.doctorFailure === "3" ? "not-through" : "doctor-missed";
+      a.polled = true; a.done = true; c.stage = ch.doctorFailure === "3" ? "not-through" : "doctor-missed";
       event(ch.doctorFailure === "3" ? "call request refused / leg 1 error → didn't go through" : "leg 1 not answered → you didn't answer"); return true;
     }
     const cause = ch.patientFailure !== "none" ? ch.patientFailure : ch.connected === "none" ? "no-answer" : null;
-    if (cause) { a.done = true; closeUnavailable(c, cause, ctx); return true; }
+    if (cause) { a.polled = true; a.done = true; closeUnavailable(c, cause, ctx); return true; }
+    if (now < f.answeredAt + f.lag) return false;   // still ringing: the patient hasn't answered yet
+    a.polled = true;
     if (!c.attempted) event("leg 2 answered: attempted call");
     c.attempted = true;   // leg 2 answered (D-58): leaving is blocked until the case is closed
   }
@@ -126,6 +129,7 @@ function settleSubmitted(c, ctx) {
   s.done = true;
   if (r === "proven") { c.outcome = "confirmed"; ctx.onProven(c); return true; }
   event(`call record ${r}: prescription not confirmed (mismatch) → case on hold, retry`);
+  if (ctx.hold) ctx.hold(c, "unproven confirm", "by-cause");
   return false;
 }
 // "proven" · "under the gate" · "says the patient never answered" · "missing after the wait" · null (still waiting).

@@ -24,7 +24,7 @@ const LABELS = {
 const CALL_LABELS = {
   connected: "Patient answers · talk length", doctorFailure: "Doctor-side failure", patientFailure: "Patient-side failure", partner: "Partner",
   callEndedEvent: "Call-ended event (Knowlarity, open)", hangup: "Hang-up", whoEnded: "Who ended", ha: "Health Advisor (B2)",
-  record: "Call result / record", callback: "Callback", releaseRefused: "Release", recordDelay: "Result timing", length: "Talk length (seconds)",
+  record: "Call result / record", callback: "Callback", releaseRefused: "Release", recordDelay: "Result timing", length: "Talk length (seconds)", ring: "Rings before the answer",
 };
 // Rows of the Review panel card. `fields` carry data-journey so the phone drawer shows only the current screen's controls.
 const ROWS = [

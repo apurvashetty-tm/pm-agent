@@ -1,0 +1,9 @@
+PASS A-OPTIONS-d-default approved schedule/duration choices: d-default
+PASS A-OPTIONS-d-every-x-hours approved schedule/duration choices: d-every-x-hours
+PASS A-OPTIONS-d-duration-picker approved schedule/duration choices: d-duration-picker
+PASS A-SOS-d-sos-only SOS total dose and unit: tablet
+PASS A-SOS-d-inhaler SOS total dose and unit: puffs
+PASS A-SOS-d-cream SOS total dose and unit: times
+PASS A-PROFILE-cancelled Profile faster sign-in on: cancelled
+PASS A-PROFILE-enable-failed Profile faster sign-in on: enable-failed
+8/8 passed

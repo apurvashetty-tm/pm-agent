@@ -1,3 +1,0 @@
-scan: 52 files, 4587 lines checked
-3.2 hard-coded time value in core/call-engine.js:58: event(`patient unavailable (${cause}): case on hold — ` + (p === "by-cause" ? `retry by cause, every
-FAIL 1

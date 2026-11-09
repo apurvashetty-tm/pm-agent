@@ -13,7 +13,7 @@ import { clock } from "../core/clock.js";
 import { value } from "../core/settings.js";
 import { event } from "../core/events.js";
 import { EV } from "../core/call-events.js";
-import { work, saveWork, currentCase, openCase, updateMedicine, releaseCase, countConfirmed, availability, keepRecord } from "../core/session.js";
+import { work, saveWork, currentCase, openCase, updateMedicine, releaseCase, countConfirmed, availability, keepRecord, addHold } from "../core/session.js";
 import { route, scriptKey, startAttempt, stillTalking, callEnded, submitConfirm, closeUnavailable, stepCall } from "../core/call-engine.js";
 import { defaultAttempt } from "../data/story-schema.js";
 import { icon, paint, btn, busyBtn, notice, statusLine, actionBar, sheet, toast, caseHeader, medicineRow, focusSheet, revealAboveKeyboard, watchKeyboard } from "./parts.js";
@@ -152,6 +152,8 @@ export function render(host, id, { mode, params = {} }) {
   const empty = () => c.medicines.length === 0;
   // Header Back on 1, 3 and 4 only, while the patient has never been reached (D-80 pt 1, D-81 F21)
   const backAllowed = () => ["ready", "not-through", "doctor-missed"].includes(c.stage) && !c.attempted && !ui.loading;
+  const callbackAllowed = () => ["ended-early", "result-missing"].includes(c.stage) && !ui.confirming;   // only on 6 and 7d (CW-A1, CW-C3)
+  const unavailableAllowed = () => c.stage === "result-missing" && !ui.confirming;   // the doctor marks unavailable only on 7d (D-58 pt 23)
   const scriptShown = () => ["calling", "still-on-call"].includes(c.stage);   // from the tap while a call may be live; hidden once it has ended (D-58 pt 24)
 
   const root = h("div", { class: "case-screen tm" });
@@ -236,7 +238,7 @@ export function render(host, id, { mode, params = {} }) {
     if (!band && STAGE_NOTICE[c.stage] && !ui.loadFailed) band = STAGE_NOTICE[c.stage]();
     if (offline() && !closed() && !ui.bar) band = notice("warning", MSG("case.offline"));   // D-54: offline blocks the main action
     const callAgain = () => btn([icon("phone"), MSG("case.callAgain")], `tm-btn--primary ${lg}`, onCall, { id: "call-initiate-btn" });
-    const callbackBtn = () => btn([icon("calendar", "tm-icon--16"), MSG("case.callback")], "tm-btn--secondary tm-btn--lg", () => openOverlay("callback"), { id: "schedule-callback-btn" });
+    const callbackBtn = () => btn([icon("calendar", "tm-icon--16"), MSG("case.callback")], "tm-btn--secondary tm-btn--lg", () => openOverlay("callback"), { id: "schedule-callback-btn", disabled: !!ui.confirming });   // Confirming…: everything else disabled
     const confirmBtn = () => (ui.confirming ? busyBtn(MSG("case.confirming"), `tm-btn--primary ${lg}`) : btn(MSG("case.confirmPrescription"), `tm-btn--primary ${lg}`, onConfirm, { id: "main-cta-btn" }));
     let kids;
     if (ui.loadFailed) kids = [btn(MSG("common.tryAgain"), `tm-btn--primary ${lg}`, onRetryLoad)];
@@ -250,7 +252,7 @@ export function render(host, id, { mode, params = {} }) {
     else if (c.stage === "not-through" || c.stage === "doctor-missed") kids = [callAgain()];
     else if (c.stage === "ended-early") kids = [callAgain(), h("div", { class: "tm-btn-pair case-pair--single" }, callbackBtn())];   // Call again · Callback, no Unavailable (D-58 pt 23)
     else if (c.stage === "result-missing") kids = [confirmBtn(), h("div", { class: "tm-btn-pair" }, callbackBtn(),   // CW-D2: Cat4 / HA skipped → Confirm prescription
-      btn([icon("phone-off", "tm-icon--16"), MSG("case.unavailable")], "tm-btn--destructive tm-btn--lg", () => openOverlay("unavailable"), { id: "az-unavail-btn" }))];
+      btn([icon("phone-off", "tm-icon--16"), MSG("case.unavailable")], "tm-btn--destructive tm-btn--lg", () => openOverlay("unavailable"), { id: "az-unavail-btn", disabled: !!ui.confirming }))];
     else if (c.stage === "valid") kids = [confirmBtn()];   // 8a: Confirm prescription only (CW-C3)
     else if (empty()) kids = [ui.releasing ? busyBtn(MSG("case.releasing"), `tm-btn--primary ${lg}`) : btn(MSG("case.releaseCase"), `tm-btn--primary ${lg}`, () => onRelease(true))];
     else kids = [btn([icon("phone"), MSG("case.callPatient")], `tm-btn--primary ${lg}`, onCall, { id: "call-initiate-btn" })];
@@ -318,6 +320,7 @@ export function render(host, id, { mode, params = {} }) {
   // ---------- behaviour ----------
   function openOverlay(which, medId) {
     if (closed() && which === "prescribe") return;
+    if ((which === "callback" && !callbackAllowed()) || (which === "unavailable" && !unavailableAllowed())) return;
     if (which === "callback") ui.cb = { day: null, time: null, error: null, notice: null, busy: false };
     ui.overlay = which; ui.medId = medId ?? ui.medId; ui.rxFailed = which === "rx" && c.fxKind === "rx-failed"; draw();
   }
@@ -352,19 +355,22 @@ export function render(host, id, { mode, params = {} }) {
   function onCallEnded() { callEnded(c, clock.now(), v); event(EV.callEnded()); saveWork(); draw(); }
   // Confirm prescription (8a / 7d): Flag 5 first; one submit; unclear result stays Confirming… (D-69); failure keeps everything.
   function onConfirm() {
-    if (ui.confirming) return;
+    if (ui.confirming || c.confirmPending) return;
     if (offline()) { ui.bar = "offline-action"; draw(); return; }
     if (pending()) { ui.bar = "confirm-blocked"; draw(); scrollToFirstPending(); return; }
-    ui.bar = null; ui.confirming = true; draw();
-    life.later(() => {
-      const r = mode === "demo" ? "saved" : story().prescribe;
-      if (r === "confirm-busy") return;   // unclear result: stays on Confirming… while the app checks (D-69); never a second submit
-      ui.confirming = false;
-      if (r === "confirm-failed") { ui.bar = "confirm-failed"; event(EV.confirmFailed()); draw(); return; }
-      if (c.stage === "result-missing") { submitConfirm(c, clock.now()); event(EV.saved()); }   // D-68
-      else { c.stage = "closed"; c.outcome = "confirmed"; proven(c); }
-      saveWork(); draw();
-    });
+    ui.bar = null; ui.confirming = true; c.confirmPending = true; saveWork(); draw();   // kept with the case: a reopen keeps checking, never resubmits
+    life.later(checkConfirm);
+  }
+  // The server's answer to the one submit. Unclear (no answer): stay on Confirming… and check again after the reconcile time; the
+  // result is then the confirmed card or the failure notice, never a second submit (D-69, app-logic §6).
+  function checkConfirm() {
+    const r = mode === "demo" ? "saved" : story().prescribe;
+    if (r === "confirm-busy") { life.later(checkConfirm, "reconcileDelay"); return; }
+    ui.confirming = false; c.confirmPending = false;
+    if (r === "confirm-failed") { ui.bar = "confirm-failed"; event(EV.confirmFailed()); saveWork(); draw(); return; }
+    if (c.stage === "result-missing") { submitConfirm(c, clock.now()); event(EV.saved()); }   // D-68
+    else if (c.stage === "valid") { c.stage = "closed"; c.outcome = "confirmed"; proven(c); }
+    saveWork(); draw();
   }
   // A proven confirm counts once (app-logic §3) and is one analytics event per outcome, never from the button text (D-50).
   function proven(x) {
@@ -386,6 +392,7 @@ export function render(host, id, { mode, params = {} }) {
     cb.notice = null; cb.busy = true; draw();
     life.later(() => {
       cb.busy = false;
+      if (!callbackAllowed()) { ui.overlay = null; draw(); return; }   // a late result changed the stage meanwhile
       const i = c.call ? c.call.attempts.length - 1 : 0;
       const answer = mode === "demo" ? "accepted" : choicesFor(i).callback;
       // The backend refuses a callback unless the patient answered (leg 2) (CW-A1, K3); a save failure keeps the choices.
@@ -397,6 +404,7 @@ export function render(host, id, { mode, params = {} }) {
     });
   }
   function onUnavailableReason(reason) {   // choosing a reason is the confirmation (D-75); the reason is saved with the case (D-73)
+    if (!unavailableAllowed()) { ui.overlay = null; draw(); return; }
     if (offline()) { ui.overlay = null; ui.bar = "offline-action"; draw(); return; }
     closeUnavailable(c, reason, { event, v, by: "doctor" });
     ui.overlay = null; saveWork(); draw();
@@ -426,10 +434,14 @@ export function render(host, id, { mode, params = {} }) {
     if (!c.call || offline() || ui.confirming) return;
     const before = c.stage;
     let changed = false;
-    for (let i = 0; i < 6 && stepCall(c, { now: clock.now(), v, choices: choicesFor, event, onProven: proven }); i++) changed = true;   // a jump in time may pass several steps
+    const ctx = { now: clock.now(), v, choices: choicesFor, event, onProven: proven,
+      hold: (x, cause, policy) => addHold({ order: x.order, cause, policy, at: clock.now() }) };
+    for (let i = 0; i < 6 && stepCall(c, ctx); i++) changed = true;   // a jump in time may pass several steps
     if (!changed) return;
     if (c.stage !== before) ui.bar = null;   // a result notice belongs to the stage it came from
-    if (closed() && ["callback", "unavailable"].includes(ui.overlay) && !ui.cb.busy) ui.overlay = null;   // closed by the backend meanwhile
+    // A late result can change the stage under an open sheet: a sheet the new stage doesn't offer closes (Callback on 6 / 7d,
+    // Unavailable on 7d only). A callback save in flight checks again when it answers.
+    if (!ui.cb.busy && ((ui.overlay === "callback" && !callbackAllowed()) || (ui.overlay === "unavailable" && !unavailableAllowed()))) ui.overlay = null;
     saveWork();
     if (ui.overlay !== "prescribe") draw();
   }
@@ -456,7 +468,8 @@ export function render(host, id, { mode, params = {} }) {
     const off = clock.onJump(() => { if (!life.alive()) { off(); return; } poll(); });   // a fast-forward polls straight away
   }
   if (ui.releasing && !capture) { ui.releasing = false; onRelease(false); }   // a-releasing opened live: the request is in flight
-  if (ui.confirming && !capture) { ui.confirming = false; onConfirm(); }
+  if (c.confirmPending && !capture) { ui.confirming = true; life.later(checkConfirm, "reconcileDelay"); }   // reopened mid-confirm: check, don't resubmit
+  else if (ui.confirming && !capture) { ui.confirming = false; onConfirm(); }
 
   watchKeyboard(root, life.alive);
   draw();

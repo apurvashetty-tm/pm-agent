@@ -69,7 +69,8 @@ export const VALUE_LABEL = {
   callback: { accepted: "Callback saved", refused: "Callback refused (patient not reached)", failed: "Callback save fails" },
   releaseRefused: { accepted: "Release accepted", refused: "Release refused" },
   recordDelay: { prompt: "Result arrives at once", late: "Result arrives late" },
-  length: { auto: "From “Patient answers”", ...Object.fromEntries(CALL_CHOICES.length.slice(1).map((s) => [s, `${s} seconds`])) },
+  ring: { 0: "Answers at once", 5: "Rings 5 s first", 20: "Rings 20 s first", 45: "Rings 45 s first", 90: "Rings 90 s first" },
+  length: { auto:"From “Patient answers”", ...Object.fromEntries(CALL_CHOICES.length.slice(1).map((s) => [s, `${s} seconds`])) },
 };
 export const valueLabel = (field, v) => (VALUE_LABEL[field] && VALUE_LABEL[field][v]) || String(v);
 
