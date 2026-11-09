@@ -23,7 +23,5 @@
    A-19: "Couldn't turn on…" (the result of a tap) sits inside the bar, 16 above its button (.tm-actionbar > .tm-notice). */
 .offer-screen .footer { flex: none; margin: 0; }
 .offer-screen .notice-slot[hidden] { display: none !important; }
-/* D-93: "isn't available" is a standing state, so its neutral notice sits at the top of the panel (as on unlock_unavailable, A-19). */
-.offer-screen .offer-unavailable { margin: 0 0 var(--tm-space-lg); }
-.offer-screen .offer-unavailable .tm-icon { width: 20px; height: 20px; flex: none; }
+/* D-93 (revised): "isn't available" is the result of the Turn on tap, so it uses the same bar slot (A-19). */
 .offer-screen [hidden] { display: none !important; }

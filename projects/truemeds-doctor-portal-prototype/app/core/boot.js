@@ -96,7 +96,7 @@ const BEHAVIOUR_SCREEN = {
   "offer.enabled": "home_setup-wheel",       // turned on → Home (stub until step 2)
   "offer.not-now": "home_setup-wheel",       // Not now → Home
   "offer.unsupported": "home_setup-wheel",   // no screen lock → offer skipped → Home
-  "offer.unavailable": "offer_unavailable",  // D-93: phone answers unavailable at Turn on (picture pending approval)
+  "offer.unavailable": "offer_unavailable",  // D-93: phone answers unavailable at Turn on (approved; picture joins ui-screens/ at D-94 step 5)
   "signin.locked-number": "otp_locked",      // sign-in on a locked number → OTP locked
 };
 function renderScreen(id, params = {}) {

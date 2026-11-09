@@ -461,7 +461,7 @@ async function signInFull(p, n) { await send(p, n); await verify(p, "1234"); }
   await r.ctx.close(); await r2.ctx.close();
 }
 
-{ // F5: failed → notice in the bar + Try again; Try again re-runs the prompt; cancelled → as it was; offline; unavailable → offer_unavailable (D-93)
+{ // F5: failed → notice in the bar + Try again; Try again re-runs the prompt; cancelled → as it was; offline; unavailable → offer_unavailable (D-93, bar notice; F5d)
   const r = await open(""); const p = r.p;
   await setStory(p, { offer: "enable-failed" });
   await signInFull(p, "7012345613");
@@ -492,20 +492,22 @@ async function signInFull(p, n) { await send(p, n); await verify(p, "1234"); }
   await r.ctx.close(); await r2.ctx.close();
 }
 
-{ // F5d (D-93): Turn on → phone answers unavailable → neutral notice at the top of the panel, Turn on / Not now / hero hidden,
-  // Continue the only button → Home; not enabled; the offer is not shown again (signing in again, reopening the app)
+{ // F5d (D-93, revised): Turn on → phone answers unavailable → screen unchanged (hero + three points), warning notice in the bar
+  // (same slot as offline / failed), the primary reads Continue → Home, Not now hidden; not enabled; the offer is not shown again
   const r = await open(""); const p = r.p;
   await setStory(p, { offer: "unavailable" });
   await signInFull(p, "7012345619");
   await p.click("#turn-on"); await p.waitForTimeout(PROMPT);
   const u = await p.evaluate(() => {
     const vis = (id) => { const e = document.getElementById(id); return !!e && !e.hidden && e.getClientRects().length > 0; };
-    const n = document.getElementById("offer-unavailable");
+    const n = document.getElementById("offer-notice");
     const btns = [...document.querySelectorAll(".offer-screen .tm-actionbar button")].filter((b) => !b.hidden && b.getClientRects().length);
-    return { s: window.__tm.store.get().s, n: vis("offer-unavailable") ? n.textContent : null, neutral: n.classList.contains("tm-notice--neutral"),
-      top: n.parentElement.classList.contains("panel") && n.parentElement.firstElementChild === n, barNotice: vis("offer-notice"),
-      hero: vis("offer-unavailable") && !!document.querySelector(".offer-screen .hero-wrap:not([hidden])"), turnOn: vis("turn-on"), notNow: vis("not-now"),
-      btns: btns.map((b) => [b.textContent, b.classList.contains("tm-btn--primary")]) };
+    return { s: window.__tm.store.get().s, n: vis("offer-notice") ? n.textContent : null, warn: n.classList.contains("tm-notice--warning"),
+      icon: n.querySelector(".tm-icon").getAttribute("data-icon"), inBar: !!document.querySelector(".tm-actionbar > #offer-notice:not([hidden])"),
+      topNotice: !!document.querySelector(".offer-screen .panel .tm-notice"),
+      hero: !!document.querySelector(".offer-screen .hero-wrap") && document.querySelector(".offer-screen .hero-wrap").getClientRects().length > 0,
+      points: document.querySelectorAll(".offer-screen .points li").length, notNow: vis("not-now"),
+      btns: btns.map((b) => [b.id, b.textContent, b.classList.contains("tm-btn--primary")]) };
   });
   await p.goBack(); await p.waitForTimeout(300); const viaBack = await sNow(p);   // phone Back = the only action (Continue)
   const st = await p.evaluate(() => JSON.parse(localStorage.getItem("tm-doctor-app:review:faster:7012345619")));
@@ -513,18 +515,21 @@ async function signInFull(p, n) { await send(p, n); await verify(p, "1234"); }
   await setStory(p, { offer: "enabled" });
   await signInFull(p, "7012345619"); const again = await sNow(p);
   await p.reload(); await p.waitForTimeout(400); const reopened = await sNow(p);
-  // Continue tapped (second run, fresh number)
+  // Continue tapped (second run, fresh number); it never re-opens the prompt
   const r2 = await open(""); const p2 = r2.p;
   await setStory(p2, { offer: "unavailable" }); await signInFull(p2, "7012345620");
   await p2.click("#turn-on"); await p2.waitForTimeout(PROMPT);
-  await p2.click("#continue"); await p2.waitForTimeout(200); const cont = await sNow(p2);
+  await setStory(p2, { offer: "enabled" });
+  await p2.click("#turn-on"); await p2.waitForTimeout(200); const cont = await sNow(p2);
   const st2 = await p2.evaluate(() => JSON.parse(localStorage.getItem("tm-doctor-app:review:faster:7012345620")));
   // Jump to the behaviour row opens the built state
-  const r3 = await open("?s=offer.unavailable"); const j = await r3.p.evaluate(() => ({ s: window.__tm.store.get().s, n: document.getElementById("offer-unavailable")?.hidden === false }));
-  check("F5d", "D-93: Turn on → unavailable → \"Faster sign-in isn't available on this phone right now.\" (neutral, top of the panel), Turn on / Not now / hero hidden, Continue the only (primary) button → Home; not enabled, offered; phone Back = Continue; the offer is not shown again; Jump offer.unavailable opens it",
-    u.s === "offer_fingerprint" && u.n === "Faster sign-in isn’t available on this phone right now." && u.neutral && u.top && !u.barNotice && !u.hero && !u.turnOn && !u.notNow &&
-    JSON.stringify(u.btns) === JSON.stringify([["Continue", true]]) && viaBack === "home_setup-wheel" && st.offered && !st.enabled &&
-    again === "home_setup-wheel" && reopened === "home_setup-wheel" && cont === "home_setup-wheel" && st2.offered && !st2.enabled && j.s === "offer_unavailable" && j.n,
+  const r3 = await open("?s=offer.unavailable"); const j = await r3.p.evaluate(() => ({ s: window.__tm.store.get().s,
+    n: document.getElementById("offer-notice")?.hidden === false ? document.getElementById("offer-notice").textContent : null, btn: document.getElementById("turn-on").textContent }));
+  check("F5d", "D-93 revised: Turn on → unavailable → screen unchanged (tile + 3 points), \"Faster sign-in isn't available on this phone right now.\" (warning, alert-triangle) in the bar, primary reads Continue, Not now hidden, no top notice → Home; not enabled, offered; phone Back = Continue; the offer is not shown again; Jump offer.unavailable opens it",
+    u.s === "offer_fingerprint" && u.n === "Faster sign-in isn’t available on this phone right now." && u.warn && u.icon === "alert-triangle" && u.inBar && !u.topNotice && u.hero && u.points === 3 && !u.notNow &&
+    JSON.stringify(u.btns) === JSON.stringify([["turn-on", "Continue", true]]) && viaBack === "home_setup-wheel" && st.offered && !st.enabled &&
+    again === "home_setup-wheel" && reopened === "home_setup-wheel" && cont === "home_setup-wheel" && st2.offered && !st2.enabled &&
+    j.s === "offer_unavailable" && j.n === "Faster sign-in isn’t available on this phone right now." && j.btn === "Continue",
     JSON.stringify({ u, viaBack, st, again, reopened, cont, st2, j }));
   check("F5e", "offer unavailable: 0 console errors", r.errors.length + r2.errors.length + r3.errors.length === 0, [...r.errors, ...r2.errors, ...r3.errors].join("|"));
   for (const x of [r, r2, r3]) await x.ctx.close();

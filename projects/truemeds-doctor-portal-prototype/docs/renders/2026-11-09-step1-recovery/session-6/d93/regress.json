@@ -1,0 +1,206 @@
+{
+ "offer_enable-failed_w360.png": {
+  "size": [
+   720,
+   1688
+  ],
+  "newSize": [
+   720,
+   1688
+  ],
+  "sameSize": true,
+  "changedPx": 0,
+  "over8Px": 0,
+  "maxChannel": 0,
+  "shiftedRows": 0,
+  "colourBands": [],
+  "verdict": "identical"
+ },
+ "offer_enable-failed_w390.png": {
+  "size": [
+   780,
+   1688
+  ],
+  "newSize": [
+   780,
+   1688
+  ],
+  "sameSize": true,
+  "changedPx": 0,
+  "over8Px": 0,
+  "maxChannel": 0,
+  "shiftedRows": 0,
+  "colourBands": [],
+  "verdict": "identical"
+ },
+ "offer_enabling_w360.png": {
+  "size": [
+   720,
+   1688
+  ],
+  "newSize": [
+   720,
+   1688
+  ],
+  "sameSize": true,
+  "changedPx": 0,
+  "over8Px": 0,
+  "maxChannel": 0,
+  "shiftedRows": 0,
+  "colourBands": [],
+  "verdict": "identical"
+ },
+ "offer_enabling_w390.png": {
+  "size": [
+   780,
+   1688
+  ],
+  "newSize": [
+   780,
+   1688
+  ],
+  "sameSize": true,
+  "changedPx": 0,
+  "over8Px": 0,
+  "maxChannel": 0,
+  "shiftedRows": 0,
+  "colourBands": [],
+  "verdict": "identical"
+ },
+ "offer_face-id_w360.png": {
+  "size": [
+   720,
+   1688
+  ],
+  "newSize": [
+   720,
+   1688
+  ],
+  "sameSize": true,
+  "changedPx": 0,
+  "over8Px": 0,
+  "maxChannel": 0,
+  "shiftedRows": 0,
+  "colourBands": [],
+  "verdict": "identical"
+ },
+ "offer_face-id_w390.png": {
+  "size": [
+   780,
+   1688
+  ],
+  "newSize": [
+   780,
+   1688
+  ],
+  "sameSize": true,
+  "changedPx": 0,
+  "over8Px": 0,
+  "maxChannel": 0,
+  "shiftedRows": 0,
+  "colourBands": [],
+  "verdict": "identical"
+ },
+ "offer_fingerprint_w360.png": {
+  "size": [
+   720,
+   1688
+  ],
+  "newSize": [
+   720,
+   1688
+  ],
+  "sameSize": true,
+  "changedPx": 0,
+  "over8Px": 0,
+  "maxChannel": 0,
+  "shiftedRows": 0,
+  "colourBands": [],
+  "verdict": "identical"
+ },
+ "offer_fingerprint_w390.png": {
+  "size": [
+   780,
+   1688
+  ],
+  "newSize": [
+   780,
+   1688
+  ],
+  "sameSize": true,
+  "changedPx": 0,
+  "over8Px": 0,
+  "maxChannel": 0,
+  "shiftedRows": 0,
+  "colourBands": [],
+  "verdict": "identical"
+ },
+ "offer_offline_w360.png": {
+  "size": [
+   720,
+   1688
+  ],
+  "newSize": [
+   720,
+   1688
+  ],
+  "sameSize": true,
+  "changedPx": 0,
+  "over8Px": 0,
+  "maxChannel": 0,
+  "shiftedRows": 0,
+  "colourBands": [],
+  "verdict": "identical"
+ },
+ "offer_offline_w390.png": {
+  "size": [
+   780,
+   1688
+  ],
+  "newSize": [
+   780,
+   1688
+  ],
+  "sameSize": true,
+  "changedPx": 0,
+  "over8Px": 0,
+  "maxChannel": 0,
+  "shiftedRows": 0,
+  "colourBands": [],
+  "verdict": "identical"
+ },
+ "offer_screen-lock_w360.png": {
+  "size": [
+   720,
+   1688
+  ],
+  "newSize": [
+   720,
+   1688
+  ],
+  "sameSize": true,
+  "changedPx": 0,
+  "over8Px": 0,
+  "maxChannel": 0,
+  "shiftedRows": 0,
+  "colourBands": [],
+  "verdict": "identical"
+ },
+ "offer_screen-lock_w390.png": {
+  "size": [
+   780,
+   1688
+  ],
+  "newSize": [
+   780,
+   1688
+  ],
+  "sameSize": true,
+  "changedPx": 0,
+  "over8Px": 0,
+  "maxChannel": 0,
+  "shiftedRows": 0,
+  "colourBands": [],
+  "verdict": "identical"
+ }
+}

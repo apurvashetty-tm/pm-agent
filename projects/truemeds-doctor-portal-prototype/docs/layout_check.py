@@ -59,7 +59,7 @@ def run_app():
             pg.close()
             # Step 1 entry screens (built): fill the frame, no nested phone, no sideways scroll, main button on screen
             for sid, btn in [("sign-in_default", ".login-submit"), ("sign-in_keyboard-open", ".login-submit"), ("otp_default", "#b"), ("otp_locked", "#b"),
-                             ("offer_fingerprint", "#turn-on"), ("offer_enable-failed", "#turn-on"), ("offer_unavailable", "#continue"), ("unlock_fingerprint", "#unlock-action"), ("unlock_unavailable", "#fallback")]:
+                             ("offer_fingerprint", "#turn-on"), ("offer_enable-failed", "#turn-on"), ("offer_unavailable", "#turn-on"), ("unlock_fingerprint", "#unlock-action"), ("unlock_unavailable", "#fallback")]:
                 pg = b.new_page(viewport={"width": w, "height": h}); errs = []
                 pg.on("pageerror", lambda e: errs.append(str(e)))
                 pg.goto(base + "?s=" + sid); pg.wait_for_timeout(400)

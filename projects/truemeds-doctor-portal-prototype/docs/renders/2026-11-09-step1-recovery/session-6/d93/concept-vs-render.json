@@ -1,0 +1,25 @@
+{
+ "x/p.png": {
+  "size": [
+   780,
+   1688
+  ],
+  "newSize": [
+   780,
+   1688
+  ],
+  "sameSize": true,
+  "changedPx": 25484,
+  "over8Px": 11396,
+  "maxChannel": 102,
+  "box": [
+   34,
+   163,
+   718,
+   1614
+  ],
+  "shiftedRows": 0,
+  "colourBands": [],
+  "verdict": "DIFFERENT"
+ }
+}

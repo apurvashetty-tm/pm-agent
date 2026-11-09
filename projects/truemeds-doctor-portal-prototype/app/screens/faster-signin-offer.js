@@ -4,8 +4,8 @@
 //   Shown once (plan B12: "offered" is remembered per number) · Turn on → phone prompt (mock unlock, B14) → Home ·
 //   cancelled → back to the offer as it was, no message · failed → "Couldn't turn on…" in the bar above Try again ·
 //   Try again = Turn on · offline → "You're offline…" · Not now → Home · phone Back = Not now (no Back control, D-47).
-//   unavailable (D-93) → neutral notice at the top of the panel (`unlock.unavailable`, as on unlock), hero, Turn on and Not now
-//   hidden, Continue → Home is the only button; not enabled; stays recorded as offered (so it is not shown again).
+//   unavailable (D-93, revised) → screen unchanged; warning notice in the bar (`unlock.unavailable`, same slot as offline / failed),
+//   the primary reads Continue (`offer.continue`) → Home, Not now hidden; not enabled; stays recorded as offered (not shown again).
 // A state opened directly (?s=offer_<state>) shows the approved picture's moment, then behaves live from there.
 import { MSG } from "../core/msg.js";
 import { push, setScreenBack, reset as resetNav } from "../core/nav.js";
@@ -25,6 +25,7 @@ const VARIANT = {
 const NOTICE = {
   failed:  { cls: "tm-notice--error", icon: "alert-circle", key: "offer.enableFailed" },
   offline: { cls: "tm-notice--warning", icon: "alert-triangle", key: "offer.offline" },
+  unavailable: { cls: "tm-notice--warning", icon: "alert-triangle", key: "unlock.unavailable" },   // D-93: the phone blocks it (warning, not error)
 };
 // Picture moments (same table as the approved file).
 const FIXTURES = {
@@ -34,7 +35,7 @@ const FIXTURES = {
   enabling:        { variant: "fingerprint", busy: true },
   "enable-failed": { variant: "fingerprint", notice: "failed", retry: true },
   offline:         { variant: "fingerprint", notice: "offline" },
-  unavailable:     { variant: "fingerprint", unavailable: true },   // D-93; picture pending Apurva's approval (session-5/d93/)
+  unavailable:     { variant: "fingerprint", notice: "unavailable", unavailable: true },   // D-93 (approved; picture joins ui-screens/ at D-94 step 5)
 };
 export const STATES = Object.keys(FIXTURES).map((k) => `offer_${k}`);
 
@@ -45,7 +46,7 @@ export function render(host, id, { mode, params = {} }) {
   const ctx = () => authCtx(mode);
   const live = !!params.live;
   const number = params.number || (signedIn(ctx()) || {}).number || PICTURE_NUMBER;
-  const m = { variant: fx.variant, busy: !live && !!fx.busy, notice: live ? null : fx.notice || null, retry: !live && !!fx.retry, unavailable: !!fx.unavailable };
+  const m = { variant: fx.variant, busy: !live && !!fx.busy, notice: live && !fx.unavailable ? null : fx.notice || null, retry: !live && !!fx.retry, unavailable: !!fx.unavailable };
   // Offered once (D-45): shown live after a first OTP sign-in → remembered, so it is not shown again on this phone.
   if (live) markOffered(number, ctx());
 
@@ -55,11 +56,7 @@ export function render(host, id, { mode, params = {} }) {
   const noticeIcon = h("span", { class: "tm-icon", "data-icon": "alert-circle", "aria-hidden": "true" });
   const noticeText = h("span", {});
   const notice = h("div", { class: "tm-notice notice-slot", id: "offer-notice", role: "status", hidden: true }, noticeIcon, noticeText);
-  // D-93: a standing state ("isn't available"), so its neutral notice sits at the top of the panel, as on unlock_unavailable (A-19).
-  const unavailable = h("div", { class: "tm-notice tm-notice--neutral offer-unavailable", id: "offer-unavailable", role: "status", hidden: true },
-    h("span", { class: "tm-icon", "data-icon": "info-circle", "aria-hidden": "true" }), h("span", { id: "offer-unavailable-text", text: MSG("unlock.unavailable") }));
   const heroWrap = h("div", { class: "hero-wrap" }, h("div", { class: "hero-ic", "aria-hidden": "true" }, heroIcon));
-  const cont = h("button", { class: "tm-btn tm-btn--primary tm-btn--lg tm-btn--block", id: "continue", type: "button", hidden: true, onclick: onContinue, text: MSG("offer.continue") });
   const turnOnLabel = h("span", { id: "turn-on-label" });
   const turnOn = h("button", { class: "tm-btn tm-btn--primary tm-btn--lg tm-btn--block", id: "turn-on", type: "button", onclick: onTurnOn }, turnOnLabel);
   const notNow = h("button", { class: "tm-btn tm-btn--quiet tm-btn--lg tm-btn--block", id: "not-now", type: "button", onclick: onNotNow, text: MSG("offer.notNow") });
@@ -71,13 +68,12 @@ export function render(host, id, { mode, params = {} }) {
       h("h1", { class: "tm-text-title-lg", id: "offer-title", text: MSG("offer.title") }),
       h("p", { class: "sub", text: MSG(v().sub) })),
     h("div", { class: "panel" },
-      unavailable,
       heroWrap,
       h("ul", { class: "points" },
         point("circle-check", MSG("offer.pointNoWait"), MSG(v().line)),
         point("lock", MSG(v().trust), MSG("offer.pointStored")),
         point("settings", MSG("offer.pointChange"), MSG("offer.pointChangeLine")))),
-    h("div", { class: "tm-actionbar footer" }, notice, turnOn, notNow, cont));
+    h("div", { class: "tm-actionbar footer" }, notice, turnOn, notNow));
   host.replaceChildren(root);
 
   // ---- paint ----
@@ -92,21 +88,18 @@ export function render(host, id, { mode, params = {} }) {
     turnOn.disabled = m.busy;
     turnOn.setAttribute("aria-busy", String(m.busy));
     turnOnLabel.replaceChildren(...(m.busy ? [h("span", { class: "tm-spinner", "aria-hidden": "true" }), MSG("offer.submitBusy")]
-      : [MSG(m.retry ? "offer.retry" : "offer.submit")]));
+      : [MSG(m.unavailable ? "offer.continue" : m.retry ? "offer.retry" : "offer.submit")]));
     notNow.disabled = m.busy;
-    // D-93: only the notice speaks; Continue is the single primary (one primary per context).
-    unavailable.hidden = !m.unavailable;
-    heroWrap.hidden = m.unavailable;
-    turnOn.hidden = m.unavailable;
+    // D-93: one action left — the primary reads Continue, Not now is hidden (one primary per context).
     notNow.hidden = m.unavailable;
-    cont.hidden = !m.unavailable;
     if (window.TMIcons) window.TMIcons.render(root);
   }
 
   // ---- behaviour ----
   // Turn on and Try again both open the phone prompt (one request at a time).
   function onTurnOn() {
-    if (m.busy || m.unavailable) return;
+    if (m.busy) return;
+    if (m.unavailable) { onContinue(); return; }   // D-93: the primary is Continue
     if (ctx().offline) { m.notice = "offline"; paint(); return; }   // D-66: needs the server; the prompt does not open
     const before = { notice: m.notice, retry: m.retry };
     m.busy = true; m.notice = null; paint();
@@ -115,7 +108,7 @@ export function render(host, id, { mode, params = {} }) {
       const answer = promptAnswer("enable", ctx().story, mode);
       if (answer === "enabled") { setEnabled(number, ctx(), true); toHome(); return; }   // offer.enabled: no toast (Profile shows it)
       if (answer === "cancelled") Object.assign(m, before);                             // offer.cancelled: as it was, no message
-      else if (answer === "unavailable") Object.assign(m, { unavailable: true, notice: null, retry: false });   // D-93: not enabled
+      else if (answer === "unavailable") Object.assign(m, { unavailable: true, notice: "unavailable", retry: false });   // D-93: not enabled
       else Object.assign(m, { notice: "failed", retry: true });                          // failed
       paint();
     }, "phonePromptDelay");

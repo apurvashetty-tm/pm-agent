@@ -18,9 +18,7 @@ body.tm{background:var(--tm-surface-primary)}
 /* Round 4 (A-19): "Couldn't turn on…" is the result of a tap, so it sits inside the pinned bar, 16 above its button. */
 /* Round 4 lane D: the in-bar offer notice takes its 16 gap from .tm-actionbar > .tm-notice (component). */
 .notice-slot[hidden]{display:none!important}
-/* D-93: "unavailable" at Turn on is a standing state, so its neutral notice sits at the top of the panel, as on unlock_unavailable (A-19). */
-.offer-unavailable{margin:0 0 var(--tm-space-lg)}
-.offer-unavailable .tm-icon{width:20px;height:20px;flex:none}
+/* D-93 (revised): "unavailable" is the result of the Turn on tap, so its warning notice sits in the same bar slot as Offline and Couldn't turn on (A-19). */
 .screen [hidden]{display:none!important}
 h1{margin:var(--tm-space-lg) 0 var(--tm-space-sm)}
 .sub{margin:0;font-size:var(--tm-font-size-body-md);line-height:var(--tm-font-lineheight-sm);color:var(--tm-content-secondary)}
@@ -54,8 +52,7 @@ html.capture .review-controls{display:none}
   <p class="sub" id="sub"></p>
  </div>
  <div class="panel">
-  <div class="tm-notice tm-notice--neutral offer-unavailable notice-slot" id="offer-unavailable" role="status" hidden><span class="tm-icon" data-icon="info-circle" aria-hidden="true"></span><span id="offer-unavailable-text"></span></div>
-  <div class="hero-wrap" id="hero-wrap"><div class="hero-ic" aria-hidden="true"><span class="tm-icon" id="hero-icon" data-icon="fingerprint"></span></div></div>
+  <div class="hero-wrap"><div class="hero-ic" aria-hidden="true"><span class="tm-icon" id="hero-icon" data-icon="fingerprint"></span></div></div>
   <ul class="points">
    <li><span class="tm-icon" data-icon="circle-check" aria-hidden="true"></span><div><p class="pt-t">No more waiting for SMS codes</p><p class="pt-d" id="pt-d1"></p></div></li>
    <li><span class="tm-icon" data-icon="lock" aria-hidden="true"></span><div><p class="pt-t" id="pt-t2"></p><p class="pt-d">Truemeds never sees or stores it.</p></div></li>
@@ -66,7 +63,6 @@ html.capture .review-controls{display:none}
    <div class="tm-notice tm-notice--error notice-slot" id="offer-notice" role="status" hidden><span class="tm-icon" data-icon="alert-circle" aria-hidden="true"></span><span id="offer-notice-text"></span></div>
    <button class="tm-btn tm-btn--primary tm-btn--lg tm-btn--block" id="turn-on" type="button"><span id="turn-on-label">Turn on faster sign-in</span></button>
    <button class="tm-btn tm-btn--quiet tm-btn--lg tm-btn--block" id="not-now" type="button">Not now</button>
-   <button class="tm-btn tm-btn--primary tm-btn--lg tm-btn--block" id="continue" type="button" hidden>Continue</button>
   </div>
 </div>
 <script>
@@ -79,8 +75,9 @@ const VARIANTS={
  'screen-lock':{icon:'lock',sub:M('offer.screenLockSub'),d1:M('offer.screenLockLine'),t2:M('offer.screenLockTrust')},
  'enable-failed':{icon:'fingerprint',sub:'Use your fingerprint instead of waiting for an OTP.',d1:'Unlock the app with one touch, not an OTP.',t2:'Your fingerprint stays on your phone',notice:['error','alert-circle',M('offer.enableFailed')],retry:true},
  offline:{icon:'fingerprint',sub:'Use your fingerprint instead of waiting for an OTP.',d1:'Unlock the app with one touch, not an OTP.',t2:'Your fingerprint stays on your phone',notice:['warning','alert-triangle',M('offer.offline')]},
- // D-93: the phone answered "unavailable" at Turn on. Neutral notice at the top (unlock.unavailable), Turn on hidden, Continue → Home is the only action.
- unavailable:{icon:'fingerprint',sub:'Use your fingerprint instead of waiting for an OTP.',d1:'Unlock the app with one touch, not an OTP.',t2:'Your fingerprint stays on your phone',unavailable:true}
+ // D-93 (revised): the phone answered "unavailable" at Turn on. Screen unchanged; warning notice in the bar (unlock.unavailable),
+ // the primary reads Continue (offer.continue) → Home, Not now hidden.
+ unavailable:{icon:'fingerprint',sub:'Use your fingerprint instead of waiting for an OTP.',d1:'Unlock the app with one touch, not an OTP.',t2:'Your fingerprint stays on your phone',notice:['warning','alert-triangle',M('unlock.unavailable')],unavailable:true}
 };
 const params=new URLSearchParams(location.search);
 const key=params.get('capture')||params.get('state')||'fingerprint';
@@ -95,11 +92,9 @@ document.getElementById('pt-t2').textContent=v.t2;
 const turnOn=document.getElementById('turn-on');
 if(v.notice){const n=document.getElementById('offer-notice');n.className='tm-notice tm-notice--'+v.notice[0]+' notice-slot';n.hidden=false;n.querySelector('.tm-icon').dataset.icon=v.notice[1];document.getElementById('offer-notice-text').textContent=v.notice[2];}
 if(v.unavailable){
- // As on unlock_unavailable: the hero tile is hidden so only the notice speaks; Continue is the single primary (one primary per context).
- const u=document.getElementById('offer-unavailable');u.hidden=false;document.getElementById('offer-unavailable-text').textContent=M('unlock.unavailable');
- document.getElementById('hero-wrap').hidden=true;
- turnOn.hidden=true;document.getElementById('not-now').hidden=true;
- const c=document.getElementById('continue');c.hidden=false;c.textContent=M('offer.continue');
+ // D-93: one action left, so the primary reads Continue and Not now is hidden (one primary per context).
+ document.getElementById('turn-on-label').textContent=M('offer.continue');
+ document.getElementById('not-now').hidden=true;
 }
 if(v.retry){document.getElementById('turn-on-label').textContent='Try again';}
 if(v.enabling){
@@ -110,7 +105,8 @@ if(v.enabling){
 }
 // No Back: this screen follows sign-in, so there is nothing to go back to (D-47).
 // Phone back gesture = Not now (native). Escape stands in for it in this reference.
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!document.getElementById('not-now').disabled)document.getElementById('not-now').click();});
+// D-93: on unavailable Not now is hidden, so phone Back = Continue (the only action).
+document.addEventListener('keydown',e=>{if(e.key!=='Escape')return;const nn=document.getElementById('not-now');if(v.unavailable)turnOn.click();else if(!nn.disabled)nn.click();});
 // Exits (cancelled, failed, not now, enabled) all go to Home; no error is shown (D-45, D-37).
 // D-93: unavailable → Continue → Home; faster sign-in is not enabled (Profile can turn it on later).
 TMIcons.render(document);
