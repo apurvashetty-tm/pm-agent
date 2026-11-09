@@ -13,8 +13,8 @@ node --test tests/codex/tokens/*.mjs
 
 | ID | Check | Method |
 |---|---|---|
-| T01 | Every final-table CSS token exists with its final value, including all grouped toggle/layout names and retained D-98 tokens | auto: one test per token; every declaration must match |
-| T02 | Every corresponding native token exists beneath `tokens`, in its semantic family, with a camel-cased name and specified value | auto: one test per token |
+| T01 | Every final-table CSS token exists with its final value, including all grouped toggle/layout names and retained D-98 tokens; a SALT semantic token may alias a core token (resolved one level, e.g. `--tm-radius-full` → `--tm-core-radius-full` = 999px) | auto: one test per token; every declaration must match |
+| T02 | Every corresponding native token exists in `design-system/native/tokens.json` (no `tokens` root; `tokens` is the TypeScript export name) at `<group>.<name>` as in D-98 (e.g. `iconSize.sm`, `borderWidth.thick`, `spinner.sizeLg`, `layout.pageMax`), with the specified value | auto: one test per token |
 | T03 | Components and built screen CSS have no unmarked raw sizes, colours, border widths, layering, opacity or durations | auto: independent scanner, diagnostics include file and line |
 | T04 | A `raw-ok` comment must be on the same line and contain a nonempty reason | auto: scanner fixture tests |
 | T05 | Only explicitly deprecated legacy `.tm-otp` rules and mock Rx paper selectors bypass scanning as blocks | auto: scanner; shell/review/reference files excluded by scan scope |
@@ -28,16 +28,13 @@ node --test tests/codex/tokens/*.mjs
 - CSS dimensional values use px, durations ms, disabled opacity 50%, and sheet
   maximum height 85vh. Native values are unitless numbers. The brief's opacity
   value is 50; tests deliberately do not silently change it to 0.5.
-- The brief specifies `tokens.<group>.<name>` with camel casing but does not give
-  literal native paths for every row. Tests use the table's family (`size`,
-  `radius`, `duration`, `easing`, `layer`, `shadow`, `opacity`, `layout`), accepting
-  a name with or without a repeated family prefix. Border widths belong to
-  `size`, consistent with the retained D-98 border width described in §1.
-  `sheetMaxHeight` also uses `size`. These path interpretations need review
-  against the final exporter; the tests do not read its implementation.
-- Native bar shadow must preserve x=0, y=-8, blur=24, spread=0 and the specified
-  RGBA colour. Common semantic field spellings are accepted; arbitrary objects
-  or a shadow with different geometry fail.
+- Native paths (ruled 2026-11-09, see below): `<group>.<name>` split from the CSS name the way D-98 did
+  (`--tm-icon-size-sm` → `iconSize.sm`, `--tm-spinner-size-lg` → `spinner.sizeLg`); the test accepts any split
+  point of the kebab name, plus the original family spellings. There is no `tokens` root in `tokens.json`.
+- Native bar shadow has the same shape as the other native shadows: `boxShadow` (the CSS value) plus `ios` and
+  `android`. An object with x / y / blur / spread fields is also accepted if it keeps x=0, y=-8, blur=24, spread=0
+  and the specified RGBA colour.
+- `transparent` is a keyword ("no colour"), not a raw colour, like `currentColor`, `none` and `0`.
 - Geometry, optical offsets, 31ch, hidden-input zoom prevention, media widths,
   reduced motion and drawn keyboard dimensions still need same-line `raw-ok`
   comments. The brief explicitly distinguishes these from unscanned files.
@@ -51,3 +48,10 @@ node --test tests/codex/tokens/*.mjs
 - Pictures, semantic token use, native README, beyond-SALT documentation and
   build integration are outside this requested test scope. No visual claim is
   made by this suite.
+
+## Rulings (main thread, 2026-11-09, after the token pass)
+
+The first version of this suite failed 45 of 90 tests against a correct build (token-pass `test-disputes.md`).
+Ruled in the build's favour and fixed in `token-pass.test.mjs`: (1) native paths follow D-98 and `tokens.json`
+has no `tokens` root (43 tests); (2) a semantic token may alias a core token (1 test); (3) `transparent` is a
+keyword (1 test). Result: **90 / 90 pass**. Record: `docs/runs/RULINGS.md` (2026-11-09 20:45).
