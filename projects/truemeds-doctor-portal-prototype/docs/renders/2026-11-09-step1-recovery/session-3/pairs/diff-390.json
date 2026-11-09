@@ -1,0 +1,110 @@
+[
+ {
+  "state": "offer_enable-failed_w390.png",
+  "diff_px": 764,
+  "pct": 0.058,
+  "bbox": [
+   32,
+   32,
+   747,
+   1528
+  ]
+ },
+ {
+  "state": "offer_enabling_w390.png",
+  "diff_px": 715,
+  "pct": 0.054,
+  "bbox": [
+   32,
+   32,
+   747,
+   1528
+  ]
+ },
+ {
+  "state": "offer_face-id_w390.png",
+  "diff_px": 656,
+  "pct": 0.05,
+  "bbox": [
+   32,
+   32,
+   747,
+   1528
+  ]
+ },
+ {
+  "state": "offer_fingerprint_w390.png",
+  "diff_px": 709,
+  "pct": 0.054,
+  "bbox": [
+   32,
+   32,
+   747,
+   1528
+  ]
+ },
+ {
+  "state": "offer_offline_w390.png",
+  "diff_px": 732,
+  "pct": 0.056,
+  "bbox": [
+   32,
+   32,
+   747,
+   1528
+  ]
+ },
+ {
+  "state": "offer_screen-lock_w390.png",
+  "diff_px": 617,
+  "pct": 0.047,
+  "bbox": [
+   32,
+   32,
+   747,
+   1528
+  ]
+ },
+ {
+  "state": "unlock_cancelled_w390.png",
+  "diff_px": 0,
+  "pct": 0.0,
+  "bbox": null
+ },
+ {
+  "state": "unlock_face_w390.png",
+  "diff_px": 0,
+  "pct": 0.0,
+  "bbox": null
+ },
+ {
+  "state": "unlock_fingerprint_w390.png",
+  "diff_px": 0,
+  "pct": 0.0,
+  "bbox": null
+ },
+ {
+  "state": "unlock_pending_w390.png",
+  "diff_px": 0,
+  "pct": 0.0,
+  "bbox": null
+ },
+ {
+  "state": "unlock_platform-retry_w390.png",
+  "diff_px": 0,
+  "pct": 0.0,
+  "bbox": null
+ },
+ {
+  "state": "unlock_screen-lock_w390.png",
+  "diff_px": 0,
+  "pct": 0.0,
+  "bbox": null
+ },
+ {
+  "state": "unlock_unavailable_w390.png",
+  "diff_px": 0,
+  "pct": 0.0,
+  "bbox": null
+ }
+]

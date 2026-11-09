@@ -1,0 +1,222 @@
+[
+ {
+  "picture": "home/home_logout-confirm_w360.png",
+  "changed_box": [
+   90,
+   191,
+   453,
+   237
+  ],
+  "expected": "name + initials",
+  "only_name": true
+ },
+ {
+  "picture": "home/home_logout-confirm_w390.png",
+  "changed_box": [
+   90,
+   191,
+   453,
+   237
+  ],
+  "expected": "name + initials",
+  "only_name": true
+ },
+ {
+  "picture": "home/home_profile-case-open_w360.png",
+  "changed_box": [
+   90,
+   191,
+   453,
+   237
+  ],
+  "expected": "name + initials",
+  "only_name": true
+ },
+ {
+  "picture": "home/home_profile-case-open_w390.png",
+  "changed_box": [
+   90,
+   191,
+   453,
+   237
+  ],
+  "expected": "name + initials",
+  "only_name": true
+ },
+ {
+  "picture": "home/home_profile_w360.png",
+  "changed_box": [
+   90,
+   191,
+   453,
+   237
+  ],
+  "expected": "name + initials",
+  "only_name": true
+ },
+ {
+  "picture": "home/home_profile_w390.png",
+  "changed_box": [
+   90,
+   191,
+   453,
+   237
+  ],
+  "expected": "name + initials",
+  "only_name": true
+ },
+ {
+  "picture": "returning-unlock/unlock_cancelled_w360.png",
+  "changed_box": [
+   325,
+   163,
+   540,
+   225
+  ],
+  "expected": "greeting name",
+  "only_name": true
+ },
+ {
+  "picture": "returning-unlock/unlock_cancelled_w390.png",
+  "changed_box": [
+   325,
+   163,
+   540,
+   225
+  ],
+  "expected": "greeting name",
+  "only_name": true
+ },
+ {
+  "picture": "returning-unlock/unlock_face_w360.png",
+  "changed_box": [
+   325,
+   163,
+   540,
+   225
+  ],
+  "expected": "greeting name",
+  "only_name": true
+ },
+ {
+  "picture": "returning-unlock/unlock_face_w390.png",
+  "changed_box": [
+   325,
+   163,
+   540,
+   225
+  ],
+  "expected": "greeting name",
+  "only_name": true
+ },
+ {
+  "picture": "returning-unlock/unlock_fingerprint_w360.png",
+  "changed_box": [
+   325,
+   163,
+   540,
+   225
+  ],
+  "expected": "greeting name",
+  "only_name": true
+ },
+ {
+  "picture": "returning-unlock/unlock_fingerprint_w390.png",
+  "changed_box": [
+   325,
+   163,
+   540,
+   225
+  ],
+  "expected": "greeting name",
+  "only_name": true
+ },
+ {
+  "picture": "returning-unlock/unlock_pending_w360.png",
+  "changed_box": [
+   325,
+   163,
+   540,
+   225
+  ],
+  "expected": "greeting name",
+  "only_name": true
+ },
+ {
+  "picture": "returning-unlock/unlock_pending_w390.png",
+  "changed_box": [
+   325,
+   163,
+   540,
+   225
+  ],
+  "expected": "greeting name",
+  "only_name": true
+ },
+ {
+  "picture": "returning-unlock/unlock_platform-retry_w360.png",
+  "changed_box": [
+   325,
+   163,
+   540,
+   225
+  ],
+  "expected": "greeting name",
+  "only_name": true
+ },
+ {
+  "picture": "returning-unlock/unlock_platform-retry_w390.png",
+  "changed_box": [
+   325,
+   163,
+   540,
+   225
+  ],
+  "expected": "greeting name",
+  "only_name": true
+ },
+ {
+  "picture": "returning-unlock/unlock_screen-lock_w360.png",
+  "changed_box": [
+   325,
+   163,
+   540,
+   225
+  ],
+  "expected": "greeting name",
+  "only_name": true
+ },
+ {
+  "picture": "returning-unlock/unlock_screen-lock_w390.png",
+  "changed_box": [
+   325,
+   163,
+   540,
+   225
+  ],
+  "expected": "greeting name",
+  "only_name": true
+ },
+ {
+  "picture": "returning-unlock/unlock_unavailable_w360.png",
+  "changed_box": [
+   325,
+   163,
+   540,
+   225
+  ],
+  "expected": "greeting name",
+  "only_name": true
+ },
+ {
+  "picture": "returning-unlock/unlock_unavailable_w390.png",
+  "changed_box": [
+   325,
+   163,
+   540,
+   225
+  ],
+  "expected": "greeting name",
+  "only_name": true
+ }
+]

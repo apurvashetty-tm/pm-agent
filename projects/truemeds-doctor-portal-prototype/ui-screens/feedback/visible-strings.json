@@ -3489,17 +3489,6 @@
  },
  {
   "kind": "text",
-  "text": "AS",
-  "cls": "profile-avatar",
-  "tag": "div",
-  "states": [
-   "home/logout-confirm",
-   "home/profile",
-   "home/profile-case-open"
-  ]
- },
- {
-  "kind": "text",
   "text": "Add 30 minutes",
   "cls": "tm-btn tm-btn--primary tm-btn--lg tm-btn--block",
   "tag": "button",
@@ -4196,15 +4185,6 @@
  {
   "kind": "text",
   "text": "Callback",
-  "cls": "",
-  "tag": "span",
-  "states": [
-   "case/a-confirm-failed"
-  ]
- },
- {
-  "kind": "text",
-  "text": "Callback",
   "cls": "tm-btn tm-btn--lg tm-btn--secondary",
   "tag": "button",
   "states": [
@@ -4216,6 +4196,15 @@
    "case/s7d-result-missing-pilot",
    "case/s7d-unavailable-sheet",
    "case/t06-ended-early"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Callback",
+  "cls": "",
+  "tag": "span",
+  "states": [
+   "case/t08a-valid-cat4"
   ]
  },
  {
@@ -5043,7 +5032,7 @@
  },
  {
   "kind": "text",
-  "text": "Dr. Apurva Shetty",
+  "text": "Dr. Kunal Wani",
   "cls": "pt-t",
   "tag": "p",
   "states": [
@@ -5470,7 +5459,7 @@
  },
  {
   "kind": "text",
-  "text": "Hello, Dr. Apurva",
+  "text": "Hello, Dr. Kunal",
   "cls": "tm-text-title-lg",
   "tag": "h1",
   "states": [
@@ -5597,6 +5586,17 @@
    "case/a-leave-sheet",
    "case/a-releasing",
    "case/s7e-leave-sheet"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "KW",
+  "cls": "profile-avatar",
+  "tag": "div",
+  "states": [
+   "home/logout-confirm",
+   "home/profile",
+   "home/profile-case-open"
   ]
  },
  {

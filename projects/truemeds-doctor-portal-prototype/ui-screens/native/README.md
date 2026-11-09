@@ -33,7 +33,7 @@ Host provides:
 
 Sign-in: `state`, `mobile`, `retrySeconds`, mobile-change/send/ops/signup callbacks.
 OTP: `state`, `mobileLabel`, `code`, resend/lock seconds, capability/checkbox booleans, verify/resend/back/change-number/ops/legal callbacks.
-Unlock: doctorName (e.g. `Dr. Apurva`), capability-selected variant, busy and unlock/OTP/switch callbacks.
+Unlock: doctorName (e.g. `Dr. Kunal`), capability-selected variant, busy and unlock/OTP/switch callbacks.
 Home: setup/active mode, prescribed count, remaining whole minutes, selected duration/variant, header callbacks, start/request/end/add callbacks.
 Sheet: visibility, selected duration/variant, busy/feedbackKey, close/select/add callbacks. `feedbackKey` uses IDs from `../feedback/messages.json`.
 

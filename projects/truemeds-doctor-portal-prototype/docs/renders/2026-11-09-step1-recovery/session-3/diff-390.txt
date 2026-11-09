@@ -1,0 +1,13 @@
+offer_enable-failed_w390.png                       764 px    0.058%  (32, 32, 747, 1528)
+offer_enabling_w390.png                            715 px    0.054%  (32, 32, 747, 1528)
+offer_face-id_w390.png                             656 px     0.05%  (32, 32, 747, 1528)
+offer_fingerprint_w390.png                         709 px    0.054%  (32, 32, 747, 1528)
+offer_offline_w390.png                             732 px    0.056%  (32, 32, 747, 1528)
+offer_screen-lock_w390.png                         617 px    0.047%  (32, 32, 747, 1528)
+unlock_cancelled_w390.png                            0 px      0.0%  None
+unlock_face_w390.png                                 0 px      0.0%  None
+unlock_fingerprint_w390.png                          0 px      0.0%  None
+unlock_pending_w390.png                              0 px      0.0%  None
+unlock_platform-retry_w390.png                       0 px      0.0%  None
+unlock_screen-lock_w390.png                          0 px      0.0%  None
+unlock_unavailable_w390.png                          0 px      0.0%  None

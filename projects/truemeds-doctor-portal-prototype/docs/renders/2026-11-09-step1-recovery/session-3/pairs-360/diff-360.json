@@ -1,0 +1,110 @@
+[
+ {
+  "state": "offer_enable-failed_w360.png",
+  "diff_px": 764,
+  "pct": 0.063,
+  "bbox": [
+   32,
+   32,
+   687,
+   1528
+  ]
+ },
+ {
+  "state": "offer_enabling_w360.png",
+  "diff_px": 716,
+  "pct": 0.059,
+  "bbox": [
+   32,
+   32,
+   687,
+   1528
+  ]
+ },
+ {
+  "state": "offer_face-id_w360.png",
+  "diff_px": 656,
+  "pct": 0.054,
+  "bbox": [
+   32,
+   32,
+   687,
+   1528
+  ]
+ },
+ {
+  "state": "offer_fingerprint_w360.png",
+  "diff_px": 709,
+  "pct": 0.058,
+  "bbox": [
+   32,
+   32,
+   687,
+   1528
+  ]
+ },
+ {
+  "state": "offer_offline_w360.png",
+  "diff_px": 732,
+  "pct": 0.06,
+  "bbox": [
+   32,
+   32,
+   687,
+   1528
+  ]
+ },
+ {
+  "state": "offer_screen-lock_w360.png",
+  "diff_px": 616,
+  "pct": 0.051,
+  "bbox": [
+   32,
+   32,
+   687,
+   1528
+  ]
+ },
+ {
+  "state": "unlock_cancelled_w360.png",
+  "diff_px": 0,
+  "pct": 0.0,
+  "bbox": null
+ },
+ {
+  "state": "unlock_face_w360.png",
+  "diff_px": 0,
+  "pct": 0.0,
+  "bbox": null
+ },
+ {
+  "state": "unlock_fingerprint_w360.png",
+  "diff_px": 0,
+  "pct": 0.0,
+  "bbox": null
+ },
+ {
+  "state": "unlock_pending_w360.png",
+  "diff_px": 0,
+  "pct": 0.0,
+  "bbox": null
+ },
+ {
+  "state": "unlock_platform-retry_w360.png",
+  "diff_px": 0,
+  "pct": 0.0,
+  "bbox": null
+ },
+ {
+  "state": "unlock_screen-lock_w360.png",
+  "diff_px": 0,
+  "pct": 0.0,
+  "bbox": null
+ },
+ {
+  "state": "unlock_unavailable_w360.png",
+  "diff_px": 0,
+  "pct": 0.0,
+  "bbox": null
+ }
+]

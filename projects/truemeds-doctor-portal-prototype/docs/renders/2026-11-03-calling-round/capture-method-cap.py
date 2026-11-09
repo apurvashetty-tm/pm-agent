@@ -3,7 +3,7 @@ Renders every EXPECTED state at 390 and 360 (DPR 2) into OUTDIR/<folder>/<file>.
 import sys, json, pathlib, re, importlib.util
 from playwright.sync_api import sync_playwright
 import os
-ROOT = pathlib.Path(os.environ.get('TMROOT', '/Users/mac/src/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype'))
+ROOT = pathlib.Path(os.environ.get('TMROOT') or pathlib.Path(__file__).resolve().parents[3])   # the project folder (no user path)
 GUARD = ROOT / 'ui-screens/feedback/check-locked-specs.py'
 spec = importlib.util.spec_from_file_location('guard', GUARD); guard = importlib.util.module_from_spec(spec); spec.loader.exec_module(guard)
 out = pathlib.Path(sys.argv[1]); flt = re.compile(sys.argv[2]) if len(sys.argv) > 2 else None
@@ -23,7 +23,7 @@ for ph in ['A', 'B', 'C', 'D']:
 log = {'count': 0, 'errors': {}}
 SPIN = {}
 with sync_playwright() as p:
-    br = p.chromium.launch()
+    br = p.chromium.launch(executable_path=os.environ.get('CHROMIUM') or None)   # installed Chrome on this Mac, else Playwright's
     for sub, state, folder, stem in jobs:
         for vw in (390, 360):
             (out / folder).mkdir(parents=True, exist_ok=True)
