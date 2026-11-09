@@ -14,7 +14,7 @@ Session 1 (overnight) did set-up and started sign-in, then ended on its own afte
 | 3 | Faster sign-in offer + returning unlock + D-92 (section 2) | ✅ done (55 journey tests, D-92 name-only checked, Codex 0 blockers) |
 | 4 | Part A panel + checklist 1.3 table + compare harness | ✅ done (compare 14 exact · 70 accepted · 0 failed; 78 + 55 tests; Codex blockers fixed) |
 | 5 | D-93 `offer_unavailable` + Codex + report | First D-93 (below), then section 4 and "Report and stop" |
-| 6 | Picture baseline refresh (D-94) | Section 6 below; run only after session 5 is ✅ |
+| 6 | D-93 bar placement + picture baseline refresh (D-94) | Sections 6a and 6; stop at D-94 step 4 for the main-thread review |
 
 **Every session runs a Codex critique before it ends** (Apurva's standard: terminal builds, Codex critiques, Claude fixes). When the session's checks pass:
 `codex exec --sandbox read-only --output-last-message docs/renders/2026-11-09-step1-recovery/session-<n>/codex-critique.md "Read docs/renders/2026-11-09-step1-recovery/TERMINAL-BRIEF.md (session <n>) and docs/renders/2026-11-06-step1/BRIEF.md. You are the critic. Review only what session <n> built against both briefs, plan v3.2, checklist v3.2 lines with Step 1, and the approved pictures. Report blockers, should-fix, nice-to-have with file, line and checklist line. Read-only; write no files." < /dev/null`
@@ -106,10 +106,18 @@ Fix valid points (say why for any not adopted); re-run Codex once (`codex-critiq
 
 If the session runs long, finish the item in hand, commit at the nearest checkpoint, write in the report exactly where you stopped, and stop — the next session continues from there.
 
+## 6a · D-93 revised: `offer_unavailable` notice in the bar (session 6, first item; read the revised D-93)
+
+Apurva approved a new placement (concept: `session-5/d93/bar-proposal/offer_unavailable-bar_w390.png`). Rework the state built in session 5:
+1. `ui-screens/faster-signin-offer/faster-signin-offer.html`: `offer_unavailable` = the fingerprint offer unchanged (tile and three points shown), with the bar notice `warning` / `alert-triangle` / `unlock.unavailable` (same slot as Offline and Couldn't turn on), Turn on labelled **Continue** (`offer.continue`), and Not now hidden. Remove the top-of-panel notice version.
+2. App (`faster-signin-offer.js/.css`), app-logic §2, and the state-map row: match it. Update tests F5 / F5d / F5e. The other six offer states stay pixel-identical.
+3. Render 390 / 360 into `session-6/d93/` and compare with the concept at 390. Allowed differences: none beyond anti-aliasing. List any other difference.
+4. This picture **is approved** (D-93): it joins the D-94 refresh and goes into `ui-screens/` with the other pictures at D-94 step 5, once the main thread has written the go-ahead. Remove `PENDING_PICTURE` and do the "after approval" list in REPORT §11 at that point.
+
 ## 6 · Picture baseline refresh — D-94 (session 6; read `decision_log.md` D-94)
 
 1. **Repeatable capture:** make `capture-method-cap.py` and `tests/compare-step1.mjs` produce identical pixels when the same page is captured twice. Use fixed Chrome flags (for example `--font-render-hinting=none`, `--disable-gpu`, `--disable-lcd-text`, `--force-color-profile=srgb`, fixed device scale factor) and wait for fonts to load. Prove it by capturing all 148 pictures twice: 0 px difference. Remove the retry loop from the compare.
-2. **Re-render** all 148 approved pictures (360 and 390) into `docs/renders/2026-11-09-step1-recovery/session-6/new/`, **not** into `ui-screens/` yet. Include D-93's `offer_unavailable` only if Apurva has approved it by then; otherwise leave it out.
+2. **Re-render** all 148 approved pictures (360 and 390) into `docs/renders/2026-11-09-step1-recovery/session-6/new/`, **not** into `ui-screens/` yet. Include D-93's `offer_unavailable` (approved; from 6a).
 3. **Prove "same design"** for each picture, old vs new: changed pixels, max channel difference, and rows with a shift. Any picture with a shifted row, moved box, colour band, or changes beyond the session-4 anti-aliasing limits (3,000 px / 110) is listed and **not** replaced. Write `session-6/baseline-check.md` and a contact sheet of the worst 10.
 4. **Stop for the main-thread review** after step 3: commit the evidence, push, and set SESSION-STATUS to "session 6: waiting for main-thread review". The main thread then writes the go-ahead for step 5.
 5. (After the go-ahead) copy into `ui-screens/`, rebuild the contact sheets, delete the anti-aliasing rule from `compare-allow.json` (listed regions stay), re-run the compare (it must be exact or listed-region only), run all guards and tests, run Codex, and push.
