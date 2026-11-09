@@ -28,13 +28,13 @@
     /* ============================================================
        LAYOUT — PHONE FRAME (RULE: see design-system/RULES.md §7)
        <768px  : the app IS the screen (window scrolls, overlays are viewport-fixed).
-       >=768px : the app is a 9:16 PHONE FRAME centred on the page. Exactly ONE scroll
+       >=768px : the app is a 390 : 844 PHONE FRAME (D-97) centred on the page. Exactly ONE scroll
                  area inside it (#main-scroll). Header stays on top. Bottom sheets, the Rx viewer
                  and toasts live INSIDE the frame (DOM + transform containing block), so they
                  anchor to the frame's bottom, never to the browser window.
                  The demo panel floats beside the frame and never affects its size or centring.
     ============================================================ */
-    :root { --phone-h: clamp(640px, calc(100vh - 2 * var(--tm-space-lg)), 800px); --phone-w: calc(var(--phone-h) * 9 / 16); }
+    :root { --phone-h: clamp(640px, calc(100vh - 48px), 844px); --phone-w: calc(var(--phone-h) * 390 / 844); }
     #layout-wrapper { display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; position: relative; }
     /* Round 6 (sheets and pinned bar on a 360×640 phone): the phone column is the screen (one scroll area, #main-scroll), as on the desktop frame.
        It used to grow with its content, so the transformed column anchored the fixed bar and sheets below the visible screen. */

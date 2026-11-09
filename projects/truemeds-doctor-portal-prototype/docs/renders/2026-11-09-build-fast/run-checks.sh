@@ -7,6 +7,7 @@ O="${1:?output folder}"; mkdir -p "$O"
 sh scripts/copy-shared.sh >/dev/null
 run() { n=$(echo "$*" | tr ' /' '__'); "$@" > "$O/$n.txt" 2>&1; echo "$* -> exit $? : $(tail -2 "$O/$n.txt" | tr '\n' ' ' | cut -c1-220)"; }
 run node tests/entry-journeys.mjs
+export SHOTS="$O/shots"   # run-checks.mjs screenshots for this run
 run node tests/run-checks.mjs
 run python3 docs/layout_check.py
 python3 -m http.server 8765 --directory app >/dev/null 2>&1 & SRV=$!; sleep 1   # layout_check --app reads http://localhost:8765/

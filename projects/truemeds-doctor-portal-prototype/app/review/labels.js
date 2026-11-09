@@ -4,7 +4,10 @@ export const REVIEW_TEXT = {
   start: "Start the story at",
   scenario: "Case scenario",
   offline: "Offline",
-  settingsHeading: "Settings",
+  settingsHeading: "Timings and limits",
+  advanced: "Advanced",
+  sameWifi: "Phone and Mac on the same Wi-Fi",
+  serveHint: "A phone can't open localhost: start the app with scripts/serve.sh to get a link for the phone.",
   journeysHeading: "Journey answers",
   call: "Call simulator",
   unlock: "Phone unlock (faster sign-in)",
@@ -66,3 +69,26 @@ export const VALUE_LABEL = {
   releaseRefused: { accepted: "Release accepted", refused: "Release refused" },
 };
 export const valueLabel = (field, v) => (VALUE_LABEL[field] && VALUE_LABEL[field][v]) || String(v);
+
+// Timings and limits (D-97 item 5c): one plain name per settings key. tests/run-checks.mjs (P11) fails when a key has none.
+export const SETTING_NAME = {
+  gate: "Valid-call minimum", minCountedCall: "Shortest call that counts", talkWindow: "Talk-time window",
+  noResultTimeout: "No call result after", stillOnCallRepeat: "\u201cStill on the call?\u201d repeats every", callRecordWait: "Call record wait",
+  holdRetryGap: "Hold: gap between retries", holdRetryAttempts: "Hold: retries before plain hold", pollingInterval: "Server check every",
+  otpWindow: "OTP code window", otpLock: "OTP lock", resendWaits: "Resend waits", nearExpiryWarning: "Availability ending warning",
+  otpWrongLimit: "Wrong codes before lock", otpCodesPerWindow: "Codes per number per window", otpTriesLeftFrom: "Tries-left line from",
+  tooManyTriesWait: "Too-many-codes wait", returningUnlockFallbackAfter: "Failed unlocks before OTP",
+  availabilityMinimum: "Shortest availability", availabilityStep: "Availability step", attemptGap: "Gap between simulated calls",
+  mockServerDelay: "Simulated server answer", reconcileDelay: "Simulated cooldown check", phonePromptDelay: "Simulated phone prompt",
+  fastForwardStep: "Fast-forward step", earningsPerConfirmedRx: "Earnings per confirmed prescription",
+};
+// Value in plain units: whole minutes as "min", anything shorter in seconds; counts as plain numbers; money in rupees.
+const MS_PER_MIN = 60 * 1000;   // unit conversion for display, not a setting
+const dur = (ms) => (ms >= MS_PER_MIN && ms % MS_PER_MIN === 0 ? `${ms / MS_PER_MIN} min` : `${Math.round(ms / 100) / 10} s`);
+export function settingValue({ key, value, time }) {
+  if (key === "earningsPerConfirmedRx") return `\u20b9${value}`;
+  if (!time) return String(value);
+  return Array.isArray(value) ? value.map(dur).join(", ") : dur(value);
+}
+// "rule" = agreed in the decision log; everything else (MOCK ASSUMPTION, review tool) is a stand-in until decided.
+export const settingTag = (source) => (source === "rule" ? "Rule" : "Stand-in");

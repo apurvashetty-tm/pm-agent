@@ -74,7 +74,7 @@ Codex wrote both runs' tests ahead: `tests/codex/run-A/` (one set for A1 + A2; r
 `run-<A|B>/REPORT.md`, short: what plays end to end, Codex tests (written / passing / disputed), the compare report (flagged states and what was done), the tests, Codex blockers and fixes, commits, `[OPEN DECISION]`s / `[MOCK ASSUMPTION]`s added (with the `open_questions.md` lines for the main thread to record; don't write `docs/context/`), what's left. Mark the run done below, push, stop.
 
 ## Run status
-- Run A0: not started
+- Run A0: waiting for main-thread review (terminal, 2026-11-09; D-94 step 5 done first. Report: `run-A0/REPORT.md`)
 - Run A1: not started
 - Run A2: not started
 - Run B: not started

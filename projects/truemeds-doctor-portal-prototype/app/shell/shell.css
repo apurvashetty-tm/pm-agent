@@ -14,7 +14,7 @@ body {
 [hidden] { display: none !important; }
 
 /* ---- stage and frame ---- */
-/* Below 768px the app is the screen. From 768px it sits in a centred 9:16 frame (RULES §7.2). */
+/* Below 768px the app is the screen. From 768px it sits in a centred 390 : 844 frame (RULES §7.2, D-97). */
 #stage { position: fixed; inset: 0; }
 .shell-frame {
   position: fixed; inset: 0;
@@ -56,7 +56,7 @@ body {
 .shell-picture--card h2 { margin: 0 0 var(--tm-space-sm); font-size: var(--tm-font-size-title-md); }
 
 /* ---- review controls ---- */
-/* Two cards (step 1 recovery, Part A item 2): "Review panel" with one row per section (one open at a time) and "Test on phone". */
+/* One card (D-97): "Review panel", one folding row per section (one open at a time); "Test on phone" is the first row. */
 body { position: relative; }
 .review-panel {
   position: absolute; z-index: 50; /* desktop: never its own scroll area (RULES §7.5) */
@@ -75,10 +75,17 @@ body { position: relative; }
 .review-panel h2 { margin: 0; font-size: var(--tm-font-size-body-md); }
 .rp-row { border-top: 1px solid var(--tm-border-subtle); }
 .rp-row:first-of-type { margin-top: var(--tm-space-2xs); }
+.rp-attempt { display: flex; align-items: flex-end; gap: var(--tm-space-2xs); }
+.rp-attempt label { flex: 1 1 auto; }
+.rp-attempt .tm-btn { margin-bottom: 2px; }
 .rp-row > summary { list-style: none; cursor: pointer; min-height: 32px; display: flex; align-items: center; gap: var(--tm-space-xs); }
 .rp-row > summary::-webkit-details-marker { display: none; }
 .rp-row__title { font-weight: 600; flex: none; }
-.rp-row__value { flex: 1 1 auto; min-width: 0; text-align: right; color: var(--tm-content-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+/* Summaries wrap to two lines instead of being cut off (D-97); a third line, if ever needed, ends in an ellipsis. */
+.rp-row__value { flex: 1 1 auto; min-width: 0; text-align: right; color: var(--tm-content-secondary); overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; line-clamp: 2; overflow-wrap: anywhere; }
+.rp-row > summary { padding: 2px 0; }
+.rp-group { margin: var(--tm-space-xs) 0 0; padding-top: var(--tm-space-2xs); border-top: 1px solid var(--tm-border-subtle); color: var(--tm-content-tertiary); font-size: var(--tm-font-size-body-xs); text-transform: none; }
+.rp-group + .rp-row { border-top: 0; }
 .rp-row__chev { flex: none; width: 16px; height: 16px; color: var(--tm-content-secondary); }
 .rp-row__chev svg { width: 16px; height: 16px; display: block; }
 .rp-row[open] .rp-row__chev { transform: rotate(180deg); }
@@ -92,11 +99,32 @@ body { position: relative; }
 .rp-note { margin: var(--tm-space-2xs) 0; color: var(--tm-content-secondary); }
 .rp-qr-row { display: flex; gap: var(--tm-space-sm); align-items: flex-start; }
 .review-panel .qr-box { flex: none; display: block; width: 160px; height: 160px; }
+.rp-wifi { margin: var(--tm-space-2xs) 0 0; color: var(--tm-content-secondary); }
 .review-panel .qr-box svg { width: 100%; height: 100%; display: block; }
 .rp-steps { flex: 1 1 auto; min-width: 0; padding-left: var(--tm-space-md); }
 .rp-steps li + li { margin-top: 2px; }
 .review-panel code { display: block; margin-top: var(--tm-space-2xs); word-break: break-all; font-size: var(--tm-font-size-body-xs); color: var(--tm-content-brand); }
 .review-panel .missing { color: var(--tm-content-error); }
+/* Sign-in answers: test numbers and codes (D-97, app-logic §11). Each line fills its value into the running app. */
+.rp-tests { list-style: none; margin: var(--tm-space-2xs) 0 0; padding: 0 !important; display: grid; grid-template-columns: 1fr 1fr; gap: 2px var(--tm-space-xs); }
+.rp-tests__h { grid-column: 1 / -1; margin-top: var(--tm-space-2xs); color: var(--tm-content-secondary); }
+.rp-fill { display: flex; gap: var(--tm-space-2xs); align-items: baseline; width: 100%; min-height: 24px; padding: 2px var(--tm-space-2xs); text-align: left; font: inherit; color: var(--tm-content-primary); background: var(--tm-surface-secondary); border: 1px solid transparent; border-radius: var(--tm-radius-xs); cursor: pointer; }
+.rp-fill:hover, .rp-fill:focus-visible { border-color: var(--tm-border-brand-strong); }
+.rp-fill b { font-variant-numeric: tabular-nums; font-weight: 600; flex: none; }
+.rp-fill span { color: var(--tm-content-secondary); min-width: 0; }
+/* Timings and limits (D-97): plain name, value with its unit, Rule / Stand-in tag; the reference on hover or tap. */
+.rp-timings { list-style: none; margin: 0; padding: 0 !important; }
+.rp-timings + .rp-timings { margin-top: var(--tm-space-2xs); }
+.rp-timings__h { color: var(--tm-content-secondary); }
+.rp-timings details > summary { list-style: none; cursor: pointer; display: flex; gap: var(--tm-space-xs); align-items: baseline; min-height: 16px; line-height: 16px; }
+.rp-timings details > summary::-webkit-details-marker { display: none; }
+.rp-timings__name { flex: 1 1 auto; min-width: 0; color: var(--tm-content-primary); }
+.rp-timings__val { flex: none; font-variant-numeric: tabular-nums; }
+.rp-tag { flex: none; min-width: 52px; text-align: center; padding: 0 4px; border-radius: var(--tm-core-radius-full); font-size: var(--tm-font-size-body-xs); line-height: 14px; background: var(--tm-surface-secondary); color: var(--tm-content-secondary); }
+.rp-tag--rule { background: var(--tm-surface-brand-subtle); color: var(--tm-content-brand); }
+.rp-tag--stand-in { background: var(--tm-surface-warning-subtle); color: var(--tm-content-primary); }
+.rp-timings__ref { margin: 0 0 2px; color: var(--tm-content-secondary); }
+.rp-timings__tool { margin: var(--tm-space-2xs) 0 0; color: var(--tm-content-secondary); }
 
 .drawer-handle {
   position: fixed; right: 0; top: 50%; transform: translateY(-50%); z-index: 40; /* vertically centred, clear of the case header (Part A item 4) */
@@ -111,7 +139,7 @@ body { position: relative; }
 
 /* ---- desktop: frame + panel beside it ---- */
 @media (min-width: 768px) {
-  :root { --frame-h: clamp(640px, calc(100vh - 48px), 800px); --frame-w: calc(var(--frame-h) * 9 / 16); }
+  :root { --frame-h: clamp(640px, calc(100vh - 48px), 844px); --frame-w: calc(var(--frame-h) * 390 / 844); --frame-top: calc((100vh - var(--frame-h)) / 2); }   /* RULES §7.2 (D-97): exactly 390 x 844 when the window allows */
   #stage { display: flex; align-items: center; justify-content: center; }
   .shell-frame {
     position: relative; inset: auto;
@@ -119,14 +147,11 @@ body { position: relative; }
     border-radius: var(--tm-core-radius-32);
     border: 1px solid var(--tm-border-default);
   }
-  .review-panel { top: 24px; left: calc(50% + var(--frame-w) / 2 + 24px); width: min(380px, calc(50vw - var(--frame-w) / 2 - 36px)); max-height: none; }
+  .review-panel { top: var(--frame-top); left: calc(50% + var(--frame-w) / 2 + 24px); width: min(420px, calc(50vw - var(--frame-w) / 2 - 36px)); max-height: none; }
+  .rp-row > summary { min-height: 28px; }
+  .review-panel label { margin: 2px 0; }   /* one column on the right, top edge = frame top (RULES §7.5, D-97) */
   .drawer-handle, .drawer-backdrop { display: none !important; }
   .shell-notice { position: absolute; }
-}
-/* Wide desktop: "Test on phone" sits in the left gutter, so opening any Review panel row never pushes it off screen
-   (Part A item 2; at 1280 x 800 the tallest row, Call simulator, needs the whole right column). Narrower desktops stack it. */
-@media (min-width: 1024px) {
-  .rp-phone { position: fixed; top: 24px; right: calc(50% + var(--frame-w) / 2 + 24px); width: min(380px, calc(50vw - var(--frame-w) / 2 - 36px)); margin: 0 !important; }
 }
 
 /* ---- phone: the panel is a hidden drawer that slides up from the bottom (plan §4) ---- */
@@ -142,11 +167,11 @@ body { position: relative; }
   }
   body.drawer-open .review-panel { transform: translateY(0); }
   /* phone: every control in the drawer is a 48px target (RULES §9) */
-  .review-panel select, .review-panel .tm-btn { min-height: 48px; }
+  .review-panel select, .review-panel .tm-btn, .review-panel .rp-fill { min-height: 48px; }
   .review-panel { background: var(--tm-surface-primary); }
   .rp-card { border: 0; border-radius: 0; }
   .rp-row > summary { min-height: 48px; }
-  .rp-phone { display: none; } /* the phone is the test device: no QR in the drawer */
+  .rp-row[data-row="phone"] { display: none; } /* the phone is the test device: no QR in the drawer */
   body[data-mode="review"] .drawer-handle, body[data-mode="play"] .drawer-handle { display: flex; }
   body.drawer-open .drawer-backdrop { display: block; }
   body.drawer-open .drawer-handle { display: none; }

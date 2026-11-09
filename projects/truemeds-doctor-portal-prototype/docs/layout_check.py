@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Layout regression check for the Truemeds Doctor prototype (phone frame rule, design-system/RULES.md §7).
 Run from anywhere:  python3 docs/layout_check.py            (needs: pip install playwright; a Chromium)
-Fails (exit 1) if desktop is not a 9:16 phone frame, wheel scrolling is lost, or sheets / the Prescribe screen / Rx viewer escape the frame.
+Fails (exit 1) if desktop is not a 390 : 844 phone frame (app/, --app, D-97; the old frozen index.html keeps its 9:16 frame), wheel scrolling is lost, or sheets / the Prescribe screen / Rx viewer escape the frame.
 """
 import os, sys
 from pathlib import Path
@@ -31,17 +31,18 @@ def run_app():
     with sync_playwright() as p:
         kw = {"executable_path": EXE} if os.path.exists(EXE) else {}
         b = p.chromium.launch(**kw)
-        for (w, h) in [(1280, 800), (1440, 900), (1024, 768), (430, 932), (390, 844), (360, 640)]:
+        for (w, h) in [(1920, 1080), (1280, 800), (1440, 900), (1024, 768), (430, 932), (390, 844), (360, 640)]:
             tag = f"{w}x{h}"
             pg = b.new_page(viewport={"width": w, "height": h}); errs = []
             pg.on("pageerror", lambda e: errs.append(str(e)))
             pg.goto(base + "?s=t01-ready"); pg.wait_for_timeout(400)
             f = pg.evaluate("(()=>{const q=document.getElementById('frame').getBoundingClientRect();return {l:q.left,t:q.top,w:q.width,h:q.height,r:q.right,b:q.bottom}})()")
-            panel = pg.evaluate("(()=>{const p=document.getElementById('review-panel').getBoundingClientRect();const cs=getComputedStyle(document.getElementById('review-panel'));return {ov:cs.overflowY, inside: !!document.getElementById('frame').contains(document.getElementById('review-panel')), l:p.left, r:p.right}})()")
+            panel = pg.evaluate("(()=>{const p=document.getElementById('review-panel').getBoundingClientRect();const cs=getComputedStyle(document.getElementById('review-panel'));return {ov:cs.overflowY, inside: !!document.getElementById('frame').contains(document.getElementById('review-panel')), l:p.left, r:p.right, t:p.top}})()")
             if w >= 768:
-                ok(f"{tag} frame is 9:16", abs(f["w"] / f["h"] - 9 / 16) < 0.01, f"{f['w']:.0f}x{f['h']:.0f}")
+                ok(f"{tag} frame is 390 : 844, exactly 390 x 844 when the window allows (D-97)", abs(f["w"] / f["h"] - 390 / 844) < 0.005 and (h - 48 < 844 or (abs(f["w"] - 390) < 1.5 and abs(f["h"] - 844) < 1.5)), f"{f['w']:.1f}x{f['h']:.1f}")
                 ok(f"{tag} frame centred", abs((f["l"] + f["r"]) / 2 - w / 2) < 2)
                 ok(f"{tag} frame fits viewport height", f["b"] <= h)
+                ok(f"{tag} panel top-aligned with the frame, one column on the right (RULES §7.5, D-97)", abs(panel["t"] - f["t"]) <= 1, f"panel top {panel['t']:.1f}, frame top {f['t']:.1f}")
                 ok(f"{tag} panel beside the frame, not inside it, on screen", not panel["inside"] and (panel["l"] >= f["r"] - 1) and panel["r"] <= w, f"panel {panel['l']:.0f}-{panel['r']:.0f}, frame {f['l']:.0f}-{f['r']:.0f}")
             else:
                 ok(f"{tag} phone: frame is the screen", abs(f["w"] - w) < 2 and abs(f["h"] - h) < 2, f"{f['w']:.0f}x{f['h']:.0f}")
@@ -85,7 +86,7 @@ with sync_playwright() as p:
         pg.goto(URL); pg.wait_for_timeout(400)
         f = frame(pg); desktop = w >= 768
         if desktop:
-            check(f"{tag} frame is 9:16", abs(f["w"] / f["h"] - 9 / 16) < 0.01, f"{f['w']:.0f}x{f['h']:.0f}")
+            check(f"{tag} frame is 9:16 (old frozen prototype: index.html / styles.css stay frozen, D-56; the 390 : 844 rule, D-97, is checked on app/ with --app)", abs(f["w"] / f["h"] - 9 / 16) < 0.01, f"{f['w']:.0f}x{f['h']:.0f}")
             check(f"{tag} frame centred", abs((f["l"] + f["r"]) / 2 - w / 2) < 2)
             check(f"{tag} frame fits viewport height", f["b"] <= h or h < 700)
             pg.mouse.move((f["l"] + f["r"]) / 2, (f["t"] + f["b"]) / 2); pg.mouse.wheel(0, 400); pg.wait_for_timeout(400)

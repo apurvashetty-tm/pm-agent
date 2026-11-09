@@ -22,9 +22,9 @@ export const SETTINGS = {
   // Server polling (B7)
   pollingInterval:      { value: 3 * SEC, time: true, source: "MOCK ASSUMPTION", ref: "inside D-58 pt 14 (about 5 s)" },
   // Sign-in and OTP (app-logic §2, OQ-017)
-  otpWindow:            { value: 10 * MIN, time: true, source: "MOCK ASSUMPTION", ref: "OQ-017" },
-  otpLock:              { value: 15 * MIN, time: true, source: "MOCK ASSUMPTION", ref: "OQ-017" },
-  resendWaits:          { value: [30 * SEC, 60 * SEC, 120 * SEC], time: true, source: "MOCK ASSUMPTION", ref: "OQ-017" },
+  otpWindow:            { value: 10 * MIN, time: true, source: "MOCK ASSUMPTION", ref: "OQ-017: how long a code stays valid" },
+  otpLock:              { value: 15 * MIN, time: true, source: "MOCK ASSUMPTION", ref: "OQ-017: lock after 5 wrong codes" },
+  resendWaits:          { value: [30 * SEC, 60 * SEC, 120 * SEC], time: true, source: "MOCK ASSUMPTION", ref: "OQ-017: waits between resends" },
   nearExpiryWarning:    { value: 5 * MIN, time: true, source: "MOCK ASSUMPTION", ref: "app-logic §3 near-expiry" },
   otpWrongLimit:        { value: 5, source: "rule", ref: "D-34: the 5th server-confirmed wrong code locks the number" },
   otpCodesPerWindow:    { value: 4, source: "rule", ref: "D-35: first code + 3 resends per number per window" },

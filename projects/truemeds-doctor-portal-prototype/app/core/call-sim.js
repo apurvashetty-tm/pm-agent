@@ -16,7 +16,9 @@ export const CALL_CHOICES = {
   releaseRefused:  ["accepted", "refused"],
 };
 
-export const DEFAULT_CHOICES = Object.fromEntries(Object.entries(CALL_CHOICES).map(([k, o]) => [k, o[0]]));
+// Default attempt = the happy path (D-97 item 4): the patient answers and the call passes the gate (record over the gate, the
+// first record value), so the default story plays through to Prescription confirmed. Every other value: the first in its list.
+export const DEFAULT_CHOICES = { ...Object.fromEntries(Object.entries(CALL_CHOICES).map(([k, o]) => [k, o[0]])), connected: "over-gate" };
 
 // Returns [{ at (ms from call start), ev, data }]. Times come from settings (demo scales them). Deterministic.
 export function timeline(choices, mode = "review") {

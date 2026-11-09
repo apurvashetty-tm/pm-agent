@@ -1,7 +1,7 @@
 // Story schema for the review panel and play link (plan v3 §4 "Phone testing", checklist 5.12). Every journey, not only calling.
 // Each group: the allowed values (first = default). Values are answers the simulated backend / phone gives; screens read them in later steps.
 // Test numbers and OTP codes are from app-logic §11. Add a value here before a screen can use it.
-import { CALL_CHOICES } from "../core/call-sim.js";
+import { CALL_CHOICES, DEFAULT_CHOICES } from "../core/call-sim.js";
 
 export const JOURNEYS = {
   signIn:    { label: "Sign-in", screens: ["sign-in"] },
@@ -37,7 +37,7 @@ export const STORY_FIELDS = {
 // Call attempts: each attempt is one set of simulator choices (CALL_CHOICES). 1 to 3 attempts per story, played in order.
 export const CALL_KEYS = Object.keys(CALL_CHOICES);
 export const MAX_CALL_ATTEMPTS = 3;
-export const defaultAttempt = () => Object.fromEntries(CALL_KEYS.map((k) => [k, CALL_CHOICES[k][0]]));
+export const defaultAttempt = () => Object.fromEntries(CALL_KEYS.map((k) => [k, DEFAULT_CHOICES[k]]));   // happy path (D-97)
 
 export const DEFAULT_STORY = {
   v: 2,

@@ -13,6 +13,8 @@ export function defaultStory() { return { ...DEFAULT_STORY, calls: [defaultAttem
 // value's index. Attempts follow, each after "~", with upper-case letters for call fields. Letters and indexes are fixed by
 // the order in STORY_FIELDS / CALL_KEYS: add new fields and values at the end only. Example: "3b1~K1" = Pilot HA free,
 // one attempt where the patient ended the call. A default story is "3". Older base64 links (v2) still decode.
+// D-97: the default attempt is the happy path (patient answers, over the gate). A call field is written when it differs from that
+// default, so "~A0" = the patient didn't answer. Short links made before D-97 with no "A" token now play the happy path.
 const STORY_KEYS = Object.keys(STORY_FIELDS);
 const lower = (i) => String.fromCharCode(97 + i), upper = (i) => String.fromCharCode(65 + i);
 export function encodeShort(story) {
@@ -23,7 +25,8 @@ export function encodeShort(story) {
   });
   const calls = story.calls && story.calls.length ? story.calls : [defaultAttempt()];
   const def = defaultAttempt();
-  const parts = calls.map((a) => CALL_KEYS.map((k, i) => { const idx = CALL_CHOICES[k].indexOf(a[k] ?? def[k]); return idx > 0 ? upper(i) + idx : ""; }).join(""));
+  // a call field is written when it differs from the default attempt (the default is not always the first value: D-97 happy path)
+  const parts = calls.map((a) => CALL_KEYS.map((k, i) => { const v = a[k] ?? def[k]; return v !== def[k] ? upper(i) + CALL_CHOICES[k].indexOf(v) : ""; }).join(""));
   if (parts.length > 1 || parts[0]) out += parts.map((p) => "~" + p).join("");
   return out;
 }

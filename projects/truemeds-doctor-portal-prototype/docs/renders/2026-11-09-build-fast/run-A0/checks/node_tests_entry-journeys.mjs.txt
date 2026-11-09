@@ -1,0 +1,62 @@
+PASS A1 cleaning: +91 / 0 / spaces / dashes removed; 10 digits max
+PASS A2 number checks: empty and short only on submit; first digit at once
+PASS A3 test numbers: …01 not registered, …02 inactive, …03 too many, …04 couldn't send, …05 locked, other sent
+PASS A4 wrong codes: Wrong code. ×2, then 2 tries left, then 1 try left, 5th locks the number
+PASS A5 lock: even 1234 refused while locked; sign-in on the number goes to locked; lock ends on the clock (15 min mock)
+PASS A6 resend waits 30 / 60 / 120 s; 4 codes per window (4th → used up, 5th refused); restart does not reset
+PASS A7 expired code with codes used up → expired and resend limited
+PASS A8 the window frees on the clock (10 min mock): a new code can be sent
+PASS A9 codes: 0000 expired, 9999 couldn't verify (not counted), 1234 signs in
+PASS A10 story overrides: two tries left, forced sign-in answer, resend failed; offline answers offline
+PASS A11 the server enforces the resend wait (also after an expired code); the last code returns the window end
+PASS A12 sign-in during the resend wait: no new code, OTP on the running wait (codes left unchanged); the 4th code sent from sign-in returns last + window end
+PASS B1 all 29 sign-in / OTP states render the built screen (registry copy, no inline styles, 0 console errors)
+PASS B2 sign-in checks: empty on Send, first digit at once, too short on Send, re-checks while typing, clears when valid, paste cleaned
+PASS B2b sign-in: 0 console errors
+PASS B3 test numbers: not registered, couldn't send, too many (countdown, ends on the clock), inactive → Call Doctor Ops placeholder, offline
+PASS B3b 9000000005: straight to OTP locked (field and Verify off, lock time, call Doctor Ops, Change kept)
+PASS B3c test numbers: 0 console errors
+PASS B4 OTP arrival: field focused, first box current (blue), recipient = typed number, Resend in 0:30
+PASS B4b OTP: empty and short checks; wrong-code count (Wrong code. ×2, 2 tries left, 1 try left); first keystroke replaces the code and clears the error
+PASS B4c 5th wrong code locks the number (notice with time, Verify off, keyboard closed, resend hidden); lock survives a story restart with its remaining time; ends on the clock
+PASS B4d 1234 signs in (session remembered) → faster sign-in offer; phone Back never returns to OTP
+PASS B4e OTP journey: 0 console errors
+PASS B5 0000 expired (Verify off, terms keep their height); Resend obeys the running wait, then shows; 9999 couldn't check the code
+PASS B5e after the last code, the cap ends with the window on the clock: notice gone, Resend code back
+PASS B5f one server action at a time: Verify during a resend is ignored (no wrong try counted)
+PASS B5g Back from a placeholder restores OTP as it was (cap notice, resend hidden, typed digits)
+PASS B5h Verify answer arriving after leaving for a placeholder does not navigate (screen life ends on every transition)
+PASS B5b resend: green "New code sent" with no icon; countdown ticks; waits 60 s then 120 s; 4th code → too many codes (resend hidden, Doctor Ops link → placeholder)
+PASS B5c story changes apply to the running journey: resend failed, couldn't verify (even for 1234), offline
+PASS B5d OTP states: 0 console errors
+PASS B6 Sign up opens the onboarding page in a new tab; Change and phone Back on OTP return to sign-in with the number kept (first digit typed replaces it); Back at sign-in stays in the app; Terms → Link pending
+PASS B6b navigation: 0 console errors
+PASS B6c Change → Send OTP during the resend wait sends no new code (Resend in keeps counting, under 0:30); the window's last code sent from sign-in → Resend hidden, too-many-codes notice
+PASS B7 drawn keyboard types in review; demo starts on sign-in with no drawn keyboard [MOCK ASSUMPTION]
+PASS B8 frame: sign-in and OTP fill the frame at 360 / 390 / 430 / desktop; no horizontal page scroll
+PASS F1 offer once per number (then Home); device picks fingerprint / Face ID / screen lock, none skips; app open: nobody → sign-in, signed in → Home, faster sign-in on → unlock
+PASS F2 all 14 offer / unlock states render the built screen (registry copy, no inline styles, 0 console errors)
+PASS F3 sign-in → OTP 1234 → offer (fingerprint, no Back) → Turn on: Turning on… with spinner, Not now off → Home; enabled remembered; phone Back stays on Home
+PASS F3b app restart with faster sign-in on → returning unlock "Hello, Dr. Kunal" (name from mock profile data) → Unlocking… → Home
+PASS F3c chain: 0 console errors
+PASS F4 offer shown once: Not now → Home; signing in again (story restarted) skips the offer; reopening the app (faster sign-in off) → Home
+PASS F4b phone Back on the offer = Not now (→ Home, offered, not enabled)
+PASS F4c offer once / Back: 0 console errors
+PASS F5 failed: "Couldn't turn on faster sign-in." in the bar (error) above Try again; Try again re-runs the prompt (Turning on…, notice cleared); cancelled → back as it was, no new message; offline notice (warning, no prompt); then Turn on → Home
+PASS F5b cancelled prompt → back to the offer, no message (offer.cancelled)
+PASS F5c offer outcomes: 0 console errors
+PASS F5d D-93 revised: Turn on → unavailable → screen unchanged (tile + 3 points), "Faster sign-in isn't available on this phone right now." (warning, alert-triangle) in the bar, primary reads Continue, Not now hidden, no top notice → Home; not enabled, offered; phone Back = Continue; the offer is not shown again; Jump offer.unavailable opens it
+PASS F5e offer unavailable: 0 console errors
+PASS F6 device: Face ID wording; no screen lock → offer skipped (Home); screen lock only → offer "Use your screen lock instead of an OTP." → Turn on → restart → "Unlock with screen lock" → Home
+PASS F6b device variants: 0 console errors
+PASS F6c fingerprint turned on, phone changed to screen lock only → unlock asks for the screen lock; no screen lock → unavailable; panel story kept across reopen
+PASS F7f unlock → Use OTP instead (codes 2–4): the 4th code (window's last) opens OTP with Resend hidden and the too-many-codes notice; earlier ones show Resend
+PASS F7 unlock: cancelled → unchanged, no message; phone Back stays on unlock; failed tries 1–2 stay (phone owns retry), the 3rd → OTP for the remembered number
+PASS F7b OTP after unlock fallback: 1234 → Home (faster sign-in already on, no offer)
+PASS F7c unavailable: neutral notice at the top of the panel, prompt and Unlock hidden, Use OTP instead primary; Use OTP instead → OTP (Back = Change → sign-in)
+PASS F7d Not you? Switch account → sign-in with an empty number; phone Back returns to unlock
+PASS F7e unlock journeys: 0 console errors
+PASS F8 story start = returning unlock (Face ID phone); a panel change applies at the next prompt answer
+PASS F9 frame: offer and unlock fill the frame (360×640 / 360 / 390 / 430 / desktop), bar flush with the bottom, no page scroll
+
+60/60 passed
