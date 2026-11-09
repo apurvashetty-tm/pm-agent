@@ -29,7 +29,7 @@ Long check loops still missed a basic gap (design tokens for sizes, borders, tim
    (behaviour, rules, copy, tokens), skipping style and preferences. Use a different model family for logic and risky
    changes. All findings go on one list → **one fix pass**. A second review only if the first found blockers.
 6. **Human eyes for looks.** Machines check rules and logic; Apurva's walkthrough on the phone link (about 10 minutes per
-   journey) checks how it looks and feels. Her notes join the same one list.
+   journey) checks how it looks and feels. His notes join the same one list.
 7. **Every bug gets its smallest test** (or lint rule) so it can't come back, plus a line in the project's feedback log.
 8. **Time-box every run; half-page reports.** A run states its time limit; at the limit it reports what's left instead of
    looping. Screenshots only when someone's eyes are needed.
