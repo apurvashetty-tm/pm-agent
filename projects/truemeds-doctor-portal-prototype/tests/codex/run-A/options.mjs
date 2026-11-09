@@ -2,7 +2,7 @@ import { run, assert } from './harness.mjs';
 const CASES=[];
 for(const [state,options] of [
  ['d-default',['Daily','Every X hours','Alt days','Weekly','Monthly','SOS only']],
- ['d-every-x-hours',['4','6','8','12']],
+ ['d-every-x-hours',['Every 4 hours','Every 6 hours','Every 8 hours','Every 12 hours']], // Main-thread ruling 2026-11-09 (A1 disputes): chips read '4 h'…, accessible names 'Every 4 hours'…
  ['d-duration-picker',['1','2','3','4','5','6','7','10','14','15','Days','Weeks','Months','Ongoing']],
 ]) CASES.push({id:'A-OPTIONS-'+state,name:'approved schedule/duration choices: '+state,state,source:'ui-screens/app-logic.md:223,240-243',test:async d=>{
  for(const name of options) assert.ok(await d.root().getByRole('button',{name,exact:true}).filter({visible:true}).count(),`Choice ${name}`);

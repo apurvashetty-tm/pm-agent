@@ -49,7 +49,7 @@ add('A-H10', 'Profile logout cancelled then confirmed returns to sign-in', 'home
   await d.settle(); await d.text(copy('signin.welcome')); await d.p.reload(); await d.text(copy('signin.welcome'));
 });
 add('A-C01', 'ready Back opens leave; stay and close preserve case', 't01-ready', '89,100', async d => {
-  await d.click('Back'); await d.text('Leave this case?'); await d.click('Stay on this case'); await d.buttons(['Call patient']);
+  await d.click('Back'); await d.text('Leave this case?'); await d.click('Stay'); /* Main-thread ruling 2026-11-09 (A1 disputes): D-84 CA-22 */ await d.buttons(['Call patient']);
   await d.click('Back'); await d.closeSheet(); await d.buttons(['Call patient']);
 });
 add('A-C02', 'release returns to Home', 's7e-leave-sheet', '100', async d => {
@@ -96,7 +96,8 @@ add('A-P06', 'unchanged Prescribe closes without discard', 'd-default', '248', a
   await d.click('Close'); await d.buttons(['Call patient']); await d.noText('Discard changes?');
 });
 add('A-P07', 'Other accepts only positive decimal numbers', 'd-syrup', '244', async d => {
-  await d.click('Other'); const input = d.root().locator('input[inputmode=decimal]:visible');
+  // Main-thread ruling 2026-11-09 (A1 disputes): d-syrup is on Daily (M/A/N grid, no Other); Other is a single-dose choice, so pick Weekly first.
+  await d.click('Weekly'); await d.click('Other'); const input = d.root().locator('input[inputmode=decimal]:visible');
   for (const invalid of ['', '0', '-1', '1e2', '1/2', '7..5']) {
     await input.fill(invalid); await d.click('Prescribe'); assert.ok(await input.isVisible(), `${invalid} must not save`);
     assert.ok(await d.root().locator('.tm-field__helper:visible, [role=alert]:visible').count(), 'Field error visible');

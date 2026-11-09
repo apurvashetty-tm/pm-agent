@@ -8,7 +8,7 @@ function recipe(from,to,pattern,fn) { recipes.set(`${from}>${to}:${pattern}`,fn)
 const advance = async d => { await d.ff(ms('gate') + ms('mockServerDelay') + ms('pollingInterval') * 2); };
 const confirm = label => async d => { await d.click(label); await d.settle(); };
 recipe('R1','CALL','Call patient',async d=>{await d.click('Call patient'); await d.buttons([],['Back','Callback','End call']); await d.msg('call.scriptCat4');});
-recipe('R1','LEAVE','Back',async d=>{await d.click('Back'); await d.text('Leave this case?'); await d.buttons(['Release case','Stay on this case']);});
+recipe('R1','LEAVE','Back',async d=>{await d.click('Back'); await d.text('Leave this case?'); await d.buttons(['Release case','Stay']); /* Main-thread ruling 2026-11-09 (A1 disputes): D-84 CA-22 renamed it to Stay */});
 recipe('E3','LEAVE','Back',async d=>{await d.click('Back'); await d.text('Leave this case?');});
 recipe('E3','CALL','Call again',async d=>{await d.click('Call again'); await d.msg('call.scriptCat4'); await d.buttons([],['Back']);});
 recipe('CALL','C0','Cat4 / HA skipped',async d=>{await d.click('Call patient'); await d.msg('call.scriptCat4');});

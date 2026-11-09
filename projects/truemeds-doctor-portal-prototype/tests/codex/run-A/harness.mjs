@@ -114,7 +114,9 @@ export function addressing(min, max) {
     test: async d => {
       await d.p.setViewportSize({ width, height: 844 }); await d.p.goto(d.base + '?capture=1&s=' + encodeURIComponent(r.id));
       await d.p.waitForTimeout(100);
-      assert.ok(norm(await d.root().innerText()).length > 0, 'Nonempty built screen');
+      // Main-thread ruling 2026-11-09 (A1 disputes): a-loading is a text-free skeleton by design (D-81 F28); accept its status region instead of text.
+      if (r.id === 'a-loading') assert.ok(await d.root().locator('[role=status][aria-label]').count(), 'Loading skeleton');
+      else assert.ok(norm(await d.root().innerText()).length > 0, 'Nonempty built screen');
       assert.equal(await d.root().locator('img.shell-picture, figure').count(), 0, 'No picture stand-in');
       await d.noText('[missing:'); await d.noText('Not built');
     },

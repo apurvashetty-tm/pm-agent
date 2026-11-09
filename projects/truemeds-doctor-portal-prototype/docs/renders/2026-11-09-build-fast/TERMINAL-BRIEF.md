@@ -88,6 +88,6 @@ This brief may be started by `scripts/run-chain.sh` in a fresh headless session.
 
 ## Run status
 - Run A0: ✅ done — main-thread review passed 2026-11-09 18:35 (rulings on its test disputes below)
-- Run A1: ✅ done 2026-11-09 — waiting for main-thread review (`run-A1/REPORT.md`; 4 Codex test disputes in `run-A1/test-disputes.md`)
+- Run A1: ✅ done 2026-11-09 — main-thread review passed 21:50 (4 test disputes ruled as test bugs and fixed; see `docs/runs/RULINGS.md`)
 - Run A2: not started
 - Run B: not started
