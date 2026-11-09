@@ -1,0 +1,10 @@
+/* Each rule below must be reported by check_tokens.py (one finding each). */
+.f1 { margin: 13px; }
+.f2 { color: #fff; }
+.f3 { z-index: 5; }
+.f4 { transition: 150ms; }
+.f5 { width: calc(20px - var(--tm-space-sm)); }
+.f6 { background: white; }
+.f7 { opacity: 0.5; }
+.f8 { padding: var(--tm-space-sm) 4px; }
+.f9 { width: 37px; } /* raw-ok: */
