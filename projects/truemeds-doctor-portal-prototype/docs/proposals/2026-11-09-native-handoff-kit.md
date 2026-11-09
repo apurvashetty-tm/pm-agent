@@ -1,6 +1,6 @@
 # Native hand-off kit — pilot on the Sign-in screen
 
-**Status:** approved by Apurva 2026-11-09 (D-95) · **Date:** 2026-11-09 · **Backlog:** §2e step 5 (token inspector), now widened to a hand-off kit
+**Status:** approved by Apurva 2026-11-09 (D-96; amended same day: fast-build way, see brief) · **Date:** 2026-11-09 · **Backlog:** §2e step 5 (token inspector), now widened to a hand-off kit
 
 ## 1. Why
 
@@ -72,7 +72,7 @@ repo; deploy only if Apurva asks) · any change to `app/`, `ui-screens/` or `des
 
 - [ ] Every token shown uses its native name and matches `design-system/native/tokens.ts`.
 - [ ] Every block on Sign-in has a spec: parts × states → token, size, rules.
-- [ ] All 12 states inspectable at 360 and 390; a "tokens used" table exists.
+- [ ] All 12 states inspectable at 390 (360 shown as the approved pictures); a "tokens used" table exists.
 - [ ] Zero raw values unflagged.
 - [ ] Font files (TTF, 4 weights) and setup note included.
 - [ ] `sign-in.json` covers every element in every state; each copy key exists in `messages.ts`.
