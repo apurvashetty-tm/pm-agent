@@ -1,0 +1,3330 @@
+OpenAI Codex v0.167.0
+--------
+workdir: /Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype
+model: gpt-6.1-sol
+provider: openai
+approval: never
+sandbox: workspace-write [workdir, /tmp, $TMPDIR]
+reasoning effort: none
+reasoning summaries: none
+session id: 01a1c1c3-e493-78b2-94af-22c0c54cbdf2
+--------
+user
+You are the tester for the D-103 kit viewer redesign. Write NEW tests H25 onward in `tests/codex/handoff/` (a new file `tests/codex/handoff/viewer-d103.test.mjs`, plus a "D-103 viewer — H25 onward" section appended to `tests/codex/handoff/CASES.md`). Do not edit or delete the existing tests (H01–H24). Write ONLY under `tests/codex/handoff/`.
+
+Write the tests from these two sources only (do not read the preview's code under docs/renders/2026-11-10-kit-cleanup/, and do not read app/ or scripts/):
+- `docs/proposals/2026-11-10-kit-viewer-cleanup.md` (agreed, D-103) — especially its "Done when" list.
+- `docs/runs/RULINGS.md`, the entry "2026-11-10 00:46 — KIT RUN" (incl. the "Restart note" and "Check before DONE").
+You may also read `app/state-map.js` (the approved state list; its `calling` field marks calling states) as the state oracle.
+
+Tests are written before the build; they will fail now. Run them once (`node --test tests/codex/handoff/viewer-d103.test.mjs`) and report pass / fail counts; do not weaken them to pass.
+
+## How to run the viewer headless
+jsdom is not installed. Use Playwright's Chromium, already installed: `createRequire(path.join(root,'tests/package.json'))('playwright')`, `chromium.launch({ executablePath: process.env.CHROME || '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome' })`. Open `handoff/viewer/index.html` with a `file://` URL (no server). Collect `pageerror` and console errors; any is a failure. Keep each test under ~120 s; reuse one browser.
+
+## Interface contract (what the builder will produce; test against it)
+- Data: `viewer/data.js` sets `window.KIT = { screens: [ { key, name, tab, states: [...], tokensUsed, rawValues } ], blocks: [ { block, name, usedIn: [stateIds], ... } ], tokenIndex: [ { native, ts, web, value } ], decided: [ { id, q } ], open: [ { id, q } ] }` and `window.KIT_DOWNLOADS = [ { main?, href, label, what, size } ]`. Every state has `when: { shows, next }` (non-empty plain text) and `rule.decided: [DECIDED ids]`. You may read these via `page.evaluate(() => window.KIT)` to drive the walk.
+- Routing is by URL hash: `#start`, `#foundation`, `#blocks/<block>`, `#screens/<tab>/<stateId>[/<elementId>]`.
+- Top nav: `nav.v-top` with buttons "Start here", "Foundation", "Building blocks", "Screens".
+- Screens tab: `nav.scrtabs` with one button per screen tab, exactly these labels in this order: Sign-in, OTP, Faster sign-in offer, Returning unlock, Home, Case, Prescribe, Calling; none disabled; clicking one shows that screen's states (state chips are `.chips button`). Calling = the case-folder states that `app/state-map.js` marks `calling`; Case = the other case-folder states. Each approved state in the state map is reachable under exactly one tab.
+- Phone: `.shot img` (the built 390 picture, `src` resolves to an existing file) with tap targets `.shot .hit[data-id]`; caption contains "smallest supported phone: 360 wide". No other `<img>` of the screen state anywhere on the Screens tab (no 360 picture, no approved-390 picture). Three version-A states that are not built yet (`t08b-valid-forward`, `t11-calling-transfer`, `t12-transfer-ready`) show their approved picture in `.shot img` with a "later" note instead, and have no `.hit`.
+- Right panel `.panel` (scrolls by itself: computed `overflow-y` is `auto` or `scroll` at a 1280×800 window): first card `.card.when` with heading "When this shows", `p.when-shows` and `p.when-next` both non-empty, and (when the state has answered questions) `details.ans` whose links are `a[href^="../DECIDED.md#"]`, link text is the question text (not an id like `d05` / `otp-03`), and every target id exists in `handoff/DECIDED.md` (as `### <id> ·` heading or `id="<id>"`).
+- Tapping a `.hit` shows `.card.el` for that element; it contains a block link `a[href^="#blocks/"]` (the block exists in `KIT.blocks`); it does NOT contain "box", a "Behaviour" heading, or "role"; a "Screen reader label" heading only appears when the element has an accessibility name. Then `details.elfold` with summary "Can't tap it? Pick from a list".
+- No "Not tokens in this state: 0" card; a not-tokens card appears only if the count is above 0.
+- Building blocks: each block page has `.usedon` with heading "Where it's used", one `p` per screen with the screen name in `b`, and `a.uchip[href^="#screens/"]` links; following one opens that screen tab and state with that block's element selected (`.hit.sel` exists and its element's block is this block).
+- Start here: `.dls a.dl[href]` download links; one `a.dl-main` for the whole kit zip, plus tokens.ts, messages.ts, icons.ts, fonts.zip, logo.zip. Every href resolves (relative to `viewer/`) to a file in `handoff/`. Single files equal `handoff/foundation/tokens.ts`, `messages.ts`, `icons.ts` byte for byte. The kit zip (read it with `unzip -Z1` / `unzip -p` via child_process) holds exactly every file under `handoff/` except `viewer/downloads/`, paths relative to `handoff/`, contents byte-identical. Start here fits in one 1440×900 laptop window without scrolling (`document.documentElement.scrollHeight <= innerHeight + 1`) and has no tokens table.
+- Foundation: `label.only` holds a screen `select` and a checkbox "Only values used on <screen>"; ticking it narrows the token table (`tbody tr` count drops, > 0). Alias chains are not inline text (no "(via --tm-" in the rendered text).
+- No internal code or label anywhere in the rendered text of any tab, screen, state (one element tapped per state) or block page: F1, F2, N1, W1, L1 (as whole words), [RECOMMENDED], [PROPOSED], [LOCKED], §, "Design rules", "Rule for this state", "Tokens used in this state", "Approved reference", "box N×N". `[MOCK]` is allowed.
+- No script errors on any tab, screen or state.
+- `node scripts/build-handoff.mjs --check` exits 0 (the kit is up to date, including the downloads).
+
+Name tests `H25: …`, `H26: …` etc. In CASES.md give each ID, the pass/fail check and its source line (proposal / ruling line numbers). Keep it compact.
+
+codex
+I’ll read the two agreed sources and the state oracle, add H25 onward without changing H01–H24, then run the new file once and report the counts.
+exec
+/bin/zsh -lc 'pwd && rg --files tests/codex/handoff && nl -ba docs/proposals/2026-11-10-kit-viewer-cleanup.md && nl -ba docs/runs/RULINGS.md' in /Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype
+ succeeded in 0ms:
+/Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype
+tests/codex/handoff/journeys.test.mjs
+tests/codex/handoff/CASES.md
+tests/codex/handoff/handoff.test.mjs
+     1	# Kit viewer clean-up and downloads: proposal
+     2	
+     3	2026-11-10 · **Agreed by Apurva 00:45 (D-103)**, after a working preview with three extra changes: a tab per screen; phone fixed left with details on the right (no 360 picture; behaviour as answered questions in "When this shows"); "Where it's used" on each building block. Applied in one pass by the kit run (all journeys), before Netlify deploy 1.
+     4	
+     5	**Test for every item:** does it help an engineer build the screen right, or help Apurva walk them through it? If neither, cut it.
+     6	
+     7	## 1. Screens tab (what you walk Engineering through)
+     8	
+     9	| # | What's there today | Does it help? | Proposal |
+    10	|---|---|---|---|
+    11	| S1 | The 390 picture you tap, plus the element card (block, design values, spacing, text, icon) | **Yes**: this is the kit's core. | **Keep.** |
+    12	| S2 | Inside the element card: "box 358×743 at x,y" | Barely. The engineer builds with the spacing and design values, not pixel positions. | **Cut.** |
+    13	| S3 | Inside the element card: Accessibility ("role main · name · size 358×743") | Half. The spoken label matters for screen readers; role and size are noise. | **Keep only the spoken label**, and only where one exists. |
+    14	| S4 | A row of buttons with element names (field-control, field-prefix…) | Yes for tiny elements that are hard to tap. Clutter otherwise. | **Keep, folded** under "Can't tap it? Pick from a list". |
+    15	| S5 | "Rule for this state" card | **Not as written.** It shows our internal codes ("F1 — Submit empty; focus field, edit") and pastes the same long paragraph into many states. What it should answer is real: when does this state appear, and what can the doctor do next? | **Replace** with "When this shows": one or two plain lines (what causes it · what happens next) and links to the DECIDED answers. |
+    16	| S6 | "Tokens used in this state" table | No. It repeats what each element card already shows. | **Cut.** |
+    17	| S7 | "Not tokens in this state: 0" card | No. It's 0 on every state now, so it's noise. | **Show only when above 0**, as a red warning. Red flags inside element cards stay. |
+    18	| S8 | "Approved reference file: values that are not tokens (19)" | No. It's our internal check on our own reference HTML; engineers build from the built app, which has 0. | **Cut.** |
+    19	| S9 | Three pictures of the same screen (built 390, approved 360, approved 390) | Built 390 and approved 390 are the same picture (proved by the compare). | **Keep the built 390 (tap it) and the approved 360** (the smallest phone). **Cut the approved 390.** |
+    20	
+    21	## 2. Start here tab
+    22	
+    23	| # | Today | Proposal |
+    24	|---|---|---|
+    25	| H1 | "What is here" card | **Keep**, rewritten in four plain lines (one per tab). |
+    26	| H2 | "Files" card listing `../AGENTS.md`, `../DECIDED.md`… | **Replace** with the download area (§5). |
+    27	| H3 | "Tokens used on Sign-in" table (the first thing anyone sees) | **Move** to Foundation as a "used on screen X" filter. It's the main reason the first page overwhelms. |
+    28	| H4 | Nothing on how to use the viewer in a walkthrough | **Add** one line: "Start with Screens. Tap anything. Check DECIDED before asking." |
+    29	
+    30	## 3. Foundation tab
+    31	
+    32	| # | Today | Proposal |
+    33	|---|---|---|
+    34	| F1 | 174 design values, searchable, native name beside web name | **Keep** (reference). Add the "used on screen X" filter from H3. |
+    35	| F2 | "(via --tm-core-…)" alias chains | **Fold** into a hover / second line; most readers don't need them. |
+    36	
+    37	## 4. Building blocks tab
+    38	
+    39	| # | Today | Proposal |
+    40	|---|---|---|
+    41	| B1 | Each block: pictures, parts × states → values, rules | **Keep.** |
+    42	| B2 | "RN names are a suggestion [RECOMMENDED]" | **Reword:** "Suggested React Native names; you own the components." No internal labels. |
+    43	| B3 | Rules end with "— Design rules 9.1", "§9.1" | **Cut the section numbers.** They point to our internal rules file, which isn't in the kit. The rule text stays. |
+    44	
+    45	## 5. Downloads: inside the site, not Google Drive
+    46	
+    47	**Proposal:** a **Download** area on Start here, built by the same script that builds the kit:
+    48	- **"Download the whole kit (.zip)"**: one button. This is the folder their AI tool reads.
+    49	- **Single files** for people who only need one: `tokens.ts`, `icons.ts`, `messages.ts`, fonts (.zip), logo files.
+    50	- The file names, size and kit version/date show beside the buttons.
+    51	
+    52	**Why not Google Drive:** someone has to upload to Drive by hand after every change, so it falls behind the site and people end up with mismatched versions. Drive also needs sharing permissions per person. Inside the site, the download is always the same version as what they're looking at, and it costs nothing extra.
+    53	
+    54	**Public link check:** a Netlify link is open to anyone who has it, and the screens are already public on the current prototype site. The fonts are open-licence (SIL OFL), so hosting them is fine. Nothing internal is in the kit (checked: no run logs, briefs or deploy settings).
+    55	
+    56	## Done when (pass / fail)
+    57	
+    58	- [ ] Every item above is applied as agreed (or marked "kept on purpose").
+    59	- [ ] No internal code, label or section number visible anywhere in the viewer (F1, N1, [RECOMMENDED], §, "Design rules x.y").
+    60	- [ ] Start here fits on one laptop screen without scrolling.
+    61	- [ ] Download zip and single files work from the deployed site and from a downloaded copy (opened from disk).
+    62	- [ ] The zip equals the `handoff/` folder (checked by script); the kit's "out of date" check still passes.
+    63	- [ ] Applied to every journey's screens, not only Sign-in.
+    64	
+    65	## Order
+    66	
+    67	Agree → the kit run applies it with all journeys (one pass) → Claude reviews → Apurva looks → **Netlify deploy 1** (app + kit + calling-flow page) → final deploy 2 after approval.
+     1	# Main-thread rulings
+     2	
+     3	Every run reads this first. Rulings override briefs where they conflict. Newest at the top.
+     4	
+     5	## 2026-11-10 00:35 (after run B — main thread review: passed)
+     6	- **B passed.** Evidence checked: run B 94 / 99 with the 5 disputed cases passing 5 / 5 via `textContent`; run A 303 / 303; A0-happy-path PASS; own tests 23 / 23; compare steps 2–6, 206 pictures, 2 over 1 %. Critique: 1 blocker + 2 should-fix adopted, critique-2 no blockers.
+     7	- **Dispute #1 (B-play-*, 5 cases): test bug.** The Story row folds Test on phone (D-97 item 2), so `innerText` is empty. Fixed by the main thread in `tests/codex/run-B/journeys.mjs` (link read with `textContent`). No app change. The drawer `visibility: hidden` fix stays.
+     8	- **t13-connecting-ha @390 (16 %): the build is right.** In launch B, 13 Transferring… keeps the neutral Pilot script; `call.scriptTransfer` is version A only (app-logic §4 script list, §5 "Transfer path in B reuses 13–15"; D-83 / D-85). The 390 picture is stale (version-A script; the 360 picture is 0.67 %). Accept the diff; re-render `t13-connecting-ha_w390` from the build when pictures are next re-rendered (backlog §2l). Don't change the app.
+     9	- **c-skip-ha @390 (2.5 %): accepted** (background is version-A screen 12 in the picture, B1 in the build; plan v3.2 §5). The `c-skip-ha-b1` / `c-skip-ha-16` re-renders are logged in backlog §2l, not for the kit run.
+    10	- **B's ten `[MOCK ASSUMPTION]`s accepted** (OQ-038 in `open_questions.md`); all consistent with app-logic §4–§5. Setting `pilotTalkAfterGate` (60 s, stand-in) stays.
+    11	- **Not automated** (B-R07 every ending type, B-R09 every background deadline, B-R10 storage isolation, B-R11 desktop / phone parity to the final card): no new test run; they go to Apurva's phone walkthrough. A parity-to-final-card Codex test is optional, logged in backlog.
+    12	- **signin-d101 and handoff-kit-all:** unchanged by this review. Kit run: t13 in launch B is documented with the neutral script.
+    13	
+    14	## 2026-11-10 00:46 — KIT RUN: read this first (Apurva agreed the viewer redesign, D-103)
+    15	- **The viewer is redesigned; build every journey in the new design, not the old one.** Agreed proposal: `docs/proposals/2026-11-10-kit-viewer-cleanup.md` (its "Done when" list is part of your done-checklist). **Working reference, approved by Apurva:** `docs/renders/2026-11-10-kit-cleanup/preview/viewer/` — `viewer.js`, `cleanup.css`, `index.html` show exactly what to build; the `when` lines and `KIT_DOWNLOADS` appended at the end of its `data.js` show the data shape. Move all of it **into `scripts/build-handoff.mjs`** (VIEWER_JS / VIEWER_HTML / data), so `handoff/` stays generated and `--check` passes. Don't edit `handoff/` by hand.
+    16	- **What changed (vs the pilot viewer):** Start here = how-to line, four plain lines, Download area (whole kit .zip + tokens.ts, messages.ts, icons.ts, fonts.zip, logo.zip, built by the script; the zip must equal `handoff/`, checked by script); no tokens table there. Foundation = "only values used on <screen>" filter; alias chains folded into a tooltip. Building blocks = no internal labels or section numbers ([RECOMMENDED], [PROPOSED], [LOCKED], §, "Design rules x.y" — keep [MOCK]); a **"Where it's used"** list grouped by screen, each state a link opening Screens with that block selected. Screens = **a tab per screen** (Sign-in, OTP, Faster sign-in offer, Returning unlock, Home, Case, Prescribe, Calling — every one live now); the phone fixed on the left (390, tap any part; caption "smallest supported phone: 360 wide"; no 360 or approved-390 pictures); a right panel that scrolls on its own: **"When this shows"** (what causes it · what happens next, plain words, one per state, written by you from app-logic / feedback-state-map into the generator's config, + "Answered questions" as question text linking to DECIDED) → the tapped element's details (block name links to its building block; no box position, no behaviour section; screen-reader label only when one exists) → "Can't tap it? Pick from a list". No state-level tokens table, no "Not tokens: 0" card (show only when > 0), no approved-reference table.
+    17	- **Restart note (00:50):** the first start of this run was stopped by Apurva on purpose after step 0, so it builds the new design (the STOPPED line above it in STATUS is that). **Codex tests H15–H24 are already written and committed (93ef993): use them, don't rewrite them.** Where one checks a viewer card D-103 removes or moves, list it in `test-disputes.md` (don't edit it) and follow D-103. **Then, before step 1, Codex writes the D-103 viewer tests (H25 onward) in `tests/codex/handoff/`** from the agreed proposal (`docs/proposals/2026-11-10-kit-viewer-cleanup.md`, its "Done when") and this ruling only — not from the preview's code — and commits them as written. They run the built viewer headless (jsdom, as the preview check did) and cover at least: a Screens tab per journey, each one opening; every state shows "When this shows" with both lines filled and its answered questions as question text linking to DECIDED; tapping an element shows its details with the block name linking to Building blocks; no 360 or approved-390 picture in the viewer, the "smallest supported phone: 360 wide" line present; each building block has "Where it's used" grouped by screen, every link opening that screen and state with that block selected; Start here has the download area, every download link resolves to a file, and the kit zip matches `handoff/`; Foundation's "used on" filter narrows the list; no internal code or label anywhere in the rendered text (the list under "Check before DONE"); no script errors on any tab, screen or state. Then continue from step 1.
+    18	- **Check before DONE:** a headless pass over every tab, screen and state with no script errors and none of: F1, F2, N1, W1, L1, [RECOMMENDED], [PROPOSED], [LOCKED], §, "Design rules", "Rule for this state", "Tokens used in this state", "Approved reference", "box N×N". (Method used for the preview: jsdom, every state, one element tapped.)
+    19	
+    20	## 2026-11-09 23:05 (after run A2 — main thread review: passed)
+    21	- **A2 passed.** A0-happy-path dispute: test bug (Set availability *is* the confirm, app-logic §3; the approved label is "Request a case"). Fixed by the main thread in `tests/codex/run-A0/all.mjs` (no second availability click; `/Request (a |next )?case/`). **Run B: run `tests/codex/run-A0/` once and confirm A0-happy-path passes.**
+    22	- A2's extra builds (scheduled hold retries, ring time / `answeredAt`) stay. **B's live Pilot gate counts from `answeredAt`.**
+    23	- **D-101 (Apurva):** Product answers for the Sign-in kit items o04, o05, o07, o08, o10, o11, o17, o18, o25, o26 — read D-101 in the decision log. Queue: `signin-d101` (small prototype run) after B, then the kit run.
+    24	- **Kit run (handoff-kit-all):** move o04, o05, o07, o08, o10, o11, o17, o18, o25, o26 from OPEN to DECIDED with D-101 (in `scripts/build-handoff.mjs`'s list, generated as before). This replaces the brief's "these stay OPEN" line for these ten; any new Product question still stays OPEN.
+    25	- **Kit = prototype hand-off with a fake backend (D-101 amended):** move o01, o02, o03, o12, o15, o16, o19, o21, o22, o24 to DECIDED too, each with the prototype's current mock value / behaviour (from the build and `open_questions.md`), labelled `[MOCK]` and "keep configurable". o23 → stated as the app team's choice. o09 → prototype-only note. For the other journeys, do the same: a backend or design gap gets the prototype's mock answer, not an OPEN line; only genuinely undecided **Product** questions stay OPEN.
+    26	- **Archive tag:** none when the chain ends — only after Apurva approves everything (backlog §2m point 1).
+    27	
+    28	## 2026-11-09 22:35 (for run B and later — main thread, new thread)
+    29	- **A2 Codex critique, pre-ruled:** blockers 1–3 are valid (unclear confirm must reconcile and never resubmit, D-69; everything else disabled while Confirming, incl. Callback / Unavailable on 7d; a late result closes or revokes a sheet the new stage doesn't allow, and the Callback / Unavailable handlers check the stage). Should-fix 4 (scheduled retries / attempt counts) is backend behaviour the doctor never sees — **not needed in the prototype**; a log line is enough. Should-fix 5 (time anchored to the patient's answer) is **run B's**: the Pilot live-call gate counts from the patient answering (app-logic §5, Launch B), so B's simulator needs a separate answer time and ring interval.
+    30	- **Lighter evidence from run B on (backlog §2m point 4):** commit proof (REPORT, JSON, test logs, compare report, one sheet) and only pictures that **differ** from what's committed; no identical re-captures.
+    31	- **Queue:** a hand-off-kit run for all journeys runs after B (`docs/renders/2026-11-09-handoff-kit-all/TERMINAL-BRIEF.md`). B doesn't touch `handoff/`.
+    32	
+    33	## 2026-11-09 21:50 (after run A1 — main thread review: passed)
+    34	- **A1 test disputes (4): all test bugs, app follows the approved pictures.** Fixed in `tests/codex/run-A/` by the main thread: A-C01 clicks **Stay** (D-84 CA-22); A-P07 picks **Weekly** before **Other** (Other is single-dose only); A-OPTIONS-d-every-x-hours matches the accessible names **Every 4 hours…**; `a-loading` accepts the skeleton's status region (text-free by design, D-81 F28). Syntax and inventory checked; **A2: run the whole run-A suite once and confirm these four pass.**
+    35	- **app-logic §4** stale "Stay on this case" lines corrected to **Stay**.
+    36	- **A1's five `[MOCK ASSUMPTION]`s accepted** (recorded as OQ-037 in `open_questions.md`). View Rx during "Confirming…": looks as approved, takes no tap — correct.
+    37	- **Eye checks** (Rx pinch / drag / double-tap on a phone, real keyboard hiding / restoring the bar, 360×640 feel) go to Apurva's phone walkthrough, not to a run.
+    38	
+    39	## 2026-11-09 20:45 (after the token pass)
+    40	- **Token-pass test disputes 1–3: the build is right, Codex's tests were wrong.** Native tokens follow the D-98 pattern `tokens.<group>.<name>` (e.g. `iconSize.sm`, `spinner.sizeLg`), with no `tokens` root in `tokens.json`; SALT semantic tokens may alias core tokens (`--tm-radius-full` → `--tm-core-radius-full`); `transparent` is a keyword, not a raw colour. The main thread fixed `tests/codex/tokens/token-pass.test.mjs` accordingly: **90 / 90 pass**. Don't reopen these.
+    41	- **25 `raw-ok` lines reviewed:** all valid (geometry, ≤3px optical nudges, the listed exceptions). Keep the bar: a new `raw-ok` needs a reason a reviewer would accept; anything else becomes a token or goes to the report.
+    42	
+    43	## 2026-11-09 20:30 (after the rails run)
+    44	- **After-edit hook is live** for every run from now on (installed by the main thread in `.claude/settings.json`, both folders). If an edit returns "Token lint (D-100): raw values…", fix that value in the same step.
+    45	- **Environment in unattended runs:** run `../../scripts/publish.sh` from the project folder, with repo-root-relative paths (e.g. `projects/truemeds-doctor-portal-prototype/app/…`). Don't `cd` outside the project folder; use `git -C` and `../../` paths in one command. `chmod`, nested `claude` and `.claude/` writes are refused — don't try; call scripts with `bash` / `python3`.
+    46	- **Codex tests written ahead** for runs A and B are in `tests/codex/run-A/`, `run-B/`, `validate.mjs`, `README.md`, `VALIDATION.md` (not yet committed): commit them as they are at the start of A1, then use them.
+    47	- **Runner:** `scripts/run-chain.sh` now counts only real `DONE <name>` lines (rails fix swapped in). Keep ending with one `DONE` / `STOPPED` line.
+    48	
+    49	## 2026-11-09 (before the chain)
+    50	- **Apurva is he / him.** Use he / him in everything you write; if a file you're already editing says she / her about Apurva, correct it.
+    51	- **Rails run:** `scripts/run-chain.sh`, `docs/runs/QUEUE.md`, `STATUS.md`, `RULINGS.md` already exist (written by the main thread) and the chain is running you. **Do not edit `scripts/run-chain.sh`** (it is running). In rails §4 only check it: read it, run its dry run with `--queue docs/runs/QUEUE-dry.md` **only if no other chain is running** — it is, so skip the dry run and say so. If you find a bug, write the fix to `scripts/run-chain.next.sh` and note it in your REPORT; the main thread swaps it in. Skip rails §6's "Rails ready" print.
+    52	- **Product questions in the kit (o04, o05, o07, o08, o10, o11, o17, o18, o25, o26):** not decided yet; leave them OPEN. Don't ask.
+    53	- **Reviews:** one Codex review per run, correctness against the spec only, style skipped; one fix pass; a second review only for blockers (D-100).
+    54	- **Small things you can't fix in one try:** list them in the report and move on; don't loop.
+
+exec
+/bin/zsh -lc 'cat app/state-map.js' in /Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype
+ succeeded in 0ms:
+// GENERATED by scripts/build-state-map.mjs — do not edit. Drift is checked by scripts/check-state-map.mjs.
+window.TM_STATE_MAP = {
+ "pictures": [
+  {
+   "id": "offer_enable-failed",
+   "kind": "picture",
+   "picture": "faster-signin-offer/offer_enable-failed",
+   "step": 1,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": "offer.failed",
+   "notes": []
+  },
+  {
+   "id": "offer_enabling",
+   "kind": "picture",
+   "picture": "faster-signin-offer/offer_enabling",
+   "step": 1,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": "offer.enabling",
+   "notes": []
+  },
+  {
+   "id": "offer_face-id",
+   "kind": "picture",
+   "picture": "faster-signin-offer/offer_face-id",
+   "step": 1,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "offer_fingerprint",
+   "kind": "picture",
+   "picture": "faster-signin-offer/offer_fingerprint",
+   "step": 1,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "offer_offline",
+   "kind": "picture",
+   "picture": "faster-signin-offer/offer_offline",
+   "step": 1,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": "offer.offline",
+   "notes": []
+  },
+  {
+   "id": "offer_screen-lock",
+   "kind": "picture",
+   "picture": "faster-signin-offer/offer_screen-lock",
+   "step": 1,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": "offer.screen-lock",
+   "notes": []
+  },
+  {
+   "id": "offer_unavailable",
+   "kind": "picture",
+   "picture": "faster-signin-offer/offer_unavailable",
+   "step": 1,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": "offer.unavailable",
+   "notes": []
+  },
+  {
+   "id": "otp_code-expired",
+   "kind": "picture",
+   "picture": "otp/otp_code-expired",
+   "step": 1,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": "otp.code-expired",
+   "notes": []
+  },
+  {
+   "id": "otp_cooldown-reconciling",
+   "kind": "picture",
+   "picture": "otp/otp_cooldown-reconciling",
+   "step": 1,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": "otp.cooldown-reconciling",
+   "notes": []
+  },
+  {
+   "id": "otp_couldnt-verify",
+   "kind": "picture",
+   "picture": "otp/otp_couldnt-verify",
+   "step": 1,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": "otp.couldnt-verify",
+   "notes": []
+  },
+  {
+   "id": "otp_default",
+   "kind": "picture",
+   "picture": "otp/otp_default",
+   "step": 1,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": "otp.default",
+   "notes": []
+  },
+  {
+   "id": "otp_empty-tap",
+   "kind": "picture",
+   "picture": "otp/otp_empty-tap",
+   "step": 1,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": "otp.empty-tap",
+   "notes": []
+  },
+  {
+   "id": "otp_expired-and-resend-limited",
+   "kind": "picture",
+   "picture": "otp/otp_expired-and-resend-limited",
+   "step": 1,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": "otp.expired-and-resend-limited",
+   "notes": []
+  },
+  {
+   "id": "otp_locked",
+   "kind": "picture",
+   "picture": "otp/otp_locked",
+   "step": 1,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": "otp.locked",
+   "notes": []
+  },
+  {
+   "id": "otp_new-code-sent",
+   "kind": "picture",
+   "picture": "otp/otp_new-code-sent",
+   "step": 1,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": "otp.new-code-sent",
+   "notes": []
+  },
+  {
+   "id": "otp_offline",
+   "kind": "picture",
+   "picture": "otp/otp_offline",
+   "step": 1,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": "otp.offline",
+   "notes": []
+  },
+  {
+   "id": "otp_resend-available",
+   "kind": "picture",
+   "picture": "otp/otp_resend-available",
+   "step": 1,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": "otp.resend-available",
+   "notes": []
+  },
+  {
+   "id": "otp_resend-failed",
+   "kind": "picture",
+   "picture": "otp/otp_resend-failed",
+   "step": 1,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": "otp.resend-failed",
+   "notes": []
+  },
+  {
+   "id": "otp_resending",
+   "kind": "picture",
+   "picture": "otp/otp_resending",
+   "step": 1,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": "otp.resending",
+   "notes": []
+  },
+  {
+   "id": "otp_too-many-resends",
+   "kind": "picture",
+   "picture": "otp/otp_too-many-resends",
+   "step": 1,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": "otp.too-many-resends",
+   "notes": []
+  },
+  {
+   "id": "otp_too-short",
+   "kind": "picture",
+   "picture": "otp/otp_too-short",
+   "step": 1,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": "otp.too-short",
+   "notes": []
+  },
+  {
+   "id": "otp_two-tries-left",
+   "kind": "picture",
+   "picture": "otp/otp_two-tries-left",
+   "step": 1,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": "otp.two-tries-left",
+   "notes": []
+  },
+  {
+   "id": "otp_verifying",
+   "kind": "picture",
+   "picture": "otp/otp_verifying",
+   "step": 1,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": "otp.verifying",
+   "notes": []
+  },
+  {
+   "id": "otp_wrong-code",
+   "kind": "picture",
+   "picture": "otp/otp_wrong-code",
+   "step": 1,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": "otp.wrong-code",
+   "notes": []
+  },
+  {
+   "id": "sign-in_couldnt-send",
+   "kind": "picture",
+   "picture": "sign-in/sign-in_couldnt-send",
+   "step": 1,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": "signin.couldnt-send",
+   "notes": []
+  },
+  {
+   "id": "sign-in_default",
+   "kind": "picture",
+   "picture": "sign-in/sign-in_default",
+   "step": 1,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": "signin.default",
+   "notes": []
+  },
+  {
+   "id": "sign-in_empty-tap",
+   "kind": "picture",
+   "picture": "sign-in/sign-in_empty-tap",
+   "step": 1,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": "signin.empty-tap",
+   "notes": []
+  },
+  {
+   "id": "sign-in_inactive",
+   "kind": "picture",
+   "picture": "sign-in/sign-in_inactive",
+   "step": 1,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": "signin.inactive",
+   "notes": []
+  },
+  {
+   "id": "sign-in_keyboard-open",
+   "kind": "picture",
+   "picture": "sign-in/sign-in_keyboard-open",
+   "step": 1,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": "signin.keyboard-open",
+   "notes": []
+  },
+  {
+   "id": "sign-in_not-registered",
+   "kind": "picture",
+   "picture": "sign-in/sign-in_not-registered",
+   "step": 1,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": "signin.not-registered",
+   "notes": []
+  },
+  {
+   "id": "sign-in_offline",
+   "kind": "picture",
+   "picture": "sign-in/sign-in_offline",
+   "step": 1,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": "signin.offline",
+   "notes": []
+  },
+  {
+   "id": "sign-in_pasted-cleaned",
+   "kind": "picture",
+   "picture": "sign-in/sign-in_pasted-cleaned",
+   "step": 1,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": "signin.pasted-cleaned",
+   "notes": []
+  },
+  {
+   "id": "sign-in_sending",
+   "kind": "picture",
+   "picture": "sign-in/sign-in_sending",
+   "step": 1,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": "signin.sending",
+   "notes": []
+  },
+  {
+   "id": "sign-in_too-many-tries",
+   "kind": "picture",
+   "picture": "sign-in/sign-in_too-many-tries",
+   "step": 1,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": "signin.too-many-tries",
+   "notes": []
+  },
+  {
+   "id": "sign-in_too-short",
+   "kind": "picture",
+   "picture": "sign-in/sign-in_too-short",
+   "step": 1,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": "signin.too-short",
+   "notes": []
+  },
+  {
+   "id": "sign-in_wrong-first-digit",
+   "kind": "picture",
+   "picture": "sign-in/sign-in_wrong-first-digit",
+   "step": 1,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": "signin.wrong-first-digit",
+   "notes": []
+  },
+  {
+   "id": "unlock_cancelled",
+   "kind": "picture",
+   "picture": "returning-unlock/unlock_cancelled",
+   "step": 1,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": "unlock.cancelled",
+   "notes": []
+  },
+  {
+   "id": "unlock_face",
+   "kind": "picture",
+   "picture": "returning-unlock/unlock_face",
+   "step": 1,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "unlock_fingerprint",
+   "kind": "picture",
+   "picture": "returning-unlock/unlock_fingerprint",
+   "step": 1,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "unlock_pending",
+   "kind": "picture",
+   "picture": "returning-unlock/unlock_pending",
+   "step": 1,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": "unlock.pending",
+   "notes": []
+  },
+  {
+   "id": "unlock_platform-retry",
+   "kind": "picture",
+   "picture": "returning-unlock/unlock_platform-retry",
+   "step": 1,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": "unlock.platform-retry",
+   "notes": []
+  },
+  {
+   "id": "unlock_screen-lock",
+   "kind": "picture",
+   "picture": "returning-unlock/unlock_screen-lock",
+   "step": 1,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "unlock_unavailable",
+   "kind": "picture",
+   "picture": "returning-unlock/unlock_unavailable",
+   "step": 1,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": "unlock.unavailable",
+   "notes": []
+  },
+  {
+   "id": "home_active",
+   "kind": "picture",
+   "picture": "home/home_active",
+   "step": 2,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": "home.active",
+   "notes": []
+  },
+  {
+   "id": "home_add-failed",
+   "kind": "picture",
+   "picture": "home/home_add-failed",
+   "step": 2,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": "home.add-failed",
+   "notes": []
+  },
+  {
+   "id": "home_add-wheel",
+   "kind": "picture",
+   "picture": "home/home_add-wheel",
+   "step": 2,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "home_added",
+   "kind": "picture",
+   "picture": "home/home_added",
+   "step": 2,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": "home.added",
+   "notes": []
+  },
+  {
+   "id": "home_adding",
+   "kind": "picture",
+   "picture": "home/home_adding",
+   "step": 2,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": "home.adding",
+   "notes": []
+  },
+  {
+   "id": "home_end-confirmation",
+   "kind": "picture",
+   "picture": "home/home_end-confirmation",
+   "step": 2,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": "home.end-confirmation",
+   "notes": []
+  },
+  {
+   "id": "home_expired-pending",
+   "kind": "picture",
+   "picture": "home/home_expired-pending",
+   "step": 2,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": "home.expired-pending",
+   "notes": []
+  },
+  {
+   "id": "home_idle-expired",
+   "kind": "picture",
+   "picture": "home/home_idle-expired",
+   "step": 2,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "home_logout-confirm",
+   "kind": "picture",
+   "picture": "home/home_logout-confirm",
+   "step": 2,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "home_manually-ended",
+   "kind": "picture",
+   "picture": "home/home_manually-ended",
+   "step": 2,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "home_near-expiry",
+   "kind": "picture",
+   "picture": "home/home_near-expiry",
+   "step": 2,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": "home.near-expiry",
+   "notes": []
+  },
+  {
+   "id": "home_no-cases",
+   "kind": "picture",
+   "picture": "home/home_no-cases",
+   "step": 2,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": "home.no-cases",
+   "notes": []
+  },
+  {
+   "id": "home_offline",
+   "kind": "picture",
+   "picture": "home/home_offline",
+   "step": 2,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": "home.offline",
+   "notes": []
+  },
+  {
+   "id": "home_profile",
+   "kind": "picture",
+   "picture": "home/home_profile",
+   "step": 2,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "home_profile-case-open",
+   "kind": "picture",
+   "picture": "home/home_profile-case-open",
+   "step": 2,
+   "lookAhead": [
+    3
+   ],
+   "version": "B",
+   "calling": [],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "home_request-failed",
+   "kind": "picture",
+   "picture": "home/home_request-failed",
+   "step": 2,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": "home.request-failed",
+   "notes": []
+  },
+  {
+   "id": "home_requesting",
+   "kind": "picture",
+   "picture": "home/home_requesting",
+   "step": 2,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": "home.requesting",
+   "notes": []
+  },
+  {
+   "id": "home_setting",
+   "kind": "picture",
+   "picture": "home/home_setting",
+   "step": 2,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": "home.setting",
+   "notes": []
+  },
+  {
+   "id": "home_setup-failed",
+   "kind": "picture",
+   "picture": "home/home_setup-failed",
+   "step": 2,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": "home.setup-failed",
+   "notes": []
+  },
+  {
+   "id": "home_setup-wheel",
+   "kind": "picture",
+   "picture": "home/home_setup-wheel",
+   "step": 2,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "home_stop-pending",
+   "kind": "picture",
+   "picture": "home/home_stop-pending",
+   "step": 2,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": "home.stop-pending",
+   "notes": []
+  },
+  {
+   "id": "home_unknown-result",
+   "kind": "picture",
+   "picture": "home/home_unknown-result",
+   "step": 2,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": "home.unknown-result",
+   "notes": []
+  },
+  {
+   "id": "a-back-blocked",
+   "kind": "picture",
+   "picture": "case/a-back-blocked",
+   "step": 3,
+   "lookAhead": [
+    5
+   ],
+   "version": "B",
+   "calling": [
+    "CALL",
+    "ANY"
+   ],
+   "behaviour": "case.back-blocked",
+   "notes": []
+  },
+  {
+   "id": "a-confirm-busy",
+   "kind": "picture",
+   "picture": "case/a-confirm-busy",
+   "step": 3,
+   "lookAhead": [
+    5
+   ],
+   "version": "B",
+   "calling": [
+    "C8",
+    "ANY"
+   ],
+   "behaviour": "case.confirm-busy",
+   "notes": []
+  },
+  {
+   "id": "a-confirm-failed",
+   "kind": "picture",
+   "picture": "case/a-confirm-failed",
+   "step": 3,
+   "lookAhead": [
+    5
+   ],
+   "version": "B",
+   "calling": [
+    "C8",
+    "ANY"
+   ],
+   "behaviour": "case.confirm-failed",
+   "notes": []
+  },
+  {
+   "id": "a-leave-sheet",
+   "kind": "picture",
+   "picture": "case/a-leave-sheet",
+   "step": 3,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [
+    "LEAVE"
+   ],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "a-load-failed",
+   "kind": "picture",
+   "picture": "case/a-load-failed",
+   "step": 3,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [
+    "R1",
+    "ANY"
+   ],
+   "behaviour": "case.load-failed",
+   "notes": []
+  },
+  {
+   "id": "a-loading",
+   "kind": "picture",
+   "picture": "case/a-loading",
+   "step": 3,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [
+    "R1",
+    "ANY"
+   ],
+   "behaviour": "case.loading",
+   "notes": []
+  },
+  {
+   "id": "a-long-content",
+   "kind": "picture",
+   "picture": "case/a-long-content",
+   "step": 3,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": "case.long-content",
+   "notes": []
+  },
+  {
+   "id": "a-no-medicines",
+   "kind": "picture",
+   "picture": "case/a-no-medicines",
+   "step": 3,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [
+    "R1"
+   ],
+   "behaviour": "case.no-medicines",
+   "notes": []
+  },
+  {
+   "id": "a-notes-typing",
+   "kind": "picture",
+   "picture": "case/a-notes-typing",
+   "step": 3,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "a-offline",
+   "kind": "picture",
+   "picture": "case/a-offline",
+   "step": 3,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [
+    "ANY"
+   ],
+   "behaviour": "case.offline",
+   "notes": []
+  },
+  {
+   "id": "a-offline-action",
+   "kind": "picture",
+   "picture": "case/a-offline-action",
+   "step": 3,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [
+    "ANY"
+   ],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "a-order-details",
+   "kind": "picture",
+   "picture": "case/a-order-details",
+   "step": 3,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "a-release-failed",
+   "kind": "picture",
+   "picture": "case/a-release-failed",
+   "step": 3,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [
+    "LEAVE",
+    "ANY"
+   ],
+   "behaviour": "case.release-failed",
+   "notes": []
+  },
+  {
+   "id": "a-releasing",
+   "kind": "picture",
+   "picture": "case/a-releasing",
+   "step": 3,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [
+    "LEAVE"
+   ],
+   "behaviour": "case.releasing",
+   "notes": []
+  },
+  {
+   "id": "a-rx-viewer",
+   "kind": "picture",
+   "picture": "case/a-rx-viewer",
+   "step": 3,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "a-scrolled",
+   "kind": "picture",
+   "picture": "case/a-scrolled",
+   "step": 3,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "a-top",
+   "kind": "picture",
+   "picture": "case/a-top",
+   "step": 3,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "d-rx-failed",
+   "kind": "picture",
+   "picture": "prescribe/d-rx-failed",
+   "step": 3,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "s-10-medicines",
+   "kind": "picture",
+   "picture": "case/s-10-medicines",
+   "step": 3,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "s-medicine-disabled",
+   "kind": "picture",
+   "picture": "case/s-medicine-disabled",
+   "step": 3,
+   "lookAhead": [
+    4
+   ],
+   "version": "B",
+   "calling": [],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "s-optional-empty",
+   "kind": "picture",
+   "picture": "case/s-optional-empty",
+   "step": 3,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "s7e-leave-sheet",
+   "kind": "picture",
+   "picture": "case/s7e-leave-sheet",
+   "step": 3,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [
+    "LEAVE"
+   ],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "d-alt-days",
+   "kind": "picture",
+   "picture": "prescribe/d-alt-days",
+   "step": 4,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "d-cream",
+   "kind": "picture",
+   "picture": "prescribe/d-cream",
+   "step": 4,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "d-default",
+   "kind": "picture",
+   "picture": "prescribe/d-default",
+   "step": 4,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "d-disable-sheet",
+   "kind": "picture",
+   "picture": "prescribe/d-disable-sheet",
+   "step": 4,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "d-disabled",
+   "kind": "picture",
+   "picture": "prescribe/d-disabled",
+   "step": 4,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": "prescribe.disabled",
+   "notes": []
+  },
+  {
+   "id": "d-discard-sheet",
+   "kind": "picture",
+   "picture": "prescribe/d-discard-sheet",
+   "step": 4,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "d-drops",
+   "kind": "picture",
+   "picture": "prescribe/d-drops",
+   "step": 4,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "d-duration-picker",
+   "kind": "picture",
+   "picture": "prescribe/d-duration-picker",
+   "step": 4,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "d-error-dose",
+   "kind": "picture",
+   "picture": "prescribe/d-error-dose",
+   "step": 4,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "d-error-other",
+   "kind": "picture",
+   "picture": "prescribe/d-error-other",
+   "step": 4,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "d-every-x-hours",
+   "kind": "picture",
+   "picture": "prescribe/d-every-x-hours",
+   "step": 4,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "d-food-selected",
+   "kind": "picture",
+   "picture": "prescribe/d-food-selected",
+   "step": 4,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "d-header-white",
+   "kind": "picture",
+   "picture": "prescribe/d-header-white",
+   "step": 4,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "d-inhaler",
+   "kind": "picture",
+   "picture": "prescribe/d-inhaler",
+   "step": 4,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "d-injection-default",
+   "kind": "picture",
+   "picture": "prescribe/d-injection-default",
+   "step": 4,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "d-monthly",
+   "kind": "picture",
+   "picture": "prescribe/d-monthly",
+   "step": 4,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "d-notes-keyboard",
+   "kind": "picture",
+   "picture": "prescribe/d-notes-keyboard",
+   "step": 4,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": "prescribe.keyboard",
+   "notes": []
+  },
+  {
+   "id": "d-scrolled",
+   "kind": "picture",
+   "picture": "prescribe/d-scrolled",
+   "step": 4,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "d-sos-on",
+   "kind": "picture",
+   "picture": "prescribe/d-sos-on",
+   "step": 4,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "d-sos-only",
+   "kind": "picture",
+   "picture": "prescribe/d-sos-only",
+   "step": 4,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "d-syrup",
+   "kind": "picture",
+   "picture": "prescribe/d-syrup",
+   "step": 4,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "d-weekly",
+   "kind": "picture",
+   "picture": "prescribe/d-weekly",
+   "step": 4,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "c-callback",
+   "kind": "picture",
+   "picture": "case/c-callback",
+   "step": 5,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [
+    "CB"
+   ],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "c-callback-error",
+   "kind": "picture",
+   "picture": "case/c-callback-error",
+   "step": 5,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [
+    "CB"
+   ],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "c-callback-failed",
+   "kind": "picture",
+   "picture": "case/c-callback-failed",
+   "step": 5,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [
+    "CB"
+   ],
+   "behaviour": "case.callback-failed",
+   "notes": []
+  },
+  {
+   "id": "c-callback-refused",
+   "kind": "picture",
+   "picture": "case/c-callback-refused",
+   "step": 5,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [
+    "CB"
+   ],
+   "behaviour": "case.callback-refused",
+   "notes": []
+  },
+  {
+   "id": "e-availability-ended",
+   "kind": "picture",
+   "picture": "case/e-availability-ended",
+   "step": 5,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [
+    "E10a"
+   ],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "e-callback-scheduled",
+   "kind": "picture",
+   "picture": "case/e-callback-scheduled",
+   "step": 5,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [
+    "ECB"
+   ],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "s7a-calling",
+   "kind": "picture",
+   "picture": "case/s7a-calling",
+   "step": 5,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [
+    "C0"
+   ],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "s7b-still-on-call",
+   "kind": "picture",
+   "picture": "case/s7b-still-on-call",
+   "step": 5,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [
+    "C7b"
+   ],
+   "behaviour": null,
+   "notes": [
+    "Pilot retry (Still talking) → B0 Calling… (Pilot context kept)"
+   ]
+  },
+  {
+   "id": "s7d-result-missing",
+   "kind": "picture",
+   "picture": "case/s7d-result-missing",
+   "step": 5,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [
+    "C7d"
+   ],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "s7d-unavailable-sheet",
+   "kind": "picture",
+   "picture": "case/s7d-unavailable-sheet",
+   "step": 5,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [
+    "C7d"
+   ],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "s7f-submitted",
+   "kind": "picture",
+   "picture": "case/s7f-submitted",
+   "step": 5,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [
+    "C7f"
+   ],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "t01-ready",
+   "kind": "picture",
+   "picture": "case/t01-ready",
+   "step": 5,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [
+    "R1"
+   ],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "t02-calling",
+   "kind": "picture",
+   "picture": "case/t02-calling",
+   "step": 5,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [
+    "CALL"
+   ],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "t03-not-through",
+   "kind": "picture",
+   "picture": "case/t03-not-through",
+   "step": 5,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [
+    "E3"
+   ],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "t04-doctor-missed",
+   "kind": "picture",
+   "picture": "case/t04-doctor-missed",
+   "step": 5,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [
+    "E3"
+   ],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "t05-result-wait",
+   "kind": "picture",
+   "picture": "case/t05-result-wait",
+   "step": 5,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [
+    "RES",
+    "C7c"
+   ],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "t06-ended-early",
+   "kind": "picture",
+   "picture": "case/t06-ended-early",
+   "step": 5,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [
+    "C6"
+   ],
+   "behaviour": null,
+   "notes": [
+    "Pilot retry (Call again) → B0 Calling… (Pilot context kept)"
+   ]
+  },
+  {
+   "id": "t08a-valid-cat4",
+   "kind": "picture",
+   "picture": "case/t08a-valid-cat4",
+   "step": 5,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [
+    "C8"
+   ],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "t08c-confirm-blocked",
+   "kind": "picture",
+   "picture": "case/t08c-confirm-blocked",
+   "step": 5,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [
+    "C8"
+   ],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "t09-patient-unavailable",
+   "kind": "picture",
+   "picture": "case/t09-patient-unavailable",
+   "step": 5,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [
+    "P9"
+   ],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "t10a-confirmed",
+   "kind": "picture",
+   "picture": "case/t10a-confirmed",
+   "step": 5,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [
+    "E10a"
+   ],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "c-skip-ha",
+   "kind": "picture",
+   "picture": "case/c-skip-ha",
+   "step": 6,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [
+    "T17"
+   ],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "g0-calling-pilot",
+   "kind": "picture",
+   "picture": "case/g0-calling-pilot",
+   "step": 6,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [
+    "CALL",
+    "B0"
+   ],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "g1-generic-confirm",
+   "kind": "picture",
+   "picture": "case/g1-generic-confirm",
+   "step": 6,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [
+    "B1"
+   ],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "g2-checking-ha",
+   "kind": "picture",
+   "picture": "case/g2-checking-ha",
+   "step": 6,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [
+    "B2"
+   ],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "g3b-after-hangup",
+   "kind": "picture",
+   "picture": "case/g3b-after-hangup",
+   "step": 6,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [
+    "EB3"
+   ],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "g3b-forwarded",
+   "kind": "picture",
+   "picture": "case/g3b-forwarded",
+   "step": 6,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [
+    "B3"
+   ],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "s7d-result-missing-pilot",
+   "kind": "picture",
+   "picture": "case/s7d-result-missing-pilot",
+   "step": 6,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [
+    "B7d"
+   ],
+   "behaviour": "case.result-missing-pilot",
+   "notes": []
+  },
+  {
+   "id": "t10b-forwarded",
+   "kind": "picture",
+   "picture": "case/t10b-forwarded",
+   "step": 6,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [
+    "E10b"
+   ],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "t13-connecting-ha",
+   "kind": "picture",
+   "picture": "case/t13-connecting-ha",
+   "step": 6,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [
+    "T13"
+   ],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "t14-transferred",
+   "kind": "picture",
+   "picture": "case/t14-transferred",
+   "step": 6,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [
+    "E14"
+   ],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "t15-after-hangup",
+   "kind": "picture",
+   "picture": "case/t15-after-hangup",
+   "step": 6,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [
+    "E15"
+   ],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "t15-ha-no-join",
+   "kind": "picture",
+   "picture": "case/t15-ha-no-join",
+   "step": 6,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [
+    "T15"
+   ],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "t16-transfer-missed",
+   "kind": "picture",
+   "picture": "case/t16-transfer-missed",
+   "step": 6,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [
+    "T16"
+   ],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "t16b-transfer-missed-patient",
+   "kind": "picture",
+   "picture": "case/t16b-transfer-missed-patient",
+   "step": 6,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [
+    "T16"
+   ],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "t16c-transfer-missed-unknown",
+   "kind": "picture",
+   "picture": "case/t16c-transfer-missed-unknown",
+   "step": 6,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [
+    "T16"
+   ],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "t17-skip-ha-wait",
+   "kind": "picture",
+   "picture": "case/t17-skip-ha-wait",
+   "step": 6,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [
+    "T17"
+   ],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "t08b-valid-forward",
+   "kind": "picture",
+   "picture": "case/t08b-valid-forward",
+   "step": 9,
+   "lookAhead": [],
+   "version": "A",
+   "calling": [],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "t11-calling-transfer",
+   "kind": "picture",
+   "picture": "case/t11-calling-transfer",
+   "step": 9,
+   "lookAhead": [],
+   "version": "A",
+   "calling": [],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "t12-transfer-ready",
+   "kind": "picture",
+   "picture": "case/t12-transfer-ready",
+   "step": 9,
+   "lookAhead": [],
+   "version": "A",
+   "calling": [],
+   "behaviour": null,
+   "notes": []
+  }
+ ],
+ "others": [
+  {
+   "id": "offer.cancelled",
+   "kind": "behaviour",
+   "step": 1,
+   "picture": null,
+   "version": "B"
+  },
+  {
+   "id": "offer.enabled",
+   "kind": "behaviour",
+   "step": 1,
+   "picture": null,
+   "version": "B"
+  },
+  {
+   "id": "offer.not-now",
+   "kind": "behaviour",
+   "step": 1,
+   "picture": null,
+   "version": "B"
+  },
+  {
+   "id": "offer.shown",
+   "kind": "behaviour",
+   "step": 1,
+   "picture": null,
+   "version": "B"
+  },
+  {
+   "id": "offer.unsupported",
+   "kind": "behaviour",
+   "step": 1,
+   "picture": null,
+   "version": "B"
+  },
+  {
+   "id": "signin.back-from-otp",
+   "kind": "behaviour",
+   "step": 1,
+   "picture": null,
+   "version": "B"
+  },
+  {
+   "id": "signin.locked-number",
+   "kind": "behaviour",
+   "step": 1,
+   "picture": null,
+   "version": "B"
+  },
+  {
+   "id": "signin.too-long",
+   "kind": "behaviour",
+   "step": 1,
+   "picture": null,
+   "version": "B"
+  },
+  {
+   "id": "home.add-open",
+   "kind": "behaviour",
+   "step": 2,
+   "picture": null,
+   "version": "B"
+  },
+  {
+   "id": "home.setup",
+   "kind": "behaviour",
+   "step": 2,
+   "picture": null,
+   "version": "B"
+  },
+  {
+   "id": "case.back-before-call",
+   "kind": "behaviour",
+   "step": 3,
+   "picture": null,
+   "version": "B"
+  },
+  {
+   "id": "case.closed",
+   "kind": "behaviour",
+   "step": 3,
+   "picture": null,
+   "version": "B"
+  },
+  {
+   "id": "case.closed-availability-ended",
+   "kind": "behaviour",
+   "step": 3,
+   "picture": null,
+   "version": "B"
+  },
+  {
+   "id": "rx.load-failed",
+   "kind": "behaviour",
+   "step": 3,
+   "picture": null,
+   "version": "B"
+  },
+  {
+   "id": "prescribe.dose-error",
+   "kind": "behaviour",
+   "step": 4,
+   "picture": null,
+   "version": "B"
+  },
+  {
+   "id": "call.hold",
+   "kind": "behaviour",
+   "step": 5,
+   "picture": null,
+   "version": "B"
+  },
+  {
+   "id": "flow.HOLD",
+   "kind": "calling-box",
+   "step": 5,
+   "picture": null,
+   "version": "B",
+   "calling": "HOLD",
+   "title": "Not confirmed",
+   "types": "CKP"
+  },
+  {
+   "id": "call.mismatch-logged",
+   "kind": "behaviour",
+   "step": 6,
+   "picture": null,
+   "version": "B"
+  },
+  {
+   "id": "call.skipHa",
+   "kind": "behaviour",
+   "step": 6,
+   "picture": null,
+   "version": "B"
+  },
+  {
+   "id": "call.transfer-failed",
+   "kind": "behaviour",
+   "step": 6,
+   "picture": null,
+   "version": "B"
+  },
+  {
+   "id": "call.waiting-for-hangup",
+   "kind": "behaviour",
+   "step": 6,
+   "picture": null,
+   "version": "B"
+  },
+  {
+   "id": "case.reopened",
+   "kind": "behaviour",
+   "step": 7,
+   "picture": null,
+   "version": "B"
+  }
+ ],
+ "edges": [
+  {
+   "from": "A11",
+   "to": "A12",
+   "via": [],
+   "label": "gate passed, call live",
+   "kind": "e",
+   "drawn": true,
+   "route": "A",
+   "screen": "—"
+  },
+  {
+   "from": "A12",
+   "to": "T13",
+   "via": [
+    "AJ13"
+   ],
+   "label": "Confirm & transfer",
+   "kind": "a",
+   "drawn": true,
+   "route": "A",
+   "screen": "—"
+  },
+  {
+   "from": "A12",
+   "to": "T16",
+   "via": [
+    "AJ16"
+   ],
+   "label": "ended before the tap",
+   "kind": "e",
+   "drawn": true,
+   "route": "A",
+   "screen": "—"
+  },
+  {
+   "from": "A12",
+   "to": "T17",
+   "via": [
+    "AJ17"
+   ],
+   "label": "Skip HA + reason",
+   "kind": "a",
+   "drawn": true,
+   "route": "A",
+   "screen": "—"
+  },
+  {
+   "from": "A2",
+   "to": "A5",
+   "via": [],
+   "label": "hang-up",
+   "kind": "e",
+   "drawn": true,
+   "route": "A",
+   "screen": "—"
+  },
+  {
+   "from": "A5",
+   "to": "A8b",
+   "via": [],
+   "label": "over the gate",
+   "kind": "e",
+   "drawn": true,
+   "route": "A",
+   "screen": "—"
+  },
+  {
+   "from": "A8b",
+   "to": "E10b",
+   "via": [
+    "AJ10b"
+   ],
+   "label": "Confirm & forward",
+   "kind": "a",
+   "drawn": true,
+   "route": "A",
+   "screen": "—"
+  },
+  {
+   "from": "B0",
+   "to": "B1",
+   "via": [],
+   "label": "gate passed, call live",
+   "kind": "e",
+   "drawn": true,
+   "route": "pilot",
+   "screen": "—"
+  },
+  {
+   "from": "B0",
+   "to": "B7d",
+   "via": [],
+   "label": "no result: 7c, nothing",
+   "kind": "e",
+   "drawn": true,
+   "route": "pilot",
+   "screen": "—"
+  },
+  {
+   "from": "B0",
+   "to": "RES",
+   "via": [
+    "J3"
+   ],
+   "label": "ended before the gate",
+   "kind": "e",
+   "drawn": true,
+   "route": "pilot",
+   "screen": "t05-result-wait"
+  },
+  {
+   "from": "B1",
+   "to": "B2",
+   "via": [],
+   "label": "Confirm prescription",
+   "kind": "a",
+   "drawn": true,
+   "route": "pilot",
+   "screen": "—"
+  },
+  {
+   "from": "B1",
+   "to": "T16",
+   "via": [],
+   "label": "ended after gate, no Confirm",
+   "kind": "e",
+   "drawn": true,
+   "route": "pilot",
+   "screen": "—"
+  },
+  {
+   "from": "B1",
+   "to": "T17",
+   "via": [],
+   "label": "Skip HA + reason",
+   "kind": "a",
+   "drawn": true,
+   "route": "pilot",
+   "screen": "—"
+  },
+  {
+   "from": "B2",
+   "to": "B3",
+   "via": [],
+   "label": "no HA free",
+   "kind": "e",
+   "drawn": true,
+   "route": "pilot",
+   "screen": "—"
+  },
+  {
+   "from": "B2",
+   "to": "T13",
+   "via": [],
+   "label": "HA free",
+   "kind": "e",
+   "drawn": true,
+   "route": "pilot",
+   "screen": "—"
+  },
+  {
+   "from": "B3",
+   "to": "EB3",
+   "via": [],
+   "label": "hang-up",
+   "kind": "e",
+   "drawn": true,
+   "route": "pilot",
+   "screen": "—"
+  },
+  {
+   "from": "B7d",
+   "to": "C7f",
+   "via": [
+    "J2"
+   ],
+   "label": "Confirm & forward",
+   "kind": "a",
+   "drawn": true,
+   "route": "pilot",
+   "screen": "—"
+  },
+  {
+   "from": "B7d",
+   "to": "CB",
+   "via": [],
+   "label": "Callback",
+   "kind": "a",
+   "drawn": false,
+   "route": "pilot",
+   "screen": "—"
+  },
+  {
+   "from": "B7d",
+   "to": "P9",
+   "via": [],
+   "label": "Unavailable + reason",
+   "kind": "a",
+   "drawn": false,
+   "route": "pilot",
+   "screen": "—"
+  },
+  {
+   "from": "C0",
+   "to": "C7b",
+   "via": [],
+   "label": "3 min, no result, end not known",
+   "kind": "e",
+   "drawn": true,
+   "route": "cat4",
+   "screen": "—"
+  },
+  {
+   "from": "C0",
+   "to": "C7c",
+   "via": [],
+   "label": "3 min, no result, hang-up reported",
+   "kind": "e",
+   "drawn": false,
+   "route": "ha-skipped (Ozonetel)",
+   "screen": "t05-result-wait (7c = 5, D-91)"
+  },
+  {
+   "from": "C0",
+   "to": "RES",
+   "via": [],
+   "label": "hang-up reported → 5 Getting call result → result",
+   "kind": "e",
+   "drawn": true,
+   "route": "ha-skipped (Ozonetel)",
+   "screen": "t05-result-wait"
+  },
+  {
+   "from": "C0",
+   "to": "RES",
+   "via": [],
+   "label": "result (no screen: stays on Calling)",
+   "kind": "e",
+   "drawn": true,
+   "route": "cat4 (Knowlarity)",
+   "screen": "— (t02-calling)"
+  },
+  {
+   "from": "C6",
+   "to": "B0",
+   "via": [],
+   "label": "Call again (Pilot context kept)",
+   "kind": "a",
+   "drawn": false,
+   "route": "pilot",
+   "screen": "—"
+  },
+  {
+   "from": "C6",
+   "to": "C0",
+   "via": [],
+   "label": "Call again",
+   "kind": "a",
+   "drawn": false,
+   "route": "shared",
+   "screen": "—"
+  },
+  {
+   "from": "C6",
+   "to": "CB",
+   "via": [],
+   "label": "Callback",
+   "kind": "a",
+   "drawn": true,
+   "route": "shared",
+   "screen": "—"
+  },
+  {
+   "from": "C7b",
+   "to": "B0",
+   "via": [],
+   "label": "Still talking (Pilot context kept)",
+   "kind": "a",
+   "drawn": false,
+   "route": "pilot",
+   "screen": "—"
+  },
+  {
+   "from": "C7b",
+   "to": "C0",
+   "via": [],
+   "label": "Still talking",
+   "kind": "a",
+   "drawn": false,
+   "route": "shared",
+   "screen": "—"
+  },
+  {
+   "from": "C7b",
+   "to": "C7c",
+   "via": [],
+   "label": "Call ended",
+   "kind": "a",
+   "drawn": true,
+   "route": "shared",
+   "screen": "t05-result-wait (7c = 5, D-91)"
+  },
+  {
+   "from": "C7c",
+   "to": "C7d",
+   "via": [],
+   "label": "nothing found",
+   "kind": "e",
+   "drawn": true,
+   "route": "shared",
+   "screen": "—"
+  },
+  {
+   "from": "C7c",
+   "to": "RES",
+   "via": [],
+   "label": "result found",
+   "kind": "e",
+   "drawn": false,
+   "route": "shared",
+   "screen": "t05-result-wait (7c = 5, D-91)"
+  },
+  {
+   "from": "C7d",
+   "to": "C7f",
+   "via": [],
+   "label": "Confirm",
+   "kind": "a",
+   "drawn": true,
+   "route": "shared",
+   "screen": "—"
+  },
+  {
+   "from": "C7d",
+   "to": "CB",
+   "via": [],
+   "label": "Callback",
+   "kind": "a",
+   "drawn": false,
+   "route": "shared",
+   "screen": "—"
+  },
+  {
+   "from": "C7d",
+   "to": "P9",
+   "via": [],
+   "label": "Unavailable + reason",
+   "kind": "a",
+   "drawn": false,
+   "route": "shared",
+   "screen": "—"
+  },
+  {
+   "from": "C7f",
+   "to": "E10a",
+   "via": [],
+   "label": "record over the gate",
+   "kind": "e",
+   "drawn": true,
+   "route": "cat4 / ha-skipped",
+   "screen": "—"
+  },
+  {
+   "from": "C7f",
+   "to": "E10b",
+   "via": [
+    "J2"
+   ],
+   "label": "record over the gate (Pilot)",
+   "kind": "e",
+   "drawn": false,
+   "route": "pilot",
+   "screen": "—"
+  },
+  {
+   "from": "C7f",
+   "to": "HOLD",
+   "via": [],
+   "label": "record under the gate or none in time",
+   "kind": "e",
+   "drawn": true,
+   "route": "shared",
+   "screen": "—"
+  },
+  {
+   "from": "C8",
+   "to": "E10a",
+   "via": [],
+   "label": "Confirm prescription",
+   "kind": "a",
+   "drawn": true,
+   "route": "shared",
+   "screen": "—"
+  },
+  {
+   "from": "CALL",
+   "to": "A11",
+   "via": [],
+   "label": "Pilot (A) Value Meds",
+   "kind": "trunk",
+   "drawn": true,
+   "route": "split",
+   "screen": "—"
+  },
+  {
+   "from": "CALL",
+   "to": "A2",
+   "via": [],
+   "label": "Pilot (A) Non-Value",
+   "kind": "trunk",
+   "drawn": true,
+   "route": "split",
+   "screen": "—"
+  },
+  {
+   "from": "CALL",
+   "to": "B0",
+   "via": [],
+   "label": "Pilot",
+   "kind": "trunk",
+   "drawn": true,
+   "route": "split",
+   "screen": "—"
+  },
+  {
+   "from": "CALL",
+   "to": "C0",
+   "via": [],
+   "label": "Cat4 / HA skipped",
+   "kind": "trunk",
+   "drawn": true,
+   "route": "split",
+   "screen": "—"
+  },
+  {
+   "from": "CALL",
+   "to": "E3",
+   "via": [],
+   "label": "doctor's leg failed",
+   "kind": "e",
+   "drawn": true,
+   "route": "every",
+   "screen": "—"
+  },
+  {
+   "from": "CALL",
+   "to": "P9",
+   "via": [],
+   "label": "patient's side failed (any time)",
+   "kind": "e",
+   "drawn": true,
+   "route": "every",
+   "screen": "—"
+  },
+  {
+   "from": "CB",
+   "to": "ECB",
+   "via": [],
+   "label": "time chosen",
+   "kind": "a",
+   "drawn": true,
+   "route": "shared",
+   "screen": "—"
+  },
+  {
+   "from": "E15",
+   "to": "HOLD",
+   "via": [],
+   "label": "result under the gate (background)",
+   "kind": "e",
+   "drawn": false,
+   "route": "pilot",
+   "screen": "—"
+  },
+  {
+   "from": "E3",
+   "to": "CALL",
+   "via": [],
+   "label": "Call again",
+   "kind": "a",
+   "drawn": false,
+   "route": "every",
+   "screen": "—"
+  },
+  {
+   "from": "E3",
+   "to": "LEAVE",
+   "via": [],
+   "label": "Back",
+   "kind": "a",
+   "drawn": false,
+   "route": "every",
+   "screen": "—"
+  },
+  {
+   "from": "EB3",
+   "to": "HOLD",
+   "via": [],
+   "label": "result under the gate (background)",
+   "kind": "e",
+   "drawn": false,
+   "route": "pilot",
+   "screen": "—"
+  },
+  {
+   "from": "R1",
+   "to": "CALL",
+   "via": [],
+   "label": "Call patient",
+   "kind": "a",
+   "drawn": true,
+   "route": "every",
+   "screen": "—"
+  },
+  {
+   "from": "R1",
+   "to": "LEAVE",
+   "via": [],
+   "label": "Back",
+   "kind": "a",
+   "drawn": true,
+   "route": "every",
+   "screen": "—"
+  },
+  {
+   "from": "RES",
+   "to": "C6",
+   "via": [],
+   "label": "too short",
+   "kind": "e",
+   "drawn": true,
+   "route": "shared",
+   "screen": "—"
+  },
+  {
+   "from": "RES",
+   "to": "C8",
+   "via": [],
+   "label": "over the gate",
+   "kind": "e",
+   "drawn": true,
+   "route": "shared",
+   "screen": "—"
+  },
+  {
+   "from": "T13",
+   "to": "E14",
+   "via": [],
+   "label": "HA rung (joins or doesn't pick up)",
+   "kind": "e",
+   "drawn": true,
+   "route": "every",
+   "screen": "—"
+  },
+  {
+   "from": "T13",
+   "to": "T15",
+   "via": [],
+   "label": "couldn't start",
+   "kind": "e",
+   "drawn": true,
+   "route": "pilot",
+   "screen": "—"
+  },
+  {
+   "from": "T15",
+   "to": "E15",
+   "via": [],
+   "label": "hang-up",
+   "kind": "e",
+   "drawn": true,
+   "route": "pilot",
+   "screen": "—"
+  },
+  {
+   "from": "T16",
+   "to": "E10a",
+   "via": [],
+   "label": "Skip HA + reason → Confirm prescription",
+   "kind": "a",
+   "drawn": false,
+   "route": "pilot",
+   "screen": "—"
+  },
+  {
+   "from": "T16",
+   "to": "E10b",
+   "via": [],
+   "label": "Confirm & forward",
+   "kind": "a",
+   "drawn": true,
+   "route": "pilot",
+   "screen": "—"
+  },
+  {
+   "from": "T17",
+   "to": "RES",
+   "via": [
+    "J1"
+   ],
+   "label": "result",
+   "kind": "e",
+   "drawn": true,
+   "route": "pilot",
+   "screen": "t17-skip-ha-wait (its own line)"
+  }
+ ],
+ "paths": {
+  "cat4": [
+   "R1",
+   "CALL",
+   "C0",
+   "RES",
+   "C8",
+   "E10a"
+  ],
+  "skipped": [
+   "R1",
+   "CALL",
+   "C0",
+   "RES",
+   "C8",
+   "E10a"
+  ],
+  "pilot": [
+   "R1",
+   "CALL",
+   "B0",
+   "B1",
+   "B2",
+   "T13",
+   "E14"
+  ]
+ },
+ "retired": [
+  "call.forwarded-after-hangup",
+  "case.end-call-first",
+  "call.end-call-first",
+  "call.endCallFirst",
+  "t15b-end-call-first"
+ ]
+};
+
+codex
+The ruling overrides the proposal’s earlier two-picture layout: Screens must show one phone image and the 360-wide caption. I’ll check every approved picture state, every block usage link, download contents, and errors throughout the walk.
+exec
+/bin/zsh -lc "cat > tests/codex/handoff/viewer-d103.test.mjs <<'EOF'
+import { test, before, after } from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import path from 'node:path';
+import vm from 'node:vm';
+import { fileURLToPath, pathToFileURL } from 'node:url';
+import { createRequire } from 'node:module';
+import { execFileSync } from 'node:child_process';
+
+// Black-box tests: proposal D-103 + KIT RUN ruling, never the preview implementation.
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../..');
+const handoff = path.join(root, 'handoff');
+const viewer = path.join(handoff, 'viewer');
+const url = pathToFileURL(path.join(viewer, 'index.html')).href;
+const { chromium } = createRequire(path.join(root, 'tests/package.json'))('playwright');
+const sandbox = { window: {} };
+vm.runInNewContext(fs.readFileSync(path.join(root, 'app/state-map.js'), 'utf8'), sandbox);
+const oracle = sandbox.window.TM_STATE_MAP.pictures;
+const labels = ['Sign-in', 'OTP', 'Faster sign-in offer', 'Returning unlock', 'Home', 'Case', 'Prescribe', 'Calling'];
+const later = new Set(['t08b-valid-forward', 't11-calling-transfer', 't12-transfer-ready']);
+const forbidden = /\\b(?:F1|F2|N1|W1|L1)\\b|\\[(?:RECOMMENDED|PROPOSED|LOCKED)\\]|§|Design rules|Rule for this state|Tokens used in this state|Approved reference|\\bbox\\s+\\d+\\s*[×x]\\s*\\d+/i;
+let browser, page, kit;
+const runtimeErrors = [];
+before(async () => {
+  browser = await chromium.launch({ executablePath: process.env.CHROME || '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome' });
+  page = await browser.newPage({ viewport: { width: 1280, height: 800 } });
+  page.setDefaultTimeout(2500);
+  page.on('pageerror', e => runtimeErrors.push(String(e)));
+  page.on('console', m => { if (m.type() === 'error') runtimeErrors.push(m.text()); });
+  await page.goto(url);
+  kit = await page.evaluate(() => window.KIT);
+});
+after(async () => { await browser?.close(); });
+async function route(hash) {
+  await page.evaluate(h => { location.hash = h; }, hash);
+  await page.waitForFunction(h => location.hash === h, hash);
+  // Let the hashchange renderer complete without depending on its implementation.
+  await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+}
+const states = () => {
+  assert.ok(kit?.screens?.length, 'KIT.screens must not be empty');
+  return kit.screens.flatMap(screen => screen.states.map(state => ({ screen, state })));
+};
+const stateRoute = (screen, state) => "'`#screens/${screen.tab}/${state.id}`;
+async function eachState(check) {
+  const failures = [];
+  for (const { screen, state } of states()) {
+    try { await route(stateRoute(screen, state)); await check(screen, state); }
+    catch (e) { failures.push(`${screen.tab}/${state.id}: ${e.message}`); }
+  }
+  assert.deepEqual(failures, []);
+}
+function localFile(href) {
+  const resolved = fileURLToPath(new URL(href, url));
+  assert.ok(resolved.startsWith(handoff + path.sep), `outside handoff: ${href}`);
+  assert.ok(fs.statSync(resolved).isFile(), `missing file: ${href}`);
+  return resolved;
+}
+
+test('"'H25: all eight live screen tabs reach every approved state exactly once', { timeout: 120000 }, async () => {
+  await route('#start');
+  assert.deepEqual(await page.locator('nav.v-top button').allTextContents(), ['Start here', 'Foundation', 'Building blocks', 'Screens']);
+  await page.locator('nav.v-top button').getByText('Screens', { exact: true }).click();
+  assert.deepEqual(await page.locator('nav.scrtabs button').allTextContents(), labels);
+  const all = states();
+  for (const item of oracle) {
+    const matches = all.filter(x => x.state.id === item.id);
+    assert.equal(matches.length, 1, "'`${item.id} reachable once`);
+    const folder = item.picture.split('"'/')[0];
+    const expected = folder === 'case' ? (item.calling.length ? 'Calling' : 'Case') : ({ 'sign-in': 'Sign-in', otp: 'OTP', 'faster-signin-offer': 'Faster sign-in offer', 'returning-unlock': 'Returning unlock', home: 'Home', prescribe: 'Prescribe' })[folder];
+    assert.equal(matches[0].screen.name, expected, item.id);
+  }
+  for (const label of labels) {
+    const button = page.locator('nav.scrtabs button').getByText(label, { exact: true });
+    assert.equal(await button.isDisabled(), false, label);
+    await button.click();
+    const screen = kit.screens.find(s => s.name === label);
+    assert.ok(screen, label);
+    assert.equal(await page.locator('.chips button').count(), screen.states.length, label);
+    for (let i = 0; i < screen.states.length; i++) {
+      await page.locator('.chips button').nth(i).click();
+      assert.equal(await page.evaluate(() => location.hash), stateRoute(screen, screen.states[i]));
+    }
+  }
+});
+
+test('H26: every state has plain When this shows and linked answered questions', { timeout: 120000 }, async () => {
+  const decided = fs.readFileSync(path.join(handoff, 'DECIDED.md'), 'utf8');
+  await eachState(async (_, state) => {
+    assert.ok(state.when?.shows?.trim() && state.when?.next?.trim(), 'data has both when lines');
+    const first = page.locator('.panel .card').first();
+    assert.ok(await first.evaluate(e => e.matches('.when')));
+    assert.match(await first.innerText(), /When this shows/);
+    for (const [selector, expected] of [['p.when-shows', state.when.shows], ['p.when-next', state.when.next]]) {
+      assert.equal((await first.locator(selector).innerText()).trim(), expected.trim());
+      assert.doesNotMatch(expected, /<["'^>]+>|'"\\b(?:F1|F2|N1|W1|L1)\\b/);
+    }
+    assert.ok(Array.isArray(state.rule?.decided), 'rule.decided exists');
+    if (state.rule.decided.length) {
+      const links = first.locator('details.ans a[href"'^="../DECIDED.md#"]'"');
+      const actual = await links.evaluateAll(es => es.map(e => ({ id: decodeURIComponent(e.hash.slice(1)), text: e.textContent.trim() })));
+      assert.deepEqual(actual.map(a => a.id).sort(), [...state.rule.decided].sort());
+      for (const a of actual) {
+        assert.equal(a.text, kit.decided.find(d => d.id === a.id)?.q, a.id);
+        assert.notEqual(a.text.toLowerCase(), a.id.toLowerCase());
+        assert.ok(decided.includes("'`### ${a.id} ·`) || decided.includes(`id="${a.id}"`), a.id);
+      }
+    }
+  });
+});
+
+test('"'H27: one phone image, caption, later exceptions and independently scrolling panel', { timeout: 120000 }, async () => {
+  await page.setViewportSize({ width: 1280, height: 800 });
+  await eachState(async (_, state) => {
+    assert.equal(await page.locator('.shot img').count(), 1);
+    const images = await page.locator('img').evaluateAll(es => es.map(e => ({ shot: "'!!e.closest('"'.shot'), src: e.src, loaded: e.complete && e.naturalWidth > 0 })));
+    const shot = images.find(i => i.shot);
+    localFile(shot.src);
+    assert.ok(shot.loaded, 'phone image loaded');
+    assert.equal(images.filter(i => "'!i.shot && (i.src.includes(state.id) || /(?:w360|w390|approved)/i.test(i.src))).length, 0, '"'no duplicate reference screen');
+    assert.match(await page.locator('body').innerText(), /smallest supported phone: 360 wide/i);
+    assert.match(await page.locator('.panel').evaluate(e => getComputedStyle(e).overflowY), /"'^(auto|scroll)$/);
+    if (later.has(state.id)) {
+      assert.match(await page.locator('"'body').innerText(), /later/i);
+      assert.equal(await page.locator('.shot .hit').count(), 0);
+    } else {
+      assert.ok(await page.locator('.shot .hit[data-id]').count(), 'built phone has tap targets');
+      assert.equal(Math.round(await page.locator('.shot img').evaluate(e => e.getBoundingClientRect().width)), 390);
+    }
+  });
+});
+
+test('H28: tapping elements opens clean details, block route and folded picker', { timeout: 120000 }, async () => {
+  await eachState(async (_, state) => {
+    if (later.has(state.id)) return;
+    const hit = page.locator('.shot .hit[data-id]').first();
+    await hit.click({ force: true });
+    const card = page.locator('.card.el');
+    assert.equal(await card.count(), 1);
+    const text = await card.innerText();
+    assert.doesNotMatch(text, /\\bbox\\b|\\bBehaviour\\b|\\brole\\b/i);
+    const href = await card.locator('a[href"'^="#blocks/"]'"').first().getAttribute('href');
+    assert.ok(kit.blocks.some(b => "'`#blocks/${b.block}` === href), href);
+    const fold = page.locator('"'details.elfold');
+    assert.equal(await fold.locator('summary').innerText(), \"Can't tap it? Pick from a list\");
+    assert.equal(await fold.getAttribute('open'), null);
+    // Data field names for element a11y are deliberately not assumed: the rendered
+    // label must contain a real value whenever its heading is present.
+    if (/Screen reader label/i.test(text)) assert.match(text, /Screen reader label\\s+\\S/i);
+    await card.locator('a[href"'^="#blocks/"]'"').first().click();
+    assert.equal(await page.evaluate(() => location.hash), href);
+  });
+});
+
+test('H29: no zero not-tokens card or state token/reference tables', { timeout: 120000 }, async () => {
+  await eachState(async () => {
+    const text = await page.locator('body').innerText();
+    assert.doesNotMatch(text, /Not tokens(?: in this state)?\\s*:\\s*0\\b/i);
+    assert.doesNotMatch(text, /Tokens used in this state|Approved reference/i);
+    for (const card of await page.locator('.card').all()) {
+      const value = await card.innerText();
+      if (/Not tokens/i.test(value)) assert.match(value, /Not tokens["'^'"\\n]*\\b[1-9]\\d*\\b/i);
+    }
+  });
+});
+
+test('H30: every block usage is grouped and every chip selects that block on its state', { timeout: 120000 }, async () => {
+  assert.ok(kit.blocks.length);
+  const failures = [];
+  for (const block of kit.blocks) {
+    try {
+      await route("'`#blocks/${block.block}`);
+      const used = page.locator('"'.usedon');
+      assert.match(await used.innerText(), /Where it's used/);
+      const groups = await used.locator('p').evaluateAll(es => es.map(e => ({ name: e.querySelector('b')?.textContent.trim(), links: [...e.querySelectorAll('a.uchip')].map(a => a.getAttribute('href')) })));
+      const expected = states().filter(x => block.usedIn.includes(x.state.id));
+      assert.deepEqual(groups.map(g => g.name).sort(), [...new Set(expected.map(x => x.screen.name))].sort());
+      assert.deepEqual(groups.flatMap(g => g.links.map(h => decodeURIComponent(h.split('/')[3]))).sort(), [...block.usedIn].sort());
+      for (const group of groups) for (const href of group.links) {
+        assert.ok(href.startsWith('#screens/'));
+        const [, , tab, id, element] = href.split('/');
+        // Hash structure is #screens/<tab>/<state>/<element>.
+        const parts = href.slice(1).split('/');
+        const entry = expected.find(x => x.screen.tab === parts[1] && x.state.id === parts[2]);
+        assert.ok(entry && entry.screen.name === group.name && parts[3], href);
+        await route("'`#blocks/${block.block}`);
+        await page.locator(`.usedon a.uchip`).filter({ hasText: '"'' }).evaluateAll((es, h) => es.find(e => e.getAttribute('href') === h).click(), href);
+        await page.waitForFunction(h => location.hash === h, href);
+        assert.equal(await page.locator('.hit.sel').getAttribute('data-id'), decodeURIComponent(parts[3]));
+        assert.equal(await page.locator('.card.el a[href"'^="#blocks/"]'"').first().getAttribute('href'), "'`#blocks/${block.block}`);
+      }
+    } catch (e) { failures.push(`${block.block}: ${e.message}`); }
+  }
+  assert.deepEqual(failures, []);
+});
+
+test('"'H31: Start here fits laptop and exposes all real downloads with identical single files', { timeout: 120000 }, async () => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await route('#start');
+  assert.ok(await page.evaluate(() => document.documentElement.scrollHeight <= innerHeight + 1));
+  assert.equal(await page.locator('table').count(), 0);
+  assert.match(await page.locator('body').innerText(), /Start with Screens\\. Tap anything\\. Check DECIDED before asking\\./);
+  const links = await page.locator('.dls a.dl[href]').evaluateAll(es => es.map(e => ({ href: e.getAttribute('href'), text: e.innerText })));
+  assert.equal(await page.locator('.dls a.dl-main').count(), 1);
+  assert.ok(Array.isArray(await page.evaluate(() => window.KIT_DOWNLOADS)));
+  const files = links.map(l => localFile(l.href));
+  for (const name of ['tokens.ts', 'messages.ts', 'icons.ts', 'fonts.zip', 'logo.zip']) {
+    const file = files.find(f => path.basename(f) === name);
+    assert.ok(file, name);
+    if (name.endsWith('.ts')) assert.deepEqual(fs.readFileSync(file), fs.readFileSync(path.join(handoff, 'foundation', name)), name);
+  }
+});
+
+test('H32: whole-kit zip contains exactly handoff excluding downloads, byte for byte', { timeout: 120000 }, async () => {
+  await route('#start');
+  const zip = localFile(await page.locator('.dls a.dl-main').getAttribute('href'));
+  const walk = dir => fs.readdirSync(dir, { withFileTypes: true }).flatMap(e => {
+    const full = path.join(dir, e.name);
+    const relative = path.relative(handoff, full).split(path.sep).join('/');
+    if (relative === 'viewer/downloads') return [];
+    return e.isDirectory() ? walk(full) : [relative];
+  });
+  const expected = walk(handoff).sort();
+  const entries = execFileSync('unzip', ['-Z1', zip], { encoding: 'utf8', timeout: 20000 }).trim().split('\\n').filter(x => "'!x.endsWith('"'/')).sort();
+  assert.deepEqual(entries, expected);
+  for (const entry of entries) assert.deepEqual(execFileSync('unzip', ['-p', zip, entry], { maxBuffer: 128 * 1024 * 1024, timeout: 20000 }), fs.readFileSync(path.join(handoff, entry)), entry);
+});
+
+test('H33: Foundation screen filter narrows tokens and hides inline alias chains', { timeout: 120000 }, async () => {
+  await route('#foundation');
+  const label = page.locator('label.only');
+  assert.match(await label.innerText(), /Only values used on/i);
+  const select = label.locator('select');
+  assert.ok(await select.locator('option').count());
+  const checkbox = label.locator('input[type=\"checkbox\"]');
+  await checkbox.uncheck();
+  const total = await page.locator('tbody tr').count();
+  await select.selectOption({ index: 0 });
+  await checkbox.check();
+  const filtered = await page.locator('tbody tr').count();
+  assert.ok(filtered > 0 && filtered < total, "'`${filtered} must be between 0 and ${total}`);
+  assert.doesNotMatch(await page.locator('"'body').innerText(), /\\(via --tm-/);
+});
+
+test('H34: all tabs, states with one tap and block pages are free of internal labels and script errors', { timeout: 120000 }, async () => {
+  const failures = [];
+  async function clean(where) {
+    const text = await page.locator('body').innerText();
+    if (forbidden.test(text)) failures.push("'`${where}: ${text.match(forbidden)?.[0]}`);
+  }
+  for (const hash of ['"'#start', '#foundation', '#blocks', '#screens']) { await route(hash); await clean(hash); }
+  for (const { screen, state } of states()) {
+    await route(stateRoute(screen, state));
+    await clean(state.id);
+    if (await page.locator('.shot .hit[data-id]').count()) {
+      await page.locator('.shot .hit[data-id]').first().click({ force: true });
+      await clean("'`${state.id} tapped`);
+    }
+  }
+  for (const block of kit.blocks) { await route(`#blocks/${block.block}`); await clean(block.block); }
+  assert.deepEqual({ labels: failures, runtimeErrors }, { labels: [], runtimeErrors: [] });
+});
+
+test('"'H35: generated kit and downloads pass build freshness check', { timeout: 120000 }, () => {
+  execFileSync(process.execPath, ['scripts/build-handoff.mjs', '--check'], { cwd: root, encoding: 'utf8', timeout: 110000, stdio: 'pipe' });
+});
+EOF
+cat >> tests/codex/handoff/CASES.md <<'EOF'
+
+## D-103 viewer — H25 onward
+
+Sources: P = "'`docs/proposals/2026-11-10-kit-viewer-cleanup.md`; R = `docs/runs/RULINGS.md` (00:46 KIT RUN). Interface selectors/data and later-state exceptions follow the tester'"'s supplied contract. Tests are black-box Playwright Chromium over "'`file://`; existing H01–H24 remain unchanged.
+
+| ID | Pass / fail check | Source lines |
+|---|---|---|
+| H25 | Eight enabled tabs in order; every approved picture state exactly once, correct Case/Calling split; tabs and chips open routes. | P 3, 63; R 16–17 |
+| H26 | Every state'"'s first panel card has both plain when lines; all answered questions use question text and existing DECIDED anchors. | P 15; R 16–17 |
+| H27 | Single loaded phone picture, no duplicate reference pictures; 360-wide caption; later exceptions untappable; panel scrolls independently. | P 3; R 16–17 (overrides P 19) |
+| H28 | Tap opens element details and valid block link; no box/role/Behaviour; spoken-label value when shown; picker folded. | P 11–14; R 16–17 |
+| H29 | No zero not-tokens card, state tokens table or approved-reference table. | P 16–18; R 16 |
+| H30 | Every block's usage grouped once per screen; every chip opens its state with matching block element selected. | P 3; R 16–17 |
+| H31 | Start fits 1440×900, no table, how-to and downloads present; all links resolve within handoff; TS copies byte-identical. | P 27–28, 47–50, 60–61; R 16–17 |
+| H32 | Whole-kit zip has exactly all handoff files except downloads, relative paths and identical bytes. | P 62; R 16–17 |
+| H33 | Foundation's screen checkbox narrows token rows to a nonempty subset; no inline alias chain. | P 27, 34–35; R 16–17 |
+| H34 | Every top tab/state/one tapped element/block has no forbidden internal labels; no console or page errors throughout. | P 59, 63; R 17–18 |
+| H35 | "'`node scripts/build-handoff.mjs --check` exits zero including downloads. | P 62; R 15–17 |
+EOF
+node --test tests/codex/handoff/viewer-d103.test.mjs' in /Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype
+ exited 1 in 222ms:
+✖ H25: all eight live screen tabs reach every approved state exactly once (172.501208ms)
+✖ H26: every state has plain When this shows and linked answered questions (0.193ms)
+✖ H27: one phone image, caption, later exceptions and independently scrolling panel (0.067ms)
+✖ H28: tapping elements opens clean details, block route and folded picker (0.017791ms)
+✖ H29: no zero not-tokens card or state token/reference tables (0.032291ms)
+✖ H30: every block usage is grouped and every chip selects that block on its state (0.017417ms)
+✖ H31: Start here fits laptop and exposes all real downloads with identical single files (0.015792ms)
+✖ H32: whole-kit zip contains exactly handoff excluding downloads, byte for byte (0.0195ms)
+✖ H33: Foundation screen filter narrows tokens and hides inline alias chains (0.035ms)
+✖ H34: all tabs, states with one tap and block pages are free of internal labels and script errors (0.028417ms)
+✖ H35: generated kit and downloads pass build freshness check (0.017209ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 0
+ℹ fail 11
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 308.702083
+
+✖ failing tests:
+
+test at tests/codex/handoff/viewer-d103.test.mjs:60:1
+✖ H25: all eight live screen tabs reach every approved state exactly once (172.501208ms)
+  browserType.launch: Target page, context or browser has been closed
+  Browser logs:
+  
+  <launching> /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument,OptimizationHints --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --enable-automation --disable-infobars --disable-search-engine-choice-screen --disable-sync --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/var/folders/dw/ltxkysqs6dv0md9zk_n9fh9w0000gn/T/playwright_chromiumdev_profile-j5laPH --remote-debugging-pipe --no-startup-window
+  <launched> pid=58486
+  Call log:
+  [2m  - <launching> /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument,OptimizationHints --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --enable-automation --disable-infobars --disable-search-engine-choice-screen --disable-sync --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/var/folders/dw/ltxkysqs6dv0md9zk_n9fh9w0000gn/T/playwright_chromiumdev_profile-j5laPH --remote-debugging-pipe --no-startup-window[22m
+  [2m  - <launched> pid=58486[22m
+  [2m  - [pid=58486] <gracefully close start>[22m
+  [2m  - [pid=58486] <kill>[22m
+  [2m  - [pid=58486] <will force kill>[22m
+  [2m  - [pid=58486] exception while trying to kill process: Error: kill EPERM[22m
+  [2m  - [pid=58486] <process did exit: exitCode=null, signal=SIGABRT>[22m
+  [2m  - [pid=58486] starting temporary directories cleanup[22m
+  [2m  - [pid=58486] finished temporary directories cleanup[22m
+  [2m  - [pid=58486] <gracefully close end>[22m
+  
+      at TestContext.<anonymous> (/Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype/tests/codex/handoff/viewer-d103.test.mjs:25:28)
+      at /Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype/tests/codex/handoff/viewer-d103.test.mjs:24:1
+      at async node:internal/modules/esm/loader:650:26
+
+test at tests/codex/handoff/viewer-d103.test.mjs:87:1
+✖ H26: every state has plain When this shows and linked answered questions (0.193ms)
+  browserType.launch: Target page, context or browser has been closed
+  Browser logs:
+  
+  <launching> /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument,OptimizationHints --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --enable-automation --disable-infobars --disable-search-engine-choice-screen --disable-sync --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/var/folders/dw/ltxkysqs6dv0md9zk_n9fh9w0000gn/T/playwright_chromiumdev_profile-j5laPH --remote-debugging-pipe --no-startup-window
+  <launched> pid=58486
+  Call log:
+  [2m  - <launching> /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument,OptimizationHints --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --enable-automation --disable-infobars --disable-search-engine-choice-screen --disable-sync --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/var/folders/dw/ltxkysqs6dv0md9zk_n9fh9w0000gn/T/playwright_chromiumdev_profile-j5laPH --remote-debugging-pipe --no-startup-window[22m
+  [2m  - <launched> pid=58486[22m
+  [2m  - [pid=58486] <gracefully close start>[22m
+  [2m  - [pid=58486] <kill>[22m
+  [2m  - [pid=58486] <will force kill>[22m
+  [2m  - [pid=58486] exception while trying to kill process: Error: kill EPERM[22m
+  [2m  - [pid=58486] <process did exit: exitCode=null, signal=SIGABRT>[22m
+  [2m  - [pid=58486] starting temporary directories cleanup[22m
+  [2m  - [pid=58486] finished temporary directories cleanup[22m
+  [2m  - [pid=58486] <gracefully close end>[22m
+  
+      at TestContext.<anonymous> (/Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype/tests/codex/handoff/viewer-d103.test.mjs:25:28)
+      at /Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype/tests/codex/handoff/viewer-d103.test.mjs:24:1
+      at async node:internal/modules/esm/loader:650:26
+
+test at tests/codex/handoff/viewer-d103.test.mjs:112:1
+✖ H27: one phone image, caption, later exceptions and independently scrolling panel (0.067ms)
+  browserType.launch: Target page, context or browser has been closed
+  Browser logs:
+  
+  <launching> /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument,OptimizationHints --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --enable-automation --disable-infobars --disable-search-engine-choice-screen --disable-sync --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/var/folders/dw/ltxkysqs6dv0md9zk_n9fh9w0000gn/T/playwright_chromiumdev_profile-j5laPH --remote-debugging-pipe --no-startup-window
+  <launched> pid=58486
+  Call log:
+  [2m  - <launching> /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument,OptimizationHints --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --enable-automation --disable-infobars --disable-search-engine-choice-screen --disable-sync --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/var/folders/dw/ltxkysqs6dv0md9zk_n9fh9w0000gn/T/playwright_chromiumdev_profile-j5laPH --remote-debugging-pipe --no-startup-window[22m
+  [2m  - <launched> pid=58486[22m
+  [2m  - [pid=58486] <gracefully close start>[22m
+  [2m  - [pid=58486] <kill>[22m
+  [2m  - [pid=58486] <will force kill>[22m
+  [2m  - [pid=58486] exception while trying to kill process: Error: kill EPERM[22m
+  [2m  - [pid=58486] <process did exit: exitCode=null, signal=SIGABRT>[22m
+  [2m  - [pid=58486] starting temporary directories cleanup[22m
+  [2m  - [pid=58486] finished temporary directories cleanup[22m
+  [2m  - [pid=58486] <gracefully close end>[22m
+  
+      at TestContext.<anonymous> (/Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype/tests/codex/handoff/viewer-d103.test.mjs:25:28)
+      at /Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype/tests/codex/handoff/viewer-d103.test.mjs:24:1
+      at async node:internal/modules/esm/loader:650:26
+
+test at tests/codex/handoff/viewer-d103.test.mjs:133:1
+✖ H28: tapping elements opens clean details, block route and folded picker (0.017791ms)
+  browserType.launch: Target page, context or browser has been closed
+  Browser logs:
+  
+  <launching> /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument,OptimizationHints --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --enable-automation --disable-infobars --disable-search-engine-choice-screen --disable-sync --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/var/folders/dw/ltxkysqs6dv0md9zk_n9fh9w0000gn/T/playwright_chromiumdev_profile-j5laPH --remote-debugging-pipe --no-startup-window
+  <launched> pid=58486
+  Call log:
+  [2m  - <launching> /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument,OptimizationHints --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --enable-automation --disable-infobars --disable-search-engine-choice-screen --disable-sync --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/var/folders/dw/ltxkysqs6dv0md9zk_n9fh9w0000gn/T/playwright_chromiumdev_profile-j5laPH --remote-debugging-pipe --no-startup-window[22m
+  [2m  - <launched> pid=58486[22m
+  [2m  - [pid=58486] <gracefully close start>[22m
+  [2m  - [pid=58486] <kill>[22m
+  [2m  - [pid=58486] <will force kill>[22m
+  [2m  - [pid=58486] exception while trying to kill process: Error: kill EPERM[22m
+  [2m  - [pid=58486] <process did exit: exitCode=null, signal=SIGABRT>[22m
+  [2m  - [pid=58486] starting temporary directories cleanup[22m
+  [2m  - [pid=58486] finished temporary directories cleanup[22m
+  [2m  - [pid=58486] <gracefully close end>[22m
+  
+      at TestContext.<anonymous> (/Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype/tests/codex/handoff/viewer-d103.test.mjs:25:28)
+      at /Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype/tests/codex/handoff/viewer-d103.test.mjs:24:1
+      at async node:internal/modules/esm/loader:650:26
+
+test at tests/codex/handoff/viewer-d103.test.mjs:155:1
+✖ H29: no zero not-tokens card or state token/reference tables (0.032291ms)
+  browserType.launch: Target page, context or browser has been closed
+  Browser logs:
+  
+  <launching> /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument,OptimizationHints --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --enable-automation --disable-infobars --disable-search-engine-choice-screen --disable-sync --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/var/folders/dw/ltxkysqs6dv0md9zk_n9fh9w0000gn/T/playwright_chromiumdev_profile-j5laPH --remote-debugging-pipe --no-startup-window
+  <launched> pid=58486
+  Call log:
+  [2m  - <launching> /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument,OptimizationHints --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --enable-automation --disable-infobars --disable-search-engine-choice-screen --disable-sync --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/var/folders/dw/ltxkysqs6dv0md9zk_n9fh9w0000gn/T/playwright_chromiumdev_profile-j5laPH --remote-debugging-pipe --no-startup-window[22m
+  [2m  - <launched> pid=58486[22m
+  [2m  - [pid=58486] <gracefully close start>[22m
+  [2m  - [pid=58486] <kill>[22m
+  [2m  - [pid=58486] <will force kill>[22m
+  [2m  - [pid=58486] exception while trying to kill process: Error: kill EPERM[22m
+  [2m  - [pid=58486] <process did exit: exitCode=null, signal=SIGABRT>[22m
+  [2m  - [pid=58486] starting temporary directories cleanup[22m
+  [2m  - [pid=58486] finished temporary directories cleanup[22m
+  [2m  - [pid=58486] <gracefully close end>[22m
+  
+      at TestContext.<anonymous> (/Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype/tests/codex/handoff/viewer-d103.test.mjs:25:28)
+      at /Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype/tests/codex/handoff/viewer-d103.test.mjs:24:1
+      at async node:internal/modules/esm/loader:650:26
+
+test at tests/codex/handoff/viewer-d103.test.mjs:167:1
+✖ H30: every block usage is grouped and every chip selects that block on its state (0.017417ms)
+  browserType.launch: Target page, context or browser has been closed
+  Browser logs:
+  
+  <launching> /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument,OptimizationHints --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --enable-automation --disable-infobars --disable-search-engine-choice-screen --disable-sync --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/var/folders/dw/ltxkysqs6dv0md9zk_n9fh9w0000gn/T/playwright_chromiumdev_profile-j5laPH --remote-debugging-pipe --no-startup-window
+  <launched> pid=58486
+  Call log:
+  [2m  - <launching> /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument,OptimizationHints --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --enable-automation --disable-infobars --disable-search-engine-choice-screen --disable-sync --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/var/folders/dw/ltxkysqs6dv0md9zk_n9fh9w0000gn/T/playwright_chromiumdev_profile-j5laPH --remote-debugging-pipe --no-startup-window[22m
+  [2m  - <launched> pid=58486[22m
+  [2m  - [pid=58486] <gracefully close start>[22m
+  [2m  - [pid=58486] <kill>[22m
+  [2m  - [pid=58486] <will force kill>[22m
+  [2m  - [pid=58486] exception while trying to kill process: Error: kill EPERM[22m
+  [2m  - [pid=58486] <process did exit: exitCode=null, signal=SIGABRT>[22m
+  [2m  - [pid=58486] starting temporary directories cleanup[22m
+  [2m  - [pid=58486] finished temporary directories cleanup[22m
+  [2m  - [pid=58486] <gracefully close end>[22m
+  
+      at TestContext.<anonymous> (/Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype/tests/codex/handoff/viewer-d103.test.mjs:25:28)
+      at /Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype/tests/codex/handoff/viewer-d103.test.mjs:24:1
+      at async node:internal/modules/esm/loader:650:26
+
+test at tests/codex/handoff/viewer-d103.test.mjs:197:1
+✖ H31: Start here fits laptop and exposes all real downloads with identical single files (0.015792ms)
+  browserType.launch: Target page, context or browser has been closed
+  Browser logs:
+  
+  <launching> /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument,OptimizationHints --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --enable-automation --disable-infobars --disable-search-engine-choice-screen --disable-sync --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/var/folders/dw/ltxkysqs6dv0md9zk_n9fh9w0000gn/T/playwright_chromiumdev_profile-j5laPH --remote-debugging-pipe --no-startup-window
+  <launched> pid=58486
+  Call log:
+  [2m  - <launching> /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument,OptimizationHints --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --enable-automation --disable-infobars --disable-search-engine-choice-screen --disable-sync --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/var/folders/dw/ltxkysqs6dv0md9zk_n9fh9w0000gn/T/playwright_chromiumdev_profile-j5laPH --remote-debugging-pipe --no-startup-window[22m
+  [2m  - <launched> pid=58486[22m
+  [2m  - [pid=58486] <gracefully close start>[22m
+  [2m  - [pid=58486] <kill>[22m
+  [2m  - [pid=58486] <will force kill>[22m
+  [2m  - [pid=58486] exception while trying to kill process: Error: kill EPERM[22m
+  [2m  - [pid=58486] <process did exit: exitCode=null, signal=SIGABRT>[22m
+  [2m  - [pid=58486] starting temporary directories cleanup[22m
+  [2m  - [pid=58486] finished temporary directories cleanup[22m
+  [2m  - [pid=58486] <gracefully close end>[22m
+  
+      at TestContext.<anonymous> (/Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype/tests/codex/handoff/viewer-d103.test.mjs:25:28)
+      at /Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype/tests/codex/handoff/viewer-d103.test.mjs:24:1
+      at async node:internal/modules/esm/loader:650:26
+
+test at tests/codex/handoff/viewer-d103.test.mjs:214:1
+✖ H32: whole-kit zip contains exactly handoff excluding downloads, byte for byte (0.0195ms)
+  browserType.launch: Target page, context or browser has been closed
+  Browser logs:
+  
+  <launching> /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument,OptimizationHints --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --enable-automation --disable-infobars --disable-search-engine-choice-screen --disable-sync --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/var/folders/dw/ltxkysqs6dv0md9zk_n9fh9w0000gn/T/playwright_chromiumdev_profile-j5laPH --remote-debugging-pipe --no-startup-window
+  <launched> pid=58486
+  Call log:
+  [2m  - <launching> /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument,OptimizationHints --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --enable-automation --disable-infobars --disable-search-engine-choice-screen --disable-sync --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/var/folders/dw/ltxkysqs6dv0md9zk_n9fh9w0000gn/T/playwright_chromiumdev_profile-j5laPH --remote-debugging-pipe --no-startup-window[22m
+  [2m  - <launched> pid=58486[22m
+  [2m  - [pid=58486] <gracefully close start>[22m
+  [2m  - [pid=58486] <kill>[22m
+  [2m  - [pid=58486] <will force kill>[22m
+  [2m  - [pid=58486] exception while trying to kill process: Error: kill EPERM[22m
+  [2m  - [pid=58486] <process did exit: exitCode=null, signal=SIGABRT>[22m
+  [2m  - [pid=58486] starting temporary directories cleanup[22m
+  [2m  - [pid=58486] finished temporary directories cleanup[22m
+  [2m  - [pid=58486] <gracefully close end>[22m
+  
+      at TestContext.<anonymous> (/Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype/tests/codex/handoff/viewer-d103.test.mjs:25:28)
+      at /Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype/tests/codex/handoff/viewer-d103.test.mjs:24:1
+      at async node:internal/modules/esm/loader:650:26
+
+test at tests/codex/handoff/viewer-d103.test.mjs:229:1
+✖ H33: Foundation screen filter narrows tokens and hides inline alias chains (0.035ms)
+  browserType.launch: Target page, context or browser has been closed
+  Browser logs:
+  
+  <launching> /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument,OptimizationHints --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --enable-automation --disable-infobars --disable-search-engine-choice-screen --disable-sync --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/var/folders/dw/ltxkysqs6dv0md9zk_n9fh9w0000gn/T/playwright_chromiumdev_profile-j5laPH --remote-debugging-pipe --no-startup-window
+  <launched> pid=58486
+  Call log:
+  [2m  - <launching> /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument,OptimizationHints --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --enable-automation --disable-infobars --disable-search-engine-choice-screen --disable-sync --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/var/folders/dw/ltxkysqs6dv0md9zk_n9fh9w0000gn/T/playwright_chromiumdev_profile-j5laPH --remote-debugging-pipe --no-startup-window[22m
+  [2m  - <launched> pid=58486[22m
+  [2m  - [pid=58486] <gracefully close start>[22m
+  [2m  - [pid=58486] <kill>[22m
+  [2m  - [pid=58486] <will force kill>[22m
+  [2m  - [pid=58486] exception while trying to kill process: Error: kill EPERM[22m
+  [2m  - [pid=58486] <process did exit: exitCode=null, signal=SIGABRT>[22m
+  [2m  - [pid=58486] starting temporary directories cleanup[22m
+  [2m  - [pid=58486] finished temporary directories cleanup[22m
+  [2m  - [pid=58486] <gracefully close end>[22m
+  
+      at TestContext.<anonymous> (/Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype/tests/codex/handoff/viewer-d103.test.mjs:25:28)
+      at /Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype/tests/codex/handoff/viewer-d103.test.mjs:24:1
+      at async node:internal/modules/esm/loader:650:26
+
+test at tests/codex/handoff/viewer-d103.test.mjs:245:1
+✖ H34: all tabs, states with one tap and block pages are free of internal labels and script errors (0.028417ms)
+  browserType.launch: Target page, context or browser has been closed
+  Browser logs:
+  
+  <launching> /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument,OptimizationHints --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --enable-automation --disable-infobars --disable-search-engine-choice-screen --disable-sync --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/var/folders/dw/ltxkysqs6dv0md9zk_n9fh9w0000gn/T/playwright_chromiumdev_profile-j5laPH --remote-debugging-pipe --no-startup-window
+  <launched> pid=58486
+  Call log:
+  [2m  - <launching> /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument,OptimizationHints --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --enable-automation --disable-infobars --disable-search-engine-choice-screen --disable-sync --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/var/folders/dw/ltxkysqs6dv0md9zk_n9fh9w0000gn/T/playwright_chromiumdev_profile-j5laPH --remote-debugging-pipe --no-startup-window[22m
+  [2m  - <launched> pid=58486[22m
+  [2m  - [pid=58486] <gracefully close start>[22m
+  [2m  - [pid=58486] <kill>[22m
+  [2m  - [pid=58486] <will force kill>[22m
+  [2m  - [pid=58486] exception while trying to kill process: Error: kill EPERM[22m
+  [2m  - [pid=58486] <process did exit: exitCode=null, signal=SIGABRT>[22m
+  [2m  - [pid=58486] starting temporary directories cleanup[22m
+  [2m  - [pid=58486] finished temporary directories cleanup[22m
+  [2m  - [pid=58486] <gracefully close end>[22m
+  
+      at TestContext.<anonymous> (/Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype/tests/codex/handoff/viewer-d103.test.mjs:25:28)
+      at /Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype/tests/codex/handoff/viewer-d103.test.mjs:24:1
+      at async node:internal/modules/esm/loader:650:26
+
+test at tests/codex/handoff/viewer-d103.test.mjs:264:1
+✖ H35: generated kit and downloads pass build freshness check (0.017209ms)
+  browserType.launch: Target page, context or browser has been closed
+  Browser logs:
+  
+  <launching> /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument,OptimizationHints --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --enable-automation --disable-infobars --disable-search-engine-choice-screen --disable-sync --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/var/folders/dw/ltxkysqs6dv0md9zk_n9fh9w0000gn/T/playwright_chromiumdev_profile-j5laPH --remote-debugging-pipe --no-startup-window
+  <launched> pid=58486
+  Call log:
+  [2m  - <launching> /Applications/Google Chrome.app/Contents/MacOS/Google Chrome --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,AutoDeElevate,RenderDocument,OptimizationHints --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --enable-automation --disable-infobars --disable-search-engine-choice-screen --disable-sync --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --user-data-dir=/var/folders/dw/ltxkysqs6dv0md9zk_n9fh9w0000gn/T/playwright_chromiumdev_profile-j5laPH --remote-debugging-pipe --no-startup-window[22m
+  [2m  - <launched> pid=58486[22m
+  [2m  - [pid=58486] <gracefully close start>[22m
+  [2m  - [pid=58486] <kill>[22m
+  [2m  - [pid=58486] <will force kill>[22m
+  [2m  - [pid=58486] exception while trying to kill process: Error: kill EPERM[22m
+  [2m  - [pid=58486] <process did exit: exitCode=null, signal=SIGABRT>[22m
+  [2m  - [pid=58486] starting temporary directories cleanup[22m
+  [2m  - [pid=58486] finished temporary directories cleanup[22m
+  [2m  - [pid=58486] <gracefully close end>[22m
+  
+      at TestContext.<anonymous> (/Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype/tests/codex/handoff/viewer-d103.test.mjs:25:28)
+      at /Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype/tests/codex/handoff/viewer-d103.test.mjs:24:1
+      at async node:internal/modules/esm/loader:650:26
+
+codex
+The single run reported 0 passed and 11 failed. Chrome aborted during the shared setup, so these are setup failures; the viewer assertions weren’t reached. I also caught a block-link path-index error in the new test and am correcting it without rerunning the suite.
+exec
+/bin/zsh -lc "python3 - <<'PY'
+p='tests/codex/handoff/viewer-d103.test.mjs'
+s=open(p).read().replace(\"h.split('/')[3]\", \"h.split('/')[2]\")
+s=s.replace(\"        const [, , tab, id, element] = href.split('/');\\n\", '')
+s=s.replace(\"page.locator("'`.usedon a.uchip`).filter({ hasText: '"'' })\", \"page.locator('.usedon a.uchip')\")
+open(p,'w').write(s)
+PY" in /Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype
+ succeeded in 0ms:
+codex
+Added H25–H35 in `tests/codex/handoff/viewer-d103.test.mjs` and appended source-linked checks to `CASES.md`. H01–H24 unchanged.
+
+Ran once: **0 passed, 11 failed**. Chrome aborted during shared setup; viewer assertions were not reached. Tests were not weakened.
+tokens used
+41,758
+Added H25–H35 in `tests/codex/handoff/viewer-d103.test.mjs` and appended source-linked checks to `CASES.md`. H01–H24 unchanged.
+
+Ran once: **0 passed, 11 failed**. Chrome aborted during shared setup; viewer assertions were not reached. Tests were not weakened.

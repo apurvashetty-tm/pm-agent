@@ -169,3 +169,21 @@ Additional source legend (line numbers at authoring):
 ### Execution evidence
 
 Authoring run: `node --test tests/codex/handoff/` completed in approximately 0.3 seconds [INFERRED: Node test-runner duration, local 2026-11-10]. Result: 27 tests, 14 pass, 13 fail [local Node test output, 2026-11-10]. All oracle self-checks passed. Current kit acceptance failures include absent new screen files, stale foundation copy, existing copy coverage and freshness baseline failures; these are not skipped or silently waived. Freshness mutation assertions cannot run until their replica baselines pass. Re-run after the builder produces the extended kit. No browser needed; no shared records changed.
+
+## D-103 viewer — H25 onward
+
+Sources: P = `docs/proposals/2026-11-10-kit-viewer-cleanup.md`; R = `docs/runs/RULINGS.md` (00:46 KIT RUN). Interface selectors/data and later-state exceptions follow the tester's supplied contract. Tests are black-box Playwright Chromium over `file://`; existing H01–H24 remain unchanged.
+
+| ID | Pass / fail check | Source lines |
+|---|---|---|
+| H25 | Eight enabled tabs in order; every approved picture state exactly once, correct Case/Calling split; tabs and chips open routes. | P 3, 63; R 16–17 |
+| H26 | Every state's first panel card has both plain when lines; all answered questions use question text and existing DECIDED anchors. | P 15; R 16–17 |
+| H27 | Single loaded phone picture, no duplicate reference pictures; 360-wide caption; later exceptions untappable; panel scrolls independently. | P 3; R 16–17 (overrides P 19) |
+| H28 | Tap opens element details and valid block link; no box/role/Behaviour; spoken-label value when shown; picker folded. | P 11–14; R 16–17 |
+| H29 | No zero not-tokens card, state tokens table or approved-reference table. | P 16–18; R 16 |
+| H30 | Every block's usage grouped once per screen; every chip opens its state with matching block element selected. | P 3; R 16–17 |
+| H31 | Start fits 1440×900, no table, how-to and downloads present; all links resolve within handoff; TS copies byte-identical. | P 27–28, 47–50, 60–61; R 16–17 |
+| H32 | Whole-kit zip has exactly all handoff files except downloads, relative paths and identical bytes. | P 62; R 16–17 |
+| H33 | Foundation's screen checkbox narrows token rows to a nonempty subset; no inline alias chain. | P 27, 34–35; R 16–17 |
+| H34 | Every top tab/state/one tapped element/block has no forbidden internal labels; no console or page errors throughout. | P 59, 63; R 17–18 |
+| H35 | `node scripts/build-handoff.mjs --check` exits zero including downloads. | P 62; R 15–17 |
