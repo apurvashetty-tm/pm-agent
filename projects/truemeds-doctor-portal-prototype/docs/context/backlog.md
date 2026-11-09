@@ -77,6 +77,7 @@ Nothing goes to `main` while the chain runs (`publish.sh` pulls `main` into this
 2. [ ] **Tokens to `main` first:** before / after look at ACOM's 2 pages that use the central design system → `shared/design-tokens` PR with only the `design-system/` and `scripts/` changes (≈22 files) → Apurva approves → merge → this branch picks up `main` on its next publish.
 3. [ ] **When Apurva approves the prototype:** one deliverables PR = **everything in this project except run evidence** (`docs/renders/**` work folders and `*.log`). Includes `app/`, `ui-screens/`, `handoff/`, `scripts/`, `tests/`, `calling-flow/`, `brand/`, `reference/`, `docs/` (minus evidence), `CLAUDE.md`, and the old `index.html` / `app.js` / `styles.css` (the live demo still serves them). Built on a branch from `main`, merged as a normal merge commit.
 4. [ ] **From the next run on:** commit proof (reports, JSON, comparison sheets, logs) and only pictures that **differ**; not identical re-captures (≈150 MB of renders on the branch after two days).
+- [ ] **Netlify: two deploys only for this project (Apurva, 2026-11-09 23:41):** none now (the Sign-in kit goes as a zip; a deploy now would need a merge to `main` mid-chain). Deploy 1: when every screen is built (app + kit viewer + the pending calling-flow page, one `[deploy]` merge). Deploy 2: the final one after Apurva's approval. Nothing else.
 5. [ ] **Before any `workspace.sh close project`:** the archive tag must exist (close deletes the branch on GitHub).
 
 ## 3. Rebuild items (for the build, not the renders)
