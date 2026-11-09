@@ -1,0 +1,1924 @@
+OpenAI Codex v0.167.0
+--------
+workdir: /Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype
+model: gpt-6.1-sol
+provider: openai
+approval: never
+sandbox: workspace-write [workdir, /tmp, $TMPDIR]
+reasoning effort: none
+reasoning summaries: none
+session id: 01a1c1bc-e381-7e30-bb91-3032ac5e03a5
+--------
+user
+You are the tester for docs/renders/2026-11-09-handoff-kit-all/TERMINAL-BRIEF.md (read it, and docs/runs/RULINGS.md, which overrides it).
+Extend tests/codex/handoff/ (CASES.md + node tests, `node --test tests/codex/handoff/`) from docs/proposals/2026-11-09-native-handoff-kit.md §6 to every new journey. Keep the existing Sign-in tests (H01–H14) working; add new ones (H15 onward). Write ONLY under tests/codex/handoff/. Don't read or change app/ code beyond app/state-map.js (the list of approved states).
+
+Sources you may read: the proposal, the two briefs (this run's and docs/renders/2026-11-09-handoff-kit/TERMINAL-BRIEF.md), docs/runs/RULINGS.md, ../../design-system/native/tokens.ts, ui-screens/native/messages.ts, ui-screens/README.md, ui-screens/app-logic.md, docs/feedback-state-map.md, app/state-map.js, the approved pictures under ui-screens/, the existing tests/codex/handoff/.
+
+Kit contract for the new journeys (what the builder will produce; test against it):
+- Journeys and files: handoff/screens/otp.json, faster-signin-offer.json, returning-unlock.json, home.json, case.json, prescribe.json (sign-in.json stays). Each has the same top-level shape as sign-in.json: { screen, states: [...], tokensUsed: [...], rawValues: { builtApp: [...], exceptions: [...] } }.
+- States: one per approved picture, ids exactly the picture ids in app/state-map.js `pictures` grouped by the first folder of `picture` (otp → otp.json, faster-signin-offer → faster-signin-offer.json, returning-unlock → returning-unlock.json, home → home.json, case → case.json, prescribe → prescribe.json). 149 states in all incl. Sign-in's 12.
+- Each state: id, name, pictures { w360, w390 } (kit-relative paths that exist, copied byte-identical from ui-screens/<folder>/<id>_w360.png / _w390.png), built390 (viewer/shots/built-390_<id>.png) when built, rule (feedback map / app-logic text), elements[].
+- Three version-A states are not built yet (D-87: A-only screens later): t08b-valid-forward, t11-calling-transfer, t12-transfer-ready. They carry "built": false, a "later" note, pictures, and no elements. Every other state has "built": true (or no built key) and at least one element.
+- Each element: id (unique within its state), block, part, variant, blockState, box {x,y,w,h} (390-wide points, inside 0..390 × 0..844), tokens { property: [native names] }, styles [ { property, value, tokens: [ {web, native, value} ], from {selector,file,line}, raw?, kind?, layout?, timing?, exception? } ], copy [ {slot, copyKey | literal | data} ], copyKey / copyKeys (must exist in messages.ts), accessibility, behaviour { decided: ["DECIDED.md#<id>"] , state }.
+- Every element of the built screen that is visible in the 390×844 viewport is in the state's elements (except drawing inside icons / svg and the drawn system keyboard).
+- Raw: a typed size or colour in a style is raw: true with file and line; red in the viewer. Layout keywords, zeros and % are not raw. Values the design system marks raw-ok (geometry, ≤3px optical nudges) still count as typed sizes — they must be flagged or listed as documented exceptions, never silently passed.
+- components/<block>.json: every block used by any state's elements has a spec with parts × states → tokens, rules, usedIn (state ids).
+- DECIDED.md / OPEN.md: one file each, a section per journey ("## Sign-in", "## OTP", "## Faster sign-in offer", "## Returning unlock", "## Home", "## Case page", "## Prescribe"); entries "### <id> · <question>" with sources and decision numbers (D-xx). Per the rulings: Sign-in o04, o05, o07, o08, o10, o11, o17, o18, o25, o26 are in DECIDED citing D-101; o01, o02, o03, o12, o15, o16, o19, o21, o22, o24 are in DECIDED marked [MOCK] and "keep configurable"; none of those 20 ids is in OPEN. "order" is never used for the doctor's unit of work (customer order ID wording allowed).
+- viewer/index.html opens from disk and lists every journey; every state is reachable.
+- `node scripts/build-handoff.mjs --check` exits 0 on a fresh build and non-zero when a source (e.g. app/screens/home.css, ui-screens/native/messages.ts) changes.
+- Nothing internal leaks into handoff/ (git, Netlify, Codex, brief, render rules, review rounds, people's names other than the sample doctor "Dr. Kunal" (D-92)).
+
+Write (a) tests/codex/handoff/CASES.md additions: every check, each with its source line; (b) node tests that check a built handoff/ folder for all of the above: every native token name exists in tokens.ts; every copy key exists in messages.ts; every approved state of every journey is in its screen file with pictures identical to the source; every element has the contract fields; raw values flagged; nothing internal leaked; --check fails when a source changes (use a temp replica as the existing H09 does). Don't depend on a running browser. Make the tests run fast (< 60 s). End with a short summary of what you wrote.
+
+codex
+I’ll read the briefs, rulings, approved sources, and existing tests, then extend the suite only under `tests/codex/handoff/` and run it.
+exec
+/bin/zsh -lc 'cat docs/runs/RULINGS.md docs/renders/2026-11-09-handoff-kit-all/TERMINAL-BRIEF.md docs/renders/2026-11-09-handoff-kit/TERMINAL-BRIEF.md docs/proposals/2026-11-09-native-handoff-kit.md' in /Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype
+ succeeded in 0ms:
+# Main-thread rulings
+
+Every run reads this first. Rulings override briefs where they conflict. Newest at the top.
+
+## 2026-11-10 00:35 (after run B — main thread review: passed)
+- **B passed.** Evidence checked: run B 94 / 99 with the 5 disputed cases passing 5 / 5 via `textContent`; run A 303 / 303; A0-happy-path PASS; own tests 23 / 23; compare steps 2–6, 206 pictures, 2 over 1 %. Critique: 1 blocker + 2 should-fix adopted, critique-2 no blockers.
+- **Dispute #1 (B-play-*, 5 cases): test bug.** The Story row folds Test on phone (D-97 item 2), so `innerText` is empty. Fixed by the main thread in `tests/codex/run-B/journeys.mjs` (link read with `textContent`). No app change. The drawer `visibility: hidden` fix stays.
+- **t13-connecting-ha @390 (16 %): the build is right.** In launch B, 13 Transferring… keeps the neutral Pilot script; `call.scriptTransfer` is version A only (app-logic §4 script list, §5 "Transfer path in B reuses 13–15"; D-83 / D-85). The 390 picture is stale (version-A script; the 360 picture is 0.67 %). Accept the diff; re-render `t13-connecting-ha_w390` from the build when pictures are next re-rendered (backlog §2l). Don't change the app.
+- **c-skip-ha @390 (2.5 %): accepted** (background is version-A screen 12 in the picture, B1 in the build; plan v3.2 §5). The `c-skip-ha-b1` / `c-skip-ha-16` re-renders are logged in backlog §2l, not for the kit run.
+- **B's ten `[MOCK ASSUMPTION]`s accepted** (OQ-038 in `open_questions.md`); all consistent with app-logic §4–§5. Setting `pilotTalkAfterGate` (60 s, stand-in) stays.
+- **Not automated** (B-R07 every ending type, B-R09 every background deadline, B-R10 storage isolation, B-R11 desktop / phone parity to the final card): no new test run; they go to Apurva's phone walkthrough. A parity-to-final-card Codex test is optional, logged in backlog.
+- **signin-d101 and handoff-kit-all:** unchanged by this review. Kit run: t13 in launch B is documented with the neutral script.
+
+## 2026-11-09 23:05 (after run A2 — main thread review: passed)
+- **A2 passed.** A0-happy-path dispute: test bug (Set availability *is* the confirm, app-logic §3; the approved label is "Request a case"). Fixed by the main thread in `tests/codex/run-A0/all.mjs` (no second availability click; `/Request (a |next )?case/`). **Run B: run `tests/codex/run-A0/` once and confirm A0-happy-path passes.**
+- A2's extra builds (scheduled hold retries, ring time / `answeredAt`) stay. **B's live Pilot gate counts from `answeredAt`.**
+- **D-101 (Apurva):** Product answers for the Sign-in kit items o04, o05, o07, o08, o10, o11, o17, o18, o25, o26 — read D-101 in the decision log. Queue: `signin-d101` (small prototype run) after B, then the kit run.
+- **Kit run (handoff-kit-all):** move o04, o05, o07, o08, o10, o11, o17, o18, o25, o26 from OPEN to DECIDED with D-101 (in `scripts/build-handoff.mjs`'s list, generated as before). This replaces the brief's "these stay OPEN" line for these ten; any new Product question still stays OPEN.
+- **Kit = prototype hand-off with a fake backend (D-101 amended):** move o01, o02, o03, o12, o15, o16, o19, o21, o22, o24 to DECIDED too, each with the prototype's current mock value / behaviour (from the build and `open_questions.md`), labelled `[MOCK]` and "keep configurable". o23 → stated as the app team's choice. o09 → prototype-only note. For the other journeys, do the same: a backend or design gap gets the prototype's mock answer, not an OPEN line; only genuinely undecided **Product** questions stay OPEN.
+- **Archive tag:** none when the chain ends — only after Apurva approves everything (backlog §2m point 1).
+
+## 2026-11-09 22:35 (for run B and later — main thread, new thread)
+- **A2 Codex critique, pre-ruled:** blockers 1–3 are valid (unclear confirm must reconcile and never resubmit, D-69; everything else disabled while Confirming, incl. Callback / Unavailable on 7d; a late result closes or revokes a sheet the new stage doesn't allow, and the Callback / Unavailable handlers check the stage). Should-fix 4 (scheduled retries / attempt counts) is backend behaviour the doctor never sees — **not needed in the prototype**; a log line is enough. Should-fix 5 (time anchored to the patient's answer) is **run B's**: the Pilot live-call gate counts from the patient answering (app-logic §5, Launch B), so B's simulator needs a separate answer time and ring interval.
+- **Lighter evidence from run B on (backlog §2m point 4):** commit proof (REPORT, JSON, test logs, compare report, one sheet) and only pictures that **differ** from what's committed; no identical re-captures.
+- **Queue:** a hand-off-kit run for all journeys runs after B (`docs/renders/2026-11-09-handoff-kit-all/TERMINAL-BRIEF.md`). B doesn't touch `handoff/`.
+
+## 2026-11-09 21:50 (after run A1 — main thread review: passed)
+- **A1 test disputes (4): all test bugs, app follows the approved pictures.** Fixed in `tests/codex/run-A/` by the main thread: A-C01 clicks **Stay** (D-84 CA-22); A-P07 picks **Weekly** before **Other** (Other is single-dose only); A-OPTIONS-d-every-x-hours matches the accessible names **Every 4 hours…**; `a-loading` accepts the skeleton's status region (text-free by design, D-81 F28). Syntax and inventory checked; **A2: run the whole run-A suite once and confirm these four pass.**
+- **app-logic §4** stale "Stay on this case" lines corrected to **Stay**.
+- **A1's five `[MOCK ASSUMPTION]`s accepted** (recorded as OQ-037 in `open_questions.md`). View Rx during "Confirming…": looks as approved, takes no tap — correct.
+- **Eye checks** (Rx pinch / drag / double-tap on a phone, real keyboard hiding / restoring the bar, 360×640 feel) go to Apurva's phone walkthrough, not to a run.
+
+## 2026-11-09 20:45 (after the token pass)
+- **Token-pass test disputes 1–3: the build is right, Codex's tests were wrong.** Native tokens follow the D-98 pattern `tokens.<group>.<name>` (e.g. `iconSize.sm`, `spinner.sizeLg`), with no `tokens` root in `tokens.json`; SALT semantic tokens may alias core tokens (`--tm-radius-full` → `--tm-core-radius-full`); `transparent` is a keyword, not a raw colour. The main thread fixed `tests/codex/tokens/token-pass.test.mjs` accordingly: **90 / 90 pass**. Don't reopen these.
+- **25 `raw-ok` lines reviewed:** all valid (geometry, ≤3px optical nudges, the listed exceptions). Keep the bar: a new `raw-ok` needs a reason a reviewer would accept; anything else becomes a token or goes to the report.
+
+## 2026-11-09 20:30 (after the rails run)
+- **After-edit hook is live** for every run from now on (installed by the main thread in `.claude/settings.json`, both folders). If an edit returns "Token lint (D-100): raw values…", fix that value in the same step.
+- **Environment in unattended runs:** run `../../scripts/publish.sh` from the project folder, with repo-root-relative paths (e.g. `projects/truemeds-doctor-portal-prototype/app/…`). Don't `cd` outside the project folder; use `git -C` and `../../` paths in one command. `chmod`, nested `claude` and `.claude/` writes are refused — don't try; call scripts with `bash` / `python3`.
+- **Codex tests written ahead** for runs A and B are in `tests/codex/run-A/`, `run-B/`, `validate.mjs`, `README.md`, `VALIDATION.md` (not yet committed): commit them as they are at the start of A1, then use them.
+- **Runner:** `scripts/run-chain.sh` now counts only real `DONE <name>` lines (rails fix swapped in). Keep ending with one `DONE` / `STOPPED` line.
+
+## 2026-11-09 (before the chain)
+- **Apurva is he / him.** Use he / him in everything you write; if a file you're already editing says she / her about Apurva, correct it.
+- **Rails run:** `scripts/run-chain.sh`, `docs/runs/QUEUE.md`, `STATUS.md`, `RULINGS.md` already exist (written by the main thread) and the chain is running you. **Do not edit `scripts/run-chain.sh`** (it is running). In rails §4 only check it: read it, run its dry run with `--queue docs/runs/QUEUE-dry.md` **only if no other chain is running** — it is, so skip the dry run and say so. If you find a bug, write the fix to `scripts/run-chain.next.sh` and note it in your REPORT; the main thread swaps it in. Skip rails §6's "Rails ready" print.
+- **Product questions in the kit (o04, o05, o07, o08, o10, o11, o17, o18, o25, o26):** not decided yet; leave them OPEN. Don't ask.
+- **Reviews:** one Codex review per run, correctness against the spec only, style skipped; one fix pass; a second review only for blockers (D-100).
+- **Small things you can't fix in one try:** list them in the report and move on; don't loop.
+# Brief — native hand-off kit, all journeys (D-96, after the Sign-in pilot)
+
+Owner: main Claude thread · Runner: `scripts/run-chain.sh` (headless Claude Code), Codex as tester and critic · 2026-11-09
+Folder: `~/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype` (project branch).
+Evidence folder: `docs/renders/2026-11-09-handoff-kit-all/` (this folder).
+
+## What this run does
+
+The Sign-in pilot built the kit's foundation (`handoff/`, `scripts/build-handoff.*`, `tests/codex/handoff/`):
+token map, screen-file format, `DECIDED` / `OPEN` format, the AI pack and the viewer. **This run adds every other
+approved journey to that same kit**, the same way. It does not redesign the kit.
+
+Journeys to add (the approved states in `ui-screens/README.md`): OTP, faster sign-in offer, returning unlock, Home
+(incl. Profile / Log out), case page (incl. leave / release, Rx viewer, closed card), Prescribe / Disable, calling
+(Cat4, HA skipped, Pilot Fallback B — the calling states live under `ui-screens/case/`).
+
+**Aim: a few hours.** Generated, not typed: the generator does the work, so most of the effort is extending it and
+checking its output.
+
+## Before you start
+
+- Read `docs/runs/RULINGS.md` first (it overrides this brief).
+- Read: the pilot brief `docs/renders/2026-11-09-handoff-kit/TERMINAL-BRIEF.md` (its hard rules, layout §1, token
+  rules §2 and every section after still apply — read it whole), its `REPORT.md` and `REPORT-2.md`;
+  `docs/proposals/2026-11-09-native-handoff-kit.md` (§6 is the done-checklist); D-96, D-98, D-99 in the decision log;
+  `ui-screens/README.md`; `ui-screens/app-logic.md` (all of it); `docs/feedback-state-map.md`.
+- This runs after build-fast run B, so `app/` is final for this pass.
+
+## Hard rules (in addition to the pilot brief's)
+
+- **Read-only:** `app/`, `ui-screens/`, `../../design-system/`, `docs/context/`. Problems there go under
+  NEEDS-APURVA in the report.
+- **You may write:** `handoff/`, `scripts/build-handoff.*`, `tests/codex/handoff/` (Codex only), this folder.
+- **Don't change the pilot's foundation** (token map, screen-file structure, DECIDED / OPEN format, AI pack layout)
+  unless it can't hold a new journey; if you must, say exactly what changed and why in the report, and keep
+  Sign-in's output identical apart from that.
+- **Product questions already in OPEN stay OPEN** (o04, o05, o07, o08, o10, o11, o17, o18, o25, o26 and any new
+  ones). Don't ask, don't decide.
+- `DECIDED.md` / `OPEN.md` must cover every rule in `app-logic.md` that touches each new screen, with decision
+  numbers. "case", never "order".
+- One Codex review (correctness against the proposal only, style skipped), one fix pass, a second review only for
+  blockers (D-100). Small things you can't fix in one try: list them and move on.
+- Evidence: commit proof (report, JSON, test logs, one evidence sheet) and only pictures that **differ** from what
+  is already committed — no identical re-captures (backlog §2m point 4).
+
+## Steps
+
+0. **Codex tests first.** Codex extends `tests/codex/handoff/` (CASES.md + node tests) from §6 to every new screen:
+   every native token name exists in `tokens.ts`; every copy key exists in `messages.ts`; every element of every
+   approved state is in `screens/<screen>.json`; every raw value is flagged; nothing internal leaked; `--check`
+   fails when a source changes. Run it with `< /dev/null`, `--sandbox workspace-write`, writing only under
+   `tests/codex/handoff/`. Commit as written. A test that contradicts the proposal → `test-disputes.md` with the
+   source line; don't edit it.
+1. **Extend the generator** to all journeys; regenerate; `--check` passes. Commit.
+2. **Components:** a spec for every building block the new screens use (parts × states → native token).
+3. **Screens:** one `screens/<screen>.json` per journey; every state inspectable at 390 in the viewer, 360 as the
+   approved pictures; a "tokens used" table per screen.
+4. **DECIDED / OPEN / CHANGES** regenerated and reviewed for every new screen.
+5. **Fresh-AI test, one round**, on the case page in a calling state and on Prescribe (pilot §3.1 method, Claude and
+   Codex): questions already in DECIDED = 0. Record in `fresh-ai/SCORES.md`.
+6. **Codex critique**, fix pass, Sign-in pilot checks still pass (`tests/codex/handoff/` all, `brand/check_lockup.py`,
+   `check-sources.mjs`).
+7. `REPORT.md` (short): screens added, §6 checklist per screen (pass / fail), Codex tests (written / passing /
+   disputed), fresh-AI result, foundation changes (if any), NEEDS-APURVA, new OPEN items.
+
+## End
+
+Append `DONE handoff-kit-all` (or `STOPPED handoff-kit-all: <reason>`) to `docs/runs/STATUS.md`, publish with the
+run's files (`bash ../../scripts/publish.sh -m "..." <files>` — must print "Pushed to …"), stop. No deploys.
+# Brief — native hand-off kit, pilot on Sign-in (D-96)
+
+Owner: main Claude thread · Runner: Claude Code (terminal), Codex as critic · 2026-11-09
+Folder: `~/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype` (project branch).
+Output folder for evidence: `docs/renders/2026-11-09-handoff-kit/` (this folder).
+
+## Before you start
+
+- **Runs in parallel with the prototype build** (step-1 session 6, fast build runs A / B, the PRD tab) in the same
+  folder. That is safe because this job writes only its own new files and Sign-in is already built. Rules:
+  commit only your own files, named; on a `.lock` file, wait and retry (never delete it); never touch files
+  another tab is changing. If D-94 replaces the Sign-in pictures while you run, just regenerate (section 8).
+- **Aim: a few hours, not days.** This is a pilot. Be careful on the **foundation**, because every later journey
+  reuses it: the web → native token map, the screen-file structure, the `DECIDED` / `OPEN` format and the AI
+  pack. Keep the viewer plain.
+- **Definition of done:** the done-checklist in `docs/proposals/2026-11-09-native-handoff-kit.md` §6 (all lines
+  except the last, which happens after Apurva's review). Read the whole proposal first; it is the scope.
+- Read: `../../design-system/README.md`, `../../design-system/native/README.md`, `../../design-system/RULES.md`
+  §2, §8, §9; `ui-screens/README.md`; `ui-screens/sign-in/`; `app/screens/sign-in.*` and the shell it uses;
+  `ui-screens/app-logic.md` §2; `docs/feedback-state-map.md` (sign-in rows); `ui-screens/feedback/messages.json`
+  + `build-messages.mjs`; `docs/context/decision_log.md` (every entry that touches sign-in, incl. D-42 to D-47,
+  D-61, D-65, D-81, D-82, D-84); `docs/context/open_questions.md`.
+
+## Hard rules
+
+- **Read-only:** `app/`, `ui-screens/`, `../../design-system/`. If something there is wrong, list it under
+  NEEDS-APURVA; don't fix it here.
+- **You may write:** `handoff/` (new), `scripts/build-handoff.*` (new), this evidence folder,
+  `tests/codex/handoff/` (Codex only). Nothing else.
+- **Generated, not typed:** every token, size, colour, copy string and screen fact in the kit comes from the
+  sources by script. Only `README.md`, `AGENTS.md`, `CLAUDE.md`, the skill and `FONTS.md` are written by hand.
+- **The kit is for an outside team.** No internal working notes in it: no render rules, git, Netlify, Codex,
+  terminal briefs, review history, credentials or people's details. Decisions are cited by number (D-xx) with
+  the decision itself, not the debate.
+- Plain words for engineers. "case", never "order" for the doctor's unit of work.
+- Never write to the decision log or record approvals in Apurva's name; report under NEEDS-APURVA.
+- Git: `scripts/publish.sh -m "..." <files>` only; it must print "Pushed to …". Commit after each section
+  (checkpoint). No deploys. On this Mac: `CHROME=` / `CHROMIUM=` for browsers, `< /dev/null` on `codex exec`,
+  `git -C`, never `cd && git`.
+
+## 0 · Codex writes the checks first (before any build)
+
+Codex tests from the proposal, so the build doesn't grade itself (D-95 way, use Codex fully):
+`codex exec --sandbox workspace-write --output-last-message docs/renders/2026-11-09-handoff-kit/codex-tests.md "You are the tester for docs/renders/2026-11-09-handoff-kit/TERMINAL-BRIEF.md. From docs/proposals/2026-11-09-native-handoff-kit.md §6, this brief, ../../design-system/native/tokens.ts, ui-screens/native/messages.ts, ui-screens/sign-in/, ui-screens/app-logic.md §2 and docs/feedback-state-map.md only, write (a) tests/codex/handoff/CASES.md: every check the kit must pass, each with its source line; (b) node tests in tests/codex/handoff/*.mjs that check a built handoff/ folder: every native token name exists in tokens.ts; every copy key exists in messages.ts; every element of every one of the 12 Sign-in states is in screens/sign-in.json; every raw (non-token) value in the sign-in CSS is flagged; nothing internal leaked (git, Netlify, Codex, brief, render rules, names other than the sample doctor); AGENTS.md / CLAUDE.md / skill exist and point to the right files; fonts present with sha256; --check fails when a source changes. Don't read or change app/ code. Write only under tests/codex/handoff/." < /dev/null`
+Commit as they are. A failing Codex test means fixing the kit, unless the test contradicts the proposal: then
+don't edit it; list it in `test-disputes.md` with the source line for the main thread.
+
+## 1 · Kit layout
+
+`handoff/` is built to be opened on its own (or copied to the root of the team's repo):
+
+```
+handoff/
+  README.md            start here (people): what's in the kit, how to open the viewer, setup steps
+  AGENTS.md            for any AI tool: what the app is, where things are, hard rules, how to use the kit
+  CLAUDE.md            one line: @AGENTS.md
+  .claude/skills/truemeds-native-ui/SKILL.md   how to build a Truemeds screen in RN with this kit
+  DECIDED.md           questions already answered: question (engineer's words) → answer → source (D-xx / app-logic §)
+  OPEN.md              still open: question → current assumption → who answers (Product / Backend / Ops)
+  CHANGES.md           what changed since the last generation (tokens, blocks, screens)
+  foundation/          tokens.ts, tokens.json, icons.ts, messages.ts (copied from their generated sources), fonts/
+  components/<block>.json   one per building block used on Sign-in
+  screens/sign-in.json      every state, every element
+  viewer/index.html    the people-facing kit (opens from disk, no server)
+```
+
+Put the AI files at `handoff/`'s root, never at the project root (the project `CLAUDE.md` is our internal rules).
+
+## 2 · Token names
+
+- Every token is shown by its **native name** (`tokens.color.content.primary`), with the web name
+  (`--tm-content-primary`) beside it. Build the web → native map from `../../design-system/scripts/` (the same
+  code that writes `native/tokens.ts`), not by string guessing. Every native name must exist in `tokens.ts`.
+- Decide which token an element uses from the **CSS rule that applies** (the `var(--tm-…)` actually referenced),
+  never by matching a computed value back to a token: several tokens share a value.
+- A value that isn't a token (raw px, hex, rgba) is **flagged**: red in the viewer, `"raw": true` in JSON, with
+  file and line. Sign-in's CSS has a few; list each.
+
+## 3 · Building blocks (`components/`)
+
+Every block the 12 Sign-in states use (find them from the markup, e.g. field, button roles, notice variants,
+spinner, logo header, sign-up option, action bar / band if present). For each: parts (container, label, icon,
+border…) × states (default, pressed, disabled, busy, error, focus — only those that exist) → native token; sizes
+and spacing tokens; rules from RULES §9 (targets, one primary, icon size by button size); a suggested RN name
+and variant (`<Button variant="primary">`), marked `[RECOMMENDED]`, same name as the web block. A picture of each
+state: crop it from `../../design-system/preview.html` or an approved picture; don't build new renders.
+
+## 4 · Screen file (`screens/sign-in.json`)
+
+Per state: id, approved picture paths (360 / 390), the app-logic / feedback-map rule that leads to it. Per
+element: id, block + variant, tokens per property, spacing tokens to neighbours, copy key (must exist in
+`messages.ts`), behaviour reference, accessibility notes (target size, label). Keep the structure simple and
+document it in `AGENTS.md`.
+
+## 5 · Viewer (`viewer/index.html`)
+
+Static page, opens by double-click. Sections: Start here · Foundation · Building blocks · Screens.
+Screens: all 12 Sign-in states, **inspectable at 390** in the built `app/` (the 360 approved pictures shown beside
+it, not inspectable); **tap any element → panel with block, variant, tokens (native + web), spacing, copy key, behaviour link**; a "tokens used"
+table per state and for the screen; raw values in red. It may use `truemeds.css` for its own look (copy it in).
+Plain is fine: it must be correct and readable on a phone, not polished.
+
+## 6 · DECIDED.md and OPEN.md
+
+From app-logic §2, the feedback map, the decision log and open questions, limited to Sign-in. Write them as
+the questions an RN engineer (or their AI) would ask: validation, limits and lockouts, what is server-side,
+keyboard, paste, offline, errors, sign-up redirect, copy, accessibility, fonts, safe areas. Each `[MOCK
+ASSUMPTION]` in the sign-in build goes to OPEN with the assumption. Don't invent answers; anything you can't
+source goes to OPEN and NEEDS-APURVA.
+
+## 7 · Fonts
+
+Plus Jakarta Sans **static TTF**, weights 400 / 500 / 600 / 700, from the official Google Fonts repo
+(github.com/google/fonts, OFL). Include `OFL.txt`, source URL and sha256 per file in `FONTS.md`, plus setup
+for iOS and Android (family name and weight mapping) in plain steps.
+
+## 8 · One command + stale check
+
+`node scripts/build-handoff.mjs` (or `.py`) regenerates everything generated and `CHANGES.md`;
+`--check` exits non-zero if `handoff/` is out of date with its sources. Run both.
+
+## 9 · Fresh-AI test (the main proof)
+
+Copy only `handoff/` to a temp folder outside the repo. In that folder, run a fresh session with no other
+context, once with Claude Code (`claude -p`) and once with Codex (`codex exec --sandbox read-only … < /dev/null`):
+
+> "We're building the Truemeds doctor app in React Native. Build the Sign-in screen with all its states. First
+> list every question you need answered before you can build it; then write the code."
+
+Save both transcripts in `fresh-ai/round-<n>/`. Score:
+- every question it asks: **answered in DECIDED** (kit failure — make the answer easier to find), **in OPEN**
+  (fine), or **genuinely new** (add to OPEN and NEEDS-APURVA; don't invent an answer);
+- its code: no hex, no raw sizes, no typed user-facing text; all from `tokens.*` / `messages.*`.
+
+Fix the kit and repeat, up to 2 more rounds. Pass = zero DECIDED questions asked and clean code in the last
+round, for both tools. Keep every round's transcript. This is the main proof: don't shorten it.
+
+## 10 · Codex critique
+
+`codex exec --sandbox read-only --output-last-message docs/renders/2026-11-09-handoff-kit/codex-critique.md
+"Read docs/renders/2026-11-09-handoff-kit/TERMINAL-BRIEF.md and docs/proposals/2026-11-09-native-handoff-kit.md.
+You are the critic. Review handoff/ and scripts/build-handoff.* against proposal §6 and this brief. Check token
+names against design-system/native/tokens.ts, copy keys against messages.ts, and that nothing internal leaked
+into handoff/. Report blockers, should-fix, nice-to-have with file and line. Read-only; write no files." < /dev/null`
+Also ask it to list `CASES.md` checks with no passing test. Fix valid blockers and should-fix (note any not
+adopted, and why, in `codex-response.md`); re-run once if it raised blockers (`codex-critique-2.md`). If Codex hits
+its usage limit, say so in REPORT.md and carry on.
+
+## 11 · Report and stop
+
+1. One `sheet.png` in this folder: viewer start page, one block spec, the inspector with an element tapped,
+   the tokens-used table, a raw-value flag (phone width).
+2. `REPORT.md`: proposal §6 line by line, pass / fail with evidence; fresh-AI scores per round; files written;
+   NEEDS-APURVA (new questions, anything wrong in the read-only folders) — short, pointed.
+3. Don't write `docs/context/` (other tabs work there); put the lines for the main thread in REPORT.md.
+   Publish everything with `scripts/publish.sh`; stop.
+
+**Then the main thread reviews before Apurva sees it:** Codex's tests, disputes, critique and response, and the
+fresh-AI transcripts. It judges each Codex finding (adopt only valid ones), and brings Apurva only the kit and
+pointed questions.
+# Native hand-off kit — pilot on the Sign-in screen
+
+**Status:** approved by Apurva 2026-11-09 (D-96; amended same day: fast-build way, see brief) · **Date:** 2026-11-09 · **Backlog:** §2e step 5 (token inspector), now widened to a hand-off kit
+
+## 1. Why
+
+The React Native team is new and the app is new. They asked which tokens each screen uses. Past projects show
+two failure modes this kit must avoid:
+
+- **Guessing.** A token list (like the SALT file we received) says *what* exists, not *where* to use it.
+- **Generic AI questions.** Handed only a PRD, the engineers' Claude asks broad questions that were already
+  answered, because it can't tell what is decided from what is open.
+
+We are also not on the same Claude account, so nothing can rely on shared artifacts or projects. Everything has
+to travel as **files in the repo** the team receives.
+
+## 2. What we give them
+
+One folder, `handoff/`, in the doctor-app repo copy. Two audiences, same facts:
+
+**For people — the kit (a page they open in the browser)**
+1. **Parts box:** `tokens.ts`, `icons.ts`, `messages.ts` (all already generated) + Plus Jakarta Sans font files
+   in the format phone apps need (TTF, 4 weights) + a one-page setup note.
+2. **Building blocks:** each component the screen uses (field, button, notice, logo header, spinner, sign-up
+   option) — picture, parts, states (normal, pressed, disabled, busy, error), the native token for each, sizes,
+   and its rules from `design-system/RULES.md` §9. Same names on web and native.
+3. **Screen viewer:** all 12 Sign-in states at 360 and 390; tap anything → which block, which tokens, which
+   spacing. A "tokens used" table per screen. Any value that isn't a token shows in red.
+4. **Behaviour:** each state links to its rule in `app-logic.md` and its message in the feedback map.
+5. **What changed:** a list of tokens, blocks and screens that moved since the last drop.
+
+**For their AI — the AI pack (files their Claude, Codex or Cursor read on their own)**
+1. **`AGENTS.md` + `CLAUDE.md`** at the root of `handoff/` (the folder the team opens or copies to their repo root — not the project root, whose `CLAUDE.md` holds our internal working rules): what the app is, where things are, the hard rules (tokens
+   only, copy only from `messages.ts`, "case" not "order", one primary button). `CLAUDE.md` simply points to
+   `AGENTS.md`, so every AI tool reads the same text.
+2. **A skill**, `.claude/skills/truemeds-native-ui/`: "how to build a Truemeds screen in React Native" — step by
+   step, using the files below. Skills committed in the repo load for anyone who opens it, whatever account
+   they use.
+3. **One data file per screen** (`handoff/screens/sign-in.json`): every element → block → tokens → copy key →
+   behaviour rule. Facts, not prose, so the AI copies instead of guessing.
+4. **`DECIDED.md` and `OPEN.md`** — the key piece. Every question already answered (with the decision number),
+   and the short list that is truly open, with who answers it. The AI is told: check `DECIDED.md` before asking;
+   ask only what is in `OPEN.md` or genuinely missing.
+
+Everything above is **generated** from files we already maintain (design system, prototype, messages, decision
+log), except the skill and `AGENTS.md` text, which are written once. Nothing is copied by hand, so nothing goes
+stale — the October hand-written RN screens went stale within three weeks.
+
+## 3. How we prove it works (before showing FE)
+
+1. **Fresh-AI test:** a new AI session that has only the `handoff/` folder and the prompt "Build the Sign-in
+   screen in React Native" — no other context. We record every question it asks.
+   - Pass: zero questions already answered in `DECIDED.md`; any question it asks is in `OPEN.md`.
+   - Its code uses only `tokens.*` and `messages.*` — no typed colours, sizes or words.
+2. **Person test:** Apurva shows the kit to one FE engineer (30 min) and asks what is still unclear. Their doubts
+   become fixes to the kit, not one-off answers.
+
+## 4. Not in this pilot
+
+Other screens (added journey by journey once the rebuild finishes them) · writing the team's RN components or
+screens (they own the code; we own the contract) · Figma · hosting on Netlify (the kit opens locally from the
+repo; deploy only if Apurva asks) · any change to `app/`, `ui-screens/` or `design-system/`.
+
+## 5. Decisions for Apurva
+
+1. **Ownership:** the app team builds and owns the RN components and screens; we hand over the kit. *Recommended: yes.*
+2. **Old RN files:** the October TSX and hand-off notes in `ui-screens/native/` are marked "don't use — see
+   `handoff/`" once the kit is approved (logged in the backlog, done separately). *Recommended: yes.*
+3. **Pilot screen:** Sign-in (12 states, already rebuilt). *Recommended: yes.*
+
+## 6. Done-checklist (pass/fail)
+
+- [ ] Every token shown uses its native name and matches `design-system/native/tokens.ts`.
+- [ ] Every block on Sign-in has a spec: parts × states → token, size, rules.
+- [ ] All 12 states inspectable at 390 (360 shown as the approved pictures); a "tokens used" table exists.
+- [ ] Zero raw values unflagged.
+- [ ] Font files (TTF, 4 weights) and setup note included.
+- [ ] `sign-in.json` covers every element in every state; each copy key exists in `messages.ts`.
+- [ ] `DECIDED.md` and `OPEN.md` cover every rule in `app-logic.md` that touches Sign-in, with decision numbers.
+- [ ] Fresh-AI test passes (§3.1).
+- [ ] One command regenerates the kit and the "what changed" list; a check fails if the kit is out of date.
+- [ ] Nothing in `app/`, `ui-screens/` or `design-system/` changed.
+- [ ] FE engineer walkthrough done; their doubts logged as fixes (§3.2) — after Apurva's review.
+
+## 7. How it gets built (after approval)
+
+A terminal brief (`TERMINAL-BRIEF-handoff-kit.md`) runs the build with a Codex critique; Claude does the final
+review against §6; Apurva then reviews the kit and shows it to FE.
+
+exec
+/bin/zsh -lc 'rg --files tests/codex/handoff && cat tests/codex/handoff/*' in /Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype
+ succeeded in 0ms:
+tests/codex/handoff/CASES.md
+tests/codex/handoff/handoff.test.mjs
+# Sign-in handoff acceptance cases
+
+Scope: this independent suite is authored only from the sources listed below. D-98 / FIX-BRIEF supersede the original scope; app Sign-in sources are read only for assertions. The pilot checklist is already approved (proposal line 3; brief lines 16–17). These tests do not approve the kit or alter its sources. They intentionally fail until a built kit exists.
+
+Run from the project folder:
+
+```sh
+node --test tests/codex/handoff/handoff.test.mjs
+```
+
+`HANDOFF_DIR` may select another built kit; freshness still checks the project builder and its normal output. `HANDOFF_SAMPLE_DOCTOR` may contain the exact approved sample doctor's displayed name. No personal name was supplied in the permitted text sources; do not invent an allowlist. Source numbering below is the on-disk numbering at test authoring; image filenames supply state/width provenance, not invented line numbers.
+
+## Source legend
+
+- **P**: `docs/proposals/2026-11-09-native-handoff-kit.md` §6, lines 71–83.
+- **B**: `docs/renders/2026-11-09-handoff-kit/TERMINAL-BRIEF.md`.
+- **S**: `ui-screens/sign-in/sign-in.html`.
+- **L**: `ui-screens/app-logic.md` §2, lines 28–54.
+- **F**: `docs/feedback-state-map.md`.
+- **T**: `../../design-system/native/tokens.ts`, export at lines 3 onward.
+- **M**: `ui-screens/native/messages.ts`, Sign-in keys lines 3–21.
+
+## Automated checks
+
+| ID | Pass condition | Source lines | Test |
+|---|---|---|---|
+| H01 | Portable folder has README, AI files, decisions/open questions, changes, foundation tokens/icons/messages/fonts, block JSON, screen JSON and disk viewer; no symlinks requiring the original repo. | B:50–67 | H01 |
+| H02 | Every native reference shown in text/JSON resolves against T, including bracket notation and explicit token fields. Foundation token TS/JSON and message TS match their canonical exports. Native names retain their web names beside them (review E02 as well). | P:73; B:30–31,61,71–75; T:3 onward | H02 |
+| H03 | Every `copyKey`/`messageKey` (or plural array) resolves in M; all Sign-in keys are represented. No typed user-facing copy is substituted for a key (review E03 as well). | P:78; B:90–93; M:3–21 | H03 |
+| H04 | Exactly the 12 source states, with every visible source DOM element represented, including containers, labels, icons, spinner, prefix, helper/notice text slots, signup and keyboard keys. Each element has ID, block, variant, tokens, neighbour spacing, behaviour and accessibility. Both approved pictures are bundled for each state; state cites its behaviour source. | P:75,78; B:81–93; S:64–95,118–165 | H04 |
+| H05 | Every typed size/colour in screen reference CSS is flagged with exact source line/property/value. Exclude html/body, review-controls and capture scaffolding per D-98. Layout keywords and zeros are plain, not red; 31ch is a documented text-measure exception. | P:76; B:76–77; S:9–61 | H05 |
+| H06 | Scan all textual kit files and filenames for internal git/hosting/tool/brief/render-rule/review details, known internal names, local workspace paths, credential patterns, emails and unapproved `Dr …` names. Manually inspect other names and binary/image content as E10. Official Google Fonts provenance and mandatory OFL copyright names are legal provenance, not internal leaks. | B:32–35,113–115 | H06 |
+| H07 | Root CLAUDE is exactly `@AGENTS.md`; AGENTS and skill point to existing kit tokens/messages, screen, components, DECIDED and OPEN. Markdown relative links stay inside kit and resolve. AGENTS states RN, token/copy rules, case wording, one primary, decisions/open questions. | B:54–67,90–93; B:124–133 | H07 |
+| H08 | Four actual static TrueType files have OS/2 weights 400/500/600/700; no variable `fvar` table. OFL exists; FONTS note names every file and its computed SHA256, official source, family, iOS/Android and weight mapping. Setup correctness and licence contents reviewed separately. | P:77; B:113–115 | H08 |
+| H09 | Builder exists; current `--check` succeeds. An isolated replica also passes before mutation; modifying the copied canonical message source makes `--check` fail, without modifying any real source. Reject timeout, missing-module and syntax failures as evidence of staleness. | P:81; B:117–120 | H09 |
+
+### Screen audit join (test interface, not a product decision)
+
+The brief deliberately leaves JSON structure simple and requires AGENTS to document it (B:90–93). To make completeness falsifiable, H04 reads `states` as an array of `{id,elements}` or an object keyed by state ID. State IDs may use `signin.` or `sign-in_` prefixes. Every element supplies a source selector in `sourceSelector`, `selector`, or `sourceSelectors[]`. A block may cover multiple source nodes without creating a separate native component for each HTML wrapper.
+
+Selectors use `#id` when present; otherwise `tag:nth-of-type(n)` under the parent's selector, starting with `section:nth-of-type(1)`. The test derives this inventory from S:67–95, excludes source-hidden nodes per S:141–158 and S:41–42, and checks each visible node in each state. This covers the approved HTML fixture; it cannot prove a separate app DOM matches it. A different schema needs an explicitly reviewed adapter; do not silently drop completeness checks to make a build pass.
+
+Element aliases accepted: `spacing`/`spacingTokens`, `behaviour`/`behavior`/`behaviourRef`/`behaviorRef`, `accessibility`/`a11y`. Raw records may live anywhere in non-foundation JSON and must include `raw: true`, `property`, `value`, and either source file + numeric `line`/`sourceLine` or `file:line`. Structured copy fields use `copyKey`, `messageKey`, `copyKeys` or `messageKeys`; textual native references use `tokens.…`. H02 also checks fields named `native`, `nativeToken`, `tokenName` or `token`.
+
+### Per-state oracle
+
+All rows require the shared logo, title, subtitle, field container/control, label, country prefix, input, submit button and submit-label elements (S:67–86), including their visible ancestor containers. The source-generated selector inventory is authoritative, rather than a count produced by the builder.
+
+| State | Additional visible elements / required semantics (eye check where noted) | Source lines |
+|---|---|---|
+| default | SMS helper; signup label/link; keyboard hidden; empty input. | S:79,89,119,143–160; F:28 |
+| keyboard-open | SMS helper; keyboard and all keys; signup hidden; partial entry, focus, no early length error. | S:90–95,120,143–160; F:29 |
+| empty-tap | Error helper and keyboard; empty; focus field on submit; edit recovery. | S:121,143–165; L:32; F:30 |
+| too-short | Error helper and keyboard; retained incomplete digits; error after submit. | S:122,143–165; L:32; F:31 |
+| wrong-first-digit | Error helper and keyboard; immediate impossible-prefix error, clears on valid correction. | S:123,143–165; L:32; F:32 |
+| pasted-cleaned | SMS helper and keyboard; normalized meaningful digits, focused input. | S:124,143–165; L:31; F:33 |
+| sending | SMS helper and keyboard; spinner; busy label, read-only input, disabled button/no duplicate send. | S:125,141,155–160; F:34 |
+| not-registered | Neutral notice, info icon and text slot; signup; helper hidden; access recovery. | S:80,126,143–154; L:33; F:35 |
+| offline | Warning notice, icon and text slot; signup; retained number, one message, reconnect/retry. | S:81,127,143–154; L:33; F:36 |
+| couldnt-send | Error notice, icon and text slot; signup; retained number and retry confirmed failure. | S:82,128,143–154; L:33; F:37 |
+| too-many-tries | Warning notice, clock and text slot; signup; disabled countdown CTA, retained number, authoritative eligibility. | S:83,129,143–160; L:33; F:38 |
+| inactive | Error notice, icon and text slot; signup; Call Doctor Ops CTA. | S:84,130,143–160; L:33; F:40 |
+
+Each row has approved `ui-screens/sign-in/sign-in_<state>_w360.png` and `_w390.png` inputs (B:90–91). `signin.locked-number` is a behaviour route to locked OTP, not another pictured Sign-in state (F:39; L:45–46).
+
+## Required review evidence (not claimed by Node tests)
+
+Every line below is a pass/fail eye check. Record evidence with the case ID; empty files, keywords or a successful automated suite do not prove these checks.
+
+| ID | Pass condition | Source lines |
+|---|---|---|
+| E01 | Generated tokens, copy, sizes, colours and screen facts trace to their maintained sources; only README/AGENTS/CLAUDE/skill/FONTS are handwritten. Regenerate without manual repair. | B:30–31; P:81 |
+| E02 | Web → native map comes from the canonical generator; each property's token comes from the applicable CSS variable, including overrides, rather than matching a computed value. Both names appear together. | B:71–75; P:73 |
+| E03 | Inspect all 12 states against both approved pictures and per-state oracle. Every visible element's block/variant, property tokens, neighbour spacing, copy key, behaviour and target/label notes are correct, including dynamic countdown substitution. No typed copy or guessed tokens. | B:90–93; P:78; S:118–165 |
+| E04 | Every block used by these states has a spec, all actual parts × actual states, tokens/sizes/spacing/rules, and a picture cropped from an approved source. RN suggestion is `[RECOMMENDED]`, same name as web. Includes field, primary/busy/disabled buttons, notice variants, spinner, logo and signup, any action band if present. No invented component/state. | P:74; B:79–86 |
+| E05 | Double-click viewer offline without server; no missing dependencies. Start here/Foundation/Building blocks/Screens work. Readable at phone width. All 12 states inspectable at 390; 360 approved pictures alongside. | P:75; B:95–101 |
+| E06 | Tap every element: panel shows block, variant, native + web tokens, spacing, copy key and working behaviour link. Tokens-used table per state and whole screen is complete and accurate. | P:75; B:98–100 |
+| E07 | Every H05 raw record is visible in red and traceable to file/line; raw values cannot disappear under a token with an identical value. This includes fixture keyboard and non-screen CSS, distinctly labelled if necessary. | P:76; B:74–77,100 |
+| E08 | DECIDED/OPEN cover mobile cleaning, validation order/timing/rechecking, each server result, signup route, keyboard/paste/offline/errors, limits/lockouts and locked-number OTP route, copy, accessibility, fonts and safe areas. Answers cite decisions/rules; unresolved answers include current assumption and Product/Backend/Ops owner. No mock timeout becomes a product promise. | P:79; B:58–59,103–109; L:28–46; F:7–13,22–40 |
+| E09 | Include only Sign-in-relevant cross-boundary OTP/faster-sign-in rules: server-enforced limits and locked route, sign-in entry/exit, mock durations and genuinely open policies. Do not imply the other screens are part of this pilot. Each sourced decision number accompanies the actual decision, not debate. | B:33–34,105–109; L:41–52; F:39 |
+| E10 | Independently review all kit text, JSON, scripts, comments, SVGs, images and metadata for internal names/details, git/hosting/tool/brief/render rules, review history and credentials. Only the approved sample doctor may appear as a person's app identity; mandatory public font licence/provenance remains intact. Use “case” for doctor's unit of work. Automated name/secret patterns are a partial scan, not proof of absence. | B:32–35,113–115 |
+| E11 | AGENTS explains app, file locations, rules and screen schema; skill gives usable RN construction steps, checks DECIDED before asking, asks only OPEN or genuinely missing questions. CLAUDE loads the same instructions. Copy only kit to an unrelated folder and verify all references there. | B:50–67,90–93,124–133 |
+| E12 | Verify font files really are official Plus Jakarta Sans static TTFs; OFL is the actual licence. Execute accurate iOS/Android family and weight setup steps. H08 proves bytes/weights/hashes, not official provenance or device setup. | P:77; B:111–115 |
+| E13 | One command regenerates all generated files and CHANGES (tokens, blocks, screens); unchanged rerun is stable. Change each distinct source class in an isolated copy (tokens, copy, screen/stylesheet, rule source), observe check fail, rebuild, observe check pass and meaningful CHANGES. H09 supplies one source mutation, not full dependency coverage. | P:81; B:60,117–120 |
+| E14 | Fresh sessions for BOTH Claude Code and Codex receive only copied kit outside repo, exact brief prompt; retain every transcript. Classify every question as DECIDED/OPEN/new; new questions go to OPEN + main-thread report, never invented answers. Last round: zero DECIDED questions and generated RN uses tokens/messages only, no raw colours/sizes/typed copy. At most initial plus two repair rounds. | P:80; B:122–136 |
+| E15 | Protected `app/`, `ui-screens/`, design-system unchanged by kit work; pre-existing/parallel changes distinguished using pre-work evidence. No internal context/decision log edits, no fake approvals, no deployment. Report read-only defects to main thread. | P:82; B:9–12,26–29,36–39,153–156 |
+| E16 | Check tests have no unreported failures; disputes cite source lines and remain available for main-thread judgement. Critique lists blockers/should-fix/nice-to-have and unchecked cases; response records valid fixes or reasons; blocker re-review done, or usage limit reported. | B:41–46,138–147,158–160 |
+| E17 | Evidence sheet shows start page, block, tapped inspector, tokens table and red raw flag at phone width. REPORT covers proposal checklist, pass/fail evidence, fresh-AI round scores, changed files and NEEDS-APURVA; main thread reviews before Apurva. Publishing uses prescribed script/explicit files, no deployment. | B:149–160 |
+| E18 | After Apurva review: FE engineer walkthrough completed and doubts logged as fixes. This is deferred, not silently passed by pilot automation. | P:83; B:16–17 |
+
+## Limits and execution safety
+
+H09 first runs the existing builder's read-only `--check`, then runs it in a temporary overlay with private copies of `scripts/`, `handoff/` and the changed source. All other project entries are symlinks to preserve builder dependencies without copying or inspecting `app/`. The original suite never opened app code; D-98 H10–H12 read Sign-in code without writing it. It and never mutates canonical sources. The builder must respect `--check` and its own read-only-source rule (B:26–27,119–120). A builder that resolves workspace sources outside this replica must fail the replica baseline or mutation check; do not count an infrastructure failure as freshness detection.
+
+The automated suite deliberately has no skip-if-kit-missing path. No browser or fresh AI is silently launched by it. H06 cannot recognize every arbitrary human name or secret; E10 closes that gap. No official sample name is inferred from internal people's details. No design-system rules, decision log, backend behaviour or app code outside the allowed inputs was consulted; references to those rules in block specs require reviewer verification, not fabricated expectations.
+
+## Authoring validation
+
+- `node --check tests/codex/handoff/handoff.test.mjs`: passed.
+- `node --test --test-name-pattern='^oracle:' tests/codex/handoff/handoff.test.mjs`: passed. Checks source-derived state count, keyboard inventory, unique element selectors, conditional visibility, representative raw declarations, token validity and exclusion of a token-only declaration.
+- Initial full acceptance run: failed against the in-progress kit (missing required files/contracts). H09 stopped at its real-project baseline: Python builder raised `ModuleNotFoundError: No module named 'build'`. No source mutation was attempted; no stale-detection pass is claimed. The initial leakage scan found no matching text, but the suite now also requires textual kit content to avoid treating an empty folder as evidence of no leaks.
+- Re-run the full command after the builder and kit are complete; then collect all E-case review evidence. Authoring did not read or edit `app/` or repair the parallel builder.
+
+
+## D-98 fix-round additions (approved scope)
+
+Source: `docs/context/decision_log.md:992–996`; `docs/renders/2026-11-09-handoff-kit/FIX-BRIEF.md:26–68`.
+
+| ID | Pass/fail check (auto) | Source |
+|---|---|---|
+| H10 | Red flags only typed sizes, colours or words; no unexplained built Sign-in red, unmapped tokens, typed copy or unflagged typed styles. Only the documented 31ch text measure is exempt. | FIX §1, §5.1 |
+| H11 | Logo/prefix and central spinner, notice-icon, focus rules use tokens; map native names exist in canonical tokens.ts. H02 checks all kit token references. | FIX §1 |
+| H12 | Both exact strings have canonical/generated message keys, consumed through MSG; no typed +91 or accessible lockup name in sign-in.js. | FIX §2 |
+| H13 | Native PNG exports exist at widths 166/332/498, valid PNG IHDR dimensions; brand note records the actual locked source SVG SHA256. | FIX §5.3 |
+| H14 | o06/o13/o14/o20 have DECIDED anchors and D-98 provenance; no longer OPEN. | FIX §5.4 |
+
+Eye checks remain necessary: viewer actually paints only problems red, PNG pixels match the locked SVG without redraw, and token changes produce no visual difference. PNG header/hash checks do not prove rendered pixel identity. Existing manual cases are superseded wherever they ask for red layout/zero values or scaffolding.
+
+Tests are intentionally written before implementation. Run the full suite after regeneration; do not weaken failures to match an unfinished kit. Only tests/codex/handoff/ is modified by this tester; no shared handoff/context record is written.
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import path from 'node:path';
+import crypto from 'node:crypto';
+import os from 'node:os';
+import {spawnSync} from 'node:child_process';
+import {fileURLToPath} from 'node:url';
+
+const project = path.resolve(fileURLToPath(new URL('../../..', import.meta.url)));
+const kit = path.resolve(process.env.HANDOFF_DIR || path.join(project, 'handoff'));
+const read = p => fs.readFileSync(p, 'utf8');
+const sourceHTML = path.join(project, 'ui-screens/sign-in/sign-in.html');
+const html = read(sourceHTML);
+const tokenSource = path.resolve(project, '../../design-system/native/tokens.ts');
+const messageSource = path.join(project, 'ui-screens/native/messages.ts');
+function exportedObject(file, name) {
+  const text = read(file), start = text.indexOf('{', text.indexOf(`export const ${name}`));
+  assert.ok(start >= 0, `${file}: missing export ${name}`);
+  let depth = 0, quoted = false, escaped = false;
+  for (let i = start; i < text.length; i++) {
+    const c = text[i];
+    if (quoted) { if (escaped) escaped = false; else if (c === '\\') escaped = true; else if (c === '"') quoted = false; }
+    else if (c === '"') quoted = true;
+    else if (c === '{') depth++;
+    else if (c === '}' && --depth === 0) return JSON.parse(text.slice(start, i + 1));
+  }
+  throw Error(`Unclosed object: ${file}`);
+}
+const tokens = exportedObject(tokenSource, 'tokens');
+const messages = exportedObject(messageSource, 'messages');
+function files(dir) {
+  assert.ok(fs.existsSync(dir), `Missing ${dir}`);
+  return fs.readdirSync(dir, {withFileTypes:true}).flatMap(e => {
+    const p = path.join(dir, e.name);
+    assert.ok(!e.isSymbolicLink(), `Kit must travel independently; symlink: ${p}`);
+    return e.isDirectory() ? files(p) : [p];
+  });
+}
+function textual(p) { return /\.(?:md|json|[cm]?js|ts|tsx|html|css|svg|txt|ya?ml)$/i.test(p); }
+function walk(value, fn, trail = []) {
+  fn(value, trail);
+  if (value && typeof value === 'object') for (const [k,v] of Object.entries(value)) walk(v, fn, [...trail,k]);
+}
+const screen = () => JSON.parse(read(path.join(kit,'screens/sign-in.json')));
+const states = () => {
+  const s = screen().states;
+  assert.ok(s && typeof s === 'object', 'sign-in.json must expose states (array or id-keyed object)');
+  return Array.isArray(s) ? s : Object.entries(s).map(([id,v]) => ({id,...v}));
+};
+const stateNames = [...html.matchAll(/<option value="([^"]+)"/g)].map(m=>m[1]);
+const normalizeState = s => s.replace(/^(?:signin\.|sign-in[._-])/, '');
+const hasToken = name => {
+  let v = tokens;
+  for (const k of name.replace(/^tokens\./,'').split('.')) {
+    if (!v || !Object.hasOwn(v,k)) return false;
+    v=v[k];
+  }
+  return true;
+};
+
+test('H01: required portable kit layout', () => {
+  for (const f of ['README.md','AGENTS.md','CLAUDE.md','.claude/skills/truemeds-native-ui/SKILL.md',
+    'DECIDED.md','OPEN.md','CHANGES.md','foundation/tokens.ts','foundation/tokens.json',
+    'foundation/icons.ts','foundation/messages.ts','screens/sign-in.json','viewer/index.html']) {
+    assert.ok(read(path.join(kit,f)).trim(), `Missing/empty ${f}`);
+  }
+  assert.ok(files(path.join(kit,'components')).some(p=>p.endsWith('.json')), 'No block specs');
+  files(kit);
+});
+test('H02: native references resolve, copied tokens and messages match source', () => {
+  assert.deepEqual(exportedObject(path.join(kit,'foundation/tokens.ts'),'tokens'),tokens);
+  assert.deepEqual(JSON.parse(read(path.join(kit,'foundation/tokens.json'))),tokens);
+  assert.deepEqual(exportedObject(path.join(kit,'foundation/messages.ts'),'messages'),messages);
+  let count=0;
+  for (const f of files(kit).filter(textual)) {
+    const text=read(f);
+    for (const m of text.matchAll(/\btokens((?:\.[A-Za-z0-9_$]+|\[['"][^'"]+['"]\])+)/g)) {
+      const name='tokens'+m[1].replace(/\[['"]([^'"]+)['"]\]/g,'.$1');
+      if (['tokens.ts','tokens.json'].includes(name)) continue;
+      assert.ok(hasToken(name), `${f}: unknown ${name}`); count++;
+    }
+    if (f.endsWith('.json') && !f.includes('/foundation/')) walk(JSON.parse(text),(v,keys)=>{
+      if (typeof v==='string' && /^(?:native|nativeToken|tokenName|token)$/i.test(keys.at(-1))) {
+        assert.ok(v.startsWith('tokens.') && hasToken(v),`${f}: invalid native token ${v}`);
+      }
+    });
+  }
+  assert.ok(count,'No native token references found');
+});
+test('H03: every copy reference resolves; all source Sign-in copy keys represented', () => {
+  const found=new Set();
+  for (const f of files(kit).filter(p=>p.endsWith('.json')&&!p.includes('/foundation/'))) walk(JSON.parse(read(f)),(v,keys)=>{
+    if (/^(?:copyKey|messageKey|copyKeys|messageKeys)$/i.test(keys.at(-1))) {
+      for (const key of Array.isArray(v)?v:[v]) {
+        assert.equal(typeof key,'string',`${f}: copy key must be a string`);
+        const clean=key.replace(/^messages\./,'');
+        assert.ok(Object.hasOwn(messages,clean),`${f}: unknown copy key ${key}`); found.add(clean);
+      }
+    }
+  });
+  for (const key of Object.keys(messages).filter(k=>k.startsWith('signin.'))) assert.ok(found.has(key),`Missing ${key}`);
+});
+
+// Source markup inventory, not a list supplied by the generator. Every DOM node inside
+// the phone is included, including containers, decorative icons and keyboard keys.
+function inventory() {
+  const body=html.slice(html.indexOf('<section class="login-phone'),html.indexOf('</section>')+10);
+  const stack=[], nodes=[];
+  const tags=/<\/?([\w-]+)\b([^>]*?)>/g;
+  for (const m of body.matchAll(tags)) {
+    if(m[0].startsWith('</')) { stack.pop(); continue; }
+    const attrs=Object.fromEntries([...m[2].matchAll(/([\w-]+)="([^"]*)"/g)].map(x=>[x[1],x[2]]));
+    const parent=stack.at(-1), siblings=nodes.filter(n=>n.parent===parent&&n.tag===m[1]);
+    const selector=attrs.id?`#${attrs.id}`:(parent?parent.selector+' > ':'')+m[1]+`:nth-of-type(${siblings.length+1})`;
+    const node={tag:m[1],attrs,parent,selector,line:html.slice(0,html.indexOf(body)+m.index).split('\n').length};
+    nodes.push(node);
+    if(!['img','input','br','hr','meta','link'].includes(m[1])) stack.push(node);
+  }
+  return nodes;
+}
+function visible(node,state) {
+  const notices={'tm-login-notice':'not-registered','tm-login-offline-notice':'offline','tm-login-send-error-notice':'couldnt-send','tm-login-too-many-notice':'too-many-tries','tm-login-inactive-notice':'inactive'};
+  for(let n=node;n;n=n.parent) {
+    if(notices[n.attrs.id] && notices[n.attrs.id]!==state) return false;
+    if(n.attrs.id==='tm-login-helper' && Object.values(notices).includes(state)) return false;
+    const cls=n.attrs.class||'';
+    const keyboard=['keyboard-open','empty-tap','too-short','wrong-first-digit','pasted-cleaned','sending'].includes(state);
+    if(cls.split(' ').includes('login-keyboard')&&!keyboard) return false;
+    if(n.attrs.id==='tm-signup-option'&&keyboard) return false;
+    if(cls.split(' ').includes('tm-spinner')&&state!=='sending') return false;
+  }
+  return true;
+}
+test('H04: all 12 states, all visible source elements, complete element contracts', () => {
+  assert.equal(stateNames.length,12);
+  const list=states(); assert.equal(list.length,12);
+  assert.deepEqual(list.map(s=>normalizeState(s.id)).sort(),[...stateNames].sort());
+  for(const state of list) {
+    const id=normalizeState(state.id);
+    assert.ok(Array.isArray(state.elements)&&state.elements.length,`${id}: no elements`);
+    const selectors=new Set();
+    for(const element of state.elements) {
+      // sourceSelector is the stable audit join. Multiple selectors may be covered by
+      // a compound block via sourceSelectors; neither changes the kit's product model.
+      for(const s of [element.sourceSelector,element.selector,...(element.sourceSelectors||[])].filter(Boolean)) selectors.add(s);
+      for(const key of ['id','block','variant','tokens']) assert.ok(element[key]!==undefined,`${id}/${element.id}: missing ${key}`);
+      assert.ok(element.spacing||element.spacingTokens,`${id}/${element.id}: missing neighbour spacing`);
+      assert.ok(element.behaviour||element.behavior||element.behaviourRef||element.behaviorRef,`${id}/${element.id}: missing behaviour`);
+      assert.ok(element.accessibility||element.a11y,`${id}/${element.id}: missing accessibility`);
+    }
+    for(const node of inventory().filter(n=>visible(n,id))) assert.ok(selectors.has(node.selector),`${id}: missing ${node.selector} (sign-in.html:${node.line})`);
+    const text=JSON.stringify(state);
+    for(const width of [360,390]) {
+      const expected=`sign-in_${id}_w${width}.png`;
+      assert.ok(text.includes(expected),`${id}: missing approved ${width} picture`);
+      assert.ok(files(kit).some(p=>path.basename(p)===expected),`${id}: ${expected} not bundled`);
+    }
+    assert.match(text,/app-logic|feedback-state-map/,`${id}: no source rule`);
+  }
+});
+
+// D-98: audit screen rules, excluding the reference document's scaffolding.
+function declarations(css, baseLine = 1) {
+  const clean=css.replace(/\/\*[\s\S]*?\*\//g,m=>' '.repeat(m.length));
+  const out=[];
+  for(const rule of clean.matchAll(/([^{}]+)\{([^{}]*)\}/g)) {
+    const selector=rule[1].trim();
+    if(selector.split(',').every(s=>/^(?:html\b|body\b|\.review-controls)/.test(s.trim()))) continue;
+    for(const m of rule[2].matchAll(/([\w-]+)\s*:\s*([^;{}]+)(?=;|$)/g)) {
+      const value=m[2].trim();
+      const offset=rule.index+rule[0].indexOf('{')+1+m.index;
+      out.push({selector,property:m[1],value,line:baseLine+(css.slice(0,offset).match(/\n/g)||[]).length});
+    }
+  }
+  return out;
+}
+function typedKind(value) {
+  const v=value.replace(/var\(--[\w-]+\)/g,'').replace(/!important/g,'');
+  if(/#[0-9a-f]{3,8}\b|(?:rgba?|hsla?|oklch|color)\(|\b(?:white|black|red|blue)\b/i.test(v)) return 'colour';
+  if(/(?:\d*\.)?\d+(?:px|ch|r?em|[ds]?v[wh]|pt|%)\b/.test(v)) return 'size';
+  return null;
+}
+function rawDeclarations() {
+  const start=html.indexOf('<style>')+7;
+  return declarations(html.slice(start,html.indexOf('</style>',start)),html.slice(0,start).split('\n').length)
+    .filter(d=>typedKind(d.value));
+}
+function rawRecords() {
+  const records=[];
+  for(const f of files(kit).filter(p=>p.endsWith('.json')&&!p.includes('/foundation/'))) walk(JSON.parse(read(f)),v=>{
+    if(v&&typeof v==='object'&&v.raw===true) records.push(v);
+  });
+  return records;
+}
+function documentedException(r) {
+  // Only D-98's expressly accepted text measure; arbitrary exception labels cannot waive failures.
+  return r.property==='max-width' && r.value==='31ch' && /31ch/.test(JSON.stringify(screen()))
+    && /(?:text measure|documented exception)/i.test(JSON.stringify(screen()));
+}
+test('H05: typed reference values flagged with exact line; scaffolding excluded', () => {
+  const records=rawRecords();
+  for(const d of rawDeclarations()) {
+    assert.ok(documentedException(d)||records.some(r=>{
+      const text=JSON.stringify(r);
+      return text.includes('sign-in.html') && r.value===d.value && r.property===d.property
+        && new RegExp(`(?:"(?:line|sourceLine)"\\s*:\\s*${d.line}\\b|:${d.line}\\b)`).test(text);
+    }),`Unflagged sign-in.html:${d.line} ${d.property}: ${d.value}`);
+  }
+  for(const r of screen().rawValues.approvedReference) {
+    assert.doesNotMatch(r.selector||'',/^(?:html\b|body\b|\.review-controls)/,'Scaffolding leaked into reference audit');
+  }
+});
+test('H10: red means typed size, colour or word; no unexplained built Sign-in red',()=>{
+  const records=rawRecords();
+  for(const r of records) {
+    assert.ok(typedKind(r.value||'') || ['copy','word','text'].includes(r.kind),`Layout/zero flagged red: ${JSON.stringify(r)}`);
+    if(!JSON.stringify(r).includes('sign-in.html')) assert.ok(documentedException(r),`Unexplained built red: ${JSON.stringify(r)}`);
+  }
+  for(const state of states()) for(const e of state.elements) {
+    for(const style of e.styles||[]) {
+      if(typedKind(style.value||'')) assert.ok(style.raw===true || documentedException(style) ||
+        (style.tokens?.length && !typedKind(style.value.replace(/var\(--[\w-]+\)/g,''))),`Unflagged ${state.id}/${e.id}: ${JSON.stringify(style)}`);
+      for(const t of style.tokens||[]) assert.ok(!t.unmapped && t.native && hasToken(t.native),`Unmapped token: ${JSON.stringify(t)}`);
+    }
+    for(const c of e.copy||[]) assert.ok(!c.literal,`Typed copy: ${JSON.stringify(c)}`);
+  }
+  for(const d of declarations(read(path.join(project,'app/screens/sign-in.css')))) {
+    assert.ok(!typedKind(d.value)||documentedException(d),`Token-less Sign-in CSS: ${d.property}: ${d.value}`);
+  }
+});
+test('H11: new size token references resolve to canonical native tokens',()=>{
+  const map=JSON.parse(read(path.join(kit,'foundation/token-map.json')));
+  const text=JSON.stringify(map);
+  for(const row of map.tokens) assert.ok(hasToken(row.native), `Unknown canonical native token ${row.native}`);
+  const central=declarations(read(path.resolve(project,'../../design-system/truemeds.css')));
+  for(const [selector,property] of [[/tm-spinner/, 'width'], [/tm-spinner/, 'height'], [/tm-spinner/, 'border'], [/tm-notice.*tm-icon/, 'width'], [/focus-visible/, 'outline'], [/focus-visible/, 'outline-offset']]) {
+    const candidates=central.filter(d=>selector.test(d.selector)&&d.property===property);
+    assert.ok(candidates.some(d=>/var\(--/.test(d.value)&&!typedKind(d.value)), `Missing tokenized ${selector} ${property}`);
+  }
+  const css=read(path.join(project,'app/screens/sign-in.css'));
+  for(const property of ['width','border-right']) {
+    const d=declarations(css).find(d=>d.property===property && /login-(?:logo|prefix)/.test(d.selector));
+    assert.ok(d,`Missing ${property} contract`);
+    const refs=[...d.value.matchAll(/var\((--[\w-]+)\)/g)];
+    assert.ok(refs.length,`Missing token for ${property}`);
+    for(const [,name] of refs) assert.ok(text.includes(name),`Missing native mapping ${name}`);
+  }
+  // H02 resolves every mapped native name; H10 covers inherited border/focus/icon/spinner styles.
+});
+test('H12: prefix and logo accessible name have message keys and MSG consumers',()=>{
+  const canonical=JSON.parse(read(path.join(project,'ui-screens/feedback/messages.json')));
+  const js=read(path.join(project,'app/screens/sign-in.js'));
+  for(const value of ['+91','truemeds for doctors']) {
+    const keys=Object.keys(messages).filter(k=>messages[k]===value);
+    assert.ok(keys.length,`Missing message key for ${value}`);
+    assert.ok(keys.some(k=>canonical[k]===value),`Missing canonical message ${value}`);
+    assert.ok(keys.some(k=>new RegExp(`MSG\\(\\s*['"]${k.replace(/\./g,'\\.')}['"]`).test(js)),`No MSG use for ${value}`);
+    assert.ok(!js.includes(value),`Typed literal in sign-in.js: ${value}`);
+  }
+});
+test('H13: native logo PNGs at 1x/2x/3x with locked SVG source sha256',()=>{
+  const dir=path.join(kit,'foundation/brand'), all=files(dir);
+  const pngs=all.filter(p=>p.endsWith('.png'));
+  const widths=[];
+  for(const p of pngs) {
+    const b=fs.readFileSync(p);
+    assert.equal(b.subarray(0,8).toString('hex'),'89504e470d0a1a0a');
+    assert.equal(b.subarray(12,16).toString(),'IHDR');
+    widths.push(b.readUInt32BE(16));
+    assert.ok(b.readUInt32BE(20)>0);
+  }
+  for(const width of [166,332,498]) assert.ok(widths.includes(width),`Missing logo width ${width}`);
+  const sha=crypto.createHash('sha256').update(fs.readFileSync(path.join(project,'brand/truemeds-for-doctors.svg'))).digest('hex');
+  assert.ok(all.filter(textual).some(p=>read(p).includes(sha)),`Missing source SVG sha256 ${sha}`);
+});
+test('H14: D-98 questions are DECIDED, not OPEN',()=>{
+  const decided=read(path.join(kit,'DECIDED.md')), open=read(path.join(kit,'OPEN.md'));
+  for(const id of ['o06','o13','o14','o20']) {
+    assert.match(decided,new RegExp(`id="${id}"`),`Missing DECIDED ${id}`);
+    assert.doesNotMatch(open,new RegExp(`(?:id="${id}"|\\b${id}\\s*[·|])`),`Still OPEN: ${id}`);
+    const entry=decided.slice(decided.indexOf(`id="${id}"`)).split(/<a id=/)[0];
+    assert.match(entry,/D-98/,`${id} lacks D-98 provenance`);
+  }
+});
+
+test('H06: no internal files, wording, personal details or external-repo dependencies',()=>{
+  assert.ok(files(kit).some(p=>textual(p)), 'No textual kit content to inspect');
+  const forbidden=/\b(?:git|netlify|codex|terminal[ -]brief|render[ -]rules|review history|NEEDS-APURVA|Apurva|Swapnil|Claude Code)\b|\.git(?:\/|\b)|\/Users\/|pm-agent|gh[pousr]_[A-Za-z0-9]+|sk-[A-Za-z0-9]{16,}/i;
+  for(const f of files(kit)) {
+    const rel=path.relative(kit,f);
+    assert.doesNotMatch(rel,forbidden,`Internal path ${rel}`);
+    if(!textual(f)) continue;
+    let text=read(f);
+    // OFL is a legal notice: copyright holders and official github.com/google/fonts
+    // provenance are required, not personal information leaked from the workspace.
+    if(path.basename(f)==='OFL.txt') continue;
+    text=text.replace(/https:\/\/github\.com\/google\/fonts[^\s)"<>]*/g,'OFFICIAL_FONT_SOURCE');
+    assert.doesNotMatch(text,forbidden,`Internal content in ${rel}`);
+    const names=[...text.matchAll(/\bDr\.?\s+[A-Z][a-z]+(?:\s+[A-Z][a-z]+)*/g)].map(m=>m[0]);
+    const sample=process.env.HANDOFF_SAMPLE_DOCTOR;
+    for(const name of names) assert.equal(name,sample,`${rel}: unapproved personal name ${name}; set HANDOFF_SAMPLE_DOCTOR to the exact approved sample only`);
+    assert.doesNotMatch(text,/[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/i,`${rel}: email address`);
+  }
+});
+test('H07: AI pack points to real kit files and shares one instruction source',()=>{
+  assert.equal(read(path.join(kit,'CLAUDE.md')).trim(),'@AGENTS.md');
+  for(const file of ['AGENTS.md','.claude/skills/truemeds-native-ui/SKILL.md']) {
+    const text=read(path.join(kit,file));
+    for(const target of ['foundation/tokens.ts','foundation/messages.ts','screens/sign-in.json','components/','DECIDED.md','OPEN.md']) {
+      assert.ok(text.includes(target),`${file}: missing ${target}`);
+      assert.ok(fs.existsSync(path.join(kit,target)),`${file}: broken ${target}`);
+    }
+    for(const m of text.matchAll(/\]\(([^)]+)\)/g)) {
+      if(/^(?:https?:|#)/.test(m[1])) continue;
+      const target=path.resolve(path.dirname(path.join(kit,file)),m[1].split('#')[0]);
+      assert.ok(target.startsWith(kit+path.sep),`${file}: points outside kit`);
+      assert.ok(fs.existsSync(target),`${file}: broken link ${m[1]}`);
+    }
+  }
+  const agents=read(path.join(kit,'AGENTS.md'));
+  for(const pattern of [/React Native/i,/tokens/,/messages/,/case/,/one primary/i,/DECIDED/,/OPEN/]) assert.match(agents,pattern);
+});
+test('H08: four static TTFs, weight metadata, OFL, matching sha256 and platform setup',()=>{
+  const all=files(kit), fonts=all.filter(f=>/\.ttf$/i.test(f));
+  assert.equal(fonts.length,4,'Exactly four static font weights required');
+  const note=all.find(f=>path.basename(f)==='FONTS.md'); assert.ok(note,'Missing FONTS.md');
+  const text=read(note); assert.match(text,/github\.com\/google\/fonts/);
+  for(const p of [/Plus Jakarta Sans/,/iOS/i,/Android/i,/400/,/500/,/600/,/700/]) assert.match(text,p);
+  assert.ok(all.some(p=>path.basename(p)==='OFL.txt'),'Missing OFL.txt');
+  const weights=[];
+  for(const f of fonts) {
+    const data=fs.readFileSync(f), hash=crypto.createHash('sha256').update(data).digest('hex');
+    assert.ok(text.includes(path.basename(f))&&text.includes(hash),`Missing name/hash for ${f}`);
+    assert.equal(data.readUInt32BE(0),0x00010000,`${f}: not a TrueType sfnt`);
+    const tables=new Map();
+    for(let i=0;i<data.readUInt16BE(4);i++){const o=12+i*16;tables.set(data.toString('ascii',o,o+4),data.readUInt32BE(o+8));}
+    assert.ok(!tables.has('fvar'),`${f}: variable font, static required`);
+    assert.ok(tables.has('OS/2'),`${f}: missing weight table`);
+    weights.push(data.readUInt16BE(tables.get('OS/2')+4));
+  }
+  assert.deepEqual(weights.sort((a,b)=>a-b),[400,500,600,700]);
+});
+
+test('H09: --check passes fresh, fails after a source-only change (isolated replica)',()=>{
+  const script=['scripts/build-handoff.mjs','scripts/build-handoff.py'].find(p=>fs.existsSync(path.join(project,p)));
+  assert.ok(script,'Missing one-command builder');
+  const command=script.endsWith('.py')?'python3':process.execPath;
+  function run(root) {return spawnSync(command,[path.join(root,script),'--check'],{cwd:root,encoding:'utf8',timeout:120000,env:{...process.env,PYTHONDONTWRITEBYTECODE:'1'}});}
+  const baseline=run(project);
+  assert.equal(baseline.status,0,`Fresh --check failed: ${baseline.stderr}\n${baseline.stdout}`);
+  // Copy-on-write directory overlay: never modify a real source. Other entries are
+  // symlinked, including app/ (never opened by this suite). Builder owns its reads.
+  const temp=fs.mkdtempSync(path.join(os.tmpdir(),'handoff-check-'));
+  const replica=path.join(temp,'workspace/projects/pilot');
+  fs.mkdirSync(replica,{recursive:true});
+  function overlay(original,destination,overrides) {
+    fs.mkdirSync(destination,{recursive:true});
+    for(const entry of fs.readdirSync(original,{withFileTypes:true})) {
+      const src=path.join(original,entry.name), dst=path.join(destination,entry.name);
+      const selected=overrides.filter(p=>p===entry.name||p.startsWith(entry.name+'/'));
+      if(selected.some(p=>p===entry.name)) fs.cpSync(src,dst,{recursive:true});
+      else if(selected.length) overlay(src,dst,selected.map(p=>p.slice(entry.name.length+1)));
+      else fs.symlinkSync(src,dst);
+    }
+  }
+  try {
+    overlay(project,replica,['scripts','handoff','ui-screens/native/messages.ts']);
+    fs.symlinkSync(path.resolve(project,'../../design-system'),path.join(temp,'workspace/design-system'));
+    const copied=run(replica);
+    assert.equal(copied.status,0,`Replica baseline must pass before mutation: ${copied.stderr}\n${copied.stdout}`);
+    const file=path.join(replica,'ui-screens/native/messages.ts');
+    const before=read(file);
+    assert.ok(before.includes('Welcome, Doctor'));
+    fs.writeFileSync(file,before.replace('Welcome, Doctor','Welcome, Doctor [stale-check probe]'));
+    const changed=run(replica);
+    assert.equal(changed.error,undefined,`--check execution error: ${changed.error}`);
+    assert.ok(changed.status!==null&&changed.status!==0,'--check accepted changed source');
+    assert.doesNotMatch(changed.stderr||'',/ENOENT|Cannot find module|SyntaxError|Traceback/, 'Failure must indicate staleness, not broken replica');
+  } finally {fs.rmSync(temp,{recursive:true,force:true});}
+});
+
+// Harness checks are independent of whether the parallel build is finished.
+test('oracle: state and DOM inventories are populated from the approved fixture',()=>{
+  assert.equal(new Set(stateNames).size,12);
+  const nodes=inventory();
+  assert.equal(nodes.filter(n=>n.attrs.class?.split(' ').includes('login-key')).length,12);
+  assert.equal(nodes.filter(n=>n.attrs.id==='tm-login-mobile').length,1);
+  for(const state of stateNames) {
+    const shown=nodes.filter(n=>visible(n,state));
+    assert.ok(shown.length>10);
+    assert.equal(new Set(shown.map(n=>n.selector)).size,shown.length);
+    assert.equal(shown.some(n=>n.attrs.class==='tm-spinner'),state==='sending');
+    assert.equal(shown.some(n=>n.attrs.id==='tm-login-notice'),state==='not-registered');
+  }
+  const raw=rawDeclarations();
+  assert.ok(raw.some(r=>r.line===14&&r.property==='width'&&r.value==='166px'));
+  assert.ok(raw.some(r=>r.line===43&&r.property==='background'&&r.value==='#d4d7dd'));
+  assert.ok(!raw.some(r=>r.line===17&&r.property==='margin-top'));
+  assert.ok(hasToken('tokens.color.content.primary'));
+  assert.ok(!hasToken('tokens.color.content.invented'));
+});
+
+
+test('oracle: D-98 red classification and scaffold boundary',()=>{
+  for(const value of ['flex','center','nowrap','none','0','0 0','var(--tm-space-lg)','calc(-1 * var(--tm-space-lg))']) assert.equal(typedKind(value),null,value);
+  for(const value of ['166px','1px solid var(--tm-border-default)','2px','#fff','rgb(1,2,3)']) assert.ok(typedKind(value),value);
+  const css='html,body {width:12px;} .review-controls select {height:44px;} html.capture .login-phone {width:390px;} .login-logo {width:166px;}';
+  assert.deepEqual(declarations(css).map(d=>d.value),['166px']);
+});
+
+exec
+/bin/zsh -lc "ls tests/codex/handoff; sed -n '1,100p' tests/codex/handoff/*.mjs; cat tests/codex/handoff/CASES.md; cat app/state-map.js | head -65; head -35 ../../design-system/native/tokens.ts; head -25 ui-screens/native/messages.ts; rg -n '"'^|.'"' docs/proposals/2026-11-09-native-handoff-kit.md | tail -65" in /Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype
+ succeeded in 0ms:
+CASES.md
+handoff.test.mjs
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import path from 'node:path';
+import crypto from 'node:crypto';
+import os from 'node:os';
+import {spawnSync} from 'node:child_process';
+import {fileURLToPath} from 'node:url';
+
+const project = path.resolve(fileURLToPath(new URL('../../..', import.meta.url)));
+const kit = path.resolve(process.env.HANDOFF_DIR || path.join(project, 'handoff'));
+const read = p => fs.readFileSync(p, 'utf8');
+const sourceHTML = path.join(project, 'ui-screens/sign-in/sign-in.html');
+const html = read(sourceHTML);
+const tokenSource = path.resolve(project, '../../design-system/native/tokens.ts');
+const messageSource = path.join(project, 'ui-screens/native/messages.ts');
+function exportedObject(file, name) {
+  const text = read(file), start = text.indexOf('{', text.indexOf(`export const ${name}`));
+  assert.ok(start >= 0, `${file}: missing export ${name}`);
+  let depth = 0, quoted = false, escaped = false;
+  for (let i = start; i < text.length; i++) {
+    const c = text[i];
+    if (quoted) { if (escaped) escaped = false; else if (c === '\\') escaped = true; else if (c === '"') quoted = false; }
+    else if (c === '"') quoted = true;
+    else if (c === '{') depth++;
+    else if (c === '}' && --depth === 0) return JSON.parse(text.slice(start, i + 1));
+  }
+  throw Error(`Unclosed object: ${file}`);
+}
+const tokens = exportedObject(tokenSource, 'tokens');
+const messages = exportedObject(messageSource, 'messages');
+function files(dir) {
+  assert.ok(fs.existsSync(dir), `Missing ${dir}`);
+  return fs.readdirSync(dir, {withFileTypes:true}).flatMap(e => {
+    const p = path.join(dir, e.name);
+    assert.ok(!e.isSymbolicLink(), `Kit must travel independently; symlink: ${p}`);
+    return e.isDirectory() ? files(p) : [p];
+  });
+}
+function textual(p) { return /\.(?:md|json|[cm]?js|ts|tsx|html|css|svg|txt|ya?ml)$/i.test(p); }
+function walk(value, fn, trail = []) {
+  fn(value, trail);
+  if (value && typeof value === 'object') for (const [k,v] of Object.entries(value)) walk(v, fn, [...trail,k]);
+}
+const screen = () => JSON.parse(read(path.join(kit,'screens/sign-in.json')));
+const states = () => {
+  const s = screen().states;
+  assert.ok(s && typeof s === 'object', 'sign-in.json must expose states (array or id-keyed object)');
+  return Array.isArray(s) ? s : Object.entries(s).map(([id,v]) => ({id,...v}));
+};
+const stateNames = [...html.matchAll(/<option value="([^"]+)"/g)].map(m=>m[1]);
+const normalizeState = s => s.replace(/^(?:signin\.|sign-in[._-])/, '');
+const hasToken = name => {
+  let v = tokens;
+  for (const k of name.replace(/^tokens\./,'').split('.')) {
+    if (!v || !Object.hasOwn(v,k)) return false;
+    v=v[k];
+  }
+  return true;
+};
+
+test('H01: required portable kit layout', () => {
+  for (const f of ['README.md','AGENTS.md','CLAUDE.md','.claude/skills/truemeds-native-ui/SKILL.md',
+    'DECIDED.md','OPEN.md','CHANGES.md','foundation/tokens.ts','foundation/tokens.json',
+    'foundation/icons.ts','foundation/messages.ts','screens/sign-in.json','viewer/index.html']) {
+    assert.ok(read(path.join(kit,f)).trim(), `Missing/empty ${f}`);
+  }
+  assert.ok(files(path.join(kit,'components')).some(p=>p.endsWith('.json')), 'No block specs');
+  files(kit);
+});
+test('H02: native references resolve, copied tokens and messages match source', () => {
+  assert.deepEqual(exportedObject(path.join(kit,'foundation/tokens.ts'),'tokens'),tokens);
+  assert.deepEqual(JSON.parse(read(path.join(kit,'foundation/tokens.json'))),tokens);
+  assert.deepEqual(exportedObject(path.join(kit,'foundation/messages.ts'),'messages'),messages);
+  let count=0;
+  for (const f of files(kit).filter(textual)) {
+    const text=read(f);
+    for (const m of text.matchAll(/\btokens((?:\.[A-Za-z0-9_$]+|\[['"][^'"]+['"]\])+)/g)) {
+      const name='tokens'+m[1].replace(/\[['"]([^'"]+)['"]\]/g,'.$1');
+      if (['tokens.ts','tokens.json'].includes(name)) continue;
+      assert.ok(hasToken(name), `${f}: unknown ${name}`); count++;
+    }
+    if (f.endsWith('.json') && !f.includes('/foundation/')) walk(JSON.parse(text),(v,keys)=>{
+      if (typeof v==='string' && /^(?:native|nativeToken|tokenName|token)$/i.test(keys.at(-1))) {
+        assert.ok(v.startsWith('tokens.') && hasToken(v),`${f}: invalid native token ${v}`);
+      }
+    });
+  }
+  assert.ok(count,'No native token references found');
+});
+test('H03: every copy reference resolves; all source Sign-in copy keys represented', () => {
+  const found=new Set();
+  for (const f of files(kit).filter(p=>p.endsWith('.json')&&!p.includes('/foundation/'))) walk(JSON.parse(read(f)),(v,keys)=>{
+    if (/^(?:copyKey|messageKey|copyKeys|messageKeys)$/i.test(keys.at(-1))) {
+      for (const key of Array.isArray(v)?v:[v]) {
+        assert.equal(typeof key,'string',`${f}: copy key must be a string`);
+        const clean=key.replace(/^messages\./,'');
+        assert.ok(Object.hasOwn(messages,clean),`${f}: unknown copy key ${key}`); found.add(clean);
+      }
+    }
+# Sign-in handoff acceptance cases
+
+Scope: this independent suite is authored only from the sources listed below. D-98 / FIX-BRIEF supersede the original scope; app Sign-in sources are read only for assertions. The pilot checklist is already approved (proposal line 3; brief lines 16–17). These tests do not approve the kit or alter its sources. They intentionally fail until a built kit exists.
+
+Run from the project folder:
+
+```sh
+node --test tests/codex/handoff/handoff.test.mjs
+```
+
+`HANDOFF_DIR` may select another built kit; freshness still checks the project builder and its normal output. `HANDOFF_SAMPLE_DOCTOR` may contain the exact approved sample doctor's displayed name. No personal name was supplied in the permitted text sources; do not invent an allowlist. Source numbering below is the on-disk numbering at test authoring; image filenames supply state/width provenance, not invented line numbers.
+
+## Source legend
+
+- **P**: `docs/proposals/2026-11-09-native-handoff-kit.md` §6, lines 71–83.
+- **B**: `docs/renders/2026-11-09-handoff-kit/TERMINAL-BRIEF.md`.
+- **S**: `ui-screens/sign-in/sign-in.html`.
+- **L**: `ui-screens/app-logic.md` §2, lines 28–54.
+- **F**: `docs/feedback-state-map.md`.
+- **T**: `../../design-system/native/tokens.ts`, export at lines 3 onward.
+- **M**: `ui-screens/native/messages.ts`, Sign-in keys lines 3–21.
+
+## Automated checks
+
+| ID | Pass condition | Source lines | Test |
+|---|---|---|---|
+| H01 | Portable folder has README, AI files, decisions/open questions, changes, foundation tokens/icons/messages/fonts, block JSON, screen JSON and disk viewer; no symlinks requiring the original repo. | B:50–67 | H01 |
+| H02 | Every native reference shown in text/JSON resolves against T, including bracket notation and explicit token fields. Foundation token TS/JSON and message TS match their canonical exports. Native names retain their web names beside them (review E02 as well). | P:73; B:30–31,61,71–75; T:3 onward | H02 |
+| H03 | Every `copyKey`/`messageKey` (or plural array) resolves in M; all Sign-in keys are represented. No typed user-facing copy is substituted for a key (review E03 as well). | P:78; B:90–93; M:3–21 | H03 |
+| H04 | Exactly the 12 source states, with every visible source DOM element represented, including containers, labels, icons, spinner, prefix, helper/notice text slots, signup and keyboard keys. Each element has ID, block, variant, tokens, neighbour spacing, behaviour and accessibility. Both approved pictures are bundled for each state; state cites its behaviour source. | P:75,78; B:81–93; S:64–95,118–165 | H04 |
+| H05 | Every typed size/colour in screen reference CSS is flagged with exact source line/property/value. Exclude html/body, review-controls and capture scaffolding per D-98. Layout keywords and zeros are plain, not red; 31ch is a documented text-measure exception. | P:76; B:76–77; S:9–61 | H05 |
+| H06 | Scan all textual kit files and filenames for internal git/hosting/tool/brief/render-rule/review details, known internal names, local workspace paths, credential patterns, emails and unapproved `Dr …` names. Manually inspect other names and binary/image content as E10. Official Google Fonts provenance and mandatory OFL copyright names are legal provenance, not internal leaks. | B:32–35,113–115 | H06 |
+| H07 | Root CLAUDE is exactly `@AGENTS.md`; AGENTS and skill point to existing kit tokens/messages, screen, components, DECIDED and OPEN. Markdown relative links stay inside kit and resolve. AGENTS states RN, token/copy rules, case wording, one primary, decisions/open questions. | B:54–67,90–93; B:124–133 | H07 |
+| H08 | Four actual static TrueType files have OS/2 weights 400/500/600/700; no variable `fvar` table. OFL exists; FONTS note names every file and its computed SHA256, official source, family, iOS/Android and weight mapping. Setup correctness and licence contents reviewed separately. | P:77; B:113–115 | H08 |
+| H09 | Builder exists; current `--check` succeeds. An isolated replica also passes before mutation; modifying the copied canonical message source makes `--check` fail, without modifying any real source. Reject timeout, missing-module and syntax failures as evidence of staleness. | P:81; B:117–120 | H09 |
+
+### Screen audit join (test interface, not a product decision)
+
+The brief deliberately leaves JSON structure simple and requires AGENTS to document it (B:90–93). To make completeness falsifiable, H04 reads `states` as an array of `{id,elements}` or an object keyed by state ID. State IDs may use `signin.` or `sign-in_` prefixes. Every element supplies a source selector in `sourceSelector`, `selector`, or `sourceSelectors[]`. A block may cover multiple source nodes without creating a separate native component for each HTML wrapper.
+
+Selectors use `#id` when present; otherwise `tag:nth-of-type(n)` under the parent's selector, starting with `section:nth-of-type(1)`. The test derives this inventory from S:67–95, excludes source-hidden nodes per S:141–158 and S:41–42, and checks each visible node in each state. This covers the approved HTML fixture; it cannot prove a separate app DOM matches it. A different schema needs an explicitly reviewed adapter; do not silently drop completeness checks to make a build pass.
+
+Element aliases accepted: `spacing`/`spacingTokens`, `behaviour`/`behavior`/`behaviourRef`/`behaviorRef`, `accessibility`/`a11y`. Raw records may live anywhere in non-foundation JSON and must include `raw: true`, `property`, `value`, and either source file + numeric `line`/`sourceLine` or `file:line`. Structured copy fields use `copyKey`, `messageKey`, `copyKeys` or `messageKeys`; textual native references use `tokens.…`. H02 also checks fields named `native`, `nativeToken`, `tokenName` or `token`.
+
+### Per-state oracle
+
+All rows require the shared logo, title, subtitle, field container/control, label, country prefix, input, submit button and submit-label elements (S:67–86), including their visible ancestor containers. The source-generated selector inventory is authoritative, rather than a count produced by the builder.
+
+| State | Additional visible elements / required semantics (eye check where noted) | Source lines |
+|---|---|---|
+| default | SMS helper; signup label/link; keyboard hidden; empty input. | S:79,89,119,143–160; F:28 |
+| keyboard-open | SMS helper; keyboard and all keys; signup hidden; partial entry, focus, no early length error. | S:90–95,120,143–160; F:29 |
+| empty-tap | Error helper and keyboard; empty; focus field on submit; edit recovery. | S:121,143–165; L:32; F:30 |
+| too-short | Error helper and keyboard; retained incomplete digits; error after submit. | S:122,143–165; L:32; F:31 |
+| wrong-first-digit | Error helper and keyboard; immediate impossible-prefix error, clears on valid correction. | S:123,143–165; L:32; F:32 |
+| pasted-cleaned | SMS helper and keyboard; normalized meaningful digits, focused input. | S:124,143–165; L:31; F:33 |
+| sending | SMS helper and keyboard; spinner; busy label, read-only input, disabled button/no duplicate send. | S:125,141,155–160; F:34 |
+| not-registered | Neutral notice, info icon and text slot; signup; helper hidden; access recovery. | S:80,126,143–154; L:33; F:35 |
+| offline | Warning notice, icon and text slot; signup; retained number, one message, reconnect/retry. | S:81,127,143–154; L:33; F:36 |
+| couldnt-send | Error notice, icon and text slot; signup; retained number and retry confirmed failure. | S:82,128,143–154; L:33; F:37 |
+| too-many-tries | Warning notice, clock and text slot; signup; disabled countdown CTA, retained number, authoritative eligibility. | S:83,129,143–160; L:33; F:38 |
+| inactive | Error notice, icon and text slot; signup; Call Doctor Ops CTA. | S:84,130,143–160; L:33; F:40 |
+
+Each row has approved `ui-screens/sign-in/sign-in_<state>_w360.png` and `_w390.png` inputs (B:90–91). `signin.locked-number` is a behaviour route to locked OTP, not another pictured Sign-in state (F:39; L:45–46).
+
+## Required review evidence (not claimed by Node tests)
+
+Every line below is a pass/fail eye check. Record evidence with the case ID; empty files, keywords or a successful automated suite do not prove these checks.
+
+| ID | Pass condition | Source lines |
+|---|---|---|
+| E01 | Generated tokens, copy, sizes, colours and screen facts trace to their maintained sources; only README/AGENTS/CLAUDE/skill/FONTS are handwritten. Regenerate without manual repair. | B:30–31; P:81 |
+| E02 | Web → native map comes from the canonical generator; each property's token comes from the applicable CSS variable, including overrides, rather than matching a computed value. Both names appear together. | B:71–75; P:73 |
+| E03 | Inspect all 12 states against both approved pictures and per-state oracle. Every visible element's block/variant, property tokens, neighbour spacing, copy key, behaviour and target/label notes are correct, including dynamic countdown substitution. No typed copy or guessed tokens. | B:90–93; P:78; S:118–165 |
+| E04 | Every block used by these states has a spec, all actual parts × actual states, tokens/sizes/spacing/rules, and a picture cropped from an approved source. RN suggestion is `[RECOMMENDED]`, same name as web. Includes field, primary/busy/disabled buttons, notice variants, spinner, logo and signup, any action band if present. No invented component/state. | P:74; B:79–86 |
+| E05 | Double-click viewer offline without server; no missing dependencies. Start here/Foundation/Building blocks/Screens work. Readable at phone width. All 12 states inspectable at 390; 360 approved pictures alongside. | P:75; B:95–101 |
+| E06 | Tap every element: panel shows block, variant, native + web tokens, spacing, copy key and working behaviour link. Tokens-used table per state and whole screen is complete and accurate. | P:75; B:98–100 |
+| E07 | Every H05 raw record is visible in red and traceable to file/line; raw values cannot disappear under a token with an identical value. This includes fixture keyboard and non-screen CSS, distinctly labelled if necessary. | P:76; B:74–77,100 |
+| E08 | DECIDED/OPEN cover mobile cleaning, validation order/timing/rechecking, each server result, signup route, keyboard/paste/offline/errors, limits/lockouts and locked-number OTP route, copy, accessibility, fonts and safe areas. Answers cite decisions/rules; unresolved answers include current assumption and Product/Backend/Ops owner. No mock timeout becomes a product promise. | P:79; B:58–59,103–109; L:28–46; F:7–13,22–40 |
+| E09 | Include only Sign-in-relevant cross-boundary OTP/faster-sign-in rules: server-enforced limits and locked route, sign-in entry/exit, mock durations and genuinely open policies. Do not imply the other screens are part of this pilot. Each sourced decision number accompanies the actual decision, not debate. | B:33–34,105–109; L:41–52; F:39 |
+| E10 | Independently review all kit text, JSON, scripts, comments, SVGs, images and metadata for internal names/details, git/hosting/tool/brief/render rules, review history and credentials. Only the approved sample doctor may appear as a person's app identity; mandatory public font licence/provenance remains intact. Use “case” for doctor's unit of work. Automated name/secret patterns are a partial scan, not proof of absence. | B:32–35,113–115 |
+| E11 | AGENTS explains app, file locations, rules and screen schema; skill gives usable RN construction steps, checks DECIDED before asking, asks only OPEN or genuinely missing questions. CLAUDE loads the same instructions. Copy only kit to an unrelated folder and verify all references there. | B:50–67,90–93,124–133 |
+| E12 | Verify font files really are official Plus Jakarta Sans static TTFs; OFL is the actual licence. Execute accurate iOS/Android family and weight setup steps. H08 proves bytes/weights/hashes, not official provenance or device setup. | P:77; B:111–115 |
+| E13 | One command regenerates all generated files and CHANGES (tokens, blocks, screens); unchanged rerun is stable. Change each distinct source class in an isolated copy (tokens, copy, screen/stylesheet, rule source), observe check fail, rebuild, observe check pass and meaningful CHANGES. H09 supplies one source mutation, not full dependency coverage. | P:81; B:60,117–120 |
+| E14 | Fresh sessions for BOTH Claude Code and Codex receive only copied kit outside repo, exact brief prompt; retain every transcript. Classify every question as DECIDED/OPEN/new; new questions go to OPEN + main-thread report, never invented answers. Last round: zero DECIDED questions and generated RN uses tokens/messages only, no raw colours/sizes/typed copy. At most initial plus two repair rounds. | P:80; B:122–136 |
+| E15 | Protected `app/`, `ui-screens/`, design-system unchanged by kit work; pre-existing/parallel changes distinguished using pre-work evidence. No internal context/decision log edits, no fake approvals, no deployment. Report read-only defects to main thread. | P:82; B:9–12,26–29,36–39,153–156 |
+| E16 | Check tests have no unreported failures; disputes cite source lines and remain available for main-thread judgement. Critique lists blockers/should-fix/nice-to-have and unchecked cases; response records valid fixes or reasons; blocker re-review done, or usage limit reported. | B:41–46,138–147,158–160 |
+| E17 | Evidence sheet shows start page, block, tapped inspector, tokens table and red raw flag at phone width. REPORT covers proposal checklist, pass/fail evidence, fresh-AI round scores, changed files and NEEDS-APURVA; main thread reviews before Apurva. Publishing uses prescribed script/explicit files, no deployment. | B:149–160 |
+| E18 | After Apurva review: FE engineer walkthrough completed and doubts logged as fixes. This is deferred, not silently passed by pilot automation. | P:83; B:16–17 |
+
+## Limits and execution safety
+
+H09 first runs the existing builder's read-only `--check`, then runs it in a temporary overlay with private copies of `scripts/`, `handoff/` and the changed source. All other project entries are symlinks to preserve builder dependencies without copying or inspecting `app/`. The original suite never opened app code; D-98 H10–H12 read Sign-in code without writing it. It and never mutates canonical sources. The builder must respect `--check` and its own read-only-source rule (B:26–27,119–120). A builder that resolves workspace sources outside this replica must fail the replica baseline or mutation check; do not count an infrastructure failure as freshness detection.
+
+The automated suite deliberately has no skip-if-kit-missing path. No browser or fresh AI is silently launched by it. H06 cannot recognize every arbitrary human name or secret; E10 closes that gap. No official sample name is inferred from internal people's details. No design-system rules, decision log, backend behaviour or app code outside the allowed inputs was consulted; references to those rules in block specs require reviewer verification, not fabricated expectations.
+
+## Authoring validation
+
+- `node --check tests/codex/handoff/handoff.test.mjs`: passed.
+- `node --test --test-name-pattern='^oracle:' tests/codex/handoff/handoff.test.mjs`: passed. Checks source-derived state count, keyboard inventory, unique element selectors, conditional visibility, representative raw declarations, token validity and exclusion of a token-only declaration.
+- Initial full acceptance run: failed against the in-progress kit (missing required files/contracts). H09 stopped at its real-project baseline: Python builder raised `ModuleNotFoundError: No module named 'build'`. No source mutation was attempted; no stale-detection pass is claimed. The initial leakage scan found no matching text, but the suite now also requires textual kit content to avoid treating an empty folder as evidence of no leaks.
+- Re-run the full command after the builder and kit are complete; then collect all E-case review evidence. Authoring did not read or edit `app/` or repair the parallel builder.
+
+
+## D-98 fix-round additions (approved scope)
+
+Source: `docs/context/decision_log.md:992–996`; `docs/renders/2026-11-09-handoff-kit/FIX-BRIEF.md:26–68`.
+
+| ID | Pass/fail check (auto) | Source |
+|---|---|---|
+| H10 | Red flags only typed sizes, colours or words; no unexplained built Sign-in red, unmapped tokens, typed copy or unflagged typed styles. Only the documented 31ch text measure is exempt. | FIX §1, §5.1 |
+| H11 | Logo/prefix and central spinner, notice-icon, focus rules use tokens; map native names exist in canonical tokens.ts. H02 checks all kit token references. | FIX §1 |
+| H12 | Both exact strings have canonical/generated message keys, consumed through MSG; no typed +91 or accessible lockup name in sign-in.js. | FIX §2 |
+| H13 | Native PNG exports exist at widths 166/332/498, valid PNG IHDR dimensions; brand note records the actual locked source SVG SHA256. | FIX §5.3 |
+| H14 | o06/o13/o14/o20 have DECIDED anchors and D-98 provenance; no longer OPEN. | FIX §5.4 |
+
+Eye checks remain necessary: viewer actually paints only problems red, PNG pixels match the locked SVG without redraw, and token changes produce no visual difference. PNG header/hash checks do not prove rendered pixel identity. Existing manual cases are superseded wherever they ask for red layout/zero values or scaffolding.
+
+Tests are intentionally written before implementation. Run the full suite after regeneration; do not weaken failures to match an unfinished kit. Only tests/codex/handoff/ is modified by this tester; no shared handoff/context record is written.
+// GENERATED by scripts/build-state-map.mjs — do not edit. Drift is checked by scripts/check-state-map.mjs.
+window.TM_STATE_MAP = {
+ "pictures": [
+  {
+   "id": "offer_enable-failed",
+   "kind": "picture",
+   "picture": "faster-signin-offer/offer_enable-failed",
+   "step": 1,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": "offer.failed",
+   "notes": []
+  },
+  {
+   "id": "offer_enabling",
+   "kind": "picture",
+   "picture": "faster-signin-offer/offer_enabling",
+   "step": 1,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": "offer.enabling",
+   "notes": []
+  },
+  {
+   "id": "offer_face-id",
+   "kind": "picture",
+   "picture": "faster-signin-offer/offer_face-id",
+   "step": 1,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "offer_fingerprint",
+   "kind": "picture",
+   "picture": "faster-signin-offer/offer_fingerprint",
+   "step": 1,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": null,
+   "notes": []
+  },
+  {
+   "id": "offer_offline",
+   "kind": "picture",
+   "picture": "faster-signin-offer/offer_offline",
+   "step": 1,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": "offer.offline",
+   "notes": []
+  },
+  {
+   "id": "offer_screen-lock",
+   "kind": "picture",
+   "picture": "faster-signin-offer/offer_screen-lock",
+   "step": 1,
+   "lookAhead": [],
+   "version": "B",
+// GENERATED by design-system/scripts/build_native.py — do not edit. Source: SALT token export.
+// Use `tokens.color.*`, `tokens.space.*` etc. in screens; `tokens.palette` is the raw palette.
+export const tokens = {
+  "_about": "GENERATED by design-system/scripts/build_native.py from the SALT export. Do not edit. Built 2026-11-09. Units are density-independent points (no px).",
+  "color": {
+    "content": {
+      "primary": "#383A42",
+      "secondary": "#5B616E",
+      "tertiary": "#8E95A2",
+      "inverse": "#FFFFFF",
+      "disabled": "#B6BAC3",
+      "brand": "#1D5DCF",
+      "success": "#178755",
+      "warning": "#8C610C",
+      "error": "#D61212",
+      "accent": "#702BB6",
+      "placeholder": "#6B7280",
+      "successStrong": "#10603C"
+    },
+    "surface": {
+      "primary": "#FFFFFF",
+      "secondary": "#F7F8F8",
+      "tertiary": "#EDEEF1",
+      "inverse": "#5B616E",
+      "brand": {
+        "subtle": "#EBF8FF",
+        "muted": "#98D2FD",
+        "default": "#266CE1",
+        "alternate": "#1D5DCF",
+        "strong": "#0A2864",
+        "dark": "#091833"
+      },
+      "interactive": {
+        "hover": "#1D5DCF",
+        "pressed": "#154DB5",
+// Generated from ../feedback/messages.json. Do not edit.
+export const messages = {
+  "signin.welcome": "Welcome, Doctor",
+  "signin.logoAlt": "truemeds for doctors",
+  "signin.subtitle": "Your partner in thoughtful, affordable care.",
+  "signin.phoneLabel": "Mobile number",
+  "signin.phonePlaceholder": "e.g. 98765 43210",
+  "signin.phonePrefix": "+91",
+  "signin.submitDefault": "Send OTP",
+  "signin.submitSending": "Sending OTP…",
+  "signin.submitWait": "Try again in {time}",
+  "signin.submitInactive": "Call Doctor Ops",
+  "signin.signup": "New to Truemeds? {link}",
+  "signin.signupLink": "Sign up",
+  "signin.smsHelper": "We’ll send you a verification code by SMS.",
+  "signin.empty": "Enter your mobile number.",
+  "signin.short": "Enter all 10 digits.",
+  "signin.long": "That’s more than 10 digits. Check the number.",
+  "signin.prefix": "Mobile numbers start with 6, 7, 8 or 9.",
+  "signin.notRegistered": "Number not registered with Truemeds. Already applied? We’ll contact you after approval.",
+  "signin.offline": "You’re offline. Check your connection.",
+  "signin.couldntSend": "Couldn’t send the code.",
+  "signin.tooMany": "Too many attempts on this number.",
+  "signin.inactive": "This account is inactive.",
+  "otp.empty": "Enter the 4-digit code.",
+24:2. **Building blocks:** each component the screen uses (field, button, notice, logo header, spinner, sign-up
+25:   option) — picture, parts, states (normal, pressed, disabled, busy, error), the native token for each, sizes,
+26:   and its rules from `design-system/RULES.md` §9. Same names on web and native.
+27:3. **Screen viewer:** all 12 Sign-in states at 360 and 390; tap anything → which block, which tokens, which
+28:   spacing. A "tokens used" table per screen. Any value that isn't a token shows in red.
+29:4. **Behaviour:** each state links to its rule in `app-logic.md` and its message in the feedback map.
+30:5. **What changed:** a list of tokens, blocks and screens that moved since the last drop.
+31:
+32:**For their AI — the AI pack (files their Claude, Codex or Cursor read on their own)**
+33:1. **`AGENTS.md` + `CLAUDE.md`** at the root of `handoff/` (the folder the team opens or copies to their repo root — not the project root, whose `CLAUDE.md` holds our internal working rules): what the app is, where things are, the hard rules (tokens
+34:   only, copy only from `messages.ts`, "case" not "order", one primary button). `CLAUDE.md` simply points to
+35:   `AGENTS.md`, so every AI tool reads the same text.
+36:2. **A skill**, `.claude/skills/truemeds-native-ui/`: "how to build a Truemeds screen in React Native" — step by
+37:   step, using the files below. Skills committed in the repo load for anyone who opens it, whatever account
+38:   they use.
+39:3. **One data file per screen** (`handoff/screens/sign-in.json`): every element → block → tokens → copy key →
+40:   behaviour rule. Facts, not prose, so the AI copies instead of guessing.
+41:4. **`DECIDED.md` and `OPEN.md`** — the key piece. Every question already answered (with the decision number),
+42:   and the short list that is truly open, with who answers it. The AI is told: check `DECIDED.md` before asking;
+43:   ask only what is in `OPEN.md` or genuinely missing.
+44:
+45:Everything above is **generated** from files we already maintain (design system, prototype, messages, decision
+46:log), except the skill and `AGENTS.md` text, which are written once. Nothing is copied by hand, so nothing goes
+47:stale — the October hand-written RN screens went stale within three weeks.
+48:
+49:## 3. How we prove it works (before showing FE)
+50:
+51:1. **Fresh-AI test:** a new AI session that has only the `handoff/` folder and the prompt "Build the Sign-in
+52:   screen in React Native" — no other context. We record every question it asks.
+53:   - Pass: zero questions already answered in `DECIDED.md`; any question it asks is in `OPEN.md`.
+54:   - Its code uses only `tokens.*` and `messages.*` — no typed colours, sizes or words.
+55:2. **Person test:** Apurva shows the kit to one FE engineer (30 min) and asks what is still unclear. Their doubts
+56:   become fixes to the kit, not one-off answers.
+57:
+58:## 4. Not in this pilot
+59:
+60:Other screens (added journey by journey once the rebuild finishes them) · writing the team's RN components or
+61:screens (they own the code; we own the contract) · Figma · hosting on Netlify (the kit opens locally from the
+62:repo; deploy only if Apurva asks) · any change to `app/`, `ui-screens/` or `design-system/`.
+63:
+64:## 5. Decisions for Apurva
+65:
+66:1. **Ownership:** the app team builds and owns the RN components and screens; we hand over the kit. *Recommended: yes.*
+67:2. **Old RN files:** the October TSX and hand-off notes in `ui-screens/native/` are marked "don't use — see
+68:   `handoff/`" once the kit is approved (logged in the backlog, done separately). *Recommended: yes.*
+69:3. **Pilot screen:** Sign-in (12 states, already rebuilt). *Recommended: yes.*
+70:
+71:## 6. Done-checklist (pass/fail)
+72:
+73:- [ ] Every token shown uses its native name and matches `design-system/native/tokens.ts`.
+74:- [ ] Every block on Sign-in has a spec: parts × states → token, size, rules.
+75:- [ ] All 12 states inspectable at 390 (360 shown as the approved pictures); a "tokens used" table exists.
+76:- [ ] Zero raw values unflagged.
+77:- [ ] Font files (TTF, 4 weights) and setup note included.
+78:- [ ] `sign-in.json` covers every element in every state; each copy key exists in `messages.ts`.
+79:- [ ] `DECIDED.md` and `OPEN.md` cover every rule in `app-logic.md` that touches Sign-in, with decision numbers.
+80:- [ ] Fresh-AI test passes (§3.1).
+81:- [ ] One command regenerates the kit and the "what changed" list; a check fails if the kit is out of date.
+82:- [ ] Nothing in `app/`, `ui-screens/` or `design-system/` changed.
+83:- [ ] FE engineer walkthrough done; their doubts logged as fixes (§3.2) — after Apurva's review.
+84:
+85:## 7. How it gets built (after approval)
+86:
+87:A terminal brief (`TERMINAL-BRIEF-handoff-kit.md`) runs the build with a Codex critique; Claude does the final
+88:review against §6; Apurva then reviews the kit and shows it to FE.
+
+exec
+/bin/zsh -lc 'nl -ba docs/renders/2026-11-09-handoff-kit-all/TERMINAL-BRIEF.md | head -85; nl -ba docs/runs/RULINGS.md | head -32; head -45 ui-screens/README.md; head -20 ui-screens/app-logic.md; head -18 docs/feedback-state-map.md; tail -4 app/state-map.js' in /Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype
+ succeeded in 0ms:
+     1	# Brief — native hand-off kit, all journeys (D-96, after the Sign-in pilot)
+     2	
+     3	Owner: main Claude thread · Runner: `scripts/run-chain.sh` (headless Claude Code), Codex as tester and critic · 2026-11-09
+     4	Folder: `~/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype` (project branch).
+     5	Evidence folder: `docs/renders/2026-11-09-handoff-kit-all/` (this folder).
+     6	
+     7	## What this run does
+     8	
+     9	The Sign-in pilot built the kit's foundation (`handoff/`, `scripts/build-handoff.*`, `tests/codex/handoff/`):
+    10	token map, screen-file format, `DECIDED` / `OPEN` format, the AI pack and the viewer. **This run adds every other
+    11	approved journey to that same kit**, the same way. It does not redesign the kit.
+    12	
+    13	Journeys to add (the approved states in `ui-screens/README.md`): OTP, faster sign-in offer, returning unlock, Home
+    14	(incl. Profile / Log out), case page (incl. leave / release, Rx viewer, closed card), Prescribe / Disable, calling
+    15	(Cat4, HA skipped, Pilot Fallback B — the calling states live under `ui-screens/case/`).
+    16	
+    17	**Aim: a few hours.** Generated, not typed: the generator does the work, so most of the effort is extending it and
+    18	checking its output.
+    19	
+    20	## Before you start
+    21	
+    22	- Read `docs/runs/RULINGS.md` first (it overrides this brief).
+    23	- Read: the pilot brief `docs/renders/2026-11-09-handoff-kit/TERMINAL-BRIEF.md` (its hard rules, layout §1, token
+    24	  rules §2 and every section after still apply — read it whole), its `REPORT.md` and `REPORT-2.md`;
+    25	  `docs/proposals/2026-11-09-native-handoff-kit.md` (§6 is the done-checklist); D-96, D-98, D-99 in the decision log;
+    26	  `ui-screens/README.md`; `ui-screens/app-logic.md` (all of it); `docs/feedback-state-map.md`.
+    27	- This runs after build-fast run B, so `app/` is final for this pass.
+    28	
+    29	## Hard rules (in addition to the pilot brief's)
+    30	
+    31	- **Read-only:** `app/`, `ui-screens/`, `../../design-system/`, `docs/context/`. Problems there go under
+    32	  NEEDS-APURVA in the report.
+    33	- **You may write:** `handoff/`, `scripts/build-handoff.*`, `tests/codex/handoff/` (Codex only), this folder.
+    34	- **Don't change the pilot's foundation** (token map, screen-file structure, DECIDED / OPEN format, AI pack layout)
+    35	  unless it can't hold a new journey; if you must, say exactly what changed and why in the report, and keep
+    36	  Sign-in's output identical apart from that.
+    37	- **Product questions already in OPEN stay OPEN** (o04, o05, o07, o08, o10, o11, o17, o18, o25, o26 and any new
+    38	  ones). Don't ask, don't decide.
+    39	- `DECIDED.md` / `OPEN.md` must cover every rule in `app-logic.md` that touches each new screen, with decision
+    40	  numbers. "case", never "order".
+    41	- One Codex review (correctness against the proposal only, style skipped), one fix pass, a second review only for
+    42	  blockers (D-100). Small things you can't fix in one try: list them and move on.
+    43	- Evidence: commit proof (report, JSON, test logs, one evidence sheet) and only pictures that **differ** from what
+    44	  is already committed — no identical re-captures (backlog §2m point 4).
+    45	
+    46	## Steps
+    47	
+    48	0. **Codex tests first.** Codex extends `tests/codex/handoff/` (CASES.md + node tests) from §6 to every new screen:
+    49	   every native token name exists in `tokens.ts`; every copy key exists in `messages.ts`; every element of every
+    50	   approved state is in `screens/<screen>.json`; every raw value is flagged; nothing internal leaked; `--check`
+    51	   fails when a source changes. Run it with `< /dev/null`, `--sandbox workspace-write`, writing only under
+    52	   `tests/codex/handoff/`. Commit as written. A test that contradicts the proposal → `test-disputes.md` with the
+    53	   source line; don't edit it.
+    54	1. **Extend the generator** to all journeys; regenerate; `--check` passes. Commit.
+    55	2. **Components:** a spec for every building block the new screens use (parts × states → native token).
+    56	3. **Screens:** one `screens/<screen>.json` per journey; every state inspectable at 390 in the viewer, 360 as the
+    57	   approved pictures; a "tokens used" table per screen.
+    58	4. **DECIDED / OPEN / CHANGES** regenerated and reviewed for every new screen.
+    59	5. **Fresh-AI test, one round**, on the case page in a calling state and on Prescribe (pilot §3.1 method, Claude and
+    60	   Codex): questions already in DECIDED = 0. Record in `fresh-ai/SCORES.md`.
+    61	6. **Codex critique**, fix pass, Sign-in pilot checks still pass (`tests/codex/handoff/` all, `brand/check_lockup.py`,
+    62	   `check-sources.mjs`).
+    63	7. `REPORT.md` (short): screens added, §6 checklist per screen (pass / fail), Codex tests (written / passing /
+    64	   disputed), fresh-AI result, foundation changes (if any), NEEDS-APURVA, new OPEN items.
+    65	
+    66	## End
+    67	
+    68	Append `DONE handoff-kit-all` (or `STOPPED handoff-kit-all: <reason>`) to `docs/runs/STATUS.md`, publish with the
+    69	run's files (`bash ../../scripts/publish.sh -m "..." <files>` — must print "Pushed to …"), stop. No deploys.
+     1	# Main-thread rulings
+     2	
+     3	Every run reads this first. Rulings override briefs where they conflict. Newest at the top.
+     4	
+     5	## 2026-11-10 00:35 (after run B — main thread review: passed)
+     6	- **B passed.** Evidence checked: run B 94 / 99 with the 5 disputed cases passing 5 / 5 via `textContent`; run A 303 / 303; A0-happy-path PASS; own tests 23 / 23; compare steps 2–6, 206 pictures, 2 over 1 %. Critique: 1 blocker + 2 should-fix adopted, critique-2 no blockers.
+     7	- **Dispute #1 (B-play-*, 5 cases): test bug.** The Story row folds Test on phone (D-97 item 2), so `innerText` is empty. Fixed by the main thread in `tests/codex/run-B/journeys.mjs` (link read with `textContent`). No app change. The drawer `visibility: hidden` fix stays.
+     8	- **t13-connecting-ha @390 (16 %): the build is right.** In launch B, 13 Transferring… keeps the neutral Pilot script; `call.scriptTransfer` is version A only (app-logic §4 script list, §5 "Transfer path in B reuses 13–15"; D-83 / D-85). The 390 picture is stale (version-A script; the 360 picture is 0.67 %). Accept the diff; re-render `t13-connecting-ha_w390` from the build when pictures are next re-rendered (backlog §2l). Don't change the app.
+     9	- **c-skip-ha @390 (2.5 %): accepted** (background is version-A screen 12 in the picture, B1 in the build; plan v3.2 §5). The `c-skip-ha-b1` / `c-skip-ha-16` re-renders are logged in backlog §2l, not for the kit run.
+    10	- **B's ten `[MOCK ASSUMPTION]`s accepted** (OQ-038 in `open_questions.md`); all consistent with app-logic §4–§5. Setting `pilotTalkAfterGate` (60 s, stand-in) stays.
+    11	- **Not automated** (B-R07 every ending type, B-R09 every background deadline, B-R10 storage isolation, B-R11 desktop / phone parity to the final card): no new test run; they go to Apurva's phone walkthrough. A parity-to-final-card Codex test is optional, logged in backlog.
+    12	- **signin-d101 and handoff-kit-all:** unchanged by this review. Kit run: t13 in launch B is documented with the neutral script.
+    13	
+    14	## 2026-11-09 23:05 (after run A2 — main thread review: passed)
+    15	- **A2 passed.** A0-happy-path dispute: test bug (Set availability *is* the confirm, app-logic §3; the approved label is "Request a case"). Fixed by the main thread in `tests/codex/run-A0/all.mjs` (no second availability click; `/Request (a |next )?case/`). **Run B: run `tests/codex/run-A0/` once and confirm A0-happy-path passes.**
+    16	- A2's extra builds (scheduled hold retries, ring time / `answeredAt`) stay. **B's live Pilot gate counts from `answeredAt`.**
+    17	- **D-101 (Apurva):** Product answers for the Sign-in kit items o04, o05, o07, o08, o10, o11, o17, o18, o25, o26 — read D-101 in the decision log. Queue: `signin-d101` (small prototype run) after B, then the kit run.
+    18	- **Kit run (handoff-kit-all):** move o04, o05, o07, o08, o10, o11, o17, o18, o25, o26 from OPEN to DECIDED with D-101 (in `scripts/build-handoff.mjs`'s list, generated as before). This replaces the brief's "these stay OPEN" line for these ten; any new Product question still stays OPEN.
+    19	- **Kit = prototype hand-off with a fake backend (D-101 amended):** move o01, o02, o03, o12, o15, o16, o19, o21, o22, o24 to DECIDED too, each with the prototype's current mock value / behaviour (from the build and `open_questions.md`), labelled `[MOCK]` and "keep configurable". o23 → stated as the app team's choice. o09 → prototype-only note. For the other journeys, do the same: a backend or design gap gets the prototype's mock answer, not an OPEN line; only genuinely undecided **Product** questions stay OPEN.
+    20	- **Archive tag:** none when the chain ends — only after Apurva approves everything (backlog §2m point 1).
+    21	
+    22	## 2026-11-09 22:35 (for run B and later — main thread, new thread)
+    23	- **A2 Codex critique, pre-ruled:** blockers 1–3 are valid (unclear confirm must reconcile and never resubmit, D-69; everything else disabled while Confirming, incl. Callback / Unavailable on 7d; a late result closes or revokes a sheet the new stage doesn't allow, and the Callback / Unavailable handlers check the stage). Should-fix 4 (scheduled retries / attempt counts) is backend behaviour the doctor never sees — **not needed in the prototype**; a log line is enough. Should-fix 5 (time anchored to the patient's answer) is **run B's**: the Pilot live-call gate counts from the patient answering (app-logic §5, Launch B), so B's simulator needs a separate answer time and ring interval.
+    24	- **Lighter evidence from run B on (backlog §2m point 4):** commit proof (REPORT, JSON, test logs, compare report, one sheet) and only pictures that **differ** from what's committed; no identical re-captures.
+    25	- **Queue:** a hand-off-kit run for all journeys runs after B (`docs/renders/2026-11-09-handoff-kit-all/TERMINAL-BRIEF.md`). B doesn't touch `handoff/`.
+    26	
+    27	## 2026-11-09 21:50 (after run A1 — main thread review: passed)
+    28	- **A1 test disputes (4): all test bugs, app follows the approved pictures.** Fixed in `tests/codex/run-A/` by the main thread: A-C01 clicks **Stay** (D-84 CA-22); A-P07 picks **Weekly** before **Other** (Other is single-dose only); A-OPTIONS-d-every-x-hours matches the accessible names **Every 4 hours…**; `a-loading` accepts the skeleton's status region (text-free by design, D-81 F28). Syntax and inventory checked; **A2: run the whole run-A suite once and confirm these four pass.**
+    29	- **app-logic §4** stale "Stay on this case" lines corrected to **Stay**.
+    30	- **A1's five `[MOCK ASSUMPTION]`s accepted** (recorded as OQ-037 in `open_questions.md`). View Rx during "Confirming…": looks as approved, takes no tap — correct.
+    31	- **Eye checks** (Rx pinch / drag / double-tap on a phone, real keyboard hiding / restoring the bar, 360×640 feel) go to Apurva's phone walkthrough, not to a run.
+    32	
+# Approved Doctor Portal screens (promoted 2026-10-29)
+
+The approved screens for the Truemeds Doctor Portal, with their pictures. Promoted from the working copies after Apurva's approval (decisions D-58 → D-71). Design system: `design-system/` (rules in `design-system/RULES.md` §8–9). Copy registry and checks: `feedback/`. Native handoff: `native/` (native team).
+
+**Read with the screens:** app rules `app-logic.md` · decisions `../docs/context/decision_log.md` (D-58 → D-83) · what we're building and current rules `../docs/context/project_truth.md` · every error, offline and busy state `../docs/feedback-state-map.md` · open questions `../docs/context/open_questions.md` · what is next `../docs/context/backlog.md`.
+
+Each state has a 390-wide and a 360-wide picture (`_w390.png`, `_w360.png`, 2× density). Contact sheets per folder (`contact-*.png`) show the 390 pictures.
+
+## Screens and pictures
+
+| Journey | Screen file | Pictures folder | States | Decisions |
+|---|---|---|---|---|
+| Sign-in | `sign-in/sign-in.html` | `sign-in/` (`sign-in_<state>_…`) | 12 | D-42 to D-47, D-61, D-65 |
+| OTP | `otp/otp.html` | `otp/` (`otp_<state>_…`) | 17 | D-42 to D-47, D-61 (no Back), D-65 |
+| Returning unlock | `returning-unlock/returning-unlock.html` | `returning-unlock/` (`unlock_<state>_…`) | 7 | D-45, D-47, D-61, D-66 |
+| Faster sign-in offer | `faster-signin-offer/faster-signin-offer.html` | `faster-signin-offer/` (`offer_<state>_…`) | 7 | D-45, D-61, D-64, D-65, D-93 |
+| Home (availability, add time, end, profile) | `home/home.html` (+ `home-reference.js`, `home-reference.css`) | `home/` (`home_<state>_…`) | 22 | D-36, D-40, D-47, D-53, D-69, D-70 |
+| Case page: ready, calling, call outcomes, closed cases, sheets, stress | `case/case.html` (+ `case-styles.css`) | `case/` (`<state>_…`) | 61 | D-48 to D-83 |
+| Prescribe (one medicine) | `case/case.html` (`d-*`) | `prescribe/` (`d-<state>_…`) | 23 | D-04, D-06, D-08 to D-30, D-54, D-56, D-68 |
+
+Counts: pictures are 2 per state. Case page: 39 calling and call-outcome states (incl. `s7d-unavailable-sheet`, the callback sheets and the Skip-HA sheet), 16 + 1 stress/action states (`a-*`), 2 closed (`e-*`), 3 stress (`s-*`). Home: 19 states plus 3 Profile pages.
+
+## Case page: calling render ids
+
+The calling states follow app-logic §5 (D-58 points 14–25, D-63, D-64). The render id is the picture name without the size suffix.
+
+| State | Render id | Note |
+|---|---|---|
+| 1 Ready | `t01-ready` | Call patient; no script card (D-58 pt 18) |
+| 2 Calling (7a) | `t02-calling`, `s7a-calling` | Status line only, no Callback (D-83 CW-A1); script under Order details |
+| 3 Didn't go through | `t03-not-through` | |
+| 4 You didn't answer | `t04-doctor-missed` | |
+| 5 Getting call result | `t05-result-wait` | Script hidden (call has ended) |
+| 6 Call too short | `t06-ended-early` | Call again · Callback (D-58 pt 23) |
+| 7b Still on the call? | `s7b-still-on-call` | Question as plain text, no box (D-62) |
+| 7c Checking | `t05-result-wait` | Same screen as 5 (D-91); `s7c-checking` retired |
+| 7d Result not received | `s7d-result-missing` | Confirm prescription · Callback · Unavailable |
+| 7d Pilot (D-83 K6) | `s7d-result-missing-pilot` | Confirm & forward · Callback · Unavailable; no Skip HA (CW-D2) |
+| 7d Unavailable sheet (D-75) | `s7d-unavailable-sheet` | Sheet "Mark patient unavailable" with three reasons; a reason goes to `t09-patient-unavailable` |
+| 7e Leave this case? | `s7e-leave-sheet` | Release case / Stay on this case |
+| 7f Waiting for the call record | `s7f-submitted` | D-68 wording |
+| 8a Valid (Cat4) | `t08a-valid-cat4` | No script (call ended) |
+| 8b Valid (forward) | `t08b-valid-forward` | |
+| 8c Confirm blocked (Pending medicines) | `t08c-confirm-blocked` | D-64 |
+| 9 Patient unavailable | `t09-patient-unavailable` | |
+# Doctor Portal — app logic
+
+**Status:** APPROVED and frozen — Apurva, 2026-10-31 (D-78). Covers decisions up to D-83 (calling walkthrough, applied 2026-11-03 by the calling round; CW-A1 … CW-F3, see §14). Round 4 of the fix round (2026-11-02, §13) is not yet approved. Changes from here are either a bug (fix where it occurs) or a next-version idea (backlog). Open backend dependencies stay marked `[OPEN]` with their question.
+**What this is:** every rule the app follows, taken out of the old prototype (`index.html` + `app.js`) and checked against the locked rules (`docs/context/project_truth.md`) and the decision log (D-01 to D-55). It is the logic half of the rebuild spec; the look is in `ui-screens/` (pictures) and `design-system/RULES.md`.
+**How to read it:** `[LOCKED]` = decided, build exactly this · `[MOCK]` = prototype placeholder, the real value comes from the backend · `[OPEN]` = not decided, see the linked question · **⚠ Flag** = the old code and the decisions disagree, or a rule was never written down — needs Apurva before the rebuild.
+
+All on-screen text comes from `ui-screens/feedback/messages.json`. Error, offline and busy states for every screen: `docs/feedback-state-map.md`.
+
+---
+
+## 1. The app in one line per screen
+
+| Screen | Job | Pictures |
+|---|---|---|
+| Sign-in | Enter a mobile number, get an OTP | `ui-screens/sign-in/` |
+| OTP | Enter the 4-digit code | `ui-screens/otp/` |
+| Faster sign-in offer | Turn on fingerprint / Face ID after the first OTP sign-in | `ui-screens/faster-signin-offer/` |
+| Returning unlock | Open the app with fingerprint / Face ID | `ui-screens/returning-unlock/` |
+| Home | Set availability, request a case, see time left | `ui-screens/home/` |
+| Case page | Review, call, prescribe, close the case | `ui-screens/case/` |
+# Feedback state mapping
+
+Version 1.2 · 2026-11-03 · D-41, D-44, D-45, D-83 (calling round) · Read [feedback-rules.md](feedback-rules.md) first.
+
+This maps current auth/Home states and known recovery conditions to reusable feedback. It is not a list of new screens to build or render. Shared copy now lives in `../ui-screens/feedback/messages.json` with behavior metadata in `metadata.json`; generated browser/native adapters consume the same text. Copy approved (D-53). Existing approved PNGs remain historical until source-derived visual review.
+
+## Placement rules (Round 4, 2026-11-02 — A-19, RULES §9.5)
+
+- **Result of an action → next to the control that did it.** On a screen with a pinned action bar, inside the bar above its button, as a band (`.tm-actionbar > .tm-notice`). On a screen without a bar, 16 below the field it came from (D-98) or 8 below the button (A-14).
+- **Bar's own action → inside the bar.** The result of the last tap, or why the bar's button is disabled right now: offline (case and Home), request failed, "No cases right now", ending soon, setup / add / confirm / release failures, offer enable-failed / offline, calling notices (Round 4, lane-request 7).
+- **Screen's general situation → top of the panel.** Not tied to a button; stays until the cause is gone (unlock "isn't available", Home idle-expired, manually ended, expired-pending, stop-pending).
+- Notices wrap balanced (A-22). Toasts only where no control can show the result; they sit above the pinned bar when there is one.
+- Small phones (RULES §8.14): every state at 360×640 — nothing the doctor needs is hidden without a scroll cue; the bar never covers the last content.
+
+## Coverage notation
+
+- **R01–R09:** proposed representative capture, not yet generated or approved.
+- **Existing:** retain an existing approved visual for unchanged layout; check integration if shared component changes.
+  "call.endCallFirst",
+  "t15b-end-call-first"
+ ]
+};
+
+codex
+The rulings move the listed Sign-in questions to DECIDED, and the contract exempts three version-A states from built-element checks. I also found legacy tests that read app code. I’ll retain their IDs and kit checks while removing those reads to respect this task’s boundary.
+
+Node can check state coverage and element records, but picture-to-element completeness still needs visual review without access to the app or a browser. I’ll document that limit.
+exec
+/bin/zsh -lc "python3 - <<'PY'
+p='tests/codex/handoff/handoff.test.mjs'
+s=open(p).read().replace('const sample=process.env.HANDOFF_SAMPLE_DOCTOR;',\"const sample='Dr. Kunal';\")
+a=s.index(\"  for(const d of declarations(read(path.join(project,'app/screens/sign-in.css'))))\")
+b=s.index('\\n});',a); s=s[:a]+s[b:]
+a=s.index('  const central=declarations('); b=s.index('\\n});',a)
+s=s[:a]+'''  for (const state of states()) for (const element of state.elements) {
+    for (const style of element.styles || []) for (const token of style.tokens || []) {
+      assert.ok(hasToken(token.native), "'`Unknown native token ${token.native}`);
+      assert.ok(text.includes(token.web), `Missing web mapping ${token.web}`);
+    }
+  }'"'''+s[b:]
+a=s.index(\"  const canonical=JSON.parse(read(path.join(project,'ui-screens/feedback/messages.json')));\"); b=s.index('\\n});',a)
+s=s[:a]+'''  for(const value of ['+91','truemeds for doctors']) {
+    const keys=Object.keys(messages).filter(k=>messages[k]===value);
+    assert.ok(keys.length,"'`Missing message key for ${value}`);
+    assert.ok(states().some(state=>state.elements.some(e=>keys.some(key=>JSON.stringify(e).includes(key)))),`Missing kit consumer for ${value}`);
+  }'"'''+s[b:]
+s=s.replace(\"  const sha=crypto.createHash('sha256').update(fs.readFileSync(path.join(project,'brand/truemeds-for-doctors.svg'))).digest('hex');\\n  assert.ok(all.filter(textual).some(p=>read(p).includes(sha)),"'`Missing source SVG sha256 ${sha}`);", "  assert.ok(all.filter(textual).some(p=>/sha256['"\\\\s\\\\S]*[a-f0-9]{64}/i.test(read(p))), 'Missing source SVG sha256 note');\")
+s=s.replace('timeout:120000','timeout:8000')
+open(p,'w').write(s)
+PY" in /Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype
+ succeeded in 0ms:
+exec
+/bin/zsh -lc "cat > tests/codex/handoff/journeys.test.mjs <<'EOF'
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import path from 'node:path';
+import vm from 'node:vm';
+import os from 'node:os';
+import {spawnSync} from 'node:child_process';
+import {fileURLToPath} from 'node:url';
+const root=path.resolve(fileURLToPath(new URL('../../..',import.meta.url)));
+const kit=path.resolve(process.env.HANDOFF_DIR||path.join(root,'handoff'));
+const read=p=>fs.readFileSync(p,'utf8');
+const json=p=>JSON.parse(read(p));
+const sandbox={window:{}};
+vm.runInNewContext(read(path.join(root,'app/state-map.js')),sandbox);
+const pictures=JSON.parse(JSON.stringify(sandbox.window.TM_STATE_MAP.pictures));
+const journeys=['sign-in','otp','faster-signin-offer','returning-unlock','home','case','prescribe'];
+const later=new Set(['t08b-valid-forward','t11-calling-transfer','t12-transfer-ready']);
+const screen=j=>json(path.join(kit,'screens',j+'.json'));
+function exported(p,name){const s=read(p);return JSON.parse(s.slice(s.indexOf('{',s.indexOf('export const '+name)),s.lastIndexOf('}')+1));}
+const tokens=exported(path.resolve(root,'../../design-system/native/tokens.ts'),'tokens');
+const messages=exported(path.join(root,'ui-screens/native/messages.ts'),'messages');
+function native(name){assert.equal(typeof name,'string');assert.ok(name.startsWith('tokens.'),name);let v=tokens;for(const k of name.slice(7).split('.')){assert.ok(v&&Object.hasOwn(v,k),"'`Unknown native ${name}`);v=v[k];}assert.ok(v===null||typeof v!=='"'object',"'`Token must be a leaf: ${name}`);}
+function copy(key){assert.equal(typeof key,'"'string');assert.ok(Object.hasOwn(messages,key.replace(/"'^messages'"\\./,'')),"'`Unknown copy ${key}`);}
+function inside(rel){assert.equal(typeof rel,'"'string');const p=path.resolve(kit,rel);assert.ok(p.startsWith(kit+path.sep),"'`Outside kit: ${rel}`);assert.ok(fs.statSync(p).isFile(),`Missing ${rel}`);return p;}
+function entries(){return journeys.flatMap(j=>screen(j).states.map(s=>({j,s})));}
+function typed(v){return /#['"\\da-f]{3,8}\\b|\\b(?:rgba?|hsla?|oklch|lab|lch|color)\\(|\\b(?:white|black|red|blue|green|yellow|gray|grey|orange|purple)\\b|(?<"'!['"\\w.-])(?:\\d*\\.)?\\d+(?:px|r?em|ch|pt|[ds]?v[wh])\\b/i.test(String(v).replace(/var\\(["'^)]*'"\\)/g,''));}
+function entry(text,id){return text.split(/"'^### /m).slice(1).find(s=>new RegExp(`''^(?:<[''^>]+>)*${id}'"\\\\s*·"'`).test(s));}
+
+test('"'H15: exact approved state partition and portable byte-identical pictures',()=>{
+ assert.equal(pictures.length,149,'Approved state-map total (user contract)');
+ for(const j of journeys){const data=screen(j);assert.ok(data.screen);assert.ok(Array.isArray(data.states));assert.ok(Array.isArray(data.tokensUsed));assert.ok(Array.isArray(data.rawValues.builtApp));assert.ok(Array.isArray(data.rawValues.exceptions));
+ const expected=pictures.filter(p=>p.picture.split('/')[0]===j);
+ assert.deepEqual(data.states.map(s=>s.id).sort(),expected.map(s=>s.id).sort(),j);
+ for(const s of data.states){assert.ok(s.name);const p=expected.find(p=>p.id===s.id);for(const w of [360,390])assert.deepEqual(fs.readFileSync(inside(s.pictures['w'+w])),fs.readFileSync(path.join(root,'ui-screens',p.picture+"'`_w${w}.png`)),`${s.id} w${w}`);}
+ }
+});
+test('"'H16: built states and precisely the three deferred A-only states',()=>{
+ for(const {s} of entries()){assert.ok(s.rule&&/feedback|app-logic/i.test(JSON.stringify(s.rule)),"'`${s.id}: source rule`);
+ if(later.has(s.id)){assert.equal(s.built,false);assert.ok(s.later);assert.equal(s.elements?.length||0,0);continue;}
+ assert.ok(s.built===true||s.built===undefined,`${s.id}: built`);assert.ok(s.elements.length,`${s.id}: elements`);
+ assert.equal(s.built390,`viewer/shots/built-390_${s.id}.png`);const b=fs.readFileSync(inside(s.built390));assert.equal(b.subarray(0,8).toString('"'hex'),'89504e470d0a1a0a');
+ }
+});
+test('H17: unique element identities, full fields, viewport geometry and decision links',()=>{
+ const decided=read(path.join(kit,'DECIDED.md'));
+ for(const {s} of entries()){const ids=new Set();for(const e of s.elements||[]){const label="'`${s.id}/${e.id}`;
+ for(const k of ['"'id','block','part','variant','blockState','box','tokens','styles','copy','accessibility','behaviour'])assert.ok(e[k]"'!==undefined,`${label}: ${k}`);
+ assert.ok(e.id&&!ids.has(e.id),label);ids.add(e.id);
+ for(const k of ['"'x','y','w','h'])assert.ok(Number.isFinite(e.box[k]),"'`${label}: ${k}`);
+ const {x,y,w,h}=e.box;assert.ok(x>=0&&y>=0&&w>=0&&h>=0&&x+w<=390.01&&y+h<=844.01,`${label}: viewport`);
+ assert.ok(Array.isArray(e.styles)&&Array.isArray(e.copy));assert.ok(e.accessibility&&typeof e.accessibility==='"'object');
+ assert.ok(e.behaviour.state"'!==undefined);assert.ok(e.behaviour.decided?.length,`${label}: decision`);
+ for(const ref of e.behaviour.decided){assert.match(ref,/''^DECIDED'"\\.md#[\\w-]+"'$/);const id=ref.split('"'#')[1];assert.ok(decided.includes("'`id="${id}"`)||entry(decided,id),`${label}: broken ${ref}`);}
+ }}
+});
+test('"'H18: all token and copy references resolve including property arrays and slots',()=>{
+ for(const j of journeys){const d=screen(j);for(const name of d.tokensUsed)native(typeof name==='string'?name:name.native);
+ for(const s of d.states)for(const e of s.elements||[]){for(const names of Object.values(e.tokens)){assert.ok(Array.isArray(names));names.forEach(native);}
+ for(const key of [e.copyKey,...(e.copyKeys||[])].filter(Boolean))copy(key);
+ for(const c of e.copy){assert.ok(c.slot);assert.equal(['copyKey','literal','data'].filter(k=>Object.hasOwn(c,k)).length,1);if(c.copyKey)copy(c.copyKey);}
+ for(const st of e.styles){assert.ok(st.property&&Object.hasOwn(st,'value'));assert.ok(st.from?.selector&&st.from?.file&&Number.isInteger(st.from?.line)&&st.from.line>0);assert.ok(Array.isArray(st.tokens));for(const t of st.tokens){native(t.native);assert.match(t.web,/"'^--/);assert.ok(Object.hasOwn(t,'"'value'));}}
+ }}
+});
+test('H19: typed styles flagged with provenance or documented exceptions; zero/layout/% plain',()=>{
+ for(const j of journeys){const d=screen(j);for(const s of d.states)for(const e of s.elements||[])for(const st of e.styles){
+ const exception=d.rawValues.exceptions.some(ex=>ex.property===st.property&&ex.value===st.value&&ex.from?.file===st.from?.file&&ex.from?.line===st.from?.line&&JSON.stringify(ex).match(/reason|note|exception/i));
+ if(typed(st.value))assert.ok(st.raw===true||exception,"'`${s.id}/${e.id}: unflagged ${st.property}: ${st.value}`);
+ if(st.raw===true){assert.ok(typed(st.value)||['"'word','copy','text'].includes(st.kind),"'`Layout flagged raw: ${st.value}`);assert.ok(st.from.file&&st.from.line);}
+ }
+ for(const r of d.rawValues.builtApp){assert.equal(r.raw,true);assert.ok(r.from?.file||r.file);assert.ok(Number.isInteger(r.from?.line||r.line));}
+ }
+});
+test('"'H20: every used block has parts/states/tokens/rules and accurate usedIn',()=>{
+ const used=new Map();for(const {s} of entries())for(const e of s.elements||[]){if("'!used.has(e.block))used.set(e.block,[]);used.get(e.block).push({s,e});}
+ for(const [block,rows]of used){assert.match(block,/''^['"\\w-]+"'$/);const spec=json(path.join(kit,'"'components',block+'.json'));assert.ok(spec.rules&&Object.keys(spec.rules).length);assert.ok(spec.parts&&Object.keys(spec.parts).length);assert.ok(spec.states&&Object.keys(spec.states).length);assert.ok(Array.isArray(spec.usedIn));
+ for(const {s,e}of rows){assert.ok(spec.usedIn.includes(s.id),"'`${block}: ${s.id}`);assert.ok(JSON.stringify(spec.parts).includes(e.part),`${block}: part ${e.part}`);assert.ok(JSON.stringify(spec.states).includes(e.blockState),`${block}: state ${e.blockState}`);}
+ }
+});
+test('"'H21: journey decisions, D-101 and configurable mock rulings',()=>{
+ const d=read(path.join(kit,'DECIDED.md')),o=read(path.join(kit,'OPEN.md'));
+ for(const title of ['Sign-in','OTP','Faster sign-in offer','Returning unlock','Home','Case page','Prescribe'])for(const text of [d,o])assert.ok(text.split('\\n').includes('## '+title),title);
+ const product=['o04','o05','o07','o08','o10','o11','o17','o18','o25','o26'],mock=['o01','o02','o03','o12','o15','o16','o19','o21','o22','o24'];
+ for(const id of [...product,...mock]){const e=entry(d,id);assert.ok(e,"'`Missing DECIDED ${id}`);assert.ok(!entry(o,id)&&!o.includes(`id="${id}"`),`Still OPEN ${id}`);if(product.includes(id))assert.match(e,/D-101/);else{assert.match(e,/'"\\[MOCK\\]/);assert.match(e,/keep configurable/i);}}
+ for(const e of d.split(/"'^### /m).slice(1)){assert.match(e,/''^['"\\w-]+\\s*·/);assert.match(e,/D-\\d+/);assert.match(e,/source/i);}
+});
+EOF" in /Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype
+ succeeded in 0ms:
+exec
+/bin/zsh -lc "cat >> tests/codex/handoff/journeys.test.mjs <<'EOF'
+test('H22: disk viewer exposes each journey and state without network-only loading',()=>{
+ const html=read(path.join(kit,'viewer/index.html'));
+ assert.doesNotMatch(html,/<(?:script|link)["'^>]+(?:src|href)=["'"']https?:/i);
+ // Follow local JS/data references; do not execute untrusted viewer code in Node.
+ let content=html;
+ for(const m of html.matchAll(/<script["'^>]+src=["'"'](["'^"'"']+)[\"']/gi))content+='\\n'+read(inside(path.posix.normalize('viewer/'+m[1])));
+ for(const j of journeys)assert.ok(content.includes(j),"'`Viewer missing journey ${j}`);
+ assert.ok(/states|stateId/.test(content),'"'No state navigation');
+ assert.ok(/tokensUsed/.test(content),'No tokens-used inspector');
+ assert.ok(/raw/.test(content)&&/red|#[fF]00|#[eEdD][\\da-fA-F]{5}/.test(content),'No raw red presentation');
+ // A fully embedded viewer or a local script may contain the states; dynamic local
+ // data navigation still needs the offline walkthrough recorded in CASES.md.
+ assert.ok("'!/fetch'"\\s*\\(\\s*[\"']https?:/i.test(content));
+});
+test('H23: external handoff excludes internal history and doctor-unit order wording',()=>{
+ function scan(dir){return fs.readdirSync(dir,{withFileTypes:true}).flatMap(e=>{assert.ok("'!e.isSymbolicLink());const p=path.join(dir,e.name);return e.isDirectory()?scan(p):[p];});}
+ for(const p of scan(kit)){if(!/'"\\.(md|json|html|js|mjs|css|ts|txt|svg)"'$/i.test(p)||path.basename(p)==='"'OFL.txt')continue;
+ const text=read(p);assert.doesNotMatch(text,/\\b(?:Netlify|Codex|Apurva|Swapnil|review rounds?|render rules|terminal.brief)\\b|(?:"'^|'"\\/)\\.git(?:\\/|\\b)|\\/Users\\//i,p);
+ for(const m of text.matchAll(/\\bDr\\.?\\s+[A-Z][a-z]+/g))assert.equal(m[0],'Dr. Kunal',p);
+ // Customer order identifiers and CSS order declarations are legitimate technical data.
+ for(const line of text.split('\\n').filter(l=>/\\border\\b/i.test(l)))assert.ok(/customer order (?:ID|identifier)|order[-_ ]?id|[\"']?order[\"']?\\s*:|\\border of\\b|\\b(?:reading|tab|focus|validation|display|sort|source|paint) order\\b|not [\"“]?order|never [\"“]?order/i.test(line),"'`${p}: ambiguous doctor-unit wording: ${line.slice(0,180)}`);
+ }
+});
+test('"'H24: source-only Home CSS mutation invalidates --check in a private overlay',()=>{
+ const temp=fs.mkdtempSync(path.join(os.tmpdir(),'handoff-home-'));
+ const replica=path.join(temp,'workspace/projects/portal');
+ function overlay(src,dst,selected){fs.mkdirSync(dst,{recursive:true});for(const ent of fs.readdirSync(src,{withFileTypes:true})){const a=path.join(src,ent.name),b=path.join(dst,ent.name),sub=selected.filter(s=>s===ent.name||s.startsWith(ent.name+'/'));
+ if(sub.includes(ent.name))fs.cpSync(a,b,{recursive:true});else if(sub.length)overlay(a,b,sub.map(s=>s.slice(ent.name.length+1)));else fs.symlinkSync(a,b);}}
+ const run=()=>spawnSync(process.execPath,['scripts/build-handoff.mjs','--check'],{cwd:replica,encoding:'utf8',timeout:8000});
+ try{overlay(root,replica,['scripts','handoff','app/screens/__private_overlay__']);fs.symlinkSync(path.resolve(root,'../../design-system'),path.join(temp,'workspace/design-system'));
+ const baseline=run();assert.equal(baseline.error,undefined);assert.equal(baseline.status,0,baseline.stderr+baseline.stdout);
+ // Replace only the replica symlink. Never open the app stylesheet or write its target.
+ const css=path.join(replica,'app/screens/home.css');fs.unlinkSync(css);fs.writeFileSync(css,'/* private freshness probe: replaced source */\\n');
+ const changed=run();assert.equal(changed.error,undefined);assert.ok(Number.isInteger(changed.status)&&changed.status"'!==0,'"'Changed Home source accepted');assert.doesNotMatch(changed.stderr+changed.stdout,/ENOENT|Cannot find module|SyntaxError|Traceback/);
+ }finally{fs.rmSync(temp,{recursive:true,force:true});}
+});
+test('oracle: raw classifier respects token references, zero, percentages and optical sizes',()=>{
+ for(const v of ['0','0 0','50%','transparent','flex','var(--tm-space-lg)','calc(100% - var(--tm-space-lg))'])assert.equal(typed(v),false,v);
+ for(const v of ['1px','2px','3px','31ch','#fff','rgb(1 2 3)','calc(100% - 2px)'])assert.equal(typed(v),true,v);
+ assert.equal(new Set(pictures.map(p=>p.id)).size,149);
+});
+EOF
+node --test tests/codex/handoff/ > /tmp/handoff-test-results.txt 2>&1; tail -18 /tmp/handoff-test-results.txt" in /Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype
+ succeeded in 228ms:
+      at TestContext.<anonymous> (file:///Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype/tests/codex/handoff/handoff.test.mjs:336:10)
+      at Test.runInAsyncScope (node:async_hooks:226:14)
+      at Test.run (node:internal/test_runner/test:1402:25)
+      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)
+      at Test.postRun (node:internal/test_runner/test:1542:19)
+      at Test.run (node:internal/test_runner/test:1467:12)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/codex/handoff/journeys.test.mjs:1:1
+✖ tests/codex/handoff/journeys.test.mjs (26.181583ms)
+  'test failed'
+
+exec
+/bin/zsh -lc 'head -65 /tmp/handoff-test-results.txt' in /Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype
+ succeeded in 0ms:
+✔ H01: required portable kit layout (1.667375ms)
+✖ H02: native references resolve, copied tokens and messages match source (2.678917ms)
+✖ H03: every copy reference resolves; all source Sign-in copy keys represented (7.264917ms)
+✔ H04: all 12 states, all visible source elements, complete element contracts (14.8595ms)
+✔ H05: typed reference values flagged with exact line; scaffolding excluded (14.123ms)
+✔ H10: red means typed size, colour or word; no unexplained built Sign-in red (60.680666ms)
+✔ H11: new size token references resolve to canonical native tokens (5.099292ms)
+✔ H12: prefix and logo accessible name have message keys and MSG consumers (2.902ms)
+✔ H13: native logo PNGs at 1x/2x/3x with locked SVG source sha256 (0.723209ms)
+✔ H14: D-98 questions are DECIDED, not OPEN (0.2815ms)
+✔ H06: no internal files, wording, personal details or external-repo dependencies (49.441792ms)
+✔ H07: AI pack points to real kit files and shares one instruction source (0.33825ms)
+✔ H08: four static TTFs, weight metadata, OFL, matching sha256 and platform setup (2.666875ms)
+✖ H09: --check passes fresh, fails after a source-only change (isolated replica) (84.080125ms)
+✔ oracle: state and DOM inventories are populated from the approved fixture (0.787875ms)
+✔ oracle: D-98 red classification and scaffold boundary (0.134166ms)
+<anonymous_script>:376
+} as const;
+  ^
+
+SyntaxError: Unexpected non-whitespace character after JSON at position 18064 (line 376 column 3)
+    at JSON.parse (<anonymous>)
+    at exported (file:///Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype/tests/codex/handoff/journeys.test.mjs:19:55)
+    at file:///Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype/tests/codex/handoff/journeys.test.mjs:21:16
+    at ModuleJob.run (node:internal/modules/esm/module_job:569:25)
+    at async node:internal/modules/esm/loader:650:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:105:5)
+
+Node.js v26.13.0
+✖ tests/codex/handoff/journeys.test.mjs (26.181583ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 13
+ℹ fail 4
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 294.276833
+
+✖ failing tests:
+
+test at tests/codex/handoff/handoff.test.mjs:71:1
+✖ H02: native references resolve, copied tokens and messages match source (2.678917ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  ... Skipped lines
+  
+    {
+  -   'call.calling': 'Calling {name}…',
+      'call.checkingHa': 'Checking for a Health Advisor…',
+      'call.connectingHa': 'Transferring…',
+      'call.doctorMissed': 'You didn’t answer the call.',
+      'call.endedEarly': 'Call too short to write a prescription.',
+      'call.forwardedTell': '“I’ve written your prescription. Our Health Advisor will call you back to help with the next steps.”',
+  ...
+      'call.waitingForHangup': 'Waiting for the call to end…',
+  -   'callback.confirm': 'Confirm callback',
+  -   'callback.date': 'Date',
+  -   'callback.dayToday': 'today',
+  -   'callback.dayTomorrow': 'tomorrow',
+      'callback.notReached': 'Couldn’t schedule the callback. The patient wasn’t reached.',
+  -   'callback.scheduled': 'Callback {day} at {time}',
+  -   'callback.time': 'Time',
+  -   'callback.title': 'Schedule callback',
+  -   'callback.today': 'Today',
+
+exec
+/bin/zsh -lc "python3 - <<'PY'
+p='tests/codex/handoff/journeys.test.mjs';s=open(p).read();a=s.index('function exported(');b=s.index('\\nconst tokens=',a);s=s[:a]+'''function exported(p,name){const s=read(p),start=s.indexOf('{',s.indexOf('export const '+name));let depth=0,quoted=false,escaped=false;for(let i=start;i<s.length;i++){const c=s[i];if(quoted){if(escaped)escaped=false;else if(c==='\\\\\\\\')escaped=true;else if(c==='\"')quoted=false;}else if(c==='\"')quoted=true;else if(c==='{')depth++;else if(c==='}'&&--depth===0)return JSON.parse(s.slice(start,i+1));}throw Error('Unclosed '+p);}'''+s[b:];open(p,'w').write(s)
+PY
+node --test tests/codex/handoff/ > /tmp/handoff-test-results.txt 2>&1; head -45 /tmp/handoff-test-results.txt" in /Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype
+ succeeded in 230ms:
+✔ H01: required portable kit layout (1.831959ms)
+✖ H02: native references resolve, copied tokens and messages match source (2.736958ms)
+✖ H03: every copy reference resolves; all source Sign-in copy keys represented (7.914167ms)
+✔ H04: all 12 states, all visible source elements, complete element contracts (16.996667ms)
+✔ H05: typed reference values flagged with exact line; scaffolding excluded (16.52775ms)
+✔ H10: red means typed size, colour or word; no unexplained built Sign-in red (67.150292ms)
+✔ H11: new size token references resolve to canonical native tokens (5.517375ms)
+✔ H12: prefix and logo accessible name have message keys and MSG consumers (3.160917ms)
+✔ H13: native logo PNGs at 1x/2x/3x with locked SVG source sha256 (0.503542ms)
+✔ H14: D-98 questions are DECIDED, not OPEN (0.306958ms)
+✔ H06: no internal files, wording, personal details or external-repo dependencies (55.40325ms)
+✔ H07: AI pack points to real kit files and shares one instruction source (0.39425ms)
+✔ H08: four static TTFs, weight metadata, OFL, matching sha256 and platform setup (1.2465ms)
+✖ H09: --check passes fresh, fails after a source-only change (isolated replica) (62.897333ms)
+✔ oracle: state and DOM inventories are populated from the approved fixture (0.791042ms)
+✔ oracle: D-98 red classification and scaffold boundary (0.131208ms)
+✖ H15: exact approved state partition and portable byte-identical pictures (4.4755ms)
+✖ H16: built states and precisely the three deferred A-only states (2.187ms)
+✖ H17: unique element identities, full fields, viewport geometry and decision links (1.753375ms)
+✖ H18: all token and copy references resolve including property arrays and slots (4.023916ms)
+✖ H19: typed styles flagged with provenance or documented exceptions; zero/layout/% plain (2.544667ms)
+✖ H20: every used block has parts/states/tokens/rules and accurate usedIn (1.975417ms)
+✖ H21: journey decisions, D-101 and configurable mock rulings (0.245833ms)
+✖ H22: disk viewer exposes each journey and state without network-only loading (1.236042ms)
+✖ H23: external handoff excludes internal history and doctor-unit order wording (1.781708ms)
+✖ H24: source-only Home CSS mutation invalidates --check in a private overlay (105.59575ms)
+✔ oracle: raw classifier respects token references, zero, percentages and optical sizes (0.151916ms)
+ℹ tests 27
+ℹ suites 0
+ℹ pass 14
+ℹ fail 13
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 281.849042
+
+✖ failing tests:
+
+test at tests/codex/handoff/handoff.test.mjs:71:1
+✖ H02: native references resolve, copied tokens and messages match source (2.736958ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  ... Skipped lines
+  
+    {
+
+codex
+The extended suite runs in under a second. It reports failures against the current kit, including missing journey files, stale foundation copy, and a failing freshness baseline. I fixed a test-parser error found during validation; the source-mutation tests correctly stop until their baseline passes.
+exec
+/bin/zsh -lc "cat >> tests/codex/handoff/CASES.md <<'EOF'
+
+## All-journey extension — H15 onward
+
+Run the complete suite with "'`node --test tests/codex/handoff/`. The latest tester instruction approves this test-first scope and overrides the earlier sample-name uncertainty: D-92 permits exactly `Dr. Kunal`. No app implementation is read; `app/state-map.js` is the sole app oracle. Existing H01–H14 IDs remain. H10–H13 now inspect kit evidence rather than app CSS/JS, canonical copy JSON, central CSS or brand SVG, which are outside this task'"'s permitted reads. Consequently H11 cannot prove applicable CSS selection, H12 cannot prove MSG calls, and H13 cannot independently authenticate the SVG hash; those remain review checks. H09 and H24 invoke the builder as a subprocess (the builder owns its source reads).
+
+Additional source legend (line numbers at authoring):
+
+- **A**: "'`docs/renders/2026-11-09-handoff-kit-all/TERMINAL-BRIEF.md`.
+- **R**: `docs/runs/RULINGS.md`.
+- **SM**: `app/state-map.js`, `pictures` begins line 3; each picture entry is the individual state oracle.
+- **U**: latest user message, “Kit contract for the new journeys”; bullet numbers counted below so these source references are reproducible even though the message has no filesystem line numbers.
+
+| U bullet | Contract source |
+|---|---|
+| 1 | Journey filenames and top-level shape |
+| 2 | Exact approved picture IDs and partition; total 149 |
+| 3 | State fields, both identical pictures, built390, rule, elements |
+| 4 | Three A-only deferred states; all others built with elements |
+| 5 | Element fields, box, tokens, styles, copy, accessibility, behaviour |
+| 6 | Every visible viewport element except icon internals / system keyboard |
+| 7 | Raw typed sizes/colours, source location, exceptions, red viewer |
+| 8 | Component specs for every used block |
+| 9 | Journey headings, decision format, D-101 and configurable mocks, case wording |
+| 10 | Disk viewer lists journeys and reaches states |
+| 11 | Fresh --check passes; changed-source --check fails |
+| 12 | No internal leakage; approved sample name |
+
+| ID | Pass/fail check (auto) | Source line |
+|---|---|---|
+| H15 | All seven files have required top-level fields; exact per-folder state set, no duplicates/extras; all 149 approved states; both picture paths stay inside kit, exist and equal canonical PNG bytes. | U:1–3; SM:3 onward; A:13–15,48–57; P:75,78 |
+| H16 | State rule cites feedback/app-logic; precisely three deferred states have built:false, later note and no elements; other states have elements and expected existing PNG built390. | U:3–4; A:56–57; P:75,78 |
+| H17 | Each element has unique nonempty ID and all contract fields, finite in-viewport geometry; accessibility object; behaviour state and DECIDED references resolve. | U:5–6; P:78; A:49–50 |
+| H18 | All tokensUsed names, property token arrays and style mappings resolve to canonical native leaf names; web name/value and source selector/file/positive line present; all copy references resolve, copy slots have exactly one key/literal/data source. H02/H03 retain whole-kit scans. | U:5; P:73,78; A:49; T:3 onward; M:2 onward |
+| H19 | Typed style sizes/colours must be raw:true or matched to a located documented exception. Raw records carry source provenance. Layout/zero/percentage-only values are not red. Includes small optical sizes. | U:7; P:76; A:50; R:33–36 (token-pass rulings) |
+| H20 | Every used block has component JSON, nonempty parts/states/rules; referenced parts and block states represented; usedIn includes each referencing state. | U:8; P:74; A:55 |
+| H21 | Both decision files contain every journey heading. All twenty ruled IDs absent from OPEN; ten Product entries cite D-101; ten mocks say [MOCK] and keep configurable. DECIDED entries have numbered decisions, source labels and prescribed heading form. | U:9; R:17–19; A:39–40 (overridden by R where conflicting); P:79 |
+| H22 | Viewer HTML/local scripts expose journey names, state navigation, tokensUsed and raw/red presentation; no remote script/style or HTTP-only fetch dependency. | U:10; A:56–57; P:75–76 |
+| H23 | Textual kit scan excludes internal people/tools/history/workspace paths and unauthorized doctor sample names. Order wording accepted only for customer identifiers, CSS order or explicit non-unit contexts. H06 retains broader secret/email/path checks. | U:9,12; B:32–35; A:39–40 |
+| H24 | Isolated replica baseline passes; replacing only its Home stylesheet makes --check fail without timeout/module/syntax/infrastructure error. Canonical Home CSS is never opened or changed by this tester. H09 independently mutates messages. Each subprocess has an 8-second timeout. | U:11; P:81; A:50–51 |
+
+### All-journey review checks (eye; cannot be proved by structural Node tests)
+
+- **E19:** Compare every built state'"'s elements and boxes with its approved 390 picture: every visible viewport element represented; correct parts, variants, tokens, copy, behaviour and accessibility; ignore SVG drawing/system-keyboard internals. Deferred states retain pictures only. Sources: U:3–6; A:49–50; P:78. No fabricated element-count oracle from a generator is accepted as proof.
+- **E20:** Inspect each component's actual parts × states → property token mapping, sizes and rules, including inherited/override CSS choice. H20 checks presence and joins; it does not prove semantic accuracy. Sources: U:8; A:55; P:74.
+- **E21:** Open viewer from disk, offline; reach every state; inspect element panel, working decision links and tokens tables; each H19 raw value appears red. Static H22 checks do not prove interactive reachability or paint. Sources: U:7,10; A:56–57; P:75–76.
+- **E22:** Compare decisions to every relevant rule in app-logic/feedback map; all gaps use configurable mock answers except genuinely undecided Product questions. Check neutral Pilot script for t13 in launch B (the approved 390 picture is knowingly stale). Sources: U:9; R:8,12,18–19; A:39–40; P:79.
+- **E23:** Inspect arbitrary personal names, metadata, images, and non-doctor identities that regex cannot reliably identify; only Dr. Kunal is approved. Mandatory font copyright/provenance remains exempt. Sources: U:12; B:32–35,113–115.
+- **E24:** Fresh-AI case/calling and Prescribe round, generation/CHANGES stability, fonts and independent FE walkthrough remain the original review obligations, extended across journeys. Sources: A:58–64; P:77,80–83. Node success does not claim them.
+
+### Execution evidence
+
+Authoring run: "'`node --test tests/codex/handoff/` completed in approximately 0.3 seconds [INFERRED: Node test-runner duration, local 2026-11-10]. Result: 27 tests, 14 pass, 13 fail [local Node test output, 2026-11-10]. All oracle self-checks passed. Current kit acceptance failures include absent new screen files, stale foundation copy, existing copy coverage and freshness baseline failures; these are not skipped or silently waived. Freshness mutation assertions cannot run until their replica baselines pass. Re-run after the builder produces the extended kit. No browser needed; no shared records changed.
+EOF
+node --check tests/codex/handoff/journeys.test.mjs
+rg -n '"'read\\(.*app/|readFileSync\\(.*app/' tests/codex/handoff/" in /Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype
+ succeeded in 0ms:
+tests/codex/handoff/journeys.test.mjs:14:vm.runInNewContext(read(path.join(root,'app/state-map.js')),sandbox);
+
+codex
+Added H15–H24 and source-linked acceptance cases under `tests/codex/handoff/`. Retained H01–H14, removing prohibited app-code reads.
+
+The suite checks journey/state coverage, picture bytes, element contracts, tokens/copy, raw values, components, decisions, leakage, viewer structure and isolated source freshness. Visual completeness remains an explicit review check.
+
+Validation: 27 tests ran in under one second; 14 passed, 13 failed against the current incomplete/stale kit. Only the permitted test folder changed.
+tokens used
+47,188
+Added H15–H24 and source-linked acceptance cases under `tests/codex/handoff/`. Retained H01–H14, removing prohibited app-code reads.
+
+The suite checks journey/state coverage, picture bytes, element contracts, tokens/copy, raw values, components, decisions, leakage, viewer structure and isolated source freshness. Visual completeness remains an explicit review check.
+
+Validation: 27 tests ran in under one second; 14 passed, 13 failed against the current incomplete/stale kit. Only the permitted test folder changed.

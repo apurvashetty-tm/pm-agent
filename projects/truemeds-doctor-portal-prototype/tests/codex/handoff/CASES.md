@@ -117,3 +117,55 @@ Source: `docs/context/decision_log.md:992–996`; `docs/renders/2026-11-09-hando
 Eye checks remain necessary: viewer actually paints only problems red, PNG pixels match the locked SVG without redraw, and token changes produce no visual difference. PNG header/hash checks do not prove rendered pixel identity. Existing manual cases are superseded wherever they ask for red layout/zero values or scaffolding.
 
 Tests are intentionally written before implementation. Run the full suite after regeneration; do not weaken failures to match an unfinished kit. Only tests/codex/handoff/ is modified by this tester; no shared handoff/context record is written.
+
+## All-journey extension — H15 onward
+
+Run the complete suite with `node --test tests/codex/handoff/`. The latest tester instruction approves this test-first scope and overrides the earlier sample-name uncertainty: D-92 permits exactly `Dr. Kunal`. No app implementation is read; `app/state-map.js` is the sole app oracle. Existing H01–H14 IDs remain. H10–H13 now inspect kit evidence rather than app CSS/JS, canonical copy JSON, central CSS or brand SVG, which are outside this task's permitted reads. Consequently H11 cannot prove applicable CSS selection, H12 cannot prove MSG calls, and H13 cannot independently authenticate the SVG hash; those remain review checks. H09 and H24 invoke the builder as a subprocess (the builder owns its source reads).
+
+Additional source legend (line numbers at authoring):
+
+- **A**: `docs/renders/2026-11-09-handoff-kit-all/TERMINAL-BRIEF.md`.
+- **R**: `docs/runs/RULINGS.md`.
+- **SM**: `app/state-map.js`, `pictures` begins line 3; each picture entry is the individual state oracle.
+- **U**: latest user message, “Kit contract for the new journeys”; bullet numbers counted below so these source references are reproducible even though the message has no filesystem line numbers.
+
+| U bullet | Contract source |
+|---|---|
+| 1 | Journey filenames and top-level shape |
+| 2 | Exact approved picture IDs and partition; total 149 |
+| 3 | State fields, both identical pictures, built390, rule, elements |
+| 4 | Three A-only deferred states; all others built with elements |
+| 5 | Element fields, box, tokens, styles, copy, accessibility, behaviour |
+| 6 | Every visible viewport element except icon internals / system keyboard |
+| 7 | Raw typed sizes/colours, source location, exceptions, red viewer |
+| 8 | Component specs for every used block |
+| 9 | Journey headings, decision format, D-101 and configurable mocks, case wording |
+| 10 | Disk viewer lists journeys and reaches states |
+| 11 | Fresh --check passes; changed-source --check fails |
+| 12 | No internal leakage; approved sample name |
+
+| ID | Pass/fail check (auto) | Source line |
+|---|---|---|
+| H15 | All seven files have required top-level fields; exact per-folder state set, no duplicates/extras; all 149 approved states; both picture paths stay inside kit, exist and equal canonical PNG bytes. | U:1–3; SM:3 onward; A:13–15,48–57; P:75,78 |
+| H16 | State rule cites feedback/app-logic; precisely three deferred states have built:false, later note and no elements; other states have elements and expected existing PNG built390. | U:3–4; A:56–57; P:75,78 |
+| H17 | Each element has unique nonempty ID and all contract fields, finite in-viewport geometry; accessibility object; behaviour state and DECIDED references resolve. | U:5–6; P:78; A:49–50 |
+| H18 | All tokensUsed names, property token arrays and style mappings resolve to canonical native leaf names; web name/value and source selector/file/positive line present; all copy references resolve, copy slots have exactly one key/literal/data source. H02/H03 retain whole-kit scans. | U:5; P:73,78; A:49; T:3 onward; M:2 onward |
+| H19 | Typed style sizes/colours must be raw:true or matched to a located documented exception. Raw records carry source provenance. Layout/zero/percentage-only values are not red. Includes small optical sizes. | U:7; P:76; A:50; R:33–36 (token-pass rulings) |
+| H20 | Every used block has component JSON, nonempty parts/states/rules; referenced parts and block states represented; usedIn includes each referencing state. | U:8; P:74; A:55 |
+| H21 | Both decision files contain every journey heading. All twenty ruled IDs absent from OPEN; ten Product entries cite D-101; ten mocks say [MOCK] and keep configurable. DECIDED entries have numbered decisions, source labels and prescribed heading form. | U:9; R:17–19; A:39–40 (overridden by R where conflicting); P:79 |
+| H22 | Viewer HTML/local scripts expose journey names, state navigation, tokensUsed and raw/red presentation; no remote script/style or HTTP-only fetch dependency. | U:10; A:56–57; P:75–76 |
+| H23 | Textual kit scan excludes internal people/tools/history/workspace paths and unauthorized doctor sample names. Order wording accepted only for customer identifiers, CSS order or explicit non-unit contexts. H06 retains broader secret/email/path checks. | U:9,12; B:32–35; A:39–40 |
+| H24 | Isolated replica baseline passes; replacing only its Home stylesheet makes --check fail without timeout/module/syntax/infrastructure error. Canonical Home CSS is never opened or changed by this tester. H09 independently mutates messages. Each subprocess has an 8-second timeout. | U:11; P:81; A:50–51 |
+
+### All-journey review checks (eye; cannot be proved by structural Node tests)
+
+- **E19:** Compare every built state's elements and boxes with its approved 390 picture: every visible viewport element represented; correct parts, variants, tokens, copy, behaviour and accessibility; ignore SVG drawing/system-keyboard internals. Deferred states retain pictures only. Sources: U:3–6; A:49–50; P:78. No fabricated element-count oracle from a generator is accepted as proof.
+- **E20:** Inspect each component's actual parts × states → property token mapping, sizes and rules, including inherited/override CSS choice. H20 checks presence and joins; it does not prove semantic accuracy. Sources: U:8; A:55; P:74.
+- **E21:** Open viewer from disk, offline; reach every state; inspect element panel, working decision links and tokens tables; each H19 raw value appears red. Static H22 checks do not prove interactive reachability or paint. Sources: U:7,10; A:56–57; P:75–76.
+- **E22:** Compare decisions to every relevant rule in app-logic/feedback map; all gaps use configurable mock answers except genuinely undecided Product questions. Check neutral Pilot script for t13 in launch B (the approved 390 picture is knowingly stale). Sources: U:9; R:8,12,18–19; A:39–40; P:79.
+- **E23:** Inspect arbitrary personal names, metadata, images, and non-doctor identities that regex cannot reliably identify; only Dr. Kunal is approved. Mandatory font copyright/provenance remains exempt. Sources: U:12; B:32–35,113–115.
+- **E24:** Fresh-AI case/calling and Prescribe round, generation/CHANGES stability, fonts and independent FE walkthrough remain the original review obligations, extended across journeys. Sources: A:58–64; P:77,80–83. Node success does not claim them.
+
+### Execution evidence
+
+Authoring run: `node --test tests/codex/handoff/` completed in approximately 0.3 seconds [INFERRED: Node test-runner duration, local 2026-11-10]. Result: 27 tests, 14 pass, 13 fail [local Node test output, 2026-11-10]. All oracle self-checks passed. Current kit acceptance failures include absent new screen files, stale foundation copy, existing copy coverage and freshness baseline failures; these are not skipped or silently waived. Freshness mutation assertions cannot run until their replica baselines pass. Re-run after the builder produces the extended kit. No browser needed; no shared records changed.
