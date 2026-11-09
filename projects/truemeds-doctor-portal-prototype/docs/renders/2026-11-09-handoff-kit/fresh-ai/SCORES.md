@@ -52,3 +52,12 @@ Kit fixes after round 3 (not re-tested; the brief allows three rounds): o22 (dyn
 Kit fixes after round 4 (not re-tested: the fix brief runs one round): AGENTS.md now says take the logo's height from the PNG itself (`Image.resolveAssetSource`), never type the artwork's numbers; the spinner animation is marked `timing: true` ("no motion token yet, don't type it", OPEN o24) instead of a layout value; o24–o26 added for the three new questions.
 
 **Verdict round 4:** questions PASS (both 0 DECIDED). Strict code FAIL — one cause was the kit (fixed), one is a missing motion token (needs a decision; see REPORT-2).
+
+
+## Round 5 (token pass, D-99) — Codex only, same prompt, kit copied alone to a folder outside any repo, read-only
+
+| Tool | DECIDED | OPEN | New | Code (strict) |
+|---|---|---|---|---|
+| Codex | **0** | o01–o05, o07, o08, o10–o12, o15–o19, o21–o26, grouped by owner (o09 noted as answered) | 0 | **PASS**: no hex / rgb, every word from `messages`, every size from `tokens` (incl. `tokens.target.min`, `tokens.controlHeight.lg`), spinner turn `tokens.duration.spinner`, logo ratio from the PNG (`Image.resolveAssetSource`), no constants file. Only literals: `'100%'`, `0`, `'transparent'` and ms-to-seconds arithmetic. |
+
+**Verdict round 5:** questions PASS, strict code PASS. Codex still cites o24 for the spinner ("the component spec now supplies this token") — o24 can be closed now that `tokens.duration.spinner` exists (main thread: `open_questions.md`). Transcript: `round-5/codex-transcript.txt`, answer: `round-5/codex-final.md`.
