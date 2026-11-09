@@ -17,7 +17,7 @@ You build the React Native components and screens. This kit is the contract: tok
 | [`foundation/messages.ts`](foundation/messages.ts) | Every word the app shows, by key (`messages['signin.welcome']`), with `message(key, values)` for `{placeholders}`. |
 | [`foundation/icons.ts`](foundation/icons.ts) | Every icon as an SVG string; render with `react-native-svg` `SvgXml`, stroke colour from the `color` prop. |
 | [`foundation/fonts/`](foundation/fonts/FONTS.md) | Plus Jakarta Sans, 4 static TTF weights, licence and iOS / Android setup. |
-| [`foundation/logo/`](foundation/logo/truemeds-for-doctors.svg) | The "truemeds for doctors" lockup. Use as is; never redraw or recolour. |
+| [`foundation/brand/`](foundation/brand/logo.json) | The "truemeds for doctors" lockup as PNG @1x / @2x / @3x for the phone (`logo.json`: source and sha256). `foundation/logo/` holds the source SVG. Never redraw or recolour. |
 | [`components/`](components/button.json) | One JSON spec per building block used on Sign-in: parts × states → tokens, sizes, rules, cropped pictures. |
 | [`screens/sign-in.json`](screens/sign-in.json) | Every element of every Sign-in state (12 states). Facts, not prose: copy these. |
 | [`screens/pictures/`](screens/pictures/sign-in_default_w390.png) | The approved pictures of each state at 360 and 390 wide. |
@@ -37,13 +37,18 @@ You build the React Native components and screens. This kit is the contract: tok
 6. **Server-side limits.** The app shows limits (attempts, waits, locks); the server enforces them. Never hard-code a wait time: the server sends when the wait ends.
 7. **Don't guess product behaviour.** Check `DECIDED.md` first. If the answer is in `OPEN.md`, build the current assumption and keep it easy to change. Ask only questions that are in `OPEN.md` or in neither file.
 
-## Values that are not tokens
+## Every value has a token or a key
 
-A few things on this screen have no token: border and outline widths (1 / 2), the logo width (166), icon and spinner sizes (20 / 16), layout keywords (`flex`, `100%`) and two fixed strings (the `+91` prefix and the logo's accessible name). Each is listed in `screens/sign-in.json` → `rawValues.builtApp`, with `raw: true`, its `kind` (`size`, `colour`, `keyword`, `zero`, `copy`) and the source line. Shown red in the viewer.
+Every size, colour and word on Sign-in comes from `tokens` or `messages`, including border widths (`tokens.borderWidth.default`), the focus ring (`tokens.focusRing.width` / `.offset`), icon and spinner sizes (`tokens.iconSize.*`, `tokens.spinner.size` / `.ring`), the logo width (`tokens.logoLockup.width`), the `+91` prefix (`messages['signin.phonePrefix']`) and the logo's accessible name (`messages['signin.logoAlt']`). **Never create a constants file of numbers or strings.** If you need a value that has neither, it's a question for `OPEN.md`, not a constant.
 
-- Put any size you need from that list in **one constants file** (for example `layout.ts`), named after what it is (`borderWidth`, `logoWidth`, `iconSize`), never as numbers scattered in screens.
-- Never copy a `kind: "colour"` entry. There is one (the busy spinner's white ring); `OPEN.md` names the token to use for it.
-- `rawValues.approvedReference` lists the same kind of values from the approved reference file; it is for audit, not for building.
+- Layout values (`flex`, `center`, `nowrap`, `100%`, `0`) aren't tokens and don't need to be: they are shown plainly in the kit (`layout: true`).
+- One value has no token yet: the busy spinner's turn speed (`timing: true` in the JSON). Don't type it; it's `OPEN.md` o24 for Design.
+- One documented exception: the subtitle's `max-width: 31ch` (a text measure; React Native has no `ch` unit). Leave it out; see `OPEN.md` o19.
+- `screens/sign-in.json` → `rawValues.builtApp` lists anything typed that is not a token (red in the viewer). It is empty for Sign-in. `rawValues.approvedReference` audits the approved reference file; it is not for building.
+
+## Logo on the phone
+
+Use the PNG exports in `foundation/brand/` (`truemeds-for-doctors.png` in three densities, suffixes `@1x` / `@2x` / `@3x`; React Native picks the right one): width `tokens.logoLockup.width`, height from the image's own shape (`const src = Image.resolveAssetSource(require('./truemeds-for-doctors.png'))`, then `aspectRatio: src.width / src.height`), `accessibilityLabel={messages['signin.logoAlt']}`. Don't type the artwork's numbers. The SVG embeds an image that react-native-svg can't draw. Never redraw or recolour the logo.
 
 ## Screen file — `screens/sign-in.json`
 
@@ -91,4 +96,4 @@ Notes:
 1. Read `DECIDED.md` and `OPEN.md` (both short).
 2. Follow the skill: `.claude/skills/truemeds-native-ui/SKILL.md`.
 3. Build blocks first (`components/*.json`), then the screen (`screens/sign-in.json`), state by state; compare against `screens/pictures/`.
-4. Before you finish: search your code for `#`, `rgb`, numbers in styles and quoted user-facing strings. Each must be a `tokens.*` / `messages[...]` reference or a named constant from the raw-values list.
+4. Before you finish: search your code for `#`, `rgb`, numbers in styles and quoted user-facing strings. Each must be a `tokens.*` / `messages[...]` reference (or a layout value such as `flex: 1`).

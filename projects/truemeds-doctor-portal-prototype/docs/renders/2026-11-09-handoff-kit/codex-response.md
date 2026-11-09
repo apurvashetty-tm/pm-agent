@@ -20,7 +20,7 @@ Verified fixed by Codex: B1, S2, N1, N2. Remaining:
 
 | # | Finding | Verdict | What changed |
 |---|---|---|---|
-| R1 | Scoring counts the constants-file sizes and the two literals (`+91`, logo name) as clean; brief §9 says tokens / messages only | **Valid** | Not fixable inside this job: no token exists for border width (1), logo width (166), icon (20) or spinner (16) sizes, and no message key for `+91` or the logo's accessible name; `design-system/` and `ui-screens/` are read-only here. SCORES and REPORT now mark code as **conditional**; NEEDS-APURVA asks for the tokens / keys or an explicit exception. |
+| R1 | Scoring counts the constants-file sizes and the two literals (`+91`, logo name) as clean; brief §9 says tokens / messages only | **Valid** | (Resolved later by D-98: tokens and message keys added — see third pass.) At the time not fixable inside the job: no token exists for border width (1), logo width (166), icon (20) or spinner (16) sizes, and no message key for `+91` or the logo's accessible name; `design-system/` and `ui-screens/` are read-only here. SCORES and REPORT now mark code as **conditional**; NEEDS-APURVA asks for the tokens / keys or an explicit exception. |
 | R2 | No completed pass recorded | Timing (round 3 was running) | Round 3 scored in `fresh-ai/SCORES.md`. |
 | R3 | S1 partial: `state-map.js`, `icons.js`, other global stylesheets not hashed | **Valid, fixed** | Added (67 → 72 source files). |
 | R4 | S3: one blanket keyboard regex; ids never checked | **Valid, fixed** | Each MOCK entry matches its own line; the build fails if a MOCK maps to an id missing from OPEN.md. |
@@ -28,3 +28,14 @@ Verified fixed by Codex: B1, S2, N1, N2. Remaining:
 | R6 | Font source deviation | Valid — recorded | `google/fonts` ships only the variable TTF; static files are the upstream files at the commit Google Fonts pins (FONTS.md). Listed in NEEDS-APURVA for explicit acceptance. |
 
 No third pass (brief: re-run once).
+
+## Third pass (`codex-critique-3.md`, fix brief D-98)
+
+Verified by Codex: tokens and keys resolve, zero unexplained red, scaffolding excluded, PNG logo exports + source hash, o06/o13/o14/o20 in DECIDED, font source recorded, `--check` passes, all 86 baseline / after compare pairs pixel-identical (80 exact, 6 accepted, 0 failed).
+
+| # | Finding | Verdict | What changed |
+|---|---|---|---|
+| T1 | Round 4 fails strict code: logo `220 / 54` (both tools), spinner timing (both) | **Valid** | Logo: the kit's own AGENTS.md told them to type the ratio — fixed (take it from the PNG). Spinner timing: no motion token exists and D-98 doesn't add one — OPEN o24, raised to the main thread. Not re-run (one round in the fix brief). |
+| T2 | `0.8s` labelled as a layout value | **Valid, fixed** | Durations are now `timing: true` with "no motion token yet, don't type it (OPEN o24)". |
+| T3 | REPORT-2 missing; SCORES / response stale | Valid | SCORES round 4 + verdict, this section, REPORT-2 written. |
+| T4 | `B3b` id used twice | **Valid, fixed** | Countdown-end journey is now `B3d`; 61/61 pass. |

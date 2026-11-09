@@ -10,23 +10,22 @@ Generated from the product rules — do not edit by hand.
 | [o03](#o03) | Send OTP again for the same number while the resend wait is still running: what does the server answer? | Backend |
 | [o04](#o04) | More than 10 digits that aren't a +91 or 0 prefix: cut silently or show a message? | Product |
 | [o05](#o05) | Should Sign-in show an offline notice before the doctor taps Send OTP (passive offline)? | Product |
-| [o06](#o06) | When the "Try again in m:ss" countdown ends, does the notice stay until the number changes, or go away? | Product |
 | [o07](#o07) | Is the logo's 16 from the top measured from the screen edge or from the safe area (status bar, notch)? | Product |
 | [o08](#o08) | Android back gesture on Sign-in (the first screen): leave the app, or stay? | Product |
 | [o09](#o09) | The prototype draws a number keyboard in its pictures. Do we draw one? | — (prototype only; no action) |
 | [o10](#o10) | Coming back from OTP (Change): is the number kept, and does the first typed digit replace it? | Product |
 | [o11](#o11) | Terms, Privacy and support links: final URLs, and where are they configured? | Product + Ops |
-| [o13](#o13) | The busy spinner's ring is drawn in a raw white (#fff) in the design system. Which token? | Design |
-| [o14](#o14) | The logo file embeds the Truemeds logo as an image inside the SVG (needed to keep it unchanged). react-native-svg may not draw embedded images. Is there a native-ready version? | Design |
 | [o15](#o15) | Send OTP API: endpoint, request and the shape of each answer (sent, locked, not registered, couldn't send, too many attempts, inactive). Does "too many attempts" return an end time or seconds left? | Backend |
 | [o16](#o16) | How long does the app wait for Send OTP before showing "Couldn't send the code."? | Backend + Product |
 | [o17](#o17) | On the phone, does Sign up open the system browser or a browser inside the app? | Product |
 | [o18](#o18) | If the doctor changes the number and then types the old one back, should its earlier answer (too many attempts, inactive) show again without a new Send OTP? | Product |
 | [o19](#o19) | Some web styles have no native equivalent: balanced line breaks for titles and notices (iOS), the subtitle's 31-character width limit, and the 2px focus ring for hardware keyboards. Drop or approximate? | Design |
-| [o20](#o20) | A server notice sits 8 below the field by the rule, but the approved pictures and the build measure 16 (the field's 8 gap plus the notice's own 8 margin). Which is right? | Design |
 | [o21](#o21) | Is "New to Truemeds? Sign up" a link inside a sentence (exempt from the 48 tap target) or a standalone link (48 tall)? | Design |
 | [o22](#o22) | Should text grow with the phone's font-size setting (dynamic type), and is there a dark mode? | Design + Product |
 | [o23](#o23) | Expo or bare React Native CLI, and which navigation library? | App team |
+| [o24](#o24) | How fast does the busy spinner turn, and does it stop when the phone's reduce-motion setting is on? | Design |
+| [o25](#o25) | "New to Truemeds?" and "Sign up" are two copy entries; the space between them is typed in code. One entry with a {link} placeholder instead? | Product |
+| [o26](#o26) | What does "Call Doctor Ops" do on a device that can't make calls (tablet, no SIM)? | Product + Ops |
 | [o12](#o12) | How long does a signed-in session last before OTP is asked again? | Backend + Product |
 
 <a id="o01"></a>
@@ -63,12 +62,6 @@ Generated from the product rules — do not edit by hand.
 - **Who answers:** Product
 - **References:** D-65
 
-<a id="o06"></a>
-### o06 · When the "Try again in m:ss" countdown ends, does the notice stay until the number changes, or go away?
-
-- **Current assumption:** Current build: when the wait ends the button returns to Send OTP and the notice goes away: `if (clock.now() >= m.until) { m.button = "default"; m.notice = null; }` — *Sign-in build*
-- **Who answers:** Product
-
 <a id="o07"></a>
 ### o07 · Is the logo's 16 from the top measured from the screen edge or from the safe area (status bar, notch)?
 
@@ -100,20 +93,6 @@ Generated from the product rules — do not edit by hand.
 - **Current assumption:** Sign-up URL and the Doctor Ops number are answered (d11, d12); only Terms and Privacy are open, and all links must be configurable. **Safe placeholder:** Terms/Privacy point to a "link pending" page. `[MOCK ASSUMPTION]` — *OQ-021*
 - **Who answers:** Product + Ops
 - **References:** OQ-021
-
-<a id="o13"></a>
-### o13 · The busy spinner's ring is drawn in a raw white (#fff) in the design system. Which token?
-
-- **Current assumption:** Assumption [RECOMMENDED]: tokens.color.content.inverse, the token the busy button's label uses (white). The ring's open quarter is transparent. L2 — Loading primary buttons: brand-blue fill, white label, white spinner, on every screen (sign-in "Sending OTP", OTP "Verifying", any future loading primary). — *Design rules L2*
-- **Who answers:** Design
-- **References:** D-46
-
-<a id="o14"></a>
-### o14 · The logo file embeds the Truemeds logo as an image inside the SVG (needed to keep it unchanged). react-native-svg may not draw embedded images. Is there a native-ready version?
-
-- **Current assumption:** Only foundation/logo/truemeds-for-doctors.svg exists. Check it on a device first; never redraw or recolour it (d19). — *Kit*
-- **Who answers:** Design
-- **References:** D-02
 
 <a id="o15"></a>
 ### o15 · Send OTP API: endpoint, request and the shape of each answer (sent, locked, not registered, couldn't send, too many attempts, inactive). Does "too many attempts" return an end time or seconds left?
@@ -148,12 +127,6 @@ Generated from the product rules — do not edit by hand.
 - **Who answers:** Design
 - **References:** D-47
 
-<a id="o20"></a>
-### o20 · A server notice sits 8 below the field by the rule, but the approved pictures and the build measure 16 (the field's 8 gap plus the notice's own 8 margin). Which is right?
-
-- **Current assumption:** Build and approved pictures: 16 (see screens/sign-in.json, element notice, spacing.above). **Three gaps only:** tight `--tm-space-sm` (8): label↔field, field↔helper, and a result notice ↔ the control it came from · related `--tm-space-lg` (16): items within a group, **and cards stacked one above another — the same gap everywhere cards stack, on the case page, Prescribe and Profile** · section `--tm-space-2xl` (32): between groups. Spare vertical space goes between the content and a pinned button, never inside a group. Home-base screens use 3xl (48) as the hero gap between logo and title. — *Design rules 8.3*
-- **Who answers:** Design
-
 <a id="o21"></a>
 ### o21 · Is "New to Truemeds? Sign up" a link inside a sentence (exempt from the 48 tap target) or a standalone link (48 tall)?
 
@@ -171,6 +144,25 @@ Generated from the product rules — do not edit by hand.
 
 - **Current assumption:** Not set by the kit: the app team owns the components, screens and project set-up. Sign-in hands off to OTP (or locked OTP) after Send OTP (d10, d25). — *Kit*
 - **Who answers:** App team
+
+<a id="o24"></a>
+### o24 · How fast does the busy spinner turn, and does it stop when the phone's reduce-motion setting is on?
+
+- **Current assumption:** No motion token exists. The web turns it once every 0.8 s and stops it under reduce motion. Animations (sheets, toasts) respect the phone's reduce-motion setting. — *Design rules 9.8*
+- **Who answers:** Design
+
+<a id="o25"></a>
+### o25 · "New to Truemeds?" and "Sign up" are two copy entries; the space between them is typed in code. One entry with a {link} placeholder instead?
+
+- **Current assumption:** Two keys today: signin.signup and signin.signupLink. — *Message rules*
+- **Who answers:** Product
+
+<a id="o26"></a>
+### o26 · What does "Call Doctor Ops" do on a device that can't make calls (tablet, no SIM)?
+
+- **Current assumption:** Not defined. The support number also takes WhatsApp (d11). — *Kit*
+- **Who answers:** Product + Ops
+- **References:** OQ-021
 
 <a id="o12"></a>
 ### o12 · How long does a signed-in session last before OTP is asked again?

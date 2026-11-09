@@ -160,32 +160,127 @@ test('H04: all 12 states, all visible source elements, complete element contract
   }
 });
 
-function rawDeclarations() {
-  const start=html.indexOf('<style>')+7, css=html.slice(start,html.indexOf('</style>',start));
-  // Preserve offsets while stripping comments. Includes review, capture and keyboard
-  // CSS: the brief says list every raw value, not only the winning screen rules.
+// D-98: audit screen rules, excluding the reference document's scaffolding.
+function declarations(css, baseLine = 1) {
   const clean=css.replace(/\/\*[\s\S]*?\*\//g,m=>' '.repeat(m.length));
   const out=[];
-  for(const m of clean.matchAll(/([\w-]+)\s*:\s*([^;{}]+)(?=;|})/g)) {
-    const value=m[2].trim();
-    const residual=value.replace(/var\(--[\w-]+\)/g,'').replace(/\s|!important/g,'');
-    if(!residual) continue;
-    const line=html.slice(0,start+m.index).split('\n').length;
-    out.push({property:m[1],value,line});
+  for(const rule of clean.matchAll(/([^{}]+)\{([^{}]*)\}/g)) {
+    const selector=rule[1].trim();
+    if(selector.split(',').every(s=>/^(?:html\b|body\b|\.review-controls)/.test(s.trim()))) continue;
+    for(const m of rule[2].matchAll(/([\w-]+)\s*:\s*([^;{}]+)(?=;|$)/g)) {
+      const value=m[2].trim();
+      const offset=rule.index+rule[0].indexOf('{')+1+m.index;
+      out.push({selector,property:m[1],value,line:baseLine+(css.slice(0,offset).match(/\n/g)||[]).length});
+    }
   }
   return out;
 }
-test('H05: every non-token CSS declaration is flagged with exact source line', () => {
+function typedKind(value) {
+  const v=value.replace(/var\(--[\w-]+\)/g,'').replace(/!important/g,'');
+  if(/#[0-9a-f]{3,8}\b|(?:rgba?|hsla?|oklch|color)\(|\b(?:white|black|red|blue)\b/i.test(v)) return 'colour';
+  if(/(?:\d*\.)?\d+(?:px|ch|r?em|[ds]?v[wh]|pt|%)\b/.test(v)) return 'size';
+  return null;
+}
+function rawDeclarations() {
+  const start=html.indexOf('<style>')+7;
+  return declarations(html.slice(start,html.indexOf('</style>',start)),html.slice(0,start).split('\n').length)
+    .filter(d=>typedKind(d.value));
+}
+function rawRecords() {
   const records=[];
   for(const f of files(kit).filter(p=>p.endsWith('.json')&&!p.includes('/foundation/'))) walk(JSON.parse(read(f)),v=>{
     if(v&&typeof v==='object'&&v.raw===true) records.push(v);
   });
-  for(const declaration of rawDeclarations()) {
-    assert.ok(records.some(r=>{
+  return records;
+}
+function documentedException(r) {
+  // Only D-98's expressly accepted text measure; arbitrary exception labels cannot waive failures.
+  return r.property==='max-width' && r.value==='31ch' && /31ch/.test(JSON.stringify(screen()))
+    && /(?:text measure|documented exception)/i.test(JSON.stringify(screen()));
+}
+test('H05: typed reference values flagged with exact line; scaffolding excluded', () => {
+  const records=rawRecords();
+  for(const d of rawDeclarations()) {
+    assert.ok(documentedException(d)||records.some(r=>{
       const text=JSON.stringify(r);
-      return text.includes('sign-in.html') && r.value===declaration.value && r.property===declaration.property
-        && new RegExp(`(?:"(?:line|sourceLine)"\\s*:\\s*${declaration.line}\\b|:${declaration.line}\\b)`).test(text);
-    }),`Unflagged sign-in.html:${declaration.line} ${declaration.property}: ${declaration.value}`);
+      return text.includes('sign-in.html') && r.value===d.value && r.property===d.property
+        && new RegExp(`(?:"(?:line|sourceLine)"\\s*:\\s*${d.line}\\b|:${d.line}\\b)`).test(text);
+    }),`Unflagged sign-in.html:${d.line} ${d.property}: ${d.value}`);
+  }
+  for(const r of screen().rawValues.approvedReference) {
+    assert.doesNotMatch(r.selector||'',/^(?:html\b|body\b|\.review-controls)/,'Scaffolding leaked into reference audit');
+  }
+});
+test('H10: red means typed size, colour or word; no unexplained built Sign-in red',()=>{
+  const records=rawRecords();
+  for(const r of records) {
+    assert.ok(typedKind(r.value||'') || ['copy','word','text'].includes(r.kind),`Layout/zero flagged red: ${JSON.stringify(r)}`);
+    if(!JSON.stringify(r).includes('sign-in.html')) assert.ok(documentedException(r),`Unexplained built red: ${JSON.stringify(r)}`);
+  }
+  for(const state of states()) for(const e of state.elements) {
+    for(const style of e.styles||[]) {
+      if(typedKind(style.value||'')) assert.ok(style.raw===true || documentedException(style) ||
+        (style.tokens?.length && !typedKind(style.value.replace(/var\(--[\w-]+\)/g,''))),`Unflagged ${state.id}/${e.id}: ${JSON.stringify(style)}`);
+      for(const t of style.tokens||[]) assert.ok(!t.unmapped && t.native && hasToken(t.native),`Unmapped token: ${JSON.stringify(t)}`);
+    }
+    for(const c of e.copy||[]) assert.ok(!c.literal,`Typed copy: ${JSON.stringify(c)}`);
+  }
+  for(const d of declarations(read(path.join(project,'app/screens/sign-in.css')))) {
+    assert.ok(!typedKind(d.value)||documentedException(d),`Token-less Sign-in CSS: ${d.property}: ${d.value}`);
+  }
+});
+test('H11: new size token references resolve to canonical native tokens',()=>{
+  const map=JSON.parse(read(path.join(kit,'foundation/token-map.json')));
+  const text=JSON.stringify(map);
+  for(const row of map.tokens) assert.ok(hasToken(row.native), `Unknown canonical native token ${row.native}`);
+  const central=declarations(read(path.resolve(project,'../../design-system/truemeds.css')));
+  for(const [selector,property] of [[/tm-spinner/, 'width'], [/tm-spinner/, 'height'], [/tm-spinner/, 'border'], [/tm-notice.*tm-icon/, 'width'], [/focus-visible/, 'outline'], [/focus-visible/, 'outline-offset']]) {
+    const candidates=central.filter(d=>selector.test(d.selector)&&d.property===property);
+    assert.ok(candidates.some(d=>/var\(--/.test(d.value)&&!typedKind(d.value)), `Missing tokenized ${selector} ${property}`);
+  }
+  const css=read(path.join(project,'app/screens/sign-in.css'));
+  for(const property of ['width','border-right']) {
+    const d=declarations(css).find(d=>d.property===property && /login-(?:logo|prefix)/.test(d.selector));
+    assert.ok(d,`Missing ${property} contract`);
+    const refs=[...d.value.matchAll(/var\((--[\w-]+)\)/g)];
+    assert.ok(refs.length,`Missing token for ${property}`);
+    for(const [,name] of refs) assert.ok(text.includes(name),`Missing native mapping ${name}`);
+  }
+  // H02 resolves every mapped native name; H10 covers inherited border/focus/icon/spinner styles.
+});
+test('H12: prefix and logo accessible name have message keys and MSG consumers',()=>{
+  const canonical=JSON.parse(read(path.join(project,'ui-screens/feedback/messages.json')));
+  const js=read(path.join(project,'app/screens/sign-in.js'));
+  for(const value of ['+91','truemeds for doctors']) {
+    const keys=Object.keys(messages).filter(k=>messages[k]===value);
+    assert.ok(keys.length,`Missing message key for ${value}`);
+    assert.ok(keys.some(k=>canonical[k]===value),`Missing canonical message ${value}`);
+    assert.ok(keys.some(k=>new RegExp(`MSG\\(\\s*['"]${k.replace(/\./g,'\\.')}['"]`).test(js)),`No MSG use for ${value}`);
+    assert.ok(!js.includes(value),`Typed literal in sign-in.js: ${value}`);
+  }
+});
+test('H13: native logo PNGs at 1x/2x/3x with locked SVG source sha256',()=>{
+  const dir=path.join(kit,'foundation/brand'), all=files(dir);
+  const pngs=all.filter(p=>p.endsWith('.png'));
+  const widths=[];
+  for(const p of pngs) {
+    const b=fs.readFileSync(p);
+    assert.equal(b.subarray(0,8).toString('hex'),'89504e470d0a1a0a');
+    assert.equal(b.subarray(12,16).toString(),'IHDR');
+    widths.push(b.readUInt32BE(16));
+    assert.ok(b.readUInt32BE(20)>0);
+  }
+  for(const width of [166,332,498]) assert.ok(widths.includes(width),`Missing logo width ${width}`);
+  const sha=crypto.createHash('sha256').update(fs.readFileSync(path.join(project,'brand/truemeds-for-doctors.svg'))).digest('hex');
+  assert.ok(all.filter(textual).some(p=>read(p).includes(sha)),`Missing source SVG sha256 ${sha}`);
+});
+test('H14: D-98 questions are DECIDED, not OPEN',()=>{
+  const decided=read(path.join(kit,'DECIDED.md')), open=read(path.join(kit,'OPEN.md'));
+  for(const id of ['o06','o13','o14','o20']) {
+    assert.match(decided,new RegExp(`id="${id}"`),`Missing DECIDED ${id}`);
+    assert.doesNotMatch(open,new RegExp(`(?:id="${id}"|\\b${id}\\s*[·|])`),`Still OPEN: ${id}`);
+    const entry=decided.slice(decided.indexOf(`id="${id}"`)).split(/<a id=/)[0];
+    assert.match(entry,/D-98/,`${id} lacks D-98 provenance`);
   }
 });
 
@@ -304,4 +399,12 @@ test('oracle: state and DOM inventories are populated from the approved fixture'
   assert.ok(!raw.some(r=>r.line===17&&r.property==='margin-top'));
   assert.ok(hasToken('tokens.color.content.primary'));
   assert.ok(!hasToken('tokens.color.content.invented'));
+});
+
+
+test('oracle: D-98 red classification and scaffold boundary',()=>{
+  for(const value of ['flex','center','nowrap','none','0','0 0','var(--tm-space-lg)','calc(-1 * var(--tm-space-lg))']) assert.equal(typedKind(value),null,value);
+  for(const value of ['166px','1px solid var(--tm-border-default)','2px','#fff','rgb(1,2,3)']) assert.ok(typedKind(value),value);
+  const css='html,body {width:12px;} .review-controls select {height:44px;} html.capture .login-phone {width:390px;} .login-logo {width:166px;}';
+  assert.deepEqual(declarations(css).map(d=>d.value),['166px']);
 });

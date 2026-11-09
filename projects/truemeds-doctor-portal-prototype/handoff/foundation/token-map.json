@@ -870,6 +870,69 @@
    "source": "Truemeds layer"
   },
   {
+   "web": "--tm-border-width-default",
+   "native": "tokens.borderWidth.default",
+   "ts": "tokens.borderWidth.default",
+   "value": 1,
+   "source": "Truemeds layer (D-98)"
+  },
+  {
+   "web": "--tm-focus-ring-width",
+   "native": "tokens.focusRing.width",
+   "ts": "tokens.focusRing.width",
+   "value": 2,
+   "source": "Truemeds layer (D-98)"
+  },
+  {
+   "web": "--tm-focus-ring-offset",
+   "native": "tokens.focusRing.offset",
+   "ts": "tokens.focusRing.offset",
+   "value": 2,
+   "source": "Truemeds layer (D-98)"
+  },
+  {
+   "web": "--tm-icon-size-sm",
+   "native": "tokens.iconSize.sm",
+   "ts": "tokens.iconSize.sm",
+   "value": 16,
+   "source": "Truemeds layer (D-98)"
+  },
+  {
+   "web": "--tm-icon-size-md",
+   "native": "tokens.iconSize.md",
+   "ts": "tokens.iconSize.md",
+   "value": 20,
+   "source": "Truemeds layer (D-98)"
+  },
+  {
+   "web": "--tm-icon-size-lg",
+   "native": "tokens.iconSize.lg",
+   "ts": "tokens.iconSize.lg",
+   "value": 24,
+   "source": "Truemeds layer (D-98)"
+  },
+  {
+   "web": "--tm-spinner-size",
+   "native": "tokens.spinner.size",
+   "ts": "tokens.spinner.size",
+   "value": 16,
+   "source": "Truemeds layer (D-98)"
+  },
+  {
+   "web": "--tm-spinner-ring",
+   "native": "tokens.spinner.ring",
+   "ts": "tokens.spinner.ring",
+   "value": 2,
+   "source": "Truemeds layer (D-98)"
+  },
+  {
+   "web": "--tm-logo-lockup-width",
+   "native": "tokens.logoLockup.width",
+   "ts": "tokens.logoLockup.width",
+   "value": 166,
+   "source": "Truemeds layer (D-98)"
+  },
+  {
    "web": "--tm-shadow-primary",
    "native": "tokens.shadow.primary",
    "ts": "tokens.shadow.primary",

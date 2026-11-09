@@ -28,7 +28,7 @@ Kit fixes after round 1: d06 rewritten (what changing the number does); new d27 
 
 Kit fixes after round 2: d01 shows the 91 rule from the build; d08 shows the m:ss formatter (75:00, rounded up); d28 placeholder colour; the builder now captures `::placeholder` rules (field-input carries `tokens.color.content.placeholder`); o20 (notice gap 8 vs 16) and o21 (sign-up target) added.
 
-## Round 3 (last)
+## Round 3 (last round of the first brief)
 
 | Tool | Questions asked | DECIDED | OPEN | New | Code |
 |---|---|---|---|---|---|
@@ -41,3 +41,14 @@ Kit fixes after round 3 (not re-tested; the brief allows three rounds): o22 (dyn
 
 - **Questions: PASS for both tools in the last round** — zero questions already answered in DECIDED.md; every question asked is in OPEN.md or genuinely new (now added to OPEN).
 - **Code: CONDITIONAL.** Neither tool typed a colour or a user-facing sentence. Both put the values that have **no token or message key in the sources** — border width 1, focus ring 2, logo width 166 (and its 220×54 artwork ratio), icon 20, spinner 16, the `+91` prefix and the logo's accessible name — in one constants file, as `AGENTS.md` tells them to. By the strict brief wording (tokens / messages only) that is not clean, and the kit can't make it clean without new tokens in `design-system/` and new keys in `messages.json` (both read-only for this job). See NEEDS-APURVA in `REPORT.md`.
+
+## Round 4 (fix brief, D-98) — strict code rule: no hex, no typed sizes, no typed words, no constants file
+
+| Tool | DECIDED | OPEN | New | Code (strict) |
+|---|---|---|---|---|
+| Claude | **0** | o01–o05, o07, o08, o10, o11, o15–o19, o21–o23 | 3: spinner turn speed / reduce motion (no motion token) · "New to Truemeds?" + "Sign up" as two keys (space typed in code) · Call Doctor Ops on a device that can't call | **FAIL** on 2 values: `aspectRatio: 220 / 54` (logo) — **the kit's AGENTS.md told it to type this**; `SPINNER_TURN_MS = 800` — no motion token exists. Otherwise clean: no hex / rgb, every word from `messages` (incl. `signin.phonePrefix`, `signin.logoAlt`), every size from `tokens` (incl. the new D-98 tokens), no constants file. |
+| Codex | **0** | all, grouped by owner | 0 | **FAIL** on the same logo ratio (`aspectRatio: 220 / 54`, kit-instructed) and a typed spinner step (30° every 67 ms). Otherwise clean. |
+
+Kit fixes after round 4 (not re-tested: the fix brief runs one round): AGENTS.md now says take the logo's height from the PNG itself (`Image.resolveAssetSource`), never type the artwork's numbers; the spinner animation is marked `timing: true` ("no motion token yet, don't type it", OPEN o24) instead of a layout value; o24–o26 added for the three new questions.
+
+**Verdict round 4:** questions PASS (both 0 DECIDED). Strict code FAIL — one cause was the kit (fixed), one is a missing motion token (needs a decision; see REPORT-2).

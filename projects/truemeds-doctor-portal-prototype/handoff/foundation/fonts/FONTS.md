@@ -18,6 +18,9 @@ Check them: `shasum -a 256 *.ttf OFL.txt` (macOS) or `sha256sum *.ttf OFL.txt` (
 
 ## Where they come from
 
+Accepted source (D-98): the static files from the font's upstream repository at the commit Google Fonts pins.
+
+
 - Google Fonts lists Plus Jakarta Sans at https://github.com/google/fonts/tree/main/ofl/plusjakartasans. That folder ships only the **variable** font (`PlusJakartaSans[wght].ttf`), which React Native can't select weights from reliably. `OFL.txt` above is copied from it unchanged.
 - Its `upstream_info.md` names the font's source repository and the exact commit Google Fonts builds from: https://github.com/tokotype/PlusJakartaSans, commit `18d1cd2f7ea10481919d2f05c1f7064b7307fc26`. The four static files are taken unchanged from `fonts/ttf/` at that commit, e.g. https://raw.githubusercontent.com/tokotype/PlusJakartaSans/18d1cd2f7ea10481919d2f05c1f7064b7307fc26/fonts/ttf/PlusJakartaSans-Regular.ttf.
 

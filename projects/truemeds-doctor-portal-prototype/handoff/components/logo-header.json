@@ -13,28 +13,24 @@
        "property": "display",
        "value": "block",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "app/screens/sign-in.css",
-       "line": 6
+       "layout": true
       },
       {
        "property": "width",
-       "value": "166px",
-       "tokens": [],
-       "raw": true,
-       "kind": "size",
-       "file": "app/screens/sign-in.css",
-       "line": 6
+       "value": "var(--tm-logo-lockup-width)",
+       "tokens": [
+        {
+         "native": "tokens.logoLockup.width",
+         "web": "--tm-logo-lockup-width",
+         "value": 166
+        }
+       ]
       },
       {
        "property": "height",
        "value": "auto",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "app/screens/sign-in.css",
-       "line": 6
+       "layout": true
       },
       {
        "property": "color",

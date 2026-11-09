@@ -19,8 +19,8 @@ Typical questions already answered in `DECIDED.md`: input cleaning and paste, va
 
 - Fonts: follow `foundation/fonts/FONTS.md` (iOS and Android steps; family name `tokens.font.family`).
 - Import `tokens` from `foundation/tokens.ts`, `messages` / `message` from `foundation/messages.ts`, `icons` from `foundation/icons.ts` (render with `SvgXml` from `react-native-svg`, `color` prop = a `tokens.color.*` value).
-- Logo: `foundation/logo/truemeds-for-doctors.svg` as an SVG, unchanged.
-- Create one constants file for the few sizes that have no token (see `AGENTS.md` → "Values that are not tokens").
+- Logo: the PNG exports in `foundation/brand/` (@1x / @2x / @3x), `tokens.logoLockup.width` wide, label `messages['signin.logoAlt']` (see `AGENTS.md` → "Logo on the phone").
+- No constants file: every size has a token and every word a key (see `AGENTS.md` → "Every value has a token or a key").
 
 ## 3. Build the blocks
 
@@ -44,8 +44,8 @@ Open `screens/sign-in.json`:
 
 ## 5. Check before you finish
 
-- No `#`, `rgb(`, `rgba(` in your code. No number in a style that isn't `tokens.*` or a named constant from the raw-values list.
-- No quoted user-facing text: every string is `messages['…']` / `message('…', …)`.
+- No `#`, `rgb(`, `rgba(` in your code. No number in a style that isn't `tokens.*` (layout values like `flex: 1` are fine).
+- No quoted user-facing text, including `+91` and the logo's label: every string is `messages['…']` / `message('…', …)`.
 - "case", never "order", in anything the doctor reads.
 - One primary button on the screen.
 - Every assumption you took from `OPEN.md` is in one place and named after its `OPEN.md` id (e.g. `// OPEN o06`).

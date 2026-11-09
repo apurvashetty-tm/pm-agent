@@ -13,19 +13,13 @@
        "property": "display",
        "value": "flex",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 433
+       "layout": true
       },
       {
        "property": "flex-direction",
        "value": "column",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 433
+       "layout": true
       },
       {
        "property": "gap",
@@ -48,19 +42,13 @@
        "property": "display",
        "value": "flex",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 433
+       "layout": true
       },
       {
        "property": "flex-direction",
        "value": "column",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 433
+       "layout": true
       },
       {
        "property": "gap",
@@ -83,19 +71,13 @@
        "property": "display",
        "value": "flex",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 433
+       "layout": true
       },
       {
        "property": "flex-direction",
        "value": "column",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 433
+       "layout": true
       },
       {
        "property": "gap",
@@ -118,19 +100,13 @@
        "property": "display",
        "value": "flex",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 433
+       "layout": true
       },
       {
        "property": "flex-direction",
        "value": "column",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 433
+       "layout": true
       },
       {
        "property": "gap",
@@ -409,19 +385,13 @@
        "property": "display",
        "value": "flex",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 436
+       "layout": true
       },
       {
        "property": "align-items",
        "value": "center",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 436
+       "layout": true
       },
       {
        "property": "gap",
@@ -447,18 +417,20 @@
       },
       {
        "property": "border",
-       "value": "1px solid var(--tm-border-default)",
+       "value": "var(--tm-border-width-default) solid var(--tm-border-default)",
        "tokens": [
+        {
+         "native": "tokens.borderWidth.default",
+         "web": "--tm-border-width-default",
+         "value": 1
+        },
         {
          "native": "tokens.color.border.default",
          "web": "--tm-border-default",
          "value": "#D8DBDF"
         }
        ],
-       "raw": true,
-       "kind": "size",
-       "file": "design-system/truemeds.css",
-       "line": 438
+       "layout": true
       },
       {
        "property": "border-radius",
@@ -503,19 +475,13 @@
        "property": "display",
        "value": "flex",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 436
+       "layout": true
       },
       {
        "property": "align-items",
        "value": "center",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 436
+       "layout": true
       },
       {
        "property": "gap",
@@ -541,18 +507,20 @@
       },
       {
        "property": "border",
-       "value": "1px solid var(--tm-border-default)",
+       "value": "var(--tm-border-width-default) solid var(--tm-border-default)",
        "tokens": [
+        {
+         "native": "tokens.borderWidth.default",
+         "web": "--tm-border-width-default",
+         "value": 1
+        },
         {
          "native": "tokens.color.border.default",
          "web": "--tm-border-default",
          "value": "#D8DBDF"
         }
        ],
-       "raw": true,
-       "kind": "size",
-       "file": "design-system/truemeds.css",
-       "line": 438
+       "layout": true
       },
       {
        "property": "border-color",
@@ -608,19 +576,13 @@
        "property": "display",
        "value": "flex",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 436
+       "layout": true
       },
       {
        "property": "align-items",
        "value": "center",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 436
+       "layout": true
       },
       {
        "property": "gap",
@@ -646,18 +608,20 @@
       },
       {
        "property": "border",
-       "value": "1px solid var(--tm-border-default)",
+       "value": "var(--tm-border-width-default) solid var(--tm-border-default)",
        "tokens": [
+        {
+         "native": "tokens.borderWidth.default",
+         "web": "--tm-border-width-default",
+         "value": 1
+        },
         {
          "native": "tokens.color.border.default",
          "web": "--tm-border-default",
          "value": "#D8DBDF"
         }
        ],
-       "raw": true,
-       "kind": "size",
-       "file": "design-system/truemeds.css",
-       "line": 438
+       "layout": true
       },
       {
        "property": "border-color",
@@ -713,19 +677,13 @@
        "property": "display",
        "value": "flex",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 436
+       "layout": true
       },
       {
        "property": "align-items",
        "value": "center",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 436
+       "layout": true
       },
       {
        "property": "gap",
@@ -751,18 +709,20 @@
       },
       {
        "property": "border",
-       "value": "1px solid var(--tm-border-default)",
+       "value": "var(--tm-border-width-default) solid var(--tm-border-default)",
        "tokens": [
+        {
+         "native": "tokens.borderWidth.default",
+         "web": "--tm-border-width-default",
+         "value": 1
+        },
         {
          "native": "tokens.color.border.default",
          "web": "--tm-border-default",
          "value": "#D8DBDF"
         }
        ],
-       "raw": true,
-       "kind": "size",
-       "file": "design-system/truemeds.css",
-       "line": 438
+       "layout": true
       },
       {
        "property": "border-color",
@@ -831,18 +791,20 @@
       },
       {
        "property": "border-right",
-       "value": "1px solid var(--tm-border-default)",
+       "value": "var(--tm-border-width-default) solid var(--tm-border-default)",
        "tokens": [
+        {
+         "native": "tokens.borderWidth.default",
+         "web": "--tm-border-width-default",
+         "value": 1
+        },
         {
          "native": "tokens.color.border.default",
          "web": "--tm-border-default",
          "value": "#D8DBDF"
         }
        ],
-       "raw": true,
-       "kind": "size",
-       "file": "app/screens/sign-in.css",
-       "line": 17
+       "layout": true
       },
       {
        "property": "font-size",
@@ -908,18 +870,20 @@
       },
       {
        "property": "border-right",
-       "value": "1px solid var(--tm-border-default)",
+       "value": "var(--tm-border-width-default) solid var(--tm-border-default)",
        "tokens": [
+        {
+         "native": "tokens.borderWidth.default",
+         "web": "--tm-border-width-default",
+         "value": 1
+        },
         {
          "native": "tokens.color.border.default",
          "web": "--tm-border-default",
          "value": "#D8DBDF"
         }
        ],
-       "raw": true,
-       "kind": "size",
-       "file": "app/screens/sign-in.css",
-       "line": 17
+       "layout": true
       },
       {
        "property": "font-size",
@@ -985,18 +949,20 @@
       },
       {
        "property": "border-right",
-       "value": "1px solid var(--tm-border-default)",
+       "value": "var(--tm-border-width-default) solid var(--tm-border-default)",
        "tokens": [
+        {
+         "native": "tokens.borderWidth.default",
+         "web": "--tm-border-width-default",
+         "value": 1
+        },
         {
          "native": "tokens.color.border.default",
          "web": "--tm-border-default",
          "value": "#D8DBDF"
         }
        ],
-       "raw": true,
-       "kind": "size",
-       "file": "app/screens/sign-in.css",
-       "line": 17
+       "layout": true
       },
       {
        "property": "font-size",
@@ -1062,18 +1028,20 @@
       },
       {
        "property": "border-right",
-       "value": "1px solid var(--tm-border-default)",
+       "value": "var(--tm-border-width-default) solid var(--tm-border-default)",
        "tokens": [
+        {
+         "native": "tokens.borderWidth.default",
+         "web": "--tm-border-width-default",
+         "value": 1
+        },
         {
          "native": "tokens.color.border.default",
          "web": "--tm-border-default",
          "value": "#D8DBDF"
         }
        ],
-       "raw": true,
-       "kind": "size",
-       "file": "app/screens/sign-in.css",
-       "line": 17
+       "layout": true
       },
       {
        "property": "font-size",
@@ -1134,10 +1102,7 @@
        "property": "align-self",
        "value": "stretch",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 443
+       "layout": true
       },
       {
        "property": "margin",
@@ -1149,10 +1114,7 @@
          "value": 12
         }
        ],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 443
+       "layout": true
       },
       {
        "property": "padding",
@@ -1164,73 +1126,49 @@
          "value": 12
         }
        ],
-       "raw": true,
-       "kind": "zero",
-       "file": "design-system/truemeds.css",
-       "line": 443
+       "layout": true
       },
       {
        "property": "flex",
        "value": "1",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 449
+       "layout": true
       },
       {
        "property": "min-width",
        "value": "0",
        "tokens": [],
-       "raw": true,
-       "kind": "zero",
-       "file": "design-system/truemeds.css",
-       "line": 449
+       "layout": true
       },
       {
        "property": "border",
        "value": "0",
        "tokens": [],
-       "raw": true,
-       "kind": "zero",
-       "file": "design-system/truemeds.css",
-       "line": 449
+       "layout": true
       },
       {
        "property": "outline",
        "value": "0",
        "tokens": [],
-       "raw": true,
-       "kind": "zero",
-       "file": "design-system/truemeds.css",
-       "line": 449
+       "layout": true
       },
       {
        "property": "background",
        "value": "transparent",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 449
+       "layout": true
       },
       {
        "property": "resize",
        "value": "vertical",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 449
+       "layout": true
       },
       {
        "property": "font",
        "value": "inherit",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 450
+       "layout": true
       },
       {
        "property": "font-size",
@@ -1286,10 +1224,7 @@
        "property": "align-self",
        "value": "stretch",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 443
+       "layout": true
       },
       {
        "property": "margin",
@@ -1301,10 +1236,7 @@
          "value": 12
         }
        ],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 443
+       "layout": true
       },
       {
        "property": "padding",
@@ -1316,73 +1248,49 @@
          "value": 12
         }
        ],
-       "raw": true,
-       "kind": "zero",
-       "file": "design-system/truemeds.css",
-       "line": 443
+       "layout": true
       },
       {
        "property": "flex",
        "value": "1",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 449
+       "layout": true
       },
       {
        "property": "min-width",
        "value": "0",
        "tokens": [],
-       "raw": true,
-       "kind": "zero",
-       "file": "design-system/truemeds.css",
-       "line": 449
+       "layout": true
       },
       {
        "property": "border",
        "value": "0",
        "tokens": [],
-       "raw": true,
-       "kind": "zero",
-       "file": "design-system/truemeds.css",
-       "line": 449
+       "layout": true
       },
       {
        "property": "outline",
        "value": "0",
        "tokens": [],
-       "raw": true,
-       "kind": "zero",
-       "file": "design-system/truemeds.css",
-       "line": 449
+       "layout": true
       },
       {
        "property": "background",
        "value": "transparent",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 449
+       "layout": true
       },
       {
        "property": "resize",
        "value": "vertical",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 449
+       "layout": true
       },
       {
        "property": "font",
        "value": "inherit",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 450
+       "layout": true
       },
       {
        "property": "font-size",
@@ -1438,10 +1346,7 @@
        "property": "align-self",
        "value": "stretch",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 443
+       "layout": true
       },
       {
        "property": "margin",
@@ -1453,10 +1358,7 @@
          "value": 12
         }
        ],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 443
+       "layout": true
       },
       {
        "property": "padding",
@@ -1468,73 +1370,49 @@
          "value": 12
         }
        ],
-       "raw": true,
-       "kind": "zero",
-       "file": "design-system/truemeds.css",
-       "line": 443
+       "layout": true
       },
       {
        "property": "flex",
        "value": "1",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 449
+       "layout": true
       },
       {
        "property": "min-width",
        "value": "0",
        "tokens": [],
-       "raw": true,
-       "kind": "zero",
-       "file": "design-system/truemeds.css",
-       "line": 449
+       "layout": true
       },
       {
        "property": "border",
        "value": "0",
        "tokens": [],
-       "raw": true,
-       "kind": "zero",
-       "file": "design-system/truemeds.css",
-       "line": 449
+       "layout": true
       },
       {
        "property": "outline",
        "value": "0",
        "tokens": [],
-       "raw": true,
-       "kind": "zero",
-       "file": "design-system/truemeds.css",
-       "line": 449
+       "layout": true
       },
       {
        "property": "background",
        "value": "transparent",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 449
+       "layout": true
       },
       {
        "property": "resize",
        "value": "vertical",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 449
+       "layout": true
       },
       {
        "property": "font",
        "value": "inherit",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 450
+       "layout": true
       },
       {
        "property": "font-size",
@@ -1590,10 +1468,7 @@
        "property": "align-self",
        "value": "stretch",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 443
+       "layout": true
       },
       {
        "property": "margin",
@@ -1605,10 +1480,7 @@
          "value": 12
         }
        ],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 443
+       "layout": true
       },
       {
        "property": "padding",
@@ -1620,73 +1492,49 @@
          "value": 12
         }
        ],
-       "raw": true,
-       "kind": "zero",
-       "file": "design-system/truemeds.css",
-       "line": 443
+       "layout": true
       },
       {
        "property": "flex",
        "value": "1",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 449
+       "layout": true
       },
       {
        "property": "min-width",
        "value": "0",
        "tokens": [],
-       "raw": true,
-       "kind": "zero",
-       "file": "design-system/truemeds.css",
-       "line": 449
+       "layout": true
       },
       {
        "property": "border",
        "value": "0",
        "tokens": [],
-       "raw": true,
-       "kind": "zero",
-       "file": "design-system/truemeds.css",
-       "line": 449
+       "layout": true
       },
       {
        "property": "outline",
        "value": "0",
        "tokens": [],
-       "raw": true,
-       "kind": "zero",
-       "file": "design-system/truemeds.css",
-       "line": 449
+       "layout": true
       },
       {
        "property": "background",
        "value": "transparent",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 449
+       "layout": true
       },
       {
        "property": "resize",
        "value": "vertical",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 449
+       "layout": true
       },
       {
        "property": "font",
        "value": "inherit",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 450
+       "layout": true
       },
       {
        "property": "font-size",
@@ -1779,19 +1627,13 @@
        "property": "text-wrap",
        "value": "pretty",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 769
+       "layout": true
       },
       {
        "property": "margin-top",
        "value": "0",
        "tokens": [],
-       "raw": true,
-       "kind": "zero",
-       "file": "app/screens/sign-in.css",
-       "line": 22
+       "layout": true
       },
       {
        "property": "font-family",
@@ -1848,19 +1690,13 @@
        "property": "text-wrap",
        "value": "pretty",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 769
+       "layout": true
       },
       {
        "property": "margin-top",
        "value": "0",
        "tokens": [],
-       "raw": true,
-       "kind": "zero",
-       "file": "app/screens/sign-in.css",
-       "line": 22
+       "layout": true
       },
       {
        "property": "font-family",
@@ -1917,19 +1753,13 @@
        "property": "text-wrap",
        "value": "pretty",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 769
+       "layout": true
       },
       {
        "property": "margin-top",
        "value": "0",
        "tokens": [],
-       "raw": true,
-       "kind": "zero",
-       "file": "app/screens/sign-in.css",
-       "line": 22
+       "layout": true
       },
       {
        "property": "font-family",
@@ -1986,19 +1816,13 @@
        "property": "text-wrap",
        "value": "pretty",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 769
+       "layout": true
       },
       {
        "property": "margin-top",
        "value": "0",
        "tokens": [],
-       "raw": true,
-       "kind": "zero",
-       "file": "app/screens/sign-in.css",
-       "line": 22
+       "layout": true
       },
       {
        "property": "font-family",
@@ -2021,7 +1845,7 @@
  "rules": [
   {
    "section": "Design rules 8.3",
-   "text": "**Three gaps only:** tight `--tm-space-sm` (8): label↔field, field↔helper, and a result notice ↔ the control it came from · related `--tm-space-lg` (16): items within a group, **and cards stacked one above another — the same gap everywhere cards stack, on the case page, Prescribe and Profile** · section `--tm-space-2xl` (32): between groups. Spare vertical space goes between the content and a pinned button, never inside a group. Home-base screens use 3xl (48) as the hero gap between logo and title."
+   "text": "**Three gaps only:** tight `--tm-space-sm` (8): label↔field, field↔helper, and a result notice ↔ the button it came from. **A result notice under a field sits 16 below the field** (the field's 8 gap plus the notice's 8; D-98) · related `--tm-space-lg` (16): items within a group, **and cards stacked one above another — the same gap everywhere cards stack, on the case page, Prescribe and Profile** · section `--tm-space-2xl` (32): between groups. Spare vertical space goes between the content and a pinned button, never inside a group. Home-base screens use 3xl (48) as the hero gap between logo and title."
   },
   {
    "section": "Design rules L4",

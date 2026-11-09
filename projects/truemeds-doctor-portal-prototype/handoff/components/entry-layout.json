@@ -68,46 +68,31 @@
        "property": "position",
        "value": "relative",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "app/screens/sign-in.css",
-       "line": 3
+       "layout": true
       },
       {
        "property": "min-height",
        "value": "100%",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "app/screens/sign-in.css",
-       "line": 3
+       "layout": true
       },
       {
        "property": "display",
        "value": "flex",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "app/screens/sign-in.css",
-       "line": 3
+       "layout": true
       },
       {
        "property": "flex-direction",
        "value": "column",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "app/screens/sign-in.css",
-       "line": 3
+       "layout": true
       },
       {
        "property": "overflow",
        "value": "hidden",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "app/screens/sign-in.css",
-       "line": 3
+       "layout": true
       },
       {
        "property": "padding",
@@ -124,10 +109,7 @@
          "value": 16
         }
        ],
-       "raw": true,
-       "kind": "zero",
-       "file": "app/screens/sign-in.css",
-       "line": 4
+       "layout": true
       }
      ],
      "size": "390×844"
@@ -143,28 +125,19 @@
        "property": "flex",
        "value": "1",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "app/screens/sign-in.css",
-       "line": 8
+       "layout": true
       },
       {
        "property": "display",
        "value": "flex",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "app/screens/sign-in.css",
-       "line": 8
+       "layout": true
       },
       {
        "property": "flex-direction",
        "value": "column",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "app/screens/sign-in.css",
-       "line": 8
+       "layout": true
       },
       {
        "property": "padding-top",
@@ -191,10 +164,7 @@
        "property": "text-wrap",
        "value": "balance",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 338
+       "layout": true
       },
       {
        "property": "font-family",
@@ -261,19 +231,13 @@
          "value": 8
         }
        ],
-       "raw": true,
-       "kind": "zero",
-       "file": "app/screens/sign-in.css",
-       "line": 10
+       "layout": true
       },
       {
        "property": "letter-spacing",
        "value": "normal",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "app/screens/sign-in.css",
-       "line": 10
+       "layout": true
       }
      ],
      "size": "358×40"
@@ -289,10 +253,7 @@
        "property": "text-wrap",
        "value": "pretty",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 769
+       "layout": true
       },
       {
        "property": "color",
@@ -331,19 +292,13 @@
        "property": "margin",
        "value": "0",
        "tokens": [],
-       "raw": true,
-       "kind": "zero",
-       "file": "app/screens/sign-in.css",
-       "line": 11
+       "layout": true
       },
       {
        "property": "max-width",
        "value": "31ch",
        "tokens": [],
-       "raw": true,
-       "kind": "size",
-       "file": "app/screens/sign-in.css",
-       "line": 12
+       "exception": "Documented exception (D-98): a text measure, not a size — the subtitle's line length. React Native has no ch unit; see OPEN o19."
       },
       {
        "property": "font-family",
@@ -371,10 +326,7 @@
        "property": "flex",
        "value": "1",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "app/screens/sign-in.css",
-       "line": 14
+       "layout": true
       },
       {
        "property": "margin",
@@ -391,10 +343,7 @@
          "value": 16
         }
        ],
-       "raw": true,
-       "kind": "keyword",
-       "file": "app/screens/sign-in.css",
-       "line": 14
+       "layout": true
       },
       {
        "property": "padding",
@@ -443,10 +392,7 @@
          "value": 24
         }
        ],
-       "raw": true,
-       "kind": "zero",
-       "file": "app/screens/sign-in.css",
-       "line": 16
+       "layout": true
       }
      ],
      "size": "390×595.3"
@@ -461,7 +407,7 @@
   },
   {
    "section": "Design rules 8.3",
-   "text": "**Three gaps only:** tight `--tm-space-sm` (8): label↔field, field↔helper, and a result notice ↔ the control it came from · related `--tm-space-lg` (16): items within a group, **and cards stacked one above another — the same gap everywhere cards stack, on the case page, Prescribe and Profile** · section `--tm-space-2xl` (32): between groups. Spare vertical space goes between the content and a pinned button, never inside a group. Home-base screens use 3xl (48) as the hero gap between logo and title."
+   "text": "**Three gaps only:** tight `--tm-space-sm` (8): label↔field, field↔helper, and a result notice ↔ the button it came from. **A result notice under a field sits 16 below the field** (the field's 8 gap plus the notice's 8; D-98) · related `--tm-space-lg` (16): items within a group, **and cards stacked one above another — the same gap everywhere cards stack, on the case page, Prescribe and Profile** · section `--tm-space-2xl` (32): between groups. Spare vertical space goes between the content and a pinned button, never inside a group. Home-base screens use 3xl (48) as the hero gap between logo and title."
   },
   {
    "section": "Design rules 8.4",

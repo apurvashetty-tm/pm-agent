@@ -13,37 +13,35 @@
        "property": "display",
        "value": "inline-block",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 420
+       "layout": true
       },
       {
        "property": "width",
-       "value": "16px",
-       "tokens": [],
-       "raw": true,
-       "kind": "size",
-       "file": "design-system/truemeds.css",
-       "line": 420
+       "value": "var(--tm-spinner-size)",
+       "tokens": [
+        {
+         "native": "tokens.spinner.size",
+         "web": "--tm-spinner-size",
+         "value": 16
+        }
+       ]
       },
       {
        "property": "height",
-       "value": "16px",
-       "tokens": [],
-       "raw": true,
-       "kind": "size",
-       "file": "design-system/truemeds.css",
-       "line": 420
+       "value": "var(--tm-spinner-size)",
+       "tokens": [
+        {
+         "native": "tokens.spinner.size",
+         "web": "--tm-spinner-size",
+         "value": 16
+        }
+       ]
       },
       {
        "property": "flex",
        "value": "none",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 420
+       "layout": true
       },
       {
        "property": "margin-right",
@@ -57,49 +55,45 @@
        ]
       },
       {
-       "property": "vertical-align",
-       "value": "-3px",
-       "tokens": [],
-       "raw": true,
-       "kind": "size",
-       "file": "design-system/truemeds.css",
-       "line": 420
-      },
-      {
        "property": "border",
-       "value": "2px solid #fff",
-       "tokens": [],
-       "raw": true,
-       "kind": "colour",
-       "file": "design-system/truemeds.css",
-       "line": 420
+       "value": "var(--tm-spinner-ring) solid var(--tm-content-inverse)",
+       "tokens": [
+        {
+         "native": "tokens.spinner.ring",
+         "web": "--tm-spinner-ring",
+         "value": 2
+        },
+        {
+         "native": "tokens.color.content.inverse",
+         "web": "--tm-content-inverse",
+         "value": "#FFFFFF"
+        }
+       ],
+       "layout": true
       },
       {
        "property": "border-top-color",
        "value": "transparent",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 420
+       "layout": true
       },
       {
        "property": "border-radius",
-       "value": "50%",
-       "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 420
+       "value": "var(--tm-radius-full)",
+       "tokens": [
+        {
+         "native": "tokens.radius.full",
+         "web": "--tm-radius-full",
+         "value": 999
+        }
+       ]
       },
       {
        "property": "animation",
        "value": "tm-spin 0.8s linear infinite",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 420
+       "timing": true,
+       "unresolved": "No motion token yet: see OPEN.md o24. Don't type it."
       }
      ],
      "size": "16×16"

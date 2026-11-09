@@ -77,6 +77,12 @@ for name in tm["content"]:
     add(f"--tm-content-{name}", ["color", "content", build_native.key(name)], "Truemeds layer")
 for name in tm["text"]:
     out["textClasses"][f"tm-text-{name}"] = ["text", build_native.key(name)]
+# D-98 sizes (tokens/truemeds.json "size"), as build.truemeds_overrides() / build_native.truemeds()
+for group, vals in tm.get("size", {}).items():
+    if group.startswith("_"):
+        continue
+    for name in vals:
+        add(f"--tm-{group}-{name}", [build_native.key(group), build_native.key(name)], "Truemeds layer (D-98)")
 
 # 3. Shadows and text styles (tokens/extras.json), as build.build_extras() / build_native.extras()
 ex = json.loads((DS / "tokens/extras.json").read_text())

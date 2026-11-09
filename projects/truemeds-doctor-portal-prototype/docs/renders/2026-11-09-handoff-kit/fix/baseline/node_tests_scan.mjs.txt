@@ -1,0 +1,2 @@
+scan: 37 files, 2652 lines checked
+PASS — 0 scan failures

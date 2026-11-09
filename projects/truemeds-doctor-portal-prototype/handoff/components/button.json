@@ -13,28 +13,19 @@
        "property": "display",
        "value": "flex",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 373
+       "layout": true
       },
       {
        "property": "align-items",
        "value": "center",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 358
+       "layout": true
       },
       {
        "property": "justify-content",
        "value": "center",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 358
+       "layout": true
       },
       {
        "property": "gap",
@@ -117,37 +108,25 @@
        "property": "border",
        "value": "0",
        "tokens": [],
-       "raw": true,
-       "kind": "zero",
-       "file": "design-system/truemeds.css",
-       "line": 365
+       "layout": true
       },
       {
        "property": "white-space",
        "value": "nowrap",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 366
+       "layout": true
       },
       {
        "property": "text-decoration",
        "value": "none",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 366
+       "layout": true
       },
       {
        "property": "width",
        "value": "100%",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 373
+       "layout": true
       },
       {
        "property": "background",
@@ -192,37 +171,25 @@
        "property": "display",
        "value": "flex",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 373
+       "layout": true
       },
       {
        "property": "align-items",
        "value": "center",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 358
+       "layout": true
       },
       {
        "property": "justify-content",
        "value": "center",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 358
+       "layout": true
       },
       {
        "property": "gap",
        "value": "0",
        "tokens": [],
-       "raw": true,
-       "kind": "zero",
-       "file": "design-system/truemeds.css",
-       "line": 422
+       "layout": true
       },
       {
        "property": "font-family",
@@ -294,37 +261,25 @@
        "property": "border",
        "value": "0",
        "tokens": [],
-       "raw": true,
-       "kind": "zero",
-       "file": "design-system/truemeds.css",
-       "line": 365
+       "layout": true
       },
       {
        "property": "white-space",
        "value": "nowrap",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 366
+       "layout": true
       },
       {
        "property": "text-decoration",
        "value": "none",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 366
+       "layout": true
       },
       {
        "property": "width",
        "value": "100%",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 373
+       "layout": true
       },
       {
        "property": "background",
@@ -352,10 +307,7 @@
        "property": "box-shadow",
        "value": "none",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 410
+       "layout": true
       },
       {
        "property": "margin-top",
@@ -378,28 +330,19 @@
        "property": "display",
        "value": "flex",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 373
+       "layout": true
       },
       {
        "property": "align-items",
        "value": "center",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 358
+       "layout": true
       },
       {
        "property": "justify-content",
        "value": "center",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 358
+       "layout": true
       },
       {
        "property": "gap",
@@ -482,37 +425,25 @@
        "property": "border",
        "value": "0",
        "tokens": [],
-       "raw": true,
-       "kind": "zero",
-       "file": "design-system/truemeds.css",
-       "line": 365
+       "layout": true
       },
       {
        "property": "white-space",
        "value": "nowrap",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 366
+       "layout": true
       },
       {
        "property": "text-decoration",
        "value": "none",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 366
+       "layout": true
       },
       {
        "property": "width",
        "value": "100%",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 373
+       "layout": true
       },
       {
        "property": "background",
@@ -540,10 +471,7 @@
        "property": "box-shadow",
        "value": "none",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 410
+       "layout": true
       },
       {
        "property": "margin-top",
@@ -581,27 +509,30 @@
      "styles": [
       {
        "property": "outline",
-       "value": "2px solid var(--tm-border-focus)",
+       "value": "var(--tm-focus-ring-width) solid var(--tm-border-focus)",
        "tokens": [
+        {
+         "native": "tokens.focusRing.width",
+         "web": "--tm-focus-ring-width",
+         "value": 2
+        },
         {
          "native": "tokens.color.border.focus",
          "web": "--tm-border-focus",
          "value": "#266CE1"
         }
-       ],
-       "raw": true,
-       "kind": "size",
-       "file": "design-system/truemeds.css",
-       "line": 766
+       ]
       },
       {
        "property": "outline-offset",
-       "value": "2px",
-       "tokens": [],
-       "raw": true,
-       "kind": "size",
-       "file": "design-system/truemeds.css",
-       "line": 766
+       "value": "var(--tm-focus-ring-offset)",
+       "tokens": [
+        {
+         "native": "tokens.focusRing.offset",
+         "web": "--tm-focus-ring-offset",
+         "value": 2
+        }
+       ]
       }
      ],
      "changesOnly": true

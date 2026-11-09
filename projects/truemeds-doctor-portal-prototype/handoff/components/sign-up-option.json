@@ -19,10 +19,7 @@
          "value": 16
         }
        ],
-       "raw": true,
-       "kind": "keyword",
-       "file": "app/screens/sign-in.css",
-       "line": 24
+       "layout": true
       },
       {
        "property": "padding",
@@ -39,10 +36,7 @@
          "value": 24
         }
        ],
-       "raw": true,
-       "kind": "zero",
-       "file": "app/screens/sign-in.css",
-       "line": 24
+       "layout": true
       },
       {
        "property": "background",
@@ -59,10 +53,7 @@
        "property": "text-align",
        "value": "center",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "app/screens/sign-in.css",
-       "line": 25
+       "layout": true
       },
       {
        "property": "font-size",
@@ -145,10 +136,7 @@
        "property": "text-decoration",
        "value": "none",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "app/screens/sign-in.css",
-       "line": 27
+       "layout": true
       },
       {
        "property": "font-family",
@@ -190,10 +178,7 @@
        "property": "text-align",
        "value": "center",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "app/screens/sign-in.css",
-       "line": 25,
+       "layout": true,
        "inherited": true
       }
      ],
@@ -209,27 +194,30 @@
      "styles": [
       {
        "property": "outline",
-       "value": "2px solid var(--tm-border-focus)",
+       "value": "var(--tm-focus-ring-width) solid var(--tm-border-focus)",
        "tokens": [
+        {
+         "native": "tokens.focusRing.width",
+         "web": "--tm-focus-ring-width",
+         "value": 2
+        },
         {
          "native": "tokens.color.border.focus",
          "web": "--tm-border-focus",
          "value": "#266CE1"
         }
-       ],
-       "raw": true,
-       "kind": "size",
-       "file": "design-system/truemeds.css",
-       "line": 766
+       ]
       },
       {
        "property": "outline-offset",
-       "value": "2px",
-       "tokens": [],
-       "raw": true,
-       "kind": "size",
-       "file": "design-system/truemeds.css",
-       "line": 766
+       "value": "var(--tm-focus-ring-offset)",
+       "tokens": [
+        {
+         "native": "tokens.focusRing.offset",
+         "web": "--tm-focus-ring-offset",
+         "value": 2
+        }
+       ]
       }
      ],
      "changesOnly": true

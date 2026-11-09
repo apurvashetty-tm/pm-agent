@@ -1,6 +1,6 @@
 # Sign-in handoff acceptance cases
 
-Scope: this independent suite is authored only from the sources listed below. No `app/` implementation was read. The pilot checklist is already approved (proposal line 3; brief lines 16–17). These tests do not approve the kit or alter its sources. They intentionally fail until a built kit exists.
+Scope: this independent suite is authored only from the sources listed below. D-98 / FIX-BRIEF supersede the original scope; app Sign-in sources are read only for assertions. The pilot checklist is already approved (proposal line 3; brief lines 16–17). These tests do not approve the kit or alter its sources. They intentionally fail until a built kit exists.
 
 Run from the project folder:
 
@@ -28,7 +28,7 @@ node --test tests/codex/handoff/handoff.test.mjs
 | H02 | Every native reference shown in text/JSON resolves against T, including bracket notation and explicit token fields. Foundation token TS/JSON and message TS match their canonical exports. Native names retain their web names beside them (review E02 as well). | P:73; B:30–31,61,71–75; T:3 onward | H02 |
 | H03 | Every `copyKey`/`messageKey` (or plural array) resolves in M; all Sign-in keys are represented. No typed user-facing copy is substituted for a key (review E03 as well). | P:78; B:90–93; M:3–21 | H03 |
 | H04 | Exactly the 12 source states, with every visible source DOM element represented, including containers, labels, icons, spinner, prefix, helper/notice text slots, signup and keyboard keys. Each element has ID, block, variant, tokens, neighbour spacing, behaviour and accessibility. Both approved pictures are bundled for each state; state cites its behaviour source. | P:75,78; B:81–93; S:64–95,118–165 | H04 |
-| H05 | Each non-token declaration in Sign-in's inline CSS is represented by a `raw: true` record with source file/line, property and exact value. Includes mixed token/raw declarations, zeros, CSS keywords, layout, keyboard, capture and review CSS; no implicit exemption. Viewer red treatment is E07. | P:76; B:76–77; S:9–61 | H05 |
+| H05 | Every typed size/colour in screen reference CSS is flagged with exact source line/property/value. Exclude html/body, review-controls and capture scaffolding per D-98. Layout keywords and zeros are plain, not red; 31ch is a documented text-measure exception. | P:76; B:76–77; S:9–61 | H05 |
 | H06 | Scan all textual kit files and filenames for internal git/hosting/tool/brief/render-rule/review details, known internal names, local workspace paths, credential patterns, emails and unapproved `Dr …` names. Manually inspect other names and binary/image content as E10. Official Google Fonts provenance and mandatory OFL copyright names are legal provenance, not internal leaks. | B:32–35,113–115 | H06 |
 | H07 | Root CLAUDE is exactly `@AGENTS.md`; AGENTS and skill point to existing kit tokens/messages, screen, components, DECIDED and OPEN. Markdown relative links stay inside kit and resolve. AGENTS states RN, token/copy rules, case wording, one primary, decisions/open questions. | B:54–67,90–93; B:124–133 | H07 |
 | H08 | Four actual static TrueType files have OS/2 weights 400/500/600/700; no variable `fvar` table. OFL exists; FONTS note names every file and its computed SHA256, official source, family, iOS/Android and weight mapping. Setup correctness and licence contents reviewed separately. | P:77; B:113–115 | H08 |
@@ -90,7 +90,7 @@ Every line below is a pass/fail eye check. Record evidence with the case ID; emp
 
 ## Limits and execution safety
 
-H09 first runs the existing builder's read-only `--check`, then runs it in a temporary overlay with private copies of `scripts/`, `handoff/` and the changed source. All other project entries are symlinks to preserve builder dependencies without copying or inspecting `app/`. The suite itself never opens app code and never mutates canonical sources. The builder must respect `--check` and its own read-only-source rule (B:26–27,119–120). A builder that resolves workspace sources outside this replica must fail the replica baseline or mutation check; do not count an infrastructure failure as freshness detection.
+H09 first runs the existing builder's read-only `--check`, then runs it in a temporary overlay with private copies of `scripts/`, `handoff/` and the changed source. All other project entries are symlinks to preserve builder dependencies without copying or inspecting `app/`. The original suite never opened app code; D-98 H10–H12 read Sign-in code without writing it. It and never mutates canonical sources. The builder must respect `--check` and its own read-only-source rule (B:26–27,119–120). A builder that resolves workspace sources outside this replica must fail the replica baseline or mutation check; do not count an infrastructure failure as freshness detection.
 
 The automated suite deliberately has no skip-if-kit-missing path. No browser or fresh AI is silently launched by it. H06 cannot recognize every arbitrary human name or secret; E10 closes that gap. No official sample name is inferred from internal people's details. No design-system rules, decision log, backend behaviour or app code outside the allowed inputs was consulted; references to those rules in block specs require reviewer verification, not fabricated expectations.
 
@@ -100,3 +100,20 @@ The automated suite deliberately has no skip-if-kit-missing path. No browser or 
 - `node --test --test-name-pattern='^oracle:' tests/codex/handoff/handoff.test.mjs`: passed. Checks source-derived state count, keyboard inventory, unique element selectors, conditional visibility, representative raw declarations, token validity and exclusion of a token-only declaration.
 - Initial full acceptance run: failed against the in-progress kit (missing required files/contracts). H09 stopped at its real-project baseline: Python builder raised `ModuleNotFoundError: No module named 'build'`. No source mutation was attempted; no stale-detection pass is claimed. The initial leakage scan found no matching text, but the suite now also requires textual kit content to avoid treating an empty folder as evidence of no leaks.
 - Re-run the full command after the builder and kit are complete; then collect all E-case review evidence. Authoring did not read or edit `app/` or repair the parallel builder.
+
+
+## D-98 fix-round additions (approved scope)
+
+Source: `docs/context/decision_log.md:992–996`; `docs/renders/2026-11-09-handoff-kit/FIX-BRIEF.md:26–68`.
+
+| ID | Pass/fail check (auto) | Source |
+|---|---|---|
+| H10 | Red flags only typed sizes, colours or words; no unexplained built Sign-in red, unmapped tokens, typed copy or unflagged typed styles. Only the documented 31ch text measure is exempt. | FIX §1, §5.1 |
+| H11 | Logo/prefix and central spinner, notice-icon, focus rules use tokens; map native names exist in canonical tokens.ts. H02 checks all kit token references. | FIX §1 |
+| H12 | Both exact strings have canonical/generated message keys, consumed through MSG; no typed +91 or accessible lockup name in sign-in.js. | FIX §2 |
+| H13 | Native PNG exports exist at widths 166/332/498, valid PNG IHDR dimensions; brand note records the actual locked source SVG SHA256. | FIX §5.3 |
+| H14 | o06/o13/o14/o20 have DECIDED anchors and D-98 provenance; no longer OPEN. | FIX §5.4 |
+
+Eye checks remain necessary: viewer actually paints only problems red, PNG pixels match the locked SVG without redraw, and token changes produce no visual difference. PNG header/hash checks do not prove rendered pixel identity. Existing manual cases are superseded wherever they ask for red layout/zero values or scaffolding.
+
+Tests are intentionally written before implementation. Run the full suite after regeneration; do not weaken failures to match an unfinished kit. Only tests/codex/handoff/ is modified by this tester; no shared handoff/context record is written.

@@ -12,6 +12,11 @@ Generated from the product rules — do not edit by hand.
 | [d05](#d05) | Server answers | What can the server answer after Send OTP, and how is each answer shown? |
 | [d06](#d06) | Server answers | Does a server answer stay when the doctor edits the number? |
 | [d28](#d28) | Errors | What colour is the placeholder text in the field? |
+| [o06](#o06) | Limits | When the "Try again in m:ss" countdown ends, does the notice stay or go? |
+| [o13](#o13) | Tokens | Which token is the busy spinner's ring? |
+| [o14](#o14) | Logo | react-native-svg may not draw the image the logo SVG embeds. What do we use on the phone? |
+| [o20](#o20) | Layout | Is a server notice 8 or 16 below the field? |
+| [d29](#d29) | Tokens | Border widths, the focus ring, icon and spinner sizes and the logo width: are there tokens? |
 | [d27](#d27) | Errors | Can a field error and a server notice show at the same time? |
 | [d07](#d07) | Sending | What happens to the button and the field while the code is being sent? |
 | [d08](#d08) | Limits | Too many attempts: what does the button show, and how long is the wait? |
@@ -98,7 +103,7 @@ Decisions: D-33
 
 - After sending, server results show as a notice: not registered (with the sign-up route), offline, couldn't send, too many attempts (button counts down "Try again in m:ss"), account inactive (button becomes **Call Doctor Ops**). — *App logic §2*
 - not-registered: neutral notice, icon `info-circle`, copy `signin.notRegistered`, role="status" · offline: warning notice, icon `alert-triangle`, copy `signin.offline`, role="alert" · couldnt-send: error notice, icon `alert-circle`, copy `signin.couldntSend`, role="alert" · too-many-tries: warning notice, icon `clock`, copy `signin.tooMany`, role="alert" · inactive: error notice, icon `alert-circle`, copy `signin.inactive`, role="alert" — *Sign-in screen*
-- **Notice** — Neutral / warning / error (L5); stays until the cause is gone. **Warning** when something blocks the main action or runs on a timer (offline, locks, near expiry); **error** when an action failed; **neutral** only for side information (D-54). Text wraps balanced. **Placement:** a notice that is the **result of an action** sits next to the control that did it — on a screen with a pinned bar, inside the bar above its button, in the band style of §3 (Home "ending soon", setup / add / request failures, the offer's "Couldn't turn on…", the case and calling bar notices); on a screen without a bar, 8 below the field or button it came from. A notice about **the bar's own action** — the result of the last tap, or why its button is disabled now (offline, "No cases right now") — is also in the bar. A notice about the **screen's general situation** (unlock "isn't available", Home idle-expired, manually ended, expired-pending, stop-pending) stays at the top of the panel, not tied to a button. **Alignment (D-86, 2026-11-03):** the band inside the bar is centred (icon and text as a group, wrapped lines centred, balanced breaks kept); every other notice (top of page, inside sheets, in content) stays left-aligned. — *Design rules 9.5*
+- **Notice** — Neutral / warning / error (L5); stays until the cause is gone. **Warning** when something blocks the main action or runs on a timer (offline, locks, near expiry); **error** when an action failed; **neutral** only for side information (D-54). Text wraps balanced. **Placement:** a notice that is the **result of an action** sits next to the control that did it — on a screen with a pinned bar, inside the bar above its button, in the band style of §3 (Home "ending soon", setup / add / request failures, the offer's "Couldn't turn on…", the case and calling bar notices); on a screen without a bar, 16 below the field it came from (D-98) or 8 below the button. A notice about **the bar's own action** — the result of the last tap, or why its button is disabled now (offline, "No cases right now") — is also in the bar. A notice about the **screen's general situation** (unlock "isn't available", Home idle-expired, manually ended, expired-pending, stop-pending) stays at the top of the panel, not tied to a button. **Alignment (D-86, 2026-11-03):** the band inside the bar is centred (icon and text as a group, wrapped lines centred, balanced breaks kept); every other notice (top of page, inside sheets, in content) stays left-aligned. — *Design rules 9.5*
 
 Decisions: D-33, D-54
 
@@ -110,18 +115,15 @@ Decisions: D-33, D-54
 
 Decisions: D-33
 
-## Sending
-
-<a id="d07"></a>
-### d07 · What happens to the button and the field while the code is being sent?
-
-- L2 — Loading primary buttons: brand-blue fill, white label, white spinner, on every screen (sign-in "Sending OTP", OTP "Verifying", any future loading primary). — *Design rules L2*
-- **States:** pressed; disabled (design-system disabled style, exempt from contrast); busy (L2). Busy spinner → label gap is 8 on every busy button. A quiet action in progress shows text only ("Ending…"), no spinner. **Busy labels always end with "…"** ("Verifying…", "Sending OTP…") (D-54). — *Design rules 9.1*
-- signin.sending: L1 — Send pending; disable duplicate send — *Feedback state map: signin.sending*
-
-Decisions: D-46, D-54
-
 ## Limits
+
+<a id="o06"></a>
+### o06 · When the "Try again in m:ss" countdown ends, does the notice stay or go?
+
+- When the "Try again in m:ss" countdown ends, the "Too many attempts" notice goes away and **Send OTP** works again (D-98). — *App logic §2*
+- The build does exactly that: `if (clock.now() >= m.until) { m.button = "default"; m.notice = null; }` — *Sign-in build*
+
+Decisions: D-98
 
 <a id="d08"></a>
 ### d08 · Too many attempts: what does the button show, and how long is the wait?
@@ -150,6 +152,82 @@ Decisions: D-34, D-35
 - signin.locked-number: W1 — Sign-in on a locked number goes to OTP in the locked state (`otp.locked`): code and Verify off, lock time and "call Doctor Ops", Change still available (D-81 F6) — *Feedback state map: signin.locked-number*
 
 Decisions: D-81
+
+## Tokens
+
+<a id="o13"></a>
+### o13 · Which token is the busy spinner's ring?
+
+- The busy spinner ring uses `--tm-content-inverse` instead of `#fff` (same white). — *D-98*
+- Ring width tokens.spinner.ring, colour tokens.color.content.inverse, box tokens.spinner.size: `border: var(--tm-spinner-ring) solid var(--tm-content-inverse)` — *Design system*
+
+Decisions: D-98
+
+<a id="d29"></a>
+### d29 · Border widths, the focus ring, icon and spinner sizes and the logo width: are there tokens?
+
+- (1) Sizes the Sign-in kit found with no token become design-system tokens (border width, focus ring width and offset, logo lockup width, icon sizes incl. the notice icon 20, spinner size and ring), listed in as `[PROPOSED]`. — *D-98*
+- tokens.borderWidth.default, tokens.focusRing.width / .offset, tokens.iconSize.sm / .md / .lg, tokens.spinner.size / .ring, tokens.logoLockup.width. The +91 prefix is messages['signin.phonePrefix']; the logo's accessible name is messages['signin.logoAlt']. — *Tokens*
+
+Decisions: D-98
+
+<a id="d23"></a>
+### d23 · Can I use a hex colour, a palette colour or a pixel value that matches a token?
+
+- **No raw values.** No hex codes, no `rgb`, no ad-hoc px for colour, radius, spacing or shadow in project code. If a value isn't a token, it isn't allowed. — *Design rules 2.1*
+- **Semantic tokens only.** Use `--tm-content-*`, `--tm-surface-*`, `--tm-border-*`, `--tm-feedback-*`, `--tm-space-*`, `--tm-radius-*`. Never use `--tm-core-*` (the raw palette) in a project. — *Design rules 2.2*
+
+## Logo
+
+<a id="o14"></a>
+### o14 · react-native-svg may not draw the image the logo SVG embeds. What do we use on the phone?
+
+- The native logo ships as PNG exports of the locked SVG (no redraw). — *D-98*
+- PNG exports in foundation/brand/ (truemeds-for-doctors.png with the @1x / @2x / @3x density suffixes: 166, 332, 498 px wide), drawn tokens.logoLockup.width wide; source SVG and its sha256 in foundation/brand/logo.json. — *Kit*
+
+Decisions: D-98, D-02
+
+## Layout
+
+<a id="o20"></a>
+### o20 · Is a server notice 8 or 16 below the field?
+
+- The notice sits 16 below the field as the approved pictures show, and RULES §8.3 wording is corrected. — *D-98*
+- **Three gaps only:** tight `--tm-space-sm` (8): label↔field, field↔helper, and a result notice ↔ the button it came from. **A result notice under a field sits 16 below the field** (the field's 8 gap plus the notice's 8; D-98) · related `--tm-space-lg` (16): items within a group, **and cards stacked one above another — the same gap everywhere cards stack, on the case page, Prescribe and Profile** · section `--tm-space-2xl` (32): between groups. Spare vertical space goes between the content and a pinned button, never inside a group. Home-base screens use 3xl (48) as the hero gap between logo and title. — *Design rules 8.3*
+
+Decisions: D-98
+
+<a id="d19"></a>
+### d19 · What are the logo size and the spacing at the top of the screen?
+
+- **Logo lockup size and place.** Every home-base screen with the "truemeds for doctors" lockup (`foundation/logo/truemeds-for-doctors.svg`, project level, §2.8) draws it **166px wide** (height follows the 220×54 artwork), **16px from the top**, and the logo→title gap stays as in §8.3 (L6). Nothing else sets the lockup size. — *Design rules 8.13*
+- L6 — Sign-in logo-to-title gap: 48 (`--tm-space-3xl`), home-base hero gap. — *Design rules L6*
+- **Side margin:** `--tm-space-page` (**16**, the design team's standard — changed from 24 on 2026-10-26, D-67) on every mobile screen, including the header, sheets and the action bar. Every block — fields, notices, cards, code boxes, buttons — shares the same left and right edges. — *Design rules 8.2*
+- **Three gaps only:** tight `--tm-space-sm` (8): label↔field, field↔helper, and a result notice ↔ the button it came from. **A result notice under a field sits 16 below the field** (the field's 8 gap plus the notice's 8; D-98) · related `--tm-space-lg` (16): items within a group, **and cards stacked one above another — the same gap everywhere cards stack, on the case page, Prescribe and Profile** · section `--tm-space-2xl` (32): between groups. Spare vertical space goes between the content and a pinned button, never inside a group. Home-base screens use 3xl (48) as the hero gap between logo and title. — *Design rules 8.3*
+
+Decisions: D-46, D-61, D-67
+
+<a id="d20"></a>
+### d20 · Which type sizes does the screen use?
+
+- L1 — Screen title: `.tm-text-title-lg` 32/40 semibold — *Design rules 8.1*
+- L2 — Key content (values, names, the thing acted on): `.tm-text-body-lg-strong` where emphasis matters) — *Design rules 8.1*
+- L3 — Supporting text (descriptions, helper, status lines): `.tm-text-body-md--tm-content-secondary` — *Design rules 8.1*
+- L4 — Field helper and field error text: 14/20 (`.tm-field__helper`). — *Design rules L4*
+- L5 — Notice text (`.tm-notice`): 14/20. — *Design rules L5*
+
+Decisions: D-43, D-46
+
+## Sending
+
+<a id="d07"></a>
+### d07 · What happens to the button and the field while the code is being sent?
+
+- L2 — Loading primary buttons: brand-blue fill, white label, white spinner, on every screen (sign-in "Sending OTP", OTP "Verifying", any future loading primary). — *Design rules L2*
+- **States:** pressed; disabled (design-system disabled style, exempt from contrast); busy (L2). Busy spinner → label gap is 8 on every busy button. A quiet action in progress shows text only ("Ending…"), no spinner. **Busy labels always end with "…"** ("Verifying…", "Sending OTP…") (D-54). — *Design rules 9.1*
+- signin.sending: L1 — Send pending; disable duplicate send — *Feedback state map: signin.sending*
+
+Decisions: D-46, D-54
 
 ## Inactive account
 
@@ -226,29 +304,6 @@ Decisions: D-47, D-53, D-65
 
 Decisions: D-48
 
-## Layout
-
-<a id="d19"></a>
-### d19 · What are the logo size and the spacing at the top of the screen?
-
-- **Logo lockup size and place.** Every home-base screen with the "truemeds for doctors" lockup (`foundation/logo/truemeds-for-doctors.svg`, project level, §2.8) draws it **166px wide** (height follows the 220×54 artwork), **16px from the top**, and the logo→title gap stays as in §8.3 (L6). Nothing else sets the lockup size. — *Design rules 8.13*
-- L6 — Sign-in logo-to-title gap: 48 (`--tm-space-3xl`), home-base hero gap. — *Design rules L6*
-- **Side margin:** `--tm-space-page` (**16**, the design team's standard — changed from 24 on 2026-10-26, D-67) on every mobile screen, including the header, sheets and the action bar. Every block — fields, notices, cards, code boxes, buttons — shares the same left and right edges. — *Design rules 8.2*
-- **Three gaps only:** tight `--tm-space-sm` (8): label↔field, field↔helper, and a result notice ↔ the control it came from · related `--tm-space-lg` (16): items within a group, **and cards stacked one above another — the same gap everywhere cards stack, on the case page, Prescribe and Profile** · section `--tm-space-2xl` (32): between groups. Spare vertical space goes between the content and a pinned button, never inside a group. Home-base screens use 3xl (48) as the hero gap between logo and title. — *Design rules 8.3*
-
-Decisions: D-46, D-61, D-67
-
-<a id="d20"></a>
-### d20 · Which type sizes does the screen use?
-
-- L1 — Screen title: `.tm-text-title-lg` 32/40 semibold — *Design rules 8.1*
-- L2 — Key content (values, names, the thing acted on): `.tm-text-body-lg-strong` where emphasis matters) — *Design rules 8.1*
-- L3 — Supporting text (descriptions, helper, status lines): `.tm-text-body-md--tm-content-secondary` — *Design rules 8.1*
-- L4 — Field helper and field error text: 14/20 (`.tm-field__helper`). — *Design rules L4*
-- L5 — Notice text (`.tm-notice`): 14/20. — *Design rules L5*
-
-Decisions: D-43, D-46
-
 ## Accessibility
 
 <a id="d21"></a>
@@ -268,14 +323,6 @@ Decisions: D-54
 
 - **One font:** Plus Jakarta Sans (comes with the design system). No system-font stacks, no second typeface. — *Design rules 2.3*
 - tokens.font.family is "Plus Jakarta Sans". Weights this screen uses: tokens.font.weight.semibold = 600, tokens.font.weight.regular = 400. Font files and setup: foundation/fonts/FONTS.md. — *Tokens*
-
-## Tokens
-
-<a id="d23"></a>
-### d23 · Can I use a hex colour, a palette colour or a pixel value that matches a token?
-
-- **No raw values.** No hex codes, no `rgb`, no ad-hoc px for colour, radius, spacing or shadow in project code. If a value isn't a token, it isn't allowed. — *Design rules 2.1*
-- **Semantic tokens only.** Use `--tm-content-*`, `--tm-surface-*`, `--tm-border-*`, `--tm-feedback-*`, `--tm-space-*`, `--tm-radius-*`. Never use `--tm-core-*` (the raw palette) in a project. — *Design rules 2.2*
 
 ## Buttons
 
@@ -304,7 +351,7 @@ Decisions: D-48
 ### d26 · How do notices wrap and where do they sit?
 
 - **Notices** wrap balanced, set centrally. — *App logic §10*
-- **Notice** — Neutral / warning / error (L5); stays until the cause is gone. **Warning** when something blocks the main action or runs on a timer (offline, locks, near expiry); **error** when an action failed; **neutral** only for side information (D-54). Text wraps balanced. **Placement:** a notice that is the **result of an action** sits next to the control that did it — on a screen with a pinned bar, inside the bar above its button, in the band style of §3 (Home "ending soon", setup / add / request failures, the offer's "Couldn't turn on…", the case and calling bar notices); on a screen without a bar, 8 below the field or button it came from. A notice about **the bar's own action** — the result of the last tap, or why its button is disabled now (offline, "No cases right now") — is also in the bar. A notice about the **screen's general situation** (unlock "isn't available", Home idle-expired, manually ended, expired-pending, stop-pending) stays at the top of the panel, not tied to a button. **Alignment (D-86, 2026-11-03):** the band inside the bar is centred (icon and text as a group, wrapped lines centred, balanced breaks kept); every other notice (top of page, inside sheets, in content) stays left-aligned. — *Design rules 9.5*
+- **Notice** — Neutral / warning / error (L5); stays until the cause is gone. **Warning** when something blocks the main action or runs on a timer (offline, locks, near expiry); **error** when an action failed; **neutral** only for side information (D-54). Text wraps balanced. **Placement:** a notice that is the **result of an action** sits next to the control that did it — on a screen with a pinned bar, inside the bar above its button, in the band style of §3 (Home "ending soon", setup / add / request failures, the offer's "Couldn't turn on…", the case and calling bar notices); on a screen without a bar, 16 below the field it came from (D-98) or 8 below the button. A notice about **the bar's own action** — the result of the last tap, or why its button is disabled now (offline, "No cases right now") — is also in the bar. A notice about the **screen's general situation** (unlock "isn't available", Home idle-expired, manually ended, expired-pending, stop-pending) stays at the top of the panel, not tied to a button. **Alignment (D-86, 2026-11-03):** the band inside the bar is centred (icon and text as a group, wrapped lines centred, balanced breaks kept); every other notice (top of page, inside sheets, in content) stays left-aligned. — *Design rules 9.5*
 
 Decisions: D-86
 

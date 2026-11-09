@@ -13,10 +13,7 @@
        "property": "display",
        "value": "flex",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 581
+       "layout": true
       },
       {
        "property": "gap",
@@ -33,10 +30,7 @@
        "property": "align-items",
        "value": "flex-start",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 581
+       "layout": true
       },
       {
        "property": "padding",
@@ -62,18 +56,20 @@
       },
       {
        "property": "border",
-       "value": "1px solid var(--tm-border-brand-subtle)",
+       "value": "var(--tm-border-width-default) solid var(--tm-border-brand-subtle)",
        "tokens": [
+        {
+         "native": "tokens.borderWidth.default",
+         "web": "--tm-border-width-default",
+         "value": 1
+        },
         {
          "native": "tokens.color.border.brand.subtle",
          "web": "--tm-border-brand-subtle",
          "value": "#98D2FD"
         }
        ],
-       "raw": true,
-       "kind": "size",
-       "file": "design-system/truemeds.css",
-       "line": 583
+       "layout": true
       },
       {
        "property": "border-color",
@@ -134,10 +130,7 @@
        "property": "text-wrap",
        "value": "balance",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 771
+       "layout": true
       },
       {
        "property": "margin-top",
@@ -160,10 +153,7 @@
        "property": "display",
        "value": "flex",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 581
+       "layout": true
       },
       {
        "property": "gap",
@@ -180,10 +170,7 @@
        "property": "align-items",
        "value": "flex-start",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 581
+       "layout": true
       },
       {
        "property": "padding",
@@ -209,18 +196,20 @@
       },
       {
        "property": "border",
-       "value": "1px solid var(--tm-border-brand-subtle)",
+       "value": "var(--tm-border-width-default) solid var(--tm-border-brand-subtle)",
        "tokens": [
+        {
+         "native": "tokens.borderWidth.default",
+         "web": "--tm-border-width-default",
+         "value": 1
+        },
         {
          "native": "tokens.color.border.brand.subtle",
          "web": "--tm-border-brand-subtle",
          "value": "#98D2FD"
         }
        ],
-       "raw": true,
-       "kind": "size",
-       "file": "design-system/truemeds.css",
-       "line": 583
+       "layout": true
       },
       {
        "property": "border-color",
@@ -281,10 +270,7 @@
        "property": "text-wrap",
        "value": "balance",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 771
+       "layout": true
       },
       {
        "property": "margin-top",
@@ -307,10 +293,7 @@
        "property": "display",
        "value": "flex",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 581
+       "layout": true
       },
       {
        "property": "gap",
@@ -327,10 +310,7 @@
        "property": "align-items",
        "value": "flex-start",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 581
+       "layout": true
       },
       {
        "property": "padding",
@@ -356,18 +336,20 @@
       },
       {
        "property": "border",
-       "value": "1px solid var(--tm-border-brand-subtle)",
+       "value": "var(--tm-border-width-default) solid var(--tm-border-brand-subtle)",
        "tokens": [
+        {
+         "native": "tokens.borderWidth.default",
+         "web": "--tm-border-width-default",
+         "value": 1
+        },
         {
          "native": "tokens.color.border.brand.subtle",
          "web": "--tm-border-brand-subtle",
          "value": "#98D2FD"
         }
        ],
-       "raw": true,
-       "kind": "size",
-       "file": "design-system/truemeds.css",
-       "line": 583
+       "layout": true
       },
       {
        "property": "border-color",
@@ -428,10 +410,7 @@
        "property": "text-wrap",
        "value": "balance",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 771
+       "layout": true
       },
       {
        "property": "margin-top",
@@ -456,48 +435,43 @@
      "styles": [
       {
        "property": "width",
-       "value": "20px",
-       "tokens": [],
-       "raw": true,
-       "kind": "size",
-       "file": "design-system/truemeds.css",
-       "line": 593
+       "value": "var(--tm-icon-size-md)",
+       "tokens": [
+        {
+         "native": "tokens.iconSize.md",
+         "web": "--tm-icon-size-md",
+         "value": 20
+        }
+       ]
       },
       {
        "property": "height",
-       "value": "20px",
-       "tokens": [],
-       "raw": true,
-       "kind": "size",
-       "file": "design-system/truemeds.css",
-       "line": 593
+       "value": "var(--tm-icon-size-md)",
+       "tokens": [
+        {
+         "native": "tokens.iconSize.md",
+         "web": "--tm-icon-size-md",
+         "value": 20
+        }
+       ]
       },
       {
        "property": "flex",
        "value": "none",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 593
+       "layout": true
       },
       {
        "property": "display",
        "value": "inline-block",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 349
+       "layout": true
       },
       {
        "property": "vertical-align",
        "value": "middle",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 349
+       "layout": true
       },
       {
        "property": "color",
@@ -550,10 +524,7 @@
        "property": "text-wrap",
        "value": "balance",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 771,
+       "layout": true,
        "inherited": true
       }
      ],
@@ -564,48 +535,43 @@
      "styles": [
       {
        "property": "width",
-       "value": "20px",
-       "tokens": [],
-       "raw": true,
-       "kind": "size",
-       "file": "design-system/truemeds.css",
-       "line": 593
+       "value": "var(--tm-icon-size-md)",
+       "tokens": [
+        {
+         "native": "tokens.iconSize.md",
+         "web": "--tm-icon-size-md",
+         "value": 20
+        }
+       ]
       },
       {
        "property": "height",
-       "value": "20px",
-       "tokens": [],
-       "raw": true,
-       "kind": "size",
-       "file": "design-system/truemeds.css",
-       "line": 593
+       "value": "var(--tm-icon-size-md)",
+       "tokens": [
+        {
+         "native": "tokens.iconSize.md",
+         "web": "--tm-icon-size-md",
+         "value": 20
+        }
+       ]
       },
       {
        "property": "flex",
        "value": "none",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 593
+       "layout": true
       },
       {
        "property": "display",
        "value": "inline-block",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 349
+       "layout": true
       },
       {
        "property": "vertical-align",
        "value": "middle",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 349
+       "layout": true
       },
       {
        "property": "color",
@@ -658,10 +624,7 @@
        "property": "text-wrap",
        "value": "balance",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 771,
+       "layout": true,
        "inherited": true
       }
      ],
@@ -672,48 +635,43 @@
      "styles": [
       {
        "property": "width",
-       "value": "20px",
-       "tokens": [],
-       "raw": true,
-       "kind": "size",
-       "file": "design-system/truemeds.css",
-       "line": 593
+       "value": "var(--tm-icon-size-md)",
+       "tokens": [
+        {
+         "native": "tokens.iconSize.md",
+         "web": "--tm-icon-size-md",
+         "value": 20
+        }
+       ]
       },
       {
        "property": "height",
-       "value": "20px",
-       "tokens": [],
-       "raw": true,
-       "kind": "size",
-       "file": "design-system/truemeds.css",
-       "line": 593
+       "value": "var(--tm-icon-size-md)",
+       "tokens": [
+        {
+         "native": "tokens.iconSize.md",
+         "web": "--tm-icon-size-md",
+         "value": 20
+        }
+       ]
       },
       {
        "property": "flex",
        "value": "none",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 593
+       "layout": true
       },
       {
        "property": "display",
        "value": "inline-block",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 349
+       "layout": true
       },
       {
        "property": "vertical-align",
        "value": "middle",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 349
+       "layout": true
       },
       {
        "property": "color",
@@ -766,10 +724,7 @@
        "property": "text-wrap",
        "value": "balance",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 771,
+       "layout": true,
        "inherited": true
       }
      ],
@@ -834,10 +789,7 @@
        "property": "text-wrap",
        "value": "balance",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 771,
+       "layout": true,
        "inherited": true
       }
      ],
@@ -898,10 +850,7 @@
        "property": "text-wrap",
        "value": "balance",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 771,
+       "layout": true,
        "inherited": true
       }
      ],
@@ -962,10 +911,7 @@
        "property": "text-wrap",
        "value": "balance",
        "tokens": [],
-       "raw": true,
-       "kind": "keyword",
-       "file": "design-system/truemeds.css",
-       "line": 771,
+       "layout": true,
        "inherited": true
       }
      ],
@@ -977,7 +923,7 @@
  "rules": [
   {
    "section": "Design rules 9.5",
-   "text": "**Notice** — Neutral / warning / error (L5); stays until the cause is gone. **Warning** when something blocks the main action or runs on a timer (offline, locks, near expiry); **error** when an action failed; **neutral** only for side information (D-54). Text wraps balanced. **Placement:** a notice that is the **result of an action** sits next to the control that did it — on a screen with a pinned bar, inside the bar above its button, in the band style of §3 (Home \"ending soon\", setup / add / request failures, the offer's \"Couldn't turn on…\", the case and calling bar notices); on a screen without a bar, 8 below the field or button it came from. A notice about **the bar's own action** — the result of the last tap, or why its button is disabled now (offline, \"No cases right now\") — is also in the bar. A notice about the **screen's general situation** (unlock \"isn't available\", Home idle-expired, manually ended, expired-pending, stop-pending) stays at the top of the panel, not tied to a button. **Alignment (D-86, 2026-11-03):** the band inside the bar is centred (icon and text as a group, wrapped lines centred, balanced breaks kept); every other notice (top of page, inside sheets, in content) stays left-aligned."
+   "text": "**Notice** — Neutral / warning / error (L5); stays until the cause is gone. **Warning** when something blocks the main action or runs on a timer (offline, locks, near expiry); **error** when an action failed; **neutral** only for side information (D-54). Text wraps balanced. **Placement:** a notice that is the **result of an action** sits next to the control that did it — on a screen with a pinned bar, inside the bar above its button, in the band style of §3 (Home \"ending soon\", setup / add / request failures, the offer's \"Couldn't turn on…\", the case and calling bar notices); on a screen without a bar, 16 below the field it came from (D-98) or 8 below the button. A notice about **the bar's own action** — the result of the last tap, or why its button is disabled now (offline, \"No cases right now\") — is also in the bar. A notice about the **screen's general situation** (unlock \"isn't available\", Home idle-expired, manually ended, expired-pending, stop-pending) stays at the top of the panel, not tied to a button. **Alignment (D-86, 2026-11-03):** the band inside the bar is centred (icon and text as a group, wrapped lines centred, balanced breaks kept); every other notice (top of page, inside sheets, in content) stays left-aligned."
   },
   {
    "section": "Design rules L5",
