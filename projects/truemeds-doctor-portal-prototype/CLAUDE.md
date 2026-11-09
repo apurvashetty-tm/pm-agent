@@ -11,6 +11,18 @@ It is a clean prototype lane where the goal is a polished, working, believable d
 
 ---
 
+## Way of working (D-100)
+
+- Playbook: `../../workflows/core/build-with-agents.md` (central, all projects; on the shared branch). Why: decision log D-100.
+- **Size the job.** Small, mechanical fix → do it directly with the one relevant check. Build → a terminal run from `docs/runs/QUEUE.md`.
+- **Checks:** `python3 ../../design-system/scripts/check_tokens.py` (no raw values; same-line `/* raw-ok: <reason> */` for the listed exceptions) ·
+  `node tests/run-checks.mjs` · `docs/renders/2026-11-09-build-fast/run-checks.sh`.
+- The token check also runs after every CSS edit (Claude hook `../../scripts/claude-hooks/`) and at every commit (`scripts/git-hooks/pre-commit`).
+- **Reviews:** one Codex review per run, correctness against the spec only; one fix pass; a second review only for blockers.
+- **Runs** read `docs/runs/RULINGS.md` first and end with one line in `docs/runs/STATUS.md`: `DONE <name>` or `STOPPED <name>: <reason>`, published with `scripts/publish.sh`. Pause the chain: create `docs/runs/HOLD`.
+
+---
+
 ## Workspace memory
 
 Before project-specific work, also read:
