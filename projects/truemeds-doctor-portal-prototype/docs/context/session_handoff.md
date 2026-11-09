@@ -961,6 +961,12 @@ User identified missing HTML/native linkage. Inspected actual sign-in and OTP HT
 - **Installable demo:** the manifest already exists (standalone, `?demo=1`); install needs https (Netlify) or Chrome's insecure-origins flag for the LAN link.
 - **Open:** FE delivery via GitLab (copy of the kit pushed to a GitLab repo; details pending with Apurva).
 
+## 2026-11-10 · Run signin-d101 (unattended) — D-101 o04, o10, o11, o25 in the prototype
+- **Built:** o04 more than 10 digits (after +91 / 0 cleaning) → field error `signin.long` "That’s more than 10 digits. Check the number." at once, same slot / style as `signin.short`, digits never cut (`app/core/auth.js`). o10 back from OTP (Change / phone back) keeps the number and edits normally (`app/screens/sign-in.js`; the pasted-picture first-digit replace is unchanged). o11 OTP Terms / Privacy open the D-101 URLs in a new tab, from `TERMS_URL` / `PRIVACY_URL` in `app/data/links.js` (`app/screens/otp.js`). o25 `signin.signup` = "New to Truemeds? {link}" (link text stays `signin.signupLink`); screen identical.
+- **Docs:** `ui-screens/app-logic.md` §2 and the sign-in rows of `docs/feedback-state-map.md` (new behaviour rows `signin.too-long`, `signin.back-from-otp` → `app/state-map.js`, `docs/state-map.md` regenerated; jump-list names and jump targets added).
+- **Checks:** see `docs/renders/2026-11-09-signin-d101/REPORT.md`. New test `tests/signin-d101.mjs`; `tests/entry-journeys.mjs` A1, B5g, B5h, B6 updated for D-101. New o04 picture (360 / 390) in the run folder for Apurva's phone walkthrough — not in `ui-screens/`.
+- **Next:** the kit run (`handoff-kit-all`) — regenerates `handoff/` (still shows the old o04 / o10 / o25 code and copy until then).
+
 ## 2026-11-10 (00:35) · Scheduled check-in — run B reviewed (passed)
 - **Chain:** B done and reviewed (passed): Pilot Fallback B plays end to end (B0/B1 gate from the answer, B2, 13 → 14, B3 / 15, 16 / 16b / 16c, 17, Pilot 7d) plus the step-7 cross-journey cases; final pass (copy parity 373 keys, all checks). `signin-d101` running since 00:12; then `handoff-kit-all`.
 - **Rulings (RULINGS 00:35):** B-play dispute = test bug, fixed in `tests/codex/run-B/journeys.mjs`; t13 @390 diff accepted (13 keeps the neutral script in launch B, D-102); c-skip-ha diff accepted; B's mock assumptions → OQ-038.

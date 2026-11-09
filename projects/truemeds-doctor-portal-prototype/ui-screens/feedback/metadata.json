@@ -26,6 +26,15 @@
     "retain": "number",
     "copy": "approved"
   },
+  "signin.long": {
+    "pattern": "F1",
+    "trigger": "more than 10 digits after +91 / 0 cleaning (as typed)",
+    "slot": "mobile field",
+    "next": "remove the extra digits",
+    "clear": "valid edit",
+    "retain": "number",
+    "copy": "approved (D-101 o04)"
+  },
   "signin.prefix": {
     "pattern": "F1",
     "trigger": "impossible prefix",
@@ -873,11 +882,14 @@
   "signin.signup": {
     "pattern": "none",
     "trigger": "entry screen label",
-    "slot": "sign-up line",
+    "slot": "sign-up line ({link} = signin.signupLink)",
     "next": "—",
     "clear": "—",
     "retain": "—",
-    "copy": "approved picture label (plan B6, step 1 recovery 2026-11-09)"
+    "copy": "approved picture label (plan B6, step 1 recovery 2026-11-09); one entry with {link}, D-101 o25",
+    "placeholders": [
+      "link"
+    ]
   },
   "signin.signupLink": {
     "pattern": "none",

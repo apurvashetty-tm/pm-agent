@@ -6,7 +6,7 @@ import { MSG } from "../core/msg.js";
 import { push, setScreenBack, saveCurrent } from "../core/nav.js";
 import { store } from "../core/store.js";
 import { clock } from "../core/clock.js";
-import { h } from "../core/dom.js";
+import { h, parts } from "../core/dom.js";
 import { cleanNumber, checkNumber, requestCode, formatWait } from "../core/auth.js";
 import { PICTURE_NUMBER } from "../data/test-numbers.js";
 import { SIGN_UP_URL, PLACEHOLDER } from "../data/links.js";
@@ -55,8 +55,9 @@ export function render(host, id, { mode, params = {} }) {
     until: fx.waitMs ? clock.now() + fx.waitMs : 0,
     kb: params.live ? false : !!fx.kb,
     focused: params.live ? false : !!fx.focused,
-    // A pasted or pre-filled number (pasted picture, back from OTP Change) is replaced by the first typed digit (recovery §1).
-    replace: params.live ? !!typed : key === "pasted-cleaned",
+    // A pasted number (pasted picture) is replaced by the first typed digit (recovery §1). Back from OTP Change keeps the
+    // number and it edits normally (D-101 o10).
+    replace: params.live ? false : key === "pasted-cleaned",
   };
   // Back from a placeholder page (Call Doctor Ops): restore the screen as it was.
   if (params.saved) Object.assign(m, params.saved, { button: params.saved.button === "sending" ? "default" : params.saved.button });
@@ -76,7 +77,7 @@ export function render(host, id, { mode, params = {} }) {
     h("div", { class: "tm-field__control" }, h("span", { class: "login-prefix", text: MSG("signin.phonePrefix") }), input),
     helper, Object.values(notices));
   const signupLink = h("a", { class: "login-signup-label", href: SIGN_UP_URL, target: "_blank", rel: "noopener", text: MSG("signin.signupLink") });
-  const signup = h("div", { class: "login-signup", id: "tm-signup-option" }, `${MSG("signin.signup")} `, signupLink);
+  const signup = h("div", { class: "login-signup", id: "tm-signup-option" }, parts("signin.signup", { link: signupLink }, MSG));   // D-101 o25
   const keyboard = kbDrawn ? mockKeyboard(typeKey) : null;
   const root = h("section", { class: "signin-screen tm", "aria-labelledby": "tm-login-title" },
     h("img", { class: "login-logo", src: "brand/truemeds-for-doctors.svg", alt: MSG("signin.logoAlt") }),
@@ -122,7 +123,7 @@ export function render(host, id, { mode, params = {} }) {
     store.set({ entryNumber: cleaned });
     // once an error shows it re-checks on every keystroke; the first-digit rule shows as soon as it is typed
     // (an "empty" / "too short" error keeps the Send-level check; a first-digit error re-checks with the typing rules)
-    m.error = checkNumber(cleaned, { submit: m.error === "signin.empty" || m.error === "signin.short" });
+    m.error = checkNumber(cleaned, { submit: m.error === "signin.empty" || m.error === "signin.short" || m.error === "signin.long" });
     if (changed && m.notice) { m.notice = null; m.button = "default"; }   // a server answer belongs to the number it was for
     paint();
   }

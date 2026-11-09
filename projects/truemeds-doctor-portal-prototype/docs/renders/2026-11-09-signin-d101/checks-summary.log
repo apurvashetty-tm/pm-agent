@@ -1,0 +1,14 @@
+signin-d101 -> exit 0 : 10/10 pass
+node tests/entry-journeys.mjs -> exit 0 :  61/61 passed 
+node tests/run-checks.mjs -> exit 0 :  95/95 passed 
+python3 docs/layout_check.py -> exit 0 :  ALL PASS 
+python3 docs/layout_check.py --app -> exit 0 :  ALL PASS 
+docs/renders/2026-11-09-build-fast/run-checks.sh: line 8: 53639 Terminated: 15          python3 -m http.server 8765 --directory app > /dev/null 2>&1
+python3 ui-screens/feedback/check-locked-specs.py -> exit 0 : small-phone pass: 149 states at 360×640 STANDARDS GUARD: PASS — 0 failure(s) across 149 states × 3 viewport(s) 
+node ui-screens/feedback/check-sources.mjs -> exit 0 : PASS: app/ copy — 18 built screen files, 3056 string literals, every MSG key in the registry, no typed copy PASS: copy checks rules 4/5/11/13/14/19/21/22/23 over 948 strings; 12 sign-in states, 17 OTP states, local asset
+python3 brand/check_lockup.py -> exit 0 : lockup OK: truemeds-for-doctors.svg, truemeds-for-doctors.png 
+python3 ../../design-system/scripts/check_tokens.py -> exit 0 : 
+node tests/scan.mjs -> exit 0 : scan: 54 files, 4906 lines checked PASS — 0 scan failures 
+node scripts/check-state-map.mjs -> exit 0 : pictures 149 · map rows 149 · behaviour/calling boxes 22 PASS — 0 drift failures 
+node tests/compare-step1.mjs -> exit 0 :  43 states, 86 pictures: exact 80, accepted 6, failed 0 
+old index.html / app.js / styles.css unchanged

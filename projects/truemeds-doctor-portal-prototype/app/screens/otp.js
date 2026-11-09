@@ -10,7 +10,7 @@ import { clock } from "../core/clock.js";
 import { h, parts, linkPhrase } from "../core/dom.js";
 import { checkCode, verifyCode, resendCode, status, formatNumber, formatWait, signIn } from "../core/auth.js";
 import { OTP_LENGTH, PICTURE_NUMBER, PICTURE_CODE } from "../data/test-numbers.js";
-import { PLACEHOLDER } from "../data/links.js";
+import { PLACEHOLDER, TERMS_URL, PRIVACY_URL } from "../data/links.js";
 import { mockKeyboard, drawsKeyboard } from "../shell/mock-keyboard.js";
 import { afterSignIn } from "../core/faster-signin.js";
 import { authCtx, newLife } from "./entry-ctx.js";
@@ -87,9 +87,10 @@ export function render(host, id, { mode, params = {} }) {
   const rsLead = h("span", { id: "rp", text: `${MSG("otp.didntReceive")} ` });
   const rsBody = h("span", { id: "rr" });
   const rs = h("p", { class: "rs", id: "rs" }, rsLead, rsBody);
-  const placeholderLink = (text, which) => h("a", { href: "#", text, onclick: (e) => { e.preventDefault(); leave({ s: "placeholder", text: PLACEHOLDER[which] }); } });
+  // Terms and Privacy open the configured pages in a new tab (D-101 o11); the OTP screen stays as it is.
+  const legalLink = (text, href) => h("a", { href, target: "_blank", rel: "noopener", text });
   const consent = h("p", { class: "consent tm-text-body-sm", id: "consent" },
-    parts("otp.consent", { terms: placeholderLink(MSG("otp.terms"), "terms"), privacy: placeholderLink(MSG("otp.privacy"), "privacy") }, MSG));
+    parts("otp.consent", { terms: legalLink(MSG("otp.terms"), TERMS_URL), privacy: legalLink(MSG("otp.privacy"), PRIVACY_URL) }, MSG));
   const btn = h("button", { class: "tm-btn tm-btn--lg tm-btn--primary tm-btn--block", id: "b", type: "button", onclick: onVerify });
   const keyboard = kbDrawn ? mockKeyboard(typeKey) : null;
   const root = h("section", { class: "otp-screen tm", "aria-labelledby": "otp-title" },

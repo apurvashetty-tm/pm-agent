@@ -29,9 +29,9 @@ function fakeCtx(story = {}, offline = false) {
   };
 }
 const MIN = 60000, SEC = 1000;
-check("A1", "cleaning: +91 / 0 / spaces / dashes removed; 10 digits max",
+check("A1", "cleaning: +91 / 0 / spaces / dashes removed; more than 10 digits kept, not cut (D-101 o04)",
   auth.cleanNumber("+91 98765-43210") === "9876543210" && auth.cleanNumber("098765 43210") === "9876543210" &&
-  auth.cleanNumber("98765") === "98765" && auth.cleanNumber("987654321099") === "9876543210" && auth.cleanNumber("abc") === "");
+  auth.cleanNumber("98765") === "98765" && auth.cleanNumber("987654321099") === "987654321099" && auth.cleanNumber("abc") === "");
 check("A2", "number checks: empty and short only on submit; first digit at once",
   auth.checkNumber("", {}) === null && auth.checkNumber("", { submit: true }) === "signin.empty" && auth.checkNumber("1") === "signin.prefix" &&
   auth.checkNumber("98765") === null && auth.checkNumber("98765", { submit: true }) === "signin.short" && auth.checkNumber("9876543210", { submit: true }) === null);
@@ -298,14 +298,14 @@ const signInNotice = (p) => p.evaluate(() => [...document.querySelectorAll(".log
   await p.goBack(); await p.waitForTimeout(300);
   const restored = await p.evaluate(() => ({ note: document.getElementById("n").classList.contains("show"), rsHidden: document.getElementById("rs").hidden }));
   await enterCode(p, "12");
-  await p.click("#consent a"); await p.waitForTimeout(200); await p.goBack(); await p.waitForTimeout(300);
+  await p.click("#nt a"); await p.waitForTimeout(200); await p.goBack(); await p.waitForTimeout(300);
   const digits = await p.inputValue("#c");
   check("B5g", "Back from a placeholder restores OTP as it was (cap notice, resend hidden, typed digits)", restored.note && restored.rsHidden && digits === "12", JSON.stringify({ restored, digits }));
   // a late server answer never acts on a screen the doctor has left
   await p.fill("#c", ""); await enterCode(p, "1234"); await p.click("#b");
-  await p.evaluate(() => document.querySelector("#consent a").click()); await p.waitForTimeout(ANSWER + 300);
+  await p.evaluate(() => document.querySelector("#nt a").click()); await p.waitForTimeout(ANSWER + 300);
   const stayed = await text(p, ".placeholder-page__text");
-  check("B5h", "Verify answer arriving after leaving for a placeholder does not navigate (screen life ends on every transition)", stayed === "Link pending", String(stayed));
+  check("B5h", "Verify answer arriving after leaving for a placeholder does not navigate (screen life ends on every transition)", stayed === "This would call Doctor Ops", String(stayed));
   await p.goBack(); await p.waitForTimeout(300);
   check("B5b", "resend: green \"New code sent\" with no icon; countdown ticks; waits 60 s then 120 s; 4th code → too many codes (resend hidden, Doctor Ops link → placeholder)",
     n1.s1 === "New code sent" && !n1.icon && /Resend in 1:00/.test(n1.rs) && ticking === "0:40" && n2 === "2:00" &&
@@ -332,7 +332,7 @@ const signInNotice = (p) => p.evaluate(() => [...document.querySelectorAll(".log
   await send(p, "7012345692");
   await p.click("a.lk"); await p.waitForTimeout(300);
   const change = await p.evaluate(() => ({ signIn: !!document.querySelector(".signin-screen"), n: document.getElementById("tm-login-mobile").value }));
-  await p.focus("#tm-login-mobile"); await p.keyboard.press("8");
+  await p.focus("#tm-login-mobile"); await p.keyboard.press("End"); await p.keyboard.press("Backspace"); await p.keyboard.press("8");
   const replacedNum = await p.inputValue("#tm-login-mobile");
   await p.fill("#tm-login-mobile", "7012345692");
   await p.click(".login-submit"); await p.waitForTimeout(ANSWER);
@@ -341,9 +341,10 @@ const signInNotice = (p) => p.evaluate(() => [...document.querySelectorAll(".log
   await p.goBack(); await p.waitForTimeout(300);
   const root = await p.evaluate(() => !!document.querySelector(".signin-screen"));
   await p.click(".login-submit"); await p.waitForTimeout(ANSWER);
-  await p.click("#consent a"); await p.waitForTimeout(200); const terms = await text(p, ".placeholder-page__text");
-  check("B6", "Sign up opens the onboarding page in a new tab; Change and phone Back on OTP return to sign-in with the number kept (first digit typed replaces it); Back at sign-in stays in the app; Terms → Link pending",
-    signup.href === "https://pwa-doctor.truemeds.in/onboarding" && signup.target === "_blank" && change.signIn && change.n === "7012345692" && replacedNum === "8" && back.signIn && back.n === "7012345692" && root && terms === "Link pending",
+  const terms = await p.evaluate(() => [...document.querySelectorAll("#consent a")].map((a) => `${a.href} ${a.target}`).join(" | "));
+  check("B6", "Sign up opens the onboarding page in a new tab; Change and phone Back on OTP return to sign-in with the number kept (it edits normally, D-101 o10); Back at sign-in stays in the app; Terms / Privacy open the D-101 pages in a new tab (o11)",
+    signup.href === "https://pwa-doctor.truemeds.in/onboarding" && signup.target === "_blank" && change.signIn && change.n === "7012345692" && replacedNum === "7012345698" && back.signIn && back.n === "7012345692" && root &&
+    terms === "https://www.truemeds.in/legal/terms-and-conditions _blank | https://www.truemeds.in/legal/privacy-policy _blank",
     JSON.stringify({ signup, change, replacedNum, back, root, terms }));
   check("B6b", "navigation: 0 console errors", r.errors.length === 0, r.errors.join("|"));
   await r.ctx.close();

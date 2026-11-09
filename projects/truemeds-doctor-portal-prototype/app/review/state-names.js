@@ -17,6 +17,8 @@ export const STATE_GROUPS = [
     "sign-in_too-many-tries": "Sign-in · too many codes, wait",
     "sign-in_inactive": "Sign-in · account inactive",
     "signin.locked-number": "Sign-in on a locked number → OTP locked (behaviour)",
+    "signin.too-long": "Sign-in · more than 10 digits (behaviour, D-101)",
+    "signin.back-from-otp": "Sign-in · back from OTP, number kept (behaviour, D-101)",
   } },
   { title: "OTP", ids: {
     "otp_default": "OTP · code sent, timer running",

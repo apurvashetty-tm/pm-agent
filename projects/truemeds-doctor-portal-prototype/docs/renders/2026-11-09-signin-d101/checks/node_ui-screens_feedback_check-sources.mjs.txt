@@ -1,0 +1,2 @@
+PASS: app/ copy — 18 built screen files, 3056 string literals, every MSG key in the registry, no typed copy
+PASS: copy checks rules 4/5/11/13/14/19/21/22/23 over 948 strings; 12 sign-in states, 17 OTP states, local assets, four-slot OTP, Home/unlock feedback, 374 registry IDs

@@ -30,9 +30,11 @@ Current copy: `../ui-screens/sign-in/sign-in.html`. Native: `../ui-screens/nativ
 | signin.empty-tap | F1 | Submit empty; focus field, edit | R01 sibling |
 | signin.too-short | F1 | Submit incomplete; retain digits, edit | R01 sibling |
 | signin.wrong-first-digit | F1 | Impossible prefix; immediate, clear on valid correction | R01 representative |
+| signin.too-long | F1 | More than 10 digits after +91 / 0 cleaning: `signin.long` "That’s more than 10 digits. Check the number." — immediate, same slot and style as `signin.too-short`; digits kept, never cut; clears on a valid edit (D-101 o04) | New — live state, captured for the phone walkthrough (`docs/renders/2026-11-09-signin-d101/`) |
 | signin.pasted-cleaned | None | Normalise supported prefix; preserve meaningful digits per D-39 | Existing + fixture |
+| signin.back-from-otp | None | Change / phone back on OTP returns with the number kept; it edits normally (first typed digit does not replace it, D-101 o10) | Live behaviour |
 | signin.sending | L1 | Send pending; disable duplicate send | Existing + fixture |
-| signin.not-registered | N1 | Server access result; existing sign-up route / approval information | R06 |
+| signin.not-registered | N1 | Server access result; existing sign-up route / approval information (sign-up line is one entry `signin.signup` with `{link}`, D-101 o25) | R06 |
 | signin.offline | F2 after action; N1 passive | Restore connectivity, retry; retain number; one message | R03 sibling + layout QA |
 | signin.couldnt-send | F2 | Confirmed send failure; retain number and retry | R03 sibling + layout QA |
 | signin.too-many-tries | W1 | Issuance cap; wait for server eligibility, retain number | R04 sibling + fixture |

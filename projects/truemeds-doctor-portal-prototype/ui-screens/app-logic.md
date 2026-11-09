@@ -28,8 +28,10 @@ Order on first use: Sign-in → OTP → (offer, once) → Home → Case. Returni
 ## 2. Sign-in and OTP `[LOCKED]` (D-33, D-34, D-35, D-39, D-44, D-46)
 
 **Mobile number**
-- Typing and pasting are cleaned: "+91 98765-43210", "098765 43210" → `9876543210`. A leading 0 or 91 is dropped.
-- Checks, most basic first: empty → "Enter your mobile number." · first digit not 6/7/8/9 → "Mobile numbers start with 6, 7, 8 or 9." (shown as soon as it's typed) · fewer than 10 digits → "Enter all 10 digits." (shown on Send OTP). Once an error shows, it re-checks on every keystroke.
+- Typing and pasting are cleaned: "+91 98765-43210", "098765 43210" → `9876543210`. A leading 0 or 91 is dropped. More than 10 digits left after that is **not cut** (D-101 o04).
+- Checks, most basic first: empty → "Enter your mobile number." · more than 10 digits → "That’s more than 10 digits. Check the number." (shown as soon as it's typed, whatever the first digit; same place and style as the other field errors, D-101 o04) · first digit not 6/7/8/9 → "Mobile numbers start with 6, 7, 8 or 9." (shown as soon as it's typed) · fewer than 10 digits → "Enter all 10 digits." (shown on Send OTP). Once an error shows, it re-checks on every keystroke.
+- Back from OTP (**Change** or the phone's back) keeps the number, and it edits normally: the first typed digit does **not** replace it (D-101 o10).
+- The sign-up line "New to Truemeds? Sign up" is one copy entry with a `{link}` placeholder; "Sign up" is the link (D-101 o25). On OTP, Terms and Privacy open the D-101 pages, each from one config value (o11).
 - After sending, server results show as a notice: not registered (with the sign-up route), offline, couldn't send, too many attempts (button counts down "Try again in m:ss"), account inactive (button becomes **Call Doctor Ops**).
 - When the "Try again in m:ss" countdown ends, the "Too many attempts" notice goes away and **Send OTP** works again (D-98).
 

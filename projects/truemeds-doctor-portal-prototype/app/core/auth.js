@@ -10,16 +10,17 @@ import { SIGN_IN_NUMBERS, OTP_CODES, OTP_LENGTH, MOBILE_LENGTH } from "../data/t
 
 // ---- mobile number -------------------------------------------------------------------------------------------------
 // Typing and pasting are cleaned: "+91 98765-43210", "098765 43210" → the same 10 digits. A leading 0 or 91 is dropped.
+// More than 10 digits left after that is never cut silently (D-101 o04): the digits stay and checkNumber flags them.
 export function cleanNumber(raw) {
   let d = String(raw || "").replace(/\D/g, "");
   if (d.length > MOBILE_LENGTH && d.startsWith("91")) d = d.slice(2);
-  d = d.replace(/^0+/, "");
-  return d.slice(0, MOBILE_LENGTH);
+  return d.replace(/^0+/, "");
 }
 // Checks, most basic first. `submit` = on Send OTP, or an error is already showing (it then re-checks on every keystroke).
-// The first-digit check shows as soon as the digit is typed. Returns a message key or null.
+// The first-digit and over-10-digit checks show as soon as they are typed. Returns a message key or null.
 export function checkNumber(d, { submit = false } = {}) {
   if (!d) return submit ? "signin.empty" : null;
+  if (d.length > MOBILE_LENGTH) return "signin.long";   // any over-10 entry, whatever its first digit (D-101 o04)
   if (!/^[6-9]/.test(d)) return "signin.prefix";
   if (d.length < MOBILE_LENGTH) return submit ? "signin.short" : null;
   return null;

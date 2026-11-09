@@ -1798,7 +1798,21 @@ window.TM_STATE_MAP = {
    "version": "B"
   },
   {
+   "id": "signin.back-from-otp",
+   "kind": "behaviour",
+   "step": 1,
+   "picture": null,
+   "version": "B"
+  },
+  {
    "id": "signin.locked-number",
+   "kind": "behaviour",
+   "step": 1,
+   "picture": null,
+   "version": "B"
+  },
+  {
+   "id": "signin.too-long",
    "kind": "behaviour",
    "step": 1,
    "picture": null,
