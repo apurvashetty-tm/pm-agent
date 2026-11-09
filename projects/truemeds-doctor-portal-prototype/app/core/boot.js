@@ -12,7 +12,11 @@ import { value } from "./settings.js";
 import { renderState, renderShellIntro } from "../shell/screen-host.js";
 import { onOpen, unlockState } from "./faster-signin.js";
 import { authCtx } from "../screens/entry-ctx.js";
-import { mountPanel, focusJourney, logLine } from "../review/panel.js";
+import { mountPanel, focusJourney, logLine, setLogKeeper } from "../review/panel.js";
+import { setEventSink, event } from "./events.js";
+import { work, settleRecords } from "./session.js";
+import { recordOutcome } from "./call-engine.js";
+import { CALL_KEYS } from "../data/story-schema.js";
 import { mountDrawer } from "../review/drawer.js";
 import { REVIEW_TEXT as T } from "../review/labels.js";
 
@@ -49,6 +53,21 @@ const CASE_ID = "shell-case-1";
 let server = createServer();
 let poller;
 const logEvent = (e) => { logLine(panelRoot, `${e.ev} ${JSON.stringify(e.data)}`); store.log(e.ev); };
+// App events (hold, retry, mismatch, confirm outcomes, D-50) go to the reviewer's event log.
+setEventSink((text) => { logLine(panelRoot, text); store.log(text); });
+// The app clock survives reopening the app (B8, B12): a fast-forward stays applied, like real time passing on the phone.
+if (mode !== "capture") {
+  const kept = storage.get("clockOffset");
+  if (kept) clock.fastForward(kept);
+  let saved = clock.offset();
+  setInterval(() => { if (clock.offset() !== saved) { saved = clock.offset(); storage.set("clockOffset", saved); } }, 250);
+}
+// 7f cases the doctor has left still settle when their call record arrives or the wait runs out (CW-D3, CW-D4).
+setInterval(() => settleRecords(clock.now(), {
+  outcome: (r, now) => recordOutcome(r.attempts[r.attempts.length - 1], r.choices, { call: { attempts: r.attempts } }, now, (k) => value(k, mode), r.submittedAt),
+  onProven: (r) => event(`confirm completed: ${r.route === "cat4" ? "Cat4" : "HA skipped"} — prescription confirmed (order ${r.order}, after the doctor left)`),
+  onUnproven: (r, why) => event(`call record ${why}: prescription not confirmed (mismatch, order ${r.order}) → case on hold, retry`),
+}), 250);
 const newPoller = () => createPoller({ server, caseId: CASE_ID, apply: logEvent });
 poller = newPoller();
 let pending = [];
@@ -85,6 +104,9 @@ function startState(opening) {
   const ctx = authCtx(mode);
   if (story.start === "unlock") return unlockState(ctx);
   if (story.start !== "sign-in") return null;
+  // A doctor with a case open goes straight back into it (D-48, app-logic §4: reopening goes back into the case, OQ-025);
+  // the session stays valid through an open case (no OTP over a live case, app-logic §3).
+  if (opening && mode !== "capture" && work().openCase) return "t01-ready";
   return (opening && mode !== "capture" && onOpen(ctx)) || "sign-in_default";
 }
 // Story starts at Home or straight in a case (plan §4 play link): the picture moment for the story's availability answer, then live.
@@ -112,6 +134,8 @@ const BEHAVIOUR_SCREEN = {
   "case.closed-availability-ended": "e-availability-ended",   // step 3: closed after availability ended → Back to Home only
   "rx.load-failed": "d-rx-failed",           // step 3: Rx viewer couldn't load
   "prescribe.dose-error": "d-error-dose",    // step 4: no dose on a daily schedule
+  "call.hold": "t09-patient-unavailable",    // step 5: patient side failed → the case closes as unavailable and goes on hold (CW-B2)
+  "flow.HOLD": "s7f-submitted",              // step 5: an unproven confirm is not confirmed → hold and retry (CW-D3); the doctor sees 7f
 };
 function renderScreen(id, params = {}) {
   if (id && BEHAVIOUR_SCREEN[id]) id = BEHAVIOUR_SCREEN[id];
@@ -151,11 +175,13 @@ if (mode === "review" || mode === "play") {
     story,
     stateIds: [...window.TM_STATE_MAP.pictures, ...window.TM_STATE_MAP.others].map((r) => ({ id: r.id, step: r.step })),   // behaviour-only states too
     handlers: {
-      onChange: (s) => {
+      onChange: (s, field) => {
         story = s;
-        store.set({ story: s, scenario: s.scenario, offline: s.offline, unlock: s.unlock });
+        // A Call simulator change applies to the active attempt from now on, replacing what a picture state implied (B9).
+        const callEdit = field === "calls" || CALL_KEYS.includes(field);
+        store.set({ story: s, scenario: s.scenario, offline: s.offline, unlock: s.unlock, ...(callEdit ? { callEdits: (store.get().callEdits || 0) + 1 } : {}) });
         setUnlockOutcome(s.unlock);
-        logLine(panelRoot, `set ${s.scenario}, offline ${s.offline}, unlock ${s.unlock}`);
+        logLine(panelRoot, callEdit ? (field === "calls" ? `call simulator: ${s.calls.length} calls` : `call simulator: ${field} changed`) : `set ${s.scenario}, offline ${s.offline}, unlock ${s.unlock}`);
       },
       onRunCalls: (s) => { story = s; runCalls(s.calls); },
       onFastForward: () => { const step = value("fastForwardStep", mode); clock.fastForward(step); logLine(panelRoot, `fast-forward ${Math.round(step / 1000)} s`); },
@@ -166,6 +192,10 @@ if (mode === "review" || mode === "play") {
     },
   });
   mountDrawer({ mode, panel: panelRoot, handle: document.getElementById("drawer-handle"), backdrop: document.getElementById("drawer-backdrop") });
+  // The event log is kept like the simulated server's state (review / play storage; Reset clears it): replay, then keep.
+  const LOG_KEPT = 50;
+  (storage.get("log") || []).forEach((t) => logLine(panelRoot, t, { replay: true }));
+  setLogKeeper((t) => storage.set("log", [...(storage.get("log") || []), t].slice(-LOG_KEPT)));
 }
 attachPhoneBack();
 start(null, startParams(q.s, true));

@@ -33,20 +33,26 @@ export function actionBar(children, { notice: band = null, cls = "", id } = {}) 
 
 // Bottom sheet over the screen (RULES §9.4): scrim, header (title + ✕), body, pinned actions. Returns the overlay element.
 // onClose: ✕ and a tap on the scrim. closeDisabled: busy sheets keep ✕ greyed (D-81 F9).
-export function sheet({ title, subtitle, body = [], actions = [], onClose, closeDisabled = false, id, label, cls = "" }) {
+// beforeActions: a result notice that sits between the body and the buttons (callback save failure, K3).
+export function sheet({ title, subtitle, body = [], actions = [], onClose, closeDisabled = false, id, label, cls = "", beforeActions = null }) {
   const titleId = `sh-${Math.random().toString(36).slice(2, 7)}`;
   const close = h("button", { type: "button", class: "tm-btn tm-btn--quiet tm-btn--icon tm-sheet__close", "aria-label": MSG("common.close"), disabled: closeDisabled, onclick: () => onClose && onClose() }, icon("x"));
   const box = h("section", { class: `tm-sheet${cls ? " " + cls : ""}`, role: "dialog", "aria-modal": "true", "aria-labelledby": titleId, tabindex: "-1", id },
     h("header", { class: "tm-sheet__header" }, h("h2", { class: "tm-sheet__title", id: titleId, text: title }), close),
     h("div", { class: "tm-sheet__body" }, subtitle ? h("p", { class: "tm-sheet__subtitle", text: subtitle }) : null, label ? h("div", { class: "tm-sheet__label", text: label }) : null, ...[].concat(body)),
+    beforeActions,
     actions.length ? h("div", { class: "tm-sheet__actions" }, ...actions) : null);
   const overlay = h("div", { class: "tm-overlay app-overlay" }, box);
   overlay.addEventListener("click", (e) => { if (e.target === overlay && !closeDisabled && onClose) onClose(); });
   return overlay;
 }
 // Reason list (Disable, Unavailable, Skip HA): tapping a row applies it (no extra button).
+// The title names the button; the line under it describes it (screen readers read the name, then the description).
+let optSeq = 0;
 export function option(title, desc, onclick) {
-  return h("button", { type: "button", class: "tm-option", onclick }, h("span", { class: "tm-option__title", text: title }), desc ? h("span", { class: "tm-option__desc", text: desc }) : null);
+  const id = `opt-${++optSeq}`;
+  return h("button", { type: "button", class: "tm-option", onclick, "aria-labelledby": `${id}-t`, "aria-describedby": desc ? `${id}-d` : null },
+    h("span", { class: "tm-option__title", id: `${id}-t`, text: title }), desc ? h("span", { class: "tm-option__desc", id: `${id}-d`, text: desc }) : null);
 }
 
 export function toast(text, cls = "") { return h("div", { class: `tm-toast${cls ? " " + cls : ""}`, role: "status" }, text); }

@@ -171,9 +171,9 @@ async function open(qs, { w = 1280, h = 800 } = {}) {
   for (const w of [390, 360, 1280]) {
     for (const id of states) {
       const r = await open(`?s=${id}`, { w, h: w === 1280 ? 800 : 844 });
-      if (/^(sign-in|otp|offer|unlock|home)_|^(a|s|d)-|^t01-ready$/.test(id)) { // built in steps 1–4: the screen itself, no picture and no "not built yet" label
+      if (/^(sign-in|otp|offer|unlock|home)_|^(a|s|d)-|^t0[1-9]-|^s7[a-f]-|^c-callback|^e-/.test(id)) { // built in steps 1–5 (step 5 calling, run A2): the screen itself, no picture and no "not built yet" label
         const built = await r.p.evaluate(() => !!document.querySelector("#screen .signin-screen, #screen .otp-screen, #screen .offer-screen, #screen .unlock-screen, #screen .home-screen, #screen .case-screen") && !document.querySelector("#screen .shell-picture, .shell-label"));
-        check(`R-${id}-${w}`, `?s=${id} at ${w}: built screen shown (steps 1–4)`, built && r.errors.length === 0, r.errors.join(" | "));
+        check(`R-${id}-${w}`, `?s=${id} at ${w}: built screen shown (steps 1–5)`, built && r.errors.length === 0, r.errors.join(" | "));
         await r.ctx.close(); continue;
       }
       const shown = await r.p.evaluate(() => { const i = document.querySelector("#screen img"); return !!i && i.complete && i.naturalWidth > 0; });

@@ -81,3 +81,19 @@
 .rx-stack { display: flex; flex-direction: column; gap: var(--tm-space-lg); width: 100%; box-sizing: border-box; padding: 0 var(--tm-space-page); }   /* raw-ok: 100% fill (geometry) */
 #rx-overlay .rx-bar { flex: none; position: relative; }
 #rx-overlay-body:has(> .rx-stack) { padding-top: var(--tm-space-lg); }   /* B-19: the Rx failed notice sits 16 below the header */
+
+/* Calling bar (app-logic §5): a lone secondary under the main button is full width (Callback on 6, D-53). */
+.case-bar .case-pair--single { grid-template-columns: minmax(0, 1fr); }
+
+/* Schedule callback sheet (app-logic §7), lifted from case.html #sheet-callback: Date / Time labels, chips, field error, notice. */
+#sheet-callback .sheet-section-label { margin: var(--tm-space-lg) 0 var(--tm-space-sm); }
+#sheet-callback .sheet-section-label:first-child { margin-top: 0; }
+#callback-error-wrap { margin-top: var(--tm-space-sm); }   /* the helper sits 8 under the Time grid (D-54 D11) */
+#callback-error-wrap > #callback-error { margin: 0; color: var(--tm-content-error); }
+#sheet-callback .callback-notice { margin: var(--tm-space-lg) 0 0; }   /* the save failure / refusal between the grid and the button */
+
+/* Outcome card with a line under the title (7f Waiting for the call record): icon at the top, the line 4 under the title. */
+#success-toast.concept-has-text { align-items: flex-start; }
+#success-toast .tm-status-card__text { margin-top: var(--tm-space-xs); }
+/* 7b: the question line in the bar is not a band; it keeps no negative top margin (case.html Round 5 item 1). */
+.case-bar > .tm-notice--question { margin-top: 0; }

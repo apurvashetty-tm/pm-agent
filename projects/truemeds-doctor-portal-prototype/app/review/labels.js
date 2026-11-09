@@ -1,3 +1,4 @@
+import { CALL_CHOICES } from "../core/call-sim.js";
 // Review-only labels (panel, drawer, notices). These are not product copy: product words come from MSG() (checklist 3.1).
 export const REVIEW_TEXT = {
   title: "Review panel",
@@ -57,16 +58,18 @@ export const VALUE_LABEL = {
     "at-gate": "At the gate", "over-gate": "Over the gate" },
   doctorFailure: { none: "None", 3: "Didn't go through", 4: "You didn't answer" },
   patientFailure: { none: "None", busy: "Busy", "no-answer": "No answer", "switched-off": "Switched off", network: "Network",
-    unknown: "Unknown", "invalid-number": "Invalid number" },
+    unknown: "Unknown", "invalid-number": "Invalid number", rejected: "Rejected", unreachable: "Unreachable" },
   partner: { ozonetel: "Ozonetel", knowlarity: "Knowlarity" },
   callEndedEvent: { "no-event": "No call-ended event", event: "Call-ended event" },
-  hangupReported: { reported: "Hang-up reported", "not-reported": "Hang-up not reported" },
+  hangup: { reported: "Hang-up reported", "not-reported": "Hang-up not reported" },
   whoEnded: { doctor: "Doctor ended the call", patient: "Patient ended the call", unknown: "Not known who ended" },
-  ha: { free: "Health Advisor free", none: "No Health Advisor free", "transfer-failed": "Transfer fails", "no-answer": "Health Advisor doesn't answer" },
-  record: { "over-gate": "Record: over the gate", "under-gate": "Record: under the gate", "never-answered": "Record: never answered",
-    never: "No record", delayed: "Record late" },
-  callbackRefused: { accepted: "Callback accepted", refused: "Callback refused" },
+  ha: { free: "Health Advisor free", none: "No Health Advisor free", "request-failed": "Transfer request fails", "no-answer": "Health Advisor doesn't answer" },
+  record: { "over-gate": "Result: over the gate", "under-gate": "Result: under the gate", "no-answer": "Result: patient never answered",
+    never: "No result", delayed: "Result late" },
+  callback: { accepted: "Callback saved", refused: "Callback refused (patient not reached)", failed: "Callback save fails" },
   releaseRefused: { accepted: "Release accepted", refused: "Release refused" },
+  recordDelay: { prompt: "Result arrives at once", late: "Result arrives late" },
+  length: { auto: "From “Patient answers”", ...Object.fromEntries(CALL_CHOICES.length.slice(1).map((s) => [s, `${s} seconds`])) },
 };
 export const valueLabel = (field, v) => (VALUE_LABEL[field] && VALUE_LABEL[field][v]) || String(v);
 

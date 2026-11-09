@@ -3186,5 +3186,216 @@
     "clear": "—",
     "retain": "—",
     "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+  },
+  "case.callAgain": {
+    "pattern": "none",
+    "trigger": "Calling bar on 3, 4 and 6",
+    "slot": "case action bar button",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A2 2026-11-09)"
+  },
+  "case.callback": {
+    "pattern": "none",
+    "trigger": "Calling bar on 6 and 7d",
+    "slot": "case action bar button",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A2 2026-11-09)"
+  },
+  "case.unavailable": {
+    "pattern": "none",
+    "trigger": "Calling bar on 7d",
+    "slot": "case action bar button",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A2 2026-11-09)"
+  },
+  "case.stillTalking": {
+    "pattern": "none",
+    "trigger": "7b Still on the call?",
+    "slot": "case action bar button",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A2 2026-11-09)"
+  },
+  "case.callEnded": {
+    "pattern": "none",
+    "trigger": "7b Still on the call?",
+    "slot": "case action bar button",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A2 2026-11-09)"
+  },
+  "case.unavailableTitle": {
+    "pattern": "none",
+    "trigger": "Case closed as patient unavailable (9)",
+    "slot": "outcome card title",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A2 2026-11-09)"
+  },
+  "callback.title": {
+    "pattern": "none",
+    "trigger": "Callback sheet",
+    "slot": "sheet title",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A2 2026-11-09)"
+  },
+  "callback.date": {
+    "pattern": "none",
+    "trigger": "Callback sheet",
+    "slot": "sheet label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A2 2026-11-09)"
+  },
+  "callback.time": {
+    "pattern": "none",
+    "trigger": "Callback sheet",
+    "slot": "sheet label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A2 2026-11-09)"
+  },
+  "callback.today": {
+    "pattern": "none",
+    "trigger": "Callback sheet",
+    "slot": "date chip",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A2 2026-11-09)"
+  },
+  "callback.tomorrow": {
+    "pattern": "none",
+    "trigger": "Callback sheet",
+    "slot": "date chip",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A2 2026-11-09)"
+  },
+  "callback.confirm": {
+    "pattern": "none",
+    "trigger": "Callback sheet",
+    "slot": "sheet button",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A2 2026-11-09)"
+  },
+  "callback.scheduled": {
+    "pattern": "none",
+    "trigger": "Case closed with a callback (e-callback-scheduled)",
+    "slot": "outcome card title",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A2 2026-11-09)",
+    "placeholders": [
+      "day",
+      "time"
+    ]
+  },
+  "callback.dayToday": {
+    "pattern": "none",
+    "trigger": "Callback outcome card",
+    "slot": "day word in callback.scheduled",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A2 2026-11-09)"
+  },
+  "callback.dayTomorrow": {
+    "pattern": "none",
+    "trigger": "Callback outcome card",
+    "slot": "day word in callback.scheduled",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A2 2026-11-09)"
+  },
+  "unavailable.title": {
+    "pattern": "none",
+    "trigger": "Unavailable sheet (7d)",
+    "slot": "sheet title",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A2 2026-11-09)"
+  },
+  "unavailable.selectReason": {
+    "pattern": "none",
+    "trigger": "Unavailable sheet (7d)",
+    "slot": "sheet label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A2 2026-11-09)"
+  },
+  "unavailable.noAnswer": {
+    "pattern": "none",
+    "trigger": "Unavailable sheet (7d)",
+    "slot": "reason title",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A2 2026-11-09)"
+  },
+  "unavailable.noAnswerDesc": {
+    "pattern": "none",
+    "trigger": "Unavailable sheet (7d)",
+    "slot": "reason line",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A2 2026-11-09)"
+  },
+  "unavailable.notReachable": {
+    "pattern": "none",
+    "trigger": "Unavailable sheet (7d)",
+    "slot": "reason title",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A2 2026-11-09)"
+  },
+  "unavailable.notReachableDesc": {
+    "pattern": "none",
+    "trigger": "Unavailable sheet (7d)",
+    "slot": "reason line",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A2 2026-11-09)"
+  },
+  "unavailable.wrongNumber": {
+    "pattern": "none",
+    "trigger": "Unavailable sheet (7d)",
+    "slot": "reason title",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A2 2026-11-09)"
+  },
+  "unavailable.wrongNumberDesc": {
+    "pattern": "none",
+    "trigger": "Unavailable sheet (7d)",
+    "slot": "reason line",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run A2 2026-11-09)"
   }
 }

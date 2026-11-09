@@ -1,0 +1,5 @@
+case {"attempts":[{"at":1794241222744,"polled":true,"done":false}],"askAt":1794241402744,"checkAt":null,"fx":{"record":"never"},"fxEdits":0,"submit":{"at":1794241822744,"done":false}}
+records [{"order":"TM-ORD-20240812","route":"cat4","ha":"none","attempts":[{"at":1794241222744,"polled":true,"done":false}],"choices":{"connected":"over-gate","doctorFailure":"none","patientFailure":"none","partner":"ozonetel","callEndedEvent":"no-event","hangup":"not-reported","whoEnded":"doctor","ha":"free","record":"delayed","callback":"accepted","releaseRefused":"accepted","recordDelay":"prompt","length":"auto"},"submittedAt":1794241822744}]
+records after []
+confirm completed: Cat4 — prescription confirmed (order TM-ORD-20240812, after the doctor left)call simulator: record changedjump to s7f-submitted ["jump to s7f-submitted","call simulator: record changed","confirm completed: Cat4 — prescription confirmed (order TM-ORD-20240812, after the doctor left)"]
+[]

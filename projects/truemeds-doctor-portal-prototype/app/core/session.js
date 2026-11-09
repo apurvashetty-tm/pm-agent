@@ -60,3 +60,19 @@ export function updateMedicine(id, patch) { const c = work().openCase; const m =
 export function releaseCase() { saveWork({ openCase: null }); }
 // A confirmed prescription counts once (app-logic §3; D-50 analytics are the call steps' job).
 export function countConfirmed() { saveWork({ rxToday: work().rxToday + 1 }); }
+
+// 7f left before the call record arrived (app-logic §5 7f, CW-D3, CW-D4): the backend still settles it. Proven → counts as a
+// confirmed prescription (earnings, D-73); unproven → hold and retry, mismatch logged. Never touches the open case (B7).
+// entry: { order, attempt, choices, attempts, submittedAt, label } — the simulator's choices as they were when the doctor left.
+export function keepRecord(entry) { saveWork({ records: [...(work().records || []), entry] }); }
+export function settleRecords(now, { outcome, onProven, onUnproven }) {
+  const list = work().records || [];
+  if (!list.length) return;
+  const left = list.filter((r) => {
+    const res = outcome(r, now);
+    if (!res) return true;
+    if (res === "proven") { countConfirmed(); onProven(r); } else onUnproven(r, res);
+    return false;
+  });
+  if (left.length !== list.length) saveWork({ records: left });
+}

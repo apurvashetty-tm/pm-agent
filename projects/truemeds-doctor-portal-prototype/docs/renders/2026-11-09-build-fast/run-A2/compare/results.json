@@ -1,0 +1,344 @@
+{
+ "steps": "5",
+ "thresholdPerChannel": 8,
+ "pictures": 42,
+ "over1pct": 0,
+ "rows": [
+  {
+   "id": "c-callback",
+   "w": 390,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "c-callback",
+   "w": 360,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "c-callback-error",
+   "w": 390,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "c-callback-error",
+   "w": 360,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "c-callback-failed",
+   "w": 390,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "c-callback-failed",
+   "w": 360,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "c-callback-refused",
+   "w": 390,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "c-callback-refused",
+   "w": 360,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "e-availability-ended",
+   "w": 390,
+   "changedPx": 1,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "e-availability-ended",
+   "w": 360,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "e-callback-scheduled",
+   "w": 390,
+   "changedPx": 4977,
+   "changedPct": 0.38,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "e-callback-scheduled",
+   "w": 360,
+   "changedPx": 4976,
+   "changedPct": 0.41,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "s7a-calling",
+   "w": 390,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "s7a-calling",
+   "w": 360,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "s7b-still-on-call",
+   "w": 390,
+   "changedPx": 1,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "s7b-still-on-call",
+   "w": 360,
+   "changedPx": 31,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "s7d-result-missing",
+   "w": 390,
+   "changedPx": 4,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "s7d-result-missing",
+   "w": 360,
+   "changedPx": 10,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "s7d-unavailable-sheet",
+   "w": 390,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "s7d-unavailable-sheet",
+   "w": 360,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "s7f-submitted",
+   "w": 390,
+   "changedPx": 10718,
+   "changedPct": 0.81,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "s7f-submitted",
+   "w": 360,
+   "changedPx": 10706,
+   "changedPct": 0.88,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "t01-ready",
+   "w": 390,
+   "changedPx": 1,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "t01-ready",
+   "w": 360,
+   "changedPx": 33,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "t02-calling",
+   "w": 390,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "t02-calling",
+   "w": 360,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "t03-not-through",
+   "w": 390,
+   "changedPx": 2,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "t03-not-through",
+   "w": 360,
+   "changedPx": 19,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "t04-doctor-missed",
+   "w": 390,
+   "changedPx": 4,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "t04-doctor-missed",
+   "w": 360,
+   "changedPx": 95,
+   "changedPct": 0.01,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "t05-result-wait",
+   "w": 390,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "t05-result-wait",
+   "w": 360,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "t06-ended-early",
+   "w": 390,
+   "changedPx": 3,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "t06-ended-early",
+   "w": 360,
+   "changedPx": 19,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "t08a-valid-cat4",
+   "w": 390,
+   "changedPx": 5733,
+   "changedPct": 0.44,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "t08a-valid-cat4",
+   "w": 360,
+   "changedPx": 5732,
+   "changedPct": 0.47,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "t08c-confirm-blocked",
+   "w": 390,
+   "changedPx": 5734,
+   "changedPct": 0.44,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "t08c-confirm-blocked",
+   "w": 360,
+   "changedPx": 5732,
+   "changedPct": 0.47,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "t09-patient-unavailable",
+   "w": 390,
+   "changedPx": 4977,
+   "changedPct": 0.38,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "t09-patient-unavailable",
+   "w": 360,
+   "changedPx": 4976,
+   "changedPct": 0.41,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "t10a-confirmed",
+   "w": 390,
+   "changedPx": 4977,
+   "changedPct": 0.38,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "t10a-confirmed",
+   "w": 360,
+   "changedPx": 4976,
+   "changedPct": 0.41,
+   "errors": [],
+   "flagged": false
+  }
+ ]
+}

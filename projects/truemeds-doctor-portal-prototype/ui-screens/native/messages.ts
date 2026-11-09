@@ -337,7 +337,30 @@ export const messages = {
   "print.months": "months",
   "print.duration": "{n} {unit}",
   "print.sep": " · ",
-  "case.medicinesTitleClosed": "Medicines"
+  "case.medicinesTitleClosed": "Medicines",
+  "case.callAgain": "Call again",
+  "case.callback": "Callback",
+  "case.unavailable": "Unavailable",
+  "case.stillTalking": "Still talking",
+  "case.callEnded": "Call ended",
+  "case.unavailableTitle": "Patient unavailable",
+  "callback.title": "Schedule callback",
+  "callback.date": "Date",
+  "callback.time": "Time",
+  "callback.today": "Today",
+  "callback.tomorrow": "Tomorrow",
+  "callback.confirm": "Confirm callback",
+  "callback.scheduled": "Callback {day} at {time}",
+  "callback.dayToday": "today",
+  "callback.dayTomorrow": "tomorrow",
+  "unavailable.title": "Mark patient unavailable",
+  "unavailable.selectReason": "Select reason",
+  "unavailable.noAnswer": "Didn’t answer",
+  "unavailable.noAnswerDesc": "Rang with no answer, or the line was busy",
+  "unavailable.notReachable": "Not reachable",
+  "unavailable.notReachableDesc": "Phone switched off or out of coverage",
+  "unavailable.wrongNumber": "Wrong number",
+  "unavailable.wrongNumberDesc": "Invalid or not the patient’s number"
 } as const;
 export type FeedbackMessageId = keyof typeof messages;
 export function message(id: FeedbackMessageId, values: Record<string, string | number> = {}): string {

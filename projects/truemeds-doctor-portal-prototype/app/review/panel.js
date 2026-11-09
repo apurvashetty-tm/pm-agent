@@ -23,8 +23,8 @@ const LABELS = {
 };
 const CALL_LABELS = {
   connected: "Patient answers · talk length", doctorFailure: "Doctor-side failure", patientFailure: "Patient-side failure", partner: "Partner",
-  callEndedEvent: "Call-ended event (Knowlarity, open)", hangupReported: "Hang-up", whoEnded: "Who ended", ha: "Health Advisor (B2)",
-  record: "Call record", callbackRefused: "Callback", releaseRefused: "Release",
+  callEndedEvent: "Call-ended event (Knowlarity, open)", hangup: "Hang-up", whoEnded: "Who ended", ha: "Health Advisor (B2)",
+  record: "Call result / record", callback: "Callback", releaseRefused: "Release", recordDelay: "Result timing", length: "Talk length (seconds)",
 };
 // Rows of the Review panel card. `fields` carry data-journey so the phone drawer shows only the current screen's controls.
 const ROWS = [
@@ -121,7 +121,7 @@ export function mountPanel(root, { story, handlers, stateIds }) {
   }).join("");
   const callBody = () => `
       <div class="rp-attempt"><label data-for="call">Attempt<select id="rp-attempt">${story.calls.map((_, i) => `<option value="${i}"${i === active ? " selected" : ""}>Call ${i + 1} of ${story.calls.length}</option>`).join("")}</select></label>${btn("rp-add-attempt", "Add a call", "tm-btn--secondary")} ${btn("rp-remove-attempt", "Remove last", "tm-btn--secondary")}</div>
-      <div class="rp-grid">${CALL_KEYS.map((k) => sel(k, CALL_LABELS[k], CALL_CHOICES[k], story.calls[active][k], "call")).join("")}</div>
+      <div class="rp-grid">${CALL_KEYS.filter((k) => k !== "length").map((k) => sel(k, CALL_LABELS[k], CALL_CHOICES[k], story.calls[active][k], "call")).join("")}</div>
       <div class="rp-actions">${btn("rp-run-calls", T.runCall)}</div>`;
   root.innerHTML = `
   <div class="rp-card" id="rp-review">
@@ -144,7 +144,7 @@ export function mountPanel(root, { story, handlers, stateIds }) {
     <p class="rp-group" data-group="advanced">${T.advanced}</p>
     ${row("settings", T.settingsHeading, timingsHtml())}
     ${row("log", T.log, `<ol id="rp-log" class="log"></ol>`)}
-    <div class="rp-actions rp-bar">${btn("rp-restart", T.restart)} ${btn("rp-ff", T.fastForward, "tm-btn--secondary")}</div>
+    <div class="rp-actions rp-bar">${sel("length", CALL_LABELS.length, CALL_CHOICES.length, story.calls[active].length || "auto", "call")}${btn("rp-restart", T.restart)} ${btn("rp-ff", T.fastForward, "tm-btn--secondary")}</div>
   </div>`;
 
   if (window.TMIcons) window.TMIcons.render(root);
@@ -186,7 +186,7 @@ export function mountPanel(root, { story, handlers, stateIds }) {
   }
   root.addEventListener("change", (e) => {
     if (e.target.id === "rp-attempt") { readStory(); active = Number(e.target.value); rerenderCall(); refresh(); return; }
-    if (e.target.matches("select[data-field]")) { handlers.onChange(readStory()); refresh(); }
+    if (e.target.matches("select[data-field]")) { handlers.onChange(readStory(), e.target.dataset.field); refresh(); }
   });
   // Delegated: the call section is re-rendered on attempt changes, so its buttons are replaced. Listeners live on the root.
   root.addEventListener("click", (e) => {
@@ -210,7 +210,7 @@ export function mountPanel(root, { story, handlers, stateIds }) {
     if (story.calls.length >= MAX_CALL_ATTEMPTS) return;
     story = { ...story, calls: [...story.calls, { ...story.calls[active] }] };
     active = story.calls.length - 1;
-    handlers.onChange(story);
+    handlers.onChange(story, "calls");
     rerenderCall(); refresh();
   }
   function removeAttempt() {
@@ -218,10 +218,11 @@ export function mountPanel(root, { story, handlers, stateIds }) {
     if (story.calls.length <= 1) return;
     story = { ...story, calls: story.calls.slice(0, -1) };
     active = Math.min(active, story.calls.length - 1);
-    handlers.onChange(story);
+    handlers.onChange(story, "calls");
     rerenderCall(); refresh();
   }
-  function rerenderCall() { q("#rp-call-body").innerHTML = callBody(); }
+  // The talk length sits in the panel's bottom bar (always in reach, next to Fast-forward, B9) and follows the active attempt.
+  function rerenderCall() { q("#rp-call-body").innerHTML = callBody(); q("#rp-length").value = story.calls[active].length || "auto"; }
   function copyLink() {
     const text = q("#rp-link").textContent;
     const done = () => logLine(root, "link copied");
@@ -271,12 +272,17 @@ export function focusJourney(root, journey) {
   }
 }
 const LOG_SHOWN = 10;   // newest events only; the count in the row keeps the total
-export function logLine(root, text) {
+// The event log survives reopening the app like the simulated server does (review / play keep it in the mode's storage, set by
+// boot), so a completed confirm is seen exactly once after a reload (D-50 events once per completed confirm).
+let keeper = null;
+export function setLogKeeper(fn) { keeper = fn; }
+export function logLine(root, text, { replay = false } = {}) {
   const ol = root && root.querySelector("#rp-log");
   if (!ol) return;
   const li = document.createElement("li");
   li.textContent = text;
   ol.prepend(li);
   while (ol.children.length > LOG_SHOWN) ol.lastElementChild.remove();   // bounded: the desktop panel never scrolls (RULES §7)
+  if (keeper && !replay) keeper(text);
   root.dispatchEvent(new CustomEvent("tm-log"));
 }
