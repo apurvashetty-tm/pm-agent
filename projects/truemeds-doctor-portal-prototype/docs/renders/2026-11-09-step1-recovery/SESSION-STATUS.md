@@ -1,9 +1,36 @@
+> **Session 2 — ✅ DONE (terminal, 2026-11-09, run about 08:10–09:45 IST, from file times; commit time in git).** Sign-in and OTP rebuilt to section 1; every "done when" item met. Details: section "Session 2 result" below. **Next run: session 3** (faster sign-in offer + returning unlock + D-92).
+
 > **Main thread review, 2026-11-09 08:05 — SESSION 2 IS NOT DONE.** The four renderers are display-only scaffolds. Codex (session-2/codex-critique.md) found 6 blockers and 6 should-fix; none were fixed. Missing: all behaviour (validation, test numbers, OTP checking, resend / countdown / locks, faster sign-in lifecycle, phone Back), journey tests, per-journey stylesheets (inline styles remain in otp.js and returning-unlock.js), and the session-2 screenshots + contact sheet. Also: this note's time figures are wrong (the four screens were committed 10 minutes apart) — report real times from git.
 > **Next run: continue session 2.** Its "done when" in the brief is the bar: sign-in and OTP fully working per section 1, their states render from `?s=`, journey tests pass, `check-sources.mjs` passes, Codex blockers fixed, Codex re-run, screenshots + sheet, push. Offer and unlock behaviour stay for session 3.
 
 > **Main thread, 2026-11-09 07:45:** work is now split into sessions — see the table at the top of `TERMINAL-BRIEF.md`. Session 1 = done. Session 2 = started 2026-11-09 16:30, Codex critique complete.
 
 # Step 1 Recovery — Session Status (2026-11-09)
+
+## Session 2 result (2026-11-09) — ✅ done
+
+**Built** (markup lifted from `ui-screens/sign-in/sign-in.html`, `ui-screens/otp/otp.html`; no inline styles; every word via `MSG()`):
+- `app/core/auth.js` — the simulated server: cleaning (+91 / 0 dropped), checks (empty / first digit / 10 digits), test numbers and codes §11, 5 wrong codes lock the number (15 min mock), 4 codes per number per window (10 min mock), resend waits 30 / 60 / 120 s enforced by the server, expired code obeys a running wait, story answers forced from the panel at the next server answer. Limits stored per number in session storage; they survive a story restart (the app clock is kept on restart).
+- `app/screens/sign-in.js` + `sign-in.css`, `app/screens/otp.js` + `otp.css`, `app/screens/entry-ctx.js` (screen life: timers and late answers never touch a screen that was left), `app/core/dom.js` (refuses inline styles), `app/shell/mock-keyboard.*` (drawn phone keyboard in review / capture only, keys type; demo / play use the phone's keyboard — `[MOCK ASSUMPTION]`, plan silent), `app/data/links.js`.
+- Navigation: `nav.start / replace / backTo / saveCurrent / setScreenBack`. OTP: no Back control; phone Back = Change (sign-in, number kept). Signing in clears the entry journey from history. Back at sign-in stays in the app. Back from a placeholder restores the screen as it was.
+- Links: Sign up → onboarding URL, new tab; Call Doctor Ops (button and notice links), Terms, Privacy → placeholder page; OQ-021 `[MOCK ASSUMPTION]` note added in `open_questions.md`.
+- Registry: 19 approved picture labels added (plan B6) with metadata; `signin.title` (not in any picture) removed; metadata added for the 16 keys session 1 left without it (check-sources was failing).
+- Offer / unlock: session-1 scaffolds unregistered (they show the approved picture, "Not built yet") until session 3 rebuilds them; files kept.
+- After 1234 the app goes to `offer_fingerprint` (picture stub until session 3), or Home if the story says the phone doesn't support it.
+
+**Checks (all pass):** `tests/entry-journeys.mjs` 34/34 (auth unit A1–A11; browser: all 29 states from `?s=`, validation, every test number and code, wrong-try count and lock, lock survives restart with remaining time, resend waits / cap / window end, overlap, story changes mid-journey, offline, Change / phone Back, placeholders, keyboard, frame at 360 / 390 / 430 / desktop) · `tests/run-checks.mjs` 65/65 (R- checks updated for built sign-in; N2 = restart returns to sign-in) · `scan.mjs` 0 · `check-sources.mjs` (now also reads the built `app/` screen modules: MSG keys exist, no typed copy; negative-tested) · `check-locked-specs.py` 0 failures / 148 states × 3 · `layout_check.py` and `--app` ALL PASS (`--app` now opens sign-in and OTP states at every width) · `check_lockup.py` · `check-state-map.mjs` · 0 console errors · old `index.html` / `app.js` / `styles.css` unchanged.
+
+**Evidence:** `session-2/sheet.png` (29 states at 390: approved | built | diff), `session-2/pairs/`, `diff-390.txt`, `diff-360.txt`. All states differ by anti-aliasing only (≤ 0.04 %), except `otp_locked`, `otp_too-many-resends`, `otp_expired-and-resend-limited` (~0.2 %): "call Doctor Ops" is a blue link (required; the approved file's phrase search missed the non-breaking spaces, so the pictures show plain text) — explained region for the session 4 compare.
+
+**Codex:** critique 2 (3 blockers, 3 should-fix) → fixed; critique 3 (re-run): no blockers, 2 should-fix → fixed, 1 nice-to-have → done. `session-2/codex-critique-1/2/3.md`, `codex-response.md`. One point not changed with reason: OTP phone Back = Change (approved file and brief agree).
+
+**Set-up notes for this Mac:** Playwright's own browser download stalls here (no progress); tests use the installed Chrome: `CHROME=…/Google Chrome` for Node tests, `CHROMIUM=…` for the Python guards (`check-locked-specs.py` now reads `CHROMIUM` like `layout_check.py`). Codex must run with `< /dev/null` (it otherwise waits on stdin).
+
+**Left for later sessions (not session 2):** offer + unlock behaviour and D-92 (session 3); panel polish, 1.3 table, compare harness over 42 states (session 4); `session_handoff.md` not updated (brief: leave `docs/context/` alone except the OQ-021 note).
+
+---
+
+## Earlier notes (session 1 run — superseded where they conflict with the result above)
 
 **Session time:** ~4 hours terminal work  
 **Status:** Screen modules built; Codex critique shows critical blockers (validation, state machine, CSS, copy). Next session fixes.  
