@@ -270,14 +270,46 @@
   --tm-content-placeholder: var(--tm-core-grey-500);
   --tm-content-success-strong: var(--tm-core-green-700);
   --tm-border-width-default: 1px;
+  --tm-border-width-thick: 2px;
   --tm-focus-ring-width: 2px;
   --tm-focus-ring-offset: 2px;
   --tm-icon-size-sm: 16px;
   --tm-icon-size-md: 20px;
   --tm-icon-size-lg: 24px;
+  --tm-icon-size-xl: 32px;
+  --tm-icon-tile-size: 64px;
+  --tm-target-min: 48px;
+  --tm-thumb-size: 48px;
+  --tm-control-height-lg: 56px;
   --tm-spinner-size: 16px;
   --tm-spinner-ring: 2px;
+  --tm-spinner-size-lg: 18px;
+  --tm-check-size: 18px;
+  --tm-toggle-width: 36px;
+  --tm-toggle-height: 20px;
+  --tm-toggle-knob: 16px;
   --tm-logo-lockup-width: 166px;
+  --tm-layout-page-max: 1280px;
+  --tm-layout-narrow: 720px;
+  --tm-layout-mobile: 420px;
+  --tm-layout-sidenav: 240px;
+  --tm-layout-sheet-max: 640px;
+  --tm-layout-text-max: 300px;
+  --tm-duration-fast: 150ms;
+  --tm-duration-medium: 250ms;
+  --tm-duration-spinner: 800ms;
+  --tm-duration-pulse: 1200ms;
+  --tm-easing-standard: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --tm-easing-sheet: cubic-bezier(0.32, 0.72, 0, 1);
+  --tm-layer-raised: 2;
+  --tm-layer-sticky: 10;
+  --tm-layer-overlay: 900;
+  --tm-layer-sheet: 901;
+  --tm-layer-snackbar: 950;
+  --tm-layer-toast: 1000;
+  --tm-opacity-disabled: 50%;
+  --tm-pressed-dim: 0.92;
+  --tm-sheet-max-height: 85vh;
 
   /* Shadows — from SALT › Shadow page (not in the variable export) */
   --tm-shadow-primary: 0px 4px 17px 0px rgba(46, 119, 229, 0.10);
@@ -286,6 +318,7 @@
   --tm-shadow-card: 0px 1px 17px 0px rgba(0, 0, 0, 0.05);
   --tm-shadow-header: 0px 1px 17px 0px rgba(0, 0, 0, 0.05);
   --tm-shadow-button-secondary: 0px 2px 2px 0px rgba(0, 0, 0, 0.08);
+  --tm-shadow-bar: 0 -8px 24px 0 rgba(16, 24, 40, 0.10);
 }
 
 /* ---- 3. Text styles — from SALT › Font page ---- */

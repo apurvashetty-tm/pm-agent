@@ -110,13 +110,14 @@ def semantic():
     return out
 
 
-SHADOW_RE = re.compile(r"(-?\d+)px\s+(-?\d+)px\s+(\d+)px\s+(-?\d+)px\s+rgba\((\d+),\s*(\d+),\s*(\d+),\s*([\d.]+)\)")
+SHADOW_RE = re.compile(r"(-?\d+)(?:px)?\s+(-?\d+)(?:px)?\s+(\d+)(?:px)?\s+(-?\d+)(?:px)?\s+rgba\((\d+),\s*(\d+),\s*(\d+),\s*([\d.]+)\)")
 
 
 def extras(family):
     ex = json.loads((ROOT / "tokens/extras.json").read_text())
+    tm_shadows = json.loads((ROOT / "tokens/truemeds.json").read_text()).get("shadow", {})  # D-99: Truemeds shadows, same export
     shadows = {}
-    for k, v in ex["shadow"].items():
+    for k, v in {**ex["shadow"], **tm_shadows}.items():
         if k.startswith("_"):
             continue
         m = SHADOW_RE.match(v)
@@ -158,7 +159,12 @@ def truemeds(sem, palette):
         family, shade = ref.split(":", 1)[1].rsplit("-", 1)
         sem["color"].setdefault("content", {})[key(name)] = palette[family][shade]
     # D-98: sizes with no SALT token -> tokens.<group>.<name> (points), same values as the --tm-<group>-<name> CSS variables
-    sem["size"] = {key(g): {key(n): v for n, v in vals.items()} for g, vals in tm.get("size", {}).items() if not g.startswith("_")}
+    sem["size"] = {key(g): {key(n): v for n, v in vals.items() if not n.startswith("_")}
+                   for g, vals in tm.get("size", {}).items() if not g.startswith("_")}
+    # D-99: non-px scales -> tokens.<group>.<name>, plain numbers (ms, %, multiplier, % of screen) or strings (easing)
+    for g, vals in tm.get("scale", {}).items():
+        if not g.startswith("_"):
+            sem["size"][key(g)] = {key(n): v for n, v in vals.items() if not n.startswith("_")}
     return {key(k): v for k, v in tm["text"].items()}
 
 

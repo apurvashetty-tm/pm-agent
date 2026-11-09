@@ -82,7 +82,18 @@ for group, vals in tm.get("size", {}).items():
     if group.startswith("_"):
         continue
     for name in vals:
-        add(f"--tm-{group}-{name}", [build_native.key(group), build_native.key(name)], "Truemeds layer (D-98)")
+        if not name.startswith("_"):
+            add(f"--tm-{group}-{name}", [build_native.key(group), build_native.key(name)], "Truemeds layer (D-98/D-99)")
+# D-99 non-px scales (tokens/truemeds.json "scale"): duration, easing, layer, opacity, pressed, sheet
+for group, vals in tm.get("scale", {}).items():
+    if group.startswith("_"):
+        continue
+    for name in vals:
+        if not name.startswith("_"):
+            add(f"--tm-{group}-{name}", [build_native.key(group), build_native.key(name)], "Truemeds layer (D-99)")
+for name in tm.get("shadow", {}):
+    if not name.startswith("_"):
+        add(f"--tm-shadow-{name}", ["shadow", build_native.key(name)], "Truemeds layer (D-99)")
 
 # 3. Shadows and text styles (tokens/extras.json), as build.build_extras() / build_native.extras()
 ex = json.loads((DS / "tokens/extras.json").read_text())

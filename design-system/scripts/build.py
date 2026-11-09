@@ -130,7 +130,16 @@ def truemeds_overrides():
         if group.startswith("_"):
             continue
         for name, v in vals.items():
-            sem[f"--tm-{group}-{name}"] = f"{v}px"
+            if not name.startswith("_"):
+                sem[f"--tm-{group}-{name}"] = f"{v}px"
+    # D-99: non-px scales (duration, easing, layer, opacity, pressed, sheet) -> --tm-<group>-<name>: <value><_unit>
+    for group, vals in tm.get("scale", {}).items():
+        if group.startswith("_"):
+            continue
+        unit = vals.get("_unit", "")
+        for name, v in vals.items():
+            if not name.startswith("_"):
+                sem[f"--tm-{group}-{name}"] = f"{v}{unit}"
     text = []
     for k, (size, lh, weight) in tm["text"].items():
         text.append(
@@ -162,6 +171,10 @@ def build_extras():
         if k.startswith("_"):
             continue
         lines.append(f"  --tm-shadow-{k}: {v};")
+    # D-99: Truemeds shadows (tokens/truemeds.json "shadow"), same list as the SALT ones
+    for k, v in json.loads((ROOT / "tokens/truemeds.json").read_text()).get("shadow", {}).items():
+        if not k.startswith("_"):
+            lines.append(f"  --tm-shadow-{k}: {v};")
     classes = []
     for k, v in ex["text"].items():
         if k.startswith("_"):

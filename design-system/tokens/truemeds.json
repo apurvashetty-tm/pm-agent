@@ -25,7 +25,8 @@
   "size": {
     "_about": "Sizes with no SALT token, added by D-98 (Sign-in hand-off kit). Values in px (web) / points (native). CSS: --tm-<group>-<name>; native: tokens.<group>.<name>. [PROPOSED], listed in beyond-salt.md.",
     "border-width": {
-      "default": 1
+      "default": 1,
+      "thick": 2
     },
     "focus-ring": {
       "width": 2,
@@ -34,14 +35,84 @@
     "icon-size": {
       "sm": 16,
       "md": 20,
-      "lg": 24
+      "lg": 24,
+      "xl": 32
+    },
+    "icon-tile": {
+      "size": 64
+    },
+    "target": {
+      "min": 48
+    },
+    "thumb": {
+      "size": 48
+    },
+    "control-height": {
+      "lg": 56
     },
     "spinner": {
       "size": 16,
-      "ring": 2
+      "ring": 2,
+      "size-lg": 18
+    },
+    "check": {
+      "size": 18
+    },
+    "toggle": {
+      "width": 36,
+      "height": 20,
+      "knob": 16
     },
     "logo-lockup": {
       "width": 166
+    },
+    "layout": {
+      "_about": "Web only (D-99): page and panel widths for portals and desktop screens. Exported to native for completeness; a phone app does not use them.",
+      "page-max": 1280,
+      "narrow": 720,
+      "mobile": 420,
+      "sidenav": 240,
+      "sheet-max": 640,
+      "text-max": 300
     }
+  },
+  "scale": {
+    "_about": "Values that are not px sizes, added by D-99 (token pass). CSS: --tm-<group>-<name>: <value><_unit>; native: tokens.<group>.<name> as a plain number or string (no unit). [PROPOSED], listed in beyond-salt.md.",
+    "duration": {
+      "_unit": "ms",
+      "fast": 150,
+      "medium": 250,
+      "spinner": 800,
+      "pulse": 1200
+    },
+    "easing": {
+      "standard": "cubic-bezier(0.25, 0.1, 0.25, 1)",
+      "sheet": "cubic-bezier(0.32, 0.72, 0, 1)"
+    },
+    "layer": {
+      "raised": 2,
+      "sticky": 10,
+      "overlay": 900,
+      "sheet": 901,
+      "snackbar": 950,
+      "toast": 1000
+    },
+    "opacity": {
+      "_unit": "%",
+      "disabled": 50
+    },
+    "pressed": {
+      "_about": "Multiplier for the pressed look of the solid call-end button (CSS brightness()). Native: draw it as a darker fill or a dark overlay.",
+      "dim": 0.92
+    },
+    "sheet": {
+      "_unit": "vh",
+      "_about": "Percent of the screen height.",
+      "max-height": 85
+    }
+  },
+  "shadow": {
+    "_about": "Truemeds shadows with no SALT equivalent (D-62 action bar, D-99 token). Exported like the SALT shadows in extras.json.",
+    "bar": "0 -8px 24px 0 rgba(16, 24, 40, 0.10)"
   }
 }

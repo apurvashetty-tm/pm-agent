@@ -26,6 +26,37 @@ SALT has no tokens for these; the React Native hand-off kit found them typed as 
 | `--tm-spinner-ring` | 2 | `tokens.spinner.ring` | Busy-button spinner ring width (colour `--tm-content-inverse`). |
 | `--tm-logo-lockup-width` | 166 | `tokens.logoLockup.width` | The "truemeds for doctors" lockup on home-base screens (§8.13). |
 
+## Proposed SALT additions (2026-11-09)
+D-99 token pass: every value the components typed as a raw number now has a name, so web and native share it. Same
+values as before (no visual change). Defined in `tokens/truemeds.json` (`size`, `scale`, `shadow`). All `[PROPOSED]`.
+
+- `[PROPOSED]` `--tm-icon-size-xl` · 32 · `tokens.iconSize.xl` — large icon inside an empty-state tile.
+- `[PROPOSED]` `--tm-icon-tile-size` · 64 · `tokens.iconTile.size` — round icon tile (empty state, offer hero, unlock prompt).
+- `[PROPOSED]` `--tm-target-min` · 48 · `tokens.target.min` — minimum tap target (height / width of anything tappable).
+- `[PROPOSED]` `--tm-thumb-size` · 48 · `tokens.thumb.size` — product thumbnail.
+- `[PROPOSED]` `--tm-control-height-lg` · 56 · `tokens.controlHeight.lg` — large control: OTP slot, app bar, large button row.
+- `[PROPOSED]` `--tm-spinner-size-lg` · 18 · `tokens.spinner.sizeLg` — status-line spinner.
+- `[PROPOSED]` `--tm-check-size` · 18 · `tokens.check.size` — checkbox.
+- `[PROPOSED]` `--tm-toggle-width` / `-height` / `-knob` · 36 / 20 / 16 · `tokens.toggle.*` — toggle track and knob (knob inset is `--tm-space-2xs`).
+- `[PROPOSED]` `--tm-border-width-thick` · 2 · `tokens.borderWidth.thick` — thick ring or border (status-line spinner).
+- `[PROPOSED]` `--tm-duration-fast` · 150ms · `tokens.duration.fast` — button and toggle transitions.
+- `[PROPOSED]` `--tm-duration-medium` · 250ms · `tokens.duration.medium` — sheets and toasts (when built).
+- `[PROPOSED]` `--tm-duration-spinner` · 800ms · `tokens.duration.spinner` — one spinner turn.
+- `[PROPOSED]` `--tm-duration-pulse` · 1200ms · `tokens.duration.pulse` — busy pulse ring.
+- `[PROPOSED]` `--tm-easing-standard` · cubic-bezier(0.25, 0.1, 0.25, 1) · `tokens.easing.standard` — default curve (same as CSS `ease`).
+- `[PROPOSED]` `--tm-easing-sheet` · cubic-bezier(0.32, 0.72, 0, 1) · `tokens.easing.sheet` — sheet open / close (when built).
+- `[PROPOSED]` `--tm-layer-raised` · 2 · `tokens.layer.raised` — pinned header / actions inside a sheet.
+- `[PROPOSED]` `--tm-layer-sticky` · 10 · `tokens.layer.sticky` — app bar, action bar, compact header.
+- `[PROPOSED]` `--tm-layer-overlay` · 900 · `tokens.layer.overlay` — scrim behind a sheet.
+- `[PROPOSED]` `--tm-layer-sheet` · 901 · `tokens.layer.sheet` — bottom sheet.
+- `[PROPOSED]` `--tm-layer-snackbar` · 950 · `tokens.layer.snackbar` — snackbar.
+- `[PROPOSED]` `--tm-layer-toast` · 1000 · `tokens.layer.toast` — toast (top of everything).
+- `[PROPOSED]` `--tm-shadow-bar` · 0 -8px 24px 0 rgba(16, 24, 40, 0.10) · `tokens.shadow.bar` — upward shadow of the action bar and stuck sheet actions (D-62).
+- `[PROPOSED]` `--tm-opacity-disabled` · 50% · `tokens.opacity.disabled` — disabled rows (Case, when built).
+- `[PROPOSED]` `--tm-pressed-dim` · 0.92 · `tokens.pressed.dim` — pressed call-end button (web `brightness()`; native: darker fill).
+- `[PROPOSED]` `--tm-layout-page-max` / `-narrow` / `-mobile` / `-sidenav` / `-sheet-max` / `-text-max` · 1280 / 720 / 420 / 240 / 640 / 300 · `tokens.layout.*` — web-only page and panel widths.
+- `[PROPOSED]` `--tm-sheet-max-height` · 85vh · `tokens.sheet.maxHeight` — tallest a sheet gets (percent of the screen).
+
 Mobile layout rules: `RULES.md` §8 (four type levels, one side margin, three gaps, button placement, two header types, contrast).
 
 ## Components (`src/components.css`)
