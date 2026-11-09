@@ -108,7 +108,7 @@ export function render(host, id, { mode, params = {} }) {
     if (!number) { push(null, { s: "sign-in_default", live: true, number: "" }); return; }
     const r = requestCode(number, ctx());
     if (r.outcome === "sent" || r.outcome === "locked") {
-      push(null, { s: r.outcome === "sent" ? "otp_default" : "otp_locked", live: true, number, resendAt: r.resendAt, until: r.until });
+      push(null, { s: r.outcome === "sent" ? "otp_default" : "otp_locked", live: true, number, resendAt: r.resendAt, until: r.until, lastCode: !!r.last });   // codex 2: last code → codes used up
       return;
     }
     const button = r.outcome === "too-many-tries" ? "wait" : r.outcome === "inactive" ? "inactive" : "default";

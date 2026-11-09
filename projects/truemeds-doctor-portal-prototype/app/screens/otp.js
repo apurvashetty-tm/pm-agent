@@ -66,6 +66,8 @@ export function render(host, id, { mode, params = {} }) {
     until: params.until || (fx.untilMs ? now + fx.untilMs : 0),
   };
   // Back from a placeholder page: restore the screen as it was (a pending server answer is dropped; its action can be retried).
+  // Sign-in used the window's last code: same as a resend that used it (sent-last) — Resend hidden, the too-many notice until the window ends.
+  if (live && params.lastCode) Object.assign(m, { note: NOTE.tooManyResends, rs: "hidden", until: params.until });
   if (params.saved) Object.assign(m, params.saved, { busy: false, rs: params.saved.rs === "sending" ? "available" : params.saved.rs });
   const leave = (to) => { saveCurrent({ saved: { ...m } }); push(null, to); };
 

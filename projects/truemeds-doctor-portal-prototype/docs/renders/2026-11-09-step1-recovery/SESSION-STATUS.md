@@ -1,3 +1,20 @@
+> **Session 5 — ✅ DONE (terminal, 2026-11-09; commit times in git).** D-93 `offer_unavailable`, whole-step Codex critique (2 runs), `REPORT.md`. Details: "Session 5 result" below. **Next run: session 6** (D-94 picture refresh) — the brief says run it only after session 5 is ✅; D-93's picture is in it only if Apurva has approved it by then.
+
+## Session 5 result (2026-11-09) — ✅ done
+
+**D-93 `offer_unavailable`:** state added to `ui-screens/faster-signin-offer/faster-signin-offer.html` (neutral notice at the top of the panel as on `unlock_unavailable`, `unlock.unavailable`; hero, Turn on and Not now hidden; Continue the single primary). Registry `offer.continue` = "Continue" + metadata. app-logic §2 (offer outcomes, notice placement) and `feedback-state-map.md` row `offer.unavailable` (behaviour row; state map regenerated, 148 pictures, drift 0). Built in the app (`faster-signin-offer.js/.css`; `PENDING_PICTURE` in `screen-host.js` so `?s=offer_unavailable` and Jump `offer.unavailable` open it before the picture is approved): Continue → Home, not enabled, recorded as offered, phone Back = Continue. Test F5 updated (placeholder expectation removed) + F5d / F5e. Picture rendered at 390 / 360 into `session-5/d93/` only (not `ui-screens/`); built app = picture, 0 px at both widths; the six approved offer states render pixel-identically from the edited file (12 / 12). `layout_check.py --app` now also opens `offer_unavailable`. Judgement for approval: hero tile hidden (as unlock hides its prompt tile).
+
+**Codex (whole step):** critique 1 — 1 blocker (sign-in resend during the wait sent a new code) + 1 should-fix (last code from sign-in → wrong OTP state): both fixed (`auth.js requestCode`, `sign-in.js`, `otp.js`; tests A12, B6c; sign-in during the wait = `[MOCK ASSUMPTION]`, app-logic silent). Critique 2 — 0 blockers, 1 should-fix (unlock → Use OTP instead dropped the last-code flag): fixed (`returning-unlock.js`; test F7f). `codex-critique.md`, `codex-critique-2.md`, `session-5/codex-response.md`.
+
+**Checks (all pass, logs in `session-5/checks/`, re-run with `session-5/checks/run-all.sh`):** `entry-journeys.mjs` 60/60 · `run-checks.mjs` 78/78 · `layout_check.py` and `--app` ALL PASS · `check-locked-specs.py` 0 failures / 148 × 3 · `check-sources.mjs` · `check_lockup.py` · `scan.mjs` 0 · state-map drift 0 · compare exact 14 · accepted 70 · failed 0 · old `index.html` / `app.js` / `styles.css` unchanged.
+
+**Report:** `REPORT.md` (set-up baseline, Part A, 1.3 with the main thread's answers, compare, guards, D-92, D-93, checklist Step-1 table, Codex, commits, gaps). Evidence: `session-5/sheet.png` (approved fingerprint offer | new `offer_unavailable` | built | approved `unlock_unavailable`).
+
+**NEEDS-APURVA:** approve the new picture `offer_unavailable` (`session-5/d93/`), incl. the hidden hero tile.
+**NEEDS main thread:** OQ-036 in `open_questions.md` and `session_handoff.md` not touched (brief); promotion steps for the D-93 picture after approval are listed in `REPORT.md` §11.
+
+---
+
 > **Session 4 — ✅ DONE (terminal, 2026-11-09; commit times in git).** Part A panel, checklist 1.3 table and compare harness. Details: "Session 4 result" below. **Next run: session 5** (D-93 `offer_unavailable`, then section 4 Codex and "Report and stop").
 
 ## Session 4 result (2026-11-09) — ✅ done

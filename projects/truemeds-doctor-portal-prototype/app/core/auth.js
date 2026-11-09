@@ -73,7 +73,10 @@ const forced = (field, ctx, byDefault) => {
   return v && v !== byDefault ? v : null;
 };
 
-// Send OTP from sign-in. Outcomes: sent · locked · not-registered · inactive · too-many-tries · couldnt-send · offline
+// Send OTP from sign-in. Outcomes: sent (last: true when it used the window's last code) · locked · not-registered · inactive ·
+// too-many-tries · couldnt-send · offline. The resend wait is the server's and is per number: sending again from sign-in (Change →
+// Send OTP) while it is still running sends no new code and opens OTP on the running wait (codex session 5)
+// [MOCK ASSUMPTION] app-logic §2 is silent on what the server answers here; the code already sent stays valid.
 export function requestCode(n, ctx) {
   if (ctx.offline) return { outcome: "offline" };
   const now = ctx.now();
@@ -86,9 +89,12 @@ export function requestCode(n, ctx) {
   const cap = ctx.value("otpCodesPerWindow");
   if (!r.tooManyUntil && r.sent.length >= cap) r.tooManyUntil = r.sent[0] + ctx.value("otpWindow");   // codes used up (D-35)
   if (r.tooManyUntil) { save(n, r, ctx); return { outcome: "too-many-tries", until: r.tooManyUntil }; }
+  const last = r.sent.length ? r.sent[r.sent.length - 1] : 0;
+  if (last && now < last + waitAfter(r, ctx)) return { outcome: "sent", resendAt: last + waitAfter(r, ctx), reused: true };
   r.sent.push(now);
   save(n, r, ctx);
-  return { outcome: "sent", resendAt: now + waitAfter(r, ctx) };
+  const lastCode = r.sent.length >= cap;
+  return { outcome: "sent", resendAt: now + waitAfter(r, ctx), ...(lastCode ? { last: true, until: r.sent[0] + ctx.value("otpWindow") } : {}) };
 }
 
 // Verify & sign in. Outcomes: correct · wrong (with message) · expired · couldnt-verify · locked · offline

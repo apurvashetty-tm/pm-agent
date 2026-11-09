@@ -97,6 +97,18 @@ check("A2", "number checks: empty and short only on submit; first digit at once"
     ok.outcome === "sent" && last.outcome === "sent-last" && last.until > c.now(), JSON.stringify({ early, exp, ok, last }));
 }
 
+{ // A12 (codex session 5): sending again from sign-in obeys the running resend wait (no new code, same wait); the window's last
+  // code sent from sign-in says so (last + window end)
+  const c = fakeCtx(); const n = "7012345684";
+  const first = auth.requestCode(n, c);
+  c.tick(10 * SEC); const again = auth.requestCode(n, c); const left = auth.status(n, c).codesLeft;
+  c.tick(20 * SEC); auth.resendCode(n, c); c.tick(60 * SEC); auth.resendCode(n, c); c.tick(120 * SEC);
+  const lastViaSignIn = auth.requestCode(n, c);
+  check("A12", "sign-in during the resend wait: no new code, OTP on the running wait (codes left unchanged); the 4th code sent from sign-in returns last + window end",
+    first.outcome === "sent" && !first.last && again.outcome === "sent" && again.reused && again.resendAt === first.resendAt && left === 3 &&
+    lastViaSignIn.outcome === "sent" && lastViaSignIn.last === true && lastViaSignIn.until > c.now(), JSON.stringify({ first, again, left, lastViaSignIn }));
+}
+
 // ---------------- browser ----------------
 const TYPES = { ".html": "text/html", ".js": "text/javascript", ".css": "text/css", ".png": "image/png", ".svg": "image/svg+xml", ".webmanifest": "application/manifest+json", ".woff2": "font/woff2", ".ttf": "font/ttf" };
 const srv = http.createServer((req, res) => {
@@ -327,6 +339,25 @@ const signInNotice = (p) => p.evaluate(() => [...document.querySelectorAll(".log
   await r.ctx.close();
 }
 
+{ // B6c (codex session 5): Send OTP → Change → Send OTP again during the wait → OTP keeps counting down (no new code);
+  // after the waits, the 4th code sent from sign-in opens OTP with codes used up (Resend hidden, too-many notice)
+  const r = await open(""); const p = r.p; const n = "7012345693";
+  await send(p, n);
+  await ff(p, 10 * 1000);
+  await p.click("a.lk"); await p.waitForTimeout(300); await p.click(".login-submit"); await p.waitForTimeout(ANSWER);
+  const rs1 = await text(p, "#rs");
+  const t = (x) => { const m = /(\d+):(\d\d)$/.exec(x || ""); return m ? Number(m[1]) * 60 + Number(m[2]) : null; };
+  for (const w of [30, 60, 120]) {   // remaining wait, then a resend from sign-in after it (each is a real new code)
+    await ff(p, w * 1000); await p.waitForTimeout(300);
+    await p.click("a.lk"); await p.waitForTimeout(300); await p.click(".login-submit"); await p.waitForTimeout(ANSWER);
+  }
+  const lastState = await p.evaluate(() => ({ s: window.__tm.store.get().s, rsHidden: document.getElementById("rs").hidden, note: document.getElementById("nt").textContent.replace(/\u00a0/g, " ") }));
+  check("B6c", "Change → Send OTP during the resend wait sends no new code (Resend in keeps counting, under 0:30); the window's last code sent from sign-in → Resend hidden, too-many-codes notice",
+    t(rs1) !== null && t(rs1) <= 21 && lastState.s === "otp_default" && lastState.rsHidden && /call Doctor Ops/.test(lastState.note) && r.errors.length === 0,
+    JSON.stringify({ rs1, lastState, e: r.errors }));
+  await r.ctx.close();
+}
+
 { // B7: drawn keyboard: review and capture only; demo uses the phone's keyboard; keys type into the field
   const r = await open("?s=otp_default"); const p = r.p;
   await p.dispatchEvent(".mock-kbd__key:nth-child(1)", "pointerdown"); await p.dispatchEvent(".mock-kbd__key:nth-child(2)", "pointerdown");
@@ -532,6 +563,25 @@ async function signInFull(p, n) { await send(p, n); await verify(p, "1234"); }
   const none = await sNow(p);
   check("F6c", "fingerprint turned on, phone changed to screen lock only → unlock asks for the screen lock; no screen lock → unavailable; panel story kept across reopen",
     sl.s === "unlock_screen-lock" && sl.panel === "screen-lock" && none === "unlock_unavailable" && r.errors.length === 0, JSON.stringify({ sl, none, e: r.errors }));
+  await r.ctx.close();
+}
+
+{ // F7f (codex session 5, 2nd run): Use OTP instead on unlock sends a code; when that is the window's last code, OTP opens with
+  // codes used up (Resend hidden, too-many-codes notice), as from sign-in
+  const r = await open("", { w: 1280, h: 800 }); const p = r.p; const n = "7012345621";   // desktop review: every panel row
+  await signInFull(p, n); await p.click("#turn-on"); await p.waitForTimeout(PROMPT);   // code 1, faster sign-in on
+  await choose(p, "start", "unlock");   // Restart then opens the returning unlock for the remembered doctor
+  const seen = [];
+  for (const w of [30, 60, 120]) {
+    await ff(p, w * 1000); await p.evaluate(() => document.getElementById("rp-restart").click()); await p.waitForTimeout(400);   // restart keeps the app clock
+    const at = await sNow(p);
+    await p.click("#fallback"); await p.waitForTimeout(ANSWER);
+    seen.push([at, await p.evaluate(() => ({ s: window.__tm.store.get().s, rsHidden: document.getElementById("rs")?.hidden, note: document.getElementById("nt")?.textContent.replace(/\u00a0/g, " ") }))]);
+  }
+  const [, last] = seen[2];
+  check("F7f", "unlock → Use OTP instead (codes 2–4): the 4th code (window's last) opens OTP with Resend hidden and the too-many-codes notice; earlier ones show Resend",
+    seen.every(([at]) => at === "unlock_fingerprint") && !seen[0][1].rsHidden && !seen[1][1].rsHidden && last.s === "otp_default" && last.rsHidden && /call Doctor Ops/.test(last.note) && r.errors.length === 0,
+    JSON.stringify({ seen, e: r.errors }));
   await r.ctx.close();
 }
 

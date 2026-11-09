@@ -159,7 +159,8 @@ export function render(host, id, { mode, params = {} }) {
     const number = m.number;
     if (r.outcome === "sent" || r.outcome === "locked") {
       m.button = "default"; m.kb = false; m.focused = false;
-      push(null, { s: r.outcome === "sent" ? "otp_default" : "otp_locked", live: true, number, resendAt: r.resendAt, until: r.until });
+      // The window's last code (D-35): OTP opens with codes used up — Resend hidden, "too many codes" until the window ends.
+      push(null, { s: r.outcome === "sent" ? "otp_default" : "otp_locked", live: true, number, resendAt: r.resendAt, until: r.until, lastCode: !!r.last });
       return;
     }
     m.notice = r.outcome;
