@@ -969,6 +969,11 @@ From an external (ChatGPT) review, each point verified before acting.
 - **Why:** the phone gives no reason (nothing set up, sensor locked, or hardware fault), so neutral wording is the only honest message. Try again could never succeed here. Going to Home silently would confuse the doctor. Reusing the unlock pattern keeps the two screens consistent.
 - **Rejected:** treating it as a failed turn-on with Try again (the build placeholder); going to Home with no message; "Biometrics is not enabled" (wrong in two of the three causes, and jargon); opening phone settings now (iOS can't open the Face ID / Touch ID page, the web prototype can't open settings at all, and it's a detour while the doctor is signing in). Android "Set up on this phone" is logged in backlog §4b.
 
+### D-94 · Approved pictures re-rendered on the new Mac (same designs) — 2026-11-09
+- **Decision (Apurva):** after step 1, all 148 approved pictures are re-rendered from their approved sources on the new Mac, and screen captures are made repeatable. Each picture is checked to differ from the old one only by text-edge smoothing: no moved boxes, shifted rows or colour changes. The main thread reviews that evidence before the pictures replace the approved set. Then the anti-aliasing allow-list is removed, so app-vs-picture compares must match exactly, apart from listed, reasoned regions.
+- **Why:** 128 pictures came from the old Mac and 20 (D-92) from the new one. The mix forced an anti-aliasing allow-list and capture retries, and that test debt would triple in step 2. No design changes.
+- **Rejected:** keeping the allow-list (weaker test, and it grows with every step); refreshing during step 2 (mixes two kinds of change).
+
 ## Design system changes made for this work
 
 ### D-60 · Secondary button without drop shadow (design system) — 2026-10-24 · **REVERTED same day**
