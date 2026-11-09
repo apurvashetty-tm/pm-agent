@@ -18,6 +18,9 @@ if [ -z "${TM_CAFFEINATED:-}" ] && command -v caffeinate >/dev/null 2>&1; then
 fi
 
 mkdir -p docs/runs/logs
+# Count only real "DONE <name>" lines (not the header, not "DONE added:" inside a runner STOPPED line).
+# grep -c prints 0 AND exits 1 on no match, so "|| echo 0" would give "0\n0"; default with :- instead.
+done_count() { local n; n="$(grep -cE '^[-*[:space:]]*`?DONE[[:space:]]' "$STATUS" 2>/dev/null)"; echo "${n:-0}"; }
 say() { echo "[$(date +%H:%M)] $1"; osascript -e "display notification \"$1\" with title \"Doctor portal build chain\"" >/dev/null 2>&1 || true; }
 publish() { (cd "$ROOT" && scripts/publish.sh -m "$1" "$REL/$QUEUE" "$REL/$STATUS") >/dev/null 2>&1 || say "Publish failed (will retry with the next run): $1"; }
 
@@ -36,12 +39,12 @@ while true; do
   prompt="${line#- \[ \] }"
   slug="$(printf '%s' "$prompt" | tr -cs 'A-Za-z0-9' '-' | cut -c1-60)"
   log="docs/runs/logs/$(date +%m%d-%H%M)-$slug.log"
-  before="$(grep -c 'DONE' "$STATUS" 2>/dev/null || echo 0)"
+  before="$(done_count)"
   say "Running: $prompt"
   claude -p "$prompt. Before starting, read docs/runs/RULINGS.md (main-thread rulings; they override the brief). You are unattended: nobody will answer questions, so take the most reasonable reading and note it in your report. Finish exactly as the brief says, ending with a DONE or STOPPED line in docs/runs/STATUS.md, published with scripts/publish.sh." \
     "${PERM[@]}" --max-turns 400 > "$log" 2>&1
   rc=$?
-  after="$(grep -c 'DONE' "$STATUS" 2>/dev/null || echo 0)"
+  after="$(done_count)"
   git -C "$ROOT" fetch -q origin "$BRANCH" 2>/dev/null
   pushed=no; git -C "$ROOT" merge-base --is-ancestor HEAD "origin/$BRANCH" 2>/dev/null && pushed=yes
   if [ "$after" -gt "$before" ] && [ "$pushed" = yes ] && ! tail -n 1 "$STATUS" | grep -q 'STOPPED'; then

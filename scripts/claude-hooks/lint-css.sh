@@ -9,9 +9,9 @@ try: print((json.load(sys.stdin).get("tool_input") or {}).get("file_path",""))
 except Exception: pass' 2>/dev/null)
 case "$file" in *.css) ;; *) exit 0 ;; esac
 [ -f "$file" ] || exit 0
-# Find the repo that owns the edited file (several working folders share one machine).
-dir=$(dirname "$file")
-while [ "$dir" != / ] && [ ! -f "$dir/design-system/scripts/check_tokens.py" ]; do dir=$(dirname "$dir"); done
+# Find the repo that owns the edited file (several working folders share one machine). Use git's top level,
+# not an upward search: app/design-system/ holds a build copy of the design system that must not be used.
+dir=$(git -C "$(dirname "$file")" rev-parse --show-toplevel 2>/dev/null) || exit 0
 [ -f "$dir/design-system/scripts/check_tokens.py" ] || exit 0
 out=$(python3 "$dir/design-system/scripts/check_tokens.py" --scoped "$file" 2>&1); rc=$?
 [ $rc -eq 1 ] || exit 0   # 0 clean, 3 linter not installed: never block an edit for tooling
