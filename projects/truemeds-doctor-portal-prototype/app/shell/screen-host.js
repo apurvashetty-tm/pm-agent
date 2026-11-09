@@ -2,9 +2,15 @@
 // behaviour-only state. Journey screens replace this per state in their own step.
 import { REVIEW_TEXT as T } from "../review/labels.js";
 import { MSG } from "../core/msg.js";
+import * as signInScreen from "../screens/sign-in.js";
 
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 export const FOLDER_JOURNEY = { "sign-in": "signIn", otp: "otp", "faster-signin-offer": "offer", "returning-unlock": "unlock", home: "home", case: "caseView", prescribe: "prescribe" };
+
+// Built screen renderers (step 1+)
+const renderers = {
+  "sign-in": signInScreen.render,
+};
 
 export function findState(id) {
   const map = window.TM_STATE_MAP;
@@ -26,6 +32,19 @@ export function renderState(host, id, { mode, w }) {
     found.kind === "picture" ? T.pictureLabel.replace("{step}", found.row.step) : T.behaviourOnly.replace("{step}", found.row.step))}</p>`;
   if (found.kind === "picture") {
     const folder = found.row.picture.split("/")[0];
+    const renderer = renderers[folder];
+
+    // Try to render with actual screen (step 1+)
+    if (renderer) {
+      try {
+        const result = renderer(host, id, { mode, w });
+        if (result) return { journey: result.journey || (found.row.calling.length ? "call" : FOLDER_JOURNEY[folder] || null), ok: true };
+      } catch (e) {
+        console.error("Screen render failed:", e);
+      }
+    }
+
+    // Fallback to picture
     host.innerHTML = `<figure class="shell-picture">${label}<img alt="${esc(found.row.id)}" src="pictures/${esc(found.row.picture)}_w${w}.png"></figure>`;
     return { journey: found.row.calling.length ? "call" : FOLDER_JOURNEY[folder] || null, ok: true };
   }
