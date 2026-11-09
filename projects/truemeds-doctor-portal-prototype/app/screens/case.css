@@ -84,6 +84,10 @@
 
 /* Calling bar (app-logic §5): a lone secondary under the main button is full width (Callback on 6, D-53). */
 .case-bar .case-pair--single { grid-template-columns: minmax(0, 1fr); }
+/* Skip HA sheet (case.html #sheet-skip-ha): long reason titles wrap balanced. */
+#sheet-skip-ha .tm-option__title { text-wrap: balance; }
+/* B2 "Checking for a Health Advisor…": the status line sits centred in the main button's slot (B-02), Skip HA greyed under it. */
+.case-bar .case-status--slot { min-height: var(--tm-control-height-lg); }
 
 /* Schedule callback sheet (app-logic §7), lifted from case.html #sheet-callback: Date / Time labels, chips, field error, notice. */
 #sheet-callback .sheet-section-label { margin: var(--tm-space-lg) 0 var(--tm-space-sm); }

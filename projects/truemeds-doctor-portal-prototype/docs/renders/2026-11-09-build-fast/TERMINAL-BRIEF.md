@@ -90,4 +90,4 @@ This brief may be started by `scripts/run-chain.sh` in a fresh headless session.
 - Run A0: ✅ done — main-thread review passed 2026-11-09 18:35 (rulings on its test disputes below)
 - Run A1: ✅ done 2026-11-09 — main-thread review passed 21:50 (4 test disputes ruled as test bugs and fixed; see `docs/runs/RULINGS.md`)
 - Run A2: ✅ done 2026-11-09 (`run-A2/REPORT.md`; Codex run A all pass; 1 dispute, A0-happy-path labels, in `run-A2/test-disputes.md`)
-- Run B: not started
+- Run B: ✅ done 2026-11-10 (`run-B/REPORT.md`; Codex run B 94/99, 5 disputed on one cause in `run-B/test-disputes.md`; run A 303/303; critique blocker fixed, critique-2 no blockers)

@@ -1,0 +1,1656 @@
+{
+ "steps": "2-6",
+ "thresholdPerChannel": 8,
+ "pictures": 206,
+ "over1pct": 2,
+ "rows": [
+  {
+   "id": "home_active",
+   "w": 390,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "home_active",
+   "w": 360,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "home_add-failed",
+   "w": 390,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "home_add-failed",
+   "w": 360,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "home_add-wheel",
+   "w": 390,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "home_add-wheel",
+   "w": 360,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "home_added",
+   "w": 390,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "home_added",
+   "w": 360,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "home_adding",
+   "w": 390,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "home_adding",
+   "w": 360,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "home_end-confirmation",
+   "w": 390,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "home_end-confirmation",
+   "w": 360,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "home_expired-pending",
+   "w": 390,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "home_expired-pending",
+   "w": 360,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "home_idle-expired",
+   "w": 390,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "home_idle-expired",
+   "w": 360,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "home_logout-confirm",
+   "w": 390,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "home_logout-confirm",
+   "w": 360,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "home_manually-ended",
+   "w": 390,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "home_manually-ended",
+   "w": 360,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "home_near-expiry",
+   "w": 390,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "home_near-expiry",
+   "w": 360,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "home_no-cases",
+   "w": 390,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "home_no-cases",
+   "w": 360,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "home_offline",
+   "w": 390,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "home_offline",
+   "w": 360,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "home_profile",
+   "w": 390,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "home_profile",
+   "w": 360,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "home_profile-case-open",
+   "w": 390,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "home_profile-case-open",
+   "w": 360,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "home_request-failed",
+   "w": 390,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "home_request-failed",
+   "w": 360,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "home_requesting",
+   "w": 390,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "home_requesting",
+   "w": 360,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "home_setting",
+   "w": 390,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "home_setting",
+   "w": 360,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "home_setup-failed",
+   "w": 390,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "home_setup-failed",
+   "w": 360,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "home_setup-wheel",
+   "w": 390,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "home_setup-wheel",
+   "w": 360,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "home_stop-pending",
+   "w": 390,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "home_stop-pending",
+   "w": 360,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "home_unknown-result",
+   "w": 390,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "home_unknown-result",
+   "w": 360,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "a-back-blocked",
+   "w": 390,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "a-back-blocked",
+   "w": 360,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "a-confirm-busy",
+   "w": 390,
+   "changedPx": 1,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "a-confirm-busy",
+   "w": 360,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "a-confirm-failed",
+   "w": 390,
+   "changedPx": 5734,
+   "changedPct": 0.44,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "a-confirm-failed",
+   "w": 360,
+   "changedPx": 5732,
+   "changedPct": 0.47,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "a-leave-sheet",
+   "w": 390,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "a-leave-sheet",
+   "w": 360,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "a-load-failed",
+   "w": 390,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "a-load-failed",
+   "w": 360,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "a-loading",
+   "w": 390,
+   "changedPx": 1118,
+   "changedPct": 0.08,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "a-loading",
+   "w": 360,
+   "changedPx": 1118,
+   "changedPct": 0.09,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "a-long-content",
+   "w": 390,
+   "changedPx": 1,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "a-long-content",
+   "w": 360,
+   "changedPx": 33,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "a-no-medicines",
+   "w": 390,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "a-no-medicines",
+   "w": 360,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "a-notes-typing",
+   "w": 390,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "a-notes-typing",
+   "w": 360,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "a-offline",
+   "w": 390,
+   "changedPx": 3,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "a-offline",
+   "w": 360,
+   "changedPx": 33,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "a-offline-action",
+   "w": 390,
+   "changedPx": 2,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "a-offline-action",
+   "w": 360,
+   "changedPx": 33,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "a-order-details",
+   "w": 390,
+   "changedPx": 1,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "a-order-details",
+   "w": 360,
+   "changedPx": 33,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "a-release-failed",
+   "w": 390,
+   "changedPx": 2,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "a-release-failed",
+   "w": 360,
+   "changedPx": 33,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "a-releasing",
+   "w": 390,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "a-releasing",
+   "w": 360,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "a-rx-viewer",
+   "w": 390,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "a-rx-viewer",
+   "w": 360,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "a-scrolled",
+   "w": 390,
+   "changedPx": 1,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "a-scrolled",
+   "w": 360,
+   "changedPx": 33,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "a-top",
+   "w": 390,
+   "changedPx": 1,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "a-top",
+   "w": 360,
+   "changedPx": 33,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "d-rx-failed",
+   "w": 390,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "d-rx-failed",
+   "w": 360,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "s-10-medicines",
+   "w": 390,
+   "changedPx": 1,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "s-10-medicines",
+   "w": 360,
+   "changedPx": 33,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "s-medicine-disabled",
+   "w": 390,
+   "changedPx": 1,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "s-medicine-disabled",
+   "w": 360,
+   "changedPx": 33,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "s-optional-empty",
+   "w": 390,
+   "changedPx": 1,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "s-optional-empty",
+   "w": 360,
+   "changedPx": 33,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "s7e-leave-sheet",
+   "w": 390,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "s7e-leave-sheet",
+   "w": 360,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "d-alt-days",
+   "w": 390,
+   "changedPx": 226,
+   "changedPct": 0.02,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "d-alt-days",
+   "w": 360,
+   "changedPx": 227,
+   "changedPct": 0.02,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "d-cream",
+   "w": 390,
+   "changedPx": 1,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "d-cream",
+   "w": 360,
+   "changedPx": 2,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "d-default",
+   "w": 390,
+   "changedPx": 1,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "d-default",
+   "w": 360,
+   "changedPx": 2,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "d-disable-sheet",
+   "w": 390,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "d-disable-sheet",
+   "w": 360,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "d-disabled",
+   "w": 390,
+   "changedPx": 1,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "d-disabled",
+   "w": 360,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "d-discard-sheet",
+   "w": 390,
+   "changedPx": 54,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "d-discard-sheet",
+   "w": 360,
+   "changedPx": 54,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "d-drops",
+   "w": 390,
+   "changedPx": 107,
+   "changedPct": 0.01,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "d-drops",
+   "w": 360,
+   "changedPx": 108,
+   "changedPct": 0.01,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "d-duration-picker",
+   "w": 390,
+   "changedPx": 1,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "d-duration-picker",
+   "w": 360,
+   "changedPx": 2,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "d-error-dose",
+   "w": 390,
+   "changedPx": 1,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "d-error-dose",
+   "w": 360,
+   "changedPx": 2,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "d-error-other",
+   "w": 390,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "d-error-other",
+   "w": 360,
+   "changedPx": 2,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "d-every-x-hours",
+   "w": 390,
+   "changedPx": 218,
+   "changedPct": 0.02,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "d-every-x-hours",
+   "w": 360,
+   "changedPx": 219,
+   "changedPct": 0.02,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "d-food-selected",
+   "w": 390,
+   "changedPx": 1,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "d-food-selected",
+   "w": 360,
+   "changedPx": 2,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "d-header-white",
+   "w": 390,
+   "changedPx": 1,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "d-header-white",
+   "w": 360,
+   "changedPx": 2,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "d-inhaler",
+   "w": 390,
+   "changedPx": 416,
+   "changedPct": 0.03,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "d-inhaler",
+   "w": 360,
+   "changedPx": 417,
+   "changedPct": 0.03,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "d-injection-default",
+   "w": 390,
+   "changedPx": 153,
+   "changedPct": 0.01,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "d-injection-default",
+   "w": 360,
+   "changedPx": 154,
+   "changedPct": 0.01,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "d-monthly",
+   "w": 390,
+   "changedPx": 1,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "d-monthly",
+   "w": 360,
+   "changedPx": 2,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "d-notes-keyboard",
+   "w": 390,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "d-notes-keyboard",
+   "w": 360,
+   "changedPx": 2,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "d-scrolled",
+   "w": 390,
+   "changedPx": 1,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "d-scrolled",
+   "w": 360,
+   "changedPx": 2,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "d-sos-on",
+   "w": 390,
+   "changedPx": 346,
+   "changedPct": 0.03,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "d-sos-on",
+   "w": 360,
+   "changedPx": 347,
+   "changedPct": 0.03,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "d-sos-only",
+   "w": 390,
+   "changedPx": 396,
+   "changedPct": 0.03,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "d-sos-only",
+   "w": 360,
+   "changedPx": 397,
+   "changedPct": 0.03,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "d-syrup",
+   "w": 390,
+   "changedPx": 1,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "d-syrup",
+   "w": 360,
+   "changedPx": 2,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "d-weekly",
+   "w": 390,
+   "changedPx": 1,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "d-weekly",
+   "w": 360,
+   "changedPx": 2,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "c-callback",
+   "w": 390,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "c-callback",
+   "w": 360,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "c-callback-error",
+   "w": 390,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "c-callback-error",
+   "w": 360,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "c-callback-failed",
+   "w": 390,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "c-callback-failed",
+   "w": 360,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "c-callback-refused",
+   "w": 390,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "c-callback-refused",
+   "w": 360,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "e-availability-ended",
+   "w": 390,
+   "changedPx": 1,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "e-availability-ended",
+   "w": 360,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "e-callback-scheduled",
+   "w": 390,
+   "changedPx": 4977,
+   "changedPct": 0.38,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "e-callback-scheduled",
+   "w": 360,
+   "changedPx": 4976,
+   "changedPct": 0.41,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "s7a-calling",
+   "w": 390,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "s7a-calling",
+   "w": 360,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "s7b-still-on-call",
+   "w": 390,
+   "changedPx": 1,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "s7b-still-on-call",
+   "w": 360,
+   "changedPx": 31,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "s7d-result-missing",
+   "w": 390,
+   "changedPx": 4,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "s7d-result-missing",
+   "w": 360,
+   "changedPx": 10,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "s7d-unavailable-sheet",
+   "w": 390,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "s7d-unavailable-sheet",
+   "w": 360,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "s7f-submitted",
+   "w": 390,
+   "changedPx": 10718,
+   "changedPct": 0.81,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "s7f-submitted",
+   "w": 360,
+   "changedPx": 10706,
+   "changedPct": 0.88,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "t01-ready",
+   "w": 390,
+   "changedPx": 1,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "t01-ready",
+   "w": 360,
+   "changedPx": 33,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "t02-calling",
+   "w": 390,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "t02-calling",
+   "w": 360,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "t03-not-through",
+   "w": 390,
+   "changedPx": 2,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "t03-not-through",
+   "w": 360,
+   "changedPx": 19,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "t04-doctor-missed",
+   "w": 390,
+   "changedPx": 4,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "t04-doctor-missed",
+   "w": 360,
+   "changedPx": 95,
+   "changedPct": 0.01,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "t05-result-wait",
+   "w": 390,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "t05-result-wait",
+   "w": 360,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "t06-ended-early",
+   "w": 390,
+   "changedPx": 3,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "t06-ended-early",
+   "w": 360,
+   "changedPx": 19,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "t08a-valid-cat4",
+   "w": 390,
+   "changedPx": 5733,
+   "changedPct": 0.44,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "t08a-valid-cat4",
+   "w": 360,
+   "changedPx": 5732,
+   "changedPct": 0.47,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "t08c-confirm-blocked",
+   "w": 390,
+   "changedPx": 5734,
+   "changedPct": 0.44,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "t08c-confirm-blocked",
+   "w": 360,
+   "changedPx": 5732,
+   "changedPct": 0.47,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "t09-patient-unavailable",
+   "w": 390,
+   "changedPx": 4977,
+   "changedPct": 0.38,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "t09-patient-unavailable",
+   "w": 360,
+   "changedPx": 4976,
+   "changedPct": 0.41,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "t10a-confirmed",
+   "w": 390,
+   "changedPx": 4977,
+   "changedPct": 0.38,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "t10a-confirmed",
+   "w": 360,
+   "changedPx": 4976,
+   "changedPct": 0.41,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "c-skip-ha",
+   "w": 390,
+   "changedPx": 32895,
+   "changedPct": 2.5,
+   "errors": [],
+   "flagged": true
+  },
+  {
+   "id": "c-skip-ha",
+   "w": 360,
+   "changedPx": 7376,
+   "changedPct": 0.61,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "g0-calling-pilot",
+   "w": 390,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "g0-calling-pilot",
+   "w": 360,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "g1-generic-confirm",
+   "w": 390,
+   "changedPx": 1,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "g1-generic-confirm",
+   "w": 360,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "g2-checking-ha",
+   "w": 390,
+   "changedPx": 1,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "g2-checking-ha",
+   "w": 360,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "g3b-after-hangup",
+   "w": 390,
+   "changedPx": 4977,
+   "changedPct": 0.38,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "g3b-after-hangup",
+   "w": 360,
+   "changedPx": 4976,
+   "changedPct": 0.41,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "g3b-forwarded",
+   "w": 390,
+   "changedPx": 2792,
+   "changedPct": 0.21,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "g3b-forwarded",
+   "w": 360,
+   "changedPx": 2792,
+   "changedPct": 0.23,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "s7d-result-missing-pilot",
+   "w": 390,
+   "changedPx": 4,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "s7d-result-missing-pilot",
+   "w": 360,
+   "changedPx": 10,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "t10b-forwarded",
+   "w": 390,
+   "changedPx": 4977,
+   "changedPct": 0.38,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "t10b-forwarded",
+   "w": 360,
+   "changedPx": 4976,
+   "changedPct": 0.41,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "t13-connecting-ha",
+   "w": 390,
+   "changedPx": 211136,
+   "changedPct": 16.04,
+   "errors": [],
+   "flagged": true
+  },
+  {
+   "id": "t13-connecting-ha",
+   "w": 360,
+   "changedPx": 8124,
+   "changedPct": 0.67,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "t14-transferred",
+   "w": 390,
+   "changedPx": 4977,
+   "changedPct": 0.38,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "t14-transferred",
+   "w": 360,
+   "changedPx": 4976,
+   "changedPct": 0.41,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "t15-after-hangup",
+   "w": 390,
+   "changedPx": 4977,
+   "changedPct": 0.38,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "t15-after-hangup",
+   "w": 360,
+   "changedPx": 4976,
+   "changedPct": 0.41,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "t15-ha-no-join",
+   "w": 390,
+   "changedPx": 2792,
+   "changedPct": 0.21,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "t15-ha-no-join",
+   "w": 360,
+   "changedPx": 2792,
+   "changedPct": 0.23,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "t16-transfer-missed",
+   "w": 390,
+   "changedPx": 3,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "t16-transfer-missed",
+   "w": 360,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "t16b-transfer-missed-patient",
+   "w": 390,
+   "changedPx": 3,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "t16b-transfer-missed-patient",
+   "w": 360,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "t16c-transfer-missed-unknown",
+   "w": 390,
+   "changedPx": 3,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "t16c-transfer-missed-unknown",
+   "w": 360,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "t17-skip-ha-wait",
+   "w": 390,
+   "changedPx": 2,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "t17-skip-ha-wait",
+   "w": 360,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  }
+ ]
+}

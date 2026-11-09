@@ -360,7 +360,19 @@ export const messages = {
   "unavailable.notReachable": "Not reachable",
   "unavailable.notReachableDesc": "Phone switched off or out of coverage",
   "unavailable.wrongNumber": "Wrong number",
-  "unavailable.wrongNumberDesc": "Invalid or not the patient’s number"
+  "unavailable.wrongNumberDesc": "Invalid or not the patient’s number",
+  "case.confirmForward": "Confirm & forward",
+  "case.skipHa": "Skip HA",
+  "case.transferredTitle": "Transferred to Health Advisor",
+  "case.forwardedTitle": "Forwarded to Health Advisor",
+  "skipHa.title": "Skip the Health Advisor call",
+  "skipHa.selectReason": "Select reason",
+  "skipHa.declined": "Patient declined the Health Advisor call",
+  "skipHa.declinedDesc": "The patient didn’t want the call",
+  "skipHa.notRequired": "Clinically not required",
+  "skipHa.notRequiredDesc": "Health Advisor counselling isn’t needed",
+  "skipHa.repeat": "Repeat patient, familiar with the medicines",
+  "skipHa.repeatDesc": "Counselled in an earlier order"
 } as const;
 export type FeedbackMessageId = keyof typeof messages;
 export function message(id: FeedbackMessageId, values: Record<string, string | number> = {}): string {

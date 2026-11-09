@@ -152,7 +152,7 @@ async function open(qs, { w = 1280, h = 800 } = {}) {
   check("B3", "demo: 0 console errors", d.errors.length === 0, d.errors.join(" | "));
   await d.ctx.close();
 
-  const c = await open("?capture=1&s=t10b-forwarded");   // a state still shown as its picture (step 6)
+  const c = await open("?capture=1&s=t12-transfer-ready");   // a state still shown as its picture (version A, step 9; run B built step 6)
   const cinfo = await c.p.evaluate(() => ({ panel: !document.getElementById("review-panel").hidden, label: !!document.querySelector(".shell-label") && getComputedStyle(document.querySelector(".shell-label")).display !== "none" }));
   check("B4", "?capture=1: no panel, no label, picture shown", !cinfo.panel && !cinfo.label && (await c.p.$("#screen img")) !== null);
   check("B5", "capture: 0 console errors", c.errors.length === 0, c.errors.join(" | "));
@@ -167,13 +167,13 @@ async function open(qs, { w = 1280, h = 800 } = {}) {
 }
 
 { // ?s= for 10 states across journeys at 390, 360 and 1280 wide
-  const states = ["sign-in_default", "offer_fingerprint", "unlock_face", "home_active", "t01-ready", "s7f-submitted", "t10b-forwarded", "g1-generic-confirm", "d-default", "a-no-medicines"];
+  const states = ["sign-in_default", "offer_fingerprint", "unlock_face", "home_active", "t01-ready", "s7f-submitted", "t10b-forwarded", "g1-generic-confirm", "d-default", "a-no-medicines", "t12-transfer-ready"];
   for (const w of [390, 360, 1280]) {
     for (const id of states) {
       const r = await open(`?s=${id}`, { w, h: w === 1280 ? 800 : 844 });
-      if (/^(sign-in|otp|offer|unlock|home)_|^(a|s|d)-|^t0[1-9]-|^s7[a-f]-|^c-callback|^e-/.test(id)) { // built in steps 1–5 (step 5 calling, run A2): the screen itself, no picture and no "not built yet" label
+      if (!/^(t08b|t11|t12)-/.test(id)) { // built in steps 1–6 (step 6 Pilot Fallback B, run B): the screen itself, no picture and no "not built yet" label; version A (step 9) stays the picture
         const built = await r.p.evaluate(() => !!document.querySelector("#screen .signin-screen, #screen .otp-screen, #screen .offer-screen, #screen .unlock-screen, #screen .home-screen, #screen .case-screen") && !document.querySelector("#screen .shell-picture, .shell-label"));
-        check(`R-${id}-${w}`, `?s=${id} at ${w}: built screen shown (steps 1–5)`, built && r.errors.length === 0, r.errors.join(" | "));
+        check(`R-${id}-${w}`, `?s=${id} at ${w}: built screen shown (steps 1–6)`, built && r.errors.length === 0, r.errors.join(" | "));
         await r.ctx.close(); continue;
       }
       const shown = await r.p.evaluate(() => { const i = document.querySelector("#screen img"); return !!i && i.complete && i.naturalWidth > 0; });
@@ -243,10 +243,10 @@ async function open(qs, { w = 1280, h = 800 } = {}) {
 
 { // jump goes through navigation and sets picture layout; restart resets the shell; both from the panel
   const r = await open("", { w: 1280, h: 800 });
-  await choose(r.p, "jump", "t10b-forwarded");
+  await choose(r.p, "jump", "t12-transfer-ready");   // still a picture (version A, step 9); run B built t10b-forwarded
   await r.p.click("#rp-jump-go"); await r.p.waitForTimeout(200);
   const j = await r.p.evaluate(() => ({ img: document.querySelector("#screen img")?.getAttribute("src") || "", picOnly: document.body.classList.contains("picture-only") }));
-  check("N1", "panel Jump opens the chosen state through navigation, picture layout set", j.img.includes("t10b-forwarded") && j.picOnly, JSON.stringify(j));
+  check("N1", "panel Jump opens the chosen state through navigation, picture layout set", j.img.includes("t12-transfer-ready") && j.picOnly, JSON.stringify(j));
   await r.p.click("#rp-restart"); await r.p.waitForTimeout(200);
   const rs = await r.p.evaluate(() => ({ img: !!document.querySelector("#screen figure img"), signIn: !!document.querySelector("#screen .signin-screen") }));
   check("N2", "Restart story returns to the story's start screen (sign-in, built in step 1), no picture left", !rs.img && rs.signIn, JSON.stringify(rs));

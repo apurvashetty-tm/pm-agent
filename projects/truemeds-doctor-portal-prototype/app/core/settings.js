@@ -39,6 +39,8 @@ export const SETTINGS = {
   mockServerDelay:      { value: 1200, time: true, source: "review tool", ref: "simulated server answer time" },
   reconcileDelay:       { value: 800, time: true, source: "review tool", ref: "simulated cooldown check when the app comes back" },
   phonePromptDelay:     { value: 1200, time: true, source: "review tool", ref: "mock phone prompt (B14): time before it answers" },
+  // Review tool only (not a product rule): the simulated Pilot call (Fallback B, run B)
+  pilotTalkAfterGate:   { value: 60 * SEC, time: true, source: "review tool", ref: "simulated Pilot call (\"Patient answers: over the gate\", length auto): the patient stays on the line this long after the gate, so the doctor can confirm on the live call" },
   // Review tool only (not a product rule): size of one fast-forward step in the review panel
   fastForwardStep:      { value: 60 * SEC, time: true, source: "review tool", ref: "panel button" },
   // Earnings (app-logic §11, D-81 F10)

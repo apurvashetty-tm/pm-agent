@@ -84,6 +84,7 @@ export const SETTING_NAME = {
   tooManyTriesWait: "Too-many-codes wait", returningUnlockFallbackAfter: "Failed unlocks before OTP",
   availabilityMinimum: "Shortest availability", availabilityStep: "Availability step", attemptGap: "Gap between simulated calls",
   mockServerDelay: "Simulated server answer", reconcileDelay: "Simulated cooldown check", phonePromptDelay: "Simulated phone prompt",
+  pilotTalkAfterGate: "Pilot talk past gate",
   fastForwardStep: "Fast-forward step", earningsPerConfirmedRx: "Earnings per confirmed prescription",
 };
 // Value in plain units: whole minutes as "min", anything shorter in seconds; counts as plain numbers; money in rupees.

@@ -33,9 +33,11 @@ export const DEFAULT_CHOICES = { ...Object.fromEntries(Object.entries(CALL_CHOIC
 // Ringing before the patient answers, in ms (leg 1 then leg 2). Talk time counts from the answer, never from the tap (D-58).
 export const ringTime = (c) => Number(c.ring || 0) * 1000;
 // Talk length of one attempt in ms: the length control in seconds, else the "Patient answers" choice around the gate.
-export function talkLength(c, gate) {
+// A Pilot call with an HA call (Fallback B) is confirmed while live, so its "over the gate" call stays on the line pilotTalkAfterGate
+// past the gate (afterGate, ms); every other route: one second over.
+export function talkLength(c, gate, afterGate = 1000) {
   if (c.length && c.length !== "auto") return Number(c.length) * 1000;
-  return { "over-gate": gate + 1000, "at-gate": gate, "just-under-gate": gate - 1000, "under-gate": Math.round(gate / 2) }[c.connected] ?? 0;
+  return { "over-gate": gate + afterGate, "at-gate": gate, "just-under-gate": gate - 1000, "under-gate": Math.round(gate / 2) }[c.connected] ?? 0;
 }
 
 // Returns [{ at (ms from call start), ev, data }]. Times come from settings (demo scales them). Deterministic.

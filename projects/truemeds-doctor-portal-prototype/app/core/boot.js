@@ -16,6 +16,7 @@ import { mountPanel, focusJourney, logLine, setLogKeeper } from "../review/panel
 import { setEventSink, event } from "./events.js";
 import { work, settleRecords, settleHolds, addHold } from "./session.js";
 import { recordOutcome } from "./call-engine.js";
+import { EV } from "./call-events.js";
 import { CALL_KEYS } from "../data/story-schema.js";
 import { mountDrawer } from "../review/drawer.js";
 import { REVIEW_TEXT as T } from "../review/labels.js";
@@ -65,8 +66,8 @@ if (mode !== "capture") {
 // 7f cases the doctor has left still settle when their call record arrives or the wait runs out (CW-D3, CW-D4).
 setInterval(() => settleRecords(clock.now(), {
   outcome: (r, now) => recordOutcome(r.attempts[r.attempts.length - 1], r.choices, { call: { attempts: r.attempts } }, now, (k) => value(k, mode), r.submittedAt),
-  onProven: (r) => event(`confirm completed: ${r.route === "cat4" ? "Cat4" : "HA skipped"} — prescription confirmed (order ${r.order}, after the doctor left)`),
-  onUnproven: (r, why) => { event(`call record ${why}: prescription not confirmed (mismatch, order ${r.order}) → case on hold, retry`); addHold({ order: r.order, cause: "unproven confirm", policy: "by-cause", at: clock.now() }); },
+  onProven: (r) => event(`${EV.confirmed(r.route, r.ha)} (order ${r.order}, after the doctor left)`),
+  onUnproven: (r, why) => { event(`call record ${why}: ${r.route === "pilot" ? "forward" : "prescription"} not confirmed (mismatch, order ${r.order}) → case on hold, retry`); addHold({ order: r.order, cause: "unproven confirm", policy: "by-cause", at: clock.now() }); },
 }), 250);
 // Held cases are retried by the backend (hold-retry gap and attempts from settings); the log shows each retry and the end.
 setInterval(() => settleHolds(clock.now(), {
@@ -119,6 +120,9 @@ function startState(opening) {
 const HOME_START = { normal: "home_active", "near-expiry": "home_near-expiry", ending: "home_near-expiry", "ended-with-request": "home_expired-pending" };
 function startParams(s, opening = false) {
   if (s) return { s };
+  // Opening the app with a case open goes straight back into it, whatever the story's start (plan B12, app-logic §4, OQ-025):
+  // a story starting at Home or Case never replaces the remembered case.
+  if (opening && mode !== "capture" && work().openCase) return { s: "t01-ready", live: true };
   if (story.start === "home") return { s: HOME_START[story.availability] || "home_active" };
   if (story.start === "case") return { s: "t01-ready" };
   const id = startState(opening); return id ? { s: id, live: true } : { s };
@@ -142,6 +146,11 @@ const BEHAVIOUR_SCREEN = {
   "prescribe.dose-error": "d-error-dose",    // step 4: no dose on a daily schedule
   "call.hold": "t09-patient-unavailable",    // step 5: patient side failed → the case closes as unavailable and goes on hold (CW-B2)
   "flow.HOLD": "s7f-submitted",              // step 5: an unproven confirm is not confirmed → hold and retry (CW-D3); the doctor sees 7f
+  "call.mismatch-logged": "s7f-submitted",   // step 6: record under the gate / missing → mismatch logged, hold (CW-D3, CW-D4); the doctor sees 7f
+  "call.skipHa": "t17-skip-ha-wait",         // step 6: Skip HA on the live call → 17 (CW-E2)
+  "call.transfer-failed": "t15-ha-no-join",  // step 6: the transfer couldn't start → 15 (CW-E1)
+  "call.waiting-for-hangup": "g3b-forwarded",   // step 6: B3 / 15 while live: "Waiting for the call to end…" (CW-E3)
+  "case.reopened": "t01-ready",              // step 7: reopening goes straight back into the open case (OQ-025)
 };
 function renderScreen(id, params = {}) {
   if (id && BEHAVIOUR_SCREEN[id]) id = BEHAVIOUR_SCREEN[id];

@@ -3397,5 +3397,113 @@
     "clear": "—",
     "retain": "—",
     "copy": "approved picture label (plan B6, run A2 2026-11-09)"
+  },
+  "case.confirmForward": {
+    "pattern": "none",
+    "trigger": "Pilot 7d / 16 (Fallback B)",
+    "slot": "primary button",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run B 2026-11-09)"
+  },
+  "case.skipHa": {
+    "pattern": "none",
+    "trigger": "Pilot B1 / B2 / 13 / 16 (Fallback B)",
+    "slot": "secondary button, full width",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run B 2026-11-09)"
+  },
+  "case.transferredTitle": {
+    "pattern": "none",
+    "trigger": "Transfer succeeded (14)",
+    "slot": "outcome card title",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run B 2026-11-09)"
+  },
+  "case.forwardedTitle": {
+    "pattern": "none",
+    "trigger": "Forward (B3 / 15 / 10b)",
+    "slot": "outcome card title",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run B 2026-11-09)"
+  },
+  "skipHa.title": {
+    "pattern": "none",
+    "trigger": "Skip HA sheet (B1 / 16)",
+    "slot": "sheet title",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run B 2026-11-09)"
+  },
+  "skipHa.selectReason": {
+    "pattern": "none",
+    "trigger": "Skip HA sheet",
+    "slot": "sheet label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run B 2026-11-09)"
+  },
+  "skipHa.declined": {
+    "pattern": "none",
+    "trigger": "Skip HA sheet",
+    "slot": "reason title",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run B 2026-11-09)"
+  },
+  "skipHa.declinedDesc": {
+    "pattern": "none",
+    "trigger": "Skip HA sheet",
+    "slot": "reason line",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run B 2026-11-09)"
+  },
+  "skipHa.notRequired": {
+    "pattern": "none",
+    "trigger": "Skip HA sheet",
+    "slot": "reason title",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run B 2026-11-09)"
+  },
+  "skipHa.notRequiredDesc": {
+    "pattern": "none",
+    "trigger": "Skip HA sheet",
+    "slot": "reason line",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run B 2026-11-09)"
+  },
+  "skipHa.repeat": {
+    "pattern": "none",
+    "trigger": "Skip HA sheet",
+    "slot": "reason title",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run B 2026-11-09)"
+  },
+  "skipHa.repeatDesc": {
+    "pattern": "none",
+    "trigger": "Skip HA sheet",
+    "slot": "reason line",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, run B 2026-11-09)"
   }
 }
