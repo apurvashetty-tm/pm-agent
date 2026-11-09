@@ -87,6 +87,7 @@ Order = the order we work in.
 - [ ] Help: what the "?" opens on Home and the case page.
 - [ ] Notifications: what the bell opens on Home (D-75).
 - [ ] App navigation for future features — bottom tab bar once a second destination is approved (D-69 point 7).
+- [ ] Faster sign-in on Android: a "Set up on this phone" action that opens the phone's fingerprint set-up when the phone has none (native app only; iOS can't open that page). From D-93.
 
 ## 4c. Hosting (found in the build-plan review, 2026-10-29)
 - [ ] **Current site publishes the whole project folder** — `docs/` (decision log, open questions, handoffs) is reachable on the live doctor-portal link. Apurva to decide: accept, or publish a clean folder. The new preview site publishes only `app/`.

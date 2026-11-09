@@ -964,6 +964,11 @@ From an external (ChatGPT) review, each point verified before acting.
 - **Rejected:** "Dr. Sachin" (either was fine; one name used everywhere).
 - **Restored 2026-11-09** from the build thread's chat after the old Mac died before this entry was committed; the re-rendered pictures were lost too and are redone in the step 1 recovery round.
 
+### D-93 · Faster sign-in offer: the phone can't do it at Turn on — 2026-11-09
+- **Decision (Apurva):** if the phone answers "unavailable" when the doctor taps **Turn on** (e.g. fingerprints removed after the offer appeared), the offer screen shows the neutral notice at the top, the same pattern as `unlock_unavailable`, with the approved wording "Faster sign-in isn't available on this phone right now." (`unlock.unavailable`). **Turn on** is hidden, and the only action is **Continue** → Home. Faster sign-in is not marked as enabled, and the doctor can turn it on later from Profile. New state `offer_unavailable` (390 / 360), plus one new label "Continue". Closes OQ-036.
+- **Why:** the phone gives no reason (nothing set up, sensor locked, or hardware fault), so neutral wording is the only honest message. Try again could never succeed here. Going to Home silently would confuse the doctor. Reusing the unlock pattern keeps the two screens consistent.
+- **Rejected:** treating it as a failed turn-on with Try again (the build placeholder); going to Home with no message; "Biometrics is not enabled" (wrong in two of the three causes, and jargon); opening phone settings now (iOS can't open the Face ID / Touch ID page, the web prototype can't open settings at all, and it's a detour while the doctor is signing in). Android "Set up on this phone" is logged in backlog §4b.
+
 ## Design system changes made for this work
 
 ### D-60 · Secondary button without drop shadow (design system) — 2026-10-24 · **REVERTED same day**

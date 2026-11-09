@@ -13,7 +13,7 @@ Session 1 (overnight) did set-up and started sign-in, then ended on its own afte
 | 2 | Sign-in finished + OTP | ✅ done (34 journey tests, Codex clean on 3rd pass) |
 | 3 | Faster sign-in offer + returning unlock + D-92 (section 2) | ✅ done (55 journey tests, D-92 name-only checked, Codex 0 blockers) |
 | 4 | Part A panel + checklist 1.3 table + compare harness | Panel / drawer / QR per Part A; harness built; compare run on all 42 step-1 states with every region explained; `layout_check.py --app` passes |
-| 5 | Codex + report | Section 4 and "Report and stop" |
+| 5 | D-93 `offer_unavailable` + Codex + report | First D-93 (below), then section 4 and "Report and stop" |
 
 **Every session runs a Codex critique before it ends** (Apurva's standard: terminal builds, Codex critiques, Claude fixes). When the session's checks pass:
 `codex exec --sandbox read-only --output-last-message docs/renders/2026-11-09-step1-recovery/session-<n>/codex-critique.md "Read docs/renders/2026-11-09-step1-recovery/TERMINAL-BRIEF.md (session <n>) and docs/renders/2026-11-06-step1/BRIEF.md. You are the critic. Review only what session <n> built against both briefs, plan v3.2, checklist v3.2 lines with Step 1, and the approved pictures. Report blockers, should-fix, nice-to-have with file, line and checklist line. Read-only; write no files." < /dev/null`
@@ -34,6 +34,12 @@ Fix every valid blocker and should-fix (note why for any not adopted, in `sessio
 - Already-known explained regions: "call Doctor Ops" link in `otp_locked`, `otp_too-many-resends`, `otp_expired-and-resend-limited` (session 2).
 - The offer's `unavailable` answer is now OQ-036 in `open_questions.md`. Keep the placeholder; don't change it.
 - In the panel, show the Faster sign-in offer and Unlock story values in words, the same as the other rows.
+
+**Session 5 — first item, D-93 (main thread, 2026-11-09 12:25; read `decision_log.md` D-93):** new offer state `offer_unavailable`, which replaces the `[OPEN DECISION]` placeholder. The phone answers "unavailable" at Turn on → the offer screen shows the neutral notice at the top (same component and position as `unlock_unavailable`, text key `unlock.unavailable`). Turn on is hidden, and the single primary button is **Continue** → Home. Faster sign-in is not enabled and is recorded as offered.
+1. Add the state to `ui-screens/faster-signin-offer/faster-signin-offer.html`. Add the registry key `offer.continue` = "Continue" (with metadata). Add the row to app-logic §2 (offer outcomes) and to the state map. Change no other state.
+2. Render the state at 390 and 360 into `docs/renders/2026-11-09-step1-recovery/session-5/d93/` only, **not** into `ui-screens/`. It is a new picture, and Apurva approves it before it is promoted.
+3. Build it in the app: story value `unavailable` shows this state. Update test F5 and add one journey test: Turn on → unavailable → notice → Continue → Home, not enabled, and the offer doesn't come back.
+4. Guards pass. The other 148 approved pictures are unchanged. List the new picture under NEEDS-APURVA for approval.
 
 **Quality rules the sign-in start broke — fix in session 2:**
 - **No inline styles.** Lift the approved screen's markup and classes from `ui-screens/<journey>/<journey>.html`; its CSS goes into one stylesheet per journey under `app/screens/` using only `--tm-*` tokens and `.tm-*` classes. Replace the inline CSS already in `app/screens/sign-in.js`.

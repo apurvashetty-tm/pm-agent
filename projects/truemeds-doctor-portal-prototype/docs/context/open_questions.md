@@ -286,5 +286,5 @@ Buttons are inconsistent today: Call patient / Call again (phone), Callback (cal
 ### OQ-035 — Orders with no medicines [OPEN — Engineering + Ops, 2026-11-01, D-80]
 Keep orders with no medicines out of the doctor queue and send them to Ops. If one reaches a doctor, the app offers only Release case, and the released case goes to Ops (not back to the queue). Engineering: how an empty order is detected at assignment; Ops: who handles them and what happens to the order.
 
-### OQ-036 — Phone can't do faster sign-in at the moment of Turn on [OPEN — Apurva, 2026-11-09]
+### OQ-036 — Phone can't do faster sign-in at the moment of Turn on [CLOSED — D-93, 2026-11-09: neutral notice + Continue → Home] [was OPEN — Apurva, 2026-11-09]
 On the faster sign-in offer, the phone can answer "unavailable" when the doctor taps Turn on, for example because fingerprints were removed after the offer appeared. app-logic §2 lists only enabled / cancelled / failed / offline. `[OPEN DECISION]` placeholder in the build (step 1, session 3): treated as a failed turn-on ("Couldn't turn on faster sign-in." · Try again · Not now). Panel value: Faster sign-in offer = `unavailable`.
