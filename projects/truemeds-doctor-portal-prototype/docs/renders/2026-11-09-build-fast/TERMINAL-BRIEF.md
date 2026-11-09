@@ -62,6 +62,10 @@ Short run. App shell and review tools only, no screen or approved picture change
 5c. **Settings made understandable:** rename the row **"Timings and limits"**. Show each value with a plain name ("Valid-call minimum", "OTP lock", "Resend waits", …), its value in seconds or minutes, and a tag **Rule** or **Stand-in** (from `source`), with its reference on hover or tap. Move it and **Event log** to the bottom of the panel under a quiet label "Advanced". Order the panel: Test on phone · Story · Jump to a state · Sign-in answers · Home and case answers · Call simulator · Advanced (Timings and limits, Event log).
 6. Checks: all existing checks and tests pass. Screenshots for review in `docs/renders/2026-11-09-build-fast/run-A0/`: desktop at 1280 × 800 and 1440 × 900 (Story open, then Call simulator open), and the frame at 1920 × 1080, each next to a before shot. Push. Set run status "Run A0: waiting for main-thread review" and stop.
 
+## Main-thread rulings on the Run A0 test disputes (2026-11-09 18:35)
+
+All four proposed rulings in `run-A0/test-disputes.md` are accepted: (1) align the panel card's top, not the first row; (2) anchor the code / number names (`^0000\b`); (3) select the QR (`#rp-qr svg`), not the chevron; (4) the happy-path test belongs to the end of A2, and it uses the approved labels "Send OTP" / "Verify & sign in". **At the start of A1**, have Codex correct its own tests to these rulings (`codex exec --sandbox workspace-write "Apply the main-thread rulings in docs/renders/2026-11-09-build-fast/TERMINAL-BRIEF.md 'Main-thread rulings on the Run A0 test disputes' to tests/codex/run-A0/. Change only what the rulings name." < /dev/null`), then re-run A0's Codex tests: all must pass except A0-happy-path, which re-runs at the end of A2. Before writing the A1 / A2 tests' expectations into the app, check `tests/codex/run-A/` for the same label mistake ("Send code") and correct any you find the same way, through Codex.
+
 ## Codex tests: already written (main-thread review, 2026-11-09 16:20)
 
 Codex wrote both runs' tests ahead: `tests/codex/run-A/` (one set for A1 + A2; run the ids for the steps in hand, e.g. `CODEX_FILTER=A-H` / `A-C` / `A-P` / `S-` for A1, and the rest for A2) and `tests/codex/run-B/`. Read `tests/codex/README.md` → "Driver contract and limits" first. The main thread reviewed them: they are spec-sourced and accepted as the oracle. Commit them as they are at the start of A1. Then:
@@ -74,7 +78,7 @@ Codex wrote both runs' tests ahead: `tests/codex/run-A/` (one set for A1 + A2; r
 `run-<A|B>/REPORT.md`, short: what plays end to end, Codex tests (written / passing / disputed), the compare report (flagged states and what was done), the tests, Codex blockers and fixes, commits, `[OPEN DECISION]`s / `[MOCK ASSUMPTION]`s added (with the `open_questions.md` lines for the main thread to record; don't write `docs/context/`), what's left. Mark the run done below, push, stop.
 
 ## Run status
-- Run A0: waiting for main-thread review (terminal, 2026-11-09; D-94 step 5 done first. Report: `run-A0/REPORT.md`)
+- Run A0: ✅ done — main-thread review passed 2026-11-09 18:35 (rulings on its test disputes below)
 - Run A1: not started
 - Run A2: not started
 - Run B: not started
