@@ -10,16 +10,24 @@ Session 1 (overnight) did set-up and started sign-in, then ended on its own afte
 | # | Session | Done when |
 |---|---|---|
 | 1 | Set-up + screen host | ✅ done (checkpoint a, screen system) |
-| 2 | Sign-in finished + OTP | Both journeys built to section 1, all their states render from `?s=`, their journey tests pass, `check-sources.mjs` passes on them |
+| 2 | Sign-in finished + OTP | ✅ done (34 journey tests, Codex clean on 3rd pass) |
 | 3 | Faster sign-in offer + returning unlock + D-92 (section 2) | Both journeys built and tested; the 20 D-92 pictures re-rendered, name-only diff checked; all guards pass |
 | 4 | Part A panel + checklist 1.3 table + compare harness | Panel / drawer / QR per Part A; harness built; compare run on all 42 step-1 states with every region explained; `layout_check.py --app` passes |
 | 5 | Codex + report | Section 4 and "Report and stop" |
 
 **Every session runs a Codex critique before it ends** (Apurva's standard: terminal builds, Codex critiques, Claude fixes). When the session's checks pass:
-`codex exec --sandbox read-only --output-last-message docs/renders/2026-11-09-step1-recovery/session-<n>/codex-critique.md "Read docs/renders/2026-11-09-step1-recovery/TERMINAL-BRIEF.md (session <n>) and docs/renders/2026-11-06-step1/BRIEF.md. You are the critic. Review only what session <n> built against both briefs, plan v3.2, checklist v3.2 lines with Step 1, and the approved pictures. Report blockers, should-fix, nice-to-have with file, line and checklist line. Read-only; write no files."`
+`codex exec --sandbox read-only --output-last-message docs/renders/2026-11-09-step1-recovery/session-<n>/codex-critique.md "Read docs/renders/2026-11-09-step1-recovery/TERMINAL-BRIEF.md (session <n>) and docs/renders/2026-11-06-step1/BRIEF.md. You are the critic. Review only what session <n> built against both briefs, plan v3.2, checklist v3.2 lines with Step 1, and the approved pictures. Report blockers, should-fix, nice-to-have with file, line and checklist line. Read-only; write no files." < /dev/null`
 Fix every valid blocker and should-fix (note why for any not adopted, in `session-<n>/codex-response.md`); re-run Codex once if it raised blockers. If Codex hits its usage limit, write that in SESSION-STATUS.md and finish the session without it — the next session runs the missed critique first. Session 5 is then the final whole-step critique.
 
 **Every session ends the same way:** save screenshots of what it built — each new state at 390, next to its approved picture — in `docs/renders/2026-11-09-step1-recovery/session-<n>/` with a contact sheet `session-<n>/sheet.png`; then push with `scripts/publish.sh` (it must print "Pushed to …" — a local `git commit` alone is not a checkpoint), then update `SESSION-STATUS.md` (mark the session ✅, list anything left), publish that too, and stop.
+
+**Session 3 notes (main thread, 2026-11-09 10:40) — read before starting session 3:**
+- In `SESSION-STATUS.md`, read only "Session 2 result". Everything under "Earlier notes", including its "Next Steps for Session 3", is stale session-1 text about sign-in/OTP. Ignore it.
+- Build to the session-2 standard: copy the approved markup from `ui-screens/faster-signin-offer/` and `ui-screens/returning-unlock/`, one CSS file per journey, no inline styles, every word through `MSG()`, and screen lifecycle through `entry-ctx.js`. The session-1 offer and unlock scaffolds are reference only. Rebuild them; don't patch them.
+- Behaviour is the bar, not looks: every **Faster sign-in** and **Phone Back** point in section 1 needs a journey test (offered once and enabled persist; Try again re-runs the prompt; screen-lock fallback reachable; Not now = Back on the offer; Back stays on unlock; unavailable handled per app-logic §2 or marked `[OPEN DECISION]`). Wire the full chain sign-in → OTP → offer → Home, and app restart → unlock → Home. Add these to `tests/entry-journeys.mjs`. Keep the existing 34 passing.
+- D-92 (section 2): the name in the built app comes from mock data, never typed in a screen. For the re-render check, list the changed pixel region per picture and confirm that only the name / initials changed.
+- On this Mac, use `CHROME=` / `CHROMIUM=` (installed Chrome) for the tests and guards, and `< /dev/null` on every `codex exec`.
+- Screenshots: every offer and unlock state at 390 next to its approved picture, plus the 20 D-92 pictures before and after, in `session-3/` with `sheet.png`.
 
 **Quality rules the sign-in start broke — fix in session 2:**
 - **No inline styles.** Lift the approved screen's markup and classes from `ui-screens/<journey>/<journey>.html`; its CSS goes into one stylesheet per journey under `app/screens/` using only `--tm-*` tokens and `.tm-*` classes. Replace the inline CSS already in `app/screens/sign-in.js`.
@@ -74,7 +82,7 @@ This pushes the project branch only. **No pull request, no `[deploy]`, never `ma
 
 ## 4 · Codex
 
-When the checks pass: `codex exec --sandbox read-only --output-last-message docs/renders/2026-11-09-step1-recovery/codex-critique.md "Read docs/renders/2026-11-09-step1-recovery/TERMINAL-BRIEF.md and docs/renders/2026-11-06-step1/BRIEF.md. You are the critic. Check the step 1 build against both, plan v3.2 and checklist v3.2 lines with Step 1, and the approved pictures. Report blockers, should-fix, nice-to-have with file, line and checklist line. Read-only; write no files."`
+When the checks pass: `codex exec --sandbox read-only --output-last-message docs/renders/2026-11-09-step1-recovery/codex-critique.md "Read docs/renders/2026-11-09-step1-recovery/TERMINAL-BRIEF.md and docs/renders/2026-11-06-step1/BRIEF.md. You are the critic. Check the step 1 build against both, plan v3.2 and checklist v3.2 lines with Step 1, and the approved pictures. Report blockers, should-fix, nice-to-have with file, line and checklist line. Read-only; write no files." < /dev/null`
 Fix valid points (say why for any not adopted); re-run Codex once (`codex-critique-2.md`) if it raised blockers. Stop after that and list what remains.
 
 If the session runs long, finish the item in hand, commit at the nearest checkpoint, write in the report exactly where you stopped, and stop — the next session continues from there.
