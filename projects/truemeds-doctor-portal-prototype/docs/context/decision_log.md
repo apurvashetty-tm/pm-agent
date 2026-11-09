@@ -974,6 +974,11 @@ From an external (ChatGPT) review, each point verified before acting.
 - **Why:** 128 pictures came from the old Mac and 20 (D-92) from the new one. The mix forced an anti-aliasing allow-list and capture retries, and that test debt would triple in step 2. No design changes.
 - **Rejected:** keeping the allow-list (weaker test, and it grows with every step); refreshing during step 2 (mixes two kinds of change).
 
+### D-95 · Native hand-off kit for the React Native team, piloted on Sign-in — 2026-11-09
+- **Decision (Apurva):** the React Native team gets a **hand-off kit** in the repo (`handoff/`), not a token list or hand-written RN code. For people: foundation files (tokens, icons, messages, native fonts), a spec for each building block (parts × states → native token), a screen viewer (tap an element → block, tokens, spacing; "tokens used" table; raw values flagged red), behaviour links and a "what changed" list. For their AI: `AGENTS.md` + `CLAUDE.md`, a skill, one data file per screen, and `DECIDED.md` / `OPEN.md`. Everything factual is generated from files we already maintain. (1) The app team builds and owns the RN components and screens; we own the contract. (2) The October TSX and hand-off notes in `ui-screens/native/` are marked "don't use — see `handoff/`" once the kit is approved (backlog). (3) Pilot screen: Sign-in. Proposal: `docs/proposals/2026-11-09-native-handoff-kit.md` (§6 is the done-checklist).
+- **Why:** a new team on a new app. A token list says what exists but not where to use it; a PRD alone makes the engineers' AI ask questions that are already answered, because it can't tell decided from open. We are not on the same Claude account, so the kit travels as files in the repo, which their Claude, Codex or Cursor read on their own. Hand-written RN screens went stale within three weeks; generated files can't.
+- **Rejected:** Figma Dev Mode (not our source of truth, no React Native names, paid seats); a Style Dictionary pipeline (native tokens are already generated); writing their RN components or screens; a per-screen token list alone (doesn't cover the components, which aren't exported to RN); shared Claude artifacts or projects (different accounts).
+
 ## Design system changes made for this work
 
 ### D-60 · Secondary button without drop shadow (design system) — 2026-10-24 · **REVERTED same day**
