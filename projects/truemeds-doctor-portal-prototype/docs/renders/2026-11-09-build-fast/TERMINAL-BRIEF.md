@@ -9,12 +9,13 @@ Folder: `~/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doc
 
 | Run | Steps (plan v3.2 §5) | Done when |
 |---|---|---|
+| **A0** | Shell fixes, D-97 (step 0 / 1 follow-ups) | Section "Run A0" below done; **stop for the main-thread review** |
 | **A1** | 2 Home · 3 Case page · 4 Prescribe / Disable | Home, case page, prescribe and disable fully working; their states open from `?s=`; their Codex tests pass. Then **stop for the main-thread review** |
 | **A2** | 5 Calling (Cat4 and Pilot HA skipped) | The full Cat4 demo plays end to end: sign-in → Home → case → prescribe → call → Prescription confirmed → next case. The calling Codex tests pass |
 | **B** | 6 Pilot Fallback B · 7 Across journeys · 8 Final pass | Every Pilot calling-flow edge plays; the step-7 scenarios run; one whole-app check |
 
 Each time you are started: read the run status at the bottom of this file, do the **first run not marked done** completely, then stop.
-Before Run A1: if `docs/renders/2026-11-09-step1-recovery/SESSION-STATUS.md` says the main thread gave the D-94 go-ahead, do D-94 step 5 first (copy the pictures, rebuild the contact sheets). If it says skip, or says nothing, leave D-94 alone.
+Before Run A0 (first thing): if `docs/renders/2026-11-09-step1-recovery/SESSION-STATUS.md` says the main thread gave the D-94 go-ahead, do D-94 step 5 first (copy the pictures, rebuild the contact sheets). If it says skip, or says nothing, leave D-94 alone.
 
 ## Keep (these rules make it right by construction)
 
@@ -49,6 +50,18 @@ Codex writes the tests **from the spec, before the build**, so the build isn't g
 
 The run is done when all Codex tests pass (except disputed ones), the existing checks pass, and no blocker is open.
 
+## Run A0 — shell fixes from Apurva's review (D-97; read it in the decision log)
+
+Short run. App shell and review tools only, no screen or approved picture changes.
+1. **Frame 390 : 844** (`design-system/RULES.md` §7, already updated): `app/shell/shell.css` frame variables. Update the frame assertion in `docs/layout_check.py` (and any test that asserts 9:16, e.g. entry-journeys B8 / F9) to 390 : 844. Also update the desktop frame in the reference pages (`ui-screens/home/home-reference.css`, `ui-screens/case/case-styles.css`, and any other `ui-screens` page with a 9:16 frame). **Prove the approved pictures don't change:** re-capture all of them with the D-94 settings after the edit and compare: 0 px difference. The old `styles.css` stays frozen.
+2. **One right-hand control column, top-aligned with the frame:** "Test on phone" becomes the first folding row of the review panel (open by default, collapses like the others; QR, steps, link, Copy link inside), and the left-gutter card is removed. The panel's top edge is the frame's top edge at every desktop size. No row ever pushes another off screen at 1280 × 800 (the panel itself doesn't scroll, per §7.3: rows fold).
+3. **QR / play link works from a phone:** when served from `localhost` / `127.0.0.1`, build the link with the Mac's network address and port, with one plain line under the QR ("Phone and Mac on the same Wi-Fi"). On the preview site, use its own address. Test that the link decodes to a non-localhost host when an address is configured. The address comes from the server, so add a tiny `scripts/serve.sh` that starts `python3 -m http.server` on 8080 for `app/` and prints the network URL, after running `copy-shared.sh`.
+4. **Default story = happy path:** Cat4, patient answers, call over the gate, record over the gate, so playing straight through ends on Prescription confirmed → next case. Failure choices stay in the panel. Update the default QR steps.
+5. **Panel summaries wrap** to two lines instead of being cut off ("Turns on · Unl…").
+5b. **Test numbers and codes, visible:** inside the **Sign-in answers** row, a short list built from `app/data/test-numbers.js` (the same data the mock server uses, so it can't drift): each number / code with its result in plain words (app-logic §11 table). Tapping a line fills it into the sign-in or OTP field of the running app. On the phone drawer, show the same list when the current screen is sign-in or OTP.
+5c. **Settings made understandable:** rename the row **"Timings and limits"**. Show each value with a plain name ("Valid-call minimum", "OTP lock", "Resend waits", …), its value in seconds or minutes, and a tag **Rule** or **Stand-in** (from `source`), with its reference on hover or tap. Move it and **Event log** to the bottom of the panel under a quiet label "Advanced". Order the panel: Test on phone · Story · Jump to a state · Sign-in answers · Home and case answers · Call simulator · Advanced (Timings and limits, Event log).
+6. Checks: all existing checks and tests pass. Screenshots for review in `docs/renders/2026-11-09-build-fast/run-A0/`: desktop at 1280 × 800 and 1440 × 900 (Story open, then Call simulator open), and the frame at 1920 × 1080, each next to a before shot. Push. Set run status "Run A0: waiting for main-thread review" and stop.
+
 ## Codex tests: already written (main-thread review, 2026-11-09 16:20)
 
 Codex wrote both runs' tests ahead: `tests/codex/run-A/` (one set for A1 + A2; run the ids for the steps in hand, e.g. `CODEX_FILTER=A-H` / `A-C` / `A-P` / `S-` for A1, and the rest for A2) and `tests/codex/run-B/`. Read `tests/codex/README.md` → "Driver contract and limits" first. The main thread reviewed them: they are spec-sourced and accepted as the oracle. Commit them as they are at the start of A1. Then:
@@ -61,6 +74,7 @@ Codex wrote both runs' tests ahead: `tests/codex/run-A/` (one set for A1 + A2; r
 `run-<A|B>/REPORT.md`, short: what plays end to end, Codex tests (written / passing / disputed), the compare report (flagged states and what was done), the tests, Codex blockers and fixes, commits, `[OPEN DECISION]`s / `[MOCK ASSUMPTION]`s added (with the `open_questions.md` lines for the main thread to record; don't write `docs/context/`), what's left. Mark the run done below, push, stop.
 
 ## Run status
+- Run A0: not started
 - Run A1: not started
 - Run A2: not started
 - Run B: not started

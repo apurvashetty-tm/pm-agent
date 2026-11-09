@@ -113,15 +113,15 @@ Run before calling any UI task done. Every answer must be "yes".
 
 ## 7. Phone-frame prototypes (layout rule — do not re-litigate)
 
-Mobile-first prototypes are previewed on desktop as a **9:16 phone frame**, never as a stretched page, a narrow column glued to the window, or a dialog layout.
+Mobile-first prototypes are previewed on desktop as a **phone frame at the real phone shape (390 × 844, about 19.5:9)**, never as a stretched page, a narrow column glued to the window, or a dialog layout. *(Changed 2026-11-09, Apurva, doctor portal D-97: was 9:16, which is wider and shorter than today's phones and than the approved pictures.)*
 
 1. **Below 768px** the app *is* the screen: the window scrolls and overlays are viewport-fixed.
-2. **At 768px and up** the app sits in a centred 9:16 frame: `height: clamp(640px, 100vh - 48px, 800px)`, `width: height × 9/16`, rounded border, `overflow: hidden`, `transform: translateZ(0)`.
+2. **At 768px and up** the app sits in a centred phone frame at 390 : 844: `height: clamp(640px, 100vh - 48px, 844px)`, `width: height × 390/844`, so it is exactly 390 × 844 when the window allows and scales down evenly when it doesn't. Rounded border, `overflow: hidden`, `transform: translateZ(0)`.
 3. **One scroll area** inside the frame (the content region). The header is pinned above it. The page behind never scrolls because of the frame, and no side panel may be a scroll container.
 4. **Overlays live inside the frame.** Bottom sheets, full-screen viewers, toasts and snackbars are DOM children of the frame (the transform makes `position: fixed` anchor to it). Bottom sheets keep the mobile bottom-sheet behaviour at every width; they are never turned into centred dialogs on desktop.
-5. **Demo/dev panels** float beside the frame (absolutely positioned) and never change its size or centring.
+5. **Demo/dev panels** float beside the frame (absolutely positioned), **top-aligned with the frame's top edge**, in **one column on the right** of the frame. They never change its size or centring.
 6. Desktop overrides go in one block at the END of the stylesheet so they beat the mobile rules.
-7. Check before every commit that touches layout: `python3 projects/<project>/docs/layout_check.py` must say ALL PASS (frame 9:16, wheel scroll works, sheet at frame bottom, Rx viewer fills frame, no page errors).
+7. Check before every commit that touches layout: `python3 projects/<project>/docs/layout_check.py` must say ALL PASS (frame 390 : 844, panels top-aligned, wheel scroll works, sheet at frame bottom, Rx viewer fills frame, no page errors).
 
 ## 8. Mobile screen layout  [ADDED 2026-10-14 · layout v2 · D-42–D-45]
 
