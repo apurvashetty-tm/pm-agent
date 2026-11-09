@@ -3,7 +3,7 @@ import { resolveMode } from "./modes.js";
 import { clock } from "./clock.js";
 import { store } from "./store.js";
 import { storageFor } from "./storage.js";
-import { setRenderer, attachPhoneBack, push } from "./nav.js";
+import { setRenderer, attachPhoneBack, push, start } from "./nav.js";
 import { decodeStory, defaultStory } from "./play-link.js";
 import { timeline } from "./call-sim.js";
 import { createServer, createPoller } from "./mock-server.js";
@@ -69,7 +69,11 @@ setInterval(pollOnce, value("pollingInterval", mode));     // the app's clock: p
 document.addEventListener("visibilitychange", () => { if (!document.hidden) pollOnce(); }); // re-read when the app comes back
 
 // 4. Screens (one renderer for every route; picture layout set on every render).
-function renderScreen(id) {
+// The story's start screen when no state is named: sign-in is built (step 1); the others show the shell until their step.
+const START_STATE = { "sign-in": "sign-in_default" };
+// The first step names its state, so later steps (OTP Change, phone Back) can find it in the history.
+function startParams(s) { return !s && START_STATE[story.start] ? { s: START_STATE[story.start], live: true } : { s }; }
+function renderScreen(id, params = {}) {
   document.body.classList.toggle("picture-only", !!id);
   if (!id) {
     renderShellIntro(host, mode);
@@ -77,12 +81,12 @@ function renderScreen(id) {
     store.set({ s: null, journey: null });
     return;
   }
-  const r = renderState(host, id, { mode, w: store.get().w });
+  const r = renderState(host, id, { mode, w: store.get().w, params });
   store.set({ s: id, journey: r.journey });
   if (panelRoot && r.journey) focusJourney(panelRoot, r.journey);
 }
 const START_JOURNEY = { "sign-in": "signIn", unlock: "unlock", home: "home", case: "caseView" };
-setRenderer((screen, params) => renderScreen(params.s ?? null));
+setRenderer((screen, params) => renderScreen(params.s ?? null, params));
 
 // 5. Review panel and drawer (review and play only).
 function restart(s) {
@@ -90,12 +94,13 @@ function restart(s) {
   pending = [];
   server = createServer();
   poller = newPoller();
-  clock.reset();
+  // The app clock (and any fast-forward) is kept: sign-in limits stored in this session sit on that time base and must keep
+  // their remaining time across a story restart (step 1 recovery §1). Reset (storage clear) starts the clock again.
   store.set({ story: s, scenario: s.scenario, offline: s.offline, unlock: s.unlock });
   setUnlockOutcome(s.unlock);
   if (panelRoot) panelRoot.dispatchEvent(new CustomEvent("tm-restart"));
   logLine(panelRoot, `restart at ${s.start}`);
-  renderScreen(null);
+  start(null, startParams(null));
 }
 if (mode === "review" || mode === "play") {
   panelRoot.hidden = false;
@@ -120,5 +125,5 @@ if (mode === "review" || mode === "play") {
   mountDrawer({ mode, panel: panelRoot, handle: document.getElementById("drawer-handle"), backdrop: document.getElementById("drawer-backdrop") });
 }
 attachPhoneBack();
-renderScreen(q.s);
+start(null, startParams(q.s));
 window.__tm = { store, get server() { return server; }, runCalls, clock, story: () => story };

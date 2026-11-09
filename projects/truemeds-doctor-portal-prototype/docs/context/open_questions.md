@@ -225,6 +225,9 @@ WhatsApp: **+91 86524 24617** (`https://wa.me/918652424617`). Terms & Conditions
 The number takes both voice calls and WhatsApp, so "Call Doctor Ops" (tel:) and "Message support" (WhatsApp) stay as
 approved. **Production:** sign-up URL, Terms, Privacy and support numbers must be configurable, not hard-coded.
 **Safe placeholder:** Terms/Privacy point to a "link pending" page. `[MOCK ASSUMPTION]`
+**Prototype build (step 1 recovery, 2026-11-09):** Sign up opens the onboarding URL in a new tab. Call Doctor Ops, Message
+support, Terms and Privacy open a blank placeholder page ("This would call Doctor Ops" / "This would open WhatsApp support" /
+"Link pending"), same pattern as Help (D-88) — never a real `tel:` or `wa.me` link in the prototype. `[MOCK ASSUMPTION]`
 
 **Added 2026-10-14:** what the case-page **Help** button opens (call Doctor Ops, FAQ, or a choice) — needed before the case page is built (D-49).
 

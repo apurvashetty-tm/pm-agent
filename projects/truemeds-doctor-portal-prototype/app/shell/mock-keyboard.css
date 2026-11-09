@@ -1,0 +1,7 @@
+/* Drawing of the phone's OS number keyboard (approved sign-in / OTP pictures). Not app UI: raw colours are allowed in this
+   file only, as in the approved screens ("Mock OS keyboard (raw colours allowed here only)"). Exempt in tests/scan.mjs. */
+.mock-kbd { position: absolute; left: 0; right: 0; bottom: 0; height: 256px; padding: 6px 5px 12px; box-sizing: border-box; z-index: 5;
+  display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(4, 1fr); gap: 5px; background: #d4d7dd; }
+.mock-kbd__key { display: grid; place-items: center; background: #fff; border-radius: 5px; color: #202124; font: 400 23px/1 system-ui, sans-serif;
+  cursor: pointer; user-select: none; -webkit-user-select: none; }
+.mock-kbd__key:empty { cursor: default; }

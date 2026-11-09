@@ -1,3 +1,5 @@
+> **Superseded 2026-11-09:** this summary describes the session-1 scaffolds (critique now `codex-critique-1.md`). Current verdict: `codex-critique-3.md` (no blockers) and `codex-response.md`.
+
 # Session 2 Codex Critique — Summary
 
 **Status:** Does NOT pass.

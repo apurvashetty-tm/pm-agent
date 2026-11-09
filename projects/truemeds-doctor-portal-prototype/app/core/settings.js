@@ -26,11 +26,18 @@ export const SETTINGS = {
   otpLock:              { value: 15 * MIN, time: true, source: "MOCK ASSUMPTION", ref: "OQ-017" },
   resendWaits:          { value: [30 * SEC, 60 * SEC, 120 * SEC], time: true, source: "MOCK ASSUMPTION", ref: "OQ-017" },
   nearExpiryWarning:    { value: 5 * MIN, time: true, source: "MOCK ASSUMPTION", ref: "app-logic §3 near-expiry" },
+  otpWrongLimit:        { value: 5, source: "rule", ref: "D-34: the 5th server-confirmed wrong code locks the number" },
+  otpCodesPerWindow:    { value: 4, source: "rule", ref: "D-35: first code + 3 resends per number per window" },
+  otpTriesLeftFrom:     { value: 2, source: "rule", ref: "D-81 F1: the wrong-code line counts from 2 tries left" },
+  tooManyTriesWait:     { value: 10 * MIN, time: true, source: "MOCK ASSUMPTION", ref: "test number 9000000003: sign-in countdown; OQ-017" },
   returningUnlockFallbackAfter: { value: 3, source: "MOCK ASSUMPTION", ref: "3 failed tries → OTP (checklist 4.3)" },
   // Availability (checklist 4.4)
   availabilityMinimum:  { value: 15 * MIN, time: true, source: "rule", ref: "app-logic §3" },
   availabilityStep:     { value: 15 * MIN, time: true, source: "rule", ref: "app-logic §3 (15-min wheel)" },
   attemptGap:           { value: 60 * SEC, time: true, source: "MOCK ASSUMPTION", ref: "review tool: gap between scheduled call attempts" },
+  // Review tool only (not a product rule): how long the simulated server takes to answer (sign-in, OTP, resend)
+  mockServerDelay:      { value: 1200, time: true, source: "review tool", ref: "simulated server answer time" },
+  reconcileDelay:       { value: 800, time: true, source: "review tool", ref: "simulated cooldown check when the app comes back" },
   // Review tool only (not a product rule): size of one fast-forward step in the review panel
   fastForwardStep:      { value: 60 * SEC, time: true, source: "review tool", ref: "panel button" },
   // Earnings (app-logic §11, D-81 F10)

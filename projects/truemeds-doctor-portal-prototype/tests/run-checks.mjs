@@ -159,6 +159,11 @@ async function open(qs, { w = 1280, h = 800 } = {}) {
   for (const w of [390, 360, 1280]) {
     for (const id of states) {
       const r = await open(`?s=${id}`, { w, h: w === 1280 ? 800 : 844 });
+      if (/^(sign-in|otp)_/.test(id)) { // built in step 1: the screen itself, no picture and no "not built yet" label
+        const built = await r.p.evaluate(() => !!document.querySelector("#screen .signin-screen, #screen .otp-screen") && !document.querySelector("#screen img.shell-picture, .shell-label"));
+        check(`R-${id}-${w}`, `?s=${id} at ${w}: built screen shown (step 1)`, built && r.errors.length === 0, r.errors.join(" | "));
+        await r.ctx.close(); continue;
+      }
       const shown = await r.p.evaluate(() => { const i = document.querySelector("#screen img"); return !!i && i.complete && i.naturalWidth > 0; });
       check(`R-${id}-${w}`, `?s=${id} at ${w}: picture loads, label says not built yet`, shown && (await r.p.evaluate(() => document.querySelector(".shell-label")?.textContent.includes("Not built yet"))) && r.errors.length === 0, r.errors.join(" | "));
       await r.ctx.close();
@@ -231,8 +236,8 @@ async function open(qs, { w = 1280, h = 800 } = {}) {
   const j = await r.p.evaluate(() => ({ img: document.querySelector("#screen img")?.getAttribute("src") || "", picOnly: document.body.classList.contains("picture-only") }));
   check("N1", "panel Jump opens the chosen state through navigation, picture layout set", j.img.includes("t10b-forwarded") && j.picOnly, JSON.stringify(j));
   await r.p.click("#rp-restart"); await r.p.waitForTimeout(200);
-  const rs = await r.p.evaluate(() => ({ img: !!document.querySelector("#screen img"), picOnly: document.body.classList.contains("picture-only") }));
-  check("N2", "Restart story returns to the start placeholder and clears the picture layout", !rs.img && !rs.picOnly);
+  const rs = await r.p.evaluate(() => ({ img: !!document.querySelector("#screen figure img"), signIn: !!document.querySelector("#screen .signin-screen") }));
+  check("N2", "Restart story returns to the story's start screen (sign-in, built in step 1), no picture left", !rs.img && rs.signIn, JSON.stringify(rs));
   await r.p.selectOption("#rp-attempt", "0");
   await r.p.click("#rp-add-attempt"); await r.p.waitForTimeout(200);
   const attempts = await r.p.evaluate(() => document.querySelectorAll("#rp-attempt option").length);

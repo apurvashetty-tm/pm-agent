@@ -1,365 +1,276 @@
-// OTP screen (entry journey, step 1). States: default, empty-tap, too-short, verifying, wrong-code, two-tries-left,
-// resend-available, new-code-sent, code-expired, couldnt-verify, too-many-resends, locked, resending, resend-failed,
-// offline, cooldown-reconciling, expired-and-resend-limited. Number always "+91 98765 43210" with semibold digits.
+// OTP (entry journey, step 1). Markup and classes lifted from ui-screens/otp/otp.html; styles in otp.css.
+// Behaviour: app-logic §2 (4 digits, no auto-verify, wrong-code count, 5th wrong locks the number, 4 codes per window,
+// resend waits, expired code, locked number, Verify never moves), test codes §11, D-44, D-81 F1/F5/F6/F7, A-01–A-21.
+// Limits come from app/core/auth.js (the simulated server) and survive a journey restart within the session.
+// A state opened directly (?s=otp_<state>) shows the approved picture's moment, then behaves live from there.
 import { MSG } from "../core/msg.js";
-import { push } from "../core/nav.js";
+import { push, backTo, setScreenBack, saveCurrent, reset as resetNav } from "../core/nav.js";
+import { store } from "../core/store.js";
+import { clock } from "../core/clock.js";
+import { h, parts, linkPhrase } from "../core/dom.js";
+import { checkCode, verifyCode, resendCode, status, formatNumber, formatWait, signIn } from "../core/auth.js";
+import { OTP_LENGTH, PICTURE_NUMBER, PICTURE_CODE } from "../data/test-numbers.js";
+import { PLACEHOLDER } from "../data/links.js";
+import { mockKeyboard, drawsKeyboard } from "../shell/mock-keyboard.js";
+import { authCtx, newLife } from "./entry-ctx.js";
 
-const STATES = {
-  "otp_default": "default",
-  "otp_empty-tap": "empty-tap",
-  "otp_too-short": "too-short",
-  "otp_verifying": "verifying",
-  "otp_wrong-code": "wrong-code",
-  "otp_two-tries-left": "two-tries-left",
-  "otp_resend-available": "resend-available",
-  "otp_new-code-sent": "new-code-sent",
-  "otp_code-expired": "code-expired",
-  "otp_couldnt-verify": "couldnt-verify",
-  "otp_too-many-resends": "too-many-resends",
-  "otp_locked": "locked",
-  "otp_resending": "resending",
-  "otp_resend-failed": "resend-failed",
-  "otp_offline": "offline",
-  "otp_cooldown-reconciling": "cooldown-reconciling",
-  "otp_expired-and-resend-limited": "expired-and-resend-limited",
+const C = PICTURE_CODE;
+const sec = (m, s) => (m * 60 + s) * 1000;
+const NOTE = {
+  couldntVerify: { k: "error", i: "alert-circle", t: "otp.couldntVerify" },
+  tooManyResends: { k: "warning", i: "clock", ops: true, t: "otp.tooManyResends" },
+  locked: { k: "warning", i: "clock", ops: true, t: "otp.locked", timed: true },
+  resendFailed: { k: "error", i: "alert-circle", t: "otp.resendFailed" },
+  offline: { k: "warning", i: "alert-triangle", t: "signin.offline" },
+  expiredLimited: { k: "warning", i: "clock", ops: true, t: "otp.expiredAndLimited", timed: true },
 };
-
-const STATE_DEFS = {
-  "default": { code: "", kb: true, rs: "wait", consent: true },
-  "empty-tap": { code: "", kb: true, err: "otp.empty", rs: "wait", consent: true },
-  "too-short": { code: "48", kb: true, err: "otp.short", rs: "wait", consent: true },
-  "verifying": { code: "4827", kb: true, busy: true, rs: "wait", consent: true },
-  "wrong-code": { code: "4827", kb: true, err: "otp.wrong", replace: true, rs: "wait", consent: true },
-  "two-tries-left": { code: "4827", kb: true, err: "otp.triesLeft", replace: true, rs: "wait", consent: true },
-  "resend-available": { code: "", kb: true, rs: "available", consent: true },
-  "new-code-sent": { code: "", kb: true, s1: "otp.newSent", rs: "wait", consent: true, time: "1:00" },
-  "code-expired": { code: "4827", kb: true, err: "otp.expired", replace: true, rs: "available", expired: true },
-  "couldnt-verify": { code: "4827", kb: true, note: { k: "error", i: "alert-circle", t: "otp.couldntVerify" }, rs: "wait", consent: true },
-  "too-many-resends": { code: "", kb: true, note: { k: "warning", i: "clock", ops: true, t: "otp.tooManyResends" }, rs: "hidden", consent: true },
-  "locked": { code: "", locked: true, note: { k: "warning", i: "clock", ops: true, t: "otp.locked" }, rs: "hidden" },
-  "resending": { code: "4827", kb: true, rs: "sending", consent: true },
-  "resend-failed": { code: "4827", kb: true, note: { k: "error", i: "alert-circle", t: "otp.resendFailed" }, rs: "available", consent: true },
-  "offline": { code: "4827", kb: true, note: { k: "warning", i: "alert-triangle", t: "signin.offline" }, rs: "available", consent: true },
-  "cooldown-reconciling": { code: "", kb: true, rs: "checking", hold: true, consent: true },
-  "expired-and-resend-limited": { code: "", locked: true, note: { k: "warning", i: "clock", ops: true, t: "otp.expiredAndLimited" }, rs: "hidden" },
+// Picture moments (same table as the approved file). wait: resend countdown shown; until: time in a timed notice.
+const FIXTURES = {
+  default:                      { code: "", kb: true, rs: "wait", consent: true },
+  "empty-tap":                  { code: "", kb: true, err: { key: "otp.empty" }, rs: "wait", consent: true },
+  "too-short":                  { code: C.slice(0, 2), kb: true, err: { key: "otp.short" }, rs: "wait", consent: true },
+  verifying:                    { code: C, kb: true, busy: true, rs: "wait", consent: true },
+  "wrong-code":                 { code: C, kb: true, err: { key: "otp.wrong" }, replace: true, rs: "wait", consent: true },
+  "two-tries-left":             { code: C, kb: true, err: { key: "otp.triesLeft", values: { count: 2 } }, replace: true, rs: "wait", consent: true },
+  "resend-available":           { code: "", kb: true, rs: "available", consent: true },
+  "new-code-sent":              { code: "", kb: true, s1: true, rs: "wait", waitMs: sec(1, 0), consent: true },
+  "code-expired":               { code: C, kb: true, expired: true, err: { key: "otp.expired" }, replace: true, rs: "available" },
+  "couldnt-verify":             { code: C, kb: true, note: NOTE.couldntVerify, rs: "wait", consent: true },
+  "too-many-resends":           { code: "", kb: true, note: NOTE.tooManyResends, rs: "hidden", consent: true },
+  locked:                       { code: "", locked: true, note: NOTE.locked, untilMs: sec(14, 52), rs: "hidden" },
+  resending:                    { code: C, kb: true, rs: "sending", consent: true },
+  "resend-failed":              { code: C, kb: true, note: NOTE.resendFailed, rs: "available", consent: true },
+  offline:                      { code: C, kb: true, note: NOTE.offline, rs: "available", consent: true },
+  "cooldown-reconciling":       { code: "", kb: true, rs: "checking", hold: true, consent: true },
+  "expired-and-resend-limited": { code: "", locked: true, note: NOTE.expiredLimited, untilMs: sec(9, 42), rs: "hidden" },
 };
+export const STATES = Object.keys(FIXTURES).map((k) => `otp_${k}`);
 
-export function render(host, id, { mode, w }) {
-  const stateKey = STATES[id];
-  if (!stateKey) return null;
+export function render(host, id, { mode, params = {} }) {
+  const key = id.replace(/^otp_/, "");
+  const fx = FIXTURES[key];
+  if (!fx) return null;
+  const life = newLife(host, mode);
+  const kbDrawn = drawsKeyboard(mode);
+  const now = clock.now();
+  // The number is the one submitted on sign-in; the picture's sample number only when the state is opened directly.
+  const number = params.number || PICTURE_NUMBER;
+  const live = !!params.live;
+  const m = {
+    code: live ? "" : fx.code,
+    kb: !!fx.kb, err: live ? null : fx.err || null, replace: !live && !!fx.replace, s1: !live && !!fx.s1,
+    note: fx.note || null, rs: fx.rs, consent: fx.consent ? "show" : fx.expired ? "reserve" : "hide",
+    locked: !!fx.locked, busy: !live && !!fx.busy, expired: !live && !!fx.expired, hold: !!fx.hold,
+    resendAt: params.resendAt || now + (fx.waitMs || authCtx(mode).value("resendWaits")[0]),
+    until: params.until || (fx.untilMs ? now + fx.untilMs : 0),
+  };
+  // Back from a placeholder page: restore the screen as it was (a pending server answer is dropped; its action can be retried).
+  if (params.saved) Object.assign(m, params.saved, { busy: false, rs: params.saved.rs === "sending" ? "available" : params.saved.rs });
+  const leave = (to) => { saveCurrent({ saved: { ...m } }); push(null, to); };
 
-  const state = STATE_DEFS[stateKey];
-  if (!state) return null;
+  // ---- markup (approved hierarchy: .screen > .top (logo, .head) · .panel > .grp (field, notice, resend) · .grp (consent, button)) ----
+  const change = h("a", { class: "lk", href: "#", onclick: (e) => { e.preventDefault(); goChange(); }, text: MSG("otp.change") });
+  const code = h("input", { class: "tm-otp-slots__input", id: "c", type: "text", inputmode: "numeric", pattern: "[0-9]*",
+    maxlength: String(OTP_LENGTH), autocomplete: "one-time-code", "aria-label": MSG("otp.codeLabel"), "aria-describedby": "h", "aria-invalid": "false" });
+  const slots = Array.from({ length: OTP_LENGTH }, () => h("span", { class: "tm-otp-slots__slot", "aria-hidden": "true" }));
+  const slotsBox = h("div", { class: "tm-otp-slots", id: "slots" }, code, slots);
+  const helper = h("div", { class: "tm-field__helper", id: "h", hidden: true });
+  const s1 = h("p", { class: "s1", id: "s1", role: "status" }, h("span", { id: "s1t" }));
+  const codeSlot = h("div", { class: "code-slot", id: "slot" }, helper, s1);
+  const field = h("div", { class: "tm-field code", id: "f" }, slotsBox, codeSlot);
+  const noteIcon = h("span", { class: "tm-icon", id: "ni", "data-icon": "info-circle", "aria-hidden": "true" });
+  const noteText = h("div", { id: "nt" });
+  const note = h("div", { class: "tm-notice note", id: "n", role: "status", "aria-live": "polite" }, noteIcon, noteText);
+  const rsLead = h("span", { id: "rp", text: `${MSG("otp.didntReceive")} ` });
+  const rsBody = h("span", { id: "rr" });
+  const rs = h("p", { class: "rs", id: "rs" }, rsLead, rsBody);
+  const placeholderLink = (text, which) => h("a", { href: "#", text, onclick: (e) => { e.preventDefault(); leave({ s: "placeholder", text: PLACEHOLDER[which] }); } });
+  const consent = h("p", { class: "consent tm-text-body-sm", id: "consent" },
+    parts("otp.consent", { terms: placeholderLink(MSG("otp.terms"), "terms"), privacy: placeholderLink(MSG("otp.privacy"), "privacy") }, MSG));
+  const btn = h("button", { class: "tm-btn tm-btn--lg tm-btn--primary tm-btn--block", id: "b", type: "button", onclick: onVerify });
+  const keyboard = kbDrawn ? mockKeyboard(typeKey) : null;
+  const root = h("section", { class: "otp-screen tm", "aria-labelledby": "otp-title" },
+    h("div", { class: "top" },
+      h("img", { class: "login-logo", src: "brand/truemeds-for-doctors.svg", alt: "truemeds for doctors" }),
+      h("div", { class: "head" },
+        h("h1", { class: "tm-text-title-lg", id: "otp-title", text: MSG("otp.title") }),
+        h("p", {}, parts("otp.sentTo", { number: h("b", { text: formatNumber(number) }) }, MSG), " · ", change))),
+    h("div", { class: "panel" },
+      h("div", { class: "grp" }, field, note, rs),
+      h("div", { class: "grp" }, consent, btn)),
+    keyboard);
+  host.replaceChildren(root);
 
-  host.innerHTML = "";
-  const section = document.createElement("section");
-  section.className = "tm shell-screen";
-  section.style.display = "flex";
-  section.style.flexDirection = "column";
-  section.style.height = "100%";
-  section.setAttribute("aria-label", "Verify your number");
-
-  // Top section: logo, title, subtitle
-  const top = document.createElement("div");
-  top.style.padding = "var(--tm-space-lg) var(--tm-space-page) var(--tm-space-2xl)";
-  top.style.background = "var(--tm-surface-brand-subtle)";
-  top.style.flexShrink = 0;
-
-  const logo = document.createElement("img");
-  logo.src = "brand/truemeds-for-doctors.svg";
-  logo.alt = "truemeds for doctors";
-  logo.style.width = "166px";
-  logo.style.height = "auto";
-  logo.style.display = "block";
-  logo.style.marginBottom = "var(--tm-space-lg)";
-  top.appendChild(logo);
-
-  const head = document.createElement("div");
-  head.style.marginTop = "var(--tm-space-sm)";
-  head.style.display = "flex";
-  head.style.flexDirection = "column";
-  head.style.gap = "var(--tm-space-sm)";
-
-  const h1 = document.createElement("h1");
-  h1.className = "tm-font-title-lg";
-  h1.style.margin = "0";
-  h1.textContent = "Verify your number";
-  head.appendChild(h1);
-
-  const subtitle = document.createElement("p");
-  subtitle.className = "tm-font-body-md";
-  subtitle.style.margin = "0";
-  subtitle.style.color = "var(--tm-content-secondary)";
-  subtitle.innerHTML = "Sent to <b style=\"color:var(--tm-content-primary);font-weight:600\">+91 90000 00001</b> · ";
-  const changeLink = document.createElement("a");
-  changeLink.href = "#";
-  changeLink.style.color = "var(--tm-content-brand)";
-  changeLink.style.fontWeight = "600";
-  changeLink.style.textDecoration = "none";
-  changeLink.textContent = "Change";
-  changeLink.addEventListener("click", (e) => {
-    e.preventDefault();
-    push(null, { s: "sign-in_default" });
-  });
-  subtitle.appendChild(changeLink);
-  head.appendChild(subtitle);
-
-  top.appendChild(head);
-  section.appendChild(top);
-
-  // Panel: scrollable content
-  const panel = document.createElement("div");
-  panel.style.flex = "1";
-  panel.style.minHeight = "0";
-  panel.style.overflowY = "auto";
-  panel.style.background = "var(--tm-surface-primary)";
-  panel.style.borderRadius = "var(--tm-radius-2xl) var(--tm-radius-2xl) 0 0";
-  panel.style.padding = "var(--tm-space-2xl) var(--tm-space-page) var(--tm-space-xl)";
-  panel.style.display = "flex";
-  panel.style.flexDirection = "column";
-
-  // Group 1: Code input + messages
-  const grp1 = document.createElement("div");
-  grp1.style.display = "flex";
-  grp1.style.flexDirection = "column";
-  grp1.style.gap = "var(--tm-space-lg)";
-
-  const field = document.createElement("div");
-  field.className = "tm-field";
-  field.style.display = "flex";
-  field.style.flexDirection = "column";
-  field.style.gap = "var(--tm-space-sm)";
-
-  // OTP slots
-  const slotsDiv = document.createElement("div");
-  slotsDiv.className = "tm-otp-slots";
-  slotsDiv.style.display = "flex";
-  slotsDiv.style.gap = "var(--tm-space-md)";
-  slotsDiv.style.justifyContent = "center";
-
-  const codeInput = document.createElement("input");
-  codeInput.id = "otp-input";
-  codeInput.type = "text";
-  codeInput.inputMode = "numeric";
-  codeInput.pattern = "[0-9]*";
-  codeInput.maxLength = "4";
-  codeInput.autoComplete = "one-time-code";
-  codeInput.setAttribute("aria-label", "4-digit verification code");
-  codeInput.style.width = "0";
-  codeInput.style.height = "0";
-  codeInput.style.opacity = "0";
-  codeInput.style.position = "absolute";
-  codeInput.style.pointerEvents = "none";
-  codeInput.value = state.code || "";
-  if (state.locked) codeInput.disabled = true;
-  if (state.busy) codeInput.readOnly = true;
-  slotsDiv.appendChild(codeInput);
-
-  const slots = [];
-  for (let i = 0; i < 4; i++) {
-    const slot = document.createElement("span");
-    slot.className = "tm-otp-slots__slot";
-    slot.style.width = "56px";
-    slot.style.height = "56px";
-    slot.style.display = "flex";
-    slot.style.alignItems = "center";
-    slot.style.justifyContent = "center";
-    slot.style.fontSize = "28px";
-    slot.style.fontWeight = "600";
-    slot.style.border = "2px solid var(--tm-border-default)";
-    slot.style.borderRadius = "var(--tm-radius-md)";
-    slot.style.color = "var(--tm-content-primary)";
-    slot.style.backgroundColor = "var(--tm-surface-secondary)";
-    slot.setAttribute("aria-hidden", "true");
-    slots.push(slot);
-    slotsDiv.appendChild(slot);
-  }
-
-  field.appendChild(slotsDiv);
-
-  // Helper / error / success message
-  const codeSlot = document.createElement("div");
-  codeSlot.style.minHeight = "20px";
-  const helper = document.createElement("div");
-  helper.className = "tm-field__helper";
-  helper.id = "otp-helper";
-  helper.style.margin = "0";
-  helper.hidden = true;
-  codeSlot.appendChild(helper);
-
-  const s1 = document.createElement("p");
-  s1.style.margin = "0";
-  s1.style.display = "none";
-  s1.style.alignItems = "center";
-  s1.style.justifyContent = "center";
-  s1.style.gap = "var(--tm-space-xs)";
-  s1.style.fontSize = "var(--tm-font-size-body-md)";
-  s1.style.color = "var(--tm-content-success)";
-  s1.setAttribute("role", "status");
-  const s1Icon = document.createElement("span");
-  s1Icon.className = "tm-icon";
-  s1Icon.setAttribute("data-icon", "check-circle");
-  s1Icon.setAttribute("aria-hidden", "true");
-  s1Icon.style.width = "16px";
-  s1Icon.style.height = "16px";
-  s1.appendChild(s1Icon);
-  const s1Text = document.createElement("span");
-  s1.appendChild(s1Text);
-  codeSlot.appendChild(s1);
-
-  field.appendChild(codeSlot);
-
-  // Notice box
-  const notice = document.createElement("div");
-  notice.className = "tm-notice";
-  notice.style.marginTop = "var(--tm-space-sm)";
-  notice.style.display = "none";
-  notice.setAttribute("role", "status");
-  const noticeIcon = document.createElement("span");
-  noticeIcon.className = "tm-icon";
-  noticeIcon.setAttribute("aria-hidden", "true");
-  notice.appendChild(noticeIcon);
-  const noticeText = document.createElement("div");
-  notice.appendChild(noticeText);
-  field.appendChild(notice);
-
-  grp1.appendChild(field);
-
-  // Resend line
-  const rs = document.createElement("p");
-  rs.style.margin = "0";
-  rs.style.textAlign = "center";
-  rs.style.fontSize = "var(--tm-font-size-body-md)";
-  rs.style.lineHeight = "48px";
-  rs.style.minHeight = "48px";
-  rs.style.color = "var(--tm-content-secondary)";
-  rs.id = "resend-line";
-
-  const rp = document.createElement("span");
-  rp.textContent = "Didn't receive it? ";
-  rs.appendChild(rp);
-
-  const rr = document.createElement("span");
-  rs.appendChild(rr);
-
-  grp1.appendChild(rs);
-  panel.appendChild(grp1);
-
-  // Group 2: Consent + Button
-  const grp2 = document.createElement("div");
-  grp2.style.display = "flex";
-  grp2.style.flexDirection = "column";
-  grp2.style.gap = "var(--tm-space-lg)";
-  grp2.style.marginTop = "var(--tm-space-2xl)";
-
-  const consent = document.createElement("p");
-  consent.className = "tm-text-body-sm";
-  consent.style.margin = "0";
-  consent.style.color = "var(--tm-content-secondary)";
-  consent.style.textAlign = "center";
-  consent.style.textWrap = "balance";
-  consent.innerHTML = "By selecting Verify &amp; sign in, you agree to the <a href=\"#\" style=\"color:var(--tm-content-brand);font-weight:600;text-decoration:none;white-space:nowrap\">Terms &amp; Conditions</a> and acknowledge the <a href=\"#\" style=\"color:var(--tm-content-brand);font-weight:600;text-decoration:none;white-space:nowrap\">Privacy Policy</a>.";
-  consent.style.display = state.consent && !state.locked && !state.expired ? "block" : "none";
-  if (state.expired) {
-    consent.style.visibility = "hidden";
-    consent.style.height = "20px";
-  }
-  grp2.appendChild(consent);
-
-  const button = document.createElement("button");
-  button.className = "tm-btn tm-btn--lg tm-btn--primary tm-btn--block";
-  button.type = "button";
-  button.id = "otp-btn";
-  button.disabled = state.locked || state.busy || state.expired || state.hold;
-
-  const spinner = document.createElement("span");
-  spinner.className = "tm-spinner";
-  spinner.setAttribute("aria-hidden", "true");
-  spinner.style.display = state.busy ? "inline-block" : "none";
-  spinner.style.marginRight = "var(--tm-space-xs)";
-  button.appendChild(spinner);
-
-  const btnText = document.createElement("span");
-  btnText.textContent = state.busy ? "Verifying…" : "Verify & sign in";
-  button.appendChild(btnText);
-
-  button.setAttribute("aria-busy", String(state.busy || false));
-  button.style.marginTop = "var(--tm-space-lg)";
-
-  button.addEventListener("click", () => {
-    if (!button.disabled && !state.busy) {
-      push(null, { s: "home_default" });
-    }
-  });
-
-  grp2.appendChild(button);
-  panel.appendChild(grp2);
-
-  section.appendChild(panel);
-  host.appendChild(section);
-
-  // Update OTP slots display
-  function updateSlots() {
-    const v = codeInput.value.replace(/\D/g, "").slice(0, 4);
-    if (codeInput.value !== v) codeInput.value = v;
-    slots.forEach((slot, i) => {
-      slot.textContent = v[i] || "";
+  // ---- paint ----
+  function paintSlots() {
+    const v = m.code;
+    const err = !!m.err;
+    slots.forEach((s, i) => {
+      s.textContent = v[i] || "";
+      s.classList.toggle("is-current", m.kb && !err && !m.locked && i === Math.min(v.length, OTP_LENGTH - 1));
     });
   }
-
-  // Input handling
-  codeInput.addEventListener("input", updateSlots);
-  codeInput.addEventListener("focus", updateSlots);
-
-  // Click on slots to focus input
-  slotsDiv.addEventListener("click", () => {
-    if (!state.locked) codeInput.focus();
-  });
-
-  // Update state display
-  if (state.err) {
-    helper.hidden = false;
-    helper.textContent = MSG(state.err === "otp.triesLeft" ? "otp.triesLeft" : state.err,
-      state.err === "otp.triesLeft" ? { count: 2 } : {});
-    helper.setAttribute("role", "alert");
-    field.style.borderColor = "var(--tm-border-error-strong)";
-    field.classList.add("tm-field--error");
+  function paintNote() {
+    note.classList.remove("show", "tm-notice--error", "tm-notice--warning", "tm-notice--neutral");
+    noteText.replaceChildren();
+    if (!m.note) return;
+    note.classList.add("show", `tm-notice--${m.note.k}`);
+    noteIcon.setAttribute("data-icon", m.note.i);
+    const text = MSG(m.note.t, m.note.timed ? { time: formatWait(m.until - clock.now()) } : {});
+    if (m.note.ops) {
+      noteText.append(...linkPhrase(text, MSG("otp.callOps"), (p) => h("a", { href: "#", text: p,
+        onclick: (e) => { e.preventDefault(); leave({ s: "placeholder", text: PLACEHOLDER.callOps }); } })));
+    } else noteText.textContent = text;
+  }
+  function paintResend() {
+    rs.hidden = m.rs === "hidden";
+    rsLead.hidden = m.rs === "checking";   // D-81 F7: "Checking…" alone
+    if (m.rs === "wait") rsBody.replaceChildren(...parts("otp.resendIn", { time: h("span", { class: "timer", text: formatWait(m.resendAt - clock.now()) }) }, MSG));
+    if (m.rs === "available") rsBody.replaceChildren(h("button", { type: "button", onclick: onResend, text: MSG("otp.resendCode") }));
+    if (m.rs === "sending") rsBody.textContent = MSG("otp.resending");
+    if (m.rs === "checking") rsBody.textContent = MSG("otp.checking");
+  }
+  function paint() {
+    code.value = m.code;
+    code.disabled = m.locked;
+    code.readOnly = m.busy;
+    field.classList.toggle("tm-field--disabled", m.locked);
+    field.classList.toggle("tm-field--error", !!m.err);
+    code.setAttribute("aria-invalid", String(!!m.err));
+    helper.hidden = !m.err;
+    helper.textContent = m.err ? MSG(m.err.key, m.err.values || {}) : "";
+    if (m.err) helper.setAttribute("role", "alert"); else helper.removeAttribute("role");
+    paintNote();
+    codeSlot.classList.toggle("off", !!m.note);
+    s1.classList.toggle("show", m.s1);
+    s1.firstChild.textContent = m.s1 ? MSG("otp.newSent") : "";
+    paintResend();
+    consent.classList.toggle("show", m.consent === "show" && !m.locked);
+    consent.classList.toggle("reserve", m.consent === "reserve");
+    const off = m.locked || m.busy || m.expired || m.hold;
+    btn.disabled = off;
+    btn.classList.toggle("tm-btn--busy", m.busy);
+    btn.setAttribute("aria-busy", String(m.busy));
+    btn.replaceChildren(...(m.busy ? [h("span", { class: "tm-spinner", "aria-hidden": "true" }), MSG("otp.submitBusy")] : [MSG("otp.submit")]));
+    root.classList.toggle("kb", kbDrawn && m.kb && !m.locked);
+    if (keyboard) keyboard.hidden = !(m.kb && !m.locked);
+    paintSlots();
+    if (window.TMIcons) window.TMIcons.render(root);
   }
 
-  if (state.s1) {
-    s1.style.display = "flex";
-    s1Text.textContent = MSG(state.s1);
+  // ---- typing (real keyboard, paste, or the drawn keyboard) ----
+  function clearError() { m.err = null; m.replace = false; }
+  function setCode(next) {
+    if (m.locked || m.busy) return;
+    m.code = next.replace(/\D/g, "").slice(0, OTP_LENGTH);
+    clearError();
+    m.s1 = false;
+    if (m.note && !m.note.ops) m.note = null;       // one-off notices (couldn't check, resend failed, offline) clear on edit
+    if (m.expired) { m.expired = false; m.consent = "show"; } // a new code after an expiry re-enables Verify (approved file)
+    paint();
+  }
+  // D-44: after a wrong or expired code, the first new keystroke replaces the whole code
+  code.addEventListener("keydown", (e) => { if (m.replace && /^\d$/.test(e.key)) { e.preventDefault(); setCode(e.key); } });
+  code.addEventListener("input", () => setCode(m.replace ? code.value.replace(/\D/g, "").slice(-1) : code.value));
+  code.addEventListener("focus", paintSlots);
+  code.addEventListener("blur", paintSlots);
+  slotsBox.addEventListener("click", () => { if (!m.locked) code.focus(); });
+  function typeKey(k) {
+    if (m.locked) return;
+    code.focus();
+    if (k === "back") setCode(m.replace ? "" : m.code.slice(0, -1));
+    else setCode(m.replace ? k : m.code + k);
   }
 
-  if (state.note) {
-    notice.style.display = "flex";
-    notice.classList.add("tm-notice--" + state.note.k);
-    noticeIcon.setAttribute("data-icon", state.note.i);
-    if (state.note.ops && state.note.t === "otp.locked") {
-      noticeText.textContent = MSG(state.note.t, { time: "14:52" });
-    } else if (state.note.ops && state.note.t === "otp.expiredAndLimited") {
-      noticeText.textContent = MSG(state.note.t, { time: "9:42" });
-    } else {
-      noticeText.textContent = MSG(state.note.t);
+  // ---- server actions ----
+  const ctx = () => authCtx(mode);
+  function onVerify() {
+    if (btn.disabled || m.rs === "sending") return;   // one server action at a time: a tap while a resend is in flight is ignored (Verify keeps its look, as the resending picture)
+    const err = checkCode(m.code);
+    if (err) { m.err = { key: err }; m.replace = false; paint(); code.focus(); return; }
+    if (m.note && !m.note.ops) m.note = null;
+    const submitted = m.code;                        // the code as submitted, not as the field reads later
+    m.busy = true; paint();                          // L3: keyboard stays open while verifying; terms stay (D-81 F5)
+    life.later(() => { m.busy = false; verified(verifyCode(number, submitted, ctx())); });
+  }
+  function verified(r) {
+    if (r.outcome === "correct") {
+      signIn(number, ctx());
+      store.set({ entryNumber: number });
+      // Signed in: the entry journey leaves history (Back never returns to OTP). Faster sign-in offer once (session 3), else Home.
+      const offer = (store.get().story || {}).offer === "unsupported" ? "home_default" : "offer_fingerprint";
+      resetNav();
+      push(null, { s: offer, live: true });
+      return;
     }
-    codeSlot.style.display = "none";
+    if (r.outcome === "wrong") { m.err = { key: r.key, values: r.values }; m.replace = true; }
+    if (r.outcome === "expired") {
+      Object.assign(m, { expired: true, err: { key: "otp.expired" }, replace: true, consent: "reserve" });
+      if (clock.now() < r.resendAt) Object.assign(m, { rs: "wait", resendAt: r.resendAt }); else m.rs = "available";
+    }
+    if (r.outcome === "expired-limited") lockLike(NOTE.expiredLimited, r.until);
+    if (r.outcome === "locked") lockLike(NOTE.locked, r.until);
+    if (r.outcome === "couldnt-verify") m.note = NOTE.couldntVerify;
+    if (r.outcome === "offline") m.note = NOTE.offline;
+    paint();
+    if (!m.locked) code.focus();
+  }
+  function lockLike(n, until) {
+    Object.assign(m, { locked: true, note: n, until, code: "", err: null, replace: false, s1: false, rs: "hidden", consent: "hide", kb: false, expired: false });
+    code.blur();
+  }
+  function onResend() {
+    if (m.rs !== "available" || m.busy) return;      // one server action at a time (verifying)
+    if (m.note && !m.note.ops) m.note = null;
+    m.rs = "sending"; paint();
+    life.later(() => resent(resendCode(number, ctx())));
+  }
+  function resent(r) {
+    m.rs = "available";
+    if (r.outcome === "sent") Object.assign(m, { code: "", err: null, replace: false, expired: false, s1: true, rs: "wait", resendAt: r.resendAt, consent: "show" });
+    if (r.outcome === "sent-last") Object.assign(m, { code: "", err: null, replace: false, expired: false, s1: false, note: NOTE.tooManyResends, rs: "hidden", consent: "show", until: r.until });
+    if (r.outcome === "cooldown") Object.assign(m, { rs: "wait", resendAt: r.resendAt });
+    if (r.outcome === "too-many") { if (m.expired) lockLike(NOTE.expiredLimited, r.until); else Object.assign(m, { note: NOTE.tooManyResends, rs: "hidden", until: r.until }); }
+    if (r.outcome === "failed") m.note = NOTE.resendFailed;
+    if (r.outcome === "offline") m.note = NOTE.offline;
+    if (r.outcome === "locked") lockLike(NOTE.locked, r.until);
+    paint();
+    if (!m.locked) code.focus();
   }
 
-  // Resend line
-  if (state.rs === "wait") {
-    rr.innerHTML = "Resend in <span style=\"font-weight:600;font-variant-numeric:tabular-nums;color:var(--tm-content-primary)\">" + (state.time || "0:30") + "</span>";
-  } else if (state.rs === "available") {
-    rr.innerHTML = "<button type=\"button\" style=\"min-height:48px;min-width:48px;border:0;background:transparent;padding:0;color:var(--tm-content-brand);font:inherit;font-weight:600;cursor:pointer\">Resend code</button>";
-  } else if (state.rs === "sending") {
-    rr.textContent = "Sending a new code…";
-  } else if (state.rs === "checking") {
-    rp.hidden = true;
-    rr.textContent = "Checking…";
-  } else if (state.rs === "hidden") {
-    rs.hidden = true;
+  // ---- clock: countdowns and lock / window expiry (on the app clock, demo-scaled through settings) ----
+  life.every(() => {
+    const t = clock.now();
+    if (m.rs === "wait" && t >= m.resendAt) { m.rs = "available"; paint(); return; }
+    if (m.note && m.note.timed && t >= m.until) {
+      // lock or window over: a fresh start on this number (Resend code available, field on)
+      Object.assign(m, { locked: false, note: null, rs: "available", consent: "show", kb: true, expired: false });
+      paint(); code.focus(); return;
+    }
+    if (m.note === NOTE.tooManyResends && m.until && t >= m.until) { m.note = null; m.rs = "available"; paint(); return; }
+    if (m.rs === "wait" || (m.note && m.note.timed)) paint();
+  }, 250);
+
+  // Coming back to the app: the cooldown is checked with the server first ("Checking…", Verify held; D-81 F7).
+  if (live) {
+    const onVisible = () => {
+      if (!life.alive()) { document.removeEventListener("visibilitychange", onVisible); return; }
+      if (document.hidden || m.locked || m.rs !== "wait") return;
+      Object.assign(m, { rs: "checking", hold: true }); paint();
+      life.later(() => {
+        const s = status(number, ctx());
+        Object.assign(m, { hold: false, rs: s.codesLeft > 0 ? (clock.now() < s.resendAt ? "wait" : "available") : "hidden", resendAt: s.resendAt });
+        paint();
+      }, "reconcileDelay");
+    };
+    document.addEventListener("visibilitychange", onVisible);
   }
 
-  updateSlots();
+  // ---- Change and phone Back: back to sign-in with the number kept (OTP has no Back control; D-61, app-logic §2) ----
+  function goChange() { backTo((e) => String(e.params.s || "").startsWith("sign-in"), { s: "sign-in_default", live: true, number }); }
+  setScreenBack(goChange);
 
+  paint();
+  if (m.kb && !m.locked) code.focus();               // keyboard opens on load: field focused with the blue current box
   return { journey: "otp" };
 }

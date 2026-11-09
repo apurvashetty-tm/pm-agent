@@ -776,5 +776,324 @@
     "clear": "next confirm attempt",
     "retain": "choices kept",
     "copy": "decided (D-83 pt 2, CW-A1); wording per CHECKLIST K3; main-check 2 (D-85): End the call when you’re done."
+  },
+  "signin.welcome": {
+    "pattern": "none",
+    "trigger": "entry screen label",
+    "slot": "sign-in title",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, step 1 recovery 2026-11-09)"
+  },
+  "signin.subtitle": {
+    "pattern": "none",
+    "trigger": "entry screen label",
+    "slot": "sign-in subtitle",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, step 1 recovery 2026-11-09)"
+  },
+  "signin.phoneLabel": {
+    "pattern": "none",
+    "trigger": "entry screen label",
+    "slot": "field label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, step 1 recovery 2026-11-09)"
+  },
+  "signin.phonePlaceholder": {
+    "pattern": "none",
+    "trigger": "entry screen label",
+    "slot": "field placeholder",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, step 1 recovery 2026-11-09)"
+  },
+  "signin.submitDefault": {
+    "pattern": "none",
+    "trigger": "entry screen label",
+    "slot": "main button",
+    "next": "request a code",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, step 1 recovery 2026-11-09)"
+  },
+  "signin.submitSending": {
+    "pattern": "none",
+    "trigger": "entry screen label",
+    "slot": "main button, busy",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, step 1 recovery 2026-11-09)"
+  },
+  "signin.submitWait": {
+    "pattern": "none",
+    "trigger": "entry screen label",
+    "slot": "main button, countdown",
+    "next": "wait",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, step 1 recovery 2026-11-09)",
+    "placeholders": [
+      "time"
+    ]
+  },
+  "signin.submitInactive": {
+    "pattern": "none",
+    "trigger": "entry screen label",
+    "slot": "main button, inactive account",
+    "next": "Call Doctor Ops placeholder",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, step 1 recovery 2026-11-09)"
+  },
+  "signin.signup": {
+    "pattern": "none",
+    "trigger": "entry screen label",
+    "slot": "sign-up line",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, step 1 recovery 2026-11-09)"
+  },
+  "signin.signupLink": {
+    "pattern": "none",
+    "trigger": "entry screen label",
+    "slot": "sign-up link",
+    "next": "onboarding page, new tab (OQ-021)",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, step 1 recovery 2026-11-09)"
+  },
+  "offer.fingerprintSub": {
+    "pattern": "none",
+    "trigger": "entry screen label",
+    "slot": "offer subtitle, fingerprint phones",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, step 1 recovery 2026-11-09)"
+  },
+  "offer.fingerprintLine": {
+    "pattern": "none",
+    "trigger": "entry screen label",
+    "slot": "offer benefit line, fingerprint",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, step 1 recovery 2026-11-09)"
+  },
+  "offer.fingerprintTrust": {
+    "pattern": "none",
+    "trigger": "entry screen label",
+    "slot": "offer trust line, fingerprint",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, step 1 recovery 2026-11-09)"
+  },
+  "offer.faceIdSub": {
+    "pattern": "none",
+    "trigger": "entry screen label",
+    "slot": "offer subtitle, Face ID phones",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, step 1 recovery 2026-11-09)"
+  },
+  "offer.faceIdLine": {
+    "pattern": "none",
+    "trigger": "entry screen label",
+    "slot": "offer benefit line, Face ID",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, step 1 recovery 2026-11-09)"
+  },
+  "offer.faceIdTrust": {
+    "pattern": "none",
+    "trigger": "entry screen label",
+    "slot": "offer trust line, Face ID",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, step 1 recovery 2026-11-09)"
+  },
+  "otp.title": {
+    "pattern": "none",
+    "trigger": "entry screen label",
+    "slot": "OTP title",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, step 1 recovery 2026-11-09)"
+  },
+  "otp.sentTo": {
+    "pattern": "none",
+    "trigger": "entry screen label",
+    "slot": "OTP subtitle (number semibold)",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, step 1 recovery 2026-11-09)",
+    "placeholders": [
+      "number"
+    ]
+  },
+  "otp.change": {
+    "pattern": "none",
+    "trigger": "entry screen label",
+    "slot": "OTP subtitle link",
+    "next": "sign-in, number kept",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, step 1 recovery 2026-11-09)"
+  },
+  "otp.codeLabel": {
+    "pattern": "none",
+    "trigger": "entry screen label",
+    "slot": "code field, screen-reader label",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, step 1 recovery 2026-11-09)"
+  },
+  "otp.didntReceive": {
+    "pattern": "none",
+    "trigger": "entry screen label",
+    "slot": "resend line lead",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, step 1 recovery 2026-11-09)"
+  },
+  "otp.resendIn": {
+    "pattern": "none",
+    "trigger": "entry screen label",
+    "slot": "resend line, waiting (timer semibold)",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, step 1 recovery 2026-11-09)",
+    "placeholders": [
+      "time"
+    ]
+  },
+  "otp.resendCode": {
+    "pattern": "none",
+    "trigger": "entry screen label",
+    "slot": "resend line link",
+    "next": "send a new code",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, step 1 recovery 2026-11-09)"
+  },
+  "otp.resending": {
+    "pattern": "none",
+    "trigger": "entry screen label",
+    "slot": "resend line, busy",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, step 1 recovery 2026-11-09)"
+  },
+  "otp.checking": {
+    "pattern": "none",
+    "trigger": "entry screen label",
+    "slot": "resend line, cooldown check (D-81 F7)",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, step 1 recovery 2026-11-09)"
+  },
+  "otp.consent": {
+    "pattern": "none",
+    "trigger": "entry screen label",
+    "slot": "terms line above Verify",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, step 1 recovery 2026-11-09)",
+    "placeholders": [
+      "privacy",
+      "terms"
+    ]
+  },
+  "otp.terms": {
+    "pattern": "none",
+    "trigger": "entry screen label",
+    "slot": "terms link",
+    "next": "link pending placeholder (OQ-021)",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, step 1 recovery 2026-11-09)"
+  },
+  "otp.privacy": {
+    "pattern": "none",
+    "trigger": "entry screen label",
+    "slot": "privacy link",
+    "next": "link pending placeholder (OQ-021)",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, step 1 recovery 2026-11-09)"
+  },
+  "otp.submit": {
+    "pattern": "none",
+    "trigger": "entry screen label",
+    "slot": "main button",
+    "next": "verify the code",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, step 1 recovery 2026-11-09)"
+  },
+  "otp.submitBusy": {
+    "pattern": "none",
+    "trigger": "entry screen label",
+    "slot": "main button, busy",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, step 1 recovery 2026-11-09)"
+  },
+  "otp.callOps": {
+    "pattern": "none",
+    "trigger": "entry screen label",
+    "slot": "link inside the OTP limit notices",
+    "next": "Call Doctor Ops placeholder",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (plan B6, step 1 recovery 2026-11-09)"
+  },
+  "placeholder.callOps": {
+    "pattern": "none",
+    "trigger": "entry screen label",
+    "slot": "placeholder page (OQ-021, D-88 pattern)",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "step 1 recovery brief 2026-11-09 (main thread)"
+  },
+  "placeholder.whatsapp": {
+    "pattern": "none",
+    "trigger": "entry screen label",
+    "slot": "placeholder page (OQ-021, D-88 pattern)",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "step 1 recovery brief 2026-11-09 (main thread)"
+  },
+  "placeholder.linkPending": {
+    "pattern": "none",
+    "trigger": "entry screen label",
+    "slot": "placeholder page (OQ-021, D-88 pattern)",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "step 1 recovery brief 2026-11-09 (main thread)"
   }
 }

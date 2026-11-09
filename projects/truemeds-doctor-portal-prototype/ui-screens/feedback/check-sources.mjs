@@ -81,4 +81,30 @@ for (const item of copyItems) {
   if (/tm-btn|tm-chip|tm-field__label|tm-toast|tm-status-line|tm-section-title/.test(item.cls) && /\.$/.test(t) && !isScript(t) && t.length < 45) fail(23, item, 'fragment label ends with full stop');
 }
 assert.deepEqual(failures, [], `copy checks failed (${failures.length}):\n${failures.join('\n')}`);
+
+// Copy on app/ (checklist 3.7, plan B6): built screens take every visible word from the registry. Each built screen module is
+// read as source: every MSG() key must exist, and no string literal may carry visible English (typed copy). Class lists,
+// attribute values, key names and the brand lockup's alt text are not copy. The registry text itself passed the rules above.
+const appRoot = join(here, '../../app');
+const APP_COPY_FILES = ['screens/sign-in.js', 'screens/otp.js', 'screens/entry-ctx.js', 'shell/mock-keyboard.js', 'core/auth.js'];
+const NOT_COPY = new Set(['truemeds for doctors', '+91', ' · ', 'Backspace', 'Delete']);   // lockup alt (brand/check_lockup.py); dial prefix; separator; DOM key names
+const appFailures = [];
+let appLiterals = 0;
+for (const rel of APP_COPY_FILES) {
+  if (!existsSync(join(appRoot, rel))) { appFailures.push(`${rel}: missing`); continue; }
+  const src = readFileSync(join(appRoot, rel), 'utf8').replace(/\/\*[\s\S]*?\*\//g, '').replace(/^\s*\/\/.*$/gm, '').replace(/([;,(){}\]])[ \t]*\/\/.*$/gm, '$1');
+  for (const m of src.matchAll(/MSG\(\s*["']([\w.]+)["']/g)) if (!(m[1] in messages)) appFailures.push(`${rel}: MSG key not in messages.json: ${m[1]}`);
+  for (const m of src.matchAll(/(["'`])((?:\\.|(?!\1)[^\\\n])*)\1/g)) {
+    const lit = m[2].replace(/\$\{[^}]*\}/g, ' ').trim();
+    appLiterals++;
+    if (!lit || NOT_COPY.has(lit) || NOT_COPY.has(m[2])) continue;
+    if (/^[a-z][\w.-]*$/.test(lit) && !/ /.test(lit)) continue;                                  // keys, classes, attributes, events
+    if (lit.split(/\s+/).every(t => /^[a-z0-9_.:#\[\]="-]+$/.test(t) || /^[.#][\w-]+/.test(t))) continue; // class lists and selectors
+    if (/^(https?:|\.\.?\/|brand\/|[\w-]+\.(js|css|svg|png)$)/.test(lit)) continue;            // paths and links
+    if (/^[A-Z][a-z]+[A-Z]\w*$/.test(lit)) continue;                                                // camelCase names
+    if (/[A-Za-z]{2,}/.test(lit) && (/[A-Z][a-z]/.test(lit) || /[a-z]{2,} [a-z]{2,}/.test(lit))) appFailures.push(`${rel}: typed copy "${lit.slice(0, 60)}"`);
+  }
+}
+assert.deepEqual(appFailures, [], `app/ copy check failed (${appFailures.length}):\n${appFailures.join('\n')}`);
+console.log(`PASS: app/ copy — ${APP_COPY_FILES.length} built screen files, ${appLiterals} string literals, every MSG key in the registry, no typed copy`);
 console.log(`PASS: copy checks rules 4/5/11/13/14/19/21/22/23 over ${copyItems.length} strings; ${requiredSign.length} sign-in states, ${requiredOtp.length} OTP states, local assets, four-slot OTP, Home/unlock feedback, ${Object.keys(messages).length} registry IDs`);

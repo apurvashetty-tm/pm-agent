@@ -1,227 +1,184 @@
-// Sign-in screen (entry journey, step 1). States: default, keyboard-open, empty-tap, too-short, wrong-first-digit,
-// pasted-cleaned, sending, not-registered, offline, couldnt-send, too-many-tries, inactive (app-logic §2, §11).
-// Behaviour: live validation, test numbers in app/data/test-numbers.js, errors clear on edit.
+// Sign-in (entry journey, step 1). Markup and classes lifted from ui-screens/sign-in/sign-in.html; styles in sign-in.css.
+// Behaviour: app-logic §2 (cleaning, live checks, server answers as notices), test numbers §11 (app/data/test-numbers.js),
+// feedback-state-map rows for sign-in. Every word through MSG().
+// A state opened directly (?s=sign-in_<state>) shows the approved picture's moment, then behaves live from there.
 import { MSG } from "../core/msg.js";
-import { push } from "../core/nav.js";
+import { push, setScreenBack, saveCurrent } from "../core/nav.js";
 import { store } from "../core/store.js";
+import { clock } from "../core/clock.js";
+import { h } from "../core/dom.js";
+import { cleanNumber, checkNumber, requestCode, formatWait } from "../core/auth.js";
+import { PICTURE_NUMBER } from "../data/test-numbers.js";
+import { SIGN_UP_URL, PLACEHOLDER } from "../data/links.js";
+import { mockKeyboard, drawsKeyboard } from "../shell/mock-keyboard.js";
+import { authCtx, newLife } from "./entry-ctx.js";
 
-const STATES = {
-  "sign-in_default": "default",
-  "sign-in_keyboard-open": "keyboard-open",
-  "sign-in_empty-tap": "empty-tap",
-  "sign-in_too-short": "too-short",
-  "sign-in_wrong-first-digit": "wrong-first-digit",
-  "sign-in_pasted-cleaned": "pasted-cleaned",
-  "sign-in_sending": "sending",
-  "sign-in_not-registered": "not-registered",
-  "sign-in_offline": "offline",
-  "sign-in_couldnt-send": "couldnt-send",
-  "sign-in_too-many-tries": "too-many-tries",
-  "sign-in_inactive": "inactive",
+// Picture moments (same table as the approved file). number: what the field shows; error: helper key shown as an error.
+const P = PICTURE_NUMBER;
+const FIXTURES = {
+  default:             { number: "", kb: false, focused: false },
+  "keyboard-open":     { number: P.slice(0, 5), kb: true, focused: true },
+  "empty-tap":         { number: "", kb: true, error: "signin.empty" },
+  "too-short":         { number: P.slice(0, 8), kb: true, error: "signin.short" },
+  "wrong-first-digit": { number: "1234567890", kb: true, error: "signin.prefix" },
+  "pasted-cleaned":    { number: P, kb: true, focused: true },
+  sending:             { number: P, kb: true, focused: true, button: "sending" },
+  "not-registered":    { number: P, notice: "not-registered" },
+  offline:             { number: P, notice: "offline" },
+  "couldnt-send":      { number: P, notice: "couldnt-send" },
+  "too-many-tries":    { number: P, notice: "too-many-tries", button: "wait", waitMs: (9 * 60 + 42) * 1000 },
+  inactive:            { number: P, notice: "inactive", button: "inactive" },
 };
+const NOTICES = {
+  "not-registered": { cls: "tm-notice--neutral", icon: "info-circle", key: "signin.notRegistered", role: "status" },
+  offline:          { cls: "tm-notice--warning", icon: "alert-triangle", key: "signin.offline", role: "alert" },
+  "couldnt-send":   { cls: "tm-notice--error", icon: "alert-circle", key: "signin.couldntSend", role: "alert" },
+  "too-many-tries": { cls: "tm-notice--warning", icon: "clock", key: "signin.tooMany", role: "alert" },
+  inactive:         { cls: "tm-notice--error", icon: "alert-circle", key: "signin.inactive", role: "alert" },
+};
+export const STATES = Object.keys(FIXTURES).map((k) => `sign-in_${k}`);
 
-export function render(host, id, { mode, w }) {
-  const stateKey = STATES[id];
-  if (!stateKey) return null;
+export function render(host, id, { mode, params = {} }) {
+  const key = id.replace(/^sign-in_/, "");
+  const fx = FIXTURES[key];
+  if (!fx) return null;
+  const life = newLife(host, mode);
+  const kbDrawn = drawsKeyboard(mode);
 
-  host.innerHTML = '';
-  const section = document.createElement('section');
-  section.className = 'tm shell-screen';
-  section.style.display = 'flex';
-  section.style.flexDirection = 'column';
-  section.style.height = '100%';
-  section.setAttribute('aria-label', MSG('signin.title'));
+  // Model. A live return (Change on OTP, phone Back) keeps the number the doctor typed; never a fixture over typed input.
+  const typed = params.live ? (params.number ?? store.get().entryNumber ?? "") : null;
+  const m = {
+    number: typed ?? fx.number,
+    error: params.live ? null : fx.error || null,
+    notice: params.live ? null : fx.notice || null,
+    button: params.live ? "default" : fx.button || "default",
+    until: fx.waitMs ? clock.now() + fx.waitMs : 0,
+    kb: params.live ? false : !!fx.kb,
+    focused: params.live ? false : !!fx.focused,
+    // A pasted or pre-filled number (pasted picture, back from OTP Change) is replaced by the first typed digit (recovery §1).
+    replace: params.live ? !!typed : key === "pasted-cleaned",
+  };
+  // Back from a placeholder page (Call Doctor Ops): restore the screen as it was.
+  if (params.saved) Object.assign(m, params.saved, { button: params.saved.button === "sending" ? "default" : params.saved.button });
 
-  // Header with logo
-  const headerDiv = document.createElement('div');
-  headerDiv.style.padding = 'var(--tm-space-lg) var(--tm-space-page) 0';
-  const logo = document.createElement('img');
-  logo.src = 'brand/truemeds-for-doctors.svg';
-  logo.alt = 'truemeds for doctors';
-  logo.style.width = '166px';
-  logo.style.height = 'auto';
-  headerDiv.appendChild(logo);
-  section.appendChild(headerDiv);
+  // ---- markup (approved hierarchy: .login-phone > logo, .login-content > h1, p, .login-fields; .login-signup; keyboard) ----
+  const input = h("input", { id: "tm-login-mobile", type: "tel", inputmode: "tel", autocomplete: "tel-national",
+    placeholder: MSG("signin.phonePlaceholder"), "aria-describedby": "tm-login-helper" });
+  const helper = h("div", { id: "tm-login-helper", class: "tm-field__helper" });
+  const notices = Object.fromEntries(Object.entries(NOTICES).map(([k, n]) => [k,
+    h("div", { id: `tm-login-${k}-notice`, class: `tm-notice login-notice ${n.cls}`, role: n.role, hidden: true },
+      h("span", { class: "tm-icon", "data-icon": n.icon, "aria-hidden": "true" }), h("span", { text: MSG(n.key) }))]));
+  const spinner = h("span", { class: "tm-spinner", "aria-hidden": "true", hidden: true });
+  const submitLabel = h("span", { class: "login-submit-label" });
+  const submit = h("button", { class: "tm-btn tm-btn--primary tm-btn--lg tm-btn--block login-submit", type: "button", onclick: onSubmit }, spinner, submitLabel);
+  const field = h("div", { class: "tm-field" },
+    h("label", { class: "tm-field__label", for: "tm-login-mobile", text: MSG("signin.phoneLabel") }),
+    h("div", { class: "tm-field__control" }, h("span", { class: "login-prefix", text: "+91" }), input),
+    helper, Object.values(notices));
+  const signupLink = h("a", { class: "login-signup-label", href: SIGN_UP_URL, target: "_blank", rel: "noopener", text: MSG("signin.signupLink") });
+  const signup = h("div", { class: "login-signup", id: "tm-signup-option" }, `${MSG("signin.signup")} `, signupLink);
+  const keyboard = kbDrawn ? mockKeyboard(typeKey) : null;
+  const root = h("section", { class: "signin-screen tm", "aria-labelledby": "tm-login-title" },
+    h("img", { class: "login-logo", src: "brand/truemeds-for-doctors.svg", alt: "truemeds for doctors" }),
+    h("main", { class: "login-content" },
+      h("h1", { id: "tm-login-title", text: MSG("signin.welcome") }),
+      h("p", { text: MSG("signin.subtitle") }),
+      h("div", { class: "login-fields" }, field, submit)),
+    signup, keyboard);
+  host.replaceChildren(root);
 
-  // Main content
-  const main = document.createElement('main');
-  main.style.flex = '1';
-  main.style.display = 'flex';
-  main.style.flexDirection = 'column';
-  main.style.paddingTop = 'var(--tm-space-3xl)';
-  main.style.maxWidth = '31ch';
-
-  const h1 = document.createElement('h1');
-  h1.className = 'tm-font-title-lg';
-  h1.style.margin = '0 0 var(--tm-space-sm)';
-  h1.textContent = MSG('signin.welcome');
-  main.appendChild(h1);
-
-  const subtitle = document.createElement('p');
-  subtitle.className = 'tm-font-body-lg';
-  subtitle.style.color = 'var(--tm-content-secondary)';
-  subtitle.style.margin = '0';
-  subtitle.textContent = MSG('signin.subtitle');
-  main.appendChild(subtitle);
-
-  section.appendChild(main);
-
-  // Fields panel
-  const fieldsDiv = document.createElement('div');
-  fieldsDiv.style.margin = 'var(--tm-space-2xl) calc(-1 * var(--tm-space-page)) 0';
-  fieldsDiv.style.padding = 'var(--tm-space-2xl) var(--tm-space-page) var(--tm-space-xl)';
-  fieldsDiv.style.background = 'var(--tm-surface-primary)';
-  fieldsDiv.style.borderRadius = 'var(--tm-radius-2xl) var(--tm-radius-2xl) 0 0';
-  fieldsDiv.style.flex = '1';
-  fieldsDiv.style.display = 'flex';
-  fieldsDiv.style.flexDirection = 'column';
-
-  const field = document.createElement('div');
-  field.className = 'tm-field';
-
-  const label = document.createElement('label');
-  label.className = 'tm-field__label';
-  label.setAttribute('for', 'tm-signin-mobile');
-  label.textContent = MSG('signin.phoneLabel');
-  field.appendChild(label);
-
-  const control = document.createElement('div');
-  control.className = 'tm-field__control';
-  control.style.display = 'flex';
-  control.style.alignItems = 'center';
-
-  const prefix = document.createElement('span');
-  prefix.style.paddingRight = 'var(--tm-space-md)';
-  prefix.style.borderRight = '1px solid var(--tm-border-default)';
-  prefix.style.fontSize = 'var(--tm-font-size-body-lg)';
-  prefix.style.lineHeight = 'var(--tm-font-lineheight-md)';
-  prefix.style.color = 'var(--tm-content-primary)';
-  prefix.style.fontWeight = 'var(--tm-font-weight-medium)';
-  prefix.textContent = '+91';
-  control.appendChild(prefix);
-
-  const input = document.createElement('input');
-  input.id = 'tm-signin-mobile';
-  input.type = 'tel';
-  input.inputMode = 'tel';
-  input.placeholder = MSG('signin.phonePlaceholder');
-  input.style.flex = '1';
-  input.style.padding = '0 var(--tm-space-md)';
-  input.style.border = 'none';
-  input.style.fontSize = 'var(--tm-font-size-body-lg)';
-  input.style.background = 'transparent';
-  input.setAttribute('aria-describedby', 'tm-signin-helper tm-signin-notice');
-  if (stateKey === 'sending') input.readOnly = true;
-
-  control.appendChild(input);
-  field.appendChild(control);
-
-  const helper = document.createElement('div');
-  helper.id = 'tm-signin-helper';
-  helper.className = 'tm-field__helper';
-  helper.style.marginTop = '0';
-  if (stateKey !== 'not-registered' && stateKey !== 'offline' && stateKey !== 'couldnt-send' && stateKey !== 'too-many-tries' && stateKey !== 'inactive') {
-    helper.textContent = MSG('signin.smsHelper');
+  // ---- paint: the DOM always follows the model ----
+  function paint() {
+    input.value = m.number;
+    const busy = m.button === "sending";
+    input.readOnly = busy;
+    root.classList.toggle("has-error", !!m.error);
+    root.classList.toggle("is-focused", m.focused && !m.error);
+    root.dataset.keyboard = String(kbDrawn && m.kb);
+    if (keyboard) keyboard.hidden = !m.kb;
+    field.classList.toggle("tm-field--error", !!m.error);
+    input.setAttribute("aria-invalid", String(!!m.error));
+    helper.hidden = !!m.notice;
+    helper.textContent = m.error ? MSG(m.error) : MSG("signin.smsHelper");
+    if (m.error) helper.setAttribute("role", "alert"); else helper.removeAttribute("role");
+    Object.entries(notices).forEach(([k, el]) => { el.hidden = m.notice !== k; });
+    input.setAttribute("aria-describedby", m.notice ? `tm-login-${m.notice}-notice` : "tm-login-helper");
+    submitLabel.textContent = busy ? MSG("signin.submitSending")
+      : m.button === "wait" ? MSG("signin.submitWait", { time: formatWait(m.until - clock.now()) })
+      : m.button === "inactive" ? MSG("signin.submitInactive") : MSG("signin.submitDefault");
+    submit.classList.toggle("tm-btn--busy", busy);
+    submit.setAttribute("aria-busy", String(busy));
+    spinner.hidden = !busy;
+    const off = busy || m.button === "wait";
+    submit.disabled = off;
+    submit.setAttribute("aria-disabled", String(off));
   }
-  field.appendChild(helper);
 
-  // Notices
-  const noticeIds = ['tm-signin-notice', 'tm-signin-offline', 'tm-signin-error', 'tm-signin-too-many', 'tm-signin-inactive'];
-  noticeIds.forEach(id => {
-    const notice = document.createElement('div');
-    notice.id = id;
-    notice.className = 'tm-notice tm-notice--' + (id.includes('error') || id.includes('inactive') ? 'error' : id.includes('offline') ? 'warning' : id.includes('too-many') ? 'warning' : 'neutral');
-    notice.style.marginTop = 'var(--tm-space-sm)';
-    notice.hidden = true;
-    notice.setAttribute('role', id.includes('notice') && !id.includes('offline') ? 'status' : 'alert');
-    const icon = document.createElement('span');
-    icon.className = 'tm-icon';
-    icon.setAttribute('data-icon', id.includes('error') || id.includes('inactive') ? 'alert-circle' : id.includes('offline') ? 'alert-triangle' : id.includes('too-many') ? 'clock' : 'info-circle');
-    icon.setAttribute('aria-hidden', 'true');
-    notice.appendChild(icon);
-    const text = document.createElement('span');
-    notice.appendChild(text);
-    field.appendChild(notice);
+  // ---- behaviour ----
+  function setNumber(raw) {
+    const cleaned = cleanNumber(raw);
+    const changed = cleaned !== m.number;
+    m.number = cleaned;
+    store.set({ entryNumber: cleaned });
+    // once an error shows it re-checks on every keystroke; the first-digit rule shows as soon as it is typed
+    // (an "empty" / "too short" error keeps the Send-level check; a first-digit error re-checks with the typing rules)
+    m.error = checkNumber(cleaned, { submit: m.error === "signin.empty" || m.error === "signin.short" });
+    if (changed && m.notice) { m.notice = null; m.button = "default"; }   // a server answer belongs to the number it was for
+    paint();
+  }
+  function typeKey(k) {
+    if (m.button === "sending") return;
+    input.focus();
+    const replacing = m.replace; m.replace = false;
+    setNumber(k === "back" ? m.number.slice(0, -1) : replacing ? k : m.number + k);
+  }
+  let pasting = false;
+  input.addEventListener("paste", () => { pasting = true; });
+  input.addEventListener("keydown", (e) => {
+    if (!m.replace || input.readOnly) return;
+    if (/^\d$/.test(e.key)) { e.preventDefault(); m.replace = false; setNumber(e.key); }
+    else if (e.key === "Backspace" || e.key === "Delete") m.replace = false;   // editing keeps the number
   });
+  input.addEventListener("input", () => {
+    const replacing = m.replace && !pasting; m.replace = false;
+    setNumber(replacing ? input.value.replace(/\D/g, "").slice(-1) : input.value);
+    if (pasting) { m.replace = true; pasting = false; }
+  });
+  input.addEventListener("focus", () => { m.focused = true; m.kb = true; paint(); });
+  input.addEventListener("blur", () => { m.focused = false; if (!kbDrawn) m.kb = false; paint(); });
 
-  fieldsDiv.appendChild(field);
-
-  const button = document.createElement('button');
-  button.className = 'tm-btn tm-btn--primary tm-btn--lg tm-btn--block';
-  button.style.marginTop = 'var(--tm-space-lg)';
-  button.type = 'button';
-  button.setAttribute('aria-busy', stateKey === 'sending');
-  if (stateKey === 'sending' || stateKey === 'too-many-tries') button.disabled = true;
-
-  const spinner = document.createElement('span');
-  spinner.className = 'tm-spinner';
-  spinner.setAttribute('aria-hidden', 'true');
-  spinner.hidden = stateKey !== 'sending';
-  button.appendChild(spinner);
-
-  const btnText = document.createElement('span');
-  if (stateKey === 'sending') btnText.textContent = MSG('signin.submitSending');
-  else if (stateKey === 'too-many-tries') btnText.textContent = MSG('signin.submitWait');
-  else if (stateKey === 'inactive') btnText.textContent = MSG('signin.submitInactive');
-  else btnText.textContent = MSG('signin.submitDefault');
-  button.appendChild(btnText);
-  fieldsDiv.appendChild(button);
-
-  section.appendChild(fieldsDiv);
-
-  // Sign up section
-  const signup = document.createElement('div');
-  signup.style.margin = '0 calc(-1 * var(--tm-space-page))';
-  signup.style.padding = '0 var(--tm-space-page) var(--tm-space-xl)';
-  signup.style.background = 'var(--tm-surface-primary)';
-  signup.style.textAlign = 'center';
-  signup.style.fontSize = 'var(--tm-font-size-body-md)';
-  signup.style.color = 'var(--tm-content-secondary)';
-  signup.textContent = MSG('signin.signup') + ' ';
-  const link = document.createElement('span');
-  link.style.color = 'var(--tm-content-brand)';
-  link.style.fontWeight = 'var(--tm-font-weight-semibold)';
-  link.style.cursor = 'pointer';
-  link.textContent = MSG('signin.signupLink');
-  signup.appendChild(link);
-  section.appendChild(signup);
-
-  host.appendChild(section);
-
-  // Set state (picture-like behavior for demonstration)
-  const inputVal = { default: '', 'keyboard-open': '98765', 'empty-tap': '', 'too-short': '98765432', 'wrong-first-digit': '1234567890', 'pasted-cleaned': '9000000001', sending: '9000000001', 'not-registered': '9000000001', offline: '9000000001', 'couldnt-send': '9000000001', 'too-many-tries': '9000000001', inactive: '9000000001' }[stateKey];
-  input.value = inputVal;
-
-  // Show appropriate notice
-  const noticeMap = { 'not-registered': 'tm-signin-notice', offline: 'tm-signin-offline', 'couldnt-send': 'tm-signin-error', 'too-many-tries': 'tm-signin-too-many', inactive: 'tm-signin-inactive' };
-  if (noticeMap[stateKey]) {
-    const notice = host.querySelector(`#${noticeMap[stateKey]}`);
-    if (notice) {
-      notice.hidden = false;
-      const text = notice.querySelector('span:last-child');
-      const msgKeys = { 'not-registered': 'signin.notRegistered', offline: 'signin.offline', 'couldnt-send': 'signin.couldntSend', 'too-many-tries': 'signin.tooMany', inactive: 'signin.inactive' };
-      text.textContent = MSG(msgKeys[stateKey]);
+  function onSubmit() {
+    if (m.button === "sending" || m.button === "wait") return;
+    if (m.button === "inactive") { saveCurrent({ saved: { ...m } }); push(null, { s: "placeholder", text: PLACEHOLDER.callOps }); return; }
+    const err = checkNumber(m.number, { submit: true });
+    if (err) { m.error = err; m.kb = true; paint(); input.focus(); return; }
+    m.button = "sending"; m.notice = null; paint();
+    life.later(() => answer(requestCode(m.number, authCtx(mode))));
+  }
+  function answer(r) {
+    const number = m.number;
+    if (r.outcome === "sent" || r.outcome === "locked") {
+      m.button = "default"; m.kb = false; m.focused = false;
+      push(null, { s: r.outcome === "sent" ? "otp_default" : "otp_locked", live: true, number, resendAt: r.resendAt, until: r.until });
+      return;
     }
+    m.notice = r.outcome;
+    m.button = r.outcome === "too-many-tries" ? "wait" : r.outcome === "inactive" ? "inactive" : "default";
+    m.until = r.until || 0;
+    m.kb = false; m.focused = false;
+    input.blur();
+    paint();
   }
-
-  // Event handlers
-  input.addEventListener('input', (e) => {
-    const val = e.target.value;
-    const cleaned = val.replace(/[^\d]/g, '').slice(0, 10);
-    if (val !== cleaned) input.value = cleaned;
+  // Countdown on "Try again in m:ss"; when it ends the button is Send OTP again (the notice stays until the number changes).
+  life.every(() => {
+    if (m.button !== "wait") return;
+    if (clock.now() >= m.until) { m.button = "default"; m.notice = null; }
+    paint();
   });
 
-  button.addEventListener('click', () => {
-    if (stateKey === 'sending' || stateKey === 'too-many-tries') return;
-    const number = input.value.replace(/\s+/g, '');
-    if (!number) { input.focus(); return; }
-    // [MOCK ASSUMPTION: proceed to OTP]
-    push(null, { s: 'otp_default' });
-  });
-
-  link.addEventListener('click', () => {
-    window.open('https://pwa-doctor.truemeds.in/onboarding', '_blank');
-  });
-
+  setScreenBack(null); // root of the entry journey: phone back stays in the app
+  paint();
+  if (window.TMIcons) window.TMIcons.render(root);
+  if (m.focused && mode !== "capture") input.focus();
   return { journey: "signIn" };
 }
