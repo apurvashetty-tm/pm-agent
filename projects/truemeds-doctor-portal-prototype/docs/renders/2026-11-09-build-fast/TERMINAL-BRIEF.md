@@ -9,11 +9,12 @@ Folder: `~/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doc
 
 | Run | Steps (plan v3.2 §5) | Done when |
 |---|---|---|
-| **A** | 2 Home · 3 Case page · 4 Prescribe / Disable · 5 Calling (Cat4 and Pilot HA skipped) | The full Cat4 demo plays end to end in the app: sign-in → Home → case → prescribe → call → Prescription confirmed → next case. Every step-2–5 state opens from `?s=` |
+| **A1** | 2 Home · 3 Case page · 4 Prescribe / Disable | Home, case page, prescribe and disable fully working; their states open from `?s=`; their Codex tests pass. Then **stop for the main-thread review** |
+| **A2** | 5 Calling (Cat4 and Pilot HA skipped) | The full Cat4 demo plays end to end: sign-in → Home → case → prescribe → call → Prescription confirmed → next case. The calling Codex tests pass |
 | **B** | 6 Pilot Fallback B · 7 Across journeys · 8 Final pass | Every Pilot calling-flow edge plays; the step-7 scenarios run; one whole-app check |
 
 Each time you are started: read the run status at the bottom of this file, do the **first run not marked done** completely, then stop.
-Before Run A: if `docs/renders/2026-11-09-step1-recovery/SESSION-STATUS.md` says the main thread gave the D-94 go-ahead, do D-94 step 5 first (copy the pictures, rebuild the contact sheets). If it says skip, or says nothing, leave D-94 alone.
+Before Run A1: if `docs/renders/2026-11-09-step1-recovery/SESSION-STATUS.md` says the main thread gave the D-94 go-ahead, do D-94 step 5 first (copy the pictures, rebuild the contact sheets). If it says skip, or says nothing, leave D-94 alone.
 
 ## Keep (these rules make it right by construction)
 
@@ -48,10 +49,18 @@ Codex writes the tests **from the spec, before the build**, so the build isn't g
 
 The run is done when all Codex tests pass (except disputed ones), the existing checks pass, and no blocker is open.
 
+## Codex tests: already written (main-thread review, 2026-11-09 16:20)
+
+Codex wrote both runs' tests ahead: `tests/codex/run-A/` (one set for A1 + A2; run the ids for the steps in hand, e.g. `CODEX_FILTER=A-H` / `A-C` / `A-P` / `S-` for A1, and the rest for A2) and `tests/codex/run-B/`. Read `tests/codex/README.md` → "Driver contract and limits" first. The main thread reviewed them: they are spec-sourced and accepted as the oracle. Commit them as they are at the start of A1. Then:
+- **Adapter gaps are build work, not disputes.** Keep the approved reference ids when lifting markup (`#medicines-list`, `#doctor-notes-input`, …). The call simulator gets a visible per-call **talk length in seconds** (`#rp-length`, B9 already asks for a length) so the gate-boundary tests run. Use the B9 semantic values the tests choose (map enum spellings in the driver if needed, without changing expected behaviour). The event log names hold / retry / mismatch / confirm-completed events, so the tests can find them.
+- **`REVIEW-CHECKS.md` "automation gap" items:** turn into tests, in the step that builds them, A-R03 (timer format and deadlines), A-R04 (counts and earnings), A-R16 (gate anchored on the patient's answer; exact minimum counted call), A-R18 (record wait and hold policy), A-R19 (callback missing-date and retained values), A-R20 (pending block count, no duplicate submit). Others where cheap. "Eye" items (Rx gestures, keyboard) are for the main thread; list them in REPORT.md.
+- Codex's tests stay unchanged. Disagreements go in `run-<X>/test-disputes.md` with the spec line.
+
 ## End of each run
 
 `run-<A|B>/REPORT.md`, short: what plays end to end, Codex tests (written / passing / disputed), the compare report (flagged states and what was done), the tests, Codex blockers and fixes, commits, `[OPEN DECISION]`s / `[MOCK ASSUMPTION]`s added (with the `open_questions.md` lines for the main thread to record; don't write `docs/context/`), what's left. Mark the run done below, push, stop.
 
 ## Run status
-- Run A: not started
+- Run A1: not started
+- Run A2: not started
 - Run B: not started

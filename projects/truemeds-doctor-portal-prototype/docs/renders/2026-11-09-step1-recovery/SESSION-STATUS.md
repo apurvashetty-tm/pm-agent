@@ -1,3 +1,5 @@
+> **Main thread, 2026-11-09 16:20 — D-94 GO-AHEAD for step 5.** Reviewed `session-6/baseline-check.md`: all 296 pictures are the same design (0 shifted rows, 0 colour bands, 0 flat-area changes, 0 moved regions, self-test of the check passes); captures repeat identically (298/298); D-93 built = picture 0 px, and the other offer states are unchanged. Do D-94 step 5 (the fast-build brief runs it at the start of Run A1).
+
 > **Session 6: waiting for main-thread review (terminal, 2026-11-09; commit times in git).** 6a done and D-94 steps 1–4 done. Stopped at D-94 step 4 as the brief says. **Next: the main thread reviews `session-6/baseline-check.md` and writes the go-ahead for step 5.** Step 5 is not started: nothing has been copied into `ui-screens/`, `PENDING_PICTURE` is still in place, and the anti-aliasing rule is still in `compare-allow.json`. Details: "Session 6 result" below.
 
 ## Session 6 result (2026-11-09) — waiting for main-thread review
