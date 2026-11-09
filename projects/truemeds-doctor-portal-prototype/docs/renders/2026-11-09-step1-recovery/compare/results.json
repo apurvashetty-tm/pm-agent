@@ -1051,7 +1051,7 @@
   {
    "id": "offer_enable-failed",
    "w": 360,
-   "attempt": 1,
+   "attempt": 2,
    "size": [
     720,
     1688
@@ -3054,7 +3054,7 @@
   {
    "id": "offer_enabling",
    "w": 360,
-   "attempt": 2,
+   "attempt": 3,
    "size": [
     720,
     1688
@@ -12141,7 +12141,7 @@
   {
    "id": "otp_code-expired",
    "w": 390,
-   "attempt": 2,
+   "attempt": 1,
    "size": [
     780,
     1688
@@ -26110,8 +26110,8 @@
       48,
       798
      ],
-     "px": 3,
-     "maxDelta": 11,
+     "px": 1,
+     "maxDelta": 9,
      "shifted": false,
      "shift": null,
      "builtVsSource": 0,
@@ -26125,8 +26125,8 @@
       678,
       798
      ],
-     "px": 3,
-     "maxDelta": 11,
+     "px": 2,
+     "maxDelta": 9,
      "shifted": false,
      "shift": null,
      "builtVsSource": 0,
@@ -26164,7 +26164,7 @@
      "reason": "Picture rendered on the old Mac; this Mac anti-aliases text, the logo and icons slightly differently. Inside the region the built app is identical to the approved source rendered on this Mac."
     }
    ],
-   "changedPx": 4115,
+   "changedPx": 4112,
    "macDiff": {
     "px": 1697,
     "maxDelta": 83
@@ -52147,7 +52147,7 @@
   {
    "id": "sign-in_couldnt-send",
    "w": 390,
-   "attempt": 1,
+   "attempt": 2,
    "size": [
     780,
     1688
@@ -60871,7 +60871,7 @@
   {
    "id": "sign-in_offline",
    "w": 390,
-   "attempt": 1,
+   "attempt": 2,
    "size": [
     780,
     1688

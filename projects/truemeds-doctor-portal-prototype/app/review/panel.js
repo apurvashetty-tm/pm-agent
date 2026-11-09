@@ -175,6 +175,8 @@ export function mountPanel(root, { story, handlers, stateIds }) {
     try { navigator.clipboard.writeText(text).then(done, () => logLine(root, "copy blocked — select the link")); } catch (e) { logLine(root, "copy blocked — select the link"); }
   }
   root.addEventListener("tm-log", () => { events += 1; refresh(); });
+  // Desktop to phone width (or back) while open: re-apply the drawer filtering for the screen on show (checklist 2.4, 5.11).
+  matchMedia("(max-width: 767px)").addEventListener("change", () => focusJourney(root, root.dataset.journey || null));
   refresh();
   return {
     readStory,
@@ -186,6 +188,7 @@ export function mountPanel(root, { story, handlers, stateIds }) {
 // Phone drawer (Part A item 4): the controls for the screen the phone is on come first, then Jump to a state and the Story row
 // (Restart story). Other rows are hidden on a phone. Desktop shows every row. Called on every screen change.
 export function focusJourney(root, journey) {
+  root.dataset.journey = journey || "";
   const narrow = matchMedia("(max-width: 767px)").matches;
   const forJourney = (el) => (el.dataset.for || "").split(" ").some((j) => j === "always" || j === journey);
   root.querySelectorAll("label[data-for]").forEach((l) => { l.hidden = narrow && !forJourney(l); });
@@ -208,12 +211,13 @@ export function focusJourney(root, journey) {
     card.append(card.querySelector(".rp-bar"));
   }
 }
+const LOG_SHOWN = 10;   // newest events only; the count in the row keeps the total
 export function logLine(root, text) {
   const ol = root && root.querySelector("#rp-log");
   if (!ol) return;
   const li = document.createElement("li");
   li.textContent = text;
   ol.prepend(li);
-  while (ol.children.length > 50) ol.lastElementChild.remove();
+  while (ol.children.length > LOG_SHOWN) ol.lastElementChild.remove();   // bounded: the desktop panel never scrolls (RULES §7)
   root.dispatchEvent(new CustomEvent("tm-log"));
 }

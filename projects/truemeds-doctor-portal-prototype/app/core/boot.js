@@ -88,7 +88,18 @@ function startState(opening) {
   return (opening && mode !== "capture" && onOpen(ctx)) || "sign-in_default";
 }
 function startParams(s, opening = false) { if (s) return { s }; const id = startState(opening); return id ? { s: id, live: true } : { s }; }
+// Behaviour-only step-1 states have no picture: Jump opens the screen where the behaviour shows (app-logic §2,
+// feedback-state-map rows). Later steps' behaviour states keep their card until their step builds them.
+const BEHAVIOUR_SCREEN = {
+  "offer.shown": "offer_fingerprint",        // offered once after the first sign-in
+  "offer.cancelled": "offer_fingerprint",    // prompt cancelled → back on the offer, unchanged, no message
+  "offer.enabled": "home_setup-wheel",       // turned on → Home (stub until step 2)
+  "offer.not-now": "home_setup-wheel",       // Not now → Home
+  "offer.unsupported": "home_setup-wheel",   // no screen lock → offer skipped → Home
+  "signin.locked-number": "otp_locked",      // sign-in on a locked number → OTP locked
+};
 function renderScreen(id, params = {}) {
+  if (id && BEHAVIOUR_SCREEN[id]) id = BEHAVIOUR_SCREEN[id];
   document.body.classList.toggle("picture-only", !!id);
   if (!id) {
     renderShellIntro(host, mode);
@@ -123,7 +134,7 @@ if (mode === "review" || mode === "play") {
   panelRoot.hidden = false;
   controls = mountPanel(panelRoot, {
     story,
-    stateIds: window.TM_STATE_MAP.pictures.map((r) => ({ id: r.id, step: r.step })),
+    stateIds: [...window.TM_STATE_MAP.pictures, ...window.TM_STATE_MAP.others].map((r) => ({ id: r.id, step: r.step })),   // behaviour-only states too
     handlers: {
       onChange: (s) => {
         story = s;

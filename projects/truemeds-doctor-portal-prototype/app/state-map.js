@@ -2255,7 +2255,7 @@ window.TM_STATE_MAP = {
    "label": "record over the gate",
    "kind": "e",
    "drawn": true,
-   "route": "shared",
+   "route": "cat4 / ha-skipped",
    "screen": "—"
   },
   {
@@ -2377,7 +2377,7 @@ window.TM_STATE_MAP = {
    "label": "Call again",
    "kind": "a",
    "drawn": false,
-   "route": "cat4",
+   "route": "every",
    "screen": "—"
   },
   {
@@ -2387,7 +2387,7 @@ window.TM_STATE_MAP = {
    "label": "Back",
    "kind": "a",
    "drawn": false,
-   "route": "cat4",
+   "route": "every",
    "screen": "—"
   },
   {
@@ -2407,7 +2407,7 @@ window.TM_STATE_MAP = {
    "label": "Call patient",
    "kind": "a",
    "drawn": true,
-   "route": "cat4",
+   "route": "every",
    "screen": "—"
   },
   {
@@ -2417,7 +2417,7 @@ window.TM_STATE_MAP = {
    "label": "Back",
    "kind": "a",
    "drawn": true,
-   "route": "cat4",
+   "route": "every",
    "screen": "—"
   },
   {

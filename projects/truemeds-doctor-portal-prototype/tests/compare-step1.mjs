@@ -46,7 +46,8 @@ const ids = window.TM_STATE_MAP.pictures.filter((r) => r.step === 1).map((r) => 
 fs.mkdirSync(OUT, { recursive: true });
 
 const browser = await chromium.launch({ executablePath: process.env.CHROME || undefined });
-const SPIN_JS = "() => [...document.querySelectorAll('.tm-spinner')].filter(e => e.getClientRects().length && !e.hidden).map(e => { const r = e.getBoundingClientRect(); return [r.x, r.y, r.width, r.height]; })";
+// Only spinners that are drawn: laid out, not hidden, visibility visible, opacity above 0 on the spinner and its ancestors.
+const SPIN_JS = "() => [...document.querySelectorAll('.tm-spinner')].filter(e => e.getClientRects().length && !e.hidden && e.checkVisibility({ opacityProperty: true, visibilityProperty: true, contentVisibilityAuto: true })).map(e => { const r = e.getBoundingClientRect(); return [r.x, r.y, r.width, r.height]; })";
 async function shoot(target, w, { capture, source = false }) {
   const pg = await browser.newPage({ viewport: { width: w, height: 844 }, deviceScaleFactor: 2 });
   const errs = [];
@@ -146,12 +147,15 @@ for (const id of ids) {
     if (A.width !== B.width || A.height !== B.height) { row.result = "failed"; row.reason = "size differs"; continue; }
     // spinner: union of the built rect and the approved source rect, both sides, in picture px (+2 px margin)
     const masks = [...built.spin, ...src.spin].map(([x, y, ww, hh]) => [Math.floor((x - 2) * 2), Math.floor((y - 2) * 2), Math.ceil((x + ww + 2) * 2), Math.ceil((y + hh + 2) * 2)]);
-    const { regions, total } = regionsOf(A, B, masks);
+    // The mask hides only the spinner's drawing: both sides must show a spinner, the same number, in the same box (1 css px).
+    const spinOk = built.spin.length === src.spin.length && built.spin.every((b, i) => b.every((v, k) => Math.abs(v - src.spin[i][k]) <= 1));
+    const eff = spinOk ? masks : [];
+    const { regions, total } = regionsOf(A, B, eff);
     row.changedPx = total;
     const S = src.png;   // the approved source file rendered on this Mac
     const sameSize = S && S.width === B.width && S.height === B.height;
     const builtVsSource = (box) => { if (!sameSize) return Infinity; let n = 0; const [x0, y0, x1, y1] = box;
-      for (let y = y0; y < y1; y++) for (let x = x0; x < x1; x++) if (!masks.some(([a, b, c, d]) => x >= a && x < c && y >= b && y < d) && delta(S, B, x, y) > THRESH) n++; return n; };
+      for (let y = y0; y < y1; y++) for (let x = x0; x < x1; x++) if (!eff.some(([a, b, c, d]) => x >= a && x < c && y >= b && y < d) && delta(S, B, x, y) > THRESH) n++; return n; };
     if (sameSize) { let n = 0, m = 0; for (let y = 0; y < A.height; y++) for (let x = 0; x < A.width; x++) { const d = delta(A, S, x, y); if (d > THRESH) n++; if (d > m) m = d; } row.macDiff = { px: n, maxDelta: m }; }
     const aa = ALLOW.antiAliasing.find((e) => new RegExp(e.match).test(id));
     let aaPx = 0;
@@ -163,7 +167,8 @@ for (const id of ids) {
       else { r.why = "unexplained"; r.reason = r.shifted ? `shifted by ${r.shift.join(",")} px` : r.builtVsSource ? `built differs from the approved source here (${r.builtVsSource} px)` : `max channel difference ${r.maxDelta}`; }
     }
     if (aa && aaPx > aa.maxPx) for (const r of regions) if (r.why === "anti-aliasing") { r.why = "unexplained"; r.reason = `anti-aliasing total ${aaPx} px over the ${aa.maxPx} px limit`; }
-    for (const m of masks) regions.push({ box: m, why: "spinner", reason: "busy spinner masked on both sides", px: 0, maxDelta: 0 });
+    if (spinOk) for (const m of masks) regions.push({ box: m, why: "spinner", reason: "busy spinner masked on both sides", px: 0, maxDelta: 0 });
+    else regions.push({ box: masks[0] || [0, 0, 0, 0], why: "unexplained", reason: `spinner missing or moved (built ${JSON.stringify(built.spin)}, approved source ${JSON.stringify(src.spin)})`, px: 0, maxDelta: 0 });
     row.regions = regions;
     const bad = regions.filter((r) => r.why === "unexplained");
     row.result = built.errs.length ? "failed" : bad.length ? "failed" : total === 0 ? "exact" : "accepted";

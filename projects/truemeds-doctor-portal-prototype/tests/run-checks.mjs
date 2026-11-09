@@ -273,6 +273,18 @@ async function open(qs, { w = 1280, h = 800 } = {}) {
   const texts = await r.p.evaluate(() => [...document.querySelectorAll("#review-panel option")].map((o) => o.textContent));
   const codeLike = texts.filter((t) => /^[a-z0-9]+([-_][a-z0-9]+)+$/.test(t) || /^\d+ · /.test(t));
   check("P4", "panel options read as words (no ids like over-gate, 1 · offer_enable-failed)", codeLike.length === 0, codeLike.slice(0, 5).join(", "));
+  const jump = await r.p.evaluate(() => [...document.querySelectorAll("#rp-jump option")].map((o) => [o.value, o.textContent]));
+  check("P2b", `Jump to a state lists every picture and behaviour-only state (${ids.length}) by its plain name, grouped by journey`,
+    jump.length === ids.length && jump.every(([v, t]) => STATE_NAME[v] === t) && (await r.p.evaluate(() => document.querySelectorAll("#rp-jump optgroup").length)) >= 8, `${jump.length} options`);
+  // behaviour-only step-1 states open the screen where the behaviour shows, with that journey's drawer controls
+  const jumpTo = async (id) => { await choose(r.p, "jump", id); await r.p.click("#rp-jump-go"); await r.p.waitForTimeout(250);
+    return r.p.evaluate(() => ({ s: window.__tm.store.get().s, j: window.__tm.store.get().journey, card: !!document.querySelector(".shell-picture--card") })); };
+  const bc = await jumpTo("offer.cancelled"), bl = await jumpTo("signin.locked-number"), bn = await jumpTo("offer.not-now");
+  check("P2c", "Jump to a behaviour-only step-1 state opens its screen (offer.cancelled → offer, signin.locked-number → OTP locked, offer.not-now → Home), not a card",
+    bc.s === "offer_fingerprint" && bc.j === "offer" && !bc.card && bl.s === "otp_locked" && bl.j === "otp" && bn.s === "home_setup-wheel", JSON.stringify({ bc, bl, bn }));
+  await jumpTo("sign-in_default");
+  // a busy event log (60 events) must not push the panel past the screen (bounded list, RULES §7)
+  await r.p.evaluate(async () => { const m = await import("./review/panel.js"); for (let i = 0; i < 60; i++) m.logLine(document.getElementById("review-panel"), `event ${i} with some detail {"partner":"ozonetel","callId":"call-${i}"}`); });
   const geo = [];
   for (const row of ["story", "jump", "entry", "work", "call", "settings", "log"]) {
     await r.p.evaluate((k) => { const d = document.querySelector(`details[data-row=${k}]`); d.open = true; }, row); await r.p.waitForTimeout(80);
@@ -301,6 +313,13 @@ async function open(qs, { w = 1280, h = 800 } = {}) {
   await r.p.evaluate(() => { document.querySelector("details[data-row=call]").open = true; });
   await r.p.screenshot({ path: path.join(SHOTS, "panel-1280-call.png") });
   check("P8", "panel at 1280: 0 console errors", r.errors.length === 0, r.errors.join(" | "));
+  // width change while open: desktop → phone filters the drawer to the current screen; back to desktop shows every row again
+  await r.p.setViewportSize({ width: 390, height: 844 }); await r.p.waitForTimeout(250);
+  const narrowRows = await r.p.evaluate(() => [...document.querySelectorAll("#rp-review > details")].filter((d) => !d.hidden).map((d) => d.dataset.row));
+  await r.p.setViewportSize({ width: 1280, height: 800 }); await r.p.waitForTimeout(250);
+  const wideRows = await r.p.evaluate(() => [...document.querySelectorAll("#rp-review > details")].filter((d) => !d.hidden).map((d) => d.dataset.row));
+  check("P8b", "resize: drawer filtering follows the width (390: sign-in controls, Jump, Story; 1280: all 7 rows)",
+    narrowRows.join(",") === "entry,jump,story" && wideRows.length === 7, JSON.stringify({ narrowRows, wideRows }));
   await r.ctx.close();
   // Phone drawer: handle centred vertically (not in the top 200 px); current screen's controls first, then Jump, Story, Restart;
   // the drawer follows a transition.
