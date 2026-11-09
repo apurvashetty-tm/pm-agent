@@ -945,3 +945,10 @@ User identified missing HTML/native linkage. Inspected actual sign-in and OTP HT
 - **Done today:** D-98 kit fixes; D-99 token pass (111 → 0 raw values, 25 `raw-ok`, 298 pictures identical, token tests 90 / 90 after the main-thread ruling); A1 (Home, case page, Prescribe / Disable: 132 pictures under 1 %, all checks pass, 4 Codex test disputes ruled and fixed, review passed).
 - **Running:** A2 (calling, step 5), then B (Pilot). **Next for the main thread:** review A2 / B, add the "kit for all journeys" queue line, then Apurva's phone walkthrough (incl. A1 eye checks) and the 10 product questions in the kit's OPEN list.
 - **Waiting on Apurva:** merge `shared/way-of-working` (central playbook); Product answers for the kit.
+
+## 2026-11-09 (22:15) · Thread handover — start a new main thread
+- **Chain:** A2 (calling) running since 21:36, then B (Pilot). Hourly check-in (scheduled task "Doctor portal — build chain check-in", :25 past each hour) reviews runs into `docs/runs/CHECKIN.md` / `RULINGS.md`. A1 reviewed and passed (21:50).
+- **Git:** PR #36 (whole branch → `main`) closed unmerged on purpose (evidence stays on this branch). PR #37 (central playbook, docs only) merged to `main` at 21:44 by mistake mid-chain — harmless, left in place, logged. Central rule edits (run evidence, what goes to `main`, no merges during chains, archive tag before close; Netlify log) are on `shared/run-evidence-and-main`, **no PR yet — merge after the chain**. After-chain plan: backlog §2m.
+- **Netlify (22:10):** deploy previews off for both sites; production deploys only with `[deploy]`. Logged in `docs/TEAM_GIT_WORKFLOW.md`.
+- **Open for Apurva:** Product answers for the kit's OPEN list (10 items); phone walkthrough after the chain (incl. A1 eye checks); FE engineer walkthrough of the Sign-in kit.
+- **Next main thread:** review A2 / B as they finish; add the "kit for all journeys" queue line before B ends; then §2m and the shared PR.
