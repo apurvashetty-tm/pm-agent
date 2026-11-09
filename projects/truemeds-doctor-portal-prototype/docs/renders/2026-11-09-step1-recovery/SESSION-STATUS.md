@@ -1,3 +1,5 @@
+> **Main thread, 2026-11-09 07:45:** work is now split into sessions — see the table at the top of `TERMINAL-BRIEF.md`. Session 1 = done. Next: **session 2** (sign-in finished + OTP).
+
 # Step 1 Recovery — Session Status (2026-11-09)
 
 **Session time:** ~3.5 hours terminal work  

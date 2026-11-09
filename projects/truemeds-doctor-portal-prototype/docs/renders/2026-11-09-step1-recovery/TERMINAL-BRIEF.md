@@ -3,6 +3,26 @@
 Owner: main Claude thread · Runner: Claude Code (terminal), Codex as critic · 2026-11-09
 Folder: `~/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype` (project branch). **New Mac, new path:** the repo is now `~/pm-agent` (was `~/src/pm-agent`); older briefs still say the old path — read them with the new one.
 
+## How to run this — one session at a time (added 2026-11-09 07:45)
+
+Session 1 (overnight) did set-up and started sign-in, then ended on its own after one checkpoint. The work is now split into **sessions**. Each time you are started: read `SESSION-STATUS.md`, do **the first session below not marked done**, finish it completely, then stop. Do not stop at an earlier "natural checkpoint"; do not start the next session.
+
+| # | Session | Done when |
+|---|---|---|
+| 1 | Set-up + screen host | ✅ done (checkpoint a, screen system) |
+| 2 | Sign-in finished + OTP | Both journeys built to section 1, all their states render from `?s=`, their journey tests pass, `check-sources.mjs` passes on them |
+| 3 | Faster sign-in offer + returning unlock + D-92 (section 2) | Both journeys built and tested; the 20 D-92 pictures re-rendered, name-only diff checked; all guards pass |
+| 4 | Part A panel + checklist 1.3 table + compare harness | Panel / drawer / QR per Part A; harness built; compare run on all 42 step-1 states with every region explained; `layout_check.py --app` passes |
+| 5 | Codex + report | Section 4 and "Report and stop" |
+
+**Every session ends the same way:** push with `scripts/publish.sh` (it must print "Pushed to …" — a local `git commit` alone is not a checkpoint), then update `SESSION-STATUS.md` (mark the session ✅, list anything left), publish that too, and stop.
+
+**Quality rules the sign-in start broke — fix in session 2:**
+- **No inline styles.** Lift the approved screen's markup and classes from `ui-screens/<journey>/<journey>.html`; its CSS goes into one stylesheet per journey under `app/screens/` using only `--tm-*` tokens and `.tm-*` classes. Replace the inline CSS already in `app/screens/sign-in.js`.
+- **Copy keys:** every visible word through `MSG()`. Reuse existing `messages.json` keys first; add a key only for an approved-picture label that has none (plan B6), named in the same scheme as its neighbours, with the exact text from the picture.
+- **On-screen keyboard in OTP / sign-in pictures:** do what plan v3.2 says. If it is silent, show the drawn keyboard exactly as in the approved picture in capture and review modes, and rely on the phone's own keyboard in demo mode; mark it `[MOCK ASSUMPTION]` in the report.
+- **Git:** use `git -C <folder> …` or `scripts/publish.sh` from the folder you're in; never `cd <folder> && git …`.
+
 ## What happened
 
 Step 1 ran three rounds on 6 Nov (round 1 build, round 2 Codex blockers, round 3 compare fixes). None of it was committed; the old Mac died and it is gone: the `app/` step 1 code, the compare harness, 21+ tests, `REPORT.md`, Codex critiques, and the D-92 re-renders. **Step 0 is committed and intact** (`docs/renders/2026-11-06-step0/`).
