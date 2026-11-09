@@ -47,7 +47,7 @@ Links each rule in `PRD.md` to its source, so the PRD body carries no decision n
 | 5.7 | No buttons that do nothing; waits are status text | D-56, D-74 |
 | 5.7 | Gate is total talk time, adds up, never shown | AL §5, D-58 pt 22 |
 | 5.7 | Attempted = patient's leg connected | D-58, project_truth §4 |
-| 5.7 | Who decides validity: own count on a live Pilot call, partner result otherwise | AL §5 (Launch B rule, All other cases), data.js B0 rules |
+| 5.7 | Who decides validity: own count on a live Pilot call with an HA call to come, partner result otherwise (Cat4, HA skipped) | AL §5 (Launch B rule, All other cases), data.js B0 rules, data.js C0 / RES / T17 (Codex round 2) |
 | 5.7 | Nothing before the gate, except confirm with no result (waits for the record) | AL §5, D-83 CW-D2/D3, data.js 7d |
 | 5.7 | Final button table | AL §6 (launch B), project_truth §4, D-83 CW-D2, CW-F3 |
 | 5.7 | Unproven confirm not confirmed; no Ops queue | D-83 pt 9 (CW-D3, D4, F2) |
@@ -89,6 +89,7 @@ Links each rule in `PRD.md` to its source, so the PRD body carries no decision n
 | 7 | Prototype [MOCK] values (ending-soon 5 min, OTP lock/window/resend, unlock tries) | left as `[NEED]`, numbers not carried into the PRD |
 | 9 | Out list | project_truth §1, D-87, D-88 pt 4, backlog §4b, OQ-015, OQ-028, old PRD §11.2 (incl. Super Doctor role) and R4 |
 | 10 | Open items | open_questions.md, backlog §4, D-83 Engineering list, D-73 (monitoring), AL §11 (incentive) |
+| 10 | Exact talk-time adding rule (shortest call, window anchor) | AL §5 ("each at least ~10 s, within ~30 min"), data.js RES rules; approximate in the sources (Codex round 2) |
 | 9 | Old-PRD R1, R2, R3, R6 out of this release | Apurva, 9 Nov 2026 |
 | 10 | Masking and call recording stay open for Legal | old PRD §10.5; Apurva, 9 Nov 2026 |
 | 11 | Four outcomes tracked apart; renaming never renames events | D-50, AL §6 |

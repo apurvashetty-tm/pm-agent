@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| Status | Draft for review · v0.4 · 9 Nov 2026 |
+| Status | Draft for review · v0.5 · 9 Nov 2026 |
 | Owner | Apurva Shetty (Product) |
 | Release | Launch release (first version of the doctor app) |
 | Calling flow, every state | [Calling-flow page](https://doctor-portal-prototype.netlify.app/calling-flow/) |
@@ -264,7 +264,7 @@ Each screen opens with the job the doctor is trying to get done, then why it's b
 
 **Rules for every call:**
 - **Valid call.** A call is valid when total talk time on the case reaches the gate time (§7). Talk time adds up across connected calls on the same case. The doctor is never shown the count.
-- Who decides the call is valid: on a live Pilot call, the app's own count from the moment the patient answered, so Confirm prescription can appear while the patient is still on the line (the partner's duration is kept for reporting). On every other call, the telecom partner's call result after the call ends.
+- Who decides the call is valid: on a live Pilot call that still has a Health Advisor call to come, the app's own count from the moment the patient answered, so Confirm prescription can appear while the patient is still on the line (the partner's duration is kept for reporting). On every other call (Cat4, and Pilot with the Health Advisor call skipped), the telecom partner's call result after the call ends.
 - Attempted call: a call is attempted only when the patient's leg connects (the patient answered). A failed request or a doctor who didn't answer isn't an attempted call.
 - Before the call is valid, the app never shows Confirm prescription, Confirm & transfer, Confirm & forward or Skip HA. The one exception is when no call result came at all: the doctor can then confirm, and the confirm waits for the call record (next rule).
 - **Final button by case type.** The system picks it:
@@ -501,6 +501,7 @@ Every value below is a starting value, set by its owner and changeable without a
 - Should Home keep checking for a case after "No cases right now", and how often? (OQ-019) [Apurva + Engineering]
 - Does the doctor who picks up a callback from the pool see the earlier doctor's notes? (OQ-020) [Apurva]
 - The table where unproven confirms are logged for analytics. [Engineering]
+- Which calls add up to the gate, exactly: the shortest call that counts and what the time window is measured from (§7 gives approximate starting values). [Product + Engineering]
 
 *Health Advisors*
 - Reserving a Health Advisor when the call starts, needed for Annex A. (OQ-032) [Apurva + Engineering + Ops]

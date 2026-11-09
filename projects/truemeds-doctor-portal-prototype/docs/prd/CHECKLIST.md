@@ -1,6 +1,6 @@
 # PRD done-checklist: evidence
 
-Checklist approved in `PRD-PLAN.md` §4 (28 lines). **auto** = `node docs/prd/check-prd.mjs` (run from the project folder). Status at v0.4 (Apurva's answers applied, 9 Nov 2026), before the Codex confirmation round.
+Checklist approved in `PRD-PLAN.md` §4 (28 lines). **auto** = `node docs/prd/check-prd.mjs` (run from the project folder). Status at v0.5 (Codex confirmation round applied, 9 Nov 2026).
 
 | # | Check | How | Status | Evidence |
 |---|---|---|---|---|
