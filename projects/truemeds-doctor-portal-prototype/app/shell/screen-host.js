@@ -3,6 +3,9 @@
 import { REVIEW_TEXT as T } from "../review/labels.js";
 import { MSG } from "../core/msg.js";
 import * as signInScreen from "../screens/sign-in.js";
+import * as otpScreen from "../screens/otp.js";
+import * as offerScreen from "../screens/faster-signin-offer.js";
+import * as unlockScreen from "../screens/returning-unlock.js";
 
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 export const FOLDER_JOURNEY = { "sign-in": "signIn", otp: "otp", "faster-signin-offer": "offer", "returning-unlock": "unlock", home: "home", case: "caseView", prescribe: "prescribe" };
@@ -10,6 +13,9 @@ export const FOLDER_JOURNEY = { "sign-in": "signIn", otp: "otp", "faster-signin-
 // Built screen renderers (step 1+)
 const renderers = {
   "sign-in": signInScreen.render,
+  "otp": otpScreen.render,
+  "faster-signin-offer": offerScreen.render,
+  "returning-unlock": unlockScreen.render,
 };
 
 export function findState(id) {

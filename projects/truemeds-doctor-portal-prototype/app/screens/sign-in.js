@@ -189,7 +189,7 @@ export function render(host, id, { mode, w }) {
   host.appendChild(section);
 
   // Set state (picture-like behavior for demonstration)
-  const inputVal = { default: '', 'keyboard-open': '98765', 'empty-tap': '', 'too-short': '98765432', 'wrong-first-digit': '1234567890', 'pasted-cleaned': '9876543210', sending: '9876543210', 'not-registered': '9876543210', offline: '9876543210', 'couldnt-send': '9876543210', 'too-many-tries': '9876543210', inactive: '9876543210' }[stateKey];
+  const inputVal = { default: '', 'keyboard-open': '98765', 'empty-tap': '', 'too-short': '98765432', 'wrong-first-digit': '1234567890', 'pasted-cleaned': '9000000001', sending: '9000000001', 'not-registered': '9000000001', offline: '9000000001', 'couldnt-send': '9000000001', 'too-many-tries': '9000000001', inactive: '9000000001' }[stateKey];
   input.value = inputVal;
 
   // Show appropriate notice
