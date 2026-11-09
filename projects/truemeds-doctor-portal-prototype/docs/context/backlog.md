@@ -71,6 +71,14 @@ Order = the order we work in.
 2. [ ] **Token inspector** page generated from the screens (which tokens each element uses) for engineering. Figma snapshot only if the design team asks.
 3. [ ] **PRD** page by page, engineering hand-off pack, then the rest of this backlog.
 
+## 2m. After the build chain — git and `main` (agreed with Apurva 2026-11-09; other thread "Git connector sign-in issue" + main-thread review)
+Nothing goes to `main` while the chain runs (`publish.sh` pulls `main` into this branch on every publish). PR #36 (whole branch → `main`) was closed unmerged on purpose. PR #37 (central playbook, docs only) was merged at 21:44 by mistake while the chain ran; reviewed, harmless, left in place.
+1. [ ] **When the chain finishes:** archive tag on the branch head (e.g. `archive/doctor-portal-2026-11-09`) — pins the finished build and its evidence.
+2. [ ] **Tokens to `main` first:** before / after look at ACOM's 2 pages that use the central design system → `shared/design-tokens` PR with only the `design-system/` and `scripts/` changes (≈22 files) → Apurva approves → merge → this branch picks up `main` on its next publish.
+3. [ ] **When Apurva approves the prototype:** one deliverables PR = **everything in this project except run evidence** (`docs/renders/**` work folders and `*.log`). Includes `app/`, `ui-screens/`, `handoff/`, `scripts/`, `tests/`, `calling-flow/`, `brand/`, `reference/`, `docs/` (minus evidence), `CLAUDE.md`, and the old `index.html` / `app.js` / `styles.css` (the live demo still serves them). Built on a branch from `main`, merged as a normal merge commit.
+4. [ ] **From the next run on:** commit proof (reports, JSON, comparison sheets, logs) and only pictures that **differ**; not identical re-captures (≈150 MB of renders on the branch after two days).
+5. [ ] **Before any `workspace.sh close project`:** the archive tag must exist (close deletes the branch on GitHub).
+
 ## 3. Rebuild items (for the build, not the renders)
 - [ ] All button labels through `MSG()` (some are typed inline in the render recipes).
 - [ ] After-confirm and closed states: View Rx, medicine rows and notes read-only and muted; no overlay (D-62).
