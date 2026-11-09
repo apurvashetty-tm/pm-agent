@@ -73,13 +73,13 @@ export function render(host, id, { mode, params = {} }) {
   const submit = h("button", { class: "tm-btn tm-btn--primary tm-btn--lg tm-btn--block login-submit", type: "button", onclick: onSubmit }, spinner, submitLabel);
   const field = h("div", { class: "tm-field" },
     h("label", { class: "tm-field__label", for: "tm-login-mobile", text: MSG("signin.phoneLabel") }),
-    h("div", { class: "tm-field__control" }, h("span", { class: "login-prefix", text: "+91" }), input),
+    h("div", { class: "tm-field__control" }, h("span", { class: "login-prefix", text: MSG("signin.phonePrefix") }), input),
     helper, Object.values(notices));
   const signupLink = h("a", { class: "login-signup-label", href: SIGN_UP_URL, target: "_blank", rel: "noopener", text: MSG("signin.signupLink") });
   const signup = h("div", { class: "login-signup", id: "tm-signup-option" }, `${MSG("signin.signup")} `, signupLink);
   const keyboard = kbDrawn ? mockKeyboard(typeKey) : null;
   const root = h("section", { class: "signin-screen tm", "aria-labelledby": "tm-login-title" },
-    h("img", { class: "login-logo", src: "brand/truemeds-for-doctors.svg", alt: "truemeds for doctors" }),
+    h("img", { class: "login-logo", src: "brand/truemeds-for-doctors.svg", alt: MSG("signin.logoAlt") }),
     h("main", { class: "login-content" },
       h("h1", { id: "tm-login-title", text: MSG("signin.welcome") }),
       h("p", { text: MSG("signin.subtitle") }),
@@ -170,7 +170,8 @@ export function render(host, id, { mode, params = {} }) {
     input.blur();
     paint();
   }
-  // Countdown on "Try again in m:ss"; when it ends the button is Send OTP again (the notice stays until the number changes).
+  // Countdown on "Try again in m:ss". When it ends, the "Too many attempts" notice goes away and Send OTP works again
+  // (D-98, app-logic §2).
   life.every(() => {
     if (m.button !== "wait") return;
     if (clock.now() >= m.until) { m.button = "default"; m.notice = null; }

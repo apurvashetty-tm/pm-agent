@@ -21,5 +21,27 @@
       24,
       600
     ]
+  },
+  "size": {
+    "_about": "Sizes with no SALT token, added by D-98 (Sign-in hand-off kit). Values in px (web) / points (native). CSS: --tm-<group>-<name>; native: tokens.<group>.<name>. [PROPOSED], listed in beyond-salt.md.",
+    "border-width": {
+      "default": 1
+    },
+    "focus-ring": {
+      "width": 2,
+      "offset": 2
+    },
+    "icon-size": {
+      "sm": 16,
+      "md": 20,
+      "lg": 24
+    },
+    "spinner": {
+      "size": 16,
+      "ring": 2
+    },
+    "logo-lockup": {
+      "width": 166
+    }
   }
 }

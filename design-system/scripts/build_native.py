@@ -157,6 +157,8 @@ def truemeds(sem, palette):
     for name, ref in tm["content"].items():
         family, shade = ref.split(":", 1)[1].rsplit("-", 1)
         sem["color"].setdefault("content", {})[key(name)] = palette[family][shade]
+    # D-98: sizes with no SALT token -> tokens.<group>.<name> (points), same values as the --tm-<group>-<name> CSS variables
+    sem["size"] = {key(g): {key(n): v for n, v in vals.items()} for g, vals in tm.get("size", {}).items() if not g.startswith("_")}
     return {key(k): v for k, v in tm["text"].items()}
 
 
@@ -174,6 +176,7 @@ def main():
         "color": sem["color"],
         "space": sem["space"],
         "radius": sem["radius"],
+        **sem["size"],
         "font": sem["font"],
         "text": text,
         "shadow": shadows,

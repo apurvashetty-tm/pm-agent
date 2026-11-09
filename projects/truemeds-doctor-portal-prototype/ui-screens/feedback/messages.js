@@ -2,9 +2,11 @@
 (() => {
   const messages = Object.freeze({
   "signin.welcome": "Welcome, Doctor",
+  "signin.logoAlt": "truemeds for doctors",
   "signin.subtitle": "Your partner in thoughtful, affordable care.",
   "signin.phoneLabel": "Mobile number",
   "signin.phonePlaceholder": "e.g. 98765 43210",
+  "signin.phonePrefix": "+91",
   "signin.submitDefault": "Send OTP",
   "signin.submitSending": "Sending OTP…",
   "signin.submitWait": "Try again in {time}",

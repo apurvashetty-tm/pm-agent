@@ -104,14 +104,15 @@ h1, .tm-text-title-lg, .tm-text-h1 { text-wrap: balance; }
   box-shadow: none; cursor: not-allowed;
 }
 .tm-btn--ghost:disabled, .tm-btn--link:disabled, .tm-btn--quiet:disabled, .tm-btn--tertiary:disabled { background: transparent; }
-.tm-btn:focus-visible { outline: 2px solid var(--tm-border-focus); outline-offset: 2px; }
+.tm-btn:focus-visible { outline: var(--tm-focus-ring-width) solid var(--tm-border-focus); outline-offset: var(--tm-focus-ring-offset); }
 
 /* [PROPOSED] Busy state — action in progress (e.g. "Calling…"). Keeps the primary look at full
    strength (a disabled grey would read as unavailable). Not in SALT; pending design-team review. */
 /* LOCKED L2 (D-46): loading primary = brand fill, white label and white spinner, on every screen, even when disabled. Never grey or pale. */
 .tm-btn--busy, .tm-btn--busy:disabled, .tm-btn--primary[aria-busy="true"]:disabled { background: var(--tm-surface-brand-default); color: var(--tm-content-inverse); cursor: default; }
 /* Spinner is solid white with one open gap (LOCKED L2). */
-.tm-btn--busy .tm-spinner { display: inline-block; width: 16px; height: 16px; flex: none; margin-right: var(--tm-space-sm); vertical-align: -3px; box-sizing: border-box; border: 2px solid #fff; border-top-color: transparent; border-radius: 50%; animation: tm-spin 0.8s linear infinite; }
+.tm-btn--busy .tm-spinner { display: inline-block; width: var(--tm-spinner-size); height: var(--tm-spinner-size); flex: none; margin-right: var(--tm-space-sm); box-sizing: border-box; border: var(--tm-spinner-ring) solid var(--tm-content-inverse); border-top-color: transparent; border-radius: var(--tm-radius-full); animation: tm-spin 0.8s linear infinite; }   /* D-98: sizes and ring colour from tokens */
+.tm-btn--busy span > .tm-spinner { vertical-align: -3px; }   /* a spinner inside a label span sits on the text line; as a direct flex child (sign-in) it needs no nudge. No token yet (D-98 follow-up) */
 /* A-08 (2026-11-02): spinner→label gap is the spinner's own 8 only. The button's flex gap is dropped while busy so it never stacks to 16. */
 .tm-btn--busy { gap: 0; }
 @keyframes tm-spin { to { transform: rotate(360deg); } }
@@ -129,7 +130,7 @@ h1, .tm-text-title-lg, .tm-text-h1 { text-wrap: balance; }
 .tm-field__control {
   display: flex; align-items: center; gap: var(--tm-space-sm);
   background: var(--tm-surface-primary);
-  border: 1px solid var(--tm-border-default); border-radius: var(--tm-radius-md);
+  border: var(--tm-border-width-default) solid var(--tm-border-default); border-radius: var(--tm-radius-md);
   padding: var(--tm-space-md);
   min-height: var(--tm-space-3xl); cursor: text;   /* 48px tap target (RULES §8.6) */
 }
@@ -274,7 +275,7 @@ h1, .tm-text-title-lg, .tm-text-h1 { text-wrap: balance; }
 .tm-notice {
   display: flex; gap: var(--tm-space-sm); align-items: flex-start;
   padding: var(--tm-space-md); border-radius: var(--tm-radius-md);
-  border: 1px solid var(--tm-border-brand-subtle);
+  border: var(--tm-border-width-default) solid var(--tm-border-brand-subtle);
   background: var(--tm-surface-brand-subtle); color: var(--tm-content-primary);
   /* LOCKED L5 (D-46): notice text is 14/20. */
   font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm);
@@ -284,7 +285,7 @@ h1, .tm-text-title-lg, .tm-text-h1 { text-wrap: balance; }
 /* [PROPOSED] Non-error access and empty-state information. */
 .tm-notice--neutral { background: var(--tm-surface-secondary); border-color: var(--tm-border-default); }
 .tm-notice--neutral .tm-icon { color: var(--tm-content-secondary); }
-.tm-notice .tm-icon { width: 20px; height: 20px; flex: none; }   /* feedback-rules: 20px leading icon */
+.tm-notice .tm-icon { width: var(--tm-icon-size-md); height: var(--tm-icon-size-md); flex: none; }   /* feedback-rules: 20px leading icon */
 /* Status line (D-74): a long wait that is not an action — e.g. "Calling Ramesh…", "Getting call result…". Plain centred text with a small
    spinner, no shape or fill, so it never reads as a button. Short waits right after a tap keep the busy button (.tm-btn--busy). */
 .tm-status-line { display: flex; align-items: center; justify-content: center; gap: var(--tm-space-sm); min-height: var(--tm-space-3xl); font-size: var(--tm-font-size-body-lg); line-height: var(--tm-font-lineheight-md); font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-primary); }
@@ -457,7 +458,7 @@ h1, .tm-text-title-lg, .tm-text-h1 { text-wrap: balance; }
 /* ---------- Accessibility (RULES §9.8) ---------- */
 /* D-54: the outline is for buttons, links and tappable rows. Text fields and the OTP code show focus with their own border
    (.tm-field__control:focus-within, the current OTP box); a sheet or screen focused by script (tabindex="-1") shows nothing. */
-.tm :where(a, button, select, summary, [tabindex]:not([tabindex="-1"]):not(input):not(textarea)):focus-visible { outline: 2px solid var(--tm-border-focus); outline-offset: 2px; }
+.tm :where(a, button, select, summary, [tabindex]:not([tabindex="-1"]):not(input):not(textarea)):focus-visible { outline: var(--tm-focus-ring-width) solid var(--tm-border-focus); outline-offset: var(--tm-focus-ring-offset); }
 .tm :where(input, textarea, [tabindex="-1"]):focus-visible { outline: none; }
 /* D-54: body text avoids a single word alone on its last line (titles already balance, L8). */
 .tm :where(p, li, .tm-field__helper, .tm-option__desc) { text-wrap: pretty; }

@@ -196,6 +196,16 @@ const signInNotice = (p) => p.evaluate(() => [...document.querySelectorAll(".log
     nr?.startsWith("Number not registered") && cs === "Couldn’t send the code." && tm === "Too many attempts on this number." && /^Try again in 10:00$/.test(btn) && dis &&
     after === "Send OTP" && ia === "This account is inactive." && iaBtn === "Call Doctor Ops" && ph === "This would call Doctor Ops" && backNum === "9000000002" &&
     off === "You’re offline. Check your connection.", JSON.stringify({ nr, cs, tm, btn, after, ia, iaBtn, ph, backNum, off }));
+  { // B3b (D-98, app-logic §2): when the countdown ends, the "Too many attempts" notice goes away and Send OTP works again
+    await typeNumber(p, "9000000003"); await p.click(".login-submit"); await p.waitForTimeout(ANSWER);
+    const during = await signInNotice(p);
+    await ff(p, value("tooManyTriesWait", "review")); await p.waitForTimeout(400);
+    const end = { notice: await signInNotice(p), label: await text(p, ".login-submit-label"), disabled: await p.isDisabled(".login-submit") };
+    await p.click(".login-submit"); await p.waitForTimeout(ANSWER); const resent = await signInNotice(p);
+    check("B3b", "too many attempts: when the countdown ends the notice goes away and Send OTP works again (tapping it asks the server again)",
+      during === "Too many attempts on this number." && !end.notice && end.label === "Send OTP" && !end.disabled && resent === "Too many attempts on this number.",
+      JSON.stringify({ during, end, resent }));
+  }
   await send(p, "9000000005");
   const locked = await p.evaluate(() => ({ otp: !!document.querySelector(".otp-screen"), disabled: document.getElementById("b").disabled, field: document.getElementById("c").disabled, note: document.getElementById("nt").textContent.replace(/\u00a0/g, " "), change: !!document.querySelector("a.lk") }));
   check("B3b", "9000000005: straight to OTP locked (field and Verify off, lock time, call Doctor Ops, Change kept)",

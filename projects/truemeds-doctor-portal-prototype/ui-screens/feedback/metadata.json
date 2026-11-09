@@ -786,6 +786,15 @@
     "retain": "—",
     "copy": "approved picture label (plan B6, step 1 recovery 2026-11-09)"
   },
+  "signin.logoAlt": {
+    "pattern": "none",
+    "trigger": "entry screen label",
+    "slot": "logo lockup accessible name",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved lockup name (D-98)"
+  },
   "signin.subtitle": {
     "pattern": "none",
     "trigger": "entry screen label",
@@ -812,6 +821,15 @@
     "clear": "—",
     "retain": "—",
     "copy": "approved picture label (plan B6, step 1 recovery 2026-11-09)"
+  },
+  "signin.phonePrefix": {
+    "pattern": "none",
+    "trigger": "entry screen label",
+    "slot": "field prefix (country code)",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved picture label (D-98)"
   },
   "signin.submitDefault": {
     "pattern": "none",

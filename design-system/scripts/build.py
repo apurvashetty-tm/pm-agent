@@ -125,6 +125,12 @@ def truemeds_overrides():
     for name, ref in tm["content"].items():
         family, shade = ref.split(":", 1)[1].rsplit("-", 1)
         sem[f"--tm-content-{name}"] = f"var(--tm-core-{family}-{shade})"
+    # D-98: sizes with no SALT token (border width, focus ring, icon, spinner, logo lockup) -> --tm-<group>-<name>: <n>px
+    for group, vals in tm.get("size", {}).items():
+        if group.startswith("_"):
+            continue
+        for name, v in vals.items():
+            sem[f"--tm-{group}-{name}"] = f"{v}px"
     text = []
     for k, (size, lh, weight) in tm["text"].items():
         text.append(

@@ -1,7 +1,7 @@
 # Added beyond SALT
 
 Everything below is a **Truemeds decision on top of SALT, owned here** (approved by Apurva). Share it with the SALT
-designers so Figma can catch up; the native app team treats it as final, not as proposals. Last updated 2026-10-31.
+designers so Figma can catch up; the native app team treats it as final, not as proposals. Last updated 2026-11-09.
 
 ## Truemeds token and text-style decisions (`tokens/truemeds.json`, layout v2 · D-43)
 Applied last by `scripts/build.py`; these override SALT values on purpose.
@@ -12,6 +12,19 @@ Applied last by `scripts/build.py`; these override SALT values on purpose.
 | `--tm-content-placeholder` (new) | — (used `--tm-content-tertiary`, grey-400, 3.0:1) | **grey-500 `#6B7280`** (4.83:1) | Placeholder must be readable; still lighter than typed text. `--tm-content-tertiary` stays for decorative uses. |
 | `.tm-text-title-lg` (new) | — (mobile headings stop at 20) | **32 / 40 / semibold** | Screen-title hierarchy (L1). Uses `--tm-font-size-title-lg`. |
 | `.tm-text-body-lg` / `-strong` | 16 / **20** | **16 / 24** | 20px line height is tight once 16px text wraps. Affects every screen using this style. |
+
+## Size tokens `[PROPOSED]` (`tokens/truemeds.json` → `size`, D-98, 2026-11-09)
+SALT has no tokens for these; the React Native hand-off kit found them typed as raw px. Same values as before (no visual change). Native: `tokens.<group>.<name>`.
+
+| Token | Value | Native | Used for |
+|---|---|---|---|
+| `--tm-border-width-default` | 1 | `tokens.borderWidth.default` | Field, notice and divider borders. |
+| `--tm-focus-ring-width` | 2 | `tokens.focusRing.width` | Keyboard focus outline on buttons. |
+| `--tm-focus-ring-offset` | 2 | `tokens.focusRing.offset` | Gap between a button and its focus outline. |
+| `--tm-icon-size-sm` / `-md` / `-lg` | 16 / 20 / 24 | `tokens.iconSize.sm` / `.md` / `.lg` | The icon scale (§9.1); notice icon is `md`. |
+| `--tm-spinner-size` | 16 | `tokens.spinner.size` | Busy-button spinner box. |
+| `--tm-spinner-ring` | 2 | `tokens.spinner.ring` | Busy-button spinner ring width (colour `--tm-content-inverse`). |
+| `--tm-logo-lockup-width` | 166 | `tokens.logoLockup.width` | The "truemeds for doctors" lockup on home-base screens (§8.13). |
 
 Mobile layout rules: `RULES.md` §8 (four type levels, one side margin, three gaps, button placement, two header types, contrast).
 
