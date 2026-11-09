@@ -146,7 +146,8 @@ export const tokens = {
     "full": 999
   },
   "borderWidth": {
-    "default": 1
+    "default": 1,
+    "thick": 2
   },
   "focusRing": {
     "width": 2,
@@ -155,14 +156,71 @@ export const tokens = {
   "iconSize": {
     "sm": 16,
     "md": 20,
-    "lg": 24
+    "lg": 24,
+    "xl": 32
+  },
+  "iconTile": {
+    "size": 64
+  },
+  "target": {
+    "min": 48
+  },
+  "thumb": {
+    "size": 48
+  },
+  "controlHeight": {
+    "lg": 56
   },
   "spinner": {
     "size": 16,
-    "ring": 2
+    "ring": 2,
+    "sizeLg": 18
+  },
+  "check": {
+    "size": 18
+  },
+  "toggle": {
+    "width": 36,
+    "height": 20,
+    "knob": 16
   },
   "logoLockup": {
     "width": 166
+  },
+  "layout": {
+    "pageMax": 1280,
+    "narrow": 720,
+    "mobile": 420,
+    "sidenav": 240,
+    "sheetMax": 640,
+    "textMax": 300
+  },
+  "duration": {
+    "fast": 150,
+    "medium": 250,
+    "spinner": 800,
+    "pulse": 1200
+  },
+  "easing": {
+    "standard": "cubic-bezier(0.25, 0.1, 0.25, 1)",
+    "sheet": "cubic-bezier(0.32, 0.72, 0, 1)"
+  },
+  "layer": {
+    "raised": 2,
+    "sticky": 10,
+    "overlay": 900,
+    "sheet": 901,
+    "snackbar": 950,
+    "toast": 1000
+  },
+  "opacity": {
+    "disabled": 50
+  },
+  "pressed": {
+    "dim": 0.92
+  },
+  "sheet": {
+    "maxHeight": 85
   },
   "font": {
     "family": "Plus Jakarta Sans",
@@ -431,6 +489,21 @@ export const tokens = {
       },
       "android": {
         "elevation": 1
+      }
+    },
+    "bar": {
+      "boxShadow": "0 -8px 24px 0 rgba(16, 24, 40, 0.10)",
+      "ios": {
+        "shadowColor": "rgb(16, 24, 40)",
+        "shadowOffset": {
+          "width": 0,
+          "height": -8
+        },
+        "shadowOpacity": 0.1,
+        "shadowRadius": 12.0
+      },
+      "android": {
+        "elevation": 6
       }
     }
   },

@@ -90,10 +90,15 @@
       },
       {
        "property": "animation",
-       "value": "tm-spin 0.8s linear infinite",
-       "tokens": [],
-       "timing": true,
-       "unresolved": "No motion token yet: see OPEN.md o24. Don't type it."
+       "value": "tm-spin var(--tm-duration-spinner) linear infinite",
+       "tokens": [
+        {
+         "native": "tokens.duration.spinner",
+         "web": "--tm-duration-spinner",
+         "value": 800
+        }
+       ],
+       "layout": true
       }
      ],
      "size": "16×16"

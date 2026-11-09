@@ -174,7 +174,7 @@ Decisions: D-98
 <a id="d23"></a>
 ### d23 · Can I use a hex colour, a palette colour or a pixel value that matches a token?
 
-- **No raw values.** No hex codes, no `rgb`, no ad-hoc px for colour, radius, spacing or shadow in project code. If a value isn't a token, it isn't allowed. — *Design rules 2.1*
+- **No raw values.** No hex codes, no `rgb`, no typed numbers for colour, spacing, radius, shadow, **sizes, border widths, timing, layering (z-index) or opacity** in component or project code (D-99). If a value isn't a token, it isn't allowed. Use a token by meaning, not by value (a 20px text line is `--tm-font-lineheight-sm`, not an icon size). The guard enforces this after every CSS edit and at every commit. Allowed exceptions carry a same-line marker: geometry (`50%` centring, `100%`, `100vh`, `rotate(360deg)`, `line-height: 1`), optical nudges of 1–3px, the 31ch text measure, the hidden OTP input's 16px (stops iPhone zoom), reduced-motion `0.01ms`, `@media` widths, and prototype-only drawings (the drawn keyboard). Not scanned:,, the mock Rx paper, reference files and the `[DEPRECATED]` legacy `.tm-otp` block. — *Design rules 2.1*
 - **Semantic tokens only.** Use `--tm-content-*`, `--tm-surface-*`, `--tm-border-*`, `--tm-feedback-*`, `--tm-space-*`, `--tm-radius-*`. Never use `--tm-core-*` (the raw palette) in a project. — *Design rules 2.2*
 
 ## Logo

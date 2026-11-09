@@ -456,11 +456,11 @@
       },
       {
        "property": "min-height",
-       "value": "var(--tm-space-3xl)",
+       "value": "var(--tm-target-min)",
        "tokens": [
         {
-         "native": "tokens.space.3xl",
-         "web": "--tm-space-3xl",
+         "native": "tokens.target.min",
+         "web": "--tm-target-min",
          "value": 48
         }
        ]
@@ -557,11 +557,11 @@
       },
       {
        "property": "min-height",
-       "value": "var(--tm-space-3xl)",
+       "value": "var(--tm-target-min)",
        "tokens": [
         {
-         "native": "tokens.space.3xl",
-         "web": "--tm-space-3xl",
+         "native": "tokens.target.min",
+         "web": "--tm-target-min",
          "value": 48
         }
        ]
@@ -658,11 +658,11 @@
       },
       {
        "property": "min-height",
-       "value": "var(--tm-space-3xl)",
+       "value": "var(--tm-target-min)",
        "tokens": [
         {
-         "native": "tokens.space.3xl",
-         "web": "--tm-space-3xl",
+         "native": "tokens.target.min",
+         "web": "--tm-target-min",
          "value": 48
         }
        ]
@@ -759,11 +759,11 @@
       },
       {
        "property": "min-height",
-       "value": "var(--tm-space-3xl)",
+       "value": "var(--tm-target-min)",
        "tokens": [
         {
-         "native": "tokens.space.3xl",
-         "web": "--tm-space-3xl",
+         "native": "tokens.target.min",
+         "web": "--tm-target-min",
          "value": 48
         }
        ]
