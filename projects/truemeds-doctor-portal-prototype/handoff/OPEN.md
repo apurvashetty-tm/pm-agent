@@ -13,16 +13,7 @@ Nothing open for this screen.
 
 ## Faster sign-in offer
 
-| # | Question | Who answers |
-|---|---|---|
-| [o28](#o28) | After Not now, when is faster sign-in offered again? | Product |
-
-<a id="o28"></a>
-### o28 · After Not now, when is faster sign-in offered again?
-
-- **Current assumption:** Prototype: offered once; it can be turned on in Profile (D-69). **Safe placeholder:** Never re-offer automatically; Profile always has the switch (D-45). Needs product + SMS-cost input. — *Source: OQ-023*
-- **Who answers:** Product
-- **References:** OQ-023
+Nothing open for this screen.
 
 ## Returning unlock
 

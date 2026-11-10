@@ -3,8 +3,10 @@
 # Deploy gate: the same rule as the root netlify.toml — the site builds only when the latest commit message contains [deploy].
 # The React Native hand-off kit is published beside the app at /kit/ (D-103, Apurva 2026-11-10): the build copies
 # ../handoff into app/kit (git-ignored, never committed); /kit opens the viewer.
+# The calling-flow page is published at /calling-flow/ (d104 run, Apurva 2026-11-10): copy-calling-flow.sh copies the page,
+# messages.js and the case pictures into app/ (git-ignored); the design-system CSS comes from copy-shared.sh.
 [build]
-  command = "sh ../scripts/copy-shared.sh && rm -rf kit && cp -R ../handoff kit"
+  command = "sh ../scripts/copy-shared.sh && sh ../scripts/copy-calling-flow.sh && rm -rf kit && cp -R ../handoff kit"
   publish = "."
   ignore = "git log -1 --pretty=%B | grep -qF '[deploy]' && exit 1 || exit 0"
 

@@ -1,0 +1,19 @@
+You are reviewing one small run of the Truemeds doctor-app prototype, for CORRECTNESS against the spec only. Skip style.
+Read-only: do not edit files. Report findings as a numbered list, each tagged BLOCKER / SHOULD-FIX / NIT, with file:line and why.
+If nothing is wrong, say "No blockers".
+
+Spec (read these):
+- docs/context/decision_log.md, entry "D-104" (faster sign-in offer again at each OTP sign-in, at most 3 times; "not available" counts as shown; remembered per number).
+- ui-screens/app-logic.md §2, the "Faster sign-in" lines (offer line mentions fasterOfferMax).
+- docs/renders/2026-11-10-d104/TERMINAL-BRIEF.md (the run brief).
+
+Changes to review (see `git diff` and new untracked files):
+1. app/core/faster-signin.js — count replaces the `offered` flag; old stored `offered: true` reads as 1; `turnedOn` remembers that faster sign-in was ever turned on (reading of "until it's turned on": never re-offer after that, even if Profile turns it off). afterSignIn() returns the offer while count < fasterOfferMax.
+2. app/core/settings.js (fasterOfferMax, value 3, rule) and app/review/labels.js (its plain name).
+3. app/screens/faster-signin-offer.js — counts once per live showing (guarded by a `counted` flag saved into the nav history step, so a re-render of the same step does not count again); Not now / Continue / phone Back no longer write.
+4. app/core/boot.js comment; ui-screens/app-logic.md stale "[OPEN OQ-023]" text replaced; scripts/build-handoff.journeys.mjs: o28 (OQ-023) removed from OPEN, fasterOfferMax listed as the offer journey's setting; handoff/ regenerated.
+5. tests/entry-journeys.mjs F1, F3, F4, F5d updated to the D-104 rule (old "offered once" asserts superseded).
+6. app/shell/shell.css: settings row line 16→15px so the review panel stays inside 1280×800 with one more setting.
+7. Calling-flow page on the preview site: app/netlify.toml build command now also runs scripts/copy-calling-flow.sh (new), which copies calling-flow/ page files, ui-screens/feedback/messages.js and ui-screens/case/*_w390.png into app/ (git-ignored in .gitignore), plus app/icons/icon-192.png as app/favicon.ico. The page itself is unchanged; check that its relative paths (../../../design-system/truemeds.css, ../ui-screens/feedback/messages.js, ../ui-screens/case/<id>_w390.png, flow.css, data.js, flow.js) resolve on a site whose root is app/, served at /calling-flow/.
+
+Questions to answer: Does the app follow D-104 exactly (counting, cap, "not available" counts, turned-on stops it, no-screen-lock skip not counted, per number)? Any path where one showing is counted twice or not at all (e.g. Jump / ?s= direct opens, reloads, Restart story, play links)? Any regression in returning unlock, Profile switch, phone with no screen lock? Does the Netlify build command and script work from the app/ base directory, and is anything committed that should be ignored?

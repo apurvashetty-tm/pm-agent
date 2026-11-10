@@ -30,6 +30,7 @@ export const SETTINGS = {
   otpCodesPerWindow:    { value: 4, source: "rule", ref: "D-35: first code + 3 resends per number per window" },
   otpTriesLeftFrom:     { value: 2, source: "rule", ref: "D-81 F1: the wrong-code line counts from 2 tries left" },
   tooManyTriesWait:     { value: 10 * MIN, time: true, source: "MOCK ASSUMPTION", ref: "test number 9000000003: sign-in countdown; OQ-017" },
+  fasterOfferMax:       { value: 3, source: "rule", ref: "D-104: faster sign-in offer at each OTP sign-in, at most 3 times in total (Product setting)" },
   returningUnlockFallbackAfter: { value: 3, source: "MOCK ASSUMPTION", ref: "3 failed tries → OTP (checklist 4.3)" },
   // Availability (checklist 4.4)
   availabilityMinimum:  { value: 15 * MIN, time: true, source: "rule", ref: "app-logic §3" },

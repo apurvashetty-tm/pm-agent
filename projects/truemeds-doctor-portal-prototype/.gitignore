@@ -30,3 +30,8 @@ docs/runs/logs/
 
 # Netlify build copy of the hand-off kit for the preview site (created at deploy time, never committed)
 /app/kit/
+
+# Netlify build copy of the calling-flow page and what it loads (scripts/copy-calling-flow.sh; never committed)
+/app/calling-flow/
+/app/ui-screens/
+/app/favicon.ico

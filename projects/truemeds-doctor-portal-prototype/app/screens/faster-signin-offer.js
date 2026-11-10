@@ -1,14 +1,14 @@
 // Faster sign-in offer (entry journey, step 1). Markup and classes lifted from ui-screens/faster-signin-offer/faster-signin-offer.html;
 // styles in faster-signin-offer.css. Every word through MSG().
 // Behaviour: app-logic §2 "Faster sign-in", feedback-state-map "Faster sign-in offer", D-45, D-47, D-61, D-64, D-65, D-66, A-19.
-//   Shown once (plan B12: "offered" is remembered per number) · Turn on → phone prompt (mock unlock, B14) → Home ·
+//   Shown at each OTP sign-in until turned on, at most fasterOfferMax times (D-104; the count is remembered per number) · Turn on → phone prompt (mock unlock, B14) → Home ·
 //   cancelled → back to the offer as it was, no message · failed → "Couldn't turn on…" in the bar above Try again ·
 //   Try again = Turn on · offline → "You're offline…" · Not now → Home · phone Back = Not now (no Back control, D-47).
 //   unavailable (D-93, revised) → screen unchanged; warning notice in the bar (`unlock.unavailable`, same slot as offline / failed),
-//   the primary reads Continue (`offer.continue`) → Home, Not now hidden; not enabled; stays recorded as offered (not shown again).
+//   the primary reads Continue (`offer.continue`) → Home, Not now hidden; not enabled; counted as shown (D-104).
 // A state opened directly (?s=offer_<state>) shows the approved picture's moment, then behaves live from there.
 import { MSG } from "../core/msg.js";
-import { push, setScreenBack, reset as resetNav } from "../core/nav.js";
+import { push, setScreenBack, reset as resetNav, saveCurrent } from "../core/nav.js";
 import { h } from "../core/dom.js";
 import { signedIn } from "../core/auth.js";
 import { promptAnswer } from "../core/unlock.js";
@@ -47,8 +47,8 @@ export function render(host, id, { mode, params = {} }) {
   const live = !!params.live;
   const number = params.number || (signedIn(ctx()) || {}).number || PICTURE_NUMBER;
   const m = { variant: fx.variant, busy: !live && !!fx.busy, notice: live && !fx.unavailable ? null : fx.notice || null, retry: !live && !!fx.retry, unavailable: !!fx.unavailable };
-  // Offered once (D-45): shown live after a first OTP sign-in → remembered, so it is not shown again on this phone.
-  if (live) markOffered(number, ctx());
+  // D-104: each live showing after an OTP sign-in counts once toward fasterOfferMax (a re-render of the same step doesn't count again).
+  if (live && !params.counted) { markOffered(number, ctx()); saveCurrent({ counted: true }); }
 
   // ---- markup (approved hierarchy: .screen > .top (logo, h1, .sub) · .panel (hero, points) · .tm-actionbar.footer) ----
   const v = () => VARIANT[m.variant];
@@ -113,11 +113,11 @@ export function render(host, id, { mode, params = {} }) {
       paint();
     }, "phonePromptDelay");
   }
-  // D-93: Continue → Home. Faster sign-in stays off (Profile can turn it on later); the offer stays recorded as offered.
-  function onContinue() { markOffered(number, ctx()); toHome(); }
+  // D-93: Continue → Home. Faster sign-in stays off (Profile can turn it on later); this showing is already counted (D-104).
+  function onContinue() { toHome(); }
   function onNotNow() {
     if (m.busy) return;
-    markOffered(number, ctx());   // offer.not-now: re-offer timing is OQ-023 (safe placeholder: never; Profile has the switch)
+    // offer.not-now: this showing is already counted; offered again at the next OTP sign-in, up to fasterOfferMax (D-104)
     toHome();
   }
   // Signed in: the entry journey is not in history any more (Back never returns to the offer).

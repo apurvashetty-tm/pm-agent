@@ -393,20 +393,31 @@ const signInNotice = (p) => p.evaluate(() => [...document.querySelectorAll(".log
 }
 
 // ---------------- session 3: faster sign-in offer and returning unlock ----------------
-{ // F1 unit: core/faster-signin.js (offered once, enabled, device, app open)
+{ // F1 unit: core/faster-signin.js (D-104 offer count, enabled, device, app open)
   const fs = await import(path.join(APP, "core/faster-signin.js"));
   const mk = (story = {}) => { const c = fakeCtx(story); c.mode = "review"; return c; };
   const c = mk({ device: "fingerprint" }); const n = "7012345601";
-  const first = fs.afterSignIn(n, c); fs.markOffered(n, c); const second = fs.afterSignIn(n, c);
+  const max = value("fasterOfferMax", "review");
+  const seen = []; for (let k = 0; k <= max; k++) { const s = fs.afterSignIn(n, c); seen.push(s); if (s !== "home_setup-wheel") fs.markOffered(n, c); }
+  const first = seen[0], second = seen[1];
+  const capped = seen.slice(0, max).every((s) => s === "offer_fingerprint") && seen[max] === "home_setup-wheel" && fs.fasterState(n, c).offerCount === max;
+  // old stored record (before D-104) `offered: true` reads as shown once
+  const cl = mk({ device: "fingerprint" }); cl.db.set("faster:7012345603", { offered: true, enabled: false });
+  const legacy = fs.fasterState("7012345603", cl).offerCount === 1 && fs.afterSignIn("7012345603", cl) === "offer_fingerprint";
+  // turned on once (then off in Profile) → never offered again
+  const ce = mk({ device: "fingerprint" }); fs.setEnabled("7012345604", ce, true); fs.setEnabled("7012345604", ce, false);
+  const onceOn = fs.afterSignIn("7012345604", ce) === "home_setup-wheel" && fs.fasterState("7012345604", ce).offerCount === 0;
+  // no screen lock → skipped, not counted
+  const cn = mk({ device: "none" }); fs.afterSignIn("7012345605", cn); const noneNotCounted = fs.fasterState("7012345605", cn).offerCount === 0;
   const open0 = fs.onOpen(c); c.db.set("auth", { number: n }); const open1 = fs.onOpen(c);
   fs.setEnabled(n, c, true); const open2 = fs.onOpen(c);
   const dev = (d) => fs.afterSignIn("7012345602", mk({ device: d }));
   const un = fs.unlockState(mk({ device: "fingerprint", unlock: "unavailable" }));
-  check("F1", "offer once per number (then Home); device picks fingerprint / Face ID / screen lock, none skips; app open: nobody → sign-in, signed in → Home, faster sign-in on → unlock",
-    first === "offer_fingerprint" && second === "home_setup-wheel" && open0 === null && open1 === "home_setup-wheel" && open2 === "unlock_fingerprint" &&
+  check("F1", `D-104: offer at each OTP sign-in until turned on, at most fasterOfferMax (${max}) times, then Home; old offered:true reads as 1; turned on once → never again; no screen lock → skipped, not counted; device picks fingerprint / Face ID / screen lock, none skips; app open: nobody → sign-in, signed in → Home, faster sign-in on → unlock`,
+    max === 3 && first === "offer_fingerprint" && second === "offer_fingerprint" && capped && legacy && onceOn && noneNotCounted && open0 === null && open1 === "home_setup-wheel" && open2 === "unlock_fingerprint" &&
     dev("face") === "offer_face-id" && dev("screen-lock") === "offer_screen-lock" && dev("none") === "home_setup-wheel" && un === "unlock_unavailable" &&
     fs.unlockState(mk({ device: "screen-lock" })) === "unlock_screen-lock" && fs.unlockState(mk({ device: "face" })) === "unlock_face",
-    JSON.stringify({ first, second, open0, open1, open2 }));
+    JSON.stringify({ max, seen, legacy, onceOn, noneNotCounted, open0, open1, open2 }));
 }
 const sNow = (p) => p.evaluate(() => window.__tm.store.get().s);
 const PROMPT = value("phonePromptDelay", "review") + 300;
@@ -439,7 +450,7 @@ async function signInFull(p, n) { await send(p, n); await verify(p, "1234"); }
   await p.goBack(); await p.waitForTimeout(300); const afterBack = await sNow(p);
   check("F3", "sign-in → OTP 1234 → offer (fingerprint, no Back) → Turn on: Turning on… with spinner, Not now off → Home; enabled remembered; phone Back stays on Home",
     offer.s === "offer_fingerprint" && offer.title === "Skip the OTP next time" && offer.btn === "Turn on faster sign-in" && !offer.back &&
-    busy.t === "Turning on…" && busy.spin && busy.nn && home === "home_setup-wheel" && stored?.enabled === true && stored?.offered === true && afterBack === "home_setup-wheel",
+    busy.t === "Turning on…" && busy.spin && busy.nn && home === "home_setup-wheel" && stored?.enabled === true && stored?.turnedOn === true && stored?.offerCount === 1 && afterBack === "home_setup-wheel",
     JSON.stringify({ offer, busy, home, stored, afterBack }));
   await p.reload(); await p.waitForTimeout(400);
   const unlock = await p.evaluate(() => ({ s: window.__tm.store.get().s, h1: document.querySelector(".unlock-screen h1")?.textContent, btn: document.getElementById("unlock-label")?.textContent }));
@@ -453,22 +464,27 @@ async function signInFull(p, n) { await send(p, n); await verify(p, "1234"); }
   await r.ctx.close();
 }
 
-{ // F4: offered once; Not now → Home; phone Back on the offer = Not now; restart → sign-in again → no offer
+{ // F4 (D-104): Not now → Home; the offer comes back at each later OTP sign-in, at most 3 times; the 4th sign-in → Home;
+  // phone Back on the offer = Not now
   const r = await open(""); const p = r.p;
-  await signInFull(p, "7012345611");
-  const shown = await sNow(p);
-  await p.click("#not-now"); await p.waitForTimeout(200); const nn = await sNow(p);
-  await p.evaluate(() => document.getElementById("rp-restart").click()); await p.waitForTimeout(300);
-  await signInFull(p, "7012345611"); const again = await sNow(p);
+  const runs = [];
+  for (let k = 0; k < 4; k++) {
+    if (k) { await p.evaluate(() => document.getElementById("rp-restart").click()); await p.waitForTimeout(300); }   // keeps what the phone remembers
+    await signInFull(p, "7012345611"); const shown = await sNow(p);
+    let after = shown; if (shown !== "home_setup-wheel") { await p.click("#not-now"); await p.waitForTimeout(200); after = await sNow(p); }
+    runs.push([shown, after]);
+  }
+  const cnt = await p.evaluate(() => JSON.parse(localStorage.getItem("tm-doctor-app:review:faster:7012345611")));
   await p.reload(); await p.waitForTimeout(400); const reopened = await sNow(p);   // signed in, faster sign-in off → Home
-  check("F4", "offer shown once: Not now → Home; signing in again (story restarted) skips the offer; reopening the app (faster sign-in off) → Home",
-    shown === "offer_fingerprint" && nn === "home_setup-wheel" && again === "home_setup-wheel" && reopened === "home_setup-wheel", JSON.stringify({ shown, nn, again, reopened }));
+  check("F4", "D-104: 1st, 2nd, 3rd OTP sign-in → offer, Not now → Home each time; 4th OTP sign-in → Home, no offer; count 3 remembered; reopening the app (faster sign-in off) → Home",
+    JSON.stringify(runs) === JSON.stringify([["offer_fingerprint", "home_setup-wheel"], ["offer_fingerprint", "home_setup-wheel"], ["offer_fingerprint", "home_setup-wheel"], ["home_setup-wheel", "home_setup-wheel"]]) &&
+    cnt?.offerCount === 3 && !cnt?.enabled && reopened === "home_setup-wheel", JSON.stringify({ runs, cnt, reopened }));
   const r2 = await open(""); const p2 = r2.p;
   await signInFull(p2, "7012345612");
   await p2.goBack(); await p2.waitForTimeout(300); const viaBack = await sNow(p2);
   const st = await p2.evaluate(() => JSON.parse(localStorage.getItem("tm-doctor-app:review:faster:7012345612")));
-  check("F4b", "phone Back on the offer = Not now (→ Home, offered, not enabled)", viaBack === "home_setup-wheel" && st.offered && !st.enabled, JSON.stringify({ viaBack, st }));
-  check("F4c", "offer once / Back: 0 console errors", r.errors.length + r2.errors.length === 0, [...r.errors, ...r2.errors].join("|"));
+  check("F4b", "phone Back on the offer = Not now (→ Home, counted once, not enabled)", viaBack === "home_setup-wheel" && st.offerCount === 1 && !st.enabled, JSON.stringify({ viaBack, st }));
+  check("F4c", "offer re-offer / Back: 0 console errors", r.errors.length + r2.errors.length === 0, [...r.errors, ...r2.errors].join("|"));
   await r.ctx.close(); await r2.ctx.close();
 }
 
@@ -504,7 +520,8 @@ async function signInFull(p, n) { await send(p, n); await verify(p, "1234"); }
 }
 
 { // F5d (D-93, revised): Turn on → phone answers unavailable → screen unchanged (hero + three points), warning notice in the bar
-  // (same slot as offline / failed), the primary reads Continue → Home, Not now hidden; not enabled; the offer is not shown again
+  // (same slot as offline / failed), the primary reads Continue → Home, Not now hidden; not enabled; counted as shown (D-104), so the
+  // next OTP sign-in offers again (2nd of 3)
   const r = await open(""); const p = r.p;
   await setStory(p, { offer: "unavailable" });
   await signInFull(p, "7012345619");
@@ -525,6 +542,7 @@ async function signInFull(p, n) { await send(p, n); await verify(p, "1234"); }
   await p.evaluate(() => document.getElementById("rp-restart").click()); await p.waitForTimeout(300);
   await setStory(p, { offer: "enabled" });
   await signInFull(p, "7012345619"); const again = await sNow(p);
+  const stAgain = await p.evaluate(() => JSON.parse(localStorage.getItem("tm-doctor-app:review:faster:7012345619")));
   await p.reload(); await p.waitForTimeout(400); const reopened = await sNow(p);
   // Continue tapped (second run, fresh number); it never re-opens the prompt
   const r2 = await open(""); const p2 = r2.p;
@@ -536,12 +554,12 @@ async function signInFull(p, n) { await send(p, n); await verify(p, "1234"); }
   // Jump to the behaviour row opens the built state
   const r3 = await open("?s=offer.unavailable"); const j = await r3.p.evaluate(() => ({ s: window.__tm.store.get().s,
     n: document.getElementById("offer-notice")?.hidden === false ? document.getElementById("offer-notice").textContent : null, btn: document.getElementById("turn-on").textContent }));
-  check("F5d", "D-93 revised: Turn on → unavailable → screen unchanged (tile + 3 points), \"Faster sign-in isn't available on this phone right now.\" (warning, alert-triangle) in the bar, primary reads Continue, Not now hidden, no top notice → Home; not enabled, offered; phone Back = Continue; the offer is not shown again; Jump offer.unavailable opens it",
+  check("F5d", "D-93 revised: Turn on → unavailable → screen unchanged (tile + 3 points), \"Faster sign-in isn't available on this phone right now.\" (warning, alert-triangle) in the bar, primary reads Continue, Not now hidden, no top notice → Home; not enabled, counted as shown (1); phone Back = Continue; next OTP sign-in → offer again (count 2, D-104); Jump offer.unavailable opens it",
     u.s === "offer_fingerprint" && u.n === "Faster sign-in isn’t available on this phone right now." && u.warn && u.icon === "alert-triangle" && u.inBar && !u.topNotice && u.hero && u.points === 3 && !u.notNow &&
-    JSON.stringify(u.btns) === JSON.stringify([["turn-on", "Continue", true]]) && viaBack === "home_setup-wheel" && st.offered && !st.enabled &&
-    again === "home_setup-wheel" && reopened === "home_setup-wheel" && cont === "home_setup-wheel" && st2.offered && !st2.enabled &&
+    JSON.stringify(u.btns) === JSON.stringify([["turn-on", "Continue", true]]) && viaBack === "home_setup-wheel" && st.offerCount === 1 && !st.enabled &&
+    again === "offer_fingerprint" && stAgain?.offerCount === 2 && reopened === "home_setup-wheel" && cont === "home_setup-wheel" && st2.offerCount === 1 && !st2.enabled &&
     j.s === "offer_unavailable" && j.n === "Faster sign-in isn’t available on this phone right now." && j.btn === "Continue",
-    JSON.stringify({ u, viaBack, st, again, reopened, cont, st2, j }));
+    JSON.stringify({ u, viaBack, st, again, stAgain, reopened, cont, st2, j }));
   check("F5e", "offer unavailable: 0 console errors", r.errors.length + r2.errors.length + r3.errors.length === 0, [...r.errors, ...r2.errors, ...r3.errors].join("|"));
   for (const x of [r, r2, r3]) await x.ctx.close();
 }

@@ -337,7 +337,7 @@ Decisions: D-54
 ### d25 · Where does Sign-in sit in the app, and where does it go next?
 
 - Sign-in — Enter a mobile number, get an OTP: — *Source: App logic §1*
-- Order on first use: Sign-in → OTP → (offer, once) → Home → Case. Returning doctor with faster sign-in on: Unlock → Home. A doctor with a case open goes straight back into the case (D-48). — *Source: App logic §1*
+- Order on first use: Sign-in → OTP → (offer, at most 3 times — D-104) → Home → Case. Returning doctor with faster sign-in on: Unlock → Home. A doctor with a case open goes straight back into the case (D-48). — *Source: App logic §1*
 
 Decisions: D-48
 
@@ -818,7 +818,7 @@ Decisions: D-78 (the approved screens and app logic)
 | # | Topic | Question |
 |---|---|---|
 | [offer-01](#offer-01) | App rules | What is the rule for "Faster sign-in"? |
-| [offer-02](#offer-02) | App rules | What is the rule for "Offered once, on its own screen, after the first"? |
+| [offer-02](#offer-02) | App rules | What is the rule for "Offered on its own screen after an OTP sign-in"? |
 | [offer-03](#offer-03) | App rules | What is the rule for "Which unlock (D-64)"? |
 | [offer-04](#offer-04) | Layout | What is the rule for "Pinned action bar (item 1)"? |
 | [offer-05](#offer-05) | States and feedback | What does the app show in offer.shown, and how does it recover? |
@@ -831,6 +831,7 @@ Decisions: D-78 (the approved screens and app logic)
 | [offer-12](#offer-12) | States and feedback | What does the app show in offer.not-now, and how does it recover? |
 | [offer-13](#offer-13) | States and feedback | What does the app show in offer.screen-lock, and how does it recover? |
 | [offer-14](#offer-14) | States and feedback | What does the app show in offer.unsupported, and how does it recover? |
+| [offer-15](#offer-15) | Limits and timings | What is the value of "fasterOfferMax"? |
 
 <a id="offer-01"></a>
 ### offer-01 · What is the rule for "Faster sign-in"?
@@ -840,11 +841,11 @@ Decisions: D-78 (the approved screens and app logic)
 Decisions: D-45, D-47
 
 <a id="offer-02"></a>
-### offer-02 · What is the rule for "Offered once, on its own screen, after the first"?
+### offer-02 · What is the rule for "Offered on its own screen after an OTP sign-in"?
 
-- Offered once, on its own screen, after the first successful OTP sign-in on a phone that supports it and has it off. The footer is the action bar; the content above it scrolls. Subtitle on one line: "Use your screen lock instead of an OTP.". **Turn on** → phone prompt → Home. **Cancelled** prompt → back to the offer, no message. **Failed** → stays on the offer; "Couldn't turn on faster sign-in." sits in the bar above Try again · Try again · Not now (D-61, D-65). **Offline** → "You're offline. Check your connection." (D-66). **Unavailable** (the phone answers "unavailable" at Turn on) → stays on the offer, unchanged (title, subtitle, tile and the three points): the amber warning notice "Faster sign-in isn't available on this phone right now." sits in the bar, the primary reads **Continue** → Home and Not now is hidden; not enabled, recorded as offered, can be turned on later in Profile (D-93, state `offer_unavailable`). **Not now** → Home; offered again later `[OPEN OQ-023]`; can be turned on or off in Profile (D-69). — *Source: App logic §2.*
+- Offered on its own screen after an OTP sign-in on a phone that supports it, while faster sign-in is off: after the first sign-in, then again at each later OTP sign-in until it is turned on, at most 3 times (setting `fasterOfferMax`, D-104; "not available" counts as shown). The footer is the action bar; the content above it scrolls. Subtitle on one line: "Use your screen lock instead of an OTP.". **Turn on** → phone prompt → Home. **Cancelled** prompt → back to the offer, no message. **Failed** → stays on the offer; "Couldn't turn on faster sign-in." sits in the bar above Try again · Try again · Not now (D-61, D-65). **Offline** → "You're offline. Check your connection." (D-66). **Unavailable** (the phone answers "unavailable" at Turn on) → stays on the offer, unchanged (title, subtitle, tile and the three points): the amber warning notice "Faster sign-in isn't available on this phone right now." sits in the bar, the primary reads **Continue** → Home and Not now is hidden; not enabled, recorded as offered, can be turned on later in Profile (D-93, state `offer_unavailable`). **Not now** → Home; offered again at the next OTP sign-in, up to `fasterOfferMax` times in total (D-104); can be turned on or off in Profile (D-69). — *Source: App logic §2.*
 
-Decisions: D-61, D-65, D-66, D-93, D-69
+Decisions: D-104, D-61, D-65, D-66, D-93, D-69
 
 <a id="offer-03"></a>
 ### offer-03 · What is the rule for "Which unlock (D-64)"?
@@ -929,6 +930,13 @@ Decisions: D-64
 - offer.unsupported: — — Phone has no screen lock at all → screen skipped entirely (D-64) — *Source: Feedback state map: offer.unsupported*
 
 Decisions: D-64
+
+<a id="offer-15"></a>
+### offer-15 · What is the value of "fasterOfferMax"?
+
+- 3. Agreed rule (D-104: faster sign-in offer at each OTP sign-in, at most 3 times in total (Product setting)). Read it from configuration; copy reads the value, never a typed number. — *Source: Setting (agreed rule)*
+
+Decisions: D-104
 
 ## Returning unlock
 

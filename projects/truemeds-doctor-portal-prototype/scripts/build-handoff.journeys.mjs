@@ -14,7 +14,7 @@ export const JOURNEYS = [
   { key: "otp", name: "OTP", folder: "otp", fmap: "## OTP", appLogic: [["## 2. Sign-in", /^\*\*OTP\*\*$/, /^\*\*Faster sign-in\*\*/]], code: ["app/screens/otp.js", "app/screens/otp.css", "app/core/auth.js"],
     settings: ["otpWindow", "otpLock", "resendWaits", "otpWrongLimit", "otpCodesPerWindow", "otpTriesLeftFrom"], rules: [["## 13.", /^\*\*OTP \(item 4/]] },
   { key: "faster-signin-offer", name: "Faster sign-in offer", folder: "faster-signin-offer", fmap: "## Faster sign-in offer", appLogic: [["## 2. Sign-in", /^\*\*Faster sign-in\*\*/, /^- Returning unlock:/]],
-    code: ["app/screens/faster-signin-offer.js", "app/screens/faster-signin-offer.css"], settings: [], rules: [["## 13.", /^\*\*Pinned action bar \(item 1\)/]] },
+    code: ["app/screens/faster-signin-offer.js", "app/screens/faster-signin-offer.css"], settings: ["fasterOfferMax"], rules: [["## 13.", /^\*\*Pinned action bar \(item 1\)/]] },
   { key: "returning-unlock", name: "Returning unlock", folder: "returning-unlock", fmap: "## Returning unlock", appLogic: [["## 2. Sign-in", /^- Returning unlock:/, null], ["## 2. Sign-in", /^- Wording follows the phone/, null]],
     code: ["app/screens/returning-unlock.js", "app/screens/returning-unlock.css"], settings: ["returningUnlockFallbackAfter"], rules: [] },
   { key: "home", name: "Home", folder: "home", fmap: "## Availability and Home", appLogic: [["## 3. Home", null, null]],
@@ -417,7 +417,7 @@ export function journeyDocs({ ROOT, read, doc, section, quote, cleanSafe, die })
   // Genuinely undecided Product questions stay OPEN (D-101 amended)
   const OQ = (q, re) => { const t = cleanSafe(section("oqs", `### ${q}`).split("\n").find((l) => re.test(l)) || ""); if (!t) die(`open_questions ${q}: no ${re}`); quote("oqs", t); return t; };
   open.push({ id: "o27", journey: "Home", topic: "No cases", q: "After \"No cases right now\", does the app check again by itself, and how often?", now: { src: "OQ-019", text: OQ("OQ-019", /^\*\*Safe placeholder:\*\*/) }, who: "Product", refs: ["OQ-019"], noteNow: "Prototype: no automatic re-check; the doctor taps Request a case again." });
-  open.push({ id: "o28", journey: "Faster sign-in offer", topic: "Re-offer", q: "After Not now, when is faster sign-in offered again?", now: { src: "OQ-023", text: OQ("OQ-023", /^\*\*Safe placeholder:\*\*/) }, who: "Product", refs: ["OQ-023"], noteNow: "Prototype: offered once; it can be turned on in Profile (D-69)." });
+  // o28 (re-offer after Not now, OQ-023) answered by D-104: now an app-logic rule and the fasterOfferMax setting (DECIDED)
   return { items, open, ruleIndex };
 }
 const ID = { otp: "otp-", "faster-signin-offer": "offer-", "returning-unlock": "unlock-", home: "home-", case: "case-", prescribe: "rx-" };

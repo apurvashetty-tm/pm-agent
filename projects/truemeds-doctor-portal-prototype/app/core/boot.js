@@ -130,7 +130,7 @@ function startParams(s, opening = false) {
 // Behaviour-only step-1 states have no picture: Jump opens the screen where the behaviour shows (app-logic §2,
 // feedback-state-map rows). Later steps' behaviour states keep their card until their step builds them.
 const BEHAVIOUR_SCREEN = {
-  "offer.shown": "offer_fingerprint",        // offered once after the first sign-in
+  "offer.shown": "offer_fingerprint",        // after an OTP sign-in, at most fasterOfferMax times (D-104)
   "offer.cancelled": "offer_fingerprint",    // prompt cancelled → back on the offer, unchanged, no message
   "offer.enabled": "home_setup-wheel",       // turned on → Home (stub until step 2)
   "offer.not-now": "home_setup-wheel",       // Not now → Home

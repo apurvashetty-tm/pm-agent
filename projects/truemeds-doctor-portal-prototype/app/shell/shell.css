@@ -117,7 +117,7 @@ body { position: relative; }
 .rp-timings { list-style: none; margin: 0; padding: 0 !important; }
 .rp-timings + .rp-timings { margin-top: var(--tm-space-2xs); }
 .rp-timings__h { color: var(--tm-content-secondary); }
-.rp-timings details > summary { list-style: none; cursor: pointer; display: flex; gap: var(--tm-space-xs); align-items: baseline; min-height: 16px; line-height: 16px; }
+.rp-timings details > summary { list-style: none; cursor: pointer; display: flex; gap: var(--tm-space-xs); align-items: baseline; min-height: 15px; line-height: 15px; }   /* 15 (was 16): 23 settings (D-104 added fasterOfferMax) keep the open row inside 1280 × 800 (RULES §7.3) */
 .rp-timings details > summary::-webkit-details-marker { display: none; }
 .rp-timings__name { flex: 1 1 auto; min-width: 0; color: var(--tm-content-primary); }
 .rp-timings__val { flex: none; font-variant-numeric: tabular-nums; }

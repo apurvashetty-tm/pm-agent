@@ -978,3 +978,14 @@ User identified missing HTML/native linkage. Inspected actual sign-in and OTP HT
 - **Merged to `main` (Claude, on Apurva's go-ahead):** #38 shared git rules (+ ops log), #39 design tokens (no other project uses the central design system), #40 deliverables (everything except run evidence, from `deliver/truemeds-doctor-portal-prototype`).
 - **Netlify:** new site **https://truemeds-doctor-app-preview.netlify.app** (base `app/`, kit copied to `/kit/` at build) — deploy 1 = its first build, 26 s, no errors. Checked live: app + review panel, `?demo=1`, `/kit` → viewer, 8 screen tabs, all 6 downloads 200, DECIDED reachable. Old `doctor-portal-prototype` site: builds stopped, live copy as on 6 Nov.
 - **Next:** Apurva's engineer walkthrough with the kit; deploy 2 (final) after his approval; archive tag after approval of everything; GitLab copy last. Optional: turn off deploy previews on the new site (as on the other two).
+
+## 2026-11-10 · Run d104 (unattended) — D-104 re-offer built; calling-flow page ready for the preview site
+- **Built:** the offer is shown again at each OTP sign-in until faster sign-in is turned on, at most `fasterOfferMax` times (new setting, 3).
+  - `app/core/faster-signin.js` now keeps a count, `offerCount`; an old stored `offered: true` reads as 1.
+  - Each live showing counts once, including "not available" (`app/screens/faster-signin-offer.js`).
+  - Turned on once means never offered again (`turnedOn`, a reading of D-104, NEEDS-APURVA to confirm).
+  - The review panel's settings row line went from 16 to 15 px (`app/shell/shell.css`) so the panel stays inside 1280 × 800 with one more setting.
+- **Kit:** o28 (OQ-023) moved from OPEN to DECIDED; offer-15 is `fasterOfferMax`; kit regenerated. `app-logic.md` §2 stale `[OPEN OQ-023]` text fixed.
+- **Preview site:** the `app/netlify.toml` build now runs `scripts/copy-calling-flow.sh`, which copies the page, messages.js, the case pictures and a favicon (all git-ignored). The temp-copy build check passed: no 404s, no console errors, pictures load. **Not deployed.**
+- **Checks:** all pass. See `docs/renders/2026-11-10-d104/REPORT.md`. Codex review found no blockers.
+- **Next:** the main thread reviews d104; `/calling-flow/` goes live with the next `[deploy]`.

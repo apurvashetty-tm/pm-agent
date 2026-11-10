@@ -1,0 +1,19 @@
+build: sh ../scripts/copy-shared.sh && sh ../scripts/copy-calling-flow.sh && rm -rf kit && cp -R ../handoff kit
+copy-shared: design-system, brand, feedback and pictures copied into app/
+copy-calling-flow: calling-flow page, messages.js and case pictures copied into app/
+{
+ "tabs": 2,
+ "title": "Doctor app — calling flow",
+ "imgs": 0,
+ "broken": [],
+ "svgImgs": 29,
+ "font": "\"Plus Jakarta Sans\", -apple-system, \"system-ui\", \"Segoe UI\", sans-serif",
+ "hasMsg": true,
+ "svgHrefs": 28,
+ "svgBad": [],
+ "notFound": [],
+ "picHits": 56,
+ "requests": 64,
+ "errors": []
+}
+PASS calling-flow on the built site: no 404s, no console errors, pictures load

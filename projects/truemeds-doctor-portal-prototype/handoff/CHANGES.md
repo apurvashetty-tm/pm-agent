@@ -4,6 +4,10 @@ What moved in the kit since the previous generation: tokens used, building block
 
 ## 2026-11-10
 
+- Screen state changed: d-notes-keyboard
+
+## 2026-11-10
+
 - Screen state changed: otp_code-expired
 - Screen state changed: otp_cooldown-reconciling
 - Screen state changed: otp_couldnt-verify
