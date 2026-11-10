@@ -84,6 +84,11 @@ Nothing goes to `main` while the chain runs (`publish.sh` pulls `main` into this
 - [ ] **Deploy 2 (final) carries:** D-104 re-offer, calling-flow page at `/calling-flow/` on the preview site (then the PRD header's calling-flow link moves there), anything from the engineer walkthrough. Confluence PRD **published 2026-11-10 (v0.6)**: page 2156789762 "Truemeds For Doctors – App PRD" in Portal → Portals-PRDs → Truemeds for Doctors (folder 2155839493), from `docs/prd/PRD.confluence.md` (PRD.md minus pictures, repo links → live links); old PROD page 1891303437 has a footer comment pointing to it. Re-push after deploy 2 (calling-flow link → new site).
 5. [ ] **Before any `workspace.sh close project`:** the archive tag must exist (close deletes the branch on GitHub).
 
+## 2n. Home round before the final deploy (Apurva, 2026-11-10) — final deploy on hold until this is done
+- [ ] **Home setup + available redesign:** blue header too tall (logo → title gap, two-line 32 title, ~30 % of the screen); setup shows two controls for one value (chips + wheel), "Adjust duration" / "Minimum 15 minutes" read old-fashioned; "Prescriptions today" reads like fine print; the available screen's timer floats in empty space. Concepts: `docs/renders/2026-11-10-home-concepts/` (setup S1–S4, available A1–A3). Needs Apurva's pick → decision (amends D-36 / D-46 L6) → one run (Home states, kit, PRD).
+- [ ] **Availability at most 10 hours:** the hours wheel goes 0–10 (today it grows without end); at 10 h minutes are 00 only. Goes into the Home run (app-logic, PRD §5.5, kit, tests).
+- [ ] **Availability only between 7 AM and 11 PM (Apurva, 2026-11-10 — later):** what the doctor sees when opening the app or setting availability outside these hours, and whether a duration may run past 11 PM (cap it, or show the latest end). Decide the copy and behaviour later; not in this release.
+
 ## 3. Rebuild items (for the build, not the renders)
 - [ ] All button labels through `MSG()` (some are typed inline in the render recipes).
 - [ ] After-confirm and closed states: View Rx, medicine rows and notes read-only and muted; no overlay (D-62).

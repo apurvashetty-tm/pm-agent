@@ -1,0 +1,90 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Home concepts — 2026-11-10</title>
+<link rel="stylesheet" href="../../../../design-system/truemeds.css">
+<style>
+*{box-sizing:border-box}
+body{margin:0;padding:var(--tm-space-xl);background:var(--tm-surface-tertiary);display:flex;flex-wrap:wrap;gap:var(--tm-space-xl);font-family:var(--tm-font)}
+.frame{width:390px;height:844px;position:relative;overflow:hidden;display:flex;flex-direction:column;background:var(--tm-surface-brand-subtle);color:var(--tm-content-primary)}
+.header{flex:none;display:flex;align-items:center;justify-content:space-between;padding:var(--tm-space-lg) var(--tm-space-lg) 0 var(--tm-space-page)}
+.logo{width:166px;height:auto}
+.acts{display:flex;gap:var(--tm-space-xs);margin:-9px -14px -9px 0}
+.acts .tm-btn{color:var(--tm-content-secondary)}
+.band{flex:none;padding:var(--tm-space-xl) var(--tm-space-page) var(--tm-space-xl)}
+.band h1{margin:0;font-size:var(--tm-font-size-title-md);line-height:var(--tm-font-lineheight-xl);font-weight:var(--tm-font-weight-semibold)}
+.sub{margin:var(--tm-space-xs) 0 0;font-size:var(--tm-font-size-body-md);line-height:var(--tm-font-lineheight-sm);color:var(--tm-content-secondary)}
+.panel{flex:1;min-height:0;display:flex;flex-direction:column;background:var(--tm-surface-primary);border-radius:var(--tm-radius-2xl) var(--tm-radius-2xl) 0 0;padding:var(--tm-space-xl) var(--tm-space-page) 0}
+.scroll{flex:1;min-height:0;overflow:hidden}
+.footer{flex:none;margin:0 calc(-1 * var(--tm-space-page))}
+.label{margin:0 0 var(--tm-space-md);font-size:var(--tm-font-size-body-lg);line-height:var(--tm-font-lineheight-md);font-weight:var(--tm-font-weight-semibold)}
+.hint{margin:var(--tm-space-sm) 0 0;font-size:var(--tm-font-size-body-md);line-height:var(--tm-font-lineheight-sm);color:var(--tm-content-secondary)}
+.center{text-align:center}
+.grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--tm-space-sm)}
+.grid4 .tm-chip{width:100%;justify-content:center;padding-left:var(--tm-space-xs);padding-right:var(--tm-space-xs);white-space:nowrap}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--tm-space-sm)}
+.grid3 .tm-chip{width:100%;justify-content:center}
+/* wheel (approved anatomy) */
+.cols{display:grid;grid-template-columns:1fr 1fr;text-align:center;font-size:var(--tm-font-size-body-md);color:var(--tm-content-secondary);margin:var(--tm-space-lg) 0 var(--tm-space-xs)}
+.wheel{position:relative;display:grid;grid-template-columns:1fr 1fr;height:144px}
+.wheel--tall{height:240px}
+.band-sel{position:absolute;left:0;right:0;top:48px;height:48px;border-radius:var(--tm-radius-md);background:var(--tm-surface-brand-subtle)}
+.wheel--tall .band-sel{top:96px}
+.band-sel::after{content:'';position:absolute;left:50%;top:var(--tm-space-xs);bottom:var(--tm-space-xs);width:1px;background:var(--tm-border-default)}
+.col{position:relative;display:flex;flex-direction:column}
+.col span{height:48px;display:flex;align-items:center;justify-content:center;font-size:var(--tm-font-size-title-md);color:var(--tm-content-secondary)}
+.col span.sel{color:var(--tm-content-brand);font-size:var(--tm-font-size-title-lg);font-weight:var(--tm-font-weight-semibold)}
+.col span.far{color:var(--tm-content-disabled);font-size:var(--tm-font-size-title-sm)}
+.unit{font-size:var(--tm-font-size-body-md)!important;font-weight:400!important;color:var(--tm-content-secondary)!important;margin-left:var(--tm-space-xs)}
+/* stepper */
+.stepper{display:flex;align-items:center;justify-content:space-between;padding:var(--tm-space-lg);border-radius:var(--tm-radius-lg);background:var(--tm-surface-brand-subtle)}
+.round{width:56px;height:56px;border-radius:var(--tm-radius-full);border:var(--tm-border-width-default) solid var(--tm-border-brand-subtle);background:var(--tm-surface-primary);color:var(--tm-content-brand);display:flex;align-items:center;justify-content:center}
+.round .tm-icon svg{width:24px;height:24px}
+.bigval{font-size:var(--tm-font-size-title-lg);line-height:var(--tm-font-lineheight-2xl);font-weight:var(--tm-font-weight-semibold);color:var(--tm-content-primary);font-variant-numeric:tabular-nums;text-align:center}
+.bigval small{display:block;font-size:var(--tm-font-size-body-md);line-height:var(--tm-font-lineheight-sm);font-weight:400;color:var(--tm-content-secondary)}
+/* stats */
+.stats{display:grid;grid-template-columns:1fr 1fr;border:var(--tm-border-width-default) solid var(--tm-border-subtle);border-radius:var(--tm-radius-lg)}
+.stat{padding:var(--tm-space-lg)}
+.stat + .stat{border-left:var(--tm-border-width-default) solid var(--tm-border-subtle)}
+.stat p{margin:0}
+.stat .k{font-size:var(--tm-font-size-body-md);line-height:var(--tm-font-lineheight-sm);color:var(--tm-content-secondary)}
+.stat .v{margin-top:var(--tm-space-xs);font-size:var(--tm-font-size-title-lg);line-height:var(--tm-font-lineheight-2xl);font-weight:var(--tm-font-weight-semibold);font-variant-numeric:tabular-nums}
+.stat .m{margin-top:var(--tm-space-xs);font-size:var(--tm-font-size-body-md);color:var(--tm-content-secondary)}
+.link{display:inline-flex;align-items:center;gap:var(--tm-space-xs);min-height:48px;color:var(--tm-content-brand);font-weight:var(--tm-font-weight-semibold);font-size:var(--tm-font-size-body-md)}
+.link .tm-icon svg{width:18px;height:18px}
+.timer-hero{font-size:var(--tm-font-size-title-xl);line-height:48px;font-weight:var(--tm-font-weight-semibold);font-variant-numeric:tabular-nums;margin:var(--tm-space-xs) 0 0}
+.bar{height:8px;border-radius:var(--tm-radius-full);background:var(--tm-surface-tertiary);overflow:hidden;margin-top:var(--tm-space-md)}
+.bar i{display:block;height:100%;width:62%;background:var(--tm-surface-brand-default);border-radius:var(--tm-radius-full)}
+.row{display:flex;align-items:center;gap:var(--tm-space-md);padding:var(--tm-space-lg);border:var(--tm-border-width-default) solid var(--tm-border-subtle);border-radius:var(--tm-radius-lg)}
+.ic{width:40px;height:40px;border-radius:var(--tm-radius-md);background:var(--tm-surface-brand-subtle);color:var(--tm-content-brand);display:flex;align-items:center;justify-content:center;flex:none}
+.ic .tm-icon svg{width:22px;height:22px}
+.row .grow{flex:1}
+.row p{margin:0}
+.dot{display:inline-block;width:8px;height:8px;border-radius:var(--tm-radius-full);background:var(--tm-content-success);margin-right:var(--tm-space-xs)}
+.scrim{position:absolute;inset:0;background:rgb(0 0 0 / 32%)}
+.sheet{position:absolute;left:0;right:0;bottom:0;background:var(--tm-surface-primary);border-radius:var(--tm-radius-2xl) var(--tm-radius-2xl) 0 0;padding:0 var(--tm-space-page)}
+.sheet h2{margin:0;padding-top:var(--tm-space-xl);font-size:var(--tm-font-size-title-sm);line-height:var(--tm-font-lineheight-lg);font-weight:var(--tm-font-weight-semibold)}
+.tag{display:inline-flex;align-items:center;padding:var(--tm-space-2xs) var(--tm-space-sm);border-radius:var(--tm-radius-full);background:var(--tm-surface-primary);font-size:var(--tm-font-size-body-xs);line-height:var(--tm-font-lineheight-xs);font-weight:var(--tm-font-weight-semibold);color:var(--tm-content-secondary);margin-top:var(--tm-space-sm)}
+.tag b{color:var(--tm-content-primary);margin-right:var(--tm-space-2xs)}
+.mt16{margin-top:var(--tm-space-lg)}.mt24{margin-top:var(--tm-space-xl)}.mt8{margin-top:var(--tm-space-sm)}
+</style>
+<body>
+<script>
+const head=`<div class="header"><img class="logo" src="../../../../design-system/logo/truemeds-logo.svg" alt="truemeds for doctors"><div class="acts"><button class="tm-btn tm-btn--quiet tm-btn--icon"><span class="tm-icon" data-icon="bell"></span></button><button class="tm-btn tm-btn--quiet tm-btn--icon"><span class="tm-icon" data-icon="help-circle"></span></button><button class="tm-btn tm-btn--quiet tm-btn--icon"><span class="tm-icon" data-icon="user"></span></button></div></div>`;
+const band=(t,s,x='')=>`<div class="band"><h1>${t}</h1>${s?`<p class="sub">${s}</p>`:''}${x}</div>`;
+const bar=(p,q)=>`<div class="footer"><div class="tm-actionbar"><button class="tm-btn tm-btn--primary tm-btn--lg">${p}</button>${q?`<button class="tm-btn tm-btn--quiet">${q}</button>`:''}</div></div>`;
+const chips=(list,sel)=>list.map(c=>`<button class="tm-chip tm-chip--lg" aria-pressed="${c===sel}">${c}</button>`).join('');
+const wheel=(h,m,tall)=>{const H=[...Array(11).keys()],Mi=['00','15','30','45'];
+ const col=(arr,v,n)=>{const i=arr.indexOf(v);const r=[];for(let k=-n;k<=n;k++){const x=arr[i+k];r.push(x===undefined?'<span></span>':`<span class="${k===0?'sel':Math.abs(k)>1?'far':''}">${x}${k===0?`<span class="unit">${n&&arr===H?'h':'min'}</span>`:''}</span>`)}return `<div class="col">${r.join('')}</div>`};
+ const n=tall?2:1;return `<div class="wheel ${tall?'wheel--tall':''}"><div class="band-sel"></div>${col(H,h,n)}${col(Mi,m,n)}</div>`};
+const F={};
+F['S1a']=`${head}${band('Set your availability','Request cases whenever you’re free.')}<div class="panel"><div class="scroll"><p class="label">How long?</p><div class="grid4">${chips(['15 min','30 min','45 min','1 hour','2 hours','3 hours','4 hours','Custom'],'1 hour')}</div><p class="hint">Ends at 7:45 PM</p></div>${bar('Start · 1 hour')}</div>`;
+F['S1b']=`${head}${band('Set your availability','Request cases whenever you’re free.')}<div class="panel"><div class="scroll"><p class="label">How long?</p><div class="grid4">${chips(['15 min','30 min','45 min','1 hour','2 hours','3 hours','4 hours','Custom'],'Custom')}</div><div class="cols"><span>Hours</span><span>Minutes</span></div>${wheel(2,'30')}<p class="hint center">Ends at 9:15 PM · 15 min to 10 hours</p></div>${bar('Start · 2 h 30 min')}</div>`;
+F['S2']=`${head}${band('Set your availability','Request cases whenever you’re free.')}<div class="panel"><div class="scroll"><p class="label">How long?</p><div class="stepper"><span class="round"><span class="tm-icon" data-icon="minus"></span></span><div class="bigval">1 h 30 min<small>Ends at 8:15 PM</small></div><span class="round"><span class="tm-icon" data-icon="plus"></span></span></div><p class="hint center">Steps of 15 min · up to 10 hours</p><p class="label mt24">Quick picks</p><div class="grid4">${chips(['30 min','1 hour','2 hours','4 hours'],'')}</div></div>${bar('Start availability')}</div>`;
+F['S3']=`${head}${band('Set your availability','Request cases whenever you’re free.')}<div class="panel"><div class="scroll"><p class="label center">How long are you available?</p>${wheel(1,'30',true)}<p class="hint center">Ends at 8:15 PM · 15 min to 10 hours</p><div class="grid4 mt24">${chips(['30 min','1 hour','2 hours','4 hours'],'')}</div></div>${bar('Start · 1 h 30 min')}</div>`;
+F['S4']=`${head}${band('Consult on your schedule','Set how long you’re available to start taking cases.')}<div class="panel"><div class="scroll"><div class="row"><span class="ic"><span class="tm-icon" data-icon="prescription"></span></span><div class="grow"><p>Prescriptions today</p></div><p>0</p></div></div>${bar('Set availability')}</div><div class="scrim"></div><div class="sheet"><h2>Set your availability</h2><p class="sub">Request cases whenever you’re free.</p><div class="grid4 mt24">${chips(['15 min','30 min','45 min','1 hour','2 hours','3 hours','4 hours','Custom'],'1 hour')}</div><p class="hint">Ends at 7:45 PM</p><div class="tm-actionbar" style="margin:var(--tm-space-xl) calc(-1 * var(--tm-space-page)) 0;box-shadow:none"><button class="tm-btn tm-btn--primary tm-btn--lg">Start · 1 hour</button><button class="tm-btn tm-btn--quiet">Cancel</button></div></div>`;
+F['A1']=`${head}${band('<span class="dot"></span>You’re available','Request a case whenever you have a moment.')}<div class="panel"><div class="scroll"><div class="stats"><div class="stat"><p class="k">Time left</p><p class="v">30:00</p><p class="m">Until 7:15 PM</p></div><div class="stat"><p class="k">Prescriptions today</p><p class="v">3</p></div></div><span class="link"><span class="tm-icon" data-icon="plus"></span>Add time</span></div>${bar('Request a case','End availability')}</div>`;
+F['A2']=`${head}<div class="band"><p class="sub" style="margin:0"><span class="dot"></span>You’re available · time left</p><p class="timer-hero">30:00</p><p class="sub">Until 7:15 PM · <span style="color:var(--tm-content-brand);font-weight:var(--tm-font-weight-semibold)">+ Add time</span></p></div><div class="panel"><div class="scroll"><div class="row"><span class="ic"><span class="tm-icon" data-icon="prescription"></span></span><div class="grow"><p class="k" style="font-size:var(--tm-font-size-body-md);color:var(--tm-content-secondary)">Prescriptions today</p></div><p style="font-size:var(--tm-font-size-title-md);font-weight:var(--tm-font-weight-semibold)">3</p></div></div>${bar('Request a case','End availability')}</div>`;
+F['A3']=`${head}${band('You’re available','',`<span class="tag"><b>3</b> prescriptions today</span>`)}<div class="panel"><div class="scroll"><p class="k" style="margin:0;font-size:var(--tm-font-size-body-md);color:var(--tm-content-secondary)">Time left</p><p class="timer-hero">30:00</p><div class="bar"><i></i></div><div style="display:flex;justify-content:space-between;align-items:center"><p class="hint">Until 7:15 PM</p><span class="link"><span class="tm-icon" data-icon="plus"></span>Add time</span></div></div>${bar('Request a case','End availability')}</div>`;
+for(const [k,v] of Object.entries(F)){const d=document.createElement('div');d.className='frame tm';d.id=k;d.innerHTML=v;document.body.appendChild(d)}
+</script>
+<script src="../../../../design-system/icons/icons.js"></script>
+</body></html>
