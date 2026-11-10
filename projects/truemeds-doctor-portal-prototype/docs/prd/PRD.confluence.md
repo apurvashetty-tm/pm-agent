@@ -161,17 +161,19 @@ Each screen opens with the job the doctor is trying to get done, then why it's b
 
 [See this state](https://truemeds-doctor-app-preview.netlify.app/kit/viewer/#screens/unlock/unlock_fingerprint) · [Try it](https://truemeds-doctor-app-preview.netlify.app/?s=unlock_fingerprint)
 
-**What the doctor can do:** unlock with fingerprint, Face ID or screen lock; Use OTP instead; Switch account (goes to sign-in).
+**What the doctor can do:** unlock with fingerprint, Face ID or screen lock; Use OTP instead (opens sign-in with their number filled in; to change account, they edit the number there).
 
 **Rules:**
-- Repeated failed unlocks fall back to OTP (number of tries in §7).
+- Two buttons only: Unlock (main) and Use OTP instead. There is no separate Switch account.
+- Use OTP instead, and repeated failed unlocks (number of tries in §7), open sign-in with the remembered number filled in. No SMS is sent until the doctor taps Send OTP.
+- That sign-in follows the normal sign-in rules: no Back, and the phone's back gesture leaves the app. Reopening the app shows the unlock screen again.
 - No Back; this is the first screen.
 
 **Other states:**
 - Unlocking → "Unlocking…".
 - Prompt cancelled → back on the screen, no message.
 - Phone asks to retry → the phone's own retry prompt.
-- Not available → "Faster sign-in isn’t available on this phone right now." at the top; Use OTP instead becomes the main button.
+- Not available → "Faster sign-in isn’t available on this phone right now." at the top; Use OTP instead becomes the main button and opens the same filled-in sign-in.
 
 ### 5.5 Home: availability, add time, end, Profile
 

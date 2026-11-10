@@ -600,8 +600,8 @@ async function signInFull(p, n) { await send(p, n); await verify(p, "1234"); }
   await r.ctx.close();
 }
 
-{ // F7f (codex session 5, 2nd run): Use OTP instead on unlock sends a code; when that is the window's last code, OTP opens with
-  // codes used up (Resend hidden, too-many-codes notice), as from sign-in
+{ // F7f (codex session 5, 2nd run; D-105): codes sent from sign-in reached through unlock → Use OTP instead keep the window's limits;
+  // when that is the window's last code, OTP opens with codes used up (Resend hidden, too-many-codes notice), as from sign-in
   const r = await open("", { w: 1280, h: 800 }); const p = r.p; const n = "7012345621";   // desktop review: every panel row
   await signInFull(p, n); await p.click("#turn-on"); await p.waitForTimeout(PROMPT);   // code 1, faster sign-in on
   await choose(p, "start", "unlock");   // Restart then opens the returning unlock for the remembered doctor
@@ -609,12 +609,14 @@ async function signInFull(p, n) { await send(p, n); await verify(p, "1234"); }
   for (const w of [30, 60, 120]) {
     await ff(p, w * 1000); await p.evaluate(() => document.getElementById("rp-restart").click()); await p.waitForTimeout(400);   // restart keeps the app clock
     const at = await sNow(p);
-    await p.click("#fallback"); await p.waitForTimeout(ANSWER);
-    seen.push([at, await p.evaluate(() => ({ s: window.__tm.store.get().s, rsHidden: document.getElementById("rs")?.hidden, note: document.getElementById("nt")?.textContent.replace(/\u00a0/g, " ") }))]);
+    await p.click("#fallback"); await p.waitForTimeout(300);   // D-105: sign-in, number filled in, nothing sent yet
+    const pre = await p.evaluate(() => ({ s: window.__tm.store.get().s, n: document.getElementById("tm-login-mobile")?.value }));
+    await p.click(".login-submit"); await p.waitForTimeout(ANSWER);
+    seen.push([at, pre, await p.evaluate(() => ({ s: window.__tm.store.get().s, rsHidden: document.getElementById("rs")?.hidden, note: document.getElementById("nt")?.textContent.replace(/ /g, " ") }))]);
   }
-  const [, last] = seen[2];
-  check("F7f", "unlock → Use OTP instead (codes 2–4): the 4th code (window's last) opens OTP with Resend hidden and the too-many-codes notice; earlier ones show Resend",
-    seen.every(([at]) => at === "unlock_fingerprint") && !seen[0][1].rsHidden && !seen[1][1].rsHidden && last.s === "otp_default" && last.rsHidden && /call Doctor Ops/.test(last.note) && r.errors.length === 0,
+  const [, , last] = seen[2];
+  check("F7f", "unlock → Use OTP instead → sign-in (number filled in) → Send OTP (codes 2–4): the 4th code (window's last) opens OTP with Resend hidden and the too-many-codes notice; earlier ones show Resend",
+    seen.every(([at, pre]) => at === "unlock_fingerprint" && pre.s === "sign-in_default" && pre.n === n) && !seen[0][2].rsHidden && !seen[1][2].rsHidden && last.s === "otp_default" && last.rsHidden && /call Doctor Ops/.test(last.note) && r.errors.length === 0,
     JSON.stringify({ seen, e: r.errors }));
   await r.ctx.close();
 }
@@ -627,21 +629,32 @@ async function returning(story = {}, n = "7012345620") {
   if (Object.keys(story).length) await setStory(p, story);
   return r;
 }
-{ // F7: returning unlock — cancelled unchanged; 3 failed tries → OTP; unavailable; Use OTP instead; Switch account; phone Back stays
-  const r = await returning({ unlock: "cancelled" }); const p = r.p;
+// Codes sent to a number so far in this window (the mock server's record), to prove "no SMS until Send OTP" (D-105).
+const codesSent = (p, n) => p.evaluate((num) => { for (let i = 0; i < localStorage.length; i++) { const k = localStorage.key(i);
+  if (k.endsWith(":otp:" + num)) return (JSON.parse(localStorage.getItem(k)).sent || []).length; } return 0; }, n);
+const signInView = (p) => p.evaluate(() => ({ s: window.__tm.store.get().s, n: document.getElementById("tm-login-mobile")?.value ?? null,
+  send: !document.querySelector(".login-submit")?.disabled, back: !!document.querySelector(".signin-screen .tm-back, .signin-screen [data-back]") }));
+{ // F7: returning unlock (D-105) — cancelled unchanged; 3 failed tries → sign-in with the number filled in, no SMS; Send OTP → OTP
+  const r = await returning({ unlock: "cancelled" }); const p = r.p; const n = "7012345620";
   const before = await p.evaluate(() => document.querySelector(".unlock-screen").innerHTML);
+  const buttons = await p.evaluate(() => [...document.querySelectorAll(".unlock-screen .tm-actionbar button")].filter((b) => !b.hidden).map((b) => b.textContent.trim()));
   await p.click("#unlock-action"); await p.waitForTimeout(PROMPT);
   const after = await p.evaluate(() => document.querySelector(".unlock-screen").innerHTML);
   await p.goBack(); await p.waitForTimeout(300); const backStays = await sNow(p);
   await setStory(p, { unlock: "failed" });
+  const codes0 = await codesSent(p, n);
   const tries = [];
   for (let i = 0; i < 3; i++) { await p.click("#unlock-action"); await p.waitForTimeout(PROMPT); tries.push(await sNow(p)); }
-  const otp = await p.evaluate(() => ({ num: document.querySelector(".otp-screen .head b")?.textContent, focused: document.activeElement?.id }));
-  check("F7", "unlock: cancelled → unchanged, no message; phone Back stays on unlock; failed tries 1–2 stay (phone owns retry), the 3rd → OTP for the remembered number",
-    before === after && backStays === "unlock_fingerprint" && tries[0] === "unlock_fingerprint" && tries[1] === "unlock_fingerprint" && tries[2] === "otp_default" && otp.num === "+91 70123 45620" && otp.focused === "c",
-    JSON.stringify({ same: before === after, backStays, tries, otp }));
+  const si = await signInView(p); const codes1 = await codesSent(p, n);
+  check("F7", "unlock: two buttons (Unlock · Use OTP instead, no Switch account); cancelled → unchanged; phone Back stays on unlock; failed tries 1–2 stay, the 3rd → sign-in with the remembered number, Send OTP ready, no SMS sent",
+    before === after && JSON.stringify(buttons) === JSON.stringify(["Unlock with fingerprint", "Use OTP instead"]) && backStays === "unlock_fingerprint" &&
+    tries[0] === "unlock_fingerprint" && tries[1] === "unlock_fingerprint" && tries[2] === "sign-in_default" && si.n === n && si.send && !si.back && codes1 === codes0,
+    JSON.stringify({ same: before === after, buttons, backStays, tries, si, codes0, codes1 }));
+  await p.click(".login-submit"); await p.waitForTimeout(ANSWER);
+  const otp = await p.evaluate(() => ({ s: window.__tm.store.get().s, num: document.querySelector(".otp-screen .head b")?.textContent }));
   await verify(p, "1234"); const signed = await sNow(p);
-  check("F7b", "OTP after unlock fallback: 1234 → Home (faster sign-in already on, no offer)", signed === "home_setup-wheel", signed);
+  check("F7b", "from that sign-in: Send OTP → OTP for the remembered number; 1234 → Home (faster sign-in already on, no offer)",
+    otp.s === "otp_default" && otp.num === "+91 70123 45620" && signed === "home_setup-wheel", JSON.stringify({ otp, signed }));
   await r.ctx.close();
 
   const u = await returning({ unlock: "unavailable" }, "7012345621"); const q = u.p;
@@ -649,20 +662,27 @@ async function returning(story = {}, n = "7012345620") {
   await q.waitForTimeout(PROMPT);
   const un = await q.evaluate(() => ({ n: document.querySelector("#unlock-notice:not([hidden])")?.textContent, neutral: document.getElementById("unlock-notice").classList.contains("tm-notice--neutral"),
     act: document.getElementById("unlock-action").hidden, prompt: document.querySelector(".prompt").hidden, primary: document.getElementById("fallback").classList.contains("tm-btn--primary") }));
-  await q.reload(); await q.waitForTimeout(400);
-  const opened = await q.evaluate(() => ({ s: window.__tm.store.get().s }));
-  await q.click("#fallback"); await q.waitForTimeout(300); const useOtp = await sNow(q);
-  await q.goBack(); await q.waitForTimeout(300); const otpBack = await sNow(q);   // OTP Back = Change → sign-in
-  check("F7c", "unavailable: neutral notice at the top of the panel, prompt and Unlock hidden, Use OTP instead primary; Use OTP instead → OTP (Back = Change → sign-in)",
-    un.n === "Faster sign-in isn’t available on this phone right now." && un.neutral && un.act && un.prompt && un.primary && useOtp === "otp_default" && otpBack === "sign-in_default",
-    JSON.stringify({ un, opened, useOtp, otpBack }));
+  const qc0 = await codesSent(q, "7012345621");
+  await q.click("#fallback"); await q.waitForTimeout(300); const useOtp = await signInView(q); const qc1 = await codesSent(q, "7012345621");
+  await q.goBack(); await q.waitForTimeout(300); const siBack = await sNow(q);   // normal Sign-in rule: root, no return to unlock (D-105)
+  await q.reload(); await q.waitForTimeout(400); const reopened = await sNow(q);
+  check("F7c", "unavailable: neutral notice, prompt and Unlock hidden, Use OTP instead primary → sign-in with the number filled in, no SMS; phone Back does not return to unlock; reopening the app shows unlock",
+    un.n === "Faster sign-in isn’t available on this phone right now." && un.neutral && un.act && un.prompt && un.primary &&
+    useOtp.s === "sign-in_default" && useOtp.n === "7012345621" && qc1 === qc0 && siBack === "sign-in_default" && /^unlock_/.test(reopened),
+    JSON.stringify({ un, useOtp, qc0, qc1, siBack, reopened }));
   await u.ctx.close();
 
   const w = await returning({}, "7012345622"); const s = w.p;
-  await s.click("#switch-account"); await s.waitForTimeout(300);
-  const sw = await s.evaluate(() => ({ s: window.__tm.store.get().s, n: document.getElementById("tm-login-mobile")?.value }));
-  await s.goBack(); await s.waitForTimeout(300); const swBack = await sNow(s);
-  check("F7d", "Not you? Switch account → sign-in with an empty number; phone Back returns to unlock", sw.s === "sign-in_default" && sw.n === "" && swBack === "unlock_fingerprint", JSON.stringify({ sw, swBack }));
+  const noSwitch = await s.evaluate(() => !document.getElementById("switch-account") && !/Switch account|Not you/.test(document.querySelector(".unlock-screen").textContent));
+  await s.click("#fallback"); await s.waitForTimeout(300);
+  await s.focus("#tm-login-mobile"); await s.waitForTimeout(100);
+  const caret = await s.evaluate(() => { const i = document.getElementById("tm-login-mobile"); return [i.selectionStart, i.selectionEnd, i.value.length]; });
+  await typeNumber(s, "7012345699"); await s.click(".login-submit"); await s.waitForTimeout(ANSWER);
+  const other = await s.evaluate(() => ({ s: window.__tm.store.get().s, num: document.querySelector(".otp-screen .head b")?.textContent }));
+  const oldCodes = await codesSent(s, "7012345622"), newCodes = await codesSent(s, "7012345699");
+  check("F7d", "no Switch account / Not you on unlock; Use OTP instead → sign-in, cursor at the end of the filled-in number; edit the number → Send OTP → OTP for the new number (the old number sent nothing new)",
+    noSwitch && caret[0] === 10 && caret[1] === 10 && caret[2] === 10 && other.s === "otp_default" && other.num === "+91 70123 45699" && oldCodes === 1 && newCodes === 1,
+    JSON.stringify({ noSwitch, caret, other, oldCodes, newCodes }));
   const errs = [...r.errors, ...u.errors, ...w.errors];
   check("F7e", "unlock journeys: 0 console errors", errs.length === 0, errs.join("|"));
   await w.ctx.close();

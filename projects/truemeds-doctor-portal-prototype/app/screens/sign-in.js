@@ -46,6 +46,7 @@ export function render(host, id, { mode, params = {} }) {
   const kbDrawn = drawsKeyboard(mode);
 
   // Model. A live return (Change on OTP, phone Back) keeps the number the doctor typed; never a fixture over typed input.
+  // From unlock (D-105) params.number is the remembered number and params.prefilled is set; no code is sent until Send OTP.
   const typed = params.live ? (params.number ?? store.get().entryNumber ?? "") : null;
   const m = {
     number: typed ?? fx.number,
@@ -145,7 +146,12 @@ export function render(host, id, { mode, params = {} }) {
     setNumber(replacing ? input.value.replace(/\D/g, "").slice(-1) : input.value);
     if (pasting) { m.replace = true; pasting = false; }
   });
-  input.addEventListener("focus", () => { m.focused = true; m.kb = true; paint(); });
+  // From unlock (D-105) the remembered number is filled in: the first focus puts the cursor at the end, so the doctor edits from there.
+  let toEnd = !!params.prefilled;
+  input.addEventListener("focus", () => {
+    m.focused = true; m.kb = true; paint();
+    if (toEnd) { toEnd = false; const n = input.value.length; try { input.setSelectionRange(n, n); } catch { /* not a text field */ } }
+  });
   input.addEventListener("blur", () => { m.focused = false; if (!kbDrawn) m.kb = false; paint(); });
 
   function onSubmit() {

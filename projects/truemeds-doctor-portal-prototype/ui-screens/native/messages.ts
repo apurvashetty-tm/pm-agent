@@ -139,8 +139,6 @@ export const messages = {
   "unlock.submitScreenLock": "Unlock with screen lock",
   "unlock.submitBusy": "Unlocking…",
   "unlock.useOtp": "Use OTP instead",
-  "unlock.notYou": "Not you?",
-  "unlock.switchAccount": "Switch account",
   "common.back": "Back",
   "common.close": "Close",
   "common.help": "Help",

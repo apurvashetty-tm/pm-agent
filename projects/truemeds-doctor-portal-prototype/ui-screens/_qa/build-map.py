@@ -80,7 +80,7 @@ LABELS = {
     'returning-unlock/unlock_screen-lock': 'Open with screen lock (phone prompt)',
     'returning-unlock/unlock_pending': 'Phone prompt open, waiting',
     'returning-unlock/unlock_cancelled': 'Prompt cancelled: back to unlock, no message',
-    'returning-unlock/unlock_platform-retry': 'Failed prompt: retry, "Not you? Switch account"',
+    'returning-unlock/unlock_platform-retry': 'Failed prompt: retry (3 failures → sign-in, number filled in, D-105)',
     'returning-unlock/unlock_unavailable': '"Faster sign-in isn\'t available" -> Use OTP instead',
     # home
     'home/home_setup-wheel': 'Set availability: presets and wheel, 15-min steps',

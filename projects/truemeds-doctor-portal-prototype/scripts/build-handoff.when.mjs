@@ -68,13 +68,13 @@ export const WHEN = {
   offer_unavailable: W("Unavailable", "The phone answered “unavailable” when Turn on was tapped.", "The offer stays as it was with a warning in the bar; the button reads Continue and goes to Home. Not now is hidden; it can be turned on later in Profile."),
 
   // Returning unlock
-  unlock_fingerprint: W("Fingerprint", "A returning doctor with faster sign-in on opens the app (fingerprint set up).", "The phone's own prompt unlocks the app and Home opens. “Not you? Switch account” goes to Sign-in."),
+  unlock_fingerprint: W("Fingerprint", "A returning doctor with faster sign-in on opens the app (fingerprint set up).", "The phone's own prompt unlocks the app and Home opens. Use OTP instead opens Sign-in with the number filled in (no SMS until Send OTP); to change account the doctor edits the number there."),
   unlock_face: W("Face ID", "A returning doctor with faster sign-in on opens the app (Face ID set up).", "The phone's own prompt unlocks the app and Home opens."),
   "unlock_screen-lock": W("Screen lock", "A returning doctor with faster sign-in on opens the app (screen lock only).", "The phone's screen-lock prompt unlocks the app and Home opens."),
   unlock_pending: W("Waiting for the phone", "The unlock button was tapped; the phone's prompt is open.", "No second request; success opens Home, cancelling comes back here unchanged."),
   unlock_cancelled: W("Cancelled", "The doctor cancelled the phone's prompt.", "The screen is unchanged, with no message: cancelling isn't a failure. They can try again or use OTP."),
-  "unlock_platform-retry": W("Phone asks to retry", "The phone's prompt didn't recognise the doctor and asks to try again.", "The phone's own retry guidance shows; after 3 failed tries the app falls back to OTP."),
-  unlock_unavailable: W("Unavailable", "Faster sign-in isn't available on this phone right now.", "A neutral notice stays at the top; Use OTP instead becomes the main button and goes to Sign-in."),
+  "unlock_platform-retry": W("Phone asks to retry", "The phone's prompt didn't recognise the doctor and asks to try again.", "The phone's own retry guidance shows; after 3 failed tries the app opens Sign-in with the number filled in, as Use OTP instead does."),
+  unlock_unavailable: W("Unavailable", "Faster sign-in isn't available on this phone right now.", "A neutral notice stays at the top; Use OTP instead becomes the main button and opens Sign-in with the number filled in (no SMS until Send OTP)."),
 
   // Home
   "home_setup-wheel": W("Set availability", "The doctor is signed in and not taking cases yet (first open of the day).", "They pick how long they're available (quick picks or the wheel, at least 15 minutes) and tap Set availability."),

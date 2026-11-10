@@ -1,16 +1,16 @@
 // Returning unlock (entry journey, step 1). Markup and classes lifted from ui-screens/returning-unlock/returning-unlock.html;
 // styles in returning-unlock.css. Every word through MSG(); the doctor's name comes from mock profile data (D-92), never typed here.
-// Behaviour: app-logic §2 "Faster sign-in", feedback-state-map "Returning unlock", D-45, D-47, D-64, D-66 A1, A-19; plan B12, B14.
+// Behaviour: app-logic §2 "Faster sign-in", feedback-state-map "Returning unlock", D-45, D-47, D-64, D-66 A1, A-19, D-105; plan B12, B14.
 //   The prompt opens when the doctor taps Unlock (no automatic prompt) · success → Home (the open case from step 2 on) ·
 //   cancelled → the screen returns unchanged, not counted · failed → the phone owns the retry (screen unchanged); after 3 failed
-//   tries (setting, [MOCK]) → OTP · unavailable → standing neutral notice at the top of the panel, Use OTP instead is the primary ·
-//   Use OTP instead → OTP · "Not you? Switch account" → sign-in · phone Back stays (first screen when the app opens, D-47).
-//   [MOCK ASSUMPTION] Use OTP instead sends a code to the remembered number at the tap and opens OTP (no picture for a busy state);
-//   if the server refuses (too many, offline, …) sign-in opens with the number and that answer.
+//   tries (setting, [MOCK]) → the same as Use OTP instead · unavailable → standing neutral notice at the top of the panel, Use OTP
+//   instead is the primary · two buttons only, no Switch account (D-105) · phone Back stays (first screen when the app opens, D-47).
+//   Use OTP instead (and the 3-failure fallback) opens Sign-in with the remembered number filled in; no SMS until Send OTP (D-105).
+//   That Sign-in is the root, as any Sign-in: no Back, phone back leaves the app (D-101); reopening the app shows unlock again.
 import { MSG } from "../core/msg.js";
-import { push, setScreenBack, saveCurrent, reset as resetNav } from "../core/nav.js";
+import { push, setScreenBack, reset as resetNav } from "../core/nav.js";
 import { h } from "../core/dom.js";
-import { signedIn, signIn, requestCode } from "../core/auth.js";
+import { signedIn, signIn } from "../core/auth.js";
 import { promptAnswer } from "../core/unlock.js";
 import { HOME_STUB } from "../core/faster-signin.js";
 import { doctorFor } from "../data/doctor.js";
@@ -53,8 +53,6 @@ export function render(host, id, { mode, params = {} }) {
   const label = h("span", { id: "unlock-label" });
   const action = h("button", { class: "tm-btn tm-btn--primary tm-btn--lg tm-btn--block", id: "unlock-action", type: "button", onclick: onUnlock }, label);
   const fallback = h("button", { class: "tm-btn tm-btn--quiet tm-btn--lg tm-btn--block", id: "fallback", type: "button", onclick: onUseOtp, text: MSG("unlock.useOtp") });
-  const account = h("button", { class: "tm-btn tm-btn--quiet account", id: "switch-account", type: "button", onclick: onSwitch },
-    `${MSG("unlock.notYou")} `, h("strong", { text: MSG("unlock.switchAccount") }));
   const root = h("main", { class: "unlock-screen tm", "aria-label": MSG("unlock.greeting", { name: doctorFor(number).firstName }) },
     h("header", { class: "intro" },
       h("img", { class: "login-logo", src: "brand/truemeds-for-doctors.svg", alt: "truemeds for doctors" }),
@@ -62,7 +60,7 @@ export function render(host, id, { mode, params = {} }) {
         h("h1", { class: "tm-text-title-lg", text: MSG("unlock.greeting", { name: doctorFor(number).firstName }) }),
         h("p", { text: MSG("unlock.subtitle") }))),
     h("section", { class: "panel", "aria-labelledby": "ready" }, notice, prompt),
-    h("div", { class: "tm-actionbar footer" }, action, fallback, account));
+    h("div", { class: "tm-actionbar footer" }, action, fallback));
   host.replaceChildren(root);
 
   // ---- paint ----
@@ -97,28 +95,17 @@ export function render(host, id, { mode, params = {} }) {
       if (answer === "unavailable") m.unavailable = true;
       if (answer === "failed") {
         m.fails += 1;   // the phone shows its own retry guidance; cancelled is not a failure
-        if (m.fails >= ctx().value("returningUnlockFallbackAfter")) { m.fails = 0; paint(); toOtp(); return; }
+        if (m.fails >= ctx().value("returningUnlockFallbackAfter")) { m.fails = 0; paint(); toSignIn(); return; }
       }
       paint();
     }, "phonePromptDelay");
   }
-  function onUseOtp() { if (!m.busy) toOtp(); }
-  function toOtp() {
-    saveCurrent({ saved: { ...m } });
-    if (!number) { push(null, { s: "sign-in_default", live: true, number: "" }); return; }
-    const r = requestCode(number, ctx());
-    if (r.outcome === "sent" || r.outcome === "locked") {
-      push(null, { s: r.outcome === "sent" ? "otp_default" : "otp_locked", live: true, number, resendAt: r.resendAt, until: r.until, lastCode: !!r.last });   // codex 2: last code → codes used up
-      return;
-    }
-    const button = r.outcome === "too-many-tries" ? "wait" : r.outcome === "inactive" ? "inactive" : "default";
-    push(null, { s: "sign-in_default", live: true, number,
-      saved: { number, notice: r.outcome, button, until: r.until || 0, error: null, kb: false, focused: false, replace: false } });
-  }
-  function onSwitch() {
-    if (m.busy) return;
-    saveCurrent({ saved: { ...m } });
-    push(null, { s: "sign-in_default", live: true, number: "" });   // another doctor signs in from an empty number
+  function onUseOtp() { if (!m.busy) toSignIn(); }
+  // D-105: Sign-in with the remembered number filled in, nothing sent. It starts a fresh history (the root, like any Sign-in):
+  // no Back, and the phone's back gesture does not return to unlock. Editing the number there signs in another doctor.
+  function toSignIn() {
+    resetNav();
+    push(null, { s: "sign-in_default", live: true, number: number || "", prefilled: !!number });
   }
 
   // First screen when the app opens: no Back control, and the phone's back gesture stays here (D-47).

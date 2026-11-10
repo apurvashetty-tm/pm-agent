@@ -4,6 +4,19 @@ What moved in the kit since the previous generation: tokens used, building block
 
 ## 2026-11-10
 
+- Block changed: button
+- Screen state changed: unlock_cancelled
+- Screen state changed: unlock_face
+- Screen state changed: unlock_fingerprint
+- Screen state changed: unlock_pending
+- Screen state changed: unlock_platform-retry
+- Screen state changed: unlock_screen-lock
+- Screen state changed: unlock_unavailable
+- Copy removed: unlock.notYou
+- Copy removed: unlock.switchAccount
+
+## 2026-11-10
+
 - Block changed: wheel
 - Block changed: wheel-item
 - Screen state changed: otp_code-expired
@@ -1550,14 +1563,4 @@ What moved in the kit since the previous generation: tokens used, building block
 
 - Block changed: field
 - Block changed: logo-header
-- Block changed: entry-layout
-
-## 2026-11-09
-
-- Block changed: button
-- Block changed: field
-- Block changed: notice
-- Block changed: spinner
-- Block changed: logo-header
-- Block changed: sign-up-option
 - Block changed: entry-layout

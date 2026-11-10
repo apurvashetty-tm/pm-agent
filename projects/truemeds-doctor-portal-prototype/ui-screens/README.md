@@ -12,7 +12,7 @@ Each state has a 390-wide and a 360-wide picture (`_w390.png`, `_w360.png`, 2× 
 |---|---|---|---|---|
 | Sign-in | `sign-in/sign-in.html` | `sign-in/` (`sign-in_<state>_…`) | 12 | D-42 to D-47, D-61, D-65 |
 | OTP | `otp/otp.html` | `otp/` (`otp_<state>_…`) | 17 | D-42 to D-47, D-61 (no Back), D-65 |
-| Returning unlock | `returning-unlock/returning-unlock.html` | `returning-unlock/` (`unlock_<state>_…`) | 7 | D-45, D-47, D-61, D-66 |
+| Returning unlock | `returning-unlock/returning-unlock.html` | `returning-unlock/` (`unlock_<state>_…`) | 7 (14 pictures re-rendered 2026-11-10 for D-105: two buttons, no Switch account; awaiting Apurva's approval) | D-45, D-47, D-61, D-66, D-105 |
 | Faster sign-in offer | `faster-signin-offer/faster-signin-offer.html` | `faster-signin-offer/` (`offer_<state>_…`) | 7 | D-45, D-61, D-64, D-65, D-93 |
 | Home (availability, add time, end, profile) | `home/home.html` (+ `home-reference.js`, `home-reference.css`) | `home/` (`home_<state>_…`) | 22 | D-36, D-40, D-47, D-53, D-69, D-70 |
 | Case page: ready, calling, call outcomes, closed cases, sheets, stress | `case/case.html` (+ `case-styles.css`) | `case/` (`<state>_…`) | 61 | D-48 to D-83 |

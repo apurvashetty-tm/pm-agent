@@ -47,7 +47,7 @@ export const STATE_GROUPS = [
     "offer_enable-failed": "Offer · couldn't turn on",
     "offer_offline": "Offer · offline",
     "offer_unavailable": "Offer · not available on this phone (D-93)",
-    "offer.shown": "Offer shown once after first sign-in (behaviour)",
+    "offer.shown": "Offer at each OTP sign-in until turned on, at most 3 times (behaviour, D-104)",
     "offer.enabled": "Offer turned on → Home (behaviour)",
     "offer.cancelled": "Offer prompt cancelled → back, no message (behaviour)",
     "offer.not-now": "Offer · Not now → Home (behaviour)",
@@ -61,6 +61,7 @@ export const STATE_GROUPS = [
     "unlock_cancelled": "Unlock · prompt cancelled",
     "unlock_platform-retry": "Unlock · phone asks to try again",
     "unlock_unavailable": "Unlock · not available on this phone",
+    "unlock.sign-in-prefilled": "Unlock · Use OTP instead → sign-in, number filled in (behaviour, D-105)",
   } },
   { title: "Home", ids: {
     "home_setup-wheel": "Home · set availability",

@@ -880,9 +880,9 @@ Decisions: D-78 (the approved screens and app logic)
 <a id="offer-05"></a>
 ### offer-05 · What does the app show in offer.shown, and how does it recover?
 
-- offer.shown: None — After first successful OTP sign-in on a supported device where faster sign-in is off — *Source: Feedback state map: offer.shown*
+- offer.shown: None — After an OTP sign-in on a supported device where faster sign-in is off; at each OTP sign-in until turned on, at most `fasterOfferMax` (3) times (D-104) — *Source: Feedback state map: offer.shown*
 
-Decisions: D-78 (the approved screens and app logic)
+Decisions: D-104
 
 <a id="offer-06"></a>
 ### offer-06 · What does the app show in offer.enabling, and how does it recover?
@@ -929,9 +929,9 @@ Decisions: D-93, D-94
 <a id="offer-12"></a>
 ### offer-12 · What does the app show in offer.not-now, and how does it recover?
 
-- offer.not-now: None — → Home; re-offer per OQ-023; can be turned on later in Profile (D-69) — *Source: Feedback state map: offer.not-now*
+- offer.not-now: None — → Home; offered again at the next OTP sign-in, up to `fasterOfferMax` times in total (D-104); can be turned on later in Profile (D-69) — *Source: Feedback state map: offer.not-now*
 
-Decisions: D-69
+Decisions: D-104, D-69
 
 <a id="offer-13"></a>
 ### offer-13 · What does the app show in offer.screen-lock, and how does it recover?
@@ -965,16 +965,16 @@ Decisions: D-104
 | [unlock-05](#unlock-05) | States and feedback | What does the app show in unlock.cancelled, and how does it recover? |
 | [unlock-06](#unlock-06) | States and feedback | What does the app show in unlock.platform-retry, and how does it recover? |
 | [unlock-07](#unlock-07) | States and feedback | What does the app show in unlock.unavailable, and how does it recover? |
-| [unlock-08](#unlock-08) | Limits and timings | What is the value of "returningUnlockFallbackAfter"? |
-| [unlock-09](#unlock-09) | Prototype stand-ins | The prototype fakes this: "Tries". What do we build? |
-| [unlock-10](#unlock-10) | Prototype stand-ins | The prototype fakes this: "Use OTP instead sends a code to the remembered". What do we build? |
+| [unlock-08](#unlock-08) | States and feedback | What does the app show in unlock.sign-in-prefilled, and how does it recover? |
+| [unlock-09](#unlock-09) | Limits and timings | What is the value of "returningUnlockFallbackAfter"? |
+| [unlock-10](#unlock-10) | Prototype stand-ins | The prototype fakes this: "Tries". What do we build? |
 
 <a id="unlock-01"></a>
 ### unlock-01 · What is the rule for "Returning unlock"?
 
-- Returning unlock: the phone's own prompt; 3 failed tries → fall back to OTP `[MOCK]`. "Not you? Switch account" → sign-in. The footer is the action bar; the content above it scrolls. If unavailable: "Faster sign-in isn't available on this phone right now." is a standing state, so the neutral notice stays at the top of the panel; **Use OTP instead** is the main button in the bar. — *Source: App logic §2.*
+- Returning unlock: two buttons (D-105), **Unlock** (primary) · **Use OTP instead** (quiet); no "Switch account". The phone's own prompt; 3 failed tries `[MOCK]` → the same as Use OTP instead. **Use OTP instead** opens **Sign-in with the remembered number filled in** (cursor at the end, Send OTP ready); no SMS is sent until the doctor taps Send OTP. To change account, the doctor edits the number there. This Sign-in follows the normal Sign-in rules: no Back; the phone's back gesture leaves the app (D-101); reopening the app shows unlock again. The footer is the action bar; the content above it scrolls. If unavailable: "Faster sign-in isn't available on this phone right now." is a standing state, so the neutral notice stays at the top of the panel; **Use OTP instead** is the main button in the bar and opens the same prefilled Sign-in. — *Source: App logic §2.*
 
-Decisions: D-78 (the approved screens and app logic)
+Decisions: D-105, D-101
 
 <a id="unlock-02"></a>
 ### unlock-02 · What is the rule for "Wording follows the phone"?
@@ -1014,28 +1014,28 @@ Decisions: D-78 (the approved screens and app logic)
 <a id="unlock-07"></a>
 ### unlock-07 · What does the app show in unlock.unavailable, and how does it recover?
 
-- unlock.unavailable: N1 (neutral info, not an error — D-47 amendment) — "Use OTP instead" becomes the primary; notice copy "Faster sign-in isn't available on this phone right now." (no repeat of the button text, D-47); preserve account context — *Source: Feedback state map: unlock.unavailable*
+- unlock.unavailable: N1 (neutral info, not an error — D-47 amendment) — "Use OTP instead" becomes the primary; notice copy "Faster sign-in isn't available on this phone right now." (no repeat of the button text, D-47); preserve account context; Use OTP instead opens the same prefilled Sign-in (D-105) — *Source: Feedback state map: unlock.unavailable*
 
-Decisions: D-47
+Decisions: D-47, D-105
 
 <a id="unlock-08"></a>
-### unlock-08 · What is the value of "returningUnlockFallbackAfter"?
+### unlock-08 · What does the app show in unlock.sign-in-prefilled, and how does it recover?
+
+- unlock.sign-in-prefilled: None — Sign-in from unlock, number filled in: Use OTP instead, or 3 failed unlocks `[MOCK]`, open `sign-in_default` with the remembered number in the field (cursor at the end, Send OTP enabled when valid); **no SMS until Send OTP**. Editing the number signs in another doctor (replaces Switch account). Normal Sign-in rules: no Back; phone back leaves the app (D-101); reopening the app shows unlock again (D-105) — *Source: Feedback state map: unlock.sign-in-prefilled*
+
+Decisions: D-101, D-105
+
+<a id="unlock-09"></a>
+### unlock-09 · What is the value of "returningUnlockFallbackAfter"?
 
 - [MOCK] 3 in the prototype. Keep configurable (a server or config value, never typed into a screen); not a production promise. Note: 3 failed tries → OTP (checklist 4.3). — *Source: Prototype setting [MOCK]*
 
 Decisions: D-78 (the approved screens and app logic)
 
-<a id="unlock-09"></a>
-### unlock-09 · The prototype fakes this: "Tries". What do we build?
-
-- [MOCK] Tries (setting, ) → OTP · unavailable → standing neutral notice at the top of the panel, Use OTP instead is the primary · Keep configurable; the real value or answer comes from the backend. — *Source: Prototype [MOCK]*
-
-Decisions: D-78 (the approved screens and app logic)
-
 <a id="unlock-10"></a>
-### unlock-10 · The prototype fakes this: "Use OTP instead sends a code to the remembered". What do we build?
+### unlock-10 · The prototype fakes this: "Tries". What do we build?
 
-- [MOCK] Use OTP instead sends a code to the remembered number at the tap and opens OTP; Keep configurable; the real value or answer comes from the backend. — *Source: Prototype [MOCK]*
+- [MOCK] Tries (setting, ) → the same as Use OTP instead · unavailable → standing neutral notice at the top of the panel, Use OTP Keep configurable; the real value or answer comes from the backend. — *Source: Prototype [MOCK]*
 
 Decisions: D-78 (the approved screens and app logic)
 
@@ -1132,7 +1132,7 @@ Decisions: D-78 (the approved screens and app logic)
 <a id="home-07"></a>
 ### home-07 · What is the rule for "Set availability"?
 
-- **Set availability:** quick picks 15 / 30 / 45 min, 1 / 2 / 3 hours, plus the wheel (hours and minutes, 15-minute steps). Minimum **15 minutes**, any start time, no maximum (24/7). Confirm starts the countdown. — *Source: App logic §3.*
+- **Set availability:** quick picks 15 / 30 / 45 min, 1 / 2 / 3 hours, plus the wheel (hours and minutes, 15-minute steps). The wheel behaves like a phone's own time wheel (F-04): swipe it, it carries on with momentum and snaps to one row (minutes in 15-minute steps); a tap on the row above or below moves one step; the value is set when the wheel comes to rest, and Set availability / Add tapped while it still moves use the value in the band. Minimum **15 minutes**, any start time, no maximum (24/7). Confirm starts the countdown. — *Source: App logic §3.*
 
 Decisions: D-78 (the approved screens and app logic)
 

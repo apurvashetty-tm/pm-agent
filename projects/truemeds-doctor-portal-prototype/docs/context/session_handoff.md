@@ -1005,3 +1005,10 @@ User identified missing HTML/native linkage. Inspected actual sign-in and OTP HT
 - **Kit:** plain-words rules added: Home "Availability wheel"; "Keyboard" on OTP, case, Prescribe and Sign-in (d30). Kit regenerated.
 - **Checks:** all pass; new `tests/wheel-keyboard.mjs` 15 / 15. Codex: 2 blockers + 1 should-fix fixed; the second review found no blockers. Report: `docs/renders/2026-11-10-wheel-keyboard/REPORT.md`.
 - **Next:** Apurva checks both on his phone through the local link (`scripts/serve.sh`) — an Android Chrome and an iOS Safari look, which headless tests can't give; then the final deploy (on request only).
+
+## 2026-11-10 · Run d105 (unattended) — D-105 returning unlock with two buttons, D-104 / wheel leftovers
+- **Unlock:** two buttons (Unlock · Use OTP instead); "Not you? Switch account" removed (screen file, prototype, copy registry, kit, PRD §5.4). Use OTP instead and the 3-failure fallback open Sign-in with the remembered number filled in, no SMS until Send OTP; that Sign-in is the normal root (no special back). New state-map behaviour row `unlock.sign-in-prefilled`.
+- **Pictures:** 14 unlock pictures re-rendered in `ui-screens/returning-unlock/` (only the bar changes) — **awaiting Apurva's approval**: `docs/renders/2026-11-10-d105/before-after-390.png` / `-360.png`. `REVIEW.html` rebuilt (was stale since D-91 / D-93).
+- **Leftovers:** D-104 wording in the state map, review state names and the OTP comment; app-logic §3 wheel behaviour line.
+- **Checks:** entry-journeys 61/61, run-checks 95/95, step-1 compare exact 80 / accepted 6 / failed 0, kit --check + handoff 38/38, PRD 17/17, all guards pass. Codex 0 blockers, 0 should-fix. Report: `docs/renders/2026-11-10-d105/REPORT.md`.
+- **Next:** Apurva approves the unlock pictures and checks Use OTP instead on his phone; then release D1 → D2 (final deploy, on request only).

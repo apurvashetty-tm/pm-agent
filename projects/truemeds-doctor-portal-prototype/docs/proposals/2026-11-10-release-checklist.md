@@ -1,6 +1,6 @@
 # Doctor app: everything before the final deploy (checklist)
 
-2026-11-10 · Covers three changes: **D-104** (offer re-asked, max 3, built), **F-04 / F-05** (swipe wheel and keyboard, run in progress) and **D-105** (returning unlock: two buttons, agreed and queued). Then one release. Found by searching the whole project for each change.
+2026-11-10 · Covers three changes: **D-104** (offer re-asked, max 3, built), **F-04 / F-05** (swipe wheel and keyboard, run in progress) and **D-105** (returning unlock: two buttons, built in the d105 run). Then one release. Found by searching the whole project for each change.
 
 Legend: ✅ done · 🔄 in the running run · ⬜ to do
 
@@ -13,9 +13,9 @@ Legend: ✅ done · 🔄 in the running run · ⬜ to do
 | A3 | Prototype code + setting `fasterOfferMax` + tests | ✅ |
 | A4 | Hand-off kit (DECIDED, setting) | ✅ |
 | A5 | PRD §5.3, §7, §10 + Confluence | ✅ |
-| A6 | **Leftover:** state map says "Shown once after the first successful OTP sign-in" (`docs/feedback-state-map.md`) | ⬜ fix in the D-105 run |
-| A7 | **Leftover:** review panel's state name "Offer shown once after first sign-in" (`app/review/state-names.js`) | ⬜ fix in the D-105 run |
-| A8 | **Leftover:** a code comment in `app/screens/otp.js` | ⬜ fix in the D-105 run |
+| A6 | **Leftover:** state map says "Shown once after the first successful OTP sign-in" (`docs/feedback-state-map.md`) | ✅ fixed in the d105 run |
+| A7 | **Leftover:** review panel's state name "Offer shown once after first sign-in" (`app/review/state-names.js`) | ✅ fixed in the d105 run |
+| A8 | **Leftover:** a code comment in `app/screens/otp.js` | ✅ fixed in the d105 run |
 | A9 | Screen pictures | ✅ no change (nothing visible changed) |
 
 Old review documents that say "offered once" (rebuild checklists from Oct–Nov) are history and stay as they are.
@@ -28,12 +28,12 @@ Old review documents that say "offered once" (rebuild checklists from Oct–Nov)
 | B2 | Prototype: keyboard never covers the field or the main button, every screen | ✅ (case + Prescribe keep D-81 bar-hides) |
 | B3 | Tests for both + picture compare (no visual change) | ✅ 15/15; 132 pictures 0 over 1 % |
 | B4 | Kit: wheel rule (Android needs a wheel component) + keyboard rule | ✅ |
-| B5 | **Missing from the run:** app rules (`app-logic.md` §3) say how the wheel *behaves* (swipe, snap) | ⬜ add in the D-105 run |
+| B5 | **Missing from the run:** app rules (`app-logic.md` §3) say how the wheel *behaves* (swipe, snap) | ✅ added in the d105 run |
 | B6 | PRD: §6 already has the keyboard rule; §5.5 "a wheel in 15-minute steps" is enough | ✅ no change |
 | B7 | Design system: if the wheel needed a new design value, it goes to `main` first on its own shared PR | ✅ checked: wheel CSS uses existing tokens only; keyboard rules already in RULES §8.9 and D-81 — no design-system change |
 | B8 | **Your phone check** through the local link: spin the wheel; type an OTP and see Verify stay visible | ⬜ after the run |
 
-## C · D-105: returning unlock with two buttons (agreed 2026-11-10; no special back gesture; queued)
+## C · D-105: returning unlock with two buttons (agreed 2026-11-10; no special back gesture; built in the d105 run — C2–C10 done, pictures await approval; see `docs/renders/2026-11-10-d105/REPORT.md`)
 
 **Change:** drop "Not you? Switch account". **Use OTP instead** opens sign-in with the number filled in (no SMS until Send OTP; the doctor can change the number there). The automatic fallback after failed unlocks goes to the same place. "Not available" state: Use OTP instead is the one main button.
 

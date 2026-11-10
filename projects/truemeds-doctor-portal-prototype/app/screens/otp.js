@@ -201,8 +201,8 @@ export function render(host, id, { mode, params = {} }) {
     if (r.outcome === "correct") {
       signIn(number, ctx());
       store.set({ entryNumber: number });
-      // Signed in: the entry journey leaves history (Back never returns to OTP). The faster sign-in offer once, on a phone with a
-      // screen lock and faster sign-in off; else Home (D-45, D-64).
+      // Signed in: the entry journey leaves history (Back never returns to OTP). The faster sign-in offer at each OTP sign-in, at most
+      // fasterOfferMax (3) times, on a phone with a screen lock and faster sign-in off; else Home (D-45, D-64, D-104).
       resetNav();
       push(null, { s: afterSignIn(number, ctx()), live: true, number });
       return;

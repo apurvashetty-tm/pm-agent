@@ -1,0 +1,88 @@
+exact     offer_enable-failed @390  changed 0 px  regions none
+exact     offer_enable-failed @360  changed 0 px  regions none
+exact     offer_enabling @390  changed 0 px  regions spinner, spinner
+exact     offer_enabling @360  changed 0 px  regions spinner, spinner
+exact     offer_face-id @390  changed 0 px  regions none
+exact     offer_face-id @360  changed 0 px  regions none
+exact     offer_fingerprint @390  changed 0 px  regions none
+exact     offer_fingerprint @360  changed 0 px  regions none
+exact     offer_offline @390  changed 0 px  regions none
+exact     offer_offline @360  changed 0 px  regions none
+exact     offer_screen-lock @390  changed 0 px  regions none
+exact     offer_screen-lock @360  changed 0 px  regions none
+exact     offer_unavailable @390  changed 0 px  regions none
+exact     offer_unavailable @360  changed 0 px  regions none
+exact     otp_code-expired @390  changed 0 px  regions none
+exact     otp_code-expired @360  changed 0 px  regions none
+exact     otp_cooldown-reconciling @390  changed 0 px  regions none
+exact     otp_cooldown-reconciling @360  changed 0 px  regions none
+exact     otp_couldnt-verify @390  changed 0 px  regions none
+exact     otp_couldnt-verify @360  changed 0 px  regions none
+exact     otp_default @390  changed 0 px  regions none
+exact     otp_default @360  changed 0 px  regions none
+exact     otp_empty-tap @390  changed 0 px  regions none
+exact     otp_empty-tap @360  changed 0 px  regions none
+accepted  otp_expired-and-resend-limited @390  changed 2380 px  regions listed
+accepted  otp_expired-and-resend-limited @360  changed 2380 px  regions listed
+accepted  otp_locked @390  changed 2418 px  regions listed
+accepted  otp_locked @360  changed 2418 px  regions listed
+exact     otp_new-code-sent @390  changed 0 px  regions none
+exact     otp_new-code-sent @360  changed 0 px  regions none
+exact     otp_offline @390  changed 0 px  regions none
+exact     otp_offline @360  changed 0 px  regions none
+exact     otp_resend-available @390  changed 0 px  regions none
+exact     otp_resend-available @360  changed 0 px  regions none
+exact     otp_resend-failed @390  changed 0 px  regions none
+exact     otp_resend-failed @360  changed 0 px  regions none
+exact     otp_resending @390  changed 0 px  regions none
+exact     otp_resending @360  changed 0 px  regions none
+accepted  otp_too-many-resends @390  changed 2384 px  regions listed
+accepted  otp_too-many-resends @360  changed 2384 px  regions listed
+exact     otp_too-short @390  changed 0 px  regions none
+exact     otp_too-short @360  changed 0 px  regions none
+exact     otp_two-tries-left @390  changed 0 px  regions none
+exact     otp_two-tries-left @360  changed 0 px  regions none
+exact     otp_verifying @390  changed 0 px  regions spinner, spinner
+exact     otp_verifying @360  changed 0 px  regions spinner, spinner
+exact     otp_wrong-code @390  changed 0 px  regions none
+exact     otp_wrong-code @360  changed 0 px  regions none
+exact     sign-in_couldnt-send @390  changed 0 px  regions none
+exact     sign-in_couldnt-send @360  changed 0 px  regions none
+exact     sign-in_default @390  changed 0 px  regions none
+exact     sign-in_default @360  changed 0 px  regions none
+exact     sign-in_empty-tap @390  changed 0 px  regions none
+exact     sign-in_empty-tap @360  changed 0 px  regions none
+exact     sign-in_inactive @390  changed 0 px  regions none
+exact     sign-in_inactive @360  changed 0 px  regions none
+exact     sign-in_keyboard-open @390  changed 0 px  regions none
+exact     sign-in_keyboard-open @360  changed 0 px  regions none
+exact     sign-in_not-registered @390  changed 0 px  regions none
+exact     sign-in_not-registered @360  changed 0 px  regions none
+exact     sign-in_offline @390  changed 0 px  regions none
+exact     sign-in_offline @360  changed 0 px  regions none
+exact     sign-in_pasted-cleaned @390  changed 0 px  regions none
+exact     sign-in_pasted-cleaned @360  changed 0 px  regions none
+exact     sign-in_sending @390  changed 0 px  regions spinner, spinner
+exact     sign-in_sending @360  changed 0 px  regions spinner, spinner
+exact     sign-in_too-many-tries @390  changed 0 px  regions none
+exact     sign-in_too-many-tries @360  changed 0 px  regions none
+exact     sign-in_too-short @390  changed 0 px  regions none
+exact     sign-in_too-short @360  changed 0 px  regions none
+exact     sign-in_wrong-first-digit @390  changed 0 px  regions none
+exact     sign-in_wrong-first-digit @360  changed 0 px  regions none
+failed    unlock_cancelled @390  changed 1977 px  regions unexplained(max channel difference 83 30,30,366,114), unexplained(max channel difference 100 366,444,420,504), unexplained(max channel difference 11 6,1386,18,1392), unexplained(max channel difference 56 30,1416,66,1452), unexplained(max channel difference 54 714,1416,750,1452), unexplained(max channel difference 53 30,1494,66,1530), unexplained(max channel difference 52 714,1494,750,1530)
+failed    unlock_cancelled @360  changed 1979 px  regions unexplained(max channel difference 83 30,30,366,114), unexplained(max channel difference 100 336,444,390,504), unexplained(max channel difference 11 6,1386,18,1392), unexplained(max channel difference 11 702,1386,714,1392), unexplained(max channel difference 56 30,1416,66,1452), unexplained(max channel difference 54 654,1416,690,1452), unexplained(max channel difference 53 30,1494,66,1530), unexplained(max channel difference 52 654,1494,690,1530)
+failed    unlock_face @390  changed 1827 px  regions unexplained(max channel difference 83 30,30,366,114), unexplained(max channel difference 103 366,450,414,498), unexplained(max channel difference 11 6,1386,18,1392), unexplained(max channel difference 56 30,1416,66,1452), unexplained(max channel difference 54 714,1416,750,1452), unexplained(max channel difference 53 30,1494,66,1530), unexplained(max channel difference 52 714,1494,750,1530)
+failed    unlock_face @360  changed 1829 px  regions unexplained(max channel difference 83 30,30,366,114), unexplained(max channel difference 103 336,450,384,498), unexplained(max channel difference 11 6,1386,18,1392), unexplained(max channel difference 11 702,1386,714,1392), unexplained(max channel difference 56 30,1416,66,1452), unexplained(max channel difference 54 654,1416,690,1452), unexplained(max channel difference 53 30,1494,66,1530), unexplained(max channel difference 52 654,1494,690,1530)
+failed    unlock_fingerprint @390  changed 1977 px  regions unexplained(max channel difference 83 30,30,366,114), unexplained(max channel difference 100 366,444,420,504), unexplained(max channel difference 11 6,1386,18,1392), unexplained(max channel difference 56 30,1416,66,1452), unexplained(max channel difference 54 714,1416,750,1452), unexplained(max channel difference 53 30,1494,66,1530), unexplained(max channel difference 52 714,1494,750,1530)
+failed    unlock_fingerprint @360  changed 1979 px  regions unexplained(max channel difference 83 30,30,366,114), unexplained(max channel difference 100 336,444,390,504), unexplained(max channel difference 11 6,1386,18,1392), unexplained(max channel difference 11 702,1386,714,1392), unexplained(max channel difference 56 30,1416,66,1452), unexplained(max channel difference 54 654,1416,690,1452), unexplained(max channel difference 53 30,1494,66,1530), unexplained(max channel difference 52 654,1494,690,1530)
+failed    unlock_pending @390  changed 1977 px  regions unexplained(max channel difference 83 30,30,366,114), unexplained(max channel difference 100 366,444,420,504), unexplained(max channel difference 11 6,1386,18,1392), unexplained(max channel difference 56 30,1416,66,1452), unexplained(max channel difference 54 714,1416,750,1452), unexplained(max channel difference 53 30,1494,66,1530), unexplained(max channel difference 52 714,1494,750,1530), spinner, spinner
+failed    unlock_pending @360  changed 1977 px  regions unexplained(max channel difference 83 30,30,366,114), unexplained(max channel difference 100 336,444,390,504), unexplained(max channel difference 9 12,1386,18,1392), unexplained(max channel difference 11 702,1386,714,1392), unexplained(max channel difference 47 30,1416,66,1452), unexplained(max channel difference 54 654,1416,690,1452), unexplained(max channel difference 53 30,1494,66,1530), unexplained(max channel difference 52 654,1494,690,1530), spinner, spinner
+failed    unlock_platform-retry @390  changed 1977 px  regions unexplained(max channel difference 83 30,30,366,114), unexplained(max channel difference 100 366,444,420,504), unexplained(max channel difference 11 6,1386,18,1392), unexplained(max channel difference 56 30,1416,66,1452), unexplained(max channel difference 54 714,1416,750,1452), unexplained(max channel difference 53 30,1494,66,1530), unexplained(max channel difference 52 714,1494,750,1530)
+failed    unlock_platform-retry @360  changed 1979 px  regions unexplained(max channel difference 83 30,30,366,114), unexplained(max channel difference 100 336,444,390,504), unexplained(max channel difference 11 6,1386,18,1392), unexplained(max channel difference 11 702,1386,714,1392), unexplained(max channel difference 56 30,1416,66,1452), unexplained(max channel difference 54 654,1416,690,1452), unexplained(max channel difference 53 30,1494,66,1530), unexplained(max channel difference 52 654,1494,690,1530)
+failed    unlock_screen-lock @390  changed 1776 px  regions unexplained(max channel difference 83 30,30,366,114), unexplained(max channel difference 90 366,444,414,504), unexplained(max channel difference 11 6,1386,18,1392), unexplained(max channel difference 56 30,1416,66,1452), unexplained(max channel difference 54 714,1416,750,1452), unexplained(max channel difference 53 30,1494,66,1530), unexplained(max channel difference 52 714,1494,750,1530)
+failed    unlock_screen-lock @360  changed 1778 px  regions unexplained(max channel difference 83 30,30,366,114), unexplained(max channel difference 90 336,444,384,504), unexplained(max channel difference 11 6,1386,18,1392), unexplained(max channel difference 11 702,1386,714,1392), unexplained(max channel difference 56 30,1416,66,1452), unexplained(max channel difference 54 654,1416,690,1452), unexplained(max channel difference 53 30,1494,66,1530), unexplained(max channel difference 52 654,1494,690,1530)
+failed    unlock_unavailable @390  changed 1761 px  regions unexplained(max channel difference 83 30,30,366,114), unexplained(max channel difference 67 60,438,96,474), unexplained(max channel difference 11 6,1512,18,1524), unexplained(max channel difference 56 30,1542,66,1578), unexplained(max channel difference 54 714,1542,750,1578), unexplained(max channel difference 53 30,1620,66,1656), unexplained(max channel difference 52 714,1620,750,1656)
+failed    unlock_unavailable @360  changed 1763 px  regions unexplained(max channel difference 83 30,30,366,114), unexplained(max channel difference 67 60,438,96,474), unexplained(max channel difference 11 6,1512,18,1524), unexplained(max channel difference 11 702,1512,714,1524), unexplained(max channel difference 56 30,1542,66,1578), unexplained(max channel difference 54 654,1542,690,1578), unexplained(max channel difference 53 30,1620,66,1656), unexplained(max channel difference 52 654,1620,690,1656)
+
+43 states, 86 pictures: exact 66, accepted 6, failed 14

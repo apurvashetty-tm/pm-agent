@@ -6174,21 +6174,6 @@
  },
  {
   "kind": "text",
-  "text": "Not you?",
-  "cls": "tm-btn tm-btn--quiet account",
-  "tag": "button",
-  "states": [
-   "unlock/cancelled",
-   "unlock/face",
-   "unlock/fingerprint",
-   "unlock/pending",
-   "unlock/platform-retry",
-   "unlock/screen-lock",
-   "unlock/unavailable"
-  ]
- },
- {
-  "kind": "text",
   "text": "Notes & symptoms",
   "cls": "tm-section-title",
   "tag": "h2",
@@ -7797,21 +7782,6 @@
    "case/t16b-transfer-missed-patient",
    "case/t16c-transfer-missed-unknown",
    "case/t17-skip-ha-wait"
-  ]
- },
- {
-  "kind": "text",
-  "text": "Switch account",
-  "cls": "",
-  "tag": "strong",
-  "states": [
-   "unlock/cancelled",
-   "unlock/face",
-   "unlock/fingerprint",
-   "unlock/pending",
-   "unlock/platform-retry",
-   "unlock/screen-lock",
-   "unlock/unavailable"
   ]
  },
  {

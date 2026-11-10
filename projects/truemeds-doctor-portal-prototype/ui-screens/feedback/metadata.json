@@ -1291,24 +1291,6 @@
     "retain": "—",
     "copy": "approved picture label (plan B6, step 1 recovery 2026-11-09)"
   },
-  "unlock.notYou": {
-    "pattern": "none",
-    "trigger": "entry screen label",
-    "slot": "switch-account line lead",
-    "next": "—",
-    "clear": "—",
-    "retain": "—",
-    "copy": "approved picture label (plan B6, step 1 recovery 2026-11-09)"
-  },
-  "unlock.switchAccount": {
-    "pattern": "none",
-    "trigger": "entry screen label",
-    "slot": "switch-account button",
-    "next": "sign-in",
-    "clear": "—",
-    "retain": "—",
-    "copy": "approved picture label (plan B6, step 1 recovery 2026-11-09)"
-  },
   "common.back": {
     "pattern": "none",
     "trigger": "Home screen label",

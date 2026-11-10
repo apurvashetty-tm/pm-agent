@@ -11,9 +11,8 @@
 .unlock-screen .panel { flex: 1; min-height: 0; overflow-y: auto; display: flex; flex-direction: column;
   padding: var(--tm-space-2xl) var(--tm-space-page) var(--tm-space-xl); border-radius: var(--tm-radius-2xl) var(--tm-radius-2xl) 0 0;
   background: var(--tm-surface-primary); }
-/* Round 4 item 1: the pinned footer is the real .tm-actionbar, a sibling below the panel. */
+/* Round 4 item 1: the pinned footer is the real .tm-actionbar, a sibling below the panel. Two buttons (D-105). */
 .unlock-screen .footer { flex: none; margin: 0; }
-.unlock-screen .footer > .account { width: auto; align-self: center; }
 /* A-19: a standing-state notice ("isn't available") sits at the top of the panel; it is not in the bar. */
 .unlock-screen .unlock-notice { margin: 0 0 var(--tm-space-lg); }
 .unlock-screen .unlock-notice .tm-icon { width: var(--tm-icon-size-md); height: var(--tm-icon-size-md); flex: none; }
@@ -21,6 +20,4 @@
 .unlock-screen .prompt-icon { width: var(--tm-icon-tile-size); height: var(--tm-icon-tile-size); display: grid; place-items: center; border-radius: var(--tm-radius-lg); background: var(--tm-surface-brand-subtle); color: var(--tm-content-brand); }
 .unlock-screen .prompt-icon .tm-icon { width: var(--tm-icon-size-xl); height: var(--tm-icon-size-xl); }
 .unlock-screen h2 { margin: 0; font-size: var(--tm-font-size-body-lg); line-height: var(--tm-font-lineheight-md); font-weight: var(--tm-font-weight-semibold); }
-.unlock-screen .account { align-self: center; font-size: var(--tm-font-size-body-md); }
-.unlock-screen .account strong { color: var(--tm-content-brand); font-weight: var(--tm-font-weight-semibold); }
 .unlock-screen [hidden] { display: none !important; }

@@ -1612,165 +1612,6 @@
      ],
      "size": "358×56"
     },
-    "quiet": {
-     "seenIn": "unlock_cancelled",
-     "styles": [
-      {
-       "property": "display",
-       "value": "inline-flex",
-       "tokens": [],
-       "layout": true
-      },
-      {
-       "property": "align-items",
-       "value": "center",
-       "tokens": [],
-       "layout": true
-      },
-      {
-       "property": "justify-content",
-       "value": "center",
-       "tokens": [],
-       "layout": true
-      },
-      {
-       "property": "gap",
-       "value": "var(--tm-space-sm)",
-       "tokens": [
-        {
-         "native": "tokens.space.sm",
-         "web": "--tm-space-sm",
-         "value": 8
-        }
-       ]
-      },
-      {
-       "property": "font-family",
-       "value": "var(--tm-font)",
-       "tokens": [
-        {
-         "native": "tokens.font.family",
-         "web": "--tm-font",
-         "value": "Plus Jakarta Sans"
-        }
-       ]
-      },
-      {
-       "property": "font-weight",
-       "value": "var(--tm-font-weight-semibold)",
-       "tokens": [
-        {
-         "native": "tokens.font.weight.semibold",
-         "web": "--tm-font-weight-semibold",
-         "value": "600"
-        }
-       ]
-      },
-      {
-       "property": "font-size",
-       "value": "var(--tm-font-size-body-md)",
-       "tokens": [
-        {
-         "native": "tokens.font.size.body.md",
-         "web": "--tm-font-size-body-md",
-         "value": 14
-        }
-       ]
-      },
-      {
-       "property": "line-height",
-       "value": "var(--tm-font-lineheight-md)",
-       "tokens": [
-        {
-         "native": "tokens.font.lineHeight.md",
-         "web": "--tm-font-lineheight-md",
-         "value": 24
-        }
-       ]
-      },
-      {
-       "property": "padding",
-       "value": "var(--tm-space-md) var(--tm-space-lg)",
-       "tokens": [
-        {
-         "native": "tokens.space.md",
-         "web": "--tm-space-md",
-         "value": 12
-        },
-        {
-         "native": "tokens.space.lg",
-         "web": "--tm-space-lg",
-         "value": 16
-        }
-       ]
-      },
-      {
-       "property": "border-radius",
-       "value": "var(--tm-radius-lg)",
-       "tokens": [
-        {
-         "native": "tokens.radius.lg",
-         "web": "--tm-radius-lg",
-         "value": 16
-        }
-       ]
-      },
-      {
-       "property": "border",
-       "value": "0",
-       "tokens": [],
-       "layout": true
-      },
-      {
-       "property": "white-space",
-       "value": "nowrap",
-       "tokens": [],
-       "layout": true
-      },
-      {
-       "property": "text-decoration",
-       "value": "none",
-       "tokens": [],
-       "layout": true
-      },
-      {
-       "property": "background",
-       "value": "transparent",
-       "tokens": [],
-       "layout": true
-      },
-      {
-       "property": "color",
-       "value": "var(--tm-content-secondary)",
-       "tokens": [
-        {
-         "native": "tokens.color.content.secondary",
-         "web": "--tm-content-secondary",
-         "value": "#5B616E"
-        }
-       ]
-      },
-      {
-       "property": "animation",
-       "value": "none",
-       "tokens": [],
-       "layout": true
-      },
-      {
-       "property": "width",
-       "value": "auto",
-       "tokens": [],
-       "layout": true
-      },
-      {
-       "property": "align-self",
-       "value": "center",
-       "tokens": [],
-       "layout": true
-      }
-     ],
-     "size": "205.5×48"
-    },
     "lg · block · primary": {
      "seenIn": "unlock_unavailable",
      "styles": [
@@ -3845,80 +3686,6 @@
      "size": "196.2×24"
     }
    }
-  },
-  "strong": {
-   "states": {
-    "default": {
-     "seenIn": "unlock_cancelled",
-     "styles": [
-      {
-       "property": "animation",
-       "value": "none",
-       "tokens": [],
-       "layout": true
-      },
-      {
-       "property": "color",
-       "value": "var(--tm-content-brand)",
-       "tokens": [
-        {
-         "native": "tokens.color.content.brand",
-         "web": "--tm-content-brand",
-         "value": "#1D5DCF"
-        }
-       ]
-      },
-      {
-       "property": "font-weight",
-       "value": "var(--tm-font-weight-semibold)",
-       "tokens": [
-        {
-         "native": "tokens.font.weight.semibold",
-         "web": "--tm-font-weight-semibold",
-         "value": "600"
-        }
-       ]
-      },
-      {
-       "property": "font-family",
-       "value": "var(--tm-font)",
-       "tokens": [
-        {
-         "native": "tokens.font.family",
-         "web": "--tm-font",
-         "value": "Plus Jakarta Sans"
-        }
-       ],
-       "inherited": true
-      },
-      {
-       "property": "font-size",
-       "value": "var(--tm-font-size-body-md)",
-       "tokens": [
-        {
-         "native": "tokens.font.size.body.md",
-         "web": "--tm-font-size-body-md",
-         "value": 14
-        }
-       ],
-       "inherited": true
-      },
-      {
-       "property": "line-height",
-       "value": "var(--tm-font-lineheight-md)",
-       "tokens": [
-        {
-         "native": "tokens.font.lineHeight.md",
-         "web": "--tm-font-lineheight-md",
-         "value": 24
-        }
-       ],
-       "inherited": true
-      }
-     ],
-     "size": "105.1×24"
-    }
-   }
   }
  },
  "rules": [
@@ -4130,8 +3897,7 @@
    "container",
    "label",
    "turn-on-label",
-   "unlock-label",
-   "strong"
+   "unlock-label"
   ],
   "busy": [
    "container",
@@ -4166,9 +3932,6 @@
    "container"
   ],
   "quiet · lg · block · disabled": [
-   "container"
-  ],
-  "quiet": [
    "container"
   ],
   "lg · block · primary": [

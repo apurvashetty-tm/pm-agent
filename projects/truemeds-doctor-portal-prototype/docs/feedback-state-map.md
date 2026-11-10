@@ -76,32 +76,33 @@ Issuance window/reset policy remains existing open backend decision. Do not inve
 
 ## Faster sign-in offer (D-45, layout v2)
 
-Shown once after the first successful OTP sign-in on a device that supports it and has faster sign-in off. Native screen; no OTP opt-in. **No Back; the phone's back gesture = Not now** (D-47). Decision D-45; re-offer timing OQ-023.
+Offered after an OTP sign-in on a device that supports it and has faster sign-in off: at each OTP sign-in until it is turned on, at most 3 times (setting `fasterOfferMax`; "not available" counts as shown) (D-104, replaces D-45's "offered once"; closes OQ-023). Native screen; no OTP opt-in. **No Back; the phone's back gesture = Not now** (D-47). Decision D-45, D-104.
 
 | State / registry key | Pattern | Behaviour |
 |---|---|---|
-| offer.shown | None | After first successful OTP sign-in on a supported device where faster sign-in is off |
+| offer.shown | None | After an OTP sign-in on a supported device where faster sign-in is off; at each OTP sign-in until turned on, at most `fasterOfferMax` (3) times (D-104) |
 | offer.enabling | L1 + OS prompt | One request at a time; primary shows progress |
 | offer.enabled | — | Go to Home (no toast needed; Profile shows it's on) |
 | offer.cancelled | None | OS prompt cancelled → back to the offer, no message (D-61) |
 | offer.failed | Notice | Enrolment failed → stays on the offer: `offer.enableFailed` "Couldn't turn on faster sign-in." · Try again · Not now (D-61, D-65) |
 | offer.offline | Notice | `offer.offline` "You're offline. Check your connection." (D-66) |
 | offer.unavailable | Notice | Phone answers "unavailable" at Turn on → stays on the offer, unchanged (tile and three points shown); warning notice in the bar, `alert-triangle`, `unlock.unavailable` "Faster sign-in isn't available on this phone right now." (same slot as Offline and Couldn't turn on, A-19); the primary reads **Continue** (`offer.continue`) → Home; Not now hidden. Not enabled; recorded as offered; can be turned on later in Profile (D-93). Picture `offer_unavailable` approved (D-93 revised); in `ui-screens/` since the D-94 refresh |
-| offer.not-now | None | → Home; re-offer per OQ-023; can be turned on later in Profile (D-69) |
+| offer.not-now | None | → Home; offered again at the next OTP sign-in, up to `fasterOfferMax` times in total (D-104); can be turned on later in Profile (D-69) |
 | offer.screen-lock | None | No fingerprint or face set up → offer uses the phone's screen lock (PIN / pattern / password) (D-64) |
 | offer.unsupported | — | Phone has no screen lock at all → screen skipped entirely (D-64) |
 
 ## Returning unlock
 
-Current copy: `../ui-screens/returning-unlock/returning-unlock.html`. Native: `../ui-screens/native/UnlockScreen.tsx`. **No Back** — first screen when the app opens; "Not you? Switch account" leads to sign-in (D-47).
+Current copy: `../ui-screens/returning-unlock/returning-unlock.html`. Native: `../ui-screens/native/UnlockScreen.tsx`. **No Back** — first screen when the app opens (D-47). Two buttons: **Unlock** (primary) · **Use OTP instead** (quiet); no "Switch account" (D-105, amends D-61 point 3). Use OTP instead, and the automatic fallback after 3 failed unlocks, open Sign-in with the remembered number filled in; no SMS until Send OTP.
 
 | State / registry key | Pattern | Recovery | Coverage |
 |---|---|---|---|
-| unlock.fingerprint / face-id / screen-lock | None | Native authentication from existing CTA | Three existing visuals |
+| unlock.fingerprint / face-id / screen-lock | None | Native authentication from existing CTA; Use OTP instead → Sign-in, number filled in (D-105) | Three existing visuals |
 | unlock.pending | L1 + OS prompt | No concurrent authentication request | Fixture |
 | unlock.cancelled | None | Return to unchanged screen; cancellation is not failure | Fixture |
 | unlock.platform-retry | OS-owned | Use supported native retry guidance | Device check; do not invent OS mock |
-| unlock.unavailable | N1 (neutral info, not an error — D-47 amendment) | "Use OTP instead" becomes the primary; notice copy "Faster sign-in isn't available on this phone right now." (no repeat of the button text, D-47); preserve account context | R03 component + host-layout QA |
+| unlock.unavailable | N1 (neutral info, not an error — D-47 amendment) | "Use OTP instead" becomes the primary; notice copy "Faster sign-in isn't available on this phone right now." (no repeat of the button text, D-47); preserve account context; Use OTP instead opens the same prefilled Sign-in (D-105) | R03 component + host-layout QA |
+| unlock.sign-in-prefilled | None | Sign-in from unlock, number filled in: Use OTP instead, or 3 failed unlocks `[MOCK]`, open `sign-in_default` with the remembered number in the field (cursor at the end, Send OTP enabled when valid); **no SMS until Send OTP**. Editing the number signs in another doctor (replaces Switch account). Normal Sign-in rules: no Back; phone back leaves the app (D-101); reopening the app shows unlock again (D-105) | Behaviour; no new picture (looks like `sign-in_default` with a number) |
 
 ## Availability and Home
 

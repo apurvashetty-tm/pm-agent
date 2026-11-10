@@ -1819,6 +1819,13 @@ window.TM_STATE_MAP = {
    "version": "B"
   },
   {
+   "id": "unlock.sign-in-prefilled",
+   "kind": "behaviour",
+   "step": 1,
+   "picture": null,
+   "version": "B"
+  },
+  {
    "id": "home.add-open",
    "kind": "behaviour",
    "step": 2,
