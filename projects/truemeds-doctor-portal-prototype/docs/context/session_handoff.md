@@ -972,3 +972,9 @@ User identified missing HTML/native linkage. Inspected actual sign-in and OTP HT
 - **Rulings (RULINGS 00:35):** B-play dispute = test bug, fixed in `tests/codex/run-B/journeys.mjs`; t13 @390 diff accepted (13 keeps the neutral script in launch B, D-102); c-skip-ha diff accepted; B's mock assumptions → OQ-038.
 - **Open:** re-render `t13-connecting-ha_w390`, `c-skip-ha-b1`, `c-skip-ha-16` (backlog §2l); Apurva's phone walkthrough (A1 eye checks + B-R07/09/10/11 + Q-B).
 - **Next:** review `signin-d101`, then the kit run; then SUMMARY and the walkthrough.
+
+## 2026-11-10 (11:00) · Released to main; deploy 1 live
+- **Chain finished:** A2, B, signin-d101 and handoff-kit-all done and reviewed (kit: 7 journeys, 149 states, 138 blocks, D-103 viewer; own headless check clean).
+- **Merged to `main` (Claude, on Apurva's go-ahead):** #38 shared git rules (+ ops log), #39 design tokens (no other project uses the central design system), #40 deliverables (everything except run evidence, from `deliver/truemeds-doctor-portal-prototype`).
+- **Netlify:** new site **https://truemeds-doctor-app-preview.netlify.app** (base `app/`, kit copied to `/kit/` at build) — deploy 1 = its first build, 26 s, no errors. Checked live: app + review panel, `?demo=1`, `/kit` → viewer, 8 screen tabs, all 6 downloads 200, DECIDED reachable. Old `doctor-portal-prototype` site: builds stopped, live copy as on 6 Nov.
+- **Next:** Apurva's engineer walkthrough with the kit; deploy 2 (final) after his approval; archive tag after approval of everything; GitLab copy last. Optional: turn off deploy previews on the new site (as on the other two).
