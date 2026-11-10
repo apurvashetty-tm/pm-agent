@@ -104,6 +104,101 @@
      "size": "16×16"
     }
    }
+  },
+  "container": {
+   "states": {
+    "default": {
+     "seenIn": "otp_verifying",
+     "styles": [
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "display",
+       "value": "inline-block",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "width",
+       "value": "var(--tm-spinner-size)",
+       "tokens": [
+        {
+         "native": "tokens.spinner.size",
+         "web": "--tm-spinner-size",
+         "value": 16
+        }
+       ]
+      },
+      {
+       "property": "height",
+       "value": "var(--tm-spinner-size)",
+       "tokens": [
+        {
+         "native": "tokens.spinner.size",
+         "web": "--tm-spinner-size",
+         "value": 16
+        }
+       ]
+      },
+      {
+       "property": "flex",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "margin-right",
+       "value": "var(--tm-space-sm)",
+       "tokens": [
+        {
+         "native": "tokens.space.sm",
+         "web": "--tm-space-sm",
+         "value": 8
+        }
+       ]
+      },
+      {
+       "property": "border",
+       "value": "var(--tm-spinner-ring) solid var(--tm-content-inverse)",
+       "tokens": [
+        {
+         "native": "tokens.spinner.ring",
+         "web": "--tm-spinner-ring",
+         "value": 2
+        },
+        {
+         "native": "tokens.color.content.inverse",
+         "web": "--tm-content-inverse",
+         "value": "#FFFFFF"
+        }
+       ],
+       "layout": true
+      },
+      {
+       "property": "border-top-color",
+       "value": "transparent",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "border-radius",
+       "value": "var(--tm-radius-full)",
+       "tokens": [
+        {
+         "native": "tokens.radius.full",
+         "web": "--tm-radius-full",
+         "value": 999
+        }
+       ]
+      }
+     ],
+     "size": "16×16"
+    }
+   }
   }
  },
  "rules": [
@@ -124,6 +219,31 @@
   }
  ],
  "usedIn": [
-  "sign-in_sending"
- ]
+  "sign-in_sending",
+  "otp_verifying",
+  "offer_enabling",
+  "unlock_pending",
+  "home_adding",
+  "home_requesting",
+  "home_setting",
+  "home_unknown-result",
+  "a-back-blocked",
+  "a-confirm-busy",
+  "a-releasing",
+  "g0-calling-pilot",
+  "g2-checking-ha",
+  "g3b-forwarded",
+  "s7a-calling",
+  "t02-calling",
+  "t05-result-wait",
+  "t13-connecting-ha",
+  "t15-ha-no-join",
+  "t17-skip-ha-wait"
+ ],
+ "states": {
+  "default": [
+   "ring",
+   "container"
+  ]
+ }
 }

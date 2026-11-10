@@ -1,0 +1,74 @@
+{
+ "block": "ps-slots",
+ "name": "PsSlots",
+ "rn": "<PsSlots />",
+ "web": ".ps-slots",
+ "parts": {
+  "container": {
+   "states": {
+    "default": {
+     "seenIn": "d-cream",
+     "styles": [
+      {
+       "property": "display",
+       "value": "flex",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "flex-direction",
+       "value": "column",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "gap",
+       "value": "var(--tm-space-sm)",
+       "tokens": [
+        {
+         "native": "tokens.space.sm",
+         "web": "--tm-space-sm",
+         "value": 8
+        }
+       ]
+      },
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      }
+     ],
+     "size": "326×160"
+    }
+   }
+  }
+ },
+ "rules": [
+  {
+   "section": "Kit",
+   "text": "Build it once from the parts × states below (tokens only, copy from messages); it appears on Prescribe. What it does in each state is in DECIDED.md under those screens."
+  }
+ ],
+ "pictures": [],
+ "usedIn": [
+  "d-cream",
+  "d-default",
+  "d-disable-sheet",
+  "d-disabled",
+  "d-discard-sheet",
+  "d-drops",
+  "d-duration-picker",
+  "d-error-dose",
+  "d-food-selected",
+  "d-header-white",
+  "d-scrolled",
+  "d-sos-on",
+  "d-syrup"
+ ],
+ "states": {
+  "default": [
+   "container"
+  ]
+ }
+}

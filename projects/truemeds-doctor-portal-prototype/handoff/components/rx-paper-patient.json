@@ -1,0 +1,45 @@
+{
+ "block": "rx-paper-patient",
+ "name": "RxPaperPatient",
+ "rn": "<RxPaperPatient />",
+ "web": ".rx-paper-patient",
+ "parts": {
+  "container": {
+   "states": {
+    "default": {
+     "seenIn": "a-rx-viewer",
+     "styles": [
+      {
+       "property": "flex",
+       "value": "1 1 0",
+       "tokens": [],
+       "exception": "Mock prescription paper (sample content standing in for the customer's prescription image). The app shows the image; nothing here is built."
+      },
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      }
+     ],
+     "size": "200.1×88"
+    }
+   }
+  }
+ },
+ "rules": [
+  {
+   "section": "Kit",
+   "text": "Build it once from the parts × states below (tokens only, copy from messages); it appears on Case page. What it does in each state is in DECIDED.md under those screens."
+  }
+ ],
+ "pictures": [],
+ "usedIn": [
+  "a-rx-viewer"
+ ],
+ "states": {
+  "default": [
+   "container"
+  ]
+ }
+}

@@ -15,6 +15,9 @@ import crypto from "node:crypto";
 import { spawnSync } from "node:child_process";
 import { createRequire } from "node:module";
 import { fileURLToPath } from "node:url";
+import zlib from "node:zlib";
+import * as J from "./build-handoff.journeys.mjs";
+import { WHEN, TABS } from "./build-handoff.when.mjs";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const DS = path.resolve(ROOT, "../../design-system");
@@ -47,7 +50,7 @@ const FILES = {
   tokenBuild: path.join(DS, "scripts/build.py"),
   tokenBuildNative: path.join(DS, "scripts/build_native.py"),
   dsTokens: [path.join(DS, "tokens/Core.tokens.json"), path.join(DS, "tokens/Default.tokens.json"), path.join(DS, "tokens/extras.json"), path.join(DS, "tokens/truemeds.json"), path.join(DS, "src/components.css")],
-  builder: [path.join(ROOT, "scripts/build-handoff.mjs"), path.join(ROOT, "scripts/build-handoff.py")],
+  builder: [path.join(ROOT, "scripts/build-handoff.mjs"), path.join(ROOT, "scripts/build-handoff.py"), path.join(ROOT, "scripts/build-handoff.journeys.mjs"), path.join(ROOT, "scripts/build-handoff.when.mjs")],
   // everything the capture loads that can move or restyle Sign-in (shell frame, routing, keyboard drawing, fonts, copy)
   capture: ["app/index.html", "app/shell/shell.css", "app/shell/screen-host.js", "app/shell/mock-keyboard.js", "app/shell/mock-keyboard.css",
     "app/core/boot.js", "app/core/modes.js", "app/core/dom.js", "app/core/msg.js", "app/core/nav.js", "app/core/store.js", "app/core/clock.js",
@@ -109,7 +112,7 @@ const PATHS = [[/`?ui-screens\/feedback\/messages\.json`?/g, "`foundation/messag
   [/`?brand\/truemeds-for-doctors\.svg`?/g, "`foundation/logo/truemeds-for-doctors.svg`"], [/`?truemeds\.css`?/g, "the design system"]];
 const REPLACE = [[/^\*\*Rejected:\*\* pinned bottom button on sign-in\/OTP; auto-opening the keyboard on sign-in \(D-33 layout kept as approved\)\./, "On sign-in the keyboard does not open by itself, and the main button is not pinned to the bottom."], [/: "New here\? Sign up below\. Already applied\? Our team will call you once you're approved\."/, " (copy: `signin.notRegistered`)."]];
 const DROP = [/^\(Try again · Not now/, /^Reconnect to turn on faster/, /^\(2\) \*\*16 messages/, /^\(3\) \*\*Kept/, /^\(4\) \*\*Faster sign-in offer copy/, /^`call\.transferReady`/, /^Failed stays on the offer/, /Sign-in is 174 today/, /166 is the largest width that fits Home/, /"New here\? Sign up below/, /Rule in §4\./, /^\(2\) \*\*16 messages shortened/];
-function clean(s) {
+function clean(s, safe = false) {
   let t = s.trim();
   if (t.startsWith("|")) { const c = t.split("|").map((x) => x.trim()).filter(Boolean); t = c.length > 2 ? `${c[0]} — ${c[1]}: ${c.slice(2).join(" · ")}` : c.join(" — "); }
   t = t.replace(/^\s*[-*]\s+/, "").replace(/^\d+\.\s+/, "").replace(/\s*\[(?:CHANGED|ADDED|ENHANCED|UPDATED)[^\]]*\]/g, "");
@@ -121,13 +124,13 @@ function clean(s) {
     if (!INTERNAL.test(inner) && !/\bpicture/i.test(inner)) return m;
     return ds ? `(${ds.join(", ")})` : "";
   });
-  t = t.replace(/`[^`]*(?:\/|\.md|\.py|\.html|\.png|\.css)[^`]*`/g, (m) => /https?:|^`foundation\//.test(m) ? m : "")
+  t = t.replace(/`[^`\s]*(?:\/|\.md|\.py|\.html|\.png|\.css)[^`\s]*`/g, (m) => /https?:|^`foundation\//.test(m) ? m : "")
     .replace(/\(\s*,\s*/g, "(").replace(/\(\s*\)/g, "").replace(/\s+([,.;:])/g, "$1").replace(/\s{2,}/g, " ").trim();
   for (const [re, to] of REPLACE) t = t.replace(re, to);
   t = t.split(/(?<!e\.g\.|i\.e\.)(?<=[.!?]["”*]{0,2})\s+(?=\S)/).filter((x) => !DROP.some((re) => re.test(x))).join(" ").replace(/ \*\*(?=[\s·]|$)/g, "**");
   // sentences that still carry internal notes go
   t = t.split(/(?<=\.)\s+(?=[A-Z*])/).filter((x) => !INTERNAL.test(x.replace(/\b(?:sign-in|Sign-in)\b/g, ""))).join(" ");
-  if (INTERNAL.test(t.replace(/\b(?:sign-in|Sign-in)\b/g, ""))) die(`internal wording left after cleaning: ${t}`);
+  if (INTERNAL.test(t.replace(/\b(?:sign-in|Sign-in)\b/g, ""))) { if (safe) return ""; die(`internal wording left after cleaning: ${t}`); }
   t = t.trim();
   return /^[a-z]+[\s,:]/.test(t) ? t.charAt(0).toUpperCase() + t.slice(1) : t;
 }
@@ -165,13 +168,14 @@ function exportedObject(text, name) {
 }
 const messages = exportedObject(read(FILES.messagesTs), "messages");
 const metadata = JSON.parse(read(FILES.metadataJson));
-const usedKeys = [...new Set([...read(FILES.signInJs).matchAll(/MSG\(\s*"([\w.]+)"/g), ...read(FILES.signInJs).matchAll(/key:\s*"([\w.]+)"/g),
+const usedKeys = [...new Set([...read(FILES.signInJs).matchAll(/(?:MSG|parts)\(\s*"([\w.]+)"/g), ...read(FILES.signInJs).matchAll(/key:\s*"([\w.]+)"/g),
   ...read(FILES.signInJs).matchAll(/error:\s*"([\w.]+)"/g)].map((x) => x[1]))].filter((k) => messages[k]);
 function copyFor(text) {
   const t = (text || "").replace(/\s+/g, " ").trim();
   if (!t) return null;
   const hits = usedKeys.flatMap((k) => {
-    const re = new RegExp("^" + messages[k].replace(/[.*+?^${}()|[\]\\]/g, "\\$&").replace(/\\\{(\w+)\\\}/g, "(?<$1>.+?)") + "$");
+    // {link} is drawn as its own element (the link), so the sentence's own text ends before it
+    const re = new RegExp("^" + messages[k].replace(/[.*+?^${}()|[\]\\]/g, "\\$&").replace(/\s*\\\{link\\\}\s*/g, "\\s*(?<link>.*?)\\s*").replace(/\\\{(\w+)\\\}/g, "(?<$1>.+?)") + "$");
     const mm = t.match(re);
     return mm ? [{ copyKey: k, values: mm.groups ? { ...mm.groups } : undefined }] : [];
   });
@@ -328,7 +332,8 @@ async function capture(T) {
   });
   await new Promise((r) => srv.listen(0, "127.0.0.1", r));
   const base = `http://127.0.0.1:${srv.address().port}/`;
-  const browser = await chromium.launch({ executablePath: process.env.CHROME || process.env.CHROMIUM || undefined,
+  const MAC_CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
+  const browser = await chromium.launch({ executablePath: process.env.CHROME || process.env.CHROMIUM || (fs.existsSync(MAC_CHROME) ? MAC_CHROME : undefined),
     args: ["--font-render-hinting=none", "--disable-gpu", "--disable-lcd-text", "--force-color-profile=srgb", "--hide-scrollbars"] });
   const inv = approvedInventory();
   const result = {};
@@ -461,7 +466,9 @@ async function capture(T) {
       await pg.close();
     }
     fs.writeFileSync(path.join(T, "foundation/brand/logo.json"), JSON.stringify({ about: "PNG exports of the locked \"truemeds for doctors\" lockup for React Native (react-native-svg can't draw the image the SVG embeds). Generated from the SVG; never redraw, recolour or stretch. React Native picks the 2x / 3x file by its density suffix, drawn tokens.logoLockup.width wide.", ...logo }, null, 1) + "\n");
-    return { result, forced, crops };
+    // every other journey: the same capture, elements named from the built markup
+    const journeys = await J.captureJourneys({ browser, base, cascade, LONG, TEXT_PROPS, outDir: T, ROOT, die, log: (m) => console.log(m) });
+    return { result, forced, crops, journeys };
   } finally { await browser.close(); srv.close(); }
 }
 // which approved picture shows each block state (cropped, not re-rendered)
@@ -516,20 +523,57 @@ function styleRecord(s, T) {
     if (!r) return { web: x[1], native: null, unmapped: true };
     return { web: x[1], native: r.native, ts: r.ts, value: r.value, ...(r.via.length ? { via: r.via } : {}), ...(r.palette ? { palette: true } : {}) };
   });
-  const residual = s.value.replace(/var\(--[\w-]+(?:,[^)]*)?\)/g, "").replace(/calc\(|\)|\*|\s|!important/g, "").replace(/^-1$/, "");
+  let residual = s.value.replace(/var\(--[\w-]+(?:,[^)]*)?\)/g, "").replace(/calc\(|\)|\*|\s|!important/g, "").replace(/^-1$/, "");
+  // a .tm-text-* class is a text style token (tokens.text.<style>): its typed font values are that token's values
+  const TEXT_KEY = { "font-size": "fontSize", "line-height": "lineHeight", "font-weight": "fontWeight", "font-family": "fontFamily", "letter-spacing": "letterSpacing" };
+  const tc = (s.selector || "").match(/^\.(tm-text-[\w-]+)$/);
+  let textStyle = null;
+  if (tc && TEXT_KEY[s.property] && T.m.textClasses[tc[1]]) {
+    const p = [...T.m.textClasses[tc[1]], TEXT_KEY[s.property]];
+    let v = T.native ??= JSON.parse(read(FILES.tokensJson)); for (const k of p) v = v?.[k];
+    if (v !== undefined && typeof v !== "object") textStyle = `Text style, not a typed number: use ${T.tsName(p)} (${v}), part of ${T.tsName(T.m.textClasses[tc[1]])}.`;
+  }
   const rec = { property: s.property, value: s.value, tokens, from: { selector: s.selector, file: s.file, line: s.line } };
+  const finish = (r) => { if (s.appliesTo) r.appliesTo = s.appliesTo; if (s.inherited) r.inherited = true; return r; };
+  if (textStyle && residual) { rec.exception = textStyle; return finish(rec, s); }
+  // the mock prescription paper stands in for the customer's uploaded prescription image: the app shows the image, it doesn't draw it
+  if (s.file === "app/screens/rx-paper.css" && residual) { rec.exception = "Mock prescription paper (sample content standing in for the customer's prescription image). The app shows the image; nothing here is built."; return finish(rec, s); }
   if (s.appliesTo) rec.appliesTo = s.appliesTo;
   if (s.inherited) rec.inherited = true;
   // D-98: red (raw) only for a typed size or colour; layout keywords, zeros and % are layout values, shown plainly
   if (residual && residual !== "-1") {
     const kind = rawKind(s.value);
+    const ok = rawOkReason(s.file, s.line);
     if (EXCEPTIONS.some((x) => x.property === s.property && x.value === s.value)) rec.exception = EXCEPTIONS.find((x) => x.value === s.value).why;
+    // a typed value the design system accepts on purpose (geometry, ≤3px optical nudge): marked raw-ok on its source line
+    else if ((kind === "size" || kind === "colour") && ok !== null) rec.exception = `Documented exception: ${ok || "accepted typed value"}. Not a token on purpose; use the number as is.`;
     else if (kind === "size" || kind === "colour") { rec.raw = true; rec.kind = kind; rec.file = s.file; rec.line = s.line; }
     else if (kind === "timing") { rec.timing = true; rec.unresolved = "No motion token yet: see OPEN.md o24. Don't type it."; }
     else rec.layout = true;
   }
   if (tokens.some((t) => t.unmapped || t.palette)) rec.raw = true;
   return rec;
+}
+const srcLines = {};
+function rawOkReason(file, line) {   // the reason after "raw-ok:" on the declaration's source line, or null
+  if (!file || !line || file === "inline") return null;
+  const p = file === "design-system/truemeds.css" ? path.join(ROOT, "app/design-system/truemeds.css") : path.join(ROOT, file);
+  if (!fs.existsSync(p)) return null;
+  const l = (srcLines[p] ??= read(p).split("\n"))[line - 1] || "";
+  const m = l.match(/raw-ok:?\s*([^*]*)\*\//);
+  return m ? m[1].trim().replace(/\.$/, "") : null;
+}
+// every documented exception the screen's elements use (H19: matched by property, value, file and line)
+function screenExceptions(states) {
+  const m = new Map();
+  for (const s of states) for (const e of s.elements || []) for (const st of e.styles) if (st.exception) {
+    const k = `${st.from.file}:${st.from.line}:${st.property}:${st.value}`;
+    const cur = m.get(k) || { property: st.property, value: st.value, from: st.from, reason: st.exception, documentedException: true, states: [], elements: [] };
+    if (!cur.states.includes(s.id)) cur.states.push(s.id);
+    if (!cur.elements.includes(e.id)) cur.elements.push(e.id);
+    m.set(k, cur);
+  }
+  return [...m.values()].sort((a, b) => a.from.file.localeCompare(b.from.file) || a.from.line - b.from.line);
 }
 function spacingOf(el, all, recs) {
   const byId = Object.fromEntries(all.map((e) => [e.id, e]));
@@ -598,7 +642,7 @@ function weightsUsed(T) {
 function decided(T) {
   const notices = noticeTable();
   return [
-    { id: "d01", topic: "Input and paste", q: "What does the mobile field accept, and how are typed or pasted numbers cleaned?", a: [AL(/Typing and pasting are cleaned/), DEC("D-39", /Impossible input is blocked silently/), DEC("D-39", /\*\*Leading 0\*\*/), CODE("Sign-in build", DOCS.auth, /if \(d\.length > MOBILE_LENGTH && d\.startsWith\("91"\)\) d = d\.slice\(2\);/, "A leading 91 is dropped only when more than 10 digits were entered (a 10-digit number starting 91 is kept):"), CODE("Sign-in build", DOCS.auth, /return d\.slice\(0, MOBILE_LENGTH\);/, "At most 10 digits are kept:")], refs: ["D-33", "D-39"] },
+    { id: "d01", topic: "Input and paste", q: "What does the mobile field accept, and how are typed or pasted numbers cleaned?", a: [AL(/Typing and pasting are cleaned/), DEC("D-39", /Impossible input is blocked silently/), DEC("D-39", /\*\*Leading 0\*\*/), CODE("Sign-in build", DOCS.auth, /if \(d\.length > MOBILE_LENGTH && d\.startsWith\("91"\)\) d = d\.slice\(2\);/, "A leading 91 is dropped only when more than 10 digits were entered (a 10-digit number starting 91 is kept):"), CODE("Sign-in build", DOCS.auth, /if \(d\.length > MOBILE_LENGTH\) return "signin\.long";/, "More than 10 digits are never cut; the field shows the error signin.long:")], refs: ["D-33", "D-39", "D-101"] },
     { id: "d02", topic: "Validation", q: "Which checks run, in what order, and when does each error appear?", a: [AL(/Checks, most basic first/), DEC("D-39", /format errors follow one pattern/)], refs: ["D-39"] },
     { id: "d03", topic: "Validation", q: "When does an error clear?", a: [DEC("D-39", /format errors follow one pattern/), { src: "Message rules", text: ["signin.empty", "signin.short", "signin.prefix"].map((k) => `${k}: clears on ${metadata[k].clear}; keeps the ${metadata[k].retain}`).join(" · ") }], refs: ["D-39"] },
     { id: "d04", topic: "Errors", q: "Where do errors show, and what does the field look like in error?", a: [DEC("D-33", /\*\*Errors:\*\*/), RUL("9.5", /^\| \*\*Field error\*\*/), RUL("L4", /^\| L4 \|/), RUL("L7", /^\| L7 \|/)], refs: ["D-33", "D-46", "D-47"] },
@@ -652,9 +696,23 @@ function open() {
   const settingsUsed = [...new Set([...doc("auth").matchAll(/value\("(\w+)"\)/g)].map((x) => x[1]))];
   for (const k of settingsUsed) { const l = doc("settings").split("\n").find((x) => x.trim().startsWith(k + ":"));
     if (l && /MOCK ASSUMPTION/.test(l) && !MOCKS.some((m) => m.file === "settings" && m.re.test(l))) die(`settings ${k}: mock value not mapped to OPEN.md`); }
-  const checkIds = (items) => { for (const m of MOCKS) if (!items.some((o) => o.id === m.id)) die(`MOCK mapped to ${m.id}, which is not in OPEN.md`); return items; };
+  const checkIds = (items) => { for (const m of MOCKS) if (!items.some((o) => o.id === m.id)) die(`MOCK mapped to ${m.id}, which is not in DECIDED.md`); return items; };
   const signInSettings = doc("settings").split("\n").filter((l) => /MOCK ASSUMPTION/.test(l) && /OQ-017/.test(l));
-  return checkIds([
+  // D-101 (and its same-day amendment): every Sign-in question is answered. Product items quote D-101; Backend / Design
+  // items take the prototype's own value, marked [MOCK] and keep configurable; o23 is the app team's; o09 a prototype note.
+  const d101 = lineOf("decisions", /^- \*\*Decision \(Apurva, on the main/, "### D-101 ·");
+  const D101 = (o) => { const part = d101.split(/\s(?=\(o\d\d\))/).find((x) => x.startsWith(`(${o})`)); if (!part) die(`D-101: no (${o})`); return { src: "D-101", text: clean(part.replace(/^\(o\d\d\)\s*/, "")) }; };
+  const AMEND = { src: "D-101 (amended)", text: clean(lineOf("decisions", /^- \*\*Amended same day/, "### D-101 ·")) };
+  const PRODUCT = ["o04", "o05", "o07", "o08", "o10", "o11", "o17", "o18", "o25", "o26"], MOCKED = ["o01", "o02", "o03", "o12", "o15", "o16", "o19", "o21", "o22", "o24"];
+  return checkIds(asked().map((o) => {
+    const prev = [o.now, ...(o.noteNow ? [{ src: "Prototype", text: o.noteNow }] : [])];
+    if (PRODUCT.includes(o.id)) return { id: o.id, topic: o.topic, q: o.q, a: [D101(o.id)], refs: [...new Set(["D-101", ...o.refs])] };
+    if (MOCKED.includes(o.id)) return { id: o.id, topic: o.topic, q: o.q, a: [{ src: "Prototype [MOCK]", text: `[MOCK] The prototype's answer, below. Keep configurable (a server or config value); not a production promise. Owner when it becomes real: ${o.who}.` }, ...prev, AMEND], refs: [...new Set(["D-101", ...o.refs])] };
+    if (o.id === "o23") return { id: o.id, topic: o.topic, q: o.q, a: [{ src: "D-101 (amended)", text: "The app team's choice: the kit does not set it." }, o.now], refs: ["D-101"] };
+    if (o.id === "o09") return { id: o.id, topic: o.topic, q: o.q, a: [{ src: "D-101 (amended)", text: "Prototype only: no action for the app." }, o.now], refs: ["D-101"] };
+    die(`Sign-in question ${o.id} has no D-101 ruling`);
+  }));
+  function asked() { return [
     { id: "o01", topic: "Limits", q: "How long are the OTP issue window, the number lock and the code life in production?", now: OQ("OQ-017", /^\*\*Safe placeholder:\*\*/), who: "Backend + Product", refs: ["OQ-017", "D-34", "D-35"] },
     { id: "o02", topic: "Limits", q: "How long is the \"Try again in m:ss\" wait after too many attempts?", now: { src: "Sign-in build", text: `The server sends the time the wait ends; the prototype uses ${signInSettings.map((l) => l.trim().split(":")[0]).join(", ")} as stand-ins (mock values, not product promises).` }, who: "Backend", refs: ["OQ-017", "D-35"] },
     { id: "o03", topic: "Server answers", q: "Send OTP again for the same number while the resend wait is still running: what does the server answer?", now: { src: "Sign-in build", text: "Assumed: no new code is sent; OTP opens on the running wait and the code already sent stays valid." }, who: "Backend", refs: [] },
@@ -663,7 +721,7 @@ function open() {
     { id: "o07", topic: "Safe areas", q: "Is the logo's 16 from the top measured from the screen edge or from the safe area (status bar, notch)?", now: RUL("8.13", /^13\. \*\*Logo lockup size and place/), who: "Product", refs: ["D-61"], noteNow: "The web build measures 16 from the top of the screen area (a browser has no status bar). No rule names the safe area for this screen." },
     { id: "o08", topic: "Navigation", q: "Android back gesture on Sign-in (the first screen): leave the app, or stay?", now: CODE("Sign-in build", FILES.signInJs, /setScreenBack\(null\);.*$/), who: "Product", refs: [] },
     { id: "o09", topic: "Keyboard", q: "The prototype draws a number keyboard in its pictures. Do we draw one?", now: { src: "Sign-in build", text: "No: the pictures show the phone's own number keyboard; the app uses the system keyboard (type tel)." }, who: "— (prototype only; no action)", refs: [] },
-    { id: "o10", topic: "Edit after return", q: "Coming back from OTP (Change): is the number kept, and does the first typed digit replace it?", now: CODE("Sign-in build", FILES.signInJs, /A pasted or pre-filled number .* is replaced by the first typed digit/), who: "Product", refs: [] },
+    { id: "o10", topic: "Edit after return", q: "Coming back from OTP (Change): is the number kept, and does the first typed digit replace it?", now: AL(/^- Back from OTP/), who: "Product", refs: [] },
     { id: "o11", topic: "Links", q: "Terms, Privacy and support links: final URLs, and where are they configured?", now: OQ("OQ-021", /^\*\*Safe placeholder:\*\*/), who: "Product + Ops", refs: ["OQ-021"], noteNow: "Sign-up URL and the Doctor Ops number are answered (d11, d12); only Terms and Privacy are open, and all links must be configurable." },
     { id: "o15", topic: "Server answers", q: "Send OTP API: endpoint, request and the shape of each answer (sent, locked, not registered, couldn't send, too many attempts, inactive). Does \"too many attempts\" return an end time or seconds left?", now: { src: "Sign-in build", text: "The web build fakes the server; it receives an end time for the wait. No contract exists yet." }, who: "Backend", refs: ["D-35"] },
     { id: "o16", topic: "Server answers", q: "How long does the app wait for Send OTP before showing \"Couldn't send the code.\"?", now: { src: "Sign-in build", text: "No timeout is defined; the web build answers at once." }, who: "Backend + Product", refs: [] },
@@ -677,32 +735,39 @@ function open() {
     { id: "o25", topic: "Copy", q: "\"New to Truemeds?\" and \"Sign up\" are two copy entries; the space between them is typed in code. One entry with a {link} placeholder instead?", now: { src: "Message rules", text: "Two keys today: signin.signup and signin.signupLink." }, who: "Product", refs: [] },
     { id: "o26", topic: "Inactive account", q: "What does \"Call Doctor Ops\" do on a device that can't make calls (tablet, no SIM)?", now: { src: "Kit", text: "Not defined. The support number also takes WhatsApp (d11)." }, who: "Product + Ops", refs: ["OQ-021"] },
     { id: "o12", topic: "Session", q: "How long does a signed-in session last before OTP is asked again?", now: OQ("OQ-017", /^\*\*Confirmed 2026-10-12:\*\*/), who: "Backend + Product", refs: ["OQ-017"] },
-  ]);
+  ]; }
 }
 const APPLOGIC_MUST = [/When the "Try again in m:ss" countdown ends/, /Typing and pasting are cleaned/, /Checks, most basic first/, /After sending, server results show/, /Sign-in on a locked number/, /All OTP limits are enforced/, /^\| Sign-in \|/, /^Order on first use/, /\*\*Notices\*\* wrap balanced/];
 
+// DECIDED / OPEN: one section per screen ("## <screen>"), an index table, then one entry per question
+// ("### <id> · <question>", every answer line with its source, then its decision numbers).
+const JOURNEY_TITLES = ["Sign-in", "OTP", "Faster sign-in offer", "Returning unlock", "Home", "Case page", "Prescribe"];
+const NO_REF = "D-78 (the approved screens and app logic)";
 function md(items, kind) {
   const L = [];
+  const tbl = (s) => String(s).replace(/\|/g, "\\|");
   if (kind === "decided") {
-    L.push("# DECIDED — Sign-in", "", "Questions already answered. **Check here before asking.** Each answer quotes its source; `D-xx` is a product decision number.", "Generated from the product rules — do not edit by hand.", "");
-    const topics = [...new Set(items.map((i) => i.topic))];
-    L.push("| # | Topic | Question |", "|---|---|---|", ...items.map((i) => `| [${i.id}](#${i.id}) | ${i.topic} | ${i.q} |`), "");
-    for (const t of topics) {
-      L.push(`## ${t}`, "");
-      for (const i of items.filter((x) => x.topic === t)) {
+    L.push("# DECIDED", "", "Questions already answered, by screen. **Check here before asking.** Each answer quotes its source; `D-xx` is a product decision number. `[MOCK]` = the prototype's own value or behaviour (it runs on a fake backend): build it, keep it configurable, and don't treat it as a production promise.", "Generated from the product rules — do not edit by hand.", "");
+    for (const jt of JOURNEY_TITLES) {
+      const its = items.filter((i) => (i.journey || "Sign-in") === jt);
+      L.push(`## ${jt}`, "", "| # | Topic | Question |", "|---|---|---|", ...its.map((i) => `| [${i.id}](#${i.id}) | ${tbl(i.topic)} | ${tbl(i.q)} |`), "");
+      for (const i of its) {
         L.push(`<a id="${i.id}"></a>`, `### ${i.id} · ${i.q}`, "");
-        for (const a of i.a) L.push(`- ${a.text} — *${a.src}*`);
-        if (i.refs.length) L.push("", `Decisions: ${i.refs.join(", ")}`);
-        L.push("");
+        for (const a of i.a) L.push(`- ${a.text} — *Source: ${a.src}*`);
+        L.push("", `Decisions: ${i.refs.length ? i.refs.join(", ") : NO_REF}`, "");
       }
     }
   } else {
-    L.push("# OPEN — Sign-in", "", "Still open. Build with the **current assumption**, keep it easy to change, and ask the named owner. If your question is in neither DECIDED.md nor here, it is genuinely new: ask it.", "Generated from the product rules — do not edit by hand.", "");
-    L.push("| # | Question | Who answers |", "|---|---|---|", ...items.map((i) => `| [${i.id}](#${i.id}) | ${i.q} | ${i.who} |`), "");
-    for (const i of items) {
-      L.push(`<a id="${i.id}"></a>`, `### ${i.id} · ${i.q}`, "", `- **Current assumption:** ${i.noteNow ? i.noteNow + " " : ""}${i.now.text} — *${i.now.src}*`, `- **Who answers:** ${i.who}`);
-      if (i.refs.length) L.push(`- **References:** ${i.refs.join(", ")}`);
-      L.push("");
+    L.push("# OPEN", "", "Still open, by screen: only Product questions nobody has decided yet. Build with the **current assumption**, keep it easy to change, and ask the named owner. If your question is in neither DECIDED.md nor here, it is genuinely new: ask it.", "Generated from the product rules — do not edit by hand.", "");
+    for (const jt of JOURNEY_TITLES) {
+      const its = items.filter((i) => (i.journey || "Sign-in") === jt);
+      L.push(`## ${jt}`, "");
+      if (!its.length) { L.push("Nothing open for this screen.", ""); continue; }
+      L.push("| # | Question | Who answers |", "|---|---|---|", ...its.map((i) => `| [${i.id}](#${i.id}) | ${tbl(i.q)} | ${i.who} |`), "");
+      for (const i of its) {
+        L.push(`<a id="${i.id}"></a>`, `### ${i.id} · ${i.q}`, "", `- **Current assumption:** ${i.noteNow ? i.noteNow + " " : ""}${i.now.text} — *Source: ${i.now.src}*`, `- **Who answers:** ${i.who}`);
+        L.push(`- **References:** ${i.refs.length ? i.refs.join(", ") : NO_REF}`, "");
+      }
     }
   }
   return L.join("\n");
@@ -832,19 +897,26 @@ function inputsHash() {
   const files = [FILES.tokensTs, FILES.tokensJson, FILES.iconsTs, FILES.messagesTs, FILES.messagesJson, FILES.metadataJson, FILES.approvedHtml,
     FILES.signInJs, FILES.signInCss, FILES.appCss, FILES.logo, FILES.dsCss, FILES.tokenBuild, FILES.tokenBuildNative, ...FILES.dsTokens, ...FILES.builder, ...FILES.capture,
     ...fs.readdirSync(path.join(ROOT, "app/design-system/fonts")).map((f) => path.join(ROOT, "app/design-system/fonts", f)),
-    ...STATES.flatMap((s) => [PICTURE(s, 360), PICTURE(s, 390)])];
+    ...STATES.flatMap((s) => [PICTURE(s, 360), PICTURE(s, 390)]),
+    // every journey: the whole built app it is measured from, and its approved pictures
+    ...J.journeyInputs(ROOT), ...Object.values(J.journeyStates(ROOT)).flat().flatMap((st) => [J.pictureFile(ROOT, st, 360), J.pictureFile(ROOT, st, 390)])];
   const out = {};
-  for (const f of files) out[rel(f)] = sha(fs.readFileSync(f));
+  for (const f of [...new Set(files)]) out[rel(f)] = sha(fs.readFileSync(f));
   return out;
 }
 function docTexts(T) {   // everything quoted from the big documents (DECIDED, OPEN, block rules, state rules)
   for (const k of Object.keys(snippets)) delete snippets[k];
-  const D = decided(T), O = open();
-  const covered = D.flatMap((d) => d.a.map((a) => a.text)).join("\n") + O.map((o) => o.now.text).join("\n");
+  const D = [...decided(T), ...open()].map((d) => ({ journey: "Sign-in", ...d }));
+  const covered = D.flatMap((d) => d.a.map((a) => a.text)).join("\n");
   for (const re of APPLOGIC_MUST) { const line = clean(lineOf("appLogic", re)); if (!covered.includes(line)) die(`DECIDED/OPEN miss an app-logic rule: ${line}`); }
+  // every other journey: generated from app-logic, the feedback map, settings and the code's [MOCK ASSUMPTION]s
+  const JD = J.journeyDocs({ ROOT, read, doc, section, quote, cleanSafe: (s) => clean(s, true), die });
+  const all = [...D, ...JD.items], O = JD.open;
+  const stateRule = J.stateRuleFn({ docs: JD, doc, cleanSafe: (s) => clean(s, true), quote });
+  const elementDecided = J.elementDecidedFn({ docs: JD });
   const rules = Object.fromEntries(Object.entries(BLOCKS).map(([k, b]) => [k, b.rules.map(([s, re]) => clean(lineOf("rules", re)))]));
   const stateRules = STATES.map((s) => [FM(`signin.${s}`).text, STATE_RULE[s] ? clean(lineOf("appLogic", STATE_RULE[s], "## 2. Sign-in")) : ""]);
-  return { decidedMd: md(D, "decided"), openMd: md(O, "open"), rules, stateRules, D, O, snippetHash: Object.fromEntries(Object.entries(snippets).map(([k, v]) => [k, sha(v.join("\n"))])) };
+  return { decidedMd: md(all, "decided"), openMd: md(O, "open"), rules, stateRules, D: all, O, JD, stateRule, elementDecided, snippetHash: Object.fromEntries(Object.entries(snippets).map(([k, v]) => [k, sha(v.join("\n"))])) };
 }
 function listFiles(dir, base = dir) {
   if (!fs.existsSync(dir)) return [];
@@ -876,6 +948,15 @@ function check() {
   for (const f of listFiles(OUT)) if (!(f in man.outputs) && !HAND.has(f) && !(f.startsWith("foundation/fonts/") && f.split("/").pop() in FONTS)) problems.push(`unexpected file: handoff/${f}`);
   for (const [f, h] of Object.entries(FONTS)) { const p = path.join(OUT, "foundation/fonts", f); if (!fs.existsSync(p) || sha(fs.readFileSync(p)) !== h) problems.push(`font: ${f}`); }
   for (const f of HAND) if (!fs.existsSync(path.join(OUT, f))) problems.push(`missing hand-written file: handoff/${f}`);
+  // D-103: the whole-kit zip equals handoff/ (every file except the downloads folder, same bytes)
+  const zp = path.join(OUT, "viewer/downloads", KIT_ZIP);
+  if (fs.existsSync(zp)) {
+    const ents = zipEntries(fs.readFileSync(zp)), want = kitFiles(OUT);
+    const names = ents.map((e) => e.name);
+    for (const f of want) if (!names.includes(f)) problems.push(`kit zip lacks: ${f}`);
+    for (const e of ents) { const p = path.join(OUT, e.name); if (!want.includes(e.name)) problems.push(`kit zip has extra: ${e.name}`); else if ((zlib.crc32(fs.readFileSync(p)) >>> 0) !== e.crc) problems.push(`kit zip differs from handoff/${e.name}`); }
+    for (const f of ["tokens.ts", "messages.ts", "icons.ts"]) if (sha(fs.readFileSync(path.join(OUT, "viewer/downloads", f))) !== sha(fs.readFileSync(path.join(OUT, "foundation", f)))) problems.push(`download differs: ${f}`);
+  } else problems.push(`missing: handoff/viewer/downloads/${KIT_ZIP}`);
   if (problems.length) { console.error("handoff/ is OUT OF DATE — run: node scripts/build-handoff.mjs\n  " + problems.join("\n  ")); process.exit(1); }
   console.log(`handoff/ is up to date (${Object.keys(man.outputs).length} generated files, ${Object.keys(now).length} source files, ${Object.keys(dt.snippetHash).length} quoted documents).`);
 }
@@ -897,7 +978,18 @@ async function build() {
     if (sha(buf) !== h) die(`font ${f}: sha256 mismatch`);
     fs.writeFileSync(path.join(TMP, "foundation/fonts", f), buf);
   }
-  const cap = await capture(TMP);
+  // --reuse-capture (development only): reuse the last browser capture instead of measuring again
+  const CACHE = path.join(ROOT, "docs/renders/2026-11-09-handoff-kit-all/tmp/capture");
+  let cap;
+  if (process.argv.includes("--reuse-capture") && fs.existsSync(path.join(CACHE, "cap.json"))) {
+    cap = JSON.parse(read(path.join(CACHE, "cap.json")));
+    for (const f of listFiles(path.join(CACHE, "files"))) { fs.mkdirSync(path.dirname(path.join(TMP, f)), { recursive: true }); fs.copyFileSync(path.join(CACHE, "files", f), path.join(TMP, f)); }
+  } else {
+    cap = await capture(TMP);
+    fs.rmSync(CACHE, { recursive: true, force: true });
+    for (const f of listFiles(TMP).filter((x) => /^(?:viewer\/shots|components\/pictures|foundation\/brand)\//.test(x))) { fs.mkdirSync(path.dirname(path.join(CACHE, "files", f)), { recursive: true }); fs.copyFileSync(path.join(TMP, f), path.join(CACHE, "files", f)); }
+    fs.writeFileSync(path.join(CACHE, "cap.json"), JSON.stringify(cap));
+  }
   const A = assemble(cap, T);
   const W = (f, data) => { const p = path.join(TMP, f); fs.mkdirSync(path.dirname(p), { recursive: true }); fs.writeFileSync(p, data); };
   // foundation: copied from their generated sources, unchanged
@@ -919,31 +1011,185 @@ async function build() {
     rawValues: { about: "Typed sizes, colours or words that are not tokens / message keys: red in the viewer. Layout keywords, zeros and % are layout values (not flagged). builtApp should be empty; exceptions are documented, not red; approvedReference audits the approved reference file's screen CSS (its own review and capture scaffolding is excluded, D-98).",
       builtApp: dedupeRaw(A.rawAll), exceptions: EXCEPTIONS.map((x) => ({ ...x, documentedException: true, where: "app/screens/sign-in.css (subtitle)" })), approvedReference: audit },
   };
-  W("screens/sign-in.json", JSON.stringify(screen, null, 1) + "\n");
-  for (const b of A.blocks) W(`components/${b.block}.json`, JSON.stringify(b, null, 1) + "\n");
+  // Sign-in states: plain name + "When this shows"; exceptions listed with their source line (H19)
+  for (const s of A.states) { applyWhen(s, "sign-in"); s.built390 = s.pictures.built390; for (const e of s.elements) if (!e.behaviour.decided.length) e.behaviour.decided = s.rule.decided.map((d) => `DECIDED.md#${d}`); }
+  screen.rawValues.exceptions = screenExceptions(A.states);
+  // every text key of the screen, including messages for states that have no approved picture (e.g. signin.long)
+  screen.copyKeys = Object.keys(messages).filter((k) => k.startsWith("signin."));
+  W("screens/sign-in.json", JSON.stringify(screen) + "\n");
+  // every other journey
+  const AJ = J.assembleJourneys({ cap: cap.journeys, T, styleRecord, LONG, spacingOf, messages, read, ROOT, dt: { stateRule: dt.stateRule, elementDecided: dt.elementDecided }, die });
+  const screens = [screen];
+  const states = J.journeyStates(ROOT);
+  for (const s of AJ.screens) {
+    for (const st of s.states) {
+      applyWhen(st, s.key);
+      for (const w of [360, 390]) { fs.mkdirSync(path.join(TMP, "screens/pictures"), { recursive: true }); fs.copyFileSync(J.pictureFile(ROOT, states[s.key].find((x) => x.id === st.id), w), path.join(TMP, `screens/pictures/${st.id}_w${w}.png`)); }
+      for (const e of st.elements) if (!e.behaviour.decided.length) e.behaviour.decided = st.rule.decided.map((d) => `DECIDED.md#${d}`);
+    }
+    const file = { screen: s.key, name: s.name, about: `Every element of every ${s.name} state. Facts measured from the built web app at 390 wide (density-independent points); tokens are the ones the applying CSS rule references. Schema: see AGENTS.md.`,
+      widthMeasured: 390, states: s.states, tokensUsed: s.tokensUsed,
+      rawValues: { about: "Typed sizes, colours or words that are not tokens / message keys: red in the viewer. Layout keywords, zeros and % are layout values (not flagged). Exceptions are documented on their source line, not red.",
+        builtApp: dedupeRaw(AJ.rawAll.filter((r) => r.screen === s.key)), exceptions: screenExceptions(s.states) } };
+    W(`screens/${s.key}.json`, JSON.stringify(file) + "\n");
+    screens.push(file);
+  }
+  const blocks = mergeBlocks(A.blocks, AJ.blockSpec, screens);
+  for (const b of blocks) W(`components/${b.block}.json`, JSON.stringify(b, null, 1) + "\n");
   W("DECIDED.md", dt.decidedMd + "\n"); W("OPEN.md", dt.openMd + "\n");
   // viewer
   W("viewer/truemeds.css", "/* Design-system stylesheet (comments removed), for the viewer's own look. Use foundation/tokens.ts in the app. */\n" + read(FILES.dsCss).replace(/\/\*[\s\S]*?\*\//g, "").replace(/\n{3,}/g, "\n\n"));
   for (const f of fs.readdirSync(FILES.dsFontsDir)) if (f.endsWith(".woff2")) { fs.mkdirSync(path.join(TMP, "viewer/fonts"), { recursive: true }); fs.copyFileSync(path.join(FILES.dsFontsDir, f), path.join(TMP, "viewer/fonts", f)); }
-  W("viewer/data.js", "// Generated — the same facts as screens/sign-in.json and components/*.json, for the viewer (opens from disk).\nwindow.KIT = " +
-    JSON.stringify({ screen, blocks: A.blocks, tokenIndex, decided: dt.D.map((d) => ({ id: d.id, q: d.q })), open: dt.O.map((o) => ({ id: o.id, q: o.q })) }) + ";\n");
   W("viewer/index.html", VIEWER_HTML);
   W("viewer/viewer.js", VIEWER_JS);
-  // CHANGES + manifest
-  const outputs = {};
-  for (const f of listFiles(TMP)) if (!HAND.has(f) && f !== "CHANGES.md" && !f.startsWith("foundation/fonts/")) outputs[f] = sha(fs.readFileSync(path.join(TMP, f)));
-  const snap = { tokens: Object.fromEntries(A.tokensUsed.map((t) => [t.native, JSON.stringify(t.value)])),
-    blocks: Object.fromEntries(A.blocks.map((b) => [b.block, sha(JSON.stringify({ parts: b.parts, rules: b.rules }))])),
-    screens: Object.fromEntries(A.states.map((s) => [s.id, sha(JSON.stringify(s.elements.map((e) => ({ ...e, box: undefined }))))])), copy: Object.fromEntries(usedKeys.map((k) => [k, messages[k]])) };
+  // CHANGES
+  const allStates = screens.flatMap((s) => s.states);
+  const allTokens = new Map(); for (const s of screens) for (const t of s.tokensUsed) allTokens.set(t.native, t.value);
+  const keysUsed = [...new Set([...usedKeys, ...allStates.flatMap((s) => (s.elements || []).flatMap((e) => e.copyKeys || []))])].sort();
+  const snap = { tokens: Object.fromEntries([...allTokens].map(([k, v]) => [k, JSON.stringify(v)])),
+    blocks: Object.fromEntries(blocks.map((b) => [b.block, sha(JSON.stringify({ parts: b.parts, rules: b.rules }))])),
+    screens: Object.fromEntries(allStates.map((s) => [s.id, sha(JSON.stringify((s.elements || []).map((e) => ({ ...e, box: undefined }))))])), copy: Object.fromEntries(keysUsed.map((k) => [k, messages[k]])) };
   const changes = changesMd(prev?.snapshot, snap, prev?.changes);
   W("CHANGES.md", changes.text);
-  outputs["CHANGES.md"] = sha(changes.text);
+  // downloads (D-103): single files + the whole kit as one zip (everything in handoff/ except the downloads folder)
+  W("viewer/downloads/tokens.ts", read(FILES.tokensTs)); W("viewer/downloads/messages.ts", read(FILES.messagesTs)); W("viewer/downloads/icons.ts", read(FILES.iconsTs));
+  W("viewer/downloads/fonts.zip", zipOf(TMP, listFiles(TMP).filter((f) => f.startsWith("foundation/fonts/")), (f) => f.replace(/^foundation\//, "")));
+  W("viewer/downloads/logo.zip", zipOf(TMP, listFiles(TMP).filter((f) => f.startsWith("foundation/brand/") || f.startsWith("foundation/logo/")), (f) => f.replace(/^foundation\//, "")));
+  // data.js shows each download's size; the kit zip contains data.js, so settle its size in a few passes
+  const sizes = Object.fromEntries(["tokens.ts", "messages.ts", "icons.ts", "fonts.zip", "logo.zip"].map((f) => [f, kb(fs.statSync(path.join(TMP, "viewer/downloads", f)).size)]));
+  for (let pass = 0, last = ""; pass < 4; pass++) {
+    W("viewer/data.js", viewerData(screens, blocks, tokenIndex, dt, sizes));
+    const z = zipOf(TMP, kitFiles(TMP));
+    W(`viewer/downloads/${KIT_ZIP}`, z);
+    if (kb(z.length) === last) break;
+    sizes[KIT_ZIP] = last = kb(z.length);
+    if (pass === 3) die("kit zip size did not settle");
+  }
+  // manifest
+  const outputs = {};
+  for (const f of listFiles(TMP)) if (!HAND.has(f) && !f.startsWith("foundation/fonts/")) outputs[f] = sha(fs.readFileSync(path.join(TMP, f)));
   fs.rmSync(OUT, { recursive: true, force: true });
   fs.renameSync(TMP, OUT);
   fs.writeFileSync(MANIFEST, JSON.stringify({ about: "build-handoff.mjs state: source hashes, quoted-document hashes, generated-file hashes, last snapshot (for CHANGES.md).",
     inputs: inputsHash(), snippets: dt.snippetHash, outputs, snapshot: snap, changes: changes.log }, null, 1) + "\n");
-  const raws = screen.rawValues.builtApp.length;
-  console.log(`handoff/ built: ${A.states.length} states, ${A.states.reduce((n, s) => n + s.elements.length, 0)} element records, ${A.blocks.length} blocks, ${A.tokensUsed.length} tokens used, ${raws} raw values in the built app, ${audit.length} in the reference file; ${changes.summary}`);
+  const raws = screens.reduce((n, s) => n + s.rawValues.builtApp.length, 0);
+  console.log(`handoff/ built: ${screens.length} screens, ${allStates.length} states, ${allStates.reduce((n, s) => n + (s.elements || []).length, 0)} element records, ${blocks.length} blocks, ${allTokens.size} tokens used, ${raws} raw values in the built app, ${audit.length} in the Sign-in reference file; ${changes.summary}`);
+}
+
+// ---------------------------------------------------------------------------------------------------------------------
+// All journeys: state names and "When this shows", merged block specs, viewer data, downloads
+// ---------------------------------------------------------------------------------------------------------------------
+function applyWhen(st, screenKey) {
+  const w = WHEN[st.id];
+  if (!w || !w.name || !w.shows || !w.next) die(`build-handoff.when.mjs: no name / shows / next for ${st.id}`);
+  st.name = w.name;
+  st.when = { shows: w.shows, next: w.next };
+  if (!st.rule.decided?.length) die(`${st.id}: no answered questions linked`);
+}
+const DS_BLOCK_RULES = {   // design-system blocks used by the new journeys: rules quoted from the design rules
+  sheet: [/^\| \*\*Sheet\*\*/, /^- \*\*Sheet template/],
+  toast: [/^\| \*\*Toast\*\*/],
+  chip: [/^\| \*\*Chip/],
+  actionbar: [/^\| \*\*Action bar\*\*/],
+};
+function blockRules(name, usedIn, screens) {
+  const out = [];
+  for (const re of DS_BLOCK_RULES[name] || []) { const l = doc("rules").split("\n").find((x) => re.test(x)); if (l) out.push({ section: "Design rules", text: clean(lineOf("rules", re)) }); }
+  const on = [...new Set(screens.filter((s) => s.states.some((x) => usedIn.includes(x.id))).map((s) => s.name || "Sign-in"))];
+  out.push({ section: "Kit", text: `Build it once from the parts × states below (tokens only, copy from messages); it appears on ${on.join(", ")}. What it does in each state is in DECIDED.md under those screens.` });
+  return out;
+}
+function mergeBlocks(signInBlocks, spec, screens) {
+  const byName = new Map(signInBlocks.map((b) => [b.block, { ...b, usedIn: [...b.usedIn] }]));
+  for (const [name, s] of Object.entries(spec)) {
+    const pascal = name.split(/[-_]+/).filter(Boolean).map((x) => x[0].toUpperCase() + x.slice(1)).join("");
+    const b = byName.get(name) || { block: name, name: pascal, rn: `<${pascal} />`, web: `.${name}`, parts: {}, rules: null, pictures: [], usedIn: [] };
+    for (const [part, p] of Object.entries(s.parts)) { const bp = (b.parts[part] ??= { states: {} }); for (const [k, v] of Object.entries(p.states)) if (!bp.states[k]) bp.states[k] = v; }
+    for (const id of s.usedIn) if (!b.usedIn.includes(id)) b.usedIn.push(id);
+    byName.set(name, b);
+  }
+  // every element of every screen has its block, part and state in a spec (Sign-in's unnamed blocks, e.g. the keyboard, too)
+  for (const scr of screens) for (const st of scr.states) for (const e of st.elements || []) {
+    const pascal = e.block.split(/[-_]+/).filter(Boolean).map((x) => x[0].toUpperCase() + x.slice(1)).join("");
+    const b = byName.get(e.block) || { block: e.block, name: pascal, rn: `<${pascal} />`, web: `.${e.block}`, parts: {}, rules: null, pictures: [], usedIn: [] };
+    const p = (b.parts[e.part] ??= { states: {} });
+    if (!Object.keys(p.states).some((k) => k.includes(e.blockState))) {
+      const key = e.variant === "default" ? e.blockState : `${e.variant}${e.blockState === "default" ? "" : " · " + e.blockState}`;
+      p.states[key.includes(e.blockState) ? key : `${key} · ${e.blockState}`] = { seenIn: st.id, styles: e.styles.map(J.slim), size: `${e.box.w}×${e.box.h}` };
+    }
+    if (!b.usedIn.includes(st.id)) b.usedIn.push(st.id);
+    byName.set(e.block, b);
+  }
+  for (const b of byName.values()) {
+    if (!b.rules) b.rules = blockRules(b.block, b.usedIn, screens);
+    // one list of the block's states (part × state keys), for a quick read and the H20 join
+    const states = {};
+    for (const [part, p] of Object.entries(b.parts)) for (const k of Object.keys(p.states)) (states[k] ??= []).push(part);
+    b.states = states;
+  }
+  return [...byName.values()].filter((b) => b.usedIn.length).sort((a, b) => a.block.localeCompare(b.block));
+}
+const KIT_ZIP = "truemeds-doctor-app-kit.zip";
+const kitFiles = (dir) => listFiles(dir).filter((f) => !f.startsWith("viewer/downloads/")).sort();
+// Deterministic zip (stored + deflate, fixed date): the same kit always gives the same bytes, so --check can compare.
+function zipOf(dir, files, name = (f) => f) {
+  const local = [], central = [];
+  let off = 0;
+  for (const f of [...files].sort()) {
+    const data = fs.readFileSync(path.join(dir, f));
+    const def = zlib.deflateRawSync(data, { level: 9 });
+    const useDef = def.length < data.length;
+    const body = useDef ? def : data, crc = zlib.crc32(data), n = Buffer.from(name(f));
+    const h = Buffer.alloc(30); h.writeUInt32LE(0x04034b50, 0); h.writeUInt16LE(20, 4); h.writeUInt16LE(0x0800, 6); h.writeUInt16LE(useDef ? 8 : 0, 8);
+    h.writeUInt16LE(0, 10); h.writeUInt16LE(0x5b6a, 12); h.writeUInt32LE(crc >>> 0, 14); h.writeUInt32LE(body.length, 18); h.writeUInt32LE(data.length, 22); h.writeUInt16LE(n.length, 26); h.writeUInt16LE(0, 28);
+    const c = Buffer.alloc(46); c.writeUInt32LE(0x02014b50, 0); c.writeUInt16LE(20, 4); c.writeUInt16LE(20, 6); c.writeUInt16LE(0x0800, 8); c.writeUInt16LE(useDef ? 8 : 0, 10);
+    c.writeUInt16LE(0, 12); c.writeUInt16LE(0x5b6a, 14); c.writeUInt32LE(crc >>> 0, 16); c.writeUInt32LE(body.length, 20); c.writeUInt32LE(data.length, 24); c.writeUInt16LE(n.length, 28);
+    c.writeUInt32LE(0o100644 * 65536, 38); c.writeUInt32LE(off, 42);
+    local.push(h, n, body); central.push(c, n);
+    off += 30 + n.length + body.length;
+  }
+  const cd = Buffer.concat(central), e = Buffer.alloc(22);
+  e.writeUInt32LE(0x06054b50, 0); e.writeUInt16LE(files.length, 8); e.writeUInt16LE(files.length, 10); e.writeUInt32LE(cd.length, 12); e.writeUInt32LE(off, 16);
+  return Buffer.concat([...local, cd, e]);
+}
+// read a zip's central directory: [{ name, crc, size }] (for --check: the kit zip must equal handoff/)
+function zipEntries(buf) {
+  const eocd = buf.lastIndexOf(Buffer.from([0x50, 0x4b, 0x05, 0x06]));
+  const n = buf.readUInt16LE(eocd + 10), at = buf.readUInt32LE(eocd + 16), out = [];
+  for (let i = 0, p = at; i < n; i++) { const len = buf.readUInt16LE(p + 28), extra = buf.readUInt16LE(p + 30), com = buf.readUInt16LE(p + 32);
+    out.push({ name: buf.toString("utf8", p + 46, p + 46 + len), crc: buf.readUInt32LE(p + 16), size: buf.readUInt32LE(p + 24) }); p += 46 + len + extra + com; }
+  return out;
+}
+const kb = (n) => n >= 1048576 ? `${(n / 1048576).toFixed(1)} MB` : `${Math.max(1, Math.round(n / 1024))} KB`;
+function viewerData(screens, blocks, tokenIndex, dt, sizes = {}) {
+  // the same style lists repeat across states: store each once (K.sets) and point to it by number
+  const sets = [], seen = new Map();
+  const intern = (v) => { const k = JSON.stringify(v); if (!seen.has(k)) { seen.set(k, sets.length); sets.push(v); } return seen.get(k); };
+  const vStyle = (s) => ({ property: s.property, value: s.value, tokens: s.tokens.map((t) => ({ native: t.native, web: t.web, value: t.value, ...(t.via?.length ? { via: t.via } : {}) })),
+    ...(s.raw ? { raw: true } : {}), ...(s.layout ? { layout: true } : {}), ...(s.exception ? { exception: s.exception } : {}), ...(s.timing ? { timing: true, unresolved: s.unresolved } : {}), ...(s.inherited ? { inherited: true } : {}) });
+  const tabs = TABS.map((t) => {
+    const src = screens.find((s) => s.screen === t.screen);
+    const states = src.states.filter((s) => !t.filter || t.filter(s.id));
+    const ids = new Set(states.map((s) => s.id));
+    // tokens used on this tab (Foundation filter); raw values for its states
+    const used = new Map();
+    for (const s of states) for (const e of s.elements || []) for (const st of e.styles) for (const tk of st.tokens) if (tk.native) used.set(tk.native, true);
+    return { key: t.screen, tab: t.tab, name: t.name, file: `screens/${t.screen}.json`,
+      states: states.map((s) => ({ id: s.id, name: s.name, when: s.when, built: s.built !== false, ...(s.later ? { later: s.later } : {}), pictures: s.pictures, rule: { decided: s.rule.decided },
+        elements: (s.elements || []).map((e) => ({ id: e.id, block: e.block, part: e.part, variant: e.variant, blockState: e.blockState, box: e.box, copy: e.copy, ...(e.icon ? { icon: e.icon } : {}),
+          st: intern(e.styles.map(vStyle)), sp: intern(e.spacing || {}), ...(e.accessibility?.name ? { sr: e.accessibility.name } : {}) })) })),
+      tokensUsed: [...used.keys()].sort(), rawValues: { builtApp: src.rawValues.builtApp.filter((r) => r.states.some((x) => ids.has(x) || ids.has(`sign-in_${x}`))) } };
+  });
+  const strip = (t) => String(t ?? "").replace(/\s*\[(?:RECOMMENDED|PROPOSED|LOCKED)\]/g, "").replace(/\s*\((?:see )?(?:RULES |Design rules )?§\s?\d+(?:\.\d+)*[a-z]?\)/g, "").replace(/\s*(?:RULES |Design rules )?§\s?\d+(?:\.\d+)*[a-z]?/g, "").replace(/\s+([.,;:])/g, "$1");
+  const vb = blocks.map((b) => ({ block: b.block, name: b.name, rn: strip(b.rn), web: b.web, rules: b.rules.map((r) => ({ text: strip(r.text) })), pictures: b.pictures, usedIn: b.usedIn,
+    parts: Object.fromEntries(Object.entries(b.parts).map(([p, v]) => [p, { states: Object.fromEntries(Object.entries(v.states).map(([k, s]) => [k, { size: s.size, ...(s.changesOnly ? { changesOnly: true } : {}), st: intern(s.styles.map(vStyle)) }])) }])) }));
+  const files = [["tokens.ts", "Design values for React Native"], ["messages.ts", "Every piece of app text"], ["icons.ts", "The icon set"], ["fonts.zip", "Plus Jakarta Sans, 4 weights + licence"], ["logo.zip", "The logo: SVG + PNG at 1x, 2x, 3x"]];
+  return "// Generated — the same facts as screens/*.json and components/*.json, for the viewer (opens from disk, no server).\nwindow.KIT = " +
+    JSON.stringify({ screens: tabs, blocks: vb, sets, tokenIndex: tokenIndex.map((t) => ({ native: t.native, ts: t.ts, web: t.web, value: t.value, ...(/^alias of/.test(t.source || "") ? { via: t.source.replace(/^alias of /, "") } : {}) })),
+      decided: dt.D.map((d) => ({ id: d.id, q: d.q })), open: dt.O.map((o) => ({ id: o.id, q: o.q })) }) + ";\n" +
+    `window.KIT_VERSION = ${JSON.stringify(`All screens · ${new Date().toISOString().slice(0, 10)}`)};\n` +
+    "window.KIT_DOWNLOADS = " + JSON.stringify([{ main: true, href: `downloads/${KIT_ZIP}`, label: "Download the whole kit (.zip)", what: "Everything: this viewer, design values, text, icons, fonts, logo, answers, AI instructions", size: sizes[KIT_ZIP] || "" },
+      ...files.map(([f, what]) => ({ href: `downloads/${f}`, label: f, what, size: sizes[f] }))]) + ";\n";
 }
 function dedupeRaw(list) {
   const m = new Map();
@@ -976,7 +1222,9 @@ function changesMd(prev, snap, log = []) {
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
-// Viewer (static; opens by double-click; reads data.js)
+// Viewer (static; opens by double-click; reads data.js). D-103 design: Start here (how-to, four lines, downloads),
+// Foundation (values, "used on <screen>" filter), Building blocks ("Where it's used"), Screens (a tab per screen,
+// phone fixed left, right panel: When this shows → tapped element → pick from a list).
 // ---------------------------------------------------------------------------------------------------------------------
 const VIEWER_HTML = `<!doctype html>
 <html lang="en">
@@ -990,7 +1238,7 @@ body { margin: 0; background: var(--tm-surface-secondary); }
 .v-top { position: sticky; top: 0; z-index: 5; background: var(--tm-surface-primary); border-bottom: 1px solid var(--tm-border-subtle); padding: var(--tm-space-sm) var(--tm-space-page); display: flex; gap: var(--tm-space-xs); flex-wrap: wrap; }
 .v-top button { border: 0; background: none; font: inherit; padding: var(--tm-space-sm) var(--tm-space-md); border-radius: var(--tm-radius-md); color: var(--tm-content-secondary); min-height: 40px; cursor: pointer; }
 .v-top button[aria-current="true"] { background: var(--tm-surface-brand-subtle); color: var(--tm-content-brand); font-weight: var(--tm-font-weight-semibold); }
-main.v { max-width: 1100px; margin: 0 auto; padding: var(--tm-space-lg) var(--tm-space-page) 96px; }
+main.v { max-width: 1180px; margin: 0 auto; padding: var(--tm-space-lg) var(--tm-space-page) 48px; }
 .v h1 { font-size: var(--tm-font-size-title-lg); line-height: var(--tm-font-lineheight-2xl); margin: 0 0 var(--tm-space-sm); }
 .v h2 { font-size: 20px; line-height: 28px; margin: var(--tm-space-2xl) 0 var(--tm-space-sm); }
 .v h3 { font-size: 16px; line-height: 24px; margin: var(--tm-space-lg) 0 var(--tm-space-xs); }
@@ -1000,33 +1248,55 @@ main.v { max-width: 1100px; margin: 0 auto; padding: var(--tm-space-lg) var(--tm
 .v th, .v td { text-align: left; vertical-align: top; padding: 6px 8px; border-bottom: 1px solid var(--tm-border-subtle); overflow-wrap: anywhere; }
 .v th { color: var(--tm-content-secondary); font-weight: var(--tm-font-weight-semibold); }
 .tblwrap { overflow-x: auto; }
+/* raw values (typed, not a token): shown in red */
 .raw, .raw code { color: var(--tm-content-error) !important; }
 tr.raw td { background: var(--tm-feedback-error-surface); }
-tr.raw.soft td { background: none; }
-tr.raw.soft, tr.raw.soft code { color: var(--tm-content-error) !important; opacity: .75; }
 .swatch { display: inline-block; width: 14px; height: 14px; border-radius: 3px; vertical-align: -2px; margin-right: 4px; box-shadow: inset 0 0 0 1px rgba(0,0,0,.15); }
 .card { background: var(--tm-surface-primary); border-radius: var(--tm-radius-lg); padding: var(--tm-space-lg); margin: var(--tm-space-sm) 0; box-shadow: var(--tm-shadow-card); }
 .chips { display: flex; flex-wrap: wrap; gap: 6px; margin: var(--tm-space-sm) 0; }
 .chips button { border: 1px solid var(--tm-border-default); background: var(--tm-surface-primary); border-radius: 999px; padding: 6px 12px; font: inherit; font-size: 13px; min-height: 36px; cursor: pointer; }
 .chips button[aria-pressed="true"] { border-color: var(--tm-border-selected); background: var(--tm-surface-brand-subtle); color: var(--tm-content-brand); }
-.stage { display: flex; gap: var(--tm-space-lg); flex-wrap: wrap; align-items: flex-start; }
-.shot { position: relative; width: 390px; max-width: 100%; flex: none; }
-.shot img { width: 100%; display: block; border-radius: 12px; box-shadow: var(--tm-shadow-card); }
+.scrtabs { display: flex; gap: 6px; flex-wrap: wrap; margin: 0 0 var(--tm-space-sm); border-bottom: 1px solid var(--tm-border-subtle); padding-bottom: var(--tm-space-sm); }
+.scrtabs button { font: inherit; font-weight: var(--tm-font-weight-semibold); border: 0; background: none; padding: 8px 12px; border-radius: var(--tm-radius-md); color: var(--tm-content-secondary); min-height: 40px; cursor: pointer; }
+.scrtabs button[aria-current="true"] { background: var(--tm-surface-brand-subtle); color: var(--tm-content-brand); }
+.stage { display: grid; grid-template-columns: 390px minmax(0, 1fr); gap: var(--tm-space-lg); align-items: start; }
+.shot { position: sticky; top: 64px; width: 390px; margin: 0; }
+.shot .frame { position: relative; }
+.shot img { width: 390px; display: block; border-radius: 12px; box-shadow: var(--tm-shadow-card); }
 .shot .hit { position: absolute; border: 1px dashed transparent; cursor: pointer; background: none; padding: 0; }
 .shot .hit:hover { border-color: var(--tm-border-focus); }
 .shot .hit.sel { border: 2px solid var(--tm-border-focus); background: rgba(38,108,225,.08); }
-.ref { width: 220px; flex: none; }
-.ref img { width: 100%; border-radius: 8px; box-shadow: var(--tm-shadow-card); }
-.ref figcaption, .shot figcaption { font-size: 12px; color: var(--tm-content-secondary); margin-top: 4px; }
-.panel { flex: 1 1 320px; min-width: 0; }
+.shot figcaption { font-size: 12px; color: var(--tm-content-secondary); margin-top: 4px; }
+.panel { position: sticky; top: 64px; max-height: calc(100vh - 80px); overflow-y: auto; padding-right: 4px; min-width: 0; }
+.panel .card:first-child { margin-top: 0; }
+.card.when { border-left: 4px solid var(--tm-border-selected); }
+.card.when .label { margin: var(--tm-space-sm) 0 0; font-size: 13px; font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-primary); }
+.card.when p { margin: 4px 0; }
+.card.hint p { margin: 0; }
+details.ans summary, details.elfold summary { cursor: pointer; font-size: 13px; color: var(--tm-content-secondary); padding: 6px 0; }
+details.ans ul { margin: 6px 0 0; padding-left: 18px; font-size: 13px; }
 .ellist { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: var(--tm-space-sm); }
 .ellist button { font: inherit; font-size: 12px; border: 1px solid var(--tm-border-subtle); background: var(--tm-surface-primary); border-radius: 6px; padding: 4px 8px; min-height: 32px; cursor: pointer; }
 .ellist button[aria-pressed="true"] { border-color: var(--tm-border-selected); color: var(--tm-content-brand); }
+.later { background: var(--tm-feedback-warning-surface); border-radius: var(--tm-radius-md); padding: var(--tm-space-sm) var(--tm-space-md); font-size: 13px; }
 .blockpics { display: flex; gap: var(--tm-space-sm); flex-wrap: wrap; }
 .blockpics figure { margin: 0; max-width: 100%; }
 .blockpics img { max-width: 100%; max-height: 220px; border: 1px solid var(--tm-border-subtle); border-radius: 6px; background: #fff; }
+.usedon { margin: var(--tm-space-sm) 0 var(--tm-space-lg); padding: var(--tm-space-md); background: var(--tm-surface-secondary); border-radius: var(--tm-radius-md); }
+.usedon p { margin: 6px 0; }
+a.uchip { display: inline-block; margin: 4px 6px 0 0; padding: 4px 10px; border: 1px solid var(--tm-border-default); border-radius: 999px; font-size: 13px; text-decoration: none; color: var(--tm-content-brand); background: var(--tm-surface-primary); }
+.lede { font-size: 16px; color: var(--tm-content-primary) !important; }
+ul.plain { padding-left: 18px; margin: 0; } ul.plain li { margin: 6px 0; }
+.small { font-size: 13px; }
+.dls { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: var(--tm-space-sm); margin: var(--tm-space-sm) 0; }
+a.dl { display: flex; flex-direction: column; gap: 2px; padding: 12px; border: 1px solid var(--tm-border-default); border-radius: var(--tm-radius-md); text-decoration: none; color: var(--tm-content-primary); background: var(--tm-surface-primary); }
+a.dl span { font-size: 12px; color: var(--tm-content-secondary); }
+a.dl-main { grid-column: 1 / -1; border-color: var(--tm-border-selected); background: var(--tm-surface-brand-subtle); }
+a.dl-main b { color: var(--tm-content-brand); }
+label.only { display: flex; align-items: center; gap: 8px; margin: 0 0 8px; font-size: 14px; color: var(--tm-content-secondary); }
+label.only select { font: inherit; padding: 4px 8px; }
 .muted { color: var(--tm-content-tertiary); }
-@media (max-width: 720px) { .shot { width: 100%; } .ref { width: 46%; } }
+@media (max-width: 860px) { .stage { grid-template-columns: 1fr; } .shot, .panel { position: static; max-height: none; } }
 </style>
 </head>
 <body class="tm">
@@ -1037,100 +1307,139 @@ tr.raw.soft, tr.raw.soft code { color: var(--tm-content-error) !important; opaci
 </body>
 </html>
 `;
-const VIEWER_JS = String.raw`// Hand-off kit viewer. Static: reads window.KIT from data.js (generated). No server needed.
+const VIEWER_JS = String.raw`// Hand-off kit viewer. Static: reads window.KIT from data.js (generated): screens (one per tab, with states and their
+// tokensUsed), blocks, tokenIndex, decided / open questions, downloads. No server needed.
 (() => {
-  const K = window.KIT, S = K.screen, $ = (h) => { const d = document.createElement("div"); d.innerHTML = h; return d.firstElementChild; };
+  const K = window.KIT, SCR = K.screens, $ = (h) => { const d = document.createElement("div"); d.innerHTML = h; return d.firstElementChild; };
   const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
   const sw = (v) => typeof v === "string" && /^(#|rgb)/.test(v) ? '<span class="swatch" style="background:' + esc(v) + '"></span>' : "";
   const val = (v) => typeof v === "object" ? (v.boxShadow ? v.boxShadow : JSON.stringify(v)) : v;
-  const tokCell = (t) => t.native ? sw(t.value) + "<code>" + esc(t.native) + "</code><br><span class=muted>" + esc(t.web) + (t.via && t.via.length ? " (via " + esc(t.via.join(", ")) + ")" : "") + " · " + esc(val(t.value)) + "</span>" : '<span class="raw">' + esc(t.web) + " — not a native token</span>";
-  const soft = (k) => k === "keyword" || k === "zero";
-  const styleRows = (styles) => styles.map((s) => '<tr class="' + (s.raw ? "raw" + (soft(s.kind) ? " soft" : "") : "") + '"><td><code>' + esc(s.property) + "</code>" + (s.inherited ? " <span class=muted>(inherited)</span>" : "") + (s.appliesTo ? "<br><span class=muted>" + esc(s.appliesTo.join(", ")) + "</span>" : "") + "</td><td>" + (s["tokens"].length ? s["tokens"].map(tokCell).join("<br>") : "") + (s.layout ? (s["tokens"].length ? "<br>" : "") + "<code>" + esc(s.value) + "</code> <span class=muted>layout value</span>" : "") + (s.exception ? "<code>" + esc(s.value) + "</code> <span class=muted>" + esc(s.exception) + "</span>" : "") + (s.timing ? "<code>" + esc(s.value) + "</code> <span class=muted>" + esc(s.unresolved) + "</span>" : "") + (!s["tokens"].length && !s.layout && !s.exception && !s.timing && !s.raw ? "—" : "") +
-    (s.raw ? '<br><span class="raw">not a token: <code>' + esc(s.value) + "</code> (" + esc(s.kind || "") + ") " + esc((s.file || (s.from && s.from.file)) + ":" + (s.line || (s.from && s.from.line))) + "</span>" : "") + "</td></tr>").join("");
+  const PROP = { "box-shadow": "shadow" };   // how React Native calls it
+  const prop = (p) => PROP[p] || p;
+  const via = (t) => t.via && t.via.length ? ' <span class=muted title="Defined as: ' + esc([].concat(t.via).join(" → ")) + '">ⓘ</span>' : "";
+  const tokCell = (t) => t.native ? sw(t.value) + "<code>" + esc(t.native) + "</code><br><span class=muted>" + esc(t.web) + via(t) + " · " + esc(val(t.value)) + "</span>" : '<span class="raw">' + esc(t.web) + " — not a native token</span>";
+  const styleRows = (styles) => styles.map((s) => '<tr class="' + (s.raw ? "raw" : "") + '"><td><code>' + esc(prop(s.property)) + "</code>" + (s.inherited ? " <span class=muted>(from the parent)</span>" : "") + "</td><td>" +
+    (s["tokens"].length ? s["tokens"].map(tokCell).join("<br>") : "") +
+    (s.layout ? (s["tokens"].length ? "<br>" : "") + "<code>" + esc(s.value) + "</code> <span class=muted>layout value</span>" : "") +
+    (s.exception ? "<code>" + esc(s.value) + "</code> <span class=muted>" + esc(s.exception) + "</span>" : "") +
+    (s.timing ? "<code>" + esc(s.value) + "</code> <span class=muted>" + esc(s.unresolved) + "</span>" : "") +
+    (!s["tokens"].length && !s.layout && !s.exception && !s.timing && !s.raw ? "—" : "") +
+    (s.raw ? '<br><span class="raw">not a design value: <code>' + esc(s.value) + "</code></span>" : "") + "</td></tr>").join("");
   const nav = document.querySelector(".v-top"), main = document.getElementById("v");
   const tabs = { start: "Start here", foundation: "Foundation", blocks: "Building blocks", screens: "Screens" };
-  let cur = location.hash.slice(1).split("/")[0] || "start";
-  for (const [k, l] of Object.entries(tabs)) { const b = $('<button type="button">' + l + "</button>"); b.onclick = () => { location.hash = k; }; b.dataset.k = k; nav.append(b); }
+  // a click draws the new page at once (the address updates too, so Back and links keep working)
+  const open = (h) => { if (location.hash.slice(1) !== h) history.pushState(null, "", "#" + h); go(h); };  for (const [k, l] of Object.entries(tabs)) { const b = $('<button type="button">' + l + "</button>"); b.onclick = () => { open(k); }; b.dataset.k = k; nav.append(b); }
   window.addEventListener("hashchange", () => go(location.hash.slice(1)));
+  const blockOf = (id) => K.blocks.find((x) => x.block === id);
+  const where = (stateId) => { for (const s of SCR) { const st = s.states.find((x) => x.id === stateId); if (st) return { s, st }; } return null; };
   function go(h) {
-    const [k, a, b] = (h || "start").split("/"); cur = tabs[k] ? k : "start";
-    nav.querySelectorAll("button").forEach((x) => x.setAttribute("aria-current", String(x.dataset.k === cur)));
-    main.innerHTML = ""; ({ start, foundation, blocks, screens })[cur](a, b); window.scrollTo(0, 0);
+    const parts = (h || "start").split("/").map(decodeURIComponent), k = tabs[parts[0]] ? parts[0] : "start";
+    nav.querySelectorAll("button").forEach((x) => x.setAttribute("aria-current", String(x.dataset.k === k)));
+    main.innerHTML = ""; ({ start, foundation, blocks, screens })[k](...parts.slice(1)); window.scrollTo(0, 0);
   }
   function start() {
-    main.append($('<section><h1>Sign-in — hand-off kit</h1><p>Everything the React Native team needs to build the Truemeds doctor app\'s Sign-in screen from the same tokens, copy and rules as the approved design.</p>' +
-      '<div class="card"><h3>What is here</h3><ul><li><b>Foundation</b>: tokens (native names beside the web names), icons, copy, fonts.</li><li><b>Building blocks</b>: each block on the screen, its parts and states, the token for each, sizes and rules.</li><li><b>Screens</b>: all ' + S.states.length + ' Sign-in states. Tap any element for its block, tokens, spacing, copy key and behaviour.</li><li><b>Red</b> = a value that is not a token.</li></ul></div>' +
-      '<div class="card"><h3>Files</h3><ul><li><code>../AGENTS.md</code> — for your AI coding tool.</li><li><code>../DECIDED.md</code> — questions already answered (' + K.decided.length + ').</li><li><code>../OPEN.md</code> — still open, with who answers (' + K.open.length + ').</li><li><code>../screens/sign-in.json</code>, <code>../components/*.json</code> — the same facts as data.</li><li><code>../CHANGES.md</code> — what moved since the last drop.</li></ul></div>' +
-      '<div class="card"><h3>Tokens used on Sign-in (' + S.tokensUsed.length + ')</h3><div class="tblwrap"><table><thead><tr><th>Native · web</th><th>Value</th><th>States</th></tr></thead><tbody>' +
-      S.tokensUsed.map((t) => "<tr><td><code>" + esc(t.native) + "</code><br><span class=muted>" + esc(t.web.join(", ")) + "</span></td><td>" + sw(t.value) + esc(val(t.value)) + "</td><td>" + (t.states === "all" ? "all" : esc(t.states.map((x) => x.replace("sign-in_", "")).join(", "))) + "</td></tr>").join("") + "</tbody></table></div></div></section>"));
+    const D = window.KIT_DOWNLOADS || [];
+    const dl = D.map((d) => '<a class="dl' + (d.main ? " dl-main" : "") + '" href="' + esc(d.href) + '" download><b>' + esc(d.label) + "</b><span>" + esc(d.what) + (d.size ? " · " + esc(d.size) : "") + "</span></a>").join("");
+    const n = SCR.reduce((a, s) => a + s.states.length, 0);
+    main.append($('<section><h1>Truemeds doctor app — hand-off kit</h1><p class="lede">How to use it: <b>Start with Screens. Tap anything. Check DECIDED before asking.</b></p>' +
+      '<div class="card"><h3 style="margin-top:0">What is here</h3><ul class="plain">' +
+      "<li><b>Screens</b>: every state of every screen (" + SCR.length + " tabs, " + n + " states). Tap a part of the phone to see what it is, its colours, sizes, spacing and text.</li>" +
+      "<li><b>Building blocks</b>: the reusable parts (button, field, notice…) with every version of each, and where each is used. Build these once, use them everywhere.</li>" +
+      "<li><b>Foundation</b>: every design value (colour, size, gap, corner) by the name you use in code.</li>" +
+      '<li><b>Answers</b>: <a href="../DECIDED.md">DECIDED</a> (' + K.decided.length + ' questions already answered) · <a href="../OPEN.md">OPEN</a> (' + K.open.length + " still open, and who answers).</li></ul></div>" +
+      '<div class="card"><h3 style="margin-top:0">Download</h3><div class="dls">' + dl + '</div><p class="muted small" style="margin:0">Using an AI coding tool? Download the whole kit and open it as a folder: the tool reads <code>AGENTS.md</code> on its own. Kit version ' + esc(window.KIT_VERSION || "") + ".</p></div></section>"));
   }
   function foundation() {
-    main.append($('<section><h1>Foundation</h1><p>Files in <code>../foundation/</code>: <code>tokens.ts</code>, <code>tokens.json</code>, <code>icons.ts</code>, <code>messages.ts</code>, <code>token-map.json</code>, <code>fonts/</code> (see <code>fonts/FONTS.md</code>), <code>logo/</code>.</p></section>'));
-    const q = $('<input class="tm-input" placeholder="Filter tokens (e.g. content, space, --tm-border)" style="width:100%;padding:12px;border:1px solid var(--tm-border-default);border-radius:8px;font:inherit;margin:8px 0">');
+    main.append($('<section><h1>Foundation</h1><p>Every design value by the name you use in code (left). Download the files from <a href="#start">Start here</a>.</p></section>'));
+    const only = $('<label class="only"><input type="checkbox"> Only values used on <select>' + SCR.map((s, i) => '<option value="' + i + '">' + esc(s.name) + "</option>").join("") + "</select></label>");
+    const q = $('<input class="tm-input" placeholder="Filter (e.g. content, space, --tm-border)" style="width:100%;padding:12px;border:1px solid var(--tm-border-default);border-radius:8px;font:inherit;margin:8px 0">');
     const box = $('<div class="tblwrap"></div>');
-    const draw = () => { const f = q.value.toLowerCase(); box.innerHTML = "<table><thead><tr><th>Native (use this)</th><th>Web</th><th>Value</th></tr></thead><tbody>" + K.tokenIndex.filter((t) => !f || (t.native + t.web).toLowerCase().includes(f)).map((t) => "<tr><td><code>" + esc(t.ts) + "</code></td><td><code>" + esc(t.web) + "</code></td><td>" + sw(t.value) + esc(val(t.value)) + "</td></tr>").join("") + "</tbody></table>"; };
-    q.oninput = draw; main.append(q, box); draw();
+    const cb = only.querySelector("input"), sel = only.querySelector("select");
+    const draw = () => {
+      const f = q.value.toLowerCase(), used = cb.checked ? new Set(SCR[+sel.value].tokensUsed) : null;
+      box.innerHTML = "<table><thead><tr><th>Native (use this)</th><th>Web</th><th>Value</th></tr></thead><tbody>" + K.tokenIndex.filter((t) => !used || used.has(t.native)).filter((t) => !f || (t.native + t.web).toLowerCase().includes(f))
+        .map((t) => "<tr><td><code>" + esc(t.ts) + "</code></td><td><code>" + esc(t.web) + "</code>" + via(t) + "</td><td>" + sw(t.value) + esc(val(t.value)) + "</td></tr>").join("") + "</tbody></table>";
+    };
+    q.oninput = draw; cb.onchange = draw; sel.onchange = draw; main.append(q, only, box); draw();
+  }
+  // Where a block is used, grouped by screen tab; each state opens Screens with that block's element selected.
+  function usedOn(b) {
+    const rows = [];
+    for (const s of SCR) {
+      const ids = s.states.filter((st) => b.usedIn.includes(st.id));
+      if (!ids.length) continue;
+      rows.push("<p><b>" + esc(s.name) + "</b> (" + ids.length + ")<br>" + ids.map((st) => { const el = (st.elements || []).find((e) => e.block === b.block);
+        return '<a class="uchip" href="#screens/' + esc(s.tab) + "/" + esc(st.id) + (el ? "/" + esc(el.id) : "") + '">' + esc(st.name) + "</a>"; }).join("") + "</p>");
+    }
+    return '<div class="usedon"><h3 style="margin-top:0">Where it\'s used</h3>' + rows.join("") + "</div>";
   }
   function blocks(which) {
-    main.append($('<section><h1>Building blocks</h1><p>Same names on web and native. RN names are a suggestion [RECOMMENDED]; you own the components.</p></section>'));
+    main.append($('<section><h1>Building blocks</h1><p>The reusable parts. Build each once in React Native and reuse it. The React Native names are suggestions; you own the components.</p></section>'));
     const chips = $('<div class="chips"></div>'); main.append(chips);
-    const b = K.blocks.find((x) => x.block === which) || K.blocks[0];
-    for (const x of K.blocks) { const c = $('<button type="button">' + esc(x.name) + "</button>"); c.setAttribute("aria-pressed", String(x === b)); c.onclick = () => { location.hash = "blocks/" + x.block; }; chips.append(c); }
+    const b = blockOf(which) || K.blocks[0];
+    for (const x of K.blocks) { const c = $('<button type="button">' + esc(x.name) + "</button>"); c.setAttribute("aria-pressed", String(x === b)); c.onclick = () => { open("blocks/" + x.block); }; chips.append(c); }
     const sec = $('<section class="card"></section>');
-    sec.innerHTML = "<h2 style=margin-top:0>" + esc(b.name) + "</h2><p><code>" + esc(b.rn) + "</code><br><span class=muted>web: " + esc(b.web) + " · used in " + b.usedIn.length + " states</span></p>" +
-      '<div class="blockpics">' + b.pictures.map((p) => "<figure><img src=\"../" + esc(p.file) + "\" alt=\"" + esc(b.name + " " + p.state) + "\"><figcaption>" + esc(p.state) + "</figcaption></figure>").join("") + "</div>" +
-      Object.entries(b.parts).map(([part, p]) => "<h3>" + esc(part) + "</h3>" + Object.entries(p.states).map(([st, s]) => "<p><b>" + esc(st) + "</b> <span class=muted>" + esc(s.seenIn) + (s.size ? " · " + esc(s.size) : "") + (s.changesOnly ? " · changes from default only" : "") + '</span></p><div class="tblwrap"><table><tbody>' + styleRows(s.styles) + "</tbody></table></div>").join("")).join("") +
-      "<h3>Rules</h3><ul>" + b.rules.map((r) => "<li>" + esc(r.text) + " <span class=muted>— " + esc(r.section) + "</span></li>").join("") + "</ul>";
+    sec.innerHTML = "<h2 style=margin-top:0>" + esc(b.name) + "</h2><p><code>" + esc(b.rn) + "</code><br><span class=muted>web: " + esc(b.web) + "</span></p>" + usedOn(b) +
+      (b.pictures.length ? '<div class="blockpics">' + b.pictures.map((p) => '<figure><img src="../' + esc(p.file) + '" alt="' + esc(b.name + " " + p.state) + '"><figcaption>' + esc(p.state) + "</figcaption></figure>").join("") + "</div>" : "") +
+      Object.entries(b.parts).map(([part, p]) => "<h3>" + esc(part) + "</h3>" + Object.entries(p.states).map(([st, s]) => "<p><b>" + esc(st) + "</b>" + (s.size ? ' <span class=muted>' + esc(s.size) + "</span>" : "") + (s.changesOnly ? " <span class=muted>changes from default only</span>" : "") + '</p><div class="tblwrap"><table><tbody>' + styleRows(K.sets[s.st]) + "</tbody></table></div>").join("")).join("") +
+      "<h3>Rules</h3><ul>" + b.rules.map((r) => "<li>" + esc(r.text) + "</li>").join("") + "</ul>";
     main.append(sec);
   }
-  function screens(stateId, elId) {
+  function screens(tab, stateId, elId) {
+    const S = SCR.find((s) => s.tab === tab) || (stateId && where(stateId) || {}).s || SCR[0];
     const st = S.states.find((s) => s.id === stateId) || S.states[0];
-    main.append($('<section><h1>Sign-in</h1><p>Tap any element on the 390 picture (built app). The approved 360 picture is beside it.</p></section>'));
+    const bar = $('<nav class="scrtabs" aria-label="Screens"></nav>');
+    for (const s of SCR) { const b = $('<button type="button">' + esc(s.name) + "</button>"); b.setAttribute("aria-current", String(s === S)); b.onclick = () => { open("screens/" + s.tab + "/" + s.states[0].id); }; bar.append(b); }
+    main.append(bar);
     const chips = $('<div class="chips"></div>'); main.append(chips);
-    for (const s of S.states) { const c = $('<button type="button">' + esc(s.name) + "</button>"); c.setAttribute("aria-pressed", String(s === st)); c.onclick = () => { location.hash = "screens/" + s.id; }; chips.append(c); }
+    for (const s of S.states) { const c = $('<button type="button">' + esc(s.name) + "</button>"); c.setAttribute("aria-pressed", String(s === st)); c.onclick = () => { open("screens/" + S.tab + "/" + s.id); }; chips.append(c); }
+    const built = st.built !== false;
     const stage = $('<div class="stage"></div>');
-    const shot = $('<figure class="shot" style="margin:0"><div class="frame" style="position:relative"><img alt="' + esc(st.name) + ' at 390, built app" src="../' + esc(st.pictures.built390) + '"></div><figcaption>390 · built app · inspectable</figcaption></figure>');
+    const shot = $('<figure class="shot"><div class="frame"><img alt="' + esc(st.name) + '" src="../' + esc(built ? st.pictures.built390 : st.pictures.w390) + '"></div><figcaption>' + (built ? "Tap any part · " : "") + "smallest supported phone: 360 wide</figcaption></figure>");
     const frame = shot.querySelector(".frame");
-    const ref = $('<figure class="ref" style="margin:0"><img alt="' + esc(st.name) + ' at 360, approved" src="../' + esc(st.pictures.w360) + '"><figcaption>360 · approved picture</figcaption><br><img alt="' + esc(st.name) + ' at 390, approved" src="../' + esc(st.pictures.w390) + '"><figcaption>390 · approved picture</figcaption></figure>');
     const panel = $('<div class="panel"></div>');
-    const order = [...st.elements].sort((a, b) => b.box.w * b.box.h - a.box.w * a.box.h);
-    let sel = st.elements.find((e) => e.id === elId) || null;
-    for (const e of order) {
+    const els = st.elements || [];
+    let sel = els.find((e) => e.id === elId) || null;
+    for (const e of [...els].sort((a, b) => b.box.w * b.box.h - a.box.w * a.box.h)) {
       const h = $('<button type="button" class="hit" aria-label="' + esc(e.id) + '"></button>');
       Object.assign(h.style, { left: e.box.x / 3.9 + "%", top: e.box.y / 8.44 + "%", width: e.box.w / 3.9 + "%", height: e.box.h / 8.44 + "%" });
       h.onclick = (ev) => { ev.stopPropagation(); pick(e); }; h.dataset.id = e.id; frame.append(h);
     }
-    stage.append(shot, panel, ref); main.append(stage);
-    const list = $('<div class="ellist"></div>');
-    function pick(e) { sel = e; history.replaceState(null, "", "#screens/" + st.id + "/" + e.id); drawPanel(); }
+    stage.append(shot, panel); main.append(stage);
+    function pick(e) { sel = e; history.replaceState(null, "", "#screens/" + S.tab + "/" + st.id + "/" + e.id); drawPanel(); }
     function drawPanel() {
-      shot.querySelectorAll(".hit").forEach((h) => h.classList.toggle("sel", sel && h.dataset.id === sel.id));
-      panel.innerHTML = ""; list.innerHTML = "";
-      for (const e of st.elements) { const b = $('<button type="button">' + esc(e.id) + "</button>"); b.setAttribute("aria-pressed", String(sel === e)); b.onclick = () => pick(e); list.append(b); }
-      panel.append(list);
+      shot.querySelectorAll(".hit").forEach((h) => h.classList.toggle("sel", !!sel && h.dataset.id === sel.id));
+      panel.innerHTML = "";
+      const Q = (id) => (K.decided.find((d) => d.id === id) || {}).q || id;
+      const ans = st.rule.decided;
+      const when = $('<div class="card when"><h3 style="margin-top:0">When this shows</h3><p class="when-shows"></p><p class="label">What happens next</p><p class="when-next"></p>' +
+        (ans.length ? '<details class="ans"><summary>Answered questions (' + ans.length + ")</summary><ul>" + ans.map((d) => '<li><a href="../DECIDED.md#' + esc(d) + '">' + esc(Q(d)) + "</a></li>").join("") + "</ul></details>" : "") + "</div>");
+      when.querySelector(".when-shows").textContent = st.when.shows; when.querySelector(".when-next").textContent = st.when.next;
+      panel.append(when);
+      if (!built) panel.append($('<div class="card"><p class="later">' + esc(st.later) + "</p></div>"));
+      if (built && !sel) panel.append($('<div class="card hint"><p>Tap any part of the phone (a button, the field, a line of text) to see how it is built.</p></div>'));
       if (sel) {
-        const e = sel, sp = e.spacing || {};
-        panel.append($('<div class="card"><h2 style="margin-top:0">' + esc(e.id) + "</h2><p><b>Block</b> " + esc(e.block) + " · <b>part</b> " + esc(e.part) + " · <b>variant</b> " + esc(e.variant) + " · <b>state</b> " + esc(e.blockState) + (e.rn ? "<br><b>RN</b> <code>" + esc(e.rn) + "</code>" : "") + "<br><span class=muted>box " + esc(e.box.w + "×" + e.box.h) + " at " + esc(e.box.x + "," + e.box.y) + "</span></p>" +
-          (e.copy.length ? "<p><b>Copy</b> " + e.copy.map((c) => c.copyKey ? "<code>messages['" + esc(c.copyKey) + "']</code>" + (c.values ? " with " + esc(JSON.stringify(c.values)) : "") + " (" + esc(c.slot) + ")" : c.literal ? '<span class="raw">typed text "' + esc(c.literal) + '" (' + esc(c.slot) + ")</span>" : "<span class=muted>" + esc(c.note) + "</span>").join("<br>") + "</p>" : "") +
-          (e.icon ? "<p><b>Icon</b> <code>" + esc(e.icon.iconTs) + "</code> " + esc(e.icon.size ? e.icon.size.join("×") : "") + "</p>" : "") +
-          '<div class="tblwrap"><table><thead><tr><th>Property</th><th>Token (native · web · value)</th></tr></thead><tbody>' + (styleRows(e.styles) || "<tr><td colspan=2 class=muted>No styles: the phone draws this.</td></tr>") + "</tbody></table></div>" +
-          "<h3>Spacing</h3>" + (sp.above ? "<p>" + esc(sp.above.px) + " above, to <b>" + esc(sp.above.neighbour) + "</b>: " + (sp.above.setBy.length ? sp.above.setBy.map((s) => esc(s.element + " " + s.property + " ") + (s["tokens"].length ? "<code>" + esc(s["tokens"].join(" ")) + "</code>" : '<span class="' + (s.raw ? "raw" : "") + '">' + esc(s.value) + "</span>")).join("; ") : "<span class=muted>layout (no spacing rule)</span>") + "</p>" : "") +
-          (sp.inside ? "<p>Inside: " + sp.inside.map((s) => esc(s.property + " ") + (s["tokens"].length ? "<code>" + esc(s["tokens"].join(" ")) + "</code>" : '<span class="' + (s.raw ? "raw" : "") + '">' + esc(s.value) + "</span>")).join("; ") + "</p>" : "") +
-          "<h3>Behaviour</h3><p>" + (e.behaviour.decided.length ? e.behaviour.decided.map((d) => '<a href="../' + esc(d) + '">' + esc(d.replace("DECIDED.md#", "DECIDED ")) + "</a>").join(" · ") : "<span class=muted>none beyond the screen rule</span>") + "</p>" +
-          "<h3>Accessibility</h3><p>" + Object.entries(e.accessibility).map(([k, v]) => "<b>" + esc(k) + "</b> " + esc(v)).join(" · ") + "</p></div>"));
+        const e = sel, sp = K.sets[e.sp] || {}, b = blockOf(e.block) || { name: e.block };
+        const tok = (s) => s["tokens"].length ? "<code>" + esc(s["tokens"].join(" ")) + "</code>" : '<span class="' + (s.raw ? "raw" : "") + '">' + esc(s.value) + "</span>";
+        panel.append($('<div class="card el"><h2 style="margin-top:0">' + esc(e.id) + '</h2><p><b>Block</b> <a href="#blocks/' + esc(e.block) + '" title="Every version, and where else it is used">' + esc(b.name) + "</a> · <b>part</b> " + esc(e.part) + " · <b>variant</b> " + esc(e.variant) + " · <b>state</b> " + esc(e.blockState) + "</p>" +
+          (e.copy.length ? "<p><b>Text</b> " + e.copy.map((c) => c.copyKey ? "<code>messages['" + esc(c.copyKey) + "']</code>" + (c.values ? " with " + esc(JSON.stringify(c.values)) : "") + " (" + esc(c.slot) + ")" : c.literal ? '<span class="raw">typed text "' + esc(c.literal) + '" (' + esc(c.slot) + ")</span>" : "<span class=muted>" + esc(c.note || "") + "</span>").join("<br>") + "</p>" : "") +
+          (e.icon ? "<p><b>Icon</b> <code>" + esc(e.icon.iconTs) + "</code> " + esc(e.icon.size ? e.icon.size.map((x) => Math.round(x)).join("×") : "") + "</p>" : "") +
+          '<div class="tblwrap"><table><thead><tr><th>Property</th><th>Design value (native · web · value)</th></tr></thead><tbody>' + (styleRows(K.sets[e.st]) || "<tr><td colspan=2 class=muted>No styles: the phone draws this.</td></tr>") + "</tbody></table></div>" +
+          (sp.above || sp.inside ? "<h3>Spacing</h3>" : "") +
+          (sp.above ? "<p>" + esc(sp.above.px) + " above, to <b>" + esc(sp.above.neighbour) + "</b>: " + (sp.above.setBy.length ? sp.above.setBy.map((s) => esc(s.element + " " + prop(s.property) + " ") + tok(s)).join("; ") : "<span class=muted>layout (no spacing rule)</span>") + "</p>" : "") +
+          (sp.inside ? "<p>Inside: " + sp.inside.map((s) => esc(prop(s.property) + " ") + tok(s)).join("; ") + "</p>" : "") +
+          (e.sr ? "<h3>Screen reader label</h3><p>" + esc(e.sr) + "</p>" : "") + "</div>"));
       }
-      const r = st.rule;
-      panel.append($('<div class="card"><h3 style="margin-top:0">Rule for this state</h3><p>' + esc(r.pattern) + "</p><p>" + esc(r.appLogic) + "</p><p>" + r.decided.map((d) => '<a href="../DECIDED.md#' + d + '">DECIDED ' + d + "</a>").join(" · ") + "</p></div>"));
-      const used = {}; for (const e of st.elements) for (const s of e.styles) for (const t of s["tokens"]) if (t.native) (used[t.native] ??= { t, els: new Set() }).els.add(e.id);
-      panel.append($('<div class="card"><h3 style="margin-top:0">Tokens used in this state (' + Object.keys(used).length + ')</h3><div class="tblwrap"><table><thead><tr><th>Native · web</th><th>Value</th><th>Elements</th></tr></thead><tbody>' +
-        Object.values(used).sort((a, b) => a.t.native.localeCompare(b.t.native)).map(({ t, els }) => "<tr><td><code>" + esc(t.native) + "</code><br><span class=muted>" + esc(t.web) + "</span></td><td>" + sw(t.value) + esc(val(t.value)) + "</td><td>" + esc([...els].join(", ")) + "</td></tr>").join("") + "</tbody></table></div></div>"));
-      const raws = S.rawValues.builtApp.filter((x) => x.states.includes(st.id.replace("sign-in_", ""))).sort((a, b) => soft(a.kind) - soft(b.kind));
-      panel.append($('<div class="card"><h3 style="margin-top:0"' + (raws.length ? ' class="raw"' : '') + '>Not tokens in this state: ' + raws.length + (raws.length ? ' typed sizes, colours or words' : ' (every size, colour and word is a token or a message key)') + '</h3><div class="tblwrap"><table><thead><tr><th>Value</th><th>Where</th><th>Elements</th></tr></thead><tbody>' +
-        raws.map((x) => '<tr class="raw' + (soft(x.kind) ? " soft" : "") + '"><td><code>' + esc(x.property + ": " + x.value) + "</code> (" + esc(x.kind) + ")</td><td>" + esc(x.file + ":" + x.line) + "</td><td>" + esc(x.elements.join(", ")) + "</td></tr>").join("") + "</tbody></table></div></div>"));
+      if (els.length) {
+        const fold = $('<details class="elfold"><summary>Can\'t tap it? Pick from a list</summary><div class="ellist"></div></details>'), list = fold.querySelector(".ellist");
+        for (const e of els) { const b = $('<button type="button">' + esc(e.id) + "</button>"); b.setAttribute("aria-pressed", String(sel === e)); b.onclick = () => pick(e); list.append(b); }
+        panel.append(fold);
+      }
+      const raws = S.rawValues.builtApp.filter((x) => x.states.includes(st.id) || x.states.includes(st.id.replace(/^sign-in_/, "")));
+      if (raws.length) panel.append($('<div class="card"><h3 style="margin-top:0" class="raw">Not design values yet: ' + raws.length + '</h3><div class="tblwrap"><table><tbody>' + raws.map((x) => '<tr class="raw"><td><code>' + esc(prop(x.property) + ": " + x.value) + "</code></td><td>" + esc(x.elements.join(", ")) + "</td></tr>").join("") + "</tbody></table></div></div>"));
+      panel.scrollTop = 0;
     }
     drawPanel();
-    const all = $('<details class="card"><summary><b>Approved reference file: values that are not tokens (' + S.rawValues.approvedReference.length + ')</b></summary><div class="tblwrap"><table><tbody>' + S.rawValues.approvedReference.map((x) => '<tr class="raw"><td><code>' + esc(x.property + ": " + x.value) + "</code> (" + esc(x.kind) + ")</td><td>" + esc(x.file + ":" + x.line) + "</td><td><code>" + esc(x.selector) + "</code></td></tr>").join("") + "</tbody></table></div></details>");
-    main.append(all);
   }
   go(location.hash.slice(1));
 })();

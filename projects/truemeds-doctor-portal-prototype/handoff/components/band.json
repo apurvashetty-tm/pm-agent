@@ -1,0 +1,155 @@
+{
+ "block": "band",
+ "name": "Band",
+ "rn": "<Band />",
+ "web": ".band",
+ "parts": {
+  "container": {
+   "states": {
+    "default": {
+     "seenIn": "home_active",
+     "styles": [
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "flex",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "padding",
+       "value": "var(--tm-space-3xl) var(--tm-space-page) var(--tm-space-2xl)",
+       "tokens": [
+        {
+         "native": "tokens.space.3xl",
+         "web": "--tm-space-3xl",
+         "value": 48
+        },
+        {
+         "native": "tokens.space.lg",
+         "web": "--tm-space-page",
+         "value": 16
+        },
+        {
+         "native": "tokens.space.2xl",
+         "web": "--tm-space-2xl",
+         "value": 32
+        }
+       ]
+      }
+     ],
+     "size": "390×188"
+    }
+   }
+  },
+  "h1": {
+   "states": {
+    "default": {
+     "seenIn": "home_active",
+     "styles": [
+      {
+       "property": "text-wrap",
+       "value": "balance",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "font-size",
+       "value": "32px",
+       "tokens": [],
+       "exception": "Text style, not a typed number: use tokens.text.titleLg.fontSize (32), part of tokens.text.titleLg."
+      },
+      {
+       "property": "line-height",
+       "value": "40px",
+       "tokens": [],
+       "exception": "Text style, not a typed number: use tokens.text.titleLg.lineHeight (40), part of tokens.text.titleLg."
+      },
+      {
+       "property": "font-weight",
+       "value": "600",
+       "tokens": [],
+       "exception": "Text style, not a typed number: use tokens.text.titleLg.fontWeight (600), part of tokens.text.titleLg."
+      },
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "margin",
+       "value": "0",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "color",
+       "value": "var(--tm-content-primary)",
+       "tokens": [
+        {
+         "native": "tokens.color.content.primary",
+         "web": "--tm-content-primary",
+         "value": "#383A42"
+        }
+       ],
+       "inherited": true
+      },
+      {
+       "property": "font-family",
+       "value": "var(--tm-font)",
+       "tokens": [
+        {
+         "native": "tokens.font.family",
+         "web": "--tm-font",
+         "value": "Plus Jakarta Sans"
+        }
+       ],
+       "inherited": true
+      }
+     ],
+     "size": "358×80"
+    }
+   }
+  }
+ },
+ "rules": [
+  {
+   "section": "Kit",
+   "text": "Build it once from the parts × states below (tokens only, copy from messages); it appears on Home. What it does in each state is in DECIDED.md under those screens."
+  }
+ ],
+ "pictures": [],
+ "usedIn": [
+  "home_active",
+  "home_add-failed",
+  "home_add-wheel",
+  "home_added",
+  "home_adding",
+  "home_end-confirmation",
+  "home_expired-pending",
+  "home_idle-expired",
+  "home_manually-ended",
+  "home_near-expiry",
+  "home_no-cases",
+  "home_offline",
+  "home_request-failed",
+  "home_requesting",
+  "home_setting",
+  "home_setup-failed",
+  "home_setup-wheel",
+  "home_stop-pending",
+  "home_unknown-result"
+ ],
+ "states": {
+  "default": [
+   "container",
+   "h1"
+  ]
+ }
+}

@@ -1,0 +1,75 @@
+{
+ "block": "profile-earnings-row",
+ "name": "ProfileEarningsRow",
+ "rn": "<ProfileEarningsRow />",
+ "web": ".profile-earnings-row",
+ "parts": {
+  "container": {
+   "states": {
+    "default": {
+     "seenIn": "home_logout-confirm",
+     "styles": [
+      {
+       "property": "display",
+       "value": "flex",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "gap",
+       "value": "var(--tm-space-2xl)",
+       "tokens": [
+        {
+         "native": "tokens.space.2xl",
+         "web": "--tm-space-2xl",
+         "value": 32
+        }
+       ]
+      },
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      }
+     ],
+     "size": "326×44"
+    }
+   }
+  },
+  "div": {
+   "states": {
+    "default": {
+     "seenIn": "home_logout-confirm",
+     "styles": [
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      }
+     ],
+     "size": "59.7×44"
+    }
+   }
+  }
+ },
+ "rules": [
+  {
+   "section": "Kit",
+   "text": "Build it once from the parts × states below (tokens only, copy from messages); it appears on Home. What it does in each state is in DECIDED.md under those screens."
+  }
+ ],
+ "pictures": [],
+ "usedIn": [
+  "home_logout-confirm",
+  "home_profile",
+  "home_profile-case-open"
+ ],
+ "states": {
+  "default": [
+   "container",
+   "div"
+  ]
+ }
+}

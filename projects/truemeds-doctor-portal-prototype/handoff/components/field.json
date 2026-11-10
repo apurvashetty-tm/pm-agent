@@ -121,6 +121,111 @@
       }
      ],
      "size": "358×106"
+    },
+    "error · error": {
+     "seenIn": "otp_code-expired",
+     "styles": [
+      {
+       "property": "display",
+       "value": "flex",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "flex-direction",
+       "value": "column",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "gap",
+       "value": "var(--tm-space-sm)",
+       "tokens": [
+        {
+         "native": "tokens.space.sm",
+         "web": "--tm-space-sm",
+         "value": 8
+        }
+       ]
+      },
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      }
+     ],
+     "size": "358×84"
+    },
+    "disabled": {
+     "seenIn": "otp_expired-and-resend-limited",
+     "styles": [
+      {
+       "property": "display",
+       "value": "flex",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "flex-direction",
+       "value": "column",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "gap",
+       "value": "var(--tm-space-sm)",
+       "tokens": [
+        {
+         "native": "tokens.space.sm",
+         "web": "--tm-space-sm",
+         "value": 8
+        }
+       ]
+      },
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      }
+     ],
+     "size": "358×56"
+    },
+    "readonly": {
+     "seenIn": "a-confirm-busy",
+     "styles": [
+      {
+       "property": "display",
+       "value": "flex",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "flex-direction",
+       "value": "column",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "gap",
+       "value": "var(--tm-space-sm)",
+       "tokens": [
+        {
+         "native": "tokens.space.sm",
+         "web": "--tm-space-sm",
+         "value": 8
+        }
+       ]
+      },
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      }
+     ],
+     "size": "326×118"
     }
    }
   },
@@ -1840,6 +1945,1009 @@
      "size": "358×20"
     }
    }
+  },
+  "symptoms-input": {
+   "states": {
+    "disabled": {
+     "seenIn": "a-confirm-busy",
+     "styles": [
+      {
+       "property": "flex",
+       "value": "1",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "min-width",
+       "value": "0",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "border",
+       "value": "0",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "outline",
+       "value": "0",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "background",
+       "value": "transparent",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "resize",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "font",
+       "value": "inherit",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "font-size",
+       "value": "var(--tm-font-size-body-md)",
+       "tokens": [
+        {
+         "native": "tokens.font.size.body.md",
+         "web": "--tm-font-size-body-md",
+         "value": 14
+        }
+       ]
+      },
+      {
+       "property": "line-height",
+       "value": "var(--tm-font-lineheight-sm)",
+       "tokens": [
+        {
+         "native": "tokens.font.lineHeight.sm",
+         "web": "--tm-font-lineheight-sm",
+         "value": 20
+        }
+       ]
+      },
+      {
+       "property": "color",
+       "value": "var(--tm-content-secondary)",
+       "tokens": [
+        {
+         "native": "tokens.color.content.secondary",
+         "web": "--tm-content-secondary",
+         "value": "#5B616E"
+        }
+       ]
+      },
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "min-height",
+       "value": "calc(var(--tm-space-3xl) + var(--tm-space-lg))",
+       "tokens": [
+        {
+         "native": "tokens.space.3xl",
+         "web": "--tm-space-3xl",
+         "value": 48
+        },
+        {
+         "native": "tokens.space.lg",
+         "web": "--tm-space-lg",
+         "value": 16
+        }
+       ],
+       "layout": true
+      },
+      {
+       "property": "padding",
+       "value": "0",
+       "tokens": [],
+       "layout": true
+      }
+     ],
+     "size": "300×64"
+    },
+    "default": {
+     "seenIn": "a-confirm-failed",
+     "styles": [
+      {
+       "property": "flex",
+       "value": "1",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "min-width",
+       "value": "0",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "border",
+       "value": "0",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "outline",
+       "value": "0",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "background",
+       "value": "transparent",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "resize",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "font",
+       "value": "inherit",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "font-size",
+       "value": "var(--tm-font-size-body-md)",
+       "tokens": [
+        {
+         "native": "tokens.font.size.body.md",
+         "web": "--tm-font-size-body-md",
+         "value": 14
+        }
+       ]
+      },
+      {
+       "property": "line-height",
+       "value": "var(--tm-font-lineheight-sm)",
+       "tokens": [
+        {
+         "native": "tokens.font.lineHeight.sm",
+         "web": "--tm-font-lineheight-sm",
+         "value": 20
+        }
+       ]
+      },
+      {
+       "property": "color",
+       "value": "var(--tm-content-primary)",
+       "tokens": [
+        {
+         "native": "tokens.color.content.primary",
+         "web": "--tm-content-primary",
+         "value": "#383A42"
+        }
+       ]
+      },
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "min-height",
+       "value": "calc(var(--tm-space-3xl) + var(--tm-space-lg))",
+       "tokens": [
+        {
+         "native": "tokens.space.3xl",
+         "web": "--tm-space-3xl",
+         "value": 48
+        },
+        {
+         "native": "tokens.space.lg",
+         "web": "--tm-space-lg",
+         "value": 16
+        }
+       ],
+       "layout": true
+      },
+      {
+       "property": "padding",
+       "value": "0",
+       "tokens": [],
+       "layout": true
+      }
+     ],
+     "size": "300×64"
+    },
+    "focus": {
+     "seenIn": "a-notes-typing",
+     "styles": [
+      {
+       "property": "flex",
+       "value": "1",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "min-width",
+       "value": "0",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "border",
+       "value": "0",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "outline",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "background",
+       "value": "transparent",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "resize",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "font",
+       "value": "inherit",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "font-size",
+       "value": "var(--tm-font-size-body-md)",
+       "tokens": [
+        {
+         "native": "tokens.font.size.body.md",
+         "web": "--tm-font-size-body-md",
+         "value": 14
+        }
+       ]
+      },
+      {
+       "property": "line-height",
+       "value": "var(--tm-font-lineheight-sm)",
+       "tokens": [
+        {
+         "native": "tokens.font.lineHeight.sm",
+         "web": "--tm-font-lineheight-sm",
+         "value": 20
+        }
+       ]
+      },
+      {
+       "property": "color",
+       "value": "var(--tm-content-primary)",
+       "tokens": [
+        {
+         "native": "tokens.color.content.primary",
+         "web": "--tm-content-primary",
+         "value": "#383A42"
+        }
+       ]
+      },
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "min-height",
+       "value": "calc(var(--tm-space-3xl) + var(--tm-space-lg))",
+       "tokens": [
+        {
+         "native": "tokens.space.3xl",
+         "web": "--tm-space-3xl",
+         "value": 48
+        },
+        {
+         "native": "tokens.space.lg",
+         "web": "--tm-space-lg",
+         "value": 16
+        }
+       ],
+       "layout": true
+      },
+      {
+       "property": "padding",
+       "value": "0",
+       "tokens": [],
+       "layout": true
+      }
+     ],
+     "size": "300×64"
+    },
+    "read-only": {
+     "seenIn": "e-availability-ended",
+     "styles": [
+      {
+       "property": "flex",
+       "value": "1",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "min-width",
+       "value": "0",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "border",
+       "value": "0",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "outline",
+       "value": "0",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "background",
+       "value": "transparent",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "resize",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "font",
+       "value": "inherit",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "font-size",
+       "value": "var(--tm-font-size-body-md)",
+       "tokens": [
+        {
+         "native": "tokens.font.size.body.md",
+         "web": "--tm-font-size-body-md",
+         "value": 14
+        }
+       ]
+      },
+      {
+       "property": "line-height",
+       "value": "var(--tm-font-lineheight-sm)",
+       "tokens": [
+        {
+         "native": "tokens.font.lineHeight.sm",
+         "web": "--tm-font-lineheight-sm",
+         "value": 20
+        }
+       ]
+      },
+      {
+       "property": "color",
+       "value": "var(--tm-content-secondary)",
+       "tokens": [
+        {
+         "native": "tokens.color.content.secondary",
+         "web": "--tm-content-secondary",
+         "value": "#5B616E"
+        }
+       ]
+      },
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "min-height",
+       "value": "calc(var(--tm-space-3xl) + var(--tm-space-lg))",
+       "tokens": [
+        {
+         "native": "tokens.space.3xl",
+         "web": "--tm-space-3xl",
+         "value": 48
+        },
+        {
+         "native": "tokens.space.lg",
+         "web": "--tm-space-lg",
+         "value": 16
+        }
+       ],
+       "layout": true
+      },
+      {
+       "property": "padding",
+       "value": "0",
+       "tokens": [],
+       "layout": true
+      }
+     ],
+     "size": "300×27"
+    }
+   }
+  },
+  "doctor-notes-input": {
+   "states": {
+    "default": {
+     "seenIn": "a-no-medicines",
+     "styles": [
+      {
+       "property": "flex",
+       "value": "1",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "min-width",
+       "value": "0",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "border",
+       "value": "0",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "outline",
+       "value": "0",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "background",
+       "value": "transparent",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "resize",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "font",
+       "value": "inherit",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "font-size",
+       "value": "var(--tm-font-size-body-md)",
+       "tokens": [
+        {
+         "native": "tokens.font.size.body.md",
+         "web": "--tm-font-size-body-md",
+         "value": 14
+        }
+       ]
+      },
+      {
+       "property": "line-height",
+       "value": "var(--tm-font-lineheight-sm)",
+       "tokens": [
+        {
+         "native": "tokens.font.lineHeight.sm",
+         "web": "--tm-font-lineheight-sm",
+         "value": 20
+        }
+       ]
+      },
+      {
+       "property": "color",
+       "value": "var(--tm-content-primary)",
+       "tokens": [
+        {
+         "native": "tokens.color.content.primary",
+         "web": "--tm-content-primary",
+         "value": "#383A42"
+        }
+       ]
+      },
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "min-height",
+       "value": "calc(var(--tm-space-3xl) + var(--tm-space-lg))",
+       "tokens": [
+        {
+         "native": "tokens.space.3xl",
+         "web": "--tm-space-3xl",
+         "value": 48
+        },
+        {
+         "native": "tokens.space.lg",
+         "web": "--tm-space-lg",
+         "value": 16
+        }
+       ],
+       "layout": true
+      },
+      {
+       "property": "padding",
+       "value": "0",
+       "tokens": [],
+       "layout": true
+      }
+     ],
+     "size": "300×64"
+    },
+    "read-only": {
+     "seenIn": "g3b-after-hangup",
+     "styles": [
+      {
+       "property": "flex",
+       "value": "1",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "min-width",
+       "value": "0",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "border",
+       "value": "0",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "outline",
+       "value": "0",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "background",
+       "value": "transparent",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "resize",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "font",
+       "value": "inherit",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "font-size",
+       "value": "var(--tm-font-size-body-md)",
+       "tokens": [
+        {
+         "native": "tokens.font.size.body.md",
+         "web": "--tm-font-size-body-md",
+         "value": 14
+        }
+       ]
+      },
+      {
+       "property": "line-height",
+       "value": "var(--tm-font-lineheight-sm)",
+       "tokens": [
+        {
+         "native": "tokens.font.lineHeight.sm",
+         "web": "--tm-font-lineheight-sm",
+         "value": 20
+        }
+       ]
+      },
+      {
+       "property": "color",
+       "value": "var(--tm-content-secondary)",
+       "tokens": [
+        {
+         "native": "tokens.color.content.secondary",
+         "web": "--tm-content-secondary",
+         "value": "#5B616E"
+        }
+       ]
+      },
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "min-height",
+       "value": "calc(var(--tm-space-3xl) + var(--tm-space-lg))",
+       "tokens": [
+        {
+         "native": "tokens.space.3xl",
+         "web": "--tm-space-3xl",
+         "value": 48
+        },
+        {
+         "native": "tokens.space.lg",
+         "web": "--tm-space-lg",
+         "value": 16
+        }
+       ],
+       "layout": true
+      },
+      {
+       "property": "padding",
+       "value": "0",
+       "tokens": [],
+       "layout": true
+      }
+     ],
+     "size": "300×43"
+    }
+   }
+  },
+  "ps-other": {
+   "states": {
+    "default": {
+     "seenIn": "d-error-other",
+     "styles": [
+      {
+       "property": "align-self",
+       "value": "stretch",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "margin",
+       "value": "calc(-1 * var(--tm-space-md)) 0",
+       "tokens": [
+        {
+         "native": "tokens.space.md",
+         "web": "--tm-space-md",
+         "value": 12
+        }
+       ],
+       "layout": true
+      },
+      {
+       "property": "padding",
+       "value": "var(--tm-space-md) 0",
+       "tokens": [
+        {
+         "native": "tokens.space.md",
+         "web": "--tm-space-md",
+         "value": 12
+        }
+       ],
+       "layout": true
+      },
+      {
+       "property": "flex",
+       "value": "1",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "min-width",
+       "value": "0",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "border",
+       "value": "0",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "outline",
+       "value": "0",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "background",
+       "value": "transparent",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "resize",
+       "value": "vertical",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "font",
+       "value": "inherit",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "font-size",
+       "value": "var(--tm-font-size-body-md)",
+       "tokens": [
+        {
+         "native": "tokens.font.size.body.md",
+         "web": "--tm-font-size-body-md",
+         "value": 14
+        }
+       ]
+      },
+      {
+       "property": "line-height",
+       "value": "var(--tm-font-lineheight-sm)",
+       "tokens": [
+        {
+         "native": "tokens.font.lineHeight.sm",
+         "web": "--tm-font-lineheight-sm",
+         "value": 20
+        }
+       ]
+      },
+      {
+       "property": "color",
+       "value": "var(--tm-content-primary)",
+       "tokens": [
+        {
+         "native": "tokens.color.content.primary",
+         "web": "--tm-content-primary",
+         "value": "#383A42"
+        }
+       ]
+      },
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      }
+     ],
+     "size": "260.1×46"
+    }
+   }
+  },
+  "ps-note": {
+   "states": {
+    "default": {
+     "seenIn": "d-food-selected",
+     "styles": [
+      {
+       "property": "flex",
+       "value": "1",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "min-width",
+       "value": "0",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "border",
+       "value": "0",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "outline",
+       "value": "0",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "background",
+       "value": "transparent",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "resize",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "font",
+       "value": "inherit",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "font-size",
+       "value": "var(--tm-font-size-body-md)",
+       "tokens": [
+        {
+         "native": "tokens.font.size.body.md",
+         "web": "--tm-font-size-body-md",
+         "value": 14
+        }
+       ]
+      },
+      {
+       "property": "line-height",
+       "value": "var(--tm-font-lineheight-sm)",
+       "tokens": [
+        {
+         "native": "tokens.font.lineHeight.sm",
+         "web": "--tm-font-lineheight-sm",
+         "value": 20
+        }
+       ]
+      },
+      {
+       "property": "color",
+       "value": "var(--tm-content-primary)",
+       "tokens": [
+        {
+         "native": "tokens.color.content.primary",
+         "web": "--tm-content-primary",
+         "value": "#383A42"
+        }
+       ]
+      },
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "min-height",
+       "value": "calc(var(--tm-space-2xl) * 2)",
+       "tokens": [
+        {
+         "native": "tokens.space.2xl",
+         "web": "--tm-space-2xl",
+         "value": 32
+        }
+       ],
+       "layout": true
+      },
+      {
+       "property": "padding",
+       "value": "0",
+       "tokens": [],
+       "layout": true
+      }
+     ],
+     "size": "300×64"
+    },
+    "focus": {
+     "seenIn": "d-notes-keyboard",
+     "styles": [
+      {
+       "property": "flex",
+       "value": "1",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "min-width",
+       "value": "0",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "border",
+       "value": "0",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "outline",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "background",
+       "value": "transparent",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "resize",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "font",
+       "value": "inherit",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "font-size",
+       "value": "var(--tm-font-size-body-md)",
+       "tokens": [
+        {
+         "native": "tokens.font.size.body.md",
+         "web": "--tm-font-size-body-md",
+         "value": 14
+        }
+       ]
+      },
+      {
+       "property": "line-height",
+       "value": "var(--tm-font-lineheight-sm)",
+       "tokens": [
+        {
+         "native": "tokens.font.lineHeight.sm",
+         "web": "--tm-font-lineheight-sm",
+         "value": 20
+        }
+       ]
+      },
+      {
+       "property": "color",
+       "value": "var(--tm-content-primary)",
+       "tokens": [
+        {
+         "native": "tokens.color.content.primary",
+         "web": "--tm-content-primary",
+         "value": "#383A42"
+        }
+       ]
+      },
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "min-height",
+       "value": "calc(var(--tm-space-2xl) * 2)",
+       "tokens": [
+        {
+         "native": "tokens.space.2xl",
+         "web": "--tm-space-2xl",
+         "value": 32
+        }
+       ],
+       "layout": true
+      },
+      {
+       "property": "padding",
+       "value": "0",
+       "tokens": [],
+       "layout": true
+      }
+     ],
+     "size": "300×64"
+    }
+   }
   }
  },
  "rules": [
@@ -1898,6 +3006,151 @@
   "sign-in_offline",
   "sign-in_couldnt-send",
   "sign-in_too-many-tries",
-  "sign-in_inactive"
- ]
+  "sign-in_inactive",
+  "otp_code-expired",
+  "otp_cooldown-reconciling",
+  "otp_couldnt-verify",
+  "otp_default",
+  "otp_empty-tap",
+  "otp_expired-and-resend-limited",
+  "otp_locked",
+  "otp_new-code-sent",
+  "otp_offline",
+  "otp_resend-available",
+  "otp_resend-failed",
+  "otp_resending",
+  "otp_too-many-resends",
+  "otp_too-short",
+  "otp_two-tries-left",
+  "otp_verifying",
+  "otp_wrong-code",
+  "a-confirm-busy",
+  "a-confirm-failed",
+  "a-leave-sheet",
+  "a-long-content",
+  "a-no-medicines",
+  "a-notes-typing",
+  "a-offline",
+  "a-offline-action",
+  "a-order-details",
+  "a-release-failed",
+  "a-releasing",
+  "a-rx-viewer",
+  "a-scrolled",
+  "a-top",
+  "c-callback",
+  "c-callback-error",
+  "c-callback-failed",
+  "c-callback-refused",
+  "c-skip-ha",
+  "e-availability-ended",
+  "e-callback-scheduled",
+  "g0-calling-pilot",
+  "g1-generic-confirm",
+  "g2-checking-ha",
+  "g3b-after-hangup",
+  "g3b-forwarded",
+  "s-medicine-disabled",
+  "s-optional-empty",
+  "s7d-result-missing",
+  "s7d-result-missing-pilot",
+  "s7d-unavailable-sheet",
+  "s7e-leave-sheet",
+  "s7f-submitted",
+  "t01-ready",
+  "t03-not-through",
+  "t04-doctor-missed",
+  "t05-result-wait",
+  "t06-ended-early",
+  "t08a-valid-cat4",
+  "t08c-confirm-blocked",
+  "t09-patient-unavailable",
+  "t10a-confirmed",
+  "t10b-forwarded",
+  "t13-connecting-ha",
+  "t14-transferred",
+  "t15-after-hangup",
+  "t15-ha-no-join",
+  "t16-transfer-missed",
+  "t16b-transfer-missed-patient",
+  "t16c-transfer-missed-unknown",
+  "t17-skip-ha-wait",
+  "d-alt-days",
+  "d-cream",
+  "d-default",
+  "d-disable-sheet",
+  "d-disabled",
+  "d-discard-sheet",
+  "d-drops",
+  "d-duration-picker",
+  "d-error-dose",
+  "d-error-other",
+  "d-every-x-hours",
+  "d-food-selected",
+  "d-header-white",
+  "d-inhaler",
+  "d-injection-default",
+  "d-monthly",
+  "d-notes-keyboard",
+  "d-rx-failed",
+  "d-scrolled",
+  "d-sos-on",
+  "d-sos-only",
+  "d-syrup",
+  "d-weekly"
+ ],
+ "states": {
+  "default": [
+   "container",
+   "label",
+   "control",
+   "prefix",
+   "input",
+   "helper",
+   "symptoms-input",
+   "doctor-notes-input",
+   "ps-other",
+   "ps-note"
+  ],
+  "focus": [
+   "container",
+   "label",
+   "control",
+   "prefix",
+   "input",
+   "helper",
+   "symptoms-input",
+   "ps-note"
+  ],
+  "error": [
+   "container",
+   "label",
+   "control",
+   "prefix",
+   "input",
+   "helper"
+  ],
+  "read-only (busy)": [
+   "container",
+   "label",
+   "control",
+   "prefix",
+   "input",
+   "helper"
+  ],
+  "error · error": [
+   "container"
+  ],
+  "disabled": [
+   "container",
+   "symptoms-input"
+  ],
+  "readonly": [
+   "container"
+  ],
+  "read-only": [
+   "symptoms-input",
+   "doctor-notes-input"
+  ]
+ }
 }

@@ -1,0 +1,85 @@
+{
+ "block": "ps-unit",
+ "name": "PsUnit",
+ "rn": "<PsUnit />",
+ "web": ".ps-unit",
+ "parts": {
+  "container": {
+   "states": {
+    "default": {
+     "seenIn": "d-error-other",
+     "styles": [
+      {
+       "property": "font-size",
+       "value": "var(--tm-font-size-body-md)",
+       "tokens": [
+        {
+         "native": "tokens.font.size.body.md",
+         "web": "--tm-font-size-body-md",
+         "value": 14
+        }
+       ]
+      },
+      {
+       "property": "color",
+       "value": "var(--tm-content-secondary)",
+       "tokens": [
+        {
+         "native": "tokens.color.content.secondary",
+         "web": "--tm-content-secondary",
+         "value": "#5B616E"
+        }
+       ]
+      },
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "font-family",
+       "value": "var(--tm-font)",
+       "tokens": [
+        {
+         "native": "tokens.font.family",
+         "web": "--tm-font",
+         "value": "Plus Jakarta Sans"
+        }
+       ],
+       "inherited": true
+      },
+      {
+       "property": "line-height",
+       "value": "var(--tm-font-lineheight-sm)",
+       "tokens": [
+        {
+         "native": "tokens.font.lineHeight.sm",
+         "web": "--tm-font-lineheight-sm",
+         "value": 20
+        }
+       ],
+       "inherited": true
+      }
+     ],
+     "size": "31.8×20"
+    }
+   }
+  }
+ },
+ "rules": [
+  {
+   "section": "Kit",
+   "text": "Build it once from the parts × states below (tokens only, copy from messages); it appears on Prescribe. What it does in each state is in DECIDED.md under those screens."
+  }
+ ],
+ "pictures": [],
+ "usedIn": [
+  "d-error-other"
+ ],
+ "states": {
+  "default": [
+   "container"
+  ]
+ }
+}

@@ -1,0 +1,66 @@
+{
+ "block": "chip-group",
+ "name": "ChipGroup",
+ "rn": "<ChipGroup />",
+ "web": ".chip-group",
+ "parts": {
+  "container": {
+   "states": {
+    "default": {
+     "seenIn": "c-callback",
+     "styles": [
+      {
+       "property": "display",
+       "value": "flex",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "flex-wrap",
+       "value": "wrap",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "gap",
+       "value": "var(--tm-space-sm)",
+       "tokens": [
+        {
+         "native": "tokens.space.sm",
+         "web": "--tm-space-sm",
+         "value": 8
+        }
+       ]
+      },
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      }
+     ],
+     "size": "358×48"
+    }
+   }
+  }
+ },
+ "rules": [
+  {
+   "section": "Kit",
+   "text": "Build it once from the parts × states below (tokens only, copy from messages); it appears on Case page, Prescribe. What it does in each state is in DECIDED.md under those screens."
+  }
+ ],
+ "pictures": [],
+ "usedIn": [
+  "c-callback",
+  "c-callback-error",
+  "c-callback-failed",
+  "c-callback-refused",
+  "d-duration-picker"
+ ],
+ "states": {
+  "default": [
+   "container"
+  ]
+ }
+}

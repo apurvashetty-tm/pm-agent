@@ -101,7 +101,7 @@
   },
   {
    "section": "Design rules 2.8",
-   "text": "**Logo: LOCKED. Use the official files in; never redraw, recolour, stretch, crop or hotlink them.** `truemeds-logo.svg` is the full logo and is the primary logo; Product-specific lockups (for example the Doctor app's \"truemeds for doctors\") are NOT design-system files: they live in their own project, must embed `truemeds-logo.svg` unchanged, and carry their own lock check. `truemeds-icon.svg` is the icon-only mark (70x70, shape from the Truemeds-LOGO Figma file, https://www.figma.com/design/nD1pPa1SMzuZKnJIZxCdKa/Truemeds-LOGO) for favicons, avatars and tight spaces. **Colours are fixed: logo blue `#1B69DE` and logo green `#22B573`, in every logo file.** (The Figma file's older blue `#0071BC` is not used.) These are logo colours only; UI colour still comes from tokens. Reference with. Lock: holds each file's sha256; must pass before any commit that touches."
+   "text": "**Logo: LOCKED. Use the official files in; never redraw, recolour, stretch, crop or hotlink them.** `truemeds-logo.svg` is the full logo and is the primary logo; Product-specific lockups (for example the Doctor app's \"truemeds for doctors\") are NOT design-system files: they live in their own project, must embed `truemeds-logo.svg` unchanged, and carry their own lock check. `truemeds-icon.svg` is the icon-only mark (70x70, shape from the Truemeds-LOGO Figma file, https://www.figma.com/design/nD1pPa1SMzuZKnJIZxCdKa/Truemeds-LOGO) for favicons, avatars and tight spaces. **Colours are fixed: logo blue `#1B69DE` and logo green `#22B573`, in every logo file.** (The Figma file's older blue `#0071BC` is not used.) These are logo colours only; UI colour still comes from tokens. Reference with `<img src=\"…/design-system/logo/<file>.svg\" alt=\"Truemeds\">`."
   }
  ],
  "pictures": [
@@ -124,5 +124,10 @@
   "sign-in_couldnt-send",
   "sign-in_too-many-tries",
   "sign-in_inactive"
- ]
+ ],
+ "states": {
+  "default": [
+   "lockup"
+  ]
+ }
 }

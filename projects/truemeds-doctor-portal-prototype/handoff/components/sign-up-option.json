@@ -249,5 +249,17 @@
   "sign-in_couldnt-send",
   "sign-in_too-many-tries",
   "sign-in_inactive"
- ]
+ ],
+ "states": {
+  "default": [
+   "container",
+   "link"
+  ],
+  "pressed": [
+   "link"
+  ],
+  "focus": [
+   "link"
+  ]
+ }
 }

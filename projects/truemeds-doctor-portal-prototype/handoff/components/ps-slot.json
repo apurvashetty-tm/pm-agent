@@ -1,0 +1,86 @@
+{
+ "block": "ps-slot",
+ "name": "PsSlot",
+ "rn": "<PsSlot />",
+ "web": ".ps-slot",
+ "parts": {
+  "container": {
+   "states": {
+    "default": {
+     "seenIn": "d-cream",
+     "styles": [
+      {
+       "property": "display",
+       "value": "grid",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "grid-template-columns",
+       "value": "var(--tm-space-xl) 1fr",
+       "tokens": [
+        {
+         "native": "tokens.space.xl",
+         "web": "--tm-space-xl",
+         "value": 24
+        }
+       ],
+       "layout": true
+      },
+      {
+       "property": "align-items",
+       "value": "center",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "gap",
+       "value": "var(--tm-space-md)",
+       "tokens": [
+        {
+         "native": "tokens.space.md",
+         "web": "--tm-space-md",
+         "value": 12
+        }
+       ]
+      },
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      }
+     ],
+     "size": "326×48"
+    }
+   }
+  }
+ },
+ "rules": [
+  {
+   "section": "Kit",
+   "text": "Build it once from the parts × states below (tokens only, copy from messages); it appears on Prescribe. What it does in each state is in DECIDED.md under those screens."
+  }
+ ],
+ "pictures": [],
+ "usedIn": [
+  "d-cream",
+  "d-default",
+  "d-disable-sheet",
+  "d-disabled",
+  "d-discard-sheet",
+  "d-drops",
+  "d-duration-picker",
+  "d-error-dose",
+  "d-food-selected",
+  "d-header-white",
+  "d-scrolled",
+  "d-sos-on",
+  "d-syrup"
+ ],
+ "states": {
+  "default": [
+   "container"
+  ]
+ }
+}
