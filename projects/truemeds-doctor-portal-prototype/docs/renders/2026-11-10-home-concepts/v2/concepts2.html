@@ -1,0 +1,70 @@
+<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Home concepts round 2</title>
+<link rel="stylesheet" href="../../../../design-system/truemeds.css">
+<style>
+*{box-sizing:border-box}
+body{margin:0;padding:var(--tm-space-xl);background:var(--tm-surface-tertiary);display:flex;flex-wrap:wrap;align-items:flex-start;gap:var(--tm-space-xl);font-family:var(--tm-font)}
+.frame{width:390px;height:844px;position:relative;overflow:hidden;display:flex;flex-direction:column;background:var(--tm-surface-brand-subtle);color:var(--tm-content-primary)}
+.frame.s360{width:360px;height:640px}
+.header{flex:none;display:flex;align-items:center;justify-content:space-between;padding:var(--tm-space-lg) var(--tm-space-lg) 0 var(--tm-space-page)}
+.logo{width:166px;height:auto;align-self:flex-start}
+.acts{display:flex;gap:var(--tm-space-xs);margin:-9px -14px -9px 0}
+/* the change: logo → title 24 (was 48), title 24/32 (was 32/40) */
+.band{flex:none;padding:var(--tm-space-xl) var(--tm-space-page) var(--tm-space-xl)}
+.band h1{margin:0;font-size:var(--tm-font-size-title-md);line-height:var(--tm-font-lineheight-xl);font-weight:var(--tm-font-weight-semibold);text-wrap:balance}
+.sub{margin:var(--tm-space-xs) 0 0;font-size:var(--tm-font-size-body-md);line-height:var(--tm-font-lineheight-sm);color:var(--tm-content-secondary)}
+.panel{flex:1;min-height:0;display:flex;flex-direction:column;background:var(--tm-surface-primary);border-radius:var(--tm-radius-2xl) var(--tm-radius-2xl) 0 0;padding:var(--tm-space-xl) var(--tm-space-page) 0}
+.scroll{flex:1;min-height:0;overflow:hidden}
+.footer{flex:none;margin:0 calc(-1 * var(--tm-space-page))}
+.sec{display:flex;align-items:baseline;justify-content:space-between;margin:0 0 var(--tm-space-sm)}
+.sec h2{margin:0;font-size:var(--tm-font-size-body-lg);line-height:var(--tm-font-lineheight-md);font-weight:var(--tm-font-weight-semibold)}
+.sec span{font-size:var(--tm-font-size-body-md);line-height:var(--tm-font-lineheight-sm);color:var(--tm-content-secondary)}
+.sec + .presets,.sec + .cols{margin-top:0}
+.gap{height:var(--tm-space-xl)}
+.presets{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--tm-space-sm)}
+.presets .tm-chip{justify-content:center}
+.cols{display:grid;grid-template-columns:1fr 1fr;text-align:center;margin-bottom:var(--tm-space-xs);font-size:var(--tm-font-size-body-md);line-height:var(--tm-font-lineheight-sm);color:var(--tm-content-secondary)}
+.wheel{position:relative;display:grid;grid-template-columns:1fr 1fr;height:144px}
+.wband{position:absolute;left:0;right:0;top:48px;height:48px;border-radius:var(--tm-radius-md);background:var(--tm-surface-brand-subtle)}
+.wband::after{content:'';position:absolute;left:50%;top:var(--tm-space-xs);bottom:var(--tm-space-xs);width:1px;background:var(--tm-border-default)}
+.col{position:relative;display:flex;flex-direction:column}
+.col span{height:48px;display:flex;align-items:center;justify-content:center;font-size:var(--tm-font-size-title-md);line-height:var(--tm-font-lineheight-lg);color:var(--tm-content-secondary)}
+.col span.sel{color:var(--tm-content-brand);font-size:var(--tm-font-size-title-lg);line-height:var(--tm-font-lineheight-2xl);font-weight:var(--tm-font-weight-semibold)}
+/* active */
+.stats{display:grid;grid-template-columns:1fr 1fr;border:var(--tm-border-width-default) solid var(--tm-border-subtle);border-radius:var(--tm-radius-lg)}
+.stat{padding:var(--tm-space-lg)}
+.stat + .stat{border-left:var(--tm-border-width-default) solid var(--tm-border-subtle)}
+.k{margin:0;font-size:var(--tm-font-size-body-md);line-height:var(--tm-font-lineheight-sm);color:var(--tm-content-secondary)}
+.v{margin:var(--tm-space-xs) 0 0}
+.addrow{display:flex;justify-content:flex-start;margin-top:var(--tm-space-lg)}
+.timer-row{display:flex;align-items:center;justify-content:space-between;min-height:48px}
+.rxrow{display:flex;align-items:center;justify-content:space-between;margin-top:var(--tm-space-xl);padding:var(--tm-space-md) var(--tm-space-lg);border-radius:var(--tm-radius-lg);background:var(--tm-surface-secondary)}
+.rxrow strong{font-size:var(--tm-font-size-title-sm);line-height:var(--tm-font-lineheight-lg);font-weight:var(--tm-font-weight-semibold)}
+.rxrow .l{display:flex;align-items:center;gap:var(--tm-space-sm);font-size:var(--tm-font-size-body-lg);line-height:var(--tm-font-lineheight-md);color:var(--tm-content-primary)}
+.rxrow .tm-icon{color:var(--tm-content-brand)}
+</style>
+<body>
+<script>
+const head=`<div class="header"><img class="logo" src="../../app/brand/truemeds-for-doctors.svg" alt="truemeds for doctors"><div class="acts"><button class="tm-btn tm-btn--quiet tm-btn--icon" aria-label="Notifications"><span class="tm-icon" data-icon="bell"></span></button><button class="tm-btn tm-btn--quiet tm-btn--icon" aria-label="Help"><span class="tm-icon" data-icon="help-circle"></span></button><button class="tm-btn tm-btn--quiet tm-btn--icon" aria-label="Profile"><span class="tm-icon" data-icon="user"></span></button></div></div>`;
+const band=(t,s)=>`<div class="band"><h1>${t}</h1><p class="sub">${s}</p></div>`;
+const bar=(p,q)=>`<div class="footer"><div class="tm-actionbar"><button class="tm-btn tm-btn--primary tm-btn--lg">${p}</button>${q?`<button class="tm-btn tm-btn--quiet">${q}</button>`:''}</div></div>`;
+const labels=[15,30,45,60,120,180];const lab=n=>n<60?n+' min':n/60+(n===60?' hour':' hours');
+const chips=sel=>`<div class="presets">${labels.map(n=>`<button class="tm-chip tm-chip--lg" aria-pressed="${n===sel}">${lab(n)}</button>`).join('')}</div>`;
+const col=(arr,v)=>{const i=arr.indexOf(v);return `<div class="col">${[i-1,i,i+1].map((j,k)=>arr[j]===undefined?'<span></span>':`<span class="${k===1?'sel':''}">${arr[j]}</span>`).join('')}</div>`};
+const wheel=(h,m)=>`<div class="cols"><span>Hours</span><span>Minutes</span></div><div class="wheel"><div class="wband"></div>${col([0,1,2,3,4,5,6,7,8,9,10],h)}${col(h===0?[15,30,45]:(h===10?[0]:[0,15,30,45]),m)}</div>`;
+const setup=(sel,h,m)=>`${head}${band('Consult on your schedule','Choose how long you’re available today.')}<div class="panel"><div class="scroll"><div class="sec"><h2>Quick picks</h2></div>${chips(sel)}<div class="gap"></div><div class="sec"><h2>Custom</h2><span>15 minutes to 10 hours</span></div>${wheel(h,m)}</div>${bar('Set availability')}</div>`;
+const statCard=(t,near)=>`<div class="stats"><div class="stat"><p class="k">Time remaining</p><p class="tm-value-display v">${t}</p></div><div class="stat"><p class="k">Prescriptions today</p><p class="tm-value-display v">3</p></div></div>${near?'<div class="addrow"><button class="tm-btn tm-btn--secondary tm-btn--sm">+ Add time</button></div>':''}`;
+const active=(body)=>`${head}${band('You’re available for consultations','Request a case whenever you have a moment.')}<div class="panel"><div class="scroll">${body}</div>${bar('Request a case','End availability')}</div>`;
+const F=[
+ ['S-a','',setup(30,0,30)],
+ ['S-b','',setup(null,1,15)],
+ ['S-c','s360',setup(30,0,30)],
+ ['A-1','',active(statCard('30:00'))],
+ ['A-1n','',active(statCard('04:59',true))],
+ ['A-2','',active(`<div class="timer-row"><span class="k">Time remaining</span></div><p class="tm-value-display" style="margin:0">30:00</p><div class="rxrow"><span class="l"><span class="tm-icon" data-icon="prescription"></span>Prescriptions today</span><strong>3</strong></div>`)],
+ ['A-1s','s360',active(statCard('30:00'))],
+];
+for(const [id,c,v] of F){const d=document.createElement('div');d.className='frame tm '+c;d.id=id;d.innerHTML=v;document.body.appendChild(d)}
+</script>
+<script src="../../../../design-system/icons/icons.js"></script>
+</body></html>
