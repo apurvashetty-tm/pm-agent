@@ -1,0 +1,71 @@
+/* Home and Profile — lifted from ui-screens/home/home-reference.css (layout v2, Round 4). Tokens only (D-99): the reference's
+   raw values are replaced by tokens (48 → --tm-target-min, 144 wheel → 3 × target, 1px → border width, header step-out → the
+   same 48px-target formula as the sheet ✕, scrim → overlay token). The screen fills the app frame (RULES §7). */
+.home-screen { height: 100%; position: relative; overflow: hidden; display: flex; flex-direction: column; background: var(--tm-surface-brand-subtle); color: var(--tm-content-primary); }   /* raw-ok: 100% fill (geometry) */
+.home-bg { flex: 1; min-height: 0; display: flex; flex-direction: column; }
+/* Home-base header (D-42): logo left, actions right; 166 lockup, 16 top offset (A-07). */
+.home-screen .header { flex: none; display: flex; align-items: center; justify-content: space-between; padding: var(--tm-space-lg) var(--tm-space-lg) 0 var(--tm-space-page); }
+.home-screen .logo { width: var(--tm-logo-lockup-width); height: auto; align-self: flex-start; }
+/* 48px icon targets step out so the last glyph sits on the 16 edge and the header keeps the logo's height (D-67, L6). */
+.home-screen .header-actions { display: flex; gap: var(--tm-space-xs); margin: calc((var(--tm-icon-size-md) - var(--tm-target-min)) / 2) calc((var(--tm-icon-size-md) - var(--tm-target-min)) / 2) calc((var(--tm-icon-size-md) - var(--tm-target-min)) / 2) 0; }
+/* LOCKED L6 (D-46): home-base hero gap, logo to title, is 48. */
+.home-screen .band { flex: none; padding: var(--tm-space-3xl) var(--tm-space-page) var(--tm-space-2xl); }
+.home-screen .band h1 { margin: 0; }
+.home-screen .sub { margin: var(--tm-space-sm) 0 0; font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); color: var(--tm-content-secondary); }
+.home-screen .panel { flex: 1; min-height: 0; display: flex; flex-direction: column; background: var(--tm-surface-primary); border-radius: var(--tm-radius-2xl) var(--tm-radius-2xl) 0 0; padding: var(--tm-space-2xl) var(--tm-space-page) var(--tm-space-xl); }
+.home-screen .scroll { flex: 1 1 auto; min-height: 0; overflow-y: auto; }
+/* A-10: the label is 14 grey; the value keeps the 16 key-content size. */
+.home-screen .rx { display: flex; align-items: center; justify-content: space-between; min-height: var(--tm-target-min); border-bottom: var(--tm-border-width-default) solid var(--tm-border-default); font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); color: var(--tm-content-secondary); }
+.home-screen .rx strong { font-size: var(--tm-font-size-body-lg); line-height: var(--tm-font-lineheight-md); font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-primary); }
+/* A-09: the row is always 48 tall, so "Time remaining" and the timer do not move when + Add time appears. */
+.home-screen .timer-row { margin-top: var(--tm-space-lg); display: flex; align-items: center; justify-content: space-between; min-height: var(--tm-target-min); }
+.home-screen .timer-label { font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); color: var(--tm-content-secondary); }
+.home-screen .time { margin: var(--tm-space-xs) 0 0; }
+.home-screen .time--warning { color: var(--tm-content-primary); }
+/* Picker (setup and the Add sheet): presets, then the centred wheel (D-40). */
+.home-screen .picker { margin-top: var(--tm-space-lg); }
+.home-screen .presets { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--tm-space-sm); }
+.home-screen .presets .tm-chip { justify-content: center; }
+.home-screen .adjust-row { display: flex; align-items: baseline; justify-content: space-between; gap: var(--tm-space-sm); margin: var(--tm-space-lg) 0 var(--tm-space-sm); }
+.home-screen .adjust { margin: 0; font-size: var(--tm-font-size-body-lg); line-height: var(--tm-font-lineheight-md); font-weight: var(--tm-font-weight-semibold); }
+.home-screen .helper { margin: 0; text-align: right; flex: none; font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); color: var(--tm-content-secondary); }
+.home-screen .col-heads { display: grid; grid-template-columns: 1fr 1fr; text-align: center; margin-bottom: var(--tm-space-xs); font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); color: var(--tm-content-secondary); }
+.home-screen .columns { position: relative; display: grid; grid-template-columns: 1fr 1fr; height: calc(3 * var(--tm-target-min)); }
+.home-screen .wheel-band { position: absolute; left: 0; right: 0; top: var(--tm-target-min); height: var(--tm-target-min); border-radius: var(--tm-radius-md); background: var(--tm-surface-brand-subtle); pointer-events: none; }
+.home-screen .wheel-band::after { content: ""; position: absolute; left: 50%; top: var(--tm-space-xs); bottom: var(--tm-space-xs); width: var(--tm-border-width-default); background: var(--tm-border-default); }   /* raw-ok: 50% centring (geometry) */
+.home-screen .wheel { position: relative; z-index: var(--tm-layer-raised); display: flex; flex-direction: column; background: transparent; }
+.home-screen .wheel-item { height: var(--tm-target-min); border: 0; background: transparent; font: inherit; font-size: var(--tm-font-size-title-md); line-height: var(--tm-font-lineheight-lg); color: var(--tm-content-secondary); cursor: pointer; padding: 0; }
+.home-screen .wheel-item.is-selected { color: var(--tm-content-brand); font-size: var(--tm-font-size-title-lg); line-height: var(--tm-font-lineheight-2xl); font-weight: var(--tm-font-weight-semibold); }
+.home-screen .wheel-item--empty { height: var(--tm-target-min); }
+.home-screen .wheel-item:disabled { color: var(--tm-content-disabled); cursor: not-allowed; }
+.home-screen .wheel-item.is-selected:disabled { color: var(--tm-content-brand); }   /* D-81 F9: the selected value keeps its brand text while busy */
+/* A-19: a standing-state notice sits at the top of the panel, outside the scroll. */
+.home-screen .panel > .status { flex: none; margin: 0 0 var(--tm-space-lg); }
+.home-screen .tm-status-line { text-align: center; text-wrap: balance; }   /* A-11: Checking… centred like the case page */
+/* Round 4 item 1: the pinned footer is the real action bar, edge to edge on the panel, on the phone's bottom edge. */
+.home-screen .footer { flex: none; margin: 0 calc(-1 * var(--tm-space-page)) calc(-1 * var(--tm-space-xl)); }
+.home-screen .footer > .tm-status-line { margin-bottom: 0; }
+/* Toast sits above the whole bar, 16 over its top edge (feedback rules §5), never over the button. */
+.home-screen .footer > .home-toast { position: absolute; bottom: calc(100% + var(--tm-space-lg)); white-space: nowrap; }   /* raw-ok: 100% = the bar's own height (geometry) */
+/* Sheets sit inside the frame over the pinned bar (Round 6); the Home scrim is the light overlay of the approved pictures. */
+.home-screen .app-overlay { background: rgb(0 0 0 / calc(var(--tm-overlay-subtle) * 1%)); }   /* raw-ok: scrim is black at the overlay-token opacity (SALT has no black semantic colour) */
+.home-screen .sheet-feedback { margin: var(--tm-space-lg) 0; }   /* A-12: 16 below the picker and above the Add button */
+
+/* D-70 Profile page: task header with Back, grey page, white cards at the 16 page margin, Log out last. */
+.home-screen.is-profile { background: var(--tm-surface-secondary); }
+.profile-page { flex: 1; min-height: 0; display: flex; flex-direction: column; background: var(--tm-surface-secondary); }
+.profile-header { flex: none; background: var(--tm-surface-brand-subtle); padding: var(--tm-space-xs) var(--tm-space-page) var(--tm-space-xs) var(--tm-space-xs); }
+.profile-body { flex: 1; overflow: auto; padding: var(--tm-space-lg) var(--tm-space-page) calc(var(--tm-space-xl) + env(safe-area-inset-bottom)); display: flex; flex-direction: column; gap: var(--tm-space-lg); }
+.profile-identity { display: flex; align-items: center; gap: var(--tm-space-md); padding: var(--tm-space-lg); }
+.profile-avatar { flex: none; width: var(--tm-space-3xl); height: var(--tm-space-3xl); border-radius: var(--tm-radius-full); background: var(--tm-surface-brand-subtle); color: var(--tm-content-brand); display: flex; align-items: center; justify-content: center; font-weight: var(--tm-font-weight-semibold); }
+.profile-page .pt-t { margin: 0; font-size: var(--tm-font-size-body-lg); line-height: var(--tm-font-lineheight-md); font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-primary); }
+.profile-page .pt-d { margin: 0; font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); color: var(--tm-content-secondary); }
+.profile-earnings { padding: var(--tm-space-lg); }
+.profile-label { margin: 0 0 var(--tm-space-sm); font-size: var(--tm-font-size-body-lg); line-height: var(--tm-font-lineheight-md); font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-primary); }   /* A-20 */
+.profile-earnings-row { display: flex; gap: var(--tm-space-2xl); }
+.profile-rows { padding: 0 var(--tm-space-lg); }
+.profile-row { display: flex; align-items: center; justify-content: space-between; width: 100%; min-height: var(--tm-space-3xl); padding: var(--tm-space-sm) 0; background: none; border: 0; font: inherit; color: var(--tm-content-primary); cursor: pointer; text-align: left; }   /* raw-ok: 100% fill (geometry) */
+.profile-row + .profile-row { border-top: var(--tm-border-width-default) solid var(--tm-border-subtle); }
+.profile-row-label { display: flex; align-items: center; gap: var(--tm-space-sm); font-size: var(--tm-font-size-body-lg); line-height: var(--tm-font-lineheight-md); }
+.profile-row .tm-toggle { flex: none; }
+.profile-logout { margin-top: 0; }

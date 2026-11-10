@@ -68,6 +68,17 @@ window.TM_STATE_MAP = {
    "notes": []
   },
   {
+   "id": "offer_unavailable",
+   "kind": "picture",
+   "picture": "faster-signin-offer/offer_unavailable",
+   "step": 1,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": "offer.unavailable",
+   "notes": []
+  },
+  {
    "id": "otp_code-expired",
    "kind": "picture",
    "picture": "otp/otp_code-expired",
@@ -1787,7 +1798,21 @@ window.TM_STATE_MAP = {
    "version": "B"
   },
   {
+   "id": "signin.back-from-otp",
+   "kind": "behaviour",
+   "step": 1,
+   "picture": null,
+   "version": "B"
+  },
+  {
    "id": "signin.locked-number",
+   "kind": "behaviour",
+   "step": 1,
+   "picture": null,
+   "version": "B"
+  },
+  {
+   "id": "signin.too-long",
    "kind": "behaviour",
    "step": 1,
    "picture": null,
@@ -1903,7 +1928,8 @@ window.TM_STATE_MAP = {
    "label": "gate passed, call live",
    "kind": "e",
    "drawn": true,
-   "route": "A"
+   "route": "A",
+   "screen": "—"
   },
   {
    "from": "A12",
@@ -1914,7 +1940,8 @@ window.TM_STATE_MAP = {
    "label": "Confirm & transfer",
    "kind": "a",
    "drawn": true,
-   "route": "A"
+   "route": "A",
+   "screen": "—"
   },
   {
    "from": "A12",
@@ -1925,7 +1952,8 @@ window.TM_STATE_MAP = {
    "label": "ended before the tap",
    "kind": "e",
    "drawn": true,
-   "route": "A"
+   "route": "A",
+   "screen": "—"
   },
   {
    "from": "A12",
@@ -1936,7 +1964,8 @@ window.TM_STATE_MAP = {
    "label": "Skip HA + reason",
    "kind": "a",
    "drawn": true,
-   "route": "A"
+   "route": "A",
+   "screen": "—"
   },
   {
    "from": "A2",
@@ -1945,7 +1974,8 @@ window.TM_STATE_MAP = {
    "label": "hang-up",
    "kind": "e",
    "drawn": true,
-   "route": "A"
+   "route": "A",
+   "screen": "—"
   },
   {
    "from": "A5",
@@ -1954,7 +1984,8 @@ window.TM_STATE_MAP = {
    "label": "over the gate",
    "kind": "e",
    "drawn": true,
-   "route": "A"
+   "route": "A",
+   "screen": "—"
   },
   {
    "from": "A8b",
@@ -1965,7 +1996,8 @@ window.TM_STATE_MAP = {
    "label": "Confirm & forward",
    "kind": "a",
    "drawn": true,
-   "route": "A"
+   "route": "A",
+   "screen": "—"
   },
   {
    "from": "B0",
@@ -1974,7 +2006,8 @@ window.TM_STATE_MAP = {
    "label": "gate passed, call live",
    "kind": "e",
    "drawn": true,
-   "route": "pilot"
+   "route": "pilot",
+   "screen": "—"
   },
   {
    "from": "B0",
@@ -1983,7 +2016,8 @@ window.TM_STATE_MAP = {
    "label": "no result: 7c, nothing",
    "kind": "e",
    "drawn": true,
-   "route": "pilot"
+   "route": "pilot",
+   "screen": "—"
   },
   {
    "from": "B0",
@@ -1994,7 +2028,8 @@ window.TM_STATE_MAP = {
    "label": "ended before the gate",
    "kind": "e",
    "drawn": true,
-   "route": "pilot"
+   "route": "pilot",
+   "screen": "t05-result-wait"
   },
   {
    "from": "B1",
@@ -2003,7 +2038,8 @@ window.TM_STATE_MAP = {
    "label": "Confirm prescription",
    "kind": "a",
    "drawn": true,
-   "route": "pilot"
+   "route": "pilot",
+   "screen": "—"
   },
   {
    "from": "B1",
@@ -2012,7 +2048,8 @@ window.TM_STATE_MAP = {
    "label": "ended after gate, no Confirm",
    "kind": "e",
    "drawn": true,
-   "route": "pilot"
+   "route": "pilot",
+   "screen": "—"
   },
   {
    "from": "B1",
@@ -2021,7 +2058,8 @@ window.TM_STATE_MAP = {
    "label": "Skip HA + reason",
    "kind": "a",
    "drawn": true,
-   "route": "pilot"
+   "route": "pilot",
+   "screen": "—"
   },
   {
    "from": "B2",
@@ -2030,7 +2068,8 @@ window.TM_STATE_MAP = {
    "label": "no HA free",
    "kind": "e",
    "drawn": true,
-   "route": "pilot"
+   "route": "pilot",
+   "screen": "—"
   },
   {
    "from": "B2",
@@ -2039,7 +2078,8 @@ window.TM_STATE_MAP = {
    "label": "HA free",
    "kind": "e",
    "drawn": true,
-   "route": "pilot"
+   "route": "pilot",
+   "screen": "—"
   },
   {
    "from": "B3",
@@ -2048,7 +2088,8 @@ window.TM_STATE_MAP = {
    "label": "hang-up",
    "kind": "e",
    "drawn": true,
-   "route": "pilot"
+   "route": "pilot",
+   "screen": "—"
   },
   {
    "from": "B7d",
@@ -2059,7 +2100,8 @@ window.TM_STATE_MAP = {
    "label": "Confirm & forward",
    "kind": "a",
    "drawn": true,
-   "route": "pilot"
+   "route": "pilot",
+   "screen": "—"
   },
   {
    "from": "B7d",
@@ -2068,7 +2110,8 @@ window.TM_STATE_MAP = {
    "label": "Callback",
    "kind": "a",
    "drawn": false,
-   "route": "pilot"
+   "route": "pilot",
+   "screen": "—"
   },
   {
    "from": "B7d",
@@ -2077,16 +2120,18 @@ window.TM_STATE_MAP = {
    "label": "Unavailable + reason",
    "kind": "a",
    "drawn": false,
-   "route": "pilot"
+   "route": "pilot",
+   "screen": "—"
   },
   {
    "from": "C0",
    "to": "C7b",
    "via": [],
-   "label": "3 min, no result",
+   "label": "3 min, no result, end not known",
    "kind": "e",
    "drawn": true,
-   "route": "cat4"
+   "route": "cat4",
+   "screen": "—"
   },
   {
    "from": "C0",
@@ -2095,16 +2140,28 @@ window.TM_STATE_MAP = {
    "label": "3 min, no result, hang-up reported",
    "kind": "e",
    "drawn": false,
-   "route": "cat4"
+   "route": "ha-skipped (Ozonetel)",
+   "screen": "t05-result-wait (7c = 5, D-91)"
   },
   {
    "from": "C0",
    "to": "RES",
    "via": [],
-   "label": "result",
+   "label": "hang-up reported → 5 Getting call result → result",
    "kind": "e",
    "drawn": true,
-   "route": "cat4"
+   "route": "ha-skipped (Ozonetel)",
+   "screen": "t05-result-wait"
+  },
+  {
+   "from": "C0",
+   "to": "RES",
+   "via": [],
+   "label": "result (no screen: stays on Calling)",
+   "kind": "e",
+   "drawn": true,
+   "route": "cat4 (Knowlarity)",
+   "screen": "— (t02-calling)"
   },
   {
    "from": "C6",
@@ -2113,7 +2170,8 @@ window.TM_STATE_MAP = {
    "label": "Call again (Pilot context kept)",
    "kind": "a",
    "drawn": false,
-   "route": "pilot"
+   "route": "pilot",
+   "screen": "—"
   },
   {
    "from": "C6",
@@ -2122,7 +2180,8 @@ window.TM_STATE_MAP = {
    "label": "Call again",
    "kind": "a",
    "drawn": false,
-   "route": "shared"
+   "route": "shared",
+   "screen": "—"
   },
   {
    "from": "C6",
@@ -2131,7 +2190,8 @@ window.TM_STATE_MAP = {
    "label": "Callback",
    "kind": "a",
    "drawn": true,
-   "route": "shared"
+   "route": "shared",
+   "screen": "—"
   },
   {
    "from": "C7b",
@@ -2140,7 +2200,8 @@ window.TM_STATE_MAP = {
    "label": "Still talking (Pilot context kept)",
    "kind": "a",
    "drawn": false,
-   "route": "pilot"
+   "route": "pilot",
+   "screen": "—"
   },
   {
    "from": "C7b",
@@ -2149,7 +2210,8 @@ window.TM_STATE_MAP = {
    "label": "Still talking",
    "kind": "a",
    "drawn": false,
-   "route": "shared"
+   "route": "shared",
+   "screen": "—"
   },
   {
    "from": "C7b",
@@ -2158,7 +2220,8 @@ window.TM_STATE_MAP = {
    "label": "Call ended",
    "kind": "a",
    "drawn": true,
-   "route": "shared"
+   "route": "shared",
+   "screen": "t05-result-wait (7c = 5, D-91)"
   },
   {
    "from": "C7c",
@@ -2167,7 +2230,8 @@ window.TM_STATE_MAP = {
    "label": "nothing found",
    "kind": "e",
    "drawn": true,
-   "route": "shared"
+   "route": "shared",
+   "screen": "—"
   },
   {
    "from": "C7c",
@@ -2176,7 +2240,8 @@ window.TM_STATE_MAP = {
    "label": "result found",
    "kind": "e",
    "drawn": false,
-   "route": "shared"
+   "route": "shared",
+   "screen": "t05-result-wait (7c = 5, D-91)"
   },
   {
    "from": "C7d",
@@ -2185,7 +2250,8 @@ window.TM_STATE_MAP = {
    "label": "Confirm",
    "kind": "a",
    "drawn": true,
-   "route": "shared"
+   "route": "shared",
+   "screen": "—"
   },
   {
    "from": "C7d",
@@ -2194,7 +2260,8 @@ window.TM_STATE_MAP = {
    "label": "Callback",
    "kind": "a",
    "drawn": false,
-   "route": "shared"
+   "route": "shared",
+   "screen": "—"
   },
   {
    "from": "C7d",
@@ -2203,7 +2270,8 @@ window.TM_STATE_MAP = {
    "label": "Unavailable + reason",
    "kind": "a",
    "drawn": false,
-   "route": "shared"
+   "route": "shared",
+   "screen": "—"
   },
   {
    "from": "C7f",
@@ -2212,7 +2280,8 @@ window.TM_STATE_MAP = {
    "label": "record over the gate",
    "kind": "e",
    "drawn": true,
-   "route": "shared"
+   "route": "cat4 / ha-skipped",
+   "screen": "—"
   },
   {
    "from": "C7f",
@@ -2223,7 +2292,8 @@ window.TM_STATE_MAP = {
    "label": "record over the gate (Pilot)",
    "kind": "e",
    "drawn": false,
-   "route": "pilot"
+   "route": "pilot",
+   "screen": "—"
   },
   {
    "from": "C7f",
@@ -2232,7 +2302,8 @@ window.TM_STATE_MAP = {
    "label": "record under the gate or none in time",
    "kind": "e",
    "drawn": true,
-   "route": "shared"
+   "route": "shared",
+   "screen": "—"
   },
   {
    "from": "C8",
@@ -2241,7 +2312,8 @@ window.TM_STATE_MAP = {
    "label": "Confirm prescription",
    "kind": "a",
    "drawn": true,
-   "route": "shared"
+   "route": "shared",
+   "screen": "—"
   },
   {
    "from": "CALL",
@@ -2250,7 +2322,8 @@ window.TM_STATE_MAP = {
    "label": "Pilot (A) Value Meds",
    "kind": "trunk",
    "drawn": true,
-   "route": "split"
+   "route": "split",
+   "screen": "—"
   },
   {
    "from": "CALL",
@@ -2259,7 +2332,8 @@ window.TM_STATE_MAP = {
    "label": "Pilot (A) Non-Value",
    "kind": "trunk",
    "drawn": true,
-   "route": "split"
+   "route": "split",
+   "screen": "—"
   },
   {
    "from": "CALL",
@@ -2268,7 +2342,8 @@ window.TM_STATE_MAP = {
    "label": "Pilot",
    "kind": "trunk",
    "drawn": true,
-   "route": "split"
+   "route": "split",
+   "screen": "—"
   },
   {
    "from": "CALL",
@@ -2277,7 +2352,8 @@ window.TM_STATE_MAP = {
    "label": "Cat4 / HA skipped",
    "kind": "trunk",
    "drawn": true,
-   "route": "split"
+   "route": "split",
+   "screen": "—"
   },
   {
    "from": "CALL",
@@ -2286,7 +2362,8 @@ window.TM_STATE_MAP = {
    "label": "doctor's leg failed",
    "kind": "e",
    "drawn": true,
-   "route": "cat4"
+   "route": "every",
+   "screen": "—"
   },
   {
    "from": "CALL",
@@ -2295,7 +2372,8 @@ window.TM_STATE_MAP = {
    "label": "patient's side failed (any time)",
    "kind": "e",
    "drawn": true,
-   "route": "cat4"
+   "route": "every",
+   "screen": "—"
   },
   {
    "from": "CB",
@@ -2304,7 +2382,8 @@ window.TM_STATE_MAP = {
    "label": "time chosen",
    "kind": "a",
    "drawn": true,
-   "route": "shared"
+   "route": "shared",
+   "screen": "—"
   },
   {
    "from": "E15",
@@ -2313,7 +2392,8 @@ window.TM_STATE_MAP = {
    "label": "result under the gate (background)",
    "kind": "e",
    "drawn": false,
-   "route": "pilot"
+   "route": "pilot",
+   "screen": "—"
   },
   {
    "from": "E3",
@@ -2322,7 +2402,8 @@ window.TM_STATE_MAP = {
    "label": "Call again",
    "kind": "a",
    "drawn": false,
-   "route": "cat4"
+   "route": "every",
+   "screen": "—"
   },
   {
    "from": "E3",
@@ -2331,7 +2412,8 @@ window.TM_STATE_MAP = {
    "label": "Back",
    "kind": "a",
    "drawn": false,
-   "route": "cat4"
+   "route": "every",
+   "screen": "—"
   },
   {
    "from": "EB3",
@@ -2340,7 +2422,8 @@ window.TM_STATE_MAP = {
    "label": "result under the gate (background)",
    "kind": "e",
    "drawn": false,
-   "route": "pilot"
+   "route": "pilot",
+   "screen": "—"
   },
   {
    "from": "R1",
@@ -2349,7 +2432,8 @@ window.TM_STATE_MAP = {
    "label": "Call patient",
    "kind": "a",
    "drawn": true,
-   "route": "cat4"
+   "route": "every",
+   "screen": "—"
   },
   {
    "from": "R1",
@@ -2358,7 +2442,8 @@ window.TM_STATE_MAP = {
    "label": "Back",
    "kind": "a",
    "drawn": true,
-   "route": "cat4"
+   "route": "every",
+   "screen": "—"
   },
   {
    "from": "RES",
@@ -2367,7 +2452,8 @@ window.TM_STATE_MAP = {
    "label": "too short",
    "kind": "e",
    "drawn": true,
-   "route": "shared"
+   "route": "shared",
+   "screen": "—"
   },
   {
    "from": "RES",
@@ -2376,16 +2462,18 @@ window.TM_STATE_MAP = {
    "label": "over the gate",
    "kind": "e",
    "drawn": true,
-   "route": "shared"
+   "route": "shared",
+   "screen": "—"
   },
   {
    "from": "T13",
    "to": "E14",
    "via": [],
-   "label": "HA joins",
+   "label": "HA rung (joins or doesn't pick up)",
    "kind": "e",
    "drawn": true,
-   "route": "pilot"
+   "route": "every",
+   "screen": "—"
   },
   {
    "from": "T13",
@@ -2394,7 +2482,8 @@ window.TM_STATE_MAP = {
    "label": "couldn't start",
    "kind": "e",
    "drawn": true,
-   "route": "pilot"
+   "route": "pilot",
+   "screen": "—"
   },
   {
    "from": "T15",
@@ -2403,7 +2492,8 @@ window.TM_STATE_MAP = {
    "label": "hang-up",
    "kind": "e",
    "drawn": true,
-   "route": "pilot"
+   "route": "pilot",
+   "screen": "—"
   },
   {
    "from": "T16",
@@ -2412,7 +2502,8 @@ window.TM_STATE_MAP = {
    "label": "Skip HA + reason → Confirm prescription",
    "kind": "a",
    "drawn": false,
-   "route": "pilot"
+   "route": "pilot",
+   "screen": "—"
   },
   {
    "from": "T16",
@@ -2421,7 +2512,8 @@ window.TM_STATE_MAP = {
    "label": "Confirm & forward",
    "kind": "a",
    "drawn": true,
-   "route": "pilot"
+   "route": "pilot",
+   "screen": "—"
   },
   {
    "from": "T17",
@@ -2432,7 +2524,8 @@ window.TM_STATE_MAP = {
    "label": "result",
    "kind": "e",
    "drawn": true,
-   "route": "pilot"
+   "route": "pilot",
+   "screen": "t17-skip-ha-wait (its own line)"
   }
  ],
  "paths": {

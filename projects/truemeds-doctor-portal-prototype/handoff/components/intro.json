@@ -1,0 +1,66 @@
+{
+ "block": "intro",
+ "name": "Intro",
+ "rn": "<Intro />",
+ "web": ".intro",
+ "parts": {
+  "container": {
+   "states": {
+    "default": {
+     "seenIn": "unlock_cancelled",
+     "styles": [
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "padding",
+       "value": "var(--tm-space-lg) var(--tm-space-page) var(--tm-space-2xl)",
+       "tokens": [
+        {
+         "native": "tokens.space.lg",
+         "web": "--tm-space-lg",
+         "value": 16
+        },
+        {
+         "native": "tokens.space.lg",
+         "web": "--tm-space-page",
+         "value": 16
+        },
+        {
+         "native": "tokens.space.2xl",
+         "web": "--tm-space-2xl",
+         "value": 32
+        }
+       ]
+      }
+     ],
+     "size": "390×172.7"
+    }
+   }
+  }
+ },
+ "rules": [
+  {
+   "section": "Kit",
+   "text": "Build it once from the parts × states below (tokens only, copy from messages); it appears on Returning unlock. What it does in each state is in DECIDED.md under those screens."
+  }
+ ],
+ "pictures": [],
+ "usedIn": [
+  "unlock_cancelled",
+  "unlock_face",
+  "unlock_fingerprint",
+  "unlock_pending",
+  "unlock_platform-retry",
+  "unlock_screen-lock",
+  "unlock_unavailable"
+ ],
+ "states": {
+  "default": [
+   "container"
+  ]
+ }
+}

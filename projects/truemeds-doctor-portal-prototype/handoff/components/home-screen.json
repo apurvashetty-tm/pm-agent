@@ -1,0 +1,145 @@
+{
+ "block": "home-screen",
+ "name": "HomeScreen",
+ "rn": "<HomeScreen />",
+ "web": ".home-screen",
+ "parts": {
+  "container": {
+   "states": {
+    "default": {
+     "seenIn": "home_active",
+     "styles": [
+      {
+       "property": "font-family",
+       "value": "var(--tm-font)",
+       "tokens": [
+        {
+         "native": "tokens.font.family",
+         "web": "--tm-font",
+         "value": "Plus Jakarta Sans"
+        }
+       ]
+      },
+      {
+       "property": "font-size",
+       "value": "var(--tm-font-size-body-md)",
+       "tokens": [
+        {
+         "native": "tokens.font.size.body.md",
+         "web": "--tm-font-size-body-md",
+         "value": 14
+        }
+       ]
+      },
+      {
+       "property": "line-height",
+       "value": "var(--tm-font-lineheight-sm)",
+       "tokens": [
+        {
+         "native": "tokens.font.lineHeight.sm",
+         "web": "--tm-font-lineheight-sm",
+         "value": 20
+        }
+       ]
+      },
+      {
+       "property": "color",
+       "value": "var(--tm-content-primary)",
+       "tokens": [
+        {
+         "native": "tokens.color.content.primary",
+         "web": "--tm-content-primary",
+         "value": "#383A42"
+        }
+       ]
+      },
+      {
+       "property": "background",
+       "value": "var(--tm-surface-brand-subtle)",
+       "tokens": [
+        {
+         "native": "tokens.color.surface.brand.subtle",
+         "web": "--tm-surface-brand-subtle",
+         "value": "#EBF8FF"
+        }
+       ]
+      },
+      {
+       "property": "height",
+       "value": "100%",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "position",
+       "value": "relative",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "overflow",
+       "value": "hidden",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "display",
+       "value": "flex",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "flex-direction",
+       "value": "column",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      }
+     ],
+     "size": "390×844"
+    }
+   }
+  }
+ },
+ "rules": [
+  {
+   "section": "Kit",
+   "text": "Build it once from the parts × states below (tokens only, copy from messages); it appears on Home. What it does in each state is in DECIDED.md under those screens."
+  }
+ ],
+ "pictures": [],
+ "usedIn": [
+  "home_active",
+  "home_add-failed",
+  "home_add-wheel",
+  "home_added",
+  "home_adding",
+  "home_end-confirmation",
+  "home_expired-pending",
+  "home_idle-expired",
+  "home_logout-confirm",
+  "home_manually-ended",
+  "home_near-expiry",
+  "home_no-cases",
+  "home_offline",
+  "home_profile",
+  "home_profile-case-open",
+  "home_request-failed",
+  "home_requesting",
+  "home_setting",
+  "home_setup-failed",
+  "home_setup-wheel",
+  "home_stop-pending",
+  "home_unknown-result"
+ ],
+ "states": {
+  "default": [
+   "container"
+  ]
+ }
+}

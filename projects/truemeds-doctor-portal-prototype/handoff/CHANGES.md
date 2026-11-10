@@ -1,0 +1,1424 @@
+# CHANGES
+
+What moved in the kit since the previous generation: tokens used, building blocks, screen states, copy. Newest first. Generated.
+
+## 2026-11-10
+
+- Screen state changed: otp_code-expired
+- Screen state changed: otp_cooldown-reconciling
+- Screen state changed: otp_couldnt-verify
+- Screen state changed: otp_default
+- Screen state changed: otp_empty-tap
+- Screen state changed: otp_expired-and-resend-limited
+- Screen state changed: otp_locked
+- Screen state changed: otp_new-code-sent
+- Screen state changed: otp_offline
+- Screen state changed: otp_resend-available
+- Screen state changed: otp_resend-failed
+- Screen state changed: otp_resending
+- Screen state changed: otp_too-many-resends
+- Screen state changed: otp_too-short
+- Screen state changed: otp_two-tries-left
+- Screen state changed: otp_verifying
+- Screen state changed: otp_wrong-code
+- Screen state changed: offer_enable-failed
+- Screen state changed: offer_offline
+- Screen state changed: unlock_cancelled
+- Screen state changed: unlock_face
+- Screen state changed: unlock_fingerprint
+- Screen state changed: unlock_pending
+- Screen state changed: unlock_platform-retry
+- Screen state changed: unlock_screen-lock
+- Screen state changed: unlock_unavailable
+- Screen state changed: home_add-failed
+- Screen state changed: home_add-wheel
+- Screen state changed: home_adding
+- Screen state changed: home_idle-expired
+- Screen state changed: home_logout-confirm
+- Screen state changed: home_manually-ended
+- Screen state changed: home_profile
+- Screen state changed: home_profile-case-open
+- Screen state changed: home_setting
+- Screen state changed: home_setup-failed
+- Screen state changed: home_setup-wheel
+- Screen state changed: a-back-blocked
+- Screen state changed: a-confirm-busy
+- Screen state changed: a-confirm-failed
+- Screen state changed: a-leave-sheet
+- Screen state changed: a-load-failed
+- Screen state changed: a-long-content
+- Screen state changed: a-no-medicines
+- Screen state changed: a-notes-typing
+- Screen state changed: a-offline
+- Screen state changed: a-offline-action
+- Screen state changed: a-order-details
+- Screen state changed: a-release-failed
+- Screen state changed: a-releasing
+- Screen state changed: a-rx-viewer
+- Screen state changed: a-scrolled
+- Screen state changed: a-top
+- Screen state changed: c-callback
+- Screen state changed: c-callback-error
+- Screen state changed: c-callback-failed
+- Screen state changed: c-callback-refused
+- Screen state changed: c-skip-ha
+- Screen state changed: e-availability-ended
+- Screen state changed: e-callback-scheduled
+- Screen state changed: g0-calling-pilot
+- Screen state changed: g1-generic-confirm
+- Screen state changed: g2-checking-ha
+- Screen state changed: g3b-after-hangup
+- Screen state changed: g3b-forwarded
+- Screen state changed: s-10-medicines
+- Screen state changed: s-medicine-disabled
+- Screen state changed: s-optional-empty
+- Screen state changed: s7a-calling
+- Screen state changed: s7b-still-on-call
+- Screen state changed: s7d-result-missing
+- Screen state changed: s7d-result-missing-pilot
+- Screen state changed: s7d-unavailable-sheet
+- Screen state changed: s7e-leave-sheet
+- Screen state changed: s7f-submitted
+- Screen state changed: t01-ready
+- Screen state changed: t02-calling
+- Screen state changed: t03-not-through
+- Screen state changed: t04-doctor-missed
+- Screen state changed: t05-result-wait
+- Screen state changed: t06-ended-early
+- Screen state changed: t08a-valid-cat4
+- Screen state changed: t08c-confirm-blocked
+- Screen state changed: t09-patient-unavailable
+- Screen state changed: t10a-confirmed
+- Screen state changed: t10b-forwarded
+- Screen state changed: t13-connecting-ha
+- Screen state changed: t14-transferred
+- Screen state changed: t15-after-hangup
+- Screen state changed: t15-ha-no-join
+- Screen state changed: t16-transfer-missed
+- Screen state changed: t16b-transfer-missed-patient
+- Screen state changed: t16c-transfer-missed-unknown
+- Screen state changed: t17-skip-ha-wait
+- Screen state changed: d-alt-days
+- Screen state changed: d-cream
+- Screen state changed: d-default
+- Screen state changed: d-disable-sheet
+- Screen state changed: d-disabled
+- Screen state changed: d-discard-sheet
+- Screen state changed: d-drops
+- Screen state changed: d-duration-picker
+- Screen state changed: d-error-dose
+- Screen state changed: d-error-other
+- Screen state changed: d-every-x-hours
+- Screen state changed: d-food-selected
+- Screen state changed: d-header-white
+- Screen state changed: d-inhaler
+- Screen state changed: d-injection-default
+- Screen state changed: d-monthly
+- Screen state changed: d-notes-keyboard
+- Screen state changed: d-rx-failed
+- Screen state changed: d-scrolled
+- Screen state changed: d-sos-on
+- Screen state changed: d-sos-only
+- Screen state changed: d-syrup
+- Screen state changed: d-weekly
+- Copy added: case.disabledMedicine
+- Copy added: case.orderMeta
+- Copy added: print.applyMAN
+- Copy removed: case.patientMeta
+- Copy removed: prescribe.unitHint
+- Copy removed: print.amount
+- Copy removed: profile.amount
+- Copy removed: rx.zoom
+
+## 2026-11-10
+
+- Screen state changed: d-alt-days
+- Screen state changed: d-cream
+- Screen state changed: d-default
+- Screen state changed: d-disable-sheet
+- Screen state changed: d-disabled
+- Screen state changed: d-discard-sheet
+- Screen state changed: d-drops
+- Screen state changed: d-duration-picker
+- Screen state changed: d-error-dose
+- Screen state changed: d-error-other
+- Screen state changed: d-every-x-hours
+- Screen state changed: d-food-selected
+- Screen state changed: d-header-white
+- Screen state changed: d-inhaler
+- Screen state changed: d-injection-default
+- Screen state changed: d-monthly
+- Screen state changed: d-notes-keyboard
+- Screen state changed: d-rx-failed
+- Screen state changed: d-scrolled
+- Screen state changed: d-sos-on
+- Screen state changed: d-sos-only
+- Screen state changed: d-syrup
+- Screen state changed: d-weekly
+
+## 2026-11-10
+
+- Block changed: logo-header
+- Screen state changed: a-back-blocked
+- Screen state changed: a-confirm-busy
+- Screen state changed: a-confirm-failed
+- Screen state changed: a-leave-sheet
+- Screen state changed: a-load-failed
+- Screen state changed: a-loading
+- Screen state changed: a-long-content
+- Screen state changed: a-no-medicines
+- Screen state changed: a-notes-typing
+- Screen state changed: a-offline
+- Screen state changed: a-offline-action
+- Screen state changed: a-order-details
+- Screen state changed: a-release-failed
+- Screen state changed: a-releasing
+- Screen state changed: a-rx-viewer
+- Screen state changed: a-scrolled
+- Screen state changed: a-top
+- Screen state changed: c-callback
+- Screen state changed: c-callback-error
+- Screen state changed: c-callback-failed
+- Screen state changed: c-callback-refused
+- Screen state changed: c-skip-ha
+- Screen state changed: e-availability-ended
+- Screen state changed: e-callback-scheduled
+- Screen state changed: g0-calling-pilot
+- Screen state changed: g1-generic-confirm
+- Screen state changed: g2-checking-ha
+- Screen state changed: g3b-after-hangup
+- Screen state changed: g3b-forwarded
+- Screen state changed: s-10-medicines
+- Screen state changed: s-medicine-disabled
+- Screen state changed: s-optional-empty
+- Screen state changed: s7a-calling
+- Screen state changed: s7b-still-on-call
+- Screen state changed: s7d-result-missing
+- Screen state changed: s7d-result-missing-pilot
+- Screen state changed: s7d-unavailable-sheet
+- Screen state changed: s7e-leave-sheet
+- Screen state changed: s7f-submitted
+- Screen state changed: t01-ready
+- Screen state changed: t02-calling
+- Screen state changed: t03-not-through
+- Screen state changed: t04-doctor-missed
+- Screen state changed: t05-result-wait
+- Screen state changed: t06-ended-early
+- Screen state changed: t08a-valid-cat4
+- Screen state changed: t08c-confirm-blocked
+- Screen state changed: t09-patient-unavailable
+- Screen state changed: t10a-confirmed
+- Screen state changed: t10b-forwarded
+- Screen state changed: t13-connecting-ha
+- Screen state changed: t14-transferred
+- Screen state changed: t15-after-hangup
+- Screen state changed: t15-ha-no-join
+- Screen state changed: t16-transfer-missed
+- Screen state changed: t16b-transfer-missed-patient
+- Screen state changed: t16c-transfer-missed-unknown
+- Screen state changed: t17-skip-ha-wait
+
+## 2026-11-09
+
+- Screen state changed: a-rx-viewer
+
+## 2026-11-09
+
+- Screen state changed: otp_code-expired
+- Screen state changed: otp_couldnt-verify
+- Screen state changed: otp_default
+- Screen state changed: otp_empty-tap
+- Screen state changed: otp_new-code-sent
+- Screen state changed: otp_offline
+- Screen state changed: otp_resend-failed
+- Screen state changed: otp_resending
+- Screen state changed: otp_too-short
+- Screen state changed: otp_two-tries-left
+- Screen state changed: otp_verifying
+- Screen state changed: otp_wrong-code
+- Screen state changed: home_active
+- Screen state changed: home_add-failed
+- Screen state changed: home_add-wheel
+- Screen state changed: home_added
+- Screen state changed: home_adding
+- Screen state changed: home_end-confirmation
+- Screen state changed: home_expired-pending
+- Screen state changed: home_idle-expired
+- Screen state changed: home_manually-ended
+- Screen state changed: home_near-expiry
+- Screen state changed: home_no-cases
+- Screen state changed: home_offline
+- Screen state changed: home_request-failed
+- Screen state changed: home_requesting
+- Screen state changed: home_setting
+- Screen state changed: home_setup-failed
+- Screen state changed: home_setup-wheel
+- Screen state changed: home_stop-pending
+- Screen state changed: home_unknown-result
+- Screen state changed: a-rx-viewer
+- Screen state changed: d-alt-days
+- Screen state changed: d-default
+- Screen state changed: d-disable-sheet
+- Screen state changed: d-disabled
+- Screen state changed: d-discard-sheet
+- Screen state changed: d-drops
+- Screen state changed: d-duration-picker
+- Screen state changed: d-error-dose
+- Screen state changed: d-error-other
+- Screen state changed: d-every-x-hours
+- Screen state changed: d-food-selected
+- Screen state changed: d-header-white
+- Screen state changed: d-inhaler
+- Screen state changed: d-injection-default
+- Screen state changed: d-monthly
+- Screen state changed: d-scrolled
+- Screen state changed: d-sos-on
+- Screen state changed: d-sos-only
+- Screen state changed: d-syrup
+- Screen state changed: d-weekly
+
+## 2026-11-09
+
+- Block changed: actionbar
+- Block changed: button
+- Block changed: case-scroll
+- Block changed: check
+- Block changed: consent
+- Block changed: ct-details
+- Block changed: field
+- Block changed: header-actions
+- Block changed: header-edit
+- Block changed: icon
+- Block changed: lk
+- Block changed: muted
+- Block changed: notice
+- Block changed: pdb-expand-label
+- Block changed: points
+- Block changed: profile-earnings-row
+- Block changed: profile-row-label
+- Block changed: ps-dur-val
+- Block changed: pt-d
+- Block changed: pt-t
+- Block changed: readonly
+- Block changed: rs
+- Block changed: rx-paper-patient-row
+- Block changed: rx-paper-symbol
+- Block changed: status-card
+- Block changed: timer
+- Block changed: timer-label
+- Screen state changed: sign-in_default
+- Screen state changed: sign-in_not-registered
+- Screen state changed: sign-in_offline
+- Screen state changed: sign-in_couldnt-send
+- Screen state changed: sign-in_too-many-tries
+- Screen state changed: sign-in_inactive
+- Screen state changed: otp_code-expired
+- Screen state changed: otp_cooldown-reconciling
+- Screen state changed: otp_couldnt-verify
+- Screen state changed: otp_default
+- Screen state changed: otp_empty-tap
+- Screen state changed: otp_expired-and-resend-limited
+- Screen state changed: otp_locked
+- Screen state changed: otp_new-code-sent
+- Screen state changed: otp_offline
+- Screen state changed: otp_resend-available
+- Screen state changed: otp_resend-failed
+- Screen state changed: otp_resending
+- Screen state changed: otp_too-many-resends
+- Screen state changed: otp_too-short
+- Screen state changed: otp_two-tries-left
+- Screen state changed: otp_verifying
+- Screen state changed: otp_wrong-code
+- Screen state changed: offer_enable-failed
+- Screen state changed: offer_enabling
+- Screen state changed: offer_face-id
+- Screen state changed: offer_fingerprint
+- Screen state changed: offer_offline
+- Screen state changed: offer_screen-lock
+- Screen state changed: offer_unavailable
+- Screen state changed: unlock_cancelled
+- Screen state changed: unlock_face
+- Screen state changed: unlock_fingerprint
+- Screen state changed: unlock_pending
+- Screen state changed: unlock_platform-retry
+- Screen state changed: unlock_screen-lock
+- Screen state changed: unlock_unavailable
+- Screen state changed: home_active
+- Screen state changed: home_add-failed
+- Screen state changed: home_add-wheel
+- Screen state changed: home_added
+- Screen state changed: home_adding
+- Screen state changed: home_end-confirmation
+- Screen state changed: home_expired-pending
+- Screen state changed: home_idle-expired
+- Screen state changed: home_logout-confirm
+- Screen state changed: home_manually-ended
+- Screen state changed: home_near-expiry
+- Screen state changed: home_no-cases
+- Screen state changed: home_offline
+- Screen state changed: home_profile
+- Screen state changed: home_profile-case-open
+- Screen state changed: home_request-failed
+- Screen state changed: home_requesting
+- Screen state changed: home_setting
+- Screen state changed: home_setup-failed
+- Screen state changed: home_setup-wheel
+- Screen state changed: home_stop-pending
+- Screen state changed: home_unknown-result
+- Screen state changed: a-back-blocked
+- Screen state changed: a-confirm-busy
+- Screen state changed: a-confirm-failed
+- Screen state changed: a-leave-sheet
+- Screen state changed: a-long-content
+- Screen state changed: a-no-medicines
+- Screen state changed: a-notes-typing
+- Screen state changed: a-offline
+- Screen state changed: a-offline-action
+- Screen state changed: a-order-details
+- Screen state changed: a-release-failed
+- Screen state changed: a-releasing
+- Screen state changed: a-rx-viewer
+- Screen state changed: a-scrolled
+- Screen state changed: a-top
+- Screen state changed: c-callback
+- Screen state changed: c-callback-error
+- Screen state changed: c-callback-failed
+- Screen state changed: c-callback-refused
+- Screen state changed: c-skip-ha
+- Screen state changed: e-availability-ended
+- Screen state changed: e-callback-scheduled
+- Screen state changed: g0-calling-pilot
+- Screen state changed: g1-generic-confirm
+- Screen state changed: g2-checking-ha
+- Screen state changed: g3b-after-hangup
+- Screen state changed: g3b-forwarded
+- Screen state changed: s-10-medicines
+- Screen state changed: s-medicine-disabled
+- Screen state changed: s-optional-empty
+- Screen state changed: s7a-calling
+- Screen state changed: s7b-still-on-call
+- Screen state changed: s7d-result-missing
+- Screen state changed: s7d-result-missing-pilot
+- Screen state changed: s7d-unavailable-sheet
+- Screen state changed: s7e-leave-sheet
+- Screen state changed: s7f-submitted
+- Screen state changed: t01-ready
+- Screen state changed: t02-calling
+- Screen state changed: t03-not-through
+- Screen state changed: t04-doctor-missed
+- Screen state changed: t05-result-wait
+- Screen state changed: t06-ended-early
+- Screen state changed: t08a-valid-cat4
+- Screen state changed: t08c-confirm-blocked
+- Screen state changed: t09-patient-unavailable
+- Screen state changed: t10a-confirmed
+- Screen state changed: t10b-forwarded
+- Screen state changed: t13-connecting-ha
+- Screen state changed: t14-transferred
+- Screen state changed: t15-after-hangup
+- Screen state changed: t15-ha-no-join
+- Screen state changed: t16-transfer-missed
+- Screen state changed: t16b-transfer-missed-patient
+- Screen state changed: t16c-transfer-missed-unknown
+- Screen state changed: t17-skip-ha-wait
+- Screen state changed: d-alt-days
+- Screen state changed: d-cream
+- Screen state changed: d-default
+- Screen state changed: d-disable-sheet
+- Screen state changed: d-disabled
+- Screen state changed: d-discard-sheet
+- Screen state changed: d-drops
+- Screen state changed: d-duration-picker
+- Screen state changed: d-error-dose
+- Screen state changed: d-error-other
+- Screen state changed: d-every-x-hours
+- Screen state changed: d-food-selected
+- Screen state changed: d-header-white
+- Screen state changed: d-inhaler
+- Screen state changed: d-injection-default
+- Screen state changed: d-monthly
+- Screen state changed: d-notes-keyboard
+- Screen state changed: d-rx-failed
+- Screen state changed: d-scrolled
+- Screen state changed: d-sos-on
+- Screen state changed: d-sos-only
+- Screen state changed: d-syrup
+- Screen state changed: d-weekly
+- Copy added: signin.signup
+
+## 2026-11-09
+
+- Token removed: tokens.text.bodySm.fontSize
+- Token removed: tokens.text.bodySm.fontWeight
+- Token removed: tokens.text.bodySm.lineHeight
+- Token removed: tokens.text.titleLg.fontSize
+- Token removed: tokens.text.titleLg.fontWeight
+- Token removed: tokens.text.titleLg.lineHeight
+- Block changed: band
+- Block changed: consent
+- Block changed: head
+- Block changed: rx-paper
+- Block changed: rx-paper-address
+- Block changed: rx-paper-body
+- Block changed: rx-paper-clinic
+- Block changed: rx-paper-doctor
+- Block changed: rx-paper-label
+- Block changed: rx-paper-letterhead
+- Block changed: rx-paper-med
+- Block changed: rx-paper-med-details
+- Block changed: rx-paper-med-name
+- Block changed: rx-paper-med-note
+- Block changed: rx-paper-med-number
+- Block changed: rx-paper-medicines
+- Block changed: rx-paper-patient
+- Block changed: rx-paper-patient-row
+- Block changed: rx-paper-quals
+- Block changed: rx-paper-symbol
+- Block changed: rx-paper-value
+- Block changed: top
+- Screen state changed: otp_code-expired
+- Screen state changed: otp_cooldown-reconciling
+- Screen state changed: otp_couldnt-verify
+- Screen state changed: otp_default
+- Screen state changed: otp_empty-tap
+- Screen state changed: otp_expired-and-resend-limited
+- Screen state changed: otp_locked
+- Screen state changed: otp_new-code-sent
+- Screen state changed: otp_offline
+- Screen state changed: otp_resend-available
+- Screen state changed: otp_resend-failed
+- Screen state changed: otp_resending
+- Screen state changed: otp_too-many-resends
+- Screen state changed: otp_too-short
+- Screen state changed: otp_two-tries-left
+- Screen state changed: otp_verifying
+- Screen state changed: otp_wrong-code
+- Screen state changed: offer_enable-failed
+- Screen state changed: offer_enabling
+- Screen state changed: offer_face-id
+- Screen state changed: offer_fingerprint
+- Screen state changed: offer_offline
+- Screen state changed: offer_screen-lock
+- Screen state changed: offer_unavailable
+- Screen state changed: unlock_cancelled
+- Screen state changed: unlock_face
+- Screen state changed: unlock_fingerprint
+- Screen state changed: unlock_pending
+- Screen state changed: unlock_platform-retry
+- Screen state changed: unlock_screen-lock
+- Screen state changed: unlock_unavailable
+- Screen state changed: home_active
+- Screen state changed: home_add-failed
+- Screen state changed: home_add-wheel
+- Screen state changed: home_added
+- Screen state changed: home_adding
+- Screen state changed: home_end-confirmation
+- Screen state changed: home_expired-pending
+- Screen state changed: home_idle-expired
+- Screen state changed: home_manually-ended
+- Screen state changed: home_near-expiry
+- Screen state changed: home_no-cases
+- Screen state changed: home_offline
+- Screen state changed: home_request-failed
+- Screen state changed: home_requesting
+- Screen state changed: home_setting
+- Screen state changed: home_setup-failed
+- Screen state changed: home_setup-wheel
+- Screen state changed: home_stop-pending
+- Screen state changed: home_unknown-result
+- Screen state changed: a-rx-viewer
+
+## 2026-11-09
+
+- Token added: tokens.text.bodySm.fontSize
+- Token added: tokens.text.bodySm.fontWeight
+- Token added: tokens.text.bodySm.lineHeight
+- Token added: tokens.text.titleLg.fontSize
+- Token added: tokens.text.titleLg.fontWeight
+- Token added: tokens.text.titleLg.lineHeight
+- Block changed: band
+- Block changed: case-scroll
+- Block changed: case-skel
+- Block changed: case-skeleton
+- Block changed: chip
+- Block changed: chip-grid
+- Block changed: consent
+- Block changed: field
+- Block changed: head
+- Block changed: open
+- Block changed: ps-sub
+- Block changed: rx-paper
+- Block changed: rx-paper-body
+- Block changed: rx-paper-medicines
+- Block changed: status-card
+- Block changed: system-keyboard
+- Block changed: tag
+- Block changed: top
+- Screen state changed: otp_code-expired
+- Screen state changed: otp_cooldown-reconciling
+- Screen state changed: otp_couldnt-verify
+- Screen state changed: otp_default
+- Screen state changed: otp_empty-tap
+- Screen state changed: otp_expired-and-resend-limited
+- Screen state changed: otp_locked
+- Screen state changed: otp_new-code-sent
+- Screen state changed: otp_offline
+- Screen state changed: otp_resend-available
+- Screen state changed: otp_resend-failed
+- Screen state changed: otp_resending
+- Screen state changed: otp_too-many-resends
+- Screen state changed: otp_too-short
+- Screen state changed: otp_two-tries-left
+- Screen state changed: otp_verifying
+- Screen state changed: otp_wrong-code
+- Screen state changed: offer_enable-failed
+- Screen state changed: offer_enabling
+- Screen state changed: offer_face-id
+- Screen state changed: offer_fingerprint
+- Screen state changed: offer_offline
+- Screen state changed: offer_screen-lock
+- Screen state changed: offer_unavailable
+- Screen state changed: unlock_cancelled
+- Screen state changed: unlock_face
+- Screen state changed: unlock_fingerprint
+- Screen state changed: unlock_pending
+- Screen state changed: unlock_platform-retry
+- Screen state changed: unlock_screen-lock
+- Screen state changed: unlock_unavailable
+- Screen state changed: home_active
+- Screen state changed: home_add-failed
+- Screen state changed: home_add-wheel
+- Screen state changed: home_added
+- Screen state changed: home_adding
+- Screen state changed: home_end-confirmation
+- Screen state changed: home_expired-pending
+- Screen state changed: home_idle-expired
+- Screen state changed: home_manually-ended
+- Screen state changed: home_near-expiry
+- Screen state changed: home_no-cases
+- Screen state changed: home_offline
+- Screen state changed: home_request-failed
+- Screen state changed: home_requesting
+- Screen state changed: home_setting
+- Screen state changed: home_setup-failed
+- Screen state changed: home_setup-wheel
+- Screen state changed: home_stop-pending
+- Screen state changed: home_unknown-result
+- Screen state changed: a-back-blocked
+- Screen state changed: a-confirm-busy
+- Screen state changed: a-confirm-failed
+- Screen state changed: a-leave-sheet
+- Screen state changed: a-loading
+- Screen state changed: a-long-content
+- Screen state changed: a-notes-typing
+- Screen state changed: a-offline
+- Screen state changed: a-offline-action
+- Screen state changed: a-order-details
+- Screen state changed: a-release-failed
+- Screen state changed: a-releasing
+- Screen state changed: a-rx-viewer
+- Screen state changed: a-scrolled
+- Screen state changed: a-top
+- Screen state changed: c-callback
+- Screen state changed: c-callback-error
+- Screen state changed: c-callback-failed
+- Screen state changed: c-callback-refused
+- Screen state changed: c-skip-ha
+- Screen state changed: e-availability-ended
+- Screen state changed: e-callback-scheduled
+- Screen state changed: g0-calling-pilot
+- Screen state changed: g1-generic-confirm
+- Screen state changed: g2-checking-ha
+- Screen state changed: g3b-after-hangup
+- Screen state changed: g3b-forwarded
+- Screen state changed: s-10-medicines
+- Screen state changed: s-medicine-disabled
+- Screen state changed: s-optional-empty
+- Screen state changed: s7a-calling
+- Screen state changed: s7b-still-on-call
+- Screen state changed: s7d-result-missing
+- Screen state changed: s7d-unavailable-sheet
+- Screen state changed: s7e-leave-sheet
+- Screen state changed: s7f-submitted
+- Screen state changed: t01-ready
+- Screen state changed: t02-calling
+- Screen state changed: t03-not-through
+- Screen state changed: t04-doctor-missed
+- Screen state changed: t06-ended-early
+- Screen state changed: t08a-valid-cat4
+- Screen state changed: t08c-confirm-blocked
+- Screen state changed: t09-patient-unavailable
+- Screen state changed: t10a-confirmed
+- Screen state changed: t10b-forwarded
+- Screen state changed: t13-connecting-ha
+- Screen state changed: t14-transferred
+- Screen state changed: t15-after-hangup
+- Screen state changed: t15-ha-no-join
+- Screen state changed: t17-skip-ha-wait
+- Screen state changed: d-alt-days
+- Screen state changed: d-cream
+- Screen state changed: d-default
+- Screen state changed: d-disable-sheet
+- Screen state changed: d-disabled
+- Screen state changed: d-discard-sheet
+- Screen state changed: d-drops
+- Screen state changed: d-duration-picker
+- Screen state changed: d-error-dose
+- Screen state changed: d-error-other
+- Screen state changed: d-every-x-hours
+- Screen state changed: d-food-selected
+- Screen state changed: d-header-white
+- Screen state changed: d-inhaler
+- Screen state changed: d-injection-default
+- Screen state changed: d-monthly
+- Screen state changed: d-notes-keyboard
+- Screen state changed: d-rx-failed
+- Screen state changed: d-scrolled
+- Screen state changed: d-sos-on
+- Screen state changed: d-sos-only
+- Screen state changed: d-syrup
+- Screen state changed: d-weekly
+
+## 2026-11-09
+
+- Token added: tokens.color.border.disabled
+- Token added: tokens.color.content.success
+- Token added: tokens.controlHeight.lg
+- Token added: tokens.font.size.title.md
+- Token added: tokens.font.weight.medium
+- Token added: tokens.space.xs
+- Token added: tokens.iconSize.lg
+- Token added: tokens.iconSize.xl
+- Token added: tokens.iconTile.size
+- Token added: tokens.layer.sticky
+- Token added: tokens.shadow.bar
+- Token added: tokens.borderWidth.thick
+- Token added: tokens.color.border.selected
+- Token added: tokens.color.border.subtle
+- Token added: tokens.color.surface.inverse
+- Token added: tokens.font.lineHeight.lg
+- Token added: tokens.font.size.title.sm
+- Token added: tokens.layer.overlay
+- Token added: tokens.layer.raised
+- Token added: tokens.layer.sheet
+- Token added: tokens.layer.toast
+- Token added: tokens.overlayOpacity.subtle
+- Token added: tokens.shadow.buttonSecondary
+- Token added: tokens.shadow.card
+- Token added: tokens.shadow.secondary
+- Token added: tokens.sheet.maxHeight
+- Token added: tokens.spinner.sizeLg
+- Token added: tokens.toggle.height
+- Token added: tokens.toggle.width
+- Token added: tokens.color.border.warning.strong
+- Token added: tokens.color.content.successStrong
+- Token added: tokens.color.content.tertiary
+- Token added: tokens.color.content.warning
+- Token added: tokens.color.surface.brand.dark
+- Token added: tokens.color.surface.brand.strong
+- Token added: tokens.color.surface.success.medium
+- Token added: tokens.color.surface.success.subtle
+- Token added: tokens.color.surface.tertiary
+- Token added: tokens.color.surface.warning.subtle
+- Token added: tokens.font.lineHeight.xs
+- Token added: tokens.font.size.body.xs
+- Token added: tokens.iconSize.sm
+- Token added: tokens.opacity.disabled
+- Token added: tokens.overlayOpacity.default
+- Token added: tokens.radius.sm
+- Token added: tokens.space.2xs
+- Token added: tokens.thumb.size
+- Token added: tokens.font.weight.regular
+- Token added: tokens.shadow.header
+- Block added: actionbar
+- Block added: adjust
+- Block added: adjust-row
+- Block added: band
+- Block added: btn-pair
+- Block added: callback-notice
+- Block added: card
+- Block added: case-screen
+- Block added: case-scroll
+- Block added: case-skel
+- Block added: case-skeleton
+- Block added: case-toast
+- Block added: check
+- Block added: chip
+- Block added: chip-grid
+- Block added: chip-group
+- Block added: code-slot
+- Block added: col-heads
+- Block added: columns
+- Block added: consent
+- Block added: ct-details
+- Block added: ct-row
+- Block added: grp
+- Block added: head
+- Block added: header
+- Block added: header-actions
+- Block added: header-edit
+- Block added: header-task
+- Block added: header-task--compact
+- Block added: header-viewer
+- Block added: helper
+- Block added: hero-ic
+- Block added: hero-wrap
+- Block added: home-bg
+- Block added: home-screen
+- Block added: icon
+- Block added: intro
+- Block added: lk
+- Block added: login-logo
+- Block added: logo
+- Block added: muted
+- Block added: offer-screen
+- Block added: open
+- Block added: option
+- Block added: otp-screen
+- Block added: otp-slots
+- Block added: overlay
+- Block added: panel
+- Block added: pcb-body
+- Block added: pcb-text
+- Block added: pdb-expand-item
+- Block added: pdb-expand-label
+- Block added: pdb-expand-value
+- Block added: picker
+- Block added: points
+- Block added: presets
+- Block added: profile-avatar
+- Block added: profile-body
+- Block added: profile-earnings-row
+- Block added: profile-label
+- Block added: profile-logout
+- Block added: profile-page
+- Block added: profile-row
+- Block added: profile-row-label
+- Block added: prompt
+- Block added: prompt-icon
+- Block added: ps-chips
+- Block added: ps-dur-field
+- Block added: ps-dur-panel
+- Block added: ps-dur-toggle
+- Block added: ps-dur-units
+- Block added: ps-dur-val
+- Block added: ps-grid
+- Block added: ps-helper
+- Block added: ps-keep
+- Block added: ps-rx-label
+- Block added: ps-section
+- Block added: ps-slot
+- Block added: ps-slot-key
+- Block added: ps-slots
+- Block added: ps-sub
+- Block added: ps-unit
+- Block added: pt-d
+- Block added: pt-t
+- Block added: readonly
+- Block added: reason-list
+- Block added: row
+- Block added: rs
+- Block added: rx
+- Block added: rx-paper
+- Block added: rx-paper-address
+- Block added: rx-paper-body
+- Block added: rx-paper-clinic
+- Block added: rx-paper-doctor
+- Block added: rx-paper-label
+- Block added: rx-paper-letterhead
+- Block added: rx-paper-med
+- Block added: rx-paper-med-details
+- Block added: rx-paper-med-name
+- Block added: rx-paper-med-note
+- Block added: rx-paper-med-number
+- Block added: rx-paper-medicines
+- Block added: rx-paper-patient
+- Block added: rx-paper-patient-row
+- Block added: rx-paper-quals
+- Block added: rx-paper-symbol
+- Block added: rx-paper-value
+- Block added: rx-stack
+- Block added: s1
+- Block added: scroll
+- Block added: section-title
+- Block added: sheet
+- Block added: shell-main
+- Block added: shell-screen
+- Block added: status-card
+- Block added: status-line
+- Block added: sub
+- Block added: system-keyboard
+- Block added: tag
+- Block added: thumb
+- Block added: timer
+- Block added: timer-label
+- Block added: timer-row
+- Block added: toast
+- Block added: toggle
+- Block added: top
+- Block added: unlock-screen
+- Block added: value-display
+- Block added: wheel
+- Block added: wheel-band
+- Block added: wheel-item
+- Block changed: button
+- Block changed: field
+- Block changed: notice
+- Block changed: spinner
+- Screen state added: otp_code-expired
+- Screen state added: otp_cooldown-reconciling
+- Screen state added: otp_couldnt-verify
+- Screen state added: otp_default
+- Screen state added: otp_empty-tap
+- Screen state added: otp_expired-and-resend-limited
+- Screen state added: otp_locked
+- Screen state added: otp_new-code-sent
+- Screen state added: otp_offline
+- Screen state added: otp_resend-available
+- Screen state added: otp_resend-failed
+- Screen state added: otp_resending
+- Screen state added: otp_too-many-resends
+- Screen state added: otp_too-short
+- Screen state added: otp_two-tries-left
+- Screen state added: otp_verifying
+- Screen state added: otp_wrong-code
+- Screen state added: offer_enable-failed
+- Screen state added: offer_enabling
+- Screen state added: offer_face-id
+- Screen state added: offer_fingerprint
+- Screen state added: offer_offline
+- Screen state added: offer_screen-lock
+- Screen state added: offer_unavailable
+- Screen state added: unlock_cancelled
+- Screen state added: unlock_face
+- Screen state added: unlock_fingerprint
+- Screen state added: unlock_pending
+- Screen state added: unlock_platform-retry
+- Screen state added: unlock_screen-lock
+- Screen state added: unlock_unavailable
+- Screen state added: home_active
+- Screen state added: home_add-failed
+- Screen state added: home_add-wheel
+- Screen state added: home_added
+- Screen state added: home_adding
+- Screen state added: home_end-confirmation
+- Screen state added: home_expired-pending
+- Screen state added: home_idle-expired
+- Screen state added: home_logout-confirm
+- Screen state added: home_manually-ended
+- Screen state added: home_near-expiry
+- Screen state added: home_no-cases
+- Screen state added: home_offline
+- Screen state added: home_profile
+- Screen state added: home_profile-case-open
+- Screen state added: home_request-failed
+- Screen state added: home_requesting
+- Screen state added: home_setting
+- Screen state added: home_setup-failed
+- Screen state added: home_setup-wheel
+- Screen state added: home_stop-pending
+- Screen state added: home_unknown-result
+- Screen state added: a-back-blocked
+- Screen state added: a-confirm-busy
+- Screen state added: a-confirm-failed
+- Screen state added: a-leave-sheet
+- Screen state added: a-load-failed
+- Screen state added: a-loading
+- Screen state added: a-long-content
+- Screen state added: a-no-medicines
+- Screen state added: a-notes-typing
+- Screen state added: a-offline
+- Screen state added: a-offline-action
+- Screen state added: a-order-details
+- Screen state added: a-release-failed
+- Screen state added: a-releasing
+- Screen state added: a-rx-viewer
+- Screen state added: a-scrolled
+- Screen state added: a-top
+- Screen state added: c-callback
+- Screen state added: c-callback-error
+- Screen state added: c-callback-failed
+- Screen state added: c-callback-refused
+- Screen state added: c-skip-ha
+- Screen state added: e-availability-ended
+- Screen state added: e-callback-scheduled
+- Screen state added: g0-calling-pilot
+- Screen state added: g1-generic-confirm
+- Screen state added: g2-checking-ha
+- Screen state added: g3b-after-hangup
+- Screen state added: g3b-forwarded
+- Screen state added: s-10-medicines
+- Screen state added: s-medicine-disabled
+- Screen state added: s-optional-empty
+- Screen state added: s7a-calling
+- Screen state added: s7b-still-on-call
+- Screen state added: s7d-result-missing
+- Screen state added: s7d-result-missing-pilot
+- Screen state added: s7d-unavailable-sheet
+- Screen state added: s7e-leave-sheet
+- Screen state added: s7f-submitted
+- Screen state added: t01-ready
+- Screen state added: t02-calling
+- Screen state added: t03-not-through
+- Screen state added: t04-doctor-missed
+- Screen state added: t05-result-wait
+- Screen state added: t06-ended-early
+- Screen state added: t08a-valid-cat4
+- Screen state added: t08b-valid-forward
+- Screen state added: t08c-confirm-blocked
+- Screen state added: t09-patient-unavailable
+- Screen state added: t10a-confirmed
+- Screen state added: t10b-forwarded
+- Screen state added: t11-calling-transfer
+- Screen state added: t12-transfer-ready
+- Screen state added: t13-connecting-ha
+- Screen state added: t14-transferred
+- Screen state added: t15-after-hangup
+- Screen state added: t15-ha-no-join
+- Screen state added: t16-transfer-missed
+- Screen state added: t16b-transfer-missed-patient
+- Screen state added: t16c-transfer-missed-unknown
+- Screen state added: t17-skip-ha-wait
+- Screen state added: d-alt-days
+- Screen state added: d-cream
+- Screen state added: d-default
+- Screen state added: d-disable-sheet
+- Screen state added: d-disabled
+- Screen state added: d-discard-sheet
+- Screen state added: d-drops
+- Screen state added: d-duration-picker
+- Screen state added: d-error-dose
+- Screen state added: d-error-other
+- Screen state added: d-every-x-hours
+- Screen state added: d-food-selected
+- Screen state added: d-header-white
+- Screen state added: d-inhaler
+- Screen state added: d-injection-default
+- Screen state added: d-monthly
+- Screen state added: d-notes-keyboard
+- Screen state added: d-rx-failed
+- Screen state added: d-scrolled
+- Screen state added: d-sos-on
+- Screen state added: d-sos-only
+- Screen state added: d-syrup
+- Screen state added: d-weekly
+- Screen state changed: sign-in_default
+- Screen state changed: sign-in_not-registered
+- Screen state changed: sign-in_offline
+- Screen state changed: sign-in_couldnt-send
+- Screen state changed: sign-in_too-many-tries
+- Screen state changed: sign-in_inactive
+- Copy added: call.calling
+- Copy added: call.checkingHa
+- Copy added: call.connectingHa
+- Copy added: call.doctorMissed
+- Copy added: call.endedEarly
+- Copy added: call.forwardedTell
+- Copy added: call.notThrough
+- Copy added: call.resultMissing
+- Copy added: call.resultWait
+- Copy added: call.scriptCat4
+- Copy added: call.scriptNeutral
+- Copy added: call.skipHa
+- Copy added: call.stillOnCall
+- Copy added: call.submittedText
+- Copy added: call.submittedTitle
+- Copy added: call.transferFailed
+- Copy added: call.transferMissed
+- Copy added: call.transferMissedDoctor
+- Copy added: call.transferMissedPatient
+- Copy added: call.waitingForHangup
+- Copy added: callback.confirm
+- Copy added: callback.date
+- Copy added: callback.notReached
+- Copy added: callback.scheduled
+- Copy added: callback.time
+- Copy added: callback.title
+- Copy added: callback.today
+- Copy added: callback.tomorrow
+- Copy added: case.backBlocked
+- Copy added: case.backToHome
+- Copy added: case.callAgain
+- Copy added: case.callEnded
+- Copy added: case.callPatient
+- Copy added: case.callback
+- Copy added: case.callbackFailed
+- Copy added: case.callbackPickBoth
+- Copy added: case.confirmBlocked
+- Copy added: case.confirmFailed
+- Copy added: case.confirmForward
+- Copy added: case.confirmPrescription
+- Copy added: case.confirmedTitle
+- Copy added: case.confirming
+- Copy added: case.doctorNotesLabel
+- Copy added: case.doctorNotesPlaceholder
+- Copy added: case.editMedicine
+- Copy added: case.expectedDelivery
+- Copy added: case.forwardedTitle
+- Copy added: case.leaveSub
+- Copy added: case.leaveTitle
+- Copy added: case.loadFailed
+- Copy added: case.loadingLabel
+- Copy added: case.medicinesCount
+- Copy added: case.medicinesTitle
+- Copy added: case.medicinesTitleClosed
+- Copy added: case.noMedicines
+- Copy added: case.notesTitle
+- Copy added: case.offline
+- Copy added: case.offlineAction
+- Copy added: case.orderCreated
+- Copy added: case.orderDetails
+- Copy added: case.patientMeta
+- Copy added: case.payment
+- Copy added: case.qty
+- Copy added: case.releaseCase
+- Copy added: case.releaseFailed
+- Copy added: case.releasing
+- Copy added: case.requestNext
+- Copy added: case.scriptTitle
+- Copy added: case.skipHa
+- Copy added: case.statusDisabled
+- Copy added: case.statusPending
+- Copy added: case.statusPrescribed
+- Copy added: case.stay
+- Copy added: case.stillTalking
+- Copy added: case.symptomsLabel
+- Copy added: case.symptomsPlaceholder
+- Copy added: case.transferredTitle
+- Copy added: case.unavailable
+- Copy added: case.unavailableTitle
+- Copy added: case.viewRx
+- Copy added: common.back
+- Copy added: common.close
+- Copy added: common.help
+- Copy added: form.capsule
+- Copy added: form.cream
+- Copy added: form.drops
+- Copy added: form.inhaler
+- Copy added: form.injection
+- Copy added: form.syrup
+- Copy added: form.tablet
+- Copy added: home.addConfirm
+- Copy added: home.addFailed
+- Copy added: home.addSub
+- Copy added: home.addTime
+- Copy added: home.addTitle
+- Copy added: home.added
+- Copy added: home.adding
+- Copy added: home.adjust
+- Copy added: home.cancel
+- Copy added: home.endAvailability
+- Copy added: home.endSub
+- Copy added: home.endTitle
+- Copy added: home.ending
+- Copy added: home.endingSoon
+- Copy added: home.expiredPending
+- Copy added: home.hours
+- Copy added: home.idleExpired
+- Copy added: home.keepAvailable
+- Copy added: home.manuallyEnded
+- Copy added: home.minimum
+- Copy added: home.minutes
+- Copy added: home.noCases
+- Copy added: home.notifications
+- Copy added: home.offline
+- Copy added: home.presetHour
+- Copy added: home.presetHours
+- Copy added: home.presetMinutes
+- Copy added: home.profile
+- Copy added: home.requestCase
+- Copy added: home.requestFailed
+- Copy added: home.requesting
+- Copy added: home.rxToday
+- Copy added: home.setAvailability
+- Copy added: home.setting
+- Copy added: home.setupFailed
+- Copy added: home.stopPending
+- Copy added: home.subActive
+- Copy added: home.subNoNewCases
+- Copy added: home.subSetup
+- Copy added: home.timeRemaining
+- Copy added: home.titleActive
+- Copy added: home.titleEnded
+- Copy added: home.titleSetup
+- Copy added: home.titleStopping
+- Copy added: home.unknownResult
+- Copy added: offer.continue
+- Copy added: offer.enableFailed
+- Copy added: offer.faceIdLine
+- Copy added: offer.faceIdSub
+- Copy added: offer.faceIdTrust
+- Copy added: offer.fingerprintLine
+- Copy added: offer.fingerprintSub
+- Copy added: offer.fingerprintTrust
+- Copy added: offer.notNow
+- Copy added: offer.offline
+- Copy added: offer.pointChange
+- Copy added: offer.pointChangeLine
+- Copy added: offer.pointNoWait
+- Copy added: offer.pointStored
+- Copy added: offer.retry
+- Copy added: offer.screenLockLine
+- Copy added: offer.screenLockSub
+- Copy added: offer.screenLockTrust
+- Copy added: offer.submit
+- Copy added: offer.submitBusy
+- Copy added: offer.title
+- Copy added: otp.change
+- Copy added: otp.checking
+- Copy added: otp.codeLabel
+- Copy added: otp.couldntVerify
+- Copy added: otp.didntReceive
+- Copy added: otp.empty
+- Copy added: otp.expired
+- Copy added: otp.newSent
+- Copy added: otp.privacy
+- Copy added: otp.resendCode
+- Copy added: otp.resendFailed
+- Copy added: otp.resending
+- Copy added: otp.sentTo
+- Copy added: otp.short
+- Copy added: otp.submit
+- Copy added: otp.submitBusy
+- Copy added: otp.terms
+- Copy added: otp.title
+- Copy added: otp.triesLeft
+- Copy added: otp.wrong
+- Copy added: prescribe.afterFood
+- Copy added: prescribe.afternoon
+- Copy added: prescribe.alsoSos
+- Copy added: prescribe.altDays
+- Copy added: prescribe.apply
+- Copy added: prescribe.beforeFood
+- Copy added: prescribe.daily
+- Copy added: prescribe.days
+- Copy added: prescribe.default
+- Copy added: prescribe.disable
+- Copy added: prescribe.disableSub
+- Copy added: prescribe.disableTitle
+- Copy added: prescribe.discard
+- Copy added: prescribe.discardSub
+- Copy added: prescribe.discardTitle
+- Copy added: prescribe.dose
+- Copy added: prescribe.doseError
+- Copy added: prescribe.doseUnits
+- Copy added: prescribe.duration
+- Copy added: prescribe.durationNumber
+- Copy added: prescribe.durationUnit
+- Copy added: prescribe.emptyStomach
+- Copy added: prescribe.every
+- Copy added: prescribe.everyXHours
+- Copy added: prescribe.food
+- Copy added: prescribe.hoursAria
+- Copy added: prescribe.hoursChip
+- Copy added: prescribe.howOften
+- Copy added: prescribe.keepEditing
+- Copy added: prescribe.keyAfternoon
+- Copy added: prescribe.keyMorning
+- Copy added: prescribe.keyNight
+- Copy added: prescribe.maxDoses
+- Copy added: prescribe.maxExtra
+- Copy added: prescribe.monthly
+- Copy added: prescribe.months
+- Copy added: prescribe.morning
+- Copy added: prescribe.night
+- Copy added: prescribe.notesHelper
+- Copy added: prescribe.notesPlaceholder
+- Copy added: prescribe.onPrescription
+- Copy added: prescribe.ongoing
+- Copy added: prescribe.ongoingValue
+- Copy added: prescribe.optional
+- Copy added: prescribe.other
+- Copy added: prescribe.otherInvalid
+- Copy added: prescribe.otherPlaceholder
+- Copy added: prescribe.prescribe
+- Copy added: prescribe.reasonContra
+- Copy added: prescribe.reasonContraDesc
+- Copy added: prescribe.reasonDeclined
+- Copy added: prescribe.reasonDeclinedDesc
+- Copy added: prescribe.reasonDuplicate
+- Copy added: prescribe.reasonDuplicateDesc
+- Copy added: prescribe.reasonRemote
+- Copy added: prescribe.reasonRemoteDesc
+- Copy added: prescribe.reasonStrength
+- Copy added: prescribe.reasonStrengthDesc
+- Copy added: prescribe.slotAria
+- Copy added: prescribe.slotNone
+- Copy added: prescribe.sosHelp
+- Copy added: prescribe.sosOnly
+- Copy added: prescribe.timesADay
+- Copy added: prescribe.unitHint
+- Copy added: prescribe.weekly
+- Copy added: prescribe.weeks
+- Copy added: print.amount
+- Copy added: print.unit.units
+- Copy added: profile.amount
+- Copy added: profile.doctorName
+- Copy added: profile.earned
+- Copy added: profile.earnings
+- Copy added: profile.fasterSignIn
+- Copy added: profile.incentive
+- Copy added: profile.logout
+- Copy added: profile.logoutBlocked
+- Copy added: profile.logoutConfirm
+- Copy added: profile.logoutTitle
+- Copy added: profile.staySignedIn
+- Copy added: profile.userManual
+- Copy added: rx.hint
+- Copy added: rx.loadFailed
+- Copy added: rx.reset
+- Copy added: rx.rotate
+- Copy added: rx.title
+- Copy added: rx.zoom
+- Copy added: rx.zoomIn
+- Copy added: rx.zoomOut
+- Copy added: skipHa.declined
+- Copy added: skipHa.declinedDesc
+- Copy added: skipHa.notRequired
+- Copy added: skipHa.notRequiredDesc
+- Copy added: skipHa.repeat
+- Copy added: skipHa.repeatDesc
+- Copy added: skipHa.title
+- Copy added: unavailable.noAnswer
+- Copy added: unavailable.noAnswerDesc
+- Copy added: unavailable.notReachable
+- Copy added: unavailable.notReachableDesc
+- Copy added: unavailable.title
+- Copy added: unavailable.wrongNumber
+- Copy added: unavailable.wrongNumberDesc
+- Copy added: unlock.greeting
+- Copy added: unlock.notYou
+- Copy added: unlock.ready
+- Copy added: unlock.submitBusy
+- Copy added: unlock.submitFace
+- Copy added: unlock.submitFingerprint
+- Copy added: unlock.submitScreenLock
+- Copy added: unlock.subtitle
+- Copy added: unlock.switchAccount
+- Copy added: unlock.unavailable
+- Copy added: unlock.useOtp
+- Copy removed: signin.signup
+
+## 2026-11-09
+
+- Token added: tokens.duration.spinner
+- Token added: tokens.target.min
+- Block changed: field
+- Block changed: spinner
+- Screen state changed: sign-in_default
+- Screen state changed: sign-in_keyboard-open
+- Screen state changed: sign-in_empty-tap
+- Screen state changed: sign-in_too-short
+- Screen state changed: sign-in_wrong-first-digit
+- Screen state changed: sign-in_pasted-cleaned
+- Screen state changed: sign-in_sending
+- Screen state changed: sign-in_not-registered
+- Screen state changed: sign-in_offline
+- Screen state changed: sign-in_couldnt-send
+- Screen state changed: sign-in_too-many-tries
+- Screen state changed: sign-in_inactive
+
+## 2026-11-09
+
+- Block changed: spinner
+- Screen state changed: sign-in_sending
+
+## 2026-11-09
+
+- Block changed: button
+- Block changed: field
+- Block changed: notice
+- Block changed: spinner
+- Block changed: logo-header
+- Block changed: sign-up-option
+- Block changed: entry-layout
+
+## 2026-11-09
+
+- Token added: tokens.borderWidth.default
+- Token added: tokens.iconSize.md
+- Token added: tokens.logoLockup.width
+- Token added: tokens.radius.full
+- Token added: tokens.spinner.ring
+- Token added: tokens.spinner.size
+- Block changed: button
+- Block changed: field
+- Block changed: notice
+- Block changed: spinner
+- Block changed: logo-header
+- Block changed: sign-up-option
+- Block changed: entry-layout
+- Screen state changed: sign-in_default
+- Screen state changed: sign-in_keyboard-open
+- Screen state changed: sign-in_empty-tap
+- Screen state changed: sign-in_too-short
+- Screen state changed: sign-in_wrong-first-digit
+- Screen state changed: sign-in_pasted-cleaned
+- Screen state changed: sign-in_sending
+- Screen state changed: sign-in_not-registered
+- Screen state changed: sign-in_offline
+- Screen state changed: sign-in_couldnt-send
+- Screen state changed: sign-in_too-many-tries
+- Screen state changed: sign-in_inactive
+- Copy added: signin.phonePrefix
+- Copy added: signin.logoAlt
+
+## 2026-11-09
+
+- Token added: tokens.color.content.placeholder
+- Block changed: field
+- Screen state changed: sign-in_default
+- Screen state changed: sign-in_keyboard-open
+- Screen state changed: sign-in_empty-tap
+- Screen state changed: sign-in_too-short
+- Screen state changed: sign-in_wrong-first-digit
+- Screen state changed: sign-in_pasted-cleaned
+- Screen state changed: sign-in_sending
+- Screen state changed: sign-in_not-registered
+- Screen state changed: sign-in_offline
+- Screen state changed: sign-in_couldnt-send
+- Screen state changed: sign-in_too-many-tries
+- Screen state changed: sign-in_inactive
+
+## 2026-11-09
+
+- Screen state changed: sign-in_default
+- Screen state changed: sign-in_keyboard-open
+- Screen state changed: sign-in_empty-tap
+- Screen state changed: sign-in_too-short
+- Screen state changed: sign-in_wrong-first-digit
+- Screen state changed: sign-in_pasted-cleaned
+- Screen state changed: sign-in_sending
+- Screen state changed: sign-in_not-registered
+- Screen state changed: sign-in_offline
+- Screen state changed: sign-in_couldnt-send
+- Screen state changed: sign-in_too-many-tries
+- Screen state changed: sign-in_inactive
+
+## 2026-11-09
+
+- Screen state changed: sign-in_not-registered
+- Screen state changed: sign-in_offline
+- Screen state changed: sign-in_couldnt-send
+- Screen state changed: sign-in_too-many-tries
+- Screen state changed: sign-in_inactive
+
+## 2026-11-09
+
+- Block changed: field
+- Block changed: logo-header
+- Block changed: entry-layout
+
+## 2026-11-09
+
+- Block changed: button
+- Block changed: field
+- Block changed: notice
+- Block changed: spinner
+- Block changed: logo-header
+- Block changed: sign-up-option
+- Block changed: entry-layout
+
+## 2026-11-09
+
+- First generation of the kit (Sign-in).

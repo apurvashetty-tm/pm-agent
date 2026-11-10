@@ -1,0 +1,103 @@
+/* Case page and the Rx viewer — lifted from ui-screens/case/case-styles.css and case.html's concept layers, as the approved
+   pictures render them. Tokens only (D-99); the mock Rx paper block (.rx-paper*) is exempt, like the reference. The screen
+   fills the app frame (RULES §7): compact header, one scroller, the pinned action bar below it. */
+.case-screen { height: 100%; position: relative; overflow: hidden; display: flex; flex-direction: column; background: var(--tm-surface-secondary); color: var(--tm-content-primary); }   /* raw-ok: 100% fill (geometry) */
+.case-screen #case-head { flex: none; }
+.case-scroll { flex: 1 1 0; min-height: 0; overflow-y: auto; display: flex; flex-direction: column; gap: var(--tm-space-lg); padding: var(--tm-space-lg) var(--tm-space-page) var(--tm-space-2xl); }
+.case-screen .case-bar { flex: none; position: relative; }
+.case-screen .tm-field__control textarea { resize: none; min-height: calc(var(--tm-space-2xl) * 2); padding: 0; }   /* the reference page zeroed the textarea default padding */
+
+/* Case tools card: Order details ⓘ and View Rx; the details expand in the card (app-logic §9). */
+#case-tools { display: flex; flex-direction: column; gap: var(--tm-space-sm); }
+#case-tools .ct-row { display: flex; align-items: center; justify-content: space-between; gap: var(--tm-space-sm); min-height: var(--tm-target-min); }
+#case-tools.ct--no-details .ct-row { justify-content: flex-start; }   /* B-16: View Rx left-aligned when Order details is hidden */
+#case-tools .ct-details { display: inline-flex; align-items: center; gap: var(--tm-space-xs); min-height: var(--tm-target-min); border: 0; background: transparent; padding: 0 var(--tm-space-xs) 0 0; font: inherit; font-size: var(--tm-font-size-body-lg); line-height: var(--tm-font-lineheight-md); color: var(--tm-content-primary); cursor: pointer; }
+#case-tools .ct-details .tm-icon { width: var(--tm-icon-size-md); height: var(--tm-icon-size-md); color: var(--tm-content-secondary); }
+#pdb-order-expand { margin: 0; padding-top: var(--tm-space-md); border-top: var(--tm-border-width-default) solid var(--tm-border-subtle); display: flex; flex-direction: column; gap: var(--tm-space-sm); }
+.pdb-expand-item { display: flex; justify-content: space-between; align-items: center; gap: var(--tm-space-md); }
+.pdb-expand-label { font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); color: var(--tm-content-secondary); }
+.pdb-expand-value { font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-primary); text-align: right; }
+#pdb-view-rx-btn { pointer-events: auto; }   /* View Rx stays tappable on a closed case (D-76) */
+
+/* End-of-call script card (D-58 pt 18): only from the tap on Call, while a call may be live. */
+#action-zone { display: flex; flex-direction: column; gap: var(--tm-space-md); }
+#action-zone > .tm-section-title { margin: 0; }
+#pre-call-brief { display: flex; }
+.pcb-body { display: flex; flex-direction: column; gap: var(--tm-space-2xs); min-width: 0; }
+.pcb-text { font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); color: var(--tm-content-primary); }
+
+/* Medicines card (app-logic §8): rows with form icon, name + strength, Qty and status tag. */
+#medicines-section { background: var(--tm-surface-primary); border-radius: var(--tm-radius-lg); box-shadow: var(--tm-shadow-card); padding: var(--tm-space-lg); }
+#medicines-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--tm-space-xs); }
+.case-screen .section-title--inline { margin: 0; }
+#medicines-count { font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-secondary); }
+#medicines-list { display: flex; flex-direction: column; }
+.medicine-item { cursor: pointer; user-select: none; }
+.medicine-item:active { background: var(--tm-surface-secondary); }
+.medicine-item.disabled .med-icon { opacity: var(--tm-opacity-disabled); }
+.medicine-item.disabled .med-name { text-decoration: line-through; color: var(--tm-content-secondary); }
+.medicine-item.disabled .tm-row__fact { color: var(--tm-content-secondary); }
+.med-icon { display: flex; align-items: center; justify-content: center; color: var(--tm-content-secondary); }
+.medicine-item > .tm-icon:last-child { color: var(--tm-content-tertiary); }
+#medicines-list .med-name { text-wrap: balance; }   /* B-13 */
+
+/* Notes & symptoms (D-59): editable until Confirm, read-only after. */
+#notes-section { background: var(--tm-surface-primary); border-radius: var(--tm-radius-lg); box-shadow: var(--tm-shadow-card); padding: var(--tm-space-lg); display: flex; flex-direction: column; gap: var(--tm-space-md); }
+#notes-section .tm-section-title { margin: 0; }
+#notes-section textarea { min-height: calc(var(--tm-space-3xl) + var(--tm-space-lg)); resize: none; }
+
+/* Closed case: the outcome card under the case tools (D-58 pt 16); room under the last card. */
+.case-screen #success-toast { margin: 0; }
+#success-toast .tm-status-card__title { white-space: nowrap; }
+.case-screen.is-closed .case-scroll { padding-bottom: calc(var(--tm-space-3xl) * 3); }
+.case-bar #next-order-btn > .tm-icon { margin-left: var(--tm-space-xs); }
+
+/* Toast over the bar ("Finish this case first…", a-back-blocked): 8 above the bar's top edge, never over the button. */
+.case-toast { position: absolute; left: var(--tm-space-xl); right: var(--tm-space-xl); bottom: calc(100% + var(--tm-space-sm)); z-index: var(--tm-layer-toast); display: flex; justify-content: center; pointer-events: none; }   /* raw-ok: 100% = the bar's own height (geometry) */
+.case-toast > .tm-toast { position: relative; left: auto; right: auto; bottom: auto; transform: none; text-align: center; }
+
+/* Loading (D-81 F28): a skeleton shaped like the loaded page, no text, no actions. Heights match the loaded cards. */
+.case-skeleton { display: flex; flex-direction: column; }
+.case-skel { display: block; background: var(--tm-border-subtle); border-radius: var(--tm-radius-md); margin-bottom: var(--tm-space-lg); }
+.case-skel--details { height: calc(var(--tm-target-min) + var(--tm-space-2xl)); }
+.case-skel--medicines { height: calc(var(--tm-target-min) * 8 + var(--tm-space-xl) + var(--tm-space-lg)); }
+.case-skel--notes { height: calc(var(--tm-target-min) * 6 + var(--tm-space-xl) + var(--tm-space-xs)); }
+
+/* Keyboard rule (D-81): the pinned bar hides while the keyboard is open; the drawn keyboard (capture) leaves room below. */
+.case-screen.kb-open .case-bar { display: none; }
+.case-screen.kb-open .case-scroll { padding-bottom: 256px; }   /* raw-ok: drawn keyboard height (prototype chrome, shell/mock-keyboard.css) */
+.case-screen.kb-real .case-bar { display: none; }   /* the phone keyboard is open (parts.js watchKeyboard) */
+
+/* ---------- Rx viewer (app-logic §9, D-51): full screen inside the frame, dark ---------- */
+#rx-overlay { position: absolute; inset: 0; z-index: var(--tm-layer-overlay); display: flex; flex-direction: column; background: var(--tm-surface-brand-dark); }
+#rx-overlay-header { display: flex; align-items: center; flex-wrap: wrap; gap: var(--tm-space-sm); row-gap: var(--tm-space-xs); flex: none; padding: var(--tm-space-md) var(--tm-space-lg); border-bottom: var(--tm-border-width-default) solid var(--tm-surface-brand-strong); }
+#rx-overlay-title { flex: 1 1 0; min-width: 0; font-size: var(--tm-font-size-body-lg); line-height: var(--tm-font-lineheight-md); font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-inverse); }
+#rx-controls { flex-basis: 100%; display: flex; gap: var(--tm-space-xs); align-items: center; justify-content: flex-end; margin-left: auto; }   /* raw-ok: 100% basis wraps the tools onto their own row (geometry) */
+#rx-zoom-label { min-width: var(--tm-space-2xl); text-align: center; font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-inverse); }
+#rx-overlay-body { flex: 1 1 0; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding-top: var(--tm-space-xs); position: relative; touch-action: none; }
+#rx-hint { flex: 0 0 auto; display: block; text-align: center; padding: var(--tm-space-xs) var(--tm-space-md); font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); color: var(--tm-content-inverse); pointer-events: none; }
+#rx-doc-wrapper { flex: 0 0 auto; position: relative; transform-origin: center center; cursor: grab; user-select: none; }
+#rx-doc-wrapper:active { cursor: grabbing; }
+.rx-stack { display: flex; flex-direction: column; gap: var(--tm-space-lg); width: 100%; box-sizing: border-box; padding: 0 var(--tm-space-page); }   /* raw-ok: 100% fill (geometry) */
+#rx-overlay .rx-bar { flex: none; position: relative; }
+#rx-overlay-body:has(> .rx-stack) { padding-top: var(--tm-space-lg); }   /* B-19: the Rx failed notice sits 16 below the header */
+
+/* Calling bar (app-logic §5): a lone secondary under the main button is full width (Callback on 6, D-53). */
+.case-bar .case-pair--single { grid-template-columns: minmax(0, 1fr); }
+/* Skip HA sheet (case.html #sheet-skip-ha): long reason titles wrap balanced. */
+#sheet-skip-ha .tm-option__title { text-wrap: balance; }
+/* B2 "Checking for a Health Advisor…": the status line sits centred in the main button's slot (B-02), Skip HA greyed under it. */
+.case-bar .case-status--slot { min-height: var(--tm-control-height-lg); }
+
+/* Schedule callback sheet (app-logic §7), lifted from case.html #sheet-callback: Date / Time labels, chips, field error, notice. */
+#sheet-callback .sheet-section-label { margin: var(--tm-space-lg) 0 var(--tm-space-sm); }
+#sheet-callback .sheet-section-label:first-child { margin-top: 0; }
+#callback-error-wrap { margin-top: var(--tm-space-sm); }   /* the helper sits 8 under the Time grid (D-54 D11) */
+#callback-error-wrap > #callback-error { margin: 0; color: var(--tm-content-error); }
+#sheet-callback .callback-notice { margin: var(--tm-space-lg) 0 0; }   /* the save failure / refusal between the grid and the button */
+
+/* Outcome card with a line under the title (7f Waiting for the call record): icon at the top, the line 4 under the title. */
+#success-toast.concept-has-text { align-items: flex-start; }
+#success-toast .tm-status-card__text { margin-top: var(--tm-space-xs); }
+/* 7b: the question line in the bar is not a band; it keeps no negative top margin (case.html Round 5 item 1). */
+.case-bar > .tm-notice--question { margin-top: 0; }

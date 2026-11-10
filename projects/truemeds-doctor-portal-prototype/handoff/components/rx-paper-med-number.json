@@ -1,0 +1,86 @@
+{
+ "block": "rx-paper-med-number",
+ "name": "RxPaperMedNumber",
+ "rn": "<RxPaperMedNumber />",
+ "web": ".rx-paper-med-number",
+ "parts": {
+  "container": {
+   "states": {
+    "default": {
+     "seenIn": "a-rx-viewer",
+     "styles": [
+      {
+       "property": "font-size",
+       "value": "11px",
+       "tokens": [],
+       "exception": "Mock prescription paper (sample content standing in for the customer's prescription image). The app shows the image; nothing here is built."
+      },
+      {
+       "property": "font-weight",
+       "value": "700",
+       "tokens": [],
+       "exception": "Mock prescription paper (sample content standing in for the customer's prescription image). The app shows the image; nothing here is built."
+      },
+      {
+       "property": "color",
+       "value": "#1b69de",
+       "tokens": [],
+       "exception": "Mock prescription paper (sample content standing in for the customer's prescription image). The app shows the image; nothing here is built."
+      },
+      {
+       "property": "font-family",
+       "value": "var(--tm-font)",
+       "tokens": [
+        {
+         "native": "tokens.font.family",
+         "web": "--tm-font",
+         "value": "Plus Jakarta Sans"
+        }
+       ]
+      },
+      {
+       "property": "margin-bottom",
+       "value": "2px",
+       "tokens": [],
+       "exception": "Mock prescription paper (sample content standing in for the customer's prescription image). The app shows the image; nothing here is built."
+      },
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "line-height",
+       "value": "var(--tm-font-lineheight-sm)",
+       "tokens": [
+        {
+         "native": "tokens.font.lineHeight.sm",
+         "web": "--tm-font-lineheight-sm",
+         "value": 20
+        }
+       ],
+       "inherited": true
+      }
+     ],
+     "size": "284×20"
+    }
+   }
+  }
+ },
+ "rules": [
+  {
+   "section": "Kit",
+   "text": "Build it once from the parts × states below (tokens only, copy from messages); it appears on Case page. What it does in each state is in DECIDED.md under those screens."
+  }
+ ],
+ "pictures": [],
+ "usedIn": [
+  "a-rx-viewer"
+ ],
+ "states": {
+  "default": [
+   "container"
+  ]
+ }
+}

@@ -1,0 +1,52 @@
+/* Prescribe (one medicine) — lifted from ui-screens/case/case-styles.css and case.html's Round 4 / D-55 layers, as the approved
+   d-* pictures render them. Tokens only (D-99). Full screen over the case page, inside the frame (RULES §7). */
+#prescribe-screen { position: absolute; inset: 0; z-index: var(--tm-layer-overlay); display: flex; flex-direction: column; background: var(--tm-surface-primary); }
+#prescribe-screen:focus { outline: none; }
+#ps-top { flex: none; position: relative; z-index: var(--tm-layer-raised); background: var(--tm-surface-primary); box-shadow: var(--tm-shadow-header); }
+#ps-bar { position: relative; box-shadow: none; }
+#ps-heading { flex: 1 1 0; min-width: 0; }
+#ps-heading > * { margin: 0; }   /* the reference page reset every margin; only the heading needs it here */
+#ps-title { text-wrap: balance; }
+#ps-form { display: block; font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); color: var(--tm-content-secondary); }
+/* The pinned "On prescription" band (D-25): exactly what will print, updated on every tap. */
+#ps-rx { background: var(--tm-surface-brand-subtle); padding: var(--tm-space-sm) var(--tm-space-lg) var(--tm-space-md); }
+.ps-rx-label { display: flex; align-items: center; gap: var(--tm-space-xs); margin-bottom: var(--tm-space-2xs); font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-brand); }
+#ps-prints-text { font-size: var(--tm-font-size-body-lg); line-height: var(--tm-font-lineheight-md); font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-primary); display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; line-clamp: 3; overflow: hidden; overflow-wrap: anywhere; }
+#ps-body { flex: 1 1 0; min-height: 0; overflow-y: auto; overscroll-behavior: contain; background: var(--tm-surface-secondary); padding: var(--tm-space-lg) var(--tm-space-page); display: flex; flex-direction: column; gap: var(--tm-space-lg); }
+#ps-dynamic { display: flex; flex-direction: column; gap: var(--tm-space-lg); }
+#ps-actionbar { flex: none; position: relative; }
+.ps-card { display: flex; flex-direction: column; gap: var(--tm-space-xl); }
+.ps-card > .ps-sub { margin-top: 0; }
+.ps-label { display: block; margin-bottom: var(--tm-space-sm); }
+#prescribe-screen .tm-muted { font-weight: var(--tm-font-weight-regular); }   /* B-10: "(optional)" is grey regular */
+.ps-chips { display: flex; flex-wrap: wrap; gap: var(--tm-space-sm); }
+.ps-chips .tm-chip { white-space: nowrap; }
+/* One chip size on the screen (B-08, D-55): every grid has four columns; a single-row grid takes the M / A / N grid's width. */
+.ps-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--tm-space-sm); width: 100%; box-sizing: border-box; }   /* raw-ok: 100% fill (geometry) */
+#ps-body .ps-section > .ps-grid { width: calc(100% - var(--tm-space-xl) - var(--tm-space-md)); margin-left: 0; }   /* raw-ok: 100% less the M / A / N key column (geometry) */
+#ps-body .ps-sub .ps-section > .ps-grid { width: calc(100% - var(--tm-space-xl) - var(--tm-space-md) + var(--tm-border-width-thick) + var(--tm-space-md)); }   /* raw-ok: 100% less the key column, plus the SOS inset (geometry) */
+.ps-dur-panel > .ps-grid { width: calc(100% - var(--tm-space-md) + var(--tm-space-2xs)); margin-left: calc(-1 * var(--tm-space-md)); }   /* raw-ok: B-09 inset (geometry) */
+.ps-slots { display: flex; flex-direction: column; gap: var(--tm-space-sm); }
+.ps-slot { display: grid; grid-template-columns: var(--tm-space-xl) 1fr; align-items: center; gap: var(--tm-space-md); }
+.ps-slot-key { text-align: left; font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-secondary); }   /* B-24 */
+.ps-helper { font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); color: var(--tm-content-secondary); margin-top: var(--tm-space-sm); }
+.ps-gap { margin-top: var(--tm-space-md); }
+.ps-dose-error { margin: var(--tm-space-xs) 0 0; color: var(--tm-feedback-error-content); }
+.ps-sub { margin-top: var(--tm-space-md); padding-left: var(--tm-space-md); border-left: var(--tm-border-width-thick) solid var(--tm-border-subtle); display: flex; flex-direction: column; }
+.ps-unit { font-size: var(--tm-font-size-body-md); color: var(--tm-content-secondary); }
+/* Duration: a dropdown-style field that opens in place (B-09: chips inside the field text's inset, 8 between the rows). */
+.ps-dur-field { background: var(--tm-surface-primary); border: var(--tm-border-width-default) solid var(--tm-border-default); border-radius: var(--tm-radius-md); }
+.ps-dur-field.is-open { border-color: var(--tm-border-focus); }
+.ps-dur-toggle { display: flex; align-items: center; justify-content: space-between; gap: var(--tm-space-md); width: 100%; text-align: left; padding: var(--tm-space-md); border: 0; border-radius: var(--tm-radius-md); background: none; font: inherit; color: inherit; cursor: pointer; }   /* raw-ok: 100% fill (geometry) */
+.ps-dur-toggle .tm-icon { color: var(--tm-content-secondary); flex-shrink: 0; }
+.ps-dur-panel { padding: 0 var(--tm-space-md) var(--tm-space-md); }
+.ps-dur-val { font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-primary); }
+.ps-dur-val span { display: block; font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); font-weight: var(--tm-font-weight-regular); color: var(--tm-content-secondary); }
+.ps-dur-units { margin: var(--tm-space-sm) 0 0 calc(-1 * var(--tm-space-md)); width: calc(100% + var(--tm-space-md)); }   /* raw-ok: B-09 inset (geometry) */
+.reason-list { display: flex; flex-direction: column; }
+#prescribe-screen .tm-field__control textarea { resize: none; min-height: calc(var(--tm-space-2xl) * 2); padding: 0; }
+/* Keyboard rule (D-81): the pinned bar hides while the keyboard is open; the drawn keyboard (capture) leaves room below. */
+#prescribe-screen.kb-open #ps-actionbar { display: none; }
+#prescribe-screen.kb-open #ps-body { padding-bottom: 256px; }   /* raw-ok: drawn keyboard height (prototype chrome, shell/mock-keyboard.css) */
+.case-screen.kb-real #ps-actionbar { display: none; }   /* the phone keyboard is open (parts.js watchKeyboard) */
+.ps-keep { white-space: nowrap; }   /* B-12 */

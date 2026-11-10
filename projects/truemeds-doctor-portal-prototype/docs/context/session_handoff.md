@@ -933,3 +933,42 @@ User identified missing HTML/native linkage. Inspected actual sign-in and OTP HT
 - **Calling-flow page:** content only in `calling-flow/data.js`; after any change run `node calling-flow/check-coverage.mjs`, `node scripts/build-state-map.mjs`, `node scripts/check-state-map.mjs`. Deploy with the next approved merge (`[deploy]`); mini-map and "Find a state" in backlog.
 - **Calling-flow page (01:45):** clicking a box now fits the whole flow beside the side panel and lifts the box (green, bigger, on top); closing the panel refits the flow and keeps the box marked with the dark border. Pinch / ⌘ + scroll outside the diagram no longer zooms the whole page (header and side panel stay put). `flow.js` / `flow.css` only; coverage + drift checks PASS. Not deployed yet.
 
+
+## 2026-11-09 · Old Mac died — recovery done; step 1 rebuild in progress (sessions)
+- **New Mac:** repo at `~/pm-agent` (was `~/src/pm-agent`); worktree `~/pm-agent/.work/truemeds-doctor-portal-prototype`. Older briefs say the old path — read with the new one. Git push works (repo-local credential helper, github.com only). Claude Code + Codex + plugins (caveman, superpowers, tm-chotu) reinstalled.
+- **Lost and restored:** PRD files (restored by the PRD thread, now v0.3 on the branch); D-92 (sample doctor "Dr. Kunal" / "Dr. Kunal Wani", KW) and the Profile-photo backlog item; three `calling-flow/data.js` labels. **Lost for good:** step 1 rounds 1–3 code and the D-92 re-renders — being rebuilt; Kunal's photo file (Apurva to re-share).
+- **Step 1 rebuild:** `docs/renders/2026-11-09-step1-recovery/TERMINAL-BRIEF.md`, run in **sessions** tracked in `SESSION-STATUS.md`. Session 1 (set-up) ✅, session 2 (sign-in + OTP, 34 journey tests, Codex clean on 3rd pass) ✅. Next: session 3 (offer + unlock + D-92), 4 (panel, 1.3 table, compare harness), 5 (final Codex + report).
+- **How to run the terminal (lessons):** start it as `claude --model opus --dangerously-skip-permissions "<brief line> … unattended: never stop to ask"` from the project folder — a fresh install defaulted to **Haiku** and to permission prompts, which produced display-only screens and overnight stalls. Every session ends with a Codex critique + fixes and a `scripts/publish.sh` push (local commits alone don't count). Codex needs `< /dev/null`. Tests use the installed Chrome (`CHROME=` / `CHROMIUM=`), Playwright's own download stalls on this Mac.
+
+## 2026-11-09 (21:50) · Build chain running (D-100): rails, token pass, A1 done; A2 running
+- **Way of working (D-100):** `scripts/run-chain.sh` runs `docs/runs/QUEUE.md` unattended in a plain Terminal (fresh headless session per line, DONE / STOPPED in `docs/runs/STATUS.md`); main-thread rulings in `docs/runs/RULINGS.md`; hourly scheduled check-in logs to `docs/runs/CHECKIN.md`. Token linter (`design-system/scripts/check_tokens.py`), after-edit hook (`.claude/settings.json`, git-ignored, both folders) and commit gate are live.
+- **Done today:** D-98 kit fixes; D-99 token pass (111 → 0 raw values, 25 `raw-ok`, 298 pictures identical, token tests 90 / 90 after the main-thread ruling); A1 (Home, case page, Prescribe / Disable: 132 pictures under 1 %, all checks pass, 4 Codex test disputes ruled and fixed, review passed).
+- **Running:** A2 (calling, step 5), then B (Pilot). **Next for the main thread:** review A2 / B, add the "kit for all journeys" queue line, then Apurva's phone walkthrough (incl. A1 eye checks) and the 10 product questions in the kit's OPEN list.
+- **Waiting on Apurva:** merge `shared/way-of-working` (central playbook); Product answers for the kit.
+
+## 2026-11-09 (22:15) · Thread handover — start a new main thread
+- **Chain:** A2 (calling) running since 21:36, then B (Pilot). Hourly check-in (scheduled task "Doctor portal — build chain check-in", :25 past each hour) reviews runs into `docs/runs/CHECKIN.md` / `RULINGS.md`. A1 reviewed and passed (21:50).
+- **Git:** PR #36 (whole branch → `main`) closed unmerged on purpose (evidence stays on this branch). PR #37 (central playbook, docs only) merged to `main` at 21:44 by mistake mid-chain — harmless, left in place, logged. Central rule edits (run evidence, what goes to `main`, no merges during chains, archive tag before close; Netlify log) are on `shared/run-evidence-and-main`, **no PR yet — merge after the chain**. After-chain plan: backlog §2m.
+- **Netlify (22:10):** deploy previews off for both sites; production deploys only with `[deploy]`. Logged in `docs/TEAM_GIT_WORKFLOW.md`.
+- **Open for Apurva:** Product answers for the kit's OPEN list (10 items); phone walkthrough after the chain (incl. A1 eye checks); FE engineer walkthrough of the Sign-in kit.
+- **Next main thread:** review A2 / B as they finish; add the "kit for all journeys" queue line before B ends; then §2m and the shared PR.
+
+## 2026-11-09 (23:05) · New main thread — A2 reviewed (passed); D-101; queue extended
+- **Chain:** A2 done and reviewed (passed; A0-happy-path test fixed, see RULINGS 23:05). B running. Queue after B: `signin-d101` (D-101 prototype bits: o04, o10, o11, o25), then `handoff-kit-all` (kit for every journey; moves the ten D-101 items to DECIDED).
+- **D-101:** Apurva's answers to the Sign-in kit's ten Product questions (Terms / Privacy placeholder URLs included).
+- **Archive tag:** only after Apurva approves everything (backlog §2m point 1 changed).
+- **Logged:** review panel simplification, separate session (backlog §4b); keep the tray button in the installed app.
+- **Installable demo:** the manifest already exists (standalone, `?demo=1`); install needs https (Netlify) or Chrome's insecure-origins flag for the LAN link.
+- **Open:** FE delivery via GitLab (copy of the kit pushed to a GitLab repo; details pending with Apurva).
+
+## 2026-11-10 · Run signin-d101 (unattended) — D-101 o04, o10, o11, o25 in the prototype
+- **Built:** o04 more than 10 digits (after +91 / 0 cleaning) → field error `signin.long` "That’s more than 10 digits. Check the number." at once, same slot / style as `signin.short`, digits never cut (`app/core/auth.js`). o10 back from OTP (Change / phone back) keeps the number and edits normally (`app/screens/sign-in.js`; the pasted-picture first-digit replace is unchanged). o11 OTP Terms / Privacy open the D-101 URLs in a new tab, from `TERMS_URL` / `PRIVACY_URL` in `app/data/links.js` (`app/screens/otp.js`). o25 `signin.signup` = "New to Truemeds? {link}" (link text stays `signin.signupLink`); screen identical.
+- **Docs:** `ui-screens/app-logic.md` §2 and the sign-in rows of `docs/feedback-state-map.md` (new behaviour rows `signin.too-long`, `signin.back-from-otp` → `app/state-map.js`, `docs/state-map.md` regenerated; jump-list names and jump targets added).
+- **Checks:** see `docs/renders/2026-11-09-signin-d101/REPORT.md`. New test `tests/signin-d101.mjs`; `tests/entry-journeys.mjs` A1, B5g, B5h, B6 updated for D-101. New o04 picture (360 / 390) in the run folder for Apurva's phone walkthrough — not in `ui-screens/`.
+- **Next:** the kit run (`handoff-kit-all`) — regenerates `handoff/` (still shows the old o04 / o10 / o25 code and copy until then).
+
+## 2026-11-10 (00:35) · Scheduled check-in — run B reviewed (passed)
+- **Chain:** B done and reviewed (passed): Pilot Fallback B plays end to end (B0/B1 gate from the answer, B2, 13 → 14, B3 / 15, 16 / 16b / 16c, 17, Pilot 7d) plus the step-7 cross-journey cases; final pass (copy parity 373 keys, all checks). `signin-d101` running since 00:12; then `handoff-kit-all`.
+- **Rulings (RULINGS 00:35):** B-play dispute = test bug, fixed in `tests/codex/run-B/journeys.mjs`; t13 @390 diff accepted (13 keeps the neutral script in launch B, D-102); c-skip-ha diff accepted; B's mock assumptions → OQ-038.
+- **Open:** re-render `t13-connecting-ha_w390`, `c-skip-ha-b1`, `c-skip-ha-16` (backlog §2l); Apurva's phone walkthrough (A1 eye checks + B-R07/09/10/11 + Q-B).
+- **Next:** review `signin-d101`, then the kit run; then SUMMARY and the walkthrough.

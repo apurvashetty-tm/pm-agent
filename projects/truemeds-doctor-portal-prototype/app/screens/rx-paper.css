@@ -1,0 +1,33 @@
+/* Mock Rx paper: the customer's prescription in View Rx (mock data, not app UI). Raw values as in the approved reference
+   (ui-screens/case/case-styles.css); exempt from the token rule (check_tokens: .rx-paper*) and the hex scan (tests/scan.mjs). */
+.rx-paper { width: 320px; background: #fff; border-radius: 4px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4); overflow: hidden; font-family: Georgia, serif; color: #1a1a1a; }
+.rx-paper-letterhead { background: linear-gradient(135deg, #1b69de 0%, #1558c0 100%); padding: 16px 18px 14px; color: #fff; }
+.rx-paper-clinic { font-size: 16px; font-weight: 700; font-family: var(--tm-font); letter-spacing: 0.02em; }
+.rx-paper-doctor { font-size: 13px; font-weight: 600; font-family: var(--tm-font); margin-top: 2px; opacity: 0.92; }
+.rx-paper-quals { font-size: 11px; font-family: var(--tm-font); opacity: 0.7; margin-top: 1px; }
+.rx-paper-address { font-size: 10px; font-family: var(--tm-font); opacity: 0.65; margin-top: 6px; line-height: 1.5; }
+.rx-paper-body { padding: 14px 18px; }
+.rx-paper-patient-row { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid #e5e7eb; gap: 8px; }
+.rx-paper-patient { flex: 1 1 0; }
+.rx-paper-label { font-size: 10px; color: #6b7280; font-family: var(--tm-font); text-transform: uppercase; letter-spacing: 0.05em; }
+.rx-paper-label--gap { margin-top: 6px; }
+.rx-paper-value { font-size: 12px; font-weight: 600; font-family: var(--tm-font); color: #1a1a1a; margin-top: 1px; }
+.rx-paper-right { text-align: right; margin-bottom: 8px; }
+.rx-paper-symbol { font-size: 28px; font-weight: 700; color: #1b69de; line-height: 1; font-family: Georgia, serif; flex-shrink: 0; }
+.rx-paper-medicines { margin-bottom: 14px; }
+.rx-paper-med { padding: 10px 0; border-bottom: 1px dashed #e5e7eb; }
+.rx-paper-med:last-child { border-bottom: none; }
+.rx-paper-med-number { font-size: 11px; font-weight: 700; color: #1b69de; font-family: var(--tm-font); margin-bottom: 2px; }
+.rx-paper-med-name { font-size: 13px; font-weight: 700; color: #111827; font-family: var(--tm-font); text-wrap: balance; }
+.rx-paper-med-details { font-size: 11px; color: #374151; font-family: var(--tm-font); margin-top: 2px; }
+.rx-paper-med-note { font-size: 10px; color: #6b7280; font-family: var(--tm-font); margin-top: 2px; font-style: italic; }
+.rx-paper-footer { border-top: 1px solid #e5e7eb; padding-top: 12px; display: flex; justify-content: space-between; align-items: flex-end; }
+.rx-paper-advice { flex: 1 1 0; }
+.rx-paper-advice-label { font-size: 10px; color: #6b7280; font-family: var(--tm-font); font-weight: 600; margin-bottom: 3px; }
+.rx-paper-advice-text { font-size: 10px; color: #374151; font-family: var(--tm-font); line-height: 1.5; }
+.rx-paper-signature { text-align: right; }
+.rx-paper-sig-line { width: 90px; border-bottom: 1px solid #374151; margin-bottom: 4px; margin-left: auto; }
+.rx-paper-sig-name { font-size: 10px; font-weight: 600; color: #374151; font-family: var(--tm-font); }
+.rx-paper-sig-reg { font-size: 9px; color: #9ca3af; font-family: var(--tm-font); }
+.rx-paper-stamp { margin-top: 10px; padding: 6px 10px; border: 2px solid #1b69de; border-radius: 4px; text-align: center; display: inline-block; }
+.rx-paper-stamp-text { font-size: 9px; font-weight: 700; color: #1b69de; font-family: var(--tm-font); letter-spacing: 0.05em; }

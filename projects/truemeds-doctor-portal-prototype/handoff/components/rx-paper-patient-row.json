@@ -1,0 +1,98 @@
+{
+ "block": "rx-paper-patient-row",
+ "name": "RxPaperPatientRow",
+ "rn": "<RxPaperPatientRow />",
+ "web": ".rx-paper-patient-row",
+ "parts": {
+  "container": {
+   "states": {
+    "default": {
+     "seenIn": "a-rx-viewer",
+     "styles": [
+      {
+       "property": "display",
+       "value": "flex",
+       "tokens": [],
+       "exception": "Mock prescription paper (sample content standing in for the customer's prescription image). The app shows the image; nothing here is built."
+      },
+      {
+       "property": "justify-content",
+       "value": "space-between",
+       "tokens": [],
+       "exception": "Mock prescription paper (sample content standing in for the customer's prescription image). The app shows the image; nothing here is built."
+      },
+      {
+       "property": "align-items",
+       "value": "flex-start",
+       "tokens": [],
+       "exception": "Mock prescription paper (sample content standing in for the customer's prescription image). The app shows the image; nothing here is built."
+      },
+      {
+       "property": "margin-bottom",
+       "value": "12px",
+       "tokens": [],
+       "exception": "Mock prescription paper (sample content standing in for the customer's prescription image). The app shows the image; nothing here is built."
+      },
+      {
+       "property": "padding-bottom",
+       "value": "10px",
+       "tokens": [],
+       "exception": "Mock prescription paper (sample content standing in for the customer's prescription image). The app shows the image; nothing here is built."
+      },
+      {
+       "property": "border-bottom",
+       "value": "1px solid #e5e7eb",
+       "tokens": [],
+       "exception": "Mock prescription paper (sample content standing in for the customer's prescription image). The app shows the image; nothing here is built."
+      },
+      {
+       "property": "gap",
+       "value": "8px",
+       "tokens": [],
+       "exception": "Mock prescription paper (sample content standing in for the customer's prescription image). The app shows the image; nothing here is built."
+      },
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      }
+     ],
+     "size": "284×99"
+    }
+   }
+  },
+  "div": {
+   "states": {
+    "default": {
+     "seenIn": "a-rx-viewer",
+     "styles": [
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      }
+     ],
+     "size": "75.8×77"
+    }
+   }
+  }
+ },
+ "rules": [
+  {
+   "section": "Kit",
+   "text": "Build it once from the parts × states below (tokens only, copy from messages); it appears on Case page. What it does in each state is in DECIDED.md under those screens."
+  }
+ ],
+ "pictures": [],
+ "usedIn": [
+  "a-rx-viewer"
+ ],
+ "states": {
+  "default": [
+   "container",
+   "div"
+  ]
+ }
+}

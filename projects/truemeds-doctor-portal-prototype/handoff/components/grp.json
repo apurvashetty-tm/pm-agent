@@ -1,0 +1,78 @@
+{
+ "block": "grp",
+ "name": "Grp",
+ "rn": "<Grp />",
+ "web": ".grp",
+ "parts": {
+  "container": {
+   "states": {
+    "default": {
+     "seenIn": "otp_code-expired",
+     "styles": [
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "display",
+       "value": "flex",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "flex-direction",
+       "value": "column",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "gap",
+       "value": "var(--tm-space-lg)",
+       "tokens": [
+        {
+         "native": "tokens.space.lg",
+         "web": "--tm-space-lg",
+         "value": 16
+        }
+       ]
+      }
+     ],
+     "size": "358×148"
+    }
+   }
+  }
+ },
+ "rules": [
+  {
+   "section": "Kit",
+   "text": "Build it once from the parts × states below (tokens only, copy from messages); it appears on OTP. What it does in each state is in DECIDED.md under those screens."
+  }
+ ],
+ "pictures": [],
+ "usedIn": [
+  "otp_code-expired",
+  "otp_cooldown-reconciling",
+  "otp_couldnt-verify",
+  "otp_default",
+  "otp_empty-tap",
+  "otp_expired-and-resend-limited",
+  "otp_locked",
+  "otp_new-code-sent",
+  "otp_offline",
+  "otp_resend-available",
+  "otp_resend-failed",
+  "otp_resending",
+  "otp_too-many-resends",
+  "otp_too-short",
+  "otp_two-tries-left",
+  "otp_verifying",
+  "otp_wrong-code"
+ ],
+ "states": {
+  "default": [
+   "container"
+  ]
+ }
+}

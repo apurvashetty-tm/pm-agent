@@ -6,7 +6,7 @@ This maps current auth/Home states and known recovery conditions to reusable fee
 
 ## Placement rules (Round 4, 2026-11-02 — A-19, RULES §9.5)
 
-- **Result of an action → next to the control that did it.** On a screen with a pinned action bar, inside the bar above its button, as a band (`.tm-actionbar > .tm-notice`). On a screen without a bar, 8 below the field or button it came from (A-14).
+- **Result of an action → next to the control that did it.** On a screen with a pinned action bar, inside the bar above its button, as a band (`.tm-actionbar > .tm-notice`). On a screen without a bar, 16 below the field it came from (D-98) or 8 below the button (A-14).
 - **Bar's own action → inside the bar.** The result of the last tap, or why the bar's button is disabled right now: offline (case and Home), request failed, "No cases right now", ending soon, setup / add / confirm / release failures, offer enable-failed / offline, calling notices (Round 4, lane-request 7).
 - **Screen's general situation → top of the panel.** Not tied to a button; stays until the cause is gone (unlock "isn't available", Home idle-expired, manually ended, expired-pending, stop-pending).
 - Notices wrap balanced (A-22). Toasts only where no control can show the result; they sit above the pinned bar when there is one.
@@ -30,9 +30,11 @@ Current copy: `../ui-screens/sign-in/sign-in.html`. Native: `../ui-screens/nativ
 | signin.empty-tap | F1 | Submit empty; focus field, edit | R01 sibling |
 | signin.too-short | F1 | Submit incomplete; retain digits, edit | R01 sibling |
 | signin.wrong-first-digit | F1 | Impossible prefix; immediate, clear on valid correction | R01 representative |
+| signin.too-long | F1 | More than 10 digits after +91 / 0 cleaning: `signin.long` "That’s more than 10 digits. Check the number." — immediate, same slot and style as `signin.too-short`; digits kept, never cut; clears on a valid edit (D-101 o04) | New — live state, captured for the phone walkthrough (`docs/renders/2026-11-09-signin-d101/`) |
 | signin.pasted-cleaned | None | Normalise supported prefix; preserve meaningful digits per D-39 | Existing + fixture |
+| signin.back-from-otp | None | Change / phone back on OTP returns with the number kept; it edits normally (first typed digit does not replace it, D-101 o10) | Live behaviour |
 | signin.sending | L1 | Send pending; disable duplicate send | Existing + fixture |
-| signin.not-registered | N1 | Server access result; existing sign-up route / approval information | R06 |
+| signin.not-registered | N1 | Server access result; existing sign-up route / approval information (sign-up line is one entry `signin.signup` with `{link}`, D-101 o25) | R06 |
 | signin.offline | F2 after action; N1 passive | Restore connectivity, retry; retain number; one message | R03 sibling + layout QA |
 | signin.couldnt-send | F2 | Confirmed send failure; retain number and retry | R03 sibling + layout QA |
 | signin.too-many-tries | W1 | Issuance cap; wait for server eligibility, retain number | R04 sibling + fixture |
@@ -84,6 +86,7 @@ Shown once after the first successful OTP sign-in on a device that supports it a
 | offer.cancelled | None | OS prompt cancelled → back to the offer, no message (D-61) |
 | offer.failed | Notice | Enrolment failed → stays on the offer: `offer.enableFailed` "Couldn't turn on faster sign-in." · Try again · Not now (D-61, D-65) |
 | offer.offline | Notice | `offer.offline` "You're offline. Check your connection." (D-66) |
+| offer.unavailable | Notice | Phone answers "unavailable" at Turn on → stays on the offer, unchanged (tile and three points shown); warning notice in the bar, `alert-triangle`, `unlock.unavailable` "Faster sign-in isn't available on this phone right now." (same slot as Offline and Couldn't turn on, A-19); the primary reads **Continue** (`offer.continue`) → Home; Not now hidden. Not enabled; recorded as offered; can be turned on later in Profile (D-93). Picture `offer_unavailable` approved (D-93 revised); in `ui-screens/` since the D-94 refresh |
 | offer.not-now | None | → Home; re-offer per OQ-023; can be turned on later in Profile (D-69) |
 | offer.screen-lock | None | No fingerprint or face set up → offer uses the phone's screen lock (PIN / pattern / password) (D-64) |
 | offer.unsupported | — | Phone has no screen lock at all → screen skipped entirely (D-64) |

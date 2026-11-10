@@ -27,7 +27,7 @@ JS = r"""() => {
 }"""
 seen = {}
 with sync_playwright() as p:
-    br = p.chromium.launch()
+    br = p.chromium.launch(executable_path=__import__("os").environ.get("CHROMIUM") or None)   # installed Chrome on this Mac, else Playwright's
     for ph in ['A', 'B', 'C', 'D']:
         for sub, state in guard.EXPECTED[ph]:
             pg = br.new_page(viewport={'width': 390, 'height': 844})

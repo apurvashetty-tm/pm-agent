@@ -1,0 +1,101 @@
+{
+ "block": "pdb-expand-value",
+ "name": "PdbExpandValue",
+ "rn": "<PdbExpandValue />",
+ "web": ".pdb-expand-value",
+ "parts": {
+  "container": {
+   "states": {
+    "default": {
+     "seenIn": "a-order-details",
+     "styles": [
+      {
+       "property": "font-size",
+       "value": "var(--tm-font-size-body-md)",
+       "tokens": [
+        {
+         "native": "tokens.font.size.body.md",
+         "web": "--tm-font-size-body-md",
+         "value": 14
+        }
+       ]
+      },
+      {
+       "property": "line-height",
+       "value": "var(--tm-font-lineheight-sm)",
+       "tokens": [
+        {
+         "native": "tokens.font.lineHeight.sm",
+         "web": "--tm-font-lineheight-sm",
+         "value": 20
+        }
+       ]
+      },
+      {
+       "property": "font-weight",
+       "value": "var(--tm-font-weight-semibold)",
+       "tokens": [
+        {
+         "native": "tokens.font.weight.semibold",
+         "web": "--tm-font-weight-semibold",
+         "value": "600"
+        }
+       ]
+      },
+      {
+       "property": "color",
+       "value": "var(--tm-content-primary)",
+       "tokens": [
+        {
+         "native": "tokens.color.content.primary",
+         "web": "--tm-content-primary",
+         "value": "#383A42"
+        }
+       ]
+      },
+      {
+       "property": "text-align",
+       "value": "right",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "font-family",
+       "value": "var(--tm-font)",
+       "tokens": [
+        {
+         "native": "tokens.font.family",
+         "web": "--tm-font",
+         "value": "Plus Jakarta Sans"
+        }
+       ],
+       "inherited": true
+      }
+     ],
+     "size": "81×20"
+    }
+   }
+  }
+ },
+ "rules": [
+  {
+   "section": "Kit",
+   "text": "Build it once from the parts × states below (tokens only, copy from messages); it appears on Case page. What it does in each state is in DECIDED.md under those screens."
+  }
+ ],
+ "pictures": [],
+ "usedIn": [
+  "a-order-details"
+ ],
+ "states": {
+  "default": [
+   "container"
+  ]
+ }
+}

@@ -7,8 +7,8 @@ body{margin:0;background:var(--tm-surface-secondary)}
 .review p{font-size:var(--tm-font-size-body-md);line-height:var(--tm-font-lineheight-sm);color:var(--tm-content-secondary)}
 #background{flex:1;min-height:0;display:flex;flex-direction:column}
 .phone{width:100%;height:100dvh;margin:0;position:relative;overflow:hidden;display:flex;flex-direction:column;background:var(--tm-surface-brand-subtle);color:var(--tm-content-primary);transform:translateZ(0)}
-/* RULES §7: below 768px the app is the screen; from 768px it sits in the centred 9:16 frame. */
-@media (min-width:768px){.phone{width:390px;height:844px;margin:auto}}
+/* RULES §7: below 768px the app is the screen; from 768px it sits in the centred 390 : 844 frame (D-97). */
+@media (min-width:768px){.phone{height:clamp(640px,calc(100vh - 48px),844px);width:calc(clamp(640px,calc(100vh - 48px),844px) * 390 / 844);margin:auto}}
 /* Home-base header (D-42): logo left, actions right. */
 .header{flex:none;display:flex;align-items:center;justify-content:space-between;padding:var(--tm-space-lg) var(--tm-space-lg) 0 var(--tm-space-page)}
 /* A-07 (Round 4): one lockup size (166, Round 4 lane D: Home fits at 360) and one top offset (16) on every screen with the logo. */

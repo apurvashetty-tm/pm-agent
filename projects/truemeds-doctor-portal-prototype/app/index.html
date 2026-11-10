@@ -2,7 +2,7 @@
 <html lang="en-IN">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
   <meta name="robots" content="noindex, nofollow">
   <title>truemeds for doctors</title>
   <meta name="theme-color" content="#FFFFFF">
@@ -14,6 +14,15 @@
   <link rel="apple-touch-icon" sizes="180x180" href="icons/icon-180.png">
   <link rel="stylesheet" href="design-system/truemeds.css">
   <link rel="stylesheet" href="shell/shell.css">
+  <link rel="stylesheet" href="shell/mock-keyboard.css">
+  <link rel="stylesheet" href="screens/sign-in.css">
+  <link rel="stylesheet" href="screens/otp.css">
+  <link rel="stylesheet" href="screens/faster-signin-offer.css">
+  <link rel="stylesheet" href="screens/returning-unlock.css">
+  <link rel="stylesheet" href="screens/home.css">
+  <link rel="stylesheet" href="screens/case.css">
+  <link rel="stylesheet" href="screens/prescribe.css">
+  <link rel="stylesheet" href="screens/rx-paper.css">
 </head>
 <body data-mode="review">
   <div id="stage">
@@ -29,11 +38,11 @@
   </div>
 
   <!-- Review controls: beside the frame on desktop; a hidden drawer on a narrow screen (plan §4). Never a scroll container. -->
-  <section id="review-panel" class="review-panel" aria-label="Review controls" hidden></section>
   <button id="drawer-handle" class="drawer-handle" type="button" aria-controls="review-panel" aria-expanded="false" hidden>
     <span class="tm-icon" data-icon="dots-vertical" aria-hidden="true"></span><span class="visually-hidden">Review controls</span>
   </button>
   <div id="drawer-backdrop" class="drawer-backdrop" hidden></div>
+  <section id="review-panel" class="review-panel" aria-label="Review controls" hidden></section>
 
   <script src="design-system/icons/icons.js"></script>
   <script src="feedback/messages.js"></script>

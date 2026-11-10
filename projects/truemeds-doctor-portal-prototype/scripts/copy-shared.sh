@@ -20,8 +20,8 @@ fi
 rm -rf "$APP/design-system" "$APP/brand" "$APP/feedback" "$APP/pictures"
 mkdir -p "$APP/design-system" "$APP/brand" "$APP/feedback" "$APP/pictures"
 
-# design-system (build/ is the design team's output folder and is not served)
-(cd "$REPO/design-system" && tar --exclude='./build' -cf - .) | (cd "$APP/design-system" && tar -xf -)
+# design-system (build/ is the design team's output folder and tools/node_modules is local tooling; neither is served)
+(cd "$REPO/design-system" && tar --exclude='./build' --exclude='./tools/node_modules' -cf - .) | (cd "$APP/design-system" && tar -xf -)
 cp "$PROJECT/brand/truemeds-for-doctors.svg" "$APP/brand/"
 cp "$PROJECT/ui-screens/feedback/messages.js" "$APP/feedback/"
 

@@ -4,5 +4,5 @@ export function qrSvg(text) {
   const qr = window.qrcode(0, "M");
   qr.addData(text);
   qr.make();
-  return qr.createSvgTag({ scalable: true, margin: 2 });
+  return qr.createSvgTag({ scalable: true, cellSize: 2, margin: 8 })   // margin is in SVG units: 8 = 4 modules of 2, the QR spec quiet zone;
 }

@@ -1,0 +1,112 @@
+{
+ "block": "muted",
+ "name": "Muted",
+ "rn": "<Muted />",
+ "web": ".muted",
+ "parts": {
+  "container": {
+   "states": {
+    "default": {
+     "seenIn": "d-alt-days",
+     "styles": [
+      {
+       "property": "color",
+       "value": "var(--tm-content-secondary)",
+       "tokens": [
+        {
+         "native": "tokens.color.content.secondary",
+         "web": "--tm-content-secondary",
+         "value": "#5B616E"
+        }
+       ]
+      },
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "font-weight",
+       "value": "var(--tm-font-weight-regular)",
+       "tokens": [
+        {
+         "native": "tokens.font.weight.regular",
+         "web": "--tm-font-weight-regular",
+         "value": "400"
+        }
+       ]
+      },
+      {
+       "property": "font-family",
+       "value": "var(--tm-font)",
+       "tokens": [
+        {
+         "native": "tokens.font.family",
+         "web": "--tm-font",
+         "value": "Plus Jakarta Sans"
+        }
+       ],
+       "inherited": true
+      },
+      {
+       "property": "font-size",
+       "value": "var(--tm-font-size-body-md)",
+       "tokens": [
+        {
+         "native": "tokens.font.size.body.md",
+         "web": "--tm-font-size-body-md",
+         "value": 14
+        }
+       ],
+       "inherited": true
+      },
+      {
+       "property": "line-height",
+       "value": "var(--tm-font-lineheight-sm)",
+       "tokens": [
+        {
+         "native": "tokens.font.lineHeight.sm",
+         "web": "--tm-font-lineheight-sm",
+         "value": 20
+        }
+       ],
+       "inherited": true
+      }
+     ],
+     "size": "63.6×18"
+    }
+   }
+  }
+ },
+ "rules": [
+  {
+   "section": "Kit",
+   "text": "Build it once from the parts × states below (tokens only, copy from messages); it appears on Prescribe. What it does in each state is in DECIDED.md under those screens."
+  }
+ ],
+ "pictures": [],
+ "usedIn": [
+  "d-alt-days",
+  "d-default",
+  "d-disable-sheet",
+  "d-discard-sheet",
+  "d-duration-picker",
+  "d-error-other",
+  "d-food-selected",
+  "d-header-white",
+  "d-inhaler",
+  "d-injection-default",
+  "d-monthly",
+  "d-notes-keyboard",
+  "d-scrolled",
+  "d-sos-only",
+  "d-syrup",
+  "d-weekly"
+ ],
+ "states": {
+  "default": [
+   "container"
+  ]
+ }
+}

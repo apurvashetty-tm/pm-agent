@@ -1,0 +1,35 @@
+{
+  "_about": "Accepted differences for tests/compare-step1.mjs. Boxes are in picture pixels (2x), [x0, y0, x1, y1]. A region passes only when it lies wholly inside a listed box and is not a shifted row. The old-Mac anti-aliasing rule was removed at the D-94 refresh (all approved pictures re-rendered on this Mac with repeatable capture): app-vs-picture compares must match exactly apart from the listed regions.",
+  "regions": [
+    {
+      "state": "^otp_locked$",
+      "box": [
+        240,
+        654,
+        486,
+        714
+      ],
+      "reason": "\"call Doctor Ops\" is a blue link in the built app (required: Call Doctor Ops opens the placeholder page, OQ-021). The approved file's phrase search missed the non-breaking spaces, so the picture shows plain text (session 2 finding)."
+    },
+    {
+      "state": "^otp_expired-and-resend-limited$",
+      "box": [
+        366,
+        654,
+        612,
+        714
+      ],
+      "reason": "\"call Doctor Ops\" is a blue link in the built app (OQ-021); the approved picture shows plain text (session 2 finding)."
+    },
+    {
+      "state": "^otp_too-many-resends$",
+      "box": [
+        354,
+        654,
+        600,
+        714
+      ],
+      "reason": "\"call Doctor Ops\" is a blue link in the built app (OQ-021); the approved picture shows plain text (session 2 finding)."
+    }
+  ]
+}

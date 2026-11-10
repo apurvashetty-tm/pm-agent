@@ -1,8 +1,10 @@
 # Preview site for the doctor app prototype (plan v3 §4, checklist 5.10). Site: truemeds-doctor-app-preview.
 # Base directory = this app/ folder (set in Netlify). Build = copy the shared files in (copy-shared.sh), then publish app/ only.
 # Deploy gate: the same rule as the root netlify.toml — the site builds only when the latest commit message contains [deploy].
+# The React Native hand-off kit is published beside the app at /kit/ (D-103, Apurva 2026-11-10): the build copies
+# ../handoff into app/kit (git-ignored, never committed); /kit opens the viewer.
 [build]
-  command = "sh ../scripts/copy-shared.sh"
+  command = "sh ../scripts/copy-shared.sh && rm -rf kit && cp -R ../handoff kit"
   publish = "."
   ignore = "git log -1 --pretty=%B | grep -qF '[deploy]' && exit 1 || exit 0"
 
@@ -10,3 +12,13 @@
   for = "/*"
   [headers.values]
     X-Robots-Tag = "noindex, nofollow"
+
+[[redirects]]
+  from = "/kit"
+  to = "/kit/viewer/"
+  status = 301
+
+[[redirects]]
+  from = "/kit/"
+  to = "/kit/viewer/"
+  status = 301

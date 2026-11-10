@@ -1,0 +1,98 @@
+{
+ "block": "profile-body",
+ "name": "ProfileBody",
+ "rn": "<ProfileBody />",
+ "web": ".profile-body",
+ "parts": {
+  "container": {
+   "states": {
+    "default": {
+     "seenIn": "home_logout-confirm",
+     "styles": [
+      {
+       "property": "flex",
+       "value": "1",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "overflow",
+       "value": "auto",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "padding",
+       "value": "var(--tm-space-lg) var(--tm-space-page) calc(var(--tm-space-xl) + env(safe-area-inset-bottom))",
+       "tokens": [
+        {
+         "native": "tokens.space.lg",
+         "web": "--tm-space-lg",
+         "value": 16
+        },
+        {
+         "native": "tokens.space.lg",
+         "web": "--tm-space-page",
+         "value": 16
+        },
+        {
+         "native": "tokens.space.xl",
+         "web": "--tm-space-xl",
+         "value": 24
+        }
+       ],
+       "layout": true
+      },
+      {
+       "property": "display",
+       "value": "flex",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "flex-direction",
+       "value": "column",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "gap",
+       "value": "var(--tm-space-lg)",
+       "tokens": [
+        {
+         "native": "tokens.space.lg",
+         "web": "--tm-space-lg",
+         "value": 16
+        }
+       ]
+      },
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      }
+     ],
+     "size": "390×788"
+    }
+   }
+  }
+ },
+ "rules": [
+  {
+   "section": "Kit",
+   "text": "Build it once from the parts × states below (tokens only, copy from messages); it appears on Home. What it does in each state is in DECIDED.md under those screens."
+  }
+ ],
+ "pictures": [],
+ "usedIn": [
+  "home_logout-confirm",
+  "home_profile",
+  "home_profile-case-open"
+ ],
+ "states": {
+  "default": [
+   "container"
+  ]
+ }
+}

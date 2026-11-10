@@ -11,6 +11,18 @@ It is a clean prototype lane where the goal is a polished, working, believable d
 
 ---
 
+## Way of working (D-100)
+
+- Playbook: `../../workflows/core/build-with-agents.md` (central, all projects; on the shared branch). Why: decision log D-100.
+- **Size the job.** Small, mechanical fix → do it directly with the one relevant check. Build → a terminal run from `docs/runs/QUEUE.md`.
+- **Checks:** `python3 ../../design-system/scripts/check_tokens.py` (no raw values; same-line `/* raw-ok: <reason> */` for the listed exceptions) ·
+  `node tests/run-checks.mjs` · `docs/renders/2026-11-09-build-fast/run-checks.sh`.
+- The token check also runs after every CSS edit (Claude hook `../../scripts/claude-hooks/`) and at every commit (`scripts/git-hooks/pre-commit`).
+- **Reviews:** one Codex review per run, correctness against the spec only; one fix pass; a second review only for blockers.
+- **Runs** read `docs/runs/RULINGS.md` first and end with one line in `docs/runs/STATUS.md`: `DONE <name>` or `STOPPED <name>: <reason>`, published with `scripts/publish.sh`. Pause the chain: create `docs/runs/HOLD`.
+
+---
+
 ## Workspace memory
 
 Before project-specific work, also read:
@@ -44,7 +56,7 @@ Before any auth/Home UI or render work, read `docs/feedback-rules.md` and `docs/
 **Layout v2 — D-42 to D-45.** Read `design-system/RULES.md` §8 (type scale, spacing, button placement, header types) before any screen work. Logo only on home-base screens (sign-in, Home). OTP v2 and the faster sign-in offer screen are defined in D-44 and D-45.
 
 ## Current state (2026-11-03) — read first
-- **Screens and app logic are approved and frozen** (D-78, re-frozen D-82): `ui-screens/` (README is the index; **148 states** (`s7c-checking` retired, D-91) at 360 and 390) and `ui-screens/app-logic.md`, with **D-83** (calling walkthrough), **D-84** (copy rules + copy round), **D-85** (17 Skip HA on a live call), **D-86** (bar notice centred) and **D-87** (Fallback B is the one Pilot flow; A-only screens later) applied. Render only what is genuinely new; every round runs the regression gate G7 (`docs/renders/2026-11-01-fix-round/CHECKLIST.md`). Anything new is a bug (fix where it occurs) or a next-version idea (backlog §4b).
+- **Screens and app logic are approved and frozen** (D-78, re-frozen D-82): `ui-screens/` (README is the index; **149 states** (`s7c-checking` retired, D-91; `offer_unavailable` added, D-93) at 360 and 390) and `ui-screens/app-logic.md`, with **D-83** (calling walkthrough), **D-84** (copy rules + copy round), **D-85** (17 Skip HA on a live call), **D-86** (bar notice centred) and **D-87** (Fallback B is the one Pilot flow; A-only screens later) applied. Render only what is genuinely new; every round runs the regression gate G7 (`docs/renders/2026-11-01-fix-round/CHECKLIST.md`). Anything new is a bug (fix where it occurs) or a next-version idea (backlog §4b).
 - **Start here:** `docs/context/session_handoff.md` (latest entry) and `docs/context/backlog.md` (§2l).
 - **Now: prototype build, step 0** — plan v3.2 and rebuild checklist v3.2 **approved** (D-90): `docs/proposals/2026-11-05-prototype-build-plan-v3.md`, `docs/reviews/2026-11-05-rebuild-checklist-v3.md`. Fallback B first; one owner per picture; phone testing via QR play link + drawer (D-89). Step 0 begins with the stale-line fixes in `docs/reviews/2026-11-05-plan-v3-review/MERGE.md` §4. Calling reference: `calling-flow/` (`data.js`). Preview site deploys only on request. Do not extend `index.html` / `app.js`.
 - **Checks:** `ui-screens/feedback/check-locked-specs.py`, `check-sources.mjs`, `docs/layout_check.py`, `brand/check_lockup.py` — all 0 failures over all 149 states. Rebuild review aids with `ui-screens/_qa/` (`build-review.py`, `build-contact-sheets.py`, `build-storyboard.py`).
@@ -183,7 +195,7 @@ Stop and ask where the decision belongs to the user.
 
 ## Layout rule (do not change without Apurva)
 
-Desktop = centred 9:16 phone frame, one scroll area, sheets/Rx/toasts inside the frame; mobile = full screen. Full rule: `design-system/RULES.md` §7. Run `python3 docs/layout_check.py` before committing any layout/CSS change. Never turn bottom sheets into desktop dialogs and never make the demo panel a scroll container.
+Desktop = centred phone frame at the real phone shape 390 : 844 (D-97; was 9:16), controls in one column on the right, top-aligned, one scroll area, sheets/Rx/toasts inside the frame; mobile = full screen. Full rule: `design-system/RULES.md` §7. Run `python3 docs/layout_check.py` before committing any layout/CSS change. Never turn bottom sheets into desktop dialogs and never make the demo panel a scroll container.
 
 ## Logo (do not change without Apurva)
 The header logo is the approved "truemeds for doctors" lockup in `brand/truemeds-for-doctors.svg` (project level, not in the design system). It embeds the canonical logo unchanged. Never redraw or recolour it. `python3 brand/check_lockup.py` must pass before any commit that touches `brand/`.
