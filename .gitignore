@@ -13,7 +13,8 @@
 .claude/settings*.json
 .claude/skills/
 
-# Render review rounds are local working history; only final/ folders and contact sheets are committed (2026-10-15)
+# Old render review rounds (round-*) stay local (2026-10-15). Run evidence from unattended runs IS committed to the
+# project branch, never to main (AGENTS.md → Git safety → Run evidence, 2026-11-09).
 projects/*/docs/renders/**/round-*/
 __pycache__/
 projects/*/docs/renders/**/promotion-baseline/
