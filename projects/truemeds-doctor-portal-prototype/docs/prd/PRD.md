@@ -2,12 +2,14 @@
 
 | | |
 |---|---|
-| Status | Draft for review · v0.5 · 9 Nov 2026 |
+| Status | Draft for review · v0.6 · 10 Nov 2026 |
 | Owner | Apurva Shetty (Product) |
 | Release | Launch release (first version of the doctor app) |
 | Calling flow, every state | [Calling-flow page](https://doctor-portal-prototype.netlify.app/calling-flow/) |
 | Approved screens | [`ui-screens/`](../../ui-screens/README.md): every screen state, 390 and 360 wide |
-| Prototype | `[NEED: preview link once the rebuilt prototype is published (Apurva)]` |
+| Prototype | [Phone demo](https://truemeds-doctor-app-preview.netlify.app/?demo=1) (app only, plays from sign-in) · [With the review panel](https://truemeds-doctor-app-preview.netlify.app/) (jump to any state, run call scenarios) |
+| Hand-off kit | [Every screen and state](https://truemeds-doctor-app-preview.netlify.app/kit) — tap any part to see how it's built; downloads for the app team |
+| Engineering contracts | [Auth](https://truemeds.atlassian.net/wiki/spaces/Portal/pages/2142535702) · [User profile](https://truemeds.atlassian.net/wiki/spaces/Portal/pages/2142404614) · [Availability](https://truemeds.atlassian.net/wiki/spaces/Portal/pages/2153447525) · [Order detail / Prescribe, v2](https://truemeds.atlassian.net/wiki/spaces/Portal/pages/2147942402) (Cat4; Pilot later) |
 
 ## 1. Executive summary
 
@@ -68,6 +70,8 @@ Each screen opens with the job the doctor is trying to get done, then why it's b
 
 *Sign-in (`sign-in_default`)*
 
+[See this state](https://truemeds-doctor-app-preview.netlify.app/kit/viewer/#screens/sign-in/sign-in_default) · [Try it](https://truemeds-doctor-app-preview.netlify.app/?s=sign-in_default)
+
 **What the doctor can do:** enter a mobile number and tap Send OTP; tap Sign up (opens Truemeds' existing doctor sign-up form).
 
 **Rules:**
@@ -100,6 +104,8 @@ Each screen opens with the job the doctor is trying to get done, then why it's b
 ![OTP](../../ui-screens/otp/otp_default_w390.png)
 
 *OTP (`otp_default`)*
+
+[See this state](https://truemeds-doctor-app-preview.netlify.app/kit/viewer/#screens/otp/otp_default) · [Try it](https://truemeds-doctor-app-preview.netlify.app/?s=otp_default)
 
 **What the doctor can do:** type the 4-digit code; tap Verify & sign in; tap Change to fix the number; tap Resend code once the wait is over.
 
@@ -136,10 +142,12 @@ Each screen opens with the job the doctor is trying to get done, then why it's b
 
 *Faster sign-in offer, fingerprint (`offer_fingerprint`)*
 
-**What the doctor can do:** Turn on faster sign-in (opens the phone's prompt, then Home); Not now (goes to Home).
+[See this state](https://truemeds-doctor-app-preview.netlify.app/kit/viewer/#screens/offer/offer_fingerprint) · [Try it](https://truemeds-doctor-app-preview.netlify.app/?s=offer_fingerprint)
+
+**What the doctor can do:** Turn on faster sign-in (opens the phone's prompt, then Home); Not now (goes to Home; asked again at the next OTP sign-in).
 
 **Rules:**
-- Shown once, after the first successful OTP sign-in, on a phone that supports it and has it off.
+- Shown after an OTP sign-in, on a phone that supports it, while faster sign-in is off: first after the first sign-in, then again at each later OTP sign-in until the doctor turns it on, **at most 3 times** (a setting). After that it isn't shown again; Profile still turns it on.
 - The unlock follows the phone: fingerprint or Face ID if set up, otherwise the phone's screen lock (PIN, pattern or password). A phone with no screen lock at all skips this screen.
 - The wording names what the phone has (Face ID, fingerprint, screen lock) and says Truemeds never sees or stores it.
 - It can be turned on or off any time in Profile. The phone's back gesture means Not now.
@@ -163,6 +171,8 @@ Each screen opens with the job the doctor is trying to get done, then why it's b
 ![Returning unlock](../../ui-screens/returning-unlock/unlock_fingerprint_w390.png)
 
 *Returning unlock, fingerprint (`unlock_fingerprint`)*
+
+[See this state](https://truemeds-doctor-app-preview.netlify.app/kit/viewer/#screens/unlock/unlock_fingerprint) · [Try it](https://truemeds-doctor-app-preview.netlify.app/?s=unlock_fingerprint)
 
 **What the doctor can do:** unlock with fingerprint, Face ID or screen lock; Use OTP instead; Switch account (goes to sign-in).
 
@@ -188,6 +198,8 @@ Each screen opens with the job the doctor is trying to get done, then why it's b
 ![Home, available](../../ui-screens/home/home_active_w390.png)
 
 *Home while available (`home_active`)*
+
+[See this state](https://truemeds-doctor-app-preview.netlify.app/kit/viewer/#screens/home/home_active) · [Try it](https://truemeds-doctor-app-preview.netlify.app/?s=home_active)
 
 **What the doctor can do:** set how long they're available (quick picks 15, 30 and 45 minutes, 1, 2 and 3 hours, or a wheel in 15-minute steps); Request a case; Add time when time is running low; End availability; open Profile, Help and notifications.
 
@@ -230,6 +242,8 @@ Each screen opens with the job the doctor is trying to get done, then why it's b
 
 *Case page, ready to call (`t01-ready`, state 1)*
 
+[See this state](https://truemeds-doctor-app-preview.netlify.app/kit/viewer/#screens/calling/t01-ready) · [Try it](https://truemeds-doctor-app-preview.netlify.app/?s=t01-ready)
+
 **What the doctor can do:** read order details; View Rx; open any medicine to prescribe or disable it (§5.10); type notes (§5.11); Call patient; Back to leave the case.
 
 **Rules:**
@@ -261,6 +275,8 @@ Each screen opens with the job the doctor is trying to get done, then why it's b
 ![Cat4 valid call, Confirm prescription](../../ui-screens/case/t08a-valid-cat4_w390.png)
 
 *Valid call, Cat4 (`t08a-valid-cat4`, state 8a)*
+
+[See this state](https://truemeds-doctor-app-preview.netlify.app/kit/viewer/#screens/calling/t08a-valid-cat4) · [Try it](https://truemeds-doctor-app-preview.netlify.app/?s=t08a-valid-cat4)
 
 **Rules for every call:**
 - **Valid call.** A call is valid when total talk time on the case reaches the gate time (§7). Talk time adds up across connected calls on the same case. The doctor is never shown the count.
@@ -300,6 +316,8 @@ Each screen opens with the job the doctor is trying to get done, then why it's b
 
 *Pilot live call after the gate (`g1-generic-confirm`, state B1)*
 
+[See this state](https://truemeds-doctor-app-preview.netlify.app/kit/viewer/#screens/calling/g1-generic-confirm) · [Try it](https://truemeds-doctor-app-preview.netlify.app/?s=g1-generic-confirm)
+
 **What the doctor can do:** Confirm prescription on the live call; Skip HA with a reason; after the case is transferred or forwarded, Request next case or Back to Home.
 
 **Rules:**
@@ -323,6 +341,8 @@ Each screen opens with the job the doctor is trying to get done, then why it's b
 ![Schedule callback](../../ui-screens/case/c-callback_w390.png)
 
 *Schedule callback sheet (`c-callback`)*
+
+[See this state](https://truemeds-doctor-app-preview.netlify.app/kit/viewer/#screens/calling/c-callback) · [Try it](https://truemeds-doctor-app-preview.netlify.app/?s=c-callback)
 
 **Rules:**
 - **Callback** is offered only when the call was too short or no call result came. The doctor picks today or tomorrow and a time; the case closes for this doctor and goes to the callback pool. The backend refuses a callback unless the patient answered.
@@ -351,6 +371,8 @@ Each screen opens with the job the doctor is trying to get done, then why it's b
 ![Prescribe](../../ui-screens/prescribe/d-default_w390.png)
 
 *Prescribe, tablet daily (`d-default`)*
+
+[See this state](https://truemeds-doctor-app-preview.netlify.app/kit/viewer/#screens/prescribe/d-default) · [Try it](https://truemeds-doctor-app-preview.netlify.app/?s=d-default)
 
 **What the doctor can do:** choose how often (Daily, Every X hours, Alt days, Weekly, Monthly, SOS only); set the dose; add an extra as-needed (SOS) dose with a daily cap; set the duration or Ongoing; optionally choose food timing and write additional instructions; Prescribe; Disable with a reason; close.
 
@@ -397,6 +419,8 @@ The printed line is the schedule, then the duration, then food timing and instru
 
 *Rx viewer (`a-rx-viewer`)*
 
+[See this state](https://truemeds-doctor-app-preview.netlify.app/kit/viewer/#screens/case/a-rx-viewer) · [Try it](https://truemeds-doctor-app-preview.netlify.app/?s=a-rx-viewer)
+
 **What the doctor can do:** View Rx (zoom, rotate, reset, pinch and drag); type chief complaints / symptoms and doctor notes.
 
 **Rules:**
@@ -439,6 +463,7 @@ Every value below is a starting value, set by its owner and changeable without a
 | OTP: lock length, limit window, code life | `[NEED, OQ-017]` | Product + Engineering |
 | OTP: resend waits (each longer than the last) | `[NEED, OQ-017]` | Product |
 | Failed phone unlocks before falling back to OTP | `[NEED]` | Product |
+| Faster sign-in offer: most times shown (at OTP sign-ins, until turned on) | 3 | Product |
 | Ongoing duration prints as | 6 months | Product |
 | Doctor earnings per confirmed prescription | ₹20 | Doctor Ops |
 | Callback time slots | sent by the backend | Doctor Ops |
@@ -481,6 +506,7 @@ Every value below is a starting value, set by its owner and changeable without a
 - Release, Patient unavailable and Callback, one job each (§5.9).
 - No adding medicines, no quantity, no prices on the doctor's screens (§5.10).
 - Four endings tracked as separate outcomes (§11).
+- Faster sign-in offer: again at each OTP sign-in until turned on, at most 3 times (§5.3, D-104).
 
 **Working default:** the app learns the call's status by asking the backend at short intervals (polling) until Engineering confirms the method and interval (OQ-030).
 
@@ -508,7 +534,6 @@ Every value below is a starting value, set by its owner and changeable without a
 
 *Sign-in*
 - OTP code life, lock length, limit window and reset, session length, and Doctor Ops approval of a second number. (OQ-017) [Product + Engineering]
-- When to offer faster sign-in again after Not now. (OQ-023) [Apurva]
 
 *Ops and money*
 - Flag rules for release and patient-unavailable rates per doctor. [Doctor Ops]

@@ -188,9 +188,10 @@ Every entry must include:
 **Question:** Telemedicine Practice Guidelines: a consultation the doctor starts needs explicit, recorded patient consent. Does the patient's order count as the patient starting it?
 **Safe placeholder:** Not built. Needs Legal before the order page changes.
 
-### OQ-023 — When to offer faster sign-in again after "Not now"
+### OQ-023 — When to offer faster sign-in again after "Not now" [ANSWERED — Apurva, 2026-11-10, D-104]
 **Question:** After a doctor taps "Not now" on the faster sign-in offer (D-45), when is it offered again? Options: after the next N OTP sign-ins on the same device (e.g. 3); after N days; never (Profile only).
 **Safe placeholder:** Never re-offer automatically; Profile always has the switch (D-45). Needs product + SMS-cost input.
+**Answered by D-104:** offered again at each OTP sign-in until turned on, at most 3 times in total (a setting); then only Profile.
 
 
 ### OQ-024 — Releasing a case [DECIDED — Apurva, 2026-10-24, D-58 point 20; backend still needed]

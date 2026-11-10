@@ -131,7 +131,7 @@ const openOq = [];
 oqBlocks.forEach(b => {
   const id = (b.match(/^OQ-\d+/) || [])[0]; if (!id) return;
   const head = b.split('\n')[0];
-  const answered = /ANSWERED|CLOSED/.test(head) || /\*\*Status:\*\*\s*Answered/i.test(b) || /Answered by D-/.test(b);
+  const answered = /ANSWERED|CLOSED|prototype only/.test(head) || /\*\*Status:\*\*\s*Answered/i.test(b) || /Answered by D-/.test(b);
   if (!answered) openOq.push(id);
 });
 const tenAndNine = sec('10.') + sec('9.');

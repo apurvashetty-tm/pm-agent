@@ -1023,6 +1023,11 @@ From an external (ChatGPT) review, each point verified before acting.
 - **Why:** the pilot viewer overwhelmed on first open; an outside team can't use our internal codes; in-site downloads always match the viewer's version, Drive would fall behind and need per-person sharing.
 - **Rejected:** a separate "components" tab (Building blocks already is that; it gains "Where it's used" instead); keeping the 360 picture (the 360 limit is stated instead); a "Behaviour" list of decision numbers per element (replaced by answered questions in plain words, once per state); Google Drive for downloads.
 
+### D-104 · Faster sign-in offer: again at each OTP sign-in, at most 3 times — 2026-11-10
+- **Decision (Apurva):** after "Not now" (or the phone's back gesture), the faster sign-in offer comes back at the doctor's next OTP sign-in, and the next, until faster sign-in is turned on — **at most 3 times in total** (a Product setting, starting value 3). After that it isn't shown again; Profile still turns it on. "Not available on this phone" counts as shown. Remembered per phone and mobile number, as today. Closes OQ-023; replaces D-45's "offered once".
+- **Why:** the point is cutting SMS cost, and every OTP sign-in is an SMS sent — the right moment to ask again. Doctors stay signed in between sessions, so OTP sign-ins are rare and the re-ask isn't frequent; the cap stops nagging a doctor who has decided no.
+- **Rejected:** never re-offering (placeholder; loses the SMS saving); offering at every app open (nags); no cap.
+
 ## Design system changes made for this work
 
 ### D-60 · Secondary button without drop shadow (design system) — 2026-10-24 · **REVERTED same day**
