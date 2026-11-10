@@ -43,6 +43,8 @@ own work; what it may touch; what stops it (turn cap, time-box); who signs off.
 - The main thread reviews each report (scheduled check-in) and writes rulings to `docs/runs/RULINGS.md`, which every run
   reads first. Decisions are still recorded only by the main thread.
 - Commits through `scripts/publish.sh` only; never `main`; no deploy unless Apurva asks.
+- While a chain runs, nothing merges to `main` (`publish.sh` pulls `main` into the branch). Evidence rules, what goes to
+  `main` and the archive tag before a close: `AGENTS.md` → Git safety.
 
 ## Sources
 
