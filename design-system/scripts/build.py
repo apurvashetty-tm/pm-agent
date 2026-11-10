@@ -125,6 +125,21 @@ def truemeds_overrides():
     for name, ref in tm["content"].items():
         family, shade = ref.split(":", 1)[1].rsplit("-", 1)
         sem[f"--tm-content-{name}"] = f"var(--tm-core-{family}-{shade})"
+    # D-98: sizes with no SALT token (border width, focus ring, icon, spinner, logo lockup) -> --tm-<group>-<name>: <n>px
+    for group, vals in tm.get("size", {}).items():
+        if group.startswith("_"):
+            continue
+        for name, v in vals.items():
+            if not name.startswith("_"):
+                sem[f"--tm-{group}-{name}"] = f"{v}px"
+    # D-99: non-px scales (duration, easing, layer, opacity, pressed, sheet) -> --tm-<group>-<name>: <value><_unit>
+    for group, vals in tm.get("scale", {}).items():
+        if group.startswith("_"):
+            continue
+        unit = vals.get("_unit", "")
+        for name, v in vals.items():
+            if not name.startswith("_"):
+                sem[f"--tm-{group}-{name}"] = f"{v}{unit}"
     text = []
     for k, (size, lh, weight) in tm["text"].items():
         text.append(
@@ -156,6 +171,10 @@ def build_extras():
         if k.startswith("_"):
             continue
         lines.append(f"  --tm-shadow-{k}: {v};")
+    # D-99: Truemeds shadows (tokens/truemeds.json "shadow"), same list as the SALT ones
+    for k, v in json.loads((ROOT / "tokens/truemeds.json").read_text()).get("shadow", {}).items():
+        if not k.startswith("_"):
+            lines.append(f"  --tm-shadow-{k}: {v};")
     classes = []
     for k, v in ex["text"].items():
         if k.startswith("_"):

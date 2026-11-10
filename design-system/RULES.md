@@ -27,7 +27,7 @@ Link two files. Never copy values out of them.
 
 ## 2. Hard rules
 
-1. **No raw values.** No hex codes, no `rgb()`, no ad-hoc px for colour, radius, spacing or shadow in project code. If a value isn't a token, it isn't allowed.
+1. **No raw values.** No hex codes, no `rgb()`, no typed numbers for colour, spacing, radius, shadow, **sizes, border widths, timing, layering (z-index) or opacity** in component or project code (D-99). If a value isn't a token, it isn't allowed. Use a token by meaning, not by value (a 20px text line is `--tm-font-lineheight-sm`, not an icon size). The guard `python3 design-system/scripts/check_tokens.py` enforces this after every CSS edit and at every commit. Allowed exceptions carry a same-line `/* raw-ok: <reason> */` marker: geometry (`50%` centring, `100%`, `100vh`, `rotate(360deg)`, `line-height: 1`), optical nudges of 1–3px, the 31ch text measure, the hidden OTP input's 16px (stops iPhone zoom), reduced-motion `0.01ms`, `@media` widths, and prototype-only drawings (the drawn keyboard). Not scanned: `app/shell/`, `app/review/`, the mock Rx paper, `ui-screens/` reference files and the `[DEPRECATED]` legacy `.tm-otp` block.
 2. **Semantic tokens only.** Use `--tm-content-*`, `--tm-surface-*`, `--tm-border-*`, `--tm-feedback-*`, `--tm-space-*`, `--tm-radius-*`. Never use `--tm-core-*` (the raw palette) in a project.
 3. **One font:** Plus Jakarta Sans (comes with `truemeds.css`). No system-font stacks, no second typeface.
 4. **One icon set:** Tabler outline via `icons.js`. Icons are monochrome and inherit text colour (default `--tm-content-secondary` or `--tm-content-primary`). **No emoji in UI.** No illustrated, multicolour or 3D icons (no shading, gradients or rendered depth; a one-colour line drawing of an object at an angle, like the `tablet` glyph, is fine). Glyphs Tabler lacks are drawn on its grid in `scripts/build-icons.mjs`, marked [PROPOSED]. Product images are real photos (`.tm-thumb`), never illustrations.
@@ -79,7 +79,8 @@ For **portals, desktop and internal tools**, use the same tokens and components 
 
 Run before calling any UI task done. Every answer must be "yes".
 
-- [ ] Only `truemeds.css` tokens/components — no hex, no raw px for colour/radius/spacing/shadow?
+- [ ] Only `truemeds.css` tokens/components — no hex, no raw values for colour/spacing/radius/shadow/size/border width/timing/layering/opacity (`check_tokens.py` passes)?
+- [ ] Would the native app need a name for this value? If yes, it's a token.
 - [ ] Plus Jakarta Sans only?
 - [ ] All icons from `icons.js`, monochrome? Zero emoji?
 - [ ] Colour used only for state (brand = action/selection, green/amber/red = status)?
@@ -113,15 +114,15 @@ Run before calling any UI task done. Every answer must be "yes".
 
 ## 7. Phone-frame prototypes (layout rule — do not re-litigate)
 
-Mobile-first prototypes are previewed on desktop as a **9:16 phone frame**, never as a stretched page, a narrow column glued to the window, or a dialog layout.
+Mobile-first prototypes are previewed on desktop as a **phone frame at the real phone shape (390 × 844, about 19.5:9)**, never as a stretched page, a narrow column glued to the window, or a dialog layout. *(Changed 2026-11-09, Apurva, doctor portal D-97: was 9:16, which is wider and shorter than today's phones and than the approved pictures.)*
 
 1. **Below 768px** the app *is* the screen: the window scrolls and overlays are viewport-fixed.
-2. **At 768px and up** the app sits in a centred 9:16 frame: `height: clamp(640px, 100vh - 48px, 800px)`, `width: height × 9/16`, rounded border, `overflow: hidden`, `transform: translateZ(0)`.
+2. **At 768px and up** the app sits in a centred phone frame at 390 : 844: `height: clamp(640px, 100vh - 48px, 844px)`, `width: height × 390/844`, so it is exactly 390 × 844 when the window allows and scales down evenly when it doesn't. Rounded border, `overflow: hidden`, `transform: translateZ(0)`.
 3. **One scroll area** inside the frame (the content region). The header is pinned above it. The page behind never scrolls because of the frame, and no side panel may be a scroll container.
 4. **Overlays live inside the frame.** Bottom sheets, full-screen viewers, toasts and snackbars are DOM children of the frame (the transform makes `position: fixed` anchor to it). Bottom sheets keep the mobile bottom-sheet behaviour at every width; they are never turned into centred dialogs on desktop.
-5. **Demo/dev panels** float beside the frame (absolutely positioned) and never change its size or centring.
+5. **Demo/dev panels** float beside the frame (absolutely positioned), **top-aligned with the frame's top edge**, in **one column on the right** of the frame. They never change its size or centring.
 6. Desktop overrides go in one block at the END of the stylesheet so they beat the mobile rules.
-7. Check before every commit that touches layout: `python3 projects/<project>/docs/layout_check.py` must say ALL PASS (frame 9:16, wheel scroll works, sheet at frame bottom, Rx viewer fills frame, no page errors).
+7. Check before every commit that touches layout: `python3 projects/<project>/docs/layout_check.py` must say ALL PASS (frame 390 : 844, panels top-aligned, wheel scroll works, sheet at frame bottom, Rx viewer fills frame, no page errors).
 
 ## 8. Mobile screen layout  [ADDED 2026-10-14 · layout v2 · D-42–D-45]
 
@@ -138,7 +139,7 @@ Mobile-first prototypes are previewed on desktop as a **9:16 phone frame**, neve
    **Small sizes:** 9–11px text tokens are never used in apps. 12px only for tags and L4 fine print. Anything the user needs to act on (clinical details, amounts, status, errors) is 14px or larger.
    The type scale applies to screen text. Component internals (OTP digits, button labels, keyboard) keep their component specs.
 2. **Side margin:** `--tm-space-page` (**16**, the design team's standard — changed from 24 on 2026-10-26, D-67) on every mobile screen, including the header, sheets and the action bar. Every block — fields, notices, cards, code boxes, buttons — shares the same left and right edges.
-3. **Three gaps only:** tight `--tm-space-sm` (8): label↔field, field↔helper, and a result notice ↔ the control it came from (A-14) · related `--tm-space-lg` (16): items within a group, **and cards stacked one above another — the same gap everywhere cards stack, on the case page, Prescribe and Profile (B-04, B-05, A-13, 2026-11-02)** · section `--tm-space-2xl` (32): between groups. Spare vertical space goes between the content and a pinned button, never inside a group.
+3. **Three gaps only:** tight `--tm-space-sm` (8): label↔field, field↔helper, and a result notice ↔ the button it came from (A-14). **A result notice under a field sits 16 below the field** (the field's 8 gap plus the notice's 8; D-98) · related `--tm-space-lg` (16): items within a group, **and cards stacked one above another — the same gap everywhere cards stack, on the case page, Prescribe and Profile (B-04, B-05, A-13, 2026-11-02)** · section `--tm-space-2xl` (32): between groups. Spare vertical space goes between the content and a pinned button, never inside a group.
    Home-base screens use 3xl (48) as the hero gap between logo and title.
 4. **Main button placement:**
    - **Screens with text entry:** the primary button sits inline directly under the content, so it stays visible above the keyboard without moving.
@@ -159,7 +160,7 @@ Mobile-first prototypes are previewed on desktop as a **9:16 phone frame**, neve
 10. **Titles:** no full stop at the end of a screen title. Titles wrap balanced (L8).
 11. **Decorative icons** (bullets, list markers) are neutral (`--tm-content-secondary`); brand blue is for actions and selection only (§2.5). An icon tile used as a screen's hero may stay brand-tinted.
 12. **Value display:** a large status value (e.g. time remaining) is a component, not screen text: 32/40 semibold, fixed-width digits (L9). Like OTP digits, it sits outside the four-level type scale.
-13. **Logo lockup size and place (A-07, 2026-11-02).** Every home-base screen with the "truemeds for doctors" lockup (`brand/truemeds-for-doctors.svg`, project level, §2.8) draws it **166px wide** (height follows the 220×54 artwork), **16px from the top**, and the logo→title gap stays as in §8.3 (L6). 166 is the largest width that fits Home at 360 wide with 16 to the first header icon: 360 − 2×16 − (3 × 48 + 2 × 8 − 14 for the actions' 14px overhang) − 16 = 166. Sign-in is 174 today and comes down to 166 (NEEDS-APURVA, Round 4). Nothing else sets the lockup size.
+13. **Logo lockup size and place (A-07, 2026-11-02).** Every home-base screen with the "truemeds for doctors" lockup (`brand/truemeds-for-doctors.svg`, project level, §2.8) draws it **166px wide** (height follows the 220×54 artwork), **16px from the top**, and the logo→title gap stays as in §8.3 (L6). 166 is the largest width that fits Home at 360 wide with 16 to the first header icon: 360 − 2×16 − (3 × 48 + 2 × 8 − 14 for the actions' 14px overhang) − 16 = 166. Nothing else sets the lockup size.
 14. **Small phones (Round 4, 2026-11-02).** At **360 × 640** every state of a screen is checked: nothing the doctor needs is hidden without a scroll cue (a visible edge of the next item, or a scroll area), and a pinned bar never covers the last content when the content is scrolled to its end. The check runs as a permanent guard in `ui-screens/feedback/check-locked-specs.py` (small-phone pass, every state, Round 4 item 10; `docs/layout_check.py` covers the old prototype only). Prescribe, the case page, Home, the offer and the unlock must pass it before a screen is approved.
 
 ### Locked specs (D-46, D-47) — set once in the design system, never per screen
@@ -230,7 +231,7 @@ Set once in the design system; a project never restyles them. Where `src/compone
 | Surface | Rule |
 |---|---|
 | **Field error** | Under the field (L4, L7). |
-| **Notice** | Neutral / warning / error (L5); stays until the cause is gone. **Warning** when something blocks the main action or runs on a timer (offline, locks, near expiry); **error** when an action failed; **neutral** only for side information (D-54). Text wraps balanced (A-22). **Placement (A-19, Round 4 item 2, 2026-11-02):** a notice that is the **result of an action** sits next to the control that did it — on a screen with a pinned bar, inside the bar above its button, in the band style of §3 (Home "ending soon", setup / add / request failures, the offer's "Couldn't turn on…", the case and calling bar notices); on a screen without a bar, 8 below the field or button it came from (A-14). A notice about **the bar's own action** — the result of the last tap, or why its button is disabled now (offline, "No cases right now") — is also in the bar. A notice about the **screen's general situation** (unlock "isn't available", Home idle-expired, manually ended, expired-pending, stop-pending) stays at the top of the panel, not tied to a button (lane-request 7, Round 4). **Alignment (D-86, 2026-11-03):** the band inside the bar is centred (icon and text as a group, wrapped lines centred, balanced breaks kept); every other notice (top of page, inside sheets, in content) stays left-aligned. |
+| **Notice** | Neutral / warning / error (L5); stays until the cause is gone. **Warning** when something blocks the main action or runs on a timer (offline, locks, near expiry); **error** when an action failed; **neutral** only for side information (D-54). Text wraps balanced (A-22). **Placement (A-19, Round 4 item 2, 2026-11-02):** a notice that is the **result of an action** sits next to the control that did it — on a screen with a pinned bar, inside the bar above its button, in the band style of §3 (Home "ending soon", setup / add / request failures, the offer's "Couldn't turn on…", the case and calling bar notices); on a screen without a bar, 16 below the field it came from (D-98) or 8 below the button (A-14). A notice about **the bar's own action** — the result of the last tap, or why its button is disabled now (offline, "No cases right now") — is also in the bar. A notice about the **screen's general situation** (unlock "isn't available", Home idle-expired, manually ended, expired-pending, stop-pending) stays at the top of the panel, not tied to a button (lane-request 7, Round 4). **Alignment (D-86, 2026-11-03):** the band inside the bar is centred (icon and text as a group, wrapped lines centred, balanced breaks kept); every other notice (top of page, inside sheets, in content) stays left-aligned. |
 | **Status card** | The outcome of a task (§9.3). |
 | **Toast** | **Dark** (inverse surface — the platform standard), **14/20**, 12px × 16px padding, medium radius, one line (two at most), width up to the screen minus margins. Just above the bottom bar (on a screen with a pinned bar, `--tm-toast-offset` = bar height + 16, Round 4), **one at a time**, about 4 seconds, polite screen-reader announcement, never takes focus. **Only when the result has no place on the screen**; otherwise show it where it happens. |
 | **Loading** | Busy primary (L2). |
