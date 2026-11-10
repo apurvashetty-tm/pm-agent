@@ -172,12 +172,22 @@ const CSS_ESC = (s) => s.replace(/(["\\])/g, "\\$1");
 // ---------------------------------------------------------------------------------------------------------------------
 export function copyMatcher(messages, codeText) {
   const res = Object.entries(messages).map(([k, v]) => [k, new RegExp("^" + v.replace(/[.*+?^${}()|[\]\\]/g, "\\$&").replace(/\s*\\\{link\\\}\s*/g, "\\s*(?<link>.*?)\\s*").replace(/\\\{(\w+)\\\}/g, "(?<$1>.+?)") + "$"), /\{\w+\}/.test(v)]);
-  return (text, prefer) => {
+  const LIT = Object.fromEntries(Object.entries(messages).map(([k, v]) => [k, v.replace(/\{\w+\}/g, "").replace(/[^A-Za-z]/g, "").length]));
+  return (text, prefer, slot) => {
     const t = (text || "").replace(/\s+/g, " ").trim();
     if (!t) return null;
     let hits = res.filter(([, re]) => re.test(t));
     if (hits.length > 1) { const exact = hits.filter(([, , ph]) => !ph); if (exact.length) hits = exact; }
-    if (hits.length > 1) { const pre = hits.filter(([k]) => prefer.some((p) => k.startsWith(p))); if (pre.length) hits = pre; }
+    // the template with the most fixed words wins ("Disabled: {reason}. …" over "{slot}: {dose}")
+    if (hits.length > 1) { const best = Math.max(...hits.map(([k]) => LIT[k])); hits = hits.filter(([k]) => LIT[k] === best).concat(hits.filter(([k]) => LIT[k] !== best)); }
+    if (hits.length > 1) { const lead = hits.filter(([k]) => LIT[k] === LIT[hits[0][0]]); const pre = lead.filter(([k]) => prefer.some((p) => k.startsWith(p))); if (pre.length) hits = pre.concat(hits.filter((h) => !pre.includes(h))); }
+    // a template with no fixed words ("{n} {unit}") says nothing on its own: visible text that only matches one is data
+    // (a name from the backend), or a value the app puts together with those keys (a dose, a duration)
+    if (hits.length && LIT[hits[0][0]] === 0 && slot !== "aria-label") {
+      const keys = hits.map((h) => h[0]); const mm = t.match(hits[0][1]); const first = mm.groups ? Object.values(mm.groups)[0] : "";
+      if (/^[\d½¼¾]/.test(first)) return { data: t, note: "A value the app puts together, not copy: build it with " + keys.map((x) => "messages." + x).join(" / ") + "." };
+      return { data: t, note: "Sample data (from the backend in the real app), not copy." };
+    }
     if (hits.length) {
       const [k, re] = hits[0]; const mm = t.match(re);
       return { copyKey: k, ...(mm.groups ? { values: { ...mm.groups } } : {}), ...(hits.length > 1 ? { sameTextAs: hits.slice(1).map((h) => h[0]) } : {}) };
@@ -243,7 +253,7 @@ export function assembleJourneys({ cap, T, styleRecord, LONG, spacingOf, message
         if (e.text && /^rx-paper/.test(e.rawBlock)) copies.push({ slot: "text", data: "(sample prescription text)", note: "Mock prescription paper: sample content standing in for the customer's prescription image; not copied into the kit." });
         else if (e.text) copies.push({ slot: "text", ...copyFor(e.text, PREFER[j.key]) });
         if (e.attrs.placeholder) copies.push({ slot: "placeholder", ...copyFor(e.attrs.placeholder, PREFER[j.key]) });
-        if (e.attrs["aria-label"]) { const cc = copyFor(e.attrs["aria-label"], PREFER[j.key]); if (cc.copyKey) copies.push({ slot: "aria-label", ...cc }); }
+        if (e.attrs["aria-label"]) { const cc = copyFor(e.attrs["aria-label"], PREFER[j.key], "aria-label"); if (cc.copyKey) copies.push({ slot: "aria-label", ...cc }); }
         if (e.attrs.alt) copies.push({ slot: "alt", ...copyFor(e.attrs.alt, PREFER[j.key]) });
         if ((e.tag === "input" || e.tag === "textarea") && e.attrs.value) copies.push({ slot: "value", data: e.attrs.value, note: "What the doctor typed (sample), not copy." });
         for (const cc of copies) if (cc.literal) {
@@ -305,11 +315,11 @@ export function journeyDocs({ ROOT, read, doc, section, quote, cleanSafe, die })
   const setting = (k) => {
     const l = settingsSrc.split("\n").find((x) => x.trim().startsWith(k + ":"));
     if (!l) die(`settings: no ${k}`);
-    const m = l.match(/value:\s*([^,]+(?:\[[^\]]*\])?[^,]*),.*source:\s*"([^"]+)",\s*ref:\s*"([^"]*)"/);
+    const m = l.match(/value:\s*(\[[^\]]*\]|[^,]+),.*source:\s*"([^"]+)",\s*ref:\s*"([^"]*)"/);
     if (!m) die(`settings: can't read ${k}`);
     return { key: k, value: m[1].trim(), mock: m[2] === "MOCK ASSUMPTION", ref: m[3] };
   };
-  const human = (v) => v.replace(/(\d+)\s*\*\s*MIN/g, "$1 min").replace(/(\d+)\s*\*\s*SEC/g, "$1 s");
+  const human = (v) => v.replace(/^\[(.*)\]$/, (m, x) => x.split(/\s*,\s*/).join(" → ")).replace(/(\d+)\s*\*\s*MIN/g, "$1 min").replace(/(\d+)\s*\*\s*SEC/g, "$1 s");
   const lead = (t) => {
     const b = t.match(/^\*\*([^*]+)\*\*/); if (b) return b[1].replace(/[:.]$/, "").trim();
     return t.replace(/\*\*/g, "").split(/[.:(—]/)[0].split(" ").slice(0, 9).join(" ").trim();
@@ -336,10 +346,24 @@ export function journeyDocs({ ROOT, read, doc, section, quote, cleanSafe, die })
     // app-logic rule lines
     for (const [sec, from, to] of j.appLogic) for (const raw of ruleLines(sec, from, to)) {
       quote("appLogic", raw);
-      const text = cleanSafe(raw);
-      if (!text || text.replace(/[^A-Za-z]/g, "").length < 12) continue;
+      const text = cleanSafe(raw).replace(/\s*\*Original flag:\*.*$/, "");   // export the answer, not the review history
+      if (!text || (!raw.startsWith("|") && text.replace(/[^A-Za-z]/g, "").length < 12)) continue;   // table rows (e.g. dose lists) stay even when short
       const refs = [...new Set(raw.match(/D-\d+/g) || [])];
       const isRow = raw.startsWith("|");
+      // a short table row (e.g. a dose list): label each cell with its column header so it reads on its own
+      if (isRow) {
+        const secLines = section("appLogic", sec).split("\n"); const at = secLines.findIndex((x) => x.trim() === raw);
+        let h = at; while (h > 0 && !/^\|[-| ]+\|$/.test(secLines[h].trim())) h--;
+        const head = h > 0 ? secLines[h - 1].split("|").map((x) => x.trim()).filter(Boolean) : null;
+        const cells = raw.split("|").map((x) => x.trim()).filter(Boolean);
+        if (head && head.length === cells.length && (head[0] === "Form" || text.replace(/[^A-Za-z]/g, "").length < 12)) {
+          quote("appLogic", secLines[h - 1].trim());
+          const t = cleanSafe(cells.slice(1).map((c, k) => `${head[k + 1]}: ${c}`).join(" · "));
+          const id = add(j, { topic: "App rules", q: head[0] === "Form" ? `What doses can be picked for ${cells[0]}?` : `What are the ${head.slice(1).join(", ").toLowerCase()} for ${cells[0]}?`, a: [{ src: `App logic ${sec.replace(/^## /, "§").split(" ")[0]}`, text: t }], refs, raw });
+          ruleIndex[j.key].push({ id, raw });
+          continue;
+        }
+      }
       const cells = isRow ? raw.split("|").map((x) => x.trim()).filter(Boolean) : null;
       const q = isRow ? `What happens in "${cells[1] && cells[1].length < 60 ? cells[1].replace(/\*\*|`/g, "") : cells[0].replace(/\*\*|`/g, "")}"${cells[0] && /^\d|^\d+[a-f]$/.test(cells[0]) ? ` (state ${cells[0]})` : ""}?` : `What is the rule for "${lead(text)}"?`;
       const id = add(j, { topic: "App rules", q, a: [{ src: `App logic ${sec.replace(/^## /, "§").split(" ")[0]}`, text }], refs, raw });
@@ -387,6 +411,9 @@ export function journeyDocs({ ROOT, read, doc, section, quote, cleanSafe, die })
   const caseJ = JOURNEYS.find((j) => j.key === "case");
   add(caseJ, { topic: "Prototype stand-ins", q: "What decides Cat4 vs Pilot, value vs non-value medicines, HA required and HA-skip eligibility?",
     a: [{ src: "App logic §6", text: cleanSafe(doc("appLogic").split("\n").find((l) => /^- What decides case type/.test(l))) }, { src: "Prototype [MOCK]", text: "[MOCK] The prototype reads them as fields on the sample case (case type, HA status). Keep them as backend fields; the app never works them out." }], refs: ["D-50"], mock: true });
+  const rxJ = JOURNEYS.find((j) => j.key === "prescribe");
+  add(rxJ, { topic: "Prototype stand-ins", q: "Does Prescribe or Disable save to the server, and what shows if that save fails?",
+    a: [{ src: "Prototype [MOCK]", text: "[MOCK] No server call: the prototype keeps each Prescribe and Disable on the phone with the case, and everything is sent once, with the case's confirm button (Confirming…; an unclear result is checked, never sent twice, D-69). So Prescribe has no save-failure state. Keep it that way; if the backend later saves each medicine on its own, a save-failure state needs design first." }], refs: ["D-69"], mock: true });
   // Genuinely undecided Product questions stay OPEN (D-101 amended)
   const OQ = (q, re) => { const t = cleanSafe(section("oqs", `### ${q}`).split("\n").find((l) => re.test(l)) || ""); if (!t) die(`open_questions ${q}: no ${re}`); quote("oqs", t); return t; };
   open.push({ id: "o27", journey: "Home", topic: "No cases", q: "After \"No cases right now\", does the app check again by itself, and how often?", now: { src: "OQ-019", text: OQ("OQ-019", /^\*\*Safe placeholder:\*\*/) }, who: "Product", refs: ["OQ-019"], noteNow: "Prototype: no automatic re-check; the doctor taps Request a case again." });

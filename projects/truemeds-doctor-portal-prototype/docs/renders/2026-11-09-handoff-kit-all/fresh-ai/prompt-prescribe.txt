@@ -1,0 +1,1 @@
+We're building the Truemeds doctor app in React Native. Build the Prescribe screen with all its states. First list every question you need answered before you can build it; then write the code.

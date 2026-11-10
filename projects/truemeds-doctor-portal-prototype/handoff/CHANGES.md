@@ -4,6 +4,160 @@ What moved in the kit since the previous generation: tokens used, building block
 
 ## 2026-11-10
 
+- Screen state changed: otp_code-expired
+- Screen state changed: otp_cooldown-reconciling
+- Screen state changed: otp_couldnt-verify
+- Screen state changed: otp_default
+- Screen state changed: otp_empty-tap
+- Screen state changed: otp_expired-and-resend-limited
+- Screen state changed: otp_locked
+- Screen state changed: otp_new-code-sent
+- Screen state changed: otp_offline
+- Screen state changed: otp_resend-available
+- Screen state changed: otp_resend-failed
+- Screen state changed: otp_resending
+- Screen state changed: otp_too-many-resends
+- Screen state changed: otp_too-short
+- Screen state changed: otp_two-tries-left
+- Screen state changed: otp_verifying
+- Screen state changed: otp_wrong-code
+- Screen state changed: offer_enable-failed
+- Screen state changed: offer_offline
+- Screen state changed: unlock_cancelled
+- Screen state changed: unlock_face
+- Screen state changed: unlock_fingerprint
+- Screen state changed: unlock_pending
+- Screen state changed: unlock_platform-retry
+- Screen state changed: unlock_screen-lock
+- Screen state changed: unlock_unavailable
+- Screen state changed: home_add-failed
+- Screen state changed: home_add-wheel
+- Screen state changed: home_adding
+- Screen state changed: home_idle-expired
+- Screen state changed: home_logout-confirm
+- Screen state changed: home_manually-ended
+- Screen state changed: home_profile
+- Screen state changed: home_profile-case-open
+- Screen state changed: home_setting
+- Screen state changed: home_setup-failed
+- Screen state changed: home_setup-wheel
+- Screen state changed: a-back-blocked
+- Screen state changed: a-confirm-busy
+- Screen state changed: a-confirm-failed
+- Screen state changed: a-leave-sheet
+- Screen state changed: a-load-failed
+- Screen state changed: a-long-content
+- Screen state changed: a-no-medicines
+- Screen state changed: a-notes-typing
+- Screen state changed: a-offline
+- Screen state changed: a-offline-action
+- Screen state changed: a-order-details
+- Screen state changed: a-release-failed
+- Screen state changed: a-releasing
+- Screen state changed: a-rx-viewer
+- Screen state changed: a-scrolled
+- Screen state changed: a-top
+- Screen state changed: c-callback
+- Screen state changed: c-callback-error
+- Screen state changed: c-callback-failed
+- Screen state changed: c-callback-refused
+- Screen state changed: c-skip-ha
+- Screen state changed: e-availability-ended
+- Screen state changed: e-callback-scheduled
+- Screen state changed: g0-calling-pilot
+- Screen state changed: g1-generic-confirm
+- Screen state changed: g2-checking-ha
+- Screen state changed: g3b-after-hangup
+- Screen state changed: g3b-forwarded
+- Screen state changed: s-10-medicines
+- Screen state changed: s-medicine-disabled
+- Screen state changed: s-optional-empty
+- Screen state changed: s7a-calling
+- Screen state changed: s7b-still-on-call
+- Screen state changed: s7d-result-missing
+- Screen state changed: s7d-result-missing-pilot
+- Screen state changed: s7d-unavailable-sheet
+- Screen state changed: s7e-leave-sheet
+- Screen state changed: s7f-submitted
+- Screen state changed: t01-ready
+- Screen state changed: t02-calling
+- Screen state changed: t03-not-through
+- Screen state changed: t04-doctor-missed
+- Screen state changed: t05-result-wait
+- Screen state changed: t06-ended-early
+- Screen state changed: t08a-valid-cat4
+- Screen state changed: t08c-confirm-blocked
+- Screen state changed: t09-patient-unavailable
+- Screen state changed: t10a-confirmed
+- Screen state changed: t10b-forwarded
+- Screen state changed: t13-connecting-ha
+- Screen state changed: t14-transferred
+- Screen state changed: t15-after-hangup
+- Screen state changed: t15-ha-no-join
+- Screen state changed: t16-transfer-missed
+- Screen state changed: t16b-transfer-missed-patient
+- Screen state changed: t16c-transfer-missed-unknown
+- Screen state changed: t17-skip-ha-wait
+- Screen state changed: d-alt-days
+- Screen state changed: d-cream
+- Screen state changed: d-default
+- Screen state changed: d-disable-sheet
+- Screen state changed: d-disabled
+- Screen state changed: d-discard-sheet
+- Screen state changed: d-drops
+- Screen state changed: d-duration-picker
+- Screen state changed: d-error-dose
+- Screen state changed: d-error-other
+- Screen state changed: d-every-x-hours
+- Screen state changed: d-food-selected
+- Screen state changed: d-header-white
+- Screen state changed: d-inhaler
+- Screen state changed: d-injection-default
+- Screen state changed: d-monthly
+- Screen state changed: d-notes-keyboard
+- Screen state changed: d-rx-failed
+- Screen state changed: d-scrolled
+- Screen state changed: d-sos-on
+- Screen state changed: d-sos-only
+- Screen state changed: d-syrup
+- Screen state changed: d-weekly
+- Copy added: case.disabledMedicine
+- Copy added: case.orderMeta
+- Copy added: print.applyMAN
+- Copy removed: case.patientMeta
+- Copy removed: prescribe.unitHint
+- Copy removed: print.amount
+- Copy removed: profile.amount
+- Copy removed: rx.zoom
+
+## 2026-11-10
+
+- Screen state changed: d-alt-days
+- Screen state changed: d-cream
+- Screen state changed: d-default
+- Screen state changed: d-disable-sheet
+- Screen state changed: d-disabled
+- Screen state changed: d-discard-sheet
+- Screen state changed: d-drops
+- Screen state changed: d-duration-picker
+- Screen state changed: d-error-dose
+- Screen state changed: d-error-other
+- Screen state changed: d-every-x-hours
+- Screen state changed: d-food-selected
+- Screen state changed: d-header-white
+- Screen state changed: d-inhaler
+- Screen state changed: d-injection-default
+- Screen state changed: d-monthly
+- Screen state changed: d-notes-keyboard
+- Screen state changed: d-rx-failed
+- Screen state changed: d-scrolled
+- Screen state changed: d-sos-on
+- Screen state changed: d-sos-only
+- Screen state changed: d-syrup
+- Screen state changed: d-weekly
+
+## 2026-11-10
+
 - Block changed: logo-header
 - Screen state changed: a-back-blocked
 - Screen state changed: a-confirm-busy

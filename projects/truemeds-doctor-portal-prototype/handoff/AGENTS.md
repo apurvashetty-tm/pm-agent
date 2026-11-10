@@ -46,7 +46,7 @@ Every size, colour and word comes from `tokens` or `messages`, including border 
 - Layout values (`flex`, `center`, `nowrap`, `100%`, `0`) aren't tokens and don't need to be: they are shown plainly (`layout: true`).
 - Text styles: a `.tm-text-*` class on the web is a `tokens.text.*` style; its numbers are listed as exceptions that name the token (use the token).
 - Documented exceptions (`exception` on a style, listed in each screen file's `rawValues.exceptions`): a few typed values the design system accepts on purpose (thin lines, ≤3px optical nudges), the subtitle's `31ch` text measure, and the mock prescription paper (sample content standing in for the customer's prescription image — the app shows the image, it doesn't draw it).
-- One value has no token yet: the busy spinner's turn speed (`timing: true`). Don't type it.
+- Motion: the web types its animation times (`timing: true`); use `tokens.duration.*` instead — the busy spinner turns once every `tokens.duration.spinner` (800 ms) and stops under the phone's reduce-motion setting (DECIDED o24). Don't type a time.
 - `rawValues.builtApp` in each screen file lists anything typed that is not a token (red in the viewer). It is empty today.
 - Numbers shown as text (doses, counts, the wheel) are values, not copy (`copy[].data`).
 

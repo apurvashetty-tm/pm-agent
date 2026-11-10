@@ -1,0 +1,1 @@
+We're building the Truemeds doctor app in React Native. Build the Case page in its calling states (the doctor calls the patient, the live call, the call result and what follows) with all its states. First list every question you need answered before you can build it; then write the code.

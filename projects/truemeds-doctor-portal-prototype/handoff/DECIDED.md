@@ -353,7 +353,7 @@ Decisions: D-86
 ### o01 · How long are the OTP issue window, the number lock and the code life in production?
 
 - [MOCK] The prototype's answer, below. Keep configurable (a server or config value); not a production promise. Owner when it becomes real: Backend + Product. — *Source: Prototype [MOCK]*
-- **Safe placeholder:** 5 min code life, resend 30 s → 1 min → 2 min, 15 min number lock after the decided 5 wrong tries; session 24 h; ops approval timing still unconfirmed. `[MOCK ASSUMPTION]` — *Source: OQ-017*
+- Code life and issue window 10 min (`otpWindow`), number lock 15 min after the 5th server-confirmed wrong code (`otpLock`, D-34), resend waits 30 s → 1 min → 2 min (`resendWaits`), 4 codes per window (D-35). `[MOCK ASSUMPTION]` — *Source: Prototype setting [MOCK]*
 - **Amended same day:** the kit is a hand-off of a **prototype with a fake backend**, so the Backend and Design items (o01, o02, o03, o12, o15, o16, o19, o21, o22, o24) are not left open either: each becomes DECIDED with **the prototype's own mock value or behaviour**, marked `[MOCK]` and "keep configurable" so nobody treats it as a production promise. o23 (Expo or plain React Native, navigation library) is the app team's choice and is stated as theirs, not as an open question. o09 stays a prototype-only note. — *Source: D-101 (amended)*
 
 Decisions: D-101, OQ-017, D-34, D-35
@@ -500,7 +500,7 @@ Decisions: D-101
 
 - [MOCK] The prototype's answer, below. Keep configurable (a server or config value); not a production promise. Owner when it becomes real: Design. — *Source: Prototype [MOCK]*
 - Animations (sheets, toasts) respect the phone's reduce-motion setting. — *Source: Design rules 9.8*
-- No motion token exists. The web turns it once every 0.8 s and stops it under reduce motion. — *Source: Prototype*
+- Use `tokens.duration.spinner` (800 ms): the web turns it once every 0.8 s and stops it under reduce motion. — *Source: Prototype*
 - **Amended same day:** the kit is a hand-off of a **prototype with a fake backend**, so the Backend and Design items (o01, o02, o03, o12, o15, o16, o19, o21, o22, o24) are not left open either: each becomes DECIDED with **the prototype's own mock value or behaviour**, marked `[MOCK]` and "keep configurable" so nobody treats it as a production promise. o23 (Expo or plain React Native, navigation library) is the app team's choice and is stated as theirs, not as an open question. o09 stays a prototype-only note. — *Source: D-101 (amended)*
 
 Decisions: D-101
@@ -781,7 +781,7 @@ Decisions: D-78 (the approved screens and app logic)
 <a id="otp-31"></a>
 ### otp-31 · What is the value of "resendWaits"?
 
-- [MOCK] [30 s in the prototype. Keep configurable (a server or config value, never typed into a screen); not a production promise. Note: OQ-017: waits between resends. — *Source: Prototype setting [MOCK]*
+- [MOCK] 30 s → 60 s → 120 s in the prototype. Keep configurable (a server or config value, never typed into a screen); not a production promise. Note: OQ-017: waits between resends. — *Source: Prototype setting [MOCK]*
 
 Decisions: D-78 (the approved screens and app logic)
 
@@ -2013,7 +2013,7 @@ Decisions: D-50
 <a id="case-75"></a>
 ### case-75 · What is the rule for "✅ Flag 5"?
 
-- ✅ **Flag 5 — answered:** Confirm is blocked while any medicine is Pending. The button stays tappable; on tap a notice in the bar says "Prescribe or disable {n} medicines first." and the page scrolls to the first Pending medicine. Applies to all three confirm buttons; Callback, Skip HA and Unavailable stay allowed. *Original flag:* The old code lets the doctor confirm while some medicines are still Pending (not prescribed, not disabled). No decision covers this. Options: (a) block Confirm until every medicine is Prescribed or Disabled, with a note saying how many are left; (b) allow it, and Pending medicines are dropped from the prescription; (c) allow it with a confirmation sheet. Recommendation: (a) — a prescription with unreviewed medicines is a clinical risk. — *Source: App logic §6.*
+- ✅ **Flag 5 — answered:** Confirm is blocked while any medicine is Pending. The button stays tappable; on tap a notice in the bar says "Prescribe or disable {n} medicines first." and the page scrolls to the first Pending medicine. Applies to all three confirm buttons; Callback, Skip HA and Unavailable stay allowed. — *Source: App logic §6.*
 
 Decisions: D-78 (the approved screens and app logic)
 
@@ -2083,7 +2083,7 @@ Decisions: D-78 (the approved screens and app logic)
 <a id="case-85"></a>
 ### case-85 · What is the rule for "✅ Flag 6"?
 
-- ✅ **Flag 6 — answered:** the case does go back to the queue, but the doctor is not told — no queue line anywhere. **Updated D-83:** the case goes on hold and the system retries it by hangup cause; nothing goes to Ops. *Original flag:* the old code still opens an extra "unavailable" sheet with "Case will be reassigned to the queue". D-51 removed it; the rebuild follows D-51. Where the case goes after "unavailable" (back to the queue?) is not written in a decision — please confirm. — *Source: App logic §7.*
+- ✅ **Flag 6 — answered:** the case does go back to the queue, but the doctor is not told — no queue line anywhere. **Updated D-83:** the case goes on hold and the system retries it by hangup cause; nothing goes to Ops. — *Source: App logic §7.*
 
 Decisions: D-83, D-51
 
@@ -2418,31 +2418,35 @@ Decisions: D-50
 | [rx-02](#rx-02) | App rules | What is the rule for "What the doctor can do"? |
 | [rx-03](#rx-03) | App rules | What is the rule for "Header"? |
 | [rx-04](#rx-04) | App rules | What is the rule for "How often"? |
-| [rx-05](#rx-05) | App rules | What happens in "0 · 2.5 · 5 · 10 ml"? |
-| [rx-06](#rx-06) | App rules | What happens in "0 · 1 · 2 puffs"? |
-| [rx-07](#rx-07) | App rules | What happens in "0 · 1 · 2 · 3"? |
-| [rx-08](#rx-08) | App rules | What happens in "— / Apply"? |
-| [rx-09](#rx-09) | App rules | What is the rule for "Dose grids"? |
-| [rx-10](#rx-10) | App rules | What is the rule for "Duration picker"? |
-| [rx-11](#rx-11) | App rules | What is the rule for "Option labels"? |
-| [rx-12](#rx-12) | App rules | What is the rule for "Rx failed notice"? |
-| [rx-13](#rx-13) | App rules | What is the rule for "Every X hours"? |
-| [rx-14](#rx-14) | App rules | What is the rule for "SOS only"? |
-| [rx-15](#rx-15) | App rules | What is the rule for "Duration"? |
-| [rx-16](#rx-16) | App rules | What is the rule for "Food (optional)"? |
-| [rx-17](#rx-17) | App rules | What is the rule for "Checks before Prescribe"? |
-| [rx-18](#rx-18) | App rules | What is the rule for "An error on Prescribe scrolls the screen to the first error"? |
-| [rx-19](#rx-19) | App rules | What is the rule for "Prescribe"? |
-| [rx-20](#rx-20) | App rules | What is the rule for "A disabled medicine"? |
-| [rx-21](#rx-21) | App rules | What is the rule for "✕ with changes"? |
-| [rx-22](#rx-22) | App rules | What is the rule for "Disable"? |
-| [rx-23](#rx-23) | App rules | What is the rule for "Printed line"? |
-| [rx-24](#rx-24) | App rules | What is the rule for "Keyboard rule (D-81)"? |
-| [rx-25](#rx-25) | App rules | What is the rule for "Keyboard type"? |
-| [rx-26](#rx-26) | States and feedback | What does the app show in prescribe.dose-error, and how does it recover? |
-| [rx-27](#rx-27) | States and feedback | What does the app show in prescribe.disabled, and how does it recover? |
-| [rx-28](#rx-28) | States and feedback | What does the app show in prescribe.keyboard, and how does it recover? |
-| [rx-29](#rx-29) | Prototype stand-ins | The prototype fakes this: "The backend's default for Ongoing". What do we build? |
+| [rx-05](#rx-05) | App rules | What doses can be picked for Tablet? |
+| [rx-06](#rx-06) | App rules | What doses can be picked for Capsule? |
+| [rx-07](#rx-07) | App rules | What doses can be picked for Syrup? |
+| [rx-08](#rx-08) | App rules | What doses can be picked for Drops? |
+| [rx-09](#rx-09) | App rules | What doses can be picked for Inhaler? |
+| [rx-10](#rx-10) | App rules | What doses can be picked for Injection? |
+| [rx-11](#rx-11) | App rules | What doses can be picked for Cream? |
+| [rx-12](#rx-12) | App rules | What is the rule for "Dose grids"? |
+| [rx-13](#rx-13) | App rules | What is the rule for "Duration picker"? |
+| [rx-14](#rx-14) | App rules | What is the rule for "Option labels"? |
+| [rx-15](#rx-15) | App rules | What is the rule for "Rx failed notice"? |
+| [rx-16](#rx-16) | App rules | What is the rule for "Every X hours"? |
+| [rx-17](#rx-17) | App rules | What is the rule for "SOS only"? |
+| [rx-18](#rx-18) | App rules | What is the rule for "Duration"? |
+| [rx-19](#rx-19) | App rules | What is the rule for "Food (optional)"? |
+| [rx-20](#rx-20) | App rules | What is the rule for "Checks before Prescribe"? |
+| [rx-21](#rx-21) | App rules | What is the rule for "An error on Prescribe scrolls the screen to the first error"? |
+| [rx-22](#rx-22) | App rules | What is the rule for "Prescribe"? |
+| [rx-23](#rx-23) | App rules | What is the rule for "A disabled medicine"? |
+| [rx-24](#rx-24) | App rules | What is the rule for "✕ with changes"? |
+| [rx-25](#rx-25) | App rules | What is the rule for "Disable"? |
+| [rx-26](#rx-26) | App rules | What is the rule for "Printed line"? |
+| [rx-27](#rx-27) | App rules | What is the rule for "Keyboard rule (D-81)"? |
+| [rx-28](#rx-28) | App rules | What is the rule for "Keyboard type"? |
+| [rx-29](#rx-29) | States and feedback | What does the app show in prescribe.dose-error, and how does it recover? |
+| [rx-30](#rx-30) | States and feedback | What does the app show in prescribe.disabled, and how does it recover? |
+| [rx-31](#rx-31) | States and feedback | What does the app show in prescribe.keyboard, and how does it recover? |
+| [rx-32](#rx-32) | Prototype stand-ins | The prototype fakes this: "The backend's default for Ongoing". What do we build? |
+| [rx-33](#rx-33) | Prototype stand-ins | Does Prescribe or Disable save to the server, and what shows if that save fails? |
 
 <a id="rx-01"></a>
 ### rx-01 · What is the rule for "On the case page"?
@@ -2473,177 +2477,205 @@ Decisions: D-78 (the approved screens and app logic)
 Decisions: D-78 (the approved screens and app logic)
 
 <a id="rx-05"></a>
-### rx-05 · What happens in "0 · 2.5 · 5 · 10 ml"?
+### rx-05 · What doses can be picked for Tablet?
 
-- Syrup — 0 · 2.5 · 5 · 10 ml: 2.5 · 5 · 10 ml · Other (ml) — *Source: App logic §8.*
+- Daily slots (M / A / N): 0 · ½ · 1 · 2 · Single dose options: ½ · 1 · 2 · Other: — — *Source: App logic §8.*
 
 Decisions: D-78 (the approved screens and app logic)
 
 <a id="rx-06"></a>
-### rx-06 · What happens in "0 · 1 · 2 puffs"?
+### rx-06 · What doses can be picked for Capsule?
 
-- Inhaler — 0 · 1 · 2 puffs: 1 · 2 · — — *Source: App logic §8.*
+- Daily slots (M / A / N): 0 · 1 · 2 · Single dose options: 1 · 2 · Other: — — *Source: App logic §8.*
 
 Decisions: D-78 (the approved screens and app logic)
 
 <a id="rx-07"></a>
-### rx-07 · What happens in "0 · 1 · 2 · 3"?
+### rx-07 · What doses can be picked for Syrup?
 
-- Injection — 0 · 1 · 2 · 3: 1 · 2 · 3 (D-54) · Other (units) — *Source: App logic §8.*
+- Daily slots (M / A / N): 0 · 2.5 · 5 · 10 ml · Single dose options: 2.5 · 5 · 10 ml · Other: Other (ml) — *Source: App logic §8.*
 
-Decisions: D-54
+Decisions: D-78 (the approved screens and app logic)
 
 <a id="rx-08"></a>
-### rx-08 · What happens in "— / Apply"?
+### rx-08 · What doses can be picked for Drops?
 
-- Cream — — / Apply: Apply · — — *Source: App logic §8.*
+- Daily slots (M / A / N): 0 · 1 · 2 · 3 · Single dose options: 1 · 2 · 3 · Other: — — *Source: App logic §8.*
 
 Decisions: D-78 (the approved screens and app logic)
 
 <a id="rx-09"></a>
-### rx-09 · What is the rule for "Dose grids"?
+### rx-09 · What doses can be picked for Inhaler?
+
+- Daily slots (M / A / N): 0 · 1 · 2 puffs · Single dose options: 1 · 2 · Other: — — *Source: App logic §8.*
+
+Decisions: D-78 (the approved screens and app logic)
+
+<a id="rx-10"></a>
+### rx-10 · What doses can be picked for Injection?
+
+- Daily slots (M / A / N): 0 · 1 · 2 · 3 · Single dose options: 1 · 2 · 3 (D-54) · Other: Other (units) — *Source: App logic §8.*
+
+Decisions: D-54
+
+<a id="rx-11"></a>
+### rx-11 · What doses can be picked for Cream?
+
+- Daily slots (M / A / N): — / Apply · Single dose options: Apply · Other: — — *Source: App logic §8.*
+
+Decisions: D-78 (the approved screens and app logic)
+
+<a id="rx-12"></a>
+### rx-12 · What is the rule for "Dose grids"?
 
 - **Dose grids:** a single-row dose grid uses the M / A / N column width, so every option grid on the screen has one chip size (D-55). The M / A / N letters sit on the "Dose" label's left edge. The unit label is "Dose (units)" for every form that counts units. — *Source: App logic §8.*
 
 Decisions: D-55
 
-<a id="rx-10"></a>
-### rx-10 · What is the rule for "Duration picker"?
+<a id="rx-13"></a>
+### rx-13 · What is the rule for "Duration picker"?
 
 - **Duration picker:** number and unit chips sit inside the same inset as the field text, with 8 between the two rows. The "On prescription" band keeps a number and its unit together: "6 months" never splits. — *Source: App logic §8.*
 
 Decisions: D-78 (the approved screens and app logic)
 
-<a id="rx-11"></a>
-### rx-11 · What is the rule for "Option labels"?
+<a id="rx-14"></a>
+### rx-14 · What is the rule for "Option labels"?
 
 - **Option labels:** "(optional)" is grey regular on Food and on Additional instructions. — *Source: App logic §8.*
 
 Decisions: D-78 (the approved screens and app logic)
 
-<a id="rx-12"></a>
-### rx-12 · What is the rule for "Rx failed notice"?
+<a id="rx-15"></a>
+### rx-15 · What is the rule for "Rx failed notice"?
 
 - **Rx failed notice:** 16 below the header, as elsewhere. — *Source: App logic §8.*
 
 Decisions: D-78 (the approved screens and app logic)
 
-<a id="rx-13"></a>
-### rx-13 · What is the rule for "Every X hours"?
+<a id="rx-16"></a>
+### rx-16 · What is the rule for "Every X hours"?
 
 - **Every X hours:** 4 · 6 · 8 · 12 h (helper "4 times a day, round the clock"). — *Source: App logic §8.*
 
 Decisions: D-78 (the approved screens and app logic)
 
-<a id="rx-14"></a>
-### rx-14 · What is the rule for "SOS only"?
+<a id="rx-17"></a>
+### rx-17 · What is the rule for "SOS only"?
 
 - SOS only: dose + **Max doses a day** 1–4. Other schedules: optional **Also as needed (SOS)** with its own dose and **Max extra doses a day** 1–4. — *Source: App logic §8.*
 
 Decisions: D-78 (the approved screens and app logic)
 
-<a id="rx-15"></a>
-### rx-15 · What is the rule for "Duration"?
+<a id="rx-18"></a>
+### rx-18 · What is the rule for "Duration"?
 
 - **Duration:** numbers 1–7, 10, 14, 15 + Days / Weeks / Months, or **Ongoing** (prints the backend default, `[MOCK]` 6 months). Shows "Default" or "Changed from default". — *Source: App logic §8.*
 
 Decisions: D-78 (the approved screens and app logic)
 
-<a id="rx-16"></a>
-### rx-16 · What is the rule for "Food (optional)"?
+<a id="rx-19"></a>
+### rx-19 · What is the rule for "Food (optional)"?
 
 - **Food (optional):** After food · Before food · Empty stomach (tap again to clear). **Additional instructions (optional)**, with the helper "Printed on the prescription." (D-81 F19). — *Source: App logic §8.*
 
 Decisions: D-81
 
-<a id="rx-17"></a>
-### rx-17 · What is the rule for "Checks before Prescribe"?
+<a id="rx-20"></a>
+### rx-20 · What is the rule for "Checks before Prescribe"?
 
 - **Checks before Prescribe:** daily schedule with no dose at all → "Choose a dose for at least one time of day." · Other picked with no valid number → "Enter the dose in ml/units." or "Use numbers only, e.g. 7.5 units." (only plain positive numbers: 7, 7.5,.5). — *Source: App logic §8.*
 
 Decisions: D-78 (the approved screens and app logic)
 
-<a id="rx-18"></a>
-### rx-18 · What is the rule for "An error on Prescribe scrolls the screen to the first error"?
+<a id="rx-21"></a>
+### rx-21 · What is the rule for "An error on Prescribe scrolls the screen to the first error"?
 
 - **An error on Prescribe scrolls the screen to the first error.** The M / A / N "choose a dose" error is field text under the grid, not a tinted box; other errors sit under their field (D-81 F16). — *Source: App logic §8.*
 
 Decisions: D-81
 
-<a id="rx-19"></a>
-### rx-19 · What is the rule for "Prescribe"?
+<a id="rx-22"></a>
+### rx-22 · What is the rule for "Prescribe"?
 
 - **Prescribe** saves, marks the medicine Prescribed (and re-enables it if it was disabled). — *Source: App logic §8.*
 
 Decisions: D-78 (the approved screens and app logic)
 
-<a id="rx-20"></a>
-### rx-20 · What is the rule for "A disabled medicine"?
+<a id="rx-23"></a>
+### rx-23 · What is the rule for "A disabled medicine"?
 
 - **A disabled medicine** opens with the note "Disabled: {reason}. Prescribing it will enable it again." (state `d-disabled`, D-81 F17, D-20). — *Source: App logic §8.*
 
 Decisions: D-81, D-20
 
-<a id="rx-21"></a>
-### rx-21 · What is the rule for "✕ with changes"?
+<a id="rx-24"></a>
+### rx-24 · What is the rule for "✕ with changes"?
 
 - **✕ with changes** → "Discard changes?" sheet: **Discard** (red outline) on top, Keep editing below (D-54). No changes → closes at once. — *Source: App logic §8.*
 
 Decisions: D-54
 
-<a id="rx-22"></a>
-### rx-22 · What is the rule for "Disable"?
+<a id="rx-25"></a>
+### rx-25 · What is the rule for "Disable"?
 
 - **Disable** → sheet "Disable {name}" with reasons: Can’t prescribe remotely · Contraindicated for patient · Duplicate medication · Patient declined · Wrong strength. Choosing a reason disables it at once (status Disabled). A disabled medicine is **removed from the order**; the order ships without it. If no medicine is left, the order is cancelled later (ops/backend). No extra warning for the last medicine — the reason sheet is the friction (D-59). — *Source: App logic §8.*
 
 Decisions: D-59
 
-<a id="rx-23"></a>
-### rx-23 · What is the rule for "Printed line"?
+<a id="rx-26"></a>
+### rx-26 · What is the rule for "Printed line"?
 
 - **Printed line** = schedule · duration · food (if chosen) · instructions (if written), e.g. "1-0-1 + SOS 1 tablet (max 1 tablet/day) · 6 months · After food". **SOS limit (D-80 pt 3, D-81 F14):** the daily total in the medicine's unit: "2 puffs as needed (max 8 puffs/day)"; a total of 1 is singular ("max 1 tablet/day"); cream prints "Apply as needed (max 3 times/day)". — *Source: App logic §8.*
 
 Decisions: D-80, D-81
 
-<a id="rx-24"></a>
-### rx-24 · What is the rule for "Keyboard rule (D-81)"?
+<a id="rx-27"></a>
+### rx-27 · What is the rule for "Keyboard rule (D-81)"?
 
 - **Keyboard rule (D-81):** on Prescribe (Other dose, Additional instructions) and the case page (Chief complaints, Doctor notes) the focused field scrolls into view above the keyboard with its label and helper. The pinned action bar hides while the keyboard is open and returns when it closes (same reason as D-43). — *Source: App logic §9.*
 
 Decisions: D-81, D-43
 
-<a id="rx-25"></a>
-### rx-25 · What is the rule for "Keyboard type"?
+<a id="rx-28"></a>
+### rx-28 · What is the rule for "Keyboard type"?
 
 - **Keyboard type:** notes fields (Chief complaints, Doctor notes, Additional instructions) open the text keyboard. The Other dose field keeps the number pad with a decimal key, and its error shows a mistake a doctor can really make on that pad. — *Source: App logic §9.*
 
 Decisions: D-78 (the approved screens and app logic)
 
-<a id="rx-26"></a>
-### rx-26 · What does the app show in prescribe.dose-error, and how does it recover?
+<a id="rx-29"></a>
+### rx-29 · What does the app show in prescribe.dose-error, and how does it recover?
 
 - prescribe.dose-error: F1 — "Choose a dose for at least one time of day." as field text under the M / A / N grid; the screen scrolls to the first error (D-81 F16). — *Source: Feedback state map: prescribe.dose-error*
 
 Decisions: D-81
 
-<a id="rx-27"></a>
-### rx-27 · What does the app show in prescribe.disabled, and how does it recover?
+<a id="rx-30"></a>
+### rx-30 · What does the app show in prescribe.disabled, and how does it recover?
 
 - prescribe.disabled: N1 — "Disabled: {reason}. Prescribing it will enable it again." (`d-disabled`; D-81 F17, D-20). — *Source: Feedback state map: prescribe.disabled*
 
 Decisions: D-81, D-20
 
-<a id="rx-28"></a>
-### rx-28 · What does the app show in prescribe.keyboard, and how does it recover?
+<a id="rx-31"></a>
+### rx-31 · What does the app show in prescribe.keyboard, and how does it recover?
 
 - prescribe.keyboard: none — Focused field (Other dose, Additional instructions; Chief complaints, Doctor notes on the case page) scrolls above the keyboard with its label and helper; the pinned bar hides while the keyboard is open (D-81 F20). — *Source: Feedback state map: prescribe.keyboard*
 
 Decisions: D-81
 
-<a id="rx-29"></a>
-### rx-29 · The prototype fakes this: "The backend's default for Ongoing". What do we build?
+<a id="rx-32"></a>
+### rx-32 · The prototype fakes this: "The backend's default for Ongoing". What do we build?
 
 - [MOCK] The backend's default for Ongoing Keep configurable; the real value or answer comes from the backend. — *Source: Prototype [MOCK]*
 
 Decisions: D-78 (the approved screens and app logic)
+
+<a id="rx-33"></a>
+### rx-33 · Does Prescribe or Disable save to the server, and what shows if that save fails?
+
+- [MOCK] No server call: the prototype keeps each Prescribe and Disable on the phone with the case, and everything is sent once, with the case's confirm button (Confirming…; an unclear result is checked, never sent twice, D-69). So Prescribe has no save-failure state. Keep it that way; if the backend later saves each medicine on its own, a save-failure state needs design first. — *Source: Prototype [MOCK]*
+
+Decisions: D-69
 

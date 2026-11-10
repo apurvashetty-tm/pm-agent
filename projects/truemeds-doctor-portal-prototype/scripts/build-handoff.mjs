@@ -548,7 +548,7 @@ function styleRecord(s, T) {
     // a typed value the design system accepts on purpose (geometry, ≤3px optical nudge): marked raw-ok on its source line
     else if ((kind === "size" || kind === "colour") && ok !== null) rec.exception = `Documented exception: ${ok || "accepted typed value"}. Not a token on purpose; use the number as is.`;
     else if (kind === "size" || kind === "colour") { rec.raw = true; rec.kind = kind; rec.file = s.file; rec.line = s.line; }
-    else if (kind === "timing") { rec.timing = true; rec.unresolved = "No motion token yet: see OPEN.md o24. Don't type it."; }
+    else if (kind === "timing") { rec.timing = true; rec.unresolved = "Typed on the web: use tokens.duration.* (the spinner: tokens.duration.spinner). See DECIDED o24. Don't type it."; }
     else rec.layout = true;
   }
   if (tokens.some((t) => t.unmapped || t.palette)) rec.raw = true;
@@ -713,7 +713,7 @@ function open() {
     die(`Sign-in question ${o.id} has no D-101 ruling`);
   }));
   function asked() { return [
-    { id: "o01", topic: "Limits", q: "How long are the OTP issue window, the number lock and the code life in production?", now: OQ("OQ-017", /^\*\*Safe placeholder:\*\*/), who: "Backend + Product", refs: ["OQ-017", "D-34", "D-35"] },
+    { id: "o01", topic: "Limits", q: "How long are the OTP issue window, the number lock and the code life in production?", now: { src: "Prototype setting [MOCK]", text: "Code life and issue window 10 min (`otpWindow`), number lock 15 min after the 5th server-confirmed wrong code (`otpLock`, D-34), resend waits 30 s → 1 min → 2 min (`resendWaits`), 4 codes per window (D-35). `[MOCK ASSUMPTION]`" }, who: "Backend + Product", refs: ["OQ-017", "D-34", "D-35"] },
     { id: "o02", topic: "Limits", q: "How long is the \"Try again in m:ss\" wait after too many attempts?", now: { src: "Sign-in build", text: `The server sends the time the wait ends; the prototype uses ${signInSettings.map((l) => l.trim().split(":")[0]).join(", ")} as stand-ins (mock values, not product promises).` }, who: "Backend", refs: ["OQ-017", "D-35"] },
     { id: "o03", topic: "Server answers", q: "Send OTP again for the same number while the resend wait is still running: what does the server answer?", now: { src: "Sign-in build", text: "Assumed: no new code is sent; OTP opens on the running wait and the code already sent stays valid." }, who: "Backend", refs: [] },
     { id: "o04", topic: "Validation", q: "More than 10 digits that aren't a +91 or 0 prefix: cut silently or show a message?", now: DEC("D-39", /^- \*\*For review:\*\*/), who: "Product", refs: ["D-39"], noteNow: "Current build: extra digits are cut silently (no message); see d01." },
@@ -731,7 +731,7 @@ function open() {
     { id: "o21", topic: "Accessibility", q: "Is \"New to Truemeds? Sign up\" a link inside a sentence (exempt from the 48 tap target) or a standalone link (48 tall)?", now: RUL("8.6", /^6\. \*\*Tap targets:\*\*/), who: "Design", refs: [], noteNow: "Build: the link is about 20 tall; the visual must not change either way." },
     { id: "o22", topic: "Platform", q: "Should text grow with the phone's font-size setting (dynamic type), and is there a dark mode?", now: RUL("9.9", /^Dark mode · large text/), who: "Design + Product", refs: [] , noteNow: "Out of scope for the design system unless the project opts in; tokens are light only and fixed sizes." },
     { id: "o23", topic: "Platform", q: "Expo or bare React Native CLI, and which navigation library?", now: { src: "Kit", text: "Not set by the kit: the app team owns the components, screens and project set-up. Sign-in hands off to OTP (or locked OTP) after Send OTP (d10, d25)." }, who: "App team", refs: [] },
-    { id: "o24", topic: "Motion", q: "How fast does the busy spinner turn, and does it stop when the phone's reduce-motion setting is on?", now: RUL("9.8", /^- Animations \(sheets, toasts\)/), who: "Design", refs: [], noteNow: "No motion token exists. The web turns it once every 0.8 s and stops it under reduce motion." },
+    { id: "o24", topic: "Motion", q: "How fast does the busy spinner turn, and does it stop when the phone's reduce-motion setting is on?", now: RUL("9.8", /^- Animations \(sheets, toasts\)/), who: "Design", refs: [], noteNow: "Use `tokens.duration.spinner` (800 ms): the web turns it once every 0.8 s and stops it under reduce motion." },
     { id: "o25", topic: "Copy", q: "\"New to Truemeds?\" and \"Sign up\" are two copy entries; the space between them is typed in code. One entry with a {link} placeholder instead?", now: { src: "Message rules", text: "Two keys today: signin.signup and signin.signupLink." }, who: "Product", refs: [] },
     { id: "o26", topic: "Inactive account", q: "What does \"Call Doctor Ops\" do on a device that can't make calls (tablet, no SIM)?", now: { src: "Kit", text: "Not defined. The support number also takes WhatsApp (d11)." }, who: "Product + Ops", refs: ["OQ-021"] },
     { id: "o12", topic: "Session", q: "How long does a signed-in session last before OTP is asked again?", now: OQ("OQ-017", /^\*\*Confirmed 2026-10-12:\*\*/), who: "Backend + Product", refs: ["OQ-017"] },
