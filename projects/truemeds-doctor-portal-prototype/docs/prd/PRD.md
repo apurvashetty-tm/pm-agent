@@ -9,7 +9,6 @@
 | Approved screens | [`ui-screens/`](../../ui-screens/README.md): every screen state, 390 and 360 wide |
 | Prototype | [Phone demo](https://truemeds-doctor-app-preview.netlify.app/?demo=1) (app only, plays from sign-in) · [With the review panel](https://truemeds-doctor-app-preview.netlify.app/) (jump to any state, run call scenarios) |
 | Hand-off kit | [Every screen and state](https://truemeds-doctor-app-preview.netlify.app/kit) — tap any part to see how it's built; downloads for the app team |
-| Engineering contracts | [Auth](https://truemeds.atlassian.net/wiki/spaces/Portal/pages/2142535702) · [User profile](https://truemeds.atlassian.net/wiki/spaces/Portal/pages/2142404614) · [Availability](https://truemeds.atlassian.net/wiki/spaces/Portal/pages/2153447525) · [Order detail / Prescribe, v2](https://truemeds.atlassian.net/wiki/spaces/Portal/pages/2147942402) (Cat4; Pilot later) |
 
 ## 1. Executive summary
 
