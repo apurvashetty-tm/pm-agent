@@ -20,7 +20,7 @@ Nothing open for this screen.
 <a id="o28"></a>
 ### o28 · After Not now, when is faster sign-in offered again?
 
-- **Current assumption:** Prototype: offered once; it can be turned on in Profile (D-69). ### OQ-023 — When to offer faster sign-in again after "Not now" — *Source: OQ-023*
+- **Current assumption:** Prototype: offered once; it can be turned on in Profile (D-69). **Safe placeholder:** Never re-offer automatically; Profile always has the switch (D-45). Needs product + SMS-cost input. — *Source: OQ-023*
 - **Who answers:** Product
 - **References:** OQ-023
 
@@ -37,7 +37,7 @@ Nothing open for this screen.
 <a id="o27"></a>
 ### o27 · After "No cases right now", does the app check again by itself, and how often?
 
-- **Current assumption:** Prototype: no automatic re-check; the doctor taps Request a case again. ### OQ-019 — "Looking for a case" (Home) — *Source: OQ-019*
+- **Current assumption:** Prototype: no automatic re-check; the doctor taps Request a case again. **Safe placeholder:** "No cases right now" with a manual Try again. `[MOCK ASSUMPTION]` — *Source: OQ-019*
 - **Who answers:** Product
 - **References:** OQ-019
 
