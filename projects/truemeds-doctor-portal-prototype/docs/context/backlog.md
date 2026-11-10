@@ -104,6 +104,12 @@ Nothing goes to `main` while the chain runs (`publish.sh` pulls `main` into this
 - [ ] Faster sign-in on Android: a "Set up on this phone" action that opens the phone's fingerprint set-up when the phone has none (native app only; iOS can't open that page). From D-93.
 - [ ] **Review panel (right-hand tray, `?demo=1`) — look at it separately (Apurva, 2026-11-09):** too many controls, some unnecessary or too complicated; simplify in its own session. Keep the purple tray button in the installed app (not hidden). Also (Apurva 2026-11-10): "Restart story" keeps what the app remembers (e.g. faster sign-in already offered), which isn't obvious in a demo — decide whether Restart should offer "as a new phone".
 
+- [ ] **Splash screen (Apurva, 2026-11-10):** a brand moment while the native app loads — logo on Truemeds brand colour, no text or buttons. Add as a rule in the hand-off kit; no new screens to render.
+- [ ] **Value words for doctors (Apurva, 2026-11-10; inspiration: Dr. Galen's App Store screenshots):** the themes that sell the app to a doctor — *work from anywhere*, *reach* (more patients), *earn* (and how fast they're paid). Use for the splash or any first-use / recruitment screens, store listing and Doctor Ops recruitment material. Words only — not their flows (email/password login, open sign-up, stat tiles on Home don't fit us).
+- [ ] **Onboarding:** no swipe-through carousel (Doctor Ops brings doctors on; it delays the first case). At most a short permissions explainer before the phone asks (notifications, microphone), if the native app needs it.
+- [ ] **Refer a colleague:** a growth idea for the doctor network; where it lives (Profile, Home banner) decided in this round.
+- [ ] **Store screenshots:** only if the doctor app is listed publicly — marketing-style images built on the value words above.
+
 ## 4c. Hosting (found in the build-plan review, 2026-10-29)
 - [ ] **Current site publishes the whole project folder** — `docs/` (decision log, open questions, handoffs) is reachable on the live doctor-portal link. Apurva to decide: accept, or publish a clean folder. The new preview site publishes only `app/`.
 
