@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 "$(git rev-parse --show-toplevel)/scripts/git-hooks/check-commit" commit || exit 1
+bash "$(git rev-parse --show-toplevel)/scripts/git-hooks/check-tokens" || exit 1   # D-100 token lint on staged CSS
 legacy="$(git rev-parse --git-common-dir)/hooks/pre-commit"   # keep any older local hook (e.g. code-review-graph)
 if [ -x "$legacy" ]; then "$legacy" || exit $?; fi
 exit 0

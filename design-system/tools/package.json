@@ -1,0 +1,9 @@
+{
+  "name": "truemeds-design-system-tools",
+  "private": true,
+  "description": "Token linter for the Truemeds design system (D-100). Run via design-system/scripts/check_tokens.py.",
+  "devDependencies": {
+    "stylelint": "^16.10.0",
+    "stylelint-declaration-strict-value": "^1.10.6"
+  }
+}

@@ -34,6 +34,16 @@ import { SvgXml } from 'react-native-svg';
   Bundle the TTF files (Google Fonts) for weights 400, 500, 600 and 700, and make sure the family name and weight
   mapping resolve on both platforms (Android needs one file per weight or a font family XML).
 - **Icons:** stroke uses `currentColor`; set it with the `color` prop on `SvgXml`.
+- **Sizes (D-98, D-99):** `tokens.iconSize`, `iconTile`, `target` (48 tap minimum), `thumb`, `controlHeight`, `spinner`,
+  `check`, `toggle`, `borderWidth`, `focusRing`, `logoLockup`, in points.
+- **Timing (D-99):** `tokens.duration.*` in milliseconds; `tokens.easing.*` as CSS `cubic-bezier()` strings (use the four
+  numbers with `Easing.bezier`).
+- **Layering (D-99):** `tokens.layer.*` is the stacking order (`zIndex`; on Android also `elevation` order).
+- **Opacity (D-99):** `tokens.opacity.disabled` is a percent (50 → `opacity: 0.5`). `tokens.pressed.dim` (0.92) is the
+  web's `brightness()` for the pressed call-end button: draw it as a darker fill or a dark overlay.
+- **Bar shadow (D-99):** `tokens.shadow.bar`, an upward shadow for the action bar, same format as the other shadows.
+- **Layout (D-99) — web only:** `tokens.layout.*` (page, narrow, mobile, side nav, desktop sheet, empty-state text widths)
+  and `tokens.sheet.maxHeight` (85, percent of the screen) are for the web; a phone app does not need the widths.
 - **Components** (buttons, fields, chips, sheets) are not exported: rebuild them natively from these tokens. Visual
   reference: `../preview.html` and the approved screens in `projects/truemeds-doctor-portal-prototype/ui-screens/`.
 - **Not in SALT yet:** see `../beyond-salt.md`.

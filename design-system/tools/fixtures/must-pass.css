@@ -1,0 +1,15 @@
+/* check_tokens.py must report nothing in this file. */
+.p1 { margin: var(--tm-space-sm); }
+.p2 { width: 100%; }
+.p3 { display: flex; }
+.p4 { margin: calc(-1 * var(--tm-space-page)); }
+.p5 { width: 37px; } /* raw-ok: drawn keyboard height, prototype only */
+.p6 { border: var(--tm-border-width-default) solid var(--tm-border-default); }
+.p7 { transition: opacity var(--tm-duration-fast) var(--tm-easing-standard); }
+.p8 { color: currentColor; background: transparent; padding: 0 var(--tm-space-md); }
+.p9 { padding-bottom: calc(var(--tm-space-xl) + env(safe-area-inset-bottom)); max-width: calc(100% - 2 * var(--tm-space-xl)); }
+.p10 { bottom: var(--tm-toast-offset, var(--tm-space-xl)); }
+.p11 { transition: color var(--tm-duration-fast) ease, opacity var(--tm-duration-fast) var(--tm-easing-standard); box-shadow: 0 0 0 var(--tm-border-width-default) var(--tm-border-default), var(--tm-shadow-bar); }
+/* [DEPRECATED] legacy OTP boxes, no project uses them */
+.tm-otp__box { width: 44px; height: 52px; }
+.mock-rx-paper { color: #222; font-size: 11px; }
