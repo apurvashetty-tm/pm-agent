@@ -101,7 +101,7 @@ Nothing goes to `main` while the chain runs (`publish.sh` pulls `main` into this
 - [ ] Notifications: what the bell opens on Home (D-75).
 - [ ] App navigation for future features — bottom tab bar once a second destination is approved (D-69 point 7).
 - [ ] Faster sign-in on Android: a "Set up on this phone" action that opens the phone's fingerprint set-up when the phone has none (native app only; iOS can't open that page). From D-93.
-- [ ] **Review panel (right-hand tray, `?demo=1`) — look at it separately (Apurva, 2026-11-09):** too many controls, some unnecessary or too complicated; simplify in its own session. Keep the purple tray button in the installed app (not hidden).
+- [ ] **Review panel (right-hand tray, `?demo=1`) — look at it separately (Apurva, 2026-11-09):** too many controls, some unnecessary or too complicated; simplify in its own session. Keep the purple tray button in the installed app (not hidden). Also (Apurva 2026-11-10): "Restart story" keeps what the app remembers (e.g. faster sign-in already offered), which isn't obvious in a demo — decide whether Restart should offer "as a new phone".
 
 ## 4c. Hosting (found in the build-plan review, 2026-10-29)
 - [ ] **Current site publishes the whole project folder** — `docs/` (decision log, open questions, handoffs) is reachable on the live doctor-portal link. Apurva to decide: accept, or publish a clean folder. The new preview site publishes only `app/`.
