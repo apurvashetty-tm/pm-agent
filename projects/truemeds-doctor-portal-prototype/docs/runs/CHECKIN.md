@@ -9,5 +9,7 @@ One dated line per firing that did something. Reviewed runs are listed so the ne
 - 2026-11-10 00:35 IST — Scheduled check-in reviewed run B: passed; dispute #1 test fixed (textContent); t13 @390 diff ruled (neutral script is right in launch B); OQ-038, D-102. Reviewed: rails, token-pass, A1, A2, B. signin-d101 running since 00:12.
 - 2026-11-10 00:50 IST — Main thread (chat) reviewed signin-d101: passed (its four readings accepted: o10 limited to Change, pasted-number behaviour unchanged; o04 checked before the first-digit rule; 91-start still a prefix; o04 picture captured live, no new fixture). D-103 agreed (kit viewer redesign); ruling 00:46 + kit-redesign follow-up queued. handoff-kit-all running since 00:42.
 
+- 2026-11-10 07:58 IST — Scheduled check-in: handoff-kit-all STOPPED twice (00:42 = Apurva's intentional stop for D-103; the 00:51 start hit the 5-hour usage limit at ~01:29 IST). Restart ruling written (continue from the uncommitted kit build); H18 + H23 test disputes upheld and test fixed (2 / 2 pass). Runner has exited; Apurva told to restart. Reviewed: rails, token-pass, A1, A2, B, signin-d101.
+
 ## NEEDS-APURVA
 (none)

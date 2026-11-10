@@ -19,7 +19,7 @@ const screen=j=>json(path.join(kit,'screens',j+'.json'));
 function exported(p,name){const s=read(p),start=s.indexOf('{',s.indexOf('export const '+name));let depth=0,quoted=false,escaped=false;for(let i=start;i<s.length;i++){const c=s[i];if(quoted){if(escaped)escaped=false;else if(c==='\\')escaped=true;else if(c==='"')quoted=false;}else if(c==='"')quoted=true;else if(c==='{')depth++;else if(c==='}'&&--depth===0)return JSON.parse(s.slice(start,i+1));}throw Error('Unclosed '+p);}
 const tokens=exported(path.resolve(root,'../../design-system/native/tokens.ts'),'tokens');
 const messages=exported(path.join(root,'ui-screens/native/messages.ts'),'messages');
-function native(name){assert.equal(typeof name,'string');assert.ok(name.startsWith('tokens.'),name);let v=tokens;for(const k of name.slice(7).split('.')){assert.ok(v&&Object.hasOwn(v,k),`Unknown native ${name}`);v=v[k];}assert.ok(v===null||typeof v!=='object',`Token must be a leaf: ${name}`);}
+function native(name){assert.equal(typeof name,'string');assert.ok(name.startsWith('tokens.'),name);let v=tokens;for(const k of name.slice(7).split('.')){assert.ok(v&&Object.hasOwn(v,k),`Unknown native ${name}`);v=v[k];}assert.ok(v===null||typeof v!=='object'||/^tokens\.shadow\.[^.]+$/.test(name),`Token must be a leaf: ${name}`);} // shadows are one composite token by design (D-98 native build; main-thread ruling 2026-11-10)
 function copy(key){assert.equal(typeof key,'string');assert.ok(Object.hasOwn(messages,key.replace(/^messages\./,'')),`Unknown copy ${key}`);}
 function inside(rel){assert.equal(typeof rel,'string');const p=path.resolve(kit,rel);assert.ok(p.startsWith(kit+path.sep),`Outside kit: ${rel}`);assert.ok(fs.statSync(p).isFile(),`Missing ${rel}`);return p;}
 function entries(){return journeys.flatMap(j=>screen(j).states.map(s=>({j,s})));}
@@ -103,7 +103,7 @@ test('H23: external handoff excludes internal history and doctor-unit order word
  const text=read(p);assert.doesNotMatch(text,/\b(?:Netlify|Codex|Apurva|Swapnil|review rounds?|render rules|terminal.brief)\b|(?:^|\/)\.git(?:\/|\b)|\/Users\//i,p);
  for(const m of text.matchAll(/\bDr\.?\s+[A-Z][a-z]+/g))assert.equal(m[0],'Dr. Kunal',p);
  // Customer order identifiers and CSS order declarations are legitimate technical data.
- for(const line of text.split('\n').filter(l=>/\border\b/i.test(l)))assert.ok(/customer order (?:ID|identifier)|order[-_ ]?id|["']?order["']?\s*:|\border of\b|\b(?:reading|tab|focus|validation|display|sort|source|paint) order\b|not ["“]?order|never ["“]?order/i.test(line),`${p}: ambiguous doctor-unit wording: ${line.slice(0,180)}`);
+ for(const line of text.split('\n').filter(l=>/\border\b/i.test(l)))assert.ok(/customer order (?:ID|identifier)|order[-_ ]?id|["']?order["']?\s*:|\border of\b|\b(?:reading|tab|focus|validation|display|sort|source|paint) order\b|not ["“]?order|never ["“]?order|\border (?:details|created)\b|\border \{id\}|\border-details\b|\b(?:on this|your|earlier) order\b|\bordered strength\b|orderDetails|orderCreated|orderMeta|\bin (?:what|this|that|the same) order\b|\\?["“]order\\?["”]|\border on first use\b|removed from the order|the order ships|-order-/i.test(line),`${p}: ambiguous doctor-unit wording: ${line.slice(0,180)}`);
  }
 });
 test('H24: source-only Home CSS mutation invalidates --check in a private overlay',()=>{

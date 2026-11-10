@@ -2,6 +2,14 @@
 
 Every run reads this first. Rulings override briefs where they conflict. Newest at the top.
 
+## 2026-11-10 07:58 — KIT RUN RESTART 2 (scheduled check-in): continue, don't start over
+- **Why it stopped:** the 00:51 start hit the 5-hour Claude usage limit at ~01:29 IST (log: "You've hit your 5-hour limit"), after `build-handoff.mjs` had built the new kit (7 screens, 149 states; `build.log` 01:19) and `test-disputes.md` was written. Not a build fault.
+- **Your work in progress is uncommitted in the worktree:** `scripts/build-handoff.mjs`, `scripts/build-handoff.manifest.json` and the regenerated `handoff/` files (`git status` / `git diff --stat`). **Start from them:** read `git diff scripts/build-handoff.mjs`, `docs/renders/2026-11-09-handoff-kit-all/build.log` and `test-disputes.md`, then carry on from where it stopped. Don't `git checkout` / reset those files and don't redo step 0 or the H25+ tests (committed in e10216a).
+- **Both test disputes are upheld (test bugs); the main thread fixed the test** (`tests/codex/handoff/journeys.test.mjs`, committed with this ruling; H18 + H23 pass 2 / 2 against your current build):
+  1. H18: `tokens.shadow.*` is one composite token by design (D-98 native build; `design-system/native/tokens.ts` has `boxShadow` + `ios` + `android`). Allowed.
+  2. H23: customer-order wording is approved copy (CLAUDE.md: "case", never "order", for the doctor's unit; the customer order ID line stays). Allowed: Order details / created / {id}, on this / your / earlier order, ordered strength, the copy keys, "in what order", the d18 "case or order" question, "Order on first use", "removed from the order" / "the order ships", ids with `-order-`. Any other "order" line is still a real failure.
+  Delete `tmp/journeys-relaxed.test.mjs` if you like; mark both disputes "ruled: upheld, test fixed by main thread" in `test-disputes.md`.
+
 ## 2026-11-10 00:35 (after run B — main thread review: passed)
 - **B passed.** Evidence checked: run B 94 / 99 with the 5 disputed cases passing 5 / 5 via `textContent`; run A 303 / 303; A0-happy-path PASS; own tests 23 / 23; compare steps 2–6, 206 pictures, 2 over 1 %. Critique: 1 blocker + 2 should-fix adopted, critique-2 no blockers.
 - **Dispute #1 (B-play-*, 5 cases): test bug.** The Story row folds Test on phone (D-97 item 2), so `innerText` is empty. Fixed by the main thread in `tests/codex/run-B/journeys.mjs` (link read with `textContent`). No app change. The drawer `visibility: hidden` fix stays.
