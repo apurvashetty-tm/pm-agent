@@ -19,7 +19,7 @@ Order = the order we work in.
 - [ ] **D-61 items:**
   - [ ] Logo on every screen except the case page and task overlays (sign-in, OTP all states, returning unlock, faster sign-in offer, Home).
   - [ ] OTP: no header Back; check OTP with the keyboard open at 360 (code boxes, error line, Verify visible) — if not, back to Apurva.
-  - [ ] Returning unlock: "Use OTP instead" as a quiet button; order Unlock (primary) · Use OTP instead · Not you? Switch account.
+  - [x] Returning unlock: "Use OTP instead" as a quiet button; order Unlock (primary) · Use OTP instead. (Switch account removed by D-105, 2026-11-10.)
   - [ ] Faster sign-in offer: **screen-lock variant** (D-64: no fingerprint/face → screen lock; no screen lock → skip the offer).
   - [ ] Faster sign-in offer: missing states — enabling failed, prompt cancelled, no fingerprint/face set up (agree the treatment), offline; hero icon placed as on returning unlock.
 - [ ] **D-65 copy** on every approved screen that shows a shortened message (sign-in, OTP, Home, case) and the calling states 3, 4, 6, 12 — re-render.
@@ -105,7 +105,7 @@ Nothing goes to `main` while the chain runs (`publish.sh` pulls `main` into this
 - [ ] **Review panel (right-hand tray, `?demo=1`) — look at it separately (Apurva, 2026-11-09):** too many controls, some unnecessary or too complicated; simplify in its own session. Keep the purple tray button in the installed app (not hidden). Also (Apurva 2026-11-10): "Restart story" keeps what the app remembers (e.g. faster sign-in already offered), which isn't obvious in a demo — decide whether Restart should offer "as a new phone".
 
 - [ ] **Splash screen (Apurva, 2026-11-10):** a brand moment while the native app loads — logo on Truemeds brand colour, no text or buttons. Add as a rule in the hand-off kit; no new screens to render.
-- [ ] **Value words for doctors (Apurva, 2026-11-10; inspiration: Dr. Galen's App Store screenshots):** the themes that sell the app to a doctor — *work from anywhere*, *reach* (more patients), *earn* (and how fast they're paid). Use for the splash or any first-use / recruitment screens, store listing and Doctor Ops recruitment material. Words only — not their flows (email/password login, open sign-up, stat tiles on Home don't fit us).
+- [ ] **Value words for doctors (Apurva, 2026-11-10; inspiration: Dr. Galen's App Store screenshots):** the themes that sell the app to a doctor — *work from anywhere*, *reach* (more patients), *earn* (no claim about how fast doctors are paid — not true for Truemeds, Apurva 2026-11-10). Use for the splash or any first-use / recruitment screens, store listing and Doctor Ops recruitment material. Words only — not their flows (email/password login, open sign-up, stat tiles on Home don't fit us).
 - [ ] **Onboarding:** no swipe-through carousel (Doctor Ops brings doctors on; it delays the first case). At most a short permissions explainer before the phone asks (notifications, microphone), if the native app needs it.
 - [ ] **Refer a colleague:** a growth idea for the doctor network; where it lives (Profile, Home banner) decided in this round.
 - [ ] **Store screenshots:** only if the doctor app is listed publicly — marketing-style images built on the value words above.
