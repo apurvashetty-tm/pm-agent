@@ -27,3 +27,6 @@ node_modules/
 # Test tooling: installed packages stay here, never inside app/
 tests/node_modules/
 docs/runs/logs/
+
+# Netlify build copy of the hand-off kit for the preview site (created at deploy time, never committed)
+/app/kit/
