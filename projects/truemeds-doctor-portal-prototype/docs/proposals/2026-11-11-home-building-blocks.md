@@ -1,5 +1,14 @@
 # Home — building blocks before any render (2026-11-11)
 
+> **Agreed 2026-11-11 (Apurva: "go ahead" with the main thread's picks), after the research + Codex review (`docs/renders/2026-11-11-home-blocks-review/REPORT.md`). These override the blocks below where they differ:**
+> 1. **Band:** logo → title gap **32** (was 48); Home band title **24/32** (`--tm-font-size-title-md` / `--tm-font-lineheight-xl`), added to the design rules as the Home title size — that rule change goes to `main` on its own shared PR before the build run. Copy unchanged.
+> 2. **Rows match:** both rows label on top, value below; **both values use the L9 value display (32/40 semibold, fixed-width digits)** — timer and count alike.
+> 3. **Count after availability ends** (idle-expired, manually ended): one row above "Availability duration", only when the count is above 0. Fresh setup with 0: no row.
+> 4. **10-hour cap in total:** the setup wheel goes 0–10 h (at 10 h minutes 00 only; at 0 h minutes 15/30/45). The add-time wheel tops out at what is left, with the hint "Up to 10 hours in total".
+> 5. **Label:** "Prescriptions written today".
+> 6. **+ Add time:** shown only near the end, as today, in a reserved slot on the timer line so nothing moves.
+> Also from the review: spacing only 8 / 16 / 32; hint 8 under the section title; sub-labels "Quick picks" / "Custom" in the existing 14/20 secondary regular section-label style; neutral (grey) icons on the rows, no brand tiles (§8.11); a content card (`tm-card`), not a status card; in stop-pending only the count row shows; countdown m:ss (h:mm:ss from an hour); wheel columns are spinbuttons, chips are toggle buttons, the countdown is not live-announced (near expiry / ended / time added announced once).
+
 Two screens: **Setup** (not available yet) and **Available**. Approved copy stays unless marked **NEW**. Nothing is rendered until you agree on these blocks.
 
 ## Rules both screens share
