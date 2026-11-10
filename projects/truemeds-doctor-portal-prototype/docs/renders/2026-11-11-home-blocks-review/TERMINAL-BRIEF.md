@@ -15,4 +15,6 @@ Write `codex-prompt.txt` and run `codex exec -s read-only "$(cat codex-prompt.tx
 - **Research findings** (each with source and which block it supports or challenges).
 - **Codex findings**, each marked: *agree / disagree / needs Apurva*, with one line why. Codex lacks context — don't adopt points that reopen approved decisions unless they fix a real problem; say so.
 - **Recommended changes to the building blocks** (a short list), and the three answers with the evidence.
+**Next (not this run):** after Apurva agrees the blocks, a separate render run makes several options, self-audits them and gets a Codex critique of the renders. Don't render anything here.
+
 Append `DONE home-blocks-review` (or `STOPPED …`) to `docs/runs/STATUS.md`, publish this folder and STATUS with `bash ../../scripts/publish.sh -m "..." <files>`, stop.
