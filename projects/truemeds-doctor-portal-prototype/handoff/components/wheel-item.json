@@ -16,6 +16,18 @@
        "layout": true
       },
       {
+       "property": "flex",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "scroll-snap-align",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
        "property": "height",
        "value": "var(--tm-target-min)",
        "tokens": [
@@ -92,6 +104,18 @@
       {
        "property": "animation",
        "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "flex",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "scroll-snap-align",
+       "value": "center",
        "tokens": [],
        "layout": true
       },
@@ -187,6 +211,18 @@
        "layout": true
       },
       {
+       "property": "flex",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "scroll-snap-align",
+       "value": "center",
+       "tokens": [],
+       "layout": true
+      },
+      {
        "property": "height",
        "value": "var(--tm-target-min)",
        "tokens": [
@@ -263,6 +299,18 @@
       {
        "property": "animation",
        "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "flex",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "scroll-snap-align",
+       "value": "center",
        "tokens": [],
        "layout": true
       },

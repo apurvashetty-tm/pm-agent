@@ -33,10 +33,15 @@
 .home-screen .columns { position: relative; display: grid; grid-template-columns: 1fr 1fr; height: calc(3 * var(--tm-target-min)); }
 .home-screen .wheel-band { position: absolute; left: 0; right: 0; top: var(--tm-target-min); height: var(--tm-target-min); border-radius: var(--tm-radius-md); background: var(--tm-surface-brand-subtle); pointer-events: none; }
 .home-screen .wheel-band::after { content: ""; position: absolute; left: 50%; top: var(--tm-space-xs); bottom: var(--tm-space-xs); width: var(--tm-border-width-default); background: var(--tm-border-default); }   /* raw-ok: 50% centring (geometry) */
-.home-screen .wheel { position: relative; z-index: var(--tm-layer-raised); display: flex; flex-direction: column; background: transparent; }
-.home-screen .wheel-item { height: var(--tm-target-min); border: 0; background: transparent; font: inherit; font-size: var(--tm-font-size-title-md); line-height: var(--tm-font-lineheight-lg); color: var(--tm-content-secondary); cursor: pointer; padding: 0; }
+/* F-04: each column is a scroll container (three rows visible) that snaps one row into the band; wheel.js sets the value at rest. */
+.home-screen .wheel { position: relative; z-index: var(--tm-layer-raised); display: flex; flex-direction: column; background: transparent;
+  height: calc(3 * var(--tm-target-min)); overflow-y: auto; overscroll-behavior: contain; scroll-snap-type: y mandatory; scrollbar-width: none; touch-action: pan-y; }
+.home-screen .wheel::-webkit-scrollbar { display: none; }
+.home-screen .wheel.is-dragging { scroll-snap-type: none; cursor: grabbing; }
+.home-screen .wheel.is-busy { overflow-y: hidden; }
+.home-screen .wheel-item { flex: none; scroll-snap-align: center; height: var(--tm-target-min); border: 0; background: transparent; font: inherit; font-size: var(--tm-font-size-title-md); line-height: var(--tm-font-lineheight-lg); color: var(--tm-content-secondary); cursor: pointer; padding: 0; }
 .home-screen .wheel-item.is-selected { color: var(--tm-content-brand); font-size: var(--tm-font-size-title-lg); line-height: var(--tm-font-lineheight-2xl); font-weight: var(--tm-font-weight-semibold); }
-.home-screen .wheel-item--empty { height: var(--tm-target-min); }
+.home-screen .wheel-item--empty { height: var(--tm-target-min); scroll-snap-align: none; }
 .home-screen .wheel-item:disabled { color: var(--tm-content-disabled); cursor: not-allowed; }
 .home-screen .wheel-item.is-selected:disabled { color: var(--tm-content-brand); }   /* D-81 F9: the selected value keeps its brand text while busy */
 /* A-19: a standing-state notice sits at the top of the panel, outside the scroll. */

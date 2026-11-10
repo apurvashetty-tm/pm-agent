@@ -49,6 +49,48 @@
        "value": "transparent",
        "tokens": [],
        "layout": true
+      },
+      {
+       "property": "height",
+       "value": "calc(3 * var(--tm-target-min))",
+       "tokens": [
+        {
+         "native": "tokens.target.min",
+         "web": "--tm-target-min",
+         "value": 48
+        }
+       ],
+       "layout": true
+      },
+      {
+       "property": "overflow-y",
+       "value": "auto",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "overscroll-behavior",
+       "value": "contain",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "scroll-snap-type",
+       "value": "y mandatory",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "scrollbar-width",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "touch-action",
+       "value": "pan-y",
+       "tokens": [],
+       "layout": true
       }
      ],
      "size": "179×144"

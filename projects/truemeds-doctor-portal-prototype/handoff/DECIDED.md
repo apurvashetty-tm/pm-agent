@@ -27,6 +27,7 @@ Generated from the product rules — do not edit by hand.
 | [d11](#d11) | Inactive account | The account is inactive: what does the doctor see and what does the button do? |
 | [d12](#d12) | Sign-up | Where does "Sign up" go, and what happens for a number that isn't registered? |
 | [d13](#d13) | Keyboard | Does the keyboard open by itself on Sign-in, and where is Send OTP when it is open? |
+| [d30](#d30) | Keyboard | On a phone, can the keyboard ever cover the number field or Send OTP? |
 | [d14](#d14) | Keyboard | Which keyboard type and autofill hint does the field use? |
 | [d15](#d15) | Keyboard | What happens to the keyboard and the sign-up line when a server answer arrives or the keyboard is open? |
 | [d16](#d16) | Offline | What happens when the doctor taps Send OTP while offline? |
@@ -236,6 +237,13 @@ Decisions: D-33
 - **Keyboard clearance:** keep at least 16px between the inline main button and an open keyboard. If the content does not fit, the content scrolls. — *Source: Design rules 8.9*
 
 Decisions: D-43, D-46
+
+<a id="d30"></a>
+### d30 · On a phone, can the keyboard ever cover the number field or Send OTP?
+
+- No. Use a keyboard-avoiding layout on every screen with a text field: when a field gets focus, the field (with its label and helper) and the screen's main button sit above the keyboard, the button at least 16 px clear of it, on Android and iOS alike. — *Source: Agreed fix (phone feedback, D-44)*
+
+Decisions: D-43, D-44
 
 <a id="d14"></a>
 ### d14 · Which keyboard type and autofill hint does the field use?
@@ -567,6 +575,7 @@ Decisions: D-101, OQ-017
 | [otp-33](#otp-33) | Limits and timings | What is the value of "otpCodesPerWindow"? |
 | [otp-34](#otp-34) | Limits and timings | What is the value of "otpTriesLeftFrom"? |
 | [otp-35](#otp-35) | Prototype stand-ins | The prototype fakes this: "app-logic §2 is silent on what the server answers". What do we build? |
+| [otp-36](#otp-36) | Keyboard | Where are the focused field and the main button when the phone's keyboard is open? |
 
 <a id="otp-01"></a>
 ### otp-01 · What is the rule for "4 digits, keyboard opens on load and stays open"?
@@ -812,6 +821,13 @@ Decisions: D-81
 - [MOCK] app-logic §2 is silent on what the server answers here; the code already sent stays valid. Keep configurable; the real value or answer comes from the backend. — *Source: Prototype [MOCK]*
 
 Decisions: D-78 (the approved screens and app logic)
+
+<a id="otp-36"></a>
+### otp-36 · Where are the focused field and the main button when the phone's keyboard is open?
+
+- Always above the keyboard: use a keyboard-avoiding layout on every screen with a text field. When a field gets focus, scroll so the field (with its label and helper) and the screen's main button sit above the keyboard, the button at least 16 px clear of it. On the case page and Prescribe the pinned action bar hides while the keyboard is open and comes back when it closes (D-81), so there the field alone is kept in view. — *Source: Agreed fix (phone feedback, D-44, D-81)*
+
+Decisions: D-44, D-81
 
 ## Faster sign-in offer
 
@@ -1069,6 +1085,7 @@ Decisions: D-78 (the approved screens and app logic)
 | [home-40](#home-40) | Limits and timings | What is the value of "availabilityMinimum"? |
 | [home-41](#home-41) | Limits and timings | What is the value of "availabilityStep"? |
 | [home-42](#home-42) | Limits and timings | What is the value of "earningsPerConfirmedRx"? |
+| [home-43](#home-43) | Availability wheel | How does the availability wheel behave on the phone? |
 
 <a id="home-01"></a>
 ### home-01 · What is the rule for "While Setting… or Adding…"?
@@ -1364,6 +1381,13 @@ Decisions: D-78 (the approved screens and app logic)
 
 Decisions: D-81
 
+<a id="home-43"></a>
+### home-43 · How does the availability wheel behave on the phone?
+
+- A native-feel wheel. The doctor swipes each column (hours, minutes); it moves with momentum and snaps to one row, and the row in the centre band is the value. Three rows are visible. Minutes go in 15-minute steps and the minimum is 15 minutes. Tapping the row above or below moves one step. While Setting… or Adding… the wheel is locked. iOS has a native wheel picker; Android's picker is a dropdown, so use a wheel component there (the app team's choice of library). — *Source: Agreed fix (phone feedback, D-40)*
+
+Decisions: D-40
+
 ## Case page
 
 | # | Topic | Question |
@@ -1499,6 +1523,7 @@ Decisions: D-81
 | [case-129](#case-129) | Prototype stand-ins | The prototype fakes this: "The backend sends these in the real app; the". What do we build? |
 | [case-130](#case-130) | Prototype stand-ins | The prototype fakes this: "Callback times". What do we build? |
 | [case-131](#case-131) | Prototype stand-ins | What decides Cat4 vs Pilot, value vs non-value medicines, HA required and HA-skip eligibility? |
+| [case-132](#case-132) | Keyboard | Where are the focused field and the main button when the phone's keyboard is open? |
 
 <a id="case-01"></a>
 ### case-01 · What is the rule for "Stages"?
@@ -2418,6 +2443,13 @@ Decisions: D-78 (the approved screens and app logic)
 
 Decisions: D-50
 
+<a id="case-132"></a>
+### case-132 · Where are the focused field and the main button when the phone's keyboard is open?
+
+- Always above the keyboard: use a keyboard-avoiding layout on every screen with a text field. When a field gets focus, scroll so the field (with its label and helper) and the screen's main button sit above the keyboard, the button at least 16 px clear of it. On the case page and Prescribe the pinned action bar hides while the keyboard is open and comes back when it closes (D-81), so there the field alone is kept in view. — *Source: Agreed fix (phone feedback, D-44, D-81)*
+
+Decisions: D-44, D-81
+
 ## Prescribe
 
 | # | Topic | Question |
@@ -2455,6 +2487,7 @@ Decisions: D-50
 | [rx-31](#rx-31) | States and feedback | What does the app show in prescribe.keyboard, and how does it recover? |
 | [rx-32](#rx-32) | Prototype stand-ins | The prototype fakes this: "The backend's default for Ongoing". What do we build? |
 | [rx-33](#rx-33) | Prototype stand-ins | Does Prescribe or Disable save to the server, and what shows if that save fails? |
+| [rx-34](#rx-34) | Keyboard | Where are the focused field and the main button when the phone's keyboard is open? |
 
 <a id="rx-01"></a>
 ### rx-01 · What is the rule for "On the case page"?
@@ -2686,4 +2719,11 @@ Decisions: D-78 (the approved screens and app logic)
 - [MOCK] No server call: the prototype keeps each Prescribe and Disable on the phone with the case, and everything is sent once, with the case's confirm button (Confirming…; an unclear result is checked, never sent twice, D-69). So Prescribe has no save-failure state. Keep it that way; if the backend later saves each medicine on its own, a save-failure state needs design first. — *Source: Prototype [MOCK]*
 
 Decisions: D-69
+
+<a id="rx-34"></a>
+### rx-34 · Where are the focused field and the main button when the phone's keyboard is open?
+
+- Always above the keyboard: use a keyboard-avoiding layout on every screen with a text field. When a field gets focus, scroll so the field (with its label and helper) and the screen's main button sit above the keyboard, the button at least 16 px clear of it. On the case page and Prescribe the pinned action bar hides while the keyboard is open and comes back when it closes (D-81), so there the field alone is kept in view. — *Source: Agreed fix (phone feedback, D-44, D-81)*
+
+Decisions: D-44, D-81
 

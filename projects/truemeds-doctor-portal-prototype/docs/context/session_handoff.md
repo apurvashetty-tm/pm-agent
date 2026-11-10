@@ -989,3 +989,19 @@ User identified missing HTML/native linkage. Inspected actual sign-in and OTP HT
 - **Preview site:** the `app/netlify.toml` build now runs `scripts/copy-calling-flow.sh`, which copies the page, messages.js, the case pictures and a favicon (all git-ignored). The temp-copy build check passed: no 404s, no console errors, pictures load. **Not deployed.**
 - **Checks:** all pass. See `docs/renders/2026-11-10-d104/REPORT.md`. Codex review found no blockers.
 - **Next:** the main thread reviews d104; `/calling-flow/` goes live with the next `[deploy]`.
+
+## 2026-11-10 · Run wheel-keyboard (unattended) — F-04 swipe wheel, F-05 keyboard
+- **F-04 wheel:** each column (Home setup and the Add time sheet) is now a real wheel, in the new file `app/screens/wheel.js`:
+  - touch swipe with momentum, mouse drag, mouse wheel and trackpad; it snaps to one row, and the row in the band is the value;
+  - tapping the row above or below, and the arrow keys, each move one step;
+  - busy (Setting… / Adding…) locks it; the 15-minute minimum and 15-minute steps are unchanged;
+  - when both columns move at once, the last one to stop sets both values; Set availability / Add tapped before the wheel stops uses the value in the band.
+  - Same look: the Home pictures compare within 1 %.
+- **F-05 keyboard:** new `app/shell/keyboard.js`, mounted from `boot.js`, does this once for every screen:
+  - on a phone, the app is sized to the space above the keyboard (`window.visualViewport`);
+  - on focus, the field (with its label and helper) and the screen's main button scroll into that space, the button at least 16 px clear of the keyboard;
+  - the OTP screen scrolls as one while the real keyboard is open (`html.phone-kb` in `otp.css`).
+  - Desktop, capture and pinch-zoom are unchanged. On the case page and Prescribe the bar still hides while typing (D-81).
+- **Kit:** plain-words rules added: Home "Availability wheel"; "Keyboard" on OTP, case, Prescribe and Sign-in (d30). Kit regenerated.
+- **Checks:** all pass; new `tests/wheel-keyboard.mjs` 15 / 15. Codex: 2 blockers + 1 should-fix fixed; the second review found no blockers. Report: `docs/renders/2026-11-10-wheel-keyboard/REPORT.md`.
+- **Next:** Apurva checks both on his phone through the local link (`scripts/serve.sh`) — an Android Chrome and an iOS Safari look, which headless tests can't give; then the final deploy (on request only).

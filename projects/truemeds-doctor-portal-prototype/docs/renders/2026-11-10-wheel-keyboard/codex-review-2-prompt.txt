@@ -1,0 +1,10 @@
+Second review (blockers only) of the wheel-keyboard run of the Truemeds doctor-app prototype. Read-only: do not edit files.
+The first review (docs/renders/2026-11-10-wheel-keyboard/codex-review.log, at the end) raised:
+1. BLOCKER: a column coming to rest redraws both columns, losing the other column's swipe in progress.
+2. BLOCKER: Set availability / Add tapped before the wheel rests sends the old value.
+3. SHOULD-FIX: pinch zoom still ran the field-reveal scrolling.
+Fixes: app/screens/wheel.js (moving state per column; the last column to rest commits every column's band value via pickAll;
+commitWheels(root) exported), app/screens/home.js (onSet / onAdd call commitWheels(root) first), app/shell/keyboard.js
+(eligible() guard when scheduling and when running the reveal). Tests W6, W7, K6 in tests/wheel-keyboard.mjs.
+Check only: are the three fixed correctly, and did the fixes introduce a new BLOCKER (wrong value sent, busy bypassed, a commit
+that never happens, an infinite loop, desktop / capture changed)? Answer with a numbered list tagged BLOCKER, or "No blockers".

@@ -1,0 +1,46 @@
+✔ H01: required portable kit layout (5.844375ms)
+✔ H02: native references resolve, copied tokens and messages match source (333.510875ms)
+✔ H03: every copy reference resolves; all source Sign-in copy keys represented (236.602167ms)
+✔ H04: all 12 states, all visible source elements, complete element contracts (34.755ms)
+✔ H05: typed reference values flagged with exact line; scaffolding excluded (294.341959ms)
+✔ H10: red means typed size, colour or word; no unexplained built Sign-in red (411.911458ms)
+✔ H11: new size token references resolve to canonical native tokens (5.545958ms)
+✔ H12: prefix and logo accessible name have message keys and MSG consumers (3.189041ms)
+✔ H13: native logo PNGs at 1x/2x/3x with locked SVG source sha256 (1.005417ms)
+✔ H14: D-98 questions are DECIDED, not OPEN (0.455ms)
+✔ H06: no internal files, wording, personal details or external-repo dependencies (599.727667ms)
+✔ H07: AI pack points to real kit files and shares one instruction source (0.536875ms)
+✔ H08: four static TTFs, weight metadata, OFL, matching sha256 and platform setup (6.595667ms)
+✔ H09: --check passes fresh, fails after a source-only change (isolated replica) (1409.193ms)
+✔ oracle: state and DOM inventories are populated from the approved fixture (0.9605ms)
+✔ oracle: D-98 red classification and scaffold boundary (0.133959ms)
+✔ H15: exact approved state partition and portable byte-identical pictures (162.04ms)
+✔ H16: built states and precisely the three deferred A-only states (156.6765ms)
+✔ H17: unique element identities, full fields, viewport geometry and decision links (1087.365917ms)
+✔ H18: all token and copy references resolve including property arrays and slots (149.500042ms)
+✔ H19: typed styles flagged with provenance or documented exceptions; zero/layout/% plain (235.248542ms)
+✔ H20: every used block has parts/states/tokens/rules and accurate usedIn (200.540625ms)
+✔ H21: journey decisions, D-101 and configurable mock rulings (3.250541ms)
+✔ H22: disk viewer exposes each journey and state without network-only loading (4.148167ms)
+✔ H23: external handoff excludes internal history and doctor-unit order wording (81.049917ms)
+✔ H24: source-only Home CSS mutation invalidates --check in a private overlay (1129.723542ms)
+✔ oracle: raw classifier respects token references, zero, percentages and optical sizes (0.159875ms)
+✔ H25: all eight live screen tabs reach every approved state exactly once (7358.607583ms)
+✔ H26: every state has plain When this shows and linked answered questions (5031.561792ms)
+✔ H27: one phone image, caption, later exceptions and independently scrolling panel (5020.414417ms)
+✔ H28: tapping elements opens clean details, block route and folded picker (9863.5505ms)
+✔ H29: no zero not-tokens card or state token/reference tables (4979.784834ms)
+✔ H30: every block usage is grouped and every chip selects that block on its state (108332.969833ms)
+✔ H31: Start here fits laptop and exposes all real downloads with identical single files (30.379875ms)
+✔ H32: whole-kit zip contains exactly handoff excluding downloads, byte for byte (1122.518041ms)
+✔ H33: Foundation screen filter narrows tokens and hides inline alias chains (62.134166ms)
+✔ H34: all tabs, states with one tap and block pages are free of internal labels and script errors (9864.06275ms)
+✔ H35: generated kit and downloads pass build freshness check (258.853125ms)
+ℹ tests 38
+ℹ suites 0
+ℹ pass 38
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 259857.962791

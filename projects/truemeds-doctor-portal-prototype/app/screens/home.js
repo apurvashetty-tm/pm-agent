@@ -17,6 +17,7 @@ import { SAMPLE_DOCTOR } from "../data/doctor.js";
 import { PICTURE_NUMBER } from "../data/test-numbers.js";
 import { icon, paint as paintIcons, btn, busyBtn, notice, statusLine, actionBar, sheet, toast, focusSheet } from "./parts.js";
 import { newLife } from "./entry-ctx.js";
+import { wheelColumn, syncWheels, commitWheels } from "./wheel.js";
 
 const MIN = 60 * 1000;
 // Picture moments (home-reference.js STATES). left: minutes remaining; rx: Prescriptions today; bar: the bar result notice.
@@ -96,14 +97,10 @@ export function render(host, id, { mode, params = {} }) {
   host.replaceChildren(root);
 
   // ---------- pieces ----------
+  // A real swipe wheel per column (F-04, D-40): wheel.js. Busy (Setting… / Adding…) blocks it.
   function wheel(name, values, current, col) {
-    const i = Math.max(0, values.indexOf(current));
-    const rows = [i - 1, i, i + 1].map((j) => (j >= 0 && j < values.length ? values[j] : null));
     const busy = ui.busy === "setting" || ui.busy === "adding";
-    return h("div", { class: "wheel", role: "listbox", "aria-label": name },
-      rows.map((val, k) => val === null ? h("span", { class: "wheel-item wheel-item--empty" })
-        : h("button", { type: "button", class: `wheel-item${k === 1 ? " is-selected" : ""}`, role: "option", "aria-selected": String(k === 1), disabled: busy,
-          onclick: () => pickWheel(col, val) }, String(val))));
+    return wheelColumn({ name, col, values, current, disabled: busy, onPick: (val, o) => pickWheel(col, val, o && o.focus) });
   }
   function picker(target, withMinimum) {
     const d = ui[target], hours = Math.floor(d / 60), minutes = d % 60;
@@ -120,13 +117,14 @@ export function render(host, id, { mode, params = {} }) {
         wheel(MSG("home.hours"), hourValues, hours, "h"), wheel(MSG("home.minutes"), minuteValues, minutes, "m")));
   }
   let pickTarget = "duration";
-  function pickWheel(col, val) {
+  function pickWheel(col, val, focus) {
+    if (ui.busy === "setting" || ui.busy === "adding") return;
     const d = ui[pickTarget];
     let hh = Math.floor(d / 60), mm = d % 60;
     if (col === "h") hh = val; else mm = val;
     if (hh >= ui.hourRange - 2) ui.hourRange += 24;
     ui[pickTarget] = Math.max(v("availabilityMinimum") / MIN, hh * 60 + mm);   // minimum 15 minutes (app-logic §3)
-    draw();
+    draw(focus ? col : null);
   }
   const NOTE = {
     "setup-failed": () => notice("error", MSG("home.setupFailed"), { cls: "status" }),
@@ -244,7 +242,7 @@ export function render(host, id, { mode, params = {} }) {
 
   // ---------- draw ----------
   let lastKey = "";
-  function draw() {
+  function draw(wheelFocus) {
     const a = availability();
     lastKey = drawKey(a);
     const page = ui.page === "profile" ? profilePage() : homePage(a);
@@ -252,7 +250,8 @@ export function render(host, id, { mode, params = {} }) {
     root.replaceChildren(page, overlay || "");
     root.classList.toggle("is-profile", ui.page === "profile");
     paintIcons(root);
-    if (overlay && !capture) focusSheet(overlay);
+    syncWheels(root, wheelFocus);   // each wheel shows its value in the band
+    if (overlay && !capture && !wheelFocus) focusSheet(overlay);
   }
   const drawKey = (a) => [a.state, ui.busy, ui.sheet, ui.bar, offline(), work().rxToday, Date.now() < ui.toastUntil].join("|");
 
@@ -265,6 +264,7 @@ export function render(host, id, { mode, params = {} }) {
   const snapshot = () => ({ duration: ui.duration, addDuration: ui.addDuration, page: ui.page });
   function onSet() {
     if (ui.busy) return;
+    commitWheels(root);   // tapped before the wheel came to rest: the value in the band is the one set
     ui.busy = "setting"; ui.bar = null; draw();
     life.later(() => {
       ui.busy = null;
@@ -298,6 +298,7 @@ export function render(host, id, { mode, params = {} }) {
   }
   function onAdd() {
     if (ui.busy) return;
+    commitWheels(root);   // as onSet: the value in the band is the one added
     ui.busy = "adding"; ui.addFailed = false; draw();
     life.later(() => {
       ui.busy = null;

@@ -157,6 +157,8 @@ body { position: relative; }
 
 /* ---- phone: the panel is a hidden drawer that slides up from the bottom (plan §4) ---- */
 @media (max-width: 767px) {
+  /* F-05: the app fills the space above the phone's keyboard (visual viewport, set by shell/keyboard.js; full screen without it). */
+  .shell-frame { top: var(--app-vt, 0px); bottom: auto; height: var(--app-vh, 100%); }   /* raw-ok: fallbacks = the full screen (inset 0) */
   .review-panel {
     left: 0; right: 0; bottom: 0; top: auto;
     position: fixed;

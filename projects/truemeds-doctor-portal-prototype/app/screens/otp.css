@@ -15,6 +15,10 @@
 .otp-screen .panel { flex: 1; min-height: 0; overflow-y: auto; background: var(--tm-surface-primary);
   border-radius: var(--tm-radius-2xl) var(--tm-radius-2xl) 0 0; padding: var(--tm-space-2xl) var(--tm-space-page) var(--tm-space-xl);
   display: flex; flex-direction: column; }
+/* F-05: while the phone's own keyboard is open (html.phone-kb, shell/keyboard.js) the whole screen scrolls, header included, so the
+   code boxes and Verify & sign in both fit above the keyboard on a short phone. Never set on desktop or in pictures. */
+.phone-kb .otp-screen { overflow-y: auto; }
+.phone-kb .otp-screen .panel { flex: 1 0 auto; overflow-y: visible; }
 .otp-screen.kb .panel { padding-bottom: calc(256px + var(--tm-space-lg)); }   /* raw-ok: drawn keyboard height (prototype only). D-46: clears the keyboard by 16 */
 .otp-screen .grp { display: flex; flex-direction: column; gap: var(--tm-space-lg); }
 .otp-screen .grp + .grp { margin-top: var(--tm-space-2xl); }

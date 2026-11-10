@@ -20,6 +20,7 @@ import { EV } from "./call-events.js";
 import { CALL_KEYS } from "../data/story-schema.js";
 import { mountDrawer } from "../review/drawer.js";
 import { REVIEW_TEXT as T } from "../review/labels.js";
+import { mountKeyboardAvoid } from "../shell/keyboard.js";
 
 const standalone = matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
 const q = resolveMode(location.search, { standalone });
@@ -215,5 +216,6 @@ if (mode === "review" || mode === "play") {
   setLogKeeper((t) => storage.set("log", [...(storage.get("log") || []), t].slice(-LOG_KEPT)));
 }
 attachPhoneBack();
+mountKeyboardAvoid({ mode, frame: document.getElementById("frame") });   // F-05: field + main button above the phone's keyboard
 start(null, startParams(q.s, true));
 window.__tm = { store, get server() { return server; }, runCalls, clock, story: () => story };

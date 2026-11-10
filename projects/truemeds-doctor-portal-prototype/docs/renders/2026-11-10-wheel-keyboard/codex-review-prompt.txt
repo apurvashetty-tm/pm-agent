@@ -1,0 +1,32 @@
+You are reviewing one small run of the Truemeds doctor-app prototype, for CORRECTNESS against the spec only. Skip style.
+Read-only: do not edit files. Report findings as a numbered list, each tagged BLOCKER / SHOULD-FIX / NIT, with file:line and why.
+If nothing is wrong, say "No blockers".
+
+Spec (read these):
+- docs/renders/2026-11-10-wheel-keyboard/TERMINAL-BRIEF.md (the run brief: F-04 swipe wheel, F-05 keyboard, kit rules).
+- docs/reviews/2026-11-09-prototype-feedback.md rows F-02, F-04, F-05.
+- docs/context/decision_log.md entries D-40 (wheel), D-44 (button 16 px clear of the keyboard), D-81 item 6 (keyboard rule: on the case page and Prescribe the pinned bar HIDES while the keyboard is open; the field scrolls into view with its label and helper).
+- ui-screens/app-logic.md §3 (Home: availability, 15-minute minimum, 15-minute steps, busy rules).
+
+Changes to review (see `git diff` and the new untracked files):
+1. app/screens/wheel.js (new) + app/screens/home.js (wheel(), pickWheel(), draw()) + app/screens/home.css (.wheel rules):
+   each column is a scroll container with CSS scroll-snap; touch swipe = native scroll with momentum; mouse drag with a short
+   momentum (snap off while dragging); mouse wheel native; value committed when the column rests (120 ms with no scroll and no
+   finger / mouse down) through pickWheel (minimum 15 min, hour range grows); tap the row above / below = one step; ArrowUp /
+   ArrowDown / Home / End; roving tabindex; busy (Setting… / Adding…) → is-busy, overflow hidden, rows disabled, pickWheel ignores.
+   The approved look must not change (3 rows, band, sizes): the compare of Home pictures stays within 1 %.
+2. app/shell/keyboard.js (new) + app/core/boot.js (mount) + app/shell/shell.css (phone media query: frame top / height from
+   --app-vt / --app-vh) + app/screens/otp.css (html.phone-kb: the OTP screen scrolls as one while the real keyboard is open):
+   on phones (< 768 wide, not capture, zoom 1) the frame is sized to window.visualViewport; on focus / viewport resize the focused
+   field (.tm-field box) and the main action (first shown .tm-btn--primary after the field) are scrolled into view, the action
+   16 px clear. Desktop frame and capture must be unchanged.
+3. scripts/build-handoff.journeys.mjs + scripts/build-handoff.mjs: plain-words kit rules (Home "Availability wheel"; "Keyboard"
+   on OTP, case, Prescribe and Sign-in d30); handoff/ regenerated.
+4. tests/wheel-keyboard.mjs (new): W1–W5 wheel, K1–K5 keyboard.
+
+Questions to answer: Does the wheel commit exactly the value in the band, never a stale or in-between one (fast swipes, a swipe
+on one column while the other is still moving, a redraw mid-gesture, the click that follows a mouse drag)? Can busy be bypassed?
+Is the 15-minute minimum / step kept (hours 0 → minutes 15/30/45 only)? Any way the keyboard code changes desktop review, capture
+pictures, pinch-zoom, or leaves the frame short after the keyboard closes? Is the main-action choice wrong on any screen with a
+text field (sign-in, OTP, case notes, Prescribe Other dose / Additional instructions)? Does the D-81 reading (bar hidden on case /
+Prescribe while typing, so only the field is revealed there) conflict with the brief in a way that matters?
