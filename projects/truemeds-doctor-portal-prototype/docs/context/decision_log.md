@@ -1028,6 +1028,11 @@ From an external (ChatGPT) review, each point verified before acting.
 - **Why:** the point is cutting SMS cost, and every OTP sign-in is an SMS sent — the right moment to ask again. Doctors stay signed in between sessions, so OTP sign-ins are rare and the re-ask isn't frequent; the cap stops nagging a doctor who has decided no.
 - **Rejected:** never re-offering (placeholder; loses the SMS saving); offering at every app open (nags); no cap.
 
+### D-105 · Returning unlock: two buttons; Use OTP opens sign-in with the number filled in — 2026-11-10
+- **Decision (Apurva):** returning unlock drops "Not you? Switch account". It keeps **Unlock** (primary) and **Use OTP instead** (quiet). Use OTP instead, and the automatic fallback after 3 failed unlocks, open **Sign-in with the remembered number filled in** — no SMS until the doctor taps Send OTP. To change account, the doctor edits the number there. Sign-in reached this way follows the normal Sign-in rules: no Back button; the phone's back gesture leaves the app (D-101); reopening the app shows unlock again. Amends D-61 point 3.
+- **Why:** three stacked buttons with two quiet ones looked odd; Switch account and Use OTP instead both led to sign-in, so one control now does both. Not sending the SMS straight away also avoids an SMS when the doctor only wanted to switch account.
+- **Rejected:** keeping Switch account; a special back gesture from this Sign-in to unlock (rare mistake; reopening the app already returns to unlock; one Sign-in behaving differently is harder to build and explain).
+
 ## Design system changes made for this work
 
 ### D-60 · Secondary button without drop shadow (design system) — 2026-10-24 · **REVERTED same day**

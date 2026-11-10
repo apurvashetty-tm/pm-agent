@@ -1,6 +1,6 @@
 # Doctor app: everything before the final deploy (checklist)
 
-2026-11-10 · Covers three changes: **D-104** (offer re-asked, max 3, built), **F-04 / F-05** (swipe wheel and keyboard, run in progress) and **D-105** (returning unlock: two buttons, proposed). Then one release. Found by searching the whole project for each change.
+2026-11-10 · Covers three changes: **D-104** (offer re-asked, max 3, built), **F-04 / F-05** (swipe wheel and keyboard, run in progress) and **D-105** (returning unlock: two buttons, agreed and queued). Then one release. Found by searching the whole project for each change.
 
 Legend: ✅ done · 🔄 in the running run · ⬜ to do
 
@@ -33,7 +33,7 @@ Old review documents that say "offered once" (rebuild checklists from Oct–Nov)
 | B7 | Design system: if the wheel needed a new design value, it goes to `main` first on its own shared PR | 🔄 check in the review |
 | B8 | **Your phone check** through the local link: spin the wheel; type an OTP and see Verify stay visible | ⬜ after the run |
 
-## C · D-105: returning unlock with two buttons (proposed, needs your yes)
+## C · D-105: returning unlock with two buttons (agreed 2026-11-10; no special back gesture; queued)
 
 **Change:** drop "Not you? Switch account". **Use OTP instead** opens sign-in with the number filled in (no SMS until Send OTP; the doctor can change the number there). The automatic fallback after failed unlocks goes to the same place. "Not available" state: Use OTP instead is the one main button.
 
