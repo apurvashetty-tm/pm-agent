@@ -20,17 +20,17 @@ Legend: ✅ done · 🔄 in the running run · ⬜ to do
 
 Old review documents that say "offered once" (rebuild checklists from Oct–Nov) are history and stay as they are.
 
-## B · F-04 swipe wheel, F-05 keyboard (run in progress)
+## B · F-04 swipe wheel, F-05 keyboard (done, reviewed 2026-11-10)
 
 | # | Touchpoint | Status |
 |---|---|---|
-| B1 | Prototype: wheel swipes and snaps (Home setup + Add time sheet), same look | 🔄 |
-| B2 | Prototype: keyboard never covers the field or the main button, every screen | 🔄 |
-| B3 | Tests for both + picture compare (no visual change) | 🔄 |
-| B4 | Kit: wheel rule (Android needs a wheel component) + keyboard rule | 🔄 |
+| B1 | Prototype: wheel swipes and snaps (Home setup + Add time sheet), same look | ✅ |
+| B2 | Prototype: keyboard never covers the field or the main button, every screen | ✅ (case + Prescribe keep D-81 bar-hides) |
+| B3 | Tests for both + picture compare (no visual change) | ✅ 15/15; 132 pictures 0 over 1 % |
+| B4 | Kit: wheel rule (Android needs a wheel component) + keyboard rule | ✅ |
 | B5 | **Missing from the run:** app rules (`app-logic.md` §3) say how the wheel *behaves* (swipe, snap) | ⬜ add in the D-105 run |
 | B6 | PRD: §6 already has the keyboard rule; §5.5 "a wheel in 15-minute steps" is enough | ✅ no change |
-| B7 | Design system: if the wheel needed a new design value, it goes to `main` first on its own shared PR | 🔄 check in the review |
+| B7 | Design system: if the wheel needed a new design value, it goes to `main` first on its own shared PR | ✅ checked: wheel CSS uses existing tokens only; keyboard rules already in RULES §8.9 and D-81 — no design-system change |
 | B8 | **Your phone check** through the local link: spin the wheel; type an OTP and see Verify stay visible | ⬜ after the run |
 
 ## C · D-105: returning unlock with two buttons (agreed 2026-11-10; no special back gesture; queued)
@@ -58,6 +58,7 @@ Old review documents that say "offered once" (rebuild checklists from Oct–Nov)
 
 | # | Step |
 |---|---|
+| D0 | **Completeness sweep before the PR** (main thread): search the whole repo — project, `design-system/`, shared `scripts/`, `docs/` — for every rule changed in A–C (old wording, removed copy keys, old button names); every hit is fixed or listed as deliberately left. Plus the design-system diff and token guard. No PR until this is clean. |
 | D1 | Review all three runs; all checks pass; you approve the new unlock pictures + phone check (one sitting) |
 | D2 | New release PR from `main` (everything except run evidence), `[deploy]` in the title, merged → **final deploy** |
 | D3 | Live check: app, `?demo=1`, `/kit`, downloads, **`/calling-flow/`**, wheel and keyboard on your phone |
