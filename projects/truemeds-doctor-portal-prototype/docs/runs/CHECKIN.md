@@ -10,6 +10,7 @@ One dated line per firing that did something. Reviewed runs are listed so the ne
 - 2026-11-10 00:50 IST — Main thread (chat) reviewed signin-d101: passed (its four readings accepted: o10 limited to Change, pasted-number behaviour unchanged; o04 checked before the first-digit rule; 91-start still a prefix; o04 picture captured live, no new fixture). D-103 agreed (kit viewer redesign); ruling 00:46 + kit-redesign follow-up queued. handoff-kit-all running since 00:42.
 
 - 2026-11-10 07:58 IST — Scheduled check-in: handoff-kit-all STOPPED twice (00:42 = Apurva's intentional stop for D-103; the 00:51 start hit the 5-hour usage limit at ~01:29 IST). Restart ruling written (continue from the uncommitted kit build); H18 + H23 test disputes upheld and test fixed (2 / 2 pass). Runner has exited; Apurva told to restart. Reviewed: rails, token-pass, A1, A2, B, signin-d101.
+- 2026-11-10 13:50 IST — Main thread reviewed d104: passed (61/61, 95/95, kit 38/38, PRD 17/17, calling-flow temp-site check 0×404; Codex no blockers). Readings accepted: once turned on the offer never returns (even if Profile turns it off later); a showing counts when shown. Reviewed: rails, token-pass, A1, A2, B, signin-d101, handoff-kit-all, d104. Queue empty; next: deploy 2 after Apurva approves.
 
 ## NEEDS-APURVA
 (none)
