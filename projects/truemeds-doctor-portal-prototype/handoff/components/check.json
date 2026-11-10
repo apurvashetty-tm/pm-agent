@@ -1,0 +1,139 @@
+{
+ "block": "check",
+ "name": "Check",
+ "rn": "<Check />",
+ "web": ".check",
+ "parts": {
+  "container": {
+   "states": {
+    "default": {
+     "seenIn": "d-alt-days",
+     "styles": [
+      {
+       "property": "display",
+       "value": "inline-flex",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "align-items",
+       "value": "center",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "gap",
+       "value": "var(--tm-space-sm)",
+       "tokens": [
+        {
+         "native": "tokens.space.sm",
+         "web": "--tm-space-sm",
+         "value": 8
+        }
+       ]
+      },
+      {
+       "property": "font-size",
+       "value": "var(--tm-font-size-body-md)",
+       "tokens": [
+        {
+         "native": "tokens.font.size.body.md",
+         "web": "--tm-font-size-body-md",
+         "value": 14
+        }
+       ]
+      },
+      {
+       "property": "min-height",
+       "value": "var(--tm-target-min)",
+       "tokens": [
+        {
+         "native": "tokens.target.min",
+         "web": "--tm-target-min",
+         "value": 48
+        }
+       ]
+      },
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "color",
+       "value": "var(--tm-content-primary)",
+       "tokens": [
+        {
+         "native": "tokens.color.content.primary",
+         "web": "--tm-content-primary",
+         "value": "#383A42"
+        }
+       ],
+       "inherited": true
+      },
+      {
+       "property": "font-family",
+       "value": "var(--tm-font)",
+       "tokens": [
+        {
+         "native": "tokens.font.family",
+         "web": "--tm-font",
+         "value": "Plus Jakarta Sans"
+        }
+       ],
+       "inherited": true
+      },
+      {
+       "property": "line-height",
+       "value": "var(--tm-font-lineheight-sm)",
+       "tokens": [
+        {
+         "native": "tokens.font.lineHeight.sm",
+         "web": "--tm-font-lineheight-sm",
+         "value": 20
+        }
+       ],
+       "inherited": true
+      }
+     ],
+     "size": "186×48"
+    }
+   }
+  }
+ },
+ "rules": [
+  {
+   "section": "Kit",
+   "text": "Build it once from the parts × states below (tokens only, copy from messages); it appears on Prescribe. What it does in each state is in DECIDED.md under those screens."
+  }
+ ],
+ "pictures": [],
+ "usedIn": [
+  "d-alt-days",
+  "d-cream",
+  "d-default",
+  "d-disable-sheet",
+  "d-disabled",
+  "d-discard-sheet",
+  "d-drops",
+  "d-duration-picker",
+  "d-error-dose",
+  "d-error-other",
+  "d-every-x-hours",
+  "d-food-selected",
+  "d-header-white",
+  "d-injection-default",
+  "d-monthly",
+  "d-notes-keyboard",
+  "d-scrolled",
+  "d-sos-on",
+  "d-syrup",
+  "d-weekly"
+ ],
+ "states": {
+  "default": [
+   "container"
+  ]
+ }
+}

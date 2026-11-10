@@ -334,7 +334,7 @@ body.concept-closed #success-toast{pointer-events:auto}
     <section id="scr-unlock" class="app-screen auth" hidden aria-labelledby="unlock-h">
       <div class="auth-top auth-top--unlock">
         <img class="auth-logo" src="../../brand/truemeds-for-doctors.svg" alt="Truemeds for doctors" width="174" height="43">
-        <h1 id="unlock-h" class="unlock-title" tabindex="-1">Hello, <span id="unlock-name">Dr. Apurva</span>.</h1>
+        <h1 id="unlock-h" class="unlock-title" tabindex="-1">Hello, <span id="unlock-name">Dr. Kunal</span>.</h1>
         <p class="unlock-sub">Let’s check in on your patients today.</p>
       </div>
       <div class="auth-panel unlock-panel">
@@ -353,7 +353,7 @@ body.concept-closed #success-toast{pointer-events:auto}
     <section id="scr-home" class="app-screen" hidden aria-labelledby="home-h">
       <div class="app-scroll home-body">
         <div class="home-greet">
-          <h1 id="home-h" class="tm-text-h1" tabindex="-1"><span id="home-greeting">Good afternoon</span>, <span id="home-name">Dr. Apurva</span></h1>
+          <h1 id="home-h" class="tm-text-h1" tabindex="-1"><span id="home-greeting">Good afternoon</span>, <span id="home-name">Dr. Kunal</span></h1>
           <p class="home-date" id="home-date">—</p>
         </div>
         <div class="tm-card home-card">
@@ -693,7 +693,7 @@ body.concept-closed #success-toast{pointer-events:auto}
       <div id="profile-identity">
         <div id="profile-avatar-large">AS</div>
         <div>
-          <div id="profile-doctor-name">Dr. Apurva Shetty</div>
+          <div id="profile-doctor-name">Dr. Kunal Wani</div>
           <div id="profile-doctor-role">General Physician</div>
         </div>
       </div>
@@ -1192,7 +1192,7 @@ document.addEventListener('DOMContentLoaded', syncCaseActionBar);
     'd-food-selected':         () => { switchScenario(CAT4); openPS(1); EDIT_STATE.food = 'before_food'; renderPrescribe(); return later(() => {   // D-81 F20: the Food chips show
       const b = $('ps-body'); const l = [...b.querySelectorAll('.tm-field__label')].find(e => /^Food/.test(e.textContent.trim())); if (l) b.scrollTop += l.getBoundingClientRect().top - b.getBoundingClientRect().top - 16; }, 150); },
     'd-disabled':              () => { switchScenario(CAT4); const m = DOCTOR_STATE.currentCase.medicines.find(x => x.id === 1); m.disabled = true; m.disable_reason = 'Patient declined'; openPS(1); },   // D-81 F17 (D-20)
-    'a-confirm-busy':          () => { passGate(CAT4); allRx(); $('action-zone').style.display = 'none'; const b = $('main-cta-btn'); b.classList.add('tm-btn--busy'); b.disabled = true; b.setAttribute('aria-busy', 'true'); b.innerHTML = '<span class="tm-spinner" aria-hidden="true"></span>' + MSG('case.confirming'); $('ab-secondary').querySelectorAll('button').forEach(x => x.disabled = true); $('case-actionbar').querySelectorAll(':scope > button').forEach(x => { if (x !== b) x.disabled = true; }); window.__frozen = true; syncConcept(); },   // D-81 F24/F25: rows and notes read-only; View Rx stays outlined (D-76)
+    'a-confirm-busy':          () => { passGate(CAT4); allRx(); $('action-zone').style.display = 'none'; $('ab-secondary').style.display = 'none'; /* D-94: as approved; was left to a ResizeObserver race (capture showed the greyed Callback row ~1 in 4) */ const b = $('main-cta-btn'); b.classList.add('tm-btn--busy'); b.disabled = true; b.setAttribute('aria-busy', 'true'); b.innerHTML = '<span class="tm-spinner" aria-hidden="true"></span>' + MSG('case.confirming'); $('ab-secondary').querySelectorAll('button').forEach(x => x.disabled = true); $('case-actionbar').querySelectorAll(':scope > button').forEach(x => { if (x !== b) x.disabled = true; }); window.__frozen = true; syncConcept(); },   // D-81 F24/F25: rows and notes read-only; View Rx stays outlined (D-76)
     'a-confirm-failed':        () => { passGate(CAT4); allRx(); return later(() => { $('action-zone').style.display = 'none'; $('ab-secondary').style.display = 'none'; noticeAboveBar(notice('error', 'alert', MSG('case.confirmFailed'), 'alert-circle')); }, 200); },   // D-83 CW-C3: after a valid call only the confirm button — no Callback (same pattern as t08c)
     'a-release-failed':        () => { switchScenario(CAT4); showLeave(); const b = $('cl-release'); b.classList.add('tm-btn--busy'); b.disabled = true; b.innerHTML = '<span class="tm-spinner" aria-hidden="true"></span>Releasing…'; $('cl-stay').disabled = true; $('cl-x').disabled = true; setTimeout(() => { leave.hidden = true; b.classList.remove('tm-btn--busy'); b.disabled = false; b.textContent = 'Release case'; $('cl-stay').disabled = false; $('cl-x').disabled = false; noticeAboveBar(notice('error', 'alert', MSG('case.releaseFailed'), 'alert-circle')); ready(); }, 300); return 'wait'; },   // A-19: the result of an action sits in the bar, above its button
     'd-rx-failed':             () => { switchScenario(CAT4); openRxOverlay(); $('rx-doc-wrapper').style.display = 'none'; $('rx-hint').style.display = 'none'; $('rx-controls').style.display = 'none'; const f = document.createElement('div'); f.className = 'concept-new concept-stack'; f.appendChild(notice('error', 'alert', MSG('rx.loadFailed'), 'alert-circle')); $('rx-overlay-body').appendChild(f); const bar = document.createElement('div'); bar.className = 'tm-actionbar concept-new'; bar.appendChild(pinnedTryAgain()); $('rx-overlay').appendChild(bar); },

@@ -1,0 +1,400 @@
+{
+ "block": "head",
+ "name": "Head",
+ "rn": "<Head />",
+ "web": ".head",
+ "parts": {
+  "container": {
+   "states": {
+    "default": {
+     "seenIn": "otp_code-expired",
+     "styles": [
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "margin-top",
+       "value": "var(--tm-space-sm)",
+       "tokens": [
+        {
+         "native": "tokens.space.sm",
+         "web": "--tm-space-sm",
+         "value": 8
+        }
+       ]
+      },
+      {
+       "property": "display",
+       "value": "flex",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "flex-direction",
+       "value": "column",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "gap",
+       "value": "var(--tm-space-sm)",
+       "tokens": [
+        {
+         "native": "tokens.space.sm",
+         "web": "--tm-space-sm",
+         "value": 8
+        }
+       ]
+      }
+     ],
+     "size": "358×96"
+    }
+   }
+  },
+  "otp-title": {
+   "states": {
+    "default": {
+     "seenIn": "otp_code-expired",
+     "styles": [
+      {
+       "property": "text-wrap",
+       "value": "balance",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "font-size",
+       "value": "32px",
+       "tokens": [],
+       "exception": "Text style, not a typed number: use tokens.text.titleLg.fontSize (32), part of tokens.text.titleLg."
+      },
+      {
+       "property": "line-height",
+       "value": "40px",
+       "tokens": [],
+       "exception": "Text style, not a typed number: use tokens.text.titleLg.lineHeight (40), part of tokens.text.titleLg."
+      },
+      {
+       "property": "font-weight",
+       "value": "600",
+       "tokens": [],
+       "exception": "Text style, not a typed number: use tokens.text.titleLg.fontWeight (600), part of tokens.text.titleLg."
+      },
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "margin",
+       "value": "0",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "color",
+       "value": "var(--tm-content-primary)",
+       "tokens": [
+        {
+         "native": "tokens.color.content.primary",
+         "web": "--tm-content-primary",
+         "value": "#383A42"
+        }
+       ],
+       "inherited": true
+      },
+      {
+       "property": "font-family",
+       "value": "var(--tm-font)",
+       "tokens": [
+        {
+         "native": "tokens.font.family",
+         "web": "--tm-font",
+         "value": "Plus Jakarta Sans"
+        }
+       ],
+       "inherited": true
+      }
+     ],
+     "size": "358×40"
+    }
+   }
+  },
+  "p": {
+   "states": {
+    "default": {
+     "seenIn": "otp_code-expired",
+     "styles": [
+      {
+       "property": "text-wrap",
+       "value": "pretty",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "margin",
+       "value": "0",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "font-size",
+       "value": "var(--tm-font-size-body-md)",
+       "tokens": [
+        {
+         "native": "tokens.font.size.body.md",
+         "web": "--tm-font-size-body-md",
+         "value": 14
+        }
+       ]
+      },
+      {
+       "property": "line-height",
+       "value": "var(--tm-font-lineheight-sm)",
+       "tokens": [
+        {
+         "native": "tokens.font.lineHeight.sm",
+         "web": "--tm-font-lineheight-sm",
+         "value": 20
+        }
+       ]
+      },
+      {
+       "property": "color",
+       "value": "var(--tm-content-secondary)",
+       "tokens": [
+        {
+         "native": "tokens.color.content.secondary",
+         "web": "--tm-content-secondary",
+         "value": "#5B616E"
+        }
+       ]
+      },
+      {
+       "property": "font-family",
+       "value": "var(--tm-font)",
+       "tokens": [
+        {
+         "native": "tokens.font.family",
+         "web": "--tm-font",
+         "value": "Plus Jakarta Sans"
+        }
+       ],
+       "inherited": true
+      }
+     ],
+     "size": "358×48"
+    }
+   }
+  },
+  "b": {
+   "states": {
+    "default": {
+     "seenIn": "otp_code-expired",
+     "styles": [
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "color",
+       "value": "var(--tm-content-primary)",
+       "tokens": [
+        {
+         "native": "tokens.color.content.primary",
+         "web": "--tm-content-primary",
+         "value": "#383A42"
+        }
+       ]
+      },
+      {
+       "property": "font-weight",
+       "value": "var(--tm-font-weight-medium, 500)",
+       "tokens": [
+        {
+         "native": "tokens.font.weight.medium",
+         "web": "--tm-font-weight-medium",
+         "value": "500"
+        }
+       ]
+      },
+      {
+       "property": "font-family",
+       "value": "var(--tm-font)",
+       "tokens": [
+        {
+         "native": "tokens.font.family",
+         "web": "--tm-font",
+         "value": "Plus Jakarta Sans"
+        }
+       ],
+       "inherited": true
+      },
+      {
+       "property": "font-size",
+       "value": "var(--tm-font-size-body-md)",
+       "tokens": [
+        {
+         "native": "tokens.font.size.body.md",
+         "web": "--tm-font-size-body-md",
+         "value": 14
+        }
+       ],
+       "inherited": true
+      },
+      {
+       "property": "line-height",
+       "value": "var(--tm-font-lineheight-sm)",
+       "tokens": [
+        {
+         "native": "tokens.font.lineHeight.sm",
+         "web": "--tm-font-lineheight-sm",
+         "value": 20
+        }
+       ],
+       "inherited": true
+      },
+      {
+       "property": "text-wrap",
+       "value": "pretty",
+       "tokens": [],
+       "layout": true,
+       "inherited": true
+      }
+     ],
+     "size": "109.8×18"
+    }
+   }
+  },
+  "h1": {
+   "states": {
+    "default": {
+     "seenIn": "unlock_cancelled",
+     "styles": [
+      {
+       "property": "text-wrap",
+       "value": "balance",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "font-size",
+       "value": "32px",
+       "tokens": [],
+       "exception": "Text style, not a typed number: use tokens.text.titleLg.fontSize (32), part of tokens.text.titleLg."
+      },
+      {
+       "property": "line-height",
+       "value": "40px",
+       "tokens": [],
+       "exception": "Text style, not a typed number: use tokens.text.titleLg.lineHeight (40), part of tokens.text.titleLg."
+      },
+      {
+       "property": "font-weight",
+       "value": "600",
+       "tokens": [],
+       "exception": "Text style, not a typed number: use tokens.text.titleLg.fontWeight (600), part of tokens.text.titleLg."
+      },
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "margin",
+       "value": "0 0 var(--tm-space-sm)",
+       "tokens": [
+        {
+         "native": "tokens.space.sm",
+         "web": "--tm-space-sm",
+         "value": 8
+        }
+       ],
+       "layout": true
+      },
+      {
+       "property": "color",
+       "value": "var(--tm-content-primary)",
+       "tokens": [
+        {
+         "native": "tokens.color.content.primary",
+         "web": "--tm-content-primary",
+         "value": "#383A42"
+        }
+       ],
+       "inherited": true
+      },
+      {
+       "property": "font-family",
+       "value": "var(--tm-font)",
+       "tokens": [
+        {
+         "native": "tokens.font.family",
+         "web": "--tm-font",
+         "value": "Plus Jakarta Sans"
+        }
+       ],
+       "inherited": true
+      }
+     ],
+     "size": "358×40"
+    }
+   }
+  }
+ },
+ "rules": [
+  {
+   "section": "Kit",
+   "text": "Build it once from the parts × states below (tokens only, copy from messages); it appears on OTP, Returning unlock. What it does in each state is in DECIDED.md under those screens."
+  }
+ ],
+ "pictures": [],
+ "usedIn": [
+  "otp_code-expired",
+  "otp_cooldown-reconciling",
+  "otp_couldnt-verify",
+  "otp_default",
+  "otp_empty-tap",
+  "otp_expired-and-resend-limited",
+  "otp_locked",
+  "otp_new-code-sent",
+  "otp_offline",
+  "otp_resend-available",
+  "otp_resend-failed",
+  "otp_resending",
+  "otp_too-many-resends",
+  "otp_too-short",
+  "otp_two-tries-left",
+  "otp_verifying",
+  "otp_wrong-code",
+  "unlock_cancelled",
+  "unlock_face",
+  "unlock_fingerprint",
+  "unlock_pending",
+  "unlock_platform-retry",
+  "unlock_screen-lock",
+  "unlock_unavailable"
+ ],
+ "states": {
+  "default": [
+   "container",
+   "otp-title",
+   "p",
+   "b",
+   "h1"
+  ]
+ }
+}

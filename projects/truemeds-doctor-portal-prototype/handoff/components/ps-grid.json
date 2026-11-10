@@ -1,0 +1,105 @@
+{
+ "block": "ps-grid",
+ "name": "PsGrid",
+ "rn": "<PsGrid />",
+ "web": ".ps-grid",
+ "parts": {
+  "container": {
+   "states": {
+    "default": {
+     "seenIn": "d-alt-days",
+     "styles": [
+      {
+       "property": "display",
+       "value": "grid",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "grid-template-columns",
+       "value": "repeat(4, minmax(0, 1fr))",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "gap",
+       "value": "var(--tm-space-sm)",
+       "tokens": [
+        {
+         "native": "tokens.space.sm",
+         "web": "--tm-space-sm",
+         "value": 8
+        }
+       ]
+      },
+      {
+       "property": "width",
+       "value": "calc(100% - var(--tm-space-xl) - var(--tm-space-md))",
+       "tokens": [
+        {
+         "native": "tokens.space.xl",
+         "web": "--tm-space-xl",
+         "value": 24
+        },
+        {
+         "native": "tokens.space.md",
+         "web": "--tm-space-md",
+         "value": 12
+        }
+       ],
+       "layout": true
+      },
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "margin-left",
+       "value": "0",
+       "tokens": [],
+       "layout": true
+      }
+     ],
+     "size": "290×48"
+    }
+   }
+  }
+ },
+ "rules": [
+  {
+   "section": "Kit",
+   "text": "Build it once from the parts × states below (tokens only, copy from messages); it appears on Prescribe. What it does in each state is in DECIDED.md under those screens."
+  }
+ ],
+ "pictures": [],
+ "usedIn": [
+  "d-alt-days",
+  "d-cream",
+  "d-default",
+  "d-disable-sheet",
+  "d-disabled",
+  "d-discard-sheet",
+  "d-drops",
+  "d-duration-picker",
+  "d-error-dose",
+  "d-error-other",
+  "d-every-x-hours",
+  "d-food-selected",
+  "d-header-white",
+  "d-inhaler",
+  "d-injection-default",
+  "d-monthly",
+  "d-scrolled",
+  "d-sos-on",
+  "d-sos-only",
+  "d-syrup",
+  "d-weekly"
+ ],
+ "states": {
+  "default": [
+   "container"
+  ]
+ }
+}

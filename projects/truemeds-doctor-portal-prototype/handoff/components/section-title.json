@@ -1,0 +1,179 @@
+{
+ "block": "section-title",
+ "name": "SectionTitle",
+ "rn": "<SectionTitle />",
+ "web": ".section-title",
+ "parts": {
+  "container": {
+   "states": {
+    "default": {
+     "seenIn": "a-back-blocked",
+     "styles": [
+      {
+       "property": "font-size",
+       "value": "var(--tm-font-size-body-lg)",
+       "tokens": [
+        {
+         "native": "tokens.font.size.body.lg",
+         "web": "--tm-font-size-body-lg",
+         "value": 16
+        }
+       ]
+      },
+      {
+       "property": "line-height",
+       "value": "var(--tm-font-lineheight-md)",
+       "tokens": [
+        {
+         "native": "tokens.font.lineHeight.md",
+         "web": "--tm-font-lineheight-md",
+         "value": 24
+        }
+       ]
+      },
+      {
+       "property": "font-weight",
+       "value": "var(--tm-font-weight-semibold)",
+       "tokens": [
+        {
+         "native": "tokens.font.weight.semibold",
+         "web": "--tm-font-weight-semibold",
+         "value": "600"
+        }
+       ]
+      },
+      {
+       "property": "color",
+       "value": "var(--tm-content-primary)",
+       "tokens": [
+        {
+         "native": "tokens.color.content.primary",
+         "web": "--tm-content-primary",
+         "value": "#383A42"
+        }
+       ]
+      },
+      {
+       "property": "margin",
+       "value": "0",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "font-family",
+       "value": "var(--tm-font)",
+       "tokens": [
+        {
+         "native": "tokens.font.family",
+         "web": "--tm-font",
+         "value": "Plus Jakarta Sans"
+        }
+       ],
+       "inherited": true
+      }
+     ],
+     "size": "326×24"
+    }
+   }
+  }
+ },
+ "rules": [
+  {
+   "section": "Kit",
+   "text": "Build it once from the parts × states below (tokens only, copy from messages); it appears on Case page, Prescribe. What it does in each state is in DECIDED.md under those screens."
+  }
+ ],
+ "pictures": [],
+ "usedIn": [
+  "a-back-blocked",
+  "a-confirm-busy",
+  "a-confirm-failed",
+  "a-leave-sheet",
+  "a-long-content",
+  "a-no-medicines",
+  "a-notes-typing",
+  "a-offline",
+  "a-offline-action",
+  "a-order-details",
+  "a-release-failed",
+  "a-releasing",
+  "a-rx-viewer",
+  "a-scrolled",
+  "a-top",
+  "c-callback",
+  "c-callback-error",
+  "c-callback-failed",
+  "c-callback-refused",
+  "c-skip-ha",
+  "e-availability-ended",
+  "e-callback-scheduled",
+  "g0-calling-pilot",
+  "g1-generic-confirm",
+  "g2-checking-ha",
+  "g3b-after-hangup",
+  "g3b-forwarded",
+  "s-10-medicines",
+  "s-medicine-disabled",
+  "s-optional-empty",
+  "s7a-calling",
+  "s7b-still-on-call",
+  "s7d-result-missing",
+  "s7d-result-missing-pilot",
+  "s7d-unavailable-sheet",
+  "s7e-leave-sheet",
+  "s7f-submitted",
+  "t01-ready",
+  "t02-calling",
+  "t03-not-through",
+  "t04-doctor-missed",
+  "t05-result-wait",
+  "t06-ended-early",
+  "t08a-valid-cat4",
+  "t08c-confirm-blocked",
+  "t09-patient-unavailable",
+  "t10a-confirmed",
+  "t10b-forwarded",
+  "t13-connecting-ha",
+  "t14-transferred",
+  "t15-after-hangup",
+  "t15-ha-no-join",
+  "t16-transfer-missed",
+  "t16b-transfer-missed-patient",
+  "t16c-transfer-missed-unknown",
+  "t17-skip-ha-wait",
+  "d-alt-days",
+  "d-cream",
+  "d-default",
+  "d-disable-sheet",
+  "d-disabled",
+  "d-discard-sheet",
+  "d-drops",
+  "d-duration-picker",
+  "d-error-dose",
+  "d-error-other",
+  "d-every-x-hours",
+  "d-food-selected",
+  "d-header-white",
+  "d-inhaler",
+  "d-injection-default",
+  "d-monthly",
+  "d-notes-keyboard",
+  "d-rx-failed",
+  "d-scrolled",
+  "d-sos-on",
+  "d-sos-only",
+  "d-syrup",
+  "d-weekly"
+ ],
+ "states": {
+  "default": [
+   "container"
+  ]
+ }
+}

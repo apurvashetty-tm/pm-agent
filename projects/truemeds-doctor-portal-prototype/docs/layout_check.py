@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Layout regression check for the Truemeds Doctor prototype (phone frame rule, design-system/RULES.md §7).
 Run from anywhere:  python3 docs/layout_check.py            (needs: pip install playwright; a Chromium)
-Fails (exit 1) if desktop is not a 9:16 phone frame, wheel scrolling is lost, or sheets / the Prescribe screen / Rx viewer escape the frame.
+Fails (exit 1) if desktop is not a 390 : 844 phone frame (app/, --app, D-97; the old frozen index.html keeps its 9:16 frame), wheel scrolling is lost, or sheets / the Prescribe screen / Rx viewer escape the frame.
 """
 import os, sys
 from pathlib import Path
@@ -31,17 +31,18 @@ def run_app():
     with sync_playwright() as p:
         kw = {"executable_path": EXE} if os.path.exists(EXE) else {}
         b = p.chromium.launch(**kw)
-        for (w, h) in [(1280, 800), (1440, 900), (1024, 768), (430, 932), (390, 844), (360, 640)]:
+        for (w, h) in [(1920, 1080), (1280, 800), (1440, 900), (1024, 768), (430, 932), (390, 844), (360, 640)]:
             tag = f"{w}x{h}"
             pg = b.new_page(viewport={"width": w, "height": h}); errs = []
             pg.on("pageerror", lambda e: errs.append(str(e)))
             pg.goto(base + "?s=t01-ready"); pg.wait_for_timeout(400)
             f = pg.evaluate("(()=>{const q=document.getElementById('frame').getBoundingClientRect();return {l:q.left,t:q.top,w:q.width,h:q.height,r:q.right,b:q.bottom}})()")
-            panel = pg.evaluate("(()=>{const p=document.getElementById('review-panel').getBoundingClientRect();const cs=getComputedStyle(document.getElementById('review-panel'));return {ov:cs.overflowY, inside: !!document.getElementById('frame').contains(document.getElementById('review-panel')), l:p.left, r:p.right}})()")
+            panel = pg.evaluate("(()=>{const p=document.getElementById('review-panel').getBoundingClientRect();const cs=getComputedStyle(document.getElementById('review-panel'));return {ov:cs.overflowY, inside: !!document.getElementById('frame').contains(document.getElementById('review-panel')), l:p.left, r:p.right, t:p.top}})()")
             if w >= 768:
-                ok(f"{tag} frame is 9:16", abs(f["w"] / f["h"] - 9 / 16) < 0.01, f"{f['w']:.0f}x{f['h']:.0f}")
+                ok(f"{tag} frame is 390 : 844, exactly 390 x 844 when the window allows (D-97)", abs(f["w"] / f["h"] - 390 / 844) < 0.005 and (h - 48 < 844 or (abs(f["w"] - 390) < 1.5 and abs(f["h"] - 844) < 1.5)), f"{f['w']:.1f}x{f['h']:.1f}")
                 ok(f"{tag} frame centred", abs((f["l"] + f["r"]) / 2 - w / 2) < 2)
                 ok(f"{tag} frame fits viewport height", f["b"] <= h)
+                ok(f"{tag} panel top-aligned with the frame, one column on the right (RULES §7.5, D-97)", abs(panel["t"] - f["t"]) <= 1, f"panel top {panel['t']:.1f}, frame top {f['t']:.1f}")
                 ok(f"{tag} panel beside the frame, not inside it, on screen", not panel["inside"] and (panel["l"] >= f["r"] - 1) and panel["r"] <= w, f"panel {panel['l']:.0f}-{panel['r']:.0f}, frame {f['l']:.0f}-{f['r']:.0f}")
             else:
                 ok(f"{tag} phone: frame is the screen", abs(f["w"] - w) < 2 and abs(f["h"] - h) < 2, f"{f['w']:.0f}x{f['h']:.0f}")
@@ -50,13 +51,24 @@ def run_app():
             else:
                 ok(f"{tag} phone drawer scrolls internally so every control is reachable", panel["ov"] in ("auto", "visible"), panel["ov"])
             ok(f"{tag} no sideways scroll", pg.evaluate("document.documentElement.scrollWidth <= innerWidth + 1"))
-            ok(f"{tag} picture fits the frame", pg.evaluate("(()=>{const i=document.querySelector('#screen img').getBoundingClientRect();const q=document.getElementById('frame').getBoundingClientRect();return i.top>=q.top-1&&i.bottom<=q.bottom+1&&i.left>=q.left-1&&i.right<=q.right+1})()"))
+            ok(f"{tag} screen fits the frame", pg.evaluate("(()=>{const i=document.querySelector('#screen > *').getBoundingClientRect();const q=document.getElementById('frame').getBoundingClientRect();return i.top>=q.top-1&&i.bottom<=q.bottom+1&&i.left>=q.left-1&&i.right<=q.right+1})()"))
             if w < 768:
                 hd = pg.evaluate("(()=>{const hd=document.getElementById('drawer-handle');if(hd.hidden)return {shown:false};const r=hd.getBoundingClientRect();const hdr=document.getElementById('app-header').getBoundingClientRect();const n=document.getElementById('notice-host').getBoundingClientRect();return {shown:true,overlapHeader:r.top<hdr.bottom&&r.bottom>hdr.top&&r.right>hdr.left&&r.left<hdr.right,overlapNotice:!document.getElementById('notice-host').hidden&&r.top<n.bottom&&r.bottom>n.top}})()")
                 ok(f"{tag} drawer handle never covers the header", not (hd["shown"] and hd["overlapHeader"]))
                 ok(f"{tag} drawer handle never covers the notice band", not (hd["shown"] and hd.get("overlapNotice")))
             ok(f"{tag} no page errors", not errs, "; ".join(errs))
             pg.close()
+            # Step 1 entry screens (built): fill the frame, no nested phone, no sideways scroll, main button on screen
+            for sid, btn in [("sign-in_default", ".login-submit"), ("sign-in_keyboard-open", ".login-submit"), ("otp_default", "#b"), ("otp_locked", "#b"),
+                             ("offer_fingerprint", "#turn-on"), ("offer_enable-failed", "#turn-on"), ("offer_unavailable", "#turn-on"), ("unlock_fingerprint", "#unlock-action"), ("unlock_unavailable", "#fallback")]:
+                pg = b.new_page(viewport={"width": w, "height": h}); errs = []
+                pg.on("pageerror", lambda e: errs.append(str(e)))
+                pg.goto(base + "?s=" + sid); pg.wait_for_timeout(400)
+                g = pg.evaluate("""(sel)=>{const fe=document.getElementById('frame');const f=fe.getBoundingClientRect();const sc=document.querySelector('.signin-screen,.otp-screen,.offer-screen,.unlock-screen');if(!sc)return null;const r=sc.getBoundingClientRect();const bt=document.querySelector(sel).getBoundingClientRect();
+                  return {fill:Math.abs(fe.clientWidth-r.width)<=1&&Math.abs(f.left+fe.clientLeft-r.left)<=1&&r.top<=f.top+fe.clientTop+1, side:document.documentElement.scrollWidth<=innerWidth+1, btn:bt.top>=f.top&&bt.bottom<=f.bottom}}""", btn)
+                ok(f"{tag} {sid}: screen fills the frame, no sideways scroll, main button inside the frame", bool(g) and g["fill"] and g["side"] and g["btn"], str(g))
+                ok(f"{tag} {sid}: no page errors", not errs, "; ".join(errs))
+                pg.close()
         b.close()
     print("\nALL PASS" if not fails_app else f"\n{len(fails_app)} FAILED: {fails_app}")
     return 1 if fails_app else 0
@@ -74,7 +86,7 @@ with sync_playwright() as p:
         pg.goto(URL); pg.wait_for_timeout(400)
         f = frame(pg); desktop = w >= 768
         if desktop:
-            check(f"{tag} frame is 9:16", abs(f["w"] / f["h"] - 9 / 16) < 0.01, f"{f['w']:.0f}x{f['h']:.0f}")
+            check(f"{tag} frame is 9:16 (old frozen prototype: index.html / styles.css stay frozen, D-56; the 390 : 844 rule, D-97, is checked on app/ with --app)", abs(f["w"] / f["h"] - 9 / 16) < 0.01, f"{f['w']:.0f}x{f['h']:.0f}")
             check(f"{tag} frame centred", abs((f["l"] + f["r"]) / 2 - w / 2) < 2)
             check(f"{tag} frame fits viewport height", f["b"] <= h or h < 700)
             pg.mouse.move((f["l"] + f["r"]) / 2, (f["t"] + f["b"]) / 2); pg.mouse.wheel(0, 400); pg.wait_for_timeout(400)

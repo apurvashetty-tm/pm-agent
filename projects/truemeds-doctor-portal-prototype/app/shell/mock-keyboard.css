@@ -1,0 +1,14 @@
+/* Drawing of the phone's OS number keyboard (approved sign-in / OTP pictures). Not app UI: raw colours are allowed in this
+   file only, as in the approved screens ("Mock OS keyboard (raw colours allowed here only)"). Exempt in tests/scan.mjs. */
+.mock-kbd { position: absolute; left: 0; right: 0; bottom: 0; height: 256px; padding: 6px 5px 12px; box-sizing: border-box; z-index: 5;
+  display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(4, 1fr); gap: 5px; background: #d4d7dd; }
+.mock-kbd__key { display: grid; place-items: center; background: #fff; border-radius: 5px; color: #202124; font: 400 23px/1 system-ui, sans-serif;
+  cursor: pointer; user-select: none; -webkit-user-select: none; }
+.mock-kbd__key:empty { cursor: default; }
+/* Case page and Prescribe keyboards (a-notes-typing, d-notes-keyboard, d-error-other): the same drawing, the case pictures' key font. */
+.mock-kbd--case { z-index: 1000; }
+.mock-kbd--case .mock-kbd__key { display: flex; align-items: center; justify-content: center; border-radius: 5px; font-family: inherit; font-size: var(--tm-font-size-title-md); line-height: var(--tm-font-lineheight-lg); font-weight: 400; color: var(--tm-content-primary); }
+.mock-kbd--text { grid-template-columns: repeat(10, minmax(0, 1fr)); }
+.mock-kbd__key--w2 { grid-column: span 2; }
+.mock-kbd__key--w6 { grid-column: span 6; }
+.mock-kbd__key--blank { background: none; }

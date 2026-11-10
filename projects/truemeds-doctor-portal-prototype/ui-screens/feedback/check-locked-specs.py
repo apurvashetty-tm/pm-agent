@@ -1,3 +1,4 @@
+import os
 """Regression guard for the LOCKED layout specs (D-46, L1–L6).
 
 Reads computed styles from the real HTML (file://) in every state and exits 1 on any violation.
@@ -231,7 +232,7 @@ def check_home(page, state, errs):
 UNLOCK = SCREENS / 'returning-unlock' / 'returning-unlock.html'
 OFFER = SCREENS / 'faster-signin-offer' / 'faster-signin-offer.html'
 UNLOCK_STATES = ['fingerprint', 'face', 'screen-lock', 'pending', 'cancelled', 'platform-retry', 'unavailable']
-OFFER_STATES = ['fingerprint', 'face-id', 'enabling', 'screen-lock', 'enable-failed', 'offline']   # Round 3: every offer picture
+OFFER_STATES = ['fingerprint', 'face-id', 'enabling', 'screen-lock', 'enable-failed', 'offline', 'unavailable']   # Round 3 (+ unavailable, D-93): every offer picture
 
 def check_unlock_offer(page, errs):
     for state in UNLOCK_STATES:
@@ -619,7 +620,7 @@ def std_url(sub, state, vw):
 def run_std_all(phases, viewports, errs, results):
     """Runs STD_JS on every state of each phase at each viewport. 430 has no capture flag (guards only)."""
     with sync_playwright() as p:
-        browser = p.chromium.launch()
+        browser = p.chromium.launch(**({"executable_path": os.environ["CHROMIUM"]} if os.environ.get("CHROMIUM") else {}))
         for phase in phases:
             for sub, state in EXPECTED[phase]:
                 for vw in viewports:
@@ -820,7 +821,7 @@ def main():
     if not a.skip_locked:
         locked = []
         with sync_playwright() as p:
-            browser = p.chromium.launch()
+            browser = p.chromium.launch(**({"executable_path": os.environ["CHROMIUM"]} if os.environ.get("CHROMIUM") else {}))
             page = browser.new_page(viewport={'width': 390, 'height': 844})
             if 'A' in phases:
                 for st in OTP_STATES: check_otp(page, st, locked)
@@ -836,7 +837,7 @@ def main():
     run_std_all(phases, vws, errs, results)
     if not a.skip_small:
         with sync_playwright() as p:
-            browser = p.chromium.launch()
+            browser = p.chromium.launch(**({"executable_path": os.environ["CHROMIUM"]} if os.environ.get("CHROMIUM") else {}))
             n_small = check_small_phone(browser, phases, errs)
             browser.close()
         print(f'small-phone pass: {n_small} states at 360×640')

@@ -1,11 +1,12 @@
 // Scans app/ for: hard-coded settings (checklist 3.2), hex colours (3.4), emoji (3.4 / RULES), phone-number patterns (6.4).
-// Excludes vendored and shared files (design-system, feedback, state-map, vendor QR, pictures).
+// Excludes vendored and shared files (design-system, feedback, state-map, vendor QR, pictures), and the drawing of the phone's own
+// keyboard (shell/mock-keyboard.css: raw colours as in the approved pictures; not app UI) — the same exemption as the mock Rx paper.
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../app");
-const SKIP = [/design-system/, /feedback/, /pictures/, /icons/, /vendor/, /state-map\.js$/, /core\/settings\.js$/, /data\/test-numbers\.js$/, /data\/scenarios\.js$/];
+const SKIP = [/shell\/mock-keyboard\.css$/, /screens\/rx-paper\.css$/, /design-system/, /feedback/, /pictures/, /icons/, /vendor/, /state-map\.js$/, /core\/settings\.js$/, /data\/test-numbers\.js$/, /data\/scenarios\.js$/];
 const fails = [];
 function walk(dir, out = []) {
   for (const f of fs.readdirSync(dir)) {

@@ -225,6 +225,9 @@ WhatsApp: **+91 86524 24617** (`https://wa.me/918652424617`). Terms & Conditions
 The number takes both voice calls and WhatsApp, so "Call Doctor Ops" (tel:) and "Message support" (WhatsApp) stay as
 approved. **Production:** sign-up URL, Terms, Privacy and support numbers must be configurable, not hard-coded.
 **Safe placeholder:** Terms/Privacy point to a "link pending" page. `[MOCK ASSUMPTION]`
+**Prototype build (step 1 recovery, 2026-11-09):** Sign up opens the onboarding URL in a new tab. Call Doctor Ops, Message
+support, Terms and Privacy open a blank placeholder page ("This would call Doctor Ops" / "This would open WhatsApp support" /
+"Link pending"), same pattern as Help (D-88) — never a real `tel:` or `wa.me` link in the prototype. `[MOCK ASSUMPTION]`
 
 **Added 2026-10-14:** what the case-page **Help** button opens (call Doctor Ops, FAQ, or a choice) — needed before the case page is built (D-49).
 
@@ -282,3 +285,12 @@ Buttons are inconsistent today: Call patient / Call again (phone), Callback (cal
 
 ### OQ-035 — Orders with no medicines [OPEN — Engineering + Ops, 2026-11-01, D-80]
 Keep orders with no medicines out of the doctor queue and send them to Ops. If one reaches a doctor, the app offers only Release case, and the released case goes to Ops (not back to the queue). Engineering: how an empty order is detected at assignment; Ops: who handles them and what happens to the order.
+
+### OQ-036 — Phone can't do faster sign-in at the moment of Turn on [CLOSED — D-93, 2026-11-09: neutral notice + Continue → Home] [was OPEN — Apurva, 2026-11-09]
+On the faster sign-in offer, the phone can answer "unavailable" when the doctor taps Turn on, for example because fingerprints were removed after the offer appeared. app-logic §2 lists only enabled / cancelled / failed / offline. `[OPEN DECISION]` placeholder in the build (step 1, session 3): treated as a failed turn-on ("Couldn't turn on faster sign-in." · Try again · Not now). Panel value: Faster sign-in offer = `unavailable`.
+
+### OQ-037 — Prototype stand-ins from run A1 [MOCK ASSUMPTION — accepted by the main thread, 2026-11-09; prototype only]
+For the prototype, not product rules: a case opened directly (`?s=` / Jump) starts 30 minutes of availability if none is set; Set availability / Add time fail only when offline (the story has no server-failure value for them); the drawn text and decimal keyboards appear only in capture mode (desktop review types with the computer keyboard); the Rx viewer's 300 ms double-tap window and the 4 s toast are interaction constants (`UI_TIMING`), not panel settings; "Request next case" = back to Home and request at once. Source: `docs/renders/2026-11-09-build-fast/run-A1/REPORT.md`.
+
+### OQ-038 — Prototype stand-ins from run B (Pilot, Fallback B) [MOCK ASSUMPTION — accepted by the main thread, 2026-11-10; prototype only]
+For the prototype, not product rules: 14 Transferred counts the prescription at once (one transfer event), forwards (B3 / 15 / 16 / Pilot 7d) only on the partner's result (CW-F2); the `pilot_no_ha_free` scenario reads the simulator's HA "free" as none; a failed transfer request from B2 goes 13 → 15; a call that ends during B2 / 13 → 16, nothing counted; B3 / 15 wait for the hang-up only (the result also counts as the hang-up); on the live B1 the 7b question still comes after the no-result timeout; B1 Confirm prescription goes straight to B2 (confirm-failed / busy story answers apply to post-call confirms only); story "Pending blocks confirm" on a case with nothing Pending puts its last medicine back to Pending; 13 keeps the neutral script (D-102); a Fallback B picture opened with a story case without an HA call uses the picture's Pilot case. Setting `pilotTalkAfterGate` 60 s (stand-in). Source: `docs/renders/2026-11-09-build-fast/run-B/REPORT.md`.

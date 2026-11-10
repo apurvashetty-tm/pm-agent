@@ -1,0 +1,415 @@
+{
+ "block": "header-viewer",
+ "name": "HeaderViewer",
+ "rn": "<HeaderViewer />",
+ "web": ".header-viewer",
+ "parts": {
+  "container": {
+   "states": {
+    "default": {
+     "seenIn": "a-rx-viewer",
+     "styles": [
+      {
+       "property": "display",
+       "value": "flex",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "align-items",
+       "value": "center",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "row-gap",
+       "value": "var(--tm-space-xs)",
+       "tokens": [
+        {
+         "native": "tokens.space.xs",
+         "web": "--tm-space-xs",
+         "value": 4
+        }
+       ]
+      },
+      {
+       "property": "gap",
+       "value": "var(--tm-space-sm)",
+       "tokens": [
+        {
+         "native": "tokens.space.sm",
+         "web": "--tm-space-sm",
+         "value": 8
+        }
+       ]
+      },
+      {
+       "property": "min-height",
+       "value": "calc(var(--tm-target-min) + var(--tm-space-lg))",
+       "tokens": [
+        {
+         "native": "tokens.target.min",
+         "web": "--tm-target-min",
+         "value": 48
+        },
+        {
+         "native": "tokens.space.lg",
+         "web": "--tm-space-lg",
+         "value": 16
+        }
+       ],
+       "layout": true
+      },
+      {
+       "property": "padding",
+       "value": "var(--tm-space-md) var(--tm-space-lg)",
+       "tokens": [
+        {
+         "native": "tokens.space.md",
+         "web": "--tm-space-md",
+         "value": 12
+        },
+        {
+         "native": "tokens.space.lg",
+         "web": "--tm-space-lg",
+         "value": 16
+        }
+       ]
+      },
+      {
+       "property": "background",
+       "value": "var(--tm-surface-inverse)",
+       "tokens": [
+        {
+         "native": "tokens.color.surface.inverse",
+         "web": "--tm-surface-inverse",
+         "value": "#5B616E"
+        }
+       ]
+      },
+      {
+       "property": "color",
+       "value": "var(--tm-content-inverse)",
+       "tokens": [
+        {
+         "native": "tokens.color.content.inverse",
+         "web": "--tm-content-inverse",
+         "value": "#FFFFFF"
+        }
+       ]
+      },
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "flex-wrap",
+       "value": "wrap",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "flex",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "border-bottom",
+       "value": "var(--tm-border-width-default) solid var(--tm-surface-brand-strong)",
+       "tokens": [
+        {
+         "native": "tokens.borderWidth.default",
+         "web": "--tm-border-width-default",
+         "value": 1
+        },
+        {
+         "native": "tokens.color.surface.brand.strong",
+         "web": "--tm-surface-brand-strong",
+         "value": "#0A2864"
+        }
+       ],
+       "layout": true
+      }
+     ],
+     "size": "390×125"
+    }
+   }
+  },
+  "title": {
+   "states": {
+    "default": {
+     "seenIn": "a-rx-viewer",
+     "styles": [
+      {
+       "property": "flex",
+       "value": "1 1 0",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "min-width",
+       "value": "0",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "overflow",
+       "value": "hidden",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "text-overflow",
+       "value": "ellipsis",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "white-space",
+       "value": "nowrap",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "font-size",
+       "value": "var(--tm-font-size-body-lg)",
+       "tokens": [
+        {
+         "native": "tokens.font.size.body.lg",
+         "web": "--tm-font-size-body-lg",
+         "value": 16
+        }
+       ]
+      },
+      {
+       "property": "line-height",
+       "value": "var(--tm-font-lineheight-md)",
+       "tokens": [
+        {
+         "native": "tokens.font.lineHeight.md",
+         "web": "--tm-font-lineheight-md",
+         "value": 24
+        }
+       ]
+      },
+      {
+       "property": "font-weight",
+       "value": "var(--tm-font-weight-semibold)",
+       "tokens": [
+        {
+         "native": "tokens.font.weight.semibold",
+         "web": "--tm-font-weight-semibold",
+         "value": "600"
+        }
+       ]
+      },
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "color",
+       "value": "var(--tm-content-inverse)",
+       "tokens": [
+        {
+         "native": "tokens.color.content.inverse",
+         "web": "--tm-content-inverse",
+         "value": "#FFFFFF"
+        }
+       ]
+      },
+      {
+       "property": "font-family",
+       "value": "var(--tm-font)",
+       "tokens": [
+        {
+         "native": "tokens.font.family",
+         "web": "--tm-font",
+         "value": "Plus Jakarta Sans"
+        }
+       ],
+       "inherited": true
+      }
+     ],
+     "size": "320×24"
+    }
+   }
+  },
+  "tools": {
+   "states": {
+    "default": {
+     "seenIn": "a-rx-viewer",
+     "styles": [
+      {
+       "property": "display",
+       "value": "flex",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "align-items",
+       "value": "center",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "flex",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "flex-basis",
+       "value": "100%",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "gap",
+       "value": "var(--tm-space-xs)",
+       "tokens": [
+        {
+         "native": "tokens.space.xs",
+         "web": "--tm-space-xs",
+         "value": 4
+        }
+       ]
+      },
+      {
+       "property": "justify-content",
+       "value": "flex-end",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "margin-left",
+       "value": "auto",
+       "tokens": [],
+       "layout": true
+      }
+     ],
+     "size": "358×48"
+    }
+   }
+  },
+  "rx-zoom-label": {
+   "states": {
+    "default": {
+     "seenIn": "a-rx-viewer",
+     "styles": [
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "min-width",
+       "value": "var(--tm-space-2xl)",
+       "tokens": [
+        {
+         "native": "tokens.space.2xl",
+         "web": "--tm-space-2xl",
+         "value": 32
+        }
+       ]
+      },
+      {
+       "property": "text-align",
+       "value": "center",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "font-size",
+       "value": "var(--tm-font-size-body-md)",
+       "tokens": [
+        {
+         "native": "tokens.font.size.body.md",
+         "web": "--tm-font-size-body-md",
+         "value": 14
+        }
+       ]
+      },
+      {
+       "property": "line-height",
+       "value": "var(--tm-font-lineheight-sm)",
+       "tokens": [
+        {
+         "native": "tokens.font.lineHeight.sm",
+         "web": "--tm-font-lineheight-sm",
+         "value": 20
+        }
+       ]
+      },
+      {
+       "property": "font-weight",
+       "value": "var(--tm-font-weight-semibold)",
+       "tokens": [
+        {
+         "native": "tokens.font.weight.semibold",
+         "web": "--tm-font-weight-semibold",
+         "value": "600"
+        }
+       ]
+      },
+      {
+       "property": "color",
+       "value": "var(--tm-content-inverse)",
+       "tokens": [
+        {
+         "native": "tokens.color.content.inverse",
+         "web": "--tm-content-inverse",
+         "value": "#FFFFFF"
+        }
+       ]
+      },
+      {
+       "property": "font-family",
+       "value": "var(--tm-font)",
+       "tokens": [
+        {
+         "native": "tokens.font.family",
+         "web": "--tm-font",
+         "value": "Plus Jakarta Sans"
+        }
+       ],
+       "inherited": true
+      }
+     ],
+     "size": "39.9×20"
+    }
+   }
+  }
+ },
+ "rules": [
+  {
+   "section": "Kit",
+   "text": "Build it once from the parts × states below (tokens only, copy from messages); it appears on Case page, Prescribe. What it does in each state is in DECIDED.md under those screens."
+  }
+ ],
+ "pictures": [],
+ "usedIn": [
+  "a-rx-viewer",
+  "d-rx-failed"
+ ],
+ "states": {
+  "default": [
+   "container",
+   "title",
+   "tools",
+   "rx-zoom-label"
+  ]
+ }
+}

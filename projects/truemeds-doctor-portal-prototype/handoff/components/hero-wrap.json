@@ -1,0 +1,68 @@
+{
+ "block": "hero-wrap",
+ "name": "HeroWrap",
+ "rn": "<HeroWrap />",
+ "web": ".hero-wrap",
+ "parts": {
+  "container": {
+   "states": {
+    "default": {
+     "seenIn": "offer_enable-failed",
+     "styles": [
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "display",
+       "value": "flex",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "justify-content",
+       "value": "center",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "margin-bottom",
+       "value": "var(--tm-space-lg)",
+       "tokens": [
+        {
+         "native": "tokens.space.lg",
+         "web": "--tm-space-lg",
+         "value": 16
+        }
+       ]
+      }
+     ],
+     "size": "358×64"
+    }
+   }
+  }
+ },
+ "rules": [
+  {
+   "section": "Kit",
+   "text": "Build it once from the parts × states below (tokens only, copy from messages); it appears on Faster sign-in offer. What it does in each state is in DECIDED.md under those screens."
+  }
+ ],
+ "pictures": [],
+ "usedIn": [
+  "offer_enable-failed",
+  "offer_enabling",
+  "offer_face-id",
+  "offer_fingerprint",
+  "offer_offline",
+  "offer_screen-lock",
+  "offer_unavailable"
+ ],
+ "states": {
+  "default": [
+   "container"
+  ]
+ }
+}

@@ -1,0 +1,385 @@
+{
+ "block": "wheel-item",
+ "name": "WheelItem",
+ "rn": "<WheelItem />",
+ "web": ".wheel-item",
+ "parts": {
+  "container": {
+   "states": {
+    "empty": {
+     "seenIn": "home_add-failed",
+     "styles": [
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "height",
+       "value": "var(--tm-target-min)",
+       "tokens": [
+        {
+         "native": "tokens.target.min",
+         "web": "--tm-target-min",
+         "value": 48
+        }
+       ]
+      },
+      {
+       "property": "border",
+       "value": "0",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "background",
+       "value": "transparent",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "font",
+       "value": "inherit",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "font-size",
+       "value": "var(--tm-font-size-title-md)",
+       "tokens": [
+        {
+         "native": "tokens.font.size.title.md",
+         "web": "--tm-font-size-title-md",
+         "value": 24
+        }
+       ]
+      },
+      {
+       "property": "line-height",
+       "value": "var(--tm-font-lineheight-lg)",
+       "tokens": [
+        {
+         "native": "tokens.font.lineHeight.lg",
+         "web": "--tm-font-lineheight-lg",
+         "value": 28
+        }
+       ]
+      },
+      {
+       "property": "color",
+       "value": "var(--tm-content-secondary)",
+       "tokens": [
+        {
+         "native": "tokens.color.content.secondary",
+         "web": "--tm-content-secondary",
+         "value": "#5B616E"
+        }
+       ]
+      },
+      {
+       "property": "padding",
+       "value": "0",
+       "tokens": [],
+       "layout": true
+      }
+     ],
+     "size": "179×48"
+    },
+    "selected": {
+     "seenIn": "home_add-failed",
+     "styles": [
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "height",
+       "value": "var(--tm-target-min)",
+       "tokens": [
+        {
+         "native": "tokens.target.min",
+         "web": "--tm-target-min",
+         "value": 48
+        }
+       ]
+      },
+      {
+       "property": "border",
+       "value": "0",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "background",
+       "value": "transparent",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "font",
+       "value": "inherit",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "font-size",
+       "value": "var(--tm-font-size-title-lg)",
+       "tokens": [
+        {
+         "native": "tokens.font.size.title.lg",
+         "web": "--tm-font-size-title-lg",
+         "value": 32
+        }
+       ]
+      },
+      {
+       "property": "font-weight",
+       "value": "var(--tm-font-weight-semibold)",
+       "tokens": [
+        {
+         "native": "tokens.font.weight.semibold",
+         "web": "--tm-font-weight-semibold",
+         "value": "600"
+        }
+       ]
+      },
+      {
+       "property": "line-height",
+       "value": "var(--tm-font-lineheight-2xl)",
+       "tokens": [
+        {
+         "native": "tokens.font.lineHeight.2xl",
+         "web": "--tm-font-lineheight-2xl",
+         "value": 40
+        }
+       ]
+      },
+      {
+       "property": "color",
+       "value": "var(--tm-content-brand)",
+       "tokens": [
+        {
+         "native": "tokens.color.content.brand",
+         "web": "--tm-content-brand",
+         "value": "#1D5DCF"
+        }
+       ]
+      },
+      {
+       "property": "padding",
+       "value": "0",
+       "tokens": [],
+       "layout": true
+      }
+     ],
+     "size": "179×48"
+    },
+    "default": {
+     "seenIn": "home_add-failed",
+     "styles": [
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "height",
+       "value": "var(--tm-target-min)",
+       "tokens": [
+        {
+         "native": "tokens.target.min",
+         "web": "--tm-target-min",
+         "value": 48
+        }
+       ]
+      },
+      {
+       "property": "border",
+       "value": "0",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "background",
+       "value": "transparent",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "font",
+       "value": "inherit",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "font-size",
+       "value": "var(--tm-font-size-title-md)",
+       "tokens": [
+        {
+         "native": "tokens.font.size.title.md",
+         "web": "--tm-font-size-title-md",
+         "value": 24
+        }
+       ]
+      },
+      {
+       "property": "line-height",
+       "value": "var(--tm-font-lineheight-lg)",
+       "tokens": [
+        {
+         "native": "tokens.font.lineHeight.lg",
+         "web": "--tm-font-lineheight-lg",
+         "value": 28
+        }
+       ]
+      },
+      {
+       "property": "color",
+       "value": "var(--tm-content-secondary)",
+       "tokens": [
+        {
+         "native": "tokens.color.content.secondary",
+         "web": "--tm-content-secondary",
+         "value": "#5B616E"
+        }
+       ]
+      },
+      {
+       "property": "padding",
+       "value": "0",
+       "tokens": [],
+       "layout": true
+      }
+     ],
+     "size": "179×48"
+    },
+    "disabled": {
+     "seenIn": "home_adding",
+     "styles": [
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "height",
+       "value": "var(--tm-target-min)",
+       "tokens": [
+        {
+         "native": "tokens.target.min",
+         "web": "--tm-target-min",
+         "value": 48
+        }
+       ]
+      },
+      {
+       "property": "border",
+       "value": "0",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "background",
+       "value": "transparent",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "font",
+       "value": "inherit",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "font-size",
+       "value": "var(--tm-font-size-title-lg)",
+       "tokens": [
+        {
+         "native": "tokens.font.size.title.lg",
+         "web": "--tm-font-size-title-lg",
+         "value": 32
+        }
+       ]
+      },
+      {
+       "property": "font-weight",
+       "value": "var(--tm-font-weight-semibold)",
+       "tokens": [
+        {
+         "native": "tokens.font.weight.semibold",
+         "web": "--tm-font-weight-semibold",
+         "value": "600"
+        }
+       ]
+      },
+      {
+       "property": "line-height",
+       "value": "var(--tm-font-lineheight-2xl)",
+       "tokens": [
+        {
+         "native": "tokens.font.lineHeight.2xl",
+         "web": "--tm-font-lineheight-2xl",
+         "value": 40
+        }
+       ]
+      },
+      {
+       "property": "color",
+       "value": "var(--tm-content-brand)",
+       "tokens": [
+        {
+         "native": "tokens.color.content.brand",
+         "web": "--tm-content-brand",
+         "value": "#1D5DCF"
+        }
+       ]
+      },
+      {
+       "property": "padding",
+       "value": "0",
+       "tokens": [],
+       "layout": true
+      }
+     ],
+     "size": "179×48"
+    }
+   }
+  }
+ },
+ "rules": [
+  {
+   "section": "Kit",
+   "text": "Build it once from the parts × states below (tokens only, copy from messages); it appears on Home. What it does in each state is in DECIDED.md under those screens."
+  }
+ ],
+ "pictures": [],
+ "usedIn": [
+  "home_add-failed",
+  "home_add-wheel",
+  "home_adding",
+  "home_idle-expired",
+  "home_manually-ended",
+  "home_setting",
+  "home_setup-failed",
+  "home_setup-wheel"
+ ],
+ "states": {
+  "empty": [
+   "container"
+  ],
+  "selected": [
+   "container"
+  ],
+  "default": [
+   "container"
+  ],
+  "disabled": [
+   "container"
+  ]
+ }
+}

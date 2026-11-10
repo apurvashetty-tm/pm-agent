@@ -96,7 +96,7 @@ function profilePage() {
   return `<div class="profile-page">
     <header class="tm-header-task profile-header"><div class="tm-header-task__row"><button class="tm-btn tm-btn--quiet tm-btn--icon" id="profile-back" type="button" aria-label="Back">${icon('arrow-left')}</button><h1 class="tm-header-task__title">Profile</h1></div></header>
     <div class="profile-body">
-      <div class="tm-card profile-identity"><div class="profile-avatar" aria-hidden="true">AS</div><div><p class="pt-t">Dr. Apurva Shetty</p><p class="pt-d">General Physician</p></div></div>
+      <div class="tm-card profile-identity"><div class="profile-avatar" aria-hidden="true">KW</div><div><p class="pt-t">Dr. Kunal Wani</p><p class="pt-d">General Physician</p></div></div>
       <div class="tm-card profile-earnings"><p class="profile-label">Today’s earnings</p><div class="profile-earnings-row"><div><p class="pt-d">Earned</p><p class="pt-t">₹${earned}</p></div><div><p class="pt-d">Incentive</p><p class="pt-t">₹0.00</p></div></div></div>
       <div class="tm-card profile-rows">
         <button class="profile-row" type="button"><span class="profile-row-label">${icon('book')}User manual</span>${icon('chevron-right')}</button>

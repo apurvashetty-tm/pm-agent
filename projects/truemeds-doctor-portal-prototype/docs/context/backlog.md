@@ -55,7 +55,8 @@ Order = the order we work in.
 2. [x] (closed, D-88) Storyboard review with Apurva, journey by journey: entry → Home → case + Prescribe → calling (incl. her walkthrough misses; then regenerate `calling-flow.png`).
 3. [ ] Per closed journey: PRD section → prototype engineering spec + test cases (agents). Spec's shared foundation may start early. Build plan → spec; rebuild checklist → test cases.
 4. [ ] Prototype rebuild — **D-88:** from build plan v3 + rebuild checklist v3 (`docs/proposals/2026-11-05-prototype-build-plan-v3.md`, `docs/reviews/2026-11-05-rebuild-checklist-v3.md`); PRD / spec / test cases are not a gate.
-5. [ ] Token inspector.
+5. [ ] Token inspector → widened to the **native hand-off kit (D-96)**. Pilot on Sign-in: `docs/renders/2026-11-09-handoff-kit/TERMINAL-BRIEF.md` (runs in parallel with the prototype build). Then FE walkthrough with one engineer; then add each journey as the rebuild finishes it. **Delivery (Apurva 2026-11-09): a copy of the kit + built app pushed to Truemeds' own GitLab — the last step, after Apurva has seen the kit and walked Engineering through it.**
+6. [ ] After the kit pilot is approved: mark `ui-screens/native/` (October TSX) and `ui-screens/home/NATIVE-HANDOFF.md` / `home.native.ts` "don't use — see `handoff/`" (D-96 pt 2).
 
 ## 2f. Screen audit — Part A answers (Apurva, 2026-11-01) — recorded as D-80; apply in the journey passes
 - [ ] **C-01:** Back whenever the screen offers a call button (Call patient / Call again: states 1, 3, 4); gone while a call is in progress and never back once the patient was reached; hidden from the tap on Call patient for every case type. Back stays on Ready (doctor took a case and has to leave = Release); not removed. **Backend guard:** Release refused once our call request is accepted by the telecom partner, unless the result is 3 or 4 (→ OQ-024). Fixes C-02. Re-capture t02, s7a, s7b, s7e, a-releasing, a-release-failed. Changes D-58 pt 20.
@@ -69,6 +70,18 @@ Order = the order we work in.
 1. [ ] **Prototype rebuild** from the frozen `ui-screens/` (D-56, D-72): build plan + rebuild checklist first; covers all order types and states; the phone demo alone is Cat4 happy path; new Netlify link alongside the current one; then journey by journey, checked against the pictures. Installable from the Netlify link (opens full screen from the home screen, no review controls); demo mode with one order type and the happy path.
 2. [ ] **Token inspector** page generated from the screens (which tokens each element uses) for engineering. Figma snapshot only if the design team asks.
 3. [ ] **PRD** page by page, engineering hand-off pack, then the rest of this backlog.
+- [ ] **Re-renders after run B (main thread, 2026-11-10):** `ui-screens/case/t13-connecting-ha_w390` from the build (neutral script, D-102; the 390 picture still shows the version-A transfer script); `c-skip-ha-b1` and `c-skip-ha-16` (the Skip HA sheet over B1 / 16, plan v3.2 §5). Pictures only, no app change.
+- [ ] **Optional test (Codex critique, run B):** desktop / phone parity to the final card (B-R11); the B-play cases stop at the CTA. Until then, covered by Apurva's phone walkthrough.
+
+## 2m. After the build chain — git and `main` (agreed with Apurva 2026-11-09; other thread "Git connector sign-in issue" + main-thread review)
+Nothing goes to `main` while the chain runs (`publish.sh` pulls `main` into this branch on every publish). PR #36 (whole branch → `main`) was closed unmerged on purpose. PR #37 (central playbook, docs only) was merged at 21:44 by mistake while the chain ran; reviewed, harmless, left in place.
+1. [ ] **Archive tag only after Apurva approves everything** (prototype, kit, walkthrough — Apurva 2026-11-09 22:41; not when the chain finishes): tag the branch head (e.g. `archive/doctor-portal-<date>`) to pin the approved build and its evidence.
+2. [ ] **Tokens to `main` first:** before / after look at ACOM's 2 pages that use the central design system → `shared/design-tokens` PR with only the `design-system/` and `scripts/` changes (≈22 files) → Apurva approves → merge → this branch picks up `main` on its next publish.
+3. [ ] **When Apurva approves the prototype:** one deliverables PR = **everything in this project except run evidence** (`docs/renders/**` work folders and `*.log`). Includes `app/`, `ui-screens/`, `handoff/`, `scripts/`, `tests/`, `calling-flow/`, `brand/`, `reference/`, `docs/` (minus evidence), `CLAUDE.md`, and the old `index.html` / `app.js` / `styles.css` (the live demo still serves them). Built on a branch from `main`, merged as a normal merge commit.
+4. [ ] **From the next run on:** commit proof (reports, JSON, comparison sheets, logs) and only pictures that **differ**; not identical re-captures (≈150 MB of renders on the branch after two days).
+- [ ] **Before deploy 1: kit viewer clean-up + in-site downloads** (Apurva 2026-11-10; proposal `docs/proposals/2026-11-10-kit-viewer-cleanup.md`, waiting for his agreement; then applied in the kit run). Not Google Drive.
+- [ ] **Netlify: two deploys only for this project (Apurva, 2026-11-09 23:41):** none now (the Sign-in kit goes as a zip; a deploy now would need a merge to `main` mid-chain). Deploy 1: when every screen is built (app + kit viewer + the pending calling-flow page, one `[deploy]` merge). Deploy 2: the final one after Apurva's approval. Nothing else.
+5. [ ] **Before any `workspace.sh close project`:** the archive tag must exist (close deletes the branch on GitHub).
 
 ## 3. Rebuild items (for the build, not the renders)
 - [ ] All button labels through `MSG()` (some are typed inline in the render recipes).
@@ -87,6 +100,8 @@ Order = the order we work in.
 - [ ] Help: what the "?" opens on Home and the case page.
 - [ ] Notifications: what the bell opens on Home (D-75).
 - [ ] App navigation for future features — bottom tab bar once a second destination is approved (D-69 point 7).
+- [ ] Faster sign-in on Android: a "Set up on this phone" action that opens the phone's fingerprint set-up when the phone has none (native app only; iOS can't open that page). From D-93.
+- [ ] **Review panel (right-hand tray, `?demo=1`) — look at it separately (Apurva, 2026-11-09):** too many controls, some unnecessary or too complicated; simplify in its own session. Keep the purple tray button in the installed app (not hidden). Also (Apurva 2026-11-10): "Restart story" keeps what the app remembers (e.g. faster sign-in already offered), which isn't obvious in a demo — decide whether Restart should offer "as a new phone".
 
 ## 4c. Hosting (found in the build-plan review, 2026-10-29)
 - [ ] **Current site publishes the whole project folder** — `docs/` (decision log, open questions, handoffs) is reachable on the live doctor-portal link. Apurva to decide: accept, or publish a clean folder. The new preview site publishes only `app/`.
@@ -160,3 +175,4 @@ Brief: `docs/renders/2026-11-01-fix-round/TERMINAL-BRIEF.md` "Round 4"; audit: `
 - [ ] **Next version — live remote for phone tests (D-89):** the desktop review panel drives the phone in real time (paired by a short code). Needs a message relay (Netlify function — credits — or a third-party service). Only if live demos for Engineering / Ops need it.
 - [ ] **Deploy the calling-flow page** with the next approved merge (`[deploy]` in that PR title) — the live copy is the 3 Nov version (Apurva, 2026-11-06).
 - [ ] **Next version — calling-flow page:** mini-map (where you are on the big diagram) and a "Find a state" box (Apurva, 2026-11-06).
+- [ ] **After step 1 — Profile photo (Apurva, 2026-11-06):** use Dr. Kunal Wani's photo as the Profile avatar (he agreed, 2026-11-06). Design change: avatar with photo + initials fallback for doctors without one; render Profile for approval before building. The photo file was lost with the old Mac (2026-11-09) — Apurva to re-share it; save to `docs/renders/2026-11-06-profile-photo/source/kunal-wani.png`. Production question for later: where doctor photos come from (onboarding upload / Truemeds records / Profile).

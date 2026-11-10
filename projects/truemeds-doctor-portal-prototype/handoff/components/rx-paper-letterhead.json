@@ -1,0 +1,57 @@
+{
+ "block": "rx-paper-letterhead",
+ "name": "RxPaperLetterhead",
+ "rn": "<RxPaperLetterhead />",
+ "web": ".rx-paper-letterhead",
+ "parts": {
+  "container": {
+   "states": {
+    "default": {
+     "seenIn": "a-rx-viewer",
+     "styles": [
+      {
+       "property": "background",
+       "value": "linear-gradient(135deg, #1b69de 0%, #1558c0 100%)",
+       "tokens": [],
+       "exception": "Mock prescription paper (sample content standing in for the customer's prescription image). The app shows the image; nothing here is built."
+      },
+      {
+       "property": "padding",
+       "value": "16px 18px 14px",
+       "tokens": [],
+       "exception": "Mock prescription paper (sample content standing in for the customer's prescription image). The app shows the image; nothing here is built."
+      },
+      {
+       "property": "color",
+       "value": "#fff",
+       "tokens": [],
+       "exception": "Mock prescription paper (sample content standing in for the customer's prescription image). The app shows the image; nothing here is built."
+      },
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      }
+     ],
+     "size": "320×129"
+    }
+   }
+  }
+ },
+ "rules": [
+  {
+   "section": "Kit",
+   "text": "Build it once from the parts × states below (tokens only, copy from messages); it appears on Case page. What it does in each state is in DECIDED.md under those screens."
+  }
+ ],
+ "pictures": [],
+ "usedIn": [
+  "a-rx-viewer"
+ ],
+ "states": {
+  "default": [
+   "container"
+  ]
+ }
+}

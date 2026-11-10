@@ -1,0 +1,108 @@
+{
+ "block": "wheel-band",
+ "name": "WheelBand",
+ "rn": "<WheelBand />",
+ "web": ".wheel-band",
+ "parts": {
+  "container": {
+   "states": {
+    "default": {
+     "seenIn": "home_add-failed",
+     "styles": [
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "position",
+       "value": "absolute",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "left",
+       "value": "0",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "right",
+       "value": "0",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "top",
+       "value": "var(--tm-target-min)",
+       "tokens": [
+        {
+         "native": "tokens.target.min",
+         "web": "--tm-target-min",
+         "value": 48
+        }
+       ]
+      },
+      {
+       "property": "height",
+       "value": "var(--tm-target-min)",
+       "tokens": [
+        {
+         "native": "tokens.target.min",
+         "web": "--tm-target-min",
+         "value": 48
+        }
+       ]
+      },
+      {
+       "property": "border-radius",
+       "value": "var(--tm-radius-md)",
+       "tokens": [
+        {
+         "native": "tokens.radius.md",
+         "web": "--tm-radius-md",
+         "value": 12
+        }
+       ]
+      },
+      {
+       "property": "background",
+       "value": "var(--tm-surface-brand-subtle)",
+       "tokens": [
+        {
+         "native": "tokens.color.surface.brand.subtle",
+         "web": "--tm-surface-brand-subtle",
+         "value": "#EBF8FF"
+        }
+       ]
+      }
+     ],
+     "size": "358×48"
+    }
+   }
+  }
+ },
+ "rules": [
+  {
+   "section": "Kit",
+   "text": "Build it once from the parts × states below (tokens only, copy from messages); it appears on Home. What it does in each state is in DECIDED.md under those screens."
+  }
+ ],
+ "pictures": [],
+ "usedIn": [
+  "home_add-failed",
+  "home_add-wheel",
+  "home_adding",
+  "home_idle-expired",
+  "home_manually-ended",
+  "home_setting",
+  "home_setup-failed",
+  "home_setup-wheel"
+ ],
+ "states": {
+  "default": [
+   "container"
+  ]
+ }
+}
