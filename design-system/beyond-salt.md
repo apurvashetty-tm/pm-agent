@@ -1,7 +1,7 @@
 # Added beyond SALT
 
 Everything below is a **Truemeds decision on top of SALT, owned here** (approved by Apurva). Share it with the SALT
-designers so Figma can catch up; the native app team treats it as final, not as proposals. Last updated 2026-11-09.
+designers so Figma can catch up; the native app team treats it as final, not as proposals. Last updated 2026-11-11.
 
 ## Truemeds token and text-style decisions (`tokens/truemeds.json`, layout v2 · D-43)
 Applied last by `scripts/build.py`; these override SALT values on purpose.
@@ -91,7 +91,7 @@ Guard: `projects/truemeds-doctor-portal-prototype/ui-screens/feedback/check-lock
 | Field helper / error | `.tm-field__helper` | 14/20 (L4) |
 | Notice text | `.tm-notice` | 14/20 (L5) |
 
-Screen rules (not components): OTP keyboard stays open during verifying (L3); sign-in logo-to-title gap 48 (L6); 16px minimum between the inline button and the keyboard.
+Screen rules (not components): OTP keyboard stays open during verifying (L3); logo → title 16 on every screen with the logo (L6, D-107, 2026-11-11; was sign-in 48); 16px minimum between the inline button and the keyboard.
 
 ## Icons (`scripts/build-icons.mjs`)
 | Icon | Why |
@@ -146,6 +146,13 @@ Implemented centrally 2026-10-15 (preview renders: `build/preview-2026-10-15/`).
 | Sheet ✕ on the 16 margin | `.tm-sheet__close` margin = (20 − 48) / 2 | B-07: the glyph sits on the same 16 line as the compact task header ✕ (was 2 px further in). |
 | Sheet label | `.tm-sheet__label` | B-14: one label style for sheet fields ("Select reason", "Date", "Time") — the field-label style, 8 above the field. |
 | Toast offset hook | `.tm-toast { bottom: var(--tm-toast-offset, 24px) }` | Round 4 item 1: on screens with a pinned bar the toast sits above it (set `--tm-toast-offset` = bar height + 16). |
+
+### Added 2026-11-11 (D-107 – D-109: one band, visible-gap spacing, sheet subtitle) — done
+| Item | Class | Why |
+|---|---|---|
+| Sheet subtitle in the header | `.tm-sheet__heading` (title + `.tm-sheet__subtitle`, gap 8) inside `.tm-sheet__header`; header aligns to the top when it has a heading, and the heading's top padding (48 − 28) / 2 keeps the title line centred on the ✕ | D-109 §2 (Apurva): a subtitle about 30 below the title read as the first content line. Now it sits 8 under the title, as in the screen bands (title → subtitle 8). The old markup (subtitle in the body) still renders as before until each sheet moves to the heading. SALT's sheet has no subtitle slot. |
+| Inline link | `.tm-link` (+ `.tm-link--in-sentence`) | D-107 variant 3 / D-108: "Change" (OTP), "Sign up" and "Resend code" are links in a line of text that still need a 48 target (RULES §8.6). A centred `::after` gives a 48-tall hit area without adding line height, so it adds no visible space (D-108). Brand semibold, 2px focus ring. Inside legal text, `--in-sentence` drops to regular weight with no enlarged hit area (WCAG 2.5.8 inline exception). SALT has only underlined link buttons (`.tm-btn--link`, 48 tall, which adds height). |
+| Visible-gap checker | `scripts/check-visible-gaps.mjs` (+ `scripts/tests/`) | D-108: spacing is measured on visible edges, such as text ink, painted shapes and icons, and checked on every screen and state. Shared, so every project runs the same rule. Uses Playwright from the project's `tests/` folder (no design-system dependency). |
 
 ### Added 2026-11-03 (D-86: notice band centred in the action bar) — done
 | Item | Class | Why |
