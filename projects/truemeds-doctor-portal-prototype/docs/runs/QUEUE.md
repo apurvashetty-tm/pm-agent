@@ -20,3 +20,4 @@ Main thread edits this file; the runner only ticks lines.
 - [x] Run docs/renders/2026-11-11-screens-audit/TERMINAL-BRIEF.md
 - [ ] Run docs/renders/2026-11-11-r1-rules/TERMINAL-BRIEF.md
 - [ ] Run docs/renders/2026-11-11-r2-build/TERMINAL-BRIEF.md
+- [ ] Run docs/renders/2026-11-11-r3-rest-audit/TERMINAL-BRIEF.md
