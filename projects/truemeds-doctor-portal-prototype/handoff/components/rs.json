@@ -22,9 +22,21 @@
        "layout": true
       },
       {
-       "property": "margin",
-       "value": "0",
+       "property": "text trim (to the ink)",
+       "value": "trim-both cap text",
        "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "margin",
+       "value": "var(--tm-space-2xl) 0 0",
+       "tokens": [
+        {
+         "native": "tokens.space.2xl",
+         "web": "--tm-space-2xl",
+         "value": 32
+        }
+       ],
        "layout": true
       },
       {
@@ -46,23 +58,12 @@
       },
       {
        "property": "line-height",
-       "value": "var(--tm-target-min)",
+       "value": "var(--tm-font-lineheight-sm)",
        "tokens": [
         {
-         "native": "tokens.target.min",
-         "web": "--tm-target-min",
-         "value": 48
-        }
-       ]
-      },
-      {
-       "property": "min-height",
-       "value": "var(--tm-target-min)",
-       "tokens": [
-        {
-         "native": "tokens.target.min",
-         "web": "--tm-target-min",
-         "value": 48
+         "native": "tokens.font.lineHeight.sm",
+         "web": "--tm-font-lineheight-sm",
+         "value": 20
         }
        ]
       },
@@ -78,7 +79,7 @@
        ]
       }
      ],
-     "size": "358×48"
+     "size": "358×13.4"
     }
    }
   },
@@ -131,12 +132,12 @@
       },
       {
        "property": "line-height",
-       "value": "var(--tm-target-min)",
+       "value": "var(--tm-font-lineheight-sm)",
        "tokens": [
         {
-         "native": "tokens.target.min",
-         "web": "--tm-target-min",
-         "value": 48
+         "native": "tokens.font.lineHeight.sm",
+         "web": "--tm-font-lineheight-sm",
+         "value": 20
         }
        ],
        "inherited": true
@@ -175,110 +176,6 @@
      "size": "88.6×18"
     }
    }
-  },
-  "button": {
-   "states": {
-    "default": {
-     "seenIn": "otp_code-expired",
-     "styles": [
-      {
-       "property": "animation",
-       "value": "none",
-       "tokens": [],
-       "layout": true
-      },
-      {
-       "property": "min-height",
-       "value": "var(--tm-target-min)",
-       "tokens": [
-        {
-         "native": "tokens.target.min",
-         "web": "--tm-target-min",
-         "value": 48
-        }
-       ]
-      },
-      {
-       "property": "min-width",
-       "value": "var(--tm-target-min)",
-       "tokens": [
-        {
-         "native": "tokens.target.min",
-         "web": "--tm-target-min",
-         "value": 48
-        }
-       ]
-      },
-      {
-       "property": "border",
-       "value": "0",
-       "tokens": [],
-       "layout": true
-      },
-      {
-       "property": "background",
-       "value": "transparent",
-       "tokens": [],
-       "layout": true
-      },
-      {
-       "property": "padding",
-       "value": "0",
-       "tokens": [],
-       "layout": true
-      },
-      {
-       "property": "vertical-align",
-       "value": "top",
-       "tokens": [],
-       "layout": true
-      },
-      {
-       "property": "color",
-       "value": "var(--tm-content-brand)",
-       "tokens": [
-        {
-         "native": "tokens.color.content.brand",
-         "web": "--tm-content-brand",
-         "value": "#1D5DCF"
-        }
-       ]
-      },
-      {
-       "property": "font",
-       "value": "inherit",
-       "tokens": [],
-       "layout": true
-      },
-      {
-       "property": "font-weight",
-       "value": "var(--tm-font-weight-semibold)",
-       "tokens": [
-        {
-         "native": "tokens.font.weight.semibold",
-         "web": "--tm-font-weight-semibold",
-         "value": "600"
-        }
-       ]
-      },
-      {
-       "property": "text-align",
-       "value": "center",
-       "tokens": [],
-       "layout": true,
-       "inherited": true
-      },
-      {
-       "property": "text-wrap",
-       "value": "pretty",
-       "tokens": [],
-       "layout": true,
-       "inherited": true
-      }
-     ],
-     "size": "88.6×48"
-    }
-   }
   }
  },
  "rules": [
@@ -308,8 +205,7 @@
   "default": [
    "container",
    "rp",
-   "rr",
-   "button"
+   "rr"
   ]
  }
 }

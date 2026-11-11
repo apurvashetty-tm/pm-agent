@@ -1,0 +1,49 @@
+✖ H25: all eight live screen tabs reach every approved state exactly once (1229.122791ms)
+✔ H26: every state has plain When this shows and linked answered questions (4982.036208ms)
+✔ H27: one phone image, caption, later exceptions and independently scrolling panel (4971.15275ms)
+✔ H28: tapping elements opens clean details, block route and folded picker (9829.411791ms)
+✔ H29: no zero not-tokens card or state token/reference tables (4964.128042ms)
+✔ H30: every block usage is grouped and every chip selects that block on its state (102534.888583ms)
+✔ H31: Start here fits laptop and exposes all real downloads with identical single files (46.391167ms)
+✔ H32: whole-kit zip contains exactly handoff excluding downloads, byte for byte (1202.12975ms)
+✔ H33: Foundation screen filter narrows tokens and hides inline alias chains (62.321625ms)
+✔ H34: all tabs, states with one tap and block pages are free of internal labels and script errors (9732.556125ms)
+✔ H35: generated kit and downloads pass build freshness check (263.30825ms)
+ℹ tests 11
+ℹ suites 0
+ℹ pass 10
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 140050.902125
+
+✖ failing tests:
+
+test at tests/codex/handoff/viewer-d103.test.mjs:60:1
+✖ H25: all eight live screen tabs reach every approved state exactly once (1229.122791ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+  + []
+  - [
+  -   'Sign-in',
+  -   'OTP',
+  -   'Faster sign-in offer',
+  -   'Returning unlock',
+  -   'Home',
+  -   'Case',
+  -   'Prescribe',
+  -   'Calling'
+  - ]
+  
+      at TestContext.<anonymous> (file:///Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype/tests/codex/handoff/viewer-d103.test.mjs:64:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [],
+    expected: [ 'Sign-in', 'OTP', 'Faster sign-in offer', 'Returning unlock', 'Home', 'Case', 'Prescribe', 'Calling' ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

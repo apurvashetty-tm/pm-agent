@@ -1,0 +1,60 @@
+{
+ "block": "code-slot",
+ "name": "CodeSlot",
+ "rn": "<CodeSlot />",
+ "web": ".code-slot",
+ "parts": {
+  "container": {
+   "states": {
+    "default": {
+     "seenIn": "otp_code-expired",
+     "styles": [
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "min-height",
+       "value": "var(--tm-font-lineheight-sm)",
+       "tokens": [
+        {
+         "native": "tokens.font.lineHeight.sm",
+         "web": "--tm-font-lineheight-sm",
+         "value": 20
+        }
+       ]
+      }
+     ],
+     "size": "358×20"
+    }
+   }
+  }
+ },
+ "rules": [
+  {
+   "section": "Kit",
+   "text": "Build it once from the parts × states below (tokens only, copy from messages); it appears on OTP. What it does in each state is in DECIDED.md under those screens."
+  }
+ ],
+ "pictures": [],
+ "usedIn": [
+  "otp_code-expired",
+  "otp_cooldown-reconciling",
+  "otp_default",
+  "otp_empty-tap",
+  "otp_new-code-sent",
+  "otp_resend-available",
+  "otp_resending",
+  "otp_too-short",
+  "otp_two-tries-left",
+  "otp_verifying",
+  "otp_wrong-code"
+ ],
+ "states": {
+  "default": [
+   "container"
+  ]
+ }
+}

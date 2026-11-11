@@ -25,7 +25,7 @@ Current copy: `../ui-screens/sign-in/sign-in.html`. Native: `../ui-screens/nativ
 
 | State / registry key | Pattern | Trigger and recovery | Visual coverage |
 |---|---|---|---|
-| signin.default | None | Entry; neutral SMS helper | Existing |
+| signin.default | None | Entry; neutral SMS helper "We’ll send you an OTP by SMS." (D-109); field + helper → 32 → Send OTP (D-108); "Sign up" a real link, 48 hit area, no added height | Re-rendered 2026-11-11 (r2-build) |
 | signin.keyboard-open | None | Potentially valid partial entry; no early length error | Existing |
 | signin.empty-tap | F1 | Submit empty; focus field, edit | R01 sibling |
 | signin.too-short | F1 | Submit incomplete; retain digits, edit | R01 sibling |
@@ -36,7 +36,7 @@ Current copy: `../ui-screens/sign-in/sign-in.html`. Native: `../ui-screens/nativ
 | signin.sending | L1 | Send pending; disable duplicate send | Existing + fixture |
 | signin.not-registered | N1 | Server access result; existing sign-up route / approval information (sign-up line is one entry `signin.signup` with `{link}`, D-101 o25) | R06 |
 | signin.offline | F2 after action; N1 passive | Restore connectivity, retry; retain number; one message | R03 sibling + layout QA |
-| signin.couldnt-send | F2 | Confirmed send failure; retain number and retry | R03 sibling + layout QA |
+| signin.couldnt-send | F2 | Confirmed send failure; retain number and retry. Copy "Couldn’t send the OTP." (D-109). Every sign-in notice: 16 under the field, 32 above Send OTP (D-108) | R03 sibling + layout QA |
 | signin.too-many-tries | W1 | Issuance cap; wait for server eligibility, retain number | R04 sibling + fixture |
 | signin.locked-number | W1 | Sign-in on a locked number goes to OTP in the locked state (`otp.locked`): code and Verify off, lock time and "call Doctor Ops", Change still available (D-81 F6) | R04 sibling |
 | signin.inactive | F2 access block | Server says inactive; Call Doctor Ops | Existing + notice integration QA |
@@ -49,18 +49,18 @@ Current copy: `../ui-screens/otp/otp.html`. Native: `../ui-screens/native/OtpScr
 
 | State / registry key | Pattern | Trigger and recovery | Visual coverage |
 |---|---|---|---|
-| otp.default | None | Keyboard open on load; box 1 focused; resend timer running (D-44) | Superseded: layout v2 capture pending |
+| otp.default | None | Keyboard open on load; box 1 focused; resend timer running (D-44). Boxes → 32 → resend line → 32 → legal → 8 → Verify; the empty message line holds no space (D-108); "Change" an inline link (D-107) | Re-rendered 2026-11-11 (r2-build) |
 | otp.empty-tap | F1 | Submit empty; focus input | R01/R02 siblings; keyboard QA |
 | otp.too-short | F1 | Submit1–3 digits; retain input, edit | R01/R02 siblings; keyboard QA |
 | otp.verifying | L1 | Verification pending; retain code, prevent duplicate | Existing + fixture |
 | otp.wrong-code | F1 | Code stays visible, red borders, no focus box; first keystroke replaces whole code; keyboard open. Copy "Wrong code." (D-81 F1; replaces "That code isn't right.") | Superseded: layout v2 capture pending |
 | otp.two-tries-left | F1 | Same as wrong code, with the remaining-tries count (dynamic): "Wrong code. 2 tries left."; at 1 try left the singular "Wrong code. 1 try left." (D-81 F1) | R02 sibling + longest-copy QA |
 | otp.resend-available | None | "Resend code" brand link, 44pt tap area, under the notice (D-44) | Superseded: layout v2 capture pending |
-| otp.new-code-sent | S1 | Confirmed resend; restart countdown | Existing; reposition only through review |
-| otp.code-expired | F1 | Code stays visible; "Resend code" available at once; Verify of the same code blocked | R02 |
+| otp.new-code-sent | S1 | Confirmed resend; restart countdown. Copy "New code sent." (D-109), 8 under the boxes | Re-rendered 2026-11-11 (r2-build) |
+| otp.code-expired | F1 | Code stays visible; "Resend code" available at once; Verify of the same code blocked; the legal line is hidden and keeps no height (D-108, replaces Round 5 B) | R02 |
 | otp.couldnt-verify | F2 | Retain code; resend line shown (D-44) | R03 |
 | otp.too-many-resends | W1 | Resend line hidden; last unexpired code can still verify | R05 |
-| otp.locked | W1 | Keyboard closed; boxes and Verify disabled; resend and consent lines hidden; authoritative cooldown recovery (D-44) | R04 |
+| otp.locked | W1 | Keyboard closed; boxes and Verify disabled; resend and consent lines hidden; authoritative cooldown recovery (D-44). Boxes → 16 → notice → 32 → Verify (D-108) | R04 |
 
 ### OTP behavior combinations: reuse patterns
 
@@ -80,7 +80,7 @@ Offered after an OTP sign-in on a device that supports it and has faster sign-in
 
 | State / registry key | Pattern | Behaviour |
 |---|---|---|
-| offer.shown | None | After an OTP sign-in on a supported device where faster sign-in is off; at each OTP sign-in until turned on, at most `fasterOfferMax` (3) times (D-104) |
+| offer.shown | None | After an OTP sign-in on a supported device where faster sign-in is off; at each OTP sign-in until turned on, at most `fasterOfferMax` (3) times (D-104). Title "Skip OTPs next time" (D-107); point 1 "Sign in with one touch" / "No SMS to wait for." (Face ID "with a glance", screen lock "with your PIN or pattern"); point titles semibold; hero → 32 → points, 16 apart (D-108, D-109) |
 | offer.enabling | L1 + OS prompt | One request at a time; primary shows progress |
 | offer.enabled | — | Go to Home (no toast needed; Profile shows it's on) |
 | offer.cancelled | None | OS prompt cancelled → back to the offer, no message (D-61) |
@@ -98,8 +98,9 @@ Current copy: `../ui-screens/returning-unlock/returning-unlock.html`. Native: `.
 | State / registry key | Pattern | Recovery | Coverage |
 |---|---|---|---|
 | unlock.fingerprint / face-id / screen-lock | None | Native authentication from existing CTA; Use OTP instead → Sign-in, number filled in (D-105) | Three existing visuals |
-| unlock.pending | L1 + OS prompt | No concurrent authentication request | Fixture |
-| unlock.cancelled | None | Return to unchanged screen; cancellation is not failure | Fixture |
+| unlock.auto-prompt | L1 + OS prompt | The app opens on unlock → the phone's prompt opens by itself, once (D-109 §3, amends D-38 / D-105); the screen shows `unlock.pending` meanwhile. Re-renders, Back from Sign-in and picture states never prompt again; the automatic prompt counts as a try | Same picture as `unlock_pending` |
+| unlock.pending | L1 + OS prompt | No concurrent authentication request (on arrival, or after Unlock) | Fixture |
+| unlock.cancelled | None | Return to unchanged screen (today's screen, no new prompt; Unlock stays for a retry, D-109 §3); cancellation is not failure | Fixture |
 | unlock.platform-retry | OS-owned | Use supported native retry guidance | Device check; do not invent OS mock |
 | unlock.unavailable | N1 (neutral info, not an error — D-47 amendment) | "Use OTP instead" becomes the primary; notice copy "Faster sign-in isn't available on this phone right now." (no repeat of the button text, D-47); preserve account context; Use OTP instead opens the same prefilled Sign-in (D-105) | R03 component + host-layout QA |
 | unlock.sign-in-prefilled | None | Sign-in from unlock, number filled in: Use OTP instead, or 3 failed unlocks `[MOCK]`, open `sign-in_default` with the remembered number in the field (cursor at the end, Send OTP enabled when valid); **no SMS until Send OTP**. Editing the number signs in another doctor (replaces Switch account). Normal Sign-in rules: no Back; phone back leaves the app (D-101); reopening the app shows unlock again (D-105) | Behaviour; no new picture (looks like `sign-in_default` with a number) |
@@ -112,23 +113,23 @@ Current references: `../ui-screens/home/`; native `../ui-screens/native/HomeScre
 
 | State / registry key | Pattern | Recovery / invariant | Coverage |
 |---|---|---|---|
-| home.setup | None | Wheel + presets, minimum reminder once | Existing wheel |
+| home.setup | None | "Start taking cases" / "You can add time or stop anytime." · "Quick picks" → 32 → "Custom" (wheel 0–10 h; at 10 h minutes 0; at 0 h 15 / 30 / 45) · "Available until {time}" 8 above Set availability; no range text, no "Minimum 15 minutes" (D-106) | Re-rendered 2026-11-11 (r2-build) |
 | home.setting | L1 | Keep selected duration; only start after confirmation | Fixture |
 | home.setup-failed | F2 | Retain duration, retry known failure | R07 component + setup-layout QA |
-| home.active | None | Timer and Request a case | Existing |
+| home.active | None | "You can take cases" / "Request a case now, or whenever you’re ready." (D-107); one card: Time remaining (+ Add time always shown, greyed offline) · Prescriptions written today → Profile (D-106); Request a case | Re-rendered 2026-11-11 (r2-build) |
 | home.requesting | L1 | One in-flight request; stable headline and CTA | Fixture |
 | home.no-cases | N1 | Check again; remain available until deadline | Existing draft needs later state approval; not an error |
 | home.request-failed | F2 | Retry confirmed failure; distinguish unknown result | R09 |
 | home.offline | F2 or N1 | Preserve state; reconnect and reconcile pending request | R09 sibling |
-| home.near-expiry | W1 | Keep Add time placement; last-second requests valid | Existing draft requires corrected layout; later review |
-| home.add-open | None | Wheel sheet; same duration controls, no repeated helper | Existing wheel sheet |
+| home.near-expiry | W1 | "Availability ends soon…" in the bar; Add time in its usual place (always shown, D-106); last-second requests valid | Re-rendered 2026-11-11 (r2-build) |
+| home.add-open | None | Sheet "Add time" (D-109) with the subtitle in the header; same Quick picks / Custom picker; the wheel tops out at what is left of 10 hours, hint "Up to 10 hours in total"; button "Add 30 min" / "Add 9 h 45 min" (D-106) | Re-rendered 2026-11-11 (r2-build) |
 | home.adding | L1 | Keep sheet/selection; prevent repeat addition | Fixture |
-| home.add-failed | F2 | Keep sheet/selection and original deadline; retry confirmed failure | R07 |
+| home.add-failed | F2 | Keep sheet/selection and original deadline; retry confirmed failure. The error sits in the pinned actions, 16 above Add (D-106) | R07 |
 | home.added | T1 | Confirmed deadline update; dismiss sheet, preserve Home | R08 |
 | home.end-confirmation | Confirmation, not error | Existing pending-request decision; no new error component | Separate interaction coverage when reviewed |
 | home.stop-pending | N1 + L1 | Finish request/assigned case before stop. Subtitle "You won't get new cases." (not a repeat of the notice). **No "Time remaining" row**; quiet "Ending…" without spinner (D-47) | Fixture + later Home state review |
-| home.expired-pending | N1 + L1 | Honour request already submitted; do not interrupt case | Same pending layout; fixture |
-| home.idle-expired / manually-ended | N1 + setup | Reuse setup; keep prescription count; no giant0-minute error screen | Existing setup integration QA |
+| home.expired-pending | N1 + L1 | Honour request already submitted; do not interrupt case. Title "Availability ended" (D-107); time 0:00, no Add time | Same pending layout; fixture |
+| home.idle-expired / manually-ended | N1 + setup | Reuse setup; the notice at the top, 32 to the content; "Prescriptions written today" as one row above the picker when above 0 (D-106); no giant 0-minute error screen | Re-rendered 2026-11-11 (r2-build) |
 | home.unknown-result | N1 + L1 | Reconcile operation ID before retry; do not invent failure or success | Fixture; backend integration required |
 
 ## Case page exits (D-48)

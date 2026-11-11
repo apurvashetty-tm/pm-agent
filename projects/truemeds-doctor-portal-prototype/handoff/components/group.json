@@ -1,0 +1,46 @@
+{
+ "block": "group",
+ "name": "Group",
+ "rn": "<Group />",
+ "web": ".group",
+ "parts": {
+  "container": {
+   "states": {
+    "default": {
+     "seenIn": "home_add-failed",
+     "styles": [
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      }
+     ],
+     "size": "358×127.9"
+    }
+   }
+  }
+ },
+ "rules": [
+  {
+   "section": "Kit",
+   "text": "Build it once from the parts × states below (tokens only, copy from messages); it appears on Home. What it does in each state is in DECIDED.md under those screens."
+  }
+ ],
+ "pictures": [],
+ "usedIn": [
+  "home_add-failed",
+  "home_add-wheel",
+  "home_adding",
+  "home_idle-expired",
+  "home_manually-ended",
+  "home_setting",
+  "home_setup-failed",
+  "home_setup-wheel"
+ ],
+ "states": {
+  "default": [
+   "container"
+  ]
+ }
+}

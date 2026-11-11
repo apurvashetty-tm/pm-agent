@@ -16,6 +16,12 @@
        "layout": true
       },
       {
+       "property": "flex",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
        "property": "display",
        "value": "flex",
        "tokens": [],
@@ -29,12 +35,12 @@
       },
       {
        "property": "margin-bottom",
-       "value": "var(--tm-space-lg)",
+       "value": "var(--tm-space-2xl)",
        "tokens": [
         {
-         "native": "tokens.space.lg",
-         "web": "--tm-space-lg",
-         "value": 16
+         "native": "tokens.space.2xl",
+         "web": "--tm-space-2xl",
+         "value": 32
         }
        ]
       }

@@ -11,6 +11,8 @@ import url from "url";
 const HERE = path.dirname(url.fileURLToPath(import.meta.url));
 const PROJECT = path.resolve(HERE, "..");
 const APP = path.join(PROJECT, "app");
+const registry = JSON.parse(fs.readFileSync(path.join(PROJECT, "ui-screens/feedback/messages.json"), "utf8"));
+const copy = (key) => typeof registry[key] === "string" ? registry[key] : registry[key].text;
 const PORT = 8767;
 const BASE = `http://localhost:${PORT}/`;
 const results = [];
@@ -175,8 +177,8 @@ const signInNotice = (p) => p.evaluate(() => [...document.querySelectorAll(".log
   await p.fill("#tm-login-mobile", ""); await p.evaluate(() => { const i = document.getElementById("tm-login-mobile"); i.value = "+91 98765-43210"; i.dispatchEvent(new Event("input", { bubbles: true })); });
   const pasted = await p.inputValue("#tm-login-mobile");
   check("B2", "sign-in checks: empty on Send, first digit at once, too short on Send, re-checks while typing, clears when valid, paste cleaned",
-    onSignIn && empty === "Enter your mobile number." && prefix === "Mobile numbers start with 6, 7, 8 or 9." && okWhileTyping === "We’ll send you a verification code by SMS." &&
-    short === "Enter all 10 digits." && recheck === "Enter all 10 digits." && cleared === "We’ll send you a verification code by SMS." && !errCls && pasted === "9876543210",
+    onSignIn && empty === "Enter your mobile number." && prefix === "Mobile numbers start with 6, 7, 8 or 9." && okWhileTyping === copy("signin.smsHelper") &&
+    short === "Enter all 10 digits." && recheck === "Enter all 10 digits." && cleared === copy("signin.smsHelper") && !errCls && pasted === "9876543210",
     JSON.stringify({ empty, prefix, okWhileTyping, short, recheck, cleared, pasted }));
   check("B2b", "sign-in: 0 console errors", r.errors.length === 0, r.errors.join("|"));
   await r.ctx.close();
@@ -193,7 +195,7 @@ const signInNotice = (p) => p.evaluate(() => [...document.querySelectorAll(".log
   await p.goBack(); await p.waitForTimeout(300); const backNum = await p.inputValue("#tm-login-mobile").catch(() => null);
   await setStory(p, { offline: "yes" }); await send(p, "7012345678"); const off = await signInNotice(p); await setStory(p, { offline: "no" });
   check("B3", "test numbers: not registered, couldn't send, too many (countdown, ends on the clock), inactive → Call Doctor Ops placeholder, offline",
-    nr?.startsWith("Number not registered") && cs === "Couldn’t send the code." && tm === "Too many attempts on this number." && /^Try again in 10:00$/.test(btn) && dis &&
+    nr?.startsWith("Number not registered") && cs === copy("signin.couldntSend") && tm === "Too many attempts on this number." && /^Try again in 10:00$/.test(btn) && dis &&
     after === "Send OTP" && ia === "This account is inactive." && iaBtn === "Call Doctor Ops" && ph === "This would call Doctor Ops" && backNum === "9000000002" &&
     off === "You’re offline. Check your connection.", JSON.stringify({ nr, cs, tm, btn, after, ia, iaBtn, ph, backNum, off }));
   { // B3d (D-98, app-logic §2): when the countdown ends, the "Too many attempts" notice goes away and Send OTP works again
@@ -218,7 +220,7 @@ const signInNotice = (p) => p.evaluate(() => [...document.querySelectorAll(".log
   const r = await open(""); const p = r.p;
   await send(p, "7012345678");
   const arrival = await p.evaluate(() => ({ focused: document.activeElement?.id === "c", current: document.querySelectorAll(".tm-otp-slots__slot")[0].classList.contains("is-current"),
-    number: document.querySelector(".head b").textContent, weight: getComputedStyle(document.querySelector(".head b")).fontWeight, rs: document.getElementById("rs").textContent }));
+    number: document.querySelector(".entry-band__sub b").textContent, weight: getComputedStyle(document.querySelector(".entry-band__sub b")).fontWeight, rs: document.getElementById("rs").textContent }));
   check("B4", "OTP arrival: field focused, first box current (blue), recipient = typed number, Resend in 0:30",
     arrival.focused && arrival.current && arrival.number === "+91 70123 45678" && arrival.rs === "Didn’t receive it? Resend in 0:30", JSON.stringify(arrival));
   await p.click("#b"); const empty = await helper(p);
@@ -268,8 +270,8 @@ const signInNotice = (p) => p.evaluate(() => [...document.querySelectorAll(".log
   const exp = await p.evaluate(() => ({ h: document.getElementById("h").textContent, dis: document.getElementById("b").disabled, rs: document.getElementById("rs").textContent, consent: document.getElementById("consent").className }));
   await p.focus("#c"); await p.keyboard.press("9"); await p.keyboard.press("9"); await p.keyboard.press("9"); await p.keyboard.press("9");
   await verify(p, null); const cv = await notice(p);
-  check("B5", "0000 expired (Verify off, terms keep their height); Resend obeys the running wait, then shows; 9999 couldn't check the code",
-    /^Didn’t receive it\? Resend in 0:\d\d$/.test(expWait) && exp.h === "This code has expired." && exp.dis && /Resend code/.test(exp.rs) && /reserve/.test(exp.consent) && cv === "Couldn’t check the code.", JSON.stringify({ expWait, exp, cv }));
+  check("B5", "0000 expired (Verify off, terms hidden with no reserved height — D-108 supersedes Round 5 B); Resend obeys the running wait, then shows; 9999 couldn't check the code",
+    /^Didn’t receive it\? Resend in 0:\d\d$/.test(expWait) && exp.h === "This code has expired." && exp.dis && /Resend code/.test(exp.rs) && !/show|reserve/.test(exp.consent) && cv === "Couldn’t check the code.", JSON.stringify({ expWait, exp, cv }));
   // resend: countdown ticks, then Resend code → New code sent, 1:00 → 2:00 → 4th code used up
   await p.click("#rs button"); await p.waitForTimeout(ANSWER);
   const n1 = await p.evaluate(() => ({ s1: document.getElementById("s1").textContent, icon: !!document.querySelector("#s1 .tm-icon"), rs: document.getElementById("rs").textContent }));
@@ -287,7 +289,7 @@ const signInNotice = (p) => p.evaluate(() => [...document.querySelectorAll(".log
   await ff(p, 30 * 1000); await p.waitForTimeout(400);
   await enterCode(p, "5551"); await p.click("#rs button"); await p.evaluate(() => document.getElementById("b").click()); await p.waitForTimeout(ANSWER);
   const overlap = await p.evaluate(() => ({ h: document.getElementById("h").hidden, ht: document.getElementById("h").textContent, s1: document.getElementById("s1").textContent }));
-  check("B5f", "one server action at a time: Verify during a resend is ignored (no wrong try counted)", overlap.h && overlap.s1 === "New code sent", JSON.stringify(overlap));
+  check("B5f", "one server action at a time: Verify during a resend is ignored (no wrong try counted)", overlap.h && overlap.s1 === copy("otp.newSent"), JSON.stringify(overlap));
   await p.evaluate(() => window.__tm.store.get());
   await p.click("a.lk"); await p.waitForTimeout(300); await send(p, "7012345693");
   await ff(p, 30 * 1000); await p.waitForTimeout(400);
@@ -308,7 +310,7 @@ const signInNotice = (p) => p.evaluate(() => [...document.querySelectorAll(".log
   check("B5h", "Verify answer arriving after leaving for a placeholder does not navigate (screen life ends on every transition)", stayed === "This would call Doctor Ops", String(stayed));
   await p.goBack(); await p.waitForTimeout(300);
   check("B5b", "resend: green \"New code sent\" with no icon; countdown ticks; waits 60 s then 120 s; 4th code → too many codes (resend hidden, Doctor Ops link → placeholder)",
-    n1.s1 === "New code sent" && !n1.icon && /Resend in 1:00/.test(n1.rs) && ticking === "0:40" && n2 === "2:00" &&
+    n1.s1 === copy("otp.newSent") && !n1.icon && /Resend in 1:00/.test(n1.rs) && ticking === "0:40" && n2 === "2:00" &&
     capped.note === "You’ve asked for too many codes. Use the last one, or call Doctor Ops." && capped.rsHidden && capped.link && opsPage === "This would call Doctor Ops",
     JSON.stringify({ n1, ticking, n2, capped, opsPage }));
   // second journey: resend failed and offline from the panel story, applied to the running journey
@@ -449,16 +451,16 @@ async function signInFull(p, n) { await send(p, n); await verify(p, "1234"); }
   const stored = await p.evaluate(() => JSON.parse(localStorage.getItem("tm-doctor-app:review:faster:7012345610")));
   await p.goBack(); await p.waitForTimeout(300); const afterBack = await sNow(p);
   check("F3", "sign-in → OTP 1234 → offer (fingerprint, no Back) → Turn on: Turning on… with spinner, Not now off → Home; enabled remembered; phone Back stays on Home",
-    offer.s === "offer_fingerprint" && offer.title === "Skip the OTP next time" && offer.btn === "Turn on faster sign-in" && !offer.back &&
+    offer.s === "offer_fingerprint" && offer.title === copy("offer.title") && offer.btn === "Turn on faster sign-in" && !offer.back &&
     busy.t === "Turning on…" && busy.spin && busy.nn && home === "home_setup-wheel" && stored?.enabled === true && stored?.turnedOn === true && stored?.offerCount === 1 && afterBack === "home_setup-wheel",
     JSON.stringify({ offer, busy, home, stored, afterBack }));
   await p.reload(); await p.waitForTimeout(400);
   const unlock = await p.evaluate(() => ({ s: window.__tm.store.get().s, h1: document.querySelector(".unlock-screen h1")?.textContent, btn: document.getElementById("unlock-label")?.textContent }));
-  await p.click("#unlock-action"); await p.waitForTimeout(100);
+  await p.waitForTimeout(100); // D-109: prompt already opened automatically
   const ub = await p.evaluate(() => ({ t: document.getElementById("unlock-action").textContent, spin: !!document.querySelector("#unlock-action .tm-spinner") }));
   await p.waitForTimeout(PROMPT); const home2 = await sNow(p);
   check("F3b", "app restart with faster sign-in on → returning unlock \"Hello, Dr. Kunal\" (name from mock profile data) → Unlocking… → Home",
-    unlock.s === "unlock_fingerprint" && unlock.h1 === "Hello, Dr. Kunal" && unlock.btn === "Unlock with fingerprint" && ub.t === "Unlocking…" && ub.spin && home2 === "home_setup-wheel",
+    unlock.s === "unlock_fingerprint" && unlock.h1 === "Hello, Dr. Kunal" && ub.t === "Unlocking…" && ub.spin && home2 === "home_setup-wheel",
     JSON.stringify({ unlock, ub, home2 }));
   check("F3c", "chain: 0 console errors", r.errors.length === 0, r.errors.join("|"));
   await r.ctx.close();
@@ -574,9 +576,9 @@ async function signInFull(p, n) { await send(p, n); await verify(p, "1234"); }
   const none = await look("none", "7012345616");
   const sl = await look("screen-lock", "7012345617");
   await sl.p.click("#turn-on"); await sl.p.waitForTimeout(PROMPT); const slHome = await sNow(sl.p);
-  await sl.p.reload(); await sl.p.waitForTimeout(400);
+  await setStory(sl.p, { unlock: "cancelled" }); await sl.p.reload(); await sl.p.waitForTimeout(PROMPT);
   const slUnlock = await sl.p.evaluate(() => ({ s: window.__tm.store.get().s, btn: document.getElementById("unlock-label").textContent, icon: document.getElementById("variant-icon").dataset.icon }));
-  await sl.p.click("#unlock-action"); await sl.p.waitForTimeout(PROMPT); const slDone = await sNow(sl.p);
+  await setStory(sl.p, { unlock: "success" }); await sl.p.click("#unlock-action"); await sl.p.waitForTimeout(PROMPT); const slDone = await sNow(sl.p);
   check("F6", "device: Face ID wording; no screen lock → offer skipped (Home); screen lock only → offer \"Use your screen lock instead of an OTP.\" → Turn on → restart → \"Unlock with screen lock\" → Home",
     face.v.s === "offer_face-id" && face.v.sub === "Use Face ID instead of waiting for an OTP." && face.v.trust === "Your Face ID stays on your phone" && none.v.s === "home_setup-wheel" &&
     sl.v.s === "offer_screen-lock" && sl.v.sub === "Use your screen lock instead of an OTP." && sl.v.icon === "lock" && slHome === "home_setup-wheel" &&
@@ -591,7 +593,7 @@ async function signInFull(p, n) { await send(p, n); await verify(p, "1234"); }
   // no screen lock any more → unavailable. The review story (the simulated phone) survives reopening the app.
   const r = await open(""); const p = r.p;
   await signInFull(p, "7012345618"); await p.click("#turn-on"); await p.waitForTimeout(PROMPT);
-  await setStory(p, { device: "screen-lock" }); await p.reload(); await p.waitForTimeout(400);
+  await setStory(p, { device: "screen-lock", unlock: "cancelled" }); await p.reload(); await p.waitForTimeout(PROMPT);
   const sl = await p.evaluate(() => ({ s: window.__tm.store.get().s, panel: document.getElementById("rp-device").value }));
   await setStory(p, { device: "none" }); await p.reload(); await p.waitForTimeout(400);
   const none = await sNow(p);
@@ -604,10 +606,10 @@ async function signInFull(p, n) { await send(p, n); await verify(p, "1234"); }
   // when that is the window's last code, OTP opens with codes used up (Resend hidden, too-many-codes notice), as from sign-in
   const r = await open("", { w: 1280, h: 800 }); const p = r.p; const n = "7012345621";   // desktop review: every panel row
   await signInFull(p, n); await p.click("#turn-on"); await p.waitForTimeout(PROMPT);   // code 1, faster sign-in on
-  await choose(p, "start", "unlock");   // Restart then opens the returning unlock for the remembered doctor
+  await choose(p, "unlock", "cancelled"); await choose(p, "start", "unlock");   // Restart then opens the returning unlock for the remembered doctor
   const seen = [];
   for (const w of [30, 60, 120]) {
-    await ff(p, w * 1000); await p.evaluate(() => document.getElementById("rp-restart").click()); await p.waitForTimeout(400);   // restart keeps the app clock
+    await ff(p, w * 1000); await p.evaluate(() => document.getElementById("rp-restart").click()); await p.waitForTimeout(PROMPT);   // cancel the automatic prompt; restart keeps the app clock
     const at = await sNow(p);
     await p.click("#fallback"); await p.waitForTimeout(300);   // D-105: sign-in, number filled in, nothing sent yet
     const pre = await p.evaluate(() => ({ s: window.__tm.store.get().s, n: document.getElementById("tm-login-mobile")?.value }));
@@ -625,7 +627,8 @@ async function signInFull(p, n) { await send(p, n); await verify(p, "1234"); }
 async function returning(story = {}, n = "7012345620") {
   const r = await open(""); const p = r.p;
   await signInFull(p, n); await p.click("#turn-on"); await p.waitForTimeout(PROMPT);
-  await p.reload(); await p.waitForTimeout(400);
+  await setStory(p, { unlock: "cancelled" });
+  await p.reload(); await p.waitForTimeout(PROMPT); // D-109: settle automatic cancellation before retry tests
   if (Object.keys(story).length) await setStory(p, story);
   return r;
 }
@@ -651,7 +654,7 @@ const signInView = (p) => p.evaluate(() => ({ s: window.__tm.store.get().s, n: d
     tries[0] === "unlock_fingerprint" && tries[1] === "unlock_fingerprint" && tries[2] === "sign-in_default" && si.n === n && si.send && !si.back && codes1 === codes0,
     JSON.stringify({ same: before === after, buttons, backStays, tries, si, codes0, codes1 }));
   await p.click(".login-submit"); await p.waitForTimeout(ANSWER);
-  const otp = await p.evaluate(() => ({ s: window.__tm.store.get().s, num: document.querySelector(".otp-screen .head b")?.textContent }));
+  const otp = await p.evaluate(() => ({ s: window.__tm.store.get().s, num: document.querySelector(".otp-screen .entry-band__sub b")?.textContent }));
   await verify(p, "1234"); const signed = await sNow(p);
   check("F7b", "from that sign-in: Send OTP → OTP for the remembered number; 1234 → Home (faster sign-in already on, no offer)",
     otp.s === "otp_default" && otp.num === "+91 70123 45620" && signed === "home_setup-wheel", JSON.stringify({ otp, signed }));
@@ -678,7 +681,7 @@ const signInView = (p) => p.evaluate(() => ({ s: window.__tm.store.get().s, n: d
   await s.focus("#tm-login-mobile"); await s.waitForTimeout(100);
   const caret = await s.evaluate(() => { const i = document.getElementById("tm-login-mobile"); return [i.selectionStart, i.selectionEnd, i.value.length]; });
   await typeNumber(s, "7012345699"); await s.click(".login-submit"); await s.waitForTimeout(ANSWER);
-  const other = await s.evaluate(() => ({ s: window.__tm.store.get().s, num: document.querySelector(".otp-screen .head b")?.textContent }));
+  const other = await s.evaluate(() => ({ s: window.__tm.store.get().s, num: document.querySelector(".otp-screen .entry-band__sub b")?.textContent }));
   const oldCodes = await codesSent(s, "7012345622"), newCodes = await codesSent(s, "7012345699");
   check("F7d", "no Switch account / Not you on unlock; Use OTP instead → sign-in, cursor at the end of the filled-in number; edit the number → Send OTP → OTP for the new number (the old number sent nothing new)",
     noSwitch && caret[0] === 10 && caret[1] === 10 && caret[2] === 10 && other.s === "otp_default" && other.num === "+91 70123 45699" && oldCodes === 1 && newCodes === 1,
@@ -690,8 +693,8 @@ const signInView = (p) => p.evaluate(() => ({ s: window.__tm.store.get().s, n: d
 
 { // F8: story start "unlock" and the panel applies to the running unlock (next prompt answer) — review mode
   const r = await open("", { w: 1280, h: 800 }); const p = r.p;   // desktop review: every panel row is there
-  await choose(p, "start", "unlock"); await choose(p, "device", "face");
-  await p.evaluate(() => document.getElementById("rp-restart").click()); await p.waitForTimeout(300);
+  await choose(p, "unlock", "cancelled"); await choose(p, "start", "unlock"); await choose(p, "device", "face");
+  await p.evaluate(() => document.getElementById("rp-restart").click()); await p.waitForTimeout(PROMPT);
   const st = await p.evaluate(() => ({ s: window.__tm.store.get().s, btn: document.getElementById("unlock-label").textContent }));
   await choose(p, "unlock", "unavailable");
   await p.click("#unlock-action"); await p.waitForTimeout(PROMPT);

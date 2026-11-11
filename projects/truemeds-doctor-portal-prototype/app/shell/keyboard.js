@@ -39,7 +39,7 @@ export function reveal(field, frame, gap) {
       if (uBottom + gap > bottom) d = uBottom + gap - bottom;
       else if (uTop < top) d = uTop - Math.min(gap, bottom - top - (uBottom - uTop) - gap) - top;
     } else d = f.top - top;                                     // not both: the field first, at the top
-    if (d) sc.scrollTop += d;
+    if (d) sc.scrollTop += d > 0 ? Math.ceil(d) : Math.floor(d);   // whole pixels: never left a fraction short of 16 clear
     if (sc === frame) break;
   }
 }
@@ -64,10 +64,40 @@ export function mountKeyboardAvoid({ mode, frame }) {
   // html.phone-kb while the phone's keyboard is open: a screen whose header sits outside its scroll area (OTP) scrolls as one.
   const open = (on) => document.documentElement.classList.toggle("phone-kb", !!on);
   document.addEventListener("focusout", () => setTimeout(fit, 0));
+  // A message that shows or goes while the keyboard is open (OTP "Wrong code.", a sign-in error) changes the screen's height
+  // with no focus or viewport event: watch the focused field's blocks and scroll areas and reveal again when one changes size
+  // (RULINGS 2026-11-11 13:45).
+  const heights = new WeakMap();
+  let pending = 0;
+  const ro = typeof ResizeObserver === "function" ? new ResizeObserver((entries) => {
+    let changed = false;
+    for (const e of entries) {
+      const h = Math.round(e.contentRect.height);
+      if (heights.has(e.target) && heights.get(e.target) !== h) changed = true;
+      heights.set(e.target, h);
+    }
+    if (!changed || pending || !document.documentElement.classList.contains("phone-kb")) return;
+    pending = requestAnimationFrame(() => {
+      pending = 0;
+      const el = document.activeElement;
+      if (eligible() && isField(el) && frame.contains(el)) reveal(el, frame, gap());
+    });
+  }) : null;
+  function watch(el) {
+    if (!ro) return;
+    ro.disconnect();
+    for (let n = el.parentElement; n && n !== document.body; n = n.parentElement) {
+      ro.observe(n);
+      const o = getComputedStyle(n).overflowY;
+      if (o === "auto" || o === "scroll") for (const c of n.children) ro.observe(c);
+      if (n === frame) break;
+    }
+  }
   function revealSoon() {
     timers.forEach(clearTimeout);
     const el = document.activeElement;
     if (!eligible() || !isField(el) || !frame.contains(el)) return;
+    watch(el);
     timers = SETTLE.map((ms) => setTimeout(() => { if (document.activeElement === el && eligible()) reveal(el, frame, gap()); }, ms));
   }
   vv.addEventListener("resize", () => { fit(); revealSoon(); });

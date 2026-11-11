@@ -32,9 +32,20 @@
        "value": "auto",
        "tokens": [],
        "layout": true
+      },
+      {
+       "property": "padding-bottom",
+       "value": "var(--tm-space-lg)",
+       "tokens": [
+        {
+         "native": "tokens.space.lg",
+         "web": "--tm-space-lg",
+         "value": 16
+        }
+       ]
       }
      ],
-     "size": "358×415.3"
+     "size": "358×487.3"
     }
    }
   }

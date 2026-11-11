@@ -10,29 +10,6 @@
      "seenIn": "sign-in_default",
      "styles": [
       {
-       "property": "display",
-       "value": "block",
-       "tokens": [],
-       "layout": true
-      },
-      {
-       "property": "width",
-       "value": "var(--tm-logo-lockup-width)",
-       "tokens": [
-        {
-         "native": "tokens.logoLockup.width",
-         "web": "--tm-logo-lockup-width",
-         "value": 166
-        }
-       ]
-      },
-      {
-       "property": "height",
-       "value": "auto",
-       "tokens": [],
-       "layout": true
-      },
-      {
        "property": "color",
        "value": "var(--tm-content-primary)",
        "tokens": [
@@ -84,6 +61,15 @@
      "size": "166×40.7"
     }
    }
+  },
+  "row": {
+   "states": {
+    "default": {
+     "seenIn": "sign-in_default",
+     "styles": [],
+     "size": "358×40.7"
+    }
+   }
   }
  },
  "rules": [
@@ -93,11 +79,11 @@
   },
   {
    "section": "Design rules 8.13",
-   "text": "**Logo lockup size and place.** Every home-base screen with the \"truemeds for doctors\" lockup (`foundation/logo/truemeds-for-doctors.svg`, project level, §2.8) draws it **166px wide** (height follows the 220×54 artwork), **16px from the top**, and the logo→title gap stays as in §8.3 (L6). Nothing else sets the lockup size."
+   "text": "**Logo lockup size and place.** Every home-base screen with the \"truemeds for doctors\" lockup (`foundation/logo/truemeds-for-doctors.svg`, project level, §2.8) draws it **166px wide** (height follows the 220×54 artwork), **16px from the top** (of the safe area), and the logo → title gap is **16** (`--tm-space-lg`) on every screen with the logo (L6, D-107; the band spec is in \"Entry and home screens\" below). Nothing else sets the lockup size."
   },
   {
    "section": "Design rules L6",
-   "text": "L6 — Sign-in logo-to-title gap: 48 (`--tm-space-3xl`), home-base hero gap."
+   "text": "L6 — Logo → title: **16** (`--tm-space-lg`) on every screen with the logo (sign-in, OTP, faster sign-in offer, returning unlock, Home). D-107, 2026-11-11; was \"sign-in 48, home-base hero gap\" (D-46)."
   },
   {
    "section": "Design rules 2.8",
@@ -127,7 +113,8 @@
  ],
  "states": {
   "default": [
-   "lockup"
+   "lockup",
+   "row"
   ]
  }
 }

@@ -4,50 +4,55 @@
  "rn": "<SignUpOption />  [RECOMMENDED]",
  "web": ".login-signup",
  "parts": {
+  "row": {
+   "states": {
+    "default": {
+     "seenIn": "sign-in_default",
+     "styles": [
+      {
+       "property": "margin-top",
+       "value": "auto",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "padding-top",
+       "value": "var(--tm-space-2xl)",
+       "tokens": [
+        {
+         "native": "tokens.space.2xl",
+         "web": "--tm-space-2xl",
+         "value": 32
+        }
+       ]
+      }
+     ],
+     "size": "358×45.4"
+    }
+   }
+  },
   "container": {
    "states": {
     "default": {
      "seenIn": "sign-in_default",
      "styles": [
       {
+       "property": "text-wrap",
+       "value": "pretty",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "text trim (to the ink)",
+       "value": "trim-both cap text",
+       "tokens": [],
+       "layout": true
+      },
+      {
        "property": "margin",
-       "value": "0 calc(-1 * var(--tm-space-page))",
-       "tokens": [
-        {
-         "native": "tokens.space.lg",
-         "web": "--tm-space-page",
-         "value": 16
-        }
-       ],
+       "value": "0",
+       "tokens": [],
        "layout": true
-      },
-      {
-       "property": "padding",
-       "value": "0 var(--tm-space-page) var(--tm-space-xl)",
-       "tokens": [
-        {
-         "native": "tokens.space.lg",
-         "web": "--tm-space-page",
-         "value": 16
-        },
-        {
-         "native": "tokens.space.xl",
-         "web": "--tm-space-xl",
-         "value": 24
-        }
-       ],
-       "layout": true
-      },
-      {
-       "property": "background",
-       "value": "var(--tm-surface-primary)",
-       "tokens": [
-        {
-         "native": "tokens.color.surface.primary",
-         "web": "--tm-surface-primary",
-         "value": "#FFFFFF"
-        }
-       ]
       },
       {
        "property": "text-align",
@@ -101,7 +106,7 @@
        "inherited": true
       }
      ],
-     "size": "390×44"
+     "size": "358×13.4"
     }
    }
   },
@@ -111,15 +116,46 @@
      "seenIn": "sign-in_default",
      "styles": [
       {
-       "property": "color",
-       "value": "var(--tm-content-brand)",
-       "tokens": [
-        {
-         "native": "tokens.color.content.brand",
-         "web": "--tm-content-brand",
-         "value": "#1D5DCF"
-        }
-       ]
+       "property": "position",
+       "value": "relative",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "display",
+       "value": "inline",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "margin",
+       "value": "0",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "padding",
+       "value": "0",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "border",
+       "value": "0",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "background",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "font",
+       "value": "inherit",
+       "tokens": [],
+       "layout": true
       },
       {
        "property": "font-weight",
@@ -133,50 +169,38 @@
        ]
       },
       {
+       "property": "line-height",
+       "value": "inherit",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "color",
+       "value": "var(--tm-content-brand)",
+       "tokens": [
+        {
+         "native": "tokens.color.content.brand",
+         "web": "--tm-content-brand",
+         "value": "#1D5DCF"
+        }
+       ]
+      },
+      {
        "property": "text-decoration",
        "value": "none",
        "tokens": [],
        "layout": true
       },
       {
-       "property": "font-family",
-       "value": "var(--tm-font)",
-       "tokens": [
-        {
-         "native": "tokens.font.family",
-         "web": "--tm-font",
-         "value": "Plus Jakarta Sans"
-        }
-       ],
-       "inherited": true
-      },
-      {
-       "property": "font-size",
-       "value": "var(--tm-font-size-body-md)",
-       "tokens": [
-        {
-         "native": "tokens.font.size.body.md",
-         "web": "--tm-font-size-body-md",
-         "value": 14
-        }
-       ],
-       "inherited": true
-      },
-      {
-       "property": "line-height",
-       "value": "var(--tm-font-lineheight-sm)",
-       "tokens": [
-        {
-         "native": "tokens.font.lineHeight.sm",
-         "web": "--tm-font-lineheight-sm",
-         "value": 20
-        }
-       ],
-       "inherited": true
-      },
-      {
        "property": "text-align",
        "value": "center",
+       "tokens": [],
+       "layout": true,
+       "inherited": true
+      },
+      {
+       "property": "text-wrap",
+       "value": "pretty",
        "tokens": [],
        "layout": true,
        "inherited": true
@@ -218,6 +242,17 @@
          "value": 2
         }
        ]
+      },
+      {
+       "property": "border-radius",
+       "value": "var(--tm-radius-xs)",
+       "tokens": [
+        {
+         "native": "tokens.radius.xs",
+         "web": "--tm-radius-xs",
+         "value": 4
+        }
+       ]
       }
      ],
      "changesOnly": true
@@ -244,6 +279,12 @@
  ],
  "usedIn": [
   "sign-in_default",
+  "sign-in_keyboard-open",
+  "sign-in_empty-tap",
+  "sign-in_too-short",
+  "sign-in_wrong-first-digit",
+  "sign-in_pasted-cleaned",
+  "sign-in_sending",
   "sign-in_not-registered",
   "sign-in_offline",
   "sign-in_couldnt-send",
@@ -252,6 +293,7 @@
  ],
  "states": {
   "default": [
+   "row",
    "container",
    "link"
   ],

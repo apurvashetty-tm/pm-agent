@@ -42,6 +42,7 @@ const FILES = {
   metadataJson: path.join(ROOT, "ui-screens/feedback/metadata.json"),
   approvedHtml: path.join(ROOT, "ui-screens/sign-in/sign-in.html"),
   signInJs: path.join(ROOT, "app/screens/sign-in.js"),
+  bandJs: path.join(ROOT, "app/screens/band.js"),   // the one band (D-107): the logo and its accessible name live here since r2-build
   signInCss: path.join(ROOT, "app/screens/sign-in.css"),
   appCss: path.join(ROOT, "app/design-system/truemeds.css"),
   logo: path.join(ROOT, "brand/truemeds-for-doctors.svg"),
@@ -168,7 +169,7 @@ function exportedObject(text, name) {
 }
 const messages = exportedObject(read(FILES.messagesTs), "messages");
 const metadata = JSON.parse(read(FILES.metadataJson));
-const usedKeys = [...new Set([...read(FILES.signInJs).matchAll(/(?:MSG|parts)\(\s*"([\w.]+)"/g), ...read(FILES.signInJs).matchAll(/key:\s*"([\w.]+)"/g),
+const usedKeys = [...new Set([...(read(FILES.signInJs) + read(FILES.bandJs)).matchAll(/(?:MSG|parts)\(\s*"([\w.]+)"/g), ...read(FILES.signInJs).matchAll(/key:\s*"([\w.]+)"/g),
   ...read(FILES.signInJs).matchAll(/error:\s*"([\w.]+)"/g)].map((x) => x[1]))].filter((k) => messages[k]);
 function copyFor(text) {
   const t = (text || "").replace(/\s+/g, " ").trim();
@@ -223,7 +224,8 @@ function approvedCssAudit() {
   return out;
 }
 // Documented exceptions (D-98 fix brief): not tokens on purpose, shown as such, not red
-const EXCEPTIONS = [{ property: "max-width", value: "31ch", why: "Documented exception (D-98): a text measure, not a size — the subtitle's line length. React Native has no ch unit; see OPEN o19." }];
+// D-98's 31ch subtitle measure was removed by D-107 (r2-build, checklist P2): no documented exceptions left.
+const EXCEPTIONS = [];
 function rawKind(value) {
   const v = value.replace(/var\(--[\w-]+\)/g, "");
   if (/#[0-9a-f]{3,8}\b|rgba?\(|hsla?\(|\b(?:white|black)\b/i.test(v)) return "colour";
@@ -236,14 +238,17 @@ function rawKind(value) {
 // ---------------------------------------------------------------------------------------------------------------------
 // Elements of the built screen: app selector -> id, block, part; and the join to the approved reference file
 // ---------------------------------------------------------------------------------------------------------------------
-const NOTICE_SRC = { "not-registered": "tm-login-notice", offline: "tm-login-offline-notice", "couldnt-send": "tm-login-send-error-notice",
-  "too-many-tries": "tm-login-too-many-notice", inactive: "tm-login-inactive-notice" };
+// The reference uses the app's notice ids (tm-login-<state>-notice) since 2026-11-11 (r2-build).
+const NOTICE_SRC = { "not-registered": "tm-login-not-registered-notice", offline: "tm-login-offline-notice", "couldnt-send": "tm-login-couldnt-send-notice",
+  "too-many-tries": "tm-login-too-many-tries-notice", inactive: "tm-login-inactive-notice" };
 const EL = [
   { id: "screen", sel: ".signin-screen", block: "entry-layout", part: "screen", src: { cls: "login-phone" } },
   { id: "logo", sel: ".login-logo", block: "logo-header", part: "lockup", src: { cls: "login-logo" } },
-  { id: "hero", sel: ".login-content", block: "entry-layout", part: "hero", src: { cls: "login-content" } },
-  { id: "title", sel: ".login-content > h1", block: "entry-layout", part: "title", src: { tag: "h1" } },
-  { id: "subtitle", sel: ".login-content > p", block: "entry-layout", part: "subtitle", src: { tag: "p" } },
+  { id: "scroll", sel: ".signin-scroll", block: "entry-layout", part: "scroll", src: { cls: "signin-scroll" } },
+  { id: "hero", sel: ".entry-band", block: "entry-layout", part: "hero", src: { cls: "entry-band" } },   // the one band (D-107)
+  { id: "band-row", sel: ".entry-band__row", block: "logo-header", part: "row", src: { cls: "entry-band__row" } },
+  { id: "title", sel: ".entry-band__title", block: "entry-layout", part: "title", src: { cls: "entry-band__title" } },
+  { id: "subtitle", sel: ".entry-band__sub", block: "entry-layout", part: "subtitle", src: { cls: "entry-band__sub" } },
   { id: "panel", sel: ".login-fields", block: "entry-layout", part: "panel", src: { cls: "login-fields" } },
   { id: "field", sel: ".login-fields > .tm-field", block: "field", part: "container", src: { cls: "tm-field" } },
   { id: "field-label", sel: ".tm-field__label", block: "field", part: "label", src: { cls: "tm-field__label" } },
@@ -257,6 +262,7 @@ const EL = [
   { id: "submit", sel: ".login-submit", block: "button", part: "container", src: { cls: "login-submit" } },
   { id: "submit-spinner", sel: ".login-submit > .tm-spinner", block: "spinner", part: "ring", src: { cls: "tm-spinner" } },
   { id: "submit-label", sel: ".login-submit-label", block: "button", part: "label", src: { cls: "login-submit-label" } },
+  { id: "signup-row", sel: ".login-signup-row", block: "sign-up-option", part: "row", src: { cls: "login-signup-row" } },
   { id: "signup", sel: ".login-signup", block: "sign-up-option", part: "container", src: { id: "tm-signup-option" } },
   { id: "signup-link", sel: ".login-signup-label", block: "sign-up-option", part: "link", src: { cls: "login-signup-label" } },
   { id: "keyboard", sel: ".mock-kbd", block: "system-keyboard", part: "keyboard", src: { keyboard: true } },
@@ -273,7 +279,7 @@ function sourceSelectors(e, state, inv) {
   else if (e.src.notice !== undefined) {
     const box = vis.find((n) => n.attrs.id === NOTICE_SRC[state]);
     nodes = e.src.notice === 0 ? [box] : [vis.filter((n) => n.parent === box)[e.src.notice - 1]];
-  } else if (e.src.keyboard) nodes = vis.filter((n) => n.cls.includes("login-keyboard") || n.cls.includes("login-key"));
+  } else if (e.src.keyboard) nodes = vis.filter((n) => n.cls.includes("login-keyboard") || n.cls.includes("login-key") || n.cls.includes("mock-kbd__key"));   // r2-build: the app's drawn keyboard
   if (!nodes?.length || nodes.some((n) => !n)) die(`no reference node for ${e.id} in ${state}`);
   return nodes.map((n) => n.selector);
 }
@@ -304,7 +310,8 @@ function cascade(rules, sheetFile, inline) {
     if (!file) continue;
     for (const p of r.rule.style.cssProperties) {
       if (!p.range || p.disabled || p.parsedOk === false || SKIP_PROPS.test(p.name)) continue;
-      decls.push({ property: p.name, value: p.value.replace(/\s*!important\s*$/, ""), important: !!p.important, selector: r.rule.selectorList.text, file, line: p.range.startLine + 1 });
+      // D-108: the text trim (CSS text-box) is shown under a plain name; the viewer's words have no CSS jargon (D-103).
+      decls.push({ property: p.name === "text-box" ? "text trim (to the ink)" : p.name, value: p.value.replace(/\s*!important\s*$/, ""), important: !!p.important, selector: r.rule.selectorList.text, file, line: p.range.startLine + 1 });
     }
   }
   for (const p of inline?.cssProperties || []) if (p.range && !SKIP_PROPS.test(p.name)) decls.push({ property: p.name, value: p.value, important: !!p.important, selector: "(inline)", file: "inline", line: 0 });
@@ -652,7 +659,7 @@ function decided(T) {
     { id: "o06", topic: "Limits", q: "When the \"Try again in m:ss\" countdown ends, does the notice stay or go?", a: [AL(/When the "Try again in m:ss" countdown ends/), CODE("Sign-in build", FILES.signInJs, /if \(clock\.now\(\) >= m\.until\) \{ m\.button = "default"; m\.notice = null; \}/, "The build does exactly that:")], refs: ["D-98"] },
     { id: "o13", topic: "Tokens", q: "Which token is the busy spinner's ring?", a: [DECP("D-98", /^- \*\*Main thread rulings/, /spinner ring/), CODE("Design system", FILES.dsCss, /border: var\(--tm-spinner-ring\) solid var\(--tm-content-inverse\)/, "Ring width tokens.spinner.ring, colour tokens.color.content.inverse, box tokens.spinner.size:")], refs: ["D-98"] },
     { id: "o14", topic: "Logo", q: "react-native-svg may not draw the image the logo SVG embeds. What do we use on the phone?", a: [DECP("D-98", /^- \*\*Main thread rulings/, /native logo/), { src: "Kit", text: "PNG exports in foundation/brand/ (truemeds-for-doctors.png with the @1x / @2x / @3x density suffixes: 166, 332, 498 px wide), drawn tokens.logoLockup.width wide; source SVG and its sha256 in foundation/brand/logo.json." }], refs: ["D-98", "D-02"] },
-    { id: "o20", topic: "Layout", q: "Is a server notice 8 or 16 below the field?", a: [DECP("D-98", /^- \*\*Main thread rulings/, /notice sits 16/), RUL("8.3", /^3\. \*\*Three gaps only:\*\*/)], refs: ["D-98"] },
+    { id: "o20", topic: "Layout", q: "Is a server notice 8 or 16 below the field?", a: [DECP("D-98", /^- \*\*Main thread rulings/, /notice sits 16/), RUL("8.3", /^3\. \*\*Spacing is measured on what the eye sees/)], refs: ["D-98"] },
     { id: "d29", topic: "Tokens", q: "Border widths, the focus ring, icon and spinner sizes and the logo width: are there tokens?", a: [DECP("D-98", /^- \*\*Decision/, /Sizes the Sign-in kit found/), { src: "Tokens", text: "tokens.borderWidth.default, tokens.focusRing.width / .offset, tokens.iconSize.sm / .md / .lg, tokens.spinner.size / .ring, tokens.logoLockup.width. The +91 prefix is messages['signin.phonePrefix']; the logo's accessible name is messages['signin.logoAlt']." }], refs: ["D-98"] },
     { id: "d27", topic: "Errors", q: "Can a field error and a server notice show at the same time?", a: [DEC("D-33", /\*\*Errors:\*\*/), RUL("9.5", /^\| \*\*Rule\*\*/), CODE("Sign-in build", FILES.signInJs, /helper\.hidden = !!m\.notice;/, "No. The notice and the helper / error line share one spot; typing a different number removes the notice first, then the format check runs:")], refs: ["D-33"] },
     { id: "d07", topic: "Sending", q: "What happens to the button and the field while the code is being sent?", a: [RUL("L2", /^\| L2 \|/), RUL("9.1", /^- \*\*States:\*\*/), FM("signin.sending")], refs: ["D-46", "D-54"] },
@@ -662,13 +669,15 @@ function decided(T) {
     { id: "d11", topic: "Inactive account", q: "The account is inactive: what does the doctor see and what does the button do?", a: [AL(/After sending, server results show as a notice/), FM("signin.inactive"), OQ("OQ-021", /^\*\*Answered 2026-10-12/)], refs: ["D-33"] },
     { id: "d12", topic: "Sign-up", q: "Where does \"Sign up\" go, and what happens for a number that isn't registered?", a: [DEC("D-33", /^- \*\*Not registered:\*\*/), { src: "Message rules", text: `signin.signupLink: ${metadata["signin.signupLink"].next}` }, OQ("OQ-021", /^\*\*Answered 2026-10-12/)], refs: ["D-33"] },
     { id: "d13", topic: "Keyboard", q: "Does the keyboard open by itself on Sign-in, and where is Send OTP when it is open?", a: [DEC("D-43", /^- \*\*Rejected:\*\*/), DEC("D-43", /\*\*Button placement:\*\*/), RUL("8.9", /^9\. \*\*Keyboard clearance:\*\*/)], refs: ["D-43", "D-46"] },
+    { id: "d31", topic: "Layout", q: "How is the space between things measured, and which gaps are allowed?", a: [RUL("8.3", /^3\. \*\*Spacing is measured on what the eye sees/), DEC("D-108", /\*\*Decision \(Apurva\):\*\* gaps are measured/), { src: "Kit", text: "Gaps are 8 (parts of one thing), 16 (items in one group) or 32 (different things), measured between visible edges: the ink of text from the top of the capitals to the bottom of the descenders, the painted edge of shapes. Tap areas and empty reserved lines add no space. On React Native, set includeFontPadding false (Android) and measure from the text's cap height: the gap tokens are the visible gaps." }], refs: ["D-108"] },
+    { id: "d32", topic: "Layout", q: "What is the band at the top of Sign-in, OTP, the offer, unlock and Home?", a: [DEC("D-107", /\*\*Decision \(Apurva\):\*\* sign-in, OTP/), { src: "Kit", text: "One shared band: logo 16 from the top of the safe area, logo → title 16, title 32/40 on one line, title → subtitle 8, subtitle 14/20 on one 20 line, subtitle → panel 32; the white panel has 24 top corners and 32 top padding, and its top lands at 173. Build it once and reuse it on all five screens (app/screens/band.js is the prototype's)." }], refs: ["D-107"] },
     { id: "d30", topic: "Keyboard", q: "On a phone, can the keyboard ever cover the number field or Send OTP?", a: [{ src: "Agreed fix (phone feedback, D-44)", text: "No. Use a keyboard-avoiding layout on every screen with a text field: when a field gets focus, the field (with its label and helper) and the screen's main button sit above the keyboard, the button at least 16 px clear of it, on Android and iOS alike." }], refs: ["D-43", "D-44"] },
     { id: "d14", topic: "Keyboard", q: "Which keyboard type and autofill hint does the field use?", a: [CODE("Sign-in build", FILES.signInJs, /type: "tel", inputmode: "tel", autocomplete: "tel-national"/, "The field is a phone-number field with national-number autofill:")], refs: [] },
     { id: "d15", topic: "Keyboard", q: "What happens to the keyboard and the sign-up line when a server answer arrives or the keyboard is open?", a: [DEC("D-33", /^- \*\*Not registered:\*\*/), CODE("Sign-in build", FILES.signInCss, /\[data-keyboard="true"\] \.login-signup \{ visibility: hidden; \}/, "While the keyboard is open, the sign-up line is hidden (its space is kept):"), CODE("Sign-in build", FILES.signInJs, /input\.blur\(\);/, "On every server answer that stays on Sign-in, the keyboard closes:")], refs: ["D-33"] },
     { id: "d16", topic: "Offline", q: "What happens when the doctor taps Send OTP while offline?", a: [FM("signin.offline"), { src: "Message rules", text: `signin.offline: ${metadata["signin.offline"].trigger}; next: ${metadata["signin.offline"].next}; clears on ${metadata["signin.offline"].clear}; keeps the ${metadata["signin.offline"].retain}` }], refs: ["D-65", "D-66"] },
     { id: "d17", topic: "Copy", q: "Where does every word on the screen come from? Can I change copy?", a: [{ src: "App logic", text: clean(lineOf("appLogic", /^All on-screen text comes from/)) }, DEC("D-47", /\*\*Titles never end with a full stop\*\*/), DEC("D-65", /A message says what happened/)], refs: ["D-47", "D-53", "D-65"] },
     { id: "d18", topic: "Copy", q: "Is it \"case\" or \"order\"?", a: [DEC("D-48", /\*\*Wording: "case", never "order",\*\*/)], refs: ["D-48"] },
-    { id: "d19", topic: "Layout", q: "What are the logo size and the spacing at the top of the screen?", a: [RUL("8.13", /^13\. \*\*Logo lockup size and place/), RUL("L6", /^\| L6 \|/), RUL("8.2", /^2\. \*\*Side margin:\*\*/), RUL("8.3", /^3\. \*\*Three gaps only:\*\*/)], refs: ["D-46", "D-61", "D-67"] },
+    { id: "d19", topic: "Layout", q: "What are the logo size and the spacing at the top of the screen?", a: [RUL("8.13", /^13\. \*\*Logo lockup size and place/), RUL("L6", /^\| L6 \|/), RUL("8.2", /^2\. \*\*Side margin:\*\*/), RUL("8.3", /^3\. \*\*Spacing is measured on what the eye sees/)], refs: ["D-46", "D-61", "D-67"] },
     { id: "d20", topic: "Layout", q: "Which type sizes does the screen use?", a: [RUL("8.1", /^\s+\| L1 \| Screen title/), RUL("8.1", /^\s+\| L2 \| Key content/), RUL("8.1", /^\s+\| L3 \| Supporting text/), RUL("L4", /^\| L4 \|/), RUL("L5", /^\| L5 \|/)], refs: ["D-43", "D-46"] },
     { id: "d21", topic: "Accessibility", q: "What are the accessibility rules (targets, contrast, focus, names)?", a: [RUL("8.6", /^6\. \*\*Tap targets:\*\*/), RUL("8.7", /^7\. \*\*Contrast:\*\*/), RUL("9.8", /^- \*\*Visible focus ring\*\*/), CODE("Sign-in build", FILES.signInJs, /if \(m\.error\) helper\.setAttribute\("role", "alert"\)/, "A field error is announced (role alert); notices use the roles listed in d05:")], refs: ["D-54"] },
     { id: "d22", topic: "Fonts", q: "Which font, which weights?", a: [RUL("2.3", /^3\. \*\*One font:\*\*/), { src: "Tokens", text: `tokens.font.family is "${T.m.vars["--tm-font-family-plus-jakarta-sans"].value}". Weights this screen uses: ${weightsUsed(T)}. Font files and setup: foundation/fonts/FONTS.md.` }], refs: [] },
@@ -728,7 +737,7 @@ function open() {
     { id: "o16", topic: "Server answers", q: "How long does the app wait for Send OTP before showing \"Couldn't send the code.\"?", now: { src: "Sign-in build", text: "No timeout is defined; the web build answers at once." }, who: "Backend + Product", refs: [] },
     { id: "o17", topic: "Sign-up", q: "On the phone, does Sign up open the system browser or a browser inside the app?", now: { src: "Message rules", text: `signin.signupLink: ${metadata["signin.signupLink"].next}` }, who: "Product", refs: ["OQ-021"], noteNow: "On the web it opens a new tab." },
     { id: "o18", topic: "Server answers", q: "If the doctor changes the number and then types the old one back, should its earlier answer (too many attempts, inactive) show again without a new Send OTP?", now: { src: "Sign-in build", text: "No: the build remembers nothing per number; the answer shows again only after Send OTP (the server answers again)." }, who: "Product", refs: [] },
-    { id: "o19", topic: "Platform", q: "Some web styles have no native equivalent: balanced line breaks for titles and notices (iOS), the subtitle's 31-character width limit, and the 2px focus ring for hardware keyboards. Drop or approximate?", now: { src: "Design rules", text: "Titles and notices wrap balanced (L8, d26); focus ring on buttons and links (d21)." }, who: "Design", refs: ["D-47"] },
+    { id: "o19", topic: "Platform", q: "Some web styles have no native equivalent: balanced line breaks for titles and notices (iOS) and the 2px focus ring for hardware keyboards. Drop or approximate?", now: { src: "Design rules", text: "Titles and notices wrap balanced (L8, d26); focus ring on buttons and links (d21)." }, who: "Design", refs: ["D-47"] },
     { id: "o21", topic: "Accessibility", q: "Is \"New to Truemeds? Sign up\" a link inside a sentence (exempt from the 48 tap target) or a standalone link (48 tall)?", now: RUL("8.6", /^6\. \*\*Tap targets:\*\*/), who: "Design", refs: [], noteNow: "Build: the link is about 20 tall; the visual must not change either way." },
     { id: "o22", topic: "Platform", q: "Should text grow with the phone's font-size setting (dynamic type), and is there a dark mode?", now: RUL("9.9", /^Dark mode · large text/), who: "Design + Product", refs: [] , noteNow: "Out of scope for the design system unless the project opts in; tokens are light only and fixed sizes." },
     { id: "o23", topic: "Platform", q: "Expo or bare React Native CLI, and which navigation library?", now: { src: "Kit", text: "Not set by the kit: the app team owns the components, screens and project set-up. Sign-in hands off to OTP (or locked OTP) after Send OTP (d10, d25)." }, who: "App team", refs: [] },
@@ -781,7 +790,7 @@ const BLOCKS = {
   button: { rn: "<Button variant=\"primary\" size=\"lg\" block busy={…} disabled={…}>", web: ".tm-btn.tm-btn--primary.tm-btn--lg.tm-btn--block", name: "Button",
     rules: [["2.6", /^6\. \*\*One primary button per context\.\*\*/], ["9.1", /^\| \*\*Primary\*\*/], ["9.1", /^- \*\*One height per group\*\*/], ["9.1", /^- \*\*Labels:\*\*/], ["9.1", /^- \*\*States:\*\*/], ["L2", /^\| L2 \|/], ["8.6", /^6\. \*\*Tap targets:\*\*/], ["9.1", /^- \*\*Button icon size steps/]] },
   field: { rn: "<Field label=… prefix=\"+91\" helper=… error=… />", web: ".tm-field", name: "Field",
-    rules: [["8.3", /^3\. \*\*Three gaps only:\*\*/], ["L4", /^\| L4 \|/], ["L7", /^\| L7 \|/], ["9.5", /^\| \*\*Field error\*\*/], ["9.8", /^- \*\*Visible focus ring\*\*/]] },
+    rules: [["8.3", /^3\. \*\*Spacing is measured on what the eye sees/], ["L4", /^\| L4 \|/], ["L7", /^\| L7 \|/], ["9.5", /^\| \*\*Field error\*\*/], ["9.8", /^- \*\*Visible focus ring\*\*/]] },
   notice: { rn: "<Notice tone=\"neutral\" | \"warning\" | \"error\" icon=… />", web: ".tm-notice.tm-notice--{tone}", name: "Notice",
     rules: [["9.5", /^\| \*\*Notice\*\*/], ["L5", /^\| L5 \|/], ["9.5", /^\| \*\*Rule\*\*/]] },
   spinner: { rn: "<Spinner /> (inside a busy Button)", web: ".tm-btn--busy .tm-spinner", name: "Spinner",
@@ -790,8 +799,8 @@ const BLOCKS = {
     rules: [["8.5", /^\s*- \*\*Home-base header:\*\*/], ["8.13", /^13\. \*\*Logo lockup size and place/], ["L6", /^\| L6 \|/], ["2.8", /^8\. \*\*Logo: LOCKED\./]] },
   "sign-up-option": { rn: "<SignUpOption />", web: ".login-signup", name: "SignUpOption",
     rules: [["8.7", /^7\. \*\*Contrast:\*\*/], ["8.6", /^6\. \*\*Tap targets:\*\*/]] },
-  "entry-layout": { rn: "<EntryLayout title=… subtitle=…>{panel}</EntryLayout>", web: ".signin-screen (blue top + white panel)", name: "EntryLayout",
-    rules: [["8.2", /^2\. \*\*Side margin:\*\*/], ["8.3", /^3\. \*\*Three gaps only:\*\*/], ["8.4", /^\s*- \*\*Screens with text entry:\*\*/], ["8.10", /^10\. \*\*Titles:\*\*/], ["L8", /^\| L8 \|/]] },
+  "entry-layout": { rn: "<EntryLayout title=… subtitle=…>{panel}</EntryLayout>", web: ".signin-screen: the one band .entry-band + the white panel .entry-panel (app/screens/band.js, band.css; D-107)", name: "EntryLayout",
+    rules: [["8.2", /^2\. \*\*Side margin:\*\*/], ["8.3", /^3\. \*\*Spacing is measured on what the eye sees/], ["8.4", /^\s*- \*\*Screens with text entry:\*\*/], ["8.10", /^10\. \*\*Titles:\*\*/], ["L8", /^\| L8 \|/]] },
 };
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -896,7 +905,7 @@ function behaviourFor(e, state) {
 // ---------------------------------------------------------------------------------------------------------------------
 function inputsHash() {
   const files = [FILES.tokensTs, FILES.tokensJson, FILES.iconsTs, FILES.messagesTs, FILES.messagesJson, FILES.metadataJson, FILES.approvedHtml,
-    FILES.signInJs, FILES.signInCss, FILES.appCss, FILES.logo, FILES.dsCss, FILES.tokenBuild, FILES.tokenBuildNative, ...FILES.dsTokens, ...FILES.builder, ...FILES.capture,
+    FILES.signInJs, FILES.bandJs, FILES.signInCss, FILES.appCss, FILES.logo, FILES.dsCss, FILES.tokenBuild, FILES.tokenBuildNative, ...FILES.dsTokens, ...FILES.builder, ...FILES.capture,
     ...fs.readdirSync(path.join(ROOT, "app/design-system/fonts")).map((f) => path.join(ROOT, "app/design-system/fonts", f)),
     ...STATES.flatMap((s) => [PICTURE(s, 360), PICTURE(s, 390)]),
     // every journey: the whole built app it is measured from, and its approved pictures

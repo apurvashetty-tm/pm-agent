@@ -1,0 +1,7362 @@
+{
+ "checker": "../../design-system/scripts/check-visible-gaps.mjs",
+ "built": "app/ (capture mode)",
+ "sizes": [
+  "390x844",
+  "360x640"
+ ],
+ "pages": [
+  {
+   "id": "offer_enable-failed",
+   "size": "390x844",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "div.hero-ic",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "div.hero-ic",
+       "below": "svg | Sign in with one touch",
+       "px": 34,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "svg | Sign in with one touch",
+       "below": "No SMS to wait for.",
+       "px": 7.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "No SMS to wait for.",
+       "below": "svg | Your fingerprint stays on your phone",
+       "px": 17.9,
+       "expected": 16,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "svg | Your fingerprint stays on your phone",
+       "below": "Truemeds never sees or stores it.",
+       "px": 7.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Truemeds never sees or stores it.",
+       "below": "svg | Change it any time",
+       "px": 17.9,
+       "expected": 16,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "svg | Change it any time",
+       "below": "Turn it off from your profile.",
+       "px": 7.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    },
+    {
+     "region": "bar",
+     "gaps": [
+      {
+       "above": "Couldn’t turn on faster sign-in.",
+       "below": "Try again",
+       "px": 16,
+       "expected": 16,
+       "pass": true,
+       "rule": "anatomy"
+      },
+      {
+       "above": "Try again",
+       "below": "Not now",
+       "px": 29.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "offer_enable-failed",
+   "size": "360x640",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "div.hero-ic",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "div.hero-ic",
+       "below": "svg | Sign in with one touch",
+       "px": 34,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "svg | Sign in with one touch",
+       "below": "No SMS to wait for.",
+       "px": 7.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "No SMS to wait for.",
+       "below": "svg | Your fingerprint stays on your phone",
+       "px": 17.9,
+       "expected": 16,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "svg | Your fingerprint stays on your phone",
+       "below": "Truemeds never sees or stores it.",
+       "px": 7.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Truemeds never sees or stores it.",
+       "below": "svg | Change it any time",
+       "px": 17.9,
+       "expected": 16,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "svg | Change it any time",
+       "below": "Turn it off from your profile.",
+       "px": 7.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    },
+    {
+     "region": "bar",
+     "gaps": [
+      {
+       "above": "Couldn’t turn on faster sign-in.",
+       "below": "Try again",
+       "px": 16,
+       "expected": 16,
+       "pass": true,
+       "rule": "anatomy"
+      },
+      {
+       "above": "Try again",
+       "below": "Not now",
+       "px": 29.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "offer_enabling",
+   "size": "390x844",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "div.hero-ic",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "div.hero-ic",
+       "below": "svg | Sign in with one touch",
+       "px": 34,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "svg | Sign in with one touch",
+       "below": "No SMS to wait for.",
+       "px": 7.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "No SMS to wait for.",
+       "below": "svg | Your fingerprint stays on your phone",
+       "px": 17.9,
+       "expected": 16,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "svg | Your fingerprint stays on your phone",
+       "below": "Truemeds never sees or stores it.",
+       "px": 7.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Truemeds never sees or stores it.",
+       "below": "svg | Change it any time",
+       "px": 17.9,
+       "expected": 16,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "svg | Change it any time",
+       "below": "Turn it off from your profile.",
+       "px": 7.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    },
+    {
+     "region": "bar",
+     "gaps": [
+      {
+       "above": "Turning on…",
+       "below": "Not now",
+       "px": 29.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "offer_enabling",
+   "size": "360x640",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "div.hero-ic",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "div.hero-ic",
+       "below": "svg | Sign in with one touch",
+       "px": 34,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "svg | Sign in with one touch",
+       "below": "No SMS to wait for.",
+       "px": 7.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "No SMS to wait for.",
+       "below": "svg | Your fingerprint stays on your phone",
+       "px": 17.9,
+       "expected": 16,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "svg | Your fingerprint stays on your phone",
+       "below": "Truemeds never sees or stores it.",
+       "px": 7.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Truemeds never sees or stores it.",
+       "below": "svg | Change it any time",
+       "px": 17.9,
+       "expected": 16,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "svg | Change it any time",
+       "below": "Turn it off from your profile.",
+       "px": 7.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    },
+    {
+     "region": "bar",
+     "gaps": [
+      {
+       "above": "Turning on…",
+       "below": "Not now",
+       "px": 29.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "offer_face-id",
+   "size": "390x844",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "div.hero-ic",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "div.hero-ic",
+       "below": "svg | Sign in with a glance",
+       "px": 34,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "svg | Sign in with a glance",
+       "below": "No SMS to wait for.",
+       "px": 7.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "No SMS to wait for.",
+       "below": "svg | Your Face ID stays on your phone",
+       "px": 17.9,
+       "expected": 16,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "svg | Your Face ID stays on your phone",
+       "below": "Truemeds never sees or stores it.",
+       "px": 7.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Truemeds never sees or stores it.",
+       "below": "svg | Change it any time",
+       "px": 17.9,
+       "expected": 16,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "svg | Change it any time",
+       "below": "Turn it off from your profile.",
+       "px": 7.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    },
+    {
+     "region": "bar",
+     "gaps": [
+      {
+       "above": "Turn on faster sign-in",
+       "below": "Not now",
+       "px": 29.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "offer_face-id",
+   "size": "360x640",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "div.hero-ic",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "div.hero-ic",
+       "below": "svg | Sign in with a glance",
+       "px": 34,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "svg | Sign in with a glance",
+       "below": "No SMS to wait for.",
+       "px": 7.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "No SMS to wait for.",
+       "below": "svg | Your Face ID stays on your phone",
+       "px": 17.9,
+       "expected": 16,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "svg | Your Face ID stays on your phone",
+       "below": "Truemeds never sees or stores it.",
+       "px": 7.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Truemeds never sees or stores it.",
+       "below": "svg | Change it any time",
+       "px": 17.9,
+       "expected": 16,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "svg | Change it any time",
+       "below": "Turn it off from your profile.",
+       "px": 7.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    },
+    {
+     "region": "bar",
+     "gaps": [
+      {
+       "above": "Turn on faster sign-in",
+       "below": "Not now",
+       "px": 29.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "offer_fingerprint",
+   "size": "390x844",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "div.hero-ic",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "div.hero-ic",
+       "below": "svg | Sign in with one touch",
+       "px": 34,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "svg | Sign in with one touch",
+       "below": "No SMS to wait for.",
+       "px": 7.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "No SMS to wait for.",
+       "below": "svg | Your fingerprint stays on your phone",
+       "px": 17.9,
+       "expected": 16,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "svg | Your fingerprint stays on your phone",
+       "below": "Truemeds never sees or stores it.",
+       "px": 7.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Truemeds never sees or stores it.",
+       "below": "svg | Change it any time",
+       "px": 17.9,
+       "expected": 16,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "svg | Change it any time",
+       "below": "Turn it off from your profile.",
+       "px": 7.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    },
+    {
+     "region": "bar",
+     "gaps": [
+      {
+       "above": "Turn on faster sign-in",
+       "below": "Not now",
+       "px": 29.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "offer_fingerprint",
+   "size": "360x640",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "div.hero-ic",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "div.hero-ic",
+       "below": "svg | Sign in with one touch",
+       "px": 34,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "svg | Sign in with one touch",
+       "below": "No SMS to wait for.",
+       "px": 7.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "No SMS to wait for.",
+       "below": "svg | Your fingerprint stays on your phone",
+       "px": 17.9,
+       "expected": 16,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "svg | Your fingerprint stays on your phone",
+       "below": "Truemeds never sees or stores it.",
+       "px": 7.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Truemeds never sees or stores it.",
+       "below": "svg | Change it any time",
+       "px": 17.9,
+       "expected": 16,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "svg | Change it any time",
+       "below": "Turn it off from your profile.",
+       "px": 7.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    },
+    {
+     "region": "bar",
+     "gaps": [
+      {
+       "above": "Turn on faster sign-in",
+       "below": "Not now",
+       "px": 29.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "offer_offline",
+   "size": "390x844",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "div.hero-ic",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "div.hero-ic",
+       "below": "svg | Sign in with one touch",
+       "px": 34,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "svg | Sign in with one touch",
+       "below": "No SMS to wait for.",
+       "px": 7.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "No SMS to wait for.",
+       "below": "svg | Your fingerprint stays on your phone",
+       "px": 17.9,
+       "expected": 16,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "svg | Your fingerprint stays on your phone",
+       "below": "Truemeds never sees or stores it.",
+       "px": 7.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Truemeds never sees or stores it.",
+       "below": "svg | Change it any time",
+       "px": 17.9,
+       "expected": 16,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "svg | Change it any time",
+       "below": "Turn it off from your profile.",
+       "px": 7.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    },
+    {
+     "region": "bar",
+     "gaps": [
+      {
+       "above": "You’re offline. Check your connection.",
+       "below": "Turn on faster sign-in",
+       "px": 16,
+       "expected": 16,
+       "pass": true,
+       "rule": "anatomy"
+      },
+      {
+       "above": "Turn on faster sign-in",
+       "below": "Not now",
+       "px": 29.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "offer_offline",
+   "size": "360x640",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "div.hero-ic",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "div.hero-ic",
+       "below": "svg | Sign in with one touch",
+       "px": 34,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "svg | Sign in with one touch",
+       "below": "No SMS to wait for.",
+       "px": 7.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "No SMS to wait for.",
+       "below": "svg | Your fingerprint stays on your phone",
+       "px": 17.9,
+       "expected": 16,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "svg | Your fingerprint stays on your phone",
+       "below": "Truemeds never sees or stores it.",
+       "px": 7.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Truemeds never sees or stores it.",
+       "below": "svg | Change it any time",
+       "px": 17.9,
+       "expected": 16,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "svg | Change it any time",
+       "below": "Turn it off from your profile.",
+       "px": 7.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    },
+    {
+     "region": "bar",
+     "gaps": [
+      {
+       "above": "You’re offline. Check your connection.",
+       "below": "Turn on faster sign-in",
+       "px": 16,
+       "expected": 16,
+       "pass": true,
+       "rule": "anatomy"
+      },
+      {
+       "above": "Turn on faster sign-in",
+       "below": "Not now",
+       "px": 29.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "offer_screen-lock",
+   "size": "390x844",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "div.hero-ic",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "div.hero-ic",
+       "below": "svg | Sign in with your PIN or pattern",
+       "px": 34,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "svg | Sign in with your PIN or pattern",
+       "below": "No SMS to wait for.",
+       "px": 7.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "No SMS to wait for.",
+       "below": "svg | Your screen lock stays on your phone",
+       "px": 17.9,
+       "expected": 16,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "svg | Your screen lock stays on your phone",
+       "below": "Truemeds never sees or stores it.",
+       "px": 7.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Truemeds never sees or stores it.",
+       "below": "svg | Change it any time",
+       "px": 17.9,
+       "expected": 16,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "svg | Change it any time",
+       "below": "Turn it off from your profile.",
+       "px": 7.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    },
+    {
+     "region": "bar",
+     "gaps": [
+      {
+       "above": "Turn on faster sign-in",
+       "below": "Not now",
+       "px": 29.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "offer_screen-lock",
+   "size": "360x640",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "div.hero-ic",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "div.hero-ic",
+       "below": "svg | Sign in with your PIN or pattern",
+       "px": 34,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "svg | Sign in with your PIN or pattern",
+       "below": "No SMS to wait for.",
+       "px": 7.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "No SMS to wait for.",
+       "below": "svg | Your screen lock stays on your phone",
+       "px": 17.9,
+       "expected": 16,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "svg | Your screen lock stays on your phone",
+       "below": "Truemeds never sees or stores it.",
+       "px": 7.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Truemeds never sees or stores it.",
+       "below": "svg | Change it any time",
+       "px": 17.9,
+       "expected": 16,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "svg | Change it any time",
+       "below": "Turn it off from your profile.",
+       "px": 7.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    },
+    {
+     "region": "bar",
+     "gaps": [
+      {
+       "above": "Turn on faster sign-in",
+       "below": "Not now",
+       "px": 29.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "offer_unavailable",
+   "size": "390x844",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "div.hero-ic",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "div.hero-ic",
+       "below": "svg | Sign in with one touch",
+       "px": 34,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "svg | Sign in with one touch",
+       "below": "No SMS to wait for.",
+       "px": 7.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "No SMS to wait for.",
+       "below": "svg | Your fingerprint stays on your phone",
+       "px": 17.9,
+       "expected": 16,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "svg | Your fingerprint stays on your phone",
+       "below": "Truemeds never sees or stores it.",
+       "px": 7.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Truemeds never sees or stores it.",
+       "below": "svg | Change it any time",
+       "px": 17.9,
+       "expected": 16,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "svg | Change it any time",
+       "below": "Turn it off from your profile.",
+       "px": 7.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    },
+    {
+     "region": "bar",
+     "gaps": [
+      {
+       "above": "Faster sign-in isn’t available on this phone rig",
+       "below": "Continue",
+       "px": 16,
+       "expected": 16,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "offer_unavailable",
+   "size": "360x640",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "div.hero-ic",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "div.hero-ic",
+       "below": "svg | Sign in with one touch",
+       "px": 34,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "svg | Sign in with one touch",
+       "below": "No SMS to wait for.",
+       "px": 7.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "No SMS to wait for.",
+       "below": "svg | Your fingerprint stays on your phone",
+       "px": 17.9,
+       "expected": 16,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "svg | Your fingerprint stays on your phone",
+       "below": "Truemeds never sees or stores it.",
+       "px": 7.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Truemeds never sees or stores it.",
+       "below": "svg | Change it any time",
+       "px": 17.9,
+       "expected": 16,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "svg | Change it any time",
+       "below": "Turn it off from your profile.",
+       "px": 7.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    },
+    {
+     "region": "bar",
+     "gaps": [
+      {
+       "above": "Faster sign-in isn’t available on this phone rig",
+       "below": "Continue",
+       "px": 16,
+       "expected": 16,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "otp_code-expired",
+   "size": "390x844",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "4 8 2 7",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "4 8 2 7",
+       "below": "This code has expired.",
+       "px": 8,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "This code has expired.",
+       "below": "Didn’t receive it? Resend code",
+       "px": 31.9,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Didn’t receive it? Resend code",
+       "below": "Verify & sign in",
+       "px": 31.9,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "otp_code-expired",
+   "size": "360x640",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "4 8 2 7",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "4 8 2 7",
+       "below": "This code has expired.",
+       "px": 8,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "This code has expired.",
+       "below": "Didn’t receive it? Resend code",
+       "px": 31.9,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Didn’t receive it? Resend code",
+       "below": "Verify & sign in",
+       "px": 31.9,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "otp_cooldown-reconciling",
+   "size": "390x844",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "div.tm-otp-slots",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "div.tm-otp-slots",
+       "below": "Checking…",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Checking…",
+       "below": "By selecting Verify & sign in, you agree to the ",
+       "px": 31.9,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "By selecting Verify & sign in, you agree to the ",
+       "below": "Verify & sign in",
+       "px": 8.3,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "otp_cooldown-reconciling",
+   "size": "360x640",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "div.tm-otp-slots",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "div.tm-otp-slots",
+       "below": "Checking…",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Checking…",
+       "below": "By selecting Verify & sign in, you agree to the ",
+       "px": 31.9,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "By selecting Verify & sign in, you agree to the ",
+       "below": "Verify & sign in",
+       "px": 8.3,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "otp_couldnt-verify",
+   "size": "390x844",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "4 8 2 7",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "4 8 2 7",
+       "below": "Couldn’t check the code.",
+       "px": 16,
+       "expected": 16,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Couldn’t check the code.",
+       "below": "Didn’t receive it? Resend in 0:30",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Didn’t receive it? Resend in 0:30",
+       "below": "By selecting Verify & sign in, you agree to the ",
+       "px": 31.9,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "By selecting Verify & sign in, you agree to the ",
+       "below": "Verify & sign in",
+       "px": 8.3,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "otp_couldnt-verify",
+   "size": "360x640",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "4 8 2 7",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "4 8 2 7",
+       "below": "Couldn’t check the code.",
+       "px": 16,
+       "expected": 16,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Couldn’t check the code.",
+       "below": "Didn’t receive it? Resend in 0:30",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Didn’t receive it? Resend in 0:30",
+       "below": "By selecting Verify & sign in, you agree to the ",
+       "px": 31.9,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "By selecting Verify & sign in, you agree to the ",
+       "below": "Verify & sign in",
+       "px": 8.3,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "otp_default",
+   "size": "390x844",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "div.tm-otp-slots",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "div.tm-otp-slots",
+       "below": "Didn’t receive it? Resend in 0:30",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Didn’t receive it? Resend in 0:30",
+       "below": "By selecting Verify & sign in, you agree to the ",
+       "px": 31.9,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "By selecting Verify & sign in, you agree to the ",
+       "below": "Verify & sign in",
+       "px": 8.3,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "otp_default",
+   "size": "360x640",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "div.tm-otp-slots",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "div.tm-otp-slots",
+       "below": "Didn’t receive it? Resend in 0:30",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Didn’t receive it? Resend in 0:30",
+       "below": "By selecting Verify & sign in, you agree to the ",
+       "px": 31.9,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "By selecting Verify & sign in, you agree to the ",
+       "below": "Verify & sign in",
+       "px": 8.3,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "otp_empty-tap",
+   "size": "390x844",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "div.tm-otp-slots",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "div.tm-otp-slots",
+       "below": "Enter the 4-digit code.",
+       "px": 8,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Enter the 4-digit code.",
+       "below": "Didn’t receive it? Resend in 0:30",
+       "px": 31.9,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Didn’t receive it? Resend in 0:30",
+       "below": "By selecting Verify & sign in, you agree to the ",
+       "px": 31.9,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "By selecting Verify & sign in, you agree to the ",
+       "below": "Verify & sign in",
+       "px": 8.3,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "otp_empty-tap",
+   "size": "360x640",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "div.tm-otp-slots",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "div.tm-otp-slots",
+       "below": "Enter the 4-digit code.",
+       "px": 8,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Enter the 4-digit code.",
+       "below": "Didn’t receive it? Resend in 0:30",
+       "px": 31.9,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Didn’t receive it? Resend in 0:30",
+       "below": "By selecting Verify & sign in, you agree to the ",
+       "px": 31.9,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "By selecting Verify & sign in, you agree to the ",
+       "below": "Verify & sign in",
+       "px": 8.3,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "otp_expired-and-resend-limited",
+   "size": "390x844",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "div.tm-otp-slots",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "div.tm-otp-slots",
+       "below": "This code has expired. Request a new code in 9:4",
+       "px": 16,
+       "expected": 16,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "This code has expired. Request a new code in 9:4",
+       "below": "Verify & sign in",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "otp_expired-and-resend-limited",
+   "size": "360x640",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "div.tm-otp-slots",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "div.tm-otp-slots",
+       "below": "This code has expired. Request a new code in 9:4",
+       "px": 16,
+       "expected": 16,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "This code has expired. Request a new code in 9:4",
+       "below": "Verify & sign in",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "otp_locked",
+   "size": "390x844",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "div.tm-otp-slots",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "div.tm-otp-slots",
+       "below": "Too many wrong tries. Try again in 14:52, or cal",
+       "px": 16,
+       "expected": 16,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Too many wrong tries. Try again in 14:52, or cal",
+       "below": "Verify & sign in",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "otp_locked",
+   "size": "360x640",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "div.tm-otp-slots",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "div.tm-otp-slots",
+       "below": "Too many wrong tries. Try again in 14:52, or cal",
+       "px": 16,
+       "expected": 16,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Too many wrong tries. Try again in 14:52, or cal",
+       "below": "Verify & sign in",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "otp_new-code-sent",
+   "size": "390x844",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "div.tm-otp-slots",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "div.tm-otp-slots",
+       "below": "New code sent.",
+       "px": 8,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "New code sent.",
+       "below": "Didn’t receive it? Resend in 1:00",
+       "px": 31.9,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Didn’t receive it? Resend in 1:00",
+       "below": "By selecting Verify & sign in, you agree to the ",
+       "px": 31.9,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "By selecting Verify & sign in, you agree to the ",
+       "below": "Verify & sign in",
+       "px": 8.3,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "otp_new-code-sent",
+   "size": "360x640",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "div.tm-otp-slots",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "div.tm-otp-slots",
+       "below": "New code sent.",
+       "px": 8,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "New code sent.",
+       "below": "Didn’t receive it? Resend in 1:00",
+       "px": 31.9,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Didn’t receive it? Resend in 1:00",
+       "below": "By selecting Verify & sign in, you agree to the ",
+       "px": 31.9,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "By selecting Verify & sign in, you agree to the ",
+       "below": "Verify & sign in",
+       "px": 8.3,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "otp_offline",
+   "size": "390x844",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "4 8 2 7",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "4 8 2 7",
+       "below": "You’re offline. Check your connection.",
+       "px": 16,
+       "expected": 16,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "You’re offline. Check your connection.",
+       "below": "Didn’t receive it? Resend code",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Didn’t receive it? Resend code",
+       "below": "By selecting Verify & sign in, you agree to the ",
+       "px": 31.9,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "By selecting Verify & sign in, you agree to the ",
+       "below": "Verify & sign in",
+       "px": 8.3,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "otp_offline",
+   "size": "360x640",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "4 8 2 7",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "4 8 2 7",
+       "below": "You’re offline. Check your connection.",
+       "px": 16,
+       "expected": 16,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "You’re offline. Check your connection.",
+       "below": "Didn’t receive it? Resend code",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Didn’t receive it? Resend code",
+       "below": "By selecting Verify & sign in, you agree to the ",
+       "px": 31.9,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "By selecting Verify & sign in, you agree to the ",
+       "below": "Verify & sign in",
+       "px": 8.3,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "otp_resend-available",
+   "size": "390x844",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "div.tm-otp-slots",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "div.tm-otp-slots",
+       "below": "Didn’t receive it? Resend code",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Didn’t receive it? Resend code",
+       "below": "By selecting Verify & sign in, you agree to the ",
+       "px": 31.9,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "By selecting Verify & sign in, you agree to the ",
+       "below": "Verify & sign in",
+       "px": 8.3,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "otp_resend-available",
+   "size": "360x640",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "div.tm-otp-slots",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "div.tm-otp-slots",
+       "below": "Didn’t receive it? Resend code",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Didn’t receive it? Resend code",
+       "below": "By selecting Verify & sign in, you agree to the ",
+       "px": 31.9,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "By selecting Verify & sign in, you agree to the ",
+       "below": "Verify & sign in",
+       "px": 8.3,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "otp_resend-failed",
+   "size": "390x844",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "4 8 2 7",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "4 8 2 7",
+       "below": "Couldn’t send a new code.",
+       "px": 16,
+       "expected": 16,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Couldn’t send a new code.",
+       "below": "Didn’t receive it? Resend code",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Didn’t receive it? Resend code",
+       "below": "By selecting Verify & sign in, you agree to the ",
+       "px": 31.9,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "By selecting Verify & sign in, you agree to the ",
+       "below": "Verify & sign in",
+       "px": 8.3,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "otp_resend-failed",
+   "size": "360x640",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "4 8 2 7",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "4 8 2 7",
+       "below": "Couldn’t send a new code.",
+       "px": 16,
+       "expected": 16,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Couldn’t send a new code.",
+       "below": "Didn’t receive it? Resend code",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Didn’t receive it? Resend code",
+       "below": "By selecting Verify & sign in, you agree to the ",
+       "px": 31.9,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "By selecting Verify & sign in, you agree to the ",
+       "below": "Verify & sign in",
+       "px": 8.3,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "otp_resending",
+   "size": "390x844",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "4 8 2 7",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "4 8 2 7",
+       "below": "Didn’t receive it? Sending a new code…",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Didn’t receive it? Sending a new code…",
+       "below": "By selecting Verify & sign in, you agree to the ",
+       "px": 31.9,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "By selecting Verify & sign in, you agree to the ",
+       "below": "Verify & sign in",
+       "px": 8.3,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "otp_resending",
+   "size": "360x640",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "4 8 2 7",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "4 8 2 7",
+       "below": "Didn’t receive it? Sending a new code…",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Didn’t receive it? Sending a new code…",
+       "below": "By selecting Verify & sign in, you agree to the ",
+       "px": 31.9,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "By selecting Verify & sign in, you agree to the ",
+       "below": "Verify & sign in",
+       "px": 8.3,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "otp_too-many-resends",
+   "size": "390x844",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "div.tm-otp-slots",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "div.tm-otp-slots",
+       "below": "You’ve asked for too many codes. Use the last on",
+       "px": 16,
+       "expected": 16,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "You’ve asked for too many codes. Use the last on",
+       "below": "By selecting Verify & sign in, you agree to the ",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "By selecting Verify & sign in, you agree to the ",
+       "below": "Verify & sign in",
+       "px": 8.3,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "otp_too-many-resends",
+   "size": "360x640",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "div.tm-otp-slots",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "div.tm-otp-slots",
+       "below": "You’ve asked for too many codes. Use the last on",
+       "px": 16,
+       "expected": 16,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "You’ve asked for too many codes. Use the last on",
+       "below": "By selecting Verify & sign in, you agree to the ",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "By selecting Verify & sign in, you agree to the ",
+       "below": "Verify & sign in",
+       "px": 8.3,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "otp_too-short",
+   "size": "390x844",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "4 8",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "4 8",
+       "below": "Enter all 4 digits.",
+       "px": 8,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Enter all 4 digits.",
+       "below": "Didn’t receive it? Resend in 0:30",
+       "px": 31.9,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Didn’t receive it? Resend in 0:30",
+       "below": "By selecting Verify & sign in, you agree to the ",
+       "px": 31.9,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "By selecting Verify & sign in, you agree to the ",
+       "below": "Verify & sign in",
+       "px": 8.3,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "otp_too-short",
+   "size": "360x640",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "4 8",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "4 8",
+       "below": "Enter all 4 digits.",
+       "px": 8,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Enter all 4 digits.",
+       "below": "Didn’t receive it? Resend in 0:30",
+       "px": 31.9,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Didn’t receive it? Resend in 0:30",
+       "below": "By selecting Verify & sign in, you agree to the ",
+       "px": 31.9,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "By selecting Verify & sign in, you agree to the ",
+       "below": "Verify & sign in",
+       "px": 8.3,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "otp_two-tries-left",
+   "size": "390x844",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "4 8 2 7",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "4 8 2 7",
+       "below": "Wrong code. 2 tries left.",
+       "px": 8,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Wrong code. 2 tries left.",
+       "below": "Didn’t receive it? Resend in 0:30",
+       "px": 31.9,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Didn’t receive it? Resend in 0:30",
+       "below": "By selecting Verify & sign in, you agree to the ",
+       "px": 31.9,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "By selecting Verify & sign in, you agree to the ",
+       "below": "Verify & sign in",
+       "px": 8.3,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "otp_two-tries-left",
+   "size": "360x640",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "4 8 2 7",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "4 8 2 7",
+       "below": "Wrong code. 2 tries left.",
+       "px": 8,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Wrong code. 2 tries left.",
+       "below": "Didn’t receive it? Resend in 0:30",
+       "px": 31.9,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Didn’t receive it? Resend in 0:30",
+       "below": "By selecting Verify & sign in, you agree to the ",
+       "px": 31.9,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "By selecting Verify & sign in, you agree to the ",
+       "below": "Verify & sign in",
+       "px": 8.3,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "otp_verifying",
+   "size": "390x844",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "4 8 2 7",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "4 8 2 7",
+       "below": "Didn’t receive it? Resend in 0:30",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Didn’t receive it? Resend in 0:30",
+       "below": "By selecting Verify & sign in, you agree to the ",
+       "px": 31.9,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "By selecting Verify & sign in, you agree to the ",
+       "below": "Verifying…",
+       "px": 8.3,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "otp_verifying",
+   "size": "360x640",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "4 8 2 7",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "4 8 2 7",
+       "below": "Didn’t receive it? Resend in 0:30",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Didn’t receive it? Resend in 0:30",
+       "below": "By selecting Verify & sign in, you agree to the ",
+       "px": 31.9,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "By selecting Verify & sign in, you agree to the ",
+       "below": "Verifying…",
+       "px": 8.3,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "otp_wrong-code",
+   "size": "390x844",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "4 8 2 7",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "4 8 2 7",
+       "below": "Wrong code.",
+       "px": 8,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Wrong code.",
+       "below": "Didn’t receive it? Resend in 0:30",
+       "px": 31.9,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Didn’t receive it? Resend in 0:30",
+       "below": "By selecting Verify & sign in, you agree to the ",
+       "px": 31.9,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "By selecting Verify & sign in, you agree to the ",
+       "below": "Verify & sign in",
+       "px": 8.3,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "otp_wrong-code",
+   "size": "360x640",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "4 8 2 7",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "4 8 2 7",
+       "below": "Wrong code.",
+       "px": 8,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Wrong code.",
+       "below": "Didn’t receive it? Resend in 0:30",
+       "px": 31.9,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Didn’t receive it? Resend in 0:30",
+       "below": "By selecting Verify & sign in, you agree to the ",
+       "px": 31.9,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "By selecting Verify & sign in, you agree to the ",
+       "below": "Verify & sign in",
+       "px": 8.3,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "sign-in_couldnt-send",
+   "size": "390x844",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "Mobile number",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "Mobile number",
+       "below": "+91",
+       "px": 7.9,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "+91",
+       "below": "Couldn’t send the OTP.",
+       "px": 16,
+       "expected": 16,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Couldn’t send the OTP.",
+       "below": "Send OTP",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    },
+    {
+     "region": "sign-up line",
+     "gaps": []
+    }
+   ]
+  },
+  {
+   "id": "sign-in_couldnt-send",
+   "size": "360x640",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "Mobile number",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "Mobile number",
+       "below": "+91",
+       "px": 7.9,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "+91",
+       "below": "Couldn’t send the OTP.",
+       "px": 16,
+       "expected": 16,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Couldn’t send the OTP.",
+       "below": "Send OTP",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    },
+    {
+     "region": "sign-up line",
+     "gaps": []
+    }
+   ]
+  },
+  {
+   "id": "sign-in_default",
+   "size": "390x844",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "Mobile number",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "Mobile number",
+       "below": "+91",
+       "px": 7.9,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "+91",
+       "below": "We’ll send you an OTP by SMS.",
+       "px": 8,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "We’ll send you an OTP by SMS.",
+       "below": "Send OTP",
+       "px": 31.9,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    },
+    {
+     "region": "sign-up line",
+     "gaps": []
+    }
+   ]
+  },
+  {
+   "id": "sign-in_default",
+   "size": "360x640",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "Mobile number",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "Mobile number",
+       "below": "+91",
+       "px": 7.9,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "+91",
+       "below": "We’ll send you an OTP by SMS.",
+       "px": 8,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "We’ll send you an OTP by SMS.",
+       "below": "Send OTP",
+       "px": 31.9,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    },
+    {
+     "region": "sign-up line",
+     "gaps": []
+    }
+   ]
+  },
+  {
+   "id": "sign-in_empty-tap",
+   "size": "390x844",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "Mobile number",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "Mobile number",
+       "below": "+91",
+       "px": 7.9,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "+91",
+       "below": "Enter your mobile number.",
+       "px": 8,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Enter your mobile number.",
+       "below": "Send OTP",
+       "px": 31.9,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    },
+    {
+     "region": "sign-up line",
+     "gaps": []
+    }
+   ]
+  },
+  {
+   "id": "sign-in_empty-tap",
+   "size": "360x640",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "Mobile number",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "Mobile number",
+       "below": "+91",
+       "px": 7.9,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "+91",
+       "below": "Enter your mobile number.",
+       "px": 8,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Enter your mobile number.",
+       "below": "Send OTP",
+       "px": 31.9,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    },
+    {
+     "region": "sign-up line",
+     "gaps": []
+    }
+   ]
+  },
+  {
+   "id": "sign-in_inactive",
+   "size": "390x844",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "Mobile number",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "Mobile number",
+       "below": "+91",
+       "px": 7.9,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "+91",
+       "below": "This account is inactive.",
+       "px": 16,
+       "expected": 16,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "This account is inactive.",
+       "below": "Call Doctor Ops",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    },
+    {
+     "region": "sign-up line",
+     "gaps": []
+    }
+   ]
+  },
+  {
+   "id": "sign-in_inactive",
+   "size": "360x640",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "Mobile number",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "Mobile number",
+       "below": "+91",
+       "px": 7.9,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "+91",
+       "below": "This account is inactive.",
+       "px": 16,
+       "expected": 16,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "This account is inactive.",
+       "below": "Call Doctor Ops",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    },
+    {
+     "region": "sign-up line",
+     "gaps": []
+    }
+   ]
+  },
+  {
+   "id": "sign-in_keyboard-open",
+   "size": "390x844",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "Mobile number",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "Mobile number",
+       "below": "+91",
+       "px": 7.9,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "+91",
+       "below": "We’ll send you an OTP by SMS.",
+       "px": 8,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "We’ll send you an OTP by SMS.",
+       "below": "Send OTP",
+       "px": 31.9,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    },
+    {
+     "region": "sign-up line",
+     "gaps": []
+    }
+   ]
+  },
+  {
+   "id": "sign-in_keyboard-open",
+   "size": "360x640",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "Mobile number",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "Mobile number",
+       "below": "+91",
+       "px": 7.9,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "+91",
+       "below": "We’ll send you an OTP by SMS.",
+       "px": 8,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "We’ll send you an OTP by SMS.",
+       "below": "Send OTP",
+       "px": 31.9,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    },
+    {
+     "region": "sign-up line",
+     "gaps": []
+    }
+   ]
+  },
+  {
+   "id": "sign-in_not-registered",
+   "size": "390x844",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "Mobile number",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "Mobile number",
+       "below": "+91",
+       "px": 7.9,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "+91",
+       "below": "Number not registered with Truemeds. Already app",
+       "px": 16,
+       "expected": 16,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Number not registered with Truemeds. Already app",
+       "below": "Send OTP",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    },
+    {
+     "region": "sign-up line",
+     "gaps": []
+    }
+   ]
+  },
+  {
+   "id": "sign-in_not-registered",
+   "size": "360x640",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "Mobile number",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "Mobile number",
+       "below": "+91",
+       "px": 7.9,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "+91",
+       "below": "Number not registered with Truemeds. Already app",
+       "px": 16,
+       "expected": 16,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Number not registered with Truemeds. Already app",
+       "below": "Send OTP",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    },
+    {
+     "region": "sign-up line",
+     "gaps": []
+    }
+   ]
+  },
+  {
+   "id": "sign-in_offline",
+   "size": "390x844",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "Mobile number",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "Mobile number",
+       "below": "+91",
+       "px": 7.9,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "+91",
+       "below": "You’re offline. Check your connection.",
+       "px": 16,
+       "expected": 16,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "You’re offline. Check your connection.",
+       "below": "Send OTP",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    },
+    {
+     "region": "sign-up line",
+     "gaps": []
+    }
+   ]
+  },
+  {
+   "id": "sign-in_offline",
+   "size": "360x640",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "Mobile number",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "Mobile number",
+       "below": "+91",
+       "px": 7.9,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "+91",
+       "below": "You’re offline. Check your connection.",
+       "px": 16,
+       "expected": 16,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "You’re offline. Check your connection.",
+       "below": "Send OTP",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    },
+    {
+     "region": "sign-up line",
+     "gaps": []
+    }
+   ]
+  },
+  {
+   "id": "sign-in_pasted-cleaned",
+   "size": "390x844",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "Mobile number",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "Mobile number",
+       "below": "+91",
+       "px": 7.9,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "+91",
+       "below": "We’ll send you an OTP by SMS.",
+       "px": 8,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "We’ll send you an OTP by SMS.",
+       "below": "Send OTP",
+       "px": 31.9,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    },
+    {
+     "region": "sign-up line",
+     "gaps": []
+    }
+   ]
+  },
+  {
+   "id": "sign-in_pasted-cleaned",
+   "size": "360x640",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "Mobile number",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "Mobile number",
+       "below": "+91",
+       "px": 7.9,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "+91",
+       "below": "We’ll send you an OTP by SMS.",
+       "px": 8,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "We’ll send you an OTP by SMS.",
+       "below": "Send OTP",
+       "px": 31.9,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    },
+    {
+     "region": "sign-up line",
+     "gaps": []
+    }
+   ]
+  },
+  {
+   "id": "sign-in_sending",
+   "size": "390x844",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "Mobile number",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "Mobile number",
+       "below": "+91",
+       "px": 7.9,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "+91",
+       "below": "We’ll send you an OTP by SMS.",
+       "px": 8,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "We’ll send you an OTP by SMS.",
+       "below": "Sending OTP…",
+       "px": 31.9,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    },
+    {
+     "region": "sign-up line",
+     "gaps": []
+    }
+   ]
+  },
+  {
+   "id": "sign-in_sending",
+   "size": "360x640",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "Mobile number",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "Mobile number",
+       "below": "+91",
+       "px": 7.9,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "+91",
+       "below": "We’ll send you an OTP by SMS.",
+       "px": 8,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "We’ll send you an OTP by SMS.",
+       "below": "Sending OTP…",
+       "px": 31.9,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    },
+    {
+     "region": "sign-up line",
+     "gaps": []
+    }
+   ]
+  },
+  {
+   "id": "sign-in_too-many-tries",
+   "size": "390x844",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "Mobile number",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "Mobile number",
+       "below": "+91",
+       "px": 7.9,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "+91",
+       "below": "Too many attempts on this number.",
+       "px": 16,
+       "expected": 16,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Too many attempts on this number.",
+       "below": "Try again in 9:42",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    },
+    {
+     "region": "sign-up line",
+     "gaps": []
+    }
+   ]
+  },
+  {
+   "id": "sign-in_too-many-tries",
+   "size": "360x640",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "Mobile number",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "Mobile number",
+       "below": "+91",
+       "px": 7.9,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "+91",
+       "below": "Too many attempts on this number.",
+       "px": 16,
+       "expected": 16,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Too many attempts on this number.",
+       "below": "Try again in 9:42",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    },
+    {
+     "region": "sign-up line",
+     "gaps": []
+    }
+   ]
+  },
+  {
+   "id": "sign-in_too-short",
+   "size": "390x844",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "Mobile number",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "Mobile number",
+       "below": "+91",
+       "px": 7.9,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "+91",
+       "below": "Enter all 10 digits.",
+       "px": 8,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Enter all 10 digits.",
+       "below": "Send OTP",
+       "px": 31.9,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    },
+    {
+     "region": "sign-up line",
+     "gaps": []
+    }
+   ]
+  },
+  {
+   "id": "sign-in_too-short",
+   "size": "360x640",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "Mobile number",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "Mobile number",
+       "below": "+91",
+       "px": 7.9,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "+91",
+       "below": "Enter all 10 digits.",
+       "px": 8,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Enter all 10 digits.",
+       "below": "Send OTP",
+       "px": 31.9,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    },
+    {
+     "region": "sign-up line",
+     "gaps": []
+    }
+   ]
+  },
+  {
+   "id": "sign-in_wrong-first-digit",
+   "size": "390x844",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "Mobile number",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "Mobile number",
+       "below": "+91",
+       "px": 7.9,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "+91",
+       "below": "Mobile numbers start with 6, 7, 8 or 9.",
+       "px": 8,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Mobile numbers start with 6, 7, 8 or 9.",
+       "below": "Send OTP",
+       "px": 31.9,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    },
+    {
+     "region": "sign-up line",
+     "gaps": []
+    }
+   ]
+  },
+  {
+   "id": "sign-in_wrong-first-digit",
+   "size": "360x640",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "Mobile number",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "Mobile number",
+       "below": "+91",
+       "px": 7.9,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "+91",
+       "below": "Mobile numbers start with 6, 7, 8 or 9.",
+       "px": 8,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Mobile numbers start with 6, 7, 8 or 9.",
+       "below": "Send OTP",
+       "px": 31.9,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    },
+    {
+     "region": "sign-up line",
+     "gaps": []
+    }
+   ]
+  },
+  {
+   "id": "unlock_cancelled",
+   "size": "390x844",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "div.prompt-icon",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "div.prompt-icon",
+       "below": "Ready when you are",
+       "px": 8,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    },
+    {
+     "region": "bar",
+     "gaps": [
+      {
+       "above": "Unlock with fingerprint",
+       "below": "Use OTP instead",
+       "px": 29.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "unlock_cancelled",
+   "size": "360x640",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "div.prompt-icon",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "div.prompt-icon",
+       "below": "Ready when you are",
+       "px": 8,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    },
+    {
+     "region": "bar",
+     "gaps": [
+      {
+       "above": "Unlock with fingerprint",
+       "below": "Use OTP instead",
+       "px": 29.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "unlock_face",
+   "size": "390x844",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "div.prompt-icon",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "div.prompt-icon",
+       "below": "Ready when you are",
+       "px": 8,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    },
+    {
+     "region": "bar",
+     "gaps": [
+      {
+       "above": "Unlock with Face ID",
+       "below": "Use OTP instead",
+       "px": 29.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "unlock_face",
+   "size": "360x640",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "div.prompt-icon",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "div.prompt-icon",
+       "below": "Ready when you are",
+       "px": 8,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    },
+    {
+     "region": "bar",
+     "gaps": [
+      {
+       "above": "Unlock with Face ID",
+       "below": "Use OTP instead",
+       "px": 29.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "unlock_fingerprint",
+   "size": "390x844",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "div.prompt-icon",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "div.prompt-icon",
+       "below": "Ready when you are",
+       "px": 8,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    },
+    {
+     "region": "bar",
+     "gaps": [
+      {
+       "above": "Unlock with fingerprint",
+       "below": "Use OTP instead",
+       "px": 29.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "unlock_fingerprint",
+   "size": "360x640",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "div.prompt-icon",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "div.prompt-icon",
+       "below": "Ready when you are",
+       "px": 8,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    },
+    {
+     "region": "bar",
+     "gaps": [
+      {
+       "above": "Unlock with fingerprint",
+       "below": "Use OTP instead",
+       "px": 29.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "unlock_pending",
+   "size": "390x844",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "div.prompt-icon",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "div.prompt-icon",
+       "below": "Ready when you are",
+       "px": 8,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    },
+    {
+     "region": "bar",
+     "gaps": [
+      {
+       "above": "Unlocking…",
+       "below": "Use OTP instead",
+       "px": 29.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "unlock_pending",
+   "size": "360x640",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "div.prompt-icon",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "div.prompt-icon",
+       "below": "Ready when you are",
+       "px": 8,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    },
+    {
+     "region": "bar",
+     "gaps": [
+      {
+       "above": "Unlocking…",
+       "below": "Use OTP instead",
+       "px": 29.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "unlock_platform-retry",
+   "size": "390x844",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "div.prompt-icon",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "div.prompt-icon",
+       "below": "Ready when you are",
+       "px": 8,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    },
+    {
+     "region": "bar",
+     "gaps": [
+      {
+       "above": "Unlock with fingerprint",
+       "below": "Use OTP instead",
+       "px": 29.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "unlock_platform-retry",
+   "size": "360x640",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "div.prompt-icon",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "div.prompt-icon",
+       "below": "Ready when you are",
+       "px": 8,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    },
+    {
+     "region": "bar",
+     "gaps": [
+      {
+       "above": "Unlock with fingerprint",
+       "below": "Use OTP instead",
+       "px": 29.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "unlock_screen-lock",
+   "size": "390x844",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "div.prompt-icon",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "div.prompt-icon",
+       "below": "Ready when you are",
+       "px": 8,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    },
+    {
+     "region": "bar",
+     "gaps": [
+      {
+       "above": "Unlock with screen lock",
+       "below": "Use OTP instead",
+       "px": 29.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "unlock_screen-lock",
+   "size": "360x640",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "div.prompt-icon",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "div.prompt-icon",
+       "below": "Ready when you are",
+       "px": 8,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    },
+    {
+     "region": "bar",
+     "gaps": [
+      {
+       "above": "Unlock with screen lock",
+       "below": "Use OTP instead",
+       "px": 29.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "unlock_unavailable",
+   "size": "390x844",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "Faster sign-in isn’t available on this phone rig",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      }
+     ]
+    },
+    {
+     "region": "bar",
+     "gaps": []
+    }
+   ]
+  },
+  {
+   "id": "unlock_unavailable",
+   "size": "360x640",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "Faster sign-in isn’t available on this phone rig",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      }
+     ]
+    },
+    {
+     "region": "bar",
+     "gaps": []
+    }
+   ]
+  },
+  {
+   "id": "home_active",
+   "size": "390x844",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "Time remaining 30:00 Add time Prescriptions writ",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      }
+     ]
+    },
+    {
+     "region": "bar",
+     "gaps": [
+      {
+       "above": "Request a case",
+       "below": "End availability",
+       "px": 29.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    },
+    {
+     "region": "sheet",
+     "gaps": []
+    },
+    {
+     "region": "sheet actions",
+     "gaps": []
+    }
+   ]
+  },
+  {
+   "id": "home_active",
+   "size": "360x640",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "Time remaining 30:00 Add time Prescriptions writ",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      }
+     ]
+    },
+    {
+     "region": "bar",
+     "gaps": [
+      {
+       "above": "Request a case",
+       "below": "End availability",
+       "px": 29.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    },
+    {
+     "region": "sheet",
+     "gaps": []
+    },
+    {
+     "region": "sheet actions",
+     "gaps": []
+    }
+   ]
+  },
+  {
+   "id": "home_add-failed",
+   "size": "390x844",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "Time remaining 5:00 Add time Prescriptions writt",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      }
+     ]
+    },
+    {
+     "region": "bar",
+     "gaps": []
+    },
+    {
+     "region": "sheet",
+     "gaps": [
+      {
+       "above": "Add time | svg",
+       "below": "Choose how much time to add.",
+       "px": 15.1,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      },
+      {
+       "above": "Choose how much time to add.",
+       "below": "Quick picks",
+       "px": 16.9,
+       "expected": 16,
+       "pass": true,
+       "rule": "anatomy"
+      },
+      {
+       "above": "Quick picks",
+       "below": "15 min | 30 min | 45 min",
+       "px": 8.5,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "15 min | 30 min | 45 min",
+       "below": "1 hour | 2 hours | 3 hours",
+       "px": 8,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      },
+      {
+       "above": "1 hour | 2 hours | 3 hours",
+       "below": "Custom | Up to 10 hours in total",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "scale"
+      },
+      {
+       "above": "Custom | Up to 10 hours in total",
+       "below": "Hours | Minutes",
+       "px": 8.5,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Hours | Minutes",
+       "below": "0 1 2 3 4 5 6 7 8 9 15 30 45",
+       "px": 21,
+       "expected": 4,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    },
+    {
+     "region": "sheet actions",
+     "gaps": [
+      {
+       "above": "Couldn’t add time.",
+       "below": "Add 30 min",
+       "px": 16,
+       "expected": 16,
+       "pass": true,
+       "rule": "anatomy"
+      },
+      {
+       "above": "Add 30 min",
+       "below": "Cancel",
+       "px": 29.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "home_add-failed",
+   "size": "360x640",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "Time remaining 5:00 Add time Prescriptions writt",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      }
+     ]
+    },
+    {
+     "region": "bar",
+     "gaps": []
+    },
+    {
+     "region": "sheet",
+     "gaps": [
+      {
+       "above": "Add time | svg",
+       "below": "Choose how much time to add.",
+       "px": 15.1,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      },
+      {
+       "above": "Choose how much time to add.",
+       "below": "Quick picks",
+       "px": 16.9,
+       "expected": 16,
+       "pass": true,
+       "rule": "anatomy"
+      },
+      {
+       "above": "Quick picks",
+       "below": "15 min | 30 min | 45 min",
+       "px": 8.5,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "15 min | 30 min | 45 min",
+       "below": "1 hour | 2 hours | 3 hours",
+       "px": 8,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      },
+      {
+       "above": "1 hour | 2 hours | 3 hours",
+       "below": "Custom | Up to 10 hours in total",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "scale"
+      },
+      {
+       "above": "Custom | Up to 10 hours in total",
+       "below": "Hours | Minutes",
+       "px": 8.5,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Hours | Minutes",
+       "below": "0 1 2 3 4 5 6 7 8 9 15 30 45",
+       "px": 21,
+       "expected": 4,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    },
+    {
+     "region": "sheet actions",
+     "gaps": [
+      {
+       "above": "Couldn’t add time.",
+       "below": "Add 30 min",
+       "px": 16,
+       "expected": 16,
+       "pass": true,
+       "rule": "anatomy"
+      },
+      {
+       "above": "Add 30 min",
+       "below": "Cancel",
+       "px": 29.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "home_add-wheel",
+   "size": "390x844",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "Time remaining 5:00 Add time Prescriptions writt",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      }
+     ]
+    },
+    {
+     "region": "bar",
+     "gaps": []
+    },
+    {
+     "region": "sheet",
+     "gaps": [
+      {
+       "above": "Add time | svg",
+       "below": "Choose how much time to add.",
+       "px": 15.1,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      },
+      {
+       "above": "Choose how much time to add.",
+       "below": "Quick picks",
+       "px": 16.9,
+       "expected": 16,
+       "pass": true,
+       "rule": "anatomy"
+      },
+      {
+       "above": "Quick picks",
+       "below": "15 min | 30 min | 45 min",
+       "px": 8.5,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "15 min | 30 min | 45 min",
+       "below": "1 hour | 2 hours | 3 hours",
+       "px": 8,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      },
+      {
+       "above": "1 hour | 2 hours | 3 hours",
+       "below": "Custom | Up to 10 hours in total",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "scale"
+      },
+      {
+       "above": "Custom | Up to 10 hours in total",
+       "below": "Hours | Minutes",
+       "px": 8.5,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Hours | Minutes",
+       "below": "0 1 2 3 4 5 6 7 8 9 15 30 45",
+       "px": 21,
+       "expected": 4,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    },
+    {
+     "region": "sheet actions",
+     "gaps": [
+      {
+       "above": "Add 30 min",
+       "below": "Cancel",
+       "px": 29.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "home_add-wheel",
+   "size": "360x640",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "Time remaining 5:00 Add time Prescriptions writt",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      }
+     ]
+    },
+    {
+     "region": "bar",
+     "gaps": []
+    },
+    {
+     "region": "sheet",
+     "gaps": [
+      {
+       "above": "Add time | svg",
+       "below": "Choose how much time to add.",
+       "px": 15.1,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      },
+      {
+       "above": "Choose how much time to add.",
+       "below": "Quick picks",
+       "px": 16.9,
+       "expected": 16,
+       "pass": true,
+       "rule": "anatomy"
+      },
+      {
+       "above": "Quick picks",
+       "below": "15 min | 30 min | 45 min",
+       "px": 8.5,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "15 min | 30 min | 45 min",
+       "below": "1 hour | 2 hours | 3 hours",
+       "px": 8,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      },
+      {
+       "above": "1 hour | 2 hours | 3 hours",
+       "below": "Custom | Up to 10 hours in total",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "scale"
+      },
+      {
+       "above": "Custom | Up to 10 hours in total",
+       "below": "Hours | Minutes",
+       "px": 8.5,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Hours | Minutes",
+       "below": "0 1 2 3 4 5 6 7 8 9 15 30 45",
+       "px": 21,
+       "expected": 4,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    },
+    {
+     "region": "sheet actions",
+     "gaps": [
+      {
+       "above": "Add 30 min",
+       "below": "Cancel",
+       "px": 29.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "home_added",
+   "size": "390x844",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "Time remaining 35:00 Add time Prescriptions writ",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      }
+     ]
+    },
+    {
+     "region": "bar",
+     "gaps": [
+      {
+       "above": "Request a case",
+       "below": "End availability",
+       "px": 29.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    },
+    {
+     "region": "sheet",
+     "gaps": []
+    },
+    {
+     "region": "sheet actions",
+     "gaps": []
+    }
+   ]
+  },
+  {
+   "id": "home_added",
+   "size": "360x640",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "Time remaining 35:00 Add time Prescriptions writ",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      }
+     ]
+    },
+    {
+     "region": "bar",
+     "gaps": [
+      {
+       "above": "Request a case",
+       "below": "End availability",
+       "px": 29.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    },
+    {
+     "region": "sheet",
+     "gaps": []
+    },
+    {
+     "region": "sheet actions",
+     "gaps": []
+    }
+   ]
+  },
+  {
+   "id": "home_adding",
+   "size": "390x844",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "Time remaining 5:00 Add time Prescriptions writt",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      }
+     ]
+    },
+    {
+     "region": "bar",
+     "gaps": []
+    },
+    {
+     "region": "sheet",
+     "gaps": [
+      {
+       "above": "Add time | svg",
+       "below": "Choose how much time to add.",
+       "px": 15.1,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      },
+      {
+       "above": "Choose how much time to add.",
+       "below": "Quick picks",
+       "px": 16.9,
+       "expected": 16,
+       "pass": true,
+       "rule": "anatomy"
+      },
+      {
+       "above": "Quick picks",
+       "below": "15 min | 30 min | 45 min",
+       "px": 8.5,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "15 min | 30 min | 45 min",
+       "below": "1 hour | 2 hours | 3 hours",
+       "px": 8,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      },
+      {
+       "above": "1 hour | 2 hours | 3 hours",
+       "below": "Custom | Up to 10 hours in total",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "scale"
+      },
+      {
+       "above": "Custom | Up to 10 hours in total",
+       "below": "Hours | Minutes",
+       "px": 8.5,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Hours | Minutes",
+       "below": "0 1 2 3 4 5 6 7 8 9 15 30 45",
+       "px": 21,
+       "expected": 4,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    },
+    {
+     "region": "sheet actions",
+     "gaps": [
+      {
+       "above": "Adding…",
+       "below": "Cancel",
+       "px": 29.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "home_adding",
+   "size": "360x640",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "Time remaining 5:00 Add time Prescriptions writt",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      }
+     ]
+    },
+    {
+     "region": "bar",
+     "gaps": []
+    },
+    {
+     "region": "sheet",
+     "gaps": [
+      {
+       "above": "Add time | svg",
+       "below": "Choose how much time to add.",
+       "px": 15.1,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      },
+      {
+       "above": "Choose how much time to add.",
+       "below": "Quick picks",
+       "px": 16.9,
+       "expected": 16,
+       "pass": true,
+       "rule": "anatomy"
+      },
+      {
+       "above": "Quick picks",
+       "below": "15 min | 30 min | 45 min",
+       "px": 8.5,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "15 min | 30 min | 45 min",
+       "below": "1 hour | 2 hours | 3 hours",
+       "px": 8,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      },
+      {
+       "above": "1 hour | 2 hours | 3 hours",
+       "below": "Custom | Up to 10 hours in total",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "scale"
+      },
+      {
+       "above": "Custom | Up to 10 hours in total",
+       "below": "Hours | Minutes",
+       "px": 8.5,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Hours | Minutes",
+       "below": "0 1 2 3 4 5 6 7 8 9 15 30 45",
+       "px": 21,
+       "expected": 4,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    },
+    {
+     "region": "sheet actions",
+     "gaps": [
+      {
+       "above": "Adding…",
+       "below": "Cancel",
+       "px": 29.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "home_end-confirmation",
+   "size": "390x844",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "Time remaining 30:00 Add time Prescriptions writ",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      }
+     ]
+    },
+    {
+     "region": "bar",
+     "gaps": []
+    },
+    {
+     "region": "sheet",
+     "gaps": [
+      {
+       "above": "End availability? | svg",
+       "below": "You won’t get new cases after this. A case alrea",
+       "px": 15.1,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    },
+    {
+     "region": "sheet actions",
+     "gaps": [
+      {
+       "above": "End availability",
+       "below": "Keep available",
+       "px": 29.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "home_end-confirmation",
+   "size": "360x640",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "Time remaining 30:00 Add time Prescriptions writ",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      }
+     ]
+    },
+    {
+     "region": "bar",
+     "gaps": []
+    },
+    {
+     "region": "sheet",
+     "gaps": [
+      {
+       "above": "End availability? | svg",
+       "below": "You won’t get new cases after this. A case alrea",
+       "px": 15.1,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    },
+    {
+     "region": "sheet actions",
+     "gaps": [
+      {
+       "above": "End availability",
+       "below": "Keep available",
+       "px": 29.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "home_expired-pending",
+   "size": "390x844",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "Your last request is still active.",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "Your last request is still active.",
+       "below": "Time remaining 0:00 Prescriptions written today ",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    },
+    {
+     "region": "bar",
+     "gaps": []
+    },
+    {
+     "region": "sheet",
+     "gaps": []
+    },
+    {
+     "region": "sheet actions",
+     "gaps": []
+    }
+   ]
+  },
+  {
+   "id": "home_expired-pending",
+   "size": "360x640",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "Your last request is still active.",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "Your last request is still active.",
+       "below": "Time remaining 0:00 Prescriptions written today ",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    },
+    {
+     "region": "bar",
+     "gaps": []
+    },
+    {
+     "region": "sheet",
+     "gaps": []
+    },
+    {
+     "region": "sheet actions",
+     "gaps": []
+    }
+   ]
+  },
+  {
+   "id": "home_idle-expired",
+   "size": "390x844",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "Your availability ended. You won’t get new cases",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "Your availability ended. You won’t get new cases",
+       "below": "Prescriptions written today 3",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Prescriptions written today 3",
+       "below": "Quick picks",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "scale"
+      },
+      {
+       "above": "Quick picks",
+       "below": "15 min | 30 min | 45 min",
+       "px": 8.5,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "15 min | 30 min | 45 min",
+       "below": "1 hour | 2 hours | 3 hours",
+       "px": 8,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      },
+      {
+       "above": "1 hour | 2 hours | 3 hours",
+       "below": "Custom",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "scale"
+      },
+      {
+       "above": "Custom",
+       "below": "Hours | Minutes",
+       "px": 8.5,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Hours | Minutes",
+       "below": "0 1 2 3 4 5 6 7 8 9 10 15 30 45",
+       "px": 21,
+       "expected": 4,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    },
+    {
+     "region": "bar",
+     "gaps": [
+      {
+       "above": "Available until 9:30 AM",
+       "below": "Set availability",
+       "px": 7.9,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    },
+    {
+     "region": "sheet",
+     "gaps": []
+    },
+    {
+     "region": "sheet actions",
+     "gaps": []
+    }
+   ]
+  },
+  {
+   "id": "home_idle-expired",
+   "size": "360x640",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "Your availability ended. You won’t get new cases",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "Your availability ended. You won’t get new cases",
+       "below": "Prescriptions written today 3",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Prescriptions written today 3",
+       "below": "Quick picks",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "scale"
+      },
+      {
+       "above": "Quick picks",
+       "below": "15 min | 30 min | 45 min",
+       "px": 8.5,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "15 min | 30 min | 45 min",
+       "below": "1 hour | 2 hours | 3 hours",
+       "px": 8,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      },
+      {
+       "above": "1 hour | 2 hours | 3 hours",
+       "below": "Custom",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "scale"
+      },
+      {
+       "above": "Custom",
+       "below": "Hours | Minutes",
+       "px": 8.5,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    },
+    {
+     "region": "bar",
+     "gaps": [
+      {
+       "above": "Available until 9:30 AM",
+       "below": "Set availability",
+       "px": 7.9,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    },
+    {
+     "region": "sheet",
+     "gaps": []
+    },
+    {
+     "region": "sheet actions",
+     "gaps": []
+    }
+   ]
+  },
+  {
+   "id": "home_logout-confirm",
+   "size": "390x844",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "sheet",
+     "gaps": [
+      {
+       "above": "Log out? | svg",
+       "below": "You’ll stop getting cases until you sign in agai",
+       "px": 15.1,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    },
+    {
+     "region": "sheet actions",
+     "gaps": [
+      {
+       "above": "Log out",
+       "below": "Stay signed in",
+       "px": 29.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "home_logout-confirm",
+   "size": "360x640",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "sheet",
+     "gaps": [
+      {
+       "above": "Log out? | svg",
+       "below": "You’ll stop getting cases until you sign in agai",
+       "px": 15.1,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    },
+    {
+     "region": "sheet actions",
+     "gaps": [
+      {
+       "above": "Log out",
+       "below": "Stay signed in",
+       "px": 29.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "home_manually-ended",
+   "size": "390x844",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "You ended your availability. You won’t get new c",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "You ended your availability. You won’t get new c",
+       "below": "Prescriptions written today 3",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Prescriptions written today 3",
+       "below": "Quick picks",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "scale"
+      },
+      {
+       "above": "Quick picks",
+       "below": "15 min | 30 min | 45 min",
+       "px": 8.5,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "15 min | 30 min | 45 min",
+       "below": "1 hour | 2 hours | 3 hours",
+       "px": 8,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      },
+      {
+       "above": "1 hour | 2 hours | 3 hours",
+       "below": "Custom",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "scale"
+      },
+      {
+       "above": "Custom",
+       "below": "Hours | Minutes",
+       "px": 8.5,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Hours | Minutes",
+       "below": "0 1 2 3 4 5 6 7 8 9 10 15 30 45",
+       "px": 21,
+       "expected": 4,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    },
+    {
+     "region": "bar",
+     "gaps": [
+      {
+       "above": "Available until 9:30 AM",
+       "below": "Set availability",
+       "px": 7.9,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    },
+    {
+     "region": "sheet",
+     "gaps": []
+    },
+    {
+     "region": "sheet actions",
+     "gaps": []
+    }
+   ]
+  },
+  {
+   "id": "home_manually-ended",
+   "size": "360x640",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "You ended your availability. You won’t get new c",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "You ended your availability. You won’t get new c",
+       "below": "Prescriptions written today 3",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Prescriptions written today 3",
+       "below": "Quick picks",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "scale"
+      },
+      {
+       "above": "Quick picks",
+       "below": "15 min | 30 min | 45 min",
+       "px": 8.5,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "15 min | 30 min | 45 min",
+       "below": "1 hour | 2 hours | 3 hours",
+       "px": 8,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      },
+      {
+       "above": "1 hour | 2 hours | 3 hours",
+       "below": "Custom",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "scale"
+      },
+      {
+       "above": "Custom",
+       "below": "Hours | Minutes",
+       "px": 8.5,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    },
+    {
+     "region": "bar",
+     "gaps": [
+      {
+       "above": "Available until 9:30 AM",
+       "below": "Set availability",
+       "px": 7.9,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    },
+    {
+     "region": "sheet",
+     "gaps": []
+    },
+    {
+     "region": "sheet actions",
+     "gaps": []
+    }
+   ]
+  },
+  {
+   "id": "home_near-expiry",
+   "size": "390x844",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "Time remaining 5:00 Add time Prescriptions writt",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      }
+     ]
+    },
+    {
+     "region": "bar",
+     "gaps": [
+      {
+       "above": "Availability ends soon. You can still request a ",
+       "below": "Request a case",
+       "px": 16,
+       "expected": 16,
+       "pass": true,
+       "rule": "anatomy"
+      },
+      {
+       "above": "Request a case",
+       "below": "End availability",
+       "px": 29.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    },
+    {
+     "region": "sheet",
+     "gaps": []
+    },
+    {
+     "region": "sheet actions",
+     "gaps": []
+    }
+   ]
+  },
+  {
+   "id": "home_near-expiry",
+   "size": "360x640",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "Time remaining 5:00 Add time Prescriptions writt",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      }
+     ]
+    },
+    {
+     "region": "bar",
+     "gaps": [
+      {
+       "above": "Availability ends soon. You can still request a ",
+       "below": "Request a case",
+       "px": 16,
+       "expected": 16,
+       "pass": true,
+       "rule": "anatomy"
+      },
+      {
+       "above": "Request a case",
+       "below": "End availability",
+       "px": 29.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    },
+    {
+     "region": "sheet",
+     "gaps": []
+    },
+    {
+     "region": "sheet actions",
+     "gaps": []
+    }
+   ]
+  },
+  {
+   "id": "home_no-cases",
+   "size": "390x844",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "Time remaining 30:00 Add time Prescriptions writ",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      }
+     ]
+    },
+    {
+     "region": "bar",
+     "gaps": [
+      {
+       "above": "No cases right now. Try again in a minute.",
+       "below": "Request a case",
+       "px": 16,
+       "expected": 16,
+       "pass": true,
+       "rule": "anatomy"
+      },
+      {
+       "above": "Request a case",
+       "below": "End availability",
+       "px": 29.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    },
+    {
+     "region": "sheet",
+     "gaps": []
+    },
+    {
+     "region": "sheet actions",
+     "gaps": []
+    }
+   ]
+  },
+  {
+   "id": "home_no-cases",
+   "size": "360x640",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "Time remaining 30:00 Add time Prescriptions writ",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      }
+     ]
+    },
+    {
+     "region": "bar",
+     "gaps": [
+      {
+       "above": "No cases right now. Try again in a minute.",
+       "below": "Request a case",
+       "px": 16,
+       "expected": 16,
+       "pass": true,
+       "rule": "anatomy"
+      },
+      {
+       "above": "Request a case",
+       "below": "End availability",
+       "px": 29.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    },
+    {
+     "region": "sheet",
+     "gaps": []
+    },
+    {
+     "region": "sheet actions",
+     "gaps": []
+    }
+   ]
+  },
+  {
+   "id": "home_offline",
+   "size": "390x844",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "Time remaining 30:00 Add time Prescriptions writ",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      }
+     ]
+    },
+    {
+     "region": "bar",
+     "gaps": [
+      {
+       "above": "You’re offline. Reconnect to request a case.",
+       "below": "Request a case",
+       "px": 16,
+       "expected": 16,
+       "pass": true,
+       "rule": "anatomy"
+      },
+      {
+       "above": "Request a case",
+       "below": "End availability",
+       "px": 29.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    },
+    {
+     "region": "sheet",
+     "gaps": []
+    },
+    {
+     "region": "sheet actions",
+     "gaps": []
+    }
+   ]
+  },
+  {
+   "id": "home_offline",
+   "size": "360x640",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "Time remaining 30:00 Add time Prescriptions writ",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      }
+     ]
+    },
+    {
+     "region": "bar",
+     "gaps": [
+      {
+       "above": "You’re offline. Reconnect to request a case.",
+       "below": "Request a case",
+       "px": 16,
+       "expected": 16,
+       "pass": true,
+       "rule": "anatomy"
+      },
+      {
+       "above": "Request a case",
+       "below": "End availability",
+       "px": 29.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    },
+    {
+     "region": "sheet",
+     "gaps": []
+    },
+    {
+     "region": "sheet actions",
+     "gaps": []
+    }
+   ]
+  },
+  {
+   "id": "home_request-failed",
+   "size": "390x844",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "Time remaining 30:00 Add time Prescriptions writ",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      }
+     ]
+    },
+    {
+     "region": "bar",
+     "gaps": [
+      {
+       "above": "Couldn’t request a case.",
+       "below": "Request a case",
+       "px": 16,
+       "expected": 16,
+       "pass": true,
+       "rule": "anatomy"
+      },
+      {
+       "above": "Request a case",
+       "below": "End availability",
+       "px": 29.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    },
+    {
+     "region": "sheet",
+     "gaps": []
+    },
+    {
+     "region": "sheet actions",
+     "gaps": []
+    }
+   ]
+  },
+  {
+   "id": "home_request-failed",
+   "size": "360x640",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "Time remaining 30:00 Add time Prescriptions writ",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      }
+     ]
+    },
+    {
+     "region": "bar",
+     "gaps": [
+      {
+       "above": "Couldn’t request a case.",
+       "below": "Request a case",
+       "px": 16,
+       "expected": 16,
+       "pass": true,
+       "rule": "anatomy"
+      },
+      {
+       "above": "Request a case",
+       "below": "End availability",
+       "px": 29.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    },
+    {
+     "region": "sheet",
+     "gaps": []
+    },
+    {
+     "region": "sheet actions",
+     "gaps": []
+    }
+   ]
+  },
+  {
+   "id": "home_requesting",
+   "size": "390x844",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "Time remaining 30:00 Add time Prescriptions writ",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      }
+     ]
+    },
+    {
+     "region": "bar",
+     "gaps": [
+      {
+       "above": "Requesting…",
+       "below": "End availability",
+       "px": 29.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    },
+    {
+     "region": "sheet",
+     "gaps": []
+    },
+    {
+     "region": "sheet actions",
+     "gaps": []
+    }
+   ]
+  },
+  {
+   "id": "home_requesting",
+   "size": "360x640",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "Time remaining 30:00 Add time Prescriptions writ",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      }
+     ]
+    },
+    {
+     "region": "bar",
+     "gaps": [
+      {
+       "above": "Requesting…",
+       "below": "End availability",
+       "px": 29.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    },
+    {
+     "region": "sheet",
+     "gaps": []
+    },
+    {
+     "region": "sheet actions",
+     "gaps": []
+    }
+   ]
+  },
+  {
+   "id": "home_setting",
+   "size": "390x844",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "Quick picks",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "Quick picks",
+       "below": "15 min | 30 min | 45 min",
+       "px": 8.5,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "15 min | 30 min | 45 min",
+       "below": "1 hour | 2 hours | 3 hours",
+       "px": 8,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      },
+      {
+       "above": "1 hour | 2 hours | 3 hours",
+       "below": "Custom",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "scale"
+      },
+      {
+       "above": "Custom",
+       "below": "Hours | Minutes",
+       "px": 8.5,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Hours | Minutes",
+       "below": "0 1 2 3 4 5 6 7 8 9 10 15 30 45",
+       "px": 21,
+       "expected": 4,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    },
+    {
+     "region": "bar",
+     "gaps": [
+      {
+       "above": "Available until 9:30 AM",
+       "below": "Setting…",
+       "px": 7.9,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    },
+    {
+     "region": "sheet",
+     "gaps": []
+    },
+    {
+     "region": "sheet actions",
+     "gaps": []
+    }
+   ]
+  },
+  {
+   "id": "home_setting",
+   "size": "360x640",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "Quick picks",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "Quick picks",
+       "below": "15 min | 30 min | 45 min",
+       "px": 8.5,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "15 min | 30 min | 45 min",
+       "below": "1 hour | 2 hours | 3 hours",
+       "px": 8,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      },
+      {
+       "above": "1 hour | 2 hours | 3 hours",
+       "below": "Custom",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "scale"
+      },
+      {
+       "above": "Custom",
+       "below": "Hours | Minutes",
+       "px": 8.5,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Hours | Minutes",
+       "below": "0 1 2 3 4 5 6 7 8 9 10 15 30 45",
+       "px": 21,
+       "expected": 4,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    },
+    {
+     "region": "bar",
+     "gaps": [
+      {
+       "above": "Available until 9:30 AM",
+       "below": "Setting…",
+       "px": 7.9,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    },
+    {
+     "region": "sheet",
+     "gaps": []
+    },
+    {
+     "region": "sheet actions",
+     "gaps": []
+    }
+   ]
+  },
+  {
+   "id": "home_setup-failed",
+   "size": "390x844",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "Quick picks",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "Quick picks",
+       "below": "15 min | 30 min | 45 min",
+       "px": 8.5,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "15 min | 30 min | 45 min",
+       "below": "1 hour | 2 hours | 3 hours",
+       "px": 8,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      },
+      {
+       "above": "1 hour | 2 hours | 3 hours",
+       "below": "Custom",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "scale"
+      },
+      {
+       "above": "Custom",
+       "below": "Hours | Minutes",
+       "px": 8.5,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Hours | Minutes",
+       "below": "0 1 2 3 4 5 6 7 8 9 10 15 30 45",
+       "px": 21,
+       "expected": 4,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    },
+    {
+     "region": "bar",
+     "gaps": [
+      {
+       "above": "Couldn’t set availability. Your selection is sav",
+       "below": "Available until 9:30 AM",
+       "px": 16,
+       "expected": 16,
+       "pass": true,
+       "rule": "scale"
+      },
+      {
+       "above": "Available until 9:30 AM",
+       "below": "Set availability",
+       "px": 7.9,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    },
+    {
+     "region": "sheet",
+     "gaps": []
+    },
+    {
+     "region": "sheet actions",
+     "gaps": []
+    }
+   ]
+  },
+  {
+   "id": "home_setup-failed",
+   "size": "360x640",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "Quick picks",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "Quick picks",
+       "below": "15 min | 30 min | 45 min",
+       "px": 8.5,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "15 min | 30 min | 45 min",
+       "below": "1 hour | 2 hours | 3 hours",
+       "px": 8,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      },
+      {
+       "above": "1 hour | 2 hours | 3 hours",
+       "below": "Custom",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "scale"
+      },
+      {
+       "above": "Custom",
+       "below": "Hours | Minutes",
+       "px": 8.5,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Hours | Minutes",
+       "below": "0 1 2 3 4 5 6 7 8 9 10 15 30 45",
+       "px": 21,
+       "expected": 4,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    },
+    {
+     "region": "bar",
+     "gaps": [
+      {
+       "above": "Couldn’t set availability. Your selection is sav",
+       "below": "Available until 9:30 AM",
+       "px": 16,
+       "expected": 16,
+       "pass": true,
+       "rule": "scale"
+      },
+      {
+       "above": "Available until 9:30 AM",
+       "below": "Set availability",
+       "px": 7.9,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    },
+    {
+     "region": "sheet",
+     "gaps": []
+    },
+    {
+     "region": "sheet actions",
+     "gaps": []
+    }
+   ]
+  },
+  {
+   "id": "home_setup-wheel",
+   "size": "390x844",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "Quick picks",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "Quick picks",
+       "below": "15 min | 30 min | 45 min",
+       "px": 8.5,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "15 min | 30 min | 45 min",
+       "below": "1 hour | 2 hours | 3 hours",
+       "px": 8,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      },
+      {
+       "above": "1 hour | 2 hours | 3 hours",
+       "below": "Custom",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "scale"
+      },
+      {
+       "above": "Custom",
+       "below": "Hours | Minutes",
+       "px": 8.5,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Hours | Minutes",
+       "below": "0 1 2 3 4 5 6 7 8 9 10 15 30 45",
+       "px": 21,
+       "expected": 4,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    },
+    {
+     "region": "bar",
+     "gaps": [
+      {
+       "above": "Available until 9:30 AM",
+       "below": "Set availability",
+       "px": 7.9,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    },
+    {
+     "region": "sheet",
+     "gaps": []
+    },
+    {
+     "region": "sheet actions",
+     "gaps": []
+    }
+   ]
+  },
+  {
+   "id": "home_setup-wheel",
+   "size": "360x640",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "Quick picks",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "Quick picks",
+       "below": "15 min | 30 min | 45 min",
+       "px": 8.5,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "15 min | 30 min | 45 min",
+       "below": "1 hour | 2 hours | 3 hours",
+       "px": 8,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      },
+      {
+       "above": "1 hour | 2 hours | 3 hours",
+       "below": "Custom",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "scale"
+      },
+      {
+       "above": "Custom",
+       "below": "Hours | Minutes",
+       "px": 8.5,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair"
+      },
+      {
+       "above": "Hours | Minutes",
+       "below": "0 1 2 3 4 5 6 7 8 9 10 15 30 45",
+       "px": 21,
+       "expected": 4,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    },
+    {
+     "region": "bar",
+     "gaps": [
+      {
+       "above": "Available until 9:30 AM",
+       "below": "Set availability",
+       "px": 7.9,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    },
+    {
+     "region": "sheet",
+     "gaps": []
+    },
+    {
+     "region": "sheet actions",
+     "gaps": []
+    }
+   ]
+  },
+  {
+   "id": "home_stop-pending",
+   "size": "390x844",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "Finishing your last request. Availability ends a",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "Finishing your last request. Availability ends a",
+       "below": "Prescriptions written today 3",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    },
+    {
+     "region": "bar",
+     "gaps": [
+      {
+       "above": "Request a case",
+       "below": "Ending…",
+       "px": 29.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    },
+    {
+     "region": "sheet",
+     "gaps": []
+    },
+    {
+     "region": "sheet actions",
+     "gaps": []
+    }
+   ]
+  },
+  {
+   "id": "home_stop-pending",
+   "size": "360x640",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "Finishing your last request. Availability ends a",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      },
+      {
+       "above": "Finishing your last request. Availability ends a",
+       "below": "Prescriptions written today 3",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair"
+      }
+     ]
+    },
+    {
+     "region": "bar",
+     "gaps": [
+      {
+       "above": "Request a case",
+       "below": "Ending…",
+       "px": 29.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy"
+      }
+     ]
+    },
+    {
+     "region": "sheet",
+     "gaps": []
+    },
+    {
+     "region": "sheet actions",
+     "gaps": []
+    }
+   ]
+  },
+  {
+   "id": "home_unknown-result",
+   "size": "390x844",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "Time remaining 30:00 Add time Prescriptions writ",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      }
+     ]
+    },
+    {
+     "region": "bar",
+     "gaps": []
+    },
+    {
+     "region": "sheet",
+     "gaps": []
+    },
+    {
+     "region": "sheet actions",
+     "gaps": []
+    }
+   ]
+  },
+  {
+   "id": "home_unknown-result",
+   "size": "360x640",
+   "pass": true,
+   "failures": 0,
+   "errors": [],
+   "bad": [],
+   "gaps": [
+    {
+     "region": "panel",
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "Time remaining 30:00 Add time Prescriptions writ",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge"
+      }
+     ]
+    },
+    {
+     "region": "bar",
+     "gaps": []
+    },
+    {
+     "region": "sheet",
+     "gaps": []
+    },
+    {
+     "region": "sheet actions",
+     "gaps": []
+    }
+   ]
+  }
+ ]
+}

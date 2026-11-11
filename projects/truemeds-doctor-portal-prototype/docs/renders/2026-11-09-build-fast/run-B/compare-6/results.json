@@ -1,0 +1,24 @@
+{
+ "steps": "6",
+ "thresholdPerChannel": 8,
+ "pictures": 2,
+ "over1pct": 1,
+ "rows": [
+  {
+   "id": "c-skip-ha",
+   "w": 390,
+   "changedPx": 32895,
+   "changedPct": 2.5,
+   "errors": [],
+   "flagged": true
+  },
+  {
+   "id": "c-skip-ha",
+   "w": 360,
+   "changedPx": 7376,
+   "changedPct": 0.61,
+   "errors": [],
+   "flagged": false
+  }
+ ]
+}

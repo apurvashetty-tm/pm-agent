@@ -120,7 +120,8 @@ function inventory() {
   return nodes;
 }
 function visible(node,state) {
-  const notices={'tm-login-notice':'not-registered','tm-login-offline-notice':'offline','tm-login-send-error-notice':'couldnt-send','tm-login-too-many-notice':'too-many-tries','tm-login-inactive-notice':'inactive'};
+  // 2026-11-11 (r2-build, U1): the approved reference uses the app's notice ids (tm-login-<state>-notice) — test edit, not a dispute.
+  const notices={'tm-login-not-registered-notice':'not-registered','tm-login-offline-notice':'offline','tm-login-couldnt-send-notice':'couldnt-send','tm-login-too-many-tries-notice':'too-many-tries','tm-login-inactive-notice':'inactive'};
   for(let n=node;n;n=n.parent) {
     if(notices[n.attrs.id] && notices[n.attrs.id]!==state) return false;
     if(n.attrs.id==='tm-login-helper' && Object.values(notices).includes(state)) return false;
@@ -369,19 +370,21 @@ test('H09: --check passes fresh, fails after a source-only change (isolated repl
 test('oracle: state and DOM inventories are populated from the approved fixture',()=>{
   assert.equal(new Set(stateNames).size,12);
   const nodes=inventory();
-  assert.equal(nodes.filter(n=>n.attrs.class?.split(' ').includes('login-key')).length,12);
+  assert.equal(nodes.filter(n=>n.attrs.class?.split(' ').includes('mock-kbd__key')).length,12);   // r2-build U1: the app's drawn keyboard
   assert.equal(nodes.filter(n=>n.attrs.id==='tm-login-mobile').length,1);
   for(const state of stateNames) {
     const shown=nodes.filter(n=>visible(n,state));
     assert.ok(shown.length>10);
     assert.equal(new Set(shown.map(n=>n.selector)).size,shown.length);
     assert.equal(shown.some(n=>n.attrs.class==='tm-spinner'),state==='sending');
-    assert.equal(shown.some(n=>n.attrs.id==='tm-login-notice'),state==='not-registered');
+    assert.equal(shown.some(n=>n.attrs.id==='tm-login-not-registered-notice'),state==='not-registered');
   }
   const raw=rawDeclarations();
-  assert.ok(raw.some(r=>r.line===14&&r.property==='width'&&r.value==='166px'));
-  assert.ok(raw.some(r=>r.line===43&&r.property==='background'&&r.value==='#d4d7dd'));
-  assert.ok(!raw.some(r=>r.line===17&&r.property==='margin-top'));
+  // r2-build U1: the reference now takes the screen's styles from the app; its only typed values are the page frame (line 20).
+  assert.ok(raw.some(r=>r.line===20&&r.property==='height'&&r.value==='844px'));
+  // (the drawn keyboard's colours now live in app/shell/mock-keyboard.css, the one file exempt from the token rule)
+  assert.ok(!raw.some(r=>r.property==='background'&&r.value==='#d4d7dd'));
+  assert.ok(!raw.some(r=>r.property==='margin-top'));
   assert.ok(hasToken('tokens.color.content.primary'));
   assert.ok(!hasToken('tokens.color.content.invented'));
 });

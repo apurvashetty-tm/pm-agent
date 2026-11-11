@@ -1,0 +1,172 @@
+{
+ "block": "prompt",
+ "name": "Prompt",
+ "rn": "<Prompt />",
+ "web": ".prompt",
+ "parts": {
+  "container": {
+   "states": {
+    "default": {
+     "seenIn": "unlock_cancelled",
+     "styles": [
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "margin",
+       "value": "0",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "display",
+       "value": "flex",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "flex-direction",
+       "value": "column",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "align-items",
+       "value": "center",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "gap",
+       "value": "var(--tm-space-lg)",
+       "tokens": [
+        {
+         "native": "tokens.space.lg",
+         "web": "--tm-space-lg",
+         "value": 16
+        }
+       ]
+      },
+      {
+       "property": "text-align",
+       "value": "center",
+       "tokens": [],
+       "layout": true
+      }
+     ],
+     "size": "358×104"
+    }
+   }
+  },
+  "ready": {
+   "states": {
+    "default": {
+     "seenIn": "unlock_cancelled",
+     "styles": [
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "margin",
+       "value": "0",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "font-size",
+       "value": "var(--tm-font-size-body-lg)",
+       "tokens": [
+        {
+         "native": "tokens.font.size.body.lg",
+         "web": "--tm-font-size-body-lg",
+         "value": 16
+        }
+       ]
+      },
+      {
+       "property": "line-height",
+       "value": "var(--tm-font-lineheight-md)",
+       "tokens": [
+        {
+         "native": "tokens.font.lineHeight.md",
+         "web": "--tm-font-lineheight-md",
+         "value": 24
+        }
+       ]
+      },
+      {
+       "property": "font-weight",
+       "value": "var(--tm-font-weight-semibold)",
+       "tokens": [
+        {
+         "native": "tokens.font.weight.semibold",
+         "web": "--tm-font-weight-semibold",
+         "value": "600"
+        }
+       ]
+      },
+      {
+       "property": "color",
+       "value": "var(--tm-content-primary)",
+       "tokens": [
+        {
+         "native": "tokens.color.content.primary",
+         "web": "--tm-content-primary",
+         "value": "#383A42"
+        }
+       ],
+       "inherited": true
+      },
+      {
+       "property": "font-family",
+       "value": "var(--tm-font)",
+       "tokens": [
+        {
+         "native": "tokens.font.family",
+         "web": "--tm-font",
+         "value": "Plus Jakarta Sans"
+        }
+       ],
+       "inherited": true
+      },
+      {
+       "property": "text-align",
+       "value": "center",
+       "tokens": [],
+       "layout": true,
+       "inherited": true
+      }
+     ],
+     "size": "153×24"
+    }
+   }
+  }
+ },
+ "rules": [
+  {
+   "section": "Kit",
+   "text": "Build it once from the parts × states below (tokens only, copy from messages); it appears on Returning unlock. What it does in each state is in DECIDED.md under those screens."
+  }
+ ],
+ "pictures": [],
+ "usedIn": [
+  "unlock_cancelled",
+  "unlock_face",
+  "unlock_fingerprint",
+  "unlock_pending",
+  "unlock_platform-retry",
+  "unlock_screen-lock"
+ ],
+ "states": {
+  "default": [
+   "container",
+   "ready"
+  ]
+ }
+}

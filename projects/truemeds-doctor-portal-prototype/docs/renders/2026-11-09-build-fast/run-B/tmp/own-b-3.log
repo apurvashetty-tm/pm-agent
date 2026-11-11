@@ -1,0 +1,2 @@
+PASS BR02-c critique 1: the call ends during Transferring… → 16 (ended before the transfer), never Transferred, nothing counted
+1/1 passed

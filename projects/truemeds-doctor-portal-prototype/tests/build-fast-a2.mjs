@@ -8,7 +8,7 @@
 import { run, assert, ms, copy } from "./codex/run-A/harness.mjs";
 const cases = [];
 const add = (id, name, state, source, test, fields = {}) => cases.push({ id, name, state, source, test, fields });
-const rxCount = async (d) => (await d.root().locator(".rx strong").innerText()).trim();
+const rxCount = async (d) => (await d.root().locator("#home-rx .srow__value").innerText()).trim();
 const logText = async (d) => { await d.p.locator("details[data-row=log]").evaluate((e) => { e.open = true; }); return d.p.locator("details[data-row=log]").innerText(); };
 async function length(d, s) { await d.p.locator("#rp-length").selectOption(String(s)); }
 async function prescribeAll(d) {

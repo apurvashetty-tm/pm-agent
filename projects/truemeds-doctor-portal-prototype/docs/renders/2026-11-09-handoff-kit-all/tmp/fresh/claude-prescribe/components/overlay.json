@@ -1,0 +1,89 @@
+{
+ "block": "overlay",
+ "name": "Overlay",
+ "rn": "<Overlay />",
+ "web": ".overlay",
+ "parts": {
+  "container": {
+   "states": {
+    "default": {
+     "seenIn": "home_add-failed",
+     "styles": [
+      {
+       "property": "position",
+       "value": "fixed",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "inset",
+       "value": "0",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "background",
+       "value": "rgb(0 0 0 / calc(var(--tm-overlay-subtle) * 1%))",
+       "tokens": [
+        {
+         "native": "tokens.overlayOpacity.subtle",
+         "web": "--tm-overlay-subtle",
+         "value": 0.3
+        }
+       ],
+       "exception": "Documented exception: scrim is black at the overlay-token opacity (SALT has no black semantic colour). Not a token on purpose; use the number as is."
+      },
+      {
+       "property": "z-index",
+       "value": "var(--tm-layer-overlay)",
+       "tokens": [
+        {
+         "native": "tokens.layer.overlay",
+         "web": "--tm-layer-overlay",
+         "value": 900
+        }
+       ]
+      },
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      }
+     ],
+     "size": "390×844"
+    }
+   }
+  }
+ },
+ "rules": [
+  {
+   "section": "Kit",
+   "text": "Build it once from the parts × states below (tokens only, copy from messages); it appears on Home, Case page, Prescribe. What it does in each state is in DECIDED.md under those screens."
+  }
+ ],
+ "pictures": [],
+ "usedIn": [
+  "home_add-failed",
+  "home_add-wheel",
+  "home_adding",
+  "home_end-confirmation",
+  "home_logout-confirm",
+  "a-leave-sheet",
+  "a-releasing",
+  "c-callback",
+  "c-callback-error",
+  "c-callback-failed",
+  "c-callback-refused",
+  "c-skip-ha",
+  "s7d-unavailable-sheet",
+  "s7e-leave-sheet",
+  "d-disable-sheet",
+  "d-discard-sheet"
+ ],
+ "states": {
+  "default": [
+   "container"
+  ]
+ }
+}

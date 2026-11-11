@@ -37,9 +37,13 @@ export function actionBar(children, { notice: band = null, cls = "", id } = {}) 
 export function sheet({ title, subtitle, body = [], actions = [], onClose, closeDisabled = false, id, label, cls = "", beforeActions = null }) {
   const titleId = `sh-${Math.random().toString(36).slice(2, 7)}`;
   const close = h("button", { type: "button", class: "tm-btn tm-btn--quiet tm-btn--icon tm-sheet__close", "aria-label": MSG("common.close"), disabled: closeDisabled, onclick: () => onClose && onClose() }, icon("x"));
+  // D-109 §2: a subtitle sits 8 under the title inside the header (.tm-sheet__heading); the title line stays centred on the ✕.
+  const titleEl = h("h2", { class: "tm-sheet__title", id: titleId, text: title });
   const box = h("section", { class: `tm-sheet${cls ? " " + cls : ""}`, role: "dialog", "aria-modal": "true", "aria-labelledby": titleId, tabindex: "-1", id },
-    h("header", { class: "tm-sheet__header" }, h("h2", { class: "tm-sheet__title", id: titleId, text: title }), close),
-    h("div", { class: "tm-sheet__body" }, subtitle ? h("p", { class: "tm-sheet__subtitle", text: subtitle }) : null, label ? h("div", { class: "tm-sheet__label", text: label }) : null, ...[].concat(body)),
+    h("header", { class: "tm-sheet__header" },
+      subtitle ? h("div", { class: "tm-sheet__heading" }, titleEl, h("p", { class: "tm-sheet__subtitle", text: subtitle })) : titleEl, close),
+    // A confirmation sheet whose only words are the subtitle has no body: header → actions (24, the actions' own margin).
+    label || [].concat(body).some(Boolean) ? h("div", { class: "tm-sheet__body" }, label ? h("div", { class: "tm-sheet__label", text: label }) : null, ...[].concat(body)) : null,
     beforeActions,
     actions.length ? h("div", { class: "tm-sheet__actions" }, ...actions) : null);
   const overlay = h("div", { class: "tm-overlay app-overlay" }, box);

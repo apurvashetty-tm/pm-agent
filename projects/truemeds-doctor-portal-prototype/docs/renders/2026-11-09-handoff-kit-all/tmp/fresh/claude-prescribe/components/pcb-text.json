@@ -1,0 +1,102 @@
+{
+ "block": "pcb-text",
+ "name": "PcbText",
+ "rn": "<PcbText />",
+ "web": ".pcb-text",
+ "parts": {
+  "container": {
+   "states": {
+    "default": {
+     "seenIn": "a-back-blocked",
+     "styles": [
+      {
+       "property": "font-size",
+       "value": "var(--tm-font-size-body-md)",
+       "tokens": [
+        {
+         "native": "tokens.font.size.body.md",
+         "web": "--tm-font-size-body-md",
+         "value": 14
+        }
+       ]
+      },
+      {
+       "property": "line-height",
+       "value": "var(--tm-font-lineheight-sm)",
+       "tokens": [
+        {
+         "native": "tokens.font.lineHeight.sm",
+         "web": "--tm-font-lineheight-sm",
+         "value": 20
+        }
+       ]
+      },
+      {
+       "property": "color",
+       "value": "var(--tm-content-primary)",
+       "tokens": [
+        {
+         "native": "tokens.color.content.primary",
+         "web": "--tm-content-primary",
+         "value": "#383A42"
+        }
+       ]
+      },
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "font-family",
+       "value": "var(--tm-font)",
+       "tokens": [
+        {
+         "native": "tokens.font.family",
+         "web": "--tm-font",
+         "value": "Plus Jakarta Sans"
+        }
+       ],
+       "inherited": true
+      },
+      {
+       "property": "text-wrap",
+       "value": "balance",
+       "tokens": [],
+       "layout": true,
+       "inherited": true
+      }
+     ],
+     "size": "300×40"
+    }
+   }
+  }
+ },
+ "rules": [
+  {
+   "section": "Kit",
+   "text": "Build it once from the parts × states below (tokens only, copy from messages); it appears on Case page. What it does in each state is in DECIDED.md under those screens."
+  }
+ ],
+ "pictures": [],
+ "usedIn": [
+  "a-back-blocked",
+  "c-skip-ha",
+  "g0-calling-pilot",
+  "g1-generic-confirm",
+  "g2-checking-ha",
+  "g3b-forwarded",
+  "s7a-calling",
+  "s7b-still-on-call",
+  "t02-calling",
+  "t13-connecting-ha",
+  "t15-ha-no-join",
+  "t17-skip-ha-wait"
+ ],
+ "states": {
+  "default": [
+   "container"
+  ]
+ }
+}

@@ -1,0 +1,162 @@
+{
+ "block": "status-line",
+ "name": "StatusLine",
+ "rn": "<StatusLine />",
+ "web": ".status-line",
+ "parts": {
+  "container": {
+   "states": {
+    "default": {
+     "seenIn": "home_unknown-result",
+     "styles": [
+      {
+       "property": "display",
+       "value": "flex",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "align-items",
+       "value": "center",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "justify-content",
+       "value": "center",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "gap",
+       "value": "var(--tm-space-sm)",
+       "tokens": [
+        {
+         "native": "tokens.space.sm",
+         "web": "--tm-space-sm",
+         "value": 8
+        }
+       ]
+      },
+      {
+       "property": "min-height",
+       "value": "var(--tm-space-3xl)",
+       "tokens": [
+        {
+         "native": "tokens.space.3xl",
+         "web": "--tm-space-3xl",
+         "value": 48
+        }
+       ]
+      },
+      {
+       "property": "font-size",
+       "value": "var(--tm-font-size-body-lg)",
+       "tokens": [
+        {
+         "native": "tokens.font.size.body.lg",
+         "web": "--tm-font-size-body-lg",
+         "value": 16
+        }
+       ]
+      },
+      {
+       "property": "line-height",
+       "value": "var(--tm-font-lineheight-md)",
+       "tokens": [
+        {
+         "native": "tokens.font.lineHeight.md",
+         "web": "--tm-font-lineheight-md",
+         "value": 24
+        }
+       ]
+      },
+      {
+       "property": "font-weight",
+       "value": "var(--tm-font-weight-semibold)",
+       "tokens": [
+        {
+         "native": "tokens.font.weight.semibold",
+         "web": "--tm-font-weight-semibold",
+         "value": "600"
+        }
+       ]
+      },
+      {
+       "property": "color",
+       "value": "var(--tm-content-primary)",
+       "tokens": [
+        {
+         "native": "tokens.color.content.primary",
+         "web": "--tm-content-primary",
+         "value": "#383A42"
+        }
+       ]
+      },
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "text-align",
+       "value": "center",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "text-wrap",
+       "value": "balance",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "margin-bottom",
+       "value": "0",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "font-family",
+       "value": "var(--tm-font)",
+       "tokens": [
+        {
+         "native": "tokens.font.family",
+         "web": "--tm-font",
+         "value": "Plus Jakarta Sans"
+        }
+       ],
+       "inherited": true
+      }
+     ],
+     "size": "358×48"
+    }
+   }
+  }
+ },
+ "rules": [
+  {
+   "section": "Kit",
+   "text": "Build it once from the parts × states below (tokens only, copy from messages); it appears on Home, Case page. What it does in each state is in DECIDED.md under those screens."
+  }
+ ],
+ "pictures": [],
+ "usedIn": [
+  "home_unknown-result",
+  "a-back-blocked",
+  "g0-calling-pilot",
+  "g2-checking-ha",
+  "g3b-forwarded",
+  "s7a-calling",
+  "t02-calling",
+  "t05-result-wait",
+  "t15-ha-no-join",
+  "t17-skip-ha-wait"
+ ],
+ "states": {
+  "default": [
+   "container"
+  ]
+ }
+}

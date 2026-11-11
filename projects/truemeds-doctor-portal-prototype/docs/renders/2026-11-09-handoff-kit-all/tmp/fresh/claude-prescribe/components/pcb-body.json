@@ -1,0 +1,79 @@
+{
+ "block": "pcb-body",
+ "name": "PcbBody",
+ "rn": "<PcbBody />",
+ "web": ".pcb-body",
+ "parts": {
+  "container": {
+   "states": {
+    "default": {
+     "seenIn": "a-back-blocked",
+     "styles": [
+      {
+       "property": "display",
+       "value": "flex",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "flex-direction",
+       "value": "column",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "gap",
+       "value": "var(--tm-space-2xs)",
+       "tokens": [
+        {
+         "native": "tokens.space.2xs",
+         "web": "--tm-space-2xs",
+         "value": 2
+        }
+       ]
+      },
+      {
+       "property": "min-width",
+       "value": "0",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      }
+     ],
+     "size": "300×40"
+    }
+   }
+  }
+ },
+ "rules": [
+  {
+   "section": "Kit",
+   "text": "Build it once from the parts × states below (tokens only, copy from messages); it appears on Case page. What it does in each state is in DECIDED.md under those screens."
+  }
+ ],
+ "pictures": [],
+ "usedIn": [
+  "a-back-blocked",
+  "c-skip-ha",
+  "g0-calling-pilot",
+  "g1-generic-confirm",
+  "g2-checking-ha",
+  "g3b-forwarded",
+  "s7a-calling",
+  "s7b-still-on-call",
+  "t02-calling",
+  "t13-connecting-ha",
+  "t15-ha-no-join",
+  "t17-skip-ha-wait"
+ ],
+ "states": {
+  "default": [
+   "container"
+  ]
+ }
+}

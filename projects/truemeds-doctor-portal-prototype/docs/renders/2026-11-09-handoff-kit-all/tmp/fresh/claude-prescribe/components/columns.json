@@ -1,0 +1,76 @@
+{
+ "block": "columns",
+ "name": "Columns",
+ "rn": "<Columns />",
+ "web": ".columns",
+ "parts": {
+  "container": {
+   "states": {
+    "default": {
+     "seenIn": "home_add-failed",
+     "styles": [
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "position",
+       "value": "relative",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "display",
+       "value": "grid",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "grid-template-columns",
+       "value": "1fr 1fr",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "height",
+       "value": "calc(3 * var(--tm-target-min))",
+       "tokens": [
+        {
+         "native": "tokens.target.min",
+         "web": "--tm-target-min",
+         "value": 48
+        }
+       ],
+       "layout": true
+      }
+     ],
+     "size": "358×144"
+    }
+   }
+  }
+ },
+ "rules": [
+  {
+   "section": "Kit",
+   "text": "Build it once from the parts × states below (tokens only, copy from messages); it appears on Home. What it does in each state is in DECIDED.md under those screens."
+  }
+ ],
+ "pictures": [],
+ "usedIn": [
+  "home_add-failed",
+  "home_add-wheel",
+  "home_adding",
+  "home_idle-expired",
+  "home_manually-ended",
+  "home_setting",
+  "home_setup-failed",
+  "home_setup-wheel"
+ ],
+ "states": {
+  "default": [
+   "container"
+  ]
+ }
+}

@@ -7,7 +7,7 @@
   "container": {
    "states": {
     "16": {
-     "seenIn": "a-back-blocked",
+     "seenIn": "home_active",
      "styles": [
       {
        "property": "width",
@@ -108,9 +108,30 @@
         }
        ],
        "inherited": true
+      },
+      {
+       "property": "letter-spacing",
+       "value": "inherit",
+       "tokens": [],
+       "layout": true,
+       "inherited": true
+      },
+      {
+       "property": "text-align",
+       "value": "inherit",
+       "tokens": [],
+       "layout": true,
+       "inherited": true
+      },
+      {
+       "property": "text-wrap",
+       "value": "inherit",
+       "tokens": [],
+       "layout": true,
+       "inherited": true
       }
      ],
-     "size": "15.9×16"
+     "size": "16×16"
     },
     "24": {
      "seenIn": "a-back-blocked",

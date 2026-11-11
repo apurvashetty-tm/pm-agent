@@ -39,9 +39,10 @@ assert.equal((otp.match(/class="tm-otp-slots__slot"/g) || []).length, 4);
 assert.equal((otp.match(/id="c"/g) || []).length, 1);
 assert.match(otp, /autocomplete="one-time-code"/);
 assert.match(otp, /expired:true/);
-assert.match(home, /state==='near-expiry'/);
-assert.match(home, /state==='add-failed'/);
-assert.match(home, /state==='request-failed'/);
+// 2026-11-11 (r2-build): the Home reference draws the app's DOM from one fixture table (FIX), as app/screens/home.js.
+assert.match(home, /'near-expiry': \{ left: 5 \}/);
+assert.match(home, /'add-failed': \{[^}]*addFailed: true/);
+assert.match(home, /'request-failed': \{[^}]*bar: 'request-failed'/);
 assert.match(home, /class="tm-toast home-toast"/);
 assert.match(unlock, /unlock\.unavailable/);
 for (const [id, item] of Object.entries(metadata)) {

@@ -1,0 +1,29 @@
+tokens                 exit 0   
+checker-unit           exit 0   ℹ duration_ms 1275.916708
+r2-tests               exit 0   PASS R2-K5 sign-in Couldn't send: keyboard reopened keeps Send OTP 16 clear at 360x640
+entry-journeys         exit 0   61/61 passed
+run-checks             exit 0   95/95 passed
+wheel-keyboard         exit 0   15 / 15 passed
+signin-d101            exit 0   10/10 pass
+f03-profile-back       exit 0   PASS F-03 profile back: header arrow and phone back land on Home (3/3)
+build-fast-a1          exit 0   15/15 passed
+build-fast-a2          exit 0   26/26 passed
+build-fast-b           exit 0   23/23 passed
+codex-run-A            exit 0   303/303 passed
+codex-run-B            exit 0   99/99 passed
+codex-run-A0-happy     exit 0   PASS A0-happy-path
+check-sources          exit 0   PASS: copy checks rules 4/5/11/13/14/19/21/22/23 over 956 strings; 12 sign-in states, 17 OTP states, local assets, four-
+state-map              exit 0   PASS — 0 drift failures
+lockup                 exit 0   lockup OK: truemeds-for-doctors.svg, truemeds-for-doctors.png
+check-locked-specs     exit 0   STANDARDS GUARD: PASS — 0 failure(s) across 149 states × 3 viewport(s)
+visible-gaps           exit 0   126 / 126 pass
+ref-diff               exit 0   130 / 130 identical
+compare-step1          exit 0   43 states, 86 pictures: exact 86, accepted 0, failed 0
+compare-steps2-4       exit 0   steps 2-4: 132 pictures, 0 over 1 %
+kit-build              exit 0   handoff/ built: 7 screens, 149 states, 10025 element records, 130 blocks, 97 tokens used, 0 raw values in the built app,
+kit-check              exit 0   handoff/ is up to date (621 generated files, 382 source files, 10 quoted documents).
+handoff-tests          exit 0   ℹ duration_ms 146493.431791
+prd-check              exit 0   17/17 passed
+layout-app             exit 0   ALL PASS
+docs/renders/2026-11-11-r2-build/tools/final-checks.sh: line 6: 27526 Terminated: 15          python3 -m http.server 8765 --bind 127.0.0.1 --directory app > /dev/null 2>&1
+layout                 exit 0   ALL PASS

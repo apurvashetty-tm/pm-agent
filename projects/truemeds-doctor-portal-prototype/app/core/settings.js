@@ -35,6 +35,7 @@ export const SETTINGS = {
   // Availability (checklist 4.4)
   availabilityMinimum:  { value: 15 * MIN, time: true, source: "rule", ref: "app-logic §3" },
   availabilityStep:     { value: 15 * MIN, time: true, source: "rule", ref: "app-logic §3 (15-min wheel)" },
+  availabilityMaximum:  { value: 10 * 60 * MIN, time: true, source: "rule", ref: "D-106: 10 hours in total (setup wheel 0–10 h; Add time tops out at what is left)" },
   attemptGap:           { value: 60 * SEC, time: true, source: "MOCK ASSUMPTION", ref: "review tool: gap between scheduled call attempts" },
   // Review tool only (not a product rule): how long the simulated server takes to answer (sign-in, OTP, resend)
   mockServerDelay:      { value: 1200, time: true, source: "review tool", ref: "simulated server answer time" },

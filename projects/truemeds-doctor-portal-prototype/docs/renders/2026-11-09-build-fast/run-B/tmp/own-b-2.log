@@ -1,0 +1,31 @@
+PASS BR01-a B1 appears at the gate counted from the patient's answer, not the tap
+PASS BR01-b a Pilot call that ends before the gate never shows B1: result → 6
+PASS BR01-c talk time adds up on the live gate: 20 s, then B1 30 s into the next call
+PASS BR01-d Non-Value Meds (no HA free) play the same B flow: B1 → B2 → B3
+PASS BR02-a an HA who rings but never picks up is 14 Transferred for the doctor
+PASS BR02-b B2: medicine rows take no tap, Skip HA disabled, no Callback
+FAIL BR02-c critique 1: the call ends during B2 → 16 (ended before the transfer), never Transferred, nothing counted
+  source: app-logic.md:158,190 (D-57: transfer = same call)
+  page.waitForFunction: Timeout 2500ms exceeded.
+    at Driver.text (/Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype/tests/codex/run-A/harness.mjs:71:18)
+    at Driver.msg (/Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype/tests/codex/run-A/harness.mjs:76:37)
+    at Object.test (/Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype/tests/build-fast-b.mjs:58:32)
+    at async run (/Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype/tests/codex/run-A/harness.mjs:103:73)
+    at async file:///Users/appu13/pm-agent/.work/truemeds-doctor-portal-prototype/projects/truemeds-doctor-portal-prototype/tests/build-fast-b.mjs:155:1
+PASS BR03-a B3 → hang-up → the record proves the forward: counted once, distinct forward event
+PASS BR03-b B3 → the record under the gate: mismatch, hold, nothing counted
+PASS BR03-c forward left before the record still settles after the doctor left
+PASS BR04 Skip HA: ✕ cancels with no change; the chosen reason is stored exactly
+PASS BR05-a 17 → result under the gate → 6 → Call again stays HA skipped (Cat4 script, no HA controls)
+PASS BR05-b 17 → result over the gate → 8a → Prescription confirmed, one HA-skipped event
+PASS BR05-c critique 3: 17 with the hang-up reported → Getting call result, script gone, HA stays skipped
+PASS BR06-a Pilot 7d → Confirm & forward → 7f → record over the gate → 10b, counted once
+PASS BR06-b Pilot 7f → record says the patient never answered → hold, card stays 7f
+PASS BR06-c Still talking on a Pilot call returns to the Pilot live stage, never Cat4
+PASS BR07 availability ends during B3: never interrupted; after the hang-up only Back to Home
+PASS BR09 reload during Transferring… continues to 14 and counts the transfer once
+PASS BR12 the four outcomes log four distinct completed events (never from the button label)
+PASS BR08 critique 2: a story starting at Case reopens the remembered case (notes, medicines), not a fresh fixture
+PASS BPILOT-offline offline on B1: Confirm prescription and Skip HA fail with one notice, nothing lost
+PASS BPILOT-back phone Back: B1 and B3 show the toast; after the hang-up it goes Home
+22/23 passed

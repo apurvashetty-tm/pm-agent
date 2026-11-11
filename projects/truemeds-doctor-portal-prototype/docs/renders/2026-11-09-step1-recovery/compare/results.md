@@ -84,8 +84,8 @@ States 43 · pictures 86 · **exact 80 · accepted 6 · failed 0**
 | `unlock_face` | 360 | exact | 0 | 0 px, max 0 | — |
 | `unlock_fingerprint` | 390 | exact | 0 | 0 px, max 0 | — |
 | `unlock_fingerprint` | 360 | exact | 0 | 0 px, max 0 | — |
-| `unlock_pending` | 390 | exact | 0 | 0 px, max 0 | spinner [261,1344,302,1384]<br>spinner [261,1344,302,1384] |
-| `unlock_pending` | 360 | exact | 0 | 0 px, max 0 | spinner [231,1344,272,1384]<br>spinner [231,1344,272,1384] |
+| `unlock_pending` | 390 | exact | 0 | 0 px, max 0 | spinner [261,1456,302,1496]<br>spinner [261,1456,302,1496] |
+| `unlock_pending` | 360 | exact | 0 | 0 px, max 0 | spinner [231,1456,272,1496]<br>spinner [231,1456,272,1496] |
 | `unlock_platform-retry` | 390 | exact | 0 | 0 px, max 0 | — |
 | `unlock_platform-retry` | 360 | exact | 0 | 0 px, max 0 | — |
 | `unlock_screen-lock` | 390 | exact | 0 | 0 px, max 0 | — |

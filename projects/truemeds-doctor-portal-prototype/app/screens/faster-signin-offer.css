@@ -1,27 +1,24 @@
-/* Faster sign-in offer — lifted from ui-screens/faster-signin-offer/faster-signin-offer.html. Tokens only (--tm-*).
-   The screen fills the app frame (RULES §7): no nested phone, no fixed inner size. Decision D-45: own screen, no OTP opt-in. */
+/* Faster sign-in offer. Band and panel: band.css (D-107). Below the band, D-108 visible gaps: hero tile → 32 → points;
+   points 16 apart; point title → its line 8. Tokens only (--tm-*). The screen fills the app frame (RULES §7). D-45: own screen. */
 .offer-screen { height: 100%; display: flex; flex-direction: column; box-sizing: border-box; position: relative; overflow: hidden;   /* raw-ok: 100% fill (geometry) */
   background: var(--tm-surface-brand-subtle); color: var(--tm-content-primary); }
-/* A-05 (Round 4): header text to the white panel is 32 on sign-in, OTP, offer, unlock and Home. */
-.offer-screen .top { padding: var(--tm-space-lg) var(--tm-space-page) var(--tm-space-2xl); }
-.offer-screen .login-logo { display: block; width: var(--tm-logo-lockup-width); height: auto; margin-bottom: var(--tm-space-lg); }
-.offer-screen h1 { margin: var(--tm-space-lg) 0 var(--tm-space-sm); }
-.offer-screen .sub { margin: 0; font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); color: var(--tm-content-secondary); }
-.offer-screen .hero-wrap { display: flex; justify-content: center; margin-bottom: var(--tm-space-lg); }
+/* The panel scrolls above the pinned bar on short phones (Round 4 lane D, 360×640). */
+.offer-screen .panel { overflow-y: auto; }
+.offer-screen .hero-wrap { flex: none; display: flex; justify-content: center; margin-bottom: var(--tm-space-2xl); }
 .offer-screen .hero-ic { width: var(--tm-icon-tile-size); height: var(--tm-icon-tile-size); border-radius: var(--tm-radius-lg); background: var(--tm-surface-brand-subtle); color: var(--tm-content-brand); display: grid; place-items: center; }
 .offer-screen .hero-ic .tm-icon { width: var(--tm-icon-size-xl); height: var(--tm-icon-size-xl); }
-/* White panel; points are one group (related 16). It scrolls above the pinned bar on short phones (Round 4 lane D, 360×640). */
-.offer-screen .panel { flex: 1; min-height: 0; overflow-y: auto; display: flex; flex-direction: column; background: var(--tm-surface-primary);
-  border-radius: var(--tm-radius-2xl) var(--tm-radius-2xl) 0 0; padding: var(--tm-space-2xl) var(--tm-space-page) var(--tm-space-xl); }
 .offer-screen .points { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--tm-space-lg); }
 .offer-screen .points li { display: flex; gap: var(--tm-space-md); align-items: flex-start; }
+/* The point's text ends on its ink (the last line's half-leading is trimmed), so points sit 16 apart as the eye sees them; the
+   icon stays centred on the title's 24 line. */
+.offer-screen .pt-txt { text-box: trim-end cap text; }
 /* Decorative icons are neutral (RULES §8.11, D-47). Blue stays for actions and the hero tile. */
 .offer-screen .points .tm-icon { width: var(--tm-icon-size-lg); height: var(--tm-icon-size-lg); flex: none; color: var(--tm-content-secondary); margin-top: 0; }
-.offer-screen .pt-t { margin: 0; font-size: var(--tm-font-size-body-lg); line-height: var(--tm-font-lineheight-md); font-weight: var(--tm-font-weight-medium, 500); color: var(--tm-content-primary); }
+/* Point titles: 16/24 semibold (one weight per role, D-108 screen standard). */
+.offer-screen .pt-t { margin: 0; font-size: var(--tm-font-size-body-lg); line-height: var(--tm-font-lineheight-md); font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-primary); }
 .offer-screen .pt-d { margin: 0; font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); color: var(--tm-content-secondary); }
 /* Round 4 item 1: the pinned footer is the real .tm-actionbar, a sibling below the panel, flush with the frame's bottom edge.
    A-19: "Couldn't turn on…" (the result of a tap) sits inside the bar, 16 above its button (.tm-actionbar > .tm-notice). */
 .offer-screen .footer { flex: none; margin: 0; }
 .offer-screen .notice-slot[hidden] { display: none !important; }
-/* D-93 (revised): "isn't available" is the result of the Turn on tap, so it uses the same bar slot (A-19). */
 .offer-screen [hidden] { display: none !important; }

@@ -14,20 +14,9 @@
        "value": "none",
        "tokens": [],
        "layout": true
-      },
-      {
-       "property": "margin-top",
-       "value": "var(--tm-space-lg)",
-       "tokens": [
-        {
-         "native": "tokens.space.lg",
-         "web": "--tm-space-lg",
-         "value": 16
-        }
-       ]
       }
      ],
-     "size": "358×320"
+     "size": "358×346.3"
     }
    }
   }

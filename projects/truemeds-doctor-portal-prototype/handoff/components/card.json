@@ -7,7 +7,7 @@
   "container": {
    "states": {
     "default": {
-     "seenIn": "home_logout-confirm",
+     "seenIn": "home_active",
      "styles": [
       {
        "property": "background",
@@ -58,37 +58,15 @@
       },
       {
        "property": "padding",
-       "value": "var(--tm-space-lg)",
+       "value": "0 var(--tm-space-lg)",
        "tokens": [
         {
          "native": "tokens.space.lg",
          "web": "--tm-space-lg",
          "value": 16
         }
-       ]
-      },
-      {
-       "property": "display",
-       "value": "flex",
-       "tokens": [],
+       ],
        "layout": true
-      },
-      {
-       "property": "align-items",
-       "value": "center",
-       "tokens": [],
-       "layout": true
-      },
-      {
-       "property": "gap",
-       "value": "var(--tm-space-md)",
-       "tokens": [
-        {
-         "native": "tokens.space.md",
-         "web": "--tm-space-md",
-         "value": 12
-        }
-       ]
       },
       {
        "property": "animation",
@@ -97,7 +75,7 @@
        "layout": true
       }
      ],
-     "size": "358×80"
+     "size": "358×209"
     }
    }
   },
@@ -199,9 +177,25 @@
  ],
  "pictures": [],
  "usedIn": [
+  "home_active",
+  "home_add-failed",
+  "home_add-wheel",
+  "home_added",
+  "home_adding",
+  "home_end-confirmation",
+  "home_expired-pending",
+  "home_idle-expired",
   "home_logout-confirm",
+  "home_manually-ended",
+  "home_near-expiry",
+  "home_no-cases",
+  "home_offline",
   "home_profile",
   "home_profile-case-open",
+  "home_request-failed",
+  "home_requesting",
+  "home_stop-pending",
+  "home_unknown-result",
   "a-back-blocked",
   "a-confirm-busy",
   "a-confirm-failed",

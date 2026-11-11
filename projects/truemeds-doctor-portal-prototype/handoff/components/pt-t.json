@@ -51,12 +51,12 @@
       },
       {
        "property": "font-weight",
-       "value": "var(--tm-font-weight-medium, 500)",
+       "value": "var(--tm-font-weight-semibold)",
        "tokens": [
         {
-         "native": "tokens.font.weight.medium",
-         "web": "--tm-font-weight-medium",
-         "value": "500"
+         "native": "tokens.font.weight.semibold",
+         "web": "--tm-font-weight-semibold",
+         "value": "600"
         }
        ]
       },
@@ -84,7 +84,7 @@
        "inherited": true
       }
      ],
-     "size": "279.6×24"
+     "size": "166.8×24"
     }
    }
   }

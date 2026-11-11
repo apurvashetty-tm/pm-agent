@@ -1,0 +1,102 @@
+{
+ "block": "case-toast",
+ "name": "CaseToast",
+ "rn": "<CaseToast />",
+ "web": ".case-toast",
+ "parts": {
+  "container": {
+   "states": {
+    "default": {
+     "seenIn": "a-back-blocked",
+     "styles": [
+      {
+       "property": "position",
+       "value": "absolute",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "left",
+       "value": "var(--tm-space-xl)",
+       "tokens": [
+        {
+         "native": "tokens.space.xl",
+         "web": "--tm-space-xl",
+         "value": 24
+        }
+       ]
+      },
+      {
+       "property": "right",
+       "value": "var(--tm-space-xl)",
+       "tokens": [
+        {
+         "native": "tokens.space.xl",
+         "web": "--tm-space-xl",
+         "value": 24
+        }
+       ]
+      },
+      {
+       "property": "bottom",
+       "value": "calc(100% + var(--tm-space-sm))",
+       "tokens": [
+        {
+         "native": "tokens.space.sm",
+         "web": "--tm-space-sm",
+         "value": 8
+        }
+       ],
+       "layout": true
+      },
+      {
+       "property": "z-index",
+       "value": "var(--tm-layer-toast)",
+       "tokens": [
+        {
+         "native": "tokens.layer.toast",
+         "web": "--tm-layer-toast",
+         "value": 1000
+        }
+       ]
+      },
+      {
+       "property": "display",
+       "value": "flex",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "justify-content",
+       "value": "center",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      }
+     ],
+     "size": "342×64"
+    }
+   }
+  }
+ },
+ "rules": [
+  {
+   "section": "Kit",
+   "text": "Build it once from the parts × states below (tokens only, copy from messages); it appears on Case page. What it does in each state is in DECIDED.md under those screens."
+  }
+ ],
+ "pictures": [],
+ "usedIn": [
+  "a-back-blocked"
+ ],
+ "states": {
+  "default": [
+   "container"
+  ]
+ }
+}

@@ -1,0 +1,89 @@
+exact     offer_enable-failed @390  changed 0 px  regions none
+exact     offer_enable-failed @360  changed 0 px  regions none
+exact     offer_enabling @390  changed 0 px  regions spinner, spinner
+exact     offer_enabling @360  changed 0 px  regions spinner, spinner
+exact     offer_face-id @390  changed 0 px  regions none
+exact     offer_face-id @360  changed 0 px  regions none
+exact     offer_fingerprint @390  changed 0 px  regions none
+exact     offer_fingerprint @360  changed 0 px  regions none
+exact     offer_offline @390  changed 0 px  regions none
+exact     offer_offline @360  changed 0 px  regions none
+exact     offer_screen-lock @390  changed 0 px  regions none
+exact     offer_screen-lock @360  changed 0 px  regions none
+exact     offer_unavailable @390  changed 0 px  regions none
+exact     offer_unavailable @360  changed 0 px  regions none
+exact     otp_code-expired @390  changed 0 px  regions none
+exact     otp_code-expired @360  changed 0 px  regions none
+exact     otp_cooldown-reconciling @390  changed 0 px  regions none
+exact     otp_cooldown-reconciling @360  changed 0 px  regions none
+exact     otp_couldnt-verify @390  changed 0 px  regions none
+exact     otp_couldnt-verify @360  changed 0 px  regions none
+exact     otp_default @390  changed 0 px  regions none
+exact     otp_default @360  changed 0 px  regions none
+exact     otp_empty-tap @390  changed 0 px  regions none
+exact     otp_empty-tap @360  changed 0 px  regions none
+exact     otp_expired-and-resend-limited @390  changed 0 px  regions none
+exact     otp_expired-and-resend-limited @360  changed 0 px  regions none
+exact     otp_locked @390  changed 0 px  regions none
+exact     otp_locked @360  changed 0 px  regions none
+exact     otp_new-code-sent @390  changed 0 px  regions none
+exact     otp_new-code-sent @360  changed 0 px  regions none
+exact     otp_offline @390  changed 0 px  regions none
+exact     otp_offline @360  changed 0 px  regions none
+exact     otp_resend-available @390  changed 0 px  regions none
+exact     otp_resend-available @360  changed 0 px  regions none
+exact     otp_resend-failed @390  changed 0 px  regions none
+exact     otp_resend-failed @360  changed 0 px  regions none
+exact     otp_resending @390  changed 0 px  regions none
+exact     otp_resending @360  changed 0 px  regions none
+exact     otp_too-many-resends @390  changed 0 px  regions none
+exact     otp_too-many-resends @360  changed 0 px  regions none
+exact     otp_too-short @390  changed 0 px  regions none
+exact     otp_too-short @360  changed 0 px  regions none
+exact     otp_two-tries-left @390  changed 0 px  regions none
+exact     otp_two-tries-left @360  changed 0 px  regions none
+exact     otp_verifying @390  changed 0 px  regions spinner, spinner
+exact     otp_verifying @360  changed 0 px  regions spinner, spinner
+exact     otp_wrong-code @390  changed 0 px  regions none
+exact     otp_wrong-code @360  changed 0 px  regions none
+exact     sign-in_couldnt-send @390  changed 0 px  regions none
+exact     sign-in_couldnt-send @360  changed 0 px  regions none
+exact     sign-in_default @390  changed 0 px  regions none
+exact     sign-in_default @360  changed 0 px  regions none
+exact     sign-in_empty-tap @390  changed 0 px  regions none
+exact     sign-in_empty-tap @360  changed 0 px  regions none
+exact     sign-in_inactive @390  changed 0 px  regions none
+exact     sign-in_inactive @360  changed 0 px  regions none
+exact     sign-in_keyboard-open @390  changed 0 px  regions none
+exact     sign-in_keyboard-open @360  changed 0 px  regions none
+exact     sign-in_not-registered @390  changed 0 px  regions none
+exact     sign-in_not-registered @360  changed 0 px  regions none
+exact     sign-in_offline @390  changed 0 px  regions none
+exact     sign-in_offline @360  changed 0 px  regions none
+exact     sign-in_pasted-cleaned @390  changed 0 px  regions none
+exact     sign-in_pasted-cleaned @360  changed 0 px  regions none
+exact     sign-in_sending @390  changed 0 px  regions spinner, spinner
+exact     sign-in_sending @360  changed 0 px  regions spinner, spinner
+exact     sign-in_too-many-tries @390  changed 0 px  regions none
+exact     sign-in_too-many-tries @360  changed 0 px  regions none
+exact     sign-in_too-short @390  changed 0 px  regions none
+exact     sign-in_too-short @360  changed 0 px  regions none
+exact     sign-in_wrong-first-digit @390  changed 0 px  regions none
+exact     sign-in_wrong-first-digit @360  changed 0 px  regions none
+exact     unlock_cancelled @390  changed 0 px  regions none
+exact     unlock_cancelled @360  changed 0 px  regions none
+exact     unlock_face @390  changed 0 px  regions none
+exact     unlock_face @360  changed 0 px  regions none
+exact     unlock_fingerprint @390  changed 0 px  regions none
+exact     unlock_fingerprint @360  changed 0 px  regions none
+exact     unlock_pending @390  changed 0 px  regions spinner, spinner
+exact     unlock_pending @360  changed 0 px  regions spinner, spinner
+exact     unlock_platform-retry @390  changed 0 px  regions none
+exact     unlock_platform-retry @360  changed 0 px  regions none
+exact     unlock_screen-lock @390  changed 0 px  regions none
+exact     unlock_screen-lock @360  changed 0 px  regions none
+exact     unlock_unavailable @390  changed 0 px  regions none
+exact     unlock_unavailable @360  changed 0 px  regions none
+
+43 states, 86 pictures: exact 86, accepted 0, failed 0
+exit 0

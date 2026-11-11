@@ -1,0 +1,24 @@
+{
+ "steps": "2-4",
+ "thresholdPerChannel": 8,
+ "pictures": 2,
+ "over1pct": 0,
+ "rows": [
+  {
+   "id": "d-scrolled",
+   "w": 390,
+   "changedPx": 1,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "d-scrolled",
+   "w": 360,
+   "changedPx": 2,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  }
+ ]
+}

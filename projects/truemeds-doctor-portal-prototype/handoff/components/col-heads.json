@@ -78,7 +78,7 @@
        ]
       }
      ],
-     "size": "358×20"
+     "size": "358×14.3"
     }
    }
   },
@@ -90,6 +90,12 @@
       {
        "property": "animation",
        "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "text trim (to the ink)",
+       "value": "trim-start cap text",
        "tokens": [],
        "layout": true
       },
@@ -149,7 +155,7 @@
        "inherited": true
       }
      ],
-     "size": "179×20"
+     "size": "179×14.3"
     }
    }
   }

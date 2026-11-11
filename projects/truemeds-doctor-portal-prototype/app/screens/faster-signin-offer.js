@@ -15,12 +15,13 @@ import { promptAnswer } from "../core/unlock.js";
 import { markOffered, setEnabled, HOME_STUB } from "../core/faster-signin.js";
 import { PICTURE_NUMBER } from "../data/test-numbers.js";
 import { authCtx, newLife } from "./entry-ctx.js";
+import { band } from "./band.js";
 
 // Wording follows the phone (D-45, D-64); never suggests Truemeds stores biometric data.
 const VARIANT = {
-  fingerprint:   { icon: "fingerprint", sub: "offer.fingerprintSub", line: "offer.fingerprintLine", trust: "offer.fingerprintTrust" },
-  "face-id":     { icon: "face-id", sub: "offer.faceIdSub", line: "offer.faceIdLine", trust: "offer.faceIdTrust" },
-  "screen-lock": { icon: "lock", sub: "offer.screenLockSub", line: "offer.screenLockLine", trust: "offer.screenLockTrust" },
+  fingerprint:   { icon: "fingerprint", sub: "offer.fingerprintSub", point: "offer.fingerprintPoint", trust: "offer.fingerprintTrust" },
+  "face-id":     { icon: "face-id", sub: "offer.faceIdSub", point: "offer.faceIdPoint", trust: "offer.faceIdTrust" },
+  "screen-lock": { icon: "lock", sub: "offer.screenLockSub", point: "offer.screenLockPoint", trust: "offer.screenLockTrust" },
 };
 const NOTICE = {
   failed:  { cls: "tm-notice--error", icon: "alert-circle", key: "offer.enableFailed" },
@@ -61,16 +62,14 @@ export function render(host, id, { mode, params = {} }) {
   const turnOn = h("button", { class: "tm-btn tm-btn--primary tm-btn--lg tm-btn--block", id: "turn-on", type: "button", onclick: onTurnOn }, turnOnLabel);
   const notNow = h("button", { class: "tm-btn tm-btn--quiet tm-btn--lg tm-btn--block", id: "not-now", type: "button", onclick: onNotNow, text: MSG("offer.notNow") });
   const point = (icon, title, line) => h("li", {}, h("span", { class: "tm-icon", "data-icon": icon, "aria-hidden": "true" }),
-    h("div", {}, h("p", { class: "pt-t", text: title }), h("p", { class: "pt-d", text: line })));
+    h("div", { class: "pt-txt" }, h("p", { class: "pt-t", text: title }), h("p", { class: "pt-d", text: line })));
+  // The one band (D-107) · panel: hero tile → 32 → points, 16 apart (D-108) · the pinned bar.
   const root = h("section", { class: "offer-screen tm", "aria-labelledby": "offer-title" },
-    h("div", { class: "top" },
-      h("img", { class: "login-logo", src: "brand/truemeds-for-doctors.svg", alt: "truemeds for doctors" }),
-      h("h1", { class: "tm-text-title-lg", id: "offer-title", text: MSG("offer.title") }),
-      h("p", { class: "sub", text: MSG(v().sub) })),
-    h("div", { class: "panel" },
+    band({ title: MSG("offer.title"), titleId: "offer-title", subtitle: MSG(v().sub) }),
+    h("div", { class: "entry-panel panel" },
       heroWrap,
       h("ul", { class: "points" },
-        point("circle-check", MSG("offer.pointNoWait"), MSG(v().line)),
+        point("circle-check", MSG(v().point), MSG("offer.pointNoWait")),
         point("lock", MSG(v().trust), MSG("offer.pointStored")),
         point("settings", MSG("offer.pointChange"), MSG("offer.pointChangeLine")))),
     h("div", { class: "tm-actionbar footer" }, notice, turnOn, notNow));

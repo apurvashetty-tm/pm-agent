@@ -1,0 +1,133 @@
+{
+ "block": "profile-row-label",
+ "name": "ProfileRowLabel",
+ "rn": "<ProfileRowLabel />",
+ "web": ".profile-row-label",
+ "parts": {
+  "container": {
+   "states": {
+    "default": {
+     "seenIn": "home_logout-confirm",
+     "styles": [
+      {
+       "property": "display",
+       "value": "flex",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "align-items",
+       "value": "center",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "gap",
+       "value": "var(--tm-space-sm)",
+       "tokens": [
+        {
+         "native": "tokens.space.sm",
+         "web": "--tm-space-sm",
+         "value": 8
+        }
+       ]
+      },
+      {
+       "property": "font-size",
+       "value": "var(--tm-font-size-body-lg)",
+       "tokens": [
+        {
+         "native": "tokens.font.size.body.lg",
+         "web": "--tm-font-size-body-lg",
+         "value": 16
+        }
+       ]
+      },
+      {
+       "property": "line-height",
+       "value": "var(--tm-font-lineheight-md)",
+       "tokens": [
+        {
+         "native": "tokens.font.lineHeight.md",
+         "web": "--tm-font-lineheight-md",
+         "value": 24
+        }
+       ]
+      },
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "color",
+       "value": "var(--tm-content-primary)",
+       "tokens": [
+        {
+         "native": "tokens.color.content.primary",
+         "web": "--tm-content-primary",
+         "value": "#383A42"
+        }
+       ],
+       "inherited": true
+      },
+      {
+       "property": "font-family",
+       "value": "inherit",
+       "tokens": [],
+       "layout": true,
+       "inherited": true
+      },
+      {
+       "property": "font-weight",
+       "value": "inherit",
+       "tokens": [],
+       "layout": true,
+       "inherited": true
+      },
+      {
+       "property": "letter-spacing",
+       "value": "inherit",
+       "tokens": [],
+       "layout": true,
+       "inherited": true
+      },
+      {
+       "property": "text-align",
+       "value": "inherit",
+       "tokens": [],
+       "layout": true,
+       "inherited": true
+      },
+      {
+       "property": "text-wrap",
+       "value": "inherit",
+       "tokens": [],
+       "layout": true,
+       "inherited": true
+      }
+     ],
+     "size": "120.1×24"
+    }
+   }
+  }
+ },
+ "rules": [
+  {
+   "section": "Kit",
+   "text": "Build it once from the parts × states below (tokens only, copy from messages); it appears on Home. What it does in each state is in DECIDED.md under those screens."
+  }
+ ],
+ "pictures": [],
+ "usedIn": [
+  "home_logout-confirm",
+  "home_profile",
+  "home_profile-case-open"
+ ],
+ "states": {
+  "default": [
+   "container"
+  ]
+ }
+}

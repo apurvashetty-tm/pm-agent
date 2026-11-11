@@ -22,6 +22,12 @@
        "layout": true
       },
       {
+       "property": "text trim (to the ink)",
+       "value": "trim-both cap text",
+       "tokens": [],
+       "layout": true
+      },
+      {
        "property": "margin",
        "value": "0",
        "tokens": [],
@@ -29,32 +35,15 @@
       },
       {
        "property": "display",
-       "value": "flex",
+       "value": "block",
        "tokens": [],
        "layout": true
       },
       {
-       "property": "align-items",
+       "property": "text-align",
        "value": "center",
        "tokens": [],
        "layout": true
-      },
-      {
-       "property": "justify-content",
-       "value": "center",
-       "tokens": [],
-       "layout": true
-      },
-      {
-       "property": "gap",
-       "value": "var(--tm-space-xs)",
-       "tokens": [
-        {
-         "native": "tokens.space.xs",
-         "web": "--tm-space-xs",
-         "value": 4
-        }
-       ]
       },
       {
        "property": "font-size",
@@ -90,7 +79,7 @@
        ]
       }
      ],
-     "size": "358×20"
+     "size": "358×13.4"
     }
    }
   },
@@ -154,6 +143,13 @@
        "inherited": true
       },
       {
+       "property": "text-align",
+       "value": "center",
+       "tokens": [],
+       "layout": true,
+       "inherited": true
+      },
+      {
        "property": "text-wrap",
        "value": "pretty",
        "tokens": [],
@@ -161,7 +157,7 @@
        "inherited": true
       }
      ],
-     "size": "99.5×20"
+     "size": "103.5×17.9"
     }
    }
   }

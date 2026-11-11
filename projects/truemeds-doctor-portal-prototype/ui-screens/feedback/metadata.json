@@ -6,7 +6,7 @@
     "next": "Send OTP",
     "clear": "input or submit",
     "retain": "number",
-    "copy": "existing"
+    "copy": "approved D-109 §1 (2026-11-11)"
   },
   "signin.empty": {
     "pattern": "F1",
@@ -69,7 +69,7 @@
     "next": "retry",
     "clear": "new attempt",
     "retain": "number",
-    "copy": "approved (Apurva, 2026-10-26, D-65 — no repeated button)"
+    "copy": "approved D-109 §1 (2026-11-11)"
   },
   "signin.tooMany": {
     "pattern": "W1",
@@ -144,7 +144,7 @@
     "next": "enter new code",
     "clear": "new input",
     "retain": "opt-in",
-    "copy": "approved"
+    "copy": "approved D-109 §1 (2026-11-11)"
   },
   "otp.couldntVerify": {
     "pattern": "F2",
@@ -639,14 +639,14 @@
     "retain": "—",
     "copy": "approved (Apurva, 2026-10-26, D-64/D-65)"
   },
-  "offer.screenLockLine": {
+  "offer.screenLockPoint": {
     "pattern": "none",
     "trigger": "faster sign-in offer (D-61, D-64)",
-    "slot": "first reassurance, second line, screen-lock phones",
+    "slot": "offer point 1 title, screen lock",
     "next": "Turn on faster sign-in",
     "clear": "—",
     "retain": "—",
-    "copy": "approved (Apurva, 2026-10-26, D-64/D-65)"
+    "copy": "approved D-109 §1 (2026-11-11)"
   },
   "offer.screenLockTrust": {
     "pattern": "none",
@@ -909,14 +909,14 @@
     "retain": "—",
     "copy": "approved picture label (plan B6, step 1 recovery 2026-11-09)"
   },
-  "offer.fingerprintLine": {
+  "offer.fingerprintPoint": {
     "pattern": "none",
     "trigger": "entry screen label",
-    "slot": "offer benefit line, fingerprint",
+    "slot": "offer point 1 title, fingerprint",
     "next": "—",
     "clear": "—",
     "retain": "—",
-    "copy": "approved picture label (plan B6, step 1 recovery 2026-11-09)"
+    "copy": "approved D-109 §1 (2026-11-11)"
   },
   "offer.fingerprintTrust": {
     "pattern": "none",
@@ -936,14 +936,14 @@
     "retain": "—",
     "copy": "approved picture label (plan B6, step 1 recovery 2026-11-09)"
   },
-  "offer.faceIdLine": {
+  "offer.faceIdPoint": {
     "pattern": "none",
     "trigger": "entry screen label",
-    "slot": "offer benefit line, Face ID",
+    "slot": "offer point 1 title, Face ID",
     "next": "—",
     "clear": "—",
     "retain": "—",
-    "copy": "approved picture label (plan B6, step 1 recovery 2026-11-09)"
+    "copy": "approved D-109 §1 (2026-11-11)"
   },
   "offer.faceIdTrust": {
     "pattern": "none",
@@ -1133,7 +1133,7 @@
     "next": "—",
     "clear": "—",
     "retain": "—",
-    "copy": "approved picture label (plan B6, step 1 recovery 2026-11-09)"
+    "copy": "approved D-107 (2026-11-11)"
   },
   "offer.pointNoWait": {
     "pattern": "none",
@@ -1142,7 +1142,7 @@
     "next": "—",
     "clear": "—",
     "retain": "—",
-    "copy": "approved picture label (plan B6, step 1 recovery 2026-11-09)"
+    "copy": "approved D-109 §1 (2026-11-11)"
   },
   "offer.pointStored": {
     "pattern": "none",
@@ -1352,7 +1352,7 @@
     "next": "—",
     "clear": "—",
     "retain": "—",
-    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+    "copy": "approved D-106 (2026-11-11)"
   },
   "home.subSetup": {
     "pattern": "none",
@@ -1361,7 +1361,7 @@
     "next": "—",
     "clear": "—",
     "retain": "—",
-    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+    "copy": "approved D-106 (2026-11-11)"
   },
   "home.titleActive": {
     "pattern": "none",
@@ -1370,7 +1370,7 @@
     "next": "—",
     "clear": "—",
     "retain": "—",
-    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+    "copy": "approved D-107 (band audit §3) (2026-11-11)"
   },
   "home.subActive": {
     "pattern": "none",
@@ -1379,7 +1379,7 @@
     "next": "—",
     "clear": "—",
     "retain": "—",
-    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+    "copy": "approved D-107 (band audit §3) (2026-11-11)"
   },
   "home.titleEnded": {
     "pattern": "none",
@@ -1388,7 +1388,7 @@
     "next": "—",
     "clear": "—",
     "retain": "—",
-    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+    "copy": "approved D-107 (2026-11-11)"
   },
   "home.titleStopping": {
     "pattern": "none",
@@ -1415,7 +1415,7 @@
     "next": "—",
     "clear": "—",
     "retain": "—",
-    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+    "copy": "approved D-106 (2026-11-11)"
   },
   "home.timeRemaining": {
     "pattern": "none",
@@ -1433,25 +1433,34 @@
     "next": "—",
     "clear": "—",
     "retain": "—",
-    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+    "copy": "approved D-106 (2026-11-11)"
   },
-  "home.adjust": {
+  "home.custom": {
     "pattern": "none",
     "trigger": "Home screen label",
-    "slot": "Home label",
+    "slot": "Home duration picker group label (setup and add-time sheet)",
     "next": "—",
     "clear": "—",
     "retain": "—",
-    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+    "copy": "approved D-109 §1 (2026-11-11)"
   },
-  "home.minimum": {
+  "home.addHint": {
     "pattern": "none",
-    "trigger": "Home screen label",
-    "slot": "Home label",
+    "trigger": "add-time sheet",
+    "slot": "add-time sheet: helper on the Custom label line (10-hour cap)",
     "next": "—",
     "clear": "—",
     "retain": "—",
-    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+    "copy": "approved D-106 (2026-11-11)"
+  },
+  "home.quickPicks": {
+    "pattern": "none",
+    "trigger": "screen label",
+    "slot": "Home duration picker group label (setup and add-time sheet)",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved D-106 (2026-11-11)"
   },
   "home.hours": {
     "pattern": "none",
@@ -1513,6 +1522,18 @@
     "retain": "—",
     "copy": "approved picture label (plan B6, run A1 2026-11-09)"
   },
+  "home.availableUntil": {
+    "pattern": "none",
+    "trigger": "setup duration picked",
+    "slot": "setup: caption line 8 above Set availability",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved D-106 (2026-11-11)",
+    "placeholders": [
+      "time"
+    ]
+  },
   "home.setting": {
     "pattern": "none",
     "trigger": "Home screen label",
@@ -1565,7 +1586,7 @@
     "next": "—",
     "clear": "—",
     "retain": "—",
-    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+    "copy": "approved D-109 §1 (2026-11-11)"
   },
   "home.addSub": {
     "pattern": "none",
@@ -1583,9 +1604,46 @@
     "next": "—",
     "clear": "—",
     "retain": "—",
-    "copy": "approved picture label (plan B6, run A1 2026-11-09)",
+    "copy": "approved D-106 (hours and minutes from 60 min up) (2026-11-11)",
     "placeholders": [
-      "n"
+      "duration"
+    ]
+  },
+  "home.durMinutes": {
+    "pattern": "none",
+    "trigger": "screen label",
+    "slot": "duration in the Add button, under 60 min",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved D-106 (2026-11-11)",
+    "placeholders": [
+      "m"
+    ]
+  },
+  "home.durHours": {
+    "pattern": "none",
+    "trigger": "screen label",
+    "slot": "duration in the Add button, whole hours",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved D-106 (2026-11-11)",
+    "placeholders": [
+      "h"
+    ]
+  },
+  "home.durHoursMinutes": {
+    "pattern": "none",
+    "trigger": "screen label",
+    "slot": "duration in the Add button, hours and minutes",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "approved D-106 (2026-11-11)",
+    "placeholders": [
+      "h",
+      "m"
     ]
   },
   "home.adding": {
@@ -1622,7 +1680,7 @@
     "next": "—",
     "clear": "—",
     "retain": "—",
-    "copy": "approved picture label (plan B6, run A1 2026-11-09)"
+    "copy": "approved D-109 §1 (2026-11-11)"
   },
   "home.keepAvailable": {
     "pattern": "none",

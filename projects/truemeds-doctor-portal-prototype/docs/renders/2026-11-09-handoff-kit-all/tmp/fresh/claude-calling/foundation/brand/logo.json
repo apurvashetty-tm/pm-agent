@@ -1,0 +1,32 @@
+{
+ "about": "PNG exports of the locked \"truemeds for doctors\" lockup for React Native (react-native-svg can't draw the image the SVG embeds). Generated from the SVG; never redraw, recolour or stretch. React Native picks the 2x / 3x file by its density suffix, drawn tokens.logoLockup.width wide.",
+ "source": "foundation/logo/truemeds-for-doctors.svg",
+ "sourceSha256": "51981c1265893173ceb380b6d70e19ae36e6284953264c8dac977cc1bc811c8d",
+ "widthToken": "tokens.logoLockup.width",
+ "files": [
+  {
+   "folder": "foundation/brand",
+   "name": "truemeds-for-doctors",
+   "densitySuffix": "@1x",
+   "ext": "png",
+   "scale": 1,
+   "widthPx": 166
+  },
+  {
+   "folder": "foundation/brand",
+   "name": "truemeds-for-doctors",
+   "densitySuffix": "@2x",
+   "ext": "png",
+   "scale": 2,
+   "widthPx": 332
+  },
+  {
+   "folder": "foundation/brand",
+   "name": "truemeds-for-doctors",
+   "densitySuffix": "@3x",
+   "ext": "png",
+   "scale": 3,
+   "widthPx": 498
+  }
+ ]
+}

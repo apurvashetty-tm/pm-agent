@@ -1,0 +1,318 @@
+{
+ "block": "case-skel",
+ "name": "CaseSkel",
+ "rn": "<CaseSkel />",
+ "web": ".case-skel",
+ "parts": {
+  "container": {
+   "states": {
+    "details": {
+     "seenIn": "a-loading",
+     "styles": [
+      {
+       "property": "display",
+       "value": "block",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "background",
+       "value": "var(--tm-border-subtle)",
+       "tokens": [
+        {
+         "native": "tokens.color.border.subtle",
+         "web": "--tm-border-subtle",
+         "value": "#EDEEF1"
+        }
+       ]
+      },
+      {
+       "property": "border-radius",
+       "value": "var(--tm-radius-md)",
+       "tokens": [
+        {
+         "native": "tokens.radius.md",
+         "web": "--tm-radius-md",
+         "value": 12
+        }
+       ]
+      },
+      {
+       "property": "margin-bottom",
+       "value": "var(--tm-space-lg)",
+       "tokens": [
+        {
+         "native": "tokens.space.lg",
+         "web": "--tm-space-lg",
+         "value": 16
+        }
+       ]
+      },
+      {
+       "property": "height",
+       "value": "calc(var(--tm-target-min) + var(--tm-space-2xl))",
+       "tokens": [
+        {
+         "native": "tokens.target.min",
+         "web": "--tm-target-min",
+         "value": 48
+        },
+        {
+         "native": "tokens.space.2xl",
+         "web": "--tm-space-2xl",
+         "value": 32
+        }
+       ],
+       "layout": true
+      },
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      }
+     ],
+     "size": "358×80"
+    },
+    "medicines": {
+     "seenIn": "a-loading",
+     "styles": [
+      {
+       "property": "display",
+       "value": "block",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "background",
+       "value": "var(--tm-border-subtle)",
+       "tokens": [
+        {
+         "native": "tokens.color.border.subtle",
+         "web": "--tm-border-subtle",
+         "value": "#EDEEF1"
+        }
+       ]
+      },
+      {
+       "property": "border-radius",
+       "value": "var(--tm-radius-md)",
+       "tokens": [
+        {
+         "native": "tokens.radius.md",
+         "web": "--tm-radius-md",
+         "value": 12
+        }
+       ]
+      },
+      {
+       "property": "margin-bottom",
+       "value": "var(--tm-space-lg)",
+       "tokens": [
+        {
+         "native": "tokens.space.lg",
+         "web": "--tm-space-lg",
+         "value": 16
+        }
+       ]
+      },
+      {
+       "property": "height",
+       "value": "calc(var(--tm-target-min) * 8 + var(--tm-space-xl) + var(--tm-space-lg))",
+       "tokens": [
+        {
+         "native": "tokens.target.min",
+         "web": "--tm-target-min",
+         "value": 48
+        },
+        {
+         "native": "tokens.space.xl",
+         "web": "--tm-space-xl",
+         "value": 24
+        },
+        {
+         "native": "tokens.space.lg",
+         "web": "--tm-space-lg",
+         "value": 16
+        }
+       ],
+       "layout": true
+      },
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      }
+     ],
+     "size": "358×424"
+    },
+    "notes": {
+     "seenIn": "a-loading",
+     "styles": [
+      {
+       "property": "display",
+       "value": "block",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "background",
+       "value": "var(--tm-border-subtle)",
+       "tokens": [
+        {
+         "native": "tokens.color.border.subtle",
+         "web": "--tm-border-subtle",
+         "value": "#EDEEF1"
+        }
+       ]
+      },
+      {
+       "property": "border-radius",
+       "value": "var(--tm-radius-md)",
+       "tokens": [
+        {
+         "native": "tokens.radius.md",
+         "web": "--tm-radius-md",
+         "value": 12
+        }
+       ]
+      },
+      {
+       "property": "margin-bottom",
+       "value": "var(--tm-space-lg)",
+       "tokens": [
+        {
+         "native": "tokens.space.lg",
+         "web": "--tm-space-lg",
+         "value": 16
+        }
+       ]
+      },
+      {
+       "property": "height",
+       "value": "calc(var(--tm-target-min) * 6 + var(--tm-space-xl) + var(--tm-space-xs))",
+       "tokens": [
+        {
+         "native": "tokens.target.min",
+         "web": "--tm-target-min",
+         "value": 48
+        },
+        {
+         "native": "tokens.space.xl",
+         "web": "--tm-space-xl",
+         "value": 24
+        },
+        {
+         "native": "tokens.space.xs",
+         "web": "--tm-space-xs",
+         "value": 4
+        }
+       ],
+       "layout": true
+      },
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      }
+     ],
+     "size": "358×192"
+    },
+    "details · default": {
+     "seenIn": "a-loading",
+     "styles": [
+      {
+       "property": "display",
+       "value": "block",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "background",
+       "value": "var(--tm-border-subtle)",
+       "tokens": [
+        {
+         "native": "tokens.color.border.subtle",
+         "web": "--tm-border-subtle",
+         "value": "#EDEEF1"
+        }
+       ]
+      },
+      {
+       "property": "border-radius",
+       "value": "var(--tm-radius-md)",
+       "tokens": [
+        {
+         "native": "tokens.radius.md",
+         "web": "--tm-radius-md",
+         "value": 12
+        }
+       ]
+      },
+      {
+       "property": "margin-bottom",
+       "value": "var(--tm-space-lg)",
+       "tokens": [
+        {
+         "native": "tokens.space.lg",
+         "web": "--tm-space-lg",
+         "value": 16
+        }
+       ]
+      },
+      {
+       "property": "height",
+       "value": "calc(var(--tm-target-min) + var(--tm-space-2xl))",
+       "tokens": [
+        {
+         "native": "tokens.target.min",
+         "web": "--tm-target-min",
+         "value": 48
+        },
+        {
+         "native": "tokens.space.2xl",
+         "web": "--tm-space-2xl",
+         "value": 32
+        }
+       ],
+       "layout": true
+      },
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      }
+     ],
+     "size": "358×80"
+    }
+   }
+  }
+ },
+ "rules": [
+  {
+   "section": "Kit",
+   "text": "Build it once from the parts × states below (tokens only, copy from messages); it appears on Case page. What it does in each state is in DECIDED.md under those screens."
+  }
+ ],
+ "pictures": [],
+ "usedIn": [
+  "a-loading"
+ ],
+ "states": {
+  "details": [
+   "container"
+  ],
+  "medicines": [
+   "container"
+  ],
+  "notes": [
+   "container"
+  ],
+  "details · default": [
+   "container"
+  ]
+ }
+}

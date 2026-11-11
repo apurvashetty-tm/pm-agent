@@ -1,0 +1,129 @@
+{
+ "block": "spinner",
+ "name": "Spinner",
+ "rn": "<Spinner /> (inside a busy Button)  [RECOMMENDED]",
+ "web": ".tm-btn--busy .tm-spinner",
+ "parts": {
+  "ring": {
+   "states": {
+    "default": {
+     "seenIn": "sign-in_sending",
+     "styles": [
+      {
+       "property": "display",
+       "value": "inline-block",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "width",
+       "value": "var(--tm-spinner-size)",
+       "tokens": [
+        {
+         "native": "tokens.spinner.size",
+         "web": "--tm-spinner-size",
+         "value": 16
+        }
+       ]
+      },
+      {
+       "property": "height",
+       "value": "var(--tm-spinner-size)",
+       "tokens": [
+        {
+         "native": "tokens.spinner.size",
+         "web": "--tm-spinner-size",
+         "value": 16
+        }
+       ]
+      },
+      {
+       "property": "flex",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "margin-right",
+       "value": "var(--tm-space-sm)",
+       "tokens": [
+        {
+         "native": "tokens.space.sm",
+         "web": "--tm-space-sm",
+         "value": 8
+        }
+       ]
+      },
+      {
+       "property": "border",
+       "value": "var(--tm-spinner-ring) solid var(--tm-content-inverse)",
+       "tokens": [
+        {
+         "native": "tokens.spinner.ring",
+         "web": "--tm-spinner-ring",
+         "value": 2
+        },
+        {
+         "native": "tokens.color.content.inverse",
+         "web": "--tm-content-inverse",
+         "value": "#FFFFFF"
+        }
+       ],
+       "layout": true
+      },
+      {
+       "property": "border-top-color",
+       "value": "transparent",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "border-radius",
+       "value": "var(--tm-radius-full)",
+       "tokens": [
+        {
+         "native": "tokens.radius.full",
+         "web": "--tm-radius-full",
+         "value": 999
+        }
+       ]
+      },
+      {
+       "property": "animation",
+       "value": "tm-spin var(--tm-duration-spinner) linear infinite",
+       "tokens": [
+        {
+         "native": "tokens.duration.spinner",
+         "web": "--tm-duration-spinner",
+         "value": 800
+        }
+       ],
+       "layout": true
+      }
+     ],
+     "size": "16×16"
+    }
+   }
+  }
+ },
+ "rules": [
+  {
+   "section": "Design rules L2",
+   "text": "L2 — Loading primary buttons: brand-blue fill, white label, white spinner, on every screen (sign-in \"Sending OTP\", OTP \"Verifying\", any future loading primary)."
+  },
+  {
+   "section": "Design rules 8.8",
+   "text": "**Loading primary:** brand-blue fill, white label and white spinner (`.tm-btn--busy` with `.tm-spinner`) on every screen. Never grey, pale or disabled-looking."
+  }
+ ],
+ "pictures": [
+  {
+   "state": "busy",
+   "file": "components/pictures/spinner_busy.png",
+   "croppedFrom": "sign-in_sending_w390.png"
+  }
+ ],
+ "usedIn": [
+  "sign-in_sending"
+ ]
+}

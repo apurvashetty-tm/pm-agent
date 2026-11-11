@@ -9,6 +9,8 @@ import http from "http"; import fs from "fs"; import path from "path"; import ur
 
 const HERE = path.dirname(url.fileURLToPath(import.meta.url));
 const APP = path.join(path.resolve(HERE, ".."), "app");
+const registry = JSON.parse(fs.readFileSync(path.join(APP, "../ui-screens/feedback/messages.json"), "utf8"));
+const addCopy = (duration) => { const e = registry["home.addConfirm"]; return (typeof e === "string" ? e : e.text).replace("{duration}", duration); };
 const PORT = 8773, BASE = `http://localhost:${PORT}/`;
 const results = [];
 const check = (id, name, ok, detail = "") => { results.push(!!ok); console.log(`${ok ? "PASS" : "FAIL"} ${id} ${name}${detail && !ok ? "  [" + detail + "]" : ""}`); };
@@ -112,7 +114,7 @@ async function swipe(p, col, dy) {   // a real touch swipe (finger moves up by d
   const h1 = await sel(p, "h"), m1 = await sel(p, "m");
   const label = await p.textContent(".tm-sheet [data-confirm]").catch(() => p.textContent("[data-confirm]"));
   const n = h1.v * 60 + m1.v;
-  check("W5", "Add time sheet: swipe sets the value, the Add button carries it", h1.v === 1 && h1.aligned && label.trim() === `Add ${n} minutes`, JSON.stringify({ h1, m1, label, t0 }));
+  check("W5", "Add time sheet: swipe sets the value, the Add button carries it", h1.v === 1 && h1.aligned && label.trim() === addCopy(`${Math.floor(n / 60)} h${n % 60 ? ` ${n % 60} min` : ""}`), JSON.stringify({ h1, m1, label, t0 }));
   await p.close();
 }
 

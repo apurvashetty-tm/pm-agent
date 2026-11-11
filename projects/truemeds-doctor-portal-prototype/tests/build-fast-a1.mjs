@@ -16,7 +16,7 @@ add("R03-a", "timer: h:mm:ss from one hour, m:ss below, set only on confirmation
 });
 add("R03-b", "Add 30 minutes to 5:00 gives 35:00", "home_near-expiry", "app-logic.md:60,68 (D-81 F10)", async (d) => {
   assert.equal(await time(d), "5:00");
-  await d.click("+ Add time"); await d.click("30 min"); await d.root().locator(".tm-sheet:visible [data-confirm]").click(); await d.settle();
+  await d.click("Add time"); await d.click("30 min"); await d.root().locator(".tm-sheet:visible [data-confirm]").click(); await d.settle();
   assert.match(await time(d), /^3[45]:\d\d$/, "5:00 + 30 min = 35:00 (less the seconds the server took)");
   await d.msg("home.added");
 });
@@ -37,7 +37,7 @@ add("R03-e", "0:00 when availability ran out with a request still open", "home_e
 add("R04-a", "a confirmed prescription counts once; earnings = count × setting", "a-confirm-failed", "app-logic.md:71,279 (D-81 F10)", async (d) => {
   await d.choose("prescribe", "saved"); await d.click("Confirm prescription"); await d.settle(); await d.text("Prescription confirmed");
   await d.click("Back to Home"); await d.settle();
-  const rx = await d.root().locator(".rx strong").innerText(); assert.equal(rx, "4", "3 before + 1 confirmed");
+  const rx = await d.root().locator("#home-rx .srow__value").innerText(); assert.equal(rx, "4", "3 before + 1 confirmed");
   await d.root().getByRole("button", { name: "Profile", exact: true }).click();
   await d.text(`₹${(4 * ms("earningsPerConfirmedRx")).toFixed(2)}`);
 });
@@ -46,7 +46,7 @@ add("R04-c", "Request next case asks for the next case at once", "t10a-confirmed
 });
 add("R04-b", "release does not count", "t01-ready", "app-logic.md:71", async (d) => {
   await d.click("Back"); await d.click("Release case"); await d.settle();
-  assert.equal(await d.root().locator(".rx strong").innerText(), "3");
+  assert.equal(await d.root().locator("#home-rx .srow__value").innerText(), "3");
 });
 add("R05-a", "Help, bell and User manual open the blank placeholder and Back returns", "home_active", "plan v3.2 §0 (D-88)", async (d) => {
   for (const name of ["Help", "Notifications"]) {

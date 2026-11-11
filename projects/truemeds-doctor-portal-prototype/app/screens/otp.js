@@ -14,6 +14,8 @@ import { PLACEHOLDER, TERMS_URL, PRIVACY_URL } from "../data/links.js";
 import { mockKeyboard, drawsKeyboard } from "../shell/mock-keyboard.js";
 import { afterSignIn } from "../core/faster-signin.js";
 import { authCtx, newLife } from "./entry-ctx.js";
+import { band } from "./band.js";
+import { revealAboveKeyboard } from "./parts.js";
 
 const C = PICTURE_CODE;
 const sec = (m, s) => (m * 60 + s) * 1000;
@@ -71,8 +73,9 @@ export function render(host, id, { mode, params = {} }) {
   if (params.saved) Object.assign(m, params.saved, { busy: false, rs: params.saved.rs === "sending" ? "available" : params.saved.rs });
   const leave = (to) => { saveCurrent({ saved: { ...m } }); push(null, to); };
 
-  // ---- markup (approved hierarchy: .screen > .top (logo, .head) · .panel > .grp (field, notice, resend) · .grp (consent, button)) ----
-  const change = h("a", { class: "lk", href: "#", onclick: (e) => { e.preventDefault(); goChange(); }, text: MSG("otp.change") });
+  // ---- markup: the one band (D-107) · panel: code boxes (+ message line) → 32 → resend line → 32 → legal → 8 → Verify (D-108) ----
+  // "Change" is an inline link whose 48 hit area adds no height (.tm-link, band variant 3).
+  const change = h("a", { class: "tm-link lk", href: "#", onclick: (e) => { e.preventDefault(); goChange(); }, text: MSG("otp.change") });
   const code = h("input", { class: "tm-otp-slots__input", id: "c", type: "text", inputmode: "numeric", pattern: "[0-9]*",
     maxlength: String(OTP_LENGTH), autocomplete: "one-time-code", "aria-label": MSG("otp.codeLabel"), "aria-describedby": "h", "aria-invalid": "false" });
   const slots = Array.from({ length: OTP_LENGTH }, () => h("span", { class: "tm-otp-slots__slot", "aria-hidden": "true" }));
@@ -94,15 +97,11 @@ export function render(host, id, { mode, params = {} }) {
   const btn = h("button", { class: "tm-btn tm-btn--lg tm-btn--primary tm-btn--block", id: "b", type: "button", onclick: onVerify });
   const keyboard = kbDrawn ? mockKeyboard(typeKey) : null;
   const root = h("section", { class: "otp-screen tm", "aria-labelledby": "otp-title" },
-    h("div", { class: "top" },
-      h("img", { class: "login-logo", src: "brand/truemeds-for-doctors.svg", alt: "truemeds for doctors" }),
-      h("div", { class: "head" },
-        h("h1", { class: "tm-text-title-lg", id: "otp-title", text: MSG("otp.title") }),
-        h("p", {}, parts("otp.sentTo", { number: h("b", { text: formatNumber(number) }) }, MSG), " · ", change))),
-    h("div", { class: "panel" },
-      h("div", { class: "grp" }, field, note, rs),
-      h("div", { class: "grp" }, consent, btn)),
+    band({ title: MSG("otp.title"), titleId: "otp-title",
+      subtitle: [...parts("otp.sentTo", { number: h("b", { text: formatNumber(number) }) }, MSG), " · ", change] }),
+    h("div", { class: "entry-panel panel" }, field, note, rs, consent, btn),
     keyboard);
+  const panel = root.querySelector(".panel");
   host.replaceChildren(root);
 
   // ---- paint ----
@@ -130,7 +129,7 @@ export function render(host, id, { mode, params = {} }) {
     rs.hidden = m.rs === "hidden";
     rsLead.hidden = m.rs === "checking";   // D-81 F7: "Checking…" alone
     if (m.rs === "wait") rsBody.replaceChildren(...parts("otp.resendIn", { time: h("span", { class: "timer", text: formatWait(m.resendAt - clock.now()) }) }, MSG));
-    if (m.rs === "available") rsBody.replaceChildren(h("button", { type: "button", onclick: onResend, text: MSG("otp.resendCode") }));
+    if (m.rs === "available") rsBody.replaceChildren(h("button", { class: "tm-link", type: "button", onclick: onResend, text: MSG("otp.resendCode") }));
     if (m.rs === "sending") rsBody.textContent = MSG("otp.resending");
     if (m.rs === "checking") rsBody.textContent = MSG("otp.checking");
   }
@@ -145,12 +144,13 @@ export function render(host, id, { mode, params = {} }) {
     helper.textContent = m.err ? MSG(m.err.key, m.err.values || {}) : "";
     if (m.err) helper.setAttribute("role", "alert"); else helper.removeAttribute("role");
     paintNote();
-    codeSlot.classList.toggle("off", !!m.note);
+    // D-108: the message line holds no space when empty (reserved lines add no visible space); a notice box replaces it.
+    codeSlot.classList.toggle("off", !!m.note || !(m.err || m.s1));
     s1.classList.toggle("show", m.s1);
     s1.firstChild.textContent = m.s1 ? MSG("otp.newSent") : "";
     paintResend();
+    // An expired code hides the legal line (it described Verify, which is off); D-108: it no longer keeps its height.
     consent.classList.toggle("show", m.consent === "show" && !m.locked);
-    consent.classList.toggle("reserve", m.consent === "reserve");
     const off = m.locked || m.busy || m.expired || m.hold;
     btn.disabled = off;
     btn.classList.toggle("tm-btn--busy", m.busy);
@@ -158,6 +158,8 @@ export function render(host, id, { mode, params = {} }) {
     btn.replaceChildren(...(m.busy ? [h("span", { class: "tm-spinner", "aria-hidden": "true" }), MSG("otp.submitBusy")] : [MSG("otp.submit")]));
     root.classList.toggle("kb", kbDrawn && m.kb && !m.locked);
     if (keyboard) keyboard.hidden = !(m.kb && !m.locked);
+    // The drawn keyboard acts as the phone's (F-05): Verify stays 16 clear above it (the panel scrolls on a short phone).
+    if (keyboard && m.kb && !m.locked) requestAnimationFrame(() => revealAboveKeyboard(panel, btn, keyboard));
     paintSlots();
     if (window.TMIcons) window.TMIcons.render(root);
   }

@@ -1,0 +1,130 @@
+{
+ "block": "offer-screen",
+ "name": "OfferScreen",
+ "rn": "<OfferScreen />",
+ "web": ".offer-screen",
+ "parts": {
+  "container": {
+   "states": {
+    "default": {
+     "seenIn": "offer_enable-failed",
+     "styles": [
+      {
+       "property": "font-family",
+       "value": "var(--tm-font)",
+       "tokens": [
+        {
+         "native": "tokens.font.family",
+         "web": "--tm-font",
+         "value": "Plus Jakarta Sans"
+        }
+       ]
+      },
+      {
+       "property": "font-size",
+       "value": "var(--tm-font-size-body-md)",
+       "tokens": [
+        {
+         "native": "tokens.font.size.body.md",
+         "web": "--tm-font-size-body-md",
+         "value": 14
+        }
+       ]
+      },
+      {
+       "property": "line-height",
+       "value": "var(--tm-font-lineheight-sm)",
+       "tokens": [
+        {
+         "native": "tokens.font.lineHeight.sm",
+         "web": "--tm-font-lineheight-sm",
+         "value": 20
+        }
+       ]
+      },
+      {
+       "property": "color",
+       "value": "var(--tm-content-primary)",
+       "tokens": [
+        {
+         "native": "tokens.color.content.primary",
+         "web": "--tm-content-primary",
+         "value": "#383A42"
+        }
+       ]
+      },
+      {
+       "property": "background",
+       "value": "var(--tm-surface-brand-subtle)",
+       "tokens": [
+        {
+         "native": "tokens.color.surface.brand.subtle",
+         "web": "--tm-surface-brand-subtle",
+         "value": "#EBF8FF"
+        }
+       ]
+      },
+      {
+       "property": "height",
+       "value": "100%",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "display",
+       "value": "flex",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "flex-direction",
+       "value": "column",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "position",
+       "value": "relative",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "overflow",
+       "value": "hidden",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      }
+     ],
+     "size": "390×844"
+    }
+   }
+  }
+ },
+ "rules": [
+  {
+   "section": "Kit",
+   "text": "Build it once from the parts × states below (tokens only, copy from messages); it appears on Faster sign-in offer. What it does in each state is in DECIDED.md under those screens."
+  }
+ ],
+ "pictures": [],
+ "usedIn": [
+  "offer_enable-failed",
+  "offer_enabling",
+  "offer_face-id",
+  "offer_fingerprint",
+  "offer_offline",
+  "offer_screen-lock",
+  "offer_unavailable"
+ ],
+ "states": {
+  "default": [
+   "container"
+  ]
+ }
+}

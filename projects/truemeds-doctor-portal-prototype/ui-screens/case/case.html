@@ -649,10 +649,7 @@ body.concept-closed #success-toast{pointer-events:auto}
 
   <!-- Discard changes? — shown only when closing the Prescribe screen after editing -->
   <div id="sheet-discard" class="bottom-sheet tm-sheet">
-    <header class="tm-sheet__header"><h2 class="tm-sheet__title">Discard changes?</h2><button class="tm-btn tm-btn--quiet tm-btn--icon tm-sheet__close" onclick="closeSheet()" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button></header>
-    <div class="tm-sheet__body">
-      <p class="tm-sheet__subtitle">Your changes to this medicine won’t be saved.</p>
-    </div>
+    <header class="tm-sheet__header"><div class="tm-sheet__heading"><h2 class="tm-sheet__title">Discard changes?</h2><p class="tm-sheet__subtitle">Your changes to this medicine won’t be saved.</p></div><button class="tm-btn tm-btn--quiet tm-btn--icon tm-sheet__close" onclick="closeSheet()" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button></header>
     <div class="tm-sheet__actions"><button class="tm-btn tm-btn--destructive tm-btn--lg tm-btn--block" onclick="discardPrescribe()">Discard</button>
       <button class="tm-btn tm-btn--quiet tm-btn--lg tm-btn--block" onclick="closeSheet()">Keep editing</button></div>
   </div>
@@ -739,10 +736,7 @@ body.concept-closed #success-toast{pointer-events:auto}
 
   <!-- Log out confirmation -->
   <div id="sheet-logout" class="bottom-sheet tm-sheet">
-    <header class="tm-sheet__header"><h2 class="tm-sheet__title">Log out?</h2><button class="tm-btn tm-btn--quiet tm-btn--icon tm-sheet__close" onclick="closeSheet()" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button></header>
-    <div class="tm-sheet__body">
-      <p class="tm-sheet__subtitle">You'll stop getting orders until you sign in again.</p>
-    </div>
+    <header class="tm-sheet__header"><div class="tm-sheet__heading"><h2 class="tm-sheet__title">Log out?</h2><p class="tm-sheet__subtitle">You'll stop getting orders until you sign in again.</p></div><button class="tm-btn tm-btn--quiet tm-btn--icon tm-sheet__close" onclick="closeSheet()" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button></header>
     <div class="tm-sheet__actions">
       <button class="tm-btn tm-btn--destructive tm-btn--lg tm-btn--block" onclick="confirmLogout()">Log out</button>
       <button class="tm-btn tm-btn--quiet tm-btn--lg tm-btn--block" onclick="closeSheet()">Stay signed in</button>
@@ -759,10 +753,7 @@ body.concept-closed #success-toast{pointer-events:auto}
 
   <!-- Customer Unavailable Sheet -->
   <div id="sheet-unavailable" class="bottom-sheet tm-sheet">
-    <header class="tm-sheet__header"><h2 class="tm-sheet__title">Patient unavailable</h2><button class="tm-btn tm-btn--quiet tm-btn--icon tm-sheet__close" onclick="closeSheet()" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button></header>
-    <div class="tm-sheet__body">
-      <p id="unavail-desc" class="tm-sheet__subtitle">Patient could not be reached. Case will be reassigned to the queue.</p>
-    </div>
+    <header class="tm-sheet__header"><div class="tm-sheet__heading"><h2 class="tm-sheet__title">Patient unavailable</h2><p id="unavail-desc" class="tm-sheet__subtitle">Patient could not be reached. Case will be reassigned to the queue.</p></div><button class="tm-btn tm-btn--quiet tm-btn--icon tm-sheet__close" onclick="closeSheet()" aria-label="Close"><span class="tm-icon" data-icon="x"></span></button></header>
     <div class="tm-sheet__actions"><button class="tm-btn tm-btn--primary tm-btn--lg tm-btn--block" onclick="requestNextOrder()">Request next case <span class="tm-icon" data-icon="arrow-right"></span></button></div>
   </div>
 </div><!-- /sheet-overlay -->
@@ -840,7 +831,7 @@ document.addEventListener('DOMContentLoaded', syncCaseActionBar);
   const leave = document.createElement('div');
   leave.id = 'concept-leave'; leave.hidden = true;
   leave.className = 'tm-overlay';
-  leave.innerHTML = `<section class="tm-sheet" id="cl-sheet" role="dialog" aria-modal="true" aria-labelledby="cl-t" tabindex="-1"><header class="tm-sheet__header"><h2 class="tm-sheet__title" id="cl-t">Leave this case?</h2><button class="tm-btn tm-btn--quiet tm-btn--icon tm-sheet__close" id="cl-x" type="button" aria-label="Close"><span class="tm-icon" data-icon="x" aria-hidden="true"></span></button></header><div class="tm-sheet__body"><p class="tm-sheet__subtitle">It goes back to the queue for another doctor.</p></div><div class="tm-sheet__actions"><button class="tm-btn tm-btn--primary tm-btn--lg tm-btn--block" id="cl-release" type="button">Release case</button><button class="tm-btn tm-btn--quiet tm-btn--lg tm-btn--block" id="cl-stay" type="button">Stay</button></div></section>`;
+  leave.innerHTML = `<section class="tm-sheet" id="cl-sheet" role="dialog" aria-modal="true" aria-labelledby="cl-t" tabindex="-1"><header class="tm-sheet__header"><div class="tm-sheet__heading"><h2 class="tm-sheet__title" id="cl-t">Leave this case?</h2><p class="tm-sheet__subtitle">It goes back to the queue for another doctor.</p></div><button class="tm-btn tm-btn--quiet tm-btn--icon tm-sheet__close" id="cl-x" type="button" aria-label="Close"><span class="tm-icon" data-icon="x" aria-hidden="true"></span></button></header><div class="tm-sheet__actions"><button class="tm-btn tm-btn--primary tm-btn--lg tm-btn--block" id="cl-release" type="button">Release case</button><button class="tm-btn tm-btn--quiet tm-btn--lg tm-btn--block" id="cl-stay" type="button">Stay</button></div></section>`;
   const showLeave = () => { leave.hidden = false; document.getElementById('cl-sheet').focus({ preventScroll: true }); };
   frame.appendChild(leave);
   const toast = document.createElement('div');

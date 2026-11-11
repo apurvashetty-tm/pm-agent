@@ -40,13 +40,19 @@
        "layout": true
       },
       {
+       "property": "text trim (to the ink)",
+       "value": "trim-both cap text",
+       "tokens": [],
+       "layout": true
+      },
+      {
        "property": "margin",
-       "value": "0 0 var(--tm-space-lg)",
+       "value": "var(--tm-space-2xl) 0 0",
        "tokens": [
         {
-         "native": "tokens.space.lg",
-         "web": "--tm-space-lg",
-         "value": 16
+         "native": "tokens.space.2xl",
+         "web": "--tm-space-2xl",
+         "value": 32
         }
        ],
        "layout": true
@@ -87,7 +93,7 @@
        "inherited": true
       }
      ],
-     "size": "358×32"
+     "size": "358×27.9"
     }
    }
   },

@@ -1,0 +1,12 @@
+PASS o04-unit over 10 digits (no +91 / 0 prefix) → signin.long at once; +91 / 0 cleaning unchanged
+PASS o11-config Terms / Privacy URLs are one config value each (links.js), not typed in the OTP screen
+PASS o25-copy signin.signup is one entry with a {link} placeholder; the link text keeps its own key
+PASS o04 11 typed digits → field error "That’s more than 10 digits…" (same helper slot and style as signin.short); clears at 10; +91 paste still cleans
+PASS o10 back from OTP via Change: number kept; the first typed digit adds to it (here over 10 → o04 error), it does not replace it
+PASS o25 sign-up line reads "New to Truemeds? Sign up", only "Sign up" is the link
+PASS o11 OTP Terms → D-101 terms URL, Privacy → D-101 privacy URL, new tab
+PASS capture-360 o04 state captured at 360 (sign-in_too-long_w360.png)
+PASS capture-390 o04 state captured at 390 (sign-in_too-long_w390.png)
+PASS errors 0 page / console errors
+10/10 pass
+exit 0

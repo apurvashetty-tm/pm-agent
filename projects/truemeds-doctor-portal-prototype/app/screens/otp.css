@@ -1,49 +1,37 @@
-/* OTP — lifted from ui-screens/otp/otp.html. Tokens only (--tm-*); the drawn phone keyboard is in shell/mock-keyboard.css.
-   The screen fills the app frame (RULES §7). */
+/* OTP. Band and panel: band.css (D-107). Below the band, D-108 visible gaps (text trimmed to its ink with text-box, so the
+   box gaps below are what the eye sees): code boxes (+ message line, 8) → 32 → resend line → 32 → legal line → 8 → Verify.
+   A notice: 16 under the code boxes, 32 to the next thing (locked / expired-and-limited: → 32 → Verify).
+   Tokens only (--tm-*); the drawn phone keyboard is in shell/mock-keyboard.css. The screen fills the app frame (RULES §7). */
 .otp-screen { height: 100%; display: flex; flex-direction: column; box-sizing: border-box; position: relative; overflow: hidden;   /* raw-ok: 100% fill (geometry) */
   background: var(--tm-surface-brand-subtle); font-family: var(--tm-font); color: var(--tm-content-primary); }
-/* Task header (D-61): logo + title, no Back (Change and the phone back gesture cover it) */
-.otp-screen .login-logo { display: block; width: var(--tm-logo-lockup-width); height: auto; margin-bottom: var(--tm-space-lg); }
-.otp-screen .top { padding: var(--tm-space-lg) var(--tm-space-page) var(--tm-space-2xl); }   /* A-05 */
-.otp-screen .head { margin-top: var(--tm-space-sm); display: flex; flex-direction: column; gap: var(--tm-space-sm); }
-.otp-screen .head h1 { margin: 0; }
-/* A-04: subtitle 14/20; the number is semibold-weight per the approved file */
-.otp-screen .head p { margin: 0; font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); color: var(--tm-content-secondary); }
-.otp-screen .head p b { color: var(--tm-content-primary); font-weight: var(--tm-font-weight-medium, 500); }
-.otp-screen a.lk { color: var(--tm-content-brand); font-weight: var(--tm-font-weight-semibold); text-decoration: none; display: inline-flex; align-items: center; min-height: var(--tm-target-min); }
-/* White panel; section gap 32 between groups, related gap 16 within a group (RULES §8.3). Scrolls when it does not fit. */
-.otp-screen .panel { flex: 1; min-height: 0; overflow-y: auto; background: var(--tm-surface-primary);
-  border-radius: var(--tm-radius-2xl) var(--tm-radius-2xl) 0 0; padding: var(--tm-space-2xl) var(--tm-space-page) var(--tm-space-xl);
-  display: flex; flex-direction: column; }
-/* F-05: while the phone's own keyboard is open (html.phone-kb, shell/keyboard.js) the whole screen scrolls, header included, so the
+/* The panel scrolls when it doesn't fit (Verify stays inline under the content, RULES §8.4). */
+.otp-screen .panel { overflow-y: auto; }
+/* F-05: while the phone's own keyboard is open (html.phone-kb, shell/keyboard.js) the whole screen scrolls, band included, so the
    code boxes and Verify & sign in both fit above the keyboard on a short phone. Never set on desktop or in pictures. */
 .phone-kb .otp-screen { overflow-y: auto; }
 .phone-kb .otp-screen .panel { flex: 1 0 auto; overflow-y: visible; }
-.otp-screen.kb .panel { padding-bottom: calc(256px + var(--tm-space-lg)); }   /* raw-ok: drawn keyboard height (prototype only). D-46: clears the keyboard by 16 */
-.otp-screen .grp { display: flex; flex-direction: column; gap: var(--tm-space-lg); }
-.otp-screen .grp + .grp { margin-top: var(--tm-space-2xl); }
-.otp-screen .code { display: flex; flex-direction: column; gap: var(--tm-space-sm); }
+.otp-screen.kb .panel { padding-bottom: calc(256px + var(--tm-space-lg)); }   /* raw-ok: drawn keyboard height (prototype only). Clears the keyboard by 16 */
+.otp-screen :is(.tm-field__helper, .s1, .rs, .consent) { text-box: trim-both cap text; }
+.otp-screen .code { display: flex; flex-direction: column; gap: var(--tm-space-sm); flex: none; }   /* boxes to message line 8 (joins) */
 .otp-screen .tm-field__helper { margin: 0; }
 .otp-screen .tm-otp-slots { position: relative; }
-/* Round 5 B: one reserved line under the boxes (helper or new-code line), hidden when a notice box shows */
-.otp-screen .code-slot { min-height: var(--tm-font-lineheight-sm); }   /* one 20px text line */
 .otp-screen .code-slot.off { display: none; }
-.otp-screen .note { display: none; }
+/* Notice: 16 under the code boxes (a message about the field), 32 to the next thing. */
+.otp-screen .note { display: none; margin-top: var(--tm-space-lg); }
 .otp-screen .note.show { display: flex; }
-.otp-screen .grp > .note { margin-top: calc(var(--tm-space-sm) - var(--tm-space-lg)); }   /* A-14 */
 .otp-screen .note .tm-icon { flex-shrink: 0; margin-top: 1px; }   /* raw-ok: optical nudge (icon on the first text line) */
 .otp-screen .note a { color: var(--tm-content-brand); font-weight: var(--tm-font-weight-semibold); text-decoration: none; }
-/* Resend line: one centred line, 48 tall in every form (A-03); timer semibold with fixed-width digits */
-.otp-screen .rs { margin: 0; text-align: center; font-size: var(--tm-font-size-body-md); line-height: var(--tm-target-min); min-height: var(--tm-target-min); color: var(--tm-content-secondary); }
+/* Resend line: one centred 20 line, 32 from what is above; "Resend code" is a .tm-link (48 hit area, no added height). */
+.otp-screen .rs { margin: var(--tm-space-2xl) 0 0; text-align: center; font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); color: var(--tm-content-secondary); }
+.otp-screen .rs[hidden] { display: none; }
 .otp-screen .rs .timer { font-weight: var(--tm-font-weight-semibold); font-variant-numeric: tabular-nums; color: var(--tm-content-primary); white-space: nowrap; }
-.otp-screen .rs button { min-height: var(--tm-target-min); min-width: var(--tm-target-min); border: 0; background: transparent; padding: 0; vertical-align: top;
-  color: var(--tm-content-brand); font: inherit; font-weight: var(--tm-font-weight-semibold); cursor: pointer; }
-/* A-21: "New code sent" is green text, no icon */
-.otp-screen .s1 { margin: 0; display: none; align-items: center; justify-content: center; gap: var(--tm-space-xs);
-  font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); color: var(--tm-content-success); }
-.otp-screen .s1.show { display: flex; }
-/* Consent: L4 fine print above the button; centred, balanced, "Terms & Conditions" never splits (A-01, A-02) */
-.otp-screen .consent { margin: 0 0 var(--tm-space-lg); display: none; color: var(--tm-content-secondary); text-align: center; text-wrap: balance; }
+/* A-21: "New code sent." is green text, no icon */
+.otp-screen .s1 { margin: 0; display: none; text-align: center; font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); color: var(--tm-content-success); }
+.otp-screen .s1.show { display: block; }
+/* Legal line: L4 fine print, 32 under the resend line, 8 above Verify (it describes it); centred, balanced (A-01, A-02) */
+.otp-screen .consent { margin: var(--tm-space-2xl) 0 0; display: none; color: var(--tm-content-secondary); text-align: center; text-wrap: balance; }
 .otp-screen .consent.show { display: block; }
-.otp-screen .consent.reserve { display: block; visibility: hidden; }   /* Round 5 B: expired keeps the height */
 .otp-screen .consent a { color: var(--tm-content-brand); font-weight: var(--tm-font-weight-semibold); text-decoration: none; white-space: nowrap; }
+/* Verify: 32 under the thing above it; 8 under the legal line that describes it. */
+.otp-screen .panel > .tm-btn { flex: none; margin-top: var(--tm-space-2xl); }
+.otp-screen .consent.show + .tm-btn { margin-top: var(--tm-space-sm); }

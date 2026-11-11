@@ -1,0 +1,186 @@
+PASS 1920x1080 frame is 390 : 844, exactly 390 x 844 when the window allows (D-97)  [390.0x844.0]
+PASS 1920x1080 frame centred
+PASS 1920x1080 frame fits viewport height
+PASS 1920x1080 panel top-aligned with the frame, one column on the right (RULES §7.5, D-97)  [panel top 118.0, frame top 118.0]
+PASS 1920x1080 panel beside the frame, not inside it, on screen  [panel 1179-1599, frame 765-1155]
+PASS 1920x1080 review panel is not a scroll container  [visible]
+PASS 1920x1080 no sideways scroll
+PASS 1920x1080 screen fits the frame
+PASS 1920x1080 no page errors
+PASS 1920x1080 sign-in_default: screen fills the frame, no sideways scroll, main button inside the frame  [{'fill': True, 'side': True, 'btn': True}]
+PASS 1920x1080 sign-in_default: no page errors
+PASS 1920x1080 sign-in_keyboard-open: screen fills the frame, no sideways scroll, main button inside the frame  [{'fill': True, 'side': True, 'btn': True}]
+PASS 1920x1080 sign-in_keyboard-open: no page errors
+PASS 1920x1080 otp_default: screen fills the frame, no sideways scroll, main button inside the frame  [{'fill': True, 'side': True, 'btn': True}]
+PASS 1920x1080 otp_default: no page errors
+PASS 1920x1080 otp_locked: screen fills the frame, no sideways scroll, main button inside the frame  [{'fill': True, 'side': True, 'btn': True}]
+PASS 1920x1080 otp_locked: no page errors
+PASS 1920x1080 offer_fingerprint: screen fills the frame, no sideways scroll, main button inside the frame  [{'fill': True, 'side': True, 'btn': True}]
+PASS 1920x1080 offer_fingerprint: no page errors
+PASS 1920x1080 offer_enable-failed: screen fills the frame, no sideways scroll, main button inside the frame  [{'fill': True, 'side': True, 'btn': True}]
+PASS 1920x1080 offer_enable-failed: no page errors
+PASS 1920x1080 offer_unavailable: screen fills the frame, no sideways scroll, main button inside the frame  [{'fill': True, 'side': True, 'btn': True}]
+PASS 1920x1080 offer_unavailable: no page errors
+PASS 1920x1080 unlock_fingerprint: screen fills the frame, no sideways scroll, main button inside the frame  [{'fill': True, 'side': True, 'btn': True}]
+PASS 1920x1080 unlock_fingerprint: no page errors
+PASS 1920x1080 unlock_unavailable: screen fills the frame, no sideways scroll, main button inside the frame  [{'fill': True, 'side': True, 'btn': True}]
+PASS 1920x1080 unlock_unavailable: no page errors
+PASS 1280x800 frame is 390 : 844, exactly 390 x 844 when the window allows (D-97)  [347.5x752.0]
+PASS 1280x800 frame centred
+PASS 1280x800 frame fits viewport height
+PASS 1280x800 panel top-aligned with the frame, one column on the right (RULES §7.5, D-97)  [panel top 24.0, frame top 24.0]
+PASS 1280x800 panel beside the frame, not inside it, on screen  [panel 838-1258, frame 466-814]
+PASS 1280x800 review panel is not a scroll container  [visible]
+PASS 1280x800 no sideways scroll
+PASS 1280x800 screen fits the frame
+PASS 1280x800 no page errors
+PASS 1280x800 sign-in_default: screen fills the frame, no sideways scroll, main button inside the frame  [{'fill': True, 'side': True, 'btn': True}]
+PASS 1280x800 sign-in_default: no page errors
+PASS 1280x800 sign-in_keyboard-open: screen fills the frame, no sideways scroll, main button inside the frame  [{'fill': True, 'side': True, 'btn': True}]
+PASS 1280x800 sign-in_keyboard-open: no page errors
+PASS 1280x800 otp_default: screen fills the frame, no sideways scroll, main button inside the frame  [{'fill': True, 'side': True, 'btn': True}]
+PASS 1280x800 otp_default: no page errors
+PASS 1280x800 otp_locked: screen fills the frame, no sideways scroll, main button inside the frame  [{'fill': True, 'side': True, 'btn': True}]
+PASS 1280x800 otp_locked: no page errors
+PASS 1280x800 offer_fingerprint: screen fills the frame, no sideways scroll, main button inside the frame  [{'fill': True, 'side': True, 'btn': True}]
+PASS 1280x800 offer_fingerprint: no page errors
+PASS 1280x800 offer_enable-failed: screen fills the frame, no sideways scroll, main button inside the frame  [{'fill': True, 'side': True, 'btn': True}]
+PASS 1280x800 offer_enable-failed: no page errors
+PASS 1280x800 offer_unavailable: screen fills the frame, no sideways scroll, main button inside the frame  [{'fill': True, 'side': True, 'btn': True}]
+PASS 1280x800 offer_unavailable: no page errors
+PASS 1280x800 unlock_fingerprint: screen fills the frame, no sideways scroll, main button inside the frame  [{'fill': True, 'side': True, 'btn': True}]
+PASS 1280x800 unlock_fingerprint: no page errors
+PASS 1280x800 unlock_unavailable: screen fills the frame, no sideways scroll, main button inside the frame  [{'fill': True, 'side': True, 'btn': True}]
+PASS 1280x800 unlock_unavailable: no page errors
+PASS 1440x900 frame is 390 : 844, exactly 390 x 844 when the window allows (D-97)  [390.0x844.0]
+PASS 1440x900 frame centred
+PASS 1440x900 frame fits viewport height
+PASS 1440x900 panel top-aligned with the frame, one column on the right (RULES §7.5, D-97)  [panel top 28.0, frame top 28.0]
+PASS 1440x900 panel beside the frame, not inside it, on screen  [panel 939-1359, frame 525-915]
+PASS 1440x900 review panel is not a scroll container  [visible]
+PASS 1440x900 no sideways scroll
+PASS 1440x900 screen fits the frame
+PASS 1440x900 no page errors
+PASS 1440x900 sign-in_default: screen fills the frame, no sideways scroll, main button inside the frame  [{'fill': True, 'side': True, 'btn': True}]
+PASS 1440x900 sign-in_default: no page errors
+PASS 1440x900 sign-in_keyboard-open: screen fills the frame, no sideways scroll, main button inside the frame  [{'fill': True, 'side': True, 'btn': True}]
+PASS 1440x900 sign-in_keyboard-open: no page errors
+PASS 1440x900 otp_default: screen fills the frame, no sideways scroll, main button inside the frame  [{'fill': True, 'side': True, 'btn': True}]
+PASS 1440x900 otp_default: no page errors
+PASS 1440x900 otp_locked: screen fills the frame, no sideways scroll, main button inside the frame  [{'fill': True, 'side': True, 'btn': True}]
+PASS 1440x900 otp_locked: no page errors
+PASS 1440x900 offer_fingerprint: screen fills the frame, no sideways scroll, main button inside the frame  [{'fill': True, 'side': True, 'btn': True}]
+PASS 1440x900 offer_fingerprint: no page errors
+PASS 1440x900 offer_enable-failed: screen fills the frame, no sideways scroll, main button inside the frame  [{'fill': True, 'side': True, 'btn': True}]
+PASS 1440x900 offer_enable-failed: no page errors
+PASS 1440x900 offer_unavailable: screen fills the frame, no sideways scroll, main button inside the frame  [{'fill': True, 'side': True, 'btn': True}]
+PASS 1440x900 offer_unavailable: no page errors
+PASS 1440x900 unlock_fingerprint: screen fills the frame, no sideways scroll, main button inside the frame  [{'fill': True, 'side': True, 'btn': True}]
+PASS 1440x900 unlock_fingerprint: no page errors
+PASS 1440x900 unlock_unavailable: screen fills the frame, no sideways scroll, main button inside the frame  [{'fill': True, 'side': True, 'btn': True}]
+PASS 1440x900 unlock_unavailable: no page errors
+PASS 1024x768 frame is 390 : 844, exactly 390 x 844 when the window allows (D-97)  [332.7x720.0]
+PASS 1024x768 frame centred
+PASS 1024x768 frame fits viewport height
+PASS 1024x768 panel top-aligned with the frame, one column on the right (RULES §7.5, D-97)  [panel top 24.0, frame top 24.0]
+PASS 1024x768 panel beside the frame, not inside it, on screen  [panel 702-1012, frame 346-678]
+PASS 1024x768 review panel is not a scroll container  [visible]
+PASS 1024x768 no sideways scroll
+PASS 1024x768 screen fits the frame
+PASS 1024x768 no page errors
+PASS 1024x768 sign-in_default: screen fills the frame, no sideways scroll, main button inside the frame  [{'fill': True, 'side': True, 'btn': True}]
+PASS 1024x768 sign-in_default: no page errors
+PASS 1024x768 sign-in_keyboard-open: screen fills the frame, no sideways scroll, main button inside the frame  [{'fill': True, 'side': True, 'btn': True}]
+PASS 1024x768 sign-in_keyboard-open: no page errors
+PASS 1024x768 otp_default: screen fills the frame, no sideways scroll, main button inside the frame  [{'fill': True, 'side': True, 'btn': True}]
+PASS 1024x768 otp_default: no page errors
+PASS 1024x768 otp_locked: screen fills the frame, no sideways scroll, main button inside the frame  [{'fill': True, 'side': True, 'btn': True}]
+PASS 1024x768 otp_locked: no page errors
+PASS 1024x768 offer_fingerprint: screen fills the frame, no sideways scroll, main button inside the frame  [{'fill': True, 'side': True, 'btn': True}]
+PASS 1024x768 offer_fingerprint: no page errors
+PASS 1024x768 offer_enable-failed: screen fills the frame, no sideways scroll, main button inside the frame  [{'fill': True, 'side': True, 'btn': True}]
+PASS 1024x768 offer_enable-failed: no page errors
+PASS 1024x768 offer_unavailable: screen fills the frame, no sideways scroll, main button inside the frame  [{'fill': True, 'side': True, 'btn': True}]
+PASS 1024x768 offer_unavailable: no page errors
+PASS 1024x768 unlock_fingerprint: screen fills the frame, no sideways scroll, main button inside the frame  [{'fill': True, 'side': True, 'btn': True}]
+PASS 1024x768 unlock_fingerprint: no page errors
+PASS 1024x768 unlock_unavailable: screen fills the frame, no sideways scroll, main button inside the frame  [{'fill': True, 'side': True, 'btn': True}]
+PASS 1024x768 unlock_unavailable: no page errors
+PASS 430x932 phone: frame is the screen  [430x932]
+PASS 430x932 phone drawer scrolls internally so every control is reachable  [auto]
+PASS 430x932 no sideways scroll
+PASS 430x932 screen fits the frame
+PASS 430x932 drawer handle never covers the header
+PASS 430x932 drawer handle never covers the notice band
+PASS 430x932 no page errors
+PASS 430x932 sign-in_default: screen fills the frame, no sideways scroll, main button inside the frame  [{'fill': True, 'side': True, 'btn': True}]
+PASS 430x932 sign-in_default: no page errors
+PASS 430x932 sign-in_keyboard-open: screen fills the frame, no sideways scroll, main button inside the frame  [{'fill': True, 'side': True, 'btn': True}]
+PASS 430x932 sign-in_keyboard-open: no page errors
+PASS 430x932 otp_default: screen fills the frame, no sideways scroll, main button inside the frame  [{'fill': True, 'side': True, 'btn': True}]
+PASS 430x932 otp_default: no page errors
+PASS 430x932 otp_locked: screen fills the frame, no sideways scroll, main button inside the frame  [{'fill': True, 'side': True, 'btn': True}]
+PASS 430x932 otp_locked: no page errors
+PASS 430x932 offer_fingerprint: screen fills the frame, no sideways scroll, main button inside the frame  [{'fill': True, 'side': True, 'btn': True}]
+PASS 430x932 offer_fingerprint: no page errors
+PASS 430x932 offer_enable-failed: screen fills the frame, no sideways scroll, main button inside the frame  [{'fill': True, 'side': True, 'btn': True}]
+PASS 430x932 offer_enable-failed: no page errors
+PASS 430x932 offer_unavailable: screen fills the frame, no sideways scroll, main button inside the frame  [{'fill': True, 'side': True, 'btn': True}]
+PASS 430x932 offer_unavailable: no page errors
+PASS 430x932 unlock_fingerprint: screen fills the frame, no sideways scroll, main button inside the frame  [{'fill': True, 'side': True, 'btn': True}]
+PASS 430x932 unlock_fingerprint: no page errors
+PASS 430x932 unlock_unavailable: screen fills the frame, no sideways scroll, main button inside the frame  [{'fill': True, 'side': True, 'btn': True}]
+PASS 430x932 unlock_unavailable: no page errors
+PASS 390x844 phone: frame is the screen  [390x844]
+PASS 390x844 phone drawer scrolls internally so every control is reachable  [auto]
+PASS 390x844 no sideways scroll
+PASS 390x844 screen fits the frame
+PASS 390x844 drawer handle never covers the header
+PASS 390x844 drawer handle never covers the notice band
+PASS 390x844 no page errors
+PASS 390x844 sign-in_default: screen fills the frame, no sideways scroll, main button inside the frame  [{'fill': True, 'side': True, 'btn': True}]
+PASS 390x844 sign-in_default: no page errors
+PASS 390x844 sign-in_keyboard-open: screen fills the frame, no sideways scroll, main button inside the frame  [{'fill': True, 'side': True, 'btn': True}]
+PASS 390x844 sign-in_keyboard-open: no page errors
+PASS 390x844 otp_default: screen fills the frame, no sideways scroll, main button inside the frame  [{'fill': True, 'side': True, 'btn': True}]
+PASS 390x844 otp_default: no page errors
+PASS 390x844 otp_locked: screen fills the frame, no sideways scroll, main button inside the frame  [{'fill': True, 'side': True, 'btn': True}]
+PASS 390x844 otp_locked: no page errors
+PASS 390x844 offer_fingerprint: screen fills the frame, no sideways scroll, main button inside the frame  [{'fill': True, 'side': True, 'btn': True}]
+PASS 390x844 offer_fingerprint: no page errors
+PASS 390x844 offer_enable-failed: screen fills the frame, no sideways scroll, main button inside the frame  [{'fill': True, 'side': True, 'btn': True}]
+PASS 390x844 offer_enable-failed: no page errors
+PASS 390x844 offer_unavailable: screen fills the frame, no sideways scroll, main button inside the frame  [{'fill': True, 'side': True, 'btn': True}]
+PASS 390x844 offer_unavailable: no page errors
+PASS 390x844 unlock_fingerprint: screen fills the frame, no sideways scroll, main button inside the frame  [{'fill': True, 'side': True, 'btn': True}]
+PASS 390x844 unlock_fingerprint: no page errors
+PASS 390x844 unlock_unavailable: screen fills the frame, no sideways scroll, main button inside the frame  [{'fill': True, 'side': True, 'btn': True}]
+PASS 390x844 unlock_unavailable: no page errors
+PASS 360x640 phone: frame is the screen  [360x640]
+PASS 360x640 phone drawer scrolls internally so every control is reachable  [auto]
+PASS 360x640 no sideways scroll
+PASS 360x640 screen fits the frame
+PASS 360x640 drawer handle never covers the header
+PASS 360x640 drawer handle never covers the notice band
+PASS 360x640 no page errors
+PASS 360x640 sign-in_default: screen fills the frame, no sideways scroll, main button inside the frame  [{'fill': True, 'side': True, 'btn': True}]
+PASS 360x640 sign-in_default: no page errors
+PASS 360x640 sign-in_keyboard-open: screen fills the frame, no sideways scroll, main button inside the frame  [{'fill': True, 'side': True, 'btn': True}]
+PASS 360x640 sign-in_keyboard-open: no page errors
+PASS 360x640 otp_default: screen fills the frame, no sideways scroll, main button inside the frame  [{'fill': True, 'side': True, 'btn': True}]
+PASS 360x640 otp_default: no page errors
+PASS 360x640 otp_locked: screen fills the frame, no sideways scroll, main button inside the frame  [{'fill': True, 'side': True, 'btn': True}]
+PASS 360x640 otp_locked: no page errors
+PASS 360x640 offer_fingerprint: screen fills the frame, no sideways scroll, main button inside the frame  [{'fill': True, 'side': True, 'btn': True}]
+PASS 360x640 offer_fingerprint: no page errors
+PASS 360x640 offer_enable-failed: screen fills the frame, no sideways scroll, main button inside the frame  [{'fill': True, 'side': True, 'btn': True}]
+PASS 360x640 offer_enable-failed: no page errors
+PASS 360x640 offer_unavailable: screen fills the frame, no sideways scroll, main button inside the frame  [{'fill': True, 'side': True, 'btn': True}]
+PASS 360x640 offer_unavailable: no page errors
+PASS 360x640 unlock_fingerprint: screen fills the frame, no sideways scroll, main button inside the frame  [{'fill': True, 'side': True, 'btn': True}]
+PASS 360x640 unlock_fingerprint: no page errors
+PASS 360x640 unlock_unavailable: screen fills the frame, no sideways scroll, main button inside the frame  [{'fill': True, 'side': True, 'btn': True}]
+PASS 360x640 unlock_unavailable: no page errors
+
+ALL PASS
+exit 0

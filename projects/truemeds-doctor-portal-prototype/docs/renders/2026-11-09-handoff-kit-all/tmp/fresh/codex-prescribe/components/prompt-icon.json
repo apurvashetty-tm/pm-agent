@@ -1,0 +1,111 @@
+{
+ "block": "prompt-icon",
+ "name": "PromptIcon",
+ "rn": "<PromptIcon />",
+ "web": ".prompt-icon",
+ "parts": {
+  "container": {
+   "states": {
+    "default": {
+     "seenIn": "unlock_cancelled",
+     "styles": [
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "width",
+       "value": "var(--tm-icon-tile-size)",
+       "tokens": [
+        {
+         "native": "tokens.iconTile.size",
+         "web": "--tm-icon-tile-size",
+         "value": 64
+        }
+       ]
+      },
+      {
+       "property": "height",
+       "value": "var(--tm-icon-tile-size)",
+       "tokens": [
+        {
+         "native": "tokens.iconTile.size",
+         "web": "--tm-icon-tile-size",
+         "value": 64
+        }
+       ]
+      },
+      {
+       "property": "display",
+       "value": "grid",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "place-items",
+       "value": "center",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "border-radius",
+       "value": "var(--tm-radius-lg)",
+       "tokens": [
+        {
+         "native": "tokens.radius.lg",
+         "web": "--tm-radius-lg",
+         "value": 16
+        }
+       ]
+      },
+      {
+       "property": "background",
+       "value": "var(--tm-surface-brand-subtle)",
+       "tokens": [
+        {
+         "native": "tokens.color.surface.brand.subtle",
+         "web": "--tm-surface-brand-subtle",
+         "value": "#EBF8FF"
+        }
+       ]
+      },
+      {
+       "property": "color",
+       "value": "var(--tm-content-brand)",
+       "tokens": [
+        {
+         "native": "tokens.color.content.brand",
+         "web": "--tm-content-brand",
+         "value": "#1D5DCF"
+        }
+       ]
+      }
+     ],
+     "size": "64×64"
+    }
+   }
+  }
+ },
+ "rules": [
+  {
+   "section": "Kit",
+   "text": "Build it once from the parts × states below (tokens only, copy from messages); it appears on Returning unlock. What it does in each state is in DECIDED.md under those screens."
+  }
+ ],
+ "pictures": [],
+ "usedIn": [
+  "unlock_cancelled",
+  "unlock_face",
+  "unlock_fingerprint",
+  "unlock_pending",
+  "unlock_platform-retry",
+  "unlock_screen-lock"
+ ],
+ "states": {
+  "default": [
+   "container"
+  ]
+ }
+}

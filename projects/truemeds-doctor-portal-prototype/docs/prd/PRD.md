@@ -64,6 +64,7 @@ Each screen opens with the job the doctor is trying to get done, then why it's b
 - The mobile number is how Truemeds already knows each doctor, so it's the only field.
 - Input that can still become right shows no error while typing; input that can never be right (a first digit that no Indian mobile number has) is flagged at once. The doctor isn't told off for typing.
 - Send OTP sits right under the field, so the field and its action stay together above the keyboard.
+- Sign-in, OTP, the offer, unlock and Home share one header band and one spacing standard (gaps measured on what the eye sees), so sibling screens look the same.
 
 ![Sign-in](../../ui-screens/sign-in/sign-in_default_w390.png)
 
@@ -71,7 +72,7 @@ Each screen opens with the job the doctor is trying to get done, then why it's b
 
 [See this state](https://truemeds-doctor-app-preview.netlify.app/kit/viewer/#screens/sign-in/sign-in_default) · [Try it](https://truemeds-doctor-app-preview.netlify.app/?s=sign-in_default)
 
-**What the doctor can do:** enter a mobile number and tap Send OTP; tap Sign up (opens Truemeds' existing doctor sign-up form).
+**What the doctor can do:** enter a mobile number (helper: "We’ll send you an OTP by SMS.") and tap Send OTP; tap Sign up (opens Truemeds' existing doctor sign-up form).
 
 **Rules:**
 - Typed or pasted numbers are cleaned: spaces, dashes, a leading 0 and a leading 91 are dropped.
@@ -86,7 +87,7 @@ Each screen opens with the job the doctor is trying to get done, then why it's b
 - Sending → button reads "Sending OTP…".
 - Not registered → "Number not registered with Truemeds. Already applied? We’ll contact you after approval."
 - Offline → "You’re offline. Check your connection."
-- Code couldn't be sent → "Couldn’t send the code."
+- OTP couldn't be sent → "Couldn’t send the OTP."
 - Too many attempts → "Too many attempts on this number." and the button counts down "Try again in {time}".
 - Account inactive → "This account is inactive." and the button becomes Call Doctor Ops.
 - Number locked after wrong codes → goes straight to OTP in its locked state (§5.2).
@@ -98,7 +99,7 @@ Each screen opens with the job the doctor is trying to get done, then why it's b
 **Built this way because:**
 - The doctor taps Verify & sign in; the code doesn't submit itself on the last digit, so a doctor can check what they typed.
 - After a wrong code the digits stay visible, so the doctor can spot a typo or an old SMS; the first new keystroke replaces the whole code, so retyping is instant.
-- Verify & sign in never moves for one-line messages, so the doctor's thumb finds it in the same place every time.
+- No reserved empty space: a one-line message under the code (wrong code, new code sent) moves the lines below it down by one line, so the screen never shows a gap that looks like a missing message.
 
 ![OTP](../../ui-screens/otp/otp_default_w390.png)
 
@@ -119,7 +120,7 @@ Each screen opens with the job the doctor is trying to get done, then why it's b
 - Empty or too short on Verify → "Enter the 4-digit code." / "Enter all 4 digits."
 - Verifying → "Verifying…".
 - Wrong code → "Wrong code."; with tries counting down → "Wrong code. {count} tries left." and "Wrong code. 1 try left."
-- New code sent → "New code sent".
+- New code sent → "New code sent."
 - Code expired → "This code has expired."
 - Couldn't verify → "Couldn’t check the code."
 - Resend failed → "Couldn’t send a new code."
@@ -131,7 +132,7 @@ Each screen opens with the job the doctor is trying to get done, then why it's b
 
 ### 5.3 Faster sign-in offer
 
-**Job to be done:** skip the OTP next time.
+**Job to be done:** skip OTPs next time.
 
 **Built this way because:**
 - The offer has its own screen right after the first sign-in, so it can't be missed and drives adoption; the point is to cut SMS cost. A pre-ticked box on the OTP screen would be a sneaky opt-in.
@@ -150,6 +151,7 @@ Each screen opens with the job the doctor is trying to get done, then why it's b
 - The unlock follows the phone: fingerprint or Face ID if set up, otherwise the phone's screen lock (PIN, pattern or password). A phone with no screen lock at all skips this screen.
 - The wording names what the phone has (Face ID, fingerprint, screen lock) and says Truemeds never sees or stores it.
 - It can be turned on or off any time in Profile. The phone's back gesture means Not now.
+- The screen is titled "Skip OTPs next time"; its first point reads "Sign in with one touch" (Face ID "with a glance", screen lock "with your PIN or pattern") / "No SMS to wait for."
 
 **Other states:**
 - Face ID / screen lock versions → same screen, wording for that unlock.
@@ -165,6 +167,7 @@ Each screen opens with the job the doctor is trying to get done, then why it's b
 
 **Built this way because:**
 - It's the first screen when the app opens for a doctor with faster sign-in on, so it greets them by name and has one main action.
+- The phone's fingerprint / Face ID / screen-lock prompt opens by itself when the app opens, as banking and payment apps do, which saves a tap every time.
 - When the phone's unlock isn't available, the main button changes to the way that still works, so the doctor never hits a dead end.
 
 ![Returning unlock](../../ui-screens/returning-unlock/unlock_fingerprint_w390.png)
@@ -176,6 +179,7 @@ Each screen opens with the job the doctor is trying to get done, then why it's b
 **What the doctor can do:** unlock with fingerprint, Face ID or screen lock; Use OTP instead (opens sign-in with their number filled in; to change account, they edit the number there).
 
 **Rules:**
+- The phone's prompt opens by itself once when the app opens here. Cancelling it leaves the screen as it is, with no new prompt; Unlock stays for a retry. The automatic prompt counts as a try.
 - Two buttons only: Unlock (main) and Use OTP instead. There is no separate Switch account.
 - Use OTP instead, and repeated failed unlocks (number of tries in §7), open sign-in with the remembered number filled in. No SMS is sent until the doctor taps Send OTP.
 - That sign-in follows the normal sign-in rules: no Back, and the phone's back gesture leaves the app. Reopening the app shows the unlock screen again.
@@ -183,7 +187,7 @@ Each screen opens with the job the doctor is trying to get done, then why it's b
 
 **Other states:**
 - Unlocking → "Unlocking…".
-- Prompt cancelled → back on the screen, no message.
+- Prompt cancelled (on arrival or after Unlock) → back on the screen, no message, no new prompt.
 - Phone asks to retry → the phone's own retry prompt.
 - Not available → "Faster sign-in isn’t available on this phone right now." at the top; Use OTP instead becomes the main button and opens the same filled-in sign-in.
 
@@ -202,11 +206,11 @@ Each screen opens with the job the doctor is trying to get done, then why it's b
 
 [See this state](https://truemeds-doctor-app-preview.netlify.app/kit/viewer/#screens/home/home_active) · [Try it](https://truemeds-doctor-app-preview.netlify.app/?s=home_active)
 
-**What the doctor can do:** set how long they're available (quick picks 15, 30 and 45 minutes, 1, 2 and 3 hours, or a wheel in 15-minute steps); Request a case; Add time when time is running low; End availability; open Profile, Help and notifications.
+**What the doctor can do:** set how long they're available ("Start taking cases": Quick picks 15, 30 and 45 minutes, 1, 2 and 3 hours, or Custom, a wheel in 15-minute steps, with "Available until {time}" above Set availability); Request a case ("You can take cases"); Add time at any point while available; tap Prescriptions written today to open Profile; End availability; open Profile, Help and notifications.
 
 **Rules:**
-- Availability has a minimum length (§7), any start time, no maximum.
-- Home shows time remaining and prescriptions confirmed today (a count only, no earnings). A case counts once its prescription is confirmed.
+- Availability has a minimum and a **maximum in total**, set plus added time (§7), any start time. Add time tops out at what is left of the maximum, and the sheet says so; the button names the time it adds in hours and minutes.
+- Home shows one card: time remaining, with Add time always on its line (greyed offline), and prescriptions written today (a count only, no earnings), which opens Profile. A case counts once its prescription is confirmed. After availability ends, the count shows as one row above the picker when it is above 0.
 - A request made before availability ends is honoured even if the case arrives after.
 - Ending availability with a request pending stops new requests; the pending one is honoured and any case it brings is finished first.
 - Availability that ends during a case never interrupts it; the case's ending offers only Back to Home.
@@ -222,10 +226,10 @@ Each screen opens with the job the doctor is trying to get done, then why it's b
 - Request failed → "Couldn’t request a case."
 - Request result unknown → "Checking whether your case request went through…"
 - Offline → "You’re offline. Reconnect to request a case." End availability is greyed out.
-- Ending soon → "Availability ends soon. You can still request a case." with + Add time.
+- Ending soon → "Availability ends soon. You can still request a case." (Add time is always there).
 - Adding time → "Adding…"; done → "Time added"; failed → "Couldn’t add time."
-- End availability → confirmation sheet; with a request pending → "Finishing your last request. Availability ends after that."
-- Ended with a request still out → "Your last request is still active."
+- End availability → confirmation sheet ("You won’t get new cases after this…"); with a request pending → "Finishing your last request. Availability ends after that."
+- Ended with a request still out → title "Availability ended", "Your last request is still active.", time 0:00.
 - Ended while idle → "Your availability ended. You won’t get new cases."; ended by the doctor → "You ended your availability. You won’t get new cases."
 - Profile during an open case → "You can log out after this case is closed."
 - Log out confirm → "You’ll stop getting cases until you sign in again." with Log out and Stay signed in.
@@ -458,6 +462,7 @@ Every value below is a starting value, set by its owner and changeable without a
 | Call-record wait time after a confirm without a result | `[NEED]` | Product + Engineering |
 | Patient unavailable: retry gaps and attempts, by failure reason | `[NEED]` | Doctor Ops + Engineering |
 | Minimum availability | 15 minutes | Product |
+| Maximum availability, in total (set + added time) | 10 hours | Product |
 | "Availability ends soon" shown when time left is under | `[NEED]` | Product |
 | OTP: wrong codes before a number is locked | 5 | Product |
 | OTP: codes per number per limit window (first code + resends) | 4 | Product |

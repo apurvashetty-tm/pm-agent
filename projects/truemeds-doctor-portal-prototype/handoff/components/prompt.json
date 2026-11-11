@@ -41,12 +41,12 @@
       },
       {
        "property": "gap",
-       "value": "var(--tm-space-lg)",
+       "value": "var(--tm-space-sm)",
        "tokens": [
         {
-         "native": "tokens.space.lg",
-         "web": "--tm-space-lg",
-         "value": 16
+         "native": "tokens.space.sm",
+         "web": "--tm-space-sm",
+         "value": 8
         }
        ]
       },
@@ -57,7 +57,7 @@
        "layout": true
       }
      ],
-     "size": "358×104"
+     "size": "358×87.9"
     }
    }
   },
@@ -112,6 +112,12 @@
        ]
       },
       {
+       "property": "text trim (to the ink)",
+       "value": "trim-both cap text",
+       "tokens": [],
+       "layout": true
+      },
+      {
        "property": "color",
        "value": "var(--tm-content-primary)",
        "tokens": [
@@ -143,7 +149,7 @@
        "inherited": true
       }
      ],
-     "size": "153×24"
+     "size": "153×15.9"
     }
    }
   }

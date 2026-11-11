@@ -1,20 +1,21 @@
 // Returning unlock (entry journey, step 1). Markup and classes lifted from ui-screens/returning-unlock/returning-unlock.html;
 // styles in returning-unlock.css. Every word through MSG(); the doctor's name comes from mock profile data (D-92), never typed here.
 // Behaviour: app-logic §2 "Faster sign-in", feedback-state-map "Returning unlock", D-45, D-47, D-64, D-66 A1, A-19, D-105; plan B12, B14.
-//   The prompt opens when the doctor taps Unlock (no automatic prompt) · success → Home (the open case from step 2 on) ·
-//   cancelled → the screen returns unchanged, not counted · failed → the phone owns the retry (screen unchanged); after 3 failed
+//   The phone's prompt opens by itself once when the app opens on this screen (D-109 §3); the Unlock button stays for a retry ·
+//   success → Home (the open case from step 2 on) · cancelled → the screen as it is (today's screen), not counted, no new prompt · failed → the phone owns the retry (screen unchanged); after 3 failed
 //   tries (setting, [MOCK]) → the same as Use OTP instead · unavailable → standing neutral notice at the top of the panel, Use OTP
 //   instead is the primary · two buttons only, no Switch account (D-105) · phone Back stays (first screen when the app opens, D-47).
 //   Use OTP instead (and the 3-failure fallback) opens Sign-in with the remembered number filled in; no SMS until Send OTP (D-105).
 //   That Sign-in is the root, as any Sign-in: no Back, phone back leaves the app (D-101); reopening the app shows unlock again.
 import { MSG } from "../core/msg.js";
-import { push, setScreenBack, reset as resetNav } from "../core/nav.js";
+import { push, setScreenBack, saveCurrent, reset as resetNav } from "../core/nav.js";
 import { h } from "../core/dom.js";
 import { signedIn, signIn } from "../core/auth.js";
 import { promptAnswer } from "../core/unlock.js";
 import { HOME_STUB } from "../core/faster-signin.js";
 import { doctorFor } from "../data/doctor.js";
 import { authCtx, newLife } from "./entry-ctx.js";
+import { band } from "./band.js";
 
 const VARIANT = {
   fingerprint:   { icon: "fingerprint", label: "unlock.submitFingerprint" },
@@ -53,13 +54,10 @@ export function render(host, id, { mode, params = {} }) {
   const label = h("span", { id: "unlock-label" });
   const action = h("button", { class: "tm-btn tm-btn--primary tm-btn--lg tm-btn--block", id: "unlock-action", type: "button", onclick: onUnlock }, label);
   const fallback = h("button", { class: "tm-btn tm-btn--quiet tm-btn--lg tm-btn--block", id: "fallback", type: "button", onclick: onUseOtp, text: MSG("unlock.useOtp") });
+  // The one band (D-107; a title carrying a name may wrap, variant 2) · panel: tile → 16 → caption (D-108) · the pinned bar.
   const root = h("main", { class: "unlock-screen tm", "aria-label": MSG("unlock.greeting", { name: doctorFor(number).firstName }) },
-    h("header", { class: "intro" },
-      h("img", { class: "login-logo", src: "brand/truemeds-for-doctors.svg", alt: "truemeds for doctors" }),
-      h("div", { class: "head" },
-        h("h1", { class: "tm-text-title-lg", text: MSG("unlock.greeting", { name: doctorFor(number).firstName }) }),
-        h("p", { text: MSG("unlock.subtitle") }))),
-    h("section", { class: "panel", "aria-labelledby": "ready" }, notice, prompt),
+    band({ title: MSG("unlock.greeting", { name: doctorFor(number).firstName }), subtitle: MSG("unlock.subtitle") }),
+    h("section", { class: "entry-panel panel", "aria-labelledby": "ready" }, notice, prompt),
     h("div", { class: "tm-actionbar footer" }, action, fallback));
   host.replaceChildren(root);
 
@@ -111,5 +109,11 @@ export function render(host, id, { mode, params = {} }) {
   // First screen when the app opens: no Back control, and the phone's back gesture stays here (D-47).
   setScreenBack(() => {});
   paint();
+  // D-109 §3: arriving live (the app opened on unlock), the phone's prompt opens by itself, once. Back from Sign-in or a
+  // re-render of the same step doesn't prompt again; a picture state (?s=, capture) never does.
+  if (live && !params.saved && !params.prompted && mode !== "capture" && !m.unavailable) {
+    saveCurrent({ prompted: true });
+    onUnlock();
+  }
   return { journey: "unlock" };
 }

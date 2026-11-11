@@ -1,0 +1,428 @@
+{
+ "block": "srow",
+ "name": "Srow",
+ "rn": "<Srow />",
+ "web": ".srow",
+ "parts": {
+  "container": {
+   "states": {
+    "default": {
+     "seenIn": "home_active",
+     "styles": [
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "display",
+       "value": "flex",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "align-items",
+       "value": "flex-start",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "gap",
+       "value": "var(--tm-space-md)",
+       "tokens": [
+        {
+         "native": "tokens.space.md",
+         "web": "--tm-space-md",
+         "value": 12
+        }
+       ]
+      },
+      {
+       "property": "width",
+       "value": "100%",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "padding",
+       "value": "var(--tm-space-lg) 0",
+       "tokens": [
+        {
+         "native": "tokens.space.lg",
+         "web": "--tm-space-lg",
+         "value": 16
+        }
+       ],
+       "layout": true
+      },
+      {
+       "property": "background",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "border",
+       "value": "0",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "margin",
+       "value": "0",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "font",
+       "value": "inherit",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "color",
+       "value": "inherit",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "text-align",
+       "value": "left",
+       "tokens": [],
+       "layout": true
+      }
+     ],
+     "size": "326×108"
+    },
+    "link": {
+     "seenIn": "home_active",
+     "styles": [
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "display",
+       "value": "flex",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "align-items",
+       "value": "flex-start",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "gap",
+       "value": "var(--tm-space-md)",
+       "tokens": [
+        {
+         "native": "tokens.space.md",
+         "web": "--tm-space-md",
+         "value": 12
+        }
+       ]
+      },
+      {
+       "property": "width",
+       "value": "100%",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "padding",
+       "value": "var(--tm-space-lg) 0",
+       "tokens": [
+        {
+         "native": "tokens.space.lg",
+         "web": "--tm-space-lg",
+         "value": 16
+        }
+       ],
+       "layout": true
+      },
+      {
+       "property": "background",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "border-top",
+       "value": "var(--tm-border-width-default) solid var(--tm-border-subtle)",
+       "tokens": [
+        {
+         "native": "tokens.borderWidth.default",
+         "web": "--tm-border-width-default",
+         "value": 1
+        },
+        {
+         "native": "tokens.color.border.subtle",
+         "web": "--tm-border-subtle",
+         "value": "#EDEEF1"
+        }
+       ],
+       "layout": true
+      },
+      {
+       "property": "border",
+       "value": "0",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "margin",
+       "value": "0",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "font",
+       "value": "inherit",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "color",
+       "value": "inherit",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "text-align",
+       "value": "left",
+       "tokens": [],
+       "layout": true
+      }
+     ],
+     "size": "326×101"
+    }
+   }
+  },
+  "txt": {
+   "states": {
+    "default": {
+     "seenIn": "home_active",
+     "styles": [
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "flex",
+       "value": "1",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "min-width",
+       "value": "0",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "display",
+       "value": "block",
+       "tokens": [],
+       "layout": true
+      }
+     ],
+     "size": "294×76"
+    }
+   }
+  },
+  "label": {
+   "states": {
+    "default": {
+     "seenIn": "home_active",
+     "styles": [
+      {
+       "property": "text-wrap",
+       "value": "pretty",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "display",
+       "value": "block",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "margin",
+       "value": "0",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "font-size",
+       "value": "var(--tm-font-size-body-lg)",
+       "tokens": [
+        {
+         "native": "tokens.font.size.body.lg",
+         "web": "--tm-font-size-body-lg",
+         "value": 16
+        }
+       ]
+      },
+      {
+       "property": "line-height",
+       "value": "var(--tm-font-lineheight-md)",
+       "tokens": [
+        {
+         "native": "tokens.font.lineHeight.md",
+         "web": "--tm-font-lineheight-md",
+         "value": 24
+        }
+       ]
+      },
+      {
+       "property": "color",
+       "value": "var(--tm-content-primary)",
+       "tokens": [
+        {
+         "native": "tokens.color.content.primary",
+         "web": "--tm-content-primary",
+         "value": "#383A42"
+        }
+       ]
+      },
+      {
+       "property": "font-family",
+       "value": "inherit",
+       "tokens": [],
+       "layout": true,
+       "inherited": true
+      },
+      {
+       "property": "font-weight",
+       "value": "inherit",
+       "tokens": [],
+       "layout": true,
+       "inherited": true
+      },
+      {
+       "property": "letter-spacing",
+       "value": "inherit",
+       "tokens": [],
+       "layout": true,
+       "inherited": true
+      },
+      {
+       "property": "text-align",
+       "value": "inherit",
+       "tokens": [],
+       "layout": true,
+       "inherited": true
+      }
+     ],
+     "size": "294×24"
+    }
+   }
+  },
+  "line": {
+   "states": {
+    "default": {
+     "seenIn": "home_active",
+     "styles": [
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "display",
+       "value": "flex",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "align-items",
+       "value": "center",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "justify-content",
+       "value": "space-between",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "gap",
+       "value": "var(--tm-space-md)",
+       "tokens": [
+        {
+         "native": "tokens.space.md",
+         "web": "--tm-space-md",
+         "value": 12
+        }
+       ]
+      },
+      {
+       "property": "margin-top",
+       "value": "var(--tm-space-xs)",
+       "tokens": [
+        {
+         "native": "tokens.space.xs",
+         "web": "--tm-space-xs",
+         "value": 4
+        }
+       ]
+      }
+     ],
+     "size": "294×48"
+    }
+   }
+  }
+ },
+ "rules": [
+  {
+   "section": "Kit",
+   "text": "Build it once from the parts × states below (tokens only, copy from messages); it appears on Home. What it does in each state is in DECIDED.md under those screens."
+  }
+ ],
+ "pictures": [],
+ "usedIn": [
+  "home_active",
+  "home_add-failed",
+  "home_add-wheel",
+  "home_added",
+  "home_adding",
+  "home_end-confirmation",
+  "home_expired-pending",
+  "home_idle-expired",
+  "home_manually-ended",
+  "home_near-expiry",
+  "home_no-cases",
+  "home_offline",
+  "home_request-failed",
+  "home_requesting",
+  "home_stop-pending",
+  "home_unknown-result"
+ ],
+ "states": {
+  "default": [
+   "container",
+   "txt",
+   "label",
+   "line"
+  ],
+  "link": [
+   "container"
+  ]
+ }
+}

@@ -57,7 +57,7 @@
        ]
       }
      ],
-     "size": "358×164"
+     "size": "358×161"
     }
    }
   },
@@ -102,23 +102,7 @@
        "layout": true
       }
      ],
-     "size": "358×44"
-    }
-   }
-  },
-  "div": {
-   "states": {
-    "default": {
-     "seenIn": "offer_enable-failed",
-     "styles": [
-      {
-       "property": "animation",
-       "value": "none",
-       "tokens": [],
-       "layout": true
-      }
-     ],
-     "size": "279.6×44"
+     "size": "358×43"
     }
    }
   }
@@ -142,8 +126,7 @@
  "states": {
   "default": [
    "container",
-   "li",
-   "div"
+   "li"
   ]
  }
 }

@@ -83,7 +83,7 @@ export const SETTING_NAME = {
   otpWrongLimit: "Wrong codes before lock", otpCodesPerWindow: "Codes per number per window", otpTriesLeftFrom: "Tries-left line from",
   tooManyTriesWait: "Too-many-codes wait", returningUnlockFallbackAfter: "Failed unlocks before OTP",
   fasterOfferMax: "Faster sign-in offer: times shown",
-  availabilityMinimum: "Shortest availability", availabilityStep: "Availability step", attemptGap: "Gap between simulated calls",
+  availabilityMinimum: "Shortest availability", availabilityStep: "Availability step", availabilityMaximum: "Longest availability (in total)", attemptGap: "Gap between simulated calls",
   mockServerDelay: "Simulated server answer", reconcileDelay: "Simulated cooldown check", phonePromptDelay: "Simulated phone prompt",
   pilotTalkAfterGate: "Pilot talk past gate",
   fastForwardStep: "Fast-forward step", earningsPerConfirmedRx: "Earnings per confirmed prescription",

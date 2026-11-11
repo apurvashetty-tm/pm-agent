@@ -1,114 +1,95 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Truemeds for doctors — Skip the OTP next time</title>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Truemeds for doctors — Skip OTPs next time</title>
 <script>if(new URLSearchParams(location.search).has('capture'))document.documentElement.classList.add('capture')</script>
 <link rel="stylesheet" href="../../../../design-system/truemeds.css">
+<!-- 2026-11-11 (run r2-build, D-106–D-109): the approved reference uses the app's own screen styles, so the two can't drift:
+     the one band and panel (D-107) and the offer's D-108 visible gaps (hero → 32 → points, 16 apart; semibold point titles). -->
+<link rel="stylesheet" href="../../app/screens/band.css">
+<link rel="stylesheet" href="../../app/screens/faster-signin-offer.css">
 <style>
-html,body{margin:0;height:100%}
-body.tm{background:var(--tm-surface-primary)}
-/* Decision D-45 (faster sign-in offer): own screen, no OTP opt-in. Task header (D-42): Back + title, no logo. */
-.screen{height:100dvh;display:flex;flex-direction:column;box-sizing:border-box;position:relative;overflow:hidden;background:var(--tm-surface-brand-subtle)}
-/* A-05 (Round 4): header text to the white panel is 32 on sign-in, OTP, offer, unlock and Home. */
-.top{padding:var(--tm-space-lg) var(--tm-space-page) var(--tm-space-2xl)}
-.back{display:inline-flex;align-items:center;gap:var(--tm-space-xs);min-height:44px;color:var(--tm-content-secondary);font-size:var(--tm-font-size-body-lg);line-height:var(--tm-font-lineheight-md);text-decoration:none;cursor:pointer;background:none;border:0;padding:0;font-family:inherit}
-.back .tm-icon{width:20px;height:20px}
-.back:focus-visible{outline:2px solid var(--tm-border-focus);outline-offset:var(--tm-space-xs)}
-.hero-wrap{display:flex;justify-content:center;margin-bottom:var(--tm-space-lg)}
-.hero-ic{width:64px;height:64px;border-radius:var(--tm-radius-lg);background:var(--tm-surface-brand-subtle);color:var(--tm-content-brand);display:grid;place-items:center}
-.hero-ic .tm-icon{width:var(--tm-space-2xl);height:var(--tm-space-2xl)}
-.login-logo{display:block;width:166px;height:auto;margin-bottom:var(--tm-space-lg)}
-/* Round 4 (A-19): "Couldn't turn on…" is the result of a tap, so it sits inside the pinned bar, 16 above its button. */
-/* Round 4 lane D: the in-bar offer notice takes its 16 gap from .tm-actionbar > .tm-notice (component). */
-.notice-slot[hidden]{display:none!important}
-/* D-93 (revised): "unavailable" is the result of the Turn on tap, so its warning notice sits in the same bar slot as Offline and Couldn't turn on (A-19). */
-.screen [hidden]{display:none!important}
-h1{margin:var(--tm-space-lg) 0 var(--tm-space-sm)}
-.sub{margin:0;font-size:var(--tm-font-size-body-md);line-height:var(--tm-font-lineheight-sm);color:var(--tm-content-secondary)}
-/* White panel; points are one group (related 16). Footer is pinned (no typing on this screen, RULES §8.4). */
-.panel{flex:1;min-height:0;display:flex;flex-direction:column;background:var(--tm-surface-primary);border-radius:var(--tm-radius-2xl) var(--tm-radius-2xl) 0 0;padding:var(--tm-space-2xl) var(--tm-space-page) var(--tm-space-xl)}
-/* Round 4 lane D (item 1, 360×640): the panel scrolls above the pinned bar when the phone is short; the bar never covers its last line. */
-.panel{overflow-y:auto}
-.points{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:var(--tm-space-lg)}
-.points li{display:flex;gap:var(--tm-space-md);align-items:flex-start}
-/* Decorative icons are neutral (RULES §8.11, D-47). Blue stays for actions and the hero tile. */
-.points .tm-icon{width:24px;height:24px;flex:none;color:var(--tm-content-secondary);margin-top:0}
-.pt-t{margin:0;font-size:var(--tm-font-size-body-lg);line-height:var(--tm-font-lineheight-md);font-weight:var(--tm-font-weight-medium,500);color:var(--tm-content-primary)}
-.pt-d{margin:0;font-size:var(--tm-font-size-body-md);line-height:var(--tm-font-lineheight-sm);color:var(--tm-content-secondary)}
-/* Round 4 item 1: the pinned footer is the real .tm-actionbar, edge to edge on the panel (like the case page). */
-.footer{flex:none;margin:0}   /* lane D: the bar is a sibling below the panel (not in its scroll), flush with the frame's bottom edge */
-html.capture body,html.capture .screen{width:100%;overflow:hidden}
-.review-controls{max-width:390px;margin:var(--tm-space-lg) auto;font-family:var(--tm-font);color:var(--tm-content-primary)}
+/* The reference page's own frame (not the screen): a 390 × 844 phone in review, the whole viewport in capture. */
+html,body{margin:0}
+[hidden]{display:none !important}   /* as the app shell (shell.css) */
+body.tm{display:flex;flex-direction:column;align-items:center;background:var(--tm-surface-secondary)}
+.screen{width:390px;height:844px;flex:none}
+.review-controls{width:390px;margin:var(--tm-space-lg) auto;font-family:var(--tm-font);color:var(--tm-content-primary)}
 .review-controls label{display:block;margin-bottom:var(--tm-space-xs)}
 .review-controls select{width:100%;padding:var(--tm-space-sm);font:inherit;border:1px solid var(--tm-border-default);border-radius:var(--tm-radius-md);background:var(--tm-surface-primary)}
 html.capture .review-controls{display:none}
-@media(min-width:768px){body.tm{display:flex;flex-direction:column;align-items:center;background:var(--tm-surface-secondary)}.screen{width:390px;height:844px;flex:none;overflow:hidden;border:1px solid var(--tm-border-subtle);border-radius:var(--tm-radius-2xl);box-shadow:var(--tm-shadow-header)}html.capture body.tm{display:block;background:var(--tm-surface-primary)}html.capture .screen{border:0;border-radius:0;box-shadow:none}}
+html.capture body.tm{display:block;overflow:hidden;background:var(--tm-surface-primary)}
+html.capture .screen{width:100vw;height:100vh}
 </style>
 <script src="../../../../design-system/icons/icons.js"></script>
 <script src="../feedback/messages.js"></script>
 </head><body class="tm">
-<div class="review-controls"><label for="review-state">Reference state</label><select id="review-state" aria-label="Faster sign-in offer state"><option value="fingerprint">Shown, fingerprint</option><option value="face-id">Shown, Face ID</option><option value="enabling">Enabling (OS prompt pending)</option><option value="screen-lock">Shown, screen lock</option><option value="enable-failed">Enabling failed</option><option value="offline">Offline (after tapping Turn on)</option><option value="unavailable">Not available on this phone (D-93)</option></select></div>
-<div class="screen">
- <div class="top">
-  <img class="login-logo" src="../../brand/truemeds-for-doctors.svg" alt="truemeds for doctors">
-  <h1 class="tm-text-title-lg" id="title">Skip the OTP next time</h1>
-  <p class="sub" id="sub"></p>
- </div>
- <div class="panel">
+<div class="review-controls"><label for="review-state">Reference state</label><select id="review-state" aria-label="Faster sign-in offer state"><option value="fingerprint">Shown, fingerprint</option><option value="face-id">Shown, Face ID</option><option value="enabling">Enabling (OS prompt pending)</option><option value="screen-lock">Shown, screen lock</option><option value="enable-failed">Enabling failed</option><option value="offline">Offline</option><option value="unavailable">Not available on this phone</option></select></div>
+<section class="screen offer-screen tm" aria-labelledby="offer-title">
+ <header class="entry-band band">
+  <div class="entry-band__row"><img class="entry-band__logo login-logo" src="../../brand/truemeds-for-doctors.svg" alt="truemeds for doctors"></div>
+  <h1 class="entry-band__title" id="offer-title"></h1>
+  <p class="entry-band__sub sub" id="sub"></p>
+ </header>
+ <div class="entry-panel panel">
   <div class="hero-wrap"><div class="hero-ic" aria-hidden="true"><span class="tm-icon" id="hero-icon" data-icon="fingerprint"></span></div></div>
   <ul class="points">
-   <li><span class="tm-icon" data-icon="circle-check" aria-hidden="true"></span><div><p class="pt-t">No more waiting for SMS codes</p><p class="pt-d" id="pt-d1"></p></div></li>
-   <li><span class="tm-icon" data-icon="lock" aria-hidden="true"></span><div><p class="pt-t" id="pt-t2"></p><p class="pt-d">Truemeds never sees or stores it.</p></div></li>
-   <li><span class="tm-icon" data-icon="settings" aria-hidden="true"></span><div><p class="pt-t">Change it any time</p><p class="pt-d">Turn it off from your profile.</p></div></li>
+   <li><span class="tm-icon" data-icon="circle-check" aria-hidden="true"></span><div class="pt-txt"><p class="pt-t" id="pt-t1"></p><p class="pt-d" id="pt-d1"></p></div></li>
+   <li><span class="tm-icon" data-icon="lock" aria-hidden="true"></span><div class="pt-txt"><p class="pt-t" id="pt-t2"></p><p class="pt-d" id="pt-d2"></p></div></li>
+   <li><span class="tm-icon" data-icon="settings" aria-hidden="true"></span><div class="pt-txt"><p class="pt-t" id="pt-t3"></p><p class="pt-d" id="pt-d3"></p></div></li>
   </ul>
  </div>
-  <div class="tm-actionbar footer">
-   <div class="tm-notice tm-notice--error notice-slot" id="offer-notice" role="status" hidden><span class="tm-icon" data-icon="alert-circle" aria-hidden="true"></span><span id="offer-notice-text"></span></div>
-   <button class="tm-btn tm-btn--primary tm-btn--lg tm-btn--block" id="turn-on" type="button"><span id="turn-on-label">Turn on faster sign-in</span></button>
-   <button class="tm-btn tm-btn--quiet tm-btn--lg tm-btn--block" id="not-now" type="button">Not now</button>
-  </div>
-</div>
+ <div class="tm-actionbar footer">
+  <div class="tm-notice notice-slot" id="offer-notice" role="status" hidden><span class="tm-icon" data-icon="alert-circle" aria-hidden="true"></span><span id="offer-notice-text"></span></div>
+  <button class="tm-btn tm-btn--primary tm-btn--lg tm-btn--block" id="turn-on" type="button"><span id="turn-on-label"></span></button>
+  <button class="tm-btn tm-btn--quiet tm-btn--lg tm-btn--block" id="not-now" type="button"></button>
+ </div>
+</section>
 <script>
-// Device wording (D-45): "Face ID" on Face-ID phones, "fingerprint" on fingerprint phones. Never implies Truemeds stores biometrics.
+// Device wording (D-45, D-64): never implies Truemeds stores biometrics. Copy from the registry (D-109: point 1 "Sign in with …").
 const M=window.TMFeedback.msg;
+const FP={icon:'fingerprint',sub:'offer.fingerprintSub',point:'offer.fingerprintPoint',trust:'offer.fingerprintTrust'};
 const VARIANTS={
- fingerprint:{icon:'fingerprint',sub:'Use your fingerprint instead of waiting for an OTP.',d1:'Unlock the app with one touch, not an OTP.',t2:'Your fingerprint stays on your phone'},
- 'face-id':{icon:'face-id',sub:'Use Face ID instead of waiting for an OTP.',d1:'Unlock the app with a glance, not an OTP.',t2:'Your Face ID stays on your phone'},
- enabling:{icon:'fingerprint',sub:'Use your fingerprint instead of waiting for an OTP.',d1:'Unlock the app with one touch, not an OTP.',t2:'Your fingerprint stays on your phone',enabling:true},
- 'screen-lock':{icon:'lock',sub:M('offer.screenLockSub'),d1:M('offer.screenLockLine'),t2:M('offer.screenLockTrust')},
- 'enable-failed':{icon:'fingerprint',sub:'Use your fingerprint instead of waiting for an OTP.',d1:'Unlock the app with one touch, not an OTP.',t2:'Your fingerprint stays on your phone',notice:['error','alert-circle',M('offer.enableFailed')],retry:true},
- offline:{icon:'fingerprint',sub:'Use your fingerprint instead of waiting for an OTP.',d1:'Unlock the app with one touch, not an OTP.',t2:'Your fingerprint stays on your phone',notice:['warning','alert-triangle',M('offer.offline')]},
+ fingerprint:FP,
+ 'face-id':{icon:'face-id',sub:'offer.faceIdSub',point:'offer.faceIdPoint',trust:'offer.faceIdTrust'},
+ enabling:{...FP,enabling:true},
+ 'screen-lock':{icon:'lock',sub:'offer.screenLockSub',point:'offer.screenLockPoint',trust:'offer.screenLockTrust'},
+ 'enable-failed':{...FP,notice:['error','alert-circle','offer.enableFailed'],retry:true},
+ offline:{...FP,notice:['warning','alert-triangle','offer.offline']},
  // D-93 (revised): the phone answered "unavailable" at Turn on. Screen unchanged; warning notice in the bar (unlock.unavailable),
  // the primary reads Continue (offer.continue) → Home, Not now hidden.
- unavailable:{icon:'fingerprint',sub:'Use your fingerprint instead of waiting for an OTP.',d1:'Unlock the app with one touch, not an OTP.',t2:'Your fingerprint stays on your phone',notice:['warning','alert-triangle',M('unlock.unavailable')],unavailable:true}
+ unavailable:{...FP,notice:['warning','alert-triangle','unlock.unavailable'],unavailable:true}
 };
+const $=id=>document.getElementById(id);
 const params=new URLSearchParams(location.search);
 const key=params.get('capture')||params.get('state')||'fingerprint';
 const v=VARIANTS[key]||VARIANTS.fingerprint;
-const sel=document.getElementById('review-state');
+const sel=$('review-state');
 sel.value=key in VARIANTS?key:'fingerprint';
 sel.addEventListener('change',()=>{location.search='?state='+encodeURIComponent(sel.value)});
-document.getElementById('hero-icon').dataset.icon=v.icon;
-document.getElementById('sub').textContent=v.sub;
-document.getElementById('pt-d1').textContent=v.d1;
-document.getElementById('pt-t2').textContent=v.t2;
-const turnOn=document.getElementById('turn-on');
-if(v.notice){const n=document.getElementById('offer-notice');n.className='tm-notice tm-notice--'+v.notice[0]+' notice-slot';n.hidden=false;n.querySelector('.tm-icon').dataset.icon=v.notice[1];document.getElementById('offer-notice-text').textContent=v.notice[2];}
+$('offer-title').textContent=M('offer.title');
+$('hero-icon').dataset.icon=v.icon;
+$('sub').textContent=M(v.sub);
+$('pt-t1').textContent=M(v.point); $('pt-d1').textContent=M('offer.pointNoWait');
+$('pt-t2').textContent=M(v.trust); $('pt-d2').textContent=M('offer.pointStored');
+$('pt-t3').textContent=M('offer.pointChange'); $('pt-d3').textContent=M('offer.pointChangeLine');
+$('turn-on-label').textContent=M('offer.submit');
+$('not-now').textContent=M('offer.notNow');
+const turnOn=$('turn-on');
+if(v.notice){const n=$('offer-notice');n.className='tm-notice notice-slot tm-notice--'+v.notice[0];n.hidden=false;n.querySelector('.tm-icon').dataset.icon=v.notice[1];$('offer-notice-text').textContent=M(v.notice[2]);}
 if(v.unavailable){
  // D-93: one action left, so the primary reads Continue and Not now is hidden (one primary per context).
- document.getElementById('turn-on-label').textContent=M('offer.continue');
- document.getElementById('not-now').hidden=true;
+ $('turn-on-label').textContent=M('offer.continue');
+ $('not-now').hidden=true;
 }
-if(v.retry){document.getElementById('turn-on-label').textContent='Try again';}
+if(v.retry){$('turn-on-label').textContent=M('offer.retry');}
 if(v.enabling){
  // L2: loading primary = brand fill, white label and spinner (central .tm-btn--busy)
  turnOn.classList.add('tm-btn--busy');turnOn.setAttribute('aria-busy','true');turnOn.disabled=true;
- document.getElementById('turn-on-label').innerHTML='<span class="tm-spinner" aria-hidden="true"></span>Turning on…';
- document.getElementById('not-now').disabled=true;
+ $('turn-on-label').replaceChildren(Object.assign(document.createElement('span'),{className:'tm-spinner'}),M('offer.submitBusy'));
+ $('not-now').disabled=true;
 }
 // No Back: this screen follows sign-in, so there is nothing to go back to (D-47).
 // Phone back gesture = Not now (native). Escape stands in for it in this reference.
 // D-93: on unavailable Not now is hidden, so phone Back = Continue (the only action).
-document.addEventListener('keydown',e=>{if(e.key!=='Escape')return;const nn=document.getElementById('not-now');if(v.unavailable)turnOn.click();else if(!nn.disabled)nn.click();});
-// Exits (cancelled, failed, not now, enabled) all go to Home; no error is shown (D-45, D-37).
-// D-93: unavailable → Continue → Home; faster sign-in is not enabled (Profile can turn it on later).
+document.addEventListener('keydown',e=>{if(e.key!=='Escape')return;const nn=$('not-now');if(v.unavailable)turnOn.click();else if(!nn.disabled)nn.click();});
 TMIcons.render(document);
 </script>
 </body></html>

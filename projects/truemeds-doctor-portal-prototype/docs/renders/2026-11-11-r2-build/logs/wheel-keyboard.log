@@ -1,0 +1,18 @@
+PASS W1 touch swipe: hours and minutes columns each snap to one row (in the band) and set the value; Set availability starts that duration
+PASS W2 mouse drag (hours) and mouse wheel (minutes) move the wheel and snap to one row
+PASS W3 tap the row below → +1 step, the row above → −1 step; ArrowDown / ArrowUp step the focused column and keep the focus on the selected row; minimum 15 min holds
+PASS W4 busy (Setting…): both columns blocked (no scroll, rows disabled); a swipe changes nothing
+PASS W5 Add time sheet: swipe sets the value, the Add button carries it
+PASS W6 both columns moving together: hours rests first, minutes later — both band values are kept (2 h 45 min; the old build kept 30)
+PASS W7 Set availability tapped while the wheel still moves: sets the band's value (3 h 30 min → 3:30:00 / 3:29:5x)
+PASS K1-390 sign-in @390×844, keyboard 336: the app fits above the keyboard; the number field and Send OTP fully inside it
+PASS K2-390 OTP @390×844, keyboard 336, code typed: the code boxes and Verify & sign in fully inside, at least 16 px above the keyboard (D-44)
+PASS K1-360 sign-in @360×640, keyboard 290: the app fits above the keyboard; the number field and Send OTP fully inside it
+PASS K2-360 OTP @360×640, keyboard 290, code typed: the code boxes and Verify & sign in fully inside, at least 16 px above the keyboard (D-44)
+PASS K3 case page: Chief complaints and Doctor notes each fully inside (label and helper), the pinned bar hidden while typing (D-81)
+PASS K4 Prescribe: the Other dose field and Additional instructions each fully inside the space above the keyboard (bar hidden while typing, D-81)
+PASS K6 pinch zoom (scale 2, visual viewport halved): the app is not resized and nothing is scrolled
+PASS K5 desktop 1280×800: the phone frame does not move or resize when the viewport changes (drawn keyboard unchanged)
+
+15 / 15 passed
+exit 0

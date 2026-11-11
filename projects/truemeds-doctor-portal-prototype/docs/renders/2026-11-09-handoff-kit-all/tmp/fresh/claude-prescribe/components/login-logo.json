@@ -1,0 +1,103 @@
+{
+ "block": "login-logo",
+ "name": "LoginLogo",
+ "rn": "<LoginLogo />",
+ "web": ".login-logo",
+ "parts": {
+  "container": {
+   "states": {
+    "default": {
+     "seenIn": "otp_code-expired",
+     "styles": [
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "display",
+       "value": "block",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "width",
+       "value": "var(--tm-logo-lockup-width)",
+       "tokens": [
+        {
+         "native": "tokens.logoLockup.width",
+         "web": "--tm-logo-lockup-width",
+         "value": 166
+        }
+       ]
+      },
+      {
+       "property": "height",
+       "value": "auto",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "margin-bottom",
+       "value": "var(--tm-space-lg)",
+       "tokens": [
+        {
+         "native": "tokens.space.lg",
+         "web": "--tm-space-lg",
+         "value": 16
+        }
+       ]
+      }
+     ],
+     "size": "166×40.7"
+    }
+   }
+  }
+ },
+ "rules": [
+  {
+   "section": "Kit",
+   "text": "Build it once from the parts × states below (tokens only, copy from messages); it appears on OTP, Faster sign-in offer, Returning unlock. What it does in each state is in DECIDED.md under those screens."
+  }
+ ],
+ "pictures": [],
+ "usedIn": [
+  "otp_code-expired",
+  "otp_cooldown-reconciling",
+  "otp_couldnt-verify",
+  "otp_default",
+  "otp_empty-tap",
+  "otp_expired-and-resend-limited",
+  "otp_locked",
+  "otp_new-code-sent",
+  "otp_offline",
+  "otp_resend-available",
+  "otp_resend-failed",
+  "otp_resending",
+  "otp_too-many-resends",
+  "otp_too-short",
+  "otp_two-tries-left",
+  "otp_verifying",
+  "otp_wrong-code",
+  "offer_enable-failed",
+  "offer_enabling",
+  "offer_face-id",
+  "offer_fingerprint",
+  "offer_offline",
+  "offer_screen-lock",
+  "offer_unavailable",
+  "unlock_cancelled",
+  "unlock_face",
+  "unlock_fingerprint",
+  "unlock_pending",
+  "unlock_platform-retry",
+  "unlock_screen-lock",
+  "unlock_unavailable"
+ ],
+ "states": {
+  "default": [
+   "container"
+  ]
+ }
+}

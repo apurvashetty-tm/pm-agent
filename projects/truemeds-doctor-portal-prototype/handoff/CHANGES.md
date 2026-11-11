@@ -2,6 +2,506 @@
 
 What moved in the kit since the previous generation: tokens used, building blocks, screen states, copy. Newest first. Generated.
 
+## 2026-11-11
+
+- Block changed: entry-band
+- Block changed: prompt
+- Screen state changed: otp_code-expired
+- Screen state changed: otp_cooldown-reconciling
+- Screen state changed: otp_couldnt-verify
+- Screen state changed: otp_default
+- Screen state changed: otp_empty-tap
+- Screen state changed: otp_expired-and-resend-limited
+- Screen state changed: otp_locked
+- Screen state changed: otp_new-code-sent
+- Screen state changed: otp_offline
+- Screen state changed: otp_resend-available
+- Screen state changed: otp_resend-failed
+- Screen state changed: otp_resending
+- Screen state changed: otp_too-many-resends
+- Screen state changed: otp_too-short
+- Screen state changed: otp_two-tries-left
+- Screen state changed: otp_verifying
+- Screen state changed: otp_wrong-code
+- Screen state changed: offer_enable-failed
+- Screen state changed: offer_enabling
+- Screen state changed: offer_face-id
+- Screen state changed: offer_fingerprint
+- Screen state changed: offer_offline
+- Screen state changed: offer_screen-lock
+- Screen state changed: offer_unavailable
+- Screen state changed: unlock_cancelled
+- Screen state changed: unlock_face
+- Screen state changed: unlock_fingerprint
+- Screen state changed: unlock_pending
+- Screen state changed: unlock_platform-retry
+- Screen state changed: unlock_screen-lock
+- Screen state changed: unlock_unavailable
+- Screen state changed: home_active
+- Screen state changed: home_add-failed
+- Screen state changed: home_add-wheel
+- Screen state changed: home_added
+- Screen state changed: home_adding
+- Screen state changed: home_end-confirmation
+- Screen state changed: home_expired-pending
+- Screen state changed: home_idle-expired
+- Screen state changed: home_manually-ended
+- Screen state changed: home_near-expiry
+- Screen state changed: home_no-cases
+- Screen state changed: home_offline
+- Screen state changed: home_request-failed
+- Screen state changed: home_requesting
+- Screen state changed: home_setting
+- Screen state changed: home_setup-failed
+- Screen state changed: home_setup-wheel
+- Screen state changed: home_stop-pending
+- Screen state changed: home_unknown-result
+
+## 2026-11-11
+
+- Screen state changed: sign-in_default
+- Screen state changed: sign-in_keyboard-open
+- Screen state changed: sign-in_empty-tap
+- Screen state changed: sign-in_too-short
+- Screen state changed: sign-in_wrong-first-digit
+- Screen state changed: sign-in_pasted-cleaned
+- Screen state changed: sign-in_sending
+- Screen state changed: sign-in_not-registered
+- Screen state changed: sign-in_offline
+- Screen state changed: sign-in_couldnt-send
+- Screen state changed: sign-in_too-many-tries
+- Screen state changed: sign-in_inactive
+
+## 2026-11-11
+
+- Block changed: entry-band
+- Block changed: entry-layout
+- Screen state changed: sign-in_default
+- Screen state changed: sign-in_keyboard-open
+- Screen state changed: sign-in_empty-tap
+- Screen state changed: sign-in_too-short
+- Screen state changed: sign-in_wrong-first-digit
+- Screen state changed: sign-in_pasted-cleaned
+- Screen state changed: sign-in_sending
+- Screen state changed: sign-in_not-registered
+- Screen state changed: sign-in_offline
+- Screen state changed: sign-in_couldnt-send
+- Screen state changed: sign-in_too-many-tries
+- Screen state changed: sign-in_inactive
+- Screen state changed: otp_code-expired
+- Screen state changed: otp_cooldown-reconciling
+- Screen state changed: otp_couldnt-verify
+- Screen state changed: otp_default
+- Screen state changed: otp_empty-tap
+- Screen state changed: otp_expired-and-resend-limited
+- Screen state changed: otp_locked
+- Screen state changed: otp_new-code-sent
+- Screen state changed: otp_offline
+- Screen state changed: otp_resend-available
+- Screen state changed: otp_resend-failed
+- Screen state changed: otp_resending
+- Screen state changed: otp_too-many-resends
+- Screen state changed: otp_too-short
+- Screen state changed: otp_two-tries-left
+- Screen state changed: otp_verifying
+- Screen state changed: otp_wrong-code
+- Screen state changed: offer_enable-failed
+- Screen state changed: offer_enabling
+- Screen state changed: offer_face-id
+- Screen state changed: offer_fingerprint
+- Screen state changed: offer_offline
+- Screen state changed: offer_screen-lock
+- Screen state changed: offer_unavailable
+- Screen state changed: unlock_cancelled
+- Screen state changed: unlock_face
+- Screen state changed: unlock_fingerprint
+- Screen state changed: unlock_pending
+- Screen state changed: unlock_platform-retry
+- Screen state changed: unlock_screen-lock
+- Screen state changed: unlock_unavailable
+- Screen state changed: home_active
+- Screen state changed: home_add-failed
+- Screen state changed: home_add-wheel
+- Screen state changed: home_added
+- Screen state changed: home_adding
+- Screen state changed: home_end-confirmation
+- Screen state changed: home_expired-pending
+- Screen state changed: home_idle-expired
+- Screen state changed: home_manually-ended
+- Screen state changed: home_near-expiry
+- Screen state changed: home_no-cases
+- Screen state changed: home_offline
+- Screen state changed: home_request-failed
+- Screen state changed: home_requesting
+- Screen state changed: home_setting
+- Screen state changed: home_setup-failed
+- Screen state changed: home_setup-wheel
+- Screen state changed: home_stop-pending
+- Screen state changed: home_unknown-result
+
+## 2026-11-11
+
+- Block changed: entry-band
+- Screen state changed: sign-in_keyboard-open
+- Screen state changed: sign-in_empty-tap
+- Screen state changed: sign-in_too-short
+- Screen state changed: sign-in_wrong-first-digit
+- Screen state changed: sign-in_pasted-cleaned
+- Screen state changed: sign-in_sending
+- Screen state changed: otp_code-expired
+- Screen state changed: otp_cooldown-reconciling
+- Screen state changed: otp_couldnt-verify
+- Screen state changed: otp_default
+- Screen state changed: otp_empty-tap
+- Screen state changed: otp_expired-and-resend-limited
+- Screen state changed: otp_locked
+- Screen state changed: otp_new-code-sent
+- Screen state changed: otp_offline
+- Screen state changed: otp_resend-available
+- Screen state changed: otp_resend-failed
+- Screen state changed: otp_resending
+- Screen state changed: otp_too-many-resends
+- Screen state changed: otp_too-short
+- Screen state changed: otp_two-tries-left
+- Screen state changed: otp_verifying
+- Screen state changed: otp_wrong-code
+- Screen state changed: offer_enable-failed
+- Screen state changed: offer_enabling
+- Screen state changed: offer_face-id
+- Screen state changed: offer_fingerprint
+- Screen state changed: offer_offline
+- Screen state changed: offer_screen-lock
+- Screen state changed: offer_unavailable
+- Screen state changed: unlock_cancelled
+- Screen state changed: unlock_face
+- Screen state changed: unlock_fingerprint
+- Screen state changed: unlock_pending
+- Screen state changed: unlock_platform-retry
+- Screen state changed: unlock_screen-lock
+- Screen state changed: unlock_unavailable
+- Screen state changed: home_active
+- Screen state changed: home_add-failed
+- Screen state changed: home_add-wheel
+- Screen state changed: home_added
+- Screen state changed: home_adding
+- Screen state changed: home_end-confirmation
+- Screen state changed: home_expired-pending
+- Screen state changed: home_idle-expired
+- Screen state changed: home_manually-ended
+- Screen state changed: home_near-expiry
+- Screen state changed: home_no-cases
+- Screen state changed: home_offline
+- Screen state changed: home_request-failed
+- Screen state changed: home_requesting
+- Screen state changed: home_setting
+- Screen state changed: home_setup-failed
+- Screen state changed: home_setup-wheel
+- Screen state changed: home_stop-pending
+- Screen state changed: home_unknown-result
+
+## 2026-11-11
+
+- Screen state changed: sign-in_default
+- Screen state changed: sign-in_keyboard-open
+- Screen state changed: sign-in_empty-tap
+- Screen state changed: sign-in_too-short
+- Screen state changed: sign-in_wrong-first-digit
+- Screen state changed: sign-in_pasted-cleaned
+- Screen state changed: sign-in_sending
+- Screen state changed: sign-in_not-registered
+- Screen state changed: sign-in_offline
+- Screen state changed: sign-in_couldnt-send
+- Screen state changed: sign-in_too-many-tries
+- Screen state changed: sign-in_inactive
+
+## 2026-11-11
+
+- Block changed: col-heads
+- Block changed: consent
+- Block changed: field
+- Block changed: hint
+- Block changed: lbl
+- Block changed: prompt
+- Block changed: pt-txt
+- Block changed: rs
+- Block changed: s1
+- Block changed: sign-up-option
+- Block changed: until
+- Screen state changed: sign-in_default
+- Screen state changed: sign-in_keyboard-open
+- Screen state changed: sign-in_empty-tap
+- Screen state changed: sign-in_too-short
+- Screen state changed: sign-in_wrong-first-digit
+- Screen state changed: sign-in_pasted-cleaned
+- Screen state changed: sign-in_sending
+- Screen state changed: sign-in_not-registered
+- Screen state changed: sign-in_offline
+- Screen state changed: sign-in_couldnt-send
+- Screen state changed: sign-in_too-many-tries
+- Screen state changed: sign-in_inactive
+- Screen state changed: otp_code-expired
+- Screen state changed: otp_cooldown-reconciling
+- Screen state changed: otp_couldnt-verify
+- Screen state changed: otp_default
+- Screen state changed: otp_empty-tap
+- Screen state changed: otp_new-code-sent
+- Screen state changed: otp_offline
+- Screen state changed: otp_resend-available
+- Screen state changed: otp_resend-failed
+- Screen state changed: otp_resending
+- Screen state changed: otp_too-many-resends
+- Screen state changed: otp_too-short
+- Screen state changed: otp_two-tries-left
+- Screen state changed: otp_verifying
+- Screen state changed: otp_wrong-code
+- Screen state changed: offer_enable-failed
+- Screen state changed: offer_enabling
+- Screen state changed: offer_face-id
+- Screen state changed: offer_fingerprint
+- Screen state changed: offer_offline
+- Screen state changed: offer_screen-lock
+- Screen state changed: offer_unavailable
+- Screen state changed: unlock_cancelled
+- Screen state changed: unlock_face
+- Screen state changed: unlock_fingerprint
+- Screen state changed: unlock_pending
+- Screen state changed: unlock_platform-retry
+- Screen state changed: unlock_screen-lock
+- Screen state changed: home_add-failed
+- Screen state changed: home_add-wheel
+- Screen state changed: home_adding
+- Screen state changed: home_idle-expired
+- Screen state changed: home_manually-ended
+- Screen state changed: home_setting
+- Screen state changed: home_setup-failed
+- Screen state changed: home_setup-wheel
+
+## 2026-11-11
+
+- Block added: entry-band
+- Block added: entry-panel
+- Block added: group
+- Block added: hint
+- Block added: lbl
+- Block added: lbl-row
+- Block added: link
+- Block added: pt-txt
+- Block added: srow
+- Block added: until
+- Block removed: adjust
+- Block removed: adjust-row
+- Block removed: band
+- Block removed: grp
+- Block removed: head
+- Block removed: header
+- Block removed: header-actions
+- Block removed: helper
+- Block removed: intro
+- Block removed: lk
+- Block removed: login-logo
+- Block removed: logo
+- Block removed: panel
+- Block removed: rx
+- Block removed: sub
+- Block removed: timer-label
+- Block removed: timer-row
+- Block removed: top
+- Block changed: button
+- Block changed: card
+- Block changed: code-slot
+- Block changed: col-heads
+- Block changed: consent
+- Block changed: entry-layout
+- Block changed: field
+- Block changed: hero-wrap
+- Block changed: icon
+- Block changed: logo-header
+- Block changed: notice
+- Block changed: picker
+- Block changed: points
+- Block changed: prompt
+- Block changed: pt-d
+- Block changed: pt-t
+- Block changed: rs
+- Block changed: s1
+- Block changed: scroll
+- Block changed: sheet
+- Block changed: sign-up-option
+- Block changed: timer
+- Block changed: value-display
+- Screen state changed: sign-in_default
+- Screen state changed: sign-in_keyboard-open
+- Screen state changed: sign-in_empty-tap
+- Screen state changed: sign-in_too-short
+- Screen state changed: sign-in_wrong-first-digit
+- Screen state changed: sign-in_pasted-cleaned
+- Screen state changed: sign-in_sending
+- Screen state changed: sign-in_not-registered
+- Screen state changed: sign-in_offline
+- Screen state changed: sign-in_couldnt-send
+- Screen state changed: sign-in_too-many-tries
+- Screen state changed: sign-in_inactive
+- Screen state changed: otp_code-expired
+- Screen state changed: otp_cooldown-reconciling
+- Screen state changed: otp_couldnt-verify
+- Screen state changed: otp_default
+- Screen state changed: otp_empty-tap
+- Screen state changed: otp_expired-and-resend-limited
+- Screen state changed: otp_locked
+- Screen state changed: otp_new-code-sent
+- Screen state changed: otp_offline
+- Screen state changed: otp_resend-available
+- Screen state changed: otp_resend-failed
+- Screen state changed: otp_resending
+- Screen state changed: otp_too-many-resends
+- Screen state changed: otp_too-short
+- Screen state changed: otp_two-tries-left
+- Screen state changed: otp_verifying
+- Screen state changed: otp_wrong-code
+- Screen state changed: offer_enable-failed
+- Screen state changed: offer_enabling
+- Screen state changed: offer_face-id
+- Screen state changed: offer_fingerprint
+- Screen state changed: offer_offline
+- Screen state changed: offer_screen-lock
+- Screen state changed: offer_unavailable
+- Screen state changed: unlock_cancelled
+- Screen state changed: unlock_face
+- Screen state changed: unlock_fingerprint
+- Screen state changed: unlock_pending
+- Screen state changed: unlock_platform-retry
+- Screen state changed: unlock_screen-lock
+- Screen state changed: unlock_unavailable
+- Screen state changed: home_active
+- Screen state changed: home_add-failed
+- Screen state changed: home_add-wheel
+- Screen state changed: home_added
+- Screen state changed: home_adding
+- Screen state changed: home_end-confirmation
+- Screen state changed: home_expired-pending
+- Screen state changed: home_idle-expired
+- Screen state changed: home_logout-confirm
+- Screen state changed: home_manually-ended
+- Screen state changed: home_near-expiry
+- Screen state changed: home_no-cases
+- Screen state changed: home_offline
+- Screen state changed: home_profile
+- Screen state changed: home_profile-case-open
+- Screen state changed: home_request-failed
+- Screen state changed: home_requesting
+- Screen state changed: home_setting
+- Screen state changed: home_setup-failed
+- Screen state changed: home_setup-wheel
+- Screen state changed: home_stop-pending
+- Screen state changed: home_unknown-result
+- Screen state changed: a-back-blocked
+- Screen state changed: a-confirm-busy
+- Screen state changed: a-confirm-failed
+- Screen state changed: a-leave-sheet
+- Screen state changed: a-load-failed
+- Screen state changed: a-loading
+- Screen state changed: a-long-content
+- Screen state changed: a-no-medicines
+- Screen state changed: a-notes-typing
+- Screen state changed: a-offline
+- Screen state changed: a-offline-action
+- Screen state changed: a-order-details
+- Screen state changed: a-release-failed
+- Screen state changed: a-releasing
+- Screen state changed: a-rx-viewer
+- Screen state changed: a-scrolled
+- Screen state changed: a-top
+- Screen state changed: c-callback
+- Screen state changed: c-callback-error
+- Screen state changed: c-callback-failed
+- Screen state changed: c-callback-refused
+- Screen state changed: c-skip-ha
+- Screen state changed: e-availability-ended
+- Screen state changed: e-callback-scheduled
+- Screen state changed: g0-calling-pilot
+- Screen state changed: g1-generic-confirm
+- Screen state changed: g2-checking-ha
+- Screen state changed: g3b-after-hangup
+- Screen state changed: g3b-forwarded
+- Screen state changed: s-10-medicines
+- Screen state changed: s-medicine-disabled
+- Screen state changed: s-optional-empty
+- Screen state changed: s7a-calling
+- Screen state changed: s7b-still-on-call
+- Screen state changed: s7d-result-missing
+- Screen state changed: s7d-result-missing-pilot
+- Screen state changed: s7d-unavailable-sheet
+- Screen state changed: s7e-leave-sheet
+- Screen state changed: s7f-submitted
+- Screen state changed: t01-ready
+- Screen state changed: t02-calling
+- Screen state changed: t03-not-through
+- Screen state changed: t04-doctor-missed
+- Screen state changed: t05-result-wait
+- Screen state changed: t06-ended-early
+- Screen state changed: t08a-valid-cat4
+- Screen state changed: t08c-confirm-blocked
+- Screen state changed: t09-patient-unavailable
+- Screen state changed: t10a-confirmed
+- Screen state changed: t10b-forwarded
+- Screen state changed: t13-connecting-ha
+- Screen state changed: t14-transferred
+- Screen state changed: t15-after-hangup
+- Screen state changed: t15-ha-no-join
+- Screen state changed: t16-transfer-missed
+- Screen state changed: t16b-transfer-missed-patient
+- Screen state changed: t16c-transfer-missed-unknown
+- Screen state changed: t17-skip-ha-wait
+- Screen state changed: d-alt-days
+- Screen state changed: d-cream
+- Screen state changed: d-default
+- Screen state changed: d-disable-sheet
+- Screen state changed: d-disabled
+- Screen state changed: d-discard-sheet
+- Screen state changed: d-drops
+- Screen state changed: d-duration-picker
+- Screen state changed: d-error-dose
+- Screen state changed: d-error-other
+- Screen state changed: d-every-x-hours
+- Screen state changed: d-food-selected
+- Screen state changed: d-header-white
+- Screen state changed: d-inhaler
+- Screen state changed: d-injection-default
+- Screen state changed: d-monthly
+- Screen state changed: d-notes-keyboard
+- Screen state changed: d-rx-failed
+- Screen state changed: d-scrolled
+- Screen state changed: d-sos-on
+- Screen state changed: d-sos-only
+- Screen state changed: d-syrup
+- Screen state changed: d-weekly
+- Copy added: home.addHint
+- Copy added: home.custom
+- Copy added: home.quickPicks
+- Copy added: offer.faceIdPoint
+- Copy added: offer.fingerprintPoint
+- Copy added: offer.screenLockPoint
+- Copy removed: home.addConfirm
+- Copy removed: home.addTitle
+- Copy removed: home.adjust
+- Copy removed: home.minimum
+- Copy removed: offer.faceIdLine
+- Copy removed: offer.fingerprintLine
+- Copy removed: offer.screenLockLine
+- Copy changed: home.addTime (+ Add time → Add time)
+- Copy changed: home.endSub (You won’t receive new cases after this. A case already assigned to you stays with you. → You won’t get new cases after this. A case already assigned to you stays with you.)
+- Copy changed: home.rxToday (Prescriptions today → Prescriptions written today)
+- Copy changed: home.subActive (Request a case whenever you have a moment. → Request a case now, or whenever you’re ready.)
+- Copy changed: home.subSetup (Choose how long you’re available today. → You can add time or stop anytime.)
+- Copy changed: home.titleActive (You’re available for consultations → You can take cases)
+- Copy changed: home.titleEnded (Your availability has ended → Availability ended)
+- Copy changed: home.titleSetup (Consult on your schedule → Start taking cases)
+- Copy changed: offer.pointNoWait (No more waiting for SMS codes → No SMS to wait for.)
+- Copy changed: offer.title (Skip the OTP next time → Skip OTPs next time)
+- Copy changed: otp.newSent (New code sent → New code sent.)
+- Copy changed: signin.couldntSend (Couldn’t send the code. → Couldn’t send the OTP.)
+- Copy changed: signin.smsHelper (We’ll send you a verification code by SMS. → We’ll send you an OTP by SMS.)
+
 ## 2026-11-10
 
 - Block changed: button
@@ -1473,94 +1973,3 @@ What moved in the kit since the previous generation: tokens used, building block
 - Screen state changed: sign-in_couldnt-send
 - Screen state changed: sign-in_too-many-tries
 - Screen state changed: sign-in_inactive
-
-## 2026-11-09
-
-- Block changed: spinner
-- Screen state changed: sign-in_sending
-
-## 2026-11-09
-
-- Block changed: button
-- Block changed: field
-- Block changed: notice
-- Block changed: spinner
-- Block changed: logo-header
-- Block changed: sign-up-option
-- Block changed: entry-layout
-
-## 2026-11-09
-
-- Token added: tokens.borderWidth.default
-- Token added: tokens.iconSize.md
-- Token added: tokens.logoLockup.width
-- Token added: tokens.radius.full
-- Token added: tokens.spinner.ring
-- Token added: tokens.spinner.size
-- Block changed: button
-- Block changed: field
-- Block changed: notice
-- Block changed: spinner
-- Block changed: logo-header
-- Block changed: sign-up-option
-- Block changed: entry-layout
-- Screen state changed: sign-in_default
-- Screen state changed: sign-in_keyboard-open
-- Screen state changed: sign-in_empty-tap
-- Screen state changed: sign-in_too-short
-- Screen state changed: sign-in_wrong-first-digit
-- Screen state changed: sign-in_pasted-cleaned
-- Screen state changed: sign-in_sending
-- Screen state changed: sign-in_not-registered
-- Screen state changed: sign-in_offline
-- Screen state changed: sign-in_couldnt-send
-- Screen state changed: sign-in_too-many-tries
-- Screen state changed: sign-in_inactive
-- Copy added: signin.phonePrefix
-- Copy added: signin.logoAlt
-
-## 2026-11-09
-
-- Token added: tokens.color.content.placeholder
-- Block changed: field
-- Screen state changed: sign-in_default
-- Screen state changed: sign-in_keyboard-open
-- Screen state changed: sign-in_empty-tap
-- Screen state changed: sign-in_too-short
-- Screen state changed: sign-in_wrong-first-digit
-- Screen state changed: sign-in_pasted-cleaned
-- Screen state changed: sign-in_sending
-- Screen state changed: sign-in_not-registered
-- Screen state changed: sign-in_offline
-- Screen state changed: sign-in_couldnt-send
-- Screen state changed: sign-in_too-many-tries
-- Screen state changed: sign-in_inactive
-
-## 2026-11-09
-
-- Screen state changed: sign-in_default
-- Screen state changed: sign-in_keyboard-open
-- Screen state changed: sign-in_empty-tap
-- Screen state changed: sign-in_too-short
-- Screen state changed: sign-in_wrong-first-digit
-- Screen state changed: sign-in_pasted-cleaned
-- Screen state changed: sign-in_sending
-- Screen state changed: sign-in_not-registered
-- Screen state changed: sign-in_offline
-- Screen state changed: sign-in_couldnt-send
-- Screen state changed: sign-in_too-many-tries
-- Screen state changed: sign-in_inactive
-
-## 2026-11-09
-
-- Screen state changed: sign-in_not-registered
-- Screen state changed: sign-in_offline
-- Screen state changed: sign-in_couldnt-send
-- Screen state changed: sign-in_too-many-tries
-- Screen state changed: sign-in_inactive
-
-## 2026-11-09
-
-- Block changed: field
-- Block changed: logo-header
-- Block changed: entry-layout

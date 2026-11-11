@@ -1,0 +1,100 @@
+<div class="home-screen tm">
+<div class="home-bg">
+<div class="entry-band band">
+<div class="entry-band__row">
+<img class="entry-band__logo login-logo" src="brand/truemeds-for-doctors.svg" alt="truemeds for doctors">
+<div class="entry-band__actions">
+<button class="tm-btn tm-btn--quiet tm-btn--icon" type="button" aria-label="Notifications">
+<span class="tm-icon" data-icon="bell" aria-hidden="true">[svg]</span>
+</button>
+<button class="tm-btn tm-btn--quiet tm-btn--icon" type="button" aria-label="Help">
+<span class="tm-icon" data-icon="help-circle" aria-hidden="true">[svg]</span>
+</button>
+<button class="tm-btn tm-btn--quiet tm-btn--icon" type="button" aria-label="Profile">
+<span class="tm-icon" data-icon="user-circle" aria-hidden="true">[svg]</span>
+</button>
+</div>
+</div>
+<h1 class="entry-band__title tm-text-title-lg">Start taking cases</h1>
+<p class="entry-band__sub sub">You can add time or stop anytime.</p>
+</div>
+<div class="entry-panel panel">
+<div class="tm-notice tm-notice--neutral status" role="status">
+<span class="tm-icon" data-icon="info-circle" aria-hidden="true">[svg]</span>
+<span>Your availability ended. You won’t get new cases.</span>
+</div>
+<div class="scroll">
+<div class="tm-card home-card">
+<button class="srow srow--link" id="home-rx" type="button">
+<span class="tm-icon srow__icon" data-icon="prescription" aria-hidden="true">[svg]</span>
+<span class="srow__txt">
+<span class="srow__label">Prescriptions written today</span>
+<span class="srow__line">
+<span class="tm-value-display srow__value">3</span>
+</span>
+</span>
+<span class="tm-icon srow__chev" data-icon="chevron-right" aria-hidden="true">[svg]</span>
+</button>
+</div>
+<div class="picker">
+<div class="group">
+<p class="lbl" id="qp-duration">Quick picks</p>
+<div class="presets" role="group" aria-labelledby="qp-duration">
+<button type="button" class="tm-chip tm-chip--lg" aria-pressed="false">15 min</button>
+<button type="button" class="tm-chip tm-chip--lg" aria-pressed="true">30 min</button>
+<button type="button" class="tm-chip tm-chip--lg" aria-pressed="false">45 min</button>
+<button type="button" class="tm-chip tm-chip--lg" aria-pressed="false">1 hour</button>
+<button type="button" class="tm-chip tm-chip--lg" aria-pressed="false">2 hours</button>
+<button type="button" class="tm-chip tm-chip--lg" aria-pressed="false">3 hours</button>
+</div>
+</div>
+<div class="group">
+<div class="lbl-row">
+<p class="lbl">Custom</p>
+</div>
+<div class="col-heads" aria-hidden="true">
+<span>Hours</span>
+<span>Minutes</span>
+</div>
+<div class="columns">
+<div class="wheel-band" aria-hidden="true">
+</div>
+<div class="wheel" role="listbox" aria-label="Hours" data-col="h">
+<span class="wheel-item wheel-item--empty" aria-hidden="true">
+</span>
+<button type="button" class="wheel-item is-selected" role="option" aria-selected="true" tabindex="0" data-index="0">0</button>
+<button type="button" class="wheel-item" role="option" aria-selected="false" tabindex="-1" data-index="1">1</button>
+<button type="button" class="wheel-item" role="option" aria-selected="false" tabindex="-1" data-index="2">2</button>
+<button type="button" class="wheel-item" role="option" aria-selected="false" tabindex="-1" data-index="3">3</button>
+<button type="button" class="wheel-item" role="option" aria-selected="false" tabindex="-1" data-index="4">4</button>
+<button type="button" class="wheel-item" role="option" aria-selected="false" tabindex="-1" data-index="5">5</button>
+<button type="button" class="wheel-item" role="option" aria-selected="false" tabindex="-1" data-index="6">6</button>
+<button type="button" class="wheel-item" role="option" aria-selected="false" tabindex="-1" data-index="7">7</button>
+<button type="button" class="wheel-item" role="option" aria-selected="false" tabindex="-1" data-index="8">8</button>
+<button type="button" class="wheel-item" role="option" aria-selected="false" tabindex="-1" data-index="9">9</button>
+<button type="button" class="wheel-item" role="option" aria-selected="false" tabindex="-1" data-index="10">10</button>
+<span class="wheel-item wheel-item--empty" aria-hidden="true">
+</span>
+</div>
+<div class="wheel" role="listbox" aria-label="Minutes" data-col="m">
+<span class="wheel-item wheel-item--empty" aria-hidden="true">
+</span>
+<button type="button" class="wheel-item" role="option" aria-selected="false" tabindex="-1" data-index="0">15</button>
+<button type="button" class="wheel-item is-selected" role="option" aria-selected="true" tabindex="0" data-index="1">30</button>
+<button type="button" class="wheel-item" role="option" aria-selected="false" tabindex="-1" data-index="2">45</button>
+<span class="wheel-item wheel-item--empty" aria-hidden="true">
+</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="tm-actionbar footer">
+<p class="until" id="home-until">Available until <b>9:30 AM</b>
+</p>
+<button type="button" class="tm-btn tm-btn--primary tm-btn--lg tm-btn--block" data-confirm="">Set availability</button>
+</div>
+</div>
+</div>
+</div>
+exit 0

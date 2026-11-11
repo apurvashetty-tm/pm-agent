@@ -12,6 +12,8 @@ import { PICTURE_NUMBER } from "../data/test-numbers.js";
 import { SIGN_UP_URL, PLACEHOLDER } from "../data/links.js";
 import { mockKeyboard, drawsKeyboard } from "../shell/mock-keyboard.js";
 import { authCtx, newLife } from "./entry-ctx.js";
+import { band } from "./band.js";
+import { revealAboveKeyboard } from "./parts.js";
 
 // Picture moments (same table as the approved file). number: what the field shows; error: helper key shown as an error.
 const P = PICTURE_NUMBER;
@@ -77,16 +79,17 @@ export function render(host, id, { mode, params = {} }) {
     h("label", { class: "tm-field__label", for: "tm-login-mobile", text: MSG("signin.phoneLabel") }),
     h("div", { class: "tm-field__control" }, h("span", { class: "login-prefix", text: MSG("signin.phonePrefix") }), input),
     helper, Object.values(notices));
-  const signupLink = h("a", { class: "login-signup-label", href: SIGN_UP_URL, target: "_blank", rel: "noopener", text: MSG("signin.signupLink") });
-  const signup = h("div", { class: "login-signup", id: "tm-signup-option" }, parts("signin.signup", { link: signupLink }, MSG));   // D-101 o25
+  // Sign up is a real link with a 48 hit area that adds no height (.tm-link, D-108 / screens audit §2).
+  const signupLink = h("a", { class: "tm-link login-signup-label", href: SIGN_UP_URL, target: "_blank", rel: "noopener", text: MSG("signin.signupLink") });
+  const signup = h("p", { class: "login-signup", id: "tm-signup-option" }, parts("signin.signup", { link: signupLink }, MSG));   // D-101 o25
   const keyboard = kbDrawn ? mockKeyboard(typeKey) : null;
+  // The one band (D-107), then the panel: field + helper → 32 → Send OTP; a server answer 16 under the field, 32 above Send OTP (D-108).
   const root = h("section", { class: "signin-screen tm", "aria-labelledby": "tm-login-title" },
-    h("img", { class: "login-logo", src: "brand/truemeds-for-doctors.svg", alt: MSG("signin.logoAlt") }),
-    h("main", { class: "login-content" },
-      h("h1", { id: "tm-login-title", text: MSG("signin.welcome") }),
-      h("p", { text: MSG("signin.subtitle") }),
-      h("div", { class: "login-fields" }, field, submit)),
-    signup, keyboard);
+    h("div", { class: "signin-scroll" },
+      band({ title: MSG("signin.welcome"), titleId: "tm-login-title", subtitle: MSG("signin.subtitle") }),
+      h("main", { class: "entry-panel panel login-fields" }, field, submit, h("div", { class: "login-signup-row" }, signup))),
+    keyboard);
+  const scroller = root.firstChild;
   host.replaceChildren(root);
 
   // ---- paint: the DOM always follows the model ----
@@ -98,6 +101,8 @@ export function render(host, id, { mode, params = {} }) {
     root.classList.toggle("is-focused", m.focused && !m.error);
     root.dataset.keyboard = String(kbDrawn && m.kb);
     if (keyboard) keyboard.hidden = !m.kb;
+    // The drawn keyboard acts as the phone's (F-05): Send OTP stays 16 clear above it (scrolls on a short phone).
+    if (keyboard && m.kb) requestAnimationFrame(() => revealAboveKeyboard(scroller, submit, keyboard));
     field.classList.toggle("tm-field--error", !!m.error);
     input.setAttribute("aria-invalid", String(!!m.error));
     helper.hidden = !!m.notice;

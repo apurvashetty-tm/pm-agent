@@ -61,14 +61,8 @@
       },
       {
        "property": "margin",
-       "value": "var(--tm-space-xs) 0 0",
-       "tokens": [
-        {
-         "native": "tokens.space.xs",
-         "web": "--tm-space-xs",
-         "value": 4
-        }
-       ],
+       "value": "0",
+       "tokens": [],
        "layout": true
       },
       {
@@ -85,18 +79,27 @@
       },
       {
        "property": "font-family",
-       "value": "var(--tm-font)",
-       "tokens": [
-        {
-         "native": "tokens.font.family",
-         "web": "--tm-font",
-         "value": "Plus Jakarta Sans"
-        }
-       ],
+       "value": "inherit",
+       "tokens": [],
+       "layout": true,
+       "inherited": true
+      },
+      {
+       "property": "letter-spacing",
+       "value": "inherit",
+       "tokens": [],
+       "layout": true,
+       "inherited": true
+      },
+      {
+       "property": "text-align",
+       "value": "inherit",
+       "tokens": [],
+       "layout": true,
        "inherited": true
       }
      ],
-     "size": "358×40"
+     "size": "87.9×40"
     }
    }
   }
@@ -116,11 +119,14 @@
   "home_adding",
   "home_end-confirmation",
   "home_expired-pending",
+  "home_idle-expired",
+  "home_manually-ended",
   "home_near-expiry",
   "home_no-cases",
   "home_offline",
   "home_request-failed",
   "home_requesting",
+  "home_stop-pending",
   "home_unknown-result"
  ],
  "states": {

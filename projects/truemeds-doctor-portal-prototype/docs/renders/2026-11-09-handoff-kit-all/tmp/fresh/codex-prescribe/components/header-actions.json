@@ -1,0 +1,111 @@
+{
+ "block": "header-actions",
+ "name": "HeaderActions",
+ "rn": "<HeaderActions />",
+ "web": ".header-actions",
+ "parts": {
+  "container": {
+   "states": {
+    "default": {
+     "seenIn": "home_active",
+     "styles": [
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "display",
+       "value": "flex",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "gap",
+       "value": "var(--tm-space-xs)",
+       "tokens": [
+        {
+         "native": "tokens.space.xs",
+         "web": "--tm-space-xs",
+         "value": 4
+        }
+       ]
+      },
+      {
+       "property": "margin",
+       "value": "calc((var(--tm-icon-size-md) - var(--tm-target-min)) / 2) calc((var(--tm-icon-size-md) - var(--tm-target-min)) / 2) calc((var(--tm-icon-size-md) - var(--tm-target-min)) / 2) 0",
+       "tokens": [
+        {
+         "native": "tokens.iconSize.md",
+         "web": "--tm-icon-size-md",
+         "value": 20
+        },
+        {
+         "native": "tokens.target.min",
+         "web": "--tm-target-min",
+         "value": 48
+        },
+        {
+         "native": "tokens.iconSize.md",
+         "web": "--tm-icon-size-md",
+         "value": 20
+        },
+        {
+         "native": "tokens.target.min",
+         "web": "--tm-target-min",
+         "value": 48
+        },
+        {
+         "native": "tokens.iconSize.md",
+         "web": "--tm-icon-size-md",
+         "value": 20
+        },
+        {
+         "native": "tokens.target.min",
+         "web": "--tm-target-min",
+         "value": 48
+        }
+       ],
+       "layout": true
+      }
+     ],
+     "size": "152×47.9"
+    }
+   }
+  }
+ },
+ "rules": [
+  {
+   "section": "Kit",
+   "text": "Build it once from the parts × states below (tokens only, copy from messages); it appears on Home. What it does in each state is in DECIDED.md under those screens."
+  }
+ ],
+ "pictures": [],
+ "usedIn": [
+  "home_active",
+  "home_add-failed",
+  "home_add-wheel",
+  "home_added",
+  "home_adding",
+  "home_end-confirmation",
+  "home_expired-pending",
+  "home_idle-expired",
+  "home_manually-ended",
+  "home_near-expiry",
+  "home_no-cases",
+  "home_offline",
+  "home_request-failed",
+  "home_requesting",
+  "home_setting",
+  "home_setup-failed",
+  "home_setup-wheel",
+  "home_stop-pending",
+  "home_unknown-result"
+ ],
+ "states": {
+  "default": [
+   "container"
+  ]
+ }
+}

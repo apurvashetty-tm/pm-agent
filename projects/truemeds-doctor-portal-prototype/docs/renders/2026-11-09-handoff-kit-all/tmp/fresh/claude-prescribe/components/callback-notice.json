@@ -1,0 +1,52 @@
+{
+ "block": "callback-notice",
+ "name": "CallbackNotice",
+ "rn": "<CallbackNotice />",
+ "web": ".callback-notice",
+ "parts": {
+  "container": {
+   "states": {
+    "default": {
+     "seenIn": "c-callback-failed",
+     "styles": [
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "margin",
+       "value": "var(--tm-space-lg) 0 0",
+       "tokens": [
+        {
+         "native": "tokens.space.lg",
+         "web": "--tm-space-lg",
+         "value": 16
+        }
+       ],
+       "layout": true
+      }
+     ],
+     "size": "358×66"
+    }
+   }
+  }
+ },
+ "rules": [
+  {
+   "section": "Kit",
+   "text": "Build it once from the parts × states below (tokens only, copy from messages); it appears on Case page. What it does in each state is in DECIDED.md under those screens."
+  }
+ ],
+ "pictures": [],
+ "usedIn": [
+  "c-callback-failed",
+  "c-callback-refused"
+ ],
+ "states": {
+  "default": [
+   "container"
+  ]
+ }
+}

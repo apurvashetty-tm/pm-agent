@@ -75,12 +75,12 @@
       },
       {
        "property": "line-height",
-       "value": "var(--tm-target-min)",
+       "value": "var(--tm-font-lineheight-sm)",
        "tokens": [
         {
-         "native": "tokens.target.min",
-         "web": "--tm-target-min",
-         "value": 48
+         "native": "tokens.font.lineHeight.sm",
+         "web": "--tm-font-lineheight-sm",
+         "value": 20
         }
        ],
        "inherited": true
@@ -100,7 +100,7 @@
        "inherited": true
       }
      ],
-     "size": "30×18"
+     "size": "30×17.9"
     }
    }
   }

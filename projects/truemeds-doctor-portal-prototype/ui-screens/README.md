@@ -4,17 +4,17 @@ The approved screens for the Truemeds Doctor Portal, with their pictures. Promot
 
 **Read with the screens:** app rules `app-logic.md` · decisions `../docs/context/decision_log.md` (D-58 → D-83) · what we're building and current rules `../docs/context/project_truth.md` · every error, offline and busy state `../docs/feedback-state-map.md` · open questions `../docs/context/open_questions.md` · what is next `../docs/context/backlog.md`.
 
-Each state has a 390-wide and a 360-wide picture (`_w390.png`, `_w360.png`, 2× density). Contact sheets per folder (`contact-*.png`) show the 390 pictures.
+Each state has a 390-wide and a 360-wide picture (`_w390.png`, `_w360.png`, 2× density). Sign-in, OTP, the offer, unlock and Home are 390 × 844 and **360 × 640** (real-size frames, 2026-11-11); the case page and Prescribe keep 360 × 844. The entry and Home reference pages use the app's own screen styles (`app/screens/band.css` + the screen's CSS) and draw the app's DOM, so a reference and the app render the same pixels (r2-build: 130 / 130 identical). Contact sheets per folder (`contact-*.png`) show the 390 pictures.
 
 ## Screens and pictures
 
 | Journey | Screen file | Pictures folder | States | Decisions |
 |---|---|---|---|---|
-| Sign-in | `sign-in/sign-in.html` | `sign-in/` (`sign-in_<state>_…`) | 12 | D-42 to D-47, D-61, D-65 |
-| OTP | `otp/otp.html` | `otp/` (`otp_<state>_…`) | 17 | D-42 to D-47, D-61 (no Back), D-65 |
-| Returning unlock | `returning-unlock/returning-unlock.html` | `returning-unlock/` (`unlock_<state>_…`) | 7 (14 pictures re-rendered 2026-11-10 for D-105: two buttons, no Switch account; awaiting Apurva's approval) | D-45, D-47, D-61, D-66, D-105 |
-| Faster sign-in offer | `faster-signin-offer/faster-signin-offer.html` | `faster-signin-offer/` (`offer_<state>_…`) | 7 | D-45, D-61, D-64, D-65, D-93 |
-| Home (availability, add time, end, profile) | `home/home.html` (+ `home-reference.js`, `home-reference.css`) | `home/` (`home_<state>_…`) | 22 | D-36, D-40, D-47, D-53, D-69, D-70 |
+| Sign-in | `sign-in/sign-in.html` | `sign-in/` (`sign-in_<state>_…`) | 12 (re-rendered 2026-11-11 (r2-build: D-106 – D-109, one band, visible gaps; 360 in a real 360 × 640 frame); awaiting Apurva's approval) | D-42 to D-47, D-61, D-65, D-107 – D-109 |
+| OTP | `otp/otp.html` | `otp/` (`otp_<state>_…`) | 17 (re-rendered 2026-11-11 (r2-build: D-106 – D-109, one band, visible gaps; 360 in a real 360 × 640 frame); awaiting Apurva's approval) | D-42 to D-47, D-61 (no Back), D-65, D-107 – D-109 |
+| Returning unlock | `returning-unlock/returning-unlock.html` | `returning-unlock/` (`unlock_<state>_…`) | 7 (re-rendered 2026-11-11 (r2-build: D-106 – D-109, one band, visible gaps; 360 in a real 360 × 640 frame); awaiting Apurva's approval; the prompt opens by itself on arrival, D-109 §3) | D-45, D-47, D-61, D-66, D-105, D-107 – D-109 |
+| Faster sign-in offer | `faster-signin-offer/faster-signin-offer.html` | `faster-signin-offer/` (`offer_<state>_…`) | 7 (re-rendered 2026-11-11 (r2-build: D-106 – D-109, one band, visible gaps; 360 in a real 360 × 640 frame); awaiting Apurva's approval) | D-45, D-61, D-64, D-65, D-93, D-107 – D-109 |
+| Home (availability, add time, end, profile) | `home/home.html` (+ `home-reference.js`, `home-reference.css`) | `home/` (`home_<state>_…`) | 22 (Home v3; re-rendered 2026-11-11 (r2-build: D-106 – D-109, one band, visible gaps; 360 in a real 360 × 640 frame); awaiting Apurva's approval) | D-36, D-40, D-47, D-53, D-69, D-70, D-106 – D-109 |
 | Case page: ready, calling, call outcomes, closed cases, sheets, stress | `case/case.html` (+ `case-styles.css`) | `case/` (`<state>_…`) | 61 | D-48 to D-83 |
 | Prescribe (one medicine) | `case/case.html` (`d-*`) | `prescribe/` (`d-<state>_…`) | 23 | D-04, D-06, D-08 to D-30, D-54, D-56, D-68 |
 

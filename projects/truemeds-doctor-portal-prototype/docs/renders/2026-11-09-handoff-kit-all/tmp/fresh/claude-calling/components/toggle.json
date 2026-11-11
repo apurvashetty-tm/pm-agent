@@ -1,0 +1,313 @@
+{
+ "block": "toggle",
+ "name": "Toggle",
+ "rn": "<Toggle />",
+ "web": ".toggle",
+ "parts": {
+  "container": {
+   "states": {
+    "selected": {
+     "seenIn": "home_logout-confirm",
+     "styles": [
+      {
+       "property": "width",
+       "value": "var(--tm-toggle-width)",
+       "tokens": [
+        {
+         "native": "tokens.toggle.width",
+         "web": "--tm-toggle-width",
+         "value": 36
+        }
+       ]
+      },
+      {
+       "property": "height",
+       "value": "var(--tm-toggle-height)",
+       "tokens": [
+        {
+         "native": "tokens.toggle.height",
+         "web": "--tm-toggle-height",
+         "value": 20
+        }
+       ]
+      },
+      {
+       "property": "border-radius",
+       "value": "var(--tm-radius-full)",
+       "tokens": [
+        {
+         "native": "tokens.radius.full",
+         "web": "--tm-radius-full",
+         "value": 999
+        }
+       ]
+      },
+      {
+       "property": "background",
+       "value": "var(--tm-surface-brand-default)",
+       "tokens": [
+        {
+         "native": "tokens.color.surface.brand.default",
+         "web": "--tm-surface-brand-default",
+         "value": "#266CE1"
+        }
+       ]
+      },
+      {
+       "property": "position",
+       "value": "relative",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "margin",
+       "value": "0",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "flex",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "color",
+       "value": "var(--tm-content-primary)",
+       "tokens": [
+        {
+         "native": "tokens.color.content.primary",
+         "web": "--tm-content-primary",
+         "value": "#383A42"
+        }
+       ],
+       "inherited": true
+      },
+      {
+       "property": "font-family",
+       "value": "inherit",
+       "tokens": [],
+       "layout": true,
+       "inherited": true
+      },
+      {
+       "property": "font-size",
+       "value": "inherit",
+       "tokens": [],
+       "layout": true,
+       "inherited": true
+      },
+      {
+       "property": "font-weight",
+       "value": "inherit",
+       "tokens": [],
+       "layout": true,
+       "inherited": true
+      },
+      {
+       "property": "line-height",
+       "value": "inherit",
+       "tokens": [],
+       "layout": true,
+       "inherited": true
+      },
+      {
+       "property": "letter-spacing",
+       "value": "inherit",
+       "tokens": [],
+       "layout": true,
+       "inherited": true
+      },
+      {
+       "property": "text-align",
+       "value": "inherit",
+       "tokens": [],
+       "layout": true,
+       "inherited": true
+      },
+      {
+       "property": "text-wrap",
+       "value": "inherit",
+       "tokens": [],
+       "layout": true,
+       "inherited": true
+      }
+     ],
+     "size": "36×20"
+    },
+    "default": {
+     "seenIn": "d-alt-days",
+     "styles": [
+      {
+       "property": "width",
+       "value": "var(--tm-toggle-width)",
+       "tokens": [
+        {
+         "native": "tokens.toggle.width",
+         "web": "--tm-toggle-width",
+         "value": 36
+        }
+       ]
+      },
+      {
+       "property": "height",
+       "value": "var(--tm-toggle-height)",
+       "tokens": [
+        {
+         "native": "tokens.toggle.height",
+         "web": "--tm-toggle-height",
+         "value": 20
+        }
+       ]
+      },
+      {
+       "property": "margin",
+       "value": "0",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "accent-color",
+       "value": "var(--tm-surface-brand-default)",
+       "tokens": [
+        {
+         "native": "tokens.color.surface.brand.default",
+         "web": "--tm-surface-brand-default",
+         "value": "#266CE1"
+        }
+       ]
+      },
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "border-radius",
+       "value": "var(--tm-radius-full)",
+       "tokens": [
+        {
+         "native": "tokens.radius.full",
+         "web": "--tm-radius-full",
+         "value": 999
+        }
+       ]
+      },
+      {
+       "property": "background",
+       "value": "var(--tm-border-default)",
+       "tokens": [
+        {
+         "native": "tokens.color.border.default",
+         "web": "--tm-border-default",
+         "value": "#D8DBDF"
+        }
+       ]
+      },
+      {
+       "property": "position",
+       "value": "relative",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "color",
+       "value": "var(--tm-content-primary)",
+       "tokens": [
+        {
+         "native": "tokens.color.content.primary",
+         "web": "--tm-content-primary",
+         "value": "#383A42"
+        }
+       ],
+       "inherited": true
+      },
+      {
+       "property": "font-family",
+       "value": "var(--tm-font)",
+       "tokens": [
+        {
+         "native": "tokens.font.family",
+         "web": "--tm-font",
+         "value": "Plus Jakarta Sans"
+        }
+       ],
+       "inherited": true
+      },
+      {
+       "property": "font-size",
+       "value": "var(--tm-font-size-body-md)",
+       "tokens": [
+        {
+         "native": "tokens.font.size.body.md",
+         "web": "--tm-font-size-body-md",
+         "value": 14
+        }
+       ],
+       "inherited": true
+      },
+      {
+       "property": "line-height",
+       "value": "var(--tm-font-lineheight-sm)",
+       "tokens": [
+        {
+         "native": "tokens.font.lineHeight.sm",
+         "web": "--tm-font-lineheight-sm",
+         "value": 20
+        }
+       ],
+       "inherited": true
+      }
+     ],
+     "size": "36×20"
+    }
+   }
+  }
+ },
+ "rules": [
+  {
+   "section": "Kit",
+   "text": "Build it once from the parts × states below (tokens only, copy from messages); it appears on Home, Prescribe. What it does in each state is in DECIDED.md under those screens."
+  }
+ ],
+ "pictures": [],
+ "usedIn": [
+  "home_logout-confirm",
+  "home_profile",
+  "home_profile-case-open",
+  "d-alt-days",
+  "d-cream",
+  "d-default",
+  "d-disable-sheet",
+  "d-disabled",
+  "d-discard-sheet",
+  "d-drops",
+  "d-duration-picker",
+  "d-error-dose",
+  "d-error-other",
+  "d-every-x-hours",
+  "d-food-selected",
+  "d-header-white",
+  "d-injection-default",
+  "d-monthly",
+  "d-scrolled",
+  "d-sos-on",
+  "d-syrup",
+  "d-weekly"
+ ],
+ "states": {
+  "selected": [
+   "container"
+  ],
+  "default": [
+   "container"
+  ]
+ }
+}

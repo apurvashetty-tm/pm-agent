@@ -560,20 +560,14 @@
       },
       {
        "property": "margin-top",
-       "value": "calc(var(--tm-space-sm) - var(--tm-space-lg))",
+       "value": "var(--tm-space-lg)",
        "tokens": [
-        {
-         "native": "tokens.space.sm",
-         "web": "--tm-space-sm",
-         "value": 8
-        },
         {
          "native": "tokens.space.lg",
          "web": "--tm-space-lg",
          "value": 16
         }
-       ],
-       "layout": true
+       ]
       }
      ],
      "size": "358×47"
@@ -1379,7 +1373,7 @@
        "inherited": true
       }
      ],
-     "size": "159.6×20"
+     "size": "151×20"
     }
    }
   },

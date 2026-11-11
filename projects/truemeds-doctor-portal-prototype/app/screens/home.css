@@ -1,35 +1,22 @@
-/* Home and Profile — lifted from ui-screens/home/home-reference.css (layout v2, Round 4). Tokens only (D-99): the reference's
-   raw values are replaced by tokens (48 → --tm-target-min, 144 wheel → 3 × target, 1px → border width, header step-out → the
-   same 48px-target formula as the sheet ✕, scrim → overlay token). The screen fills the app frame (RULES §7). */
+/* Home (v3, D-106) and Profile. Band and panel: band.css (D-107). Below the band, D-108 visible gaps: text blocks are trimmed to
+   their ink (text-box cap / text) so the box gaps below are what the eye sees. Tokens only. The screen fills the app frame (RULES §7). */
 .home-screen { height: 100%; position: relative; overflow: hidden; display: flex; flex-direction: column; background: var(--tm-surface-brand-subtle); color: var(--tm-content-primary); }   /* raw-ok: 100% fill (geometry) */
 .home-bg { flex: 1; min-height: 0; display: flex; flex-direction: column; }
-/* Home-base header (D-42): logo left, actions right; 166 lockup, 16 top offset (A-07). */
-.home-screen .header { flex: none; display: flex; align-items: center; justify-content: space-between; padding: var(--tm-space-lg) var(--tm-space-lg) 0 var(--tm-space-page); }
-.home-screen .logo { width: var(--tm-logo-lockup-width); height: auto; align-self: flex-start; }
-/* 48px icon targets step out so the last glyph sits on the 16 edge and the header keeps the logo's height (D-67, L6). */
-.home-screen .header-actions { display: flex; gap: var(--tm-space-xs); margin: calc((var(--tm-icon-size-md) - var(--tm-target-min)) / 2) calc((var(--tm-icon-size-md) - var(--tm-target-min)) / 2) calc((var(--tm-icon-size-md) - var(--tm-target-min)) / 2) 0; }
-/* LOCKED L6 (D-46): home-base hero gap, logo to title, is 48. */
-.home-screen .band { flex: none; padding: var(--tm-space-3xl) var(--tm-space-page) var(--tm-space-2xl); }
-.home-screen .band h1 { margin: 0; }
-.home-screen .sub { margin: var(--tm-space-sm) 0 0; font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); color: var(--tm-content-secondary); }
-.home-screen .panel { flex: 1; min-height: 0; display: flex; flex-direction: column; background: var(--tm-surface-primary); border-radius: var(--tm-radius-2xl) var(--tm-radius-2xl) 0 0; padding: var(--tm-space-2xl) var(--tm-space-page) var(--tm-space-xl); }
-.home-screen .scroll { flex: 1 1 auto; min-height: 0; overflow-y: auto; }
-/* A-10: the label is 14 grey; the value keeps the 16 key-content size. */
-.home-screen .rx { display: flex; align-items: center; justify-content: space-between; min-height: var(--tm-target-min); border-bottom: var(--tm-border-width-default) solid var(--tm-border-default); font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); color: var(--tm-content-secondary); }
-.home-screen .rx strong { font-size: var(--tm-font-size-body-lg); line-height: var(--tm-font-lineheight-md); font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-primary); }
-/* A-09: the row is always 48 tall, so "Time remaining" and the timer do not move when + Add time appears. */
-.home-screen .timer-row { margin-top: var(--tm-space-lg); display: flex; align-items: center; justify-content: space-between; min-height: var(--tm-target-min); }
-.home-screen .timer-label { font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); color: var(--tm-content-secondary); }
-.home-screen .time { margin: var(--tm-space-xs) 0 0; }
-.home-screen .time--warning { color: var(--tm-content-primary); }
-/* Picker (setup and the Add sheet): presets, then the centred wheel (D-40). */
-.home-screen .picker { margin-top: var(--tm-space-lg); }
+/* The content scrolls above the pinned bar, 16 clear of it at the end (§8.14). */
+.home-screen .scroll { flex: 1 1 auto; min-height: 0; overflow-y: auto; padding-bottom: var(--tm-space-lg); }
+/* A whole-screen notice (ending, ended) sits at the top of the panel, then 32 to the content (D-108). */
+.home-screen .panel > .status { flex: none; margin: 0 0 var(--tm-space-2xl); }
+/* Duration picker (setup and the add-time sheet, D-106): "Quick picks" → 32 → "Custom" → column heads 4 → wheel. */
+.home-screen .group + .group { margin-top: var(--tm-space-2xl); }
+.home-screen .lbl { margin: 0; font-size: var(--tm-font-size-body-lg); line-height: var(--tm-font-lineheight-md); font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-primary); text-box: trim-both cap text; }
+.home-screen .group > .lbl, .home-screen .lbl-row { margin-bottom: var(--tm-space-sm); }   /* group label → its control 8 */
+.home-screen .lbl-row { display: flex; align-items: last baseline; justify-content: space-between; gap: var(--tm-space-sm); }
+.home-screen .hint { margin: 0; flex: none; text-align: right; font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); color: var(--tm-content-secondary); text-box: trim-both cap text; }
 .home-screen .presets { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--tm-space-sm); }
 .home-screen .presets .tm-chip { justify-content: center; }
-.home-screen .adjust-row { display: flex; align-items: baseline; justify-content: space-between; gap: var(--tm-space-sm); margin: var(--tm-space-lg) 0 var(--tm-space-sm); }
-.home-screen .adjust { margin: 0; font-size: var(--tm-font-size-body-lg); line-height: var(--tm-font-lineheight-md); font-weight: var(--tm-font-weight-semibold); }
-.home-screen .helper { margin: 0; text-align: right; flex: none; font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); color: var(--tm-content-secondary); }
+/* Column heads: their ink starts 8 under "Custom"; the wheel keeps its 4 (box) under them (component anatomy, D-40). */
 .home-screen .col-heads { display: grid; grid-template-columns: 1fr 1fr; text-align: center; margin-bottom: var(--tm-space-xs); font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); color: var(--tm-content-secondary); }
+.home-screen .col-heads > span { text-box: trim-start cap text; }
 .home-screen .columns { position: relative; display: grid; grid-template-columns: 1fr 1fr; height: calc(3 * var(--tm-target-min)); }
 .home-screen .wheel-band { position: absolute; left: 0; right: 0; top: var(--tm-target-min); height: var(--tm-target-min); border-radius: var(--tm-radius-md); background: var(--tm-surface-brand-subtle); pointer-events: none; }
 .home-screen .wheel-band::after { content: ""; position: absolute; left: 50%; top: var(--tm-space-xs); bottom: var(--tm-space-xs); width: var(--tm-border-width-default); background: var(--tm-border-default); }   /* raw-ok: 50% centring (geometry) */
@@ -44,8 +31,25 @@
 .home-screen .wheel-item--empty { height: var(--tm-target-min); scroll-snap-align: none; }
 .home-screen .wheel-item:disabled { color: var(--tm-content-disabled); cursor: not-allowed; }
 .home-screen .wheel-item.is-selected:disabled { color: var(--tm-content-brand); }   /* D-81 F9: the selected value keeps its brand text while busy */
-/* A-19: a standing-state notice sits at the top of the panel, outside the scroll. */
-.home-screen .panel > .status { flex: none; margin: 0 0 var(--tm-space-lg); }
+/* Available card (D-106): one tm-card (as on the case page), rows of one anatomy: grey icon · 16/24 label · L9 value. */
+.home-screen .home-card { padding: 0 var(--tm-space-lg); }
+.home-screen .home-card + .picker { margin-top: var(--tm-space-2xl); }   /* ended Home: the count row → 32 → the picker */
+.home-screen .srow { display: flex; align-items: flex-start; gap: var(--tm-space-md); width: 100%; padding: var(--tm-space-lg) 0; box-sizing: border-box;   /* raw-ok: 100% fill (geometry) */
+  background: none; border: 0; margin: 0; font: inherit; color: inherit; text-align: left; }
+.home-screen .srow + .srow { border-top: var(--tm-border-width-default) solid var(--tm-border-subtle); }
+.home-screen .srow--link { cursor: pointer; }
+.home-screen .srow--link:focus-visible { outline: var(--tm-focus-ring-width) solid var(--tm-border-focus); outline-offset: var(--tm-focus-ring-offset); }
+.home-screen .srow__icon { flex: none; margin-top: 2px; color: var(--tm-content-secondary); }   /* raw-ok: 2px optical nudge, icon centred on the 24 label line */
+.home-screen .srow__txt { flex: 1; min-width: 0; display: block; }
+.home-screen .srow__label { display: block; margin: 0; font-size: var(--tm-font-size-body-lg); line-height: var(--tm-font-lineheight-md); color: var(--tm-content-primary); }
+/* Add time sits on the value line, centred on the timer (compact secondary, like View Rx). */
+.home-screen .srow__line { display: flex; align-items: center; justify-content: space-between; gap: var(--tm-space-md); margin-top: var(--tm-space-xs); }
+.home-screen .srow__value { margin: 0; }
+.home-screen .srow__chev { flex: none; align-self: center; color: var(--tm-content-secondary); }
+.home-screen .add-time { flex: none; }
+/* Setup caption "Available until 7:45 PM": L3 centred, 8 above Set availability (bar caption). */
+.home-screen .until { margin: 0; text-align: center; font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); color: var(--tm-content-secondary); text-box: trim-both cap text; }
+.home-screen .until b { color: var(--tm-content-primary); font-weight: var(--tm-font-weight-semibold); }
 .home-screen .tm-status-line { text-align: center; text-wrap: balance; }   /* A-11: Checking… centred like the case page */
 /* Round 4 item 1: the pinned footer is the real action bar, edge to edge on the panel, on the phone's bottom edge. */
 .home-screen .footer { flex: none; margin: 0 calc(-1 * var(--tm-space-page)) calc(-1 * var(--tm-space-xl)); }
@@ -54,7 +58,8 @@
 .home-screen .footer > .home-toast { position: absolute; bottom: calc(100% + var(--tm-space-lg)); white-space: nowrap; }   /* raw-ok: 100% = the bar's own height (geometry) */
 /* Sheets sit inside the frame over the pinned bar (Round 6); the Home scrim is the light overlay of the approved pictures. */
 .home-screen .app-overlay { background: rgb(0 0 0 / calc(var(--tm-overlay-subtle) * 1%)); }   /* raw-ok: scrim is black at the overlay-token opacity (SALT has no black semantic colour) */
-.home-screen .sheet-feedback { margin: var(--tm-space-lg) 0; }   /* A-12: 16 below the picker and above the Add button */
+/* Add-time error: inside the pinned actions, 16 above Add (8 actions gap + 8), left-aligned box (D-106). */
+.home-screen .tm-sheet__actions > .sheet-feedback { margin: 0 0 var(--tm-space-sm); }
 
 /* D-70 Profile page: task header with Back, grey page, white cards at the 16 page margin, Log out last. */
 .home-screen.is-profile { background: var(--tm-surface-secondary); }

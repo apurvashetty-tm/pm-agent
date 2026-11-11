@@ -1,23 +1,18 @@
-/* Returning unlock — lifted from ui-screens/returning-unlock/returning-unlock.html. Tokens only (--tm-*).
-   The screen fills the app frame (RULES §7). Task header (D-42): logo, greeting, no Back — first screen when the app opens (D-47). */
+/* Returning unlock. Band and panel: band.css (D-107); the greeting carries a name and may wrap to two lines (variant 2).
+   Below the band, D-108 visible gaps: tile → 8 → caption; a whole-screen notice at the top of the panel. Tokens only (--tm-*).
+   The screen fills the app frame (RULES §7). No Back — first screen when the app opens (D-47). */
 .unlock-screen { height: 100%; box-sizing: border-box; display: flex; flex-direction: column; overflow: hidden; position: relative;   /* raw-ok: 100% fill (geometry) */
   background: var(--tm-surface-brand-subtle); color: var(--tm-content-primary); font-family: var(--tm-font); }
-.unlock-screen .intro { padding: var(--tm-space-lg) var(--tm-space-page) var(--tm-space-2xl); }
-.unlock-screen .login-logo { display: block; width: var(--tm-logo-lockup-width); height: auto; margin-bottom: var(--tm-space-lg); }
-.unlock-screen .head { margin-top: 0; }   /* D-81 F8: same logo-to-title gap as OTP and offer (16) */
-.unlock-screen h1 { margin: 0 0 var(--tm-space-sm); }
-.unlock-screen .intro p { margin: 0; font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); color: var(--tm-content-secondary); }
-/* D-81 F8: tile at the offer position. Round 4 A-05: panel top 32. It scrolls above the pinned bar on short phones (lane D). */
-.unlock-screen .panel { flex: 1; min-height: 0; overflow-y: auto; display: flex; flex-direction: column;
-  padding: var(--tm-space-2xl) var(--tm-space-page) var(--tm-space-xl); border-radius: var(--tm-radius-2xl) var(--tm-radius-2xl) 0 0;
-  background: var(--tm-surface-primary); }
+/* D-81 F8: tile at the offer position (panel top + 32). It scrolls above the pinned bar on short phones (lane D). */
+.unlock-screen .panel { overflow-y: auto; }
 /* Round 4 item 1: the pinned footer is the real .tm-actionbar, a sibling below the panel. Two buttons (D-105). */
 .unlock-screen .footer { flex: none; margin: 0; }
-/* A-19: a standing-state notice ("isn't available") sits at the top of the panel; it is not in the bar. */
-.unlock-screen .unlock-notice { margin: 0 0 var(--tm-space-lg); }
+/* A-19 / D-108: a whole-screen notice ("isn't available") sits at the top of the panel; it is not in the bar. */
+.unlock-screen .unlock-notice { margin: 0; }
 .unlock-screen .unlock-notice .tm-icon { width: var(--tm-icon-size-md); height: var(--tm-icon-size-md); flex: none; }
-.unlock-screen .prompt { margin: 0; display: flex; flex-direction: column; align-items: center; gap: var(--tm-space-lg); text-align: center; }
+.unlock-screen .prompt { margin: 0; display: flex; flex-direction: column; align-items: center; gap: var(--tm-space-sm); text-align: center; }   /* tile → caption 8: one thing (D-108, corrected 2026-11-11) */
 .unlock-screen .prompt-icon { width: var(--tm-icon-tile-size); height: var(--tm-icon-tile-size); display: grid; place-items: center; border-radius: var(--tm-radius-lg); background: var(--tm-surface-brand-subtle); color: var(--tm-content-brand); }
 .unlock-screen .prompt-icon .tm-icon { width: var(--tm-icon-size-xl); height: var(--tm-icon-size-xl); }
-.unlock-screen h2 { margin: 0; font-size: var(--tm-font-size-body-lg); line-height: var(--tm-font-lineheight-md); font-weight: var(--tm-font-weight-semibold); }
+/* Caption: its ink sits 8 under the tile (D-108, corrected 2026-11-11: a tile and its caption join; text trimmed to the ink). */
+.unlock-screen h2 { margin: 0; font-size: var(--tm-font-size-body-lg); line-height: var(--tm-font-lineheight-md); font-weight: var(--tm-font-weight-semibold); text-box: trim-both cap text; }
 .unlock-screen [hidden] { display: none !important; }

@@ -1,0 +1,234 @@
+{
+ "block": "toast",
+ "name": "Toast",
+ "rn": "<Toast />",
+ "web": ".toast",
+ "parts": {
+  "container": {
+   "states": {
+    "default": {
+     "seenIn": "home_added",
+     "styles": [
+      {
+       "property": "position",
+       "value": "absolute",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "left",
+       "value": "50%",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "bottom",
+       "value": "calc(100% + var(--tm-space-lg))",
+       "tokens": [
+        {
+         "native": "tokens.space.lg",
+         "web": "--tm-space-lg",
+         "value": 16
+        }
+       ],
+       "layout": true
+      },
+      {
+       "property": "transform",
+       "value": "translateX(-50%)",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "background",
+       "value": "var(--tm-surface-inverse)",
+       "tokens": [
+        {
+         "native": "tokens.color.surface.inverse",
+         "web": "--tm-surface-inverse",
+         "value": "#5B616E"
+        }
+       ]
+      },
+      {
+       "property": "color",
+       "value": "var(--tm-content-inverse)",
+       "tokens": [
+        {
+         "native": "tokens.color.content.inverse",
+         "web": "--tm-content-inverse",
+         "value": "#FFFFFF"
+        }
+       ]
+      },
+      {
+       "property": "font-size",
+       "value": "var(--tm-font-size-body-md)",
+       "tokens": [
+        {
+         "native": "tokens.font.size.body.md",
+         "web": "--tm-font-size-body-md",
+         "value": 14
+        }
+       ]
+      },
+      {
+       "property": "line-height",
+       "value": "var(--tm-font-lineheight-sm)",
+       "tokens": [
+        {
+         "native": "tokens.font.lineHeight.sm",
+         "web": "--tm-font-lineheight-sm",
+         "value": 20
+        }
+       ]
+      },
+      {
+       "property": "font-weight",
+       "value": "var(--tm-font-weight-medium)",
+       "tokens": [
+        {
+         "native": "tokens.font.weight.medium",
+         "web": "--tm-font-weight-medium",
+         "value": "500"
+        }
+       ]
+      },
+      {
+       "property": "padding",
+       "value": "var(--tm-space-md) var(--tm-space-lg)",
+       "tokens": [
+        {
+         "native": "tokens.space.md",
+         "web": "--tm-space-md",
+         "value": 12
+        },
+        {
+         "native": "tokens.space.lg",
+         "web": "--tm-space-lg",
+         "value": 16
+        }
+       ]
+      },
+      {
+       "property": "border-radius",
+       "value": "var(--tm-radius-md)",
+       "tokens": [
+        {
+         "native": "tokens.radius.md",
+         "web": "--tm-radius-md",
+         "value": 12
+        }
+       ]
+      },
+      {
+       "property": "box-shadow",
+       "value": "var(--tm-shadow-secondary)",
+       "tokens": [
+        {
+         "native": "tokens.shadow.secondary",
+         "web": "--tm-shadow-secondary",
+         "value": {
+          "boxShadow": "0px 4px 8px 0px rgba(46, 119, 229, 0.10)",
+          "ios": {
+           "shadowColor": "rgb(46, 119, 229)",
+           "shadowOffset": {
+            "width": 0,
+            "height": 4
+           },
+           "shadowOpacity": 0.1,
+           "shadowRadius": 4
+          },
+          "android": {
+           "elevation": 2
+          }
+         }
+        }
+       ]
+      },
+      {
+       "property": "width",
+       "value": "max-content",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "max-width",
+       "value": "calc(100% - 2 * var(--tm-space-xl))",
+       "tokens": [
+        {
+         "native": "tokens.space.xl",
+         "web": "--tm-space-xl",
+         "value": 24
+        }
+       ],
+       "layout": true
+      },
+      {
+       "property": "text-align",
+       "value": "center",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "z-index",
+       "value": "var(--tm-layer-toast)",
+       "tokens": [
+        {
+         "native": "tokens.layer.toast",
+         "web": "--tm-layer-toast",
+         "value": 1000
+        }
+       ]
+      },
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "white-space",
+       "value": "nowrap",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "font-family",
+       "value": "var(--tm-font)",
+       "tokens": [
+        {
+         "native": "tokens.font.family",
+         "web": "--tm-font",
+         "value": "Plus Jakarta Sans"
+        }
+       ],
+       "inherited": true
+      }
+     ],
+     "size": "111.1×44"
+    }
+   }
+  }
+ },
+ "rules": [
+  {
+   "section": "Design rules",
+   "text": "**Toast** — **Dark** (inverse surface — the platform standard), **14/20**, 12px × 16px padding, medium radius, one line (two at most), width up to the screen minus margins. Just above the bottom bar, **one at a time**, about 4 seconds, polite screen-reader announcement, never takes focus. **Only when the result has no place on the screen**; otherwise show it where it happens."
+  },
+  {
+   "section": "Kit",
+   "text": "Build it once from the parts × states below (tokens only, copy from messages); it appears on Home, Case page. What it does in each state is in DECIDED.md under those screens."
+  }
+ ],
+ "pictures": [],
+ "usedIn": [
+  "home_added",
+  "a-back-blocked"
+ ],
+ "states": {
+  "default": [
+   "container"
+  ]
+ }
+}

@@ -1,0 +1,56 @@
+{
+ "block": "ps-dur-panel",
+ "name": "PsDurPanel",
+ "rn": "<PsDurPanel />",
+ "web": ".ps-dur-panel",
+ "parts": {
+  "container": {
+   "states": {
+    "default": {
+     "seenIn": "d-duration-picker",
+     "styles": [
+      {
+       "property": "padding",
+       "value": "0 var(--tm-space-md) var(--tm-space-md)",
+       "tokens": [
+        {
+         "native": "tokens.space.md",
+         "web": "--tm-space-md",
+         "value": 12
+        },
+        {
+         "native": "tokens.space.md",
+         "web": "--tm-space-md",
+         "value": 12
+        }
+       ],
+       "layout": true
+      },
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      }
+     ],
+     "size": "324×284"
+    }
+   }
+  }
+ },
+ "rules": [
+  {
+   "section": "Kit",
+   "text": "Build it once from the parts × states below (tokens only, copy from messages); it appears on Prescribe. What it does in each state is in DECIDED.md under those screens."
+  }
+ ],
+ "pictures": [],
+ "usedIn": [
+  "d-duration-picker"
+ ],
+ "states": {
+  "default": [
+   "container"
+  ]
+ }
+}

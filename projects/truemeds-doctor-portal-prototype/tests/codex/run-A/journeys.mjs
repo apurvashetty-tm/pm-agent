@@ -21,7 +21,7 @@ add('A-H04', 'Home offline blocks request and End availability', 'home_offline',
   await d.buttons([], ['Call patient']);
 });
 add('A-H05', 'near expiry adds selected time and dismisses sheet', 'home_near-expiry', '65-67', async d => {
-  await d.msg('home.endingSoon'); await d.click('+ Add time'); await d.click('15 min');
+  await d.msg('home.endingSoon'); await d.click('Add time'); await d.click('15 min');
   const confirm = d.root().locator('.tm-sheet:visible [data-confirm]'); await confirm.click(); await d.settle();
   await d.msg('home.added'); assert.equal(await d.root().locator('.tm-sheet:visible').count(), 0);
 });
@@ -39,9 +39,9 @@ add('A-H08', 'pending request honoured after availability ends', 'home_requestin
   await d.ff(ms('availabilityMinimum') + ms('mockServerDelay')); await d.settle(); await d.buttons(['Call patient']);
 });
 add('A-H09', 'idle timer expiry keeps prescription count and setup', 'home_active', '65,69-70', async d => {
-  const count = await d.root().getByText('Prescriptions today', { exact: true }).count(); assert.ok(count);
+  const count = await d.root().getByText(copy('home.rxToday'), { exact: true }).count(); assert.ok(count);
   await d.ff(24 * 60 * 60 * 1000); await d.msg('home.idleExpired'); await d.buttons(['Set availability'], ['Request a case']);
-  assert.ok(await d.root().getByText('Prescriptions today', { exact: true }).count());
+  assert.ok(await d.root().getByText(copy('home.rxToday'), { exact: true }).count());
 });
 add('A-H10', 'Profile logout cancelled then confirmed returns to sign-in', 'home_profile', '75', async d => {
   await d.click('Log out'); await d.msg('profile.logoutConfirm'); await d.click('Stay signed in'); await d.buttons(['Log out']);
@@ -139,7 +139,7 @@ add('A-N01', 'phone Back during call shows blocked toast', 't01-ready', '90,100'
   await d.buttons([], ['Back', 'Release case']);
 });
 add('A-N02', 'phone Back on closed case goes Home', 't10a-confirmed', '94', async d => {
-  await d.back(); await d.text('Prescriptions today');
+  await d.back(); await d.text(copy('home.rxToday'));
 });
 for (const [fields, message] of [[{doctorFailure:'3'}, 'call.notThrough'], [{doctorFailure:'4'}, 'call.doctorMissed']]) add('A-CALL-' + fields.doctorFailure, 'doctor-side failure allows retry and release', 't01-ready', '118,122,135-136', async d => {
   for (const [k,v] of Object.entries(fields)) await d.choose(k,v); await d.click('Call patient'); await d.ff(ms('gate')); await d.msg(message);

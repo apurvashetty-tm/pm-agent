@@ -12,3 +12,6 @@
 .mock-kbd__key--w2 { grid-column: span 2; }
 .mock-kbd__key--w6 { grid-column: span 6; }
 .mock-kbd__key--blank { background: none; }
+/* Sign-in (r2-build): while the drawn keyboard shows, the panel gets the keyboard's height at its end, so Send OTP can scroll 16 clear
+   of it on a short phone (F-05). Prototype only, like the drawing. */
+.signin-screen[data-keyboard="true"] .login-fields { padding-bottom: calc(256px + var(--tm-space-lg)); }

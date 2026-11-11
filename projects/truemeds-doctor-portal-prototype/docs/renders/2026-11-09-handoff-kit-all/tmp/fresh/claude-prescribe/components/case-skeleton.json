@@ -1,0 +1,51 @@
+{
+ "block": "case-skeleton",
+ "name": "CaseSkeleton",
+ "rn": "<CaseSkeleton />",
+ "web": ".case-skeleton",
+ "parts": {
+  "container": {
+   "states": {
+    "default": {
+     "seenIn": "a-loading",
+     "styles": [
+      {
+       "property": "display",
+       "value": "flex",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "flex-direction",
+       "value": "column",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      }
+     ],
+     "size": "358×728"
+    }
+   }
+  }
+ },
+ "rules": [
+  {
+   "section": "Kit",
+   "text": "Build it once from the parts × states below (tokens only, copy from messages); it appears on Case page. What it does in each state is in DECIDED.md under those screens."
+  }
+ ],
+ "pictures": [],
+ "usedIn": [
+  "a-loading"
+ ],
+ "states": {
+  "default": [
+   "container"
+  ]
+ }
+}

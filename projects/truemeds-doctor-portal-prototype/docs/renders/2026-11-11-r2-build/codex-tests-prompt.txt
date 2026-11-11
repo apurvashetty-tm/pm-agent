@@ -1,0 +1,47 @@
+You are writing BROWSER TESTS FIRST for a change that is not built yet. Write tests only; do not change anything under app/, ui-screens/, docs/ or design-system/.
+
+Working directory: the project folder projects/truemeds-doctor-portal-prototype (the repo root is ../..). Write:
+- tests/codex/r2/r2.test.mjs (plain node script like tests/wheel-keyboard.mjs: serves app/ on a loopback port, Playwright Chromium from tests/node_modules, prints `PASS <id> <name>` / `FAIL <id> <name> [detail]`, exits 1 on any failure; CHROME env var = executable path if set). Keep it one file, under ~450 lines.
+- tests/codex/r2/CASES.md: one line per test id → spec source (decision id / file + section).
+- Edits to EXISTING tests that assert behaviour superseded by D-106–D-109 (see "Superseded" below). Make the smallest edit; list each one in CASES.md under "Superseded test edits" with file:line and reason.
+
+Read first (spec, the only oracle): docs/context/decision_log.md D-105 … D-109; docs/proposals/2026-11-11-release-checklist-2.md (rows P, T); docs/renders/2026-11-11-band-audit/CONCLUSION.md §3 (titles); docs/renders/2026-11-11-screens-audit/CONCLUSION.md; design-system/RULES.md "Entry and home screens" (../../design-system/RULES.md); ui-screens/app-logic.md §2–3 (old text; D-106–D-109 override it); app/state-map.js (state ids). For the driver contract (server, review panel `#rp-<field>` selects, `#rp-restart`, `window.__tm.store`, `window.__tm.clock.fastForward()`, phone keyboard stub via visualViewport), read tests/entry-journeys.mjs and tests/wheel-keyboard.mjs. Do NOT read app/screens/*.js to derive expectations.
+
+Copy: resolve every word from ui-screens/feedback/messages.json by key (flat keys like "home.titleActive"; values are strings or {text}). These keys WILL hold the new copy after the build (use the key; never hard-code old copy):
+signin.smsHelper = "We’ll send you an OTP by SMS." · signin.couldntSend = "Couldn’t send the OTP." · otp.newSent = "New code sent." · offer.title = "Skip OTPs next time" ·
+home.titleSetup = "Start taking cases" · home.subSetup = "You can add time or stop anytime." · home.titleActive = "You can take cases" · home.subActive = "Request a case now, or whenever you’re ready." · home.titleEnded = "Availability ended" · home.titleStopping = "Ending availability" · home.subNoNewCases = "You won’t get new cases." ·
+home.rxToday = "Prescriptions written today" · home.quickPicks = "Quick picks" · home.custom = "Custom" · home.availableUntil = "Available until {time}" · home.addTime = "Add time" · home.addTitle = "Add time" · home.addHint = "Up to 10 hours in total" · home.addConfirm = "Add {duration}" · home.endSub starts "You won’t get new cases".
+Duration format in the Add button (D-106): under 60 min "Add 45 min"; from 60 min hours and minutes: "Add 1 h", "Add 2 h 15 min", "Add 9 h 45 min".
+
+Locator contract the build will provide (use these; equivalent accessible names are fine):
+- Home: header title `.home-screen h1`, subtitle `.home-screen .band .sub`. Wheels `.wheel[data-col="h"]`, `.wheel[data-col="m"]`, items `.wheel-item:not(.wheel-item--empty)`, selected `.wheel-item.is-selected`. Presets `.presets .tm-chip` (aria-pressed). Bar primary `.home-screen .tm-actionbar [data-confirm]`. Setup caption `#home-until` (text = home.availableUntil with a time). Timer `#home-time`. Add time button `#add` (present on every available state; `disabled` when offline). Prescriptions row `#home-rx` (a button; tapping opens Profile `.profile-page`; Profile Back `#profile-back` returns to Home). Sheets `.tm-sheet` (visible one: `.tm-sheet:visible`), sheet title `.tm-sheet__title`, subtitle `.tm-sheet__subtitle`, Add-sheet hint `#add-hint`, sheet primary `.tm-sheet [data-confirm]`.
+- States by URL: `?s=home_setup-wheel`, `home_active` (30 min left), `home_near-expiry` (5 min left), `home_add-wheel` (5 min left, add sheet open), `home_offline`, `home_idle-expired`, `home_manually-ended` (Prescriptions count 3), `home_stop-pending`, `home_expired-pending`, `home_requesting`, `home_no-cases`, `home_request-failed`, `home_unknown-result`, `home_end-confirmation`, `home_logout-confirm`. A state opened by `?s=` is live afterwards (review mode).
+- Unlock: `#unlock-action` (aria-busy="true" while the phone prompt is open), `#fallback` (Use OTP instead). The review story field `#rp-unlock` (success | cancelled | failed | unavailable) is the phone prompt's answer; `#rp-start` = unlock + `#rp-restart` opens the app on returning unlock for a doctor with faster sign-in on (see entry-journeys F3/F7 for how a doctor is first signed in and faster sign-in turned on). Setting `phonePromptDelay` is the prompt's answer delay.
+- Sign-in: `#tm-login-mobile`, helper `#tm-login-helper`, notice `#tm-login-couldnt-send-notice`, submit `.login-submit`, Sign up link `#tm-signup-option a`. OTP: `.otp-screen`, code input `#c`, new-code line `#s1`, resend line `#rs`, Change link `.otp-screen a.tm-link` (or the link named "Change").
+
+Required tests (ids R2-…; each its own check):
+T2 entry
+- R2-U1 unlock auto-prompt: arriving live on returning unlock (story unlock=success) opens the phone prompt once by itself, with no tap (Unlock button busy), then goes to Home.
+- R2-U2 cancel: story unlock=cancelled → after the automatic prompt the unlock screen is shown as normal (button not busy, label "Unlock with …"), and the prompt does NOT open again by itself (wait > 3 × phonePromptDelay); tapping Unlock opens it again (retry).
+- R2-U3 3 failures: story unlock=failed → the automatic prompt counts as try 1; two more taps on Unlock → Sign-in with the remembered number filled in, no OTP sent (no OTP screen).
+- R2-U4 a picture state opened directly (`?s=unlock_fingerprint`, `?capture=1` too) does not auto-prompt (pictures stay still).
+- R2-S1 sign-in default helper = signin.smsHelper; R2-S2 couldn't-send (`?s=sign-in_couldnt-send`) shows signin.couldntSend; R2-S3 Sign up is a real link (`a[href]`) whose tappable box is ≥ 48 px tall while the line box stays ≤ 24 px; R2-S4 sign-in errors: empty tap → signin.empty, short → signin.short, first digit → signin.prefix.
+- R2-O1 OTP "Change" is a link with a ≥ 48 hit area and the subtitle line box stays 20 px tall; R2-O2 resend → the new-code line shows otp.newSent; R2-O3 every OTP state id in app/state-map.js renders with no console error and no missing-key text ("{" or "otp.").
+- R2-B1 band: on sign-in, OTP, offer, unlock and Home (setup + available) at 390×844 the logo top is 16 below the frame top, logo→title gap 16 (±1), and the white panel's top edge is at 173 (±1); same at 360×640.
+T3 Home
+- R2-H1 setup wheel: hours column values are exactly 0–10; at 10 h the minutes column offers only 0; at 0 h only 15/30/45; Set availability with 10 h → timer shows 10:00:00 (±1 s).
+- R2-H2 setup: no text "Minimum 15 minutes" and no range text; group labels home.quickPicks and home.custom; `#home-until` reads "Available until <h:mm AM/PM>" and changes when the wheel value changes.
+- R2-H3 available: title/subtitle = home.titleActive / home.subActive; one card with home.timeRemaining and home.rxToday; `#add` visible on active (30 min left), not only near expiry.
+- R2-H4 Add time offline: on `home_offline` `#add` is visible and disabled.
+- R2-H5 add-time cap: on `home_add-wheel` (5 min left) the sheet title is home.addTitle, `#add-hint` = home.addHint, the hours column tops out at 9 and at 9 h the minutes column tops out at 45; picking 9 h 45 min makes the primary read "Add 9 h 45 min"; 30 min reads "Add 30 min"; 1 h reads "Add 1 h".
+- R2-H6 adding at the cap: add 9 h 45 min → sheet closes, timer ≈ 9:50:00 (≤ 10:00:00).
+- R2-H7 Rx row: `#home-rx` on active → Profile; `#profile-back` → Home available again (same title).
+- R2-H8 ended count row: `home_idle-expired` and `home_manually-ended` show `#home-rx` with count 3 ABOVE the picker; `home_setup-wheel` (count 0) shows no `#home-rx`.
+- R2-H9 every Home state id in app/state-map.js renders with no console error, no missing key text, and its title is one of the D-106/D-107 titles (setup states: home.titleSetup; available states: home.titleActive; stop-pending: home.titleStopping; expired-pending: home.titleEnded; profile states excluded).
+- R2-H10 end-availability sheet subtitle starts with "You won’t get new cases" and sits inside the sheet header, 8 (±1) under the title (title bottom → subtitle top, box).
+T4 keyboard at 360
+- R2-K1 at 360×640 with the phone keyboard stub (visualViewport shrinks by 300), focusing the sign-in field keeps the field and Send OTP fully inside the visual viewport with ≥ 16 px clear above the keyboard; R2-K2 same on OTP for the code boxes and Verify & sign in.
+
+Superseded (D-106–D-109 replace these; edit the existing tests, they are not disputes): any test that expects "+ Add time" only near expiry (A-09), 14px grey labels (A-10), "no maximum" on add time, "Add {n} minutes", "Adjust duration", "Minimum 15 minutes", the old Home titles, "Prescriptions today", "Add availability", "verification code by SMS", "Couldn’t send the code.", "New code sent" without a full stop, "Skip the OTP next time", or unlock that never prompts by itself. Search tests/*.mjs and tests/codex/** for them.
+
+The new tests must currently fail only where the build has not changed yet. Do not run git. Do not start long-running servers outside the test. Syntax-check with `node --check`.

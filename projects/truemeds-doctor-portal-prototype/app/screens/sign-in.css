@@ -1,30 +1,26 @@
-/* Sign-in — lifted from ui-screens/sign-in/sign-in.html (#doctor-login-preview rules). Tokens only (--tm-*); the drawn phone
-   keyboard is in shell/mock-keyboard.css. The screen fills the app frame (RULES §7): no nested phone, no stage padding. */
-.signin-screen { position: relative; box-sizing: border-box; min-height: 100%; display: flex; flex-direction: column; overflow: hidden;   /* raw-ok: 100% fill (geometry) */
-  padding: var(--tm-space-lg) var(--tm-space-page) 0;   /* A-07: logo top offset 16 */
+/* Sign-in. Band and panel: band.css (D-107). Below the band, D-108 visible gaps: text blocks are trimmed to their ink
+   (text-box cap / text) so the box gaps below are the gaps the eye sees. Tokens only (--tm-*); the drawn phone keyboard is in
+   shell/mock-keyboard.css. The screen fills the app frame (RULES §7) and scrolls as one when it doesn't fit. */
+.signin-screen { position: relative; box-sizing: border-box; height: 100%; display: flex; flex-direction: column; overflow: hidden;   /* raw-ok: 100% fill (geometry) */
   background: var(--tm-surface-brand-subtle); color: var(--tm-content-primary); font-family: var(--tm-font); color-scheme: light; }
-.signin-screen .login-logo { display: block; width: var(--tm-logo-lockup-width); height: auto; }
-/* L6 (D-46): home-base hero gap between logo and title is 48 */
-.signin-screen .login-content { flex: 1; display: flex; flex-direction: column; padding-top: var(--tm-space-3xl); }
-.signin-screen h1 { font-family: var(--tm-font); color: var(--tm-content-primary); font-size: var(--tm-font-size-title-lg);
-  line-height: var(--tm-font-lineheight-2xl); font-weight: var(--tm-font-weight-semibold); margin: 0 0 var(--tm-space-sm); letter-spacing: normal; }
-.signin-screen p { color: var(--tm-content-secondary); font-size: var(--tm-font-size-body-lg); line-height: var(--tm-font-lineheight-md); margin: 0; }
-.signin-screen .login-content > p { font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); max-width: 31ch; }   /* raw-ok: 31ch text measure (D-98) */
-/* A-05: header text to the white panel is 32, and the panel's top padding is 32 */
-.signin-screen .login-fields { flex: 1; margin: var(--tm-space-2xl) calc(-1 * var(--tm-space-page)) 0;
-  padding: var(--tm-space-2xl) var(--tm-space-page) var(--tm-space-xl); background: var(--tm-surface-primary);
-  border-radius: var(--tm-radius-2xl) var(--tm-radius-2xl) 0 0; }
+/* Band + panel scroll as one when they don't fit; the drawn keyboard sits outside, on the frame's bottom edge. */
+.signin-scroll { flex: 1; min-height: 0; display: flex; flex-direction: column; overflow-x: hidden; overflow-y: auto; scrollbar-width: none; }
+.signin-scroll::-webkit-scrollbar { display: none; }
+.signin-screen .login-fields { flex: 1 0 auto; }
+.signin-screen :is(.tm-field__label, .tm-field__helper, .login-signup) { text-box: trim-both cap text; }
 .signin-screen .login-prefix { padding-right: var(--tm-space-md); border-right: var(--tm-border-width-default) solid var(--tm-border-default);
   font-size: var(--tm-font-size-body-lg); line-height: var(--tm-font-lineheight-md); color: var(--tm-content-primary); }
 .signin-screen input { font-size: var(--tm-font-size-body-lg); line-height: var(--tm-font-lineheight-md); }
 .signin-screen input:focus-visible { outline: none; }
-.signin-screen .login-submit { margin-top: var(--tm-space-lg); }
 .signin-screen .tm-field__helper { margin-top: 0; }
-.signin-screen .login-notice { margin-top: var(--tm-space-sm); }   /* the notice sits 16 below the field: the field's 8 gap + this 8 (D-98, RULES §8.3) */
-.signin-screen .login-signup { margin: 0 calc(-1 * var(--tm-space-page)); padding: 0 var(--tm-space-page) var(--tm-space-xl);
-  background: var(--tm-surface-primary); text-align: center; font-size: var(--tm-font-size-body-md);
+/* A field message (server answer) sits 16 under the field: the field's 8 gap + this 8 (D-108). */
+.signin-screen .login-notice { margin-top: var(--tm-space-sm); }
+/* Field + helper (or message) → 32 → Send OTP (D-108). */
+.signin-screen .login-submit { margin-top: var(--tm-space-2xl); flex: none; }
+/* Sign up: a line pinned to the end of the panel; spare space goes above it (RULES §8.3), never less than 32. */
+.signin-screen .login-signup-row { margin-top: auto; padding-top: var(--tm-space-2xl); }
+.signin-screen .login-signup { margin: 0; text-align: center; font-size: var(--tm-font-size-body-md);
   line-height: var(--tm-font-lineheight-sm); color: var(--tm-content-secondary); }
-.signin-screen .login-signup-label { color: var(--tm-content-brand); font-weight: var(--tm-font-weight-semibold); text-decoration: none; }  /* A-16 */
 /* focus and error borders (error wins) */
 .signin-screen.is-focused .login-fields .tm-field__control,
 .signin-screen .login-fields .tm-field__control:focus-within { border-color: var(--tm-border-focus); }

@@ -11,14 +11,14 @@ import vm from "node:vm";
 // Journeys: states come from the app's state map (one per approved picture), grouped by picture folder
 // ---------------------------------------------------------------------------------------------------------------------
 export const JOURNEYS = [
-  { key: "otp", name: "OTP", folder: "otp", fmap: "## OTP", appLogic: [["## 2. Sign-in", /^\*\*OTP\*\*$/, /^\*\*Faster sign-in\*\*/]], code: ["app/screens/otp.js", "app/screens/otp.css", "app/core/auth.js"],
+  { key: "otp", name: "OTP", folder: "otp", fmap: "## OTP", appLogic: [["## 2. Sign-in", /^\*\*OTP\*\*$/, /^\*\*Faster sign-in\*\*/]], code: ["app/screens/otp.js", "app/screens/otp.css", "app/screens/band.js", "app/screens/band.css", "app/core/auth.js"],
     settings: ["otpWindow", "otpLock", "resendWaits", "otpWrongLimit", "otpCodesPerWindow", "otpTriesLeftFrom"], rules: [["## 13.", /^\*\*OTP \(item 4/]] },
   { key: "faster-signin-offer", name: "Faster sign-in offer", folder: "faster-signin-offer", fmap: "## Faster sign-in offer", appLogic: [["## 2. Sign-in", /^\*\*Faster sign-in\*\*/, /^- Returning unlock:/]],
-    code: ["app/screens/faster-signin-offer.js", "app/screens/faster-signin-offer.css"], settings: ["fasterOfferMax"], rules: [["## 13.", /^\*\*Pinned action bar \(item 1\)/]] },
+    code: ["app/screens/faster-signin-offer.js", "app/screens/faster-signin-offer.css", "app/screens/band.js", "app/screens/band.css"], settings: ["fasterOfferMax"], rules: [["## 13.", /^\*\*Pinned action bar \(item 1\)/]] },
   { key: "returning-unlock", name: "Returning unlock", folder: "returning-unlock", fmap: "## Returning unlock", appLogic: [["## 2. Sign-in", /^- Returning unlock:/, null], ["## 2. Sign-in", /^- Wording follows the phone/, null]],
-    code: ["app/screens/returning-unlock.js", "app/screens/returning-unlock.css"], settings: ["returningUnlockFallbackAfter"], rules: [] },
+    code: ["app/screens/returning-unlock.js", "app/screens/returning-unlock.css", "app/screens/band.js", "app/screens/band.css"], settings: ["returningUnlockFallbackAfter"], rules: [] },
   { key: "home", name: "Home", folder: "home", fmap: "## Availability and Home", appLogic: [["## 3. Home", null, null]],
-    code: ["app/screens/home.js", "app/screens/home.css"], settings: ["nearExpiryWarning", "availabilityMinimum", "availabilityStep", "earningsPerConfirmedRx"], rules: [] },
+    code: ["app/screens/home.js", "app/screens/home.css", "app/screens/band.js", "app/screens/band.css"], settings: ["nearExpiryWarning", "availabilityMinimum", "availabilityStep", "availabilityMaximum", "earningsPerConfirmedRx"], rules: [] },
   { key: "case", name: "Case page", folder: "case", fmap: ["## Case page exits", "## Case page — states"], appLogic: [["## 4. The case journey", null, null], ["## 5. Calls", null, null], ["## 6. Final buttons", null, null], ["## 7. Callback", null, null], ["## 9. Order details", null, null], ["## 10. Errors", null, null]],
     code: ["app/screens/case.js", "app/screens/case.css", "app/screens/callback-sheet.js", "app/screens/skip-ha-sheet.js", "app/screens/unavailable-sheet.js", "app/screens/rx-viewer.js", "app/screens/rx-paper.css", "app/screens/parts.js", "app/core/call-engine.js", "app/data/cases.js", "app/data/callback-slots.js"],
     settings: ["gate", "minCountedCall", "talkWindow", "noResultTimeout", "stillOnCallRepeat", "callRecordWait", "holdRetryGap", "holdRetryAttempts", "pollingInterval", "attemptGap"], rules: [["## 13.", /^\*\*Sheets over the bar/], ["## 13.", /^\*\*Busy states/], ["## 13.", /^\*\*Header edge/]] },

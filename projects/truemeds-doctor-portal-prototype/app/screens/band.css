@@ -1,0 +1,17 @@
+/* The one band (D-107) and the white panel under it — shared by sign-in, OTP, faster sign-in offer, returning unlock and Home.
+   Spec: design-system/RULES.md "Entry and home screens". Screens never restyle these classes. Tokens only. */
+.entry-band { flex: none; padding: calc(var(--tm-space-lg) + env(safe-area-inset-top)) var(--tm-space-page) var(--tm-space-2xl);   /* 16 from the safe area (D-107) */
+  background: var(--tm-surface-brand-subtle); color: var(--tm-content-primary); }
+/* Header row: the logo's height; nothing in it adds height (Home actions overhang, B-07). */
+.entry-band__row { display: flex; align-items: flex-start; justify-content: space-between; }
+.entry-band__logo { display: block; width: var(--tm-logo-lockup-width); height: auto; margin: 0; }   /* §8.13: 166 wide, height from the artwork */
+.entry-band__actions { display: flex; align-self: center; gap: var(--tm-space-xs);
+  margin: calc((var(--tm-icon-size-md) - var(--tm-target-min)) / 2) calc((var(--tm-icon-size-md) - var(--tm-target-min)) / 2) calc((var(--tm-icon-size-md) - var(--tm-target-min)) / 2) 0; }
+/* L6 (D-107): logo → title 16 · title L1 32/40, balanced (L8); a title carrying a name may wrap to two lines (variant 2). */
+.entry-band__title { margin: var(--tm-space-lg) 0 0; font-size: var(--tm-font-size-title-lg); line-height: var(--tm-font-lineheight-2xl); font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-primary); text-wrap: balance; }
+/* Title → subtitle 8 · subtitle L3 14/20, one 20 line box: nothing inside may grow it (a .tm-link's 48 hit area adds no height). */
+.entry-band__sub { margin: var(--tm-space-sm) 0 0; font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); color: var(--tm-content-secondary); }
+.entry-band__sub b { color: var(--tm-content-primary); font-weight: var(--tm-font-weight-medium, 500); }   /* OTP number (variant 3) */
+/* The panel: radius 24 on top, top padding 32, sides 16, white. Content starts 32 below its top (D-108). */
+.entry-panel { flex: 1; min-height: 0; display: flex; flex-direction: column; box-sizing: border-box; background: var(--tm-surface-primary);
+  border-radius: var(--tm-radius-2xl) var(--tm-radius-2xl) 0 0; padding: var(--tm-space-2xl) var(--tm-space-page) var(--tm-space-xl); }

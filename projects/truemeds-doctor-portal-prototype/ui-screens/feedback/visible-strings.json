@@ -1023,6 +1023,21 @@
  },
  {
   "kind": "aria-label",
+  "text": "Hello, Dr. Kunal",
+  "cls": "screen unlock-screen tm",
+  "tag": "main",
+  "states": [
+   "unlock/cancelled",
+   "unlock/face",
+   "unlock/fingerprint",
+   "unlock/pending",
+   "unlock/platform-retry",
+   "unlock/screen-lock",
+   "unlock/unavailable"
+  ]
+ },
+ {
+  "kind": "aria-label",
   "text": "Help",
   "cls": "tm-btn tm-btn--quiet tm-btn--icon",
   "tag": "button",
@@ -1140,12 +1155,20 @@
   "states": [
    "home/add-failed",
    "home/add-wheel",
-   "home/adding",
    "home/idle-expired",
    "home/manually-ended",
-   "home/setting",
    "home/setup-failed",
    "home/setup-wheel"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Hours",
+  "cls": "wheel is-busy",
+  "tag": "div",
+  "states": [
+   "home/adding",
+   "home/setting"
   ]
  },
  {
@@ -1165,12 +1188,20 @@
   "states": [
    "home/add-failed",
    "home/add-wheel",
-   "home/adding",
    "home/idle-expired",
    "home/manually-ended",
-   "home/setting",
    "home/setup-failed",
    "home/setup-wheel"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Minutes",
+  "cls": "wheel is-busy",
+  "tag": "div",
+  "states": [
+   "home/adding",
+   "home/setting"
   ]
  },
  {
@@ -1565,41 +1596,6 @@
   ]
  },
  {
-  "kind": "aria-label",
-  "text": "Returning doctor quick unlock",
-  "cls": "screen",
-  "tag": "main",
-  "states": [
-   "unlock/cancelled",
-   "unlock/face",
-   "unlock/fingerprint",
-   "unlock/pending",
-   "unlock/platform-retry",
-   "unlock/screen-lock",
-   "unlock/unavailable"
-  ]
- },
- {
-  "kind": "aria-label",
-  "text": "Truemeds doctor sign-in screen",
-  "cls": "login-phone tm",
-  "tag": "section",
-  "states": [
-   "sign-in/couldnt-send",
-   "sign-in/default",
-   "sign-in/empty-tap",
-   "sign-in/inactive",
-   "sign-in/keyboard-open",
-   "sign-in/not-registered",
-   "sign-in/offline",
-   "sign-in/pasted-cleaned",
-   "sign-in/sending",
-   "sign-in/too-many-tries",
-   "sign-in/too-short",
-   "sign-in/wrong-first-digit"
-  ]
- },
- {
   "kind": "placeholder",
   "text": "Clinical observations, instructions, internal notes…",
   "cls": "",
@@ -1888,15 +1884,6 @@
  },
  {
   "kind": "text",
-  "text": "+ Add time",
-  "cls": "tm-btn tm-btn--secondary add-link",
-  "tag": "button",
-  "states": [
-   "home/near-expiry"
-  ]
- },
- {
-  "kind": "text",
   "text": "+91",
   "cls": "login-prefix",
   "tag": "span",
@@ -1968,33 +1955,18 @@
   "cls": "",
   "tag": "div",
   "states": [
-   "case/d-error-other"
+   "case/d-error-other",
+   "otp/expired-and-resend-limited",
+   "otp/locked",
+   "otp/too-many-resends"
   ]
  },
  {
   "kind": "text",
   "text": "0",
-  "cls": "login-key",
-  "tag": "span",
-  "states": [
-   "sign-in/empty-tap",
-   "sign-in/keyboard-open",
-   "sign-in/pasted-cleaned",
-   "sign-in/sending",
-   "sign-in/too-short",
-   "sign-in/wrong-first-digit"
-  ]
- },
- {
-  "kind": "text",
-  "text": "0",
-  "cls": "",
+  "cls": "mock-kbd__key",
   "tag": "div",
   "states": [
-   "case/d-error-other",
-   "home/setting",
-   "home/setup-failed",
-   "home/setup-wheel",
    "otp/code-expired",
    "otp/cooldown-reconciling",
    "otp/couldnt-verify",
@@ -2009,7 +1981,13 @@
    "otp/too-short",
    "otp/two-tries-left",
    "otp/verifying",
-   "otp/wrong-code"
+   "otp/wrong-code",
+   "sign-in/empty-tap",
+   "sign-in/keyboard-open",
+   "sign-in/pasted-cleaned",
+   "sign-in/sending",
+   "sign-in/too-short",
+   "sign-in/wrong-first-digit"
   ]
  },
  {
@@ -2051,6 +2029,15 @@
  },
  {
   "kind": "text",
+  "text": "0",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "case/d-error-other"
+  ]
+ },
+ {
+  "kind": "text",
   "text": "0-0-0 · 6 months",
   "cls": "",
   "tag": "div",
@@ -2079,7 +2066,7 @@
  {
   "kind": "text",
   "text": "0:00",
-  "cls": "tm-value-display time",
+  "cls": "tm-value-display srow__value time",
   "tag": "p",
   "states": [
    "home/expired-pending"
@@ -2103,24 +2090,9 @@
  {
   "kind": "text",
   "text": "1",
-  "cls": "login-key",
-  "tag": "span",
-  "states": [
-   "sign-in/empty-tap",
-   "sign-in/keyboard-open",
-   "sign-in/pasted-cleaned",
-   "sign-in/sending",
-   "sign-in/too-short",
-   "sign-in/wrong-first-digit"
-  ]
- },
- {
-  "kind": "text",
-  "text": "1",
-  "cls": "",
+  "cls": "mock-kbd__key",
   "tag": "div",
   "states": [
-   "case/d-error-other",
    "otp/code-expired",
    "otp/cooldown-reconciling",
    "otp/couldnt-verify",
@@ -2135,7 +2107,13 @@
    "otp/too-short",
    "otp/two-tries-left",
    "otp/verifying",
-   "otp/wrong-code"
+   "otp/wrong-code",
+   "sign-in/empty-tap",
+   "sign-in/keyboard-open",
+   "sign-in/pasted-cleaned",
+   "sign-in/sending",
+   "sign-in/too-short",
+   "sign-in/wrong-first-digit"
   ]
  },
  {
@@ -2180,6 +2158,15 @@
    "case/d-sos-on",
    "case/d-sos-only",
    "case/d-weekly"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "1",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "case/d-error-other"
   ]
  },
  {
@@ -2472,24 +2459,9 @@
  {
   "kind": "text",
   "text": "2",
-  "cls": "login-key",
-  "tag": "span",
-  "states": [
-   "sign-in/empty-tap",
-   "sign-in/keyboard-open",
-   "sign-in/pasted-cleaned",
-   "sign-in/sending",
-   "sign-in/too-short",
-   "sign-in/wrong-first-digit"
-  ]
- },
- {
-  "kind": "text",
-  "text": "2",
-  "cls": "",
+  "cls": "mock-kbd__key",
   "tag": "div",
   "states": [
-   "case/d-error-other",
    "otp/code-expired",
    "otp/cooldown-reconciling",
    "otp/couldnt-verify",
@@ -2504,7 +2476,13 @@
    "otp/too-short",
    "otp/two-tries-left",
    "otp/verifying",
-   "otp/wrong-code"
+   "otp/wrong-code",
+   "sign-in/empty-tap",
+   "sign-in/keyboard-open",
+   "sign-in/pasted-cleaned",
+   "sign-in/sending",
+   "sign-in/too-short",
+   "sign-in/wrong-first-digit"
   ]
  },
  {
@@ -2549,6 +2527,15 @@
    "case/d-sos-on",
    "case/d-sos-only",
    "case/d-weekly"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "2",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "case/d-error-other"
   ]
  },
  {
@@ -2618,9 +2605,24 @@
  {
   "kind": "text",
   "text": "3",
-  "cls": "login-key",
-  "tag": "span",
+  "cls": "mock-kbd__key",
+  "tag": "div",
   "states": [
+   "otp/code-expired",
+   "otp/cooldown-reconciling",
+   "otp/couldnt-verify",
+   "otp/default",
+   "otp/empty-tap",
+   "otp/new-code-sent",
+   "otp/offline",
+   "otp/resend-available",
+   "otp/resend-failed",
+   "otp/resending",
+   "otp/too-many-resends",
+   "otp/too-short",
+   "otp/two-tries-left",
+   "otp/verifying",
+   "otp/wrong-code",
    "sign-in/empty-tap",
    "sign-in/keyboard-open",
    "sign-in/pasted-cleaned",
@@ -2632,10 +2634,9 @@
  {
   "kind": "text",
   "text": "3",
-  "cls": "",
-  "tag": "div",
+  "cls": "tm-value-display srow__value",
+  "tag": "span",
   "states": [
-   "case/d-error-other",
    "home/active",
    "home/add-failed",
    "home/add-wheel",
@@ -2651,22 +2652,7 @@
    "home/request-failed",
    "home/requesting",
    "home/stop-pending",
-   "home/unknown-result",
-   "otp/code-expired",
-   "otp/cooldown-reconciling",
-   "otp/couldnt-verify",
-   "otp/default",
-   "otp/empty-tap",
-   "otp/new-code-sent",
-   "otp/offline",
-   "otp/resend-available",
-   "otp/resend-failed",
-   "otp/resending",
-   "otp/too-many-resends",
-   "otp/too-short",
-   "otp/two-tries-left",
-   "otp/verifying",
-   "otp/wrong-code"
+   "home/unknown-result"
   ]
  },
  {
@@ -2682,6 +2668,15 @@
    "case/d-injection-default",
    "case/d-sos-on",
    "case/d-sos-only"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "3",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "case/d-error-other"
   ]
  },
  {
@@ -2773,13 +2768,10 @@
  {
   "kind": "text",
   "text": "30:00",
-  "cls": "tm-value-display time",
+  "cls": "tm-value-display srow__value time",
   "tag": "p",
   "states": [
    "home/active",
-   "home/add-failed",
-   "home/add-wheel",
-   "home/adding",
    "home/end-confirmation",
    "home/no-cases",
    "home/offline",
@@ -2791,7 +2783,7 @@
  {
   "kind": "text",
   "text": "35:00",
-  "cls": "tm-value-display time",
+  "cls": "tm-value-display srow__value time",
   "tag": "p",
   "states": [
    "home/added"
@@ -2838,25 +2830,23 @@
  },
  {
   "kind": "text",
-  "text": "4",
-  "cls": "login-key",
-  "tag": "span",
+  "text": "3:30 PM",
+  "cls": "",
+  "tag": "b",
   "states": [
-   "sign-in/empty-tap",
-   "sign-in/keyboard-open",
-   "sign-in/pasted-cleaned",
-   "sign-in/sending",
-   "sign-in/too-short",
-   "sign-in/wrong-first-digit"
+   "home/idle-expired",
+   "home/manually-ended",
+   "home/setting",
+   "home/setup-failed",
+   "home/setup-wheel"
   ]
  },
  {
   "kind": "text",
   "text": "4",
-  "cls": "",
+  "cls": "mock-kbd__key",
   "tag": "div",
   "states": [
-   "case/d-error-other",
    "otp/code-expired",
    "otp/cooldown-reconciling",
    "otp/couldnt-verify",
@@ -2871,7 +2861,13 @@
    "otp/too-short",
    "otp/two-tries-left",
    "otp/verifying",
-   "otp/wrong-code"
+   "otp/wrong-code",
+   "sign-in/empty-tap",
+   "sign-in/keyboard-open",
+   "sign-in/pasted-cleaned",
+   "sign-in/sending",
+   "sign-in/too-short",
+   "sign-in/wrong-first-digit"
   ]
  },
  {
@@ -2901,6 +2897,15 @@
    "case/d-inhaler",
    "case/d-sos-on",
    "case/d-sos-only"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "4",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "case/d-error-other"
   ]
  },
  {
@@ -2979,24 +2984,9 @@
  {
   "kind": "text",
   "text": "5",
-  "cls": "login-key",
-  "tag": "span",
-  "states": [
-   "sign-in/empty-tap",
-   "sign-in/keyboard-open",
-   "sign-in/pasted-cleaned",
-   "sign-in/sending",
-   "sign-in/too-short",
-   "sign-in/wrong-first-digit"
-  ]
- },
- {
-  "kind": "text",
-  "text": "5",
-  "cls": "",
+  "cls": "mock-kbd__key",
   "tag": "div",
   "states": [
-   "case/d-error-other",
    "otp/code-expired",
    "otp/cooldown-reconciling",
    "otp/couldnt-verify",
@@ -3011,7 +3001,13 @@
    "otp/too-short",
    "otp/two-tries-left",
    "otp/verifying",
-   "otp/wrong-code"
+   "otp/wrong-code",
+   "sign-in/empty-tap",
+   "sign-in/keyboard-open",
+   "sign-in/pasted-cleaned",
+   "sign-in/sending",
+   "sign-in/too-short",
+   "sign-in/wrong-first-digit"
   ]
  },
  {
@@ -3022,6 +3018,15 @@
   "states": [
    "case/d-duration-picker",
    "case/d-syrup"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "5",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "case/d-error-other"
   ]
  },
  {
@@ -3160,9 +3165,12 @@
  {
   "kind": "text",
   "text": "5:00",
-  "cls": "tm-value-display time time--warning",
+  "cls": "tm-value-display srow__value time",
   "tag": "p",
   "states": [
+   "home/add-failed",
+   "home/add-wheel",
+   "home/adding",
    "home/near-expiry"
   ]
  },
@@ -3181,24 +3189,9 @@
  {
   "kind": "text",
   "text": "6",
-  "cls": "login-key",
-  "tag": "span",
-  "states": [
-   "sign-in/empty-tap",
-   "sign-in/keyboard-open",
-   "sign-in/pasted-cleaned",
-   "sign-in/sending",
-   "sign-in/too-short",
-   "sign-in/wrong-first-digit"
-  ]
- },
- {
-  "kind": "text",
-  "text": "6",
-  "cls": "",
+  "cls": "mock-kbd__key",
   "tag": "div",
   "states": [
-   "case/d-error-other",
    "otp/code-expired",
    "otp/cooldown-reconciling",
    "otp/couldnt-verify",
@@ -3213,7 +3206,13 @@
    "otp/too-short",
    "otp/two-tries-left",
    "otp/verifying",
-   "otp/wrong-code"
+   "otp/wrong-code",
+   "sign-in/empty-tap",
+   "sign-in/keyboard-open",
+   "sign-in/pasted-cleaned",
+   "sign-in/sending",
+   "sign-in/too-short",
+   "sign-in/wrong-first-digit"
   ]
  },
  {
@@ -3223,6 +3222,15 @@
   "tag": "button",
   "states": [
    "case/d-duration-picker"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "6",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "case/d-error-other"
   ]
  },
  {
@@ -3260,24 +3268,9 @@
  {
   "kind": "text",
   "text": "7",
-  "cls": "login-key",
-  "tag": "span",
-  "states": [
-   "sign-in/empty-tap",
-   "sign-in/keyboard-open",
-   "sign-in/pasted-cleaned",
-   "sign-in/sending",
-   "sign-in/too-short",
-   "sign-in/wrong-first-digit"
-  ]
- },
- {
-  "kind": "text",
-  "text": "7",
-  "cls": "",
+  "cls": "mock-kbd__key",
   "tag": "div",
   "states": [
-   "case/d-error-other",
    "otp/code-expired",
    "otp/cooldown-reconciling",
    "otp/couldnt-verify",
@@ -3292,7 +3285,13 @@
    "otp/too-short",
    "otp/two-tries-left",
    "otp/verifying",
-   "otp/wrong-code"
+   "otp/wrong-code",
+   "sign-in/empty-tap",
+   "sign-in/keyboard-open",
+   "sign-in/pasted-cleaned",
+   "sign-in/sending",
+   "sign-in/too-short",
+   "sign-in/wrong-first-digit"
   ]
  },
  {
@@ -3330,6 +3329,15 @@
  },
  {
   "kind": "text",
+  "text": "7",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "case/d-error-other"
+  ]
+ },
+ {
+  "kind": "text",
   "text": "7 days",
   "cls": "ps-dur-val",
   "tag": "span",
@@ -3342,24 +3350,9 @@
  {
   "kind": "text",
   "text": "8",
-  "cls": "login-key",
-  "tag": "span",
-  "states": [
-   "sign-in/empty-tap",
-   "sign-in/keyboard-open",
-   "sign-in/pasted-cleaned",
-   "sign-in/sending",
-   "sign-in/too-short",
-   "sign-in/wrong-first-digit"
-  ]
- },
- {
-  "kind": "text",
-  "text": "8",
-  "cls": "",
+  "cls": "mock-kbd__key",
   "tag": "div",
   "states": [
-   "case/d-error-other",
    "otp/code-expired",
    "otp/cooldown-reconciling",
    "otp/couldnt-verify",
@@ -3374,7 +3367,13 @@
    "otp/too-short",
    "otp/two-tries-left",
    "otp/verifying",
-   "otp/wrong-code"
+   "otp/wrong-code",
+   "sign-in/empty-tap",
+   "sign-in/keyboard-open",
+   "sign-in/pasted-cleaned",
+   "sign-in/sending",
+   "sign-in/too-short",
+   "sign-in/wrong-first-digit"
   ]
  },
  {
@@ -3396,6 +3395,15 @@
  },
  {
   "kind": "text",
+  "text": "8",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "case/d-error-other"
+  ]
+ },
+ {
+  "kind": "text",
   "text": "8 h",
   "cls": "tm-chip tm-chip--lg",
   "tag": "button",
@@ -3406,24 +3414,9 @@
  {
   "kind": "text",
   "text": "9",
-  "cls": "login-key",
-  "tag": "span",
-  "states": [
-   "sign-in/empty-tap",
-   "sign-in/keyboard-open",
-   "sign-in/pasted-cleaned",
-   "sign-in/sending",
-   "sign-in/too-short",
-   "sign-in/wrong-first-digit"
-  ]
- },
- {
-  "kind": "text",
-  "text": "9",
-  "cls": "",
+  "cls": "mock-kbd__key",
   "tag": "div",
   "states": [
-   "case/d-error-other",
    "otp/code-expired",
    "otp/cooldown-reconciling",
    "otp/couldnt-verify",
@@ -3438,7 +3431,22 @@
    "otp/too-short",
    "otp/two-tries-left",
    "otp/verifying",
-   "otp/wrong-code"
+   "otp/wrong-code",
+   "sign-in/empty-tap",
+   "sign-in/keyboard-open",
+   "sign-in/pasted-cleaned",
+   "sign-in/sending",
+   "sign-in/too-short",
+   "sign-in/wrong-first-digit"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "9",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "case/d-error-other"
   ]
  },
  {
@@ -3489,7 +3497,7 @@
  },
  {
   "kind": "text",
-  "text": "Add 30 minutes",
+  "text": "Add 30 min",
   "cls": "tm-btn tm-btn--primary tm-btn--lg tm-btn--block",
   "tag": "button",
   "states": [
@@ -3499,7 +3507,27 @@
  },
  {
   "kind": "text",
-  "text": "Add availability",
+  "text": "Add time",
+  "cls": "tm-btn tm-btn--secondary add-time",
+  "tag": "button",
+  "states": [
+   "home/active",
+   "home/add-failed",
+   "home/add-wheel",
+   "home/added",
+   "home/adding",
+   "home/end-confirmation",
+   "home/near-expiry",
+   "home/no-cases",
+   "home/offline",
+   "home/request-failed",
+   "home/requesting",
+   "home/unknown-result"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Add time",
   "cls": "tm-sheet__title",
   "tag": "h2",
   "states": [
@@ -3545,22 +3573,6 @@
    "case/d-sos-only",
    "case/d-syrup",
    "case/d-weekly"
-  ]
- },
- {
-  "kind": "text",
-  "text": "Adjust duration",
-  "cls": "adjust",
-  "tag": "p",
-  "states": [
-   "home/add-failed",
-   "home/add-wheel",
-   "home/adding",
-   "home/idle-expired",
-   "home/manually-ended",
-   "home/setting",
-   "home/setup-failed",
-   "home/setup-wheel"
   ]
  },
  {
@@ -3952,11 +3964,33 @@
  },
  {
   "kind": "text",
+  "text": "Availability ended",
+  "cls": "entry-band__title tm-text-title-lg",
+  "tag": "h1",
+  "states": [
+   "home/expired-pending"
+  ]
+ },
+ {
+  "kind": "text",
   "text": "Availability ends soon. You can still request a case.",
   "cls": "",
   "tag": "span",
   "states": [
    "home/near-expiry"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Available until",
+  "cls": "until",
+  "tag": "p",
+  "states": [
+   "home/idle-expired",
+   "home/manually-ended",
+   "home/setting",
+   "home/setup-failed",
+   "home/setup-wheel"
   ]
  },
  {
@@ -4200,6 +4234,15 @@
  },
  {
   "kind": "text",
+  "text": "Callback",
+  "cls": "",
+  "tag": "span",
+  "states": [
+   "case/t08a-valid-cat4"
+  ]
+ },
+ {
+  "kind": "text",
   "text": "Callback today at 3:00 PM",
   "cls": "tm-status-card__title",
   "tag": "div",
@@ -4269,7 +4312,7 @@
  {
   "kind": "text",
   "text": "Change",
-  "cls": "lk",
+  "cls": "tm-link lk",
   "tag": "a",
   "states": [
    "otp/code-expired",
@@ -4318,8 +4361,8 @@
  {
   "kind": "text",
   "text": "Checking whether your case request went through…",
-  "cls": "status-text",
-  "tag": "span",
+  "cls": "tm-status-line",
+  "tag": "div",
   "states": [
    "home/unknown-result"
   ]
@@ -4434,19 +4477,6 @@
  },
  {
   "kind": "text",
-  "text": "Choose how long you’re available today.",
-  "cls": "sub",
-  "tag": "p",
-  "states": [
-   "home/idle-expired",
-   "home/manually-ended",
-   "home/setting",
-   "home/setup-failed",
-   "home/setup-wheel"
-  ]
- },
- {
-  "kind": "text",
   "text": "Choose how much time to add.",
   "cls": "tm-sheet__subtitle",
   "tag": "p",
@@ -4529,19 +4559,6 @@
   "tag": "button",
   "states": [
    "case/a-confirm-busy"
-  ]
- },
- {
-  "kind": "text",
-  "text": "Consult on your schedule",
-  "cls": "tm-text-title-lg",
-  "tag": "h1",
-  "states": [
-   "home/idle-expired",
-   "home/manually-ended",
-   "home/setting",
-   "home/setup-failed",
-   "home/setup-wheel"
   ]
  },
  {
@@ -4665,7 +4682,7 @@
  },
  {
   "kind": "text",
-  "text": "Couldn’t send the code.",
+  "text": "Couldn’t send the OTP.",
   "cls": "",
   "tag": "span",
   "states": [
@@ -4706,6 +4723,22 @@
   "tag": "p",
   "states": [
    "case/d-cream"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Custom",
+  "cls": "lbl",
+  "tag": "p",
+  "states": [
+   "home/add-failed",
+   "home/add-wheel",
+   "home/adding",
+   "home/idle-expired",
+   "home/manually-ended",
+   "home/setting",
+   "home/setup-failed",
+   "home/setup-wheel"
   ]
  },
  {
@@ -5193,7 +5226,7 @@
  {
   "kind": "text",
   "text": "Ending availability",
-  "cls": "tm-text-title-lg",
+  "cls": "entry-band__title tm-text-title-lg",
   "tag": "h1",
   "states": [
    "home/stop-pending"
@@ -5462,7 +5495,7 @@
  {
   "kind": "text",
   "text": "Hello, Dr. Kunal",
-  "cls": "tm-text-title-lg",
+  "cls": "entry-band__title tm-text-title-lg",
   "tag": "h1",
   "states": [
    "unlock/cancelled",
@@ -5633,7 +5666,7 @@
  {
   "kind": "text",
   "text": "Let’s check in on your patients today.",
-  "cls": "",
+  "cls": "entry-band__sub sub",
   "tag": "p",
   "states": [
    "unlock/cancelled",
@@ -5949,19 +5982,6 @@
  },
  {
   "kind": "text",
-  "text": "Minimum 15 minutes",
-  "cls": "helper",
-  "tag": "p",
-  "states": [
-   "home/idle-expired",
-   "home/manually-ended",
-   "home/setting",
-   "home/setup-failed",
-   "home/setup-wheel"
-  ]
- },
- {
-  "kind": "text",
   "text": "Minutes",
   "cls": "",
   "tag": "span",
@@ -6077,7 +6097,7 @@
  },
  {
   "kind": "text",
-  "text": "New code sent",
+  "text": "New code sent.",
   "cls": "",
   "tag": "span",
   "states": [
@@ -6088,7 +6108,7 @@
   "kind": "text",
   "text": "New to Truemeds?",
   "cls": "login-signup",
-  "tag": "div",
+  "tag": "p",
   "states": [
    "sign-in/couldnt-send",
    "sign-in/default",
@@ -6096,6 +6116,21 @@
    "sign-in/not-registered",
    "sign-in/offline",
    "sign-in/too-many-tries"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "No SMS to wait for.",
+  "cls": "pt-d",
+  "tag": "p",
+  "states": [
+   "offer/enable-failed",
+   "offer/enabling",
+   "offer/face-id",
+   "offer/fingerprint",
+   "offer/offline",
+   "offer/screen-lock",
+   "offer/unavailable"
   ]
  },
  {
@@ -6123,21 +6158,6 @@
   "tag": "span",
   "states": [
    "case/a-no-medicines"
-  ]
- },
- {
-  "kind": "text",
-  "text": "No more waiting for SMS codes",
-  "cls": "pt-t",
-  "tag": "p",
-  "states": [
-   "offer/enable-failed",
-   "offer/enabling",
-   "offer/face-id",
-   "offer/fingerprint",
-   "offer/offline",
-   "offer/screen-lock",
-   "offer/unavailable"
   ]
  },
  {
@@ -6830,8 +6850,8 @@
  },
  {
   "kind": "text",
-  "text": "Prescriptions today",
-  "cls": "",
+  "text": "Prescriptions written today",
+  "cls": "srow__label",
   "tag": "span",
   "states": [
    "home/active",
@@ -6848,9 +6868,6 @@
    "home/offline",
    "home/request-failed",
    "home/requesting",
-   "home/setting",
-   "home/setup-failed",
-   "home/setup-wheel",
    "home/stop-pending",
    "home/unknown-result"
   ]
@@ -7249,6 +7266,22 @@
  },
  {
   "kind": "text",
+  "text": "Quick picks",
+  "cls": "lbl",
+  "tag": "p",
+  "states": [
+   "home/add-failed",
+   "home/add-wheel",
+   "home/adding",
+   "home/idle-expired",
+   "home/manually-ended",
+   "home/setting",
+   "home/setup-failed",
+   "home/setup-wheel"
+  ]
+ },
+ {
+  "kind": "text",
   "text": "Ramesh Gupta",
   "cls": "tm-header-task__title",
   "tag": "h1",
@@ -7394,6 +7427,7 @@
    "home/add-failed",
    "home/add-wheel",
    "home/added",
+   "home/adding",
    "home/end-confirmation",
    "home/expired-pending",
    "home/near-expiry",
@@ -7405,8 +7439,8 @@
  },
  {
   "kind": "text",
-  "text": "Request a case whenever you have a moment.",
-  "cls": "sub",
+  "text": "Request a case now, or whenever you’re ready.",
+  "cls": "entry-band__sub sub",
   "tag": "p",
   "states": [
    "home/active",
@@ -7460,7 +7494,7 @@
  {
   "kind": "text",
   "text": "Resend code",
-  "cls": "",
+  "cls": "tm-link",
   "tag": "button",
   "states": [
    "otp/code-expired",
@@ -7595,7 +7629,7 @@
   "kind": "text",
   "text": "Sent to",
   "cls": "",
-  "tag": "p",
+  "tag": "span",
   "states": [
    "otp/code-expired",
    "otp/cooldown-reconciling",
@@ -7639,9 +7673,40 @@
  },
  {
   "kind": "text",
+  "text": "Sign in with a glance",
+  "cls": "pt-t",
+  "tag": "p",
+  "states": [
+   "offer/face-id"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Sign in with one touch",
+  "cls": "pt-t",
+  "tag": "p",
+  "states": [
+   "offer/enable-failed",
+   "offer/enabling",
+   "offer/fingerprint",
+   "offer/offline",
+   "offer/unavailable"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Sign in with your PIN or pattern",
+  "cls": "pt-t",
+  "tag": "p",
+  "states": [
+   "offer/screen-lock"
+  ]
+ },
+ {
+  "kind": "text",
   "text": "Sign up",
-  "cls": "login-signup-label",
-  "tag": "span",
+  "cls": "tm-link login-signup-label",
+  "tag": "a",
   "states": [
    "sign-in/couldnt-send",
    "sign-in/default",
@@ -7670,17 +7735,8 @@
  },
  {
   "kind": "text",
-  "text": "Skip the Health Advisor call",
-  "cls": "tm-sheet__title",
-  "tag": "h2",
-  "states": [
-   "case/c-skip-ha"
-  ]
- },
- {
-  "kind": "text",
-  "text": "Skip the OTP next time",
-  "cls": "tm-text-title-lg",
+  "text": "Skip OTPs next time",
+  "cls": "entry-band__title tm-text-title-lg",
   "tag": "h1",
   "states": [
    "offer/enable-failed",
@@ -7690,6 +7746,15 @@
    "offer/offline",
    "offer/screen-lock",
    "offer/unavailable"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Skip the Health Advisor call",
+  "cls": "tm-sheet__title",
+  "tag": "h2",
+  "states": [
+   "case/c-skip-ha"
   ]
  },
  {
@@ -7726,6 +7791,19 @@
   "tag": "h2",
   "states": [
    "case/d-drops"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Start taking cases",
+  "cls": "entry-band__title tm-text-title-lg",
+  "tag": "h1",
+  "states": [
+   "home/idle-expired",
+   "home/manually-ended",
+   "home/setting",
+   "home/setup-failed",
+   "home/setup-wheel"
   ]
  },
  {
@@ -7912,7 +7990,7 @@
  },
  {
   "kind": "text",
-  "text": "This code has expired. Request a new code in 9:42, or call Doctor Ops.",
+  "text": "This code has expired. Request a new code in 9:42, or",
   "cls": "",
   "tag": "div",
   "states": [
@@ -7943,8 +8021,8 @@
  {
   "kind": "text",
   "text": "Time remaining",
-  "cls": "timer-label",
-  "tag": "span",
+  "cls": "srow__label",
+  "tag": "p",
   "states": [
    "home/active",
    "home/add-failed",
@@ -8007,7 +8085,7 @@
  },
  {
   "kind": "text",
-  "text": "Too many wrong tries. Try again in 14:52, or call Doctor Ops.",
+  "text": "Too many wrong tries. Try again in 14:52, or",
   "cls": "",
   "tag": "div",
   "states": [
@@ -8124,37 +8202,6 @@
  },
  {
   "kind": "text",
-  "text": "Unlock the app with a glance, not an OTP.",
-  "cls": "pt-d",
-  "tag": "p",
-  "states": [
-   "offer/face-id"
-  ]
- },
- {
-  "kind": "text",
-  "text": "Unlock the app with one touch, not an OTP.",
-  "cls": "pt-d",
-  "tag": "p",
-  "states": [
-   "offer/enable-failed",
-   "offer/enabling",
-   "offer/fingerprint",
-   "offer/offline",
-   "offer/unavailable"
-  ]
- },
- {
-  "kind": "text",
-  "text": "Unlock the app with your PIN or pattern, not an OTP.",
-  "cls": "pt-d",
-  "tag": "p",
-  "states": [
-   "offer/screen-lock"
-  ]
- },
- {
-  "kind": "text",
   "text": "Unlock with Face ID",
   "cls": "",
   "tag": "span",
@@ -8193,8 +8240,19 @@
  },
  {
   "kind": "text",
+  "text": "Up to 10 hours in total",
+  "cls": "hint",
+  "tag": "p",
+  "states": [
+   "home/add-failed",
+   "home/add-wheel",
+   "home/adding"
+  ]
+ },
+ {
+  "kind": "text",
   "text": "Use Face ID instead of waiting for an OTP.",
-  "cls": "sub",
+  "cls": "entry-band__sub sub",
   "tag": "p",
   "states": [
    "offer/face-id"
@@ -8235,7 +8293,7 @@
  {
   "kind": "text",
   "text": "Use your fingerprint instead of waiting for an OTP.",
-  "cls": "sub",
+  "cls": "entry-band__sub sub",
   "tag": "p",
   "states": [
    "offer/enable-failed",
@@ -8248,7 +8306,7 @@
  {
   "kind": "text",
   "text": "Use your screen lock instead of an OTP.",
-  "cls": "sub",
+  "cls": "entry-band__sub sub",
   "tag": "p",
   "states": [
    "offer/screen-lock"
@@ -8301,7 +8359,7 @@
  {
   "kind": "text",
   "text": "Verify your number",
-  "cls": "tm-text-title-lg",
+  "cls": "entry-band__title tm-text-title-lg",
   "tag": "h1",
   "states": [
    "otp/code-expired",
@@ -8570,7 +8628,7 @@
  {
   "kind": "text",
   "text": "Welcome, Doctor",
-  "cls": "",
+  "cls": "entry-band__title tm-text-title-lg",
   "tag": "h1",
   "states": [
    "sign-in/couldnt-send",
@@ -8589,7 +8647,7 @@
  },
  {
   "kind": "text",
-  "text": "We’ll send you a verification code by SMS.",
+  "text": "We’ll send you an OTP by SMS.",
   "cls": "tm-field__helper",
   "tag": "div",
   "states": [
@@ -8637,11 +8695,44 @@
  },
  {
   "kind": "text",
+  "text": "You can add time or stop anytime.",
+  "cls": "entry-band__sub sub",
+  "tag": "p",
+  "states": [
+   "home/idle-expired",
+   "home/manually-ended",
+   "home/setting",
+   "home/setup-failed",
+   "home/setup-wheel"
+  ]
+ },
+ {
+  "kind": "text",
   "text": "You can log out after this case is closed.",
   "cls": "",
   "tag": "span",
   "states": [
    "home/profile-case-open"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "You can take cases",
+  "cls": "entry-band__title tm-text-title-lg",
+  "tag": "h1",
+  "states": [
+   "home/active",
+   "home/add-failed",
+   "home/add-wheel",
+   "home/added",
+   "home/adding",
+   "home/end-confirmation",
+   "home/near-expiry",
+   "home/no-cases",
+   "home/offline",
+   "home/request-failed",
+   "home/requesting",
+   "home/unknown-result"
   ]
  },
  {
@@ -8673,21 +8764,21 @@
  },
  {
   "kind": "text",
-  "text": "You won’t get new cases.",
-  "cls": "sub",
-  "tag": "p",
-  "states": [
-   "home/expired-pending",
-   "home/stop-pending"
-  ]
- },
- {
-  "kind": "text",
-  "text": "You won’t receive new cases after this. A case already assigned to you stays with you.",
+  "text": "You won’t get new cases after this. A case already assigned to you stays with you.",
   "cls": "tm-sheet__subtitle",
   "tag": "p",
   "states": [
    "home/end-confirmation"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "You won’t get new cases.",
+  "cls": "entry-band__sub sub",
+  "tag": "p",
+  "states": [
+   "home/expired-pending",
+   "home/stop-pending"
   ]
  },
  {
@@ -8706,15 +8797,6 @@
   "tag": "span",
   "states": [
    "home/idle-expired"
-  ]
- },
- {
-  "kind": "text",
-  "text": "Your availability has ended",
-  "cls": "tm-text-title-lg",
-  "tag": "h1",
-  "states": [
-   "home/expired-pending"
   ]
  },
  {
@@ -8751,7 +8833,7 @@
  {
   "kind": "text",
   "text": "Your partner in thoughtful, affordable care.",
-  "cls": "",
+  "cls": "entry-band__sub sub",
   "tag": "p",
   "states": [
    "sign-in/couldnt-send",
@@ -8797,26 +8879,6 @@
  },
  {
   "kind": "text",
-  "text": "You’re available for consultations",
-  "cls": "tm-text-title-lg",
-  "tag": "h1",
-  "states": [
-   "home/active",
-   "home/add-failed",
-   "home/add-wheel",
-   "home/added",
-   "home/adding",
-   "home/end-confirmation",
-   "home/near-expiry",
-   "home/no-cases",
-   "home/offline",
-   "home/request-failed",
-   "home/requesting",
-   "home/unknown-result"
-  ]
- },
- {
-  "kind": "text",
   "text": "You’re offline. Check your connection.",
   "cls": "",
   "tag": "span",
@@ -8846,7 +8908,7 @@
  },
  {
   "kind": "text",
-  "text": "You’ve asked for too many codes. Use the last one, or call Doctor Ops.",
+  "text": "You’ve asked for too many codes. Use the last one, or",
   "cls": "",
   "tag": "div",
   "states": [
@@ -8903,6 +8965,17 @@
   "states": [
    "case/a-notes-typing",
    "case/d-notes-keyboard"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "call Doctor Ops",
+  "cls": "",
+  "tag": "a",
+  "states": [
+   "otp/expired-and-resend-limited",
+   "otp/locked",
+   "otp/too-many-resends"
   ]
  },
  {
@@ -9167,7 +9240,7 @@
  {
   "kind": "text",
   "text": "·",
-  "cls": "",
+  "cls": "entry-band__sub sub",
   "tag": "p",
   "states": [
    "otp/code-expired",
@@ -9293,9 +9366,24 @@
  {
   "kind": "text",
   "text": "⌫",
-  "cls": "login-key login-key--quiet",
-  "tag": "span",
+  "cls": "mock-kbd__key",
+  "tag": "div",
   "states": [
+   "otp/code-expired",
+   "otp/cooldown-reconciling",
+   "otp/couldnt-verify",
+   "otp/default",
+   "otp/empty-tap",
+   "otp/new-code-sent",
+   "otp/offline",
+   "otp/resend-available",
+   "otp/resend-failed",
+   "otp/resending",
+   "otp/too-many-resends",
+   "otp/too-short",
+   "otp/two-tries-left",
+   "otp/verifying",
+   "otp/wrong-code",
    "sign-in/empty-tap",
    "sign-in/keyboard-open",
    "sign-in/pasted-cleaned",
@@ -9312,22 +9400,7 @@
   "states": [
    "case/a-notes-typing",
    "case/d-error-other",
-   "case/d-notes-keyboard",
-   "otp/code-expired",
-   "otp/cooldown-reconciling",
-   "otp/couldnt-verify",
-   "otp/default",
-   "otp/empty-tap",
-   "otp/new-code-sent",
-   "otp/offline",
-   "otp/resend-available",
-   "otp/resend-failed",
-   "otp/resending",
-   "otp/too-many-resends",
-   "otp/too-short",
-   "otp/two-tries-left",
-   "otp/verifying",
-   "otp/wrong-code"
+   "case/d-notes-keyboard"
   ]
  }
 ]

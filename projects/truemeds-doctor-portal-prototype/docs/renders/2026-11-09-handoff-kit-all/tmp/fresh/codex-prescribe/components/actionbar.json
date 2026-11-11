@@ -1,0 +1,294 @@
+{
+ "block": "actionbar",
+ "name": "Actionbar",
+ "rn": "<Actionbar />",
+ "web": ".actionbar",
+ "parts": {
+  "container": {
+   "states": {
+    "default": {
+     "seenIn": "offer_enable-failed",
+     "styles": [
+      {
+       "property": "position",
+       "value": "sticky",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "bottom",
+       "value": "0",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "z-index",
+       "value": "var(--tm-layer-sticky)",
+       "tokens": [
+        {
+         "native": "tokens.layer.sticky",
+         "web": "--tm-layer-sticky",
+         "value": 10
+        }
+       ]
+      },
+      {
+       "property": "padding",
+       "value": "var(--tm-space-page) var(--tm-space-page) calc(var(--tm-space-page) + env(safe-area-inset-bottom))",
+       "tokens": [
+        {
+         "native": "tokens.space.lg",
+         "web": "--tm-space-page",
+         "value": 16
+        },
+        {
+         "native": "tokens.space.lg",
+         "web": "--tm-space-page",
+         "value": 16
+        },
+        {
+         "native": "tokens.space.lg",
+         "web": "--tm-space-page",
+         "value": 16
+        }
+       ],
+       "layout": true
+      },
+      {
+       "property": "background",
+       "value": "var(--tm-surface-primary)",
+       "tokens": [
+        {
+         "native": "tokens.color.surface.primary",
+         "web": "--tm-surface-primary",
+         "value": "#FFFFFF"
+        }
+       ]
+      },
+      {
+       "property": "box-shadow",
+       "value": "0 calc(-1 * var(--tm-border-width-default)) 0 var(--tm-border-default), var(--tm-shadow-bar)",
+       "tokens": [
+        {
+         "native": "tokens.borderWidth.default",
+         "web": "--tm-border-width-default",
+         "value": 1
+        },
+        {
+         "native": "tokens.color.border.default",
+         "web": "--tm-border-default",
+         "value": "#D8DBDF"
+        },
+        {
+         "native": "tokens.shadow.bar",
+         "web": "--tm-shadow-bar",
+         "value": {
+          "boxShadow": "0 -8px 24px 0 rgba(16, 24, 40, 0.10)",
+          "ios": {
+           "shadowColor": "rgb(16, 24, 40)",
+           "shadowOffset": {
+            "width": 0,
+            "height": -8
+           },
+           "shadowOpacity": 0.1,
+           "shadowRadius": 12
+          },
+          "android": {
+           "elevation": 6
+          }
+         }
+        }
+       ],
+       "layout": true
+      },
+      {
+       "property": "border-radius",
+       "value": "var(--tm-radius-lg) var(--tm-radius-lg) 0 0",
+       "tokens": [
+        {
+         "native": "tokens.radius.lg",
+         "web": "--tm-radius-lg",
+         "value": 16
+        },
+        {
+         "native": "tokens.radius.lg",
+         "web": "--tm-radius-lg",
+         "value": 16
+        }
+       ],
+       "layout": true
+      },
+      {
+       "property": "display",
+       "value": "flex",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "flex-direction",
+       "value": "column",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "gap",
+       "value": "var(--tm-space-sm)",
+       "tokens": [
+        {
+         "native": "tokens.space.sm",
+         "web": "--tm-space-sm",
+         "value": 8
+        }
+       ]
+      },
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "flex",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "margin",
+       "value": "0",
+       "tokens": [],
+       "layout": true
+      }
+     ],
+     "size": "390×199.2"
+    }
+   }
+  }
+ },
+ "rules": [
+  {
+   "section": "Kit",
+   "text": "Build it once from the parts × states below (tokens only, copy from messages); it appears on Faster sign-in offer, Returning unlock, Home, Case page, Prescribe. What it does in each state is in DECIDED.md under those screens."
+  }
+ ],
+ "pictures": [],
+ "usedIn": [
+  "offer_enable-failed",
+  "offer_enabling",
+  "offer_face-id",
+  "offer_fingerprint",
+  "offer_offline",
+  "offer_screen-lock",
+  "offer_unavailable",
+  "unlock_cancelled",
+  "unlock_face",
+  "unlock_fingerprint",
+  "unlock_pending",
+  "unlock_platform-retry",
+  "unlock_screen-lock",
+  "unlock_unavailable",
+  "home_active",
+  "home_add-failed",
+  "home_add-wheel",
+  "home_added",
+  "home_adding",
+  "home_end-confirmation",
+  "home_expired-pending",
+  "home_idle-expired",
+  "home_manually-ended",
+  "home_near-expiry",
+  "home_no-cases",
+  "home_offline",
+  "home_request-failed",
+  "home_requesting",
+  "home_setting",
+  "home_setup-failed",
+  "home_setup-wheel",
+  "home_stop-pending",
+  "home_unknown-result",
+  "a-back-blocked",
+  "a-confirm-busy",
+  "a-confirm-failed",
+  "a-leave-sheet",
+  "a-load-failed",
+  "a-long-content",
+  "a-no-medicines",
+  "a-offline",
+  "a-offline-action",
+  "a-order-details",
+  "a-release-failed",
+  "a-releasing",
+  "a-rx-viewer",
+  "a-scrolled",
+  "a-top",
+  "c-callback",
+  "c-callback-error",
+  "c-callback-failed",
+  "c-callback-refused",
+  "c-skip-ha",
+  "e-availability-ended",
+  "e-callback-scheduled",
+  "g0-calling-pilot",
+  "g1-generic-confirm",
+  "g2-checking-ha",
+  "g3b-after-hangup",
+  "g3b-forwarded",
+  "s-10-medicines",
+  "s-medicine-disabled",
+  "s-optional-empty",
+  "s7a-calling",
+  "s7b-still-on-call",
+  "s7d-result-missing",
+  "s7d-result-missing-pilot",
+  "s7d-unavailable-sheet",
+  "s7e-leave-sheet",
+  "s7f-submitted",
+  "t01-ready",
+  "t02-calling",
+  "t03-not-through",
+  "t04-doctor-missed",
+  "t05-result-wait",
+  "t06-ended-early",
+  "t08a-valid-cat4",
+  "t08c-confirm-blocked",
+  "t09-patient-unavailable",
+  "t10a-confirmed",
+  "t10b-forwarded",
+  "t13-connecting-ha",
+  "t14-transferred",
+  "t15-after-hangup",
+  "t15-ha-no-join",
+  "t16-transfer-missed",
+  "t16b-transfer-missed-patient",
+  "t16c-transfer-missed-unknown",
+  "t17-skip-ha-wait",
+  "d-alt-days",
+  "d-cream",
+  "d-default",
+  "d-disable-sheet",
+  "d-disabled",
+  "d-discard-sheet",
+  "d-drops",
+  "d-duration-picker",
+  "d-error-dose",
+  "d-error-other",
+  "d-every-x-hours",
+  "d-food-selected",
+  "d-header-white",
+  "d-inhaler",
+  "d-injection-default",
+  "d-monthly",
+  "d-notes-keyboard",
+  "d-rx-failed",
+  "d-scrolled",
+  "d-sos-on",
+  "d-sos-only",
+  "d-syrup",
+  "d-weekly"
+ ],
+ "states": {
+  "default": [
+   "container"
+  ]
+ }
+}

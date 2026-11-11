@@ -58,8 +58,10 @@ const FLAGS = ["--font-render-hinting=none", "--disable-gpu", "--disable-lcd-tex
 const browser = await chromium.launch({ executablePath: process.env.CHROME || undefined, args: FLAGS });
 // Only spinners that are drawn: laid out, not hidden, visibility visible, opacity above 0 on the spinner and its ancestors.
 const SPIN_JS = "() => [...document.querySelectorAll('.tm-spinner')].filter(e => e.getClientRects().length && !e.hidden && e.checkVisibility({ opacityProperty: true, visibilityProperty: true, contentVisibilityAuto: true })).map(e => { const r = e.getBoundingClientRect(); return [r.x, r.y, r.width, r.height]; })";
-async function shoot(target, w, { capture, source = false }) {
-  const pg = await browser.newPage({ viewport: { width: w, height: 844 }, deviceScaleFactor: 2 });
+// Real-size frames (release checklist 2, U2): the entry and Home pictures at 360 are 360 × 640; every other picture keeps 844.
+const frameH = (id, w) => (w === 360 && /^(sign-in|otp|offer|unlock|home)_/.test(id) ? 640 : 844);
+async function shoot(target, w, { capture, source = false, h = 844 }) {
+  const pg = await browser.newPage({ viewport: { width: w, height: h }, deviceScaleFactor: 2 });
   const errs = [];
   pg.on("pageerror", (e) => errs.push(e.message)); pg.on("console", (m) => { if (m.type() === "error") errs.push(m.text()); });
   await pg.clock.setFixedTime(new Date("2026-10-28T15:00:00"));
@@ -146,7 +148,7 @@ if (STEPS) {
     const pic = window.TM_STATE_MAP.pictures.find((r) => r.id === id).picture;
     for (const w of [390, 360]) {
       const A = PNG.sync.read(fs.readFileSync(path.join(PICS, `${pic}_w${w}.png`)));
-      const built = await shoot(`http://localhost:${PORT}/?capture=1&s=${id}&w=${w}`, w, { capture: true });
+      const built = await shoot(`http://localhost:${PORT}/?capture=1&s=${id}&w=${w}`, w, { capture: true, h: frameH(id, w) });
       const B = built.png;
       const masks = built.spin.map(([x, y, ww, hh]) => [Math.floor((x - 2) * 2), Math.floor((y - 2) * 2), Math.ceil((x + ww + 2) * 2), Math.ceil((y + hh + 2) * 2)]);
       const same = A.width === B.width && A.height === B.height;
@@ -178,8 +180,8 @@ for (const id of ids) {
    do {   // one capture per picture (D-94: repeatable capture, no retries)
     const approvedFile = path.join(PICS, FOLDER[sub], `${id}_w${w}.png`);
     const A = PNG.sync.read(fs.readFileSync(approvedFile));
-    const built = await shoot(`http://localhost:${PORT}/?capture=1&s=${id}&w=${w}`, w, { capture: true });
-    const src = await shoot(url.pathToFileURL(path.join(UI, SOURCE[sub])).href + `?capture=${state}`, w, { capture: true, source: true });
+    const built = await shoot(`http://localhost:${PORT}/?capture=1&s=${id}&w=${w}`, w, { capture: true, h: frameH(id, w) });
+    const src = await shoot(url.pathToFileURL(path.join(UI, SOURCE[sub])).href + `?capture=${state}`, w, { capture: true, source: true, h: frameH(id, w) });
     const B = built.png;
     row = { id, w, size: [A.width, A.height], builtSize: [B.width, B.height], errors: built.errs, regions: [] };
     if (A.width !== B.width || A.height !== B.height) { row.result = "failed"; row.reason = "size differs"; break; }

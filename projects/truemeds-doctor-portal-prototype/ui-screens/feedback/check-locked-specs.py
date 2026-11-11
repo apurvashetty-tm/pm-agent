@@ -396,7 +396,7 @@ STD_JS = r"""(exemptSel) => {
       if (/[.?!:]$/.test(words[i - 1])) continue;   // a new sentence may start with a capital
       const w = words[i].replace(/[^A-Za-z]/g, '');
       if (!w || /\d/.test(words[i])) continue;
-      if (/^[A-Z]/.test(w) && w.length > 1 && !names.has(w) && !/^[A-Z]{2,}$/.test(w)) { add('2.4', `Title Case word "${w}" in "${t}"`); break; }
+      if (/^[A-Z]/.test(w) && w.length > 1 && !names.has(w) && !/^[A-Z]{2,}s?$/.test(w))   /* acronyms and their plurals ("OTPs", D-107) are not Title Case */ { add('2.4', `Title Case word "${w}" in "${t}"`); break; }
     }
     if (/[.]$/.test(t) && el.matches('h1,h2,.tm-sheet__title,.sheet-title span,.ch-name')) add('2.3', `title ends with a full stop: "${t}"`);
   }
@@ -466,7 +466,9 @@ STD_JS = r"""(exemptSel) => {
     if (el.matches('input[type="checkbox"],input[type="radio"]') && row && row.getBoundingClientRect().height >= 47.5) continue;   // the label row is the tap target
     if (el.matches('.tm-otp input,#c,input.otp-input,input.tm-otp')) continue;
     if (el.matches('input') && el.closest('.tm-field__control') && el.closest('.tm-field__control').getBoundingClientRect().height >= 47.5) continue;   // central: the whole control is the tap target (beyond-salt, 2026-10-15)
-    const r = el.getBoundingClientRect();
+    let r = el.getBoundingClientRect();
+    // D-108 / RULES §9.1: an inline link (.tm-link) takes its 48 hit area from a centred ::after that adds no height.
+    if (el.matches('.tm-link')) { const a = getComputedStyle(el, '::after'); if (a.content !== 'none') { const ah = parseFloat(a.height) || 0, aw = Math.max(r.width, parseFloat(a.minWidth) || 0); r = { width: aw, height: Math.max(r.height, ah) }; } }
     if (r.width < 47.5 || r.height < 47.5) add('4.1', `tap target ${Math.round(r.width)}×${Math.round(r.height)} "${(el.textContent || el.getAttribute('aria-label') || el.tagName).trim().slice(0, 30)}"`);
   }
 

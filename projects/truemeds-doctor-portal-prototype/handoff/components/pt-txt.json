@@ -1,0 +1,51 @@
+{
+ "block": "pt-txt",
+ "name": "PtTxt",
+ "rn": "<PtTxt />",
+ "web": ".pt-txt",
+ "parts": {
+  "container": {
+   "states": {
+    "default": {
+     "seenIn": "offer_enable-failed",
+     "styles": [
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "text trim (to the ink)",
+       "value": "trim-end cap text",
+       "tokens": [],
+       "layout": true
+      }
+     ],
+     "size": "166.8×43"
+    }
+   }
+  }
+ },
+ "rules": [
+  {
+   "section": "Kit",
+   "text": "Build it once from the parts × states below (tokens only, copy from messages); it appears on Faster sign-in offer. What it does in each state is in DECIDED.md under those screens."
+  }
+ ],
+ "pictures": [],
+ "usedIn": [
+  "offer_enable-failed",
+  "offer_enabling",
+  "offer_face-id",
+  "offer_fingerprint",
+  "offer_offline",
+  "offer_screen-lock",
+  "offer_unavailable"
+ ],
+ "states": {
+  "default": [
+   "container"
+  ]
+ }
+}

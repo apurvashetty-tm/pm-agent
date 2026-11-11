@@ -1,0 +1,25 @@
+You are reviewing a build (READ-ONLY: do not edit, create or delete any file; do not run git). Correctness against the spec only; skip style opinions. Report blockers and should-fix items, each with file:line and the spec line it breaks. If something is fine, don't list it.
+
+Working directory: the project folder projects/truemeds-doctor-portal-prototype (repo root ../..).
+
+Spec (the only oracle): docs/context/decision_log.md D-106, D-107, D-108, D-109 (and D-105 they amend); docs/proposals/2026-11-11-release-checklist-2.md rows P1–P10, R1–R3, U1–U3, T1–T6, K1–K2, D1; docs/runs/RULINGS.md (newest entry: R2-BUILD SCOPE); ../../design-system/RULES.md §8.3 and "Entry and home screens" and §9.4 (sheet subtitle).
+
+What was built (look at the code and the generated files; you may run read-only commands such as node --check, grep, and the existing tests if they do not write into the repo):
+- app/screens/band.js + band.css (the one band, P1) used by sign-in.js, otp.js, faster-signin-offer.js, returning-unlock.js, home.js.
+- Sign-in, OTP, offer, unlock, Home v3 (setup, available card, add-time sheet with the 10-hour cap, ended count row, "Available until"), returning-unlock auto-prompt on arrival, parts.js sheet() with the subtitle inside the header, app/core/settings.js availabilityMaximum, app/index.html (sheet-scroll.js).
+- Copy: ui-screens/feedback/messages.json (+ metadata.json, generated messages.js / native messages.ts).
+- Rules: ui-screens/app-logic.md §1–3, docs/feedback-state-map.md (→ app/state-map.js, docs/state-map.md).
+- Approved references: ui-screens/{sign-in,otp,faster-signin-offer,returning-unlock}/*.html, ui-screens/home/home.html + home-reference.js/css (they link the app's CSS and draw the app's DOM), ui-screens/case/case.html (only the subtitle sheets moved).
+- Kit: scripts/build-handoff*.mjs (regenerated handoff/). PRD: docs/prd/PRD.md §5.1–5.5, §7.
+- Tests: tests/codex/r2/r2.test.mjs (24 checks) and the edited older tests listed in tests/codex/r2/CASES.md.
+- Evidence: docs/renders/2026-11-11-r2-build/ (visible-gaps/summary.md, compare/, logs/).
+
+Check in particular:
+1. Every D-106 rule: setup labels/caption/no range text; wheel 0–10 h, at 10 h minutes 0, at 0 h 15/30/45; add-time wheel tops out at what is left of 10 h, hint text, "Add 9 h 45 min" format; Add time always shown and greyed offline; Rx row → Profile; ended count row only when > 0 on idle-expired / manually-ended; available card anatomy; add-time error in the pinned actions 16 above Add.
+2. D-107 band values and copy (offer title, "Availability ended" only on expired-pending, OTP Change link with 48 hit area adding no height).
+3. D-108 named gaps on sign-in, OTP (incl. locked / expired-limited, and that reserved lines add no space), offer, unlock.
+4. D-109 copy batch, sheet subtitle placement on every sheet that has one (Home and case page), unlock auto-prompt (once on arrival, cancel = today's screen, Unlock retries, 3 failures → sign-in prefilled, no prompt for picture states).
+5. Anything the checklist rows require that is missing, and any place app and reference could disagree.
+6. Regressions: behaviour that worked before and is now broken (e.g. timers, wheel, keyboard reveal, sheets on the case page).
+
+End with a short list: BLOCKERS (numbered), SHOULD-FIX (numbered), and "No other findings."

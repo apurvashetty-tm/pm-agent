@@ -1,0 +1,6 @@
+PASS B-play-cat4-textContent desktop and phone play-link route parity (link read with textContent)
+PASS B-play-pilot_ha_free-textContent desktop and phone play-link route parity (link read with textContent)
+PASS B-play-pilot_no_ha_free-textContent desktop and phone play-link route parity (link read with textContent)
+PASS B-play-pilot_ha_skipped_customer-textContent desktop and phone play-link route parity (link read with textContent)
+PASS B-play-pilot_ha_skipped_system-textContent desktop and phone play-link route parity (link read with textContent)
+5/5 passed
