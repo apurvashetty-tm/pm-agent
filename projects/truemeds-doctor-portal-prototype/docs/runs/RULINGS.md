@@ -2,6 +2,12 @@
 
 Every run reads this first. Rulings override briefs where they conflict. Newest at the top.
 
+## 2026-11-11 11:32 — R1 REVIEWED; two answers for r2-build (main thread)
+- **r1-rules accepted.** The checker fails exactly where D-108 names the screens wrong and passes where right.
+- **Half-leading "consequence" failures (r1 note 1): trim, don't excuse.** D-108 measures what the eye sees, so the panel top → first text, field → helper, group label → control and chips → "Custom" gaps must come out at 32 / 8 / 8 / 32 **visible**. On the in-scope screens (entry + Home + their sheets) set the box gaps so the visible result is on spec: use `text-box: trim-both cap alphabetic` on the text styles involved where the capture browser supports it, otherwise a per-style offset token (half-leading of 14/20 and 16/24). Don't rule any of them anatomy. Apply it to the in-scope screens only; the rest of the app is r3's audit.
+- **Unlock tile → caption = 8 visible** (a tile and its caption are one thing: the 8 "joins" list). D-108's "Applied" line saying 16 was the main thread's slip and is corrected in the decision log.
+- If r2-build already took a different reading on either point, the main thread will queue a small fix run after it; don't stop for it.
+
 ## 2026-11-11 10:32 — R2-BUILD SCOPE (main thread, agreed with Apurva)
 - **Screens changed: only the affected ones.** Sign-in, OTP, faster sign-in offer, returning unlock, Home (all states) and the sheets that open from them. **Case page, calling, Prescribe, Profile and the Rx viewer are not redesigned in this run.**
 - **One exception — the shared sheet subtitle (S4).** It changes every sheet that has a subtitle, wherever it opens (Home add-time / end / log-out, and the case page's sheets in `ui-screens/case/case.html` and `app/screens/parts.js`). Re-render **only those sheet states** on the case page so the approved pictures match; nothing else on the case page moves. The picture compare (T6) must pass on every other case / Prescribe state unchanged.
