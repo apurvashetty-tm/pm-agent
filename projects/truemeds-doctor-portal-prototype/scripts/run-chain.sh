@@ -2,6 +2,7 @@
 # Run the build queue unattended (D-100): one fresh headless Claude session per unchecked line
 # of docs/runs/QUEUE.md. Success = a new "DONE" line in docs/runs/STATUS.md and the branch pushed.
 # Pause: create docs/runs/HOLD. Start: bash scripts/run-chain.sh   (keep the Mac plugged in, lid open)
+# --watch: when the queue is empty, wait for new lines (checks every minute) instead of exiting. Stop with Ctrl+C or docs/runs/HOLD.
 set -u
 cd "$(dirname "$0")/.." || exit 1
 PROJ="$(pwd)"
@@ -9,6 +10,8 @@ ROOT="$(cd ../.. && pwd)"
 REL="projects/$(basename "$PROJ")"
 BRANCH="project/$(basename "$PROJ")"
 QUEUE="docs/runs/QUEUE.md"
+WATCH=0
+for a in "$@"; do [ "$a" = "--watch" ] && WATCH=1; done
 [ "${1:-}" = "--queue" ] && [ -n "${2:-}" ] && QUEUE="$2"
 STATUS="docs/runs/STATUS.md"
 
@@ -35,7 +38,12 @@ say "Chain started (permissions: ${PERM[*]:0:2})"
 while true; do
   [ -f docs/runs/HOLD ] && { say "Paused: docs/runs/HOLD exists. Delete it and run again to continue."; exit 0; }
   line="$(grep -m1 '^- \[ \] ' "$QUEUE" || true)"
-  [ -z "$line" ] && { say "Queue finished."; exit 0; }
+  if [ -z "$line" ]; then
+    [ "$WATCH" = 1 ] || { say "Queue finished."; exit 0; }
+    [ "${waiting:-0}" = 1 ] || { say "Queue empty — watching for new lines (Ctrl+C to stop)."; waiting=1; }
+    sleep 60; continue
+  fi
+  waiting=0
   prompt="${line#- \[ \] }"
   slug="$(printf '%s' "$prompt" | tr -cs 'A-Za-z0-9' '-' | cut -c1-60)"
   log="docs/runs/logs/$(date +%m%d-%H%M)-$slug.log"
