@@ -16,4 +16,4 @@ Main thread edits this file; the runner only ticks lines.
 - [x] Run docs/renders/2026-11-11-home-blocks-review/TERMINAL-BRIEF.md
 - [x] Run docs/renders/2026-11-11-home-render/TERMINAL-BRIEF.md
 - [x] Run docs/renders/2026-11-11-home-v3/TERMINAL-BRIEF.md
-- [ ] Run docs/renders/2026-11-11-band-audit/TERMINAL-BRIEF.md
+- [x] Run docs/renders/2026-11-11-band-audit/TERMINAL-BRIEF.md
