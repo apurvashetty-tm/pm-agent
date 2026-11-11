@@ -1,0 +1,11 @@
+You are a senior mobile UX/UI reviewer. Read-only; change no file. ROUND 2: report ONLY blockers and design-system rule breaks. No suggestions, no copy options, nothing already agreed.
+
+Files (this folder): home-v3.html + home-v3.css (source, fixed after round 1), home-v3-r1.png (5 frames: setup 390x844, available 390x844, setup 360x640, available 360x640, setup 360x640 scrolled to the end), home-v3-r1-measure.json (measured gaps / type / targets / Add time alignment per frame). Rules: ../../../../../design-system/RULES.md (sections 8 and 9), ../../../../../design-system/src/components.css. Your round-1 review is at the end of codex-review.log.
+
+Round-1 points fixed: Add time is now the default compact secondary (48, 16 label, like View Rx) and sits on the timer line, centred on the value; End availability is quiet --lg --block (bar spec, as the approved Home); header icons use user-circle with accessible names; the prescriptions row is one full-row link with its chevron centred and a focus ring; the wheel keeps three rows at 360 and the content scrolls above the bar (16 clear at the end); wheel columns are spinbuttons; styles moved to home-v3.css and pass the token guard.
+Round-1 points NOT adopted (ruled; do not re-raise unless you find a new reason): the 4 px column-head gap above the wheel and the 4 px label-to-value gap in the card rows are the approved Home components' own anatomy (ui-screens/home/home-reference.css: .cols / .time margin xs; D-40), which RULES 8.1 lets components keep.
+
+Check the fixed pictures and source. Output:
+## Blockers (numbered; element - problem - rule - fix) or "None"
+## Rule breaks (numbered) or "None"
+## Round-1 fixes verified (one line each: fixed / not fixed)

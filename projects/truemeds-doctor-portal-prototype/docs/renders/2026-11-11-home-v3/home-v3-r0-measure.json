@@ -1,0 +1,136 @@
+[
+ {
+  "frame": 0,
+  "w": 390,
+  "h": 844,
+  "logoTop": 16,
+  "logoToTitle": 16,
+  "titleToSub": 8,
+  "subToPanel": 32,
+  "panelToFirst": 32,
+  "labelToControl": [
+   8,
+   8
+  ],
+  "betweenGroups": 32,
+  "chipRowGap": 8,
+  "chipColGap": 8,
+  "chipH": 48,
+  "lastContentBottom": 573,
+  "scrollOverflow": 0,
+  "barTop": 728,
+  "contentToBar": 155,
+  "smallTargets": [],
+  "type": {
+   "title": "32px/40px 600 rgb(56, 58, 66)",
+   "sub": "14px/20px 400 rgb(91, 97, 110)",
+   "lbl": "16px/24px 600 rgb(56, 58, 66)",
+   "rowLabel": null,
+   "value": null,
+   "until": "14px/20px 400 rgb(91, 97, 110)"
+  }
+ },
+ {
+  "frame": 1,
+  "w": 390,
+  "h": 844,
+  "logoTop": 16,
+  "logoToTitle": 16,
+  "titleToSub": 8,
+  "subToPanel": 32,
+  "panelToFirst": 32,
+  "labelToControl": [],
+  "betweenGroups": null,
+  "rowH": [
+   100,
+   101
+  ],
+  "cardToRow": 0,
+  "lastContentBottom": 406,
+  "scrollOverflow": 0,
+  "barTop": 700,
+  "contentToBar": 294,
+  "smallTargets": [],
+  "type": {
+   "title": "32px/40px 600 rgb(56, 58, 66)",
+   "sub": "14px/20px 400 rgb(91, 97, 110)",
+   "lbl": null,
+   "rowLabel": "16px/24px 400 rgb(56, 58, 66)",
+   "value": "32px/40px 600 rgb(56, 58, 66)",
+   "until": null
+  },
+  "addBtn": {
+   "h": 48,
+   "centreY": 255,
+   "valueCentreY": 269,
+   "labelCentreY": 233
+  }
+ },
+ {
+  "frame": 2,
+  "w": 360,
+  "h": 640,
+  "logoTop": 16,
+  "logoToTitle": 16,
+  "titleToSub": 8,
+  "subToPanel": 32,
+  "panelToFirst": 32,
+  "labelToControl": [
+   8,
+   8
+  ],
+  "betweenGroups": 32,
+  "chipRowGap": 8,
+  "chipColGap": 8,
+  "chipH": 48,
+  "lastContentBottom": 525,
+  "scrollOverflow": 1,
+  "barTop": 524,
+  "contentToBar": -1,
+  "smallTargets": [],
+  "type": {
+   "title": "32px/40px 600 rgb(56, 58, 66)",
+   "sub": "14px/20px 400 rgb(91, 97, 110)",
+   "lbl": "16px/24px 600 rgb(56, 58, 66)",
+   "rowLabel": null,
+   "value": null,
+   "until": "14px/20px 400 rgb(91, 97, 110)"
+  }
+ },
+ {
+  "frame": 3,
+  "w": 360,
+  "h": 640,
+  "logoTop": 16,
+  "logoToTitle": 16,
+  "titleToSub": 8,
+  "subToPanel": 32,
+  "panelToFirst": 32,
+  "labelToControl": [],
+  "betweenGroups": null,
+  "rowH": [
+   100,
+   101
+  ],
+  "cardToRow": 0,
+  "lastContentBottom": 406,
+  "scrollOverflow": 0,
+  "barTop": 496,
+  "contentToBar": 90,
+  "smallTargets": [],
+  "type": {
+   "title": "32px/40px 600 rgb(56, 58, 66)",
+   "sub": "14px/20px 400 rgb(91, 97, 110)",
+   "lbl": null,
+   "rowLabel": "16px/24px 400 rgb(56, 58, 66)",
+   "value": "32px/40px 600 rgb(56, 58, 66)",
+   "until": null
+  },
+  "addBtn": {
+   "h": 48,
+   "centreY": 255,
+   "valueCentreY": 269,
+   "labelCentreY": 233
+  }
+ }
+]

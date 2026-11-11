@@ -1,57 +1,28 @@
 <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="stylesheet" href="../../../../../design-system/truemeds.css">
-<style>
-*{box-sizing:border-box}
-body{margin:0;padding:var(--tm-space-xl);background:var(--tm-surface-tertiary);display:flex;gap:var(--tm-space-xl);align-items:flex-start;font-family:var(--tm-font)}
-.frame{width:390px;height:844px;overflow:hidden;display:flex;flex-direction:column;background:var(--tm-surface-brand-subtle);color:var(--tm-content-primary)}
-.frame.s360{width:360px;height:640px}
-.header{flex:none;display:flex;align-items:center;justify-content:space-between;padding:var(--tm-space-lg) var(--tm-space-lg) 0 var(--tm-space-page)}
-.logo{width:166px;height:auto;align-self:flex-start}
-.acts{display:flex;gap:var(--tm-space-xs);margin:-9px -14px -9px 0}
-.band{flex:none;padding:var(--tm-space-lg) var(--tm-space-page) var(--tm-space-2xl)}
-.band h1{margin:0 0 var(--tm-space-sm)}
-.sub{margin:0;font-size:var(--tm-font-size-body-md);line-height:var(--tm-font-lineheight-sm);color:var(--tm-content-secondary)}
-.panel{flex:1;min-height:0;display:flex;flex-direction:column;background:var(--tm-surface-primary);border-radius:var(--tm-radius-2xl) var(--tm-radius-2xl) 0 0;padding:var(--tm-space-2xl) var(--tm-space-page) 0}
-.scroll{flex:1;min-height:0;overflow:hidden}
-.lbl{margin:0 0 var(--tm-space-sm);font-size:var(--tm-font-size-body-lg);line-height:var(--tm-font-lineheight-md);font-weight:var(--tm-font-weight-semibold);color:var(--tm-content-primary)}
-.presets{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--tm-space-sm)}
-.presets .tm-chip{justify-content:center}
-.group+.group{margin-top:var(--tm-space-2xl)}
-.cols{display:grid;grid-template-columns:1fr 1fr;text-align:center;margin-bottom:var(--tm-space-xs);font-size:var(--tm-font-size-body-md);line-height:var(--tm-font-lineheight-sm);color:var(--tm-content-secondary)}
-.wheel{position:relative;display:grid;grid-template-columns:1fr 1fr;height:144px}
-.s360 .wheel{height:96px}.s360 .wband{top:0}
-.wband{position:absolute;left:0;right:0;top:48px;height:48px;border-radius:var(--tm-radius-md);background:var(--tm-surface-brand-subtle)}
-.wband::after{content:'';position:absolute;left:50%;top:var(--tm-space-xs);bottom:var(--tm-space-xs);width:1px;background:var(--tm-border-default)}
-.col{position:relative;display:flex;flex-direction:column}
-.col span{height:48px;display:flex;align-items:center;justify-content:center;font-size:var(--tm-font-size-title-md);line-height:var(--tm-font-lineheight-lg);color:var(--tm-content-secondary)}
-.col span.sel{color:var(--tm-content-brand);font-size:var(--tm-font-size-title-lg);line-height:var(--tm-font-lineheight-2xl);font-weight:var(--tm-font-weight-semibold)}
-.footer{flex:none;margin:0 calc(-1 * var(--tm-space-page))}
-.until{margin:0;text-align:center;font-size:var(--tm-font-size-body-md);line-height:var(--tm-font-lineheight-sm);color:var(--tm-content-secondary)}
-.until b{color:var(--tm-content-primary);font-weight:var(--tm-font-weight-semibold)}
-.card{padding:0 var(--tm-space-lg)}
-.srow{display:flex;align-items:center;gap:var(--tm-space-md);padding:var(--tm-space-lg) 0}
-.srow+.srow{border-top:var(--tm-border-width-default) solid var(--tm-border-subtle)}
-.srow>.tm-icon{flex:none;align-self:flex-start;margin-top:2px;color:var(--tm-content-secondary)}
-.srow .txt{flex:1;min-width:0}
-.srow .k{margin:0;font-size:var(--tm-font-size-body-lg);line-height:var(--tm-font-lineheight-md);color:var(--tm-content-primary)}
-.srow .v{margin:var(--tm-space-xs) 0 0}
-.srow .chev{flex:none;color:var(--tm-content-secondary)}
-</style><body>
+<link rel="stylesheet" href="home-v3.css">
+<body>
 <script>
-const f=(cls,rows)=>{const H=[0,1,2,3,4,5,6,7,8,9,10],M=[0,15,30,45];
-const col=(a,v)=>{const i=a.indexOf(v);const idx=rows===3?[i-1,i,i+1]:[i,i+1];return `<div class="col">${idx.map(j=>a[j]===undefined?'<span></span>':`<span class="${j===i?'sel':''}">${a[j]}</span>`).join('')}</div>`};
-return `<div class="frame tm ${cls}"><div class="header"><img class="logo" src="../../../app/brand/truemeds-for-doctors.svg" alt="truemeds for doctors"><div class="acts"><button class="tm-btn tm-btn--quiet tm-btn--icon"><span class="tm-icon" data-icon="bell"></span></button><button class="tm-btn tm-btn--quiet tm-btn--icon"><span class="tm-icon" data-icon="help-circle"></span></button><button class="tm-btn tm-btn--quiet tm-btn--icon"><span class="tm-icon" data-icon="user"></span></button></div></div>
+/* Home v3 review picture. Frames: setup 390 · available 390 · setup 360 · available 360 · setup 360 scrolled to the end.
+   R1 fixes: header icons as approved Home (user-circle) with names · Add time = compact secondary (like View Rx), on the timer line ·
+   End availability = quiet 56 (bar spec) · prescriptions row = one full-row link, chevron centred · wheel keeps 3 rows at 360 and scrolls ·
+   wheel columns exposed as spinbuttons. */
+const header=`<div class="header"><img class="logo" src="../../../app/brand/truemeds-for-doctors.svg" alt="truemeds for doctors"><div class="acts">${[['bell','Notifications'],['help-circle','Help'],['user-circle','Profile']].map(([i,l])=>`<button class="tm-btn tm-btn--quiet tm-btn--icon" type="button" aria-label="${l}"><span class="tm-icon" data-icon="${i}"></span></button>`).join('')}</div></div>`;
+const f=(cls)=>{const H=[0,1,2,3,4,5,6,7,8,9,10],M=[0,15,30,45];
+const col=(a,v,name)=>{const i=a.indexOf(v);return `<div class="col" role="spinbutton" tabindex="0" aria-label="${name}" aria-valuemin="${a[0]}" aria-valuemax="${a[a.length-1]}" aria-valuenow="${v}">${[i-1,i,i+1].map(j=>a[j]===undefined?'<span aria-hidden="true"></span>':`<span aria-hidden="true" class="${j===i?'sel':''}">${a[j]}</span>`).join('')}</div>`};
+return `<div class="frame tm ${cls}">${header}
 <div class="band"><h1 class="tm-text-title-lg">Start taking cases</h1><p class="sub">You can add time or stop anytime.</p></div>
-<div class="panel"><div class="scroll"><div class="group"><p class="lbl">Quick picks</p><div class="presets">${['15 min','30 min','45 min','1 hour','2 hours','3 hours'].map(c=>`<button class="tm-chip tm-chip--lg" aria-pressed="${c==='1 hour'}">${c}</button>`).join('')}</div></div>
-<div class="group"><p class="lbl">Custom</p><div class="cols"><span>Hours</span><span>Minutes</span></div><div class="wheel"><div class="wband"></div>${col(H,1)}${col(M,0)}</div></div></div>
-<div class="footer"><div class="tm-actionbar"><p class="until">Available until <b>7:45 PM</b></p><button class="tm-btn tm-btn--primary tm-btn--lg">Set availability</button></div></div></div></div>`};
+<div class="panel"><div class="scroll"><div class="group"><p class="lbl" id="qp">Quick picks</p><div class="presets" role="group" aria-labelledby="qp">${['15 min','30 min','45 min','1 hour','2 hours','3 hours'].map(c=>`<button class="tm-chip tm-chip--lg" type="button" aria-pressed="${c==='1 hour'}">${c}</button>`).join('')}</div></div>
+<div class="group"><p class="lbl">Custom</p><div class="cols" aria-hidden="true"><span>Hours</span><span>Minutes</span></div><div class="wheel"><div class="wband"></div>${col(H,1,'Hours')}${col(M,0,'Minutes')}</div></div></div>
+<div class="footer"><div class="tm-actionbar"><p class="until">Available until <b>7:45 PM</b></p><button class="tm-btn tm-btn--primary tm-btn--lg tm-btn--block" type="button">Set availability</button></div></div></div></div>`};
 
-const a=(cls)=>`<div class="frame tm ${cls}"><div class="header"><img class="logo" src="../../../app/brand/truemeds-for-doctors.svg" alt="truemeds for doctors"><div class="acts"><button class="tm-btn tm-btn--quiet tm-btn--icon"><span class="tm-icon" data-icon="bell"></span></button><button class="tm-btn tm-btn--quiet tm-btn--icon"><span class="tm-icon" data-icon="help-circle"></span></button><button class="tm-btn tm-btn--quiet tm-btn--icon"><span class="tm-icon" data-icon="user"></span></button></div></div>
+const a=(cls)=>`<div class="frame tm ${cls}">${header}
 <div class="band"><h1 class="tm-text-title-lg">You’re available</h1><p class="sub">Request a case whenever you have a moment.</p></div>
 <div class="panel"><div class="scroll"><div class="tm-card card">
-<div class="srow"><span class="tm-icon" data-icon="clock"></span><div class="txt"><p class="k">Time remaining</p><p class="tm-value-display v">30:00</p></div><button class="tm-btn tm-btn--secondary tm-btn--sm"><span class="tm-icon tm-icon--16" data-icon="plus"></span>Add time</button></div>
-<div class="srow"><span class="tm-icon" data-icon="prescription"></span><div class="txt"><p class="k">Prescriptions written today</p><p class="tm-value-display v">3</p></div><span class="tm-icon chev" data-icon="chevron-right"></span></div>
+<div class="srow"><span class="tm-icon" data-icon="clock"></span><div class="txt"><p class="k">Time remaining</p><div class="line"><p class="tm-value-display v" aria-live="off">30:00</p><button class="tm-btn tm-btn--secondary" type="button"><span class="tm-icon tm-icon--16" data-icon="plus"></span>Add time</button></div></div></div>
+<a class="srow" href="#profile"><span class="tm-icon" data-icon="prescription"></span><div class="txt"><p class="k">Prescriptions written today</p><div class="line"><p class="tm-value-display v">3</p></div></div><span class="tm-icon chev" data-icon="chevron-right"></span></a>
 </div></div>
-<div class="footer"><div class="tm-actionbar"><button class="tm-btn tm-btn--primary tm-btn--lg">Request a case</button><button class="tm-btn tm-btn--quiet">End availability</button></div></div></div></div>`;
-document.body.innerHTML=f('',3)+a('')+f('s360',2)+a('s360');
-</script><script src="../../../../../design-system/icons/icons.js"></script></body></html>
+<div class="footer"><div class="tm-actionbar"><button class="tm-btn tm-btn--primary tm-btn--lg tm-btn--block" type="button">Request a case</button><button class="tm-btn tm-btn--quiet tm-btn--lg tm-btn--block" type="button">End availability</button></div></div></div></div>`;
+document.body.innerHTML=f('')+a('')+f('s360')+a('s360')+f('s360 at-end');
+</script><script src="../../../../../design-system/icons/icons.js"></script>
+<script>const e=document.querySelector('.at-end .scroll'); if(e) e.scrollTop=e.scrollHeight;</script></body></html>

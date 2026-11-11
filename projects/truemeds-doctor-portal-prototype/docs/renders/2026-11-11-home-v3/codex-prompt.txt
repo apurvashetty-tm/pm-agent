@@ -1,0 +1,38 @@
+You are a senior mobile UX/UI reviewer and UX writer. Read-only review; change no file.
+
+Subject: Home v3 for the Truemeds doctor portal (a mobile web app doctors use to take prescription-consultation cases). Two screens, each at 390 x 844 and 360 x 640:
+- SETUP (doctor is not taking cases yet): picks how long to be available, then "Set availability".
+- AVAILABLE (doctor is taking cases): sees time remaining and prescriptions written today; "Request a case" (primary), "End availability" (quiet), "+ Add time".
+
+Files (this folder): home-v3.html (source; all styles are design-system tokens), home-v3-r0.png (the 4 frames: setup 390, available 390, setup 360, available 360), home-v3-r0-measure.json (measured gaps, type, targets, per frame). Approved reference pictures attached: ui-screens case page (a-top), OTP default, returning unlock, Home setup-wheel and active (the older approved Home), for consistency.
+
+Rules to judge against (read them):
+- ../../../../../design-system/RULES.md (section 8 type scale: L1 title 32/40 semibold, L2 16/24, L3 14/20 secondary, L4 12/16; three gaps only 8/16/32; 8.11 icons; 8.12 / L9 value display 32/40 semibold tabular; 8.14 small phone; section 9 components)
+- ../../../../../design-system/src/components.css
+- ../../../ui-screens/README.md and ../../../ui-screens/app-logic.md (Home sections)
+- ../2026-11-11-home-blocks-review/REPORT.md (what was already found; do not repeat settled points)
+
+Already agreed with the product owner (do not reopen unless it causes a real problem):
+- Setup: title "Start taking cases" / subtitle "You can add time or stop anytime." / "Quick picks" (6 chips) / "Custom" (approved wheel, hours 0-10) / "Available until 7:45 PM" above "Set availability". No range text.
+- Available: title "You're available" / approved subtitle / one tm-card (same as the case page's) with two rows of one anatomy: grey icon, 16 label, L9 value; "+ Add time" (secondary small, like View Rx) always shown on the time row; prescriptions row taps through to Profile (chevron).
+- Band: logo -> title 16 (same as OTP / unlock / offer); title 32/40 (one line on both sizes). Sign-in keeps 48.
+- D-36 names the state "Taking cases" (not "Online").
+
+Review both screens and answer each section:
+1. DESIGN SYSTEM FOLLOWED? Every component, colour, icon treatment and radius. Name any element that isn't the system's, or is used differently from the case page / entry screens.
+2. GAPS RIGHT? Measure every vertical gap (logo -> title, title -> subtitle, band -> panel, label -> control, between chips, between groups, card padding, row padding, bar). Each must be 8 / 16 / 32 or a component's own spec; list any that isn't. Use the measure json plus the source.
+3. TYPE RIGHT? Every text: size / line height / weight / colour vs the four levels (and L9 values). Hierarchy: does the eye go title -> choices -> value -> button?
+4. TITLE AND SUBTITLE OPTIONS: 3 options for each screen (title one line at 390, about 20 characters; subtitle one line), from the doctor's point of view (a new doctor opening the app the first time, and a doctor coming back for a second session the same day). Say which you'd ship and why; "Start taking cases" / "You're available" are the baseline to beat.
+5. LABEL STYLE ON THE AVAILABLE CARD: the setup group headings ("Quick picks", "Custom") are 16 semibold dark. Should "Time remaining" and "Prescriptions written today" match them, or stay 16 regular because they label a value (the 32 semibold value is the emphasis)? Judge by the design system's rules and the case page, and pick one.
+6. THE TWO SCREENS AS A PAIR: setup says "Start taking cases"; D-36 names the state "Taking cases". Should the available title become "You're taking cases" so the pair reads Start taking cases -> You're taking cases? Do the buttons ("Set availability", "End availability", "+ Add time") still fit that vocabulary, or should the words line up? Give options as PAIRS (setup title + available title + buttons), not one screen at a time, and pick one.
+7. ANYTHING ELSE a reviewer would flag: thumb reach, tap targets, the Add time button's alignment with the timer, the chevron row, 360 x 640 fit (note measure json frame 2: scrollOverflow / contentToBar), accessibility.
+
+Output format, plain markdown, concise:
+## 1 Design system  (numbered findings: element - problem - fix - severity blocker/should-fix/nit)
+## 2 Gaps
+## 3 Type
+## 4 Titles and subtitles
+## 5 Card label style
+## 6 Pair vocabulary
+## 7 Other
+## Top 5 changes (ranked)
