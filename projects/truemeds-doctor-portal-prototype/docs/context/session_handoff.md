@@ -1012,3 +1012,9 @@ User identified missing HTML/native linkage. Inspected actual sign-in and OTP HT
 - **Leftovers:** D-104 wording in the state map, review state names and the OTP comment; app-logic §3 wheel behaviour line.
 - **Checks:** entry-journeys 61/61, run-checks 95/95, step-1 compare exact 80 / accepted 6 / failed 0, kit --check + handoff 38/38, PRD 17/17, all guards pass. Codex 0 blockers, 0 should-fix. Report: `docs/renders/2026-11-10-d105/REPORT.md`.
 - **Next:** Apurva approves the unlock pictures and checks Use OTP instead on his phone; then release D1 → D2 (final deploy, on request only).
+
+## 2026-11-11 (18:10) · Scheduled check-in — r2-build and r3-rest-audit reviewed; chain finished
+- **r2-build passed** (D-106–D-109 on sign-in, OTP, offer, unlock, Home + sheets): 29 final checks exit 0, visible gaps 126 / 126, r2 tests 27 / 27 incl. the OTP / sign-in keyboard fix, Codex 0 blockers. Readings accepted except reading 2 (Add time greyed < 15 min / none on ended) → Apurva. Checklist P5 corrected to 8.
+- **r3-rest-audit accepted as a report:** 24 drift fixes on case, Prescribe, sheets, Profile, Rx viewer (~2–2.5 h run). Not queued: Q1–Q4, Q6–Q9 change it.
+- **Queue finished.** `docs/runs/SUMMARY.md` written; NEEDS-APURVA in `docs/runs/CHECKIN.md` (10 yes / no).
+- **Next:** Apurva answers the questions and does the phone walkthrough (F2); main thread writes the r3 fix-run brief; shared design-system commit (RULES + checker) still needs a PR (connector signed out); deploy only on request.

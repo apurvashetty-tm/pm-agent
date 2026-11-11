@@ -12,5 +12,18 @@ One dated line per firing that did something. Reviewed runs are listed so the ne
 - 2026-11-10 07:58 IST — Scheduled check-in: handoff-kit-all STOPPED twice (00:42 = Apurva's intentional stop for D-103; the 00:51 start hit the 5-hour usage limit at ~01:29 IST). Restart ruling written (continue from the uncommitted kit build); H18 + H23 test disputes upheld and test fixed (2 / 2 pass). Runner has exited; Apurva told to restart. Reviewed: rails, token-pass, A1, A2, B, signin-d101.
 - 2026-11-10 13:50 IST — Main thread reviewed d104: passed (61/61, 95/95, kit 38/38, PRD 17/17, calling-flow temp-site check 0×404; Codex no blockers). Readings accepted: once turned on the offer never returns (even if Profile turns it off later); a showing counts when shown. Reviewed: rails, token-pass, A1, A2, B, signin-d101, handoff-kit-all, d104. Queue empty; next: deploy 2 after Apurva approves.
 
+- 2026-11-11 18:10 IST — Scheduled check-in reviewed r2-build (passed; 29/29 final checks, 126/126 gaps, Codex 0 blockers) and r3-rest-audit (report accepted; fix run waits for Apurva's answers). Queue finished; SUMMARY.md written. Reviewed: all runs to r3-rest-audit.
+
 ## NEEDS-APURVA
-(none)
+From r2-build (`docs/renders/2026-11-11-r2-build/REPORT.md`):
+1. Approve the new entry + Home pictures (`all-screens.png`, `before-after/`)?
+2. Add time greyed when less than 15 min fits under the 10-hour cap, and no Add time on "Availability ended" — keep?
+From r3-rest-audit (`docs/renders/2026-11-11-r3-rest-audit/CONCLUSION.md` §2):
+3. Q1 Duration: unit first, then Days 1 2 3 5 7 10 14 15 · Weeks 1 2 3 4 6 8 · Months 1 2 3 6 12 (+ Ongoing)?
+4. Q2 Add "Prescriptions written today" to Profile?
+5. Q3 Add "Your availability has ended." above Back to Home on the ended case?
+6. Q4 Keep status tags at 12 (no = 14)?
+7. Q6 Keep callback times on 3 columns?
+8. Q7 Callback busy "Scheduling…" and "Your chosen time is kept."?
+9. Q8 Rx viewer header: tools row 8 below the title (no = keep 34)?
+10. Q9 Calling-flow page = internal desktop diagram (RULES §4, not §8)?

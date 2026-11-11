@@ -2,6 +2,13 @@
 
 Every run reads this first. Rulings override briefs where they conflict. Newest at the top.
 
+## 2026-11-11 18:10 — r2-build and r3-rest-audit reviewed (scheduled check-in)
+- **r2-build passed.** Evidence read: `logs/final-checks.txt` (29 checks, all exit 0), `r2-tests.log` 27 / 27 incl. R2-K3–K5, `visible-gaps/summary.md` 126 / 126, Codex 0 blockers / 3 should-fix all fixed (correct against D-108 corrected and RULINGS 11:32).
+- **r2 readings accepted:** 1 (Apurva 13:31), 3 (10 h = remaining + added, D-106), 4 ("Add 1 h"), 5 (auto-prompt once per live arrival; a failed auto-prompt counts as a try), 6–12, 14. **Reading 2 (Add time greyed when < 15 min fits; none on "Availability ended") waits for Apurva** — keep it as built until he answers.
+- **Checklist P5** corrected to tile → 8 → caption (`docs/proposals/2026-11-11-release-checklist-2.md`, done by the main thread).
+- **r3-rest-audit accepted as a report.** 24 drift fixes are agreed in principle (rule clear, screen off). **Don't queue the fix run yet:** Q1 (duration), Q2 (Profile count), Q3 (ended reason), Q4 (tags), Q6 (callback columns), Q7 (callback copy), Q8 (Rx header) change what it builds. The fix run is written after Apurva answers. Q5 is settled (16). Q9 is wording only.
+- **For the fix run (when queued):** move r3's region / artefact rules (`tools/audit.mjs`, `tools/summarise.mjs`) into the checker config before it gates the case page and Prescribe; turn the "cards stacked 16" pair off inside a card region; extend r2's `text-box` trim to the shared text styles (r2 "Needs the main thread" 2) rather than per screen.
+
 ## 2026-11-11 13:45 — R2-BUILD RESTART: finish, don't start over (main thread)
 - r2-build **stopped at the very end because the Mac lost Wi-Fi** (API unreachable). The build is complete in the working tree but **not committed** (≈ 655 changed files); `REPORT.md` is written except the "Rows" table (`FINAL-CHECKS-TABLE` placeholder).
 - **Do not rebuild.** Keep every change. Do only this:

@@ -20,7 +20,7 @@ Decisions: **D-106** (Home v3), **D-107** (band), **D-108** (visible-gap spacing
 | P2 | Sign-in | Logo → title 16; helper "We'll send you an OTP by SMS."; field+helper → 32 → Send OTP; error "Couldn't send the OTP." 16 under field, 32 above Send OTP; Sign up as a real link (S5); drop the subtitle's 31ch cap. |
 | P3 | OTP | "Change" inline link (S5); boxes (+ message line) → 32 → Resend line → 32 → legal → 8 → Verify; locked / expired-limited: boxes → 16 → notice → 32 → Verify; "New code sent."; every OTP error state rechecked. |
 | P4 | Faster sign-in offer | Title "Skip OTPs next time"; point 1 copy (3 variants); point titles semibold; hero → 32 → points (16 apart). |
-| P5 | Returning unlock | Prompt opens by itself once on arrival; cancel = today's screen; tile → 16 → caption; long-name title may wrap. |
+| P5 | Returning unlock | Prompt opens by itself once on arrival; cancel = today's screen; tile → 8 → caption (RULINGS 11:32, D-108 corrected); long-name title may wrap. |
 | P6 | Home setup | D-106 setup; wheel hours 0–10; "Available until {time}" caption; no range text; ended Home count row above the picker when > 0. |
 | P7 | Home available | D-106 card; + Add time always (greyed offline); Rx row → Profile; titles/subtitles per D-106 / D-107 for every Home state (requesting, no cases, request failed, offline, near expiry, unknown result, ending, ended, expired-pending "Availability ended"). |
 | P8 | Add-time sheet | Title "Add time"; Quick picks / Custom picker; wheel tops out at what's left, hint "Up to 10 hours in total"; "Add 9 h 45 min" format; error in the pinned actions 16 above Add. |
