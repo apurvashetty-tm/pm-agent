@@ -2,6 +2,11 @@
 
 Every run reads this first. Rulings override briefs where they conflict. Newest at the top.
 
+## 2026-11-11 10:32 — R2-BUILD SCOPE (main thread, agreed with Apurva)
+- **Screens changed: only the affected ones.** Sign-in, OTP, faster sign-in offer, returning unlock, Home (all states) and the sheets that open from them. **Case page, calling, Prescribe, Profile and the Rx viewer are not redesigned in this run.**
+- **One exception — the shared sheet subtitle (S4).** It changes every sheet that has a subtitle, wherever it opens (Home add-time / end / log-out, and the case page's sheets in `ui-screens/case/case.html` and `app/screens/parts.js`). Re-render **only those sheet states** on the case page so the approved pictures match; nothing else on the case page moves. The picture compare (T6) must pass on every other case / Prescribe state unchanged.
+- **Visible-gap checker on the other screens: report only.** Run it on the case page, Prescribe, calling and Profile states and list the findings in `REPORT.md` under "Next round (not fixed)". Don't fix them here; they become a separate, agreed round.
+
 ## 2026-11-10 07:58 — KIT RUN RESTART 2 (scheduled check-in): continue, don't start over
 - **Why it stopped:** the 00:51 start hit the 5-hour Claude usage limit at ~01:29 IST (log: "You've hit your 5-hour limit"), after `build-handoff.mjs` had built the new kit (7 screens, 149 states; `build.log` 01:19) and `test-disputes.md` was written. Not a build fault.
 - **Your work in progress is uncommitted in the worktree:** `scripts/build-handoff.mjs`, `scripts/build-handoff.manifest.json` and the regenerated `handoff/` files (`git status` / `git diff --stat`). **Start from them:** read `git diff scripts/build-handoff.mjs`, `docs/renders/2026-11-09-handoff-kit-all/build.log` and `test-disputes.md`, then carry on from where it stopped. Don't `git checkout` / reset those files and don't redo step 0 or the H25+ tests (committed in e10216a).
