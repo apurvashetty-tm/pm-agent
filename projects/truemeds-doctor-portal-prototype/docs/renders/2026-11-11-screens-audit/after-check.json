@@ -1,0 +1,290 @@
+[
+ {
+  "check": "otp default 390x844: consent -> Verify 16",
+  "got": 16.0,
+  "want": 16,
+  "ok": true
+ },
+ {
+  "check": "otp wrong-code 390x844: consent -> Verify 16",
+  "got": 16.0,
+  "want": 16,
+  "ok": true
+ },
+ {
+  "check": "otp new-code-sent 390x844: consent -> Verify 16",
+  "got": 16.0,
+  "want": 16,
+  "ok": true
+ },
+ {
+  "check": "otp offline 390x844: consent -> Verify 16",
+  "got": 16.0,
+  "want": 16,
+  "ok": true
+ },
+ {
+  "check": "otp couldnt-verify 390x844: consent -> Verify 16",
+  "got": 16.0,
+  "want": 16,
+  "ok": true
+ },
+ {
+  "check": "otp locked 390x844: code -> notice 16",
+  "got": 16.0,
+  "want": 16,
+  "ok": true
+ },
+ {
+  "check": "otp offline 390x844: code -> notice 16",
+  "got": 16.0,
+  "want": 16,
+  "ok": true
+ },
+ {
+  "check": "otp couldnt-verify 390x844: code -> notice 16",
+  "got": 16.0,
+  "want": 16,
+  "ok": true
+ },
+ {
+  "check": "otp resend-failed 390x844: code -> notice 16",
+  "got": 16.0,
+  "want": 16,
+  "ok": true
+ },
+ {
+  "check": "otp too-many-resends 390x844: code -> notice 16",
+  "got": 16.0,
+  "want": 16,
+  "ok": true
+ },
+ {
+  "check": "otp expired-and-resend-limited 390x844: code -> notice 16",
+  "got": 16.0,
+  "want": 16,
+  "ok": true
+ },
+ {
+  "check": "otp locked 390x844: notice -> Verify 8",
+  "got": 8.0,
+  "want": 8,
+  "ok": true
+ },
+ {
+  "check": "home add-wheel 390x844: sheet title -> subtitle 8",
+  "got": 8,
+  "want": 8,
+  "ok": true
+ },
+ {
+  "check": "home end-confirmation 390x844: sheet title -> subtitle 8",
+  "got": 8,
+  "want": 8,
+  "ok": true
+ },
+ {
+  "check": "home logout-confirm 390x844: sheet title -> subtitle 8",
+  "got": 8,
+  "want": 8,
+  "ok": true
+ },
+ {
+  "check": "home add-failed 390x844: notice -> Add 16",
+  "got": 16,
+  "want": 16,
+  "ok": true
+ },
+ {
+  "check": "home add-wheel 390x844: chips -> Custom 32",
+  "got": 32,
+  "want": 32,
+  "ok": true
+ },
+ {
+  "check": "home add-wheel 390x844: Quick picks -> chips 8",
+  "got": 8,
+  "want": 8,
+  "ok": true
+ },
+ {
+  "check": "sign-in not-registered 390x844: field -> notice 16",
+  "got": 16.0,
+  "want": 16,
+  "ok": true
+ },
+ {
+  "check": "sign-in not-registered 390x844: notice -> Send OTP 8",
+  "got": 8.0,
+  "want": 8,
+  "ok": true
+ },
+ {
+  "check": "offer fingerprint 390x844: panel top 173",
+  "got": 173,
+  "want": 173,
+  "ok": true
+ },
+ {
+  "check": "offer enable-failed 390x844: panel top 173",
+  "got": 173,
+  "want": 173,
+  "ok": true
+ },
+ {
+  "check": "offer unavailable 390x844: panel top 173",
+  "got": 173,
+  "want": 173,
+  "ok": true
+ },
+ {
+  "check": "home add-failed 390x844: error fully visible above Add (bottom <= Add top)",
+  "got": 1,
+  "want": 1,
+  "ok": true
+ },
+ {
+  "check": "otp default 360x640: consent -> Verify 16",
+  "got": 16.0,
+  "want": 16,
+  "ok": true
+ },
+ {
+  "check": "otp wrong-code 360x640: consent -> Verify 16",
+  "got": 16.0,
+  "want": 16,
+  "ok": true
+ },
+ {
+  "check": "otp new-code-sent 360x640: consent -> Verify 16",
+  "got": 16.0,
+  "want": 16,
+  "ok": true
+ },
+ {
+  "check": "otp offline 360x640: consent -> Verify 16",
+  "got": 16.0,
+  "want": 16,
+  "ok": true
+ },
+ {
+  "check": "otp couldnt-verify 360x640: consent -> Verify 16",
+  "got": 16.0,
+  "want": 16,
+  "ok": true
+ },
+ {
+  "check": "otp locked 360x640: code -> notice 16",
+  "got": 16.0,
+  "want": 16,
+  "ok": true
+ },
+ {
+  "check": "otp offline 360x640: code -> notice 16",
+  "got": 16.0,
+  "want": 16,
+  "ok": true
+ },
+ {
+  "check": "otp couldnt-verify 360x640: code -> notice 16",
+  "got": 16.0,
+  "want": 16,
+  "ok": true
+ },
+ {
+  "check": "otp resend-failed 360x640: code -> notice 16",
+  "got": 16.0,
+  "want": 16,
+  "ok": true
+ },
+ {
+  "check": "otp too-many-resends 360x640: code -> notice 16",
+  "got": 16.0,
+  "want": 16,
+  "ok": true
+ },
+ {
+  "check": "otp expired-and-resend-limited 360x640: code -> notice 16",
+  "got": 16.0,
+  "want": 16,
+  "ok": true
+ },
+ {
+  "check": "otp locked 360x640: notice -> Verify 8",
+  "got": 8.0,
+  "want": 8,
+  "ok": true
+ },
+ {
+  "check": "home add-wheel 360x640: sheet title -> subtitle 8",
+  "got": 8,
+  "want": 8,
+  "ok": true
+ },
+ {
+  "check": "home end-confirmation 360x640: sheet title -> subtitle 8",
+  "got": 8,
+  "want": 8,
+  "ok": true
+ },
+ {
+  "check": "home logout-confirm 360x640: sheet title -> subtitle 8",
+  "got": 8,
+  "want": 8,
+  "ok": true
+ },
+ {
+  "check": "home add-failed 360x640: notice -> Add 16",
+  "got": 16,
+  "want": 16,
+  "ok": true
+ },
+ {
+  "check": "home add-wheel 360x640: chips -> Custom 32",
+  "got": 32,
+  "want": 32,
+  "ok": true
+ },
+ {
+  "check": "home add-wheel 360x640: Quick picks -> chips 8",
+  "got": 8,
+  "want": 8,
+  "ok": true
+ },
+ {
+  "check": "sign-in not-registered 360x640: field -> notice 16",
+  "got": 16.0,
+  "want": 16,
+  "ok": true
+ },
+ {
+  "check": "sign-in not-registered 360x640: notice -> Send OTP 8",
+  "got": 8.0,
+  "want": 8,
+  "ok": true
+ },
+ {
+  "check": "offer fingerprint 360x640: panel top 173",
+  "got": 173,
+  "want": 173,
+  "ok": true
+ },
+ {
+  "check": "offer enable-failed 360x640: panel top 173",
+  "got": 173,
+  "want": 173,
+  "ok": true
+ },
+ {
+  "check": "offer unavailable 360x640: panel top 173",
+  "got": 173,
+  "want": 173,
+  "ok": true
+ },
+ {
+  "check": "home add-failed 360x640: error fully visible above Add (bottom <= Add top)",
+  "got": 1,
+  "want": 1,
+  "ok": true
+ }
+]

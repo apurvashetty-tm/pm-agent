@@ -1,0 +1,90 @@
+[
+ {
+  "kbTop": 384,
+  "buttonBottom": 368,
+  "clearance": 16,
+  "fieldTop": 84,
+  "fieldVisible": true,
+  "scrolled": 121,
+  "screen": "otp",
+  "state": "default",
+  "ok": true
+ },
+ {
+  "kbTop": 384,
+  "buttonBottom": 368,
+  "clearance": 16,
+  "fieldTop": 84,
+  "fieldVisible": true,
+  "scrolled": 121,
+  "screen": "otp",
+  "state": "wrong-code",
+  "ok": true
+ },
+ {
+  "kbTop": 384,
+  "buttonBottom": 368,
+  "clearance": 16,
+  "fieldTop": 49,
+  "fieldVisible": true,
+  "scrolled": 156,
+  "screen": "otp",
+  "state": "offline",
+  "ok": true
+ },
+ {
+  "kbTop": 384,
+  "buttonBottom": 368,
+  "clearance": 16,
+  "fieldTop": 49,
+  "fieldVisible": true,
+  "scrolled": 156,
+  "screen": "otp",
+  "state": "couldnt-verify",
+  "ok": true
+ },
+ {
+  "kbTop": 384,
+  "buttonBottom": 368,
+  "clearance": 16,
+  "fieldTop": 84,
+  "fieldVisible": true,
+  "scrolled": 121,
+  "screen": "otp",
+  "state": "resend-available",
+  "ok": true
+ },
+ {
+  "kbTop": 384,
+  "buttonBottom": 368,
+  "clearance": 16,
+  "fieldTop": 218,
+  "fieldVisible": true,
+  "scrolled": 15,
+  "screen": "sign-in",
+  "state": "keyboard-open",
+  "ok": true
+ },
+ {
+  "kbTop": 384,
+  "buttonBottom": 368,
+  "clearance": 16,
+  "fieldTop": 218,
+  "fieldVisible": true,
+  "scrolled": 15,
+  "screen": "sign-in",
+  "state": "too-short",
+  "ok": true
+ },
+ {
+  "kbTop": 384,
+  "buttonBottom": 368,
+  "clearance": 16,
+  "fieldTop": 218,
+  "fieldVisible": true,
+  "scrolled": 15,
+  "screen": "sign-in",
+  "state": "wrong-first-digit",
+  "ok": true
+ }
+]

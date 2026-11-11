@@ -1,0 +1,14 @@
+You are the same senior mobile UX/UI reviewer and UX writer as in round 1 (your answer is codex-review.md in this folder). Read-only; change no file.
+
+Round 2 = cross-critique. Read claude-review.md (the other reviewer's independent review of the same screens, same facts: facts.md, measure.json, measure-*.png, RESEARCH.md, the rules and decisions listed in codex-prompt.txt). Do NOT read claude-on-codex.md or CONCLUSION.md if they exist.
+
+Go point by point through claude-review.md §1–§9. For each point: agree / disagree / partly, one or two lines why, citing measured numbers, rules (RULES §, L#) or decisions (D-#). Then say plainly where YOUR round-1 review was wrong or missed something that claude-review.md caught (be honest; e.g. the sheet subtitle value, the add-time sheet error, "Minimum 15 minutes", copy items, the Sign-in 360 reference page being min-height 844 so its keyboard drawing sits below the fold — check ../../../ui-screens/sign-in/sign-in.html — and the build's keyboard scrolling from the wheel-keyboard run, ../2026-11-10-wheel-keyboard/REPORT.md).
+
+Specific disputes to settle with evidence:
+1. Sign-in notice -> Send OTP: Claude says 16, you said 8. RULES §8.3 / §9.5 (A-14, D-98) — which applies to a notice that sits ABOVE the button it came from?
+2. Sheet subtitle: Claude says 8 under the title (move the subtitle into the header, like the band's title -> sub 8); you said header -> body 16 with no extra 4 (title text -> subtitle then about 26). Which is right for the component, and is it a design-system change needing Apurva?
+3. Unlock automatic prompt: Claude called it an industry gap for Apurva; you called it deliberate (D-38). D-38 (decision_log.md line ~383) is a "built into the prototype" record. Does it count as an approved decision, and does the research show a real problem? What should the conclusion say?
+4. Copy: Claude proposes few copy changes; you proposed more (offer trust / third point, count "confirmed", idle/manual notices, logout). Which of yours touch already-approved copy (D-47 idle/manual "approved as drafted", D-81, home-blocks-review Q2 already asks written vs confirmed) and should be dropped to keep Apurva's questions minimal?
+5. Add time always visible on v3 available: you said "v3 wins"; home-blocks-review Q3 (../2026-11-11-home-blocks-review/REPORT.md) left it to Apurva. Is it decided?
+
+End with: ## Still disputed (one line each, both views) and ## Agreed list (one line each).

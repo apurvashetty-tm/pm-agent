@@ -1,0 +1,32 @@
+/* Screens audit — the agreed below-band changes, applied on top of the approved pages (after the band audit's after.css)
+   for the after-<screen>.png pictures only. Injected at capture time (tools/capture.py after); no approved file changes.
+   Tokens only. */
+
+/* OTP: a box notice under the code sits 16 below it, like every result notice under a field (D-98). */
+.grp > .note{margin-top:0}
+/* OTP: the consent line sits directly above Verify (D-44): 16, like Sign-in's helper -> Send OTP. */
+.consent{margin-bottom:0}
+/* A result notice directly above the button it came from sits 8 above it (RULES §8.3, A-14: notice <-> button 8). */
+/* OTP: with no consent line (locked, expired-and-limited), the notice -> Verify is 8. */
+.grp:has(> .note.show) + .grp:not(:has(> .consent.show, > .consent.reserve)){margin-top:var(--tm-space-sm)}
+/* Sign-in: a server notice under the field -> Send OTP is 8 (the field -> notice stays 16, D-98). */
+#doctor-login-preview .tm-field:has(.login-notice:not([hidden])) + .login-submit{margin-top:var(--tm-space-sm)}
+
+/* Offer: point titles 16/24 semibold (L2 strong), like every other 16/24 emphasis; medium is not on the scale. */
+.points .pt-t{font-weight:var(--tm-font-weight-semibold)}
+
+/* Sheets: the subtitle sits 8 under the title, as in the screen band (header row is 48, the 20/28 title is centred in it). */
+/* after.js moves the subtitle into the header next to the title; the title keeps its place beside the 48 close button. */
+.tm-sheet__header:has(> .tm-sheet__titles){align-items:flex-start}
+.tm-sheet__titles{flex:1;min-width:0;padding-top:calc((var(--tm-target-min) - var(--tm-font-lineheight-lg)) / 2)}
+.tm-sheet__titles > .tm-sheet__subtitle{margin-top:var(--tm-space-sm)}
+
+/* Add-time sheet: the same picker as Home v3 setup — "Quick picks" over the chips, 32 to "Custom". */
+.tm-sheet .picker .qp{margin:0 0 var(--tm-space-sm)}
+.tm-sheet .picker .adjust-row{margin-top:var(--tm-space-2xl)}
+/* Add-time sheet: the result notice moves into the pinned actions, 16 above Add (A-12, like the bar, A-19). */
+.tm-sheet__actions > .sheet-feedback{margin:0 0 var(--tm-space-sm)}
+
+/* Home v3 setup: "Minimum 15 minutes" back on the Custom row (D-40), right-aligned helper. */
+.frame .group .lbl.with-help{display:flex;justify-content:space-between;align-items:baseline}
+.frame .group .lbl .help{font-size:var(--tm-font-size-body-md);line-height:var(--tm-font-lineheight-sm);font-weight:var(--tm-font-weight-regular);color:var(--tm-content-secondary)}

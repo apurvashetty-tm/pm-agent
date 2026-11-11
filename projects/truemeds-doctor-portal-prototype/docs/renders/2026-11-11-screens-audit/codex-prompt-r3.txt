@@ -1,0 +1,19 @@
+You are the same reviewer as in rounds 1–2 (codex-review.md, codex-on-claude.md in this folder). Read-only; change no file. Now read claude-on-codex.md (Claude's critique of your round 1). Do NOT read CONCLUSION.md if it exists.
+
+Round 3 = conclude. Where things stand:
+- Claude CONCEDED the notice -> inline button gap: 8 (RULES §8.3 A-14 "notice <-> button 8") on Sign-in (server notice -> Send OTP) and OTP locked / expired-and-limited (notice -> Verify). Field -> notice stays 16 (D-98).
+- Unlock auto-prompt: both now say "optional flow improvement for Apurva; D-38 records today's tap-to-prompt build, not an approved rejection; research shows convenience, not a defect".
+- Add time always vs near expiry: open (home-blocks-review Q3); count wording (Q2) and ended-Home count (Q4): open; not asked again.
+- Your excess copy proposals: dropped (you agreed).
+
+Still disputed — settle each in 2–4 lines, final position, and say if you change your mind:
+1. Offer point 1. Claude: put it in the one optional copy batch as title "Sign in with one touch" (Face ID "with a glance", screen lock "with your PIN or pattern") + line "No SMS to wait for." (today: "No more waiting for SMS codes" / "Unlock the app with one touch, not an OTP." — the subtitle already says "instead of waiting for an OTP"). You: defer (D-47 approved copy). Is one optional line in a batch Apurva can refuse acceptable?
+2. Sheet subtitle 8 inside the header: you agreed it's right but called it "not drift, a component change". Agree to tag it "needs Apurva (design-system component)"?
+3. The copy batch Claude proposes (each one line, optional, approved copy changing): Sign-in helper "We'll send you an OTP by SMS." · "Couldn't send the OTP." · "New code sent." (full stop; app-logic already has it) · offer point 1 (above) · add-time sheet title "Add time" + group labels "Quick picks" / "Custom" · end sheet "receive" -> "get". Anything to cut or add?
+
+Then check the AFTER pictures for blockers only (attached: before-after.png; after-otp-390.png; after-home-390.png; full sheets after-<screen>.png in this folder; after-check.json = 48/48 checks on spec; after.css / after.js / after-copy.json = what was injected). They apply: band spec; OTP code->notice 16, consent->Verify 16, notice->Verify 8 when no consent; Sign-in notice->Send OTP 8; offer point titles semibold + point 1 copy; Home v3 setup "Minimum 15 minutes" on the Custom row; add-time sheet = v3 picker labels + title "Add time" + subtitle 8 under the title inside the header + the error moved into the pinned actions 16 above Add; end / log-out sheets subtitle 8 under the title + "get". Note: .is-stuck IS set on the sheet actions at 360 (probe: hairline + upward shadow present; it is faint over the wheel band). Report: blockers (things that break a rule or hide something) and nothing else.
+
+Answer:
+## Disputes — final
+## After pictures — blockers
+## Final agreed questions for Apurva (yes/no, as few as possible)

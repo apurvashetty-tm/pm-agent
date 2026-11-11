@@ -1,0 +1,19 @@
+{
+ "sign-in": [
+  ["#tm-login-helper", "We’ll send you a verification code by SMS.", "We’ll send you an OTP by SMS."],
+  [".login-notice span:not(.tm-icon)", "Couldn’t send the code.", "Couldn’t send the OTP."]
+ ],
+ "otp": [
+  ["#s1t", "New code sent", "New code sent."]
+ ],
+ "faster-signin-offer": [
+  [".points li:first-child .pt-d", "Unlock the app with one touch, not an OTP.", "No SMS to wait for."],
+  [".points li:first-child .pt-d", "Unlock the app with a glance, not an OTP.", "No SMS to wait for."],
+  [".points li:first-child .pt-d", "Unlock the app with your PIN or pattern, not an OTP.", "No SMS to wait for."]
+ ],
+ "home": [
+  [".tm-sheet__title", "Add availability", "Add time"],
+  [".tm-sheet .adjust-row .adjust", "Adjust duration", "Custom"],
+  [".tm-sheet__subtitle", "You won’t receive new cases after this. A case already assigned to you stays with you.", "You won’t get new cases after this. A case already assigned to you stays with you."]
+ ]
+}
