@@ -1033,6 +1033,38 @@ From an external (ChatGPT) review, each point verified before acting.
 - **Why:** three stacked buttons with two quiet ones looked odd; Switch account and Use OTP instead both led to sign-in, so one control now does both. Not sending the SMS straight away also avoids an SMS when the doctor only wanted to switch account.
 - **Rejected:** keeping Switch account; a special back gesture from this Sign-in to unlock (rare mistake; reopening the app already returns to unlock; one Sign-in behaving differently is harder to build and explain).
 
+### D-106 · Home v3: setup and available screens — 2026-11-11
+- **Decision (Apurva):** Home's two main screens are rebuilt from the agreed building blocks (`docs/proposals/2026-11-11-home-building-blocks.md`, picture `docs/renders/2026-11-11-home-v3/home-v3-final.png`).
+  - **Setup:** title "Start taking cases" · subtitle "You can add time or stop anytime." · "Quick picks" (the 6 chips) → "Custom" (the approved wheel, always shown) · "Available until {time}" above "Set availability". No range text and no "Minimum 15 minutes": the wheel stops at 15 min and 10 h. Prescriptions today is not on setup; on ended Home (idle-expired, manually ended) it shows as one row above the picker when the count is above 0.
+  - **Available:** title "You can take cases" · subtitle "Request a case now, or whenever you're ready." · one `tm-card` (as on the case page) with two rows of one anatomy (grey icon · 16/24 regular label · L9 value): "Time remaining" with **+ Add time always shown** (compact secondary, like View Rx; greyed offline) on the value line, and "Prescriptions written today", which taps through to Profile (chevron). Replaces A-10 (labels 14 grey) and A-09's "Add time near expiry only".
+  - **10-hour cap in total:** the setup wheel goes 0–10 h (at 10 h minutes 0 only; at 0 h 15/30/45); the add-time wheel tops out at what is left, hint "Up to 10 hours in total"; button "Add 9 h 45 min" (hours and minutes from 60 min up). Replaces D-36's "no maximum".
+  - **Add-time sheet:** title "Add time", the same Quick picks / Custom picker; its error sits in the pinned actions, 16 above Add.
+- **Why:** the old Home's band took ~30 % of the screen, setup had two controls and three competing labels for one value, and "Prescriptions today" read like fine print. Research + two Codex reviews (`docs/renders/2026-11-11-home-blocks-review/`, `2026-11-11-home-v3/`).
+- **Rejected:** a setup bottom sheet (extra tap each session, D-36 still right); "You're taking cases" (reads as a case under way); "Ready to consult?" (question mark, Apurva); showing the 15 min–10 h range.
+
+### D-107 · One band for every screen with the logo — 2026-11-11
+- **Decision (Apurva):** sign-in, OTP, faster sign-in offer, returning unlock and Home share one band: logo 16 from the top (safe area) · **logo → title 16** · title L1 32/40, one line · title → subtitle 8 · subtitle L3 one line (20 box; nothing inside may grow it) · subtitle → panel 32 · panel radius 24, top padding 32. Panel top lands at 173 on every screen. A title carrying a name may wrap to two lines (unlock). Spec and evidence: `docs/renders/2026-11-11-band-audit/CONCLUSION.md`.
+- **Replaces** L6 / D-46 (sign-in and Home 48). **Copy:** offer title "Skip OTPs next time"; Home expired-pending title "Availability ended"; OTP "Change" is an inline link with a 48 hit area that adds no height.
+- **Why:** three band heights (173 / 201–213 / 245) made sibling screens look different.
+
+### D-108 · Spacing is measured on what the eye sees; one screen standard below the band — 2026-11-11
+- **Decision (Apurva):** gaps are measured between **visible** edges (text, shapes, borders), never between layout boxes. Tap areas and reserved message lines may not add visible space.
+  - **8** joins parts of one thing: label ↔ field, field ↔ its helper, a legal line ↔ the button it describes, a picture tile ↔ its caption.
+  - **16** separates items inside one group (chips, points, cards stacked, rows).
+  - **32** separates different things: a field group, an error or notice box, a link line, a button, a hero tile and the content under it.
+  - Notices: a message about one field sits 16 under that field and 32 above the next thing; a message about the whole screen (locked, unavailable) sits at the top of its content or under the thing it blocks, then 32 to the next thing. A notice inside the pinned bar keeps the bar's own spec (16 above its button).
+  - Applied: sign-in field + helper → 32 → Send OTP; sign-in "Couldn't send the OTP." 16 under the field, 32 above Send OTP; OTP code boxes (+ message line) → 32 → "Didn't receive it? Resend" → 32 → legal line → 8 → Verify; OTP locked / expired-limited: boxes → 16 → notice → 32 → Verify; offer hero → 32 → points (16 apart); unlock tile → 16 → caption.
+  - The rest of the screen standard is `docs/renders/2026-11-11-screens-audit/CONCLUSION.md` §1, with these visible-gap values replacing its box values where they differ (e.g. its OTP legal → Verify 16 becomes 8 visible; notice → button 8 becomes 32).
+  - **An automatic check measures visible gaps on every screen and state**; a failing check stops the build.
+- **Why:** both audits passed screens that looked cramped (sign-in) next to screens that looked airy (OTP) because they counted boxes: OTP's visible gaps were 59 / 47 while its box gaps were 8 / 16. Rules written screen by screen ("a notice sits 8 above its button") had no shared principle.
+
+### D-109 · Copy batch, sheet subtitle, unlock prompt on arrival — 2026-11-11
+- **Decision (Apurva, main thread's picks):**
+  1. **Copy:** sign-in helper "We'll send you an OTP by SMS." · sign-in error "Couldn't send the OTP." · add-time sheet title "Add time" · end sheet "You won't get new cases…" · offer point 1 "Sign in with one touch" / "No SMS to wait for." (Face ID "with a glance", screen lock "with your PIN or pattern") · "New code sent." Vocabulary: **OTP** outside the OTP screen, **code** on it; **faster sign-in**; **availability** (window), **time** (length), **case**, **get** (new cases).
+  2. **Sheets:** the subtitle sits 8 under the title inside the sheet header (design-system component).
+  3. **Returning unlock:** the phone's fingerprint / Face ID / screen-lock prompt opens by itself once when the app opens; cancelling shows today's screen; the Unlock button stays for a retry. Amends D-38 / D-105.
+- **Why:** consistent words across the entry screens; a floating sheet subtitle read as content; industry practice (prompt on arrival) saves a tap every open.
+
 ## Design system changes made for this work
 
 ### D-60 · Secondary button without drop shadow (design system) — 2026-10-24 · **REVERTED same day**
