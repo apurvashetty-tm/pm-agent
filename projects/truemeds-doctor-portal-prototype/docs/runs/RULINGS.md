@@ -2,6 +2,13 @@
 
 Every run reads this first. Rulings override briefs where they conflict. Newest at the top.
 
+## 2026-11-11 13:45 — R2-BUILD RESTART: finish, don't start over (main thread)
+- r2-build **stopped at the very end because the Mac lost Wi-Fi** (API unreachable). The build is complete in the working tree but **not committed** (≈ 655 changed files); `REPORT.md` is written except the "Rows" table (`FINAL-CHECKS-TABLE` placeholder).
+- **Do not rebuild.** Keep every change. Do only this:
+  1. **Verify-moves fix (Apurva 13:31: OTP lines may move when a message shows — reading 1 accepted).** When an OTP message appears or disappears while the keyboard is open, re-run the keyboard step that keeps the main button 16 above the keyboard (`app/shell/keyboard.js`: also react to size changes of the screen's content, e.g. a ResizeObserver on the scroll area, not only focus / visualViewport). Same on sign-in errors. Add a test: 360 × 640, keyboard open, wrong code → Verify still ≥ 16 above the keyboard; same for "Couldn't send the OTP." on sign-in.
+  2. Re-run the checks once (T1 gap checker, r2 tests, entry journeys, run-checks, compare, token guard, kit `--check`, PRD check) and fill the **Rows** table in `REPORT.md` (every checklist row ✅ / ❌ with evidence).
+  3. Publish in **two commits** as planned (design-system first, then project), append `DONE r2-build`, stop.
+
 ## 2026-11-11 11:32 — R1 REVIEWED; two answers for r2-build (main thread)
 - **r1-rules accepted.** The checker fails exactly where D-108 names the screens wrong and passes where right.
 - **Half-leading "consequence" failures (r1 note 1): trim, don't excuse.** D-108 measures what the eye sees, so the panel top → first text, field → helper, group label → control and chips → "Custom" gaps must come out at 32 / 8 / 8 / 32 **visible**. On the in-scope screens (entry + Home + their sheets) set the box gaps so the visible result is on spec: use `text-box: trim-both cap alphabetic` on the text styles involved where the capture browser supports it, otherwise a per-style offset token (half-leading of 14/20 and 16/24). Don't rule any of them anatomy. Apply it to the in-scope screens only; the rest of the app is r3's audit.

@@ -10,6 +10,11 @@ D-106–D-109 and the new `design-system/RULES.md` (visible-edge spacing, band s
 ## Screens
 Case page (all states incl. calling, outcomes, closed), Prescribe (all states, medicine overlays), Rx viewer, Profile, every sheet and the calling-flow page — every state in the kit (`handoff/`), 360 × 640 and 390 × 844.
 
+## Open the hidden parts first (Apurva, 13:31)
+Some sections are collapsed by default and a default capture never shows them. Before measuring, **open each one** and capture it at both sizes: Prescribe's **duration picker** (the number + unit chips under "6 months" / Default), the **SOS** section (toggle on, its dose and max chips), "Every X hours" hours, "SOS only" max doses, Order details on the case page, every sheet. Use r2's per-screen regions so the sticky case header and Prescribe-over-case don't count as overlaps.
+
+**Prescribe duration options (Apurva: "margins are non-existent"; "reduce the options, only till 12 or something"; fewer per line).** Today: numbers 1–7, 10, 14, 15 × Days / Weeks / Months, plus Ongoing. Both reviewers propose a reduced set (at most 12 number options, laid out on the 4-column numeric grid with 8 gaps, §9.2) with the clinical reasoning (what durations doctors actually write for 1 day–12 months; Ongoing stays), and render it. This is a **proposal for Apurva**, not a change.
+
 ## Do
 1. **Measure** with run 1's visible-gap checker (`design-system/scripts/`) on every state; reuse r2-build's capture settings. Save the report and the gap pictures.
 2. **Two independent reviews** — `claude-review.md` (you) and `codex-review.md` (Codex, read-only, prompt through stdin, the checker report + pictures attached with `-i`; not your review). Same checklist for both:
