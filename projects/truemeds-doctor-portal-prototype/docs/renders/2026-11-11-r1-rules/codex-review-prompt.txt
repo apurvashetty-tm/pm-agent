@@ -1,0 +1,25 @@
+Read-only review. Write no files. Repo root is the current directory.
+
+You review run r1-rules (rows S1–S7 of projects/truemeds-doctor-portal-prototype/docs/proposals/2026-11-11-release-checklist-2.md) for CORRECTNESS AGAINST THE SPEC ONLY. Skip style.
+
+Spec (read these):
+- projects/truemeds-doctor-portal-prototype/docs/context/decision_log.md: D-107, D-108, D-109 (search "### D-107").
+- projects/truemeds-doctor-portal-prototype/docs/renders/2026-11-11-band-audit/CONCLUSION.md §1 (band spec).
+- projects/truemeds-doctor-portal-prototype/docs/renders/2026-11-11-screens-audit/CONCLUSION.md §1 (screen standard; D-108's visible values replace its box values where they differ).
+- projects/truemeds-doctor-portal-prototype/docs/renders/2026-11-11-r1-rules/TERMINAL-BRIEF.md (the brief).
+
+Work to review:
+1. design-system/RULES.md: §8.3 (new gap rule), §8.13, the new "Entry and home screens" section, L6 in the locked table, §9.1 (.tm-link bullet), §9.4 header row. Use `git diff HEAD -- design-system/RULES.md`.
+2. design-system/src/components.css: `.tm-sheet__heading` (S4) and `.tm-link` (S5). `git diff HEAD -- design-system/src/components.css`.
+3. design-system/scripts/check-visible-gaps.mjs (S6): visible-edge measurement (text ink trimmed to cap height / descender line from Range rects; painted shapes; svg/img bounds), rows, D-108 pair rules (DEFAULT_ROLES, D108_RULES), tolerance ±2, edge gap, report + picture. Tests: design-system/scripts/tests/*.mjs.
+4. projects/truemeds-doctor-portal-prototype/ui-screens/feedback/check-locked-specs.py: L6 now 16 on every logo screen.
+5. design-system/beyond-salt.md (S7).
+6. The dry run: projects/truemeds-doctor-portal-prototype/docs/renders/2026-11-11-r1-rules/dry-run.config.json and dry-run/visible-gaps.json. The brief says the checker SHOULD fail where D-108 says the screens are wrong (e.g. sign-in helper → Send OTP 16, OTP boxes → locked notice 8) and pass where they are right.
+
+Questions to answer:
+- Does any rule text contradict D-107 / D-108 / D-109, or keep a value they replaced (48 hero gap, notice → button 8, consent → Verify 16, "Minimum 15 minutes")?
+- Does the checker measure visible edges as D-108 defines them? Any case where a tap area or reserved line still adds a visible edge, or where a real visible edge is missed?
+- Are the D108_RULES pairs right (values and first-match order)? Any pair that would pass a gap D-108 calls wrong, or fail one it calls right?
+- Does the dry run's pass / fail match D-108 for each named case?
+
+Output: BLOCKERS, SHOULD-FIX, NICE-TO-HAVE, each item with file:line and the spec line it fails. Be brief.

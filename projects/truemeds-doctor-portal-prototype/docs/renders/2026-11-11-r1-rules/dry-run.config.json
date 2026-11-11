@@ -1,0 +1,52 @@
+{
+ "note": "Dry run of the visible-gap checker (S6) on today's approved entry screens and Home v3. Read-only: pages are loaded with ?capture= / file URLs; nothing in ui-screens/ changes. 'roles' maps the approved pages' local classes onto the D-108 roles (the design-system defaults cover the .tm-* classes).",
+ "viewports": ["390x844", "360x640"],
+ "ignore": [".login-keyboard", ".kbd", ".review-controls", ".review", ".sr-only", ".visually-hidden"],
+ "atomic": [".tm-otp-slots", ".wheel"],
+ "roles": {
+  "legal": ".consent",
+  "linkLine": ".rs",
+  "tile": ".hero-ic, .prompt-icon",
+  "caption": "#ready",
+  "groupLabel": ".lbl",
+  "pointTitle": ".pt-t",
+  "pointLine": ".pt-d"
+ },
+ "rules": [
+  { "above": ".cols", "below": ".wheel", "gap": 4, "box": true, "kind": "anatomy", "note": "wheel column heads 4 (component)" }
+ ],
+ "pages": [
+  { "name": "sign-in/default", "url": "../../../ui-screens/sign-in/sign-in.html?capture=default", "root": "#doctor-login-preview .login-phone",
+    "regions": [{ "name": "panel", "selector": ".login-fields", "edgeTop": true }] },
+  { "name": "sign-in/couldnt-send", "url": "../../../ui-screens/sign-in/sign-in.html?capture=couldnt-send", "root": "#doctor-login-preview .login-phone",
+    "regions": [{ "name": "panel", "selector": ".login-fields", "edgeTop": true }] },
+  { "name": "otp/default", "url": "../../../ui-screens/otp/otp.html?capture=default", "root": ".screen",
+    "regions": [{ "name": "panel", "selector": ".panel", "edgeTop": true }] },
+  { "name": "otp/wrong-code", "url": "../../../ui-screens/otp/otp.html?capture=wrong-code", "root": ".screen",
+    "regions": [{ "name": "panel", "selector": ".panel", "edgeTop": true }] },
+  { "name": "otp/locked", "url": "../../../ui-screens/otp/otp.html?capture=locked", "root": ".screen",
+    "regions": [{ "name": "panel", "selector": ".panel", "edgeTop": true }] },
+  { "name": "otp/expired-and-resend-limited", "url": "../../../ui-screens/otp/otp.html?capture=expired-and-resend-limited", "root": ".screen",
+    "regions": [{ "name": "panel", "selector": ".panel", "edgeTop": true }] },
+  { "name": "offer/fingerprint", "url": "../../../ui-screens/faster-signin-offer/faster-signin-offer.html?capture=fingerprint", "root": ".screen",
+    "regions": [{ "name": "panel", "selector": ".panel", "edgeTop": true }, { "name": "bar", "selector": ".tm-actionbar" }] },
+  { "name": "offer/enable-failed", "url": "../../../ui-screens/faster-signin-offer/faster-signin-offer.html?capture=enable-failed", "root": ".screen",
+    "regions": [{ "name": "panel", "selector": ".panel", "edgeTop": true }, { "name": "bar", "selector": ".tm-actionbar" }] },
+  { "name": "unlock/fingerprint", "url": "../../../ui-screens/returning-unlock/returning-unlock.html?capture=fingerprint", "root": ".screen",
+    "regions": [{ "name": "panel", "selector": ".panel", "edgeTop": true }, { "name": "bar", "selector": ".tm-actionbar" }] },
+  { "name": "unlock/unavailable", "url": "../../../ui-screens/returning-unlock/returning-unlock.html?capture=unavailable", "root": ".screen",
+    "regions": [{ "name": "panel", "selector": ".panel", "edgeTop": true }, { "name": "bar", "selector": ".tm-actionbar" }] },
+  { "name": "home-v3/setup@390", "url": "../2026-11-11-home-v3/home-v3.html", "viewport": "1700x920",
+    "prepare": "document.querySelectorAll('.frame').forEach((f, j) => f.id = 'f' + j)", "root": "#f0",
+    "regions": [{ "name": "panel", "selector": ".panel", "edgeTop": true }, { "name": "bar", "selector": ".tm-actionbar" }] },
+  { "name": "home-v3/available@390", "url": "../2026-11-11-home-v3/home-v3.html", "viewport": "1700x920",
+    "prepare": "document.querySelectorAll('.frame').forEach((f, j) => f.id = 'f' + j)", "root": "#f1",
+    "regions": [{ "name": "panel", "selector": ".panel", "edgeTop": true }, { "name": "bar", "selector": ".tm-actionbar" }] },
+  { "name": "home-v3/setup@360", "url": "../2026-11-11-home-v3/home-v3.html", "viewport": "1700x920",
+    "prepare": "document.querySelectorAll('.frame').forEach((f, j) => f.id = 'f' + j)", "root": "#f2",
+    "regions": [{ "name": "panel", "selector": ".panel", "edgeTop": true }, { "name": "bar", "selector": ".tm-actionbar" }] },
+  { "name": "home-v3/available@360", "url": "../2026-11-11-home-v3/home-v3.html", "viewport": "1700x920",
+    "prepare": "document.querySelectorAll('.frame').forEach((f, j) => f.id = 'f' + j)", "root": "#f3",
+    "regions": [{ "name": "panel", "selector": ".panel", "edgeTop": true }, { "name": "bar", "selector": ".tm-actionbar" }] }
+ ]
+}

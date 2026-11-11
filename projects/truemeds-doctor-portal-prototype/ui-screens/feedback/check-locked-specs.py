@@ -1,5 +1,5 @@
 import os
-"""Regression guard for the LOCKED layout specs (D-46, L1–L6).
+"""Regression guard for the LOCKED layout specs (D-46, L1–L6; L6 = logo → title 16 since D-107, 2026-11-11).
 
 Reads computed styles from the real HTML (file://) in every state and exits 1 on any violation.
 A failed guard = open blocker. Run from the project root:
@@ -135,12 +135,19 @@ def check_clip(page, tag, errs):
     for b in bad:
         errs.append(f"{tag}: helper text clipped by the scroll area: '{b}'")
 
+def check_l6(page, tag, errs):
+    """L6 (D-107): logo → title 16 on every screen with the logo (sign-in, OTP, offer, unlock use .login-logo)."""
+    g = page.evaluate("""() => { const l = document.querySelector('.login-logo'); const h = document.querySelector('h1');
+      return l && h ? Math.round(h.getBoundingClientRect().top - l.getBoundingClientRect().bottom) : null; }""")
+    if g is not None and g != 16: errs.append(f'{tag}: L6 logo-to-title gap {g}px != 16px (D-107, every screen with the logo)')
+
 def check_otp(page, state, errs):
     page.goto(OTP.as_uri() + f'?capture={state}')
     page.wait_for_timeout(120)
     m = page.evaluate(OTP_JS)
     tag = f'otp/{state}'
     check_titles(page, tag, errs)
+    check_l6(page, tag, errs)
     if m['helperFs'] is not None: pass
     for i, s in enumerate(m['slots']):
         if PX(s['w']) != 56 or PX(s['h']) != 56: errs.append(f'{tag}: L1 slot {i} size {s["w"]}x{s["h"]} != 56x56')
@@ -166,7 +173,7 @@ def check_sign(page, state, errs):
     m = page.evaluate(SIGN_JS)
     tag = f'sign-in/{state}'
     check_titles(page, tag, errs)
-    if m['logoToTitle'] != 48: errs.append(f'{tag}: L6 logo-to-title gap {m["logoToTitle"]}px != 48px (padding {m["heroPad"]})')
+    if m['logoToTitle'] != 16: errs.append(f'{tag}: L6 logo-to-title gap {m["logoToTitle"]}px != 16px (D-107, every screen with the logo; padding {m["heroPad"]})')
     if PX(m['helperFs']) != 14: errs.append(f'{tag}: L4 helper {m["helperFs"]} != 14px')
     if m['noticeFs'] is not None and PX(m['noticeFs']) != 14: errs.append(f'{tag}: L5 notice {m["noticeFs"]} != 14px')
     if state == 'sending':
@@ -226,7 +233,7 @@ def check_home(page, state, errs):
         if w['bandBg'] != w['brandSubtle']: errs.append(f"{tag}: wheel band {w['bandBg']} is not the brand-subtle token {w['brandSubtle']} (D-40 approved wheel)")
         if w['selColor'] != w['brandText']: errs.append(f"{tag}: wheel selected value {w['selColor']} is not the brand text token {w['brandText']}")
         if w['greyBoxes']: errs.append(f"{tag}: {w['greyBoxes']} grey column box(es) behind the wheel (approved wheel has none)")
-    if gap['logoToTitle'] is not None and gap['logoToTitle'] != 48: errs.append(f'{tag}: L6 logo-to-title gap {gap["logoToTitle"]}px != 48px (home-base hero gap)')
+    if gap['logoToTitle'] is not None and gap['logoToTitle'] != 16: errs.append(f'{tag}: L6 logo-to-title gap {gap["logoToTitle"]}px != 16px (D-107, every screen with the logo)')
     if gap['footerInside'] is False: errs.append(f'{tag}: pinned footer outside the frame')   # Round 4 item 1: test is 'inside the frame', bar may sit on its bottom edge
 
 UNLOCK = SCREENS / 'returning-unlock' / 'returning-unlock.html'
@@ -239,6 +246,7 @@ def check_unlock_offer(page, errs):
         page.goto(UNLOCK.as_uri() + f'?capture={state}'); page.wait_for_timeout(120)
         tag = f'unlock/{state}'
         check_titles(page, tag, errs)
+        check_l6(page, tag, errs)
         if page.evaluate("() => !!document.querySelector('.back')"): errs.append(f'{tag}: Back present; returning unlock has no Back (D-47)')
         if state == 'pending' and 'tm-btn--busy' not in page.evaluate("() => document.getElementById('unlock-action').className"):
             errs.append(f'{tag}: L2 loading primary missing busy class')
@@ -246,6 +254,7 @@ def check_unlock_offer(page, errs):
         page.goto(OFFER.as_uri() + f'?capture={state}'); page.wait_for_timeout(120)
         tag = f'offer/{state}'
         check_titles(page, tag, errs)
+        check_l6(page, tag, errs)
         if page.evaluate("() => !!document.querySelector('.back')"): errs.append(f'{tag}: Back present; offer has no Back (D-47)')
         icon_col = page.evaluate("() => getComputedStyle(document.querySelector('.points .tm-icon')).color")
         if icon_col.startswith('rgb(37') or icon_col.startswith('rgb(38'): errs.append(f'{tag}: reassurance icons are blue (RULES §8.11, neutral grey required)')

@@ -1,0 +1,3882 @@
+{
+ "checker": "design-system/scripts/check-visible-gaps.mjs",
+ "rule": "D-108 / RULES §8.3",
+ "allowed": [
+  8,
+  16,
+  32
+ ],
+ "tolerance": 2,
+ "pages": [
+  {
+   "name": "sign-in/default",
+   "size": "390x844",
+   "url": "../../../ui-screens/sign-in/sign-in.html?capture=default",
+   "picture": "sign-in_default_390x844.png",
+   "errors": [],
+   "pass": false,
+   "failures": 3,
+   "regions": [
+    {
+     "name": "panel",
+     "rows": [
+      {
+       "top": 242.3,
+       "bottom": 255.8,
+       "units": [
+        {
+         "label": "Mobile number",
+         "kind": "text",
+         "sel": "label.tm-field__label",
+         "top": 242.3,
+         "bottom": 255.8,
+         "left": 16,
+         "right": 116.9
+        }
+       ]
+      },
+      {
+       "top": 264.7,
+       "bottom": 314.7,
+       "units": [
+        {
+         "label": "+91",
+         "kind": "paint",
+         "sel": "div.tm-field__control",
+         "top": 264.7,
+         "bottom": 314.7,
+         "left": 16,
+         "right": 374
+        }
+       ]
+      },
+      {
+       "top": 328.3,
+       "bottom": 341.8,
+       "units": [
+        {
+         "label": "We’ll send you a verification code by SMS.",
+         "kind": "text",
+         "sel": "div#tm-login-helper.tm-field__helper",
+         "top": 328.3,
+         "bottom": 341.8,
+         "left": 16,
+         "right": 290.1
+        }
+       ]
+      },
+      {
+       "top": 358.7,
+       "bottom": 414.7,
+       "units": [
+        {
+         "label": "Send OTP",
+         "kind": "paint",
+         "sel": "button.tm-btn.tm-btn--primary.tm-btn--lg",
+         "top": 358.7,
+         "bottom": 414.7,
+         "left": 16,
+         "right": 374
+        }
+       ]
+      }
+     ],
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "Mobile number",
+       "px": 37.6,
+       "expected": 32,
+       "pass": false,
+       "rule": "edge",
+       "note": "content starts this far below the region top",
+       "y1": 204.7,
+       "y2": 242.3,
+       "x1": 16,
+       "x2": 116.9
+      },
+      {
+       "above": "Mobile number",
+       "below": "+91",
+       "px": 8.9,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair",
+       "note": "label ↔ field",
+       "y1": 255.8,
+       "y2": 264.7,
+       "x1": 16,
+       "x2": 116.9
+      },
+      {
+       "above": "+91",
+       "below": "We’ll send you a verification code by SMS.",
+       "px": 13.6,
+       "expected": 8,
+       "pass": false,
+       "rule": "pair",
+       "note": "field ↔ its helper / message line",
+       "y1": 314.7,
+       "y2": 328.3,
+       "x1": 16,
+       "x2": 290.1
+      },
+      {
+       "above": "We’ll send you a verification code by SMS.",
+       "below": "Send OTP",
+       "px": 16.9,
+       "expected": 32,
+       "pass": false,
+       "rule": "pair",
+       "note": "different thing → a button",
+       "y1": 341.8,
+       "y2": 358.7,
+       "x1": 16,
+       "x2": 290.1
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "sign-in/default",
+   "size": "360x640",
+   "url": "../../../ui-screens/sign-in/sign-in.html?capture=default",
+   "picture": "sign-in_default_360x640.png",
+   "errors": [],
+   "pass": false,
+   "failures": 3,
+   "regions": [
+    {
+     "name": "panel",
+     "rows": [
+      {
+       "top": 242.3,
+       "bottom": 255.8,
+       "units": [
+        {
+         "label": "Mobile number",
+         "kind": "text",
+         "sel": "label.tm-field__label",
+         "top": 242.3,
+         "bottom": 255.8,
+         "left": 16,
+         "right": 116.9
+        }
+       ]
+      },
+      {
+       "top": 264.7,
+       "bottom": 314.7,
+       "units": [
+        {
+         "label": "+91",
+         "kind": "paint",
+         "sel": "div.tm-field__control",
+         "top": 264.7,
+         "bottom": 314.7,
+         "left": 16,
+         "right": 344
+        }
+       ]
+      },
+      {
+       "top": 328.3,
+       "bottom": 341.8,
+       "units": [
+        {
+         "label": "We’ll send you a verification code by SMS.",
+         "kind": "text",
+         "sel": "div#tm-login-helper.tm-field__helper",
+         "top": 328.3,
+         "bottom": 341.8,
+         "left": 16,
+         "right": 290.1
+        }
+       ]
+      },
+      {
+       "top": 358.7,
+       "bottom": 414.7,
+       "units": [
+        {
+         "label": "Send OTP",
+         "kind": "paint",
+         "sel": "button.tm-btn.tm-btn--primary.tm-btn--lg",
+         "top": 358.7,
+         "bottom": 414.7,
+         "left": 16,
+         "right": 344
+        }
+       ]
+      }
+     ],
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "Mobile number",
+       "px": 37.6,
+       "expected": 32,
+       "pass": false,
+       "rule": "edge",
+       "note": "content starts this far below the region top",
+       "y1": 204.7,
+       "y2": 242.3,
+       "x1": 16,
+       "x2": 116.9
+      },
+      {
+       "above": "Mobile number",
+       "below": "+91",
+       "px": 8.9,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair",
+       "note": "label ↔ field",
+       "y1": 255.8,
+       "y2": 264.7,
+       "x1": 16,
+       "x2": 116.9
+      },
+      {
+       "above": "+91",
+       "below": "We’ll send you a verification code by SMS.",
+       "px": 13.6,
+       "expected": 8,
+       "pass": false,
+       "rule": "pair",
+       "note": "field ↔ its helper / message line",
+       "y1": 314.7,
+       "y2": 328.3,
+       "x1": 16,
+       "x2": 290.1
+      },
+      {
+       "above": "We’ll send you a verification code by SMS.",
+       "below": "Send OTP",
+       "px": 16.9,
+       "expected": 32,
+       "pass": false,
+       "rule": "pair",
+       "note": "different thing → a button",
+       "y1": 341.8,
+       "y2": 358.7,
+       "x1": 16,
+       "x2": 290.1
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "sign-in/couldnt-send",
+   "size": "390x844",
+   "url": "../../../ui-screens/sign-in/sign-in.html?capture=couldnt-send",
+   "picture": "sign-in_couldnt-send_390x844.png",
+   "errors": [],
+   "pass": false,
+   "failures": 2,
+   "regions": [
+    {
+     "name": "panel",
+     "rows": [
+      {
+       "top": 242.3,
+       "bottom": 255.8,
+       "units": [
+        {
+         "label": "Mobile number",
+         "kind": "text",
+         "sel": "label.tm-field__label",
+         "top": 242.3,
+         "bottom": 255.8,
+         "left": 16,
+         "right": 116.9
+        }
+       ]
+      },
+      {
+       "top": 264.7,
+       "bottom": 314.7,
+       "units": [
+        {
+         "label": "+91",
+         "kind": "paint",
+         "sel": "div.tm-field__control",
+         "top": 264.7,
+         "bottom": 314.7,
+         "left": 16,
+         "right": 374
+        }
+       ]
+      },
+      {
+       "top": 330.7,
+       "bottom": 376.7,
+       "units": [
+        {
+         "label": "Couldn’t send the code.",
+         "kind": "paint",
+         "sel": "div#tm-login-send-error-notice.tm-notice.login-notice.tm-notice--error",
+         "top": 330.7,
+         "bottom": 376.7,
+         "left": 16,
+         "right": 374
+        }
+       ]
+      },
+      {
+       "top": 392.7,
+       "bottom": 448.7,
+       "units": [
+        {
+         "label": "Send OTP",
+         "kind": "paint",
+         "sel": "button.tm-btn.tm-btn--primary.tm-btn--lg",
+         "top": 392.7,
+         "bottom": 448.7,
+         "left": 16,
+         "right": 374
+        }
+       ]
+      }
+     ],
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "Mobile number",
+       "px": 37.6,
+       "expected": 32,
+       "pass": false,
+       "rule": "edge",
+       "note": "content starts this far below the region top",
+       "y1": 204.7,
+       "y2": 242.3,
+       "x1": 16,
+       "x2": 116.9
+      },
+      {
+       "above": "Mobile number",
+       "below": "+91",
+       "px": 8.9,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair",
+       "note": "label ↔ field",
+       "y1": 255.8,
+       "y2": 264.7,
+       "x1": 16,
+       "x2": 116.9
+      },
+      {
+       "above": "+91",
+       "below": "Couldn’t send the code.",
+       "px": 16,
+       "expected": 16,
+       "pass": true,
+       "rule": "pair",
+       "note": "a message about one field: 16 under it",
+       "y1": 314.7,
+       "y2": 330.7,
+       "x1": 16,
+       "x2": 374
+      },
+      {
+       "above": "Couldn’t send the code.",
+       "below": "Send OTP",
+       "px": 16,
+       "expected": 32,
+       "pass": false,
+       "rule": "pair",
+       "note": "notice → the next thing",
+       "y1": 376.7,
+       "y2": 392.7,
+       "x1": 16,
+       "x2": 374
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "sign-in/couldnt-send",
+   "size": "360x640",
+   "url": "../../../ui-screens/sign-in/sign-in.html?capture=couldnt-send",
+   "picture": "sign-in_couldnt-send_360x640.png",
+   "errors": [],
+   "pass": false,
+   "failures": 2,
+   "regions": [
+    {
+     "name": "panel",
+     "rows": [
+      {
+       "top": 242.3,
+       "bottom": 255.8,
+       "units": [
+        {
+         "label": "Mobile number",
+         "kind": "text",
+         "sel": "label.tm-field__label",
+         "top": 242.3,
+         "bottom": 255.8,
+         "left": 16,
+         "right": 116.9
+        }
+       ]
+      },
+      {
+       "top": 264.7,
+       "bottom": 314.7,
+       "units": [
+        {
+         "label": "+91",
+         "kind": "paint",
+         "sel": "div.tm-field__control",
+         "top": 264.7,
+         "bottom": 314.7,
+         "left": 16,
+         "right": 344
+        }
+       ]
+      },
+      {
+       "top": 330.7,
+       "bottom": 376.7,
+       "units": [
+        {
+         "label": "Couldn’t send the code.",
+         "kind": "paint",
+         "sel": "div#tm-login-send-error-notice.tm-notice.login-notice.tm-notice--error",
+         "top": 330.7,
+         "bottom": 376.7,
+         "left": 16,
+         "right": 344
+        }
+       ]
+      },
+      {
+       "top": 392.7,
+       "bottom": 448.7,
+       "units": [
+        {
+         "label": "Send OTP",
+         "kind": "paint",
+         "sel": "button.tm-btn.tm-btn--primary.tm-btn--lg",
+         "top": 392.7,
+         "bottom": 448.7,
+         "left": 16,
+         "right": 344
+        }
+       ]
+      }
+     ],
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "Mobile number",
+       "px": 37.6,
+       "expected": 32,
+       "pass": false,
+       "rule": "edge",
+       "note": "content starts this far below the region top",
+       "y1": 204.7,
+       "y2": 242.3,
+       "x1": 16,
+       "x2": 116.9
+      },
+      {
+       "above": "Mobile number",
+       "below": "+91",
+       "px": 8.9,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair",
+       "note": "label ↔ field",
+       "y1": 255.8,
+       "y2": 264.7,
+       "x1": 16,
+       "x2": 116.9
+      },
+      {
+       "above": "+91",
+       "below": "Couldn’t send the code.",
+       "px": 16,
+       "expected": 16,
+       "pass": true,
+       "rule": "pair",
+       "note": "a message about one field: 16 under it",
+       "y1": 314.7,
+       "y2": 330.7,
+       "x1": 16,
+       "x2": 344
+      },
+      {
+       "above": "Couldn’t send the code.",
+       "below": "Send OTP",
+       "px": 16,
+       "expected": 32,
+       "pass": false,
+       "rule": "pair",
+       "note": "notice → the next thing",
+       "y1": 376.7,
+       "y2": 392.7,
+       "x1": 16,
+       "x2": 344
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "otp/default",
+   "size": "390x844",
+   "url": "../../../ui-screens/otp/otp.html?capture=default",
+   "picture": "otp_default_390x844.png",
+   "errors": [],
+   "pass": false,
+   "failures": 3,
+   "regions": [
+    {
+     "name": "panel",
+     "rows": [
+      {
+       "top": 232.7,
+       "bottom": 288.7,
+       "units": [
+        {
+         "label": "div.tm-otp-slots",
+         "kind": "paint",
+         "sel": "div#slots.tm-otp-slots",
+         "top": 232.7,
+         "bottom": 288.7,
+         "left": 71,
+         "right": 319
+        }
+       ]
+      },
+      {
+       "top": 352.3,
+       "bottom": 365.8,
+       "units": [
+        {
+         "label": "Didn’t receive it? Resend in 0:30",
+         "kind": "text",
+         "sel": "p#rs.rs",
+         "top": 352.3,
+         "bottom": 365.8,
+         "left": 90.7,
+         "right": 299.3
+        }
+       ]
+      },
+      {
+       "top": 415.8,
+       "bottom": 443.4,
+       "units": [
+        {
+         "label": "By selecting Verify & sign in, you agree to the ",
+         "kind": "text",
+         "sel": "p#consent.consent.tm-text-body-sm.show",
+         "top": 415.8,
+         "bottom": 443.4,
+         "left": 34,
+         "right": 356
+        }
+       ]
+      },
+      {
+       "top": 476.7,
+       "bottom": 532.7,
+       "units": [
+        {
+         "label": "Verify & sign in",
+         "kind": "paint",
+         "sel": "button#b.tm-btn.tm-btn--lg.tm-btn--primary",
+         "top": 476.7,
+         "bottom": 532.7,
+         "left": 16,
+         "right": 374
+        }
+       ]
+      }
+     ],
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "div.tm-otp-slots",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge",
+       "note": "content starts this far below the region top",
+       "y1": 200.7,
+       "y2": 232.7,
+       "x1": 71,
+       "x2": 319
+      },
+      {
+       "above": "div.tm-otp-slots",
+       "below": "Didn’t receive it? Resend in 0:30",
+       "px": 63.6,
+       "expected": 32,
+       "pass": false,
+       "rule": "pair",
+       "note": "different thing → a link line",
+       "y1": 288.7,
+       "y2": 352.3,
+       "x1": 90.7,
+       "x2": 299.3
+      },
+      {
+       "above": "Didn’t receive it? Resend in 0:30",
+       "below": "By selecting Verify & sign in, you agree to the ",
+       "px": 50,
+       "expected": 32,
+       "pass": false,
+       "rule": "pair",
+       "note": "link line → the next thing",
+       "y1": 365.8,
+       "y2": 415.8,
+       "x1": 90.7,
+       "x2": 299.3
+      },
+      {
+       "above": "By selecting Verify & sign in, you agree to the ",
+       "below": "Verify & sign in",
+       "px": 33.3,
+       "expected": 8,
+       "pass": false,
+       "rule": "pair",
+       "note": "legal line ↔ the button it describes",
+       "y1": 443.4,
+       "y2": 476.7,
+       "x1": 34,
+       "x2": 356
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "otp/default",
+   "size": "360x640",
+   "url": "../../../ui-screens/otp/otp.html?capture=default",
+   "picture": "otp_default_360x640.png",
+   "errors": [],
+   "pass": false,
+   "failures": 3,
+   "regions": [
+    {
+     "name": "panel",
+     "rows": [
+      {
+       "top": 232.7,
+       "bottom": 288.7,
+       "units": [
+        {
+         "label": "div.tm-otp-slots",
+         "kind": "paint",
+         "sel": "div#slots.tm-otp-slots",
+         "top": 232.7,
+         "bottom": 288.7,
+         "left": 56,
+         "right": 304
+        }
+       ]
+      },
+      {
+       "top": 352.3,
+       "bottom": 365.8,
+       "units": [
+        {
+         "label": "Didn’t receive it? Resend in 0:30",
+         "kind": "text",
+         "sel": "p#rs.rs",
+         "top": 352.3,
+         "bottom": 365.8,
+         "left": 75.7,
+         "right": 284.3
+        }
+       ]
+      },
+      {
+       "top": 415.8,
+       "bottom": 443.4,
+       "units": [
+        {
+         "label": "By selecting Verify & sign in, you agree to the ",
+         "kind": "text",
+         "sel": "p#consent.consent.tm-text-body-sm.show",
+         "top": 415.8,
+         "bottom": 443.4,
+         "left": 19,
+         "right": 341
+        }
+       ]
+      },
+      {
+       "top": 476.7,
+       "bottom": 532.7,
+       "units": [
+        {
+         "label": "Verify & sign in",
+         "kind": "paint",
+         "sel": "button#b.tm-btn.tm-btn--lg.tm-btn--primary",
+         "top": 476.7,
+         "bottom": 532.7,
+         "left": 16,
+         "right": 344
+        }
+       ]
+      }
+     ],
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "div.tm-otp-slots",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge",
+       "note": "content starts this far below the region top",
+       "y1": 200.7,
+       "y2": 232.7,
+       "x1": 56,
+       "x2": 304
+      },
+      {
+       "above": "div.tm-otp-slots",
+       "below": "Didn’t receive it? Resend in 0:30",
+       "px": 63.6,
+       "expected": 32,
+       "pass": false,
+       "rule": "pair",
+       "note": "different thing → a link line",
+       "y1": 288.7,
+       "y2": 352.3,
+       "x1": 75.7,
+       "x2": 284.3
+      },
+      {
+       "above": "Didn’t receive it? Resend in 0:30",
+       "below": "By selecting Verify & sign in, you agree to the ",
+       "px": 50,
+       "expected": 32,
+       "pass": false,
+       "rule": "pair",
+       "note": "link line → the next thing",
+       "y1": 365.8,
+       "y2": 415.8,
+       "x1": 75.7,
+       "x2": 284.3
+      },
+      {
+       "above": "By selecting Verify & sign in, you agree to the ",
+       "below": "Verify & sign in",
+       "px": 33.3,
+       "expected": 8,
+       "pass": false,
+       "rule": "pair",
+       "note": "legal line ↔ the button it describes",
+       "y1": 443.4,
+       "y2": 476.7,
+       "x1": 19,
+       "x2": 341
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "otp/wrong-code",
+   "size": "390x844",
+   "url": "../../../ui-screens/otp/otp.html?capture=wrong-code",
+   "picture": "otp_wrong-code_390x844.png",
+   "errors": [],
+   "pass": false,
+   "failures": 4,
+   "regions": [
+    {
+     "name": "panel",
+     "rows": [
+      {
+       "top": 232.7,
+       "bottom": 288.7,
+       "units": [
+        {
+         "label": "4 8 2 7",
+         "kind": "paint",
+         "sel": "div#slots.tm-otp-slots",
+         "top": 232.7,
+         "bottom": 288.7,
+         "left": 71,
+         "right": 319
+        }
+       ]
+      },
+      {
+       "top": 302.3,
+       "bottom": 315.8,
+       "units": [
+        {
+         "label": "Wrong code.",
+         "kind": "text",
+         "sel": "div#h.tm-field__helper",
+         "top": 302.3,
+         "bottom": 315.8,
+         "left": 151.8,
+         "right": 238.2
+        }
+       ]
+      },
+      {
+       "top": 352.3,
+       "bottom": 365.8,
+       "units": [
+        {
+         "label": "Didn’t receive it? Resend in 0:30",
+         "kind": "text",
+         "sel": "p#rs.rs",
+         "top": 352.3,
+         "bottom": 365.8,
+         "left": 90.7,
+         "right": 299.3
+        }
+       ]
+      },
+      {
+       "top": 415.8,
+       "bottom": 443.4,
+       "units": [
+        {
+         "label": "By selecting Verify & sign in, you agree to the ",
+         "kind": "text",
+         "sel": "p#consent.consent.tm-text-body-sm.show",
+         "top": 415.8,
+         "bottom": 443.4,
+         "left": 34,
+         "right": 356
+        }
+       ]
+      },
+      {
+       "top": 476.7,
+       "bottom": 532.7,
+       "units": [
+        {
+         "label": "Verify & sign in",
+         "kind": "paint",
+         "sel": "button#b.tm-btn.tm-btn--lg.tm-btn--primary",
+         "top": 476.7,
+         "bottom": 532.7,
+         "left": 16,
+         "right": 374
+        }
+       ]
+      }
+     ],
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "4 8 2 7",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge",
+       "note": "content starts this far below the region top",
+       "y1": 200.7,
+       "y2": 232.7,
+       "x1": 71,
+       "x2": 319
+      },
+      {
+       "above": "4 8 2 7",
+       "below": "Wrong code.",
+       "px": 13.6,
+       "expected": 8,
+       "pass": false,
+       "rule": "pair",
+       "note": "field ↔ its helper / message line",
+       "y1": 288.7,
+       "y2": 302.3,
+       "x1": 151.8,
+       "x2": 238.2
+      },
+      {
+       "above": "Wrong code.",
+       "below": "Didn’t receive it? Resend in 0:30",
+       "px": 36.5,
+       "expected": 32,
+       "pass": false,
+       "rule": "pair",
+       "note": "different thing → a link line",
+       "y1": 315.8,
+       "y2": 352.3,
+       "x1": 151.8,
+       "x2": 238.2
+      },
+      {
+       "above": "Didn’t receive it? Resend in 0:30",
+       "below": "By selecting Verify & sign in, you agree to the ",
+       "px": 50,
+       "expected": 32,
+       "pass": false,
+       "rule": "pair",
+       "note": "link line → the next thing",
+       "y1": 365.8,
+       "y2": 415.8,
+       "x1": 90.7,
+       "x2": 299.3
+      },
+      {
+       "above": "By selecting Verify & sign in, you agree to the ",
+       "below": "Verify & sign in",
+       "px": 33.3,
+       "expected": 8,
+       "pass": false,
+       "rule": "pair",
+       "note": "legal line ↔ the button it describes",
+       "y1": 443.4,
+       "y2": 476.7,
+       "x1": 34,
+       "x2": 356
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "otp/wrong-code",
+   "size": "360x640",
+   "url": "../../../ui-screens/otp/otp.html?capture=wrong-code",
+   "picture": "otp_wrong-code_360x640.png",
+   "errors": [],
+   "pass": false,
+   "failures": 4,
+   "regions": [
+    {
+     "name": "panel",
+     "rows": [
+      {
+       "top": 232.7,
+       "bottom": 288.7,
+       "units": [
+        {
+         "label": "4 8 2 7",
+         "kind": "paint",
+         "sel": "div#slots.tm-otp-slots",
+         "top": 232.7,
+         "bottom": 288.7,
+         "left": 56,
+         "right": 304
+        }
+       ]
+      },
+      {
+       "top": 302.3,
+       "bottom": 315.8,
+       "units": [
+        {
+         "label": "Wrong code.",
+         "kind": "text",
+         "sel": "div#h.tm-field__helper",
+         "top": 302.3,
+         "bottom": 315.8,
+         "left": 136.8,
+         "right": 223.2
+        }
+       ]
+      },
+      {
+       "top": 352.3,
+       "bottom": 365.8,
+       "units": [
+        {
+         "label": "Didn’t receive it? Resend in 0:30",
+         "kind": "text",
+         "sel": "p#rs.rs",
+         "top": 352.3,
+         "bottom": 365.8,
+         "left": 75.7,
+         "right": 284.3
+        }
+       ]
+      },
+      {
+       "top": 415.8,
+       "bottom": 443.4,
+       "units": [
+        {
+         "label": "By selecting Verify & sign in, you agree to the ",
+         "kind": "text",
+         "sel": "p#consent.consent.tm-text-body-sm.show",
+         "top": 415.8,
+         "bottom": 443.4,
+         "left": 19,
+         "right": 341
+        }
+       ]
+      },
+      {
+       "top": 476.7,
+       "bottom": 532.7,
+       "units": [
+        {
+         "label": "Verify & sign in",
+         "kind": "paint",
+         "sel": "button#b.tm-btn.tm-btn--lg.tm-btn--primary",
+         "top": 476.7,
+         "bottom": 532.7,
+         "left": 16,
+         "right": 344
+        }
+       ]
+      }
+     ],
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "4 8 2 7",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge",
+       "note": "content starts this far below the region top",
+       "y1": 200.7,
+       "y2": 232.7,
+       "x1": 56,
+       "x2": 304
+      },
+      {
+       "above": "4 8 2 7",
+       "below": "Wrong code.",
+       "px": 13.6,
+       "expected": 8,
+       "pass": false,
+       "rule": "pair",
+       "note": "field ↔ its helper / message line",
+       "y1": 288.7,
+       "y2": 302.3,
+       "x1": 136.8,
+       "x2": 223.2
+      },
+      {
+       "above": "Wrong code.",
+       "below": "Didn’t receive it? Resend in 0:30",
+       "px": 36.5,
+       "expected": 32,
+       "pass": false,
+       "rule": "pair",
+       "note": "different thing → a link line",
+       "y1": 315.8,
+       "y2": 352.3,
+       "x1": 136.8,
+       "x2": 223.2
+      },
+      {
+       "above": "Didn’t receive it? Resend in 0:30",
+       "below": "By selecting Verify & sign in, you agree to the ",
+       "px": 50,
+       "expected": 32,
+       "pass": false,
+       "rule": "pair",
+       "note": "link line → the next thing",
+       "y1": 365.8,
+       "y2": 415.8,
+       "x1": 75.7,
+       "x2": 284.3
+      },
+      {
+       "above": "By selecting Verify & sign in, you agree to the ",
+       "below": "Verify & sign in",
+       "px": 33.3,
+       "expected": 8,
+       "pass": false,
+       "rule": "pair",
+       "note": "legal line ↔ the button it describes",
+       "y1": 443.4,
+       "y2": 476.7,
+       "x1": 19,
+       "x2": 341
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "otp/locked",
+   "size": "390x844",
+   "url": "../../../ui-screens/otp/otp.html?capture=locked",
+   "picture": "otp_locked_390x844.png",
+   "errors": [],
+   "pass": false,
+   "failures": 1,
+   "regions": [
+    {
+     "name": "panel",
+     "rows": [
+      {
+       "top": 232.7,
+       "bottom": 288.7,
+       "units": [
+        {
+         "label": "div.tm-otp-slots",
+         "kind": "paint",
+         "sel": "div#slots.tm-otp-slots",
+         "top": 232.7,
+         "bottom": 288.7,
+         "left": 71,
+         "right": 319
+        }
+       ]
+      },
+      {
+       "top": 296.7,
+       "bottom": 362.7,
+       "units": [
+        {
+         "label": "Too many wrong tries. Try again in 14:52, or cal",
+         "kind": "paint",
+         "sel": "div#n.tm-notice.note.show",
+         "top": 296.7,
+         "bottom": 362.7,
+         "left": 16,
+         "right": 374
+        }
+       ]
+      },
+      {
+       "top": 394.7,
+       "bottom": 450.7,
+       "units": [
+        {
+         "label": "Verify & sign in",
+         "kind": "paint",
+         "sel": "button#b.tm-btn.tm-btn--lg.tm-btn--primary",
+         "top": 394.7,
+         "bottom": 450.7,
+         "left": 16,
+         "right": 374
+        }
+       ]
+      }
+     ],
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "div.tm-otp-slots",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge",
+       "note": "content starts this far below the region top",
+       "y1": 200.7,
+       "y2": 232.7,
+       "x1": 71,
+       "x2": 319
+      },
+      {
+       "above": "div.tm-otp-slots",
+       "below": "Too many wrong tries. Try again in 14:52, or cal",
+       "px": 8,
+       "expected": 16,
+       "pass": false,
+       "rule": "pair",
+       "note": "a message about one field: 16 under it",
+       "y1": 288.7,
+       "y2": 296.7,
+       "x1": 71,
+       "x2": 319
+      },
+      {
+       "above": "Too many wrong tries. Try again in 14:52, or cal",
+       "below": "Verify & sign in",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair",
+       "note": "notice → the next thing",
+       "y1": 362.7,
+       "y2": 394.7,
+       "x1": 16,
+       "x2": 374
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "otp/locked",
+   "size": "360x640",
+   "url": "../../../ui-screens/otp/otp.html?capture=locked",
+   "picture": "otp_locked_360x640.png",
+   "errors": [],
+   "pass": false,
+   "failures": 1,
+   "regions": [
+    {
+     "name": "panel",
+     "rows": [
+      {
+       "top": 232.7,
+       "bottom": 288.7,
+       "units": [
+        {
+         "label": "div.tm-otp-slots",
+         "kind": "paint",
+         "sel": "div#slots.tm-otp-slots",
+         "top": 232.7,
+         "bottom": 288.7,
+         "left": 56,
+         "right": 304
+        }
+       ]
+      },
+      {
+       "top": 296.7,
+       "bottom": 362.7,
+       "units": [
+        {
+         "label": "Too many wrong tries. Try again in 14:52, or cal",
+         "kind": "paint",
+         "sel": "div#n.tm-notice.note.show",
+         "top": 296.7,
+         "bottom": 362.7,
+         "left": 16,
+         "right": 344
+        }
+       ]
+      },
+      {
+       "top": 394.7,
+       "bottom": 450.7,
+       "units": [
+        {
+         "label": "Verify & sign in",
+         "kind": "paint",
+         "sel": "button#b.tm-btn.tm-btn--lg.tm-btn--primary",
+         "top": 394.7,
+         "bottom": 450.7,
+         "left": 16,
+         "right": 344
+        }
+       ]
+      }
+     ],
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "div.tm-otp-slots",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge",
+       "note": "content starts this far below the region top",
+       "y1": 200.7,
+       "y2": 232.7,
+       "x1": 56,
+       "x2": 304
+      },
+      {
+       "above": "div.tm-otp-slots",
+       "below": "Too many wrong tries. Try again in 14:52, or cal",
+       "px": 8,
+       "expected": 16,
+       "pass": false,
+       "rule": "pair",
+       "note": "a message about one field: 16 under it",
+       "y1": 288.7,
+       "y2": 296.7,
+       "x1": 56,
+       "x2": 304
+      },
+      {
+       "above": "Too many wrong tries. Try again in 14:52, or cal",
+       "below": "Verify & sign in",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair",
+       "note": "notice → the next thing",
+       "y1": 362.7,
+       "y2": 394.7,
+       "x1": 16,
+       "x2": 344
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "otp/expired-and-resend-limited",
+   "size": "390x844",
+   "url": "../../../ui-screens/otp/otp.html?capture=expired-and-resend-limited",
+   "picture": "otp_expired-and-resend-limited_390x844.png",
+   "errors": [],
+   "pass": false,
+   "failures": 1,
+   "regions": [
+    {
+     "name": "panel",
+     "rows": [
+      {
+       "top": 232.7,
+       "bottom": 288.7,
+       "units": [
+        {
+         "label": "div.tm-otp-slots",
+         "kind": "paint",
+         "sel": "div#slots.tm-otp-slots",
+         "top": 232.7,
+         "bottom": 288.7,
+         "left": 71,
+         "right": 319
+        }
+       ]
+      },
+      {
+       "top": 296.7,
+       "bottom": 362.7,
+       "units": [
+        {
+         "label": "This code has expired. Request a new code in 9:4",
+         "kind": "paint",
+         "sel": "div#n.tm-notice.note.show",
+         "top": 296.7,
+         "bottom": 362.7,
+         "left": 16,
+         "right": 374
+        }
+       ]
+      },
+      {
+       "top": 394.7,
+       "bottom": 450.7,
+       "units": [
+        {
+         "label": "Verify & sign in",
+         "kind": "paint",
+         "sel": "button#b.tm-btn.tm-btn--lg.tm-btn--primary",
+         "top": 394.7,
+         "bottom": 450.7,
+         "left": 16,
+         "right": 374
+        }
+       ]
+      }
+     ],
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "div.tm-otp-slots",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge",
+       "note": "content starts this far below the region top",
+       "y1": 200.7,
+       "y2": 232.7,
+       "x1": 71,
+       "x2": 319
+      },
+      {
+       "above": "div.tm-otp-slots",
+       "below": "This code has expired. Request a new code in 9:4",
+       "px": 8,
+       "expected": 16,
+       "pass": false,
+       "rule": "pair",
+       "note": "a message about one field: 16 under it",
+       "y1": 288.7,
+       "y2": 296.7,
+       "x1": 71,
+       "x2": 319
+      },
+      {
+       "above": "This code has expired. Request a new code in 9:4",
+       "below": "Verify & sign in",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair",
+       "note": "notice → the next thing",
+       "y1": 362.7,
+       "y2": 394.7,
+       "x1": 16,
+       "x2": 374
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "otp/expired-and-resend-limited",
+   "size": "360x640",
+   "url": "../../../ui-screens/otp/otp.html?capture=expired-and-resend-limited",
+   "picture": "otp_expired-and-resend-limited_360x640.png",
+   "errors": [],
+   "pass": false,
+   "failures": 1,
+   "regions": [
+    {
+     "name": "panel",
+     "rows": [
+      {
+       "top": 232.7,
+       "bottom": 288.7,
+       "units": [
+        {
+         "label": "div.tm-otp-slots",
+         "kind": "paint",
+         "sel": "div#slots.tm-otp-slots",
+         "top": 232.7,
+         "bottom": 288.7,
+         "left": 56,
+         "right": 304
+        }
+       ]
+      },
+      {
+       "top": 296.7,
+       "bottom": 362.7,
+       "units": [
+        {
+         "label": "This code has expired. Request a new code in 9:4",
+         "kind": "paint",
+         "sel": "div#n.tm-notice.note.show",
+         "top": 296.7,
+         "bottom": 362.7,
+         "left": 16,
+         "right": 344
+        }
+       ]
+      },
+      {
+       "top": 394.7,
+       "bottom": 450.7,
+       "units": [
+        {
+         "label": "Verify & sign in",
+         "kind": "paint",
+         "sel": "button#b.tm-btn.tm-btn--lg.tm-btn--primary",
+         "top": 394.7,
+         "bottom": 450.7,
+         "left": 16,
+         "right": 344
+        }
+       ]
+      }
+     ],
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "div.tm-otp-slots",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge",
+       "note": "content starts this far below the region top",
+       "y1": 200.7,
+       "y2": 232.7,
+       "x1": 56,
+       "x2": 304
+      },
+      {
+       "above": "div.tm-otp-slots",
+       "below": "This code has expired. Request a new code in 9:4",
+       "px": 8,
+       "expected": 16,
+       "pass": false,
+       "rule": "pair",
+       "note": "a message about one field: 16 under it",
+       "y1": 288.7,
+       "y2": 296.7,
+       "x1": 56,
+       "x2": 304
+      },
+      {
+       "above": "This code has expired. Request a new code in 9:4",
+       "below": "Verify & sign in",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "pair",
+       "note": "notice → the next thing",
+       "y1": 362.7,
+       "y2": 394.7,
+       "x1": 16,
+       "x2": 344
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "offer/fingerprint",
+   "size": "390x844",
+   "url": "../../../ui-screens/faster-signin-offer/faster-signin-offer.html?capture=fingerprint",
+   "picture": "offer_fingerprint_390x844.png",
+   "errors": [],
+   "pass": false,
+   "failures": 3,
+   "regions": [
+    {
+     "name": "panel",
+     "rows": [
+      {
+       "top": 204.7,
+       "bottom": 268.7,
+       "units": [
+        {
+         "label": "div.hero-ic",
+         "kind": "paint",
+         "sel": "div.hero-ic",
+         "top": 204.7,
+         "bottom": 268.7,
+         "left": 163,
+         "right": 227
+        }
+       ]
+      },
+      {
+       "top": 286.7,
+       "bottom": 306.7,
+       "units": [
+        {
+         "label": "svg",
+         "kind": "image",
+         "sel": "svg",
+         "top": 286.7,
+         "bottom": 306.7,
+         "left": 18,
+         "right": 38
+        },
+        {
+         "label": "No more waiting for SMS codes",
+         "kind": "text",
+         "sel": "p.pt-t",
+         "top": 290.8,
+         "bottom": 306.3,
+         "left": 52,
+         "right": 289.6
+        }
+       ]
+      },
+      {
+       "top": 314.3,
+       "bottom": 327.8,
+       "units": [
+        {
+         "label": "Unlock the app with one touch, not an OTP.",
+         "kind": "text",
+         "sel": "p#pt-d1.pt-d",
+         "top": 314.3,
+         "bottom": 327.8,
+         "left": 52,
+         "right": 331.7
+        }
+       ]
+      },
+      {
+       "top": 346.7,
+       "bottom": 366.7,
+       "units": [
+        {
+         "label": "svg",
+         "kind": "image",
+         "sel": "svg",
+         "top": 346.7,
+         "bottom": 366.7,
+         "left": 20,
+         "right": 36
+        },
+        {
+         "label": "Your fingerprint stays on your phone",
+         "kind": "text",
+         "sel": "p#pt-t2.pt-t",
+         "top": 350.8,
+         "bottom": 366.3,
+         "left": 52,
+         "right": 324.1
+        }
+       ]
+      },
+      {
+       "top": 374.3,
+       "bottom": 387.8,
+       "units": [
+        {
+         "label": "Truemeds never sees or stores it.",
+         "kind": "text",
+         "sel": "p.pt-d",
+         "top": 374.3,
+         "bottom": 387.8,
+         "left": 52,
+         "right": 266.3
+        }
+       ]
+      },
+      {
+       "top": 406.7,
+       "bottom": 426.7,
+       "units": [
+        {
+         "label": "svg",
+         "kind": "image",
+         "sel": "svg",
+         "top": 406.7,
+         "bottom": 426.7,
+         "left": 18,
+         "right": 38
+        },
+        {
+         "label": "Change it any time",
+         "kind": "text",
+         "sel": "p.pt-t",
+         "top": 410.8,
+         "bottom": 426.3,
+         "left": 52,
+         "right": 192.7
+        }
+       ]
+      },
+      {
+       "top": 434.3,
+       "bottom": 447.8,
+       "units": [
+        {
+         "label": "Turn it off from your profile.",
+         "kind": "text",
+         "sel": "p.pt-d",
+         "top": 434.3,
+         "bottom": 447.8,
+         "left": 52,
+         "right": 227.9
+        }
+       ]
+      }
+     ],
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "div.hero-ic",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge",
+       "note": "content starts this far below the region top",
+       "y1": 172.7,
+       "y2": 204.7,
+       "x1": 163,
+       "x2": 227
+      },
+      {
+       "above": "div.hero-ic",
+       "below": "svg | No more waiting for SMS codes",
+       "px": 18,
+       "expected": 32,
+       "pass": false,
+       "rule": "pair",
+       "note": "hero tile → the content under it",
+       "y1": 268.7,
+       "y2": 286.7,
+       "x1": 163,
+       "x2": 38
+      },
+      {
+       "above": "svg | No more waiting for SMS codes",
+       "below": "Unlock the app with one touch, not an OTP.",
+       "px": 7.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair",
+       "note": "point title ↔ its line (one thing)",
+       "y1": 306.7,
+       "y2": 314.3,
+       "x1": 52,
+       "x2": 38
+      },
+      {
+       "above": "Unlock the app with one touch, not an OTP.",
+       "below": "svg | Your fingerprint stays on your phone",
+       "px": 18.9,
+       "expected": 16,
+       "pass": false,
+       "rule": "pair",
+       "note": "points 16 apart",
+       "y1": 327.8,
+       "y2": 346.7,
+       "x1": 52,
+       "x2": 36
+      },
+      {
+       "above": "svg | Your fingerprint stays on your phone",
+       "below": "Truemeds never sees or stores it.",
+       "px": 7.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair",
+       "note": "point title ↔ its line (one thing)",
+       "y1": 366.7,
+       "y2": 374.3,
+       "x1": 52,
+       "x2": 36
+      },
+      {
+       "above": "Truemeds never sees or stores it.",
+       "below": "svg | Change it any time",
+       "px": 18.9,
+       "expected": 16,
+       "pass": false,
+       "rule": "pair",
+       "note": "points 16 apart",
+       "y1": 387.8,
+       "y2": 406.7,
+       "x1": 52,
+       "x2": 38
+      },
+      {
+       "above": "svg | Change it any time",
+       "below": "Turn it off from your profile.",
+       "px": 7.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair",
+       "note": "point title ↔ its line (one thing)",
+       "y1": 426.7,
+       "y2": 434.3,
+       "x1": 52,
+       "x2": 38
+      }
+     ]
+    },
+    {
+     "name": "bar",
+     "rows": [
+      {
+       "top": 708,
+       "bottom": 764,
+       "units": [
+        {
+         "label": "Turn on faster sign-in",
+         "kind": "paint",
+         "sel": "button#turn-on.tm-btn.tm-btn--primary.tm-btn--lg",
+         "top": 708,
+         "bottom": 764,
+         "left": 16,
+         "right": 374
+        }
+       ]
+      },
+      {
+       "top": 793.6,
+       "bottom": 811,
+       "units": [
+        {
+         "label": "Not now",
+         "kind": "text",
+         "sel": "button#not-now.tm-btn.tm-btn--quiet.tm-btn--lg",
+         "top": 793.6,
+         "bottom": 811,
+         "left": 158.6,
+         "right": 231.4
+        }
+       ]
+      }
+     ],
+     "gaps": [
+      {
+       "above": "Turn on faster sign-in",
+       "below": "Not now",
+       "px": 29.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy",
+       "note": "pinned bar / sheet actions: buttons 8 apart",
+       "boxPx": 8,
+       "y1": 764,
+       "y2": 793.6,
+       "x1": 158.6,
+       "x2": 231.4
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "offer/fingerprint",
+   "size": "360x640",
+   "url": "../../../ui-screens/faster-signin-offer/faster-signin-offer.html?capture=fingerprint",
+   "picture": "offer_fingerprint_360x640.png",
+   "errors": [],
+   "pass": false,
+   "failures": 3,
+   "regions": [
+    {
+     "name": "panel",
+     "rows": [
+      {
+       "top": 244.7,
+       "bottom": 308.7,
+       "units": [
+        {
+         "label": "div.hero-ic",
+         "kind": "paint",
+         "sel": "div.hero-ic",
+         "top": 244.7,
+         "bottom": 308.7,
+         "left": 148,
+         "right": 212
+        }
+       ]
+      },
+      {
+       "top": 326.7,
+       "bottom": 346.7,
+       "units": [
+        {
+         "label": "svg",
+         "kind": "image",
+         "sel": "svg",
+         "top": 326.7,
+         "bottom": 346.7,
+         "left": 18,
+         "right": 38
+        },
+        {
+         "label": "No more waiting for SMS codes",
+         "kind": "text",
+         "sel": "p.pt-t",
+         "top": 330.8,
+         "bottom": 346.3,
+         "left": 52,
+         "right": 289.6
+        }
+       ]
+      },
+      {
+       "top": 354.3,
+       "bottom": 367.8,
+       "units": [
+        {
+         "label": "Unlock the app with one touch, not an OTP.",
+         "kind": "text",
+         "sel": "p#pt-d1.pt-d",
+         "top": 354.3,
+         "bottom": 367.8,
+         "left": 52,
+         "right": 331.7
+        }
+       ]
+      },
+      {
+       "top": 386.7,
+       "bottom": 406.7,
+       "units": [
+        {
+         "label": "svg",
+         "kind": "image",
+         "sel": "svg",
+         "top": 386.7,
+         "bottom": 406.7,
+         "left": 20,
+         "right": 36
+        },
+        {
+         "label": "Your fingerprint stays on your phone",
+         "kind": "text",
+         "sel": "p#pt-t2.pt-t",
+         "top": 390.8,
+         "bottom": 406.3,
+         "left": 52,
+         "right": 324.1
+        }
+       ]
+      },
+      {
+       "top": 414.3,
+       "bottom": 427.8,
+       "units": [
+        {
+         "label": "Truemeds never sees or stores it.",
+         "kind": "text",
+         "sel": "p.pt-d",
+         "top": 414.3,
+         "bottom": 427.8,
+         "left": 52,
+         "right": 266.3
+        }
+       ]
+      },
+      {
+       "top": 446.7,
+       "bottom": 466.7,
+       "units": [
+        {
+         "label": "svg",
+         "kind": "image",
+         "sel": "svg",
+         "top": 446.7,
+         "bottom": 466.7,
+         "left": 18,
+         "right": 38
+        },
+        {
+         "label": "Change it any time",
+         "kind": "text",
+         "sel": "p.pt-t",
+         "top": 450.8,
+         "bottom": 466.3,
+         "left": 52,
+         "right": 192.7
+        }
+       ]
+      },
+      {
+       "top": 474.3,
+       "bottom": 487.8,
+       "units": [
+        {
+         "label": "Turn it off from your profile.",
+         "kind": "text",
+         "sel": "p.pt-d",
+         "top": 474.3,
+         "bottom": 487.8,
+         "left": 52,
+         "right": 227.9
+        }
+       ]
+      }
+     ],
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "div.hero-ic",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge",
+       "note": "content starts this far below the region top",
+       "y1": 212.7,
+       "y2": 244.7,
+       "x1": 148,
+       "x2": 212
+      },
+      {
+       "above": "div.hero-ic",
+       "below": "svg | No more waiting for SMS codes",
+       "px": 18,
+       "expected": 32,
+       "pass": false,
+       "rule": "pair",
+       "note": "hero tile → the content under it",
+       "y1": 308.7,
+       "y2": 326.7,
+       "x1": 148,
+       "x2": 38
+      },
+      {
+       "above": "svg | No more waiting for SMS codes",
+       "below": "Unlock the app with one touch, not an OTP.",
+       "px": 7.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair",
+       "note": "point title ↔ its line (one thing)",
+       "y1": 346.7,
+       "y2": 354.3,
+       "x1": 52,
+       "x2": 38
+      },
+      {
+       "above": "Unlock the app with one touch, not an OTP.",
+       "below": "svg | Your fingerprint stays on your phone",
+       "px": 18.9,
+       "expected": 16,
+       "pass": false,
+       "rule": "pair",
+       "note": "points 16 apart",
+       "y1": 367.8,
+       "y2": 386.7,
+       "x1": 52,
+       "x2": 36
+      },
+      {
+       "above": "svg | Your fingerprint stays on your phone",
+       "below": "Truemeds never sees or stores it.",
+       "px": 7.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair",
+       "note": "point title ↔ its line (one thing)",
+       "y1": 406.7,
+       "y2": 414.3,
+       "x1": 52,
+       "x2": 36
+      },
+      {
+       "above": "Truemeds never sees or stores it.",
+       "below": "svg | Change it any time",
+       "px": 18.9,
+       "expected": 16,
+       "pass": false,
+       "rule": "pair",
+       "note": "points 16 apart",
+       "y1": 427.8,
+       "y2": 446.7,
+       "x1": 52,
+       "x2": 38
+      },
+      {
+       "above": "svg | Change it any time",
+       "below": "Turn it off from your profile.",
+       "px": 7.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair",
+       "note": "point title ↔ its line (one thing)",
+       "y1": 466.7,
+       "y2": 474.3,
+       "x1": 52,
+       "x2": 38
+      }
+     ]
+    },
+    {
+     "name": "bar",
+     "rows": [
+      {
+       "top": 504,
+       "bottom": 560,
+       "units": [
+        {
+         "label": "Turn on faster sign-in",
+         "kind": "paint",
+         "sel": "button#turn-on.tm-btn.tm-btn--primary.tm-btn--lg",
+         "top": 504,
+         "bottom": 560,
+         "left": 16,
+         "right": 344
+        }
+       ]
+      },
+      {
+       "top": 589.6,
+       "bottom": 607,
+       "units": [
+        {
+         "label": "Not now",
+         "kind": "text",
+         "sel": "button#not-now.tm-btn.tm-btn--quiet.tm-btn--lg",
+         "top": 589.6,
+         "bottom": 607,
+         "left": 143.6,
+         "right": 216.4
+        }
+       ]
+      }
+     ],
+     "gaps": [
+      {
+       "above": "Turn on faster sign-in",
+       "below": "Not now",
+       "px": 29.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy",
+       "note": "pinned bar / sheet actions: buttons 8 apart",
+       "boxPx": 8,
+       "y1": 560,
+       "y2": 589.6,
+       "x1": 143.6,
+       "x2": 216.4
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "offer/enable-failed",
+   "size": "390x844",
+   "url": "../../../ui-screens/faster-signin-offer/faster-signin-offer.html?capture=enable-failed",
+   "picture": "offer_enable-failed_390x844.png",
+   "errors": [],
+   "pass": false,
+   "failures": 3,
+   "regions": [
+    {
+     "name": "panel",
+     "rows": [
+      {
+       "top": 204.7,
+       "bottom": 268.7,
+       "units": [
+        {
+         "label": "div.hero-ic",
+         "kind": "paint",
+         "sel": "div.hero-ic",
+         "top": 204.7,
+         "bottom": 268.7,
+         "left": 163,
+         "right": 227
+        }
+       ]
+      },
+      {
+       "top": 286.7,
+       "bottom": 306.7,
+       "units": [
+        {
+         "label": "svg",
+         "kind": "image",
+         "sel": "svg",
+         "top": 286.7,
+         "bottom": 306.7,
+         "left": 18,
+         "right": 38
+        },
+        {
+         "label": "No more waiting for SMS codes",
+         "kind": "text",
+         "sel": "p.pt-t",
+         "top": 290.8,
+         "bottom": 306.3,
+         "left": 52,
+         "right": 289.6
+        }
+       ]
+      },
+      {
+       "top": 314.3,
+       "bottom": 327.8,
+       "units": [
+        {
+         "label": "Unlock the app with one touch, not an OTP.",
+         "kind": "text",
+         "sel": "p#pt-d1.pt-d",
+         "top": 314.3,
+         "bottom": 327.8,
+         "left": 52,
+         "right": 331.7
+        }
+       ]
+      },
+      {
+       "top": 346.7,
+       "bottom": 366.7,
+       "units": [
+        {
+         "label": "svg",
+         "kind": "image",
+         "sel": "svg",
+         "top": 346.7,
+         "bottom": 366.7,
+         "left": 20,
+         "right": 36
+        },
+        {
+         "label": "Your fingerprint stays on your phone",
+         "kind": "text",
+         "sel": "p#pt-t2.pt-t",
+         "top": 350.8,
+         "bottom": 366.3,
+         "left": 52,
+         "right": 324.1
+        }
+       ]
+      },
+      {
+       "top": 374.3,
+       "bottom": 387.8,
+       "units": [
+        {
+         "label": "Truemeds never sees or stores it.",
+         "kind": "text",
+         "sel": "p.pt-d",
+         "top": 374.3,
+         "bottom": 387.8,
+         "left": 52,
+         "right": 266.3
+        }
+       ]
+      },
+      {
+       "top": 406.7,
+       "bottom": 426.7,
+       "units": [
+        {
+         "label": "svg",
+         "kind": "image",
+         "sel": "svg",
+         "top": 406.7,
+         "bottom": 426.7,
+         "left": 18,
+         "right": 38
+        },
+        {
+         "label": "Change it any time",
+         "kind": "text",
+         "sel": "p.pt-t",
+         "top": 410.8,
+         "bottom": 426.3,
+         "left": 52,
+         "right": 192.7
+        }
+       ]
+      },
+      {
+       "top": 434.3,
+       "bottom": 447.8,
+       "units": [
+        {
+         "label": "Turn it off from your profile.",
+         "kind": "text",
+         "sel": "p.pt-d",
+         "top": 434.3,
+         "bottom": 447.8,
+         "left": 52,
+         "right": 227.9
+        }
+       ]
+      }
+     ],
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "div.hero-ic",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge",
+       "note": "content starts this far below the region top",
+       "y1": 172.7,
+       "y2": 204.7,
+       "x1": 163,
+       "x2": 227
+      },
+      {
+       "above": "div.hero-ic",
+       "below": "svg | No more waiting for SMS codes",
+       "px": 18,
+       "expected": 32,
+       "pass": false,
+       "rule": "pair",
+       "note": "hero tile → the content under it",
+       "y1": 268.7,
+       "y2": 286.7,
+       "x1": 163,
+       "x2": 38
+      },
+      {
+       "above": "svg | No more waiting for SMS codes",
+       "below": "Unlock the app with one touch, not an OTP.",
+       "px": 7.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair",
+       "note": "point title ↔ its line (one thing)",
+       "y1": 306.7,
+       "y2": 314.3,
+       "x1": 52,
+       "x2": 38
+      },
+      {
+       "above": "Unlock the app with one touch, not an OTP.",
+       "below": "svg | Your fingerprint stays on your phone",
+       "px": 18.9,
+       "expected": 16,
+       "pass": false,
+       "rule": "pair",
+       "note": "points 16 apart",
+       "y1": 327.8,
+       "y2": 346.7,
+       "x1": 52,
+       "x2": 36
+      },
+      {
+       "above": "svg | Your fingerprint stays on your phone",
+       "below": "Truemeds never sees or stores it.",
+       "px": 7.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair",
+       "note": "point title ↔ its line (one thing)",
+       "y1": 366.7,
+       "y2": 374.3,
+       "x1": 52,
+       "x2": 36
+      },
+      {
+       "above": "Truemeds never sees or stores it.",
+       "below": "svg | Change it any time",
+       "px": 18.9,
+       "expected": 16,
+       "pass": false,
+       "rule": "pair",
+       "note": "points 16 apart",
+       "y1": 387.8,
+       "y2": 406.7,
+       "x1": 52,
+       "x2": 38
+      },
+      {
+       "above": "svg | Change it any time",
+       "below": "Turn it off from your profile.",
+       "px": 7.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair",
+       "note": "point title ↔ its line (one thing)",
+       "y1": 426.7,
+       "y2": 434.3,
+       "x1": 52,
+       "x2": 38
+      }
+     ]
+    },
+    {
+     "name": "bar",
+     "rows": [
+      {
+       "top": 644.8,
+       "bottom": 692,
+       "units": [
+        {
+         "label": "Couldn’t turn on faster sign-in.",
+         "kind": "paint",
+         "sel": "div#offer-notice.tm-notice.tm-notice--error.notice-slot",
+         "top": 644.8,
+         "bottom": 692,
+         "left": 0,
+         "right": 390
+        }
+       ]
+      },
+      {
+       "top": 708,
+       "bottom": 764,
+       "units": [
+        {
+         "label": "Try again",
+         "kind": "paint",
+         "sel": "button#turn-on.tm-btn.tm-btn--primary.tm-btn--lg",
+         "top": 708,
+         "bottom": 764,
+         "left": 16,
+         "right": 374
+        }
+       ]
+      },
+      {
+       "top": 793.6,
+       "bottom": 811,
+       "units": [
+        {
+         "label": "Not now",
+         "kind": "text",
+         "sel": "button#not-now.tm-btn.tm-btn--quiet.tm-btn--lg",
+         "top": 793.6,
+         "bottom": 811,
+         "left": 158.6,
+         "right": 231.4
+        }
+       ]
+      }
+     ],
+     "gaps": [
+      {
+       "above": "Couldn’t turn on faster sign-in.",
+       "below": "Try again",
+       "px": 16,
+       "expected": 16,
+       "pass": true,
+       "rule": "anatomy",
+       "note": "notice in the pinned bar / sheet actions: 16 above its button",
+       "y1": 692,
+       "y2": 708,
+       "x1": 16,
+       "x2": 374
+      },
+      {
+       "above": "Try again",
+       "below": "Not now",
+       "px": 29.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy",
+       "note": "pinned bar / sheet actions: buttons 8 apart",
+       "boxPx": 8,
+       "y1": 764,
+       "y2": 793.6,
+       "x1": 158.6,
+       "x2": 231.4
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "offer/enable-failed",
+   "size": "360x640",
+   "url": "../../../ui-screens/faster-signin-offer/faster-signin-offer.html?capture=enable-failed",
+   "picture": "offer_enable-failed_360x640.png",
+   "errors": [],
+   "pass": false,
+   "failures": 3,
+   "regions": [
+    {
+     "name": "panel",
+     "rows": [
+      {
+       "top": 244.7,
+       "bottom": 308.7,
+       "units": [
+        {
+         "label": "div.hero-ic",
+         "kind": "paint",
+         "sel": "div.hero-ic",
+         "top": 244.7,
+         "bottom": 308.7,
+         "left": 148,
+         "right": 212
+        }
+       ]
+      },
+      {
+       "top": 326.7,
+       "bottom": 346.7,
+       "units": [
+        {
+         "label": "svg",
+         "kind": "image",
+         "sel": "svg",
+         "top": 326.7,
+         "bottom": 346.7,
+         "left": 18,
+         "right": 38
+        },
+        {
+         "label": "No more waiting for SMS codes",
+         "kind": "text",
+         "sel": "p.pt-t",
+         "top": 330.8,
+         "bottom": 346.3,
+         "left": 52,
+         "right": 289.6
+        }
+       ]
+      },
+      {
+       "top": 354.3,
+       "bottom": 367.8,
+       "units": [
+        {
+         "label": "Unlock the app with one touch, not an OTP.",
+         "kind": "text",
+         "sel": "p#pt-d1.pt-d",
+         "top": 354.3,
+         "bottom": 367.8,
+         "left": 52,
+         "right": 331.7
+        }
+       ]
+      },
+      {
+       "top": 386.7,
+       "bottom": 406.7,
+       "units": [
+        {
+         "label": "svg",
+         "kind": "image",
+         "sel": "svg",
+         "top": 386.7,
+         "bottom": 406.7,
+         "left": 20,
+         "right": 36
+        },
+        {
+         "label": "Your fingerprint stays on your phone",
+         "kind": "text",
+         "sel": "p#pt-t2.pt-t",
+         "top": 390.8,
+         "bottom": 406.3,
+         "left": 52,
+         "right": 324.1
+        }
+       ]
+      },
+      {
+       "top": 414.3,
+       "bottom": 427.8,
+       "units": [
+        {
+         "label": "Truemeds never sees or stores it.",
+         "kind": "text",
+         "sel": "p.pt-d",
+         "top": 414.3,
+         "bottom": 427.8,
+         "left": 52,
+         "right": 266.3
+        }
+       ]
+      },
+      {
+       "top": 446.7,
+       "bottom": 466.7,
+       "units": [
+        {
+         "label": "svg",
+         "kind": "image",
+         "sel": "svg",
+         "top": 446.7,
+         "bottom": 466.7,
+         "left": 18,
+         "right": 38
+        },
+        {
+         "label": "Change it any time",
+         "kind": "text",
+         "sel": "p.pt-t",
+         "top": 450.8,
+         "bottom": 466.3,
+         "left": 52,
+         "right": 192.7
+        }
+       ]
+      },
+      {
+       "top": 474.3,
+       "bottom": 487.8,
+       "units": [
+        {
+         "label": "Turn it off from your profile.",
+         "kind": "text",
+         "sel": "p.pt-d",
+         "top": 474.3,
+         "bottom": 487.8,
+         "left": 52,
+         "right": 227.9
+        }
+       ]
+      }
+     ],
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "div.hero-ic",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge",
+       "note": "content starts this far below the region top",
+       "y1": 212.7,
+       "y2": 244.7,
+       "x1": 148,
+       "x2": 212
+      },
+      {
+       "above": "div.hero-ic",
+       "below": "svg | No more waiting for SMS codes",
+       "px": 18,
+       "expected": 32,
+       "pass": false,
+       "rule": "pair",
+       "note": "hero tile → the content under it",
+       "y1": 308.7,
+       "y2": 326.7,
+       "x1": 148,
+       "x2": 38
+      },
+      {
+       "above": "svg | No more waiting for SMS codes",
+       "below": "Unlock the app with one touch, not an OTP.",
+       "px": 7.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair",
+       "note": "point title ↔ its line (one thing)",
+       "y1": 346.7,
+       "y2": 354.3,
+       "x1": 52,
+       "x2": 38
+      },
+      {
+       "above": "Unlock the app with one touch, not an OTP.",
+       "below": "svg | Your fingerprint stays on your phone",
+       "px": 18.9,
+       "expected": 16,
+       "pass": false,
+       "rule": "pair",
+       "note": "points 16 apart",
+       "y1": 367.8,
+       "y2": 386.7,
+       "x1": 52,
+       "x2": 36
+      },
+      {
+       "above": "svg | Your fingerprint stays on your phone",
+       "below": "Truemeds never sees or stores it.",
+       "px": 7.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair",
+       "note": "point title ↔ its line (one thing)",
+       "y1": 406.7,
+       "y2": 414.3,
+       "x1": 52,
+       "x2": 36
+      },
+      {
+       "above": "Truemeds never sees or stores it.",
+       "below": "svg | Change it any time",
+       "px": 18.9,
+       "expected": 16,
+       "pass": false,
+       "rule": "pair",
+       "note": "points 16 apart",
+       "y1": 427.8,
+       "y2": 446.7,
+       "x1": 52,
+       "x2": 38
+      },
+      {
+       "above": "svg | Change it any time",
+       "below": "Turn it off from your profile.",
+       "px": 7.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "pair",
+       "note": "point title ↔ its line (one thing)",
+       "y1": 466.7,
+       "y2": 474.3,
+       "x1": 52,
+       "x2": 38
+      }
+     ]
+    },
+    {
+     "name": "bar",
+     "rows": [
+      {
+       "top": 440.8,
+       "bottom": 488,
+       "units": [
+        {
+         "label": "Couldn’t turn on faster sign-in.",
+         "kind": "paint",
+         "sel": "div#offer-notice.tm-notice.tm-notice--error.notice-slot",
+         "top": 440.8,
+         "bottom": 488,
+         "left": 0,
+         "right": 360
+        }
+       ]
+      },
+      {
+       "top": 504,
+       "bottom": 560,
+       "units": [
+        {
+         "label": "Try again",
+         "kind": "paint",
+         "sel": "button#turn-on.tm-btn.tm-btn--primary.tm-btn--lg",
+         "top": 504,
+         "bottom": 560,
+         "left": 16,
+         "right": 344
+        }
+       ]
+      },
+      {
+       "top": 589.6,
+       "bottom": 607,
+       "units": [
+        {
+         "label": "Not now",
+         "kind": "text",
+         "sel": "button#not-now.tm-btn.tm-btn--quiet.tm-btn--lg",
+         "top": 589.6,
+         "bottom": 607,
+         "left": 143.6,
+         "right": 216.4
+        }
+       ]
+      }
+     ],
+     "gaps": [
+      {
+       "above": "Couldn’t turn on faster sign-in.",
+       "below": "Try again",
+       "px": 16,
+       "expected": 16,
+       "pass": true,
+       "rule": "anatomy",
+       "note": "notice in the pinned bar / sheet actions: 16 above its button",
+       "y1": 488,
+       "y2": 504,
+       "x1": 16,
+       "x2": 344
+      },
+      {
+       "above": "Try again",
+       "below": "Not now",
+       "px": 29.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy",
+       "note": "pinned bar / sheet actions: buttons 8 apart",
+       "boxPx": 8,
+       "y1": 560,
+       "y2": 589.6,
+       "x1": 143.6,
+       "x2": 216.4
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "unlock/fingerprint",
+   "size": "390x844",
+   "url": "../../../ui-screens/returning-unlock/returning-unlock.html?capture=fingerprint",
+   "picture": "unlock_fingerprint_390x844.png",
+   "errors": [],
+   "pass": false,
+   "failures": 1,
+   "regions": [
+    {
+     "name": "panel",
+     "rows": [
+      {
+       "top": 204.7,
+       "bottom": 268.7,
+       "units": [
+        {
+         "label": "div.prompt-icon",
+         "kind": "paint",
+         "sel": "div.prompt-icon",
+         "top": 204.7,
+         "bottom": 268.7,
+         "left": 163,
+         "right": 227
+        }
+       ]
+      },
+      {
+       "top": 290.8,
+       "bottom": 306.3,
+       "units": [
+        {
+         "label": "Ready when you are",
+         "kind": "text",
+         "sel": "h2#ready",
+         "top": 290.8,
+         "bottom": 306.3,
+         "left": 118.5,
+         "right": 271.5
+        }
+       ]
+      }
+     ],
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "div.prompt-icon",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge",
+       "note": "content starts this far below the region top",
+       "y1": 172.7,
+       "y2": 204.7,
+       "x1": 163,
+       "x2": 227
+      },
+      {
+       "above": "div.prompt-icon",
+       "below": "Ready when you are",
+       "px": 22.1,
+       "expected": 16,
+       "pass": false,
+       "rule": "pair",
+       "note": "unlock tile → caption 16 (D-108 applied)",
+       "y1": 268.7,
+       "y2": 290.8,
+       "x1": 163,
+       "x2": 227
+      }
+     ]
+    },
+    {
+     "name": "bar",
+     "rows": [
+      {
+       "top": 708,
+       "bottom": 764,
+       "units": [
+        {
+         "label": "Unlock with fingerprint",
+         "kind": "paint",
+         "sel": "button#unlock-action.tm-btn.tm-btn--primary.tm-btn--lg",
+         "top": 708,
+         "bottom": 764,
+         "left": 16,
+         "right": 374
+        }
+       ]
+      },
+      {
+       "top": 793.6,
+       "bottom": 811,
+       "units": [
+        {
+         "label": "Use OTP instead",
+         "kind": "text",
+         "sel": "button#fallback.tm-btn.tm-btn--quiet.tm-btn--lg",
+         "top": 793.6,
+         "bottom": 811,
+         "left": 124.8,
+         "right": 265.3
+        }
+       ]
+      }
+     ],
+     "gaps": [
+      {
+       "above": "Unlock with fingerprint",
+       "below": "Use OTP instead",
+       "px": 29.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy",
+       "note": "pinned bar / sheet actions: buttons 8 apart",
+       "boxPx": 8,
+       "y1": 764,
+       "y2": 793.6,
+       "x1": 124.8,
+       "x2": 265.3
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "unlock/fingerprint",
+   "size": "360x640",
+   "url": "../../../ui-screens/returning-unlock/returning-unlock.html?capture=fingerprint",
+   "picture": "unlock_fingerprint_360x640.png",
+   "errors": [],
+   "pass": false,
+   "failures": 1,
+   "regions": [
+    {
+     "name": "panel",
+     "rows": [
+      {
+       "top": 204.7,
+       "bottom": 268.7,
+       "units": [
+        {
+         "label": "div.prompt-icon",
+         "kind": "paint",
+         "sel": "div.prompt-icon",
+         "top": 204.7,
+         "bottom": 268.7,
+         "left": 148,
+         "right": 212
+        }
+       ]
+      },
+      {
+       "top": 290.8,
+       "bottom": 306.3,
+       "units": [
+        {
+         "label": "Ready when you are",
+         "kind": "text",
+         "sel": "h2#ready",
+         "top": 290.8,
+         "bottom": 306.3,
+         "left": 103.5,
+         "right": 256.5
+        }
+       ]
+      }
+     ],
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "div.prompt-icon",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge",
+       "note": "content starts this far below the region top",
+       "y1": 172.7,
+       "y2": 204.7,
+       "x1": 148,
+       "x2": 212
+      },
+      {
+       "above": "div.prompt-icon",
+       "below": "Ready when you are",
+       "px": 22.1,
+       "expected": 16,
+       "pass": false,
+       "rule": "pair",
+       "note": "unlock tile → caption 16 (D-108 applied)",
+       "y1": 268.7,
+       "y2": 290.8,
+       "x1": 148,
+       "x2": 212
+      }
+     ]
+    },
+    {
+     "name": "bar",
+     "rows": [
+      {
+       "top": 504,
+       "bottom": 560,
+       "units": [
+        {
+         "label": "Unlock with fingerprint",
+         "kind": "paint",
+         "sel": "button#unlock-action.tm-btn.tm-btn--primary.tm-btn--lg",
+         "top": 504,
+         "bottom": 560,
+         "left": 16,
+         "right": 344
+        }
+       ]
+      },
+      {
+       "top": 589.6,
+       "bottom": 607,
+       "units": [
+        {
+         "label": "Use OTP instead",
+         "kind": "text",
+         "sel": "button#fallback.tm-btn.tm-btn--quiet.tm-btn--lg",
+         "top": 589.6,
+         "bottom": 607,
+         "left": 109.8,
+         "right": 250.3
+        }
+       ]
+      }
+     ],
+     "gaps": [
+      {
+       "above": "Unlock with fingerprint",
+       "below": "Use OTP instead",
+       "px": 29.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy",
+       "note": "pinned bar / sheet actions: buttons 8 apart",
+       "boxPx": 8,
+       "y1": 560,
+       "y2": 589.6,
+       "x1": 109.8,
+       "x2": 250.3
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "unlock/unavailable",
+   "size": "390x844",
+   "url": "../../../ui-screens/returning-unlock/returning-unlock.html?capture=unavailable",
+   "picture": "unlock_unavailable_390x844.png",
+   "errors": [],
+   "pass": true,
+   "failures": 0,
+   "regions": [
+    {
+     "name": "panel",
+     "rows": [
+      {
+       "top": 204.7,
+       "bottom": 270.7,
+       "units": [
+        {
+         "label": "Faster sign-in isn’t available on this phone rig",
+         "kind": "paint",
+         "sel": "div#unlock-notice.tm-notice.tm-notice--neutral.unlock-notice",
+         "top": 204.7,
+         "bottom": 270.7,
+         "left": 16,
+         "right": 374
+        }
+       ]
+      }
+     ],
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "Faster sign-in isn’t available on this phone rig",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge",
+       "note": "content starts this far below the region top",
+       "y1": 172.7,
+       "y2": 204.7,
+       "x1": 16,
+       "x2": 374
+      }
+     ]
+    },
+    {
+     "name": "bar",
+     "rows": [
+      {
+       "top": 772,
+       "bottom": 828,
+       "units": [
+        {
+         "label": "Use OTP instead",
+         "kind": "paint",
+         "sel": "button#fallback.tm-btn.tm-btn--lg.tm-btn--block",
+         "top": 772,
+         "bottom": 828,
+         "left": 16,
+         "right": 374
+        }
+       ]
+      }
+     ],
+     "gaps": []
+    }
+   ]
+  },
+  {
+   "name": "unlock/unavailable",
+   "size": "360x640",
+   "url": "../../../ui-screens/returning-unlock/returning-unlock.html?capture=unavailable",
+   "picture": "unlock_unavailable_360x640.png",
+   "errors": [],
+   "pass": true,
+   "failures": 0,
+   "regions": [
+    {
+     "name": "panel",
+     "rows": [
+      {
+       "top": 204.7,
+       "bottom": 270.7,
+       "units": [
+        {
+         "label": "Faster sign-in isn’t available on this phone rig",
+         "kind": "paint",
+         "sel": "div#unlock-notice.tm-notice.tm-notice--neutral.unlock-notice",
+         "top": 204.7,
+         "bottom": 270.7,
+         "left": 16,
+         "right": 344
+        }
+       ]
+      }
+     ],
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "Faster sign-in isn’t available on this phone rig",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge",
+       "note": "content starts this far below the region top",
+       "y1": 172.7,
+       "y2": 204.7,
+       "x1": 16,
+       "x2": 344
+      }
+     ]
+    },
+    {
+     "name": "bar",
+     "rows": [
+      {
+       "top": 568,
+       "bottom": 624,
+       "units": [
+        {
+         "label": "Use OTP instead",
+         "kind": "paint",
+         "sel": "button#fallback.tm-btn.tm-btn--lg.tm-btn--block",
+         "top": 568,
+         "bottom": 624,
+         "left": 16,
+         "right": 344
+        }
+       ]
+      }
+     ],
+     "gaps": []
+    }
+   ]
+  },
+  {
+   "name": "home-v3/setup@390",
+   "size": "1700x920",
+   "url": "../2026-11-11-home-v3/home-v3.html",
+   "picture": "home-v3_setup_390_1700x920.png",
+   "errors": [],
+   "pass": false,
+   "failures": 4,
+   "regions": [
+    {
+     "name": "panel",
+     "rows": [
+      {
+       "top": 210.8,
+       "bottom": 226.3,
+       "units": [
+        {
+         "label": "Quick picks",
+         "kind": "text",
+         "sel": "p#qp.lbl",
+         "top": 210.8,
+         "bottom": 226.3,
+         "left": 16,
+         "right": 106.5
+        }
+       ]
+      },
+      {
+       "top": 236.7,
+       "bottom": 284.7,
+       "units": [
+        {
+         "label": "15 min",
+         "kind": "paint",
+         "sel": "button.tm-chip.tm-chip--lg",
+         "top": 236.7,
+         "bottom": 284.7,
+         "left": 16,
+         "right": 130
+        },
+        {
+         "label": "30 min",
+         "kind": "paint",
+         "sel": "button.tm-chip.tm-chip--lg",
+         "top": 236.7,
+         "bottom": 284.7,
+         "left": 138,
+         "right": 252
+        },
+        {
+         "label": "45 min",
+         "kind": "paint",
+         "sel": "button.tm-chip.tm-chip--lg",
+         "top": 236.7,
+         "bottom": 284.7,
+         "left": 260,
+         "right": 374
+        }
+       ]
+      },
+      {
+       "top": 292.7,
+       "bottom": 340.7,
+       "units": [
+        {
+         "label": "1 hour",
+         "kind": "paint",
+         "sel": "button.tm-chip.tm-chip--lg",
+         "top": 292.7,
+         "bottom": 340.7,
+         "left": 16,
+         "right": 130
+        },
+        {
+         "label": "2 hours",
+         "kind": "paint",
+         "sel": "button.tm-chip.tm-chip--lg",
+         "top": 292.7,
+         "bottom": 340.7,
+         "left": 138,
+         "right": 252
+        },
+        {
+         "label": "3 hours",
+         "kind": "paint",
+         "sel": "button.tm-chip.tm-chip--lg",
+         "top": 292.7,
+         "bottom": 340.7,
+         "left": 260,
+         "right": 374
+        }
+       ]
+      },
+      {
+       "top": 378.8,
+       "bottom": 394.3,
+       "units": [
+        {
+         "label": "Custom",
+         "kind": "text",
+         "sel": "p.lbl",
+         "top": 378.8,
+         "bottom": 394.3,
+         "left": 16,
+         "right": 77.5
+        }
+       ]
+      },
+      {
+       "top": 410.3,
+       "bottom": 423.8,
+       "units": [
+        {
+         "label": "Hours",
+         "kind": "text",
+         "sel": "span",
+         "top": 410.3,
+         "bottom": 423.8,
+         "left": 85.8,
+         "right": 125.2
+        },
+        {
+         "label": "Minutes",
+         "kind": "text",
+         "sel": "span",
+         "top": 410.3,
+         "bottom": 423.8,
+         "left": 258.6,
+         "right": 310.4
+        }
+       ]
+      },
+      {
+       "top": 444.9,
+       "bottom": 564,
+       "units": [
+        {
+         "label": "0 1 2 0 15",
+         "kind": "paint",
+         "sel": "div.wheel",
+         "top": 444.9,
+         "bottom": 564,
+         "left": 16,
+         "right": 374
+        }
+       ]
+      }
+     ],
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "Quick picks",
+       "px": 38.1,
+       "expected": 32,
+       "pass": false,
+       "rule": "edge",
+       "note": "content starts this far below the region top",
+       "y1": 172.7,
+       "y2": 210.8,
+       "x1": 16,
+       "x2": 106.5
+      },
+      {
+       "above": "Quick picks",
+       "below": "15 min | 30 min | 45 min",
+       "px": 10.5,
+       "expected": 8,
+       "pass": false,
+       "rule": "pair",
+       "note": "group label → its control",
+       "y1": 226.3,
+       "y2": 236.7,
+       "x1": 260,
+       "x2": 106.5
+      },
+      {
+       "above": "15 min | 30 min | 45 min",
+       "below": "1 hour | 2 hours | 3 hours",
+       "px": 8,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy",
+       "note": "chip grid 8 / 8",
+       "y1": 284.7,
+       "y2": 292.7,
+       "x1": 260,
+       "x2": 130
+      },
+      {
+       "above": "1 hour | 2 hours | 3 hours",
+       "below": "Custom",
+       "px": 38.1,
+       "expected": 32,
+       "pass": false,
+       "rule": "scale",
+       "y1": 340.7,
+       "y2": 378.8,
+       "x1": 260,
+       "x2": 77.5
+      },
+      {
+       "above": "Custom",
+       "below": "Hours | Minutes",
+       "px": 16,
+       "expected": 8,
+       "pass": false,
+       "rule": "pair",
+       "note": "group label → its control",
+       "y1": 394.3,
+       "y2": 410.3,
+       "x1": 258.6,
+       "x2": 77.5
+      },
+      {
+       "above": "Hours | Minutes",
+       "below": "0 1 2 0 15",
+       "px": 21,
+       "expected": 4,
+       "pass": true,
+       "rule": "anatomy",
+       "note": "wheel column heads 4 (component)",
+       "boxPx": 4,
+       "y1": 423.8,
+       "y2": 444.9,
+       "x1": 258.6,
+       "x2": 125.2
+      }
+     ]
+    },
+    {
+     "name": "bar",
+     "rows": [
+      {
+       "top": 749.6,
+       "bottom": 763.1,
+       "units": [
+        {
+         "label": "Available until 7:45 PM",
+         "kind": "text",
+         "sel": "p.until",
+         "top": 749.6,
+         "bottom": 763.1,
+         "left": 122,
+         "right": 268
+        }
+       ]
+      },
+      {
+       "top": 772,
+       "bottom": 828,
+       "units": [
+        {
+         "label": "Set availability",
+         "kind": "paint",
+         "sel": "button.tm-btn.tm-btn--primary.tm-btn--lg",
+         "top": 772,
+         "bottom": 828,
+         "left": 16,
+         "right": 374
+        }
+       ]
+      }
+     ],
+     "gaps": [
+      {
+       "above": "Available until 7:45 PM",
+       "below": "Set availability",
+       "px": 8.9,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy",
+       "note": "bar caption line 8 above its button",
+       "y1": 763.1,
+       "y2": 772,
+       "x1": 122,
+       "x2": 268
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "home-v3/available@390",
+   "size": "1700x920",
+   "url": "../2026-11-11-home-v3/home-v3.html",
+   "picture": "home-v3_available_390_1700x920.png",
+   "errors": [],
+   "pass": true,
+   "failures": 0,
+   "regions": [
+    {
+     "name": "panel",
+     "rows": [
+      {
+       "top": 204.7,
+       "bottom": 413.7,
+       "units": [
+        {
+         "label": "Time remaining 30:00 Add time Prescriptions writ",
+         "kind": "paint",
+         "sel": "div.tm-card.card",
+         "top": 204.7,
+         "bottom": 413.7,
+         "left": 16,
+         "right": 374
+        }
+       ]
+      }
+     ],
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "Time remaining 30:00 Add time Prescriptions writ",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge",
+       "note": "content starts this far below the region top",
+       "y1": 172.7,
+       "y2": 204.7,
+       "x1": 16,
+       "x2": 374
+      }
+     ]
+    },
+    {
+     "name": "bar",
+     "rows": [
+      {
+       "top": 708,
+       "bottom": 764,
+       "units": [
+        {
+         "label": "Request a case",
+         "kind": "paint",
+         "sel": "button.tm-btn.tm-btn--primary.tm-btn--lg",
+         "top": 708,
+         "bottom": 764,
+         "left": 16,
+         "right": 374
+        }
+       ]
+      },
+      {
+       "top": 793.6,
+       "bottom": 811,
+       "units": [
+        {
+         "label": "End availability",
+         "kind": "text",
+         "sel": "button.tm-btn.tm-btn--quiet.tm-btn--lg",
+         "top": 793.6,
+         "bottom": 811,
+         "left": 130.6,
+         "right": 259.3
+        }
+       ]
+      }
+     ],
+     "gaps": [
+      {
+       "above": "Request a case",
+       "below": "End availability",
+       "px": 29.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy",
+       "note": "pinned bar / sheet actions: buttons 8 apart",
+       "boxPx": 8,
+       "y1": 764,
+       "y2": 793.6,
+       "x1": 130.6,
+       "x2": 259.3
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "home-v3/setup@360",
+   "size": "1700x920",
+   "url": "../2026-11-11-home-v3/home-v3.html",
+   "picture": "home-v3_setup_360_1700x920.png",
+   "errors": [],
+   "pass": false,
+   "failures": 4,
+   "regions": [
+    {
+     "name": "panel",
+     "rows": [
+      {
+       "top": 210.8,
+       "bottom": 226.3,
+       "units": [
+        {
+         "label": "Quick picks",
+         "kind": "text",
+         "sel": "p#qp.lbl",
+         "top": 210.8,
+         "bottom": 226.3,
+         "left": 16,
+         "right": 106.5
+        }
+       ]
+      },
+      {
+       "top": 236.7,
+       "bottom": 284.7,
+       "units": [
+        {
+         "label": "15 min",
+         "kind": "paint",
+         "sel": "button.tm-chip.tm-chip--lg",
+         "top": 236.7,
+         "bottom": 284.7,
+         "left": 16,
+         "right": 120
+        },
+        {
+         "label": "30 min",
+         "kind": "paint",
+         "sel": "button.tm-chip.tm-chip--lg",
+         "top": 236.7,
+         "bottom": 284.7,
+         "left": 128,
+         "right": 232
+        },
+        {
+         "label": "45 min",
+         "kind": "paint",
+         "sel": "button.tm-chip.tm-chip--lg",
+         "top": 236.7,
+         "bottom": 284.7,
+         "left": 240,
+         "right": 344
+        }
+       ]
+      },
+      {
+       "top": 292.7,
+       "bottom": 340.7,
+       "units": [
+        {
+         "label": "1 hour",
+         "kind": "paint",
+         "sel": "button.tm-chip.tm-chip--lg",
+         "top": 292.7,
+         "bottom": 340.7,
+         "left": 16,
+         "right": 120
+        },
+        {
+         "label": "2 hours",
+         "kind": "paint",
+         "sel": "button.tm-chip.tm-chip--lg",
+         "top": 292.7,
+         "bottom": 340.7,
+         "left": 128,
+         "right": 232
+        },
+        {
+         "label": "3 hours",
+         "kind": "paint",
+         "sel": "button.tm-chip.tm-chip--lg",
+         "top": 292.7,
+         "bottom": 340.7,
+         "left": 240,
+         "right": 344
+        }
+       ]
+      },
+      {
+       "top": 378.8,
+       "bottom": 394.3,
+       "units": [
+        {
+         "label": "Custom",
+         "kind": "text",
+         "sel": "p.lbl",
+         "top": 378.8,
+         "bottom": 394.3,
+         "left": 16,
+         "right": 77.5
+        }
+       ]
+      },
+      {
+       "top": 410.3,
+       "bottom": 423.8,
+       "units": [
+        {
+         "label": "Hours",
+         "kind": "text",
+         "sel": "span",
+         "top": 410.3,
+         "bottom": 423.8,
+         "left": 78.3,
+         "right": 117.7
+        },
+        {
+         "label": "Minutes",
+         "kind": "text",
+         "sel": "span",
+         "top": 410.3,
+         "bottom": 423.8,
+         "left": 236.1,
+         "right": 287.9
+        }
+       ]
+      },
+      {
+       "top": 444.9,
+       "bottom": 564,
+       "units": [
+        {
+         "label": "0 1 2 0 15",
+         "kind": "paint",
+         "sel": "div.wheel",
+         "top": 444.9,
+         "bottom": 564,
+         "left": 16,
+         "right": 344
+        }
+       ]
+      }
+     ],
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "Quick picks",
+       "px": 38.1,
+       "expected": 32,
+       "pass": false,
+       "rule": "edge",
+       "note": "content starts this far below the region top",
+       "y1": 172.7,
+       "y2": 210.8,
+       "x1": 16,
+       "x2": 106.5
+      },
+      {
+       "above": "Quick picks",
+       "below": "15 min | 30 min | 45 min",
+       "px": 10.5,
+       "expected": 8,
+       "pass": false,
+       "rule": "pair",
+       "note": "group label → its control",
+       "y1": 226.3,
+       "y2": 236.7,
+       "x1": 240,
+       "x2": 106.5
+      },
+      {
+       "above": "15 min | 30 min | 45 min",
+       "below": "1 hour | 2 hours | 3 hours",
+       "px": 8,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy",
+       "note": "chip grid 8 / 8",
+       "y1": 284.7,
+       "y2": 292.7,
+       "x1": 240,
+       "x2": 120
+      },
+      {
+       "above": "1 hour | 2 hours | 3 hours",
+       "below": "Custom",
+       "px": 38.1,
+       "expected": 32,
+       "pass": false,
+       "rule": "scale",
+       "y1": 340.7,
+       "y2": 378.8,
+       "x1": 240,
+       "x2": 77.5
+      },
+      {
+       "above": "Custom",
+       "below": "Hours | Minutes",
+       "px": 16,
+       "expected": 8,
+       "pass": false,
+       "rule": "pair",
+       "note": "group label → its control",
+       "y1": 394.3,
+       "y2": 410.3,
+       "x1": 236.1,
+       "x2": 77.5
+      },
+      {
+       "above": "Hours | Minutes",
+       "below": "0 1 2 0 15",
+       "px": 21,
+       "expected": 4,
+       "pass": true,
+       "rule": "anatomy",
+       "note": "wheel column heads 4 (component)",
+       "boxPx": 4,
+       "y1": 423.8,
+       "y2": 444.9,
+       "x1": 236.1,
+       "x2": 117.7
+      }
+     ]
+    },
+    {
+     "name": "bar",
+     "rows": [
+      {
+       "top": 545.6,
+       "bottom": 559.1,
+       "units": [
+        {
+         "label": "Available until 7:45 PM",
+         "kind": "text",
+         "sel": "p.until",
+         "top": 545.6,
+         "bottom": 559.1,
+         "left": 107,
+         "right": 253
+        }
+       ]
+      },
+      {
+       "top": 568,
+       "bottom": 624,
+       "units": [
+        {
+         "label": "Set availability",
+         "kind": "paint",
+         "sel": "button.tm-btn.tm-btn--primary.tm-btn--lg",
+         "top": 568,
+         "bottom": 624,
+         "left": 16,
+         "right": 344
+        }
+       ]
+      }
+     ],
+     "gaps": [
+      {
+       "above": "Available until 7:45 PM",
+       "below": "Set availability",
+       "px": 8.9,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy",
+       "note": "bar caption line 8 above its button",
+       "y1": 559.1,
+       "y2": 568,
+       "x1": 107,
+       "x2": 253
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "name": "home-v3/available@360",
+   "size": "1700x920",
+   "url": "../2026-11-11-home-v3/home-v3.html",
+   "picture": "home-v3_available_360_1700x920.png",
+   "errors": [],
+   "pass": true,
+   "failures": 0,
+   "regions": [
+    {
+     "name": "panel",
+     "rows": [
+      {
+       "top": 204.7,
+       "bottom": 413.7,
+       "units": [
+        {
+         "label": "Time remaining 30:00 Add time Prescriptions writ",
+         "kind": "paint",
+         "sel": "div.tm-card.card",
+         "top": 204.7,
+         "bottom": 413.7,
+         "left": 16,
+         "right": 344
+        }
+       ]
+      }
+     ],
+     "gaps": [
+      {
+       "above": "panel top edge",
+       "below": "Time remaining 30:00 Add time Prescriptions writ",
+       "px": 32,
+       "expected": 32,
+       "pass": true,
+       "rule": "edge",
+       "note": "content starts this far below the region top",
+       "y1": 172.7,
+       "y2": 204.7,
+       "x1": 16,
+       "x2": 344
+      }
+     ]
+    },
+    {
+     "name": "bar",
+     "rows": [
+      {
+       "top": 504,
+       "bottom": 560,
+       "units": [
+        {
+         "label": "Request a case",
+         "kind": "paint",
+         "sel": "button.tm-btn.tm-btn--primary.tm-btn--lg",
+         "top": 504,
+         "bottom": 560,
+         "left": 16,
+         "right": 344
+        }
+       ]
+      },
+      {
+       "top": 589.6,
+       "bottom": 607,
+       "units": [
+        {
+         "label": "End availability",
+         "kind": "text",
+         "sel": "button.tm-btn.tm-btn--quiet.tm-btn--lg",
+         "top": 589.6,
+         "bottom": 607,
+         "left": 115.6,
+         "right": 244.3
+        }
+       ]
+      }
+     ],
+     "gaps": [
+      {
+       "above": "Request a case",
+       "below": "End availability",
+       "px": 29.6,
+       "expected": 8,
+       "pass": true,
+       "rule": "anatomy",
+       "note": "pinned bar / sheet actions: buttons 8 apart",
+       "boxPx": 8,
+       "y1": 560,
+       "y2": 589.6,
+       "x1": 115.6,
+       "x2": 244.3
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "failures": 50,
+ "pass": false
+}

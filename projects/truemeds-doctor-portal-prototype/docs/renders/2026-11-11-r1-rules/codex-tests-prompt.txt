@@ -1,0 +1,36 @@
+You are writing UNIT TESTS FIRST for a checker that does not exist yet. Write tests only; do not write the checker.
+
+Repo root is the current directory. Write exactly these files and nothing else:
+- design-system/scripts/tests/visible-gaps.test.mjs   (node:test + node:assert/strict)
+- design-system/scripts/tests/fixtures/  (any HTML fixtures you need; inline HTML via page.setContent is also fine)
+
+## What is being checked (decision D-108, Truemeds design system)
+Vertical spacing is measured between VISIBLE edges, never layout boxes:
+- text: the glyph ink box of each line from Range client rects, trimmed to cap height (top) and the font's descender line (bottom), not the line box;
+- filled or bordered shapes (background colour different from the parent's, a visible border, or a box-shadow): their painted border box; their children are not measured separately;
+- images / svg icons: their painted bounds.
+Tap areas (e.g. a transparent `::after` 48 px hit area on an inline link) and reserved empty lines (an empty element that only holds height) add NO visible edge.
+Allowed gaps: 8, 16, 32, each with a tolerance of +/-2 px, plus a page's own listed anatomy exceptions. Anything else fails.
+
+## The module contract (implement tests against exactly this)
+File: design-system/scripts/check-visible-gaps.mjs (ES module). Exports:
+- `async function launchBrowser()` -> a Playwright Browser (Chromium; the module resolves Playwright itself).
+- `async function measurePage(page, options)` -> report object. `page` is a Playwright Page already loaded.
+  options: `{ root?: string = 'body', regions?: [{ name: string, selector: string, edgeTop?: boolean = false }], allowed?: number[] = [8,16,32], tolerance?: number = 2, anatomy?: [{ above: string, below: string, gap: number, note?: string }], atomic?: string[], ignore?: string[] }`.
+  If `regions` is omitted there is one region named 'root' = the root element.
+  `edgeTop: true` means the region element's own top edge counts as the first visible edge (gap from it to the first content row is checked).
+  Units that overlap vertically are merged into one row; gaps are between consecutive rows (row below top minus row above bottom).
+  Report: `{ pass: boolean, failures: number, regions: [{ name, rows: [{ top, bottom, units: [{ label, kind: 'text'|'paint'|'image', top, bottom, left, right }] }], gaps: [{ above: string, below: string, px: number, expected: number, pass: boolean, rule: 'scale'|'anatomy'|'edge' }] }] }`.
+  `px` is rounded to 0.1. `expected` is the matching allowed value (or anatomy value) when passing, else the nearest allowed value. `above` / `below` are short labels (text or a selector-like name) of the two rows.
+- `async function checkVisibleGaps(config)` (CLI core; not needed by your tests).
+
+## Required test cases (each in its own test)
+1. **48 link around 14 text:** a paragraph 14px / 20px line height containing an inline link whose `::after` is an absolutely positioned transparent 48 px tall hit area centred on the link; a filled box below the paragraph. The gap from the paragraph to the box must be the same (+/-0.5) with and without the `::after` hit area, and the text unit's height must be smaller than its 20 px line box (ink trimmed).
+2. **Reserved empty message line:** filled box A (56 tall), then an empty `div` 20 px tall (no text, no paint), then filled box B, laid out so A's bottom to B's top is exactly 32 px of empty space. Expect exactly two rows (the empty line is not a row), one gap of 32 that passes.
+3. **Bordered notice:** a filled box, then 16 px below it a notice with transparent background, 1px solid border, 12 px padding and text inside. The gap must be 16 (+/-0.5) measured to the notice's border, i.e. the notice is one painted unit (kind 'paint') and its text is not a separate row.
+4. **32-gap pass:** two filled boxes 32 px apart -> one gap, px 32, pass true, report.pass true.
+5. **20-gap fail:** two filled boxes 20 px apart -> one gap, px 20, pass false, expected 16 (nearest allowed), report.pass false, failures 1.
+Optional extra tests are welcome (anatomy exception passing a 4 px gap; edgeTop on a painted region; a transparent quiet button measured by its text only), but keep the five above exact.
+
+Use `launchBrowser()` once (before/after hooks), a fresh page per test, viewport 390x844, `page.setContent(html)`; use a generic font stack ('Arial, sans-serif') and plain `div`s with explicit heights and margins so painted-box numbers are exact. Avoid margin collapsing surprises (use a flex column or padding on the parent where it matters). Do not import anything except node built-ins and `../check-visible-gaps.mjs`.
+The tests must currently fail only because the module does not exist yet. Do not run git. Keep the file under ~200 lines.
