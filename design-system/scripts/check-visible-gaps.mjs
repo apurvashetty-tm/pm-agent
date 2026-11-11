@@ -267,7 +267,7 @@ export const D108_RULES = [
   { above: '@groupLabel', below: '*', gap: 8, note: 'group label → its control' },
   { above: '@field', below: '@helper', gap: 8, note: 'field ↔ its helper / message line' },
   { above: '@legal', below: '@button', gap: 8, note: 'legal line ↔ the button it describes' },
-  { above: '@tile', below: '@caption', gap: 16, note: 'unlock tile → caption 16 (D-108 applied)' },
+  { above: '@tile', below: '@caption', gap: 8, note: 'a picture tile ↔ its caption (D-108, corrected 2026-11-11: 8)' },
   // 16 inside one group; a field's own message
   { above: '@field', below: '@notice', gap: 16, note: 'a message about one field: 16 under it' },
   { above: '@card', below: '@card', gap: 16, note: 'cards stacked' },

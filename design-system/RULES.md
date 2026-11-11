@@ -224,7 +224,7 @@ Sign-in, OTP, faster sign-in offer, returning unlock and Home share **one band**
 | Whole-screen notice | At the top of its content, or under the thing it blocks (locked, unavailable), then **32** to the next thing. | §9.5 |
 | Inline primary (typing screens) | **32** below the group above it. **8** under a legal line that describes it. Kept visible above the keyboard by scrolling, 16 clear (§8.9). | §8.4 |
 | Pinned bar | Padding 16 + safe area. Buttons 56/18, primary → quiet, 8 apart (box). Bar notice: full-width band, centred, 16 above its button. Caption line ("Available until 7:45 PM"): L3 centred, 8 above its button. The content scrolls, with ≥ 16 clear at the end. | `.tm-actionbar`, §9.5 |
-| Hero tile | 64 tile, radius lg, brand-subtle, 32 glyph, centred, at panel top + 32. Then **32** to the content under it (offer: → points). Unlock: tile → **16** → caption. | `--tm-icon-tile-size` |
+| Hero tile | 64 tile, radius lg, brand-subtle, 32 glyph, centred, at panel top + 32. Then **32** to the content under it (offer: → points). Unlock: tile → **8** → caption (a tile and its caption join; D-108 corrected 2026-11-11). | `--tm-icon-tile-size` |
 | Points | Neutral 24 icon · 12 · title 16/24 **semibold** · line 14/20 grey; title → line 8; **16** between points. | §8.11 |
 | Card rows | One `tm-card`. Rows: padding 16, a hairline between rows. Grey icon · label 16/24 regular · value L9. Cards stacked 16 apart. | `.tm-card`, L9 |
 | Links | Brand colour. Semibold when the link is the line's action (Change, Resend code, Sign up), as `.tm-link` with a 48 hit area that adds no height. Regular inside legal text (`.tm-link--in-sentence`). Visible focus. | §8.6, §9.1 |
