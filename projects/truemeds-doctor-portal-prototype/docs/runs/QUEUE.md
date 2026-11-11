@@ -14,4 +14,4 @@ Main thread edits this file; the runner only ticks lines.
 - [x] Run docs/renders/2026-11-10-wheel-keyboard/TERMINAL-BRIEF.md
 - [x] Run docs/renders/2026-11-10-d105/TERMINAL-BRIEF.md
 - [x] Run docs/renders/2026-11-11-home-blocks-review/TERMINAL-BRIEF.md
-- [ ] Run docs/renders/2026-11-11-home-render/TERMINAL-BRIEF.md
+- [x] Run docs/renders/2026-11-11-home-render/TERMINAL-BRIEF.md
