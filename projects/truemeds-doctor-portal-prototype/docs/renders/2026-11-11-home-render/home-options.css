@@ -1,0 +1,61 @@
+/* Home render options (2026-11-11 agreed blocks). Copy of ui-screens/home/home-reference.css, trimmed to Home,
+   with the agreed blocks. Tokens only. Spacing 8 / 16 / 32 (RULES §8.3). */
+*{box-sizing:border-box}
+body{margin:0;background:var(--tm-surface-secondary)}
+html.capture .review{display:none}
+.review{max-width:390px;margin:var(--tm-space-lg) auto;display:flex;flex-direction:column;gap:var(--tm-space-sm);font-size:var(--tm-font-size-body-md);line-height:var(--tm-font-lineheight-sm)}   /* raw-ok: review controls match the 390 phone width (not app UI) */
+.review p{margin:0;color:var(--tm-content-secondary)}
+.phone{width:100%;height:100dvh;margin:0;position:relative;overflow:hidden;display:flex;flex-direction:column;background:var(--tm-surface-brand-subtle);color:var(--tm-content-primary);transform:translateZ(0)}   /* raw-ok: RULES §7 below 768 the app is the screen (100dvh), copied from the approved reference */
+@media (min-width:768px){.phone{height:clamp(640px,calc(100vh - 48px),844px);width:calc(clamp(640px,calc(100vh - 48px),844px) * 390 / 844);margin:auto;border:1px solid var(--tm-border-subtle);border-radius:var(--tm-radius-2xl);box-shadow:var(--tm-shadow-header)}}   /* raw-ok: RULES §7 desktop frame geometry, copied from the approved reference */
+#background{flex:1;min-height:0;display:flex;flex-direction:column}
+
+/* Header unchanged (D-42, A-07). */
+.header{flex:none;display:flex;align-items:center;justify-content:space-between;padding:var(--tm-space-lg) var(--tm-space-lg) 0 var(--tm-space-page)}
+.logo{width:166px;height:auto;align-self:flex-start}   /* raw-ok: A-07 lockup width, RULES §8.13 */
+.header-actions{display:flex;gap:var(--tm-space-xs);margin:-9px -14px -9px 0}   /* raw-ok: D-67 48px targets step out 14px; copied from the approved reference */
+
+/* Agreed 1: band — logo → title 32 (was 48, L6); title 24/32 (planned rule change: Home band title size). */
+.band{flex:none;padding:var(--tm-space-2xl) var(--tm-space-page) var(--tm-space-2xl)}
+.band-title{margin:0;font-size:var(--tm-font-size-title-md);line-height:var(--tm-font-lineheight-xl);font-weight:var(--tm-font-weight-semibold);color:var(--tm-content-primary);text-wrap:balance}
+.sub{margin:var(--tm-space-sm) 0 0;font-size:var(--tm-font-size-body-md);line-height:var(--tm-font-lineheight-sm);color:var(--tm-content-secondary)}
+
+.panel{flex:1;min-height:0;display:flex;flex-direction:column;background:var(--tm-surface-primary);border-radius:var(--tm-radius-2xl) var(--tm-radius-2xl) 0 0;padding:var(--tm-space-2xl) var(--tm-space-page) var(--tm-space-xl)}
+.scroll{flex:1 1 auto;min-height:0;overflow-y:auto;margin:0 calc(-1 * var(--tm-space-page));padding:0 var(--tm-space-page) var(--tm-space-lg)}   /* the scroll spans the panel so card shadows are not clipped */
+.panel > .status{flex:none;margin:0 0 var(--tm-space-lg)}
+.footer{flex:none;margin:0 calc(-1 * var(--tm-space-page)) calc(-1 * var(--tm-space-xl))}
+
+/* Agreed 2: rows — neutral icon · label on top (16 regular) · L9 value below. Same anatomy for both rows. */
+.stat{display:flex;gap:var(--tm-space-lg);align-items:flex-start}
+.stat > .tm-icon{flex:none;color:var(--tm-content-secondary);margin-top:var(--tm-space-2xs)}   /* RULES §8.11 neutral icon, centred on the 24 label line */
+.stat-main{flex:1;min-width:0}
+.stat-label{margin:0;font-size:var(--tm-font-size-body-lg);line-height:var(--tm-font-lineheight-md);color:var(--tm-content-primary)}
+/* Agreed 6: the value line holds the timer and a reserved Add-time slot, so nothing moves when it appears. */
+.stat-value{display:flex;align-items:center;justify-content:space-between;gap:var(--tm-space-sm);min-height:var(--tm-target-min)}
+.stat-value .slot{flex:none}
+.stat-value .slot.is-empty{visibility:hidden}
+.stats .tm-divider{margin:var(--tm-space-lg) 0}
+.stats-stack{display:flex;flex-direction:column;gap:var(--tm-space-lg)}   /* option B: cards stacked 16 apart (RULES §8.3) */
+
+/* Setup: section title + range, sub-labels, chips, wheel. */
+.section-title{margin:0;font-size:var(--tm-font-size-body-lg);line-height:var(--tm-font-lineheight-md);font-weight:var(--tm-font-weight-semibold);color:var(--tm-content-primary)}
+.hint{margin:var(--tm-space-sm) 0 0;font-size:var(--tm-font-size-body-md);line-height:var(--tm-font-lineheight-sm);color:var(--tm-content-secondary)}
+.sublabel{margin:var(--tm-space-lg) 0 var(--tm-space-sm);font-size:var(--tm-font-size-body-md);line-height:var(--tm-font-lineheight-sm);color:var(--tm-content-secondary)}
+.ended-count{margin-bottom:var(--tm-space-2xl)}
+.opt-c .ended-count{margin-bottom:var(--tm-space-lg)}   /* option C: two cards stacked, 16 apart */
+.presets{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--tm-space-sm)}   /* D-36 Home exception to the 4-column grid (W7) */
+.presets .tm-chip{justify-content:center}
+/* Approved wheel (D-40): one light-blue band, divider inside, large blue selected values, grey neighbours. */
+.col-heads{display:grid;grid-template-columns:1fr 1fr;text-align:center;margin-bottom:var(--tm-space-xs);font-size:var(--tm-font-size-body-md);line-height:var(--tm-font-lineheight-sm);color:var(--tm-content-secondary)}
+.columns{position:relative;display:grid;grid-template-columns:1fr 1fr;height:144px}   /* raw-ok: three 48px wheel rows, copied from the approved reference */
+.wheel-band{position:absolute;left:0;right:0;top:48px;height:48px;border-radius:var(--tm-radius-md);background:var(--tm-surface-brand-subtle);pointer-events:none}   /* raw-ok: one 48px wheel row, copied from the approved reference */
+.wheel-band::after{content:'';position:absolute;left:50%;top:var(--tm-space-xs);bottom:var(--tm-space-xs);width:1px;background:var(--tm-border-default)}   /* raw-ok: hairline divider, copied from the approved reference */
+.wheel{position:relative;z-index:1;display:flex;flex-direction:column;border-radius:var(--tm-radius-md)}   /* raw-ok: z-index 1 lifts the wheel values above its own band (local stacking), as the approved reference */
+.wheel-item{height:48px;display:flex;align-items:center;justify-content:center;font-size:var(--tm-font-size-title-md);line-height:var(--tm-font-lineheight-lg);color:var(--tm-content-secondary)}   /* raw-ok: 48px wheel row, copied from the approved reference */
+.wheel-item.is-selected{color:var(--tm-content-brand);font-size:var(--tm-font-size-title-lg);line-height:var(--tm-font-lineheight-2xl);font-weight:var(--tm-font-weight-semibold)}
+.is-busy .wheel-item:not(.is-selected){color:var(--tm-content-disabled)}   /* D-81 F9: wheel locked while Setting… / Adding… */
+
+/* Sheets inside the frame (RULES §9.4); the scrim comes from the central .tm-overlay. */
+.overlay{display:flex;flex-direction:column;justify-content:flex-end}
+.tm-sheet .hint{margin-top:var(--tm-space-sm)}
+.sheet-picker .sublabel:first-child{margin-top:var(--tm-space-lg)}
+[hidden]{display:none!important}

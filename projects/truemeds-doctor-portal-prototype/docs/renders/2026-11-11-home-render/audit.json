@@ -1,0 +1,1070 @@
+{
+ "a_setup-pick_w390x844": {
+  "logoToTitle": 32,
+  "titleLines": 1,
+  "bandBottom": 181,
+  "scrollOverflow": 0,
+  "lastContentBottom": 625,
+  "barTop": 756,
+  "barCoversLast": false,
+  "valueStyles": [],
+  "smallTargets": [],
+  "overflowX": []
+ },
+ "a_setup-pick_w360x640": {
+  "logoToTitle": 32,
+  "titleLines": 1,
+  "bandBottom": 181,
+  "scrollOverflow": 89,
+  "lastContentBottom": 536,
+  "barTop": 552,
+  "barCoversLast": false,
+  "valueStyles": [],
+  "smallTargets": [],
+  "overflowX": []
+ },
+ "a_setup-custom_w390x844": {
+  "logoToTitle": 32,
+  "titleLines": 1,
+  "bandBottom": 181,
+  "scrollOverflow": 0,
+  "lastContentBottom": 625,
+  "barTop": 756,
+  "barCoversLast": false,
+  "valueStyles": [],
+  "smallTargets": [],
+  "overflowX": []
+ },
+ "a_setup-custom_w360x640": {
+  "logoToTitle": 32,
+  "titleLines": 1,
+  "bandBottom": 181,
+  "scrollOverflow": 89,
+  "lastContentBottom": 536,
+  "barTop": 552,
+  "barCoversLast": false,
+  "valueStyles": [],
+  "smallTargets": [],
+  "overflowX": []
+ },
+ "a_setting_w390x844": {
+  "logoToTitle": 32,
+  "titleLines": 1,
+  "bandBottom": 181,
+  "scrollOverflow": 0,
+  "lastContentBottom": 625,
+  "barTop": 756,
+  "barCoversLast": false,
+  "valueStyles": [],
+  "smallTargets": [],
+  "overflowX": []
+ },
+ "a_setting_w360x640": {
+  "logoToTitle": 32,
+  "titleLines": 1,
+  "bandBottom": 181,
+  "scrollOverflow": 89,
+  "lastContentBottom": 536,
+  "barTop": 552,
+  "barCoversLast": false,
+  "valueStyles": [],
+  "smallTargets": [],
+  "overflowX": []
+ },
+ "a_available_w390x844": {
+  "logoToTitle": 32,
+  "titleLines": 2,
+  "bandBottom": 213,
+  "scrollOverflow": 0,
+  "lastContentBottom": 454,
+  "barTop": 692,
+  "barCoversLast": false,
+  "valueRight": 156,
+  "slotLeft": 243,
+  "valueSlotGap": 87,
+  "valueStyles": [
+   "32px/40px 600 tabular-nums"
+  ],
+  "smallTargets": [],
+  "overflowX": []
+ },
+ "a_available_w360x640": {
+  "logoToTitle": 32,
+  "titleLines": 2,
+  "bandBottom": 213,
+  "scrollOverflow": 0,
+  "lastContentBottom": 454,
+  "barTop": 488,
+  "barCoversLast": false,
+  "valueRight": 156,
+  "slotLeft": 213,
+  "valueSlotGap": 57,
+  "valueStyles": [
+   "32px/40px 600 tabular-nums"
+  ],
+  "smallTargets": [],
+  "overflowX": []
+ },
+ "a_near-expiry_w390x844": {
+  "logoToTitle": 32,
+  "titleLines": 2,
+  "bandBottom": 213,
+  "scrollOverflow": 0,
+  "lastContentBottom": 454,
+  "barTop": 645,
+  "barCoversLast": false,
+  "valueRight": 137,
+  "slotLeft": 243,
+  "valueSlotGap": 106,
+  "valueStyles": [
+   "32px/40px 600 tabular-nums"
+  ],
+  "smallTargets": [],
+  "overflowX": []
+ },
+ "a_near-expiry_w360x640": {
+  "logoToTitle": 32,
+  "titleLines": 2,
+  "bandBottom": 213,
+  "scrollOverflow": 49,
+  "lastContentBottom": 405,
+  "barTop": 421,
+  "barCoversLast": false,
+  "valueRight": 137,
+  "slotLeft": 213,
+  "valueSlotGap": 76,
+  "valueStyles": [
+   "32px/40px 600 tabular-nums"
+  ],
+  "smallTargets": [],
+  "overflowX": []
+ },
+ "a_add-cap_w390x844": {
+  "logoToTitle": 32,
+  "titleLines": 2,
+  "bandBottom": 213,
+  "scrollOverflow": 0,
+  "lastContentBottom": 454,
+  "barTop": 645,
+  "barCoversLast": false,
+  "valueRight": 137,
+  "slotLeft": 243,
+  "valueSlotGap": 106,
+  "valueStyles": [
+   "32px/40px 600 tabular-nums"
+  ],
+  "smallTargets": [],
+  "overflowX": [
+   "tm-sheet__header"
+  ],
+  "sheetTop": 184,
+  "sheetHeightPct": 78,
+  "sheetActionsBottom": 844
+ },
+ "a_add-cap_w360x640": {
+  "logoToTitle": 32,
+  "titleLines": 2,
+  "bandBottom": 213,
+  "scrollOverflow": 49,
+  "lastContentBottom": 405,
+  "barTop": 421,
+  "barCoversLast": false,
+  "valueRight": 137,
+  "slotLeft": 213,
+  "valueSlotGap": 76,
+  "valueStyles": [
+   "32px/40px 600 tabular-nums"
+  ],
+  "smallTargets": [],
+  "overflowX": [
+   "tm-sheet__header"
+  ],
+  "sheetTop": 96,
+  "sheetHeightPct": 85,
+  "sheetActionsBottom": 640
+ },
+ "a_stop-pending_w390x844": {
+  "logoToTitle": 32,
+  "titleLines": 1,
+  "bandBottom": 181,
+  "scrollOverflow": 0,
+  "lastContentBottom": 399,
+  "barTop": 692,
+  "barCoversLast": false,
+  "valueStyles": [
+   "32px/40px 600 tabular-nums"
+  ],
+  "smallTargets": [],
+  "overflowX": []
+ },
+ "a_stop-pending_w360x640": {
+  "logoToTitle": 32,
+  "titleLines": 1,
+  "bandBottom": 181,
+  "scrollOverflow": 0,
+  "lastContentBottom": 399,
+  "barTop": 488,
+  "barCoversLast": false,
+  "valueStyles": [
+   "32px/40px 600 tabular-nums"
+  ],
+  "smallTargets": [],
+  "overflowX": []
+ },
+ "a_ended_w390x844": {
+  "logoToTitle": 32,
+  "titleLines": 1,
+  "bandBottom": 181,
+  "scrollOverflow": 103,
+  "lastContentBottom": 740,
+  "barTop": 756,
+  "barCoversLast": false,
+  "valueStyles": [
+   "32px/40px 600 tabular-nums"
+  ],
+  "smallTargets": [],
+  "overflowX": []
+ },
+ "a_ended_w360x640": {
+  "logoToTitle": 32,
+  "titleLines": 1,
+  "bandBottom": 181,
+  "scrollOverflow": 307,
+  "lastContentBottom": 536,
+  "barTop": 552,
+  "barCoversLast": false,
+  "valueStyles": [
+   "32px/40px 600 tabular-nums"
+  ],
+  "smallTargets": [],
+  "overflowX": []
+ },
+ "a_offline_w390x844": {
+  "logoToTitle": 32,
+  "titleLines": 2,
+  "bandBottom": 213,
+  "scrollOverflow": 0,
+  "lastContentBottom": 454,
+  "barTop": 645,
+  "barCoversLast": false,
+  "valueRight": 156,
+  "slotLeft": 243,
+  "valueSlotGap": 87,
+  "valueStyles": [
+   "32px/40px 600 tabular-nums"
+  ],
+  "smallTargets": [],
+  "overflowX": []
+ },
+ "a_offline_w360x640": {
+  "logoToTitle": 32,
+  "titleLines": 2,
+  "bandBottom": 213,
+  "scrollOverflow": 29,
+  "lastContentBottom": 425,
+  "barTop": 441,
+  "barCoversLast": false,
+  "valueRight": 156,
+  "slotLeft": 213,
+  "valueSlotGap": 57,
+  "valueStyles": [
+   "32px/40px 600 tabular-nums"
+  ],
+  "smallTargets": [],
+  "overflowX": []
+ },
+ "a_ended-zero_w390x844": {
+  "logoToTitle": 32,
+  "titleLines": 1,
+  "bandBottom": 181,
+  "scrollOverflow": 0,
+  "lastContentBottom": 707,
+  "barTop": 756,
+  "barCoversLast": false,
+  "valueStyles": [],
+  "smallTargets": [],
+  "overflowX": []
+ },
+ "a_ended-zero_w360x640": {
+  "logoToTitle": 32,
+  "titleLines": 1,
+  "bandBottom": 181,
+  "scrollOverflow": 171,
+  "lastContentBottom": 536,
+  "barTop": 552,
+  "barCoversLast": false,
+  "valueStyles": [],
+  "smallTargets": [],
+  "overflowX": []
+ },
+ "a_setup-max_w390x844": {
+  "logoToTitle": 32,
+  "titleLines": 1,
+  "bandBottom": 181,
+  "scrollOverflow": 0,
+  "lastContentBottom": 625,
+  "barTop": 756,
+  "barCoversLast": false,
+  "valueStyles": [],
+  "smallTargets": [],
+  "overflowX": []
+ },
+ "a_setup-max_w360x640": {
+  "logoToTitle": 32,
+  "titleLines": 1,
+  "bandBottom": 181,
+  "scrollOverflow": 89,
+  "lastContentBottom": 536,
+  "barTop": 552,
+  "barCoversLast": false,
+  "valueStyles": [],
+  "smallTargets": [],
+  "overflowX": []
+ },
+ "a_available-long_w390x844": {
+  "logoToTitle": 32,
+  "titleLines": 2,
+  "bandBottom": 213,
+  "scrollOverflow": 0,
+  "lastContentBottom": 454,
+  "barTop": 692,
+  "barCoversLast": false,
+  "valueRight": 186,
+  "slotLeft": 243,
+  "valueSlotGap": 57,
+  "valueStyles": [
+   "32px/40px 600 tabular-nums"
+  ],
+  "smallTargets": [],
+  "overflowX": []
+ },
+ "a_available-long_w360x640": {
+  "logoToTitle": 32,
+  "titleLines": 2,
+  "bandBottom": 213,
+  "scrollOverflow": 0,
+  "lastContentBottom": 454,
+  "barTop": 488,
+  "barCoversLast": false,
+  "valueRight": 186,
+  "slotLeft": 213,
+  "valueSlotGap": 27,
+  "valueStyles": [
+   "32px/40px 600 tabular-nums"
+  ],
+  "smallTargets": [],
+  "overflowX": []
+ },
+ "b_setup-pick_w390x844": {
+  "logoToTitle": 32,
+  "titleLines": 1,
+  "bandBottom": 181,
+  "scrollOverflow": 0,
+  "lastContentBottom": 625,
+  "barTop": 756,
+  "barCoversLast": false,
+  "valueStyles": [],
+  "smallTargets": [],
+  "overflowX": []
+ },
+ "b_setup-pick_w360x640": {
+  "logoToTitle": 32,
+  "titleLines": 1,
+  "bandBottom": 181,
+  "scrollOverflow": 89,
+  "lastContentBottom": 536,
+  "barTop": 552,
+  "barCoversLast": false,
+  "valueStyles": [],
+  "smallTargets": [],
+  "overflowX": []
+ },
+ "b_setup-custom_w390x844": {
+  "logoToTitle": 32,
+  "titleLines": 1,
+  "bandBottom": 181,
+  "scrollOverflow": 0,
+  "lastContentBottom": 625,
+  "barTop": 756,
+  "barCoversLast": false,
+  "valueStyles": [],
+  "smallTargets": [],
+  "overflowX": []
+ },
+ "b_setup-custom_w360x640": {
+  "logoToTitle": 32,
+  "titleLines": 1,
+  "bandBottom": 181,
+  "scrollOverflow": 89,
+  "lastContentBottom": 536,
+  "barTop": 552,
+  "barCoversLast": false,
+  "valueStyles": [],
+  "smallTargets": [],
+  "overflowX": []
+ },
+ "b_setting_w390x844": {
+  "logoToTitle": 32,
+  "titleLines": 1,
+  "bandBottom": 181,
+  "scrollOverflow": 0,
+  "lastContentBottom": 625,
+  "barTop": 756,
+  "barCoversLast": false,
+  "valueStyles": [],
+  "smallTargets": [],
+  "overflowX": []
+ },
+ "b_setting_w360x640": {
+  "logoToTitle": 32,
+  "titleLines": 1,
+  "bandBottom": 181,
+  "scrollOverflow": 89,
+  "lastContentBottom": 536,
+  "barTop": 552,
+  "barCoversLast": false,
+  "valueStyles": [],
+  "smallTargets": [],
+  "overflowX": []
+ },
+ "b_available_w390x844": {
+  "logoToTitle": 32,
+  "titleLines": 2,
+  "bandBottom": 213,
+  "scrollOverflow": 0,
+  "lastContentBottom": 469,
+  "barTop": 692,
+  "barCoversLast": false,
+  "valueRight": 156,
+  "slotLeft": 243,
+  "valueSlotGap": 87,
+  "valueStyles": [
+   "32px/40px 600 tabular-nums"
+  ],
+  "smallTargets": [],
+  "overflowX": []
+ },
+ "b_available_w360x640": {
+  "logoToTitle": 32,
+  "titleLines": 2,
+  "bandBottom": 213,
+  "scrollOverflow": 0,
+  "lastContentBottom": 469,
+  "barTop": 488,
+  "barCoversLast": false,
+  "valueRight": 156,
+  "slotLeft": 213,
+  "valueSlotGap": 57,
+  "valueStyles": [
+   "32px/40px 600 tabular-nums"
+  ],
+  "smallTargets": [],
+  "overflowX": []
+ },
+ "b_near-expiry_w390x844": {
+  "logoToTitle": 32,
+  "titleLines": 2,
+  "bandBottom": 213,
+  "scrollOverflow": 0,
+  "lastContentBottom": 469,
+  "barTop": 645,
+  "barCoversLast": false,
+  "valueRight": 137,
+  "slotLeft": 243,
+  "valueSlotGap": 106,
+  "valueStyles": [
+   "32px/40px 600 tabular-nums"
+  ],
+  "smallTargets": [],
+  "overflowX": []
+ },
+ "b_near-expiry_w360x640": {
+  "logoToTitle": 32,
+  "titleLines": 2,
+  "bandBottom": 213,
+  "scrollOverflow": 64,
+  "lastContentBottom": 405,
+  "barTop": 421,
+  "barCoversLast": false,
+  "valueRight": 137,
+  "slotLeft": 213,
+  "valueSlotGap": 76,
+  "valueStyles": [
+   "32px/40px 600 tabular-nums"
+  ],
+  "smallTargets": [],
+  "overflowX": []
+ },
+ "b_add-cap_w390x844": {
+  "logoToTitle": 32,
+  "titleLines": 2,
+  "bandBottom": 213,
+  "scrollOverflow": 0,
+  "lastContentBottom": 469,
+  "barTop": 645,
+  "barCoversLast": false,
+  "valueRight": 137,
+  "slotLeft": 243,
+  "valueSlotGap": 106,
+  "valueStyles": [
+   "32px/40px 600 tabular-nums"
+  ],
+  "smallTargets": [],
+  "overflowX": [
+   "tm-sheet__header"
+  ],
+  "sheetTop": 184,
+  "sheetHeightPct": 78,
+  "sheetActionsBottom": 844
+ },
+ "b_add-cap_w360x640": {
+  "logoToTitle": 32,
+  "titleLines": 2,
+  "bandBottom": 213,
+  "scrollOverflow": 64,
+  "lastContentBottom": 405,
+  "barTop": 421,
+  "barCoversLast": false,
+  "valueRight": 137,
+  "slotLeft": 213,
+  "valueSlotGap": 76,
+  "valueStyles": [
+   "32px/40px 600 tabular-nums"
+  ],
+  "smallTargets": [],
+  "overflowX": [
+   "tm-sheet__header"
+  ],
+  "sheetTop": 96,
+  "sheetHeightPct": 85,
+  "sheetActionsBottom": 640
+ },
+ "b_stop-pending_w390x844": {
+  "logoToTitle": 32,
+  "titleLines": 1,
+  "bandBottom": 181,
+  "scrollOverflow": 0,
+  "lastContentBottom": 399,
+  "barTop": 692,
+  "barCoversLast": false,
+  "valueStyles": [
+   "32px/40px 600 tabular-nums"
+  ],
+  "smallTargets": [],
+  "overflowX": []
+ },
+ "b_stop-pending_w360x640": {
+  "logoToTitle": 32,
+  "titleLines": 1,
+  "bandBottom": 181,
+  "scrollOverflow": 0,
+  "lastContentBottom": 399,
+  "barTop": 488,
+  "barCoversLast": false,
+  "valueStyles": [
+   "32px/40px 600 tabular-nums"
+  ],
+  "smallTargets": [],
+  "overflowX": []
+ },
+ "b_ended_w390x844": {
+  "logoToTitle": 32,
+  "titleLines": 1,
+  "bandBottom": 181,
+  "scrollOverflow": 103,
+  "lastContentBottom": 740,
+  "barTop": 756,
+  "barCoversLast": false,
+  "valueStyles": [
+   "32px/40px 600 tabular-nums"
+  ],
+  "smallTargets": [],
+  "overflowX": []
+ },
+ "b_ended_w360x640": {
+  "logoToTitle": 32,
+  "titleLines": 1,
+  "bandBottom": 181,
+  "scrollOverflow": 307,
+  "lastContentBottom": 536,
+  "barTop": 552,
+  "barCoversLast": false,
+  "valueStyles": [
+   "32px/40px 600 tabular-nums"
+  ],
+  "smallTargets": [],
+  "overflowX": []
+ },
+ "b_offline_w390x844": {
+  "logoToTitle": 32,
+  "titleLines": 2,
+  "bandBottom": 213,
+  "scrollOverflow": 0,
+  "lastContentBottom": 469,
+  "barTop": 645,
+  "barCoversLast": false,
+  "valueRight": 156,
+  "slotLeft": 243,
+  "valueSlotGap": 87,
+  "valueStyles": [
+   "32px/40px 600 tabular-nums"
+  ],
+  "smallTargets": [],
+  "overflowX": []
+ },
+ "b_offline_w360x640": {
+  "logoToTitle": 32,
+  "titleLines": 2,
+  "bandBottom": 213,
+  "scrollOverflow": 44,
+  "lastContentBottom": 425,
+  "barTop": 441,
+  "barCoversLast": false,
+  "valueRight": 156,
+  "slotLeft": 213,
+  "valueSlotGap": 57,
+  "valueStyles": [
+   "32px/40px 600 tabular-nums"
+  ],
+  "smallTargets": [],
+  "overflowX": []
+ },
+ "b_ended-zero_w390x844": {
+  "logoToTitle": 32,
+  "titleLines": 1,
+  "bandBottom": 181,
+  "scrollOverflow": 0,
+  "lastContentBottom": 707,
+  "barTop": 756,
+  "barCoversLast": false,
+  "valueStyles": [],
+  "smallTargets": [],
+  "overflowX": []
+ },
+ "b_ended-zero_w360x640": {
+  "logoToTitle": 32,
+  "titleLines": 1,
+  "bandBottom": 181,
+  "scrollOverflow": 171,
+  "lastContentBottom": 536,
+  "barTop": 552,
+  "barCoversLast": false,
+  "valueStyles": [],
+  "smallTargets": [],
+  "overflowX": []
+ },
+ "b_setup-max_w390x844": {
+  "logoToTitle": 32,
+  "titleLines": 1,
+  "bandBottom": 181,
+  "scrollOverflow": 0,
+  "lastContentBottom": 625,
+  "barTop": 756,
+  "barCoversLast": false,
+  "valueStyles": [],
+  "smallTargets": [],
+  "overflowX": []
+ },
+ "b_setup-max_w360x640": {
+  "logoToTitle": 32,
+  "titleLines": 1,
+  "bandBottom": 181,
+  "scrollOverflow": 89,
+  "lastContentBottom": 536,
+  "barTop": 552,
+  "barCoversLast": false,
+  "valueStyles": [],
+  "smallTargets": [],
+  "overflowX": []
+ },
+ "b_available-long_w390x844": {
+  "logoToTitle": 32,
+  "titleLines": 2,
+  "bandBottom": 213,
+  "scrollOverflow": 0,
+  "lastContentBottom": 469,
+  "barTop": 692,
+  "barCoversLast": false,
+  "valueRight": 186,
+  "slotLeft": 243,
+  "valueSlotGap": 57,
+  "valueStyles": [
+   "32px/40px 600 tabular-nums"
+  ],
+  "smallTargets": [],
+  "overflowX": []
+ },
+ "b_available-long_w360x640": {
+  "logoToTitle": 32,
+  "titleLines": 2,
+  "bandBottom": 213,
+  "scrollOverflow": 0,
+  "lastContentBottom": 469,
+  "barTop": 488,
+  "barCoversLast": false,
+  "valueRight": 186,
+  "slotLeft": 213,
+  "valueSlotGap": 27,
+  "valueStyles": [
+   "32px/40px 600 tabular-nums"
+  ],
+  "smallTargets": [],
+  "overflowX": []
+ },
+ "c_setup-pick_w390x844": {
+  "logoToTitle": 32,
+  "titleLines": 1,
+  "bandBottom": 181,
+  "scrollOverflow": 0,
+  "lastContentBottom": 657,
+  "barTop": 756,
+  "barCoversLast": false,
+  "valueStyles": [],
+  "smallTargets": [],
+  "overflowX": []
+ },
+ "c_setup-pick_w360x640": {
+  "logoToTitle": 32,
+  "titleLines": 1,
+  "bandBottom": 181,
+  "scrollOverflow": 121,
+  "lastContentBottom": 536,
+  "barTop": 552,
+  "barCoversLast": false,
+  "valueStyles": [],
+  "smallTargets": [],
+  "overflowX": []
+ },
+ "c_setup-custom_w390x844": {
+  "logoToTitle": 32,
+  "titleLines": 1,
+  "bandBottom": 181,
+  "scrollOverflow": 0,
+  "lastContentBottom": 657,
+  "barTop": 756,
+  "barCoversLast": false,
+  "valueStyles": [],
+  "smallTargets": [],
+  "overflowX": []
+ },
+ "c_setup-custom_w360x640": {
+  "logoToTitle": 32,
+  "titleLines": 1,
+  "bandBottom": 181,
+  "scrollOverflow": 121,
+  "lastContentBottom": 536,
+  "barTop": 552,
+  "barCoversLast": false,
+  "valueStyles": [],
+  "smallTargets": [],
+  "overflowX": []
+ },
+ "c_setting_w390x844": {
+  "logoToTitle": 32,
+  "titleLines": 1,
+  "bandBottom": 181,
+  "scrollOverflow": 0,
+  "lastContentBottom": 657,
+  "barTop": 756,
+  "barCoversLast": false,
+  "valueStyles": [],
+  "smallTargets": [],
+  "overflowX": []
+ },
+ "c_setting_w360x640": {
+  "logoToTitle": 32,
+  "titleLines": 1,
+  "bandBottom": 181,
+  "scrollOverflow": 121,
+  "lastContentBottom": 536,
+  "barTop": 552,
+  "barCoversLast": false,
+  "valueStyles": [],
+  "smallTargets": [],
+  "overflowX": []
+ },
+ "c_available_w390x844": {
+  "logoToTitle": 32,
+  "titleLines": 2,
+  "bandBottom": 213,
+  "scrollOverflow": 0,
+  "lastContentBottom": 454,
+  "barTop": 692,
+  "barCoversLast": false,
+  "valueRight": 156,
+  "slotLeft": 243,
+  "valueSlotGap": 87,
+  "valueStyles": [
+   "32px/40px 600 tabular-nums"
+  ],
+  "smallTargets": [],
+  "overflowX": []
+ },
+ "c_available_w360x640": {
+  "logoToTitle": 32,
+  "titleLines": 2,
+  "bandBottom": 213,
+  "scrollOverflow": 0,
+  "lastContentBottom": 454,
+  "barTop": 488,
+  "barCoversLast": false,
+  "valueRight": 156,
+  "slotLeft": 213,
+  "valueSlotGap": 57,
+  "valueStyles": [
+   "32px/40px 600 tabular-nums"
+  ],
+  "smallTargets": [],
+  "overflowX": []
+ },
+ "c_near-expiry_w390x844": {
+  "logoToTitle": 32,
+  "titleLines": 2,
+  "bandBottom": 213,
+  "scrollOverflow": 0,
+  "lastContentBottom": 454,
+  "barTop": 645,
+  "barCoversLast": false,
+  "valueRight": 137,
+  "slotLeft": 243,
+  "valueSlotGap": 106,
+  "valueStyles": [
+   "32px/40px 600 tabular-nums"
+  ],
+  "smallTargets": [],
+  "overflowX": []
+ },
+ "c_near-expiry_w360x640": {
+  "logoToTitle": 32,
+  "titleLines": 2,
+  "bandBottom": 213,
+  "scrollOverflow": 49,
+  "lastContentBottom": 405,
+  "barTop": 421,
+  "barCoversLast": false,
+  "valueRight": 137,
+  "slotLeft": 213,
+  "valueSlotGap": 76,
+  "valueStyles": [
+   "32px/40px 600 tabular-nums"
+  ],
+  "smallTargets": [],
+  "overflowX": []
+ },
+ "c_add-cap_w390x844": {
+  "logoToTitle": 32,
+  "titleLines": 2,
+  "bandBottom": 213,
+  "scrollOverflow": 0,
+  "lastContentBottom": 454,
+  "barTop": 645,
+  "barCoversLast": false,
+  "valueRight": 137,
+  "slotLeft": 243,
+  "valueSlotGap": 106,
+  "valueStyles": [
+   "32px/40px 600 tabular-nums"
+  ],
+  "smallTargets": [],
+  "overflowX": [
+   "tm-sheet__header"
+  ],
+  "sheetTop": 184,
+  "sheetHeightPct": 78,
+  "sheetActionsBottom": 844
+ },
+ "c_add-cap_w360x640": {
+  "logoToTitle": 32,
+  "titleLines": 2,
+  "bandBottom": 213,
+  "scrollOverflow": 49,
+  "lastContentBottom": 405,
+  "barTop": 421,
+  "barCoversLast": false,
+  "valueRight": 137,
+  "slotLeft": 213,
+  "valueSlotGap": 76,
+  "valueStyles": [
+   "32px/40px 600 tabular-nums"
+  ],
+  "smallTargets": [],
+  "overflowX": [
+   "tm-sheet__header"
+  ],
+  "sheetTop": 96,
+  "sheetHeightPct": 85,
+  "sheetActionsBottom": 640
+ },
+ "c_stop-pending_w390x844": {
+  "logoToTitle": 32,
+  "titleLines": 1,
+  "bandBottom": 181,
+  "scrollOverflow": 0,
+  "lastContentBottom": 399,
+  "barTop": 692,
+  "barCoversLast": false,
+  "valueStyles": [
+   "32px/40px 600 tabular-nums"
+  ],
+  "smallTargets": [],
+  "overflowX": []
+ },
+ "c_stop-pending_w360x640": {
+  "logoToTitle": 32,
+  "titleLines": 1,
+  "bandBottom": 181,
+  "scrollOverflow": 0,
+  "lastContentBottom": 399,
+  "barTop": 488,
+  "barCoversLast": false,
+  "valueStyles": [
+   "32px/40px 600 tabular-nums"
+  ],
+  "smallTargets": [],
+  "overflowX": []
+ },
+ "c_ended_w390x844": {
+  "logoToTitle": 32,
+  "titleLines": 1,
+  "bandBottom": 181,
+  "scrollOverflow": 119,
+  "lastContentBottom": 740,
+  "barTop": 756,
+  "barCoversLast": false,
+  "valueStyles": [
+   "32px/40px 600 tabular-nums"
+  ],
+  "smallTargets": [],
+  "overflowX": []
+ },
+ "c_ended_w360x640": {
+  "logoToTitle": 32,
+  "titleLines": 1,
+  "bandBottom": 181,
+  "scrollOverflow": 323,
+  "lastContentBottom": 536,
+  "barTop": 552,
+  "barCoversLast": false,
+  "valueStyles": [
+   "32px/40px 600 tabular-nums"
+  ],
+  "smallTargets": [],
+  "overflowX": []
+ },
+ "c_offline_w390x844": {
+  "logoToTitle": 32,
+  "titleLines": 2,
+  "bandBottom": 213,
+  "scrollOverflow": 0,
+  "lastContentBottom": 454,
+  "barTop": 645,
+  "barCoversLast": false,
+  "valueRight": 156,
+  "slotLeft": 243,
+  "valueSlotGap": 87,
+  "valueStyles": [
+   "32px/40px 600 tabular-nums"
+  ],
+  "smallTargets": [],
+  "overflowX": []
+ },
+ "c_offline_w360x640": {
+  "logoToTitle": 32,
+  "titleLines": 2,
+  "bandBottom": 213,
+  "scrollOverflow": 29,
+  "lastContentBottom": 425,
+  "barTop": 441,
+  "barCoversLast": false,
+  "valueRight": 156,
+  "slotLeft": 213,
+  "valueSlotGap": 57,
+  "valueStyles": [
+   "32px/40px 600 tabular-nums"
+  ],
+  "smallTargets": [],
+  "overflowX": []
+ },
+ "c_ended-zero_w390x844": {
+  "logoToTitle": 32,
+  "titleLines": 1,
+  "bandBottom": 181,
+  "scrollOverflow": 0,
+  "lastContentBottom": 739,
+  "barTop": 756,
+  "barCoversLast": false,
+  "valueStyles": [],
+  "smallTargets": [],
+  "overflowX": []
+ },
+ "c_ended-zero_w360x640": {
+  "logoToTitle": 32,
+  "titleLines": 1,
+  "bandBottom": 181,
+  "scrollOverflow": 203,
+  "lastContentBottom": 536,
+  "barTop": 552,
+  "barCoversLast": false,
+  "valueStyles": [],
+  "smallTargets": [],
+  "overflowX": []
+ },
+ "c_setup-max_w390x844": {
+  "logoToTitle": 32,
+  "titleLines": 1,
+  "bandBottom": 181,
+  "scrollOverflow": 0,
+  "lastContentBottom": 657,
+  "barTop": 756,
+  "barCoversLast": false,
+  "valueStyles": [],
+  "smallTargets": [],
+  "overflowX": []
+ },
+ "c_setup-max_w360x640": {
+  "logoToTitle": 32,
+  "titleLines": 1,
+  "bandBottom": 181,
+  "scrollOverflow": 121,
+  "lastContentBottom": 536,
+  "barTop": 552,
+  "barCoversLast": false,
+  "valueStyles": [],
+  "smallTargets": [],
+  "overflowX": []
+ },
+ "c_available-long_w390x844": {
+  "logoToTitle": 32,
+  "titleLines": 2,
+  "bandBottom": 213,
+  "scrollOverflow": 0,
+  "lastContentBottom": 454,
+  "barTop": 692,
+  "barCoversLast": false,
+  "valueRight": 186,
+  "slotLeft": 243,
+  "valueSlotGap": 57,
+  "valueStyles": [
+   "32px/40px 600 tabular-nums"
+  ],
+  "smallTargets": [],
+  "overflowX": []
+ },
+ "c_available-long_w360x640": {
+  "logoToTitle": 32,
+  "titleLines": 2,
+  "bandBottom": 213,
+  "scrollOverflow": 0,
+  "lastContentBottom": 454,
+  "barTop": 488,
+  "barCoversLast": false,
+  "valueRight": 186,
+  "slotLeft": 213,
+  "valueSlotGap": 27,
+  "valueStyles": [
+   "32px/40px 600 tabular-nums"
+  ],
+  "smallTargets": [],
+  "overflowX": []
+ }
+}

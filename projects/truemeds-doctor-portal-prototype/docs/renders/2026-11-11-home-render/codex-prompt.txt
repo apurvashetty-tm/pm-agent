@@ -1,0 +1,32 @@
+You are reviewing render options for the Home screen of a doctor-facing mobile web app (Truemeds doctor portal). Read-only: do not change any file. Be concrete and short.
+
+Attached images (also in this folder):
+- option-a.png, option-b.png, option-c.png — one contact sheet per option. Top row: every state at 390 × 844. Bottom row: 360 × 640 (small-phone guard), plus "scrolled to end" captures where the content scrolls.
+- compare.png — setup (quick pick) and available, all three options side by side, 390 and 360.
+Individual pictures: shots/<option>_<state>_w<W>x<H>.png. Source: home-options.html/.css/.js. Measurements: audit.json (logo→title gap, title lines, scroll overflow, whether the pinned bar covers the last content when scrolled to the end, value-to-Add-time gap, value styles, targets under 48 px).
+
+The three options differ in ONE way each:
+- A: on Available, one content card (tm-card) with two rows (Time remaining, Prescriptions written today) split by a divider. Setup's duration choice sits flat on the white panel.
+- B: as A, but each row is its own card, the two cards stacked 16 apart.
+- C: as A, and Setup's duration choice is also inside a card (so the panel always holds cards).
+
+AGREED building blocks (Apurva, 2026-11-11) — judge against these; do not reopen them:
+1. Band: logo → title gap 32 (was 48); Home band title 24/32 (planned design-rule change). Copy unchanged.
+2. Both rows: neutral grey icon, label on top (16/24 regular), value below in the L9 value display (32/40 semibold, tabular digits) — timer and count alike.
+3. Count after availability ends (idle-expired, manually ended): one row above "Availability duration", only when the count is above 0. Fresh setup with 0: no row.
+4. 10-hour cap in total: setup wheel 0–10 h (at 10 h minutes 00 only; at 0 h minutes 15/30/45). The add-time wheel tops out at what is left (remaining + added ≤ 10 h), with the hint "Up to 10 hours in total".
+5. Label "Prescriptions written today".
+6. "+ Add time" only near the end (as today), in a reserved slot on the timer line so nothing moves. Compact secondary button (48 px, 16 semibold).
+Also: spacing only 8 / 16 / 32; hint 8 under the section title; sub-labels "Quick picks" / "Custom" 14/20 secondary regular; neutral icons, no brand tiles; a content card, not a status card; in stop-pending only the count row shows; countdown m:ss (h:mm:ss from an hour); wheel columns are spinbuttons, chips toggle buttons, countdown not live-announced.
+Approved copy stays (titles, subtitles, buttons, notices from ui-screens/feedback/messages.json). New copy: "Availability duration", "15 minutes to 10 hours", "Quick picks", "Custom", "Prescriptions written today", "Up to 10 hours in total".
+Design rules: ../../../../../design-system/RULES.md §8–9 (three gaps 8/16/32; type scale; 48 px targets; §8.14 at 360 × 640 nothing needed is hidden without a scroll cue and the pinned bar never covers the last content at the end of the scroll; one card level; notices in the bar for the bar's action, at the top for the screen's situation).
+
+States rendered for every option: setup (quick pick chosen), setup (custom value, no chip), Setting…, available, near expiry with + Add time, add-time sheet at the 10-hour cap (5:00 left, wheel at its top 9 h 45 m), stop-pending (count row only), ended Home with count (manually ended), offline (bar notice).
+
+Answer in this format:
+## Best option
+Which option (A, B or C) is best and why, in at most 5 lines.
+## Still wrong, per option
+A numbered list per option (A, B, C). Each item: what is wrong, which agreed block or rule it breaks, severity (blocker / should-fix / nit). Points that apply to all options go under "All".
+## Missed
+Anything the renders do not show or get wrong that the agreed blocks or rules require (states, boundary cases, accessibility, thumb reach, duplicates).
