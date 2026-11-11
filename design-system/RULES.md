@@ -139,8 +139,30 @@ Mobile-first prototypes are previewed on desktop as a **phone frame at the real 
    **Small sizes:** 9–11px text tokens are never used in apps. 12px only for tags and L4 fine print. Anything the user needs to act on (clinical details, amounts, status, errors) is 14px or larger.
    The type scale applies to screen text. Component internals (OTP digits, button labels, keyboard) keep their component specs.
 2. **Side margin:** `--tm-space-page` (**16**, the design team's standard — changed from 24 on 2026-10-26, D-67) on every mobile screen, including the header, sheets and the action bar. Every block — fields, notices, cards, code boxes, buttons — shares the same left and right edges.
-3. **Three gaps only:** tight `--tm-space-sm` (8): label↔field, field↔helper, and a result notice ↔ the button it came from (A-14). **A result notice under a field sits 16 below the field** (the field's 8 gap plus the notice's 8; D-98) · related `--tm-space-lg` (16): items within a group, **and cards stacked one above another — the same gap everywhere cards stack, on the case page, Prescribe and Profile (B-04, B-05, A-13, 2026-11-02)** · section `--tm-space-2xl` (32): between groups. Spare vertical space goes between the content and a pinned button, never inside a group.
-   Home-base screens use 3xl (48) as the hero gap between logo and title.
+3. **Spacing is measured on what the eye sees — three gaps only (D-108, 2026-11-11; replaces the box-gap rule).**
+   Measure between **visible edges**, never between layout boxes:
+   - **Text:** the ink of the letters, from the top of the capitals to the bottom of the descenders, not the line box.
+   - **Filled or bordered shapes** (buttons, fields, notice boxes, cards, code boxes, tiles): their painted edge.
+   - **Icons and pictures:** their painted bounds.
+
+   Tap areas and reserved message lines add **no** visible space: a 48 hit area around a link, or an empty line kept for a later message, never pushes the next thing away by itself.
+
+   | Gap | Token | Use |
+   |---|---|---|
+   | **8** | `--tm-space-sm` | **Joins parts of one thing:** label ↔ field, field ↔ its helper, a legal line ↔ the button it describes, a picture tile ↔ its caption. |
+   | **16** | `--tm-space-lg` | **Separates items inside one group:** chips, points, rows, cards stacked one above another (the same gap everywhere cards stack: case page, Prescribe, Profile; B-04, B-05, A-13). |
+   | **32** | `--tm-space-2xl` | **Separates different things:** a field group, an error or notice box, a link line, a button, a hero tile and the content under it. |
+
+   **Notices:**
+   - A message about **one field** sits 16 under that field and 32 above the next thing.
+   - A message about **the whole screen** (locked, unavailable) sits at the top of its content, or under the thing it blocks, then 32 to the next thing.
+   - A notice **inside the pinned bar** keeps the bar's own spec: 16 above its button (§9.5).
+
+   **Component anatomy keeps its own listed values** (they are part of the component, not screen spacing): OTP boxes 8 apart (L1), chip grid 8 / 8, wheel column heads 4, value label → value 4, sheet content → actions 24, the pinned bar's notice → button 16 and caption → button 8.
+
+   Spare vertical space goes between the content and a pinned button, never inside a group.
+
+   **Check:** `design-system/scripts/check-visible-gaps.mjs` measures visible gaps on every screen and state; a gap that is not 8, 16, 32 (±2 px for font rounding) or listed anatomy fails, and a failing check stops the build. Screen values: "Entry and home screens" below.
 4. **Main button placement:**
    - **Screens with text entry:** the primary button sits inline directly under the content, so it stays visible above the keyboard without moving.
    - **Screens without text entry:** the primary button is pinned to the bottom with the safe-area inset; a secondary/quiet action sits below it.
@@ -160,8 +182,59 @@ Mobile-first prototypes are previewed on desktop as a **phone frame at the real 
 10. **Titles:** no full stop at the end of a screen title. Titles wrap balanced (L8).
 11. **Decorative icons** (bullets, list markers) are neutral (`--tm-content-secondary`); brand blue is for actions and selection only (§2.5). An icon tile used as a screen's hero may stay brand-tinted.
 12. **Value display:** a large status value (e.g. time remaining) is a component, not screen text: 32/40 semibold, fixed-width digits (L9). Like OTP digits, it sits outside the four-level type scale.
-13. **Logo lockup size and place (A-07, 2026-11-02).** Every home-base screen with the "truemeds for doctors" lockup (`brand/truemeds-for-doctors.svg`, project level, §2.8) draws it **166px wide** (height follows the 220×54 artwork), **16px from the top**, and the logo→title gap stays as in §8.3 (L6). 166 is the largest width that fits Home at 360 wide with 16 to the first header icon: 360 − 2×16 − (3 × 48 + 2 × 8 − 14 for the actions' 14px overhang) − 16 = 166. Nothing else sets the lockup size.
+13. **Logo lockup size and place (A-07, 2026-11-02).** Every home-base screen with the "truemeds for doctors" lockup (`brand/truemeds-for-doctors.svg`, project level, §2.8) draws it **166px wide** (height follows the 220×54 artwork), **16px from the top** (of the safe area), and the logo → title gap is **16** (`--tm-space-lg`) on every screen with the logo (L6, D-107; the band spec is in "Entry and home screens" below). 166 is the largest width that fits Home at 360 wide with 16 to the first header icon: 360 − 2×16 − (3 × 48 + 2 × 8 − 14 for the actions' 14px overhang) − 16 = 166. Nothing else sets the lockup size.
 14. **Small phones (Round 4, 2026-11-02).** At **360 × 640** every state of a screen is checked: nothing the doctor needs is hidden without a scroll cue (a visible edge of the next item, or a scroll area), and a pinned bar never covers the last content when the content is scrolled to its end. The check runs as a permanent guard in `ui-screens/feedback/check-locked-specs.py` (small-phone pass, every state, Round 4 item 10; `docs/layout_check.py` covers the old prototype only). Prescribe, the case page, Home, the offer and the unlock must pass it before a screen is approved.
+
+### Entry and home screens  [ADDED 2026-11-11 · D-107, D-108]
+
+Sign-in, OTP, faster sign-in offer, returning unlock and Home share **one band** and **one screen standard** below it. Build the band once as a shared block; screens never restyle it. Spacing values below are **visible gaps** (§8.3) unless marked "box".
+
+**The band (D-107)** — layout values, measured as boxes:
+
+| Part | Value | Token |
+|---|---|---|
+| Band surface | Full-width light blue | `--tm-surface-brand-subtle` |
+| Band padding | Top 16 from the safe area · sides 16 · bottom 32 | `--tm-space-lg` · `--tm-space-page` · `--tm-space-2xl` |
+| Logo lockup | 166 wide, left (§8.13). The header row is the logo's height; nothing in it adds height. | `--tm-logo-lockup-width` |
+| Logo → title | **16** (L6) | `--tm-space-lg` |
+| Title | L1 32/40 semibold, primary, one line, balanced (L8) | `.tm-text-title-lg`, `--tm-content-primary` |
+| Title → subtitle | 8 | `--tm-space-sm` |
+| Subtitle | L3 14/20, secondary, one line; nothing inside it may grow its 20 line box | `.tm-text-body-md`, `--tm-content-secondary` |
+| Subtitle → panel | 32 | `--tm-space-2xl` |
+| Panel | Top corners 24, top padding 32, sides 16, white | `--tm-radius-2xl` · `--tm-space-2xl` · `--tm-space-page` · `--tm-surface-primary` |
+
+- **Result:** the panel top lands at 173 on every screen at 390 × 844 and 360 × 640. It follows from the content flow; never hard-code it.
+- **Copy check:** every fixed title and subtitle fits one line at 360 wide (≤ 328 px). Never `nowrap` or clip: enlarged text and long content wrap (WCAG 1.4.4).
+- **Allowed variants, and no others:**
+  1. **Home header actions** (bell, help, profile): 48 targets, last glyph 16 from the edge (B-07). They never add height.
+  2. **A title carrying a name** ("Hello, Dr. {name}") may wrap to two balanced lines. The band grows by one line. Never truncate or shrink the name.
+  3. **OTP subtitle:** the number in primary medium and "Change" as an inline link (`.tm-link`, §9.1). The link's 48 hit area adds no height.
+  4. **State and device wording** may change. The spacing doesn't.
+- **Notices, busy buttons and keyboards stay in the panel.** The band never changes with state.
+
+**Below the band — the screen standard (D-108; screens audit §1 with visible values):**
+
+| Part | Spec | Token / source |
+|---|---|---|
+| Panel | Content starts **32** below the panel top. Side margins 16. | `--tm-space-2xl`, `--tm-space-page` |
+| Group label | 16/24 semibold, **8** to its control. An optional helper (14/20 grey) sits right-aligned on the same line. | `--tm-space-sm` |
+| Field | Label 14/20 semibold → **8** → control → **8** → helper or error, 14/20, one slot (L4, L7). Field + helper → **32** → the next thing (sign-in: → Send OTP). | `.tm-field`, `--tm-space-sm`, `--tm-space-2xl` |
+| Field message (no bar) | "Couldn't send the OTP." and similar: **16** under the field, **32** above the next thing (sign-in: Send OTP). | `.tm-notice`, `--tm-space-lg`, `--tm-space-2xl` |
+| OTP code | 56 boxes 8 apart (L1). Boxes (+ the reserved message line) → **32** → "Didn't receive it? Resend" → **32** → legal line → **8** → Verify. Locked / expired-and-limited: boxes → **16** → notice → **32** → Verify. | D-44, D-108 |
+| Whole-screen notice | At the top of its content, or under the thing it blocks (locked, unavailable), then **32** to the next thing. | §9.5 |
+| Inline primary (typing screens) | **32** below the group above it. **8** under a legal line that describes it. Kept visible above the keyboard by scrolling, 16 clear (§8.9). | §8.4 |
+| Pinned bar | Padding 16 + safe area. Buttons 56/18, primary → quiet, 8 apart (box). Bar notice: full-width band, centred, 16 above its button. Caption line ("Available until 7:45 PM"): L3 centred, 8 above its button. The content scrolls, with ≥ 16 clear at the end. | `.tm-actionbar`, §9.5 |
+| Hero tile | 64 tile, radius lg, brand-subtle, 32 glyph, centred, at panel top + 32. Then **32** to the content under it (offer: → points). Unlock: tile → **8** → caption (a tile and its caption join; D-108 corrected 2026-11-11). | `--tm-icon-tile-size` |
+| Points | Neutral 24 icon · 12 · title 16/24 **semibold** · line 14/20 grey; title → line 8; **16** between points. | §8.11 |
+| Card rows | One `tm-card`. Rows: padding 16, a hairline between rows. Grey icon · label 16/24 regular · value L9. Cards stacked 16 apart. | `.tm-card`, L9 |
+| Links | Brand colour. Semibold when the link is the line's action (Change, Resend code, Sign up), as `.tm-link` with a 48 hit area that adds no height. Regular inside legal text (`.tm-link--in-sentence`). Visible focus. | §8.6, §9.1 |
+| Fine print | L4 12/16 only for the OTP legal consent. Nothing else the doctor reads or taps is under 14. | §8.1 |
+| Sheet | Header: title 20/28 + ✕ 48, **subtitle 8 under the title inside the header** (D-109). Header → content 16; content → actions 24; actions 8 apart; 24 + safe area at the bottom. A result notice sits inside the pinned actions, 16 above its button. | §9.4 |
+| Duration picker | One block on setup and in the add-time sheet. "Quick picks" (6 chips, 3 columns, 8 / 8) → **32** → "Custom" → column heads 4 (box) → wheel of 3 × 48 rows. No range text (D-106). | D-40, D-106 |
+| Type | Four levels + L9. One weight per role: 16/24 emphasis is always semibold (600); medium is not used below the band. | §8.1 |
+| Words | **OTP** for the SMS code outside the OTP screen; **code** only on the OTP screen. **Faster sign-in** for the feature. **Availability** for the window, **time** for its length, **case** for the work, **get** for new cases (D-109). | — |
+
+**Check:** `design-system/scripts/check-visible-gaps.mjs` (§8.3) runs on every in-scope screen and state at 390 × 844 and 360 × 640. A project's config maps its own classes onto the roles above (label, field, helper, notice, legal, link line, tile, caption, group label).
 
 ### Locked specs (D-46, D-47) — set once in the design system, never per screen
 
@@ -174,7 +247,7 @@ These are fixed. A change needs Apurva's approval and an update to D-46. `ui-scr
 | L3 | OTP keyboard stays open during "Verifying" (D-44). Only locked and expired-and-resend-limited close it. |
 | L4 | Field helper and field error text: 14/20 (`.tm-field__helper`). |
 | L5 | Notice text (`.tm-notice`): 14/20. |
-| L6 | Sign-in logo-to-title gap: 48 (`--tm-space-3xl`), home-base hero gap. |
+| L6 | Logo → title: **16** (`--tm-space-lg`) on every screen with the logo (sign-in, OTP, faster sign-in offer, returning unlock, Home). D-107, 2026-11-11; was "sign-in 48, home-base hero gap" (D-46). |
 | L7 | Field helper/error text aligns with its field: left under full-width fields, centred under the centred OTP code boxes (D-47). |
 | L8 | Screen titles wrap balanced — never a single word alone on the last line (D-47). |
 | L9 | Value display (e.g. Home time remaining): 32/40 semibold, fixed-width digits (D-47). |
@@ -199,6 +272,7 @@ Set once in the design system; a project never restyles them. Where `src/compone
 - **Labels:** verb first, sentence case, no full stop, never "Click" / "Tap".
 - **States:** pressed; disabled (design-system disabled style, exempt from contrast); busy (L2). Busy spinner → label gap is 8 on every busy button (A-08, 2026-11-02). A quiet action in progress shows text only ("Ending…"), no spinner. **Busy labels always end with "…"** ("Verifying…", "Sending OTP…") (D-54).
 - Links inside a sentence stay links (brand colour), not buttons.
+- **Inline link `.tm-link` (2026-11-11, D-107 / D-108):** a link that is the action of a line of text ("Change", "Sign up", "Resend code"). It is brand colour and semibold, with a 48-tall hit area from a centred `::after` that adds **no** line height, and a visible focus ring. Use it on `<a>` or `<button>`. Inside a sentence (legal text), add `.tm-link--in-sentence`: regular weight and no enlarged hit area (§8.6 inline exception).
 - **Button icon size steps with the button size** (Apurva, 2026-11-02; replaces the D-81 F27 pair-only rule): **56px action buttons (18px label) → 20px icon; 48px compact buttons (16px label) → 16px icon.** Icons stay on the icon scale (16 / 20 / 24) — like type and spacing, each size is a step on a fixed scale, never an in-between value; the icon is one step at or just above its label (as in Carbon, Atlassian and Fluent). **Icon-only buttons** (Back, Help, notifications, Profile, close ×, viewer controls) are not labelled buttons and keep a **20px** icon. Set centrally in `components.css` by button size (`.tm-btn--lg` → 20, compact → 16, `.tm-btn--icon` → 20), overriding any size in the markup; screens never size button icons. SALT's code copy states no per-button icon size; this is a Truemeds addition (`beyond-salt.md`).
 
 ### 9.2 Chips and choice grids
@@ -218,7 +292,7 @@ Set once in the design system; a project never restyles them. Where `src/compone
 |---|---|
 | Background | Page dimmed behind the sheet (`.tm-overlay`). |
 | Top | Rounded top corners; **no drag handle** (the ✕ is always there). |
-| Header | Title 20/28 semibold, left · ✕ right (48px target, glyph on the 16 margin — the same as the compact task header, B-07) · **no divider**. Optional one-line subtitle (L3). |
+| Header | Title 20/28 semibold, left · ✕ right (48px target, glyph on the 16 margin — the same as the compact task header, B-07) · **no divider**. Optional subtitle (L3) **8 under the title, inside the header** (D-109, 2026-11-11): wrap title and subtitle in `.tm-sheet__heading`. The title line stays centred on the ✕. |
 | Spacing | 16px side margins (`--tm-space-page`, same as screens) · 16px header → content · 24px + safe area at the bottom. |
 | Content | Fields, chips, or **option rows** (one shared style for reason lists: title + one-line description, full width, 48px+; tapping applies). Labels inside a sheet ("Select reason", "Date", "Time") use `.tm-sheet__label` — one style, 8 above the field (B-14, 2026-11-02). |
 | Actions | §9.1 order and size (56px, full width). **Pinned (Round 6, 2026-11-02):** the actions are the sheet's last part and stay on screen when the content is taller than the space — the content scrolls between the pinned header and the pinned actions. The hairline and soft upward shadow show only while content scrolls under them (`design-system/src/sheet-scroll.js` sets `.is-stuck`; screens with sheets load it). Sheet buttons stay fully visible and tappable at 390×844 and 360×640. Reason lists need no button. **Confirmation sheet** ("Leave this case?", "Discard changes?"): the action the sheet asks about on top — red outline if it can't easily be undone, primary otherwise — and the "stay" option as quiet text below. A sheet offering two real actions (e.g. Retry call / Mark as unavailable) is a choice, not a confirmation (D-54). |
