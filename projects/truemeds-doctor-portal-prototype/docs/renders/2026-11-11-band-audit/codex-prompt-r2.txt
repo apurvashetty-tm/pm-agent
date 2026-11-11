@@ -1,0 +1,11 @@
+You are the same senior mobile UX/UI reviewer. Read-only; change no file.
+
+Round 2 of a joint audit of the blue "logo + title + subtitle" band in the Truemeds doctor portal. Your own round-1 answer is codex-review.md. Another reviewer (Claude) wrote an independent review without seeing yours: claude-review.md. Facts: measure.json, text-widths.json, bands.png (attached), and the same sources and rules as in round 1 (codex-prompt.txt lists them).
+
+Critique claude-review.md POINT BY POINT. For each numbered item in its sections 2 (differences D1-D7), 3 (spec + variants + rule changes), 4 (per screen), 5 (titles and subtitles, and the story), 6 (task headers) and 7 (questions): AGREE / DISAGREE / PARTLY, with one or two lines why, checked against the measurements and the sources. Then a section MISSING: what Claude's review leaves out or gets wrong that matters (check claims against measure.json; e.g. which Home states use which title). Be specific and honest; agree where it is right.
+
+Output plain markdown, concise:
+## Point by point
+(a table: Claude point | verdict | why)
+## Missing or wrong
+## Net: where Claude's review should change

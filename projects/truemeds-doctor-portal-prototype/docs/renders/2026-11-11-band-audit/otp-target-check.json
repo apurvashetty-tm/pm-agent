@@ -1,0 +1,21 @@
+{
+ "linkBox": [
+  53,
+  18
+ ],
+ "linkTop": 122,
+ "linkBottom": 140,
+ "subLineTop": 121,
+ "subLineH": 20,
+ "titleBottom": 113,
+ "hitTopEdge": true,
+ "hitBottomEdge": true,
+ "hitAbove": true,
+ "centreY": 131,
+ "hitCentreMinus23": true,
+ "hitCentrePlus23": true,
+ "hitCentreMinus26": false,
+ "hitCentrePlus26": false,
+ "focusOutline": "solid 2px",
+ "focusVisibleMatches": true
+}

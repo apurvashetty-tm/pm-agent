@@ -1,0 +1,6240 @@
+{
+ "sign-in": {
+  "default": {
+   "390x844": {
+    "w": 390,
+    "h": 844,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Welcome, Doctor",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 273,
+     "boxW": 358,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Your partner in thoughtful, affordable care.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 279.6,
+     "boxW": 358
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 20.5,
+    "bandBg": "rgb(235, 248, 255)"
+   },
+   "360x640": {
+    "w": 360,
+    "h": 640,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Welcome, Doctor",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 273,
+     "boxW": 328,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Your partner in thoughtful, affordable care.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 279.6,
+     "boxW": 328
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 27,
+    "bandBg": "rgb(235, 248, 255)"
+   }
+  },
+  "keyboard-open": {
+   "390x844": {
+    "w": 390,
+    "h": 844,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Welcome, Doctor",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 273,
+     "boxW": 358,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Your partner in thoughtful, affordable care.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 279.6,
+     "boxW": 358
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 20.5,
+    "bandBg": "rgb(235, 248, 255)"
+   },
+   "360x640": {
+    "w": 360,
+    "h": 640,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Welcome, Doctor",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 273,
+     "boxW": 328,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Your partner in thoughtful, affordable care.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 279.6,
+     "boxW": 328
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 27,
+    "bandBg": "rgb(235, 248, 255)"
+   }
+  },
+  "empty-tap": {
+   "390x844": {
+    "w": 390,
+    "h": 844,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Welcome, Doctor",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 273,
+     "boxW": 358,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Your partner in thoughtful, affordable care.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 279.6,
+     "boxW": 358
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 20.5,
+    "bandBg": "rgb(235, 248, 255)"
+   },
+   "360x640": {
+    "w": 360,
+    "h": 640,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Welcome, Doctor",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 273,
+     "boxW": 328,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Your partner in thoughtful, affordable care.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 279.6,
+     "boxW": 328
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 27,
+    "bandBg": "rgb(235, 248, 255)"
+   }
+  },
+  "too-short": {
+   "390x844": {
+    "w": 390,
+    "h": 844,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Welcome, Doctor",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 273,
+     "boxW": 358,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Your partner in thoughtful, affordable care.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 279.6,
+     "boxW": 358
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 20.5,
+    "bandBg": "rgb(235, 248, 255)"
+   },
+   "360x640": {
+    "w": 360,
+    "h": 640,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Welcome, Doctor",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 273,
+     "boxW": 328,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Your partner in thoughtful, affordable care.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 279.6,
+     "boxW": 328
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 27,
+    "bandBg": "rgb(235, 248, 255)"
+   }
+  },
+  "wrong-first-digit": {
+   "390x844": {
+    "w": 390,
+    "h": 844,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Welcome, Doctor",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 273,
+     "boxW": 358,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Your partner in thoughtful, affordable care.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 279.6,
+     "boxW": 358
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 20.5,
+    "bandBg": "rgb(235, 248, 255)"
+   },
+   "360x640": {
+    "w": 360,
+    "h": 640,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Welcome, Doctor",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 273,
+     "boxW": 328,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Your partner in thoughtful, affordable care.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 279.6,
+     "boxW": 328
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 27,
+    "bandBg": "rgb(235, 248, 255)"
+   }
+  },
+  "pasted-cleaned": {
+   "390x844": {
+    "w": 390,
+    "h": 844,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Welcome, Doctor",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 273,
+     "boxW": 358,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Your partner in thoughtful, affordable care.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 279.6,
+     "boxW": 358
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 20.5,
+    "bandBg": "rgb(235, 248, 255)"
+   },
+   "360x640": {
+    "w": 360,
+    "h": 640,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Welcome, Doctor",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 273,
+     "boxW": 328,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Your partner in thoughtful, affordable care.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 279.6,
+     "boxW": 328
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 27,
+    "bandBg": "rgb(235, 248, 255)"
+   }
+  },
+  "sending": {
+   "390x844": {
+    "w": 390,
+    "h": 844,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Welcome, Doctor",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 273,
+     "boxW": 358,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Your partner in thoughtful, affordable care.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 279.6,
+     "boxW": 358
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 20.5,
+    "bandBg": "rgb(235, 248, 255)"
+   },
+   "360x640": {
+    "w": 360,
+    "h": 640,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Welcome, Doctor",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 273,
+     "boxW": 328,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Your partner in thoughtful, affordable care.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 279.6,
+     "boxW": 328
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 27,
+    "bandBg": "rgb(235, 248, 255)"
+   }
+  },
+  "not-registered": {
+   "390x844": {
+    "w": 390,
+    "h": 844,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Welcome, Doctor",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 273,
+     "boxW": 358,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Your partner in thoughtful, affordable care.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 279.6,
+     "boxW": 358
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 20.5,
+    "bandBg": "rgb(235, 248, 255)"
+   },
+   "360x640": {
+    "w": 360,
+    "h": 640,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Welcome, Doctor",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 273,
+     "boxW": 328,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Your partner in thoughtful, affordable care.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 279.6,
+     "boxW": 328
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 27,
+    "bandBg": "rgb(235, 248, 255)"
+   }
+  },
+  "offline": {
+   "390x844": {
+    "w": 390,
+    "h": 844,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Welcome, Doctor",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 273,
+     "boxW": 358,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Your partner in thoughtful, affordable care.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 279.6,
+     "boxW": 358
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 20.5,
+    "bandBg": "rgb(235, 248, 255)"
+   },
+   "360x640": {
+    "w": 360,
+    "h": 640,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Welcome, Doctor",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 273,
+     "boxW": 328,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Your partner in thoughtful, affordable care.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 279.6,
+     "boxW": 328
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 27,
+    "bandBg": "rgb(235, 248, 255)"
+   }
+  },
+  "couldnt-send": {
+   "390x844": {
+    "w": 390,
+    "h": 844,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Welcome, Doctor",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 273,
+     "boxW": 358,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Your partner in thoughtful, affordable care.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 279.6,
+     "boxW": 358
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 20.5,
+    "bandBg": "rgb(235, 248, 255)"
+   },
+   "360x640": {
+    "w": 360,
+    "h": 640,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Welcome, Doctor",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 273,
+     "boxW": 328,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Your partner in thoughtful, affordable care.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 279.6,
+     "boxW": 328
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 27,
+    "bandBg": "rgb(235, 248, 255)"
+   }
+  },
+  "too-many-tries": {
+   "390x844": {
+    "w": 390,
+    "h": 844,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Welcome, Doctor",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 273,
+     "boxW": 358,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Your partner in thoughtful, affordable care.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 279.6,
+     "boxW": 358
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 20.5,
+    "bandBg": "rgb(235, 248, 255)"
+   },
+   "360x640": {
+    "w": 360,
+    "h": 640,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Welcome, Doctor",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 273,
+     "boxW": 328,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Your partner in thoughtful, affordable care.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 279.6,
+     "boxW": 328
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 27,
+    "bandBg": "rgb(235, 248, 255)"
+   }
+  },
+  "inactive": {
+   "390x844": {
+    "w": 390,
+    "h": 844,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Welcome, Doctor",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 273,
+     "boxW": 358,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Your partner in thoughtful, affordable care.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 279.6,
+     "boxW": 358
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 20.5,
+    "bandBg": "rgb(235, 248, 255)"
+   },
+   "360x640": {
+    "w": 360,
+    "h": 640,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Welcome, Doctor",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 273,
+     "boxW": 328,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Your partner in thoughtful, affordable care.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 279.6,
+     "boxW": 328
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 27,
+    "bandBg": "rgb(235, 248, 255)"
+   }
+  }
+ },
+ "otp": {
+  "default": {
+   "390x844": {
+    "w": 390,
+    "h": 844,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Verify your number",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 290.2,
+     "boxW": 358,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Sent to +91 98765 43210 · Change",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 221.9,
+     "boxW": 358
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 20.5,
+    "bandBg": "rgb(235, 248, 255)"
+   },
+   "360x640": {
+    "w": 360,
+    "h": 640,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Verify your number",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 290.2,
+     "boxW": 328,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Sent to +91 98765 43210 · Change",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 221.9,
+     "boxW": 328
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 27,
+    "bandBg": "rgb(235, 248, 255)"
+   }
+  },
+  "empty-tap": {
+   "390x844": {
+    "w": 390,
+    "h": 844,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Verify your number",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 290.2,
+     "boxW": 358,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Sent to +91 98765 43210 · Change",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 221.9,
+     "boxW": 358
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 20.5,
+    "bandBg": "rgb(235, 248, 255)"
+   },
+   "360x640": {
+    "w": 360,
+    "h": 640,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Verify your number",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 290.2,
+     "boxW": 328,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Sent to +91 98765 43210 · Change",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 221.9,
+     "boxW": 328
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 27,
+    "bandBg": "rgb(235, 248, 255)"
+   }
+  },
+  "too-short": {
+   "390x844": {
+    "w": 390,
+    "h": 844,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Verify your number",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 290.2,
+     "boxW": 358,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Sent to +91 98765 43210 · Change",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 221.9,
+     "boxW": 358
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 20.5,
+    "bandBg": "rgb(235, 248, 255)"
+   },
+   "360x640": {
+    "w": 360,
+    "h": 640,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Verify your number",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 290.2,
+     "boxW": 328,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Sent to +91 98765 43210 · Change",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 221.9,
+     "boxW": 328
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 27,
+    "bandBg": "rgb(235, 248, 255)"
+   }
+  },
+  "verifying": {
+   "390x844": {
+    "w": 390,
+    "h": 844,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Verify your number",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 290.2,
+     "boxW": 358,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Sent to +91 98765 43210 · Change",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 221.9,
+     "boxW": 358
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 20.5,
+    "bandBg": "rgb(235, 248, 255)"
+   },
+   "360x640": {
+    "w": 360,
+    "h": 640,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Verify your number",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 290.2,
+     "boxW": 328,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Sent to +91 98765 43210 · Change",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 221.9,
+     "boxW": 328
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 27,
+    "bandBg": "rgb(235, 248, 255)"
+   }
+  },
+  "wrong-code": {
+   "390x844": {
+    "w": 390,
+    "h": 844,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Verify your number",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 290.2,
+     "boxW": 358,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Sent to +91 98765 43210 · Change",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 221.9,
+     "boxW": 358
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 20.5,
+    "bandBg": "rgb(235, 248, 255)"
+   },
+   "360x640": {
+    "w": 360,
+    "h": 640,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Verify your number",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 290.2,
+     "boxW": 328,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Sent to +91 98765 43210 · Change",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 221.9,
+     "boxW": 328
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 27,
+    "bandBg": "rgb(235, 248, 255)"
+   }
+  },
+  "two-tries-left": {
+   "390x844": {
+    "w": 390,
+    "h": 844,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Verify your number",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 290.2,
+     "boxW": 358,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Sent to +91 98765 43210 · Change",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 221.9,
+     "boxW": 358
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 20.5,
+    "bandBg": "rgb(235, 248, 255)"
+   },
+   "360x640": {
+    "w": 360,
+    "h": 640,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Verify your number",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 290.2,
+     "boxW": 328,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Sent to +91 98765 43210 · Change",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 221.9,
+     "boxW": 328
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 27,
+    "bandBg": "rgb(235, 248, 255)"
+   }
+  },
+  "resend-available": {
+   "390x844": {
+    "w": 390,
+    "h": 844,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Verify your number",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 290.2,
+     "boxW": 358,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Sent to +91 98765 43210 · Change",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 221.9,
+     "boxW": 358
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 20.5,
+    "bandBg": "rgb(235, 248, 255)"
+   },
+   "360x640": {
+    "w": 360,
+    "h": 640,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Verify your number",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 290.2,
+     "boxW": 328,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Sent to +91 98765 43210 · Change",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 221.9,
+     "boxW": 328
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 27,
+    "bandBg": "rgb(235, 248, 255)"
+   }
+  },
+  "new-code-sent": {
+   "390x844": {
+    "w": 390,
+    "h": 844,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Verify your number",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 290.2,
+     "boxW": 358,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Sent to +91 98765 43210 · Change",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 221.9,
+     "boxW": 358
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 20.5,
+    "bandBg": "rgb(235, 248, 255)"
+   },
+   "360x640": {
+    "w": 360,
+    "h": 640,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Verify your number",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 290.2,
+     "boxW": 328,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Sent to +91 98765 43210 · Change",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 221.9,
+     "boxW": 328
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 27,
+    "bandBg": "rgb(235, 248, 255)"
+   }
+  },
+  "code-expired": {
+   "390x844": {
+    "w": 390,
+    "h": 844,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Verify your number",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 290.2,
+     "boxW": 358,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Sent to +91 98765 43210 · Change",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 221.9,
+     "boxW": 358
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 20.5,
+    "bandBg": "rgb(235, 248, 255)"
+   },
+   "360x640": {
+    "w": 360,
+    "h": 640,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Verify your number",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 290.2,
+     "boxW": 328,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Sent to +91 98765 43210 · Change",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 221.9,
+     "boxW": 328
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 27,
+    "bandBg": "rgb(235, 248, 255)"
+   }
+  },
+  "couldnt-verify": {
+   "390x844": {
+    "w": 390,
+    "h": 844,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Verify your number",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 290.2,
+     "boxW": 358,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Sent to +91 98765 43210 · Change",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 221.9,
+     "boxW": 358
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 20.5,
+    "bandBg": "rgb(235, 248, 255)"
+   },
+   "360x640": {
+    "w": 360,
+    "h": 640,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Verify your number",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 290.2,
+     "boxW": 328,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Sent to +91 98765 43210 · Change",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 221.9,
+     "boxW": 328
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 27,
+    "bandBg": "rgb(235, 248, 255)"
+   }
+  },
+  "too-many-resends": {
+   "390x844": {
+    "w": 390,
+    "h": 844,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Verify your number",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 290.2,
+     "boxW": 358,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Sent to +91 98765 43210 · Change",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 221.9,
+     "boxW": 358
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 20.5,
+    "bandBg": "rgb(235, 248, 255)"
+   },
+   "360x640": {
+    "w": 360,
+    "h": 640,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Verify your number",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 290.2,
+     "boxW": 328,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Sent to +91 98765 43210 · Change",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 221.9,
+     "boxW": 328
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 27,
+    "bandBg": "rgb(235, 248, 255)"
+   }
+  },
+  "locked": {
+   "390x844": {
+    "w": 390,
+    "h": 844,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Verify your number",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 290.2,
+     "boxW": 358,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Sent to +91 98765 43210 · Change",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 221.9,
+     "boxW": 358
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 20.5,
+    "bandBg": "rgb(235, 248, 255)"
+   },
+   "360x640": {
+    "w": 360,
+    "h": 640,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Verify your number",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 290.2,
+     "boxW": 328,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Sent to +91 98765 43210 · Change",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 221.9,
+     "boxW": 328
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 27,
+    "bandBg": "rgb(235, 248, 255)"
+   }
+  },
+  "resending": {
+   "390x844": {
+    "w": 390,
+    "h": 844,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Verify your number",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 290.2,
+     "boxW": 358,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Sent to +91 98765 43210 · Change",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 221.9,
+     "boxW": 358
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 20.5,
+    "bandBg": "rgb(235, 248, 255)"
+   },
+   "360x640": {
+    "w": 360,
+    "h": 640,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Verify your number",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 290.2,
+     "boxW": 328,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Sent to +91 98765 43210 · Change",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 221.9,
+     "boxW": 328
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 27,
+    "bandBg": "rgb(235, 248, 255)"
+   }
+  },
+  "resend-failed": {
+   "390x844": {
+    "w": 390,
+    "h": 844,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Verify your number",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 290.2,
+     "boxW": 358,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Sent to +91 98765 43210 · Change",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 221.9,
+     "boxW": 358
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 20.5,
+    "bandBg": "rgb(235, 248, 255)"
+   },
+   "360x640": {
+    "w": 360,
+    "h": 640,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Verify your number",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 290.2,
+     "boxW": 328,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Sent to +91 98765 43210 · Change",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 221.9,
+     "boxW": 328
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 27,
+    "bandBg": "rgb(235, 248, 255)"
+   }
+  },
+  "offline": {
+   "390x844": {
+    "w": 390,
+    "h": 844,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Verify your number",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 290.2,
+     "boxW": 358,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Sent to +91 98765 43210 · Change",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 221.9,
+     "boxW": 358
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 20.5,
+    "bandBg": "rgb(235, 248, 255)"
+   },
+   "360x640": {
+    "w": 360,
+    "h": 640,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Verify your number",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 290.2,
+     "boxW": 328,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Sent to +91 98765 43210 · Change",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 221.9,
+     "boxW": 328
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 27,
+    "bandBg": "rgb(235, 248, 255)"
+   }
+  },
+  "cooldown-reconciling": {
+   "390x844": {
+    "w": 390,
+    "h": 844,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Verify your number",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 290.2,
+     "boxW": 358,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Sent to +91 98765 43210 · Change",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 221.9,
+     "boxW": 358
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 20.5,
+    "bandBg": "rgb(235, 248, 255)"
+   },
+   "360x640": {
+    "w": 360,
+    "h": 640,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Verify your number",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 290.2,
+     "boxW": 328,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Sent to +91 98765 43210 · Change",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 221.9,
+     "boxW": 328
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 27,
+    "bandBg": "rgb(235, 248, 255)"
+   }
+  },
+  "expired-and-resend-limited": {
+   "390x844": {
+    "w": 390,
+    "h": 844,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Verify your number",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 290.2,
+     "boxW": 358,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Sent to +91 98765 43210 · Change",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 221.9,
+     "boxW": 358
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 20.5,
+    "bandBg": "rgb(235, 248, 255)"
+   },
+   "360x640": {
+    "w": 360,
+    "h": 640,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Verify your number",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 290.2,
+     "boxW": 328,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Sent to +91 98765 43210 · Change",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 221.9,
+     "boxW": 328
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 27,
+    "bandBg": "rgb(235, 248, 255)"
+   }
+  }
+ },
+ "faster-signin-offer": {
+  "fingerprint": {
+   "390x844": {
+    "w": 390,
+    "h": 844,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Skip OTPs next time",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 303.4,
+     "boxW": 358,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Use your fingerprint instead of waiting for an OTP.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 321.1,
+     "boxW": 358
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 20.5,
+    "bandBg": "rgb(235, 248, 255)"
+   },
+   "360x640": {
+    "w": 360,
+    "h": 640,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Skip OTPs next time",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 303.4,
+     "boxW": 328,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Use your fingerprint instead of waiting for an OTP.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 321.1,
+     "boxW": 328
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 27,
+    "bandBg": "rgb(235, 248, 255)"
+   }
+  },
+  "face-id": {
+   "390x844": {
+    "w": 390,
+    "h": 844,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Skip OTPs next time",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 303.4,
+     "boxW": 358,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Use Face ID instead of waiting for an OTP.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 269,
+     "boxW": 358
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 20.5,
+    "bandBg": "rgb(235, 248, 255)"
+   },
+   "360x640": {
+    "w": 360,
+    "h": 640,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Skip OTPs next time",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 303.4,
+     "boxW": 328,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Use Face ID instead of waiting for an OTP.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 269,
+     "boxW": 328
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 27,
+    "bandBg": "rgb(235, 248, 255)"
+   }
+  },
+  "enabling": {
+   "390x844": {
+    "w": 390,
+    "h": 844,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Skip OTPs next time",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 303.4,
+     "boxW": 358,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Use your fingerprint instead of waiting for an OTP.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 321.1,
+     "boxW": 358
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 20.5,
+    "bandBg": "rgb(235, 248, 255)"
+   },
+   "360x640": {
+    "w": 360,
+    "h": 640,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Skip OTPs next time",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 303.4,
+     "boxW": 328,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Use your fingerprint instead of waiting for an OTP.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 321.1,
+     "boxW": 328
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 27,
+    "bandBg": "rgb(235, 248, 255)"
+   }
+  },
+  "screen-lock": {
+   "390x844": {
+    "w": 390,
+    "h": 844,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Skip OTPs next time",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 303.4,
+     "boxW": 358,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Use your screen lock instead of an OTP.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 256.1,
+     "boxW": 358
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 20.5,
+    "bandBg": "rgb(235, 248, 255)"
+   },
+   "360x640": {
+    "w": 360,
+    "h": 640,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Skip OTPs next time",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 303.4,
+     "boxW": 328,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Use your screen lock instead of an OTP.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 256.1,
+     "boxW": 328
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 27,
+    "bandBg": "rgb(235, 248, 255)"
+   }
+  },
+  "enable-failed": {
+   "390x844": {
+    "w": 390,
+    "h": 844,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Skip OTPs next time",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 303.4,
+     "boxW": 358,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Use your fingerprint instead of waiting for an OTP.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 321.1,
+     "boxW": 358
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 20.5,
+    "bandBg": "rgb(235, 248, 255)"
+   },
+   "360x640": {
+    "w": 360,
+    "h": 640,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Skip OTPs next time",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 303.4,
+     "boxW": 328,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Use your fingerprint instead of waiting for an OTP.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 321.1,
+     "boxW": 328
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 27,
+    "bandBg": "rgb(235, 248, 255)"
+   }
+  },
+  "offline": {
+   "390x844": {
+    "w": 390,
+    "h": 844,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Skip OTPs next time",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 303.4,
+     "boxW": 358,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Use your fingerprint instead of waiting for an OTP.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 321.1,
+     "boxW": 358
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 20.5,
+    "bandBg": "rgb(235, 248, 255)"
+   },
+   "360x640": {
+    "w": 360,
+    "h": 640,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Skip OTPs next time",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 303.4,
+     "boxW": 328,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Use your fingerprint instead of waiting for an OTP.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 321.1,
+     "boxW": 328
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 27,
+    "bandBg": "rgb(235, 248, 255)"
+   }
+  },
+  "unavailable": {
+   "390x844": {
+    "w": 390,
+    "h": 844,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Skip OTPs next time",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 303.4,
+     "boxW": 358,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Use your fingerprint instead of waiting for an OTP.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 321.1,
+     "boxW": 358
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 20.5,
+    "bandBg": "rgb(235, 248, 255)"
+   },
+   "360x640": {
+    "w": 360,
+    "h": 640,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Skip OTPs next time",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 303.4,
+     "boxW": 328,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Use your fingerprint instead of waiting for an OTP.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 321.1,
+     "boxW": 328
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 27,
+    "bandBg": "rgb(235, 248, 255)"
+   }
+  }
+ },
+ "returning-unlock": {
+  "fingerprint": {
+   "390x844": {
+    "w": 390,
+    "h": 844,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Hello, Dr. Kunal",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 231.7,
+     "boxW": 358,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Let’s check in on your patients today.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 243.1,
+     "boxW": 358
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 20.5,
+    "bandBg": "rgb(235, 248, 255)"
+   },
+   "360x640": {
+    "w": 360,
+    "h": 640,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Hello, Dr. Kunal",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 231.7,
+     "boxW": 328,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Let’s check in on your patients today.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 243.1,
+     "boxW": 328
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 27,
+    "bandBg": "rgb(235, 248, 255)"
+   }
+  },
+  "face": {
+   "390x844": {
+    "w": 390,
+    "h": 844,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Hello, Dr. Kunal",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 231.7,
+     "boxW": 358,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Let’s check in on your patients today.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 243.1,
+     "boxW": 358
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 20.5,
+    "bandBg": "rgb(235, 248, 255)"
+   },
+   "360x640": {
+    "w": 360,
+    "h": 640,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Hello, Dr. Kunal",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 231.7,
+     "boxW": 328,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Let’s check in on your patients today.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 243.1,
+     "boxW": 328
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 27,
+    "bandBg": "rgb(235, 248, 255)"
+   }
+  },
+  "screen-lock": {
+   "390x844": {
+    "w": 390,
+    "h": 844,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Hello, Dr. Kunal",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 231.7,
+     "boxW": 358,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Let’s check in on your patients today.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 243.1,
+     "boxW": 358
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 20.5,
+    "bandBg": "rgb(235, 248, 255)"
+   },
+   "360x640": {
+    "w": 360,
+    "h": 640,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Hello, Dr. Kunal",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 231.7,
+     "boxW": 328,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Let’s check in on your patients today.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 243.1,
+     "boxW": 328
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 27,
+    "bandBg": "rgb(235, 248, 255)"
+   }
+  },
+  "pending": {
+   "390x844": {
+    "w": 390,
+    "h": 844,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Hello, Dr. Kunal",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 231.7,
+     "boxW": 358,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Let’s check in on your patients today.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 243.1,
+     "boxW": 358
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 20.5,
+    "bandBg": "rgb(235, 248, 255)"
+   },
+   "360x640": {
+    "w": 360,
+    "h": 640,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Hello, Dr. Kunal",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 231.7,
+     "boxW": 328,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Let’s check in on your patients today.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 243.1,
+     "boxW": 328
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 27,
+    "bandBg": "rgb(235, 248, 255)"
+   }
+  },
+  "cancelled": {
+   "390x844": {
+    "w": 390,
+    "h": 844,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Hello, Dr. Kunal",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 231.7,
+     "boxW": 358,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Let’s check in on your patients today.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 243.1,
+     "boxW": 358
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 20.5,
+    "bandBg": "rgb(235, 248, 255)"
+   },
+   "360x640": {
+    "w": 360,
+    "h": 640,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Hello, Dr. Kunal",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 231.7,
+     "boxW": 328,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Let’s check in on your patients today.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 243.1,
+     "boxW": 328
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 27,
+    "bandBg": "rgb(235, 248, 255)"
+   }
+  },
+  "platform-retry": {
+   "390x844": {
+    "w": 390,
+    "h": 844,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Hello, Dr. Kunal",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 231.7,
+     "boxW": 358,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Let’s check in on your patients today.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 243.1,
+     "boxW": 358
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 20.5,
+    "bandBg": "rgb(235, 248, 255)"
+   },
+   "360x640": {
+    "w": 360,
+    "h": 640,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Hello, Dr. Kunal",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 231.7,
+     "boxW": 328,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Let’s check in on your patients today.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 243.1,
+     "boxW": 328
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 27,
+    "bandBg": "rgb(235, 248, 255)"
+   }
+  },
+  "unavailable": {
+   "390x844": {
+    "w": 390,
+    "h": 844,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Hello, Dr. Kunal",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 231.7,
+     "boxW": 358,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Let’s check in on your patients today.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 243.1,
+     "boxW": 358
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 20.5,
+    "bandBg": "rgb(235, 248, 255)"
+   },
+   "360x640": {
+    "w": 360,
+    "h": 640,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": null,
+    "logoToTitle": 16,
+    "title": {
+     "text": "Hello, Dr. Kunal",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 231.7,
+     "boxW": 328,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Let’s check in on your patients today.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 243.1,
+     "boxW": 328
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 27,
+    "bandBg": "rgb(235, 248, 255)"
+   }
+  }
+ },
+ "home": {
+  "setup-wheel": {
+   "390x844": {
+    "w": 390,
+    "h": 844,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": {
+     "n": 3,
+     "size": 48,
+     "right": 2,
+     "glyphRight": 16
+    },
+    "logoToTitle": 16,
+    "title": {
+     "text": "Start taking cases",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 275,
+     "boxW": 358,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "You can add time or stop anytime.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 221.8,
+     "boxW": 358
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 20.5,
+    "bandBg": "rgb(235, 248, 255)"
+   },
+   "360x640": {
+    "w": 360,
+    "h": 640,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": {
+     "n": 3,
+     "size": 48,
+     "right": 2,
+     "glyphRight": 16
+    },
+    "logoToTitle": 16,
+    "title": {
+     "text": "Start taking cases",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 275,
+     "boxW": 328,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "You can add time or stop anytime.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 221.8,
+     "boxW": 328
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 27,
+    "bandBg": "rgb(235, 248, 255)"
+   }
+  },
+  "setting": {
+   "390x844": {
+    "w": 390,
+    "h": 844,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": {
+     "n": 3,
+     "size": 48,
+     "right": 2,
+     "glyphRight": 16
+    },
+    "logoToTitle": 16,
+    "title": {
+     "text": "Start taking cases",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 275,
+     "boxW": 358,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "You can add time or stop anytime.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 221.8,
+     "boxW": 358
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 20.5,
+    "bandBg": "rgb(235, 248, 255)"
+   },
+   "360x640": {
+    "w": 360,
+    "h": 640,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": {
+     "n": 3,
+     "size": 48,
+     "right": 2,
+     "glyphRight": 16
+    },
+    "logoToTitle": 16,
+    "title": {
+     "text": "Start taking cases",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 275,
+     "boxW": 328,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "You can add time or stop anytime.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 221.8,
+     "boxW": 328
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 27,
+    "bandBg": "rgb(235, 248, 255)"
+   }
+  },
+  "setup-failed": {
+   "390x844": {
+    "w": 390,
+    "h": 844,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": {
+     "n": 3,
+     "size": 48,
+     "right": 2,
+     "glyphRight": 16
+    },
+    "logoToTitle": 16,
+    "title": {
+     "text": "Start taking cases",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 275,
+     "boxW": 358,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "You can add time or stop anytime.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 221.8,
+     "boxW": 358
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 20.5,
+    "bandBg": "rgb(235, 248, 255)"
+   },
+   "360x640": {
+    "w": 360,
+    "h": 640,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": {
+     "n": 3,
+     "size": 48,
+     "right": 2,
+     "glyphRight": 16
+    },
+    "logoToTitle": 16,
+    "title": {
+     "text": "Start taking cases",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 275,
+     "boxW": 328,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "You can add time or stop anytime.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 221.8,
+     "boxW": 328
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 27,
+    "bandBg": "rgb(235, 248, 255)"
+   }
+  },
+  "active": {
+   "390x844": {
+    "w": 390,
+    "h": 844,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": {
+     "n": 3,
+     "size": 48,
+     "right": 2,
+     "glyphRight": 16
+    },
+    "logoToTitle": 16,
+    "title": {
+     "text": "You can take cases",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 289.4,
+     "boxW": 358,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Request a case now, or whenever you’re ready.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 305.6,
+     "boxW": 358
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 20.5,
+    "bandBg": "rgb(235, 248, 255)"
+   },
+   "360x640": {
+    "w": 360,
+    "h": 640,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": {
+     "n": 3,
+     "size": 48,
+     "right": 2,
+     "glyphRight": 16
+    },
+    "logoToTitle": 16,
+    "title": {
+     "text": "You can take cases",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 289.4,
+     "boxW": 328,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Request a case now, or whenever you’re ready.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 305.6,
+     "boxW": 328
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 27,
+    "bandBg": "rgb(235, 248, 255)"
+   }
+  },
+  "requesting": {
+   "390x844": {
+    "w": 390,
+    "h": 844,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": {
+     "n": 3,
+     "size": 48,
+     "right": 2,
+     "glyphRight": 16
+    },
+    "logoToTitle": 16,
+    "title": {
+     "text": "You can take cases",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 289.4,
+     "boxW": 358,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Request a case now, or whenever you’re ready.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 305.6,
+     "boxW": 358
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 20.5,
+    "bandBg": "rgb(235, 248, 255)"
+   },
+   "360x640": {
+    "w": 360,
+    "h": 640,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": {
+     "n": 3,
+     "size": 48,
+     "right": 2,
+     "glyphRight": 16
+    },
+    "logoToTitle": 16,
+    "title": {
+     "text": "You can take cases",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 289.4,
+     "boxW": 328,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Request a case now, or whenever you’re ready.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 305.6,
+     "boxW": 328
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 27,
+    "bandBg": "rgb(235, 248, 255)"
+   }
+  },
+  "no-cases": {
+   "390x844": {
+    "w": 390,
+    "h": 844,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": {
+     "n": 3,
+     "size": 48,
+     "right": 2,
+     "glyphRight": 16
+    },
+    "logoToTitle": 16,
+    "title": {
+     "text": "You can take cases",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 289.4,
+     "boxW": 358,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Request a case now, or whenever you’re ready.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 305.6,
+     "boxW": 358
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 20.5,
+    "bandBg": "rgb(235, 248, 255)"
+   },
+   "360x640": {
+    "w": 360,
+    "h": 640,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": {
+     "n": 3,
+     "size": 48,
+     "right": 2,
+     "glyphRight": 16
+    },
+    "logoToTitle": 16,
+    "title": {
+     "text": "You can take cases",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 289.4,
+     "boxW": 328,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Request a case now, or whenever you’re ready.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 305.6,
+     "boxW": 328
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 27,
+    "bandBg": "rgb(235, 248, 255)"
+   }
+  },
+  "request-failed": {
+   "390x844": {
+    "w": 390,
+    "h": 844,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": {
+     "n": 3,
+     "size": 48,
+     "right": 2,
+     "glyphRight": 16
+    },
+    "logoToTitle": 16,
+    "title": {
+     "text": "You can take cases",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 289.4,
+     "boxW": 358,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Request a case now, or whenever you’re ready.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 305.6,
+     "boxW": 358
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 20.5,
+    "bandBg": "rgb(235, 248, 255)"
+   },
+   "360x640": {
+    "w": 360,
+    "h": 640,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": {
+     "n": 3,
+     "size": 48,
+     "right": 2,
+     "glyphRight": 16
+    },
+    "logoToTitle": 16,
+    "title": {
+     "text": "You can take cases",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 289.4,
+     "boxW": 328,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Request a case now, or whenever you’re ready.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 305.6,
+     "boxW": 328
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 27,
+    "bandBg": "rgb(235, 248, 255)"
+   }
+  },
+  "offline": {
+   "390x844": {
+    "w": 390,
+    "h": 844,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": {
+     "n": 3,
+     "size": 48,
+     "right": 2,
+     "glyphRight": 16
+    },
+    "logoToTitle": 16,
+    "title": {
+     "text": "You can take cases",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 289.4,
+     "boxW": 358,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Request a case now, or whenever you’re ready.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 305.6,
+     "boxW": 358
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 20.5,
+    "bandBg": "rgb(235, 248, 255)"
+   },
+   "360x640": {
+    "w": 360,
+    "h": 640,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": {
+     "n": 3,
+     "size": 48,
+     "right": 2,
+     "glyphRight": 16
+    },
+    "logoToTitle": 16,
+    "title": {
+     "text": "You can take cases",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 289.4,
+     "boxW": 328,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Request a case now, or whenever you’re ready.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 305.6,
+     "boxW": 328
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 27,
+    "bandBg": "rgb(235, 248, 255)"
+   }
+  },
+  "near-expiry": {
+   "390x844": {
+    "w": 390,
+    "h": 844,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": {
+     "n": 3,
+     "size": 48,
+     "right": 2,
+     "glyphRight": 16
+    },
+    "logoToTitle": 16,
+    "title": {
+     "text": "You can take cases",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 289.4,
+     "boxW": 358,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Request a case now, or whenever you’re ready.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 305.6,
+     "boxW": 358
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 20.5,
+    "bandBg": "rgb(235, 248, 255)"
+   },
+   "360x640": {
+    "w": 360,
+    "h": 640,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": {
+     "n": 3,
+     "size": 48,
+     "right": 2,
+     "glyphRight": 16
+    },
+    "logoToTitle": 16,
+    "title": {
+     "text": "You can take cases",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 289.4,
+     "boxW": 328,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Request a case now, or whenever you’re ready.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 305.6,
+     "boxW": 328
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 27,
+    "bandBg": "rgb(235, 248, 255)"
+   }
+  },
+  "add-wheel": {
+   "390x844": {
+    "w": 390,
+    "h": 844,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": {
+     "n": 3,
+     "size": 48,
+     "right": 2,
+     "glyphRight": 16
+    },
+    "logoToTitle": 16,
+    "title": {
+     "text": "You can take cases",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 289.4,
+     "boxW": 358,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Request a case now, or whenever you’re ready.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 305.6,
+     "boxW": 358
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 20.5,
+    "bandBg": "rgb(235, 248, 255)"
+   },
+   "360x640": {
+    "w": 360,
+    "h": 640,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": {
+     "n": 3,
+     "size": 48,
+     "right": 2,
+     "glyphRight": 16
+    },
+    "logoToTitle": 16,
+    "title": {
+     "text": "You can take cases",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 289.4,
+     "boxW": 328,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Request a case now, or whenever you’re ready.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 305.6,
+     "boxW": 328
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 27,
+    "bandBg": "rgb(235, 248, 255)"
+   }
+  },
+  "adding": {
+   "390x844": {
+    "w": 390,
+    "h": 844,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": {
+     "n": 3,
+     "size": 48,
+     "right": 2,
+     "glyphRight": 16
+    },
+    "logoToTitle": 16,
+    "title": {
+     "text": "You can take cases",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 289.4,
+     "boxW": 358,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Request a case now, or whenever you’re ready.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 305.6,
+     "boxW": 358
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 20.5,
+    "bandBg": "rgb(235, 248, 255)"
+   },
+   "360x640": {
+    "w": 360,
+    "h": 640,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": {
+     "n": 3,
+     "size": 48,
+     "right": 2,
+     "glyphRight": 16
+    },
+    "logoToTitle": 16,
+    "title": {
+     "text": "You can take cases",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 289.4,
+     "boxW": 328,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Request a case now, or whenever you’re ready.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 305.6,
+     "boxW": 328
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 27,
+    "bandBg": "rgb(235, 248, 255)"
+   }
+  },
+  "add-failed": {
+   "390x844": {
+    "w": 390,
+    "h": 844,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": {
+     "n": 3,
+     "size": 48,
+     "right": 2,
+     "glyphRight": 16
+    },
+    "logoToTitle": 16,
+    "title": {
+     "text": "You can take cases",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 289.4,
+     "boxW": 358,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Request a case now, or whenever you’re ready.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 305.6,
+     "boxW": 358
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 20.5,
+    "bandBg": "rgb(235, 248, 255)"
+   },
+   "360x640": {
+    "w": 360,
+    "h": 640,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": {
+     "n": 3,
+     "size": 48,
+     "right": 2,
+     "glyphRight": 16
+    },
+    "logoToTitle": 16,
+    "title": {
+     "text": "You can take cases",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 289.4,
+     "boxW": 328,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Request a case now, or whenever you’re ready.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 305.6,
+     "boxW": 328
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 27,
+    "bandBg": "rgb(235, 248, 255)"
+   }
+  },
+  "added": {
+   "390x844": {
+    "w": 390,
+    "h": 844,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": {
+     "n": 3,
+     "size": 48,
+     "right": 2,
+     "glyphRight": 16
+    },
+    "logoToTitle": 16,
+    "title": {
+     "text": "You can take cases",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 289.4,
+     "boxW": 358,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Request a case now, or whenever you’re ready.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 305.6,
+     "boxW": 358
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 20.5,
+    "bandBg": "rgb(235, 248, 255)"
+   },
+   "360x640": {
+    "w": 360,
+    "h": 640,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": {
+     "n": 3,
+     "size": 48,
+     "right": 2,
+     "glyphRight": 16
+    },
+    "logoToTitle": 16,
+    "title": {
+     "text": "You can take cases",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 289.4,
+     "boxW": 328,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Request a case now, or whenever you’re ready.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 305.6,
+     "boxW": 328
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 27,
+    "bandBg": "rgb(235, 248, 255)"
+   }
+  },
+  "end-confirmation": {
+   "390x844": {
+    "w": 390,
+    "h": 844,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": {
+     "n": 3,
+     "size": 48,
+     "right": 2,
+     "glyphRight": 16
+    },
+    "logoToTitle": 16,
+    "title": {
+     "text": "You can take cases",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 289.4,
+     "boxW": 358,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Request a case now, or whenever you’re ready.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 305.6,
+     "boxW": 358
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 20.5,
+    "bandBg": "rgb(235, 248, 255)"
+   },
+   "360x640": {
+    "w": 360,
+    "h": 640,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": {
+     "n": 3,
+     "size": 48,
+     "right": 2,
+     "glyphRight": 16
+    },
+    "logoToTitle": 16,
+    "title": {
+     "text": "You can take cases",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 289.4,
+     "boxW": 328,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Request a case now, or whenever you’re ready.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 305.6,
+     "boxW": 328
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 27,
+    "bandBg": "rgb(235, 248, 255)"
+   }
+  },
+  "stop-pending": {
+   "390x844": {
+    "w": 390,
+    "h": 844,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": {
+     "n": 3,
+     "size": 48,
+     "right": 2,
+     "glyphRight": 16
+    },
+    "logoToTitle": 16,
+    "title": {
+     "text": "Ending availability",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 276.3,
+     "boxW": 358,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "You won’t get new cases.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 165.7,
+     "boxW": 358
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 20.5,
+    "bandBg": "rgb(235, 248, 255)"
+   },
+   "360x640": {
+    "w": 360,
+    "h": 640,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": {
+     "n": 3,
+     "size": 48,
+     "right": 2,
+     "glyphRight": 16
+    },
+    "logoToTitle": 16,
+    "title": {
+     "text": "Ending availability",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 276.3,
+     "boxW": 328,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "You won’t get new cases.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 165.7,
+     "boxW": 328
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 27,
+    "bandBg": "rgb(235, 248, 255)"
+   }
+  },
+  "expired-pending": {
+   "390x844": {
+    "w": 390,
+    "h": 844,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": {
+     "n": 3,
+     "size": 48,
+     "right": 2,
+     "glyphRight": 16
+    },
+    "logoToTitle": 16,
+    "title": {
+     "text": "Availability ended",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 273.3,
+     "boxW": 358,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "You won’t get new cases.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 165.7,
+     "boxW": 358
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 20.5,
+    "bandBg": "rgb(235, 248, 255)"
+   },
+   "360x640": {
+    "w": 360,
+    "h": 640,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": {
+     "n": 3,
+     "size": 48,
+     "right": 2,
+     "glyphRight": 16
+    },
+    "logoToTitle": 16,
+    "title": {
+     "text": "Availability ended",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 273.3,
+     "boxW": 328,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "You won’t get new cases.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 165.7,
+     "boxW": 328
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 27,
+    "bandBg": "rgb(235, 248, 255)"
+   }
+  },
+  "idle-expired": {
+   "390x844": {
+    "w": 390,
+    "h": 844,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": {
+     "n": 3,
+     "size": 48,
+     "right": 2,
+     "glyphRight": 16
+    },
+    "logoToTitle": 16,
+    "title": {
+     "text": "Start taking cases",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 275,
+     "boxW": 358,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "You can add time or stop anytime.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 221.8,
+     "boxW": 358
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 20.5,
+    "bandBg": "rgb(235, 248, 255)"
+   },
+   "360x640": {
+    "w": 360,
+    "h": 640,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": {
+     "n": 3,
+     "size": 48,
+     "right": 2,
+     "glyphRight": 16
+    },
+    "logoToTitle": 16,
+    "title": {
+     "text": "Start taking cases",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 275,
+     "boxW": 328,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "You can add time or stop anytime.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 221.8,
+     "boxW": 328
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 27,
+    "bandBg": "rgb(235, 248, 255)"
+   }
+  },
+  "manually-ended": {
+   "390x844": {
+    "w": 390,
+    "h": 844,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": {
+     "n": 3,
+     "size": 48,
+     "right": 2,
+     "glyphRight": 16
+    },
+    "logoToTitle": 16,
+    "title": {
+     "text": "Start taking cases",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 275,
+     "boxW": 358,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "You can add time or stop anytime.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 221.8,
+     "boxW": 358
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 20.5,
+    "bandBg": "rgb(235, 248, 255)"
+   },
+   "360x640": {
+    "w": 360,
+    "h": 640,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": {
+     "n": 3,
+     "size": 48,
+     "right": 2,
+     "glyphRight": 16
+    },
+    "logoToTitle": 16,
+    "title": {
+     "text": "Start taking cases",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 275,
+     "boxW": 328,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "You can add time or stop anytime.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 221.8,
+     "boxW": 328
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 27,
+    "bandBg": "rgb(235, 248, 255)"
+   }
+  },
+  "unknown-result": {
+   "390x844": {
+    "w": 390,
+    "h": 844,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": {
+     "n": 3,
+     "size": 48,
+     "right": 2,
+     "glyphRight": 16
+    },
+    "logoToTitle": 16,
+    "title": {
+     "text": "You can take cases",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 289.4,
+     "boxW": 358,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Request a case now, or whenever you’re ready.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 305.6,
+     "boxW": 358
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 20.5,
+    "bandBg": "rgb(235, 248, 255)"
+   },
+   "360x640": {
+    "w": 360,
+    "h": 640,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": {
+     "n": 3,
+     "size": 48,
+     "right": 2,
+     "glyphRight": 16
+    },
+    "logoToTitle": 16,
+    "title": {
+     "text": "You can take cases",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 289.4,
+     "boxW": 328,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Request a case now, or whenever you’re ready.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 305.6,
+     "boxW": 328
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 27,
+    "bandBg": "rgb(235, 248, 255)"
+   }
+  }
+ },
+ "home-v3": {
+  "setup": {
+   "390x844": {
+    "w": 390,
+    "h": 844,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": {
+     "n": 3,
+     "size": 48,
+     "right": 2,
+     "glyphRight": 16
+    },
+    "logoToTitle": 16,
+    "title": {
+     "text": "Start taking cases",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 275,
+     "boxW": 358,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "You can add time or stop anytime.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 221.8,
+     "boxW": 358
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 20.5,
+    "bandBg": "rgb(235, 248, 255)"
+   },
+   "360x640": {
+    "w": 360,
+    "h": 640,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": {
+     "n": 3,
+     "size": 48,
+     "right": 2,
+     "glyphRight": 16
+    },
+    "logoToTitle": 16,
+    "title": {
+     "text": "Start taking cases",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 275,
+     "boxW": 328,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "You can add time or stop anytime.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 221.8,
+     "boxW": 328
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 27,
+    "bandBg": "rgb(235, 248, 255)"
+   }
+  },
+  "available": {
+   "390x844": {
+    "w": 390,
+    "h": 844,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": {
+     "n": 3,
+     "size": 48,
+     "right": 2,
+     "glyphRight": 16
+    },
+    "logoToTitle": 16,
+    "title": {
+     "text": "You can take cases",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 289.4,
+     "boxW": 358,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Request a case now, or whenever you’re ready.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 305.6,
+     "boxW": 358
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 20.5,
+    "bandBg": "rgb(235, 248, 255)"
+   },
+   "360x640": {
+    "w": 360,
+    "h": 640,
+    "logo": {
+     "top": 16,
+     "left": 16,
+     "w": 166,
+     "h": 41
+    },
+    "headerIcons": {
+     "n": 3,
+     "size": 48,
+     "right": 2,
+     "glyphRight": 16
+    },
+    "logoToTitle": 16,
+    "title": {
+     "text": "You can take cases",
+     "size": "32px",
+     "lh": "40px",
+     "weight": "600",
+     "color": "rgb(56, 58, 66)",
+     "lines": 1,
+     "textW": 289.4,
+     "boxW": 328,
+     "left": 16,
+     "wrap": "balance"
+    },
+    "titleToSub": 8,
+    "sub": {
+     "text": "Request a case now, or whenever you’re ready.",
+     "size": "14px",
+     "lh": "20px",
+     "weight": "400",
+     "color": "rgb(91, 97, 110)",
+     "lines": 1,
+     "h": 20,
+     "textW": 305.6,
+     "boxW": 328
+    },
+    "subToPanel": 32,
+    "panel": {
+     "top": 173,
+     "radius": "24px",
+     "padTop": "32px",
+     "padX": "16px"
+    },
+    "panelToFirst": 32,
+    "bandPct": 27,
+    "bandBg": "rgb(235, 248, 255)"
+   }
+  }
+ }
+}

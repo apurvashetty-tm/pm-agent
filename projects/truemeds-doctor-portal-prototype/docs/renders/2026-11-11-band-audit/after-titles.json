@@ -1,0 +1,9 @@
+{
+ "faster-signin-offer": {"Skip the OTP next time": {"title": "Skip OTPs next time"}},
+ "home": {
+  "Consult on your schedule": {"title": "Start taking cases", "sub": "You can add time or stop anytime."},
+  "You’re available for consultations": {"title": "You can take cases", "sub": "Request a case now, or whenever you’re ready."},
+  "Your availability has ended": {"title": "Availability ended"}
+ },
+ "home-v3": {"You’re available": {"title": "You can take cases", "sub": "Request a case now, or whenever you’re ready."}}
+}

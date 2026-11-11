@@ -1,0 +1,16 @@
+/* Band audit — the one band spec, applied on top of the approved pages for the after.png picture only.
+   Injected at capture time (tools/capture.py after); no approved file is changed. Tokens only. */
+
+/* Sign-in: logo -> title 16 (was 48, L6), like OTP, offer, unlock and Home v3. */
+#doctor-login-preview .login-content{padding-top:var(--tm-space-lg)}
+
+/* Approved Home: logo -> title 16 (Home v3 already does this). */
+.phone .band{padding-top:var(--tm-space-lg)}
+
+/* OTP: "Change" becomes a plain inline link (subtitle box 48 -> 20) and keeps a 48-tall hit area from a centred
+   pseudo-element, which doesn't take part in the line box. (Inline padding was tried first: 46 tall, font-metric dependent.) */
+.screen .head a.lk{display:inline;min-height:0;position:relative}
+.screen .head a.lk::after{content:'';position:absolute;left:0;right:0;top:50%;height:var(--tm-target-min);transform:translateY(-50%)}   /* raw-ok: 50% = vertical centring (geometry) */
+
+/* Sign-in: drop the per-screen 31ch cap on the subtitle (one-line subtitles are now the band rule). */
+#doctor-login-preview .login-content > p{max-width:none}

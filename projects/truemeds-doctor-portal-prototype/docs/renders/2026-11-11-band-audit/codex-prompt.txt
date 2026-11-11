@@ -1,0 +1,46 @@
+You are a senior mobile UX/UI reviewer and UX writer. Read-only review; change no file. Do not read claude-review.md (another reviewer's independent answer) if it exists.
+
+Subject: the Truemeds doctor portal (a mobile web app doctors use to take prescription-consultation cases). Several screens open with the same light-blue band: the "truemeds for doctors" logo lockup, a screen title, a grey subtitle, then a white panel with rounded top corners. The product owner (Apurva, he/him) doesn't want these bands to look different from each other. Today they do. Find every difference and propose ONE band spec for all of them.
+
+Screens in scope (all their states): Sign-in, OTP, Faster sign-in offer, Returning unlock, Home (today's approved version, 19 states), and the agreed Home v3 (setup + available), which replaces today's Home setup and active bands. Profile, case page, Prescribe and sheets use task headers (Back + title, no logo) - out of scope except to confirm they don't need to match.
+
+Files (this folder):
+- measure.json: every in-scope state measured at 390x844 and 360x640 (CSS px, relative to the screen's top-left). Fields: logo top/left/w/h; headerIcons (Home only: 3 icon buttons, 48 targets); logoToTitle; title (size/lh/weight/lines/textW = text width, boxW = available width); titleToSub; sub (size/lh/colour/lines/h = box height/textW); subToPanel; panel (top, radius, padTop); panelToFirst; bandPct (panel top as % of screen height).
+- text-widths.json: candidate titles at 32/40 semibold and subtitles at 14/20, with whether each fits one line at 390 (358 available) and 360 (328 available).
+- bands.png (attached): every band side by side, same scale, numbers under each; row 1 = 390x844, row 2 = 360x640; dashed red line = y 173.
+- shots/*.png (attached): one picture per screen and size.
+- Sources (read-only): ../../../ui-screens/sign-in/sign-in.html, ../../../ui-screens/otp/otp.html, ../../../ui-screens/faster-signin-offer/faster-signin-offer.html, ../../../ui-screens/returning-unlock/returning-unlock.html, ../../../ui-screens/home/home-reference.css + home-reference.js, ../2026-11-11-home-v3/home-v3.html + home-v3.css (+ its REPORT.md).
+
+Facts from measure.json, in short:
+- Same everywhere: logo 166 wide, 16 from the top, 16 from the left; title 32/40 semibold, left 16; title -> subtitle 8; subtitle 14/20 grey; subtitle -> panel 32; panel radius 24, panel top padding 32; band colour the same. No state changes the band except Home stop-pending (one-line title).
+- Logo -> title: Sign-in 48, Home (approved) 48; OTP, offer, unlock 16; Home v3 16.
+- Header icons: only Home and Home v3 (bell, help, profile; 48 targets, last glyph 16 from the edge; the header row stays the logo's height).
+- Title lines: Home approved titles wrap to 2 lines on both sizes ("Consult on your schedule", "You're available for consultations", "Your availability has ended"); the offer "Skip the OTP next time" wraps at 360 only; the others are one line.
+- OTP subtitle box is 48 tall, not 20: the "Change" link inside it has a 48 min-height target, so the OTP band is 28 taller than the offer/unlock band.
+- Panel top (band height): 390x844 - sign-in 205, OTP 201, offer 173, unlock 173, Home 245 (205 when the title is one line), Home v3 173. That is 20.5 % to 29 % of the screen at 390x844 and 27 % to 38 % at 360x640.
+
+Rules to judge against (read them):
+- ../../../../../design-system/RULES.md section 8: 8.1 type (L1 title 32/40 semibold, L3 14/20 secondary), 8.3 gaps (only 8 / 16 / 32; "Home-base screens use 3xl (48) as the hero gap between logo and title"), 8.5 header types, 8.6 tap targets (48, links inside a sentence follow WCAG 2.5.8's inline exception), 8.10 titles, 8.13 logo lockup, 8.14 small phones; Locked specs table (L6 "Sign-in logo-to-title gap: 48 (3xl), home-base hero gap"; L8 balanced titles).
+- ../../../docs/context/decision_log.md: D-42 (two header types: home-base = sign-in + Home with the logo; task header = OTP, offer, unlock, no logo), D-46 (L6 locked), D-61 (logo on every screen except the case page and task overlays - replaces D-42's logo rule; OTP has no Back), D-36 (Home state is named "Taking cases").
+- ../2026-11-01-fix-round/REPORT.md and CHECKLIST.md: D-81 F8 (one header spacing for OTP, offer and unlock: logo -> title 16; fingerprint tile in the same place on offer and unlock); Round 4 A-05 (header text to white panel 32 on every screen; panel top padding 32); A-07 (one lockup size 166 and one top offset 16 on every screen with the logo).
+- The Home v3 review (../2026-11-11-home-v3/REPORT.md) already agreed with the product owner: Home v3 moves Home's logo -> title to 16; "Sign-in keeps 48" was the working assumption there.
+
+Titles and the story the screens tell:
+- Sign-in "Welcome, Doctor" / "Your partner in thoughtful, affordable care." -> OTP "Verify your number" / "Sent to +91 98765 43210 · Change" -> offer "Skip the OTP next time" / "Use your fingerprint instead of waiting for an OTP." -> Home.
+- Returning unlock "Hello, Dr. Kunal" / "Let's check in on your patients today." -> Home.
+- Home v3 setup "Start taking cases" / "You can add time or stop anytime." -> available. Apurva wants that pair to read "Start taking cases" -> "You can take cases now". Measured: "You can take cases now" is 362 px at 32/40; the line is 358 at 390 and 328 at 360, so it wraps. Propose the closest ONE-LINE wording that keeps his story (e.g. "You can take cases", with "now" carried by the subtitle) and the matching subtitle (one line; text-widths.json has candidates, you may propose others and estimate).
+- Today's Home ended / ending states: "Your availability has ended" (2 lines) / "Ending availability"; subtitle "You won't get new cases."
+
+Answer, plain markdown, concise:
+## 1 Differences
+A table: every difference you find between the bands (number, which screens, measured values) and for each: DELIBERATE RULE (name the decision) or DRIFT, with one line why.
+## 2 One band spec
+Every number and the design-system token for it (logo top / width, header row, logo -> title, title type and lines, title -> subtitle, subtitle type and lines, subtitle box height, band bottom -> panel, panel radius, panel top padding). Then ALLOWED VARIANTS (each with its reason) - e.g. header icons on Home, a 2-line title for long doctor names. Say what happens to L6 / RULES 8.3's 48 and which decision would need changing.
+## 3 Per screen
+What changes on each screen to meet the spec, or "no change".
+## 4 Titles and subtitles
+For each in-scope screen: is it one line at 390 and 360; does each pair read as a story (sign-in -> OTP -> offer -> Home; unlock -> Home; setup -> available)? Give the title + subtitle you'd ship for every screen, including the Home available title and the Home ended/ending titles.
+## 5 Task headers
+Confirm (or not) that Profile, case page, Prescribe and sheets don't need to match, in two lines.
+## 6 Questions for Apurva
+As few and as plain as possible.

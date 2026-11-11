@@ -1,0 +1,233 @@
+[
+ {
+  "kind": "title",
+  "text": "Welcome, Doctor",
+  "w": 273,
+  "fits390": true,
+  "fits360": true
+ },
+ {
+  "kind": "title",
+  "text": "Verify your number",
+  "w": 290.2,
+  "fits390": true,
+  "fits360": true
+ },
+ {
+  "kind": "title",
+  "text": "Skip the OTP next time",
+  "w": 344.5,
+  "fits390": true,
+  "fits360": false
+ },
+ {
+  "kind": "title",
+  "text": "Skip OTPs next time",
+  "w": 303.4,
+  "fits390": true,
+  "fits360": true
+ },
+ {
+  "kind": "title",
+  "text": "Skip the OTP from now",
+  "w": 347.9,
+  "fits390": true,
+  "fits360": false
+ },
+ {
+  "kind": "title",
+  "text": "Hello, Dr. Kunal",
+  "w": 231.7,
+  "fits390": true,
+  "fits360": true
+ },
+ {
+  "kind": "title",
+  "text": "Start taking cases",
+  "w": 275,
+  "fits390": true,
+  "fits360": true
+ },
+ {
+  "kind": "title",
+  "text": "You’re available",
+  "w": 241.2,
+  "fits390": true,
+  "fits360": true
+ },
+ {
+  "kind": "title",
+  "text": "You can take cases now",
+  "w": 361.6,
+  "fits390": false,
+  "fits360": false
+ },
+ {
+  "kind": "title",
+  "text": "You can take cases",
+  "w": 289.4,
+  "fits390": true,
+  "fits360": true
+ },
+ {
+  "kind": "title",
+  "text": "You’re taking cases",
+  "w": 297.3,
+  "fits390": true,
+  "fits360": true
+ },
+ {
+  "kind": "title",
+  "text": "Taking cases now",
+  "w": 267.2,
+  "fits390": true,
+  "fits360": true
+ },
+ {
+  "kind": "title",
+  "text": "Cases are open now",
+  "w": 309.3,
+  "fits390": true,
+  "fits360": true
+ },
+ {
+  "kind": "title",
+  "text": "You’re on for cases",
+  "w": 290.3,
+  "fits390": true,
+  "fits360": true
+ },
+ {
+  "kind": "title",
+  "text": "Ready for cases now",
+  "w": 315.8,
+  "fits390": true,
+  "fits360": true
+ },
+ {
+  "kind": "title",
+  "text": "Consult on your schedule",
+  "w": 387.4,
+  "fits390": false,
+  "fits360": false
+ },
+ {
+  "kind": "title",
+  "text": "Ending availability",
+  "w": 276.3,
+  "fits390": true,
+  "fits360": true
+ },
+ {
+  "kind": "title",
+  "text": "Your availability has ended",
+  "w": 404,
+  "fits390": false,
+  "fits360": false
+ },
+ {
+  "kind": "title",
+  "text": "Availability ended",
+  "w": 273.3,
+  "fits390": true,
+  "fits360": true
+ },
+ {
+  "kind": "title",
+  "text": "Hello, Dr. Raghavendra",
+  "w": 350.9,
+  "fits390": true,
+  "fits360": false
+ },
+ {
+  "kind": "subtitle",
+  "text": "Request a case whenever you have a moment.",
+  "w": 301.9,
+  "fits390": true,
+  "fits360": true
+ },
+ {
+  "kind": "subtitle",
+  "text": "Request one now, or whenever you’re ready.",
+  "w": 289,
+  "fits390": true,
+  "fits360": true
+ },
+ {
+  "kind": "subtitle",
+  "text": "Request a case now, or whenever you’re ready.",
+  "w": 305.6,
+  "fits390": true,
+  "fits360": true
+ },
+ {
+  "kind": "subtitle",
+  "text": "Request a case now or whenever you’re free.",
+  "w": 292.2,
+  "fits390": true,
+  "fits360": true
+ },
+ {
+  "kind": "subtitle",
+  "text": "You can request a case right now.",
+  "w": 217.3,
+  "fits390": true,
+  "fits360": true
+ },
+ {
+  "kind": "subtitle",
+  "text": "Request a case now. Add time or stop anytime.",
+  "w": 305.9,
+  "fits390": true,
+  "fits360": true
+ },
+ {
+  "kind": "subtitle",
+  "text": "You can add time or stop anytime.",
+  "w": 221.8,
+  "fits390": true,
+  "fits360": true
+ },
+ {
+  "kind": "subtitle",
+  "text": "Choose how long you’re available today.",
+  "w": 265.5,
+  "fits390": true,
+  "fits360": true
+ },
+ {
+  "kind": "subtitle",
+  "text": "Your partner in thoughtful, affordable care.",
+  "w": 279.6,
+  "fits390": true,
+  "fits360": true
+ },
+ {
+  "kind": "subtitle",
+  "text": "Sent to +91 98765 43210 · Change",
+  "w": 220.8,
+  "fits390": true,
+  "fits360": true
+ },
+ {
+  "kind": "subtitle",
+  "text": "Use your fingerprint instead of waiting for an OTP.",
+  "w": 321.1,
+  "fits390": true,
+  "fits360": true
+ },
+ {
+  "kind": "subtitle",
+  "text": "Let’s check in on your patients today.",
+  "w": 243.1,
+  "fits390": true,
+  "fits360": true
+ },
+ {
+  "kind": "subtitle",
+  "text": "You won’t get new cases.",
+  "w": 165.7,
+  "fits390": true,
+  "fits360": true
+ }
+]

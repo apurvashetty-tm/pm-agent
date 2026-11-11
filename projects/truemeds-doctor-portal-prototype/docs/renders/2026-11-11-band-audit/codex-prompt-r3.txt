@@ -1,0 +1,13 @@
+You are the same senior mobile UX/UI reviewer. Read-only; change no file.
+
+Round 3 (last) of the joint band audit. Read: codex-review.md (your round 1), claude-review.md (Claude round 1), codex-on-claude.md (your critique of Claude), claude-on-codex.md (Claude's critique of you). New evidence since round 2:
+- after.css + after-titles.json: the proposed spec applied on top of the approved pages for a picture only. after-measure.json: all 128 captures (every in-scope state, 390x844 and 360x640) measure logo->title 16, title 1 line, title->sub 8, subtitle box 20, sub->panel 32, panel top 173. after.png (attached) is the after sheet in the same layout as bands.png (attached).
+- otp-target-check.json: in the after render the OTP "Change" link is a plain inline link (line box 20) whose 48-tall hit area comes from a centred ::after (hit-tests true at centre +/-23, false at +/-26), with a 2px focus outline. A first try with inline padding measured 46, not 48, and was dropped. The hit area reaches 6 px into the title's line box above (title bottom 113, hit area 107-155).
+- D-101 (decision_log.md, o07) says the logo's 16 from the top is measured from the safe area. Claude accepts this and the Home state mapping you gave.
+
+Question: where do we still disagree, and what would settle each point? Keep it short. Then list the questions that genuinely need the product owner (Apurva, he/him), as few and as plain as possible; everything else should be settled between the reviewers.
+
+Output plain markdown:
+## Settled (one line each)
+## Still disagree (point | Codex view | Claude view | what would settle it)
+## Needs Apurva
