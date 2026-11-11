@@ -1,0 +1,15 @@
+READ-ONLY. Final pass for run r3-rest-audit. Do not edit files. Your final message is saved as codex-final.md.
+
+Folder: projects/truemeds-doctor-portal-prototype/docs/renders/2026-11-11-r3-rest-audit/ — you have codex-review.md, codex-on-claude.md; Claude's are claude-review.md and claude-on-codex.md.
+
+Claude's final positions on what is still disputed:
+1. Section title → its content (script, medicines, notes): Claude holds ONE value for all three, 16 — you already agree 16 for medicines (18.5) and notes (20); a title heading its whole group is "items in one group", and 8 is reserved for a label joined to its single control. Different values for the three card titles would be the inconsistency D-108 is meant to remove.
+2. Order details expanded (8): Claude concedes → drift fix to 16.
+3. Status tags 12 vs 14: Claude keeps this as NEEDS APURVA — RULES §8.1 says both "12 only for tags" and "status ≥ 14"; the tag was approved at 12 (D-54); a rule contradiction is the owner's call, not a drift fix.
+4. Rx viewer: Claude concedes hint → paper 4.9 → 8 (drift fix). Title row → tools 34.1: not listed anatomy, agreed; Claude proposes NEEDS APURVA "list the viewer header's two rows as anatomy (title row, tools row 8 below) or keep 34" rather than calling it drift now.
+5. Calling-flow page: Claude accepts a one-line scope ruling as NEEDS APURVA ("internal desktop diagram: §4 applies, not §8"), no fix work in the next round.
+6. Duration: P1 with Claude's sets (Days 1 2 3 5 / 7 10 14 15; Weeks 1 2 3 4 / 6 8; Months 1 2 3 6 / 12); Codex's Weeks 12 / Months 4, 9 as the alternative in the question to Apurva; unit-switch behaviour added to the question. Value → "Default"/"Changed" 1.6: Claude holds it is one two-line value (both 14/20, stacked as one block); no change.
+7. "Your chosen time is kept.": optional copy suggestion, not drift. Busy "…": mandatory drift (§9.1).
+Also: Prescribe's body does scroll at the real viewport (the d-duration-picker state opens scrolled with the cards above the fold at negative tops; d-scrolled exists); the overflow-hidden ancestor only clips the measurement.
+
+For each of 1–7: ACCEPT or HOLD, one line why. Then "Final disputed list" (may be empty). Under 400 words.

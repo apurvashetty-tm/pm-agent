@@ -1,0 +1,31 @@
+You are an independent UI reviewer for the Truemeds doctor app prototype (run r3-rest-audit). READ-ONLY: do not edit any file. Write your review as your final message (it is saved as codex-review.md). Do not read claude-review.md; this review must be independent.
+
+Working folder: projects/truemeds-doctor-portal-prototype/docs/renders/2026-11-11-r3-rest-audit (paths below are relative to the repository root unless they start with projects/truemeds-doctor-portal-prototype/docs/renders/2026-11-11-r3-rest-audit/).
+
+## Context
+New rules D-106–D-109 and design-system/RULES.md §8.3 (visible-edge spacing: 8 joins parts of one thing / 16 separates items in one group / 32 separates different things; component anatomy keeps its listed values), "Entry and home screens" (band spec + screen standard, vocabulary), §9 (buttons, chips 9.2, cards 9.3, sheets 9.4 incl. subtitle in header, feedback 9.5) were applied to the entry screens and Home only. This audit finds what they mean for EVERY OTHER screen: case page (all states incl. calling, outcomes, closed), Prescribe (all states, medicine overlays: tablet, syrup, drops, inhaler, injection, cream), Rx viewer, Profile, every sheet, and the calling-flow page (projects/truemeds-doctor-portal-prototype/calling-flow/, a desktop reference diagram). It is a report: nothing gets fixed in this run.
+
+Read: design-system/RULES.md (§8, "Entry and home screens", §9); projects/truemeds-doctor-portal-prototype/docs/context/decision_log.md entries D-106, D-107, D-108, D-109 (search "### D-10"); projects/truemeds-doctor-portal-prototype/ui-screens/app-logic.md (case page, Prescribe, calling sections); projects/truemeds-doctor-portal-prototype/ui-screens/feedback/messages.json (all strings); the built screens in projects/truemeds-doctor-portal-prototype/app/screens/ (case.js/.css, prescribe.js/.css, parts.js, callback-sheet.js, skip-ha-sheet.js, unavailable-sheet.js, rx-viewer.js, home.js for Profile) and design-system/src/components.css where needed.
+
+Evidence (attached pictures are a representative subset; all are in projects/truemeds-doctor-portal-prototype/docs/renders/2026-11-11-r3-rest-audit/visible-gaps/):
+- projects/truemeds-doctor-portal-prototype/docs/renders/2026-11-11-r3-rest-audit/facts.md — the visible-gap checker's failing gaps grouped (G-numbers), type facts, tap targets under 48, vocabulary strings. Measured with design-system/scripts/check-visible-gaps.mjs on the built app, 86 states × 390×844 and 360×640, per-screen regions (compact header / scroll content with cards as units / pinned bar; Prescribe edit header / body / bar; sheet / sheet actions; and the inside of every card as its own region). "artefact = yes" rows are the checker's row model, not spacing faults — check whether you agree.
+- projects/truemeds-doctor-portal-prototype/docs/renders/2026-11-11-r3-rest-audit/visible-gaps/summary.md and projects/truemeds-doctor-portal-prototype/docs/renders/2026-11-11-r3-rest-audit/visible-gaps/visible-gaps.json (every gap of every capture, passing or not).
+- projects/truemeds-doctor-portal-prototype/docs/renders/2026-11-11-r3-rest-audit/visible-gaps/<state>_w<390|360>.png — gaps drawn (green pass, red fail, number = visible px); drawn on a tall viewport so the whole scroll content shows.
+- projects/truemeds-doctor-portal-prototype/docs/renders/2026-11-11-r3-rest-audit/duration/ — Prescribe duration picker: today (today_w*.png) and a proposal (p1-* unit first, numbers by unit; p2-fixed one list of 8), measure.json.
+
+## Checklist (answer every item; per finding give screen, state, the px evidence and a tag: drift fix / needs Apurva / no change)
+1. Spacing by visible edges (8 / 16 / 32, anatomy listed in RULES §8.3). Which failing gaps are real drift, which are anatomy or checker artefacts? Which PASSING gaps are still wrong in kind (e.g. a 16 that should be 32 because the two things are different, or an 8 where two groups touch)? Look especially inside Prescribe cards (How often → Dose, SOS toggle → helper, dose grid → error, Every X hours helper), the duration picker, sheets (callback Date → Time), Profile (earnings, rows → Log out), the case bar states (s7b still on call, g2 checking HA), Order details, Rx viewer header.
+2. Type: four levels + L9; nothing the doctor acts on under 14; one weight per role (16/24 emphasis semibold; medium not used below the band).
+3. Components the same as on the entry / Home screens: buttons, pinned bar (notice 16 above its button, caption 8), notices, links (.tm-link), sheets (subtitle in header, D-109), cards (Home v3 card rows: grey icon · 16/24 regular label · L9 value), rows.
+4. Vocabulary per D-109 (OTP / code, faster sign-in, availability / time / case / get) — every string in messages.json used on these screens; "case", never "order", for the doctor's unit (the customer order ID line and "order" for the customer's order are approved).
+5. Task headers (Back, compact header, edit header, viewer header, Profile header) consistent with each other — the band spec does not apply to them; say where it doesn't.
+6. What D-106–D-109 change indirectly: e.g. Home's "Prescriptions written today" row now opens Profile — does Profile show today's count / earnings clearly; "+ Add time" always on Home vs what the case page says when availability ends (state e-availability-ended); sheet subtitle placement on the case sheets.
+7. Prescribe duration options (Apurva: "margins are non-existent"; "reduce the options, only till 12 or something"; fewer per line). Today: numbers 1–7, 10, 14, 15 × Days / Weeks / Months, plus Ongoing. Propose YOUR reduced set (at most 12 number options, laid out on the 4-column numeric grid with 8 gaps, RULES §9.2) with the clinical reasoning (what durations doctors in India actually write for 1 day – 12 months; Ongoing stays), and say whether you prefer the attached p1 (unit first, numbers by unit) or p2 (fixed list) or your own.
+
+## Output format
+# Codex review — r3-rest-audit
+## Findings by screen (Case page / Calling & outcomes / Prescribe / Sheets / Rx viewer / Profile / Calling-flow page) — numbered C1, C2…, each: what, evidence (state, px), tag, suggested fix in one line
+## Checker artefacts and anatomy (what you would exclude and why)
+## Duration proposal
+## Needs Apurva (yes/no questions)
+Keep it under 1,500 words. Plain English.

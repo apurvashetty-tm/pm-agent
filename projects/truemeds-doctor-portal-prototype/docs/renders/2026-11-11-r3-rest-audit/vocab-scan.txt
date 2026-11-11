@@ -1,0 +1,48 @@
+case.callbackFailed                | Couldn’t schedule the callback. Your time is kept.
+callback.notReached                | Couldn’t schedule the callback. The patient wasn’t reached.
+case.noMedicines                   | No medicines on this order. Our Ops team will check it.
+case.noPickup                      | Patient didn’t pick up.
+call.resultMissing                 | Couldn’t get the call result.
+call.transferMissed                | The call ended before the transfer. The Health Advisor will call the patient back.
+call.skipHa                        | Health Advisor call will be skipped. End the call when you’re done.
+call.scriptNeutral                 | “I’m writing your prescription now. Our Health Advisor will help you with the next steps.”
+call.checkingHa                    | Checking for a Health Advisor…
+call.forwardedTell                 | “I’ve written your prescription. Our Health Advisor will call you back to help with the next steps.”
+call.scriptCat4                    | “I’m writing your prescription now. You can track your order in the Truemeds app.”
+call.scriptTransfer                | “I’m writing your prescription now. Please stay on the line — I’ll connect you to our Health Advisor.”
+call.scriptForward                 | “I’m writing your prescription now. Our Health Advisor will call you to help with the next steps.”
+call.transferMissedDoctor          | You ended the call before the transfer. Next time, stay on the line until the Health Advisor joins. They’ll call the patient back.
+call.transferMissedPatient         | The patient ended the call before the transfer. The Health Advisor will call them back.
+profile.logoutConfirm              | You’ll stop getting cases until you sign in again.
+case.callbackPickBoth              | Pick a date and a time.
+case.callbackPickTime              | Pick a time.
+profile.fasterSignIn               | Faster sign-in
+case.orderMeta                     | Order {id} · {total}
+case.orderDetails                  | Order details
+case.orderCreated                  | Order created
+case.callPatient                   | Call patient
+case.leaveSub                      | It goes back to the queue for another doctor.
+case.requestNext                   | Request next case
+prescribe.slotAria                 | {slot}: {dose}
+prescribe.duration                 | Duration
+prescribe.durationNumber           | Duration number
+prescribe.durationUnit             | Duration unit
+prescribe.doseError                | Choose a dose for at least one time of day.
+prescribe.reasonRemoteDesc         | Requires in-person consultation
+prescribe.reasonContra             | Contraindicated for patient
+prescribe.reasonDeclined           | Patient declined
+prescribe.reasonDeclinedDesc       | Patient refused this medicine
+case.unavailableTitle              | Patient unavailable
+callback.time                      | Time
+callback.scheduled                 | Callback {day} at {time}
+unavailable.title                  | Mark patient unavailable
+unavailable.wrongNumberDesc        | Invalid or not the patient’s number
+case.skipHa                        | Skip HA
+case.transferredTitle              | Transferred to Health Advisor
+case.forwardedTitle                | Forwarded to Health Advisor
+skipHa.title                       | Skip the Health Advisor call
+skipHa.declined                    | Patient declined the Health Advisor call
+skipHa.declinedDesc                | The patient didn’t want the call
+skipHa.notRequiredDesc             | Health Advisor counselling isn’t needed
+skipHa.repeat                      | Repeat patient, familiar with the medicines
+skipHa.repeatDesc                  | Counselled in an earlier order

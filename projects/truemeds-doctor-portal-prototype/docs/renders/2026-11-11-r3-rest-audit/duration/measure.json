@@ -1,0 +1,74 @@
+{
+ "today_w390": [
+  "1.6 ≠ 16 Ongoing (6 months) Defau → Default",
+  "12.9 ≠ 16 Default → 1 | 2 | 3",
+  "8 1 | 2 | 3 → 5 | 6 | 7",
+  "8 5 | 6 | 7 → 14 | 15",
+  "8 14 | 15 → Days | Weeks | Months",
+  "8 Days | Weeks | Months → Ongoing"
+ ],
+ "today_w360": [
+  "1.6 ≠ 16 Ongoing (6 months) Defau → Default",
+  "12.9 ≠ 16 Default → 1 | 2 | 3",
+  "8 1 | 2 | 3 → 5 | 6 | 7",
+  "8 5 | 6 | 7 → 14 | 15",
+  "8 14 | 15 → Days | Weeks | Months",
+  "8 Days | Weeks | Months → Ongoing"
+ ],
+ "p1-days_w390": [
+  "1.6 ≠ 16 5 days Changed | svg → Changed",
+  "14.9 Changed → Days | Weeks | Months",
+  "8 Days | Weeks | Months → Ongoing",
+  "16 ≠ 8 Ongoing → 1 | 2 | 3",
+  "8 1 | 2 | 3 → 7 | 10 | 14"
+ ],
+ "p1-days_w360": [
+  "1.6 ≠ 16 5 days Changed | svg → Changed",
+  "14.9 Changed → Days | Weeks | Months",
+  "8 Days | Weeks | Months → Ongoing",
+  "16 ≠ 8 Ongoing → 1 | 2 | 3",
+  "8 1 | 2 | 3 → 7 | 10 | 14"
+ ],
+ "p1-weeks_w390": [
+  "1.6 ≠ 16 2 weeks Changed | svg → Changed",
+  "14.9 Changed → Days | Weeks | Months",
+  "8 Days | Weeks | Months → Ongoing",
+  "16 ≠ 8 Ongoing → 1 | 2 | 3",
+  "8 1 | 2 | 3 → 6 | 8"
+ ],
+ "p1-weeks_w360": [
+  "1.6 ≠ 16 2 weeks Changed | svg → Changed",
+  "14.9 Changed → Days | Weeks | Months",
+  "8 Days | Weeks | Months → Ongoing",
+  "16 ≠ 8 Ongoing → 1 | 2 | 3",
+  "8 1 | 2 | 3 → 6 | 8"
+ ],
+ "p1-months_w390": [
+  "1.6 ≠ 16 6 months Changed | svg → Changed",
+  "14.9 Changed → Days | Weeks | Months",
+  "8 Days | Weeks | Months → Ongoing",
+  "16 ≠ 8 Ongoing → 1 | 2 | 3",
+  "8 1 | 2 | 3 → 6 | 12"
+ ],
+ "p1-months_w360": [
+  "1.6 ≠ 16 6 months Changed | svg → Changed",
+  "14.9 Changed → Days | Weeks | Months",
+  "8 Days | Weeks | Months → Ongoing",
+  "16 ≠ 8 Ongoing → 1 | 2 | 3",
+  "8 1 | 2 | 3 → 6 | 12"
+ ],
+ "p2-fixed_w390": [
+  "1.6 ≠ 16 5 days Changed | svg → Changed",
+  "14.9 Changed → 1 | 2 | 3",
+  "8 1 | 2 | 3 → 7 | 10 | 14",
+  "16 ≠ 8 7 | 10 | 14 → Days | Weeks | Months",
+  "8 Days | Weeks | Months → Ongoing"
+ ],
+ "p2-fixed_w360": [
+  "1.6 ≠ 16 5 days Changed | svg → Changed",
+  "14.9 Changed → 1 | 2 | 3",
+  "8 1 | 2 | 3 → 7 | 10 | 14",
+  "16 ≠ 8 7 | 10 | 14 → Days | Weeks | Months",
+  "8 Days | Weeks | Months → Ongoing"
+ ]
+}

@@ -1,0 +1,11 @@
+READ-ONLY. Cross-critique for run r3-rest-audit (Truemeds doctor app prototype). Do not edit files. Your final message is saved as codex-on-claude.md.
+
+Folder: projects/truemeds-doctor-portal-prototype/docs/renders/2026-11-11-r3-rest-audit/
+
+You already wrote codex-review.md. Claude wrote claude-review.md independently. Read both, plus the UPDATED facts.md: after your review the measurement was completed (1) with the tall layout as part of the record (Prescribe's body is clipped by an overflow-hidden ancestor at the real viewport), and (2) with the medicines and notes sections measured inside (they are painted blocks without .tm-card). The G-numbers in facts.md changed; cite findings by state and pair, not by G-number. New in facts.md: Notes field → "Doctor notes" 17.6; section title → first content 18.5 / 20; medicine list rows 0 / 12 (classified as list-row anatomy).
+
+Rules: design-system/RULES.md §8.3, "Entry and home screens", §9; projects/truemeds-doctor-portal-prototype/docs/context/decision_log.md D-106–D-109. Note the approved-wording ruling in projects/truemeds-doctor-portal-prototype/docs/runs/RULINGS.md (2026-11-10 07:58, H23): "on this / your / earlier order" for the customer's order is approved copy.
+
+Task: go through claude-review.md point by point (K1…K32, vocabulary, task headers, calling-flow page, duration proposal, Needs Apurva). For each: AGREE / DISAGREE / PARTLY, one line of reason with evidence (state, px, rule). Then list points from your own codex-review.md that claude-review.md missed or contradicts, and say whether you still hold them after reading Claude's (e.g. your C3 tags 14, C4 script heading 8 vs Claude's 16, C1 Order details 16, C18 calling-flow page, C19 "earlier order" wording, duration sets). End with: "Still disputed" — a short list of points where you and Claude still disagree.
+
+Under 1,000 words. Plain English.
