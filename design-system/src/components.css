@@ -107,6 +107,17 @@ h1, .tm-text-title-lg, .tm-text-h1 { text-wrap: balance; }
 .tm-btn--ghost:disabled, .tm-btn--link:disabled, .tm-btn--quiet:disabled, .tm-btn--tertiary:disabled { background: transparent; }
 .tm-btn:focus-visible { outline: var(--tm-focus-ring-width) solid var(--tm-border-focus); outline-offset: var(--tm-focus-ring-offset); }
 
+/* Inline link (D-107 variant 3 / D-108, 2026-11-11): a link that is the action of a line of text ("Change", "Sign up",
+   "Resend code"). Brand colour, semibold, a 48-tall hit area from a centred ::after that adds NO line height (the line
+   box stays the text's own), visible focus ring. Works on <a> and <button>. A link inside a sentence (legal text) adds
+   --in-sentence: regular weight, no enlarged hit area (WCAG 2.5.8 inline exception, RULES §8.6). */
+.tm-link { position: relative; display: inline; margin: 0; padding: 0; border: 0; background: none; appearance: none; font: inherit; line-height: inherit; font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-brand); text-decoration: none; cursor: pointer; }
+.tm-link::after { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: var(--tm-target-min); min-width: var(--tm-target-min); transform: translateY(-50%); }   /* raw-ok: 50% centring of the hit area on the text line */
+.tm-link:focus-visible { outline: var(--tm-focus-ring-width) solid var(--tm-border-focus); outline-offset: var(--tm-focus-ring-offset); border-radius: var(--tm-radius-xs); }
+.tm-link:disabled, .tm-link[aria-disabled="true"] { color: var(--tm-content-disabled); cursor: default; }
+.tm-link--in-sentence { font-weight: inherit; }
+.tm-link--in-sentence::after { content: none; }
+
 /* [PROPOSED] Busy state — action in progress (e.g. "Calling…"). Keeps the primary look at full
    strength (a disabled grey would read as unavailable). Not in SALT; pending design-team review. */
 /* LOCKED L2 (D-46): loading primary = brand fill, white label and white spinner, on every screen, even when disabled. Never grey or pale. */
@@ -359,6 +370,12 @@ h1, .tm-text-title-lg, .tm-text-h1 { text-wrap: balance; }
 .tm-sheet__header { position: sticky; top: 0; z-index: var(--tm-layer-raised); flex: none; display: flex; align-items: center; justify-content: space-between; gap: var(--tm-space-md); min-height: calc(var(--tm-target-min) + var(--tm-space-lg)); padding-top: var(--tm-space-lg); background: var(--tm-surface-primary); border-radius: var(--tm-radius-2xl) var(--tm-radius-2xl) 0 0; }
 .tm-sheet__title { margin: 0; font-size: var(--tm-font-size-title-sm); line-height: var(--tm-font-lineheight-lg); font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-primary); }
 .tm-sheet__subtitle { margin: var(--tm-space-xs) 0 0; font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); color: var(--tm-content-secondary); }
+/* D-109 §2 (2026-11-11): the subtitle sits 8 under the title INSIDE the header, as in the screen bands (title → subtitle 8).
+   Markup: .tm-sheet__header > .tm-sheet__heading > (.tm-sheet__title + .tm-sheet__subtitle), then the ✕. The title line
+   stays centred on the ✕ (the same place as in a title-only header); the subtitle sits under the title only. */
+.tm-sheet__heading { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: var(--tm-space-sm); padding-top: calc((var(--tm-target-min) - var(--tm-font-lineheight-lg)) / 2); }
+.tm-sheet__header:has(> .tm-sheet__heading) { align-items: flex-start; }
+.tm-sheet__heading > .tm-sheet__subtitle { margin: 0; }
 .tm-sheet__close { margin-right: calc((var(--tm-icon-size-md) - var(--tm-target-min)) / 2); }   /* .tm-btn.tm-btn--quiet.tm-btn--icon, 48px; glyph sits on the 16 margin, same as the compact header (B-07, 2026-11-02) */
 /* B-14 (2026-11-02): one sheet-label style — the field-label style, 8 above the field (RULES §8.3). Used for "Select reason", "Date", "Time". */
 .tm-sheet__label { display: block; margin: 0 0 var(--tm-space-sm); font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-primary); }

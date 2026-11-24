@@ -46,6 +46,14 @@ own work; what it may touch; what stops it (turn cap, time-box); who signs off.
 - While a chain runs, nothing merges to `main` (`publish.sh` pulls `main` into the branch). Evidence rules, what goes to
   `main` and the archive tag before a close: `AGENTS.md` → Git safety.
 
+## Screens: checking how they look, not only the numbers
+Learned on the doctor portal (2026-11-11, D-106–D-108). Screens passed two rule audits and still looked different, because the audits counted layout boxes, not what the eye sees.
+- **Measure visible gaps.** Gaps are taken between visible edges (text ink, borders, filled shapes), never between layout boxes. Tap areas and reserved lines must not add visible space. `design-system/RULES.md` §8.3 has the rule; `design-system/scripts/check-visible-gaps.mjs` checks it and fails the build.
+- **Open hidden parts before measuring.** Collapsed sections, sheets, pickers and error states are captured opened; a default capture misses them.
+- **Look at sibling screens side by side once** (same scale, flow order) before freezing. One sheet answers "do these look like one app?", which no per-screen check does.
+- **Audits review the look, not only the rules.** Two independent reviewers (Claude and Codex) review, critique each other, then conclude; the human answers only the yes/no questions left.
+- **Screen changes start from building blocks** (wireframe, each block and why), agreed before any render; approved copy stays unless the change is about the copy.
+
 ## Sources
 
 Anthropic, *Best practices for Claude Code* (hooks for no-exception rules; give the agent a pass/fail check; review
