@@ -1,4 +1,5 @@
 [mcp_servers.caveman-shrink]
+enabled = false
 command = "npx"
 args = [
     "-y",
@@ -6,6 +7,7 @@ args = [
 ]
 
 [mcp_servers.claude-context]
+enabled = false
 command = "npx"
 args = ["@zilliz/claude-context-mcp@latest"]
 
@@ -16,6 +18,7 @@ OLLAMA_MODEL = "nomic-embed-text"
 MILVUS_ADDRESS = "127.0.0.1:19530"
 
 [mcp_servers.code-review-graph]
+enabled = false
 command = "/Users/mac/.local/pipx/venvs/code-review-graph/bin/python"
 args = [
     "-m",
@@ -24,6 +27,7 @@ args = [
 ]
 
 [mcp_servers.token-savior]
+enabled = false
 command = "/Users/mac/.local/token-savior-venv/bin/token-savior"
 
 [mcp_servers.token-savior.env]
