@@ -28,6 +28,17 @@
        "layout": true
       },
       {
+       "property": "margin-bottom",
+       "value": "var(--tm-space-lg)",
+       "tokens": [
+        {
+         "native": "tokens.space.lg",
+         "web": "--tm-space-lg",
+         "value": 16
+        }
+       ]
+      },
+      {
        "property": "font-size",
        "value": "var(--tm-font-size-body-lg)",
        "tokens": [
@@ -78,6 +89,12 @@
        "layout": true
       },
       {
+       "property": "text trim (to the ink)",
+       "value": "trim-both cap text",
+       "tokens": [],
+       "layout": true
+      },
+      {
        "property": "font-family",
        "value": "var(--tm-font)",
        "tokens": [
@@ -90,7 +107,7 @@
        "inherited": true
       }
      ],
-     "size": "326×24"
+     "size": "326×15.9"
     }
    }
   }

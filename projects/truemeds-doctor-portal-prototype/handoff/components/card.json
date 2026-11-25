@@ -114,12 +114,12 @@
       },
       {
        "property": "padding-top",
-       "value": "var(--tm-space-md)",
+       "value": "var(--tm-space-lg)",
        "tokens": [
         {
-         "native": "tokens.space.md",
-         "web": "--tm-space-md",
-         "value": 12
+         "native": "tokens.space.lg",
+         "web": "--tm-space-lg",
+         "value": 16
         }
        ]
       },
@@ -154,17 +154,17 @@
       },
       {
        "property": "gap",
-       "value": "var(--tm-space-sm)",
+       "value": "var(--tm-space-lg)",
        "tokens": [
         {
-         "native": "tokens.space.sm",
-         "web": "--tm-space-sm",
-         "value": 8
+         "native": "tokens.space.lg",
+         "web": "--tm-space-lg",
+         "value": 16
         }
        ]
       }
      ],
-     "size": "326×89"
+     "size": "326×89.3"
     }
    }
   }

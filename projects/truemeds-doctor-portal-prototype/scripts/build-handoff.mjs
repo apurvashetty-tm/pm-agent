@@ -51,7 +51,7 @@ const FILES = {
   tokenBuild: path.join(DS, "scripts/build.py"),
   tokenBuildNative: path.join(DS, "scripts/build_native.py"),
   dsTokens: [path.join(DS, "tokens/Core.tokens.json"), path.join(DS, "tokens/Default.tokens.json"), path.join(DS, "tokens/extras.json"), path.join(DS, "tokens/truemeds.json"), path.join(DS, "src/components.css")],
-  builder: [path.join(ROOT, "scripts/build-handoff.mjs"), path.join(ROOT, "scripts/build-handoff.py"), path.join(ROOT, "scripts/build-handoff.journeys.mjs"), path.join(ROOT, "scripts/build-handoff.when.mjs")],
+  builder: [path.join(ROOT, "scripts/build-handoff.mjs"), path.join(ROOT, "scripts/build-handoff.py"), path.join(ROOT, "scripts/build-handoff.journeys.mjs"), path.join(ROOT, "scripts/build-handoff.when.mjs"), path.join(ROOT, "scripts/kit-changes/since-v1.md"), path.join(ROOT, "scripts/kit-changes/v1.json"), ...fs.readdirSync(path.join(ROOT, "scripts/kit-changes/pictures")).map((f) => path.join(ROOT, "scripts/kit-changes/pictures", f))],
   // everything the capture loads that can move or restyle Sign-in (shell frame, routing, keyboard drawing, fonts, copy)
   capture: ["app/index.html", "app/shell/shell.css", "app/shell/screen-host.js", "app/shell/mock-keyboard.js", "app/shell/mock-keyboard.css",
     "app/core/boot.js", "app/core/modes.js", "app/core/dom.js", "app/core/msg.js", "app/core/nav.js", "app/core/store.js", "app/core/clock.js",
@@ -1059,7 +1059,8 @@ async function build() {
   const snap = { tokens: Object.fromEntries([...allTokens].map(([k, v]) => [k, JSON.stringify(v)])),
     blocks: Object.fromEntries(blocks.map((b) => [b.block, sha(JSON.stringify({ parts: b.parts, rules: b.rules }))])),
     screens: Object.fromEntries(allStates.map((s) => [s.id, sha(JSON.stringify((s.elements || []).map((e) => ({ ...e, box: undefined }))))])), copy: Object.fromEntries(keysUsed.map((k) => [k, messages[k]])) };
-  const changes = changesMd(prev?.snapshot, snap, prev?.changes);
+  const changes = changesMd(snap);
+  for (const f of fs.readdirSync(path.join(ROOT, "scripts/kit-changes/pictures"))) W(`changes/${f}`, fs.readFileSync(path.join(ROOT, "scripts/kit-changes/pictures", f)));
   W("CHANGES.md", changes.text);
   // downloads (D-103): single files + the whole kit as one zip (everything in handoff/ except the downloads folder)
   W("viewer/downloads/tokens.ts", read(FILES.tokensTs)); W("viewer/downloads/messages.ts", read(FILES.messagesTs)); W("viewer/downloads/icons.ts", read(FILES.iconsTs));
@@ -1212,23 +1213,21 @@ function dedupeRaw(list) {
   }
   return [...m.values()].sort((a, b) => String(a.file).localeCompare(String(b.file)) || a.line - b.line);
 }
-function changesMd(prev, snap, log = []) {
-  const date = new Date().toISOString().slice(0, 10);
-  const lines = [];
-  if (!prev) lines.push("- First generation of the kit (Sign-in).");
-  else {
-    const diff = (label, a, b, fmt = (k) => k) => {
-      for (const k of Object.keys(b)) if (!(k in a)) lines.push(`- ${label} added: ${fmt(k)}`);
-      for (const k of Object.keys(a)) if (!(k in b)) lines.push(`- ${label} removed: ${fmt(k)}`);
-      for (const k of Object.keys(b)) if (k in a && a[k] !== b[k]) lines.push(`- ${label} changed: ${fmt(k)}${label === "Token" || label === "Copy" ? ` (${a[k]} → ${b[k]})` : ""}`);
-    };
-    diff("Token", prev.tokens, snap.tokens); diff("Block", prev.blocks, snap.blocks); diff("Screen state", prev.screens, snap.screens); diff("Copy", prev.copy || {}, snap.copy);
-  }
-  const entry = { date, lines: lines.length ? lines : ["- No changes to tokens, blocks, screens or copy."] };
-  const keep = lines.length || !log.length ? [entry, ...log].slice(0, 20) : log;
-  const text = ["# CHANGES", "", "What moved in the kit since the previous generation: tokens used, building blocks, screen states, copy. Newest first. Generated.", "",
-    ...keep.flatMap((e) => [`## ${e.date}`, "", ...e.lines, ""])].join("\n");
-  return { text, log: keep, summary: entry.lines.length === 1 && entry.lines[0].startsWith("- No") ? "no changes" : `${entry.lines.length} change line(s)` };
+// The kit the app team started from is v1 (10 Nov 2026). CHANGES.md = the written list (scripts/kit-changes/since-v1.md) + the exact
+// wording, value and part differences against v1, so a rebuild never hides or repeats a change.
+function changesMd(snap) {
+  const v1 = JSON.parse(fs.readFileSync(path.join(ROOT, "scripts/kit-changes/v1.json"), "utf8"));
+  const now = JSON.parse(fs.readFileSync(path.join(ROOT, "ui-screens/feedback/messages.json"), "utf8"));
+  const cell = (t) => String(t).replace(/\|/g, "\\|"), a = v1.messages, b = now;
+  const words = [...Object.keys(b).filter((k) => a[k] !== b[k]).map((k) => `| \`${k}\` | ${k in a ? cell(a[k]) : "— (new)"} | ${cell(b[k])} |`), ...Object.keys(a).filter((k) => !(k in b)).map((k) => `| \`${k}\` | ${cell(a[k])} | — (removed) |`)];
+  const names = (o, p) => Object.keys(o).filter((k) => !(k in p)).map((k) => `\`${k}\``).join(", ") || "none";
+  const vals = Object.keys(snap.tokens).filter((k) => k in v1.snapshot.tokens && v1.snapshot.tokens[k] !== snap.tokens[k]);
+  const text = [fs.readFileSync(path.join(ROOT, "scripts/kit-changes/since-v1.md"), "utf8").trimEnd(), "",
+    "## Wording: every difference", "", "| Key | v1 | Now |", "|---|---|---|", ...words, "",
+    "## Parts and values", "", `- Design values changed: ${vals.length ? vals.join(", ") : "none"}. Values used now that no screen used in v1: ${names(snap.tokens, v1.snapshot.tokens)}. No longer used: ${names(v1.snapshot.tokens, snap.tokens)}.`,
+    `- Building-block files in this kit that v1 didn't have: ${names(snap.blocks, v1.snapshot.blocks)}.`, `- In v1 and gone (replaced or renamed, see the screen's file): ${names(v1.snapshot.blocks, snap.blocks)}.`,
+    `- States added: ${names(snap.screens, v1.snapshot.screens)}. Removed: ${names(v1.snapshot.screens, snap.screens)}.`, ""].join("\n");
+  return { text, log: [], summary: `${words.length} wording differences since v1` };
 }
 
 // ---------------------------------------------------------------------------------------------------------------------
@@ -1353,6 +1352,7 @@ const VIEWER_JS = String.raw`// Hand-off kit viewer. Static: reads window.KIT fr
     const n = SCR.reduce((a, s) => a + s.states.length, 0);
     main.append($('<section><h1>Truemeds doctor app — hand-off kit</h1><p class="lede">How to use it: <b>Start with Screens. Tap anything. Check DECIDED before asking.</b></p>' +
       '<div class="card"><h3 style="margin-top:0">What is here</h3><ul class="plain">' +
+      '<li><b>Started from the 10 November kit?</b> Read <a href="../CHANGES.md">What changed since then</a> first.</li>' +
       "<li><b>Screens</b>: every state of every screen (" + SCR.length + " tabs, " + n + " states). Tap a part of the phone to see what it is, its colours, sizes, spacing and text.</li>" +
       "<li><b>Building blocks</b>: the reusable parts (button, field, notice…) with every version of each, and where each is used. Build these once, use them everywhere.</li>" +
       "<li><b>Foundation</b>: every design value (colour, size, gap, corner) by the name you use in code.</li>" +

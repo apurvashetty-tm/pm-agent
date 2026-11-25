@@ -11,29 +11,12 @@
      "styles": [
       {
        "property": "margin",
-       "value": "var(--tm-space-sm) 0 0 calc(-1 * var(--tm-space-md))",
+       "value": "var(--tm-space-lg) 0 0",
        "tokens": [
         {
-         "native": "tokens.space.sm",
-         "web": "--tm-space-sm",
-         "value": 8
-        },
-        {
-         "native": "tokens.space.md",
-         "web": "--tm-space-md",
-         "value": 12
-        }
-       ],
-       "layout": true
-      },
-      {
-       "property": "width",
-       "value": "calc(100% + var(--tm-space-md))",
-       "tokens": [
-        {
-         "native": "tokens.space.md",
-         "web": "--tm-space-md",
-         "value": 12
+         "native": "tokens.space.lg",
+         "web": "--tm-space-lg",
+         "value": 16
         }
        ],
        "layout": true
@@ -45,7 +28,7 @@
        "layout": true
       }
      ],
-     "size": "312×104"
+     "size": "300×103.9"
     }
    }
   }

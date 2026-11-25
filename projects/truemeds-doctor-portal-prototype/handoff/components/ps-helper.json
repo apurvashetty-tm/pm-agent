@@ -44,14 +44,31 @@
       },
       {
        "property": "margin-top",
-       "value": "var(--tm-space-sm)",
+       "value": "calc(var(--tm-space-sm) - (var(--tm-target-min) - var(--tm-font-lineheight-sm)) / 2)",
        "tokens": [
         {
          "native": "tokens.space.sm",
          "web": "--tm-space-sm",
          "value": 8
+        },
+        {
+         "native": "tokens.target.min",
+         "web": "--tm-target-min",
+         "value": 48
+        },
+        {
+         "native": "tokens.font.lineHeight.sm",
+         "web": "--tm-font-lineheight-sm",
+         "value": 20
         }
-       ]
+       ],
+       "layout": true
+      },
+      {
+       "property": "text trim (to the ink)",
+       "value": "trim-both cap text",
+       "tokens": [],
+       "layout": true
       },
       {
        "property": "animation",
@@ -72,7 +89,7 @@
        "inherited": true
       }
      ],
-     "size": "326×40"
+     "size": "326×33.4"
     }
    }
   }

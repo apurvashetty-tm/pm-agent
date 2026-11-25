@@ -34,6 +34,7 @@
     const n = SCR.reduce((a, s) => a + s.states.length, 0);
     main.append($('<section><h1>Truemeds doctor app — hand-off kit</h1><p class="lede">How to use it: <b>Start with Screens. Tap anything. Check DECIDED before asking.</b></p>' +
       '<div class="card"><h3 style="margin-top:0">What is here</h3><ul class="plain">' +
+      '<li><b>Started from the 10 November kit?</b> Read <a href="../CHANGES.md">What changed since then</a> first.</li>' +
       "<li><b>Screens</b>: every state of every screen (" + SCR.length + " tabs, " + n + " states). Tap a part of the phone to see what it is, its colours, sizes, spacing and text.</li>" +
       "<li><b>Building blocks</b>: the reusable parts (button, field, notice…) with every version of each, and where each is used. Build these once, use them everywhere.</li>" +
       "<li><b>Foundation</b>: every design value (colour, size, gap, corner) by the name you use in code.</li>" +

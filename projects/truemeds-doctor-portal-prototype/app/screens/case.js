@@ -302,7 +302,7 @@ export function render(host, id, { mode, params = {} }) {
     if (ui.loadFailed) kids = [btn(MSG("common.tryAgain"), `tm-btn--primary ${lg}`, onRetryLoad)];
     else if (closed()) {
       const ended = availability().state === "none";
-      kids = ended ? [btn(MSG("case.backToHome"), `tm-btn--primary ${lg}`, () => toHome(), { id: "concept-back-home" })]
+      kids = ended ? [h("p", { class: "bar-caption", text: MSG("case.availabilityEnded") }), btn(MSG("case.backToHome"), `tm-btn--primary ${lg}`, () => toHome(), { id: "concept-back-home" })]
         : [btn([MSG("case.requestNext"), " ", icon("arrow-right")], `tm-btn--primary ${lg}`, () => toHome(true), { id: "next-order-btn" }), btn(MSG("case.backToHome"), `tm-btn--quiet ${lg}`, () => toHome(), { id: "concept-back-home" })];
     } else if (c.stage === "calling") kids = [statusLine(MSG("call.calling", { name: first() }))];   // D-74: no Callback, no End call on a live call (CW-A1)
     else if (c.stage === "result-wait") kids = [statusLine(MSG("call.resultWait"))];   // 5 and 7c (D-91)
@@ -361,14 +361,19 @@ export function render(host, id, { mode, params = {} }) {
     scroller.replaceChildren(...content.filter(Boolean));
     scroller.scrollTop = top;
     const overlay = overlayEl();
+    const leftPrescribe = ui.overlay !== "prescribe" && !!prescribeEl;
     if (ui.overlay !== "prescribe") prescribeEl = null;
     const kb = ui.typing ? mockTextKeyboard() : null;
-    root.replaceChildren(head, scroller, ui.loading ? "" : bar(), overlay || "", ui.overlay === "prescribe" ? prescribeEl || (prescribeEl = makePrescribe()) : "", kb || "");
+    const barEl = ui.loading ? null : bar();
+    // An open overlay (Prescribe, Rx viewer, a sheet) keeps the keyboard and the screen reader inside it (D-20, RULES §9.8).
+    [head, scroller, barEl].forEach((e) => { if (e) e.inert = !!(overlay || ui.overlay === "prescribe"); });
+    root.replaceChildren(head, scroller, barEl || "", overlay || "", ui.overlay === "prescribe" ? prescribeEl || (prescribeEl = makePrescribe()) : "", kb || "");
     root.classList.toggle("is-closed", closed());
     root.classList.toggle("kb-open", !!kb);
     root.classList.toggle("is-loading", ui.loading);
     paint(root);
     if (focused) focused.focus({ preventScroll: true });
+    if (leftPrescribe && !capture && !ui.overlay) { const row = scroller.querySelector(`[data-med-id="${ui.medId}"]`); if (row) row.focus({ preventScroll: true }); }   // D-30: back to that medicine's row
     if (overlay && ["leave", "callback", "unavailable", "skip"].includes(ui.overlay) && !capture && overlay !== lastSheet) focusSheet(overlay);
     lastSheet = overlay;
   }
@@ -564,7 +569,7 @@ export function render(host, id, { mode, params = {} }) {
 
   watchKeyboard(root, life.alive);
   draw();
-  if (!live && fx.scroll) requestAnimationFrame(() => { scroller.scrollTop = 420; });   // a-scrolled: the picture's scroll position (case.html: 420)
+  if (!live && fx.scroll) requestAnimationFrame(() => requestAnimationFrame(() => document.fonts.ready.then(() => requestAnimationFrame(() => { scroller.scrollTop = 420; }))));   // a-scrolled: the picture's scroll position (case.html: 420)
   if (ui.typing === "symptoms") { symptoms.focus({ preventScroll: true }); requestAnimationFrame(() => revealAboveKeyboard(scroller, symptoms.closest(".tm-field"), root.querySelector(".mock-kbd"))); }
   return { journey: d ? "prescribe" : ["ready", "loading"].includes(c.stage) || closed() ? "caseView" : "call" };
 }

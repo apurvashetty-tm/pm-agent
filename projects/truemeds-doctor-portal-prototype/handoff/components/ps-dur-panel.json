@@ -11,8 +11,13 @@
      "styles": [
       {
        "property": "padding",
-       "value": "0 var(--tm-space-md) var(--tm-space-md)",
+       "value": "var(--tm-space-xs) var(--tm-space-md) var(--tm-space-md)",
        "tokens": [
+        {
+         "native": "tokens.space.xs",
+         "web": "--tm-space-xs",
+         "value": 4
+        },
         {
          "native": "tokens.space.md",
          "web": "--tm-space-md",
@@ -23,8 +28,7 @@
          "web": "--tm-space-md",
          "value": 12
         }
-       ],
-       "layout": true
+       ]
       },
       {
        "property": "animation",
@@ -33,7 +37,7 @@
        "layout": true
       }
      ],
-     "size": "324×284"
+     "size": "324×295.9"
     }
    }
   }

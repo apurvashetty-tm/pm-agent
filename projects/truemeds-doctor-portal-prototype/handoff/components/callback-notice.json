@@ -17,12 +17,12 @@
       },
       {
        "property": "margin",
-       "value": "var(--tm-space-lg) 0 0",
+       "value": "0 0 var(--tm-space-sm)",
        "tokens": [
         {
-         "native": "tokens.space.lg",
-         "web": "--tm-space-lg",
-         "value": 16
+         "native": "tokens.space.sm",
+         "web": "--tm-space-sm",
+         "value": 8
         }
        ],
        "layout": true

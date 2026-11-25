@@ -20,7 +20,7 @@ const FORM = {
   cream:     { slot: [0, 1], each: [1], one: "time", many: "times", apply: true },
 };
 const INTERVALS = [["daily", "prescribe.daily"], ["every_x_hours", "prescribe.everyXHours"], ["alt_days", "prescribe.altDays"], ["weekly", "prescribe.weekly"], ["monthly", "prescribe.monthly"], ["sos", "prescribe.sosOnly"]];
-const HOURS = [4, 6, 8, 12], SOS_MAX = [1, 2, 3, 4], DUR_NUMBERS = [1, 2, 3, 4, 5, 6, 7, 10, 14, 15];
+const HOURS = [4, 6, 8, 12], SOS_MAX = [1, 2, 3, 4], DUR_NUMBERS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];   // D-110
 const DUR_UNITS = [["d", "prescribe.days"], ["w", "prescribe.weeks"], ["m", "prescribe.months"]];
 const FOODS = [["after_food", "prescribe.afterFood"], ["before_food", "prescribe.beforeFood"], ["empty_stomach", "prescribe.emptyStomach"]];
 const SLOTS = [["m", "prescribe.keyMorning", "prescribe.morning"], ["a", "prescribe.keyAfternoon", "prescribe.afternoon"], ["n", "prescribe.keyNight", "prescribe.night"]];
@@ -157,15 +157,15 @@ export function prescribeScreen(med, opts) {
       if (f.other) opts2.push(chip(MSG("prescribe.other"), x.doseOther, () => { x.doseOther = true; draw(); const o = screen.querySelector("#ps-other"); if (o) o.focus(); }));
       let other = null;
       if (x.doseOther) {
-        const input = h("input", { id: "ps-other", type: "text", inputmode: "decimal", placeholder: MSG("prescribe.otherPlaceholder") });
+        const input = h("input", { id: "ps-other", type: "text", inputmode: "decimal", placeholder: MSG("prescribe.otherPlaceholder"), ...(ui.err === "other" ? { "aria-invalid": "true", "aria-describedby": "ps-other-error" } : {}) });
         input.value = x.doseOtherVal;
-        input.addEventListener("input", () => { x.doseOtherVal = input.value; if (ui.err === "other" && parseDose(input.value) > 0) { ui.err = null; const fe = screen.querySelector("#ps-other-field"); fe.classList.remove("tm-field--error"); const hp = fe.querySelector(".tm-field__helper"); if (hp) hp.remove(); } setPrint(); });
+        input.addEventListener("input", () => { x.doseOtherVal = input.value; if (ui.err === "other" && parseDose(input.value) > 0) { ui.err = null; const fe = screen.querySelector("#ps-other-field"); fe.classList.remove("tm-field--error"); const hp = fe.querySelector(".tm-field__helper"); if (hp) hp.remove(); input.removeAttribute("aria-invalid"); input.removeAttribute("aria-describedby"); } setPrint(); });
         input.addEventListener("focus", () => { if (opts.mode === "capture") showKb("decimal"); });
         input.addEventListener("blur", () => hideKb());
         other = h("div", { class: `tm-field ps-gap${ui.err === "other" ? " tm-field--error" : ""}`, id: "ps-other-field" },
           h("label", { class: "tm-field__label", for: "ps-other", text: x.form === "injection" ? MSG("prescribe.doseUnits") : MSG("prescribe.doseIn", { unit: unit(f.other) }) }),   // B-11
           h("div", { class: "tm-field__control" }, input, h("span", { class: "ps-unit", text: unit(f.other) })),
-          ui.err === "other" ? h("div", { class: "tm-field__helper", role: "alert", text: String(x.doseOtherVal).trim() ? MSG("prescribe.otherInvalid", { unit: unit(f.other) }) : MSG("prescribe.otherEmpty", { unit: unit(f.other) }) }) : null);
+          ui.err === "other" ? h("div", { class: "tm-field__helper", id: "ps-other-error", role: "alert", text: String(x.doseOtherVal).trim() ? MSG("prescribe.otherInvalid", { unit: unit(f.other) }) : MSG("prescribe.otherEmpty", { unit: unit(f.other) }) }) : null);
       }
       sched.push(h("div", { class: "ps-section", id: "ps-dose-section" }, h("div", { class: "tm-field__label ps-label" }, MSG("prescribe.dose"), " ", h("span", { class: "tm-muted", text: hint() })),
         h("div", { class: "ps-grid", role: "group" }, opts2), other));
@@ -203,8 +203,18 @@ export function prescribeScreen(med, opts) {
     setPrint();
     if (focusKey) { const again = [...dynamic.querySelectorAll("button")].find((b) => b.textContent === focusKey); if (again) again.focus({ preventScroll: true }); }
   }
-  function setPrint() { printEl.replaceChildren(...printNodes(printLine(model()))); }
+  let lastPrint = null;
+  function setPrint() {   // the band turns a deeper blue for a moment when the printed text changes (D-25)
+    const line = printLine(model());
+    printEl.replaceChildren(...printNodes(line));
+    if (lastPrint !== null && line !== lastPrint && opts.mode !== "capture") {
+      const band = screen.querySelector("#ps-rx"); band.classList.remove("is-changed"); void band.offsetWidth; band.classList.add("is-changed");
+    }
+    lastPrint = line;
+  }
 
+  // In capture a picture moment waits for the fonts, so its scroll position never depends on load timing.
+  const moment = (fn) => requestAnimationFrame(() => (opts.mode === "capture" ? requestAnimationFrame(() => document.fonts.ready.then(() => requestAnimationFrame(fn))) : fn()));
   // ---- checks and actions ----
   function validate() {   // the only two invalid states (app-logic §8 "Checks before Prescribe")
     if (x.interval === "daily" && x.m + x.a + x.n === 0) return "dose";
@@ -217,7 +227,7 @@ export function prescribeScreen(med, opts) {
       ui.err = err; draw();
       const toError = () => { const target = screen.querySelector(err === "dose" ? "#ps-dose-section" : "#ps-other-field");   // scrolls to the first error (D-81 F16)
         if (target) body.scrollBy({ top: target.getBoundingClientRect().top - body.getBoundingClientRect().top - body.clientHeight / 3 }); };
-      if (screen.isConnected) toError(); else requestAnimationFrame(toError);   // a d-* moment validates before the screen is shown
+      if (screen.isConnected) toError(); else moment(toError);   // a d-* moment validates before the screen is shown
       if (err === "other" && opts.mode !== "capture") { const o = screen.querySelector("#ps-other"); if (o) o.focus({ preventScroll: true }); }
       return;
     }
@@ -233,10 +243,10 @@ export function prescribeScreen(med, opts) {
         actions: [btn(MSG("prescribe.discard"), "tm-btn--destructive tm-btn--lg tm-btn--block", () => opts.onClose()), btn(MSG("prescribe.keepEditing"), "tm-btn--quiet tm-btn--lg tm-btn--block", closeSheet)] })
       : sheet({ title: MSG("prescribe.disableTitle", { name: `${med.name} ${med.strength}` }), label: MSG("prescribe.disableSub"), onClose: closeSheet, cls: "ps-reason-sheet",
         body: [h("div", { class: "reason-list" }, REASONS.map(([t, dsc]) => option(MSG(t), MSG(dsc), () => opts.onDisable(MSG(t)))))] });   // a reason disables it at once (D-59)
-    sheetSlot.replaceChildren(o); paint(o); screen.classList.add("has-sheet");
+    sheetSlot.replaceChildren(o); paint(o); screen.classList.add("has-sheet"); [top, body, barEl].forEach((e) => { e.inert = true; });   // Tab stays in the sheet
     if (opts.mode !== "capture") focusSheet(o);
   }
-  function closeSheet() { ui.sheet = null; sheetSlot.replaceChildren(); screen.classList.remove("has-sheet"); }
+  function closeSheet() { ui.sheet = null; sheetSlot.replaceChildren(); screen.classList.remove("has-sheet"); [top, body, barEl].forEach((e) => { e.inert = false; }); }
   function showKb(kind) { kbSlot.replaceChildren(kind === "decimal" ? mockDecimalKeyboard() : mockTextKeyboard()); screen.classList.add("kb-open"); }
   function hideKb() { if (opts.mode === "capture") return; kbSlot.replaceChildren(); screen.classList.remove("kb-open"); }
   screen.requestClose = () => { if (ui.sheet) closeSheet(); else requestClose(); };
@@ -246,9 +256,9 @@ export function prescribeScreen(med, opts) {
   // Picture moments: the check result, an open sheet, the drawn keyboard, a scroll position (d-* fixtures).
   if (fx.validate) onPrescribe();
   if (fx.sheet) openSheet(fx.sheet);
-  if (fx.kb === "text" && opts.mode === "capture") { showKb("text"); requestAnimationFrame(() => { note.focus({ preventScroll: true }); revealAboveKeyboard(body, note.closest(".tm-field"), kbSlot.firstChild); }); }
-  if (fx.kb === "decimal" && opts.mode === "capture") requestAnimationFrame(() => showKb("decimal"));   // after the check scrolled to the error, as in the picture
-  if (fx.scroll) requestAnimationFrame(() => {
+  if (fx.kb === "text" && opts.mode === "capture") { showKb("text"); moment(() => { note.focus({ preventScroll: true }); revealAboveKeyboard(body, note.closest(".tm-field"), kbSlot.firstChild); }); }
+  if (fx.kb === "decimal" && opts.mode === "capture") moment(() => showKb("decimal"));   // after the check scrolled to the error, as in the picture
+  if (fx.scroll) moment(() => {
     const target = fx.scroll === "duration" ? screen.querySelector("#ps-dur-panel") : fx.scroll === "food" ? screen.querySelector("#ps-card-food") : null;
     if (target) target.scrollIntoView({ block: "center" }); else body.scrollTop = 420;   // d-scrolled: case.html scrolls 420
   });

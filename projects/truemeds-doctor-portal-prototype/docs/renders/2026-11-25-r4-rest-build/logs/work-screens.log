@@ -1,0 +1,19 @@
+PASS case behind Prescribe is inert 
+PASS On prescription band flashes on a change 
+PASS Duration numbers Days 1 2 3 4 5 6 7 8 9 10 11 12
+PASS Duration numbers Weeks 1 2 3 4 5 6 7 8 9 10 11 12
+PASS Duration numbers Months 1 2 3 4 5 6 7 8 9 10 11 12
+PASS Prescribe behind its sheet is inert 
+PASS closing the sheet frees Prescribe 
+PASS focus returns to the medicine's row <div class="tm-row medicine-item" role="button" tabindex="0" aria-label="Edit Am
+PASS case is usable again 
+PASS Rx viewer ✕ keeps its 48 target (rounded corners excluded) @360 
+PASS Rx viewer tools are tappable @360 
+PASS Help keeps its 48 target beside a two-line name @360 
+PASS Rx viewer ✕ keeps its 48 target (rounded corners excluded) @390 
+PASS Rx viewer tools are tappable @390 
+PASS Help keeps its 48 target beside a two-line name @390 
+PASS closed case says availability has ended 
+PASS Other dose error is linked to its field 
+17/17 passed
+exit 0

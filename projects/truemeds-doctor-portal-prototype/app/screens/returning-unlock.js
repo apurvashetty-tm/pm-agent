@@ -54,7 +54,7 @@ export function render(host, id, { mode, params = {} }) {
   const label = h("span", { id: "unlock-label" });
   const action = h("button", { class: "tm-btn tm-btn--primary tm-btn--lg tm-btn--block", id: "unlock-action", type: "button", onclick: onUnlock }, label);
   const fallback = h("button", { class: "tm-btn tm-btn--quiet tm-btn--lg tm-btn--block", id: "fallback", type: "button", onclick: onUseOtp, text: MSG("unlock.useOtp") });
-  // The one band (D-107; a title carrying a name may wrap, variant 2) · panel: tile → 16 → caption (D-108) · the pinned bar.
+  // The one band (D-107; a title carrying a name may wrap, variant 2) · panel: tile → 8 → caption (D-108, corrected) · the pinned bar.
   const root = h("main", { class: "unlock-screen tm", "aria-label": MSG("unlock.greeting", { name: doctorFor(number).firstName }) },
     band({ title: MSG("unlock.greeting", { name: doctorFor(number).firstName }), subtitle: MSG("unlock.subtitle") }),
     h("section", { class: "entry-panel panel", "aria-labelledby": "ready" }, notice, prompt),

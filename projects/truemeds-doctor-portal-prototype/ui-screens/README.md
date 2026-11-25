@@ -10,13 +10,13 @@ Each state has a 390-wide and a 360-wide picture (`_w390.png`, `_w360.png`, 2× 
 
 | Journey | Screen file | Pictures folder | States | Decisions |
 |---|---|---|---|---|
-| Sign-in | `sign-in/sign-in.html` | `sign-in/` (`sign-in_<state>_…`) | 12 (re-rendered 2026-11-11 (r2-build: D-106 – D-109, one band, visible gaps; 360 in a real 360 × 640 frame); awaiting Apurva's approval) | D-42 to D-47, D-61, D-65, D-107 – D-109 |
-| OTP | `otp/otp.html` | `otp/` (`otp_<state>_…`) | 17 (re-rendered 2026-11-11 (r2-build: D-106 – D-109, one band, visible gaps; 360 in a real 360 × 640 frame); awaiting Apurva's approval) | D-42 to D-47, D-61 (no Back), D-65, D-107 – D-109 |
+| Sign-in | `sign-in/sign-in.html` | `sign-in/` (`sign-in_<state>_…`) | 12 (re-rendered 2026-11-11 (r2-build: D-106 – D-109, one band, visible gaps; 360 in a real 360 × 640 frame); awaiting Apurva's approval; all pictures re-rendered 2026-11-25 on Chrome 158) | D-42 to D-47, D-61, D-65, D-107 – D-109 |
+| OTP | `otp/otp.html` | `otp/` (`otp_<state>_…`) | 17 (re-rendered 2026-11-11 (r2-build: D-106 – D-109, one band, visible gaps; 360 in a real 360 × 640 frame); awaiting Apurva's approval; all pictures re-rendered 2026-11-25 on Chrome 158) | D-42 to D-47, D-61 (no Back), D-65, D-107 – D-109 |
 | Returning unlock | `returning-unlock/returning-unlock.html` | `returning-unlock/` (`unlock_<state>_…`) | 7 (re-rendered 2026-11-11 (r2-build: D-106 – D-109, one band, visible gaps; 360 in a real 360 × 640 frame); awaiting Apurva's approval; the prompt opens by itself on arrival, D-109 §3) | D-45, D-47, D-61, D-66, D-105, D-107 – D-109 |
 | Faster sign-in offer | `faster-signin-offer/faster-signin-offer.html` | `faster-signin-offer/` (`offer_<state>_…`) | 7 (re-rendered 2026-11-11 (r2-build: D-106 – D-109, one band, visible gaps; 360 in a real 360 × 640 frame); awaiting Apurva's approval) | D-45, D-61, D-64, D-65, D-93, D-107 – D-109 |
 | Home (availability, add time, end, profile) | `home/home.html` (+ `home-reference.js`, `home-reference.css`) | `home/` (`home_<state>_…`) | 22 (Home v3; re-rendered 2026-11-11 (r2-build: D-106 – D-109, one band, visible gaps; 360 in a real 360 × 640 frame); awaiting Apurva's approval) | D-36, D-40, D-47, D-53, D-69, D-70, D-106 – D-109 |
-| Case page: ready, calling, call outcomes, closed cases, sheets, stress | `case/case.html` (+ `case-styles.css`) | `case/` (`<state>_…`) | 61 | D-48 to D-83 |
-| Prescribe (one medicine) | `case/case.html` (`d-*`) | `prescribe/` (`d-<state>_…`) | 23 | D-04, D-06, D-08 to D-30, D-54, D-56, D-68 |
+| Case page: ready, calling, call outcomes, closed cases, sheets, stress | `case/case.html` (+ `case-styles.css`) | `case/` (`<state>_…`) | 61 (re-rendered 2026-11-25, D-111; awaiting Apurva's approval; `case.html` is generated from the app: `node scripts/build-case-reference.mjs`) | D-48 to D-83 |
+| Prescribe (one medicine) | `case/case.html` (`d-*`) | `prescribe/` (`d-<state>_…`) | 23 (re-rendered 2026-11-25, D-110, D-111; awaiting Apurva's approval) | D-04, D-06, D-08 to D-30, D-54, D-56, D-68 |
 
 Counts: pictures are 2 per state. Case page: 39 calling and call-outcome states (incl. `s7d-unavailable-sheet`, the callback sheets and the Skip-HA sheet), 16 + 1 stress/action states (`a-*`), 2 closed (`e-*`), 3 stress (`s-*`). Home: 19 states plus 3 Profile pages.
 
@@ -37,7 +37,7 @@ The calling states follow app-logic §5 (D-58 points 14–25, D-63, D-64). The r
 | 7d Result not received | `s7d-result-missing` | Confirm prescription · Callback · Unavailable |
 | 7d Pilot (D-83 K6) | `s7d-result-missing-pilot` | Confirm & forward · Callback · Unavailable; no Skip HA (CW-D2) |
 | 7d Unavailable sheet (D-75) | `s7d-unavailable-sheet` | Sheet "Mark patient unavailable" with three reasons; a reason goes to `t09-patient-unavailable` |
-| 7e Leave this case? | `s7e-leave-sheet` | Release case / Stay on this case |
+| 7e Leave this case? | `s7e-leave-sheet` | Release case / Stay |
 | 7f Waiting for the call record | `s7f-submitted` | D-68 wording |
 | 8a Valid (Cat4) | `t08a-valid-cat4` | No script (call ended) |
 | 8b Valid (forward) | `t08b-valid-forward` | |
@@ -52,10 +52,10 @@ The calling states follow app-logic §5 (D-58 points 14–25, D-63, D-64). The r
 | 15 Health Advisor unavailable (live) | `t15-ha-no-join` | Amber card; bar "Waiting for the call to end…" while live (D-83 CW-E3) |
 | 15 after the hang-up (K8) | `t15-after-hangup` | Neutral grey card, title only (MAIN-CHECK 2); Request next case · Back to Home |
 | 16 Ended before the transfer | `t16-transfer-missed` (doctor), `t16b-transfer-missed-patient`, `t16c-transfer-missed-unknown` | Skip HA shown (D-58 pt 24) |
-| 17 Skip HA, waiting | `t17-skip-ha-wait` | Keeps the script; grey note + "Getting call result…" only (D-85, replaces CW-E2's two-step line) |
+| 17 Skip HA, waiting | `t17-skip-ha-wait` | Shows the no-Health-Advisor script (D-85); grey note + "Getting call result…" only (D-85, replaces CW-E2's two-step line) |
 | Fallback B = launch Pilot flow (D-83 CW-F1) | `g0-calling-pilot` (B1 before the gate, K12), `g1-generic-confirm`, `g2-checking-ha`, `g3b-forwarded`, `g3b-after-hangup` (K9) | |
 | Callback sheet | `c-callback`, `c-callback-error`, `c-callback-failed`, `c-callback-refused` | Over 6 Call too short (D-83 K2); refused: `callback.notReached` (K3) |
-| Skip HA reason sheet | `c-skip-ha` | Over 12 Confirm & transfer (D-70 pt 4) |
+| Skip HA reason sheet | `c-skip-ha` | Launch: over B1 and 16 (D-83); version A: over 12 |
 
 ## Other case-page states
 

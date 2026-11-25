@@ -56,13 +56,24 @@
        "layout": true
       },
       {
+       "property": "gap",
+       "value": "var(--tm-space-2xl)",
+       "tokens": [
+        {
+         "native": "tokens.space.2xl",
+         "web": "--tm-space-2xl",
+         "value": 32
+        }
+       ]
+      },
+      {
        "property": "animation",
        "value": "none",
        "tokens": [],
        "layout": true
       }
      ],
-     "size": "326×146"
+     "size": "326×163.7"
     }
    }
   }

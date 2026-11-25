@@ -1018,3 +1018,26 @@ User identified missing HTML/native linkage. Inspected actual sign-in and OTP HT
 - **r3-rest-audit accepted as a report:** 24 drift fixes on case, Prescribe, sheets, Profile, Rx viewer (~2–2.5 h run). Not queued: Q1–Q4, Q6–Q9 change it.
 - **Queue finished.** `docs/runs/SUMMARY.md` written; NEEDS-APURVA in `docs/runs/CHECKIN.md` (10 yes / no).
 - **Next:** Apurva answers the questions and does the phone walkthrough (F2); main thread writes the r3 fix-run brief; shared design-system commit (RULES + checker) still needs a PR (connector signed out); deploy only on request.
+
+## 2026-11-25 · Duration numbers (D-110)
+- **Changed:** `app/screens/prescribe.js` (numbers 1–12), decision log D-110, `docs/runs/CHECKIN.md` Q1 answered. Uncommitted.
+- **Checked:** run-checks 95/95; picker tapped through at 360 and 390 (Chromium, capture mode): values and printed line correct.
+- **Not done (fix run):** picker margins (P1), other places that still describe the old list (PRD, app-logic, kit), re-rendered pictures, kit regeneration and compare.
+- **Next:** Apurva looks at it locally; remaining answers in CHECKIN; PR #41; fix run.
+
+## 2026-11-25 · Team is building from kit v1
+- **[USER-PROVIDED]** The engineers took the kit from the preview site and started building. Every change now needs an easy input: the difference from the kit they have.
+- **Baseline (kit v1):** commit `963c2b5` (deploy 1, PR #40, 10 Nov). Checked 2026-11-25: 169 of 171 text files on the live `/kit` are byte-identical to it; the other two (`.gitignore`, the skill) aren't served. Pictures and zips not compared.
+- **Gap:** `handoff/CHANGES.md` lists state names between kit generations, not a v1 → v2 change list an engineer can work from. Proposed: one change pack (per screen: before / after picture, what to change, exact values and copy), generated against `963c2b5`.
+- 15 days dropped the same day (D-110); numbers are 1–12. run-checks 95/95 again.
+- **Next:** Apurva OKs the change pack (format + build); then audit picks, PR #41, fix run, pack regenerated after it, release.
+
+## 2026-11-25 (later) · Status dig (read only) and delivery format
+- **Apurva:** the team gets the **upgraded kit plus the diff inside it**, not a separate change pack (replaces the proposal above).
+- **Checked:** PR #41's `design-system/` files are identical to this branch's, and not on `main`; mergeable. r2-build has updated design system, rules, app, references, pictures, copy, kit and PRD on this branch only. r3 is an audit only: 24 fixes not built.
+- **Ahead of process:** D-110 was edited straight into `app/`; app-logic, references, pictures, PRD and kit must follow in the fix run.
+- **Next:** Apurva checks r2 pictures (`docs/renders/2026-11-11-r2-build/all-screens.png`), then the open audit questions, PR #41, fix run, approval, kit with v1 → v2 diff, release.
+
+## 2026-11-26 · Overnight build r4 (D-110, D-111)
+- Report: `docs/renders/2026-11-25-r4-rest-build/REPORT.md`. Built, rendered, audited; kit carries one diff against the 10 November kit; PRD file v0.7. Checks green (see the report for the two re-runs).
+- **Next:** Apurva's sanity check (pictures, phone) and CHECKIN 1, 2, D-111, 11–13; then PR #41 + D-111's design-system edits (shared), project PR, release only when asked.

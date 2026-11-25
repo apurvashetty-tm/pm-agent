@@ -1065,6 +1065,24 @@ From an external (ChatGPT) review, each point verified before acting.
   3. **Returning unlock:** the phone's fingerprint / Face ID / screen-lock prompt opens by itself once when the app opens; cancelling shows today's screen; the Unlock button stays for a retry. Amends D-38 / D-105.
 - **Why:** consistent words across the entry screens; a floating sheet subtitle read as content; industry practice (prompt on arrival) saves a tap every open.
 
+### D-110 · Duration numbers: 1–12 for every unit — 2026-11-25
+- **Decision (Apurva):** numbers 1–12 for Days, Weeks and Months; numbers first, then units; Ongoing (6 months) unchanged. Amends the number list in D-17. Answers r3 Q1 (the unit-first proposal is not adopted).
+- **Why:** the old list (1–7, 10, 14, 15) looked random; Apurva had asked for fewer, "only till 12". 14 days is 2 weeks.
+- **Rejected:** 15 for Days only (tried the same day, then dropped: it sat alone on a fourth row and needed a reset rule).
+
+### D-111 · Visible gaps on the work screens, and the r3 answers — 2026-11-25 · **[RECOMMENDED] — built overnight, awaiting Apurva**
+- **Built on Apurva's go-ahead to fix everything overnight; each item below is the recommended answer, not yet his approval.**
+  1. **Spacing (r3 drift fixes; the conclusion says 24, its rows list 21: P1–P6, C1–C7, S1–S5, F2–F3, R1):** D-108 applied to the case page, Prescribe, sheets, Profile and Rx viewer (`app/screens/task-gaps.css`).
+  2. **Profile** shows "Prescriptions written today" (Home's row, no chevron).
+  3. **Closed case, availability ended:** bar caption "Your availability has ended." above Back to Home.
+  4. **Status tags** 12 → **14** (`.tm-tag--md`, design system).
+  5. **Callback times** stay 3 per row. **Copy:** busy "Scheduling…"; failure "Your chosen time is kept."
+  6. **Rx viewer:** tools row 8 below the title row.
+  7. **Calling-flow page:** internal desktop diagram; mobile rules §8 don't apply.
+  8. **Home, ended:** the count sits on its label's line, so the whole wheel shows above the bar at 390 × 844 (adjusts D-106's row).
+  9. **Reference:** `ui-screens/case/case.html` is generated from the app (`scripts/build-case-reference.mjs`).
+- **Not changed:** "Time remaining 0:00" on Availability ended (D-53 stands; Apurva to say).
+
 ## Design system changes made for this work
 
 ### D-60 · Secondary button without drop shadow (design system) — 2026-10-24 · **REVERTED same day**

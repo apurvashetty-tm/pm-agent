@@ -1005,12 +1005,12 @@
       },
       {
        "property": "margin",
-       "value": "var(--tm-space-lg) 0 var(--tm-space-sm)",
+       "value": "var(--tm-space-2xl) 0 var(--tm-space-sm)",
        "tokens": [
         {
-         "native": "tokens.space.lg",
-         "web": "--tm-space-lg",
-         "value": 16
+         "native": "tokens.space.2xl",
+         "web": "--tm-space-2xl",
+         "value": 32
         },
         {
          "native": "tokens.space.sm",
@@ -1071,6 +1071,12 @@
        "layout": true
       },
       {
+       "property": "text trim (to the ink)",
+       "value": "trim-both cap text",
+       "tokens": [],
+       "layout": true
+      },
+      {
        "property": "font-family",
        "value": "var(--tm-font)",
        "tokens": [
@@ -1083,7 +1089,7 @@
        "inherited": true
       }
      ],
-     "size": "358×20"
+     "size": "358×13.4"
     }
    }
   }

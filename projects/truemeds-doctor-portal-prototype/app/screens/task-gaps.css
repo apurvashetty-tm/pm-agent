@@ -1,0 +1,73 @@
+/* D-111: visible gaps (D-108) on the work screens: case page, Prescribe, sheets, Profile, Rx viewer. One file, loaded by the app
+   and by the approved reference (ui-screens/case/case.html), so the two can't drift. Text is trimmed to its ink (text-box) where a
+   gap starts or ends on text, so the box gap is the gap the eye sees. Tokens only. */
+
+/* Case page: card title → its content 16 (C1) · field group → the next 32 (C2). */
+#action-zone { gap: var(--tm-space-lg); }
+#action-zone > .tm-section-title, #medicines-header > .tm-section-title, #notes-section > .tm-section-title { text-box: trim-both cap text; }
+#medicines-header { align-items: baseline; }
+#medicines-list > .medicine-item:first-child { padding-top: var(--tm-space-sm); }
+#medicines-list > .medicine-item:first-child .med-name { text-box: trim-start cap text; }
+#medicines-header { margin-bottom: var(--tm-space-sm); }
+#medicines-header + #medicines-list { margin-top: 0; }
+#notes-section { gap: var(--tm-space-2xl); }
+#notes-section > .tm-section-title { margin: 0 0 calc(var(--tm-space-lg) - var(--tm-space-2xl)); }
+#notes-section .tm-field__label { text-box: trim-both cap text; }
+/* Order details open: row → details 16, rows 16 apart (C7). */
+#case-tools:has(#pdb-order-expand) { gap: var(--tm-space-lg); }
+#pdb-order-expand { padding-top: var(--tm-space-lg); gap: var(--tm-space-lg); }
+#pdb-order-expand .pdb-expand-label, #pdb-order-expand .pdb-expand-value { text-box: trim-both cap text; }
+/* Compact header: name → age 8 (C5). */
+/* The name carries the target's spare height itself, so a name on two lines grows the row and never meets the age line. */
+#case-head .tm-header-task__title { margin-block: calc((var(--tm-target-min) - var(--tm-font-lineheight-lg)) / 2); }
+#case-head .tm-header-task__meta { pointer-events: none; }
+#case-head #ch-meta1 { margin-top: calc(-1 * (var(--tm-space-sm) + var(--tm-border-width-default))); }
+/* Bar: the 7b question → its buttons 16 (C3); the B2 status → Skip HA 8 (C4). */
+.case-bar > .tm-notice--question { padding-bottom: var(--tm-space-sm); margin-bottom: calc(-1 * var(--tm-space-2xs)); }
+.case-bar > .tm-notice--question > span { text-box: trim-both cap text; }
+/* Toast over the bar: 16 above it, page margins at the sides (C6, RULES §9.5). */
+.case-toast { left: var(--tm-space-page); right: var(--tm-space-page); bottom: calc(100% + var(--tm-space-lg)); }   /* raw-ok: 100% = the bar's own height (geometry) */
+
+/* Prescribe: helper and error lines 8 under their field (P2–P4), field groups 32 apart (P6). */
+.ps-helper, #prescribe-screen .tm-field__helper, .ps-label { text-box: trim-both cap text; }
+.ps-card { gap: var(--tm-space-2xl); }
+.ps-label { margin-bottom: var(--tm-space-sm); }
+.case-bar .case-status--slot { align-items: flex-end; }
+.case-bar .case-status--slot { text-box: trim-both cap text; }
+.bar-caption { margin: 0; text-align: center; font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); color: var(--tm-content-secondary); text-box: trim-both cap text; }
+#ps-sos-help { pointer-events: none; }   /* taps near the label still reach the switch */
+#ps-sos-help { margin-top: calc(var(--tm-space-sm) - (var(--tm-target-min) - var(--tm-font-lineheight-sm)) / 2); }
+.ps-dose-error { margin: var(--tm-space-sm) 0 0; }
+.ps-sub { margin-top: 0; gap: var(--tm-space-2xl); }
+.ps-sub > .ps-gap { margin-top: 0; }
+#ps-disabled, #ps-body > .tm-notice { margin-bottom: var(--tm-space-lg); }
+#ps-heading > #ps-title { text-box: trim-both cap text; }
+#ps-heading > #ps-form { margin-top: var(--tm-space-sm); text-box: trim-start cap text; }
+
+/* Sheets: Schedule callback (S2–S4). */
+#sheet-callback .sheet-section-label { margin: var(--tm-space-2xl) 0 var(--tm-space-sm); text-box: trim-both cap text; }
+#sheet-callback .sheet-section-label:first-child { margin-top: 0; }
+#callback-error { text-box: trim-both cap text; }
+#sheet-callback .callback-notice { margin: 0 0 var(--tm-space-sm); }
+
+/* Profile: rows card → Log out 32 (F2); value label → value 4 (F3). Prescriptions written today, Home's row (F1). */
+.profile-page .profile-logout { margin-top: var(--tm-space-lg); }
+.profile-page .profile-label { margin-bottom: var(--tm-space-lg); text-box: trim-both cap text; }
+.profile-earnings-row .pt-d, .profile-earnings-row .pt-t { text-box: trim-both cap text; }
+.profile-earnings-row .pt-t { margin-top: var(--tm-space-xs); }
+/* Home, ended: the count sits on its label's line, so the whole wheel shows above the bar at 390 × 844. */
+.home-screen .srow--inline .srow__txt { display: flex; align-items: center; justify-content: space-between; gap: var(--tm-space-md); }
+.home-screen .srow--inline { align-items: center; padding: var(--tm-space-md) 0; }
+.home-screen .srow--inline .srow__line { margin: 0; }
+.home-screen .srow--inline .srow__icon { margin: 0; }
+.home-screen .srow--inline .srow__value { font-size: var(--tm-font-size-title-sm); line-height: var(--tm-font-lineheight-lg); font-weight: var(--tm-font-weight-semibold); }
+
+/* Rx viewer: hint → paper 8 (R1); title row → tools 8 (R2). */
+#rx-hint { padding: var(--tm-space-sm) var(--tm-space-md); text-box: trim-both cap text; }
+#rx-overlay-header { row-gap: 0; }
+#rx-controls { pointer-events: none; }   /* its empty left part sits over the ✕ target */
+#rx-controls > * { pointer-events: auto; }
+#rx-controls { margin-top: calc(-1 * (var(--tm-space-md) + var(--tm-space-sm) + var(--tm-border-width-thick))); }
+
+/* Loading: Help keeps its place on the right (a-loading). */
+.case-screen.is-loading #ch-help { margin-left: auto; }

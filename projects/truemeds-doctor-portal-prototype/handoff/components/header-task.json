@@ -215,6 +215,23 @@
      "seenIn": "a-back-blocked",
      "styles": [
       {
+       "property": "margin-top",
+       "value": "calc(-1 * (var(--tm-space-sm) + var(--tm-border-width-default)))",
+       "tokens": [
+        {
+         "native": "tokens.space.sm",
+         "web": "--tm-space-sm",
+         "value": 8
+        },
+        {
+         "native": "tokens.borderWidth.default",
+         "web": "--tm-border-width-default",
+         "value": 1
+        }
+       ],
+       "layout": true
+      },
+      {
        "property": "margin",
        "value": "0 0 0 calc(var(--tm-space-xs) + var(--tm-target-min) - (var(--tm-target-min) - var(--tm-icon-size-md)) / 2)",
        "tokens": [

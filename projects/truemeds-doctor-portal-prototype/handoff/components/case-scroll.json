@@ -152,7 +152,7 @@
        ]
       }
      ],
-     "size": "358×424"
+     "size": "358×420"
     }
    }
   },
@@ -175,7 +175,7 @@
       },
       {
        "property": "align-items",
-       "value": "center",
+       "value": "baseline",
        "tokens": [],
        "layout": true
       },
@@ -187,17 +187,17 @@
       },
       {
        "property": "margin-bottom",
-       "value": "var(--tm-space-xs)",
+       "value": "var(--tm-space-sm)",
        "tokens": [
         {
-         "native": "tokens.space.xs",
-         "web": "--tm-space-xs",
-         "value": 4
+         "native": "tokens.space.sm",
+         "web": "--tm-space-sm",
+         "value": 8
         }
        ]
       }
      ],
-     "size": "326×24"
+     "size": "326×20"
     }
    }
   },
@@ -295,9 +295,15 @@
        "value": "column",
        "tokens": [],
        "layout": true
+      },
+      {
+       "property": "margin-top",
+       "value": "0",
+       "tokens": [],
+       "layout": true
       }
      ],
-     "size": "326×364"
+     "size": "326×360"
     }
    }
   },
@@ -384,17 +390,17 @@
       },
       {
        "property": "gap",
-       "value": "var(--tm-space-md)",
+       "value": "var(--tm-space-2xl)",
        "tokens": [
         {
-         "native": "tokens.space.md",
-         "web": "--tm-space-md",
-         "value": 12
+         "native": "tokens.space.2xl",
+         "web": "--tm-space-2xl",
+         "value": 32
         }
        ]
       }
      ],
-     "size": "358×42"
+     "size": "358×50.1"
     }
    }
   }

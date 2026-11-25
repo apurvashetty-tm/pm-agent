@@ -55,7 +55,7 @@ Current copy: `../ui-screens/otp/otp.html`. Native: `../ui-screens/native/OtpScr
 | otp.verifying | L1 | Verification pending; retain code, prevent duplicate | Existing + fixture |
 | otp.wrong-code | F1 | Code stays visible, red borders, no focus box; first keystroke replaces whole code; keyboard open. Copy "Wrong code." (D-81 F1; replaces "That code isn't right.") | Superseded: layout v2 capture pending |
 | otp.two-tries-left | F1 | Same as wrong code, with the remaining-tries count (dynamic): "Wrong code. 2 tries left."; at 1 try left the singular "Wrong code. 1 try left." (D-81 F1) | R02 sibling + longest-copy QA |
-| otp.resend-available | None | "Resend code" brand link, 44pt tap area, under the notice (D-44) | Superseded: layout v2 capture pending |
+| otp.resend-available | None | "Resend code" brand link, 48 tap area, under the notice (D-44) | Superseded: layout v2 capture pending |
 | otp.new-code-sent | S1 | Confirmed resend; restart countdown. Copy "New code sent." (D-109), 8 under the boxes | Re-rendered 2026-11-11 (r2-build) |
 | otp.code-expired | F1 | Code stays visible; "Resend code" available at once; Verify of the same code blocked; the legal line is hidden and keeps no height (D-108, replaces Round 5 B) | R02 |
 | otp.couldnt-verify | F2 | Retain code; resend line shown (D-44) | R03 |
@@ -141,8 +141,8 @@ Applies to the case page (`ui-screens/case/case.html`; the old `index.html` is f
 | case.back-before-call | Confirmation sheet | Only on Ready and states 3 and 4 (no call attempted). Back (header or phone gesture) opens "Leave this case?" · "It goes back to the queue for another doctor." From the Call tap the header Back is hidden and never returns once the patient answered (D-80 pt 1, D-81 F21). Sheet sits over Ready (D-81 F22). |
 | case.releasing | L1 | Release pending over Ready; one request; primary shows the busy state (L2). Failure keeps the doctor on the case with an F2 notice. Backend refuses Release once our call is accepted, unless the result is 3 or 4 (D-80). |
 | case.back-blocked | N1 (not an error) | Call attempted or connected, case not closed. Header Back hidden from the call tap on; phone back gesture shows "Finish this case first. Then you can go back to Home." (D-81 F21). |
-| case.closed | None | End of case: confirmation at the top of the content, titled by path ("Prescription confirmed" / "Transferred to HA" / "Forwarded to HA"); pinned bar **Request next case** (primary) + **Back to Home** (secondary), stacked. Header Back hidden; phone back → Home. Case content read-only and muted (D-51). |
-| case.closed-availability-ended | None | Availability ended during the case: only **Back to Home**; Home shows the expired state. |
+| case.closed | None | End of case: confirmation at the top of the content, titled by path ("Prescription confirmed" / "Transferred to Health Advisor" / "Forwarded to Health Advisor"); pinned bar **Request next case** (primary) + **Back to Home** (quiet), stacked. Header Back hidden; phone back → Home. Case content read-only and muted (D-51). |
+| case.closed-availability-ended | None | Availability ended during the case: bar caption "Your availability has ended." (`case.availabilityEnded`, D-111) above **Back to Home**, the only button; Home shows the expired state. |
 | case.reopened | None | App reopened with a case open → straight back into the case. |
 
 ## Case page — states still to design and render (D-52)
@@ -151,19 +151,19 @@ Applies to the case page (`ui-screens/case/case.html`; the old `index.html` is f
 |---|---|---|
 | case.loading | L1 | Skeleton shaped like the loaded page: an Order details row, Medicines and Notes blocks, in the same places; no text, no actions until loaded (D-81 F28). |
 | case.load-failed | F2 | Error notice "Couldn't load this case." + primary **Try again**; nothing else on the page. *Copy approved (Apurva, D-53).* |
-| case.offline | W1 → F2 | Warning notice (D-54: offline blocks the main action) "You're offline. Reconnect to call or confirm." while browsing; an action attempted offline fails with one error notice "No connection. Nothing was lost. Try again when you're back online." Typed notes are kept. *Copy approved (Apurva, D-53).* |
+| case.offline | W1 → F2 | Warning notice (D-54: offline blocks the main action) "You're offline. Reconnect to call or confirm." while browsing; an action attempted offline fails with one error notice "No connection. Nothing was lost." Typed notes are kept. *Copy approved (Apurva, D-53).* |
 | case.confirm-busy | L1 | Final CTA busy (L2), label **"Confirming…"**; every other action disabled; medicine rows and notes read-only and muted; View Rx stays the outlined button (D-81 F24–F25). No second submit. *Copy approved (Apurva, D-53).* |
-| case.confirm-failed | F2 | Error notice above the bar "Couldn't confirm. Nothing was lost. Try again."; CTA back to normal. An uncertain result is reconciled before retry (no duplicate confirm). *Copy approved (Apurva, D-53).* |
-| case.release-failed | F2 | Sheet closes over Ready; doctor stays on the case; error notice "Couldn't release this case. You're still on it. Try again."; Back works again. *Copy approved (Apurva, D-53).* (D-81 F22) |
-| case.callback-failed | F2 | Error notice inside the sheet "Couldn't schedule the callback. Your time is kept. Try again."; chosen date and time kept. *Copy approved (Apurva, D-53).* |
+| case.confirm-failed | F2 | Error notice above the bar "Couldn't confirm. Nothing was lost."; CTA back to normal. An uncertain result is reconciled before retry (no duplicate confirm). *Copy approved (Apurva, D-53).* |
+| case.release-failed | F2 | Sheet closes over Ready; doctor stays on the case; error notice "Couldn't release this case. You're still on it."; Back works again. *Copy approved (Apurva, D-53).* (D-81 F22) |
+| case.callback-failed | F2 | Error notice inside the sheet "Couldn't schedule the callback. Your chosen time is kept."; chosen date and time kept. *Copy recommended (D-111), awaiting Apurva.* |
 | rx.load-failed | F2 | Inside the viewer: notice "Couldn't load the prescription." + **Try again**; ✕ still closes. *Copy approved (Apurva, D-53).* |
 | case.no-medicines | Standing state (top of the panel) | Amber notice "No medicines on this order. Our Ops team will check it." (`case.noMedicines`, D-84) above the medicines card, which shows no text; no Call patient; main button **Release case**, which releases directly (no sheet) and returns to Home; header Back does the same (D-80 pt 4, D-81 F23; D-83 CW-A6, K4). |
 | case.long-content | — | Long patient name (two lines in the header) and long medicine names, checked at 360. |
 | call.waiting-for-hangup | Status line | "Waiting for the call to end…" (`call.waitingForHangup`) in the bar, where the buttons would be, while a forward or a failed transfer is still live (15, B3; D-83 K8, K9). After the hang-up: Request next case · Back to Home. |
 | call.transfer-failed | Card body (live) | "Read the script, then end the call." (`call.transferFailed`) in the amber card under "Forwarded to Health Advisor" while the call is live on 15 and B3. The patient script (`call.forwardedTell`): "I’ve written your prescription. Our Health Advisor will call you back to help with the next steps." Copy never says the Health Advisor is unavailable (MAIN-CHECK 2 item 2). |
 | call.skipHa | Grey note in the bar | "Health Advisor call will be skipped. End the call when you’re done." on 17 (`t17-skip-ha-wait`), with the no-HA script and the status line "Getting call result…" (D-85). No Calling line, no buttons. |
-| case.callback-refused | F2 | Error notice inside the Schedule callback sheet "Couldn’t schedule a callback. The patient wasn’t reached." (`callback.notReached`) when the backend refuses a callback without leg 2 answered (D-83 K3, CW-A1). Choices kept. |
-| case.result-missing-pilot | Same as 7d | Pilot 7d: "We didn’t get the call result." notice; **Confirm & forward** · Callback + Unavailable; no Skip HA (D-83 K6, CW-D2). |
+| case.callback-refused | F2 | Error notice inside the Schedule callback sheet "Couldn’t schedule the callback. The patient wasn’t reached." (`callback.notReached`) when the backend refuses a callback without leg 2 answered (D-83 K3, CW-A1). Choices kept. |
+| case.result-missing-pilot | Same as 7d | Pilot 7d: "Couldn’t get the call result." notice; **Confirm & forward** · Callback + Unavailable; no Skip HA (D-83 K6, CW-D2). |
 
 ## Prescribe (D-81)
 
@@ -211,9 +211,9 @@ Still open: source-derived 390×844 captures and visual approval, 360-width and 
 | OTP — waiting text and Resend link | Same height; Verify & sign in does not move | A-03 |
 | OTP — "New code sent." | Green text, no icon | A-21 |
 | OTP — too many resends / locked / expired and limited | "Doctor Ops" and the time never split across lines | A-17 |
-| case.confirm-failed, case.release-failed | Bar notice above its button (the bar keeps its height in busy states). case.callback-failed stays inside the sheet, 8 above its button | A-19, B-02 |
+| case.confirm-failed, case.release-failed | Bar notice above its button (the bar keeps its height in busy states). case.callback-failed sits in the sheet's pinned actions, 16 above its button (D-111) | A-19, B-02 |
 | case.confirming / call.connectingHa (Transferring…) | Bar keeps its height; Skip HA alone, full width, greyed and disabled; no Callback (D-83 K13) | B-01 |
-| fallback B2 | Status line takes the row the buttons were on; bar keeps its height | B-02 |
+| fallback B2 | Status line sits 8 above Skip HA in the button row's slot (D-111); bar keeps its height | B-02 |
 | case.checking (7c) | Same screen as 5: "Getting call result…" (`call.resultWait`), normal bar height, no script, no buttons; picture `t05-result-wait` | D-91 (replaces B-02 for 7c) |
 | Empty case | Card text left-aligned, 14 px normal; View Rx left-aligned when Order details is hidden | B-16, B-17 |
 | Back-blocked toast | Breaks between its two sentences | B-21 |

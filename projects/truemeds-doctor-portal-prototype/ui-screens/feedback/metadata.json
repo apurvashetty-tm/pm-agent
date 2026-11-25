@@ -394,7 +394,7 @@
     "next": "Try again",
     "clear": "new attempt",
     "retain": "chosen day and time",
-    "copy": "approved (Apurva, 2026-10-26, D-65 — no repeated button)"
+    "copy": "recommended D-111 (2026-11-25), awaiting Apurva"
   },
   "rx.loadFailed": {
     "pattern": "F2",
@@ -2113,6 +2113,15 @@
     "retain": "—",
     "copy": "approved picture label (plan B6, run A1 2026-11-09)"
   },
+  "case.availabilityEnded": {
+    "pattern": "none",
+    "trigger": "Case page screen label",
+    "slot": "closed case, bar caption above Back to Home",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "recommended D-111 (2026-11-25), awaiting Apurva"
+  },
   "case.confirmedTitle": {
     "pattern": "none",
     "trigger": "Case page screen label",
@@ -3346,6 +3355,15 @@
     "clear": "—",
     "retain": "—",
     "copy": "approved picture label (plan B6, run A2 2026-11-09)"
+  },
+  "callback.scheduling": {
+    "pattern": "none",
+    "trigger": "Callback sheet",
+    "slot": "callback sheet main button, busy",
+    "next": "—",
+    "clear": "—",
+    "retain": "—",
+    "copy": "recommended D-111 (2026-11-25), awaiting Apurva"
   },
   "callback.scheduled": {
     "pattern": "none",

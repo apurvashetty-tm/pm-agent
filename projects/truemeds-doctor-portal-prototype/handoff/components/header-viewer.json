@@ -23,14 +23,9 @@
       },
       {
        "property": "row-gap",
-       "value": "var(--tm-space-xs)",
-       "tokens": [
-        {
-         "native": "tokens.space.xs",
-         "web": "--tm-space-xs",
-         "value": 4
-        }
-       ]
+       "value": "0",
+       "tokens": [],
+       "layout": true
       },
       {
        "property": "gap",
@@ -134,7 +129,7 @@
        "layout": true
       }
      ],
-     "size": "390×125"
+     "size": "390×99"
     }
    }
   },
@@ -296,6 +291,28 @@
        "property": "margin-left",
        "value": "auto",
        "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "margin-top",
+       "value": "calc(-1 * (var(--tm-space-md) + var(--tm-space-sm) + var(--tm-border-width-thick)))",
+       "tokens": [
+        {
+         "native": "tokens.space.md",
+         "web": "--tm-space-md",
+         "value": 12
+        },
+        {
+         "native": "tokens.space.sm",
+         "web": "--tm-space-sm",
+         "value": 8
+        },
+        {
+         "native": "tokens.borderWidth.thick",
+         "web": "--tm-border-width-thick",
+         "value": 2
+        }
+       ],
        "layout": true
       }
      ],

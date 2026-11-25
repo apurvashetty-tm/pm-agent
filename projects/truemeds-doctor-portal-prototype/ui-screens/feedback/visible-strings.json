@@ -196,7 +196,6 @@
   "states": [
    "case/a-leave-sheet",
    "case/a-load-failed",
-   "case/a-loading",
    "case/a-long-content",
    "case/a-no-medicines",
    "case/a-notes-typing",
@@ -309,6 +308,18 @@
  },
  {
   "kind": "aria-label",
+  "text": "Date",
+  "cls": "tm-chip-group",
+  "tag": "div",
+  "states": [
+   "case/c-callback",
+   "case/c-callback-error",
+   "case/c-callback-failed",
+   "case/c-callback-refused"
+  ]
+ },
+ {
+  "kind": "aria-label",
   "text": "Duration number",
   "cls": "ps-grid",
   "tag": "div",
@@ -382,20 +393,6 @@
    "case/t06-ended-early",
    "case/t08a-valid-cat4",
    "case/t08c-confirm-blocked"
-  ]
- },
- {
-  "kind": "aria-label",
-  "text": "Edit Amlodipine",
-  "cls": "tm-row medicine-item tm-row--readonly",
-  "tag": "div",
-  "states": [
-   "case/a-confirm-busy",
-   "case/e-availability-ended",
-   "case/e-callback-scheduled",
-   "case/s7f-submitted",
-   "case/t09-patient-unavailable",
-   "case/t10a-confirmed"
   ]
  },
  {
@@ -478,35 +475,12 @@
  },
  {
   "kind": "aria-label",
-  "text": "Edit Antacid Suspension",
-  "cls": "tm-row medicine-item tm-row--readonly",
-  "tag": "div",
-  "states": [
-   "case/a-confirm-busy",
-   "case/e-availability-ended",
-   "case/e-callback-scheduled",
-   "case/s7f-submitted",
-   "case/t09-patient-unavailable",
-   "case/t10a-confirmed"
-  ]
- },
- {
-  "kind": "aria-label",
   "text": "Edit Aspirin",
   "cls": "tm-row medicine-item",
   "tag": "div",
   "states": [
    "case/d-cream",
    "case/t08b-valid-forward"
-  ]
- },
- {
-  "kind": "aria-label",
-  "text": "Edit Aspirin",
-  "cls": "tm-row medicine-item tm-row--readonly",
-  "tag": "div",
-  "states": [
-   "case/t10b-forwarded"
   ]
  },
  {
@@ -571,35 +545,12 @@
  },
  {
   "kind": "aria-label",
-  "text": "Edit Atorvastatin",
-  "cls": "tm-row medicine-item tm-row--readonly",
-  "tag": "div",
-  "states": [
-   "case/a-confirm-busy",
-   "case/e-availability-ended",
-   "case/e-callback-scheduled",
-   "case/s7f-submitted",
-   "case/t09-patient-unavailable",
-   "case/t10a-confirmed"
-  ]
- },
- {
-  "kind": "aria-label",
   "text": "Edit Betamethasone Cream",
   "cls": "tm-row medicine-item",
   "tag": "div",
   "states": [
    "case/d-cream",
    "case/t08b-valid-forward"
-  ]
- },
- {
-  "kind": "aria-label",
-  "text": "Edit Betamethasone Cream",
-  "cls": "tm-row medicine-item tm-row--readonly",
-  "tag": "div",
-  "states": [
-   "case/t10b-forwarded"
   ]
  },
  {
@@ -621,20 +572,6 @@
    "case/t16b-transfer-missed-patient",
    "case/t16c-transfer-missed-unknown",
    "case/t17-skip-ha-wait"
-  ]
- },
- {
-  "kind": "aria-label",
-  "text": "Edit Calcium + Vit D3",
-  "cls": "tm-row medicine-item tm-row--readonly",
-  "tag": "div",
-  "states": [
-   "case/g3b-after-hangup",
-   "case/g3b-forwarded",
-   "case/t13-connecting-ha",
-   "case/t14-transferred",
-   "case/t15-after-hangup",
-   "case/t15-ha-no-join"
   ]
  },
  {
@@ -672,15 +609,6 @@
   "states": [
    "case/d-cream",
    "case/t08b-valid-forward"
-  ]
- },
- {
-  "kind": "aria-label",
-  "text": "Edit Hydrochlorothiazide",
-  "cls": "tm-row medicine-item tm-row--readonly",
-  "tag": "div",
-  "states": [
-   "case/t10b-forwarded"
   ]
  },
  {
@@ -724,20 +652,6 @@
  },
  {
   "kind": "aria-label",
-  "text": "Edit Levothyroxine",
-  "cls": "tm-row medicine-item tm-row--readonly",
-  "tag": "div",
-  "states": [
-   "case/g3b-after-hangup",
-   "case/g3b-forwarded",
-   "case/t13-connecting-ha",
-   "case/t14-transferred",
-   "case/t15-after-hangup",
-   "case/t15-ha-no-join"
-  ]
- },
- {
-  "kind": "aria-label",
   "text": "Edit Losartan",
   "cls": "tm-row medicine-item",
   "tag": "div",
@@ -745,15 +659,6 @@
    "case/d-cream",
    "case/s-10-medicines",
    "case/t08b-valid-forward"
-  ]
- },
- {
-  "kind": "aria-label",
-  "text": "Edit Losartan",
-  "cls": "tm-row medicine-item tm-row--readonly",
-  "tag": "div",
-  "states": [
-   "case/t10b-forwarded"
   ]
  },
  {
@@ -781,7 +686,6 @@
    "case/d-alt-days",
    "case/d-default",
    "case/d-disable-sheet",
-   "case/d-disabled",
    "case/d-discard-sheet",
    "case/d-duration-picker",
    "case/d-error-dose",
@@ -818,15 +722,10 @@
  {
   "kind": "aria-label",
   "text": "Edit Metformin",
-  "cls": "tm-row medicine-item tm-row--readonly",
+  "cls": "tm-row medicine-item disabled",
   "tag": "div",
   "states": [
-   "case/a-confirm-busy",
-   "case/e-availability-ended",
-   "case/e-callback-scheduled",
-   "case/s7f-submitted",
-   "case/t09-patient-unavailable",
-   "case/t10a-confirmed"
+   "case/d-disabled"
   ]
  },
  {
@@ -875,20 +774,6 @@
    "case/t16b-transfer-missed-patient",
    "case/t16c-transfer-missed-unknown",
    "case/t17-skip-ha-wait"
-  ]
- },
- {
-  "kind": "aria-label",
-  "text": "Edit Sodium Chloride Eye Drops",
-  "cls": "tm-row medicine-item tm-row--readonly",
-  "tag": "div",
-  "states": [
-   "case/g3b-after-hangup",
-   "case/g3b-forwarded",
-   "case/t13-connecting-ha",
-   "case/t14-transferred",
-   "case/t15-after-hangup",
-   "case/t15-ha-no-join"
   ]
  },
  {
@@ -958,20 +843,6 @@
    "case/t06-ended-early",
    "case/t08a-valid-cat4",
    "case/t08c-confirm-blocked"
-  ]
- },
- {
-  "kind": "aria-label",
-  "text": "Edit Vitamin B12",
-  "cls": "tm-row medicine-item tm-row--readonly",
-  "tag": "div",
-  "states": [
-   "case/a-confirm-busy",
-   "case/e-availability-ended",
-   "case/e-callback-scheduled",
-   "case/s7f-submitted",
-   "case/t09-patient-unavailable",
-   "case/t10a-confirmed"
   ]
  },
  {
@@ -1174,7 +1045,7 @@
  {
   "kind": "aria-label",
   "text": "Loading case",
-  "cls": "concept-new",
+  "cls": "case-skeleton",
   "tag": "div",
   "states": [
    "case/a-loading"
@@ -1561,15 +1432,6 @@
  },
  {
   "kind": "aria-label",
-  "text": "Ongoing, 6 months",
-  "cls": "tm-chip tm-chip--lg",
-  "tag": "button",
-  "states": [
-   "case/d-duration-picker"
-  ]
- },
- {
-  "kind": "aria-label",
   "text": "Profile",
   "cls": "tm-btn tm-btn--quiet tm-btn--icon",
   "tag": "button",
@@ -1593,6 +1455,18 @@
    "home/setup-wheel",
    "home/stop-pending",
    "home/unknown-result"
+  ]
+ },
+ {
+  "kind": "aria-label",
+  "text": "Time",
+  "cls": "tm-chip-grid tm-chip-grid--3",
+  "tag": "div",
+  "states": [
+   "case/c-callback",
+   "case/c-callback-error",
+   "case/c-callback-failed",
+   "case/c-callback-refused"
   ]
  },
  {
@@ -1836,6 +1710,15 @@
  },
  {
   "kind": "text",
+  "text": "(max",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "case/d-sos-on"
+  ]
+ },
+ {
+  "kind": "text",
   "text": "(ml)",
   "cls": "tm-muted",
   "tag": "span",
@@ -1955,10 +1838,29 @@
   "cls": "",
   "tag": "div",
   "states": [
-   "case/d-error-other",
    "otp/expired-and-resend-limited",
    "otp/locked",
    "otp/too-many-resends"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": ".",
+  "cls": "mock-kbd__key",
+  "tag": "div",
+  "states": [
+   "case/d-error-other"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "/day) ·",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "case/d-inhaler",
+   "case/d-sos-on",
+   "case/d-sos-only"
   ]
  },
  {
@@ -1967,6 +1869,7 @@
   "cls": "mock-kbd__key",
   "tag": "div",
   "states": [
+   "case/d-error-other",
    "otp/code-expired",
    "otp/cooldown-reconciling",
    "otp/couldnt-verify",
@@ -2029,16 +1932,7 @@
  },
  {
   "kind": "text",
-  "text": "0",
-  "cls": "",
-  "tag": "div",
-  "states": [
-   "case/d-error-other"
-  ]
- },
- {
-  "kind": "text",
-  "text": "0-0-0 · 6 months",
+  "text": "0-0-0 ·",
   "cls": "",
   "tag": "div",
   "states": [
@@ -2047,7 +1941,7 @@
  },
  {
   "kind": "text",
-  "text": "0-1-1 drops · 7 days",
+  "text": "0-1-",
   "cls": "",
   "tag": "div",
   "states": [
@@ -2056,7 +1950,7 @@
  },
  {
   "kind": "text",
-  "text": "0-10-10 ml · 7 days",
+  "text": "0-10-",
   "cls": "",
   "tag": "div",
   "states": [
@@ -2093,6 +1987,7 @@
   "cls": "mock-kbd__key",
   "tag": "div",
   "states": [
+   "case/d-error-other",
    "otp/code-expired",
    "otp/cooldown-reconciling",
    "otp/couldnt-verify",
@@ -2162,20 +2057,20 @@
  },
  {
   "kind": "text",
-  "text": "1",
-  "cls": "",
-  "tag": "div",
+  "text": "1 dose",
+  "cls": "ps-keep",
+  "tag": "span",
   "states": [
-   "case/d-error-other"
+   "case/d-injection-default"
   ]
  },
  {
   "kind": "text",
-  "text": "1 dose once a month · 3 months",
-  "cls": "",
-  "tag": "div",
+  "text": "1 drops",
+  "cls": "ps-keep",
+  "tag": "span",
   "states": [
-   "case/d-injection-default"
+   "case/d-drops"
   ]
  },
  {
@@ -2196,43 +2091,20 @@
  },
  {
   "kind": "text",
-  "text": "1 tablet as needed (max 1 tablet/day) · 6 months",
-  "cls": "",
-  "tag": "div",
+  "text": "1 tablet",
+  "cls": "ps-keep",
+  "tag": "span",
   "states": [
+   "case/d-alt-days",
+   "case/d-every-x-hours",
+   "case/d-monthly",
+   "case/d-sos-on",
    "case/d-sos-only"
   ]
  },
  {
   "kind": "text",
-  "text": "1 tablet every 6 hours · 6 months",
-  "cls": "",
-  "tag": "div",
-  "states": [
-   "case/d-every-x-hours"
-  ]
- },
- {
-  "kind": "text",
-  "text": "1 tablet on alternate days · 6 months",
-  "cls": "",
-  "tag": "div",
-  "states": [
-   "case/d-alt-days"
-  ]
- },
- {
-  "kind": "text",
-  "text": "1 tablet once a month · 6 months",
-  "cls": "",
-  "tag": "div",
-  "states": [
-   "case/d-monthly"
-  ]
- },
- {
-  "kind": "text",
-  "text": "1-0-1 + SOS 1 tablet (max 1 tablet/day) · 6 months",
+  "text": "1-0-1 + SOS",
   "cls": "",
   "tag": "div",
   "states": [
@@ -2241,35 +2113,19 @@
  },
  {
   "kind": "text",
-  "text": "1-0-1 · 6 months",
+  "text": "1-0-1 ·",
   "cls": "",
   "tag": "div",
   "states": [
    "case/d-default",
    "case/d-disable-sheet",
    "case/d-disabled",
+   "case/d-discard-sheet",
    "case/d-duration-picker",
+   "case/d-food-selected",
    "case/d-header-white",
    "case/d-notes-keyboard",
    "case/d-scrolled"
-  ]
- },
- {
-  "kind": "text",
-  "text": "1-0-1 · 6 months · Before food",
-  "cls": "",
-  "tag": "div",
-  "states": [
-   "case/d-food-selected"
-  ]
- },
- {
-  "kind": "text",
-  "text": "1-0-1 · 6 months · Take after dinner",
-  "cls": "",
-  "tag": "div",
-  "states": [
-   "case/d-discard-sheet"
   ]
  },
  {
@@ -2279,6 +2135,15 @@
   "tag": "button",
   "states": [
    "case/d-duration-picker",
+   "case/d-syrup"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "10 ml",
+  "cls": "ps-keep",
+  "tag": "span",
+  "states": [
    "case/d-syrup"
   ]
  },
@@ -2317,6 +2182,15 @@
  },
  {
   "kind": "text",
+  "text": "11",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/d-duration-picker"
+  ]
+ },
+ {
+  "kind": "text",
   "text": "11:00 AM",
   "cls": "tm-chip tm-chip--lg",
   "tag": "button",
@@ -2341,6 +2215,15 @@
  },
  {
   "kind": "text",
+  "text": "12",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
+  "states": [
+   "case/d-duration-picker"
+  ]
+ },
+ {
+  "kind": "text",
   "text": "12 h",
   "cls": "tm-chip tm-chip--lg",
   "tag": "button",
@@ -2360,7 +2243,7 @@
  {
   "kind": "text",
   "text": "123",
-  "cls": "",
+  "cls": "mock-kbd__key mock-kbd__key--w2",
   "tag": "div",
   "states": [
    "case/a-notes-typing",
@@ -2377,15 +2260,6 @@
    "case/c-callback-error",
    "case/c-callback-failed",
    "case/c-callback-refused"
-  ]
- },
- {
-  "kind": "text",
-  "text": "14",
-  "cls": "tm-chip tm-chip--lg",
-  "tag": "button",
-  "states": [
-   "case/d-duration-picker"
   ]
  },
  {
@@ -2411,15 +2285,6 @@
    "home/setting",
    "home/setup-failed",
    "home/setup-wheel"
-  ]
- },
- {
-  "kind": "text",
-  "text": "15",
-  "cls": "tm-chip tm-chip--lg",
-  "tag": "button",
-  "states": [
-   "case/d-duration-picker"
   ]
  },
  {
@@ -2462,6 +2327,7 @@
   "cls": "mock-kbd__key",
   "tag": "div",
   "states": [
+   "case/d-error-other",
    "otp/code-expired",
    "otp/cooldown-reconciling",
    "otp/couldnt-verify",
@@ -2531,18 +2397,9 @@
  },
  {
   "kind": "text",
-  "text": "2",
-  "cls": "",
-  "tag": "div",
-  "states": [
-   "case/d-error-other"
-  ]
- },
- {
-  "kind": "text",
-  "text": "2 capsules once a week · 6 months",
-  "cls": "",
-  "tag": "div",
+  "text": "2 capsules",
+  "cls": "ps-keep",
+  "tag": "span",
   "states": [
    "case/d-weekly"
   ]
@@ -2565,9 +2422,9 @@
  },
  {
   "kind": "text",
-  "text": "2 puffs as needed (max 8 puffs/day) · 6 months",
-  "cls": "",
-  "tag": "div",
+  "text": "2 puffs",
+  "cls": "ps-keep",
+  "tag": "span",
   "states": [
    "case/d-inhaler"
   ]
@@ -2608,6 +2465,7 @@
   "cls": "mock-kbd__key",
   "tag": "div",
   "states": [
+   "case/d-error-other",
    "otp/code-expired",
    "otp/cooldown-reconciling",
    "otp/couldnt-verify",
@@ -2644,15 +2502,26 @@
    "home/adding",
    "home/end-confirmation",
    "home/expired-pending",
-   "home/idle-expired",
-   "home/manually-ended",
+   "home/logout-confirm",
    "home/near-expiry",
    "home/no-cases",
    "home/offline",
+   "home/profile",
+   "home/profile-case-open",
    "home/request-failed",
    "home/requesting",
    "home/stop-pending",
    "home/unknown-result"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "3",
+  "cls": "srow__value",
+  "tag": "span",
+  "states": [
+   "home/idle-expired",
+   "home/manually-ended"
   ]
  },
  {
@@ -2668,15 +2537,6 @@
    "case/d-injection-default",
    "case/d-sos-on",
    "case/d-sos-only"
-  ]
- },
- {
-  "kind": "text",
-  "text": "3",
-  "cls": "",
-  "tag": "div",
-  "states": [
-   "case/d-error-other"
   ]
  },
  {
@@ -2721,6 +2581,16 @@
    "case/t16b-transfer-missed-patient",
    "case/t16c-transfer-missed-unknown",
    "case/t17-skip-ha-wait"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "3 months",
+  "cls": "ps-keep",
+  "tag": "span",
+  "states": [
+   "case/d-error-other",
+   "case/d-injection-default"
   ]
  },
  {
@@ -2847,6 +2717,7 @@
   "cls": "mock-kbd__key",
   "tag": "div",
   "states": [
+   "case/d-error-other",
    "otp/code-expired",
    "otp/cooldown-reconciling",
    "otp/couldnt-verify",
@@ -2897,15 +2768,6 @@
    "case/d-inhaler",
    "case/d-sos-on",
    "case/d-sos-only"
-  ]
- },
- {
-  "kind": "text",
-  "text": "4",
-  "cls": "",
-  "tag": "div",
-  "states": [
-   "case/d-error-other"
   ]
  },
  {
@@ -2987,6 +2849,7 @@
   "cls": "mock-kbd__key",
   "tag": "div",
   "states": [
+   "case/d-error-other",
    "otp/code-expired",
    "otp/cooldown-reconciling",
    "otp/couldnt-verify",
@@ -3018,15 +2881,6 @@
   "states": [
    "case/d-duration-picker",
    "case/d-syrup"
-  ]
- },
- {
-  "kind": "text",
-  "text": "5",
-  "cls": "",
-  "tag": "div",
-  "states": [
-   "case/d-error-other"
   ]
  },
  {
@@ -3192,6 +3046,7 @@
   "cls": "mock-kbd__key",
   "tag": "div",
   "states": [
+   "case/d-error-other",
    "otp/code-expired",
    "otp/cooldown-reconciling",
    "otp/couldnt-verify",
@@ -3226,20 +3081,45 @@
  },
  {
   "kind": "text",
-  "text": "6",
-  "cls": "",
-  "tag": "div",
-  "states": [
-   "case/d-error-other"
-  ]
- },
- {
-  "kind": "text",
   "text": "6 h",
   "cls": "tm-chip tm-chip--lg",
   "tag": "button",
   "states": [
    "case/d-every-x-hours"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "6 hours",
+  "cls": "ps-keep",
+  "tag": "span",
+  "states": [
+   "case/d-every-x-hours"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "6 months",
+  "cls": "ps-keep",
+  "tag": "span",
+  "states": [
+   "case/d-alt-days",
+   "case/d-default",
+   "case/d-disable-sheet",
+   "case/d-disabled",
+   "case/d-discard-sheet",
+   "case/d-duration-picker",
+   "case/d-error-dose",
+   "case/d-every-x-hours",
+   "case/d-food-selected",
+   "case/d-header-white",
+   "case/d-inhaler",
+   "case/d-monthly",
+   "case/d-notes-keyboard",
+   "case/d-scrolled",
+   "case/d-sos-on",
+   "case/d-sos-only",
+   "case/d-weekly"
   ]
  },
  {
@@ -3271,6 +3151,7 @@
   "cls": "mock-kbd__key",
   "tag": "div",
   "states": [
+   "case/d-error-other",
    "otp/code-expired",
    "otp/cooldown-reconciling",
    "otp/couldnt-verify",
@@ -3329,11 +3210,13 @@
  },
  {
   "kind": "text",
-  "text": "7",
-  "cls": "",
-  "tag": "div",
+  "text": "7 days",
+  "cls": "ps-keep",
+  "tag": "span",
   "states": [
-   "case/d-error-other"
+   "case/d-cream",
+   "case/d-drops",
+   "case/d-syrup"
   ]
  },
  {
@@ -3353,6 +3236,7 @@
   "cls": "mock-kbd__key",
   "tag": "div",
   "states": [
+   "case/d-error-other",
    "otp/code-expired",
    "otp/cooldown-reconciling",
    "otp/couldnt-verify",
@@ -3396,10 +3280,10 @@
  {
   "kind": "text",
   "text": "8",
-  "cls": "",
-  "tag": "div",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
   "states": [
-   "case/d-error-other"
+   "case/d-duration-picker"
   ]
  },
  {
@@ -3413,10 +3297,20 @@
  },
  {
   "kind": "text",
+  "text": "8 puffs",
+  "cls": "ps-keep",
+  "tag": "span",
+  "states": [
+   "case/d-inhaler"
+  ]
+ },
+ {
+  "kind": "text",
   "text": "9",
   "cls": "mock-kbd__key",
   "tag": "div",
   "states": [
+   "case/d-error-other",
    "otp/code-expired",
    "otp/cooldown-reconciling",
    "otp/couldnt-verify",
@@ -3443,10 +3337,10 @@
  {
   "kind": "text",
   "text": "9",
-  "cls": "",
-  "tag": "div",
+  "cls": "tm-chip tm-chip--lg",
+  "tag": "button",
   "states": [
-   "case/d-error-other"
+   "case/d-duration-picker"
   ]
  },
  {
@@ -3860,7 +3754,7 @@
  },
  {
   "kind": "text",
-  "text": "Apply 0-1-1 · 7 days",
+  "text": "Apply 0-1-1 ·",
   "cls": "",
   "tag": "div",
   "states": [
@@ -3965,7 +3859,7 @@
  {
   "kind": "text",
   "text": "Availability ended",
-  "cls": "entry-band__title tm-text-title-lg",
+  "cls": "entry-band__title",
   "tag": "h1",
   "states": [
    "home/expired-pending"
@@ -3996,7 +3890,7 @@
  {
   "kind": "text",
   "text": "Back to Home",
-  "cls": "tm-btn tm-btn--lg tm-btn--block tm-btn--primary",
+  "cls": "tm-btn tm-btn--primary tm-btn--lg tm-btn--block",
   "tag": "button",
   "states": [
    "case/e-availability-ended"
@@ -4005,7 +3899,7 @@
  {
   "kind": "text",
   "text": "Back to Home",
-  "cls": "tm-btn tm-btn--lg tm-btn--block tm-btn--quiet",
+  "cls": "tm-btn tm-btn--quiet tm-btn--lg tm-btn--block",
   "tag": "button",
   "states": [
    "case/e-callback-scheduled",
@@ -4129,7 +4023,7 @@
  {
   "kind": "text",
   "text": "Call again",
-  "cls": "tm-btn tm-btn--lg tm-btn--primary tm-btn--block concept-new",
+  "cls": "tm-btn tm-btn--primary tm-btn--lg tm-btn--block",
   "tag": "button",
   "states": [
    "case/c-callback",
@@ -4153,7 +4047,7 @@
  {
   "kind": "text",
   "text": "Call ended",
-  "cls": "tm-btn tm-btn--lg tm-btn--secondary",
+  "cls": "tm-btn tm-btn--secondary tm-btn--lg",
   "tag": "button",
   "states": [
    "case/s7b-still-on-call"
@@ -4162,8 +4056,8 @@
  {
   "kind": "text",
   "text": "Call patient",
-  "cls": "",
-  "tag": "span",
+  "cls": "tm-btn tm-btn--primary tm-btn--lg tm-btn--block",
+  "tag": "button",
   "states": [
    "case/a-leave-sheet",
    "case/a-long-content",
@@ -4184,12 +4078,14 @@
    "case/d-drops",
    "case/d-duration-picker",
    "case/d-error-dose",
+   "case/d-error-other",
    "case/d-every-x-hours",
    "case/d-food-selected",
    "case/d-header-white",
    "case/d-inhaler",
    "case/d-injection-default",
    "case/d-monthly",
+   "case/d-notes-keyboard",
    "case/d-rx-failed",
    "case/d-scrolled",
    "case/d-sos-on",
@@ -4219,7 +4115,7 @@
  {
   "kind": "text",
   "text": "Callback",
-  "cls": "tm-btn tm-btn--lg tm-btn--secondary",
+  "cls": "tm-btn tm-btn--secondary tm-btn--lg",
   "tag": "button",
   "states": [
    "case/c-callback",
@@ -4234,15 +4130,6 @@
  },
  {
   "kind": "text",
-  "text": "Callback",
-  "cls": "",
-  "tag": "span",
-  "states": [
-   "case/t08a-valid-cat4"
-  ]
- },
- {
-  "kind": "text",
   "text": "Callback today at 3:00 PM",
   "cls": "tm-status-card__title",
   "tag": "div",
@@ -4253,7 +4140,7 @@
  {
   "kind": "text",
   "text": "Calling Ramesh…",
-  "cls": "tm-status-line concept-new",
+  "cls": "tm-status-line",
   "tag": "div",
   "states": [
    "case/a-back-blocked",
@@ -4264,7 +4151,7 @@
  {
   "kind": "text",
   "text": "Calling Sunita…",
-  "cls": "tm-status-line concept-new",
+  "cls": "tm-status-line",
   "tag": "div",
   "states": [
    "case/g0-calling-pilot",
@@ -4352,7 +4239,7 @@
  {
   "kind": "text",
   "text": "Checking for a Health Advisor…",
-  "cls": "tm-status-line concept-new",
+  "cls": "tm-status-line case-status--slot",
   "tag": "div",
   "states": [
    "case/g2-checking-ha"
@@ -4498,7 +4385,7 @@
  {
   "kind": "text",
   "text": "Confirm & forward",
-  "cls": "tm-btn tm-btn--lg tm-btn--primary tm-btn--block concept-new",
+  "cls": "tm-btn tm-btn--primary tm-btn--lg tm-btn--block",
   "tag": "button",
   "states": [
    "case/s7d-result-missing-pilot",
@@ -4511,10 +4398,9 @@
  {
   "kind": "text",
   "text": "Confirm & transfer",
-  "cls": "tm-btn tm-btn--lg tm-btn--primary tm-btn--block concept-new",
+  "cls": "tm-btn tm-btn--primary tm-btn--lg tm-btn--block",
   "tag": "button",
   "states": [
-   "case/c-skip-ha",
    "case/t12-transfer-ready"
   ]
  },
@@ -4533,29 +4419,22 @@
  {
   "kind": "text",
   "text": "Confirm prescription",
-  "cls": "",
-  "tag": "span",
+  "cls": "tm-btn tm-btn--primary tm-btn--lg tm-btn--block",
+  "tag": "button",
   "states": [
    "case/a-confirm-failed",
+   "case/c-skip-ha",
+   "case/g1-generic-confirm",
+   "case/s7d-result-missing",
+   "case/s7d-unavailable-sheet",
    "case/t08a-valid-cat4",
    "case/t08c-confirm-blocked"
   ]
  },
  {
   "kind": "text",
-  "text": "Confirm prescription",
-  "cls": "tm-btn tm-btn--lg tm-btn--primary tm-btn--block concept-new",
-  "tag": "button",
-  "states": [
-   "case/g1-generic-confirm",
-   "case/s7d-result-missing",
-   "case/s7d-unavailable-sheet"
-  ]
- },
- {
-  "kind": "text",
   "text": "Confirming…",
-  "cls": "tm-btn tm-btn--lg tm-btn--primary tm-btn--block tm-btn--busy",
+  "cls": "tm-btn tm-btn--primary tm-btn--lg tm-btn--block tm-btn--busy",
   "tag": "button",
   "states": [
    "case/a-confirm-busy"
@@ -4619,15 +4498,6 @@
  },
  {
   "kind": "text",
-  "text": "Couldn’t load the prescription.",
-  "cls": "",
-  "tag": "span",
-  "states": [
-   "case/d-rx-failed"
-  ]
- },
- {
-  "kind": "text",
   "text": "Couldn’t load this case.",
   "cls": "",
   "tag": "span",
@@ -4664,7 +4534,7 @@
  },
  {
   "kind": "text",
-  "text": "Couldn’t schedule the callback. Your time is kept.",
+  "text": "Couldn’t schedule the callback. Your chosen time is kept.",
   "cls": "",
   "tag": "span",
   "states": [
@@ -4893,9 +4763,10 @@
  {
   "kind": "text",
   "text": "Disabled",
-  "cls": "tm-tag tm-tag--md tm-tag--fixed tm-tag--neutral",
+  "cls": "tm-tag tm-tag--md tm-tag--neutral tm-tag--fixed",
   "tag": "span",
   "states": [
+   "case/d-disabled",
    "case/s-medicine-disabled"
   ]
  },
@@ -5211,11 +5082,7 @@
    "case/g3b-forwarded",
    "case/s7a-calling",
    "case/s7b-still-on-call",
-   "case/s7d-result-missing",
-   "case/s7d-result-missing-pilot",
-   "case/s7d-unavailable-sheet",
    "case/t02-calling",
-   "case/t05-result-wait",
    "case/t11-calling-transfer",
    "case/t12-transfer-ready",
    "case/t13-connecting-ha",
@@ -5226,7 +5093,7 @@
  {
   "kind": "text",
   "text": "Ending availability",
-  "cls": "entry-band__title tm-text-title-lg",
+  "cls": "entry-band__title",
   "tag": "h1",
   "states": [
    "home/stop-pending"
@@ -5385,6 +5252,15 @@
  },
  {
   "kind": "text",
+  "text": "Fever since 2 days",
+  "cls": "",
+  "tag": "textarea",
+  "states": [
+   "case/a-notes-typing"
+  ]
+ },
+ {
+  "kind": "text",
   "text": "Finish this case first.",
   "cls": "tm-toast",
   "tag": "div",
@@ -5467,7 +5343,7 @@
  {
   "kind": "text",
   "text": "Getting call result…",
-  "cls": "tm-status-line concept-new",
+  "cls": "tm-status-line",
   "tag": "div",
   "states": [
    "case/t05-result-wait",
@@ -5495,7 +5371,7 @@
  {
   "kind": "text",
   "text": "Hello, Dr. Kunal",
-  "cls": "entry-band__title tm-text-title-lg",
+  "cls": "entry-band__title",
   "tag": "h1",
   "states": [
    "unlock/cancelled",
@@ -6293,7 +6169,7 @@
  },
  {
   "kind": "text",
-  "text": "Once a month · 3 months",
+  "text": "Once a month ·",
   "cls": "",
   "tag": "div",
   "states": [
@@ -6768,7 +6644,6 @@
    "case/d-cream",
    "case/d-default",
    "case/d-disable-sheet",
-   "case/d-disabled",
    "case/d-discard-sheet",
    "case/d-drops",
    "case/d-duration-picker",
@@ -6862,10 +6737,13 @@
    "home/end-confirmation",
    "home/expired-pending",
    "home/idle-expired",
+   "home/logout-confirm",
    "home/manually-ended",
    "home/near-expiry",
    "home/no-cases",
    "home/offline",
+   "home/profile",
+   "home/profile-case-open",
    "home/request-failed",
    "home/requesting",
    "home/stop-pending",
@@ -7387,16 +7265,8 @@
   "tag": "button",
   "states": [
    "case/a-leave-sheet",
+   "case/a-no-medicines",
    "case/s7e-leave-sheet"
-  ]
- },
- {
-  "kind": "text",
-  "text": "Release case",
-  "cls": "tm-btn tm-btn--lg tm-btn--primary tm-btn--block concept-new",
-  "tag": "button",
-  "states": [
-   "case/a-no-medicines"
   ]
  },
  {
@@ -7460,7 +7330,7 @@
  {
   "kind": "text",
   "text": "Request next case",
-  "cls": "tm-btn tm-btn--lg tm-btn--primary tm-btn--block",
+  "cls": "tm-btn tm-btn--primary tm-btn--lg tm-btn--block",
   "tag": "button",
   "states": [
    "case/e-callback-scheduled",
@@ -7583,7 +7453,7 @@
   "kind": "text",
   "text": "Select reason",
   "cls": "tm-sheet__label",
-  "tag": "p",
+  "tag": "div",
   "states": [
    "case/c-skip-ha",
    "case/d-disable-sheet",
@@ -7719,7 +7589,7 @@
  {
   "kind": "text",
   "text": "Skip HA",
-  "cls": "tm-btn tm-btn--lg tm-btn--secondary",
+  "cls": "tm-btn tm-btn--secondary tm-btn--lg",
   "tag": "button",
   "states": [
    "case/c-skip-ha",
@@ -7736,7 +7606,7 @@
  {
   "kind": "text",
   "text": "Skip OTPs next time",
-  "cls": "entry-band__title tm-text-title-lg",
+  "cls": "entry-band__title",
   "tag": "h1",
   "states": [
    "offer/enable-failed",
@@ -7796,7 +7666,7 @@
  {
   "kind": "text",
   "text": "Start taking cases",
-  "cls": "entry-band__title tm-text-title-lg",
+  "cls": "entry-band__title",
   "tag": "h1",
   "states": [
    "home/idle-expired",
@@ -7829,7 +7699,7 @@
  {
   "kind": "text",
   "text": "Still talking",
-  "cls": "tm-btn tm-btn--lg tm-btn--secondary",
+  "cls": "tm-btn tm-btn--secondary tm-btn--lg",
   "tag": "button",
   "states": [
    "case/s7b-still-on-call"
@@ -7892,6 +7762,15 @@
    "case/d-scrolled",
    "case/d-sos-on",
    "case/d-sos-only"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Take after dinner",
+  "cls": "",
+  "tag": "textarea",
+  "states": [
+   "case/d-discard-sheet"
   ]
  },
  {
@@ -8104,7 +7983,7 @@
  {
   "kind": "text",
   "text": "Transferring…",
-  "cls": "tm-btn tm-btn--lg tm-btn--primary tm-btn--block tm-btn--busy concept-new",
+  "cls": "tm-btn tm-btn--primary tm-btn--lg tm-btn--block tm-btn--busy",
   "tag": "button",
   "states": [
    "case/t13-connecting-ha"
@@ -8137,11 +8016,10 @@
  {
   "kind": "text",
   "text": "Try again",
-  "cls": "tm-btn tm-btn--primary tm-btn--lg tm-btn--block concept-new",
+  "cls": "tm-btn tm-btn--primary tm-btn--lg tm-btn--block",
   "tag": "button",
   "states": [
-   "case/a-load-failed",
-   "case/d-rx-failed"
+   "case/a-load-failed"
   ]
  },
  {
@@ -8192,7 +8070,7 @@
  {
   "kind": "text",
   "text": "Unavailable",
-  "cls": "tm-btn tm-btn--lg tm-btn--destructive",
+  "cls": "tm-btn tm-btn--destructive tm-btn--lg",
   "tag": "button",
   "states": [
    "case/s7d-result-missing",
@@ -8359,7 +8237,7 @@
  {
   "kind": "text",
   "text": "Verify your number",
-  "cls": "entry-band__title tm-text-title-lg",
+  "cls": "entry-band__title",
   "tag": "h1",
   "states": [
    "otp/code-expired",
@@ -8579,7 +8457,7 @@
  {
   "kind": "text",
   "text": "Waiting for the call to end…",
-  "cls": "tm-status-line concept-new",
+  "cls": "tm-status-line",
   "tag": "div",
   "states": [
    "case/g3b-forwarded",
@@ -8628,7 +8506,7 @@
  {
   "kind": "text",
   "text": "Welcome, Doctor",
-  "cls": "entry-band__title tm-text-title-lg",
+  "cls": "entry-band__title",
   "tag": "h1",
   "states": [
    "sign-in/couldnt-send",
@@ -8718,7 +8596,7 @@
  {
   "kind": "text",
   "text": "You can take cases",
-  "cls": "entry-band__title tm-text-title-lg",
+  "cls": "entry-band__title",
   "tag": "h1",
   "states": [
    "home/active",
@@ -8797,6 +8675,15 @@
   "tag": "span",
   "states": [
    "home/idle-expired"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "Your availability has ended.",
+  "cls": "bar-caption",
+  "tag": "p",
+  "states": [
+   "case/e-availability-ended"
   ]
  },
  {
@@ -8918,7 +8805,7 @@
  {
   "kind": "text",
   "text": "a",
-  "cls": "",
+  "cls": "mock-kbd__key",
   "tag": "div",
   "states": [
    "case/a-notes-typing",
@@ -8949,8 +8836,18 @@
  },
  {
   "kind": "text",
-  "text": "b",
+  "text": "as needed (max",
   "cls": "",
+  "tag": "div",
+  "states": [
+   "case/d-inhaler",
+   "case/d-sos-only"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "b",
+  "cls": "mock-kbd__key",
   "tag": "div",
   "states": [
    "case/a-notes-typing",
@@ -8960,7 +8857,7 @@
  {
   "kind": "text",
   "text": "c",
-  "cls": "",
+  "cls": "mock-kbd__key",
   "tag": "div",
   "states": [
    "case/a-notes-typing",
@@ -8981,7 +8878,7 @@
  {
   "kind": "text",
   "text": "d",
-  "cls": "",
+  "cls": "mock-kbd__key",
   "tag": "div",
   "states": [
    "case/a-notes-typing",
@@ -8991,7 +8888,7 @@
  {
   "kind": "text",
   "text": "e",
-  "cls": "",
+  "cls": "mock-kbd__key",
   "tag": "div",
   "states": [
    "case/a-notes-typing",
@@ -9000,8 +8897,17 @@
  },
  {
   "kind": "text",
-  "text": "f",
+  "text": "every",
   "cls": "",
+  "tag": "div",
+  "states": [
+   "case/d-every-x-hours"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "f",
+  "cls": "mock-kbd__key",
   "tag": "div",
   "states": [
    "case/a-notes-typing",
@@ -9011,7 +8917,7 @@
  {
   "kind": "text",
   "text": "g",
-  "cls": "",
+  "cls": "mock-kbd__key",
   "tag": "div",
   "states": [
    "case/a-notes-typing",
@@ -9021,7 +8927,7 @@
  {
   "kind": "text",
   "text": "h",
-  "cls": "",
+  "cls": "mock-kbd__key",
   "tag": "div",
   "states": [
    "case/a-notes-typing",
@@ -9031,7 +8937,7 @@
  {
   "kind": "text",
   "text": "i",
-  "cls": "",
+  "cls": "mock-kbd__key",
   "tag": "div",
   "states": [
    "case/a-notes-typing",
@@ -9041,7 +8947,7 @@
  {
   "kind": "text",
   "text": "j",
-  "cls": "",
+  "cls": "mock-kbd__key",
   "tag": "div",
   "states": [
    "case/a-notes-typing",
@@ -9051,7 +8957,7 @@
  {
   "kind": "text",
   "text": "k",
-  "cls": "",
+  "cls": "mock-kbd__key",
   "tag": "div",
   "states": [
    "case/a-notes-typing",
@@ -9061,7 +8967,7 @@
  {
   "kind": "text",
   "text": "l",
-  "cls": "",
+  "cls": "mock-kbd__key",
   "tag": "div",
   "states": [
    "case/a-notes-typing",
@@ -9071,7 +8977,7 @@
  {
   "kind": "text",
   "text": "m",
-  "cls": "",
+  "cls": "mock-kbd__key",
   "tag": "div",
   "states": [
    "case/a-notes-typing",
@@ -9081,7 +8987,7 @@
  {
   "kind": "text",
   "text": "n",
-  "cls": "",
+  "cls": "mock-kbd__key",
   "tag": "div",
   "states": [
    "case/a-notes-typing",
@@ -9091,7 +8997,7 @@
  {
   "kind": "text",
   "text": "o",
-  "cls": "",
+  "cls": "mock-kbd__key",
   "tag": "div",
   "states": [
    "case/a-notes-typing",
@@ -9100,8 +9006,36 @@
  },
  {
   "kind": "text",
-  "text": "p",
+  "text": "on alternate days ·",
   "cls": "",
+  "tag": "div",
+  "states": [
+   "case/d-alt-days"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "once a month ·",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "case/d-injection-default",
+   "case/d-monthly"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "once a week ·",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "case/d-weekly"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "p",
+  "cls": "mock-kbd__key",
   "tag": "div",
   "states": [
    "case/a-notes-typing",
@@ -9111,7 +9045,7 @@
  {
   "kind": "text",
   "text": "q",
-  "cls": "",
+  "cls": "mock-kbd__key",
   "tag": "div",
   "states": [
    "case/a-notes-typing",
@@ -9121,7 +9055,7 @@
  {
   "kind": "text",
   "text": "r",
-  "cls": "",
+  "cls": "mock-kbd__key",
   "tag": "div",
   "states": [
    "case/a-notes-typing",
@@ -9131,7 +9065,7 @@
  {
   "kind": "text",
   "text": "return",
-  "cls": "",
+  "cls": "mock-kbd__key mock-kbd__key--w2",
   "tag": "div",
   "states": [
    "case/a-notes-typing",
@@ -9141,7 +9075,7 @@
  {
   "kind": "text",
   "text": "s",
-  "cls": "",
+  "cls": "mock-kbd__key",
   "tag": "div",
   "states": [
    "case/a-notes-typing",
@@ -9151,7 +9085,7 @@
  {
   "kind": "text",
   "text": "space",
-  "cls": "",
+  "cls": "mock-kbd__key mock-kbd__key--w6",
   "tag": "div",
   "states": [
    "case/a-notes-typing",
@@ -9161,7 +9095,7 @@
  {
   "kind": "text",
   "text": "t",
-  "cls": "",
+  "cls": "mock-kbd__key",
   "tag": "div",
   "states": [
    "case/a-notes-typing",
@@ -9171,7 +9105,7 @@
  {
   "kind": "text",
   "text": "u",
-  "cls": "",
+  "cls": "mock-kbd__key",
   "tag": "div",
   "states": [
    "case/a-notes-typing",
@@ -9190,7 +9124,7 @@
  {
   "kind": "text",
   "text": "v",
-  "cls": "",
+  "cls": "mock-kbd__key",
   "tag": "div",
   "states": [
    "case/a-notes-typing",
@@ -9200,7 +9134,7 @@
  {
   "kind": "text",
   "text": "w",
-  "cls": "",
+  "cls": "mock-kbd__key",
   "tag": "div",
   "states": [
    "case/a-notes-typing",
@@ -9210,7 +9144,7 @@
  {
   "kind": "text",
   "text": "x",
-  "cls": "",
+  "cls": "mock-kbd__key",
   "tag": "div",
   "states": [
    "case/a-notes-typing",
@@ -9220,7 +9154,7 @@
  {
   "kind": "text",
   "text": "y",
-  "cls": "",
+  "cls": "mock-kbd__key",
   "tag": "div",
   "states": [
    "case/a-notes-typing",
@@ -9230,7 +9164,7 @@
  {
   "kind": "text",
   "text": "z",
-  "cls": "",
+  "cls": "mock-kbd__key",
   "tag": "div",
   "states": [
    "case/a-notes-typing",
@@ -9264,6 +9198,35 @@
  },
  {
   "kind": "text",
+  "text": "·",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "case/d-drops",
+   "case/d-every-x-hours",
+   "case/d-syrup"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "· Before food",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "case/d-food-selected"
+  ]
+ },
+ {
+  "kind": "text",
+  "text": "· Take after dinner",
+  "cls": "",
+  "tag": "div",
+  "states": [
+   "case/d-discard-sheet"
+  ]
+ },
+ {
+  "kind": "text",
   "text": "½",
   "cls": "tm-chip tm-chip--lg",
   "tag": "button",
@@ -9291,9 +9254,11 @@
   "cls": "pcb-text",
   "tag": "div",
   "states": [
+   "case/c-skip-ha",
    "case/g0-calling-pilot",
    "case/g1-generic-confirm",
-   "case/g2-checking-ha"
+   "case/g2-checking-ha",
+   "case/t13-connecting-ha"
   ]
  },
  {
@@ -9302,10 +9267,8 @@
   "cls": "pcb-text",
   "tag": "div",
   "states": [
-   "case/c-skip-ha",
    "case/t11-calling-transfer",
-   "case/t12-transfer-ready",
-   "case/t13-connecting-ha"
+   "case/t12-transfer-ready"
   ]
  },
  {
@@ -9356,7 +9319,7 @@
  {
   "kind": "text",
   "text": "⇧",
-  "cls": "",
+  "cls": "mock-kbd__key",
   "tag": "div",
   "states": [
    "case/a-notes-typing",
@@ -9369,6 +9332,7 @@
   "cls": "mock-kbd__key",
   "tag": "div",
   "states": [
+   "case/d-error-other",
    "otp/code-expired",
    "otp/cooldown-reconciling",
    "otp/couldnt-verify",
@@ -9395,11 +9359,10 @@
  {
   "kind": "text",
   "text": "⌫",
-  "cls": "",
+  "cls": "mock-kbd__key mock-kbd__key--w2",
   "tag": "div",
   "states": [
    "case/a-notes-typing",
-   "case/d-error-other",
    "case/d-notes-keyboard"
   ]
  }

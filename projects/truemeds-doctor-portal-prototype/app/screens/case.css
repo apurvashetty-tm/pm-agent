@@ -52,7 +52,7 @@
 .case-screen.is-closed .case-scroll { padding-bottom: calc(var(--tm-space-3xl) * 3); }
 .case-bar #next-order-btn > .tm-icon { margin-left: var(--tm-space-xs); }
 
-/* Toast over the bar ("Finish this case first…", a-back-blocked): 8 above the bar's top edge, never over the button. */
+/* Toast over the bar ("Finish this case first…", a-back-blocked): 16 above the bar (task-gaps.css), never over the button. */
 .case-toast { position: absolute; left: var(--tm-space-xl); right: var(--tm-space-xl); bottom: calc(100% + var(--tm-space-sm)); z-index: var(--tm-layer-toast); display: flex; justify-content: center; pointer-events: none; }   /* raw-ok: 100% = the bar's own height (geometry) */
 .case-toast > .tm-toast { position: relative; left: auto; right: auto; bottom: auto; transform: none; text-align: center; }
 
@@ -86,7 +86,7 @@
 .case-bar .case-pair--single { grid-template-columns: minmax(0, 1fr); }
 /* Skip HA sheet (case.html #sheet-skip-ha): long reason titles wrap balanced. */
 #sheet-skip-ha .tm-option__title { text-wrap: balance; }
-/* B2 "Checking for a Health Advisor…": the status line sits centred in the main button's slot (B-02), Skip HA greyed under it. */
+/* B2 "Checking for a Health Advisor…": the status line sits in the main button's slot, 8 above Skip HA (task-gaps.css), Skip HA greyed under it. */
 .case-bar .case-status--slot { min-height: var(--tm-control-height-lg); }
 
 /* Schedule callback sheet (app-logic §7), lifted from case.html #sheet-callback: Date / Time labels, chips, field error, notice. */
@@ -94,7 +94,7 @@
 #sheet-callback .sheet-section-label:first-child { margin-top: 0; }
 #callback-error-wrap { margin-top: var(--tm-space-sm); }   /* the helper sits 8 under the Time grid (D-54 D11) */
 #callback-error-wrap > #callback-error { margin: 0; color: var(--tm-content-error); }
-#sheet-callback .callback-notice { margin: var(--tm-space-lg) 0 0; }   /* the save failure / refusal between the grid and the button */
+#sheet-callback .callback-notice { margin: var(--tm-space-lg) 0 0; }   /* superseded in task-gaps.css: pinned with the button */
 
 /* Outcome card with a line under the title (7f Waiting for the call record): icon at the top, the line 4 under the title. */
 #success-toast.concept-has-text { align-items: flex-start; }

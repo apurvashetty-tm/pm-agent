@@ -59,8 +59,9 @@ function picker(target) {
     + `<div class="col-heads" aria-hidden="true"><span>${M('home.hours')}</span><span>${M('home.minutes')}</span></div>`
     + `<div class="columns"><div class="wheel-band" aria-hidden="true"></div>${wheel(M('home.hours'), 'h', hoursFor(max), hours)}${wheel(M('home.minutes'), 'm', minutesFor(hours, max), minutes)}</div></div></div>`;
 }
-function rxRow(rx) {
-  return `<button class="srow srow--link" id="home-rx" type="button">${icon('prescription', 'srow__icon')}<span class="srow__txt"><span class="srow__label">${M('home.rxToday')}</span><span class="srow__line"><span class="tm-value-display srow__value">${rx}</span></span></span>${icon('chevron-right', 'srow__chev')}</button>`;
+function rxRow(rx, { link = true, inline = false } = {}) {
+  const tag = link ? 'button' : 'div';
+  return `<${tag} class="srow${link ? ' srow--link' : ''}${inline ? ' srow--inline' : ''}" ${link ? 'id="home-rx" type="button"' : 'id="profile-rx"'}>${icon('prescription', 'srow__icon')}<span class="srow__txt"><span class="srow__label">${M('home.rxToday')}</span><span class="srow__line"><span class="${inline ? '' : 'tm-value-display '}srow__value">${rx}</span></span></span>${link ? icon('chevron-right', 'srow__chev') : ''}</${tag}>`;
 }
 // Available: one tm-card, two rows (Time remaining + Add time, always shown; Prescriptions written today → Profile).
 function statusCard() {
@@ -126,7 +127,7 @@ function homePage() {
   const actions = [['bell', 'home.notifications'], ['help-circle', 'common.help'], ['user-circle', 'home.profile']].map(([i, l]) => `<button class="tm-btn tm-btn--quiet tm-btn--icon" type="button" aria-label="${M(l)}">${icon(i)}</button>`).join('');
   return `<div class="home-bg"${f.sheet ? ' inert=""' : ''}><div class="entry-band band"><div class="entry-band__row"><img class="entry-band__logo login-logo logo" src="../../brand/truemeds-for-doctors.svg" alt="${M('signin.logoAlt')}"><div class="entry-band__actions">${actions}</div></div>`
     + `<h1 class="entry-band__title">${M(title)}</h1><p class="entry-band__sub sub">${M(sub)}</p></div>`
-    + `<div class="entry-panel panel">${topNotice()}<div class="scroll">${setup ? (f.ended && rx > 0 ? `<div class="tm-card home-card">${rxRow(rx)}</div>` : '') + picker('duration') : statusCard()}</div>${footer()}</div></div>`;
+    + `<div class="entry-panel panel">${topNotice()}<div class="scroll">${setup ? (f.ended && rx > 0 ? `<div class="tm-card home-card">${rxRow(rx, { inline: true })}</div>` : '') + picker('duration') : statusCard()}</div>${footer()}</div></div>`;
 }
 // D-70 Profile page (out of this round's redesign; kept as approved). The log-out sheet opens over it.
 function profilePage() {
@@ -134,6 +135,7 @@ function profilePage() {
   const logout = f.caseOpen ? notice('neutral', M('profile.logoutBlocked')) : btn(M('profile.logout'), 'tm-btn--destructive tm-btn--lg tm-btn--block', ' data-logout=""');
   return `<div class="profile-page"${f.sheet ? ' inert=""' : ''}><header class="tm-header-task profile-header"><div class="tm-header-task__row"><button class="tm-btn tm-btn--quiet tm-btn--icon" id="profile-back" type="button" aria-label="${M('common.back')}">${icon('arrow-left')}</button><h1 class="tm-header-task__title">${M('profile.title')}</h1></div></header>`
     + `<div class="profile-body"><div class="tm-card profile-identity"><div class="profile-avatar" aria-hidden="true">KW</div><div><p class="pt-t">${M('profile.doctorName', { name: 'Kunal Wani' })}</p><p class="pt-d">General Physician</p></div></div>`
+    + `<div class="tm-card home-card">${rxRow(3, { link: false })}</div>`
     + `<div class="tm-card profile-earnings"><p class="profile-label">${M('profile.earnings')}</p><div class="profile-earnings-row"><div><p class="pt-d">${M('profile.earned')}</p><p class="pt-t">${M('profile.amount', { amount: (3 * 20).toFixed(2) })}</p></div><div><p class="pt-d">${M('profile.incentive')}</p><p class="pt-t">${M('profile.amount', { amount: (0).toFixed(2) })}</p></div></div></div>`
     + `<div class="tm-card profile-rows"><button class="profile-row" type="button"><span class="profile-row-label">${icon('book')}${M('profile.userManual')}</span>${icon('chevron-right')}</button><label class="profile-row"><span class="profile-row-label">${icon('fingerprint')}${M('profile.fasterSignIn')}</span><input class="tm-toggle" type="checkbox" role="switch" aria-checked="true" aria-label="${M('profile.fasterSignIn')}" checked=""></label></div>`
     + `<div class="profile-logout">${logout}</div></div></div>`;

@@ -25,7 +25,6 @@
 .ps-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--tm-space-sm); width: 100%; box-sizing: border-box; }   /* raw-ok: 100% fill (geometry) */
 #ps-body .ps-section > .ps-grid { width: calc(100% - var(--tm-space-xl) - var(--tm-space-md)); margin-left: 0; }   /* raw-ok: 100% less the M / A / N key column (geometry) */
 #ps-body .ps-sub .ps-section > .ps-grid { width: calc(100% - var(--tm-space-xl) - var(--tm-space-md) + var(--tm-border-width-thick) + var(--tm-space-md)); }   /* raw-ok: 100% less the key column, plus the SOS inset (geometry) */
-.ps-dur-panel > .ps-grid { width: calc(100% - var(--tm-space-md) + var(--tm-space-2xs)); margin-left: calc(-1 * var(--tm-space-md)); }   /* raw-ok: B-09 inset (geometry) */
 .ps-slots { display: flex; flex-direction: column; gap: var(--tm-space-sm); }
 .ps-slot { display: grid; grid-template-columns: var(--tm-space-xl) 1fr; align-items: center; gap: var(--tm-space-md); }
 .ps-slot-key { text-align: left; font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-secondary); }   /* B-24 */
@@ -34,15 +33,17 @@
 .ps-dose-error { margin: var(--tm-space-xs) 0 0; color: var(--tm-feedback-error-content); }
 .ps-sub { margin-top: var(--tm-space-md); padding-left: var(--tm-space-md); border-left: var(--tm-border-width-thick) solid var(--tm-border-subtle); display: flex; flex-direction: column; }
 .ps-unit { font-size: var(--tm-font-size-body-md); color: var(--tm-content-secondary); }
-/* Duration: a dropdown-style field that opens in place (B-09: chips inside the field text's inset, 8 between the rows). */
+/* Duration: a dropdown-style field that opens in place (D-111: chips on the value's edge, 12 in; value, numbers and units 16 apart). */
 .ps-dur-field { background: var(--tm-surface-primary); border: var(--tm-border-width-default) solid var(--tm-border-default); border-radius: var(--tm-radius-md); }
 .ps-dur-field.is-open { border-color: var(--tm-border-focus); }
 .ps-dur-toggle { display: flex; align-items: center; justify-content: space-between; gap: var(--tm-space-md); width: 100%; text-align: left; padding: var(--tm-space-md); border: 0; border-radius: var(--tm-radius-md); background: none; font: inherit; color: inherit; cursor: pointer; }   /* raw-ok: 100% fill (geometry) */
 .ps-dur-toggle .tm-icon { color: var(--tm-content-secondary); flex-shrink: 0; }
-.ps-dur-panel { padding: 0 var(--tm-space-md) var(--tm-space-md); }
+.ps-dur-panel { padding: var(--tm-space-xs) var(--tm-space-md) var(--tm-space-md); }
 .ps-dur-val { font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); font-weight: var(--tm-font-weight-semibold); color: var(--tm-content-primary); }
 .ps-dur-val span { display: block; font-size: var(--tm-font-size-body-md); line-height: var(--tm-font-lineheight-sm); font-weight: var(--tm-font-weight-regular); color: var(--tm-content-secondary); }
-.ps-dur-units { margin: var(--tm-space-sm) 0 0 calc(-1 * var(--tm-space-md)); width: calc(100% + var(--tm-space-md)); }   /* raw-ok: B-09 inset (geometry) */
+.ps-dur-panel > .ps-grid { width: calc(100% - var(--tm-space-sm) - var(--tm-space-2xs)); }   /* raw-ok: 100% less 10, the same chip width as the other grids (§9.2, geometry) */
+.ps-dur-panel > .ps-grid > .tm-chip { padding-inline: var(--tm-space-sm); }
+.ps-dur-units { margin: var(--tm-space-lg) 0 0; }
 .reason-list { display: flex; flex-direction: column; }
 #prescribe-screen .tm-field__control textarea { resize: none; min-height: calc(var(--tm-space-2xl) * 2); padding: 0; }
 /* Keyboard rule (D-81): the pinned bar hides while the keyboard is open; the drawn keyboard (capture) leaves room below. */
@@ -50,3 +51,7 @@
 #prescribe-screen.kb-open #ps-body { padding-bottom: 256px; }   /* raw-ok: drawn keyboard height (prototype chrome, shell/mock-keyboard.css) */
 .case-screen.kb-real #ps-actionbar { display: none; }   /* the phone keyboard is open (parts.js watchKeyboard) */
 .ps-keep { white-space: nowrap; }   /* B-12 */
+/* D-25: the "On prescription" band flashes one step deeper when its text changes; none with reduced motion. */
+#ps-rx.is-changed { animation: ps-rx-changed var(--tm-duration-spinner) var(--tm-easing-standard); }
+@keyframes ps-rx-changed { from { background: var(--tm-surface-brand-muted); } to { background: var(--tm-surface-brand-subtle); } }
+@media (prefers-reduced-motion: reduce) { #ps-rx.is-changed { animation: none; } }

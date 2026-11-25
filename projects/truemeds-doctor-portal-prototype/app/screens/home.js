@@ -195,12 +195,12 @@ export function render(host, id, { mode, params = {} }) {
     return actionBar([until, primary, secondary, t], { notice: barNotice(a), cls: "footer" });
   }
   // Prescriptions written today: one card row that opens Profile (D-106). On ended Home it shows above the picker when above 0.
-  function rxRow() {
-    return h("button", { class: "srow srow--link", id: "home-rx", type: "button", onclick: toProfile },
+  function rxRow({ link = true, inline = false } = {}) {
+    return h(link ? "button" : "div", { class: `srow${link ? " srow--link" : ""}${inline ? " srow--inline" : ""}`, id: link ? "home-rx" : "profile-rx", type: link ? "button" : null, onclick: link ? toProfile : null },
       icon("prescription", "srow__icon"),
       h("span", { class: "srow__txt" }, h("span", { class: "srow__label", text: MSG("home.rxToday") }),
-        h("span", { class: "srow__line" }, h("span", { class: "tm-value-display srow__value", text: String(work().rxToday) }))),
-      icon("chevron-right", "srow__chev"));
+        h("span", { class: "srow__line" }, h("span", { class: `${inline ? "" : "tm-value-display "}srow__value`, text: String(work().rxToday) }))),
+      link ? icon("chevron-right", "srow__chev") : null);
   }
   // Available: one tm-card, two rows of one anatomy (grey icon · 16/24 label · L9 value) — Time remaining with + Add time on the
   // value line, always shown (greyed offline; also greyed when less than 15 minutes fit under the cap), and Prescriptions written
@@ -253,7 +253,7 @@ export function render(host, id, { mode, params = {} }) {
       band({ title: MSG(title), subtitle: MSG(sub), actions, tag: "div" }),
       h("div", { class: "entry-panel panel" }, topNotice(a),
         h("div", { class: "scroll" },
-          setup ? [work().ended && rx > 0 ? h("div", { class: "tm-card home-card" }, rxRow()) : null, picker("duration")] : statusCard(a)),
+          setup ? [work().ended && rx > 0 ? h("div", { class: "tm-card home-card" }, rxRow({ inline: true })) : null, picker("duration")] : statusCard(a)),
         footer(a)));
   }
   function profilePage() {
@@ -274,6 +274,7 @@ export function render(host, id, { mode, params = {} }) {
       h("div", { class: "profile-body" },
         h("div", { class: "tm-card profile-identity" }, h("div", { class: "profile-avatar", "aria-hidden": "true", text: SAMPLE_DOCTOR.initials }),
           h("div", {}, h("p", { class: "pt-t", text: MSG("profile.doctorName", { name: SAMPLE_DOCTOR.fullName }) }), h("p", { class: "pt-d", text: SAMPLE_DOCTOR.role }))),
+        h("div", { class: "tm-card home-card" }, rxRow({ link: false })),   // D-111: Home's row lands on its own number
         h("div", { class: "tm-card profile-earnings" }, h("p", { class: "profile-label", text: MSG("profile.earnings") }),
           h("div", { class: "profile-earnings-row" },
             h("div", {}, h("p", { class: "pt-d", text: MSG("profile.earned") }), h("p", { class: "pt-t", text: MSG("profile.amount", { amount: earned }) })),

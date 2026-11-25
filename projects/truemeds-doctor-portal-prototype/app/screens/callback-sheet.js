@@ -22,8 +22,8 @@ export function callbackSheet(cb, { onDay, onTime, onConfirm, onClose }) {
     h("div", { class: "tm-field tm-field--error", id: "callback-error-wrap" },
       h("div", { id: "callback-error", class: "tm-field__helper callback-error", role: "alert", hidden: !cb.error, text: cb.error ? MSG(cb.error) : "" })),
   ];
-  const confirm = cb.busy ? busyBtn(MSG("callback.confirm"), "tm-btn--primary tm-btn--lg tm-btn--block")
+  const confirm = cb.busy ? busyBtn(MSG("callback.scheduling"), "tm-btn--primary tm-btn--lg tm-btn--block")
     : btn(MSG("callback.confirm"), "tm-btn--primary tm-btn--lg tm-btn--block", onConfirm, { id: "callback-confirm" });
-  return sheet({ title: MSG("callback.title"), body, actions: [confirm], onClose, closeDisabled: cb.busy, id: "sheet-callback",
-    beforeActions: cb.notice ? h("div", { class: "callback-notice" }, notice("error", MSG(cb.notice))) : null });
+  return sheet({ title: MSG("callback.title"), body, onClose, closeDisabled: cb.busy, id: "sheet-callback",
+    actions: [cb.notice ? h("div", { class: "callback-notice" }, notice("error", MSG(cb.notice))) : null, confirm].filter(Boolean) });   // the result notice is pinned with the button, 16 above it (D-111, RULES §9.4)
 }

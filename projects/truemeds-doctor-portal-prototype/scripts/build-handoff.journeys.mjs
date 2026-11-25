@@ -18,12 +18,12 @@ export const JOURNEYS = [
   { key: "returning-unlock", name: "Returning unlock", folder: "returning-unlock", fmap: "## Returning unlock", appLogic: [["## 2. Sign-in", /^- Returning unlock:/, null], ["## 2. Sign-in", /^- Wording follows the phone/, null]],
     code: ["app/screens/returning-unlock.js", "app/screens/returning-unlock.css", "app/screens/band.js", "app/screens/band.css"], settings: ["returningUnlockFallbackAfter"], rules: [] },
   { key: "home", name: "Home", folder: "home", fmap: "## Availability and Home", appLogic: [["## 3. Home", null, null]],
-    code: ["app/screens/home.js", "app/screens/home.css", "app/screens/band.js", "app/screens/band.css"], settings: ["nearExpiryWarning", "availabilityMinimum", "availabilityStep", "availabilityMaximum", "earningsPerConfirmedRx"], rules: [] },
+    code: ["app/screens/home.js", "app/screens/home.css", "app/screens/task-gaps.css", "app/screens/band.js", "app/screens/band.css"], settings: ["nearExpiryWarning", "availabilityMinimum", "availabilityStep", "availabilityMaximum", "earningsPerConfirmedRx"], rules: [] },
   { key: "case", name: "Case page", folder: "case", fmap: ["## Case page exits", "## Case page — states"], appLogic: [["## 4. The case journey", null, null], ["## 5. Calls", null, null], ["## 6. Final buttons", null, null], ["## 7. Callback", null, null], ["## 9. Order details", null, null], ["## 10. Errors", null, null]],
-    code: ["app/screens/case.js", "app/screens/case.css", "app/screens/callback-sheet.js", "app/screens/skip-ha-sheet.js", "app/screens/unavailable-sheet.js", "app/screens/rx-viewer.js", "app/screens/rx-paper.css", "app/screens/parts.js", "app/core/call-engine.js", "app/data/cases.js", "app/data/callback-slots.js"],
+    code: ["app/screens/case.js", "app/screens/case.css", "app/screens/task-gaps.css", "app/screens/callback-sheet.js", "app/screens/skip-ha-sheet.js", "app/screens/unavailable-sheet.js", "app/screens/rx-viewer.js", "app/screens/rx-paper.css", "app/screens/parts.js", "app/core/call-engine.js", "app/data/cases.js", "app/data/callback-slots.js"],
     settings: ["gate", "minCountedCall", "talkWindow", "noResultTimeout", "stillOnCallRepeat", "callRecordWait", "holdRetryGap", "holdRetryAttempts", "pollingInterval", "attemptGap"], rules: [["## 13.", /^\*\*Sheets over the bar/], ["## 13.", /^\*\*Busy states/], ["## 13.", /^\*\*Header edge/]] },
   { key: "prescribe", name: "Prescribe", folder: "prescribe", fmap: "## Prescribe", appLogic: [["## 8. Medicines", null, null], ["## 9. Order details", /^- \*\*Keyboard rule/, /^- \*\*Order details/]],
-    code: ["app/screens/prescribe.js", "app/screens/prescribe.css"], settings: [], rules: [] },
+    code: ["app/screens/prescribe.js", "app/screens/prescribe.css", "app/screens/task-gaps.css"], settings: [], rules: [] },
 ];
 // D-87: launch is Fallback B; version-A-only screens come later. The build draws a placeholder for them.
 export const LATER = { note: "Version A only (Pilot route known at call start). Not in the launch build: launch is Fallback B (D-87). Picture kept for reference; not inspectable." };

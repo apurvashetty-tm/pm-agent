@@ -200,6 +200,95 @@
       }
      ],
      "size": "326×101"
+    },
+    "link · inline": {
+     "seenIn": "home_idle-expired",
+     "styles": [
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "display",
+       "value": "flex",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "align-items",
+       "value": "center",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "gap",
+       "value": "var(--tm-space-md)",
+       "tokens": [
+        {
+         "native": "tokens.space.md",
+         "web": "--tm-space-md",
+         "value": 12
+        }
+       ]
+      },
+      {
+       "property": "width",
+       "value": "100%",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "padding",
+       "value": "var(--tm-space-md) 0",
+       "tokens": [
+        {
+         "native": "tokens.space.md",
+         "web": "--tm-space-md",
+         "value": 12
+        }
+       ],
+       "layout": true
+      },
+      {
+       "property": "background",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "border",
+       "value": "0",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "margin",
+       "value": "0",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "font",
+       "value": "inherit",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "color",
+       "value": "inherit",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "text-align",
+       "value": "left",
+       "tokens": [],
+       "layout": true
+      }
+     ],
+     "size": "326×52"
     }
    }
   },
@@ -387,6 +476,96 @@
      "size": "294×48"
     }
    }
+  },
+  "value": {
+   "states": {
+    "default": {
+     "seenIn": "home_idle-expired",
+     "styles": [
+      {
+       "property": "animation",
+       "value": "none",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "margin",
+       "value": "0",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "font-size",
+       "value": "var(--tm-font-size-title-sm)",
+       "tokens": [
+        {
+         "native": "tokens.font.size.title.sm",
+         "web": "--tm-font-size-title-sm",
+         "value": 20
+        }
+       ]
+      },
+      {
+       "property": "line-height",
+       "value": "var(--tm-font-lineheight-lg)",
+       "tokens": [
+        {
+         "native": "tokens.font.lineHeight.lg",
+         "web": "--tm-font-lineheight-lg",
+         "value": 28
+        }
+       ]
+      },
+      {
+       "property": "font-weight",
+       "value": "var(--tm-font-weight-semibold)",
+       "tokens": [
+        {
+         "native": "tokens.font.weight.semibold",
+         "web": "--tm-font-weight-semibold",
+         "value": "600"
+        }
+       ]
+      },
+      {
+       "property": "color",
+       "value": "inherit",
+       "tokens": [],
+       "layout": true,
+       "inherited": true
+      },
+      {
+       "property": "font-family",
+       "value": "inherit",
+       "tokens": [],
+       "layout": true,
+       "inherited": true
+      },
+      {
+       "property": "letter-spacing",
+       "value": "inherit",
+       "tokens": [],
+       "layout": true,
+       "inherited": true
+      },
+      {
+       "property": "text-align",
+       "value": "inherit",
+       "tokens": [],
+       "layout": true,
+       "inherited": true
+      },
+      {
+       "property": "text-wrap",
+       "value": "inherit",
+       "tokens": [],
+       "layout": true,
+       "inherited": true
+      }
+     ],
+     "size": "12.1×28"
+    }
+   }
   }
  },
  "rules": [
@@ -405,10 +584,13 @@
   "home_end-confirmation",
   "home_expired-pending",
   "home_idle-expired",
+  "home_logout-confirm",
   "home_manually-ended",
   "home_near-expiry",
   "home_no-cases",
   "home_offline",
+  "home_profile",
+  "home_profile-case-open",
   "home_request-failed",
   "home_requesting",
   "home_stop-pending",
@@ -419,9 +601,13 @@
    "container",
    "txt",
    "label",
-   "line"
+   "line",
+   "value"
   ],
   "link": [
+   "container"
+  ],
+  "link · inline": [
    "container"
   ]
  }

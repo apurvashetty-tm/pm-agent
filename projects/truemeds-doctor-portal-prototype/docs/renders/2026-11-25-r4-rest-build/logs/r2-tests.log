@@ -1,0 +1,28 @@
+PASS R2-U1 returning unlock prompts automatically then reaches Home
+PASS R2-U2 cancel stays still; tapping Unlock retries
+PASS R2-U3 automatic failure plus two retries falls back without SMS
+PASS R2-U4 direct unlock pictures never auto-prompt
+PASS R2-S1 default SMS helper
+PASS R2-S2 could not send notice
+PASS R2-S3 Sign up link has 48px hit area and compact text line
+PASS R2-S4 empty, short and invalid-prefix errors
+PASS R2-O1 Change link has 48px hit area inside 20px subtitle
+PASS R2-O2 resend shows registry new-code message
+PASS R2-O3 every OTP picture renders without errors or missing copy
+PASS R2-B1 shared band at both phone sizes
+PASS R2-H1 setup wheel edges and ten-hour timer
+PASS R2-H2 setup labels and changing until caption; no range
+PASS R2-H3 available title and single two-row card with Add time
+PASS R2-H4 offline Add time remains visible and disabled
+PASS R2-H5 add wheel cap, hint and duration formats
+PASS R2-H6 adding maximum selectable time stays below ten hours
+PASS R2-H7 Rx row opens Profile and Back restores available Home
+PASS R2-H8 ended count above picker; fresh setup hides count
+PASS R2-H9 every Home picture has the decided title and valid copy
+PASS R2-H10 end sheet subtitle inside header with eight-pixel gap
+PASS R2-K1 sign-in_default clears phone keyboard at 360
+PASS R2-K2 otp_default clears phone keyboard at 360
+PASS R2-K3 OTP wrong code with keyboard open keeps Verify 16 clear at 360x640
+PASS R2-K4 sign-in error with keyboard open keeps Send OTP 16 clear at 360x640
+PASS R2-K5 sign-in Couldn't send: keyboard reopened keeps Send OTP 16 clear at 360x640
+exit 0

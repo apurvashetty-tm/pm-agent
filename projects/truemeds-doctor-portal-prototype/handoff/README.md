@@ -21,7 +21,7 @@ This folder is everything the app team needs to build the doctor app's screens i
 | `components/` | One spec per building block (`*.json`) and cropped pictures |
 | `screens/` | One file per screen (every element of every state) and the approved pictures |
 | `DECIDED.md`, `OPEN.md` | Product answers, and what is still open |
-| `CHANGES.md` | What changed since the last version |
+| `CHANGES.md`, `changes/` | What changed since the 10 November kit (v1): what to build, exact wording, before / after pictures |
 | `viewer/` | The browser viewer and the downloads |
 | `AGENTS.md`, `CLAUDE.md`, `.claude/` | Instructions for AI tools |
 

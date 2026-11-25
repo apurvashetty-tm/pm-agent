@@ -123,7 +123,7 @@
        "layout": true
       }
      ],
-     "size": "222.3×48"
+     "size": "222.3×41.3"
     }
    }
   },
@@ -195,6 +195,12 @@
        "layout": true
       },
       {
+       "property": "text trim (to the ink)",
+       "value": "trim-both cap text",
+       "tokens": [],
+       "layout": true
+      },
+      {
        "property": "font-family",
        "value": "var(--tm-font)",
        "tokens": [
@@ -207,7 +213,7 @@
        "inherited": true
       }
      ],
-     "size": "222.3×28"
+     "size": "222.3×18.9"
     }
    }
   },
@@ -262,6 +268,17 @@
        "layout": true
       },
       {
+       "property": "margin-top",
+       "value": "var(--tm-space-sm)",
+       "tokens": [
+        {
+         "native": "tokens.space.sm",
+         "web": "--tm-space-sm",
+         "value": 8
+        }
+       ]
+      },
+      {
        "property": "margin",
        "value": "0",
        "tokens": [],
@@ -270,6 +287,12 @@
       {
        "property": "display",
        "value": "block",
+       "tokens": [],
+       "layout": true
+      },
+      {
+       "property": "text trim (to the ink)",
+       "value": "trim-start cap text",
        "tokens": [],
        "layout": true
       },
@@ -286,7 +309,7 @@
        "inherited": true
       }
      ],
-     "size": "222.3×20"
+     "size": "222.3×14.4"
     }
    }
   }

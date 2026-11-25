@@ -108,7 +108,7 @@ Decisions: D-33, D-46, D-47
 
 - After sending, server results show as a notice 16 under the field and 32 above Send OTP (D-108): not registered (with the sign-up route), offline, "Couldn’t send the OTP." (D-109), too many attempts (button counts down "Try again in m:ss"), account inactive (button becomes **Call Doctor Ops**). — *Source: App logic §2*
 - not-registered: neutral notice, icon `info-circle`, copy `signin.notRegistered`, role="status" · offline: warning notice, icon `alert-triangle`, copy `signin.offline`, role="alert" · couldnt-send: error notice, icon `alert-circle`, copy `signin.couldntSend`, role="alert" · too-many-tries: warning notice, icon `clock`, copy `signin.tooMany`, role="alert" · inactive: error notice, icon `alert-circle`, copy `signin.inactive`, role="alert" — *Source: Sign-in screen*
-- **Notice** — Neutral / warning / error (L5); stays until the cause is gone. **Warning** when something blocks the main action or runs on a timer (offline, locks, near expiry); **error** when an action failed; **neutral** only for side information (D-54). Text wraps balanced. **Placement:** a notice that is the **result of an action** sits next to the control that did it — on a screen with a pinned bar, inside the bar above its button, in the band style of §3 (Home "ending soon", setup / add / request failures, the offer's "Couldn't turn on…", the case and calling bar notices); on a screen without a bar, 16 below the field it came from (D-98) or 8 below the button. A notice about **the bar's own action** — the result of the last tap, or why its button is disabled now (offline, "No cases right now") — is also in the bar. A notice about the **screen's general situation** (unlock "isn't available", Home idle-expired, manually ended, expired-pending, stop-pending) stays at the top of the panel, not tied to a button. **Alignment (D-86, 2026-11-03):** the band inside the bar is centred (icon and text as a group, wrapped lines centred, balanced breaks kept); every other notice (top of page, inside sheets, in content) stays left-aligned. — *Source: Design rules 9.5*
+- **Notice** — Neutral / warning / error (L5); stays until the cause is gone. **Warning** when something blocks the main action or runs on a timer (offline, locks, near expiry); **error** when an action failed; **neutral** only for side information (D-54). Text wraps balanced. **Placement:** a notice that is the **result of an action** sits next to the control that did it — on a screen with a pinned bar, inside the bar above its button, in the band style of §3 (Home "ending soon", setup / add / request failures, the offer's "Couldn't turn on…", the case and calling bar notices); on a screen without a bar, 16 below the field it came from (D-98, D-108). A notice about **the bar's own action** — the result of the last tap, or why its button is disabled now (offline, "No cases right now") — is also in the bar. A notice about the **screen's general situation** (unlock "isn't available", Home idle-expired, manually ended, expired-pending, stop-pending) stays at the top of the panel, not tied to a button. **Alignment (D-86, 2026-11-03):** the band inside the bar is centred (icon and text as a group, wrapped lines centred, balanced breaks kept); every other notice (top of page, inside sheets, in content) stays left-aligned. — *Source: Design rules 9.5*
 
 Decisions: D-33, D-54
 
@@ -372,7 +372,7 @@ Decisions: D-48
 ### d26 · How do notices wrap and where do they sit?
 
 - **Notices** wrap balanced, set centrally. — *Source: App logic §10*
-- **Notice** — Neutral / warning / error (L5); stays until the cause is gone. **Warning** when something blocks the main action or runs on a timer (offline, locks, near expiry); **error** when an action failed; **neutral** only for side information (D-54). Text wraps balanced. **Placement:** a notice that is the **result of an action** sits next to the control that did it — on a screen with a pinned bar, inside the bar above its button, in the band style of §3 (Home "ending soon", setup / add / request failures, the offer's "Couldn't turn on…", the case and calling bar notices); on a screen without a bar, 16 below the field it came from (D-98) or 8 below the button. A notice about **the bar's own action** — the result of the last tap, or why its button is disabled now (offline, "No cases right now") — is also in the bar. A notice about the **screen's general situation** (unlock "isn't available", Home idle-expired, manually ended, expired-pending, stop-pending) stays at the top of the panel, not tied to a button. **Alignment (D-86, 2026-11-03):** the band inside the bar is centred (icon and text as a group, wrapped lines centred, balanced breaks kept); every other notice (top of page, inside sheets, in content) stays left-aligned. — *Source: Design rules 9.5*
+- **Notice** — Neutral / warning / error (L5); stays until the cause is gone. **Warning** when something blocks the main action or runs on a timer (offline, locks, near expiry); **error** when an action failed; **neutral** only for side information (D-54). Text wraps balanced. **Placement:** a notice that is the **result of an action** sits next to the control that did it — on a screen with a pinned bar, inside the bar above its button, in the band style of §3 (Home "ending soon", setup / add / request failures, the offer's "Couldn't turn on…", the case and calling bar notices); on a screen without a bar, 16 below the field it came from (D-98, D-108). A notice about **the bar's own action** — the result of the last tap, or why its button is disabled now (offline, "No cases right now") — is also in the bar. A notice about the **screen's general situation** (unlock "isn't available", Home idle-expired, manually ended, expired-pending, stop-pending) stays at the top of the panel, not tied to a button. **Alignment (D-86, 2026-11-03):** the band inside the bar is centred (icon and text as a group, wrapped lines centred, balanced breaks kept); every other notice (top of page, inside sheets, in content) stays left-aligned. — *Source: Design rules 9.5*
 
 Decisions: D-86
 
@@ -685,9 +685,9 @@ Decisions: D-78 (the approved screens and app logic)
 <a id="otp-13"></a>
 ### otp-13 · What is the rule for "OTP (item 4, A-01 to A-03, A-17, A-21)"?
 
-- **OTP.** Terms line centred, "Terms & Conditions" on one line; the waiting text and the Resend code link share one height, so Verify & sign in does not move. — *Source: App logic §13*
+- **OTP.** Terms line centred, "Terms & Conditions" on one line; the waiting text and the Resend code link share one height. A one-line message moves the lines under it down by one line (D-108). — *Source: App logic §13*
 
-Decisions: D-78 (the approved screens and app logic)
+Decisions: D-108
 
 <a id="otp-14"></a>
 ### otp-14 · What does the app show in otp.default, and how does it recover?
@@ -734,7 +734,7 @@ Decisions: D-81
 <a id="otp-20"></a>
 ### otp-20 · What does the app show in otp.resend-available, and how does it recover?
 
-- otp.resend-available: None — "Resend code" brand link, 44pt tap area, under the notice (D-44) — *Source: Feedback state map: otp.resend-available*
+- otp.resend-available: None — "Resend code" brand link, 48 tap area, under the notice (D-44) — *Source: Feedback state map: otp.resend-available*
 
 Decisions: D-44
 
@@ -1243,16 +1243,16 @@ Decisions: D-109
 <a id="home-15"></a>
 ### home-15 · What is the rule for "Window ends during a case"?
 
-- **Window ends during a case:** the case is never interrupted. The ending card then offers only **Back to Home**; Home shows the ended state. — *Source: App logic §3.*
+- **Window ends during a case:** the case is never interrupted. The ending then says "Your availability has ended." in the bar (D-111) and offers only **Back to Home**; Home shows the ended state. — *Source: App logic §3.*
 
-Decisions: D-78 (the approved screens and app logic)
+Decisions: D-111
 
 <a id="home-16"></a>
 ### home-16 · What is the rule for "Prescriptions written today"?
 
-- **Prescriptions written today:** a count only, no earnings. A case counts when its prescription is confirmed. On the available card it opens Profile (D-106). Not on fresh setup; on ended Home (idle-expired, manually ended) it shows as one row above the picker when the count is above 0 (D-106). — *Source: App logic §3.*
+- **Prescriptions written today:** a count only, no earnings. A case counts when its prescription is confirmed. On the available card it opens Profile (D-106). Not on fresh setup; on ended Home (idle-expired, manually ended) it shows as one row above the picker when the count is above 0 (D-106), the number on the label's line so the wheel stays above the bar (D-111). Profile shows the same count, read-only (D-111). — *Source: App logic §3.*
 
-Decisions: D-106
+Decisions: D-106, D-111
 
 <a id="home-17"></a>
 ### home-17 · What is the rule for "Result notices on Home"?
@@ -1264,9 +1264,9 @@ Decisions: D-108
 <a id="home-18"></a>
 ### home-18 · What is the rule for "Checking…"?
 
-- **Checking…** status line in the bar is centred in the button's slot, as on the case page. — *Source: App logic §3.*
+- **Checking…** status line in the bar is centred in the button's slot. On the case page the B2 line sits 8 above Skip HA in the same slot (D-111). — *Source: App logic §3.*
 
-Decisions: D-78 (the approved screens and app logic)
+Decisions: D-111
 
 <a id="home-19"></a>
 ### home-19 · What is the rule for "No cases"?
@@ -1285,9 +1285,9 @@ Decisions: D-78 (the approved screens and app logic)
 <a id="home-21"></a>
 ### home-21 · What is the rule for "Profile page"?
 
-- **Profile page** (D-70: a page, not a sheet — task header with Back, no logo; content ported from the current app with design-system fixes, D-69; full redesign later): doctor name and role · today's earnings (earned, incentive) · User manual · **Faster sign-in on/off** · **Log out** (destructive). During an open case Log out is replaced by "You can log out after this case is closed." Log out is the last item in the content (not pinned). Cards are 16 apart and Log out is 16 below the last card. The group label "Today's earnings" is 16 semibold, like the other group labels. Log out asks first in a **sheet**: "Log out? — You'll stop getting cases until you sign in again." · Log out · Stay signed in. — *Source: App logic §3.*
+- **Profile page** (D-70: a page, not a sheet — task header with Back, no logo; content ported from the current app with design-system fixes, D-69; full redesign later): doctor name and role · prescriptions written today (D-111) · today's earnings (earned, incentive) · User manual · **Faster sign-in on/off** · **Log out** (destructive). During an open case Log out is replaced by "You can log out after this case is closed." Log out is the last item in the content (not pinned). Cards are 16 apart and Log out is 32 below the last card (D-111). The group label "Today's earnings" is 16 semibold, like the other group labels. Log out asks first in a **sheet**: "Log out? — You'll stop getting cases until you sign in again." · Log out · Stay signed in. — *Source: App logic §3.*
 
-Decisions: D-70, D-69
+Decisions: D-70, D-69, D-111
 
 <a id="home-22"></a>
 ### home-22 · What is the rule for "Faster sign-in toggle (D-70)"?
@@ -1553,60 +1553,61 @@ Decisions: D-40
 | [case-76](#case-76) | App rules | What is the rule for "Callback"? |
 | [case-77](#case-77) | App rules | What is the rule for "Date"? |
 | [case-78](#case-78) | App rules | What is the rule for "Missing choice → field error "Pick a date and"? |
-| [case-79](#case-79) | App rules | What is the rule for "Confirm callback"? |
-| [case-80](#case-80) | App rules | What is the rule for "Available only on 6 Call too short and 7d Result not received"? |
-| [case-81](#case-81) | App rules | What is the rule for "Patient unavailable"? |
-| [case-82](#case-82) | App rules | What is the rule for "Automatic"? |
-| [case-83](#case-83) | App rules | What is the rule for "By the doctor"? |
-| [case-84](#case-84) | App rules | What is the rule for "Status card "Patient unavailable" with a neutral icon; medicines"? |
-| [case-85](#case-85) | App rules | What is the rule for "✅ Flag 6"? |
-| [case-86](#case-86) | App rules | What is the rule for "Keyboard rule (D-81)"? |
-| [case-87](#case-87) | App rules | What is the rule for "Keyboard type"? |
-| [case-88](#case-88) | App rules | What is the rule for "Order details ⓘ"? |
-| [case-89](#case-89) | App rules | What is the rule for "View Rx"? |
-| [case-90](#case-90) | App rules | What is the rule for "Notes & symptoms"? |
-| [case-91](#case-91) | App rules | What is the rule for "Loading"? |
-| [case-92](#case-92) | App rules | What is the rule for "Notices"? |
-| [case-93](#case-93) | App rules | What is the rule for "Follow the feedback map exactly"? |
-| [case-94](#case-94) | Layout | What is the rule for "Sheets over the bar and pinned actions (Round 6)"? |
-| [case-95](#case-95) | Layout | What is the rule for "Busy states (B-01, B-02, B-03)"? |
-| [case-96](#case-96) | Layout | What is the rule for "Header edge (B-07, Round 5)"? |
-| [case-97](#case-97) | States and feedback | What does the app show in case.back-before-call, and how does it recover? |
-| [case-98](#case-98) | States and feedback | What does the app show in case.releasing, and how does it recover? |
-| [case-99](#case-99) | States and feedback | What does the app show in case.back-blocked, and how does it recover? |
-| [case-100](#case-100) | States and feedback | What does the app show in case.closed, and how does it recover? |
-| [case-101](#case-101) | States and feedback | What does the app show in case.closed-availability-ended, and how does it recover? |
-| [case-102](#case-102) | States and feedback | What does the app show in case.reopened, and how does it recover? |
-| [case-103](#case-103) | States and feedback | What does the app show in case.loading, and how does it recover? |
-| [case-104](#case-104) | States and feedback | What does the app show in case.load-failed, and how does it recover? |
-| [case-105](#case-105) | States and feedback | What does the app show in case.offline, and how does it recover? |
-| [case-106](#case-106) | States and feedback | What does the app show in case.confirm-busy, and how does it recover? |
-| [case-107](#case-107) | States and feedback | What does the app show in case.confirm-failed, and how does it recover? |
-| [case-108](#case-108) | States and feedback | What does the app show in case.release-failed, and how does it recover? |
-| [case-109](#case-109) | States and feedback | What does the app show in case.callback-failed, and how does it recover? |
-| [case-110](#case-110) | States and feedback | What does the app show in rx.load-failed, and how does it recover? |
-| [case-111](#case-111) | States and feedback | What does the app show in case.no-medicines, and how does it recover? |
-| [case-112](#case-112) | States and feedback | What does the app show in case.long-content, and how does it recover? |
-| [case-113](#case-113) | States and feedback | What does the app show in call.waiting-for-hangup, and how does it recover? |
-| [case-114](#case-114) | States and feedback | What does the app show in call.transfer-failed, and how does it recover? |
-| [case-115](#case-115) | States and feedback | What does the app show in call.skipHa, and how does it recover? |
-| [case-116](#case-116) | States and feedback | What does the app show in case.callback-refused, and how does it recover? |
-| [case-117](#case-117) | States and feedback | What does the app show in case.result-missing-pilot, and how does it recover? |
-| [case-118](#case-118) | Limits and timings | What is the value of "gate"? |
-| [case-119](#case-119) | Limits and timings | What is the value of "minCountedCall"? |
-| [case-120](#case-120) | Limits and timings | What is the value of "talkWindow"? |
-| [case-121](#case-121) | Limits and timings | What is the value of "noResultTimeout"? |
-| [case-122](#case-122) | Limits and timings | What is the value of "stillOnCallRepeat"? |
-| [case-123](#case-123) | Limits and timings | What is the value of "callRecordWait"? |
-| [case-124](#case-124) | Limits and timings | What is the value of "holdRetryGap"? |
-| [case-125](#case-125) | Limits and timings | What is the value of "holdRetryAttempts"? |
-| [case-126](#case-126) | Limits and timings | What is the value of "pollingInterval"? |
-| [case-127](#case-127) | Limits and timings | What is the value of "attemptGap"? |
-| [case-128](#case-128) | Prototype stand-ins | The prototype fakes this: "A case only arrives while the doctor is available". What do we build? |
-| [case-129](#case-129) | Prototype stand-ins | The prototype fakes this: "The backend sends these in the real app; the". What do we build? |
-| [case-130](#case-130) | Prototype stand-ins | The prototype fakes this: "Callback times". What do we build? |
-| [case-131](#case-131) | Prototype stand-ins | What decides Cat4 vs Pilot, value vs non-value medicines, HA required and HA-skip eligibility? |
-| [case-132](#case-132) | Keyboard | Where are the focused field and the main button when the phone's keyboard is open? |
+| [case-79](#case-79) | App rules | What is the rule for "While saving, the button reads "Scheduling…"; a failure notice"? |
+| [case-80](#case-80) | App rules | What is the rule for "Confirm callback"? |
+| [case-81](#case-81) | App rules | What is the rule for "Available only on 6 Call too short and 7d Result not received"? |
+| [case-82](#case-82) | App rules | What is the rule for "Patient unavailable"? |
+| [case-83](#case-83) | App rules | What is the rule for "Automatic"? |
+| [case-84](#case-84) | App rules | What is the rule for "By the doctor"? |
+| [case-85](#case-85) | App rules | What is the rule for "Status card "Patient unavailable" with a neutral icon; medicines"? |
+| [case-86](#case-86) | App rules | What is the rule for "✅ Flag 6"? |
+| [case-87](#case-87) | App rules | What is the rule for "Keyboard rule (D-81)"? |
+| [case-88](#case-88) | App rules | What is the rule for "Keyboard type"? |
+| [case-89](#case-89) | App rules | What is the rule for "Order details ⓘ"? |
+| [case-90](#case-90) | App rules | What is the rule for "View Rx"? |
+| [case-91](#case-91) | App rules | What is the rule for "Notes & symptoms"? |
+| [case-92](#case-92) | App rules | What is the rule for "Loading"? |
+| [case-93](#case-93) | App rules | What is the rule for "Notices"? |
+| [case-94](#case-94) | App rules | What is the rule for "Follow the feedback map exactly"? |
+| [case-95](#case-95) | Layout | What is the rule for "Sheets over the bar and pinned actions (Round 6)"? |
+| [case-96](#case-96) | Layout | What is the rule for "Busy states (B-01, B-02, B-03)"? |
+| [case-97](#case-97) | Layout | What is the rule for "Header edge (B-07, Round 5)"? |
+| [case-98](#case-98) | States and feedback | What does the app show in case.back-before-call, and how does it recover? |
+| [case-99](#case-99) | States and feedback | What does the app show in case.releasing, and how does it recover? |
+| [case-100](#case-100) | States and feedback | What does the app show in case.back-blocked, and how does it recover? |
+| [case-101](#case-101) | States and feedback | What does the app show in case.closed, and how does it recover? |
+| [case-102](#case-102) | States and feedback | What does the app show in case.closed-availability-ended, and how does it recover? |
+| [case-103](#case-103) | States and feedback | What does the app show in case.reopened, and how does it recover? |
+| [case-104](#case-104) | States and feedback | What does the app show in case.loading, and how does it recover? |
+| [case-105](#case-105) | States and feedback | What does the app show in case.load-failed, and how does it recover? |
+| [case-106](#case-106) | States and feedback | What does the app show in case.offline, and how does it recover? |
+| [case-107](#case-107) | States and feedback | What does the app show in case.confirm-busy, and how does it recover? |
+| [case-108](#case-108) | States and feedback | What does the app show in case.confirm-failed, and how does it recover? |
+| [case-109](#case-109) | States and feedback | What does the app show in case.release-failed, and how does it recover? |
+| [case-110](#case-110) | States and feedback | What does the app show in case.callback-failed, and how does it recover? |
+| [case-111](#case-111) | States and feedback | What does the app show in rx.load-failed, and how does it recover? |
+| [case-112](#case-112) | States and feedback | What does the app show in case.no-medicines, and how does it recover? |
+| [case-113](#case-113) | States and feedback | What does the app show in case.long-content, and how does it recover? |
+| [case-114](#case-114) | States and feedback | What does the app show in call.waiting-for-hangup, and how does it recover? |
+| [case-115](#case-115) | States and feedback | What does the app show in call.transfer-failed, and how does it recover? |
+| [case-116](#case-116) | States and feedback | What does the app show in call.skipHa, and how does it recover? |
+| [case-117](#case-117) | States and feedback | What does the app show in case.callback-refused, and how does it recover? |
+| [case-118](#case-118) | States and feedback | What does the app show in case.result-missing-pilot, and how does it recover? |
+| [case-119](#case-119) | Limits and timings | What is the value of "gate"? |
+| [case-120](#case-120) | Limits and timings | What is the value of "minCountedCall"? |
+| [case-121](#case-121) | Limits and timings | What is the value of "talkWindow"? |
+| [case-122](#case-122) | Limits and timings | What is the value of "noResultTimeout"? |
+| [case-123](#case-123) | Limits and timings | What is the value of "stillOnCallRepeat"? |
+| [case-124](#case-124) | Limits and timings | What is the value of "callRecordWait"? |
+| [case-125](#case-125) | Limits and timings | What is the value of "holdRetryGap"? |
+| [case-126](#case-126) | Limits and timings | What is the value of "holdRetryAttempts"? |
+| [case-127](#case-127) | Limits and timings | What is the value of "pollingInterval"? |
+| [case-128](#case-128) | Limits and timings | What is the value of "attemptGap"? |
+| [case-129](#case-129) | Prototype stand-ins | The prototype fakes this: "A case only arrives while the doctor is available". What do we build? |
+| [case-130](#case-130) | Prototype stand-ins | The prototype fakes this: "The backend sends these in the real app; the". What do we build? |
+| [case-131](#case-131) | Prototype stand-ins | The prototype fakes this: "Callback times". What do we build? |
+| [case-132](#case-132) | Prototype stand-ins | What decides Cat4 vs Pilot, value vs non-value medicines, HA required and HA-skip eligibility? |
+| [case-133](#case-133) | Keyboard | Where are the focused field and the main button when the phone's keyboard is open? |
 
 <a id="case-01"></a>
 ### case-01 · What is the rule for "Stages"?
@@ -1898,9 +1899,9 @@ Decisions: D-80, D-83
 <a id="case-42"></a>
 ### case-42 · What happens in "call.submitted" (state 7f)?
 
-- 7f — `call.submitted`: Waiting for the call record · Confirm in 7d (or Confirm & forward on the Pilot route) · Grey card "Waiting for the call record · Your prescription is saved. We'll confirm it once the record arrives." (D-68); On the Cat4 route it becomes "Prescription confirmed" (10a) when the record arrives; on the Pilot route (Confirm & forward on 7d) it becomes **10b Forwarded to Health Advisor** (D-89, Q-A). **Under the gate, the patient never answered, or no record after a wait time (setting)** → not confirmed, back through hold and retry; no Ops review queue · Request next case · Back to Home · `s7f-submitted` — *Source: App logic §5.*
+- 7f — `call.submitted`: Waiting for the call record · Confirm in 7d (or Confirm & forward on the Pilot route) · Grey card "Waiting for the call record · Your prescription is saved. It isn’t confirmed until the call record arrives." (D-68, words D-84); On the Cat4 route it becomes "Prescription confirmed" (10a) when the record arrives; on the Pilot route (Confirm & forward on 7d) it becomes **10b Forwarded to Health Advisor** (D-89, Q-A). **Under the gate, the patient never answered, or no record after a wait time (setting)** → not confirmed, back through hold and retry; no Ops review queue · Request next case · Back to Home · `s7f-submitted` — *Source: App logic §5.*
 
-Decisions: D-68, D-89
+Decisions: D-68, D-84, D-89
 
 <a id="case-43"></a>
 ### case-43 · What happens in "call.valid" (state 8a)?
@@ -2094,7 +2095,7 @@ Decisions: D-83
 <a id="case-70"></a>
 ### case-70 · What is the rule for "Skip HA"?
 
-- **Skip HA** only after the gate, for **both Pilot types** (Value and Non-Value Meds) whenever an HA call follows the doctor call and it isn't already skipped — no other conditions (D-59). Opens the reason sheet: Patient declined HA call · Clinically not required · Repeat patient, familiar with the medicines — Counselled in an earlier order (D-70 item 3; title and sub-line). Choosing a reason applies it at once. On a call with a result the final button becomes **Confirm prescription**; during a live transfer call the case then waits for the call result (state 17, D-58 point 14). Skip HA is also offered after a missed transfer (state 16, D-58 point 24). — *Source: App logic §6.*
+- **Skip HA** only after the gate, for **both Pilot types** (Value and Non-Value Meds) whenever an HA call follows the doctor call and it isn't already skipped — no other conditions (D-59). Opens the reason sheet: Patient declined the Health Advisor call · Clinically not required · Repeat patient, familiar with the medicines — Counselled in an earlier order (D-70 item 3; title and sub-line). Choosing a reason applies it at once. On a call with a result the final button becomes **Confirm prescription**; during a live transfer call the case then waits for the call result (state 17, D-58 point 14). Skip HA is also offered after a missed transfer (state 16, D-58 point 24). — *Source: App logic §6.*
 
 Decisions: D-59, D-70, D-58
 
@@ -2155,379 +2156,386 @@ Decisions: D-78 (the approved screens and app logic)
 Decisions: D-78 (the approved screens and app logic)
 
 <a id="case-79"></a>
-### case-79 · What is the rule for "Confirm callback"?
+### case-79 · What is the rule for "While saving, the button reads "Scheduling…"; a failure notice"?
+
+- While saving, the button reads "Scheduling…"; a failure notice is pinned with the button, 16 above it, and the choices are kept (D-111). — *Source: App logic §7.*
+
+Decisions: D-111
+
+<a id="case-80"></a>
+### case-80 · What is the rule for "Confirm callback"?
 
 - **Confirm callback** closes the case (status card "Callback today at 3:00 PM"). The case goes to the callback pool, not back to this doctor (D-36) `[MOCK: the app treats it as closed for this session]`. Save failure: notice in the sheet, choices kept. — *Source: App logic §7.*
 
 Decisions: D-36
 
-<a id="case-80"></a>
-### case-80 · What is the rule for "Available only on 6 Call too short and 7d Result not received"?
+<a id="case-81"></a>
+### case-81 · What is the rule for "Available only on 6 Call too short and 7d Result not received"?
 
 - **Available only on 6 Call too short and 7d Result not received** (D-83). Never on a live call. The sheet opens over that post-call state, never over Calling. The backend refuses a callback unless the patient answered (leg 2): error "Couldn’t schedule a callback. The patient wasn’t reached." (K3). — *Source: App logic §7.*
 
 Decisions: D-83
 
-<a id="case-81"></a>
-### case-81 · What is the rule for "Patient unavailable"?
+<a id="case-82"></a>
+### case-82 · What is the rule for "Patient unavailable"?
 
 - **Patient unavailable** (D-51) — *Source: App logic §7.*
 
 Decisions: D-51
 
-<a id="case-82"></a>
-### case-82 · What is the rule for "Automatic"?
+<a id="case-83"></a>
+### case-83 · What is the rule for "Automatic"?
 
 - **Automatic** when the patient side fails (§5, state 9), whenever detected — the partner's reason is stored; no sheet. The case goes on hold and the system retries it by hangup cause; an invalid number is not retried. Nothing goes to Ops. — *Source: App logic §7.*
 
 Decisions: D-78 (the approved screens and app logic)
 
-<a id="case-83"></a>
-### case-83 · What is the rule for "By the doctor"?
+<a id="case-84"></a>
+### case-84 · What is the rule for "By the doctor"?
 
 - **By the doctor** only in 7d (result not received); state 6 has no Unavailable (D-58 pt 23). **Unavailable** opens the reason sheet "Mark patient unavailable" (D-75): Didn't answer · Not reachable · Wrong number. Choosing a reason closes the case at once (it is the confirmation); × backs out with no change. **The reason is saved with the case** for Ops monitoring (D-73). — *Source: App logic §7.*
 
 Decisions: D-58, D-75, D-73
 
-<a id="case-84"></a>
-### case-84 · What is the rule for "Status card "Patient unavailable" with a neutral icon; medicines"?
+<a id="case-85"></a>
+### case-85 · What is the rule for "Status card "Patient unavailable" with a neutral icon; medicines"?
 
 - Status card "Patient unavailable" with a neutral icon; medicines keep their status (Pending stays Pending). — *Source: App logic §7.*
 
 Decisions: D-78 (the approved screens and app logic)
 
-<a id="case-85"></a>
-### case-85 · What is the rule for "✅ Flag 6"?
+<a id="case-86"></a>
+### case-86 · What is the rule for "✅ Flag 6"?
 
 - ✅ **Flag 6 — answered:** the case does go back to the queue, but the doctor is not told — no queue line anywhere. **Updated D-83:** the case goes on hold and the system retries it by hangup cause; nothing goes to Ops. — *Source: App logic §7.*
 
 Decisions: D-83, D-51
 
-<a id="case-86"></a>
-### case-86 · What is the rule for "Keyboard rule (D-81)"?
+<a id="case-87"></a>
+### case-87 · What is the rule for "Keyboard rule (D-81)"?
 
 - **Keyboard rule (D-81):** on Prescribe (Other dose, Additional instructions) and the case page (Chief complaints, Doctor notes) the focused field scrolls into view above the keyboard with its label and helper. The pinned action bar hides while the keyboard is open and returns when it closes (same reason as D-43). — *Source: App logic §9.*
 
 Decisions: D-81, D-43
 
-<a id="case-87"></a>
-### case-87 · What is the rule for "Keyboard type"?
+<a id="case-88"></a>
+### case-88 · What is the rule for "Keyboard type"?
 
 - **Keyboard type:** notes fields (Chief complaints, Doctor notes, Additional instructions) open the text keyboard. The Other dose field keeps the number pad with a decimal key, and its error shows a mistake a doctor can really make on that pad. — *Source: App logic §9.*
 
 Decisions: D-78 (the approved screens and app logic)
 
-<a id="case-88"></a>
-### case-88 · What is the rule for "Order details ⓘ"?
+<a id="case-89"></a>
+### case-89 · What is the rule for "Order details ⓘ"?
 
 - **Order details ⓘ** expands in its card: Order created, Expected delivery, Payment. Hidden when the order has none of these. — *Source: App logic §9.*
 
 Decisions: D-78 (the approved screens and app logic)
 
-<a id="case-89"></a>
-### case-89 · What is the rule for "View Rx"?
+<a id="case-90"></a>
+### case-90 · What is the rule for "View Rx"?
 
 - **View Rx** opens the customer's prescription full screen: zoom (50–400%), rotate, reset, pinch and drag. Load failure: notice + Try again; ✕ always closes. Disabled while confirming. — *Source: App logic §9.*
 
 Decisions: D-78 (the approved screens and app logic)
 
-<a id="case-90"></a>
-### case-90 · What is the rule for "Notes & symptoms"?
+<a id="case-91"></a>
+### case-91 · What is the rule for "Notes & symptoms"?
 
 - **Notes & symptoms** (D-59): Chief complaints / symptoms and Doctor notes, both optional. Editable from the moment the case opens until Confirm; typed text kept if the connection drops. **Saved only when the prescription is confirmed** — a case closed as Callback or Unavailable discards them (they are consultation notes, not a call log). Locked after Confirm. **Symptoms are printed on the prescription; Doctor notes are internal only** (doctor, HA, ops, pharmacy). — *Source: App logic §9.*
 
 Decisions: D-59
 
-<a id="case-91"></a>
-### case-91 · What is the rule for "Loading"?
+<a id="case-92"></a>
+### case-92 · What is the rule for "Loading"?
 
 - **Loading** (case): a skeleton shaped like the loaded page: an Order details row, Medicines and Notes blocks, in the same places (D-81 F28). — *Source: App logic §10.*
 
 Decisions: D-81
 
-<a id="case-92"></a>
-### case-92 · What is the rule for "Notices"?
+<a id="case-93"></a>
+### case-93 · What is the rule for "Notices"?
 
 - **Notices** wrap balanced, set centrally. — *Source: App logic §10.*
 
 Decisions: D-78 (the approved screens and app logic)
 
-<a id="case-93"></a>
-### case-93 · What is the rule for "Follow the feedback map exactly"?
+<a id="case-94"></a>
+### case-94 · What is the rule for "Follow the feedback map exactly"?
 
 - Follow the feedback map exactly. Summary for the case page: loading = card outlines, no actions · load failed = notice + Try again · offline = yellow notice in the bar "You're offline. Reconnect to call or confirm." (D-54) · an action tried offline fails with one error notice, nothing lost · release failed = notice, doctor stays on the case. — *Source: App logic §10.*
 
 Decisions: D-54
 
-<a id="case-94"></a>
-### case-94 · What is the rule for "Sheets over the bar and pinned actions (Round 6)"?
+<a id="case-95"></a>
+### case-95 · What is the rule for "Sheets over the bar and pinned actions (Round 6)"?
 
 - **Sheets over the bar and pinned actions.** A sheet always covers the pinned action bar of the screen behind it; the bar takes no tap while a sheet is open. When a sheet is taller than the space, its header and its buttons stay pinned and the content between them scrolls (RULES §9.4). Buttons stay fully visible and tappable at 390×844 and 360×640. — *Source: App logic §13*
 
 Decisions: D-78 (the approved screens and app logic)
 
-<a id="case-95"></a>
-### case-95 · What is the rule for "Busy states (B-01, B-02, B-03)"?
+<a id="case-96"></a>
+### case-96 · What is the rule for "Busy states (B-01, B-02, B-03)"?
 
 - **Busy states.** Busy bars keep their height and the button's place: Transferring… keeps the Skip HA row, greyed and disabled, with no Callback (D-83 K13); Confirming… keeps its row. The status line takes the buttons' row in the confirm fallback (B2). 7c shows the same screen as 5 at normal bar height — no empty tray (D-91). The end-of-call script card has 16 padding below in every state. — *Source: App logic §13*
 
 Decisions: D-83, D-91
 
-<a id="case-96"></a>
-### case-96 · What is the rule for "Header edge (B-07, Round 5)"?
+<a id="case-97"></a>
+### case-97 · What is the rule for "Header edge (B-07, Round 5)"?
 
 - **Header edge.** In the compact task header, the edit header (Prescribe) and the viewer header (Rx), Back / ✕ is a 48px target whose glyph starts on the 16px margin; the title starts 54px from the edge on all three, the same as the sheet ✕ and the compact header. — *Source: App logic §13*
 
 Decisions: D-78 (the approved screens and app logic)
 
-<a id="case-97"></a>
-### case-97 · What does the app show in case.back-before-call, and how does it recover?
+<a id="case-98"></a>
+### case-98 · What does the app show in case.back-before-call, and how does it recover?
 
 - case.back-before-call: Confirmation sheet — Only on Ready and states 3 and 4 (no call attempted). Back (header or phone gesture) opens "Leave this case?" · "It goes back to the queue for another doctor." From the Call tap the header Back is hidden and never returns once the patient answered (D-80 pt 1, D-81 F21). Sheet sits over Ready (D-81 F22). — *Source: Feedback state map: case.back-before-call*
 
 Decisions: D-80, D-81
 
-<a id="case-98"></a>
-### case-98 · What does the app show in case.releasing, and how does it recover?
+<a id="case-99"></a>
+### case-99 · What does the app show in case.releasing, and how does it recover?
 
 - case.releasing: L1 — Release pending over Ready; one request; primary shows the busy state (L2). Failure keeps the doctor on the case with an F2 notice. Backend refuses Release once our call is accepted, unless the result is 3 or 4 (D-80). — *Source: Feedback state map: case.releasing*
 
 Decisions: D-80
 
-<a id="case-99"></a>
-### case-99 · What does the app show in case.back-blocked, and how does it recover?
+<a id="case-100"></a>
+### case-100 · What does the app show in case.back-blocked, and how does it recover?
 
 - case.back-blocked: N1 (not an error) — Call attempted or connected, case not closed. Header Back hidden from the call tap on; phone back gesture shows "Finish this case first. Then you can go back to Home." (D-81 F21). — *Source: Feedback state map: case.back-blocked*
 
 Decisions: D-81
 
-<a id="case-100"></a>
-### case-100 · What does the app show in case.closed, and how does it recover?
+<a id="case-101"></a>
+### case-101 · What does the app show in case.closed, and how does it recover?
 
-- case.closed: None — End of case: confirmation at the top of the content, titled by path ("Prescription confirmed" / "Transferred to HA" / "Forwarded to HA"); pinned bar **Request next case** (primary) + **Back to Home** (secondary), stacked. Header Back hidden; phone back → Home. Case content read-only and muted (D-51). — *Source: Feedback state map: case.closed*
+- case.closed: None — End of case: confirmation at the top of the content, titled by path ("Prescription confirmed" / "Transferred to Health Advisor" / "Forwarded to Health Advisor"); pinned bar **Request next case** (primary) + **Back to Home** (quiet), stacked. Header Back hidden; phone back → Home. Case content read-only and muted (D-51). — *Source: Feedback state map: case.closed*
 
 Decisions: D-51
 
-<a id="case-101"></a>
-### case-101 · What does the app show in case.closed-availability-ended, and how does it recover?
-
-- case.closed-availability-ended: None — Availability ended during the case: only **Back to Home**; Home shows the expired state. — *Source: Feedback state map: case.closed-availability-ended*
-
-Decisions: D-78 (the approved screens and app logic)
-
 <a id="case-102"></a>
-### case-102 · What does the app show in case.reopened, and how does it recover?
+### case-102 · What does the app show in case.closed-availability-ended, and how does it recover?
+
+- case.closed-availability-ended: None — Availability ended during the case: bar caption "Your availability has ended." (`case.availabilityEnded`, D-111) above **Back to Home**, the only button; Home shows the expired state. — *Source: Feedback state map: case.closed-availability-ended*
+
+Decisions: D-111
+
+<a id="case-103"></a>
+### case-103 · What does the app show in case.reopened, and how does it recover?
 
 - case.reopened: None — App reopened with a case open → straight back into the case. — *Source: Feedback state map: case.reopened*
 
 Decisions: D-78 (the approved screens and app logic)
 
-<a id="case-103"></a>
-### case-103 · What does the app show in case.loading, and how does it recover?
+<a id="case-104"></a>
+### case-104 · What does the app show in case.loading, and how does it recover?
 
 - case.loading: L1 — Skeleton shaped like the loaded page: an Order details row, Medicines and Notes blocks, in the same places; no text, no actions until loaded (D-81 F28). — *Source: Feedback state map: case.loading*
 
 Decisions: D-81
 
-<a id="case-104"></a>
-### case-104 · What does the app show in case.load-failed, and how does it recover?
+<a id="case-105"></a>
+### case-105 · What does the app show in case.load-failed, and how does it recover?
 
 - case.load-failed: F2 — Error notice "Couldn't load this case." + primary **Try again**; nothing else on the page. *Copy approved (D-53).* — *Source: Feedback state map: case.load-failed*
 
 Decisions: D-53
 
-<a id="case-105"></a>
-### case-105 · What does the app show in case.offline, and how does it recover?
+<a id="case-106"></a>
+### case-106 · What does the app show in case.offline, and how does it recover?
 
-- case.offline: W1 → F2 — Warning notice (D-54: offline blocks the main action) "You're offline. Reconnect to call or confirm." while browsing; an action attempted offline fails with one error notice "No connection. Nothing was lost. Try again when you're back online." Typed notes are kept. *Copy approved (D-53).* — *Source: Feedback state map: case.offline*
+- case.offline: W1 → F2 — Warning notice (D-54: offline blocks the main action) "You're offline. Reconnect to call or confirm." while browsing; an action attempted offline fails with one error notice "No connection. Nothing was lost." Typed notes are kept. *Copy approved (D-53).* — *Source: Feedback state map: case.offline*
 
 Decisions: D-54, D-53
 
-<a id="case-106"></a>
-### case-106 · What does the app show in case.confirm-busy, and how does it recover?
+<a id="case-107"></a>
+### case-107 · What does the app show in case.confirm-busy, and how does it recover?
 
 - case.confirm-busy: L1 — Final CTA busy (L2), label **"Confirming…"**; every other action disabled; medicine rows and notes read-only and muted; View Rx stays the outlined button (D-81 F24–F25). No second submit. *Copy approved (D-53).* — *Source: Feedback state map: case.confirm-busy*
 
 Decisions: D-81, D-53
 
-<a id="case-107"></a>
-### case-107 · What does the app show in case.confirm-failed, and how does it recover?
+<a id="case-108"></a>
+### case-108 · What does the app show in case.confirm-failed, and how does it recover?
 
-- case.confirm-failed: F2 — Error notice above the bar "Couldn't confirm. Nothing was lost. Try again."; CTA back to normal. An uncertain result is reconciled before retry (no duplicate confirm). *Copy approved (D-53).* — *Source: Feedback state map: case.confirm-failed*
+- case.confirm-failed: F2 — Error notice above the bar "Couldn't confirm. Nothing was lost."; CTA back to normal. An uncertain result is reconciled before retry (no duplicate confirm). *Copy approved (D-53).* — *Source: Feedback state map: case.confirm-failed*
 
 Decisions: D-53
 
-<a id="case-108"></a>
-### case-108 · What does the app show in case.release-failed, and how does it recover?
+<a id="case-109"></a>
+### case-109 · What does the app show in case.release-failed, and how does it recover?
 
-- case.release-failed: F2 — Sheet closes over Ready; doctor stays on the case; error notice "Couldn't release this case. You're still on it. Try again."; Back works again. *Copy approved (D-53).* (D-81 F22) — *Source: Feedback state map: case.release-failed*
+- case.release-failed: F2 — Sheet closes over Ready; doctor stays on the case; error notice "Couldn't release this case. You're still on it."; Back works again. *Copy approved (D-53).* (D-81 F22) — *Source: Feedback state map: case.release-failed*
 
 Decisions: D-53, D-81
 
-<a id="case-109"></a>
-### case-109 · What does the app show in case.callback-failed, and how does it recover?
-
-- case.callback-failed: F2 — Error notice inside the sheet "Couldn't schedule the callback. Your time is kept. Try again."; chosen date and time kept. *Copy approved (D-53).* — *Source: Feedback state map: case.callback-failed*
-
-Decisions: D-53
-
 <a id="case-110"></a>
-### case-110 · What does the app show in rx.load-failed, and how does it recover?
+### case-110 · What does the app show in case.callback-failed, and how does it recover?
+
+- case.callback-failed: F2 — Error notice inside the sheet "Couldn't schedule the callback. Your chosen time is kept."; chosen date and time kept. — *Source: Feedback state map: case.callback-failed*
+
+Decisions: D-111
+
+<a id="case-111"></a>
+### case-111 · What does the app show in rx.load-failed, and how does it recover?
 
 - rx.load-failed: F2 — Inside the viewer: notice "Couldn't load the prescription." + **Try again**; ✕ still closes. *Copy approved (D-53).* — *Source: Feedback state map: rx.load-failed*
 
 Decisions: D-53
 
-<a id="case-111"></a>
-### case-111 · What does the app show in case.no-medicines, and how does it recover?
+<a id="case-112"></a>
+### case-112 · What does the app show in case.no-medicines, and how does it recover?
 
 - case.no-medicines: Standing state (top of the panel) — Amber notice "No medicines on this order. Our Ops team will check it." (`case.noMedicines`, D-84) above the medicines card, which shows no text; no Call patient; main button **Release case**, which releases directly (no sheet) and returns to Home; header Back does the same (D-80 pt 4, D-81 F23, D-83). — *Source: Feedback state map: case.no-medicines*
 
 Decisions: D-84, D-80, D-81, D-83
 
-<a id="case-112"></a>
-### case-112 · What does the app show in case.long-content, and how does it recover?
+<a id="case-113"></a>
+### case-113 · What does the app show in case.long-content, and how does it recover?
 
 - case.long-content: — — Long patient name (two lines in the header) and long medicine names, checked at 360. — *Source: Feedback state map: case.long-content*
 
 Decisions: D-78 (the approved screens and app logic)
 
-<a id="case-113"></a>
-### case-113 · What does the app show in call.waiting-for-hangup, and how does it recover?
+<a id="case-114"></a>
+### case-114 · What does the app show in call.waiting-for-hangup, and how does it recover?
 
 - call.waiting-for-hangup: Status line — "Waiting for the call to end…" (`call.waitingForHangup`) in the bar, where the buttons would be, while a forward or a failed transfer is still live (15, B3; D-83 K8, K9). After the hang-up: Request next case · Back to Home. — *Source: Feedback state map: call.waiting-for-hangup*
 
 Decisions: D-83
 
-<a id="case-114"></a>
-### case-114 · What does the app show in call.transfer-failed, and how does it recover?
+<a id="case-115"></a>
+### case-115 · What does the app show in call.transfer-failed, and how does it recover?
 
 - call.transfer-failed: Card body (live) — "Read the script, then end the call." (`call.transferFailed`) in the amber card under "Forwarded to Health Advisor" while the call is live on 15 and B3. The patient script (`call.forwardedTell`): "I’ve written your prescription. Our Health Advisor will call you back to help with the next steps." Copy never says the Health Advisor is unavailable (MAIN-CHECK 2 item 2). — *Source: Feedback state map: call.transfer-failed*
 
 Decisions: D-78 (the approved screens and app logic)
 
-<a id="case-115"></a>
-### case-115 · What does the app show in call.skipHa, and how does it recover?
+<a id="case-116"></a>
+### case-116 · What does the app show in call.skipHa, and how does it recover?
 
 - call.skipHa: Grey note in the bar — "Health Advisor call will be skipped. End the call when you’re done." on 17 (`t17-skip-ha-wait`), with the no-HA script and the status line "Getting call result…" (D-85). No Calling line, no buttons. — *Source: Feedback state map: call.skipHa*
 
 Decisions: D-85
 
-<a id="case-116"></a>
-### case-116 · What does the app show in case.callback-refused, and how does it recover?
-
-- case.callback-refused: F2 — Error notice inside the Schedule callback sheet "Couldn’t schedule a callback. The patient wasn’t reached." (`callback.notReached`) when the backend refuses a callback without leg 2 answered (D-83). Choices kept. — *Source: Feedback state map: case.callback-refused*
-
-Decisions: D-83
-
 <a id="case-117"></a>
-### case-117 · What does the app show in case.result-missing-pilot, and how does it recover?
+### case-117 · What does the app show in case.callback-refused, and how does it recover?
 
-- case.result-missing-pilot: Same as 7d — Pilot 7d: "We didn’t get the call result." notice; **Confirm & forward** · Callback + Unavailable; no Skip HA (D-83). — *Source: Feedback state map: case.result-missing-pilot*
+- case.callback-refused: F2 — Error notice inside the Schedule callback sheet "Couldn’t schedule the callback. The patient wasn’t reached." (`callback.notReached`) when the backend refuses a callback without leg 2 answered (D-83). Choices kept. — *Source: Feedback state map: case.callback-refused*
 
 Decisions: D-83
 
 <a id="case-118"></a>
-### case-118 · What is the value of "gate"?
+### case-118 · What does the app show in case.result-missing-pilot, and how does it recover?
+
+- case.result-missing-pilot: Same as 7d — Pilot 7d: "Couldn’t get the call result." notice; **Confirm & forward** · Callback + Unavailable; no Skip HA (D-83). — *Source: Feedback state map: case.result-missing-pilot*
+
+Decisions: D-83
+
+<a id="case-119"></a>
+### case-119 · What is the value of "gate"?
 
 - 50 s. Agreed rule (D-58 pt 14, OQ-001). Read it from configuration; copy reads the value, never a typed number. — *Source: Setting (agreed rule)*
 
 Decisions: D-58
 
-<a id="case-119"></a>
-### case-119 · What is the value of "minCountedCall"?
+<a id="case-120"></a>
+### case-120 · What is the value of "minCountedCall"?
 
 - 10 s. Agreed rule (D-58 pt 22 (~10 s)). Read it from configuration; copy reads the value, never a typed number. — *Source: Setting (agreed rule)*
 
 Decisions: D-58
 
-<a id="case-120"></a>
-### case-120 · What is the value of "talkWindow"?
+<a id="case-121"></a>
+### case-121 · What is the value of "talkWindow"?
 
 - 30 min. Agreed rule (D-58 pt 22 (~30 min)). Read it from configuration; copy reads the value, never a typed number. — *Source: Setting (agreed rule)*
 
 Decisions: D-58
 
-<a id="case-121"></a>
-### case-121 · What is the value of "noResultTimeout"?
+<a id="case-122"></a>
+### case-122 · What is the value of "noResultTimeout"?
 
 - 3 min. Agreed rule (D-58 pt 20). Read it from configuration; copy reads the value, never a typed number. — *Source: Setting (agreed rule)*
 
 Decisions: D-58
 
-<a id="case-122"></a>
-### case-122 · What is the value of "stillOnCallRepeat"?
+<a id="case-123"></a>
+### case-123 · What is the value of "stillOnCallRepeat"?
 
 - 3 min. Agreed rule (D-83). Read it from configuration; copy reads the value, never a typed number. — *Source: Setting (agreed rule)*
 
 Decisions: D-83
 
-<a id="case-123"></a>
-### case-123 · What is the value of "callRecordWait"?
+<a id="case-124"></a>
+### case-124 · What is the value of "callRecordWait"?
 
 - [MOCK] 30 min in the prototype. Keep configurable (a server or config value, never typed into a screen); not a production promise. Note: D-73 (30 min); OQ-033 wait time to agree. — *Source: Prototype setting [MOCK]*
 
 Decisions: D-73
 
-<a id="case-124"></a>
-### case-124 · What is the value of "holdRetryGap"?
+<a id="case-125"></a>
+### case-125 · What is the value of "holdRetryGap"?
 
 - [MOCK] 15 min in the prototype. Keep configurable (a server or config value, never typed into a screen); not a production promise. Note: gap between retries; Engineering to agree. — *Source: Prototype setting [MOCK]*
 
 Decisions: D-78 (the approved screens and app logic)
 
-<a id="case-125"></a>
-### case-125 · What is the value of "holdRetryAttempts"?
+<a id="case-126"></a>
+### case-126 · What is the value of "holdRetryAttempts"?
 
 - [MOCK] 3 in the prototype. Keep configurable (a server or config value, never typed into a screen); not a production promise. Note: attempts before plain hold. — *Source: Prototype setting [MOCK]*
 
 Decisions: D-78 (the approved screens and app logic)
 
-<a id="case-126"></a>
-### case-126 · What is the value of "pollingInterval"?
+<a id="case-127"></a>
+### case-127 · What is the value of "pollingInterval"?
 
 - [MOCK] 3 s in the prototype. Keep configurable (a server or config value, never typed into a screen); not a production promise. Note: inside D-58 pt 14 (about 5 s). — *Source: Prototype setting [MOCK]*
 
 Decisions: D-58
 
-<a id="case-127"></a>
-### case-127 · What is the value of "attemptGap"?
+<a id="case-128"></a>
+### case-128 · What is the value of "attemptGap"?
 
 - [MOCK] 60 s in the prototype. Keep configurable (a server or config value, never typed into a screen); not a production promise. Note: review tool: gap between scheduled call attempts. — *Source: Prototype setting [MOCK]*
 
 Decisions: D-78 (the approved screens and app logic)
 
-<a id="case-128"></a>
-### case-128 · The prototype fakes this: "A case only arrives while the doctor is available". What do we build?
+<a id="case-129"></a>
+### case-129 · The prototype fakes this: "A case only arrives while the doctor is available". What do we build?
 
 - [MOCK] A case only arrives while the doctor is available: a fixture keeps the session's availability, or starts 30 min. Keep configurable; the real value or answer comes from the backend. — *Source: Prototype [MOCK]*
 
 Decisions: D-78 (the approved screens and app logic)
 
-<a id="case-129"></a>
-### case-129 · The prototype fakes this: "The backend sends these in the real app; the". What do we build?
+<a id="case-130"></a>
+### case-130 · The prototype fakes this: "The backend sends these in the real app; the". What do we build?
 
 - [MOCK] The backend sends these in the real app; the doctor never sets quantity (D-04, D-06). values throughout. Keep configurable; the real value or answer comes from the backend. — *Source: Prototype [MOCK]*
 
 Decisions: D-78 (the approved screens and app logic)
 
-<a id="case-130"></a>
-### case-130 · The prototype fakes this: "Callback times". What do we build?
+<a id="case-131"></a>
+### case-131 · The prototype fakes this: "Callback times". What do we build?
 
 - [MOCK] Callback times (app-logic §7) —: real slots come from the backend. Values are 24 h times; labels as the Keep configurable; the real value or answer comes from the backend. — *Source: Prototype [MOCK]*
 
 Decisions: D-78 (the approved screens and app logic)
 
-<a id="case-131"></a>
-### case-131 · What decides Cat4 vs Pilot, value vs non-value medicines, HA required and HA-skip eligibility?
+<a id="case-132"></a>
+### case-132 · What decides Cat4 vs Pilot, value vs non-value medicines, HA required and HA-skip eligibility?
 
 -  — *Source: App logic §6*
 - [MOCK] The prototype reads them as fields on the sample case (case type, HA status). Keep them as backend fields; the app never works them out. — *Source: Prototype [MOCK]*
 
 Decisions: D-50
 
-<a id="case-132"></a>
-### case-132 · Where are the focused field and the main button when the phone's keyboard is open?
+<a id="case-133"></a>
+### case-133 · Where are the focused field and the main button when the phone's keyboard is open?
 
 - Always above the keyboard: use a keyboard-avoiding layout on every screen with a text field. When a field gets focus, scroll so the field (with its label and helper) and the screen's main button sit above the keyboard, the button at least 16 px clear of it. On the case page and Prescribe the pinned action bar hides while the keyboard is open and comes back when it closes (D-81), so there the field alone is kept in view. — *Source: Agreed fix (phone feedback, D-44, D-81)*
 
@@ -2645,7 +2653,7 @@ Decisions: D-54
 <a id="rx-11"></a>
 ### rx-11 · What doses can be picked for Cream?
 
-- Daily slots (M / A / N): — / Apply · Single dose options: Apply · Other: — — *Source: App logic §8.*
+- Daily slots (M / A / N): None / Apply · Single dose options: Apply · Other: — — *Source: App logic §8.*
 
 Decisions: D-78 (the approved screens and app logic)
 
@@ -2659,9 +2667,9 @@ Decisions: D-55
 <a id="rx-13"></a>
 ### rx-13 · What is the rule for "Duration picker"?
 
-- **Duration picker:** number and unit chips sit inside the same inset as the field text, with 8 between the two rows. The "On prescription" band keeps a number and its unit together: "6 months" never splits. — *Source: App logic §8.*
+- **Duration picker:** number and unit chips sit 12 in, on the edge of the field text; value → numbers → units are 16 apart (D-111). The band turns a deeper blue for a moment when its text changes (D-25; not with reduced motion). The "On prescription" band keeps a number and its unit together: "6 months" never splits. — *Source: App logic §8.*
 
-Decisions: D-78 (the approved screens and app logic)
+Decisions: D-111, D-25
 
 <a id="rx-14"></a>
 ### rx-14 · What is the rule for "Option labels"?
@@ -2694,9 +2702,9 @@ Decisions: D-78 (the approved screens and app logic)
 <a id="rx-18"></a>
 ### rx-18 · What is the rule for "Duration"?
 
-- **Duration:** numbers 1–7, 10, 14, 15 + Days / Weeks / Months, or **Ongoing** (prints the backend default, `[MOCK]` 6 months). Shows "Default" or "Changed from default". — *Source: App logic §8.*
+- **Duration:** numbers 1–12 (D-110) + Days / Weeks / Months, or **Ongoing** (prints the backend default, `[MOCK]` 6 months). Shows "Default" or "Changed from default". — *Source: App logic §8.*
 
-Decisions: D-78 (the approved screens and app logic)
+Decisions: D-110
 
 <a id="rx-19"></a>
 ### rx-19 · What is the rule for "Food (optional)"?

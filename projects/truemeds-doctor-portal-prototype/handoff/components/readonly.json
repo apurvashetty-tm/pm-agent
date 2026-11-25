@@ -34,7 +34,7 @@
       },
       {
        "property": "align-items",
-       "value": "center",
+       "value": "baseline",
        "tokens": [],
        "layout": true
       },
@@ -46,17 +46,17 @@
       },
       {
        "property": "margin-bottom",
-       "value": "var(--tm-space-xs)",
+       "value": "var(--tm-space-sm)",
        "tokens": [
         {
-         "native": "tokens.space.xs",
-         "web": "--tm-space-xs",
-         "value": 4
+         "native": "tokens.space.sm",
+         "web": "--tm-space-sm",
+         "value": 8
         }
        ]
       }
      ],
-     "size": "326×24"
+     "size": "326×20"
     }
    }
   },

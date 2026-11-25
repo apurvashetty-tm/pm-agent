@@ -35,7 +35,7 @@ def run_app():
             tag = f"{w}x{h}"
             pg = b.new_page(viewport={"width": w, "height": h}); errs = []
             pg.on("pageerror", lambda e: errs.append(str(e)))
-            pg.goto(base + "?s=t01-ready"); pg.wait_for_timeout(400)
+            pg.goto(base + "?s=t01-ready"); pg.wait_for_selector("#screen > *", state="attached"); pg.wait_for_timeout(400)
             f = pg.evaluate("(()=>{const q=document.getElementById('frame').getBoundingClientRect();return {l:q.left,t:q.top,w:q.width,h:q.height,r:q.right,b:q.bottom}})()")
             panel = pg.evaluate("(()=>{const p=document.getElementById('review-panel').getBoundingClientRect();const cs=getComputedStyle(document.getElementById('review-panel'));return {ov:cs.overflowY, inside: !!document.getElementById('frame').contains(document.getElementById('review-panel')), l:p.left, r:p.right, t:p.top}})()")
             if w >= 768:
@@ -63,7 +63,7 @@ def run_app():
                              ("offer_fingerprint", "#turn-on"), ("offer_enable-failed", "#turn-on"), ("offer_unavailable", "#turn-on"), ("unlock_fingerprint", "#unlock-action"), ("unlock_unavailable", "#fallback")]:
                 pg = b.new_page(viewport={"width": w, "height": h}); errs = []
                 pg.on("pageerror", lambda e: errs.append(str(e)))
-                pg.goto(base + "?s=" + sid); pg.wait_for_timeout(400)
+                pg.goto(base + "?s=" + sid); pg.wait_for_selector("#screen > *", state="attached"); pg.wait_for_timeout(400)
                 g = pg.evaluate("""(sel)=>{const fe=document.getElementById('frame');const f=fe.getBoundingClientRect();const sc=document.querySelector('.signin-screen,.otp-screen,.offer-screen,.unlock-screen');if(!sc)return null;const r=sc.getBoundingClientRect();const bt=document.querySelector(sel).getBoundingClientRect();
                   return {fill:Math.abs(fe.clientWidth-r.width)<=1&&Math.abs(f.left+fe.clientLeft-r.left)<=1&&r.top<=f.top+fe.clientTop+1, side:document.documentElement.scrollWidth<=innerWidth+1, btn:bt.top>=f.top&&bt.bottom<=f.bottom}}""", btn)
                 ok(f"{tag} {sid}: screen fills the frame, no sideways scroll, main button inside the frame", bool(g) and g["fill"] and g["side"] and g["btn"], str(g))

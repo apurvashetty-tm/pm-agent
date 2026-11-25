@@ -11,9 +11,14 @@
      "styles": [
       {
        "property": "margin-top",
-       "value": "0",
-       "tokens": [],
-       "layout": true
+       "value": "var(--tm-space-lg)",
+       "tokens": [
+        {
+         "native": "tokens.space.lg",
+         "web": "--tm-space-lg",
+         "value": 16
+        }
+       ]
       },
       {
        "property": "animation",
@@ -22,7 +27,7 @@
        "layout": true
       }
      ],
-     "size": "358×56"
+     "size": "358×55.9"
     }
    }
   }

@@ -74,7 +74,7 @@
        "inherited": true
       }
      ],
-     "size": "63.6×18"
+     "size": "63.6×17.9"
     }
    }
   }
@@ -88,11 +88,15 @@
  "pictures": [],
  "usedIn": [
   "d-alt-days",
+  "d-cream",
   "d-default",
   "d-disable-sheet",
   "d-discard-sheet",
+  "d-drops",
   "d-duration-picker",
+  "d-error-dose",
   "d-error-other",
+  "d-every-x-hours",
   "d-food-selected",
   "d-header-white",
   "d-inhaler",

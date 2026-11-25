@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| Status | Draft for review · v0.6 · 10 Nov 2026 |
+| Status | Draft for review · v0.7 · 25 Nov 2026 |
 | Owner | Apurva Shetty (Product) |
 | Release | Launch release (first version of the doctor app) |
 | Calling flow, every state | [Calling-flow page](https://doctor-portal-prototype.netlify.app/calling-flow/) |
@@ -83,6 +83,7 @@ Each screen opens with the job the doctor is trying to get done, then why it's b
 **Other states:**
 - Empty on Send OTP → "Enter your mobile number."
 - Fewer than 10 digits on Send OTP → "Enter all 10 digits."
+- More than 10 digits → "That’s more than 10 digits. Check the number."
 - First digit not 6–9, as soon as typed → "Mobile numbers start with 6, 7, 8 or 9."
 - Sending → button reads "Sending OTP…".
 - Not registered → "Number not registered with Truemeds. Already applied? We’ll contact you after approval."
@@ -213,9 +214,9 @@ Each screen opens with the job the doctor is trying to get done, then why it's b
 - Home shows one card: time remaining, with Add time always on its line (greyed offline), and prescriptions written today (a count only, no earnings), which opens Profile. A case counts once its prescription is confirmed. After availability ends, the count shows as one row above the picker when it is above 0.
 - A request made before availability ends is honoured even if the case arrives after.
 - Ending availability with a request pending stops new requests; the pending one is honoured and any case it brings is finished first.
-- Availability that ends during a case never interrupts it; the case's ending offers only Back to Home.
+- Availability that ends during a case never interrupts it; the case's ending says "Your availability has ended." and offers only Back to Home.
 - Help and the bell are on Home; the bell is never inside a case. In this release both open a blank placeholder (§9).
-- Profile is a page: name and role, today's earnings, User manual, Faster sign-in on/off, Log out. Log out asks first, and isn't available while a case is open.
+- Profile is a page: name and role, prescriptions written today, today's earnings, User manual, Faster sign-in on/off, Log out. Log out asks first, and isn't available while a case is open.
 - One phone signed in at a time. The session stays valid through an open case; the doctor is never asked for an OTP over a live case.
 
 **Other states:**
@@ -358,7 +359,7 @@ Each screen opens with the job the doctor is trying to get done, then why it's b
 
 **Other states:**
 - No date or time picked → "Pick a date and a time." / "Pick a date." / "Pick a time."
-- Callback couldn't be saved → "Couldn’t schedule the callback. Your time is kept."
+- Callback couldn't be saved → "Couldn’t schedule the callback. Your chosen time is kept."
 - Callback refused → "Couldn’t schedule the callback. The patient wasn’t reached."
 - Callback booked → card "Callback today at 3:00 PM" (the chosen day and time).
 - Patient unavailable → card "Patient unavailable", with Request next case and Back to Home.
@@ -382,7 +383,7 @@ Each screen opens with the job the doctor is trying to get done, then why it's b
 **What the doctor can do:** choose how often (Daily, Every X hours, Alt days, Weekly, Monthly, SOS only); set the dose; add an extra as-needed (SOS) dose with a daily cap; set the duration or Ongoing; optionally choose food timing and write additional instructions; Prescribe; Disable with a reason; close.
 
 **Rules:**
-- Choices: Every X hours is 4, 6, 8 or 12 hours; SOS allows 1 to 4 doses a day; duration is 1–7, 10, 14 or 15 days, weeks or months, or Ongoing; food timing is after food, before food or empty stomach (optional).
+- Choices: Every X hours is 4, 6, 8 or 12 hours; SOS allows 1 to 4 doses a day; duration is 1 to 12 days, weeks or months, or Ongoing; food timing is after food, before food or empty stomach (optional).
 - Every section opens filled with the backend's defaults. Duration marks whether the doctor kept the default; Ongoing prints the backend's default length (§7).
 - SOS limits print the daily total in the medicine's unit (see the table), so the patient never has to multiply.
 - Prescribe saves the medicine as Prescribed, and re-enables it if it was disabled.

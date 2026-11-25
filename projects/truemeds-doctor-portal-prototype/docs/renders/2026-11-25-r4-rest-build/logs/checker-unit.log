@@ -1,0 +1,19 @@
+✔ pair rule: field helper → button at 16 fails, expected 32 (D-108 "field group → 32 → button") (876.481417ms)
+✔ pair rule: legal line → button wants 8; bar buttons keep the bar spec (box 8) (112.699166ms)
+✔ fix pass (Codex review): sheet-actions notice wants 16; points 8 / 16; missing region and overlap fail (113.571167ms)
+✔ S4: sheet subtitle sits 8 under the title inside the header; the title stays centred on the ✕ (104.984792ms)
+✔ S5: .tm-link has a 48 hit area that adds no line height, and a focus ring (99.293875ms)
+✔ 48 link around 14 text: transparent hit area leaves the ink gap unchanged (891.720416ms)
+✔ Reserved empty message line: only two visible rows with a 32px gap (94.380958ms)
+✔ Bordered notice: measure the border as one painted unit at 16px (103.553417ms)
+✔ 32-gap pass: two filled boxes pass the spacing scale (94.707375ms)
+✔ 20-gap fail: nearest allowed gap is 16px (96.021791ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1724.182459
+exit 0

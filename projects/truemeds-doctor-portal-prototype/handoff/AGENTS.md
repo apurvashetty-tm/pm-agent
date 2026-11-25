@@ -25,7 +25,7 @@ You build the React Native components and screens. This kit is the contract: tok
 | [`screens/pictures/`](screens/pictures/sign-in_default_w390.png) | The approved pictures of each state at 360 and 390 wide. 360 is the smallest supported phone. |
 | [`DECIDED.md`](DECIDED.md) | Questions already answered, by screen, each with its source and decision number (D-xx). |
 | [`OPEN.md`](OPEN.md) | The few Product questions still open, the current assumption, and who answers. |
-| [`CHANGES.md`](CHANGES.md) | What changed since the last version of the kit. |
+| [`CHANGES.md`](CHANGES.md) | What changed since the 10 November kit (v1). If the app was started from v1, apply every Must and Looks row to the screens already built. |
 | [`viewer/index.html`](viewer/index.html) | The same facts for people: open it in a browser (no server). |
 | [`.claude/skills/truemeds-native-ui/SKILL.md`](.claude/skills/truemeds-native-ui/SKILL.md) | Step by step: how to build a Truemeds screen with this kit. |
 

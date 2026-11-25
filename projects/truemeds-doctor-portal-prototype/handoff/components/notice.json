@@ -739,6 +739,17 @@
        ]
       },
       {
+       "property": "padding-bottom",
+       "value": "var(--tm-space-sm)",
+       "tokens": [
+        {
+         "native": "tokens.space.sm",
+         "web": "--tm-space-sm",
+         "value": 8
+        }
+       ]
+      },
+      {
        "property": "border-radius",
        "value": "var(--tm-radius-lg) var(--tm-radius-lg) 0 0",
        "tokens": [
@@ -876,13 +887,24 @@
        "layout": true
       },
       {
+       "property": "margin-bottom",
+       "value": "calc(-1 * var(--tm-space-2xs))",
+       "tokens": [
+        {
+         "native": "tokens.space.2xs",
+         "web": "--tm-space-2xs",
+         "value": 2
+        }
+       ]
+      },
+      {
        "property": "text-align",
        "value": "center",
        "tokens": [],
        "layout": true
       }
      ],
-     "size": "390×46.7"
+     "size": "390×42.7"
     }
    }
   },
@@ -1759,7 +1781,7 @@
  "rules": [
   {
    "section": "Design rules 9.5",
-   "text": "**Notice** — Neutral / warning / error (L5); stays until the cause is gone. **Warning** when something blocks the main action or runs on a timer (offline, locks, near expiry); **error** when an action failed; **neutral** only for side information (D-54). Text wraps balanced. **Placement:** a notice that is the **result of an action** sits next to the control that did it — on a screen with a pinned bar, inside the bar above its button, in the band style of §3 (Home \"ending soon\", setup / add / request failures, the offer's \"Couldn't turn on…\", the case and calling bar notices); on a screen without a bar, 16 below the field it came from (D-98) or 8 below the button. A notice about **the bar's own action** — the result of the last tap, or why its button is disabled now (offline, \"No cases right now\") — is also in the bar. A notice about the **screen's general situation** (unlock \"isn't available\", Home idle-expired, manually ended, expired-pending, stop-pending) stays at the top of the panel, not tied to a button. **Alignment (D-86, 2026-11-03):** the band inside the bar is centred (icon and text as a group, wrapped lines centred, balanced breaks kept); every other notice (top of page, inside sheets, in content) stays left-aligned."
+   "text": "**Notice** — Neutral / warning / error (L5); stays until the cause is gone. **Warning** when something blocks the main action or runs on a timer (offline, locks, near expiry); **error** when an action failed; **neutral** only for side information (D-54). Text wraps balanced. **Placement:** a notice that is the **result of an action** sits next to the control that did it — on a screen with a pinned bar, inside the bar above its button, in the band style of §3 (Home \"ending soon\", setup / add / request failures, the offer's \"Couldn't turn on…\", the case and calling bar notices); on a screen without a bar, 16 below the field it came from (D-98, D-108). A notice about **the bar's own action** — the result of the last tap, or why its button is disabled now (offline, \"No cases right now\") — is also in the bar. A notice about the **screen's general situation** (unlock \"isn't available\", Home idle-expired, manually ended, expired-pending, stop-pending) stays at the top of the panel, not tied to a button. **Alignment (D-86, 2026-11-03):** the band inside the bar is centred (icon and text as a group, wrapped lines centred, balanced breaks kept); every other notice (top of page, inside sheets, in content) stays left-aligned."
   },
   {
    "section": "Design rules L5",

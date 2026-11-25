@@ -137,7 +137,7 @@
        "layout": true
       }
      ],
-     "size": "390×719"
+     "size": "390×745"
     }
    }
   },
@@ -172,12 +172,12 @@
       },
       {
        "property": "padding",
-       "value": "var(--tm-space-xs) var(--tm-space-md)",
+       "value": "var(--tm-space-sm) var(--tm-space-md)",
        "tokens": [
         {
-         "native": "tokens.space.xs",
-         "web": "--tm-space-xs",
-         "value": 4
+         "native": "tokens.space.sm",
+         "web": "--tm-space-sm",
+         "value": 8
         },
         {
          "native": "tokens.space.md",
@@ -220,6 +220,12 @@
        ]
       },
       {
+       "property": "text trim (to the ink)",
+       "value": "trim-both cap text",
+       "tokens": [],
+       "layout": true
+      },
+      {
        "property": "font-family",
        "value": "var(--tm-font)",
        "tokens": [
@@ -232,7 +238,7 @@
        "inherited": true
       }
      ],
-     "size": "346.2×28"
+     "size": "346.2×29.4"
     }
    }
   },
@@ -266,7 +272,7 @@
        "layout": true
       }
      ],
-     "size": "320×687"
+     "size": "320×711.6"
     }
    }
   },
@@ -608,7 +614,7 @@
        ]
       }
      ],
-     "size": "358×698"
+     "size": "358×691.1"
     }
    }
   }

@@ -19,11 +19,10 @@ From r2-build (`docs/renders/2026-11-11-r2-build/REPORT.md`):
 1. Approve the new entry + Home pictures (`all-screens.png`, `before-after/`)?
 2. Add time greyed when less than 15 min fits under the 10-hour cap, and no Add time on "Availability ended" — keep?
 From r3-rest-audit (`docs/renders/2026-11-11-r3-rest-audit/CONCLUSION.md` §2):
-3. Q1 Duration: unit first, then Days 1 2 3 5 7 10 14 15 · Weeks 1 2 3 4 6 8 · Months 1 2 3 6 12 (+ Ongoing)?
-4. Q2 Add "Prescriptions written today" to Profile?
-5. Q3 Add "Your availability has ended." above Back to Home on the ended case?
-6. Q4 Keep status tags at 12 (no = 14)?
-7. Q6 Keep callback times on 3 columns?
-8. Q7 Callback busy "Scheduling…" and "Your chosen time is kept."?
-9. Q8 Rx viewer header: tools row 8 below the title (no = keep 34)?
-10. Q9 Calling-flow page = internal desktop diagram (RULES §4, not §8)?
+3. ~~Q1 Duration~~ — answered 2026-11-25 (D-110): 1–12 for every unit; numbers first.
+4–10. Q2–Q4, Q6–Q9: built on the recommended answers overnight (D-111), **awaiting Apurva's OK**.
+
+From the overnight build (2026-11-25, `docs/renders/2026-11-25-r4-rest-build/REPORT.md`):
+11. "Availability ended" still shows "Time remaining 0:00" (D-53). Hide it?
+12. Case loading: the old approved picture showed Back; the app hides it ("no actions until loaded"). Keep hidden?
+13. A backend duration above 12 (e.g. 15 days) shows as the value with no number selected. Fine?

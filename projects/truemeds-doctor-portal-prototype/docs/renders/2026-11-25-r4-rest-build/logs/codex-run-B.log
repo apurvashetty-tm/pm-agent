@@ -1,0 +1,101 @@
+PASS B-gate-pilot_ha_free before gate: neutral script, no finals, callback or back
+PASS B-live-pilot_ha_free live gate CTA independent of HA capacity
+PASS B-gate-pilot_no_ha_free before gate: neutral script, no finals, callback or back
+PASS B-live-pilot_no_ha_free live gate CTA independent of HA capacity
+PASS B-busy-g2-checking-ha busy stage disables Skip HA and has no Callback
+PASS B-busy-t13-connecting-ha busy stage disables Skip HA and has no Callback
+PASS B-wait-g3b-forwarded forward while live waits; no next-case actions
+PASS B-wait-t15-ha-no-join forward while live waits; no next-case actions
+PASS B-ended-g3b-after-hangup forward after hang-up removes script and allows next case
+PASS B-ended-t15-after-hangup forward after hang-up removes script and allows next case
+PASS B-missed-t16-transfer-missed ended-before-confirm names correct party
+PASS B-missed-t16b-transfer-missed-patient ended-before-confirm names correct party
+PASS B-missed-t16c-transfer-missed-unknown ended-before-confirm names correct party
+PASS B-skip-g1-generic-confirm-Patient declined the Health Advisor call Skip HA immediate reason: Patient declined the Health Advisor call
+PASS B-skip-g1-generic-confirm-Clinically not required Skip HA immediate reason: Clinically not required
+PASS B-skip-g1-generic-confirm-Repeat patient, familiar with the medicines Skip HA immediate reason: Repeat patient, familiar with the medicines
+PASS B-skip-t16-transfer-missed-Patient declined the Health Advisor call Skip HA immediate reason: Patient declined the Health Advisor call
+PASS B-skip-t16-transfer-missed-Clinically not required Skip HA immediate reason: Clinically not required
+PASS B-skip-t16-transfer-missed-Repeat patient, familiar with the medicines Skip HA immediate reason: Repeat patient, familiar with the medicines
+PASS B-skip-cancel Skip HA close preserves live B1 and eligibility
+PASS B-7d Pilot missing result forwards, callback and unavailable; no Skip HA
+PASS B-pending Pilot Pending gate also blocks live generic confirm
+PASS B-expiry availability ending mid-case never interrupts; ending allows only Home
+PASS B-reopen reload restores open case, medicine changes and typed notes
+PASS B-open-profile Profile forbids logout while case open
+PASS B-background clock survives background/reload during a call; no OTP overlay
+PASS B-late-earlier late record for previous case cannot replace next case
+PASS B-demo demo goes sign-in through prescribing and valid call to next case
+PASS B-play-cat4 desktop and phone play-link route parity
+PASS B-play-pilot_ha_free desktop and phone play-link route parity
+PASS B-play-pilot_no_ha_free desktop and phone play-link route parity
+PASS B-play-pilot_ha_skipped_customer desktop and phone play-link route parity
+PASS B-play-pilot_ha_skipped_system desktop and phone play-link route parity
+PASS S-360-c-skip-ha ?s=c-skip-ha opens built content
+PASS S-360-g0-calling-pilot ?s=g0-calling-pilot opens built content
+PASS S-360-g1-generic-confirm ?s=g1-generic-confirm opens built content
+PASS S-360-g2-checking-ha ?s=g2-checking-ha opens built content
+PASS S-360-g3b-after-hangup ?s=g3b-after-hangup opens built content
+PASS S-360-g3b-forwarded ?s=g3b-forwarded opens built content
+PASS S-360-s7d-result-missing-pilot ?s=s7d-result-missing-pilot opens built content
+PASS S-360-t10b-forwarded ?s=t10b-forwarded opens built content
+PASS S-360-t13-connecting-ha ?s=t13-connecting-ha opens built content
+PASS S-360-t14-transferred ?s=t14-transferred opens built content
+PASS S-360-t15-after-hangup ?s=t15-after-hangup opens built content
+PASS S-360-t15-ha-no-join ?s=t15-ha-no-join opens built content
+PASS S-360-t16-transfer-missed ?s=t16-transfer-missed opens built content
+PASS S-360-t16b-transfer-missed-patient ?s=t16b-transfer-missed-patient opens built content
+PASS S-360-t16c-transfer-missed-unknown ?s=t16c-transfer-missed-unknown opens built content
+PASS S-360-t17-skip-ha-wait ?s=t17-skip-ha-wait opens built content
+PASS S-360-call.mismatch-logged ?s=call.mismatch-logged opens built content
+PASS S-360-call.skipHa ?s=call.skipHa opens built content
+PASS S-360-call.transfer-failed ?s=call.transfer-failed opens built content
+PASS S-360-call.waiting-for-hangup ?s=call.waiting-for-hangup opens built content
+PASS S-360-case.reopened ?s=case.reopened opens built content
+PASS S-390-c-skip-ha ?s=c-skip-ha opens built content
+PASS S-390-g0-calling-pilot ?s=g0-calling-pilot opens built content
+PASS S-390-g1-generic-confirm ?s=g1-generic-confirm opens built content
+PASS S-390-g2-checking-ha ?s=g2-checking-ha opens built content
+PASS S-390-g3b-after-hangup ?s=g3b-after-hangup opens built content
+PASS S-390-g3b-forwarded ?s=g3b-forwarded opens built content
+PASS S-390-s7d-result-missing-pilot ?s=s7d-result-missing-pilot opens built content
+PASS S-390-t10b-forwarded ?s=t10b-forwarded opens built content
+PASS S-390-t13-connecting-ha ?s=t13-connecting-ha opens built content
+PASS S-390-t14-transferred ?s=t14-transferred opens built content
+PASS S-390-t15-after-hangup ?s=t15-after-hangup opens built content
+PASS S-390-t15-ha-no-join ?s=t15-ha-no-join opens built content
+PASS S-390-t16-transfer-missed ?s=t16-transfer-missed opens built content
+PASS S-390-t16b-transfer-missed-patient ?s=t16b-transfer-missed-patient opens built content
+PASS S-390-t16c-transfer-missed-unknown ?s=t16c-transfer-missed-unknown opens built content
+PASS S-390-t17-skip-ha-wait ?s=t17-skip-ha-wait opens built content
+PASS S-390-call.mismatch-logged ?s=call.mismatch-logged opens built content
+PASS S-390-call.skipHa ?s=call.skipHa opens built content
+PASS S-390-call.transfer-failed ?s=call.transfer-failed opens built content
+PASS S-390-call.waiting-for-hangup ?s=call.waiting-for-hangup opens built content
+PASS S-390-case.reopened ?s=case.reopened opens built content
+PASS B-EDGE-1 B0>B1:gate passed, call live
+PASS B-EDGE-2 B0>B7d:no result: 7c, nothing
+PASS B-EDGE-3 B0>RES:ended before the gate
+PASS B-EDGE-4 B1>B2:Confirm prescription
+PASS B-EDGE-5 B1>T16:ended after gate, no Confirm
+PASS B-EDGE-6 B1>T17:Skip HA + reason
+PASS B-EDGE-7 B2>B3:no HA free
+PASS B-EDGE-8 B2>T13:HA free
+PASS B-EDGE-9 B3>EB3:hang-up
+PASS B-EDGE-10 B7d>C7f:Confirm & forward
+PASS B-EDGE-11 B7d>CB:Callback
+PASS B-EDGE-12 B7d>P9:Unavailable + reason
+PASS B-EDGE-13 C6>B0:Call again (Pilot context kept)
+PASS B-EDGE-14 C7b>B0:Still talking (Pilot context kept)
+PASS B-EDGE-15 C7f>E10b:record over the gate (Pilot)
+PASS B-EDGE-16 CALL>B0:Pilot
+PASS B-EDGE-17 E15>HOLD:result under the gate (background)
+PASS B-EDGE-18 EB3>HOLD:result under the gate (background)
+PASS B-EDGE-19 T13>E14:HA rung (joins or doesn't pick up)
+PASS B-EDGE-20 T13>T15:couldn't start
+PASS B-EDGE-21 T15>E15:hang-up
+PASS B-EDGE-22 T16>E10a:Skip HA + reason → Confirm prescription
+PASS B-EDGE-23 T16>E10b:Confirm & forward
+PASS B-EDGE-24 T17>RES:result
+99/99 passed
+exit 0

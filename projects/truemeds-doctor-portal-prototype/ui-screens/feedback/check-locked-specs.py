@@ -337,7 +337,7 @@ STD_JS = r"""(exemptSel) => {
     const fs = PX(cs.fontSize);
     const txt = el.textContent.trim().slice(0, 40);
     if (!SIZES.includes(Math.round(fs))) add('2.1', `font ${cs.fontSize} on "${txt}"`);
-    if (fs < 14 && !el.closest('.tm-tag,.tm-text-body-sm,.tm-tag--md')) add('2.2', `text ${cs.fontSize} on "${txt}" (only tags and L4 fine print may be under 14px)`);
+    if (fs < 14 && !el.closest('.tm-tag:not(.tm-tag--md),.tm-text-body-sm')) add('2.2', `text ${cs.fontSize} on "${txt}" (only tags and L4 fine print may be under 14px)`);
     if (el.closest(exemptSel)) continue;
     const disabled = el.closest(':disabled,[aria-disabled="true"]') || el.matches(':disabled');
     if (disabled) continue;

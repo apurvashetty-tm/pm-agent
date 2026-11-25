@@ -17,34 +17,34 @@
       },
       {
        "property": "left",
-       "value": "var(--tm-space-xl)",
+       "value": "var(--tm-space-page)",
        "tokens": [
         {
-         "native": "tokens.space.xl",
-         "web": "--tm-space-xl",
-         "value": 24
+         "native": "tokens.space.lg",
+         "web": "--tm-space-page",
+         "value": 16
         }
        ]
       },
       {
        "property": "right",
-       "value": "var(--tm-space-xl)",
+       "value": "var(--tm-space-page)",
        "tokens": [
         {
-         "native": "tokens.space.xl",
-         "web": "--tm-space-xl",
-         "value": 24
+         "native": "tokens.space.lg",
+         "web": "--tm-space-page",
+         "value": 16
         }
        ]
       },
       {
        "property": "bottom",
-       "value": "calc(100% + var(--tm-space-sm))",
+       "value": "calc(100% + var(--tm-space-lg))",
        "tokens": [
         {
-         "native": "tokens.space.sm",
-         "web": "--tm-space-sm",
-         "value": 8
+         "native": "tokens.space.lg",
+         "web": "--tm-space-lg",
+         "value": 16
         }
        ],
        "layout": true
@@ -79,7 +79,7 @@
        "layout": true
       }
      ],
-     "size": "342×64"
+     "size": "358×64"
     }
    }
   }

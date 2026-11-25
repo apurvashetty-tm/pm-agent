@@ -33,8 +33,7 @@ export function actionBar(children, { notice: band = null, cls = "", id } = {}) 
 
 // Bottom sheet over the screen (RULES §9.4): scrim, header (title + ✕), body, pinned actions. Returns the overlay element.
 // onClose: ✕ and a tap on the scrim. closeDisabled: busy sheets keep ✕ greyed (D-81 F9).
-// beforeActions: a result notice that sits between the body and the buttons (callback save failure, K3).
-export function sheet({ title, subtitle, body = [], actions = [], onClose, closeDisabled = false, id, label, cls = "", beforeActions = null }) {
+export function sheet({ title, subtitle, body = [], actions = [], onClose, closeDisabled = false, id, label, cls = "" }) {
   const titleId = `sh-${Math.random().toString(36).slice(2, 7)}`;
   const close = h("button", { type: "button", class: "tm-btn tm-btn--quiet tm-btn--icon tm-sheet__close", "aria-label": MSG("common.close"), disabled: closeDisabled, onclick: () => onClose && onClose() }, icon("x"));
   // D-109 §2: a subtitle sits 8 under the title inside the header (.tm-sheet__heading); the title line stays centred on the ✕.
@@ -44,7 +43,6 @@ export function sheet({ title, subtitle, body = [], actions = [], onClose, close
       subtitle ? h("div", { class: "tm-sheet__heading" }, titleEl, h("p", { class: "tm-sheet__subtitle", text: subtitle })) : titleEl, close),
     // A confirmation sheet whose only words are the subtitle has no body: header → actions (24, the actions' own margin).
     label || [].concat(body).some(Boolean) ? h("div", { class: "tm-sheet__body" }, label ? h("div", { class: "tm-sheet__label", text: label }) : null, ...[].concat(body)) : null,
-    beforeActions,
     actions.length ? h("div", { class: "tm-sheet__actions" }, ...actions) : null);
   const overlay = h("div", { class: "tm-overlay app-overlay" }, box);
   overlay.addEventListener("click", (e) => { if (e.target === overlay && !closeDisabled && onClose) onClose(); });
@@ -79,7 +77,7 @@ const TAG = { prescribed: ["tm-tag--success", "case.statusPrescribed"], pending:
 export function medicineRow(m, { readonly = false, onOpen } = {}) {
   const [tagCls, tagKey] = TAG[m.status] || TAG.pending;
   const row = h("div", { class: `tm-row medicine-item${m.status === "disabled" ? " disabled" : ""}${readonly ? " tm-row--readonly" : ""}`,
-    role: readonly ? null : "button", tabindex: readonly ? "-1" : "0", "aria-label": MSG("case.editMedicine", { name: m.name }), "data-med-id": String(m.id) },
+    role: readonly ? null : "button", tabindex: readonly ? "-1" : "0", "aria-label": readonly ? null : MSG("case.editMedicine", { name: m.name }), "data-med-id": String(m.id) },
     h("div", { class: "tm-thumb med-icon" }, icon(FORM_ICON[m.form] || "tablet", "tm-icon--24")),
     h("div", { class: "tm-row__main med-info" },
       h("div", { class: "tm-row__title med-name", text: `${m.name} ${m.strength}` }),

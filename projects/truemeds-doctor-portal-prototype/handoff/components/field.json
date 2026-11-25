@@ -237,7 +237,7 @@
        "layout": true
       }
      ],
-     "size": "326×118"
+     "size": "326×111.4"
     }
    }
   },
@@ -2116,7 +2116,7 @@
        "layout": true
       }
      ],
-     "size": "300×64"
+     "size": "300×63.9"
     },
     "default": {
      "seenIn": "a-confirm-failed",
@@ -2226,7 +2226,7 @@
        "layout": true
       }
      ],
-     "size": "300×64"
+     "size": "300×63.9"
     },
     "focus": {
      "seenIn": "a-notes-typing",
@@ -2336,7 +2336,7 @@
        "layout": true
       }
      ],
-     "size": "300×64"
+     "size": "300×63.9"
     },
     "read-only": {
      "seenIn": "e-availability-ended",
@@ -2446,7 +2446,7 @@
        "layout": true
       }
      ],
-     "size": "300×27"
+     "size": "300×41.6"
     }
    }
   },
@@ -2670,13 +2670,13 @@
        "layout": true
       }
      ],
-     "size": "300×43"
+     "size": "300×44.2"
     }
    }
   },
   "ps-other": {
    "states": {
-    "default": {
+    "error": {
      "seenIn": "d-error-other",
      "styles": [
       {
@@ -2791,7 +2791,7 @@
        "layout": true
       }
      ],
-     "size": "260.1×46"
+     "size": "260.1×45.9"
     }
    }
   },
@@ -2900,7 +2900,7 @@
        "layout": true
       }
      ],
-     "size": "300×64"
+     "size": "300×63.9"
     },
     "focus": {
      "seenIn": "d-notes-keyboard",
@@ -3005,7 +3005,7 @@
        "layout": true
       }
      ],
-     "size": "300×64"
+     "size": "300×63.9"
     }
    }
   }
@@ -3084,6 +3084,7 @@
   "otp_two-tries-left",
   "otp_verifying",
   "otp_wrong-code",
+  "a-back-blocked",
   "a-confirm-busy",
   "a-confirm-failed",
   "a-leave-sheet",
@@ -3112,12 +3113,15 @@
   "g3b-forwarded",
   "s-medicine-disabled",
   "s-optional-empty",
+  "s7a-calling",
+  "s7b-still-on-call",
   "s7d-result-missing",
   "s7d-result-missing-pilot",
   "s7d-unavailable-sheet",
   "s7e-leave-sheet",
   "s7f-submitted",
   "t01-ready",
+  "t02-calling",
   "t03-not-through",
   "t04-doctor-missed",
   "t05-result-wait",
@@ -3169,7 +3173,6 @@
    "helper",
    "symptoms-input",
    "doctor-notes-input",
-   "ps-other",
    "ps-note"
   ],
   "focus": [
@@ -3188,7 +3191,8 @@
    "control",
    "prefix",
    "input",
-   "helper"
+   "helper",
+   "ps-other"
   ],
   "read-only (busy)": [
    "container",
