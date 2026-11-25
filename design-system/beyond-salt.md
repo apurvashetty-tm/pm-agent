@@ -74,7 +74,7 @@ Mobile layout rules: `RULES.md` §8 (four type levels, one side margin, three ga
 | Field prefix | `.tm-field__prefix` | Fixed "+91" before the mobile-number input. |
 | One-time code | `.tm-otp` | OTP boxes (one real input under the boxes, so SMS autofill and paste work). |
 | Large chip | `.tm-chip--lg` | ~46px touch-size chip for choices tapped during a call (dose, interval, duration). |
-| Medium tag | `.tm-tag--md` | 12px tag label; SALT's 10px is too small on dense doctor screens. |
+| Medium tag | `.tm-tag--md` | 14px tag label (12 until 2026-11-25, D-111): a status the doctor acts on is at least 14; SALT's is 10px. |
 | Snackbar | `.tm-snackbar` | Message + one action. Unused; a toast never carries an action (RULES §9.5). Candidate to drop. |
 | Empty / waiting state | `.tm-empty` | Centred icon, title, line and optional action (e.g. "No cases right now"). |
 | Web layer | `.tm-sidenav`, data table, `.tm-stat` | Internal desktop tools only; not needed in the native app. |
@@ -158,3 +158,5 @@ Implemented centrally 2026-10-15 (preview renders: `build/preview-2026-10-15/`).
 | Item | Class | Why |
 |---|---|---|
 | Notice band centred | `.tm-actionbar > .tm-notice` `justify-content: center; text-align: center` | RULES §9.5 (D-86, Apurva 2026-11-03): the result band inside the pinned bar is centred as a group with balanced wrapped lines; notices elsewhere stay left-aligned. |
+
+**2026-11-25 (D-111):** title-only sheet header: title carries its own 10 margin, body 4 under the header, first label trimmed, so header to content is a visible 16 for one or two title lines.
