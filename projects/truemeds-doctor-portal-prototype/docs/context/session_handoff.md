@@ -1046,3 +1046,15 @@ User identified missing HTML/native linkage. Inspected actual sign-in and OTP HT
 - **2026-11-26 · D-115 (Apurva):** Add time always tappable (says why when nothing fits); shift hours only when the backend sends them (review panel switch). 2 new Home pictures, 150 states; kit H4, H12. CHECKIN 2 and 13 closed.
 - **2026-11-26 · D-111 approved (Apurva: "Approve all").** Kit draft line removed; case and Prescribe pictures approved. Still open: CHECKIN 1 (r2 sign-in/OTP/offer/unlock/Home pictures), 12 (loading Back).
 - **Next:** Apurva's sanity check (pictures, phone) and CHECKIN 1, 2, D-111, 11–13; then PR #41 + D-111's design-system edits (shared), project PR, release only when asked.
+
+## 2026-11-26 · Kit rules from the app team; block map; learning saved
+- **D-116 (Apurva):** phone Back while a case loads opens "Leave this case?" (Release / Stay). Committed `e1a64a0`.
+- **[USER-PROVIDED] App team kit rules:** a `kit.json` version for every kit; `CHANGES.md` and `changes.json`; no silent renames (old → new, marked breaking); plain-data `tokens.ts`, `messages.ts` and `icons.ts`; every block state with a picture; answers in `DECIDED.md`; post the version and a summary. Their details page (claude.ai artifact) can't be opened yet. **Apurva asked them for access; wait before building kit 2.0.0.**
+- **Block map:** `docs/proposals/2026-11-26-kit-v1-block-map.md`. It covers all 18 renamed or removed blocks since `963c2b5`, matched by screen position and copy key. 14 blocks were merged into `entry-band`, `srow` and others, so they can't go back to their old names. Recommended: keep the new names, ship the map, and release as 2.0.0 marked breaking (aliases optional).
+- **Learning:** `knowledge/learnings/2026-11-26-handoff-kit-is-a-contract.md`.
+- **Next:** read the app team's page, then build kit 2.0.0:
+  - `kit.json`, `changes.json` and this map;
+  - an automatic check against `scripts/kit-changes/v1.json`;
+  - block-state pictures.
+
+  Don't merge until Apurva says so.
