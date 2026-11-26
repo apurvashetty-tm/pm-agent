@@ -541,17 +541,6 @@ window.TM_STATE_MAP = {
    "notes": []
   },
   {
-   "id": "home_expired-pending",
-   "kind": "picture",
-   "picture": "home/home_expired-pending",
-   "step": 2,
-   "lookAhead": [],
-   "version": "B",
-   "calling": [],
-   "behaviour": "home.expired-pending",
-   "notes": []
-  },
-  {
    "id": "home_idle-expired",
    "kind": "picture",
    "picture": "home/home_idle-expired",
@@ -1834,6 +1823,13 @@ window.TM_STATE_MAP = {
   },
   {
    "id": "home.add-open",
+   "kind": "behaviour",
+   "step": 2,
+   "picture": null,
+   "version": "B"
+  },
+  {
+   "id": "home.expired-pending",
    "kind": "behaviour",
    "step": 2,
    "picture": null,

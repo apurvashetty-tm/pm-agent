@@ -67,6 +67,7 @@ export const STATE_GROUPS = [
   { title: "Home", ids: {
     "home_setup-wheel": "Home · Start taking cases (Quick picks, Custom)",
     "home.setup": "Home · first set-up (behaviour)",
+    "home.expired-pending": "Home · time ran out during Requesting… (behaviour)",
     "home_setting": "Home · setting availability…",
     "home_setup-failed": "Home · couldn't set availability",
     "home_active": "Home · You can take cases (time card, Add time)",
@@ -83,7 +84,6 @@ export const STATE_GROUPS = [
     "home_added": "Home · time added",
     "home_end-confirmation": "Home · End availability?",
     "home_stop-pending": "Home · ending after the open request",
-    "home_expired-pending": "Home · Availability ended, request still open",
     "home_idle-expired": "Home · availability ran out (count row above the picker)",
     "home_manually-ended": "Home · availability ended",
     "home_profile": "Profile",

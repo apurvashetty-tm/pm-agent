@@ -26,7 +26,7 @@ export function resetWork(patch = {}) { mem = { ...blank(), ...patch }; db().set
 const v = (k) => value(k, mode());
 
 // ---- availability ----
-// "none" (set it) · "active" · "near" (Availability ends soon, + Add time) · "expired-pending" (ran out with a request open) ·
+// "none" (set it) · "active" · "near" (Availability ends soon, + Add time) · "expired-pending" (ran out with a request open: Home keeps the Requesting… loader, D-114) ·
 // "stopping" (ended by the doctor with a request open). Ends on its own when the clock passes endsAt (app-logic §3).
 export function availability() {
   const w = work();

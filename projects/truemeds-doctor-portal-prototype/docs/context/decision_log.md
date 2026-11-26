@@ -1093,6 +1093,11 @@ From an external (ChatGPT) review, each point verified before acting.
 - **Why:** a 0:00 timer adds nothing once the window has ended; the notice should lead to the picker and Set availability below it.
 - Built: `app/screens/home.js`, `ui-screens/home/home-reference.js`, `app/screens/home.css` (line break), copy registry. Pictures `home_expired-pending`, `home_idle-expired`, `home_manually-ended` re-rendered (other Home pictures unchanged). Kit change H11.
 
+### D-114 · No "Availability ended" screen: Requesting… stays until the answer — 2026-11-26 · **Apurva**
+- **Decision (Apurva):** remove the Home "Availability ended" screen (`home_expired-pending`, "Your last request is still active."). If time runs out while **Requesting…** shows, nothing changes on screen: the Requesting… loader stays until the answer. A case → it opens as normal (an open case is never cut off; after it closes, the ended Home). No case, or the request failed → toast **"No cases right now."** then the ended Home ("Your availability ended." / "Set it again to get new cases."). Replaces the expired-pending parts of D-47, D-53, D-107 and D-113 (the 0:00 question no longer arises).
+- **Why:** the screen only covered the few seconds between Request a case and the answer, had no action for the doctor and read as stuck; the existing Requesting… loader already covers that moment.
+- Built: `app/screens/home.js` (loader kept, toast `home.noCasesEnded`), Home reference, copy registry (removed `home.expiredPending`, `home.titleEnded`), story option "Ended, request open" removed, state map 148 pictures; behaviour row `home.expired-pending` now opens Requesting…. Check: build-fast-a1 R03-e. Kit change H11.
+
 ## Design system changes made for this work
 
 ### D-60 · Secondary button without drop shadow (design system) — 2026-10-24 · **REVERTED same day**

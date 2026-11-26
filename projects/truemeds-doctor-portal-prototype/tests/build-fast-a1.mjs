@@ -31,9 +31,13 @@ add("R03-d", "End availability with a request open: honours that request, no new
   await d.click("Back"); await d.click("Release case"); await d.settle();
   await d.msg("home.manuallyEnded"); await d.buttons(["Set availability"], ["Request a case"]);
 });
-add("R03-e", "no time row (no 0:00) when availability ran out with a request still open", "home_expired-pending", "app-logic.md:77 (D-113, was D-53)", async (d) => {
-  assert.equal(await d.root().locator("#home-time").count(), 0, "no Time remaining row"); await d.msg("home.expiredPending");
-});
+add("R03-e", "time runs out during Requesting…: the loader stays (no screen of its own); no case → toast, then ended Home", "home_active", "app-logic.md §3 (D-114, replaces D-53 / expired-pending)", async (d) => {
+  await d.ff(30 * MIN - 3000); await d.click("Request a case"); await d.ff(5000);   // the window ends while the request is open
+  await d.p.waitForTimeout(150);
+  assert.ok(await d.button(copy("home.requesting")).isVisible(), "still Requesting…");
+  assert.equal(await d.root().locator("#home-time").count(), 0, "no Time remaining row (no 0:00)");
+  await d.settle(); await d.msg("home.noCasesEnded"); await d.msg("home.idleExpired"); await d.buttons(["Set availability"], ["Request a case"]);
+}, { request: "no-cases" });
 add("R04-a", "a confirmed prescription counts once; earnings = count × setting", "a-confirm-failed", "app-logic.md:71,279 (D-81 F10)", async (d) => {
   await d.choose("prescribe", "saved"); await d.click("Confirm prescription"); await d.settle(); await d.text("Prescription confirmed");
   await d.click("Back to Home"); await d.settle();

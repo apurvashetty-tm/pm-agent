@@ -93,7 +93,6 @@ export const WHEN = {
   home_added: W("Time added", "Extra time was added.", "The sheet closes, the timer shows the new time left and a “Time added” toast shows above the bar."),
   "home_end-confirmation": W("End availability?", "End availability was tapped.", "A sheet asks to confirm. Ending stops new requests; Keep available closes the sheet."),
   "home_stop-pending": W("Ending availability", "The doctor ended availability while a request was still pending.", "No new requests; the pending one is honoured, then availability ends. No time row; a quiet “Ending…” line."),
-  "home_expired-pending": W("Ended, request pending", "Time ran out while a request was still pending.", "The request already made is honoured; any case that arrives opens as usual."),
   "home_idle-expired": W("Availability ended", "The availability time ran out while the doctor wasn't on a case.", "A notice at the top says it ended; the picker is back so they can set availability again. Today's count stays."),
   "home_manually-ended": W("Ended by the doctor", "The doctor ended availability.", "A notice at the top confirms it; the picker is back to set availability again."),
   home_profile: W("Profile", "The doctor opened Profile from Home.", "Name, prescriptions written today, today's earnings, User manual, Faster sign-in on / off and Log out. Back returns to Home."),

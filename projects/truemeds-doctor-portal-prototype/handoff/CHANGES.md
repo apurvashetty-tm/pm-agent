@@ -66,7 +66,7 @@
 | H7 | End sheet: "You won’t get new cases after this. A case already assigned to you stays with you."; title when time ran out with a request open: "Availability ended". | Must |
 | H8 | After availability ends: the count is one row above the picker, number on the label's line, so the whole wheel shows at 390 × 844. | Must |
 | H9 | Profile shows Prescriptions written today (read only). Cards to Log out 32. | Must |
-| H11 | Ended notices: "Your availability ended." / "You ended your availability." and, on its own line, **"Set it again to get new cases."** (was "You won’t get new cases."). Ran out with a request open: **no Time remaining row** (no "0:00"). | Must |
+| H11 | Ended notices: "Your availability ended." / "You ended your availability." and, on its own line, **"Set it again to get new cases."** (was "You won’t get new cases."). **The "Availability ended" screen (`home_expired-pending`) is removed:** if time runs out during Requesting…, the Requesting… loader stays until the answer; a case opens as normal; no case (or the request failed) → toast **"No cases right now."** then the ended Home. Copy removed: "Your last request is still active.", the "Availability ended" title. | Must |
 | H10 | **A new OTP sign-in opens a fresh Home** ("Start taking cases", no old notice). Availability, its "ended" notice and any case request left from an earlier session that was never logged out (app closed, sign-in expired) are cleared, and the backend ends that availability. Prescriptions written today stays; an open case still reopens first. Log out already ends availability. v1: not covered. | Must |
 
 ## Case page and calling
@@ -97,6 +97,7 @@
 | `signin.smsHelper` | We’ll send you a verification code by SMS. | We’ll send you an OTP by SMS. |
 | `signin.couldntSend` | Couldn’t send the code. | Couldn’t send the OTP. |
 | `otp.newSent` | New code sent | New code sent. |
+| `home.noCasesEnded` | — (new) | No cases right now. |
 | `home.idleExpired` | Your availability ended. You won’t get new cases. | Your availability ended.
 Set it again to get new cases. |
 | `home.manuallyEnded` | You ended your availability. You won’t get new cases. | You ended your availability.
@@ -111,7 +112,6 @@ Set it again to get new cases. |
 | `home.subSetup` | Choose how long you’re available today. | You can add time or stop anytime. |
 | `home.titleActive` | You’re available for consultations | You can take cases |
 | `home.subActive` | Request a case whenever you have a moment. | Request a case now, or whenever you’re ready. |
-| `home.titleEnded` | Your availability has ended | Availability ended |
 | `home.rxToday` | Prescriptions today | Prescriptions written today |
 | `home.addTime` | + Add time | Add time |
 | `home.custom` | — (new) | Custom |
@@ -126,11 +126,13 @@ Set it again to get new cases. |
 | `home.endSub` | You won’t receive new cases after this. A case already assigned to you stays with you. | You won’t get new cases after this. A case already assigned to you stays with you. |
 | `case.availabilityEnded` | — (new) | Your availability has ended. |
 | `callback.scheduling` | — (new) | Scheduling… |
+| `home.expiredPending` | Your last request is still active. | — (removed) |
 | `offer.fingerprintLine` | Unlock the app with one touch, not an OTP. | — (removed) |
 | `offer.faceIdLine` | Unlock the app with a glance, not an OTP. | — (removed) |
 | `offer.screenLockLine` | Unlock the app with your PIN or pattern, not an OTP. | — (removed) |
 | `unlock.notYou` | Not you? | — (removed) |
 | `unlock.switchAccount` | Switch account | — (removed) |
+| `home.titleEnded` | Your availability has ended | — (removed) |
 | `home.adjust` | Adjust duration | — (removed) |
 | `home.minimum` | Minimum 15 minutes | — (removed) |
 
@@ -139,4 +141,4 @@ Set it again to get new cases. |
 - Design values changed: none. Values used now that no screen used in v1: none. No longer used: `tokens.font.lineHeight.xs`, `tokens.font.size.body.xs`.
 - Building-block files in this kit that v1 didn't have: `bar-caption`, `entry-band`, `entry-panel`, `group`, `hint`, `lbl`, `lbl-row`, `link`, `pt-txt`, `srow`, `until`.
 - In v1 and gone (replaced or renamed, see the screen's file): `adjust`, `adjust-row`, `band`, `grp`, `head`, `header`, `header-actions`, `helper`, `intro`, `lk`, `login-logo`, `logo`, `panel`, `rx`, `sub`, `timer-label`, `timer-row`, `top`.
-- States added: none. Removed: none.
+- States added: none. Removed: `home_expired-pending`.

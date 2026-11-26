@@ -84,7 +84,6 @@ Executable inventory: 303 cases, counted from [INVENTORY.tsv](INVENTORY.tsv). Di
 | S-360-home_added | ?s=home_added opens built content | app/state-map.js:500; plan v3.2 B4 |
 | S-360-home_adding | ?s=home_adding opens built content | app/state-map.js:511; plan v3.2 B4 |
 | S-360-home_end-confirmation | ?s=home_end-confirmation opens built content | app/state-map.js:522; plan v3.2 B4 |
-| S-360-home_expired-pending | ?s=home_expired-pending opens built content | app/state-map.js:533; plan v3.2 B4 |
 | S-360-home_idle-expired | ?s=home_idle-expired opens built content | app/state-map.js:544; plan v3.2 B4 |
 | S-360-home_logout-confirm | ?s=home_logout-confirm opens built content | app/state-map.js:555; plan v3.2 B4 |
 | S-360-home_manually-ended | ?s=home_manually-ended opens built content | app/state-map.js:566; plan v3.2 B4 |
@@ -180,7 +179,6 @@ Executable inventory: 303 cases, counted from [INVENTORY.tsv](INVENTORY.tsv). Di
 | S-390-home_added | ?s=home_added opens built content | app/state-map.js:500; plan v3.2 B4 |
 | S-390-home_adding | ?s=home_adding opens built content | app/state-map.js:511; plan v3.2 B4 |
 | S-390-home_end-confirmation | ?s=home_end-confirmation opens built content | app/state-map.js:522; plan v3.2 B4 |
-| S-390-home_expired-pending | ?s=home_expired-pending opens built content | app/state-map.js:533; plan v3.2 B4 |
 | S-390-home_idle-expired | ?s=home_idle-expired opens built content | app/state-map.js:544; plan v3.2 B4 |
 | S-390-home_logout-confirm | ?s=home_logout-confirm opens built content | app/state-map.js:555; plan v3.2 B4 |
 | S-390-home_manually-ended | ?s=home_manually-ended opens built content | app/state-map.js:566; plan v3.2 B4 |

@@ -27,7 +27,7 @@ function typed(v){return /#[\da-f]{3,8}\b|\b(?:rgba?|hsla?|oklch|lab|lch|color)\
 function entry(text,id){return text.split(/^### /m).slice(1).find(s=>new RegExp(`^(?:<[^>]+>)*${id}\\s*·`).test(s));}
 
 test('H15: exact approved state partition and portable byte-identical pictures',()=>{
- assert.equal(pictures.length,149,'Approved state-map total (user contract)');
+ assert.equal(pictures.length,148,'Approved state-map total (user contract; D-114 removed home_expired-pending)');
  for(const j of journeys){const data=screen(j);assert.ok(data.screen);assert.ok(Array.isArray(data.states));assert.ok(Array.isArray(data.tokensUsed));assert.ok(Array.isArray(data.rawValues.builtApp));assert.ok(Array.isArray(data.rawValues.exceptions));
  const expected=pictures.filter(p=>p.picture.split('/')[0]===j);
  assert.deepEqual(data.states.map(s=>s.id).sort(),expected.map(s=>s.id).sort(),j);
@@ -122,5 +122,5 @@ test('H24: source-only Home CSS mutation invalidates --check in a private overla
 test('oracle: raw classifier respects token references, zero, percentages and optical sizes',()=>{
  for(const v of ['0','0 0','50%','transparent','flex','var(--tm-space-lg)','calc(100% - var(--tm-space-lg))'])assert.equal(typed(v),false,v);
  for(const v of ['1px','2px','3px','31ch','#fff','rgb(1 2 3)','calc(100% - 2px)'])assert.equal(typed(v),true,v);
- assert.equal(new Set(pictures.map(p=>p.id)).size,149);
+ assert.equal(new Set(pictures.map(p=>p.id)).size,148);
 });

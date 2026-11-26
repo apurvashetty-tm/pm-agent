@@ -28,7 +28,7 @@ export const STORY_FIELDS = {
   offer:       ["enabled", "cancelled", "enable-failed", "unavailable"],
   // the phone prompt's answer on returning unlock; "failed" = one failed try (3 → OTP)
   unlock:      ["success", "cancelled", "failed", "unavailable"],
-  availability:["normal", "near-expiry", "ending", "ended-with-request"],
+  availability:["normal", "near-expiry", "ending"],
   request:     ["accepted", "failed", "no-cases"],
   caseKind:    ["normal", "ten-medicines", "long-names", "empty", "rx-failed", "release-refused"],
   prescribe:   ["saved", "pending-blocks-confirm", "confirm-busy", "confirm-failed", "dose-error", "disabled"],

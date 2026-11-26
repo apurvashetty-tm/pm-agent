@@ -271,19 +271,19 @@
     "copy": "approved (Apurva, D-47)",
     "placeholders": []
   },
+  "home.noCasesEnded": {
+    "pattern": "T1",
+    "trigger": "time ran out during Requesting… and no case came (D-114)",
+    "slot": "toast above footer",
+    "next": "ended Home: set availability again",
+    "clear": "automatic display timeout",
+    "retain": "—",
+    "copy": "approved (Apurva, D-114)",
+    "placeholders": []
+  },
   "home.stopPending": {
     "pattern": "N1",
     "trigger": "stop requested with pending request",
-    "slot": "status slot",
-    "next": "wait for assignment",
-    "clear": "authoritative state",
-    "retain": "selected duration",
-    "copy": "approved (Apurva, D-47)",
-    "placeholders": []
-  },
-  "home.expiredPending": {
-    "pattern": "N1",
-    "trigger": "availability expired with pending request",
     "slot": "status slot",
     "next": "wait for assignment",
     "clear": "authoritative state",
@@ -1380,15 +1380,6 @@
     "clear": "—",
     "retain": "—",
     "copy": "approved D-107 (band audit §3) (2026-11-11)"
-  },
-  "home.titleEnded": {
-    "pattern": "none",
-    "trigger": "Home screen label",
-    "slot": "Home label",
-    "next": "—",
-    "clear": "—",
-    "retain": "—",
-    "copy": "approved D-107 (2026-11-11)"
   },
   "home.titleStopping": {
     "pattern": "none",

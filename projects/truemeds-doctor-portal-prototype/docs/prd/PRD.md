@@ -231,7 +231,7 @@ Each screen opens with the job the doctor is trying to get done, then why it's b
 - Ending soon → "Availability ends soon. You can still request a case." (Add time is always there).
 - Adding time → "Adding…"; done → "Time added"; failed → "Couldn’t add time."
 - End availability → confirmation sheet ("You won’t get new cases after this…"); with a request pending → "Finishing your last request. Availability ends after that."
-- Ended with a request still out → title "Availability ended", "Your last request is still active."; no time row (no "0:00", D-113).
+- Time runs out during Requesting… → no screen of its own: the Requesting… loader stays until the answer; a case opens as normal; no case → toast "No cases right now." then the ended Home (D-114).
 - Ended while idle → "Your availability ended." / "Set it again to get new cases."; ended by the doctor → "You ended your availability." / "Set it again to get new cases." (one sentence per line, D-113).
 - Profile during an open case → "You can log out after this case is closed."
 - Log out confirm → "You’ll stop getting cases until you sign in again." with Log out and Stay signed in.

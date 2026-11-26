@@ -4,7 +4,7 @@
 const $ = (s) => document.querySelector(s);
 const M = window.TMFeedback.msg;
 const STATES = ['setup-wheel', 'setting', 'setup-failed', 'active', 'requesting', 'no-cases', 'request-failed', 'offline',
-  'near-expiry', 'add-wheel', 'adding', 'add-failed', 'added', 'end-confirmation', 'stop-pending', 'expired-pending',
+  'near-expiry', 'add-wheel', 'adding', 'add-failed', 'added', 'end-confirmation', 'stop-pending',
   'idle-expired', 'manually-ended', 'unknown-result', 'profile', 'profile-case-open', 'logout-confirm'];
 // The picture moments (app/screens/home.js FIXTURES). left: minutes remaining; rx: Prescriptions written today.
 const FIX = {
@@ -13,7 +13,7 @@ const FIX = {
   'request-failed': { left: 30, bar: 'request-failed' }, offline: { left: 30, offline: true }, 'near-expiry': { left: 5 },
   'add-wheel': { left: 5, sheet: 'add' }, adding: { left: 5, sheet: 'add', busy: 'adding' }, 'add-failed': { left: 5, sheet: 'add', addFailed: true },
   added: { left: 35, toast: true }, 'end-confirmation': { left: 30, sheet: 'end' }, 'stop-pending': { left: 30, stopping: true },
-  'expired-pending': { left: 0, expired: true }, 'idle-expired': { setup: true, ended: 'idle' }, 'manually-ended': { setup: true, ended: 'manual' },
+  'idle-expired': { setup: true, ended: 'idle' }, 'manually-ended': { setup: true, ended: 'manual' },
   'unknown-result': { left: 30, unknown: true }, profile: { left: 30, page: 'profile' }, 'profile-case-open': { left: 30, page: 'profile', caseOpen: true },
   'logout-confirm': { left: 30, page: 'profile', sheet: 'logout' },
 };
@@ -67,12 +67,11 @@ function rxRow(rx, { link = true, inline = false } = {}) {
 function statusCard() {
   const timed = kind() === 'active' || kind() === 'near';   // stop-pending: no time row (D-47); ran out with a request: no time row either (D-113, no 0:00)
   const canAdd = maxFor('addDuration') >= MIN_LEN;
-  return `<div class="tm-card home-card">${timed ? `<div class="srow">${icon('clock', 'srow__icon')}<div class="srow__txt"><p class="srow__label">${M('home.timeRemaining')}</p><div class="srow__line"><p class="tm-value-display srow__value time" id="home-time" aria-live="off">${formatLeft(fx().left)}</p>${kind() === 'expired-pending' ? '' : `<button id="add" class="tm-btn tm-btn--secondary add-time" type="button"${fx().offline || !canAdd ? ' disabled=""' : ''}>${icon('plus', 'tm-icon--16')}${M('home.addTime')}</button>`}</div></div></div>` : ''}${rxRow(3)}</div>`;
+  return `<div class="tm-card home-card">${timed ? `<div class="srow">${icon('clock', 'srow__icon')}<div class="srow__txt"><p class="srow__label">${M('home.timeRemaining')}</p><div class="srow__line"><p class="tm-value-display srow__value time" id="home-time" aria-live="off">${formatLeft(fx().left)}</p>${`<button id="add" class="tm-btn tm-btn--secondary add-time" type="button"${fx().offline || !canAdd ? ' disabled=""' : ''}>${icon('plus', 'tm-icon--16')}${M('home.addTime')}</button>`}</div></div></div>` : ''}${rxRow(3)}</div>`;
 }
 function topNotice() {
   const f = fx();
   if (f.stopping) return notice('neutral', M('home.stopPending'), 'status');
-  if (f.expired) return notice('neutral', M('home.expiredPending'), 'status');
   if (f.ended === 'idle') return notice('neutral', M('home.idleExpired'), 'status');
   if (f.ended === 'manual') return notice('neutral', M('home.manuallyEnded'), 'status');
   return '';
@@ -121,7 +120,7 @@ function overlay() {
 }
 function homePage() {
   const f = fx(), k = kind(), setup = k === 'none';
-  const title = setup ? 'home.titleSetup' : k === 'expired-pending' ? 'home.titleEnded' : k === 'stopping' ? 'home.titleStopping' : 'home.titleActive';
+  const title = setup ? 'home.titleSetup' : k === 'stopping' ? 'home.titleStopping' : 'home.titleActive';
   const sub = setup ? 'home.subSetup' : k === 'expired-pending' || k === 'stopping' ? 'home.subNoNewCases' : 'home.subActive';
   const rx = f.rx ?? 3;
   const actions = [['bell', 'home.notifications'], ['help-circle', 'common.help'], ['user-circle', 'home.profile']].map(([i, l]) => `<button class="tm-btn tm-btn--quiet tm-btn--icon" type="button" aria-label="${M(l)}">${icon(i)}</button>`).join('');

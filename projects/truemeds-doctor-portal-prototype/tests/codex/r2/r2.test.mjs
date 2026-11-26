@@ -220,7 +220,7 @@ try {
     const bad = [];
     for (const id of all) {
       const p = await open(id, { query: 'capture=1' });
-      const key = setup.has(id) ? 'home.titleSetup' : id === 'home_stop-pending' ? 'home.titleStopping' : id === 'home_expired-pending' ? 'home.titleEnded' : 'home.titleActive';
+      const key = setup.has(id) ? 'home.titleSetup' : id === 'home_stop-pending' ? 'home.titleStopping' : 'home.titleActive';
       const title = await txt(p, '.home-screen h1'), text = await txt(p, '.home-screen');
       if (title !== copy(key) || /\{|home\.|\[missing:/.test(text) || p.errors.length) bad.push({ id, title, expected: copy(key), errors: p.errors, text });
       await p.context().close(); contexts.delete(p.context());

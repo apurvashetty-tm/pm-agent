@@ -1224,23 +1224,23 @@ Decisions: D-106, D-107
 <a id="home-12"></a>
 ### home-12 · What is the rule for "Time remaining"?
 
-- **Time remaining:** h:mm:ss from one hour up (1:00:00), m:ss below (9:42). When it ran out with a request still open there is **no time row** (D-113, replaces D-53's "0:00"; no Add time, the window has ended). Ending availability (stop-pending) has no time row (D-47). — *Source: App logic §3.*
+- **Time remaining:** h:mm:ss from one hour up (1:00:00), m:ss below (9:42). When it runs out during **Requesting…** nothing changes on screen: the Requesting… loader stays until the answer (D-114). Ending availability (stop-pending) has no time row (D-47). — *Source: App logic §3.*
 
-Decisions: D-113, D-53, D-47
+Decisions: D-114, D-47
 
 <a id="home-13"></a>
 ### home-13 · What is the rule for "Titles by state (D-107)"?
 
-- **Titles by state (D-107):** setup, idle-expired and manually ended: "Start taking cases"; available (incl. requesting, no cases, failures, offline, near expiry, the sheets, unknown result): "You can take cases"; stop-pending: "Ending availability" / "You won’t get new cases."; ran out with a request open: **"Availability ended"** / "You won’t get new cases." — *Source: App logic §3.*
+- **Titles by state (D-107):** setup, idle-expired and manually ended: "Start taking cases"; available (incl. requesting, no cases, failures, offline, near expiry, the sheets, unknown result): "You can take cases"; stop-pending: "Ending availability" / "You won’t get new cases."; there is no "Availability ended" screen (D-114: time running out during Requesting… keeps the Requesting… loader) — *Source: App logic §3.*
 
-Decisions: D-107
+Decisions: D-107, D-114
 
 <a id="home-14"></a>
 ### home-14 · What is the rule for "Request a case"?
 
-- **Request a case** while time remains. A request made before the window ends is honoured even if the case arrives after. — *Source: App logic §3.*
+- **Request a case** while time remains. A request made before the window ends is honoured even if the case arrives after. **Time runs out during Requesting… (D-114):** no screen of its own; the Requesting… loader stays until the answer. A case → it opens (after it is closed: the ended Home). No case, or the request failed → toast "No cases right now." and the ended Home ("Your availability ended." / "Set it again to get new cases."). — *Source: App logic §3.*
 
-Decisions: D-78 (the approved screens and app logic)
+Decisions: D-114
 
 <a id="home-15"></a>
 ### home-15 · What is the rule for "Add time (D-106)"?
@@ -1273,7 +1273,7 @@ Decisions: D-106, D-111
 <a id="home-19"></a>
 ### home-19 · What is the rule for "Result notices on Home"?
 
-- **Result notices on Home** ("Availability ends soon", setup / add / request failures) sit inside the action bar, above its button. "No cases right now" and offline are the bar's own action, so they sit inside the bar above the button. Screen-wide standing notices (idle-expired, manually ended, expired-pending, stop-pending) stay at the top of the panel, 32 above the content (D-108). — *Source: App logic §3.*
+- **Result notices on Home** ("Availability ends soon", setup / add / request failures) sit inside the action bar, above its button. "No cases right now" and offline are the bar's own action, so they sit inside the bar above the button. Screen-wide standing notices (idle-expired, manually ended, stop-pending) stay at the top of the panel, 32 above the content (D-108). — *Source: App logic §3.*
 
 Decisions: D-108
 
@@ -1434,9 +1434,9 @@ Decisions: D-47
 <a id="home-42"></a>
 ### home-42 · What does the app show in home.expired-pending, and how does it recover?
 
-- home.expired-pending: N1 + L1 — Honour request already submitted; do not interrupt case. Title "Availability ended" (D-107); no time row (D-113, was 0:00), no Add time — *Source: Feedback state map: home.expired-pending*
+- home.expired-pending: L1 + T1 — Time ran out while Requesting…: no screen of its own (D-114, replaces the "Availability ended" screen). The Requesting… loader stays until the answer; a case → it opens; no case (or the request failed) → toast "No cases right now." and the ended Home ("Your availability ended." / "Set it again to get new cases.") — *Source: Feedback state map: home.expired-pending*
 
-Decisions: D-107, D-113
+Decisions: D-114
 
 <a id="home-43"></a>
 ### home-43 · What does the app show in home.unknown-result, and how does it recover?

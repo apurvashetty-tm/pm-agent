@@ -1,7 +1,7 @@
 {
  "steps": "2-4",
  "thresholdPerChannel": 8,
- "pictures": 132,
+ "pictures": 130,
  "over1pct": 0,
  "rows": [
   {
@@ -94,22 +94,6 @@
   },
   {
    "id": "home_end-confirmation",
-   "w": 360,
-   "changedPx": 0,
-   "changedPct": 0,
-   "errors": [],
-   "flagged": false
-  },
-  {
-   "id": "home_expired-pending",
-   "w": 390,
-   "changedPx": 0,
-   "changedPct": 0,
-   "errors": [],
-   "flagged": false
-  },
-  {
-   "id": "home_expired-pending",
    "w": 360,
    "changedPx": 0,
    "changedPct": 0,

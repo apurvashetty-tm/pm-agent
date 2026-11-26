@@ -118,7 +118,7 @@ function startState(opening) {
   return (opening && mode !== "capture" && onOpen(ctx)) || "sign-in_default";
 }
 // Story starts at Home or straight in a case (plan §4 play link): the picture moment for the story's availability answer, then live.
-const HOME_START = { normal: "home_active", "near-expiry": "home_near-expiry", ending: "home_near-expiry", "ended-with-request": "home_expired-pending" };
+const HOME_START = { normal: "home_active", "near-expiry": "home_near-expiry", ending: "home_near-expiry" };
 function startParams(s, opening = false) {
   if (s) return { s };
   // Opening the app with a case open goes straight back into it, whatever the story's start (plan B12, app-logic §4, OQ-025):
@@ -140,6 +140,7 @@ const BEHAVIOUR_SCREEN = {
   "signin.locked-number": "otp_locked",      // sign-in on a locked number → OTP locked
   "signin.too-long": "sign-in_too-short",    // D-101 o04: type past 10 digits → "That’s more than 10 digits…"
   "signin.back-from-otp": "otp_default",     // D-101 o10: Change → sign-in with the number kept
+  "home.expired-pending": "home_requesting",  // D-114: time ran out during Requesting… → the loader stays (no screen of its own)
   "home.setup": "home_setup-wheel",          // step 2: set availability (wheel + presets)
   "home.add-open": "home_add-wheel",         // step 2: the Add time sheet
   "case.back-before-call": "a-leave-sheet",  // step 3: Back before a call → "Leave this case?"

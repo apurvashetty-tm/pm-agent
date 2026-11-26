@@ -8,7 +8,7 @@ This maps current auth/Home states and known recovery conditions to reusable fee
 
 - **Result of an action → next to the control that did it.** On a screen with a pinned action bar, inside the bar above its button, as a band (`.tm-actionbar > .tm-notice`). On a screen without a bar, 16 below the field it came from (D-98) or 8 below the button (A-14).
 - **Bar's own action → inside the bar.** The result of the last tap, or why the bar's button is disabled right now: offline (case and Home), request failed, "No cases right now", ending soon, setup / add / confirm / release failures, offer enable-failed / offline, calling notices (Round 4, lane-request 7).
-- **Screen's general situation → top of the panel.** Not tied to a button; stays until the cause is gone (unlock "isn't available", Home idle-expired, manually ended, expired-pending, stop-pending).
+- **Screen's general situation → top of the panel.** Not tied to a button; stays until the cause is gone (unlock "isn't available", Home idle-expired, manually ended, stop-pending).
 - Notices wrap balanced (A-22). Toasts only where no control can show the result; they sit above the pinned bar when there is one.
 - Small phones (RULES §8.14): every state at 360×640 — nothing the doctor needs is hidden without a scroll cue; the bar never covers the last content.
 
@@ -128,7 +128,7 @@ Current references: `../ui-screens/home/`; native `../ui-screens/native/HomeScre
 | home.added | T1 | Confirmed deadline update; dismiss sheet, preserve Home | R08 |
 | home.end-confirmation | Confirmation, not error | Existing pending-request decision; no new error component | Separate interaction coverage when reviewed |
 | home.stop-pending | N1 + L1 | Finish request/assigned case before stop. Subtitle "You won't get new cases." (not a repeat of the notice). **No "Time remaining" row**; quiet "Ending…" without spinner (D-47) | Fixture + later Home state review |
-| home.expired-pending | N1 + L1 | Honour request already submitted; do not interrupt case. Title "Availability ended" (D-107); no time row (D-113, was 0:00), no Add time | Same pending layout; fixture |
+| home.expired-pending | L1 + T1 | Time ran out while Requesting…: no screen of its own (D-114, replaces the "Availability ended" screen). The Requesting… loader stays until the answer; a case → it opens; no case (or the request failed) → toast "No cases right now." and the ended Home ("Your availability ended." / "Set it again to get new cases.") | Behaviour only; opens on Requesting… |
 | home.idle-expired / manually-ended | N1 + setup | Reuse setup; the notice at the top, 32 to the content; "Prescriptions written today" as one row above the picker when above 0 (D-106); no giant 0-minute error screen | Re-rendered 2026-11-11 (r2-build) |
 | home.unknown-result | N1 + L1 | Reconcile operation ID before retry; do not invent failure or success | Fixture; backend integration required |
 

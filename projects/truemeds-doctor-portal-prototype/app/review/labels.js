@@ -48,7 +48,7 @@ export const VALUE_LABEL = {
   device: { fingerprint: "Fingerprint", face: "Face", "screen-lock": "Screen lock only", none: "No screen lock" },
   offer: { enabled: "Turns on", cancelled: "Prompt cancelled", "enable-failed": "Couldn't turn on", unavailable: "Not available" },
   unlock: { success: "Unlocks", cancelled: "Prompt cancelled", failed: "Fails once", unavailable: "Not available" },
-  availability: { normal: "Normal", "near-expiry": "Ending soon", ending: "Ending", "ended-with-request": "Ended, request open" },
+  availability: { normal: "Normal", "near-expiry": "Ending soon", ending: "Ending" },
   request: { accepted: "Case arrives", failed: "Request fails", "no-cases": "No cases" },
   caseKind: { normal: "Normal", "ten-medicines": "10 medicines", "long-names": "Long names", empty: "No medicines",
     "rx-failed": "Rx won't load", "release-refused": "Release refused" },

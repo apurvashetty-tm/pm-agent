@@ -39,7 +39,6 @@ const FIXTURES = {
   added: { left: 35, toast: true },
   "end-confirmation": { left: 30, sheet: "end" },
   "stop-pending": { left: 30, request: true, stopping: true },
-  "expired-pending": { left: 0, request: true },
   "idle-expired": { setup: true, ended: "idle" },
   "manually-ended": { setup: true, ended: "manual" },
   "unknown-result": { left: 30, request: true, unknown: true },
@@ -165,23 +164,23 @@ export function render(host, id, { mode, params = {} }) {
     if (a.state === "near" && !ui.sheet) return notice("warning", MSG("home.endingSoon"), { iconName: "clock", cls: "status" });
     return null;
   }
-  // Standing notice at the top of the panel: ended (idle / by the doctor), ending after the open request, expired with it.
+  // Standing notice at the top of the panel: ended (idle / by the doctor), ending after the open request.
   function topNotice(a) {
     const w = work();
     if (a.state === "stopping") return notice("neutral", MSG("home.stopPending"), { cls: "status" });
-    if (a.state === "expired-pending") return notice("neutral", MSG("home.expiredPending"), { cls: "status" });
     if (a.state === "none" && w.ended === "idle") return notice("neutral", MSG("home.idleExpired"), { cls: "status" });
     if (a.state === "none" && w.ended === "manual") return notice("neutral", MSG("home.manuallyEnded"), { cls: "status" });
     return null;
   }
   function footer(a) {
     const lg = "tm-btn--lg tm-btn--block";
-    const t = Date.now() < ui.toastUntil ? toast(MSG("home.added"), "home-toast") : null;
+    const t = Date.now() < ui.toastUntil ? toast(MSG(ui.toastKey || "home.added"), "home-toast") : null;
     if (ui.unknown) return actionBar([statusLine(MSG("home.unknownResult")), t], { cls: "footer" });
     const setup = a.state === "none";
     const busyLabel = { setting: "home.setting", requesting: "home.requesting", adding: "home.adding" }[ui.busy];
     let primary;
-    const waiting = a.state === "stopping" || a.state === "expired-pending";   // the open request is honoured; no new one (stop-pending picture: disabled)
+    const waiting = a.state === "stopping";   // the open request is honoured; no new one (stop-pending picture: disabled)
+    // Time ran out during Requesting… (D-114): the same Requesting… loader stays until the answer; no screen of its own.
     if (busyLabel && ui.busy !== "adding" && !waiting) primary = busyBtn(MSG(busyLabel), `tm-btn--primary ${lg}`);
     else if (setup) primary = btn(MSG("home.setAvailability"), `tm-btn--primary ${lg}`, onSet, { "data-confirm": "" });
     else primary = btn(MSG("home.requestCase"), `tm-btn--primary ${lg}`, onRequest, { "data-confirm": "", disabled: offline() || a.state === "stopping" || a.state === "expired-pending" || !!ui.busy });
@@ -243,8 +242,8 @@ export function render(host, id, { mode, params = {} }) {
 
   function homePage(a) {
     const setup = a.state === "none";
-    const title = setup ? "home.titleSetup" : a.state === "expired-pending" ? "home.titleEnded" : a.state === "stopping" ? "home.titleStopping" : "home.titleActive";
-    const sub = setup ? "home.subSetup" : a.state === "expired-pending" || a.state === "stopping" ? "home.subNoNewCases" : "home.subActive";
+    const title = setup ? "home.titleSetup" : a.state === "stopping" ? "home.titleStopping" : "home.titleActive";
+    const sub = setup ? "home.subSetup" : a.state === "stopping" ? "home.subNoNewCases" : "home.subActive";
     const rx = work().rxToday;
     const actions = [["bell", "home.notifications", toPlaceholder], ["help-circle", "common.help", toPlaceholder], ["user-circle", "home.profile", toProfile]]
       .map(([ic, label, fn]) => h("button", { class: "tm-btn tm-btn--quiet tm-btn--icon", type: "button", "aria-label": MSG(label), onclick: fn }, icon(ic)));
@@ -338,7 +337,10 @@ export function render(host, id, { mode, params = {} }) {
         resetNav(); push(null, { s: "t01-ready", live: true });
         return;
       }
+      const ranOut = availability().state === "expired-pending";
       clearRequest();
+      // Time ran out while Requesting… (D-114): no case → a short toast "No cases right now." and the ended Home (set it again).
+      if (ranOut) { ui.bar = null; ui.toastKey = "home.noCasesEnded"; ui.toastUntil = Date.now() + v("toastDuration"); availability(); draw(); return; }
       ui.bar = r === "failed" ? "request-failed" : "no-cases";   // no cases: no auto re-check (OQ-019)
       draw();
     });
@@ -351,7 +353,7 @@ export function render(host, id, { mode, params = {} }) {
       ui.busy = null;
       if (offline()) { ui.addFailed = true; draw(); return; }   // home.add-failed: sheet and selection kept, deadline unchanged
       addTime(ui.addDuration * MIN); ui.sheet = null;
-      ui.toastUntil = Date.now() + v("toastDuration");   // about 4 s (RULES §9.5 toast)
+      ui.toastKey = "home.added"; ui.toastUntil = Date.now() + v("toastDuration");   // about 4 s (RULES §9.5 toast)
       draw();
     });
   }
@@ -378,10 +380,10 @@ export function render(host, id, { mode, params = {} }) {
   function toPlaceholder() { saveCurrent({ saved: snapshot() }); push(null, { s: "placeholder", text: "placeholder.linkPending" }); }   // Help / bell / User manual: blank page [OPEN DECISION] (D-88)
   function profileBack() { if (depth() > 1) { setScreenBack(null); navBack(); } else { resetNav(); push(null, { s: "home_active", live: true }); } }
 
-  // A request in flight (opened on Requesting…, Ending…, expired-pending, Checking…) gets its answer.
-  if (work().request && !ui.busy && !fx.page && !ui.unknown && ["active", "near"].includes(availability().state)) ui.busy = "requesting";
+  // A request in flight (opened on Requesting…, Ending…, Checking…; still Requesting… if the time ran out meanwhile, D-114) gets its answer.
+  if (work().request && !ui.busy && !fx.page && !ui.unknown && ["active", "near", "expired-pending"].includes(availability().state)) ui.busy = "requesting";
   if (work().request && !fx.page) resolveRequest();
-  // The clock: the timer reads it; when the window ends the screen changes (idle-expired, expired-pending, stop-pending → ended).
+  // The clock: the timer reads it; when the window ends the screen changes (idle-expired, stop-pending → ended; Requesting… stays until its answer, D-114).
   if (!capture) life.every(() => {
     const a = availability();
     const t = root.querySelector("#home-time");

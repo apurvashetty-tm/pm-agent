@@ -1826,7 +1826,6 @@
   "offer_unavailable",
   "unlock_unavailable",
   "home_add-failed",
-  "home_expired-pending",
   "home_idle-expired",
   "home_manually-ended",
   "home_near-expiry",
