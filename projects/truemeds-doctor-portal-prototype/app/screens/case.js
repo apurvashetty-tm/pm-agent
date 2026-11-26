@@ -537,6 +537,9 @@ export function render(host, id, { mode, params = {} }) {
     if (ui.overlay === "prescribe" && prescribeEl && prescribeEl.requestClose) { prescribeEl.requestClose(); return; }
     if (ui.overlay) { closeOverlay(); return; }
     if (closed()) { toHome(); return; }
+    // Loading (D-116, Apurva): no Back button on screen, but the phone's back still gets out — the "Leave this case?" sheet
+    // (Release case), so a doctor is never stuck on a case that doesn't load.
+    if (ui.loading && !c.attempted) { ui.bar = null; ui.overlay = "leave"; draw(); return; }
     if (backAllowed()) { onBack(); return; }
     ui.toastUntil = Date.now() + v("toastDuration"); draw();
   });

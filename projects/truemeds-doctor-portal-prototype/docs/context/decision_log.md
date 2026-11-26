@@ -1104,6 +1104,10 @@ From an external (ChatGPT) review, each point verified before acting.
 - **Why:** a greyed button with no reason is worse than a tap that explains; shift hours are a backend input, not a fixed rule.
 - Built: `app/core/session.js` `shiftNow()`; `app/screens/home.js` limits and messages; review panel "Shift hours (from backend)": not sent / 10 AM – 10 PM / 10 PM – 6 AM; copy `home.capReached`, `home.shiftEnds`, `home.shiftStarts`; pictures `home_limit-reached`, `home_outside-shift` (150 states). Checks in `tests/work-screens.mjs`. Kit rows H4, H12.
 
+### D-116 · Case loading: no Back button, phone back offers Release — 2026-11-26 · **Apurva**
+- **Decision (Apurva):** while a case loads, the Back button stays hidden (no actions until loaded), but the phone's back button or gesture opens "Leave this case?" (Release case · Stay), so a doctor is never stuck on a case that doesn't load. Supersedes the old picture that showed Back (CHECKIN 12).
+- Built: `app/screens/case.js` (phone back while loading). Check: `tests/work-screens.mjs`. Kit change C8.
+
 ## Design system changes made for this work
 
 ### D-60 · Secondary button without drop shadow (design system) — 2026-10-24 · **REVERTED same day**

@@ -79,6 +79,7 @@
 | C5 | Callback sheet: while saving the button reads "Scheduling…"; failure reads "Couldn’t schedule the callback. Your chosen time is kept." and is pinned with the button, 16 above it. | Must |
 | C6 | Rx viewer: hint to paper 8; tools row 8 under the title row, ✕ keeps its whole tap area. | Looks |
 | C7 | A patient name on two lines grows the header; the age line stays 8 under it. | Looks |
+| C8 | Case loading: no Back button, but the **phone's back** (button or gesture) opens "Leave this case?" (Release case · Stay). | Must |
 
 ## Prescribe
 

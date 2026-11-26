@@ -280,7 +280,7 @@ Retired: `b-missed-call`, `b-didnt-connect` (sheets) — replaced by the automat
 ---
 
 ## 10. Errors, offline, loading
-- **Loading** (case): a skeleton shaped like the loaded page: an Order details row, Medicines and Notes blocks, in the same places (D-81 F28).
+- **Loading** (case): a skeleton shaped like the loaded page: an Order details row, Medicines and Notes blocks, in the same places (D-81 F28). No Back button while loading, but the **phone's back** (button or gesture) opens "Leave this case?" (Release case · Stay), so a doctor is never stuck on a case that doesn't load (D-116).
 - **Notices** wrap balanced, set centrally (A-22).
 
 Follow `docs/feedback-state-map.md` exactly. Summary for the case page: loading = card outlines, no actions · load failed = notice + Try again · offline = yellow notice in the bar "You're offline. Reconnect to call or confirm." (D-54) · an action tried offline fails with one error notice, nothing lost · release failed = notice, doctor stays on the case.

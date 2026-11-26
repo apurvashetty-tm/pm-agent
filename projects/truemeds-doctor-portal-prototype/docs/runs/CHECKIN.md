@@ -24,5 +24,5 @@ From r3-rest-audit (`docs/renders/2026-11-11-r3-rest-audit/CONCLUSION.md` §2):
 
 From the overnight build (2026-11-25, `docs/renders/2026-11-25-r4-rest-build/REPORT.md`):
 11. ~~"Time remaining 0:00"~~ — answered 2026-11-26 (D-113): hidden; ended notices reworded.
-12. Case loading: the old approved picture showed Back; the app hides it ("no actions until loaded"). Keep hidden?
+12. ~~Case loading Back~~ — answered 2026-11-26 (D-116): Back button stays hidden; the phone's back opens "Leave this case?" (Release case).
 13. ~~Backend duration above 12~~ — closed 2026-11-26 (Apurva): cannot happen; without a valid prescription nothing is pre-filled, the doctor sets the duration in the 1–12 picker. No app change.

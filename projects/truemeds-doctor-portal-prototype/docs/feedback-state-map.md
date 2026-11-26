@@ -151,7 +151,7 @@ Applies to the case page (`ui-screens/case/case.html`; the old `index.html` is f
 
 | State | Pattern | Behaviour |
 |---|---|---|
-| case.loading | L1 | Skeleton shaped like the loaded page: an Order details row, Medicines and Notes blocks, in the same places; no text, no actions until loaded (D-81 F28). |
+| case.loading | L1 | Skeleton shaped like the loaded page: an Order details row, Medicines and Notes blocks, in the same places; no text, no actions until loaded (D-81 F28); the phone's back opens "Leave this case?" (Release case), D-116. |
 | case.load-failed | F2 | Error notice "Couldn't load this case." + primary **Try again**; nothing else on the page. *Copy approved (Apurva, D-53).* |
 | case.offline | W1 → F2 | Warning notice (D-54: offline blocks the main action) "You're offline. Reconnect to call or confirm." while browsing; an action attempted offline fails with one error notice "No connection. Nothing was lost." Typed notes are kept. *Copy approved (Apurva, D-53).* |
 | case.confirm-busy | L1 | Final CTA busy (L2), label **"Confirming…"**; every other action disabled; medicine rows and notes read-only and muted; View Rx stays the outlined button (D-81 F24–F25). No second submit. *Copy approved (Apurva, D-53).* |

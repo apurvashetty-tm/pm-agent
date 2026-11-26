@@ -2289,9 +2289,9 @@ Decisions: D-59
 <a id="case-92"></a>
 ### case-92 · What is the rule for "Loading"?
 
-- **Loading** (case): a skeleton shaped like the loaded page: an Order details row, Medicines and Notes blocks, in the same places (D-81 F28). — *Source: App logic §10.*
+- **Loading** (case): a skeleton shaped like the loaded page: an Order details row, Medicines and Notes blocks, in the same places (D-81 F28). No Back button while loading, but the **phone's back** (button or gesture) opens "Leave this case?" (Release case · Stay), so a doctor is never stuck on a case that doesn't load (D-116). — *Source: App logic §10.*
 
-Decisions: D-81
+Decisions: D-81, D-116
 
 <a id="case-93"></a>
 ### case-93 · What is the rule for "Notices"?
@@ -2373,9 +2373,9 @@ Decisions: D-78 (the approved screens and app logic)
 <a id="case-104"></a>
 ### case-104 · What does the app show in case.loading, and how does it recover?
 
-- case.loading: L1 — Skeleton shaped like the loaded page: an Order details row, Medicines and Notes blocks, in the same places; no text, no actions until loaded (D-81 F28). — *Source: Feedback state map: case.loading*
+- case.loading: L1 — Skeleton shaped like the loaded page: an Order details row, Medicines and Notes blocks, in the same places; no text, no actions until loaded (D-81 F28); the phone's back opens "Leave this case?" (Release case), D-116. — *Source: Feedback state map: case.loading*
 
-Decisions: D-81
+Decisions: D-81, D-116
 
 <a id="case-105"></a>
 ### case-105 · What does the app show in case.load-failed, and how does it recover?

@@ -87,4 +87,12 @@ for (const [w, h] of [[360, 640], [390, 844]]) {
   ok("outside the shift, Set availability says when cases start and starts nothing", /Cases are assigned from \d{1,2}:00 (AM|PM)\./.test(m2) && !(await q.locator("#home-time").count()), m2.slice(0, 120));
   await c2.close();
 }
+{ // D-116: phone back while the case loads opens "Leave this case?" (Release case); no Back button on screen
+  const p = await open("?s=a-loading", 390, 844);
+  const noBtn = !(await p.locator("#case-head [aria-label='Back'], #case-head .tm-btn--icon[aria-label*='Back']").count());
+  await p.evaluate(() => { history.pushState({ t: 1 }, "", location.href); history.back(); }); await p.waitForTimeout(500);
+  const t = await p.evaluate(() => document.querySelector(".tm-sheet")?.innerText || "");
+  ok("phone back while loading opens the Release case sheet", noBtn && /Release case/.test(t), t.slice(0, 80).replace(/\n/g, " | "));
+  await p.close();
+}
 await b.close(); srv.close(); console.log(`${pass}/${n} passed`); process.exit(pass === n ? 0 : 1);
