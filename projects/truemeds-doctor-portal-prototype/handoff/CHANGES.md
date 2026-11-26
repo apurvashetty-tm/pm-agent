@@ -4,7 +4,7 @@
 
 **How to read it.** **Must** = behaviour, rule or wording: build it. **Looks** = spacing or size only. **No work** = a file or part was renamed. Before / after pictures: [`changes/`](changes/). Exact wording differences are in the table at the end.
 
-**Status:** draft for product approval. Rows C1–C7, H8, H9, P2 and P3 (and Add time greyed under 15 minutes in H4) are built and wait for the product owner's OK.
+**Status:** draft for product approval. Rows C1–C7, H8, H9, P2 and P3 are built and wait for the product owner's OK.
 
 **Same as v1:** the number and names of the states (149), every design value (no token added, removed or changed), and the calling flow.
 
@@ -60,13 +60,14 @@
 | H1 | Setup: "Start taking cases" / "You can add time or stop anytime."; Quick picks, then Custom (the wheel, always shown); "Available until {time}" 8 above Set availability. "Adjust duration", "Minimum 15 minutes" and the count are gone from setup. | Must |
 | H2 | **10 hours in total** (set and added; setting `availabilityMaximum`). v1: no maximum. The wheel stops at 15 minutes and 10 hours and swipes and snaps. | Must |
 | H3 | Available: "You can take cases" / "Request a case now, or whenever you’re ready."; one card with Time remaining and Prescriptions written today. | Must |
-| H4 | **Add time always shows** while available (greyed offline, and when less than 15 minutes fit under the 10 hours). v1: only near the end. | Must |
+| H4 | **Add time always shows and is always tappable** while available (greyed only offline). If less than 15 minutes fit, the tap opens no sheet; the bar says "You can be available for up to 10 hours at a time." (or, with shift hours, "Cases are assigned until {time}."). v1: only near the end. | Must |
 | H5 | Prescriptions written today opens Profile. | Must |
 | H6 | Add time sheet: title "Add time"; same picker; "Up to 10 hours in total"; "Add 9 h 45 min" from 60 minutes; the error is pinned, 16 above Add. | Must |
 | H7 | End sheet: "You won’t get new cases after this. A case already assigned to you stays with you."; title when time ran out with a request open: "Availability ended". | Must |
 | H8 | After availability ends: the count is one row above the picker, number on the label's line, so the whole wheel shows at 390 × 844. | Must |
 | H9 | Profile shows Prescriptions written today (read only). Cards to Log out 32. | Must |
 | H11 | Ended notices: "Your availability ended." / "You ended your availability." and, on its own line, **"Set it again to get new cases."** (was "You won’t get new cases."). **The "Availability ended" screen (`home_expired-pending`) is removed:** if time runs out during Requesting…, the Requesting… loader stays until the answer; a case opens as normal; no case (or the request failed) → toast **"No cases right now."** then the ended Home. Copy removed: "Your last request is still active.", the "Availability ended" title. | Must |
+| H12 | **Shift hours, only when the backend sends them.** None sent → no shift limit (24×7). Sent → setup and Add time stop at the smaller of the 10 hours and the shift end; outside the shift, Set availability starts nothing and the bar says "Cases are assigned from {time}." ("Available until" hidden). Shifts may cross midnight. New pictures: `home_limit-reached`, `home_outside-shift`. | Must |
 | H10 | **A new OTP sign-in opens a fresh Home** ("Start taking cases", no old notice). Availability, its "ended" notice and any case request left from an earlier session that was never logged out (app closed, sign-in expired) are cleared, and the backend ends that availability. Prescriptions written today stays; an open case still reopens first. Log out already ends availability. v1: not covered. | Must |
 
 ## Case page and calling
@@ -98,6 +99,9 @@
 | `signin.couldntSend` | Couldn’t send the code. | Couldn’t send the OTP. |
 | `otp.newSent` | New code sent | New code sent. |
 | `home.noCasesEnded` | — (new) | No cases right now. |
+| `home.capReached` | — (new) | You can be available for up to 10 hours at a time. |
+| `home.shiftEnds` | — (new) | Cases are assigned until {time}. |
+| `home.shiftStarts` | — (new) | Cases are assigned from {time}. |
 | `home.idleExpired` | Your availability ended. You won’t get new cases. | Your availability ended.
 Set it again to get new cases. |
 | `home.manuallyEnded` | You ended your availability. You won’t get new cases. | You ended your availability.
@@ -141,4 +145,4 @@ Set it again to get new cases. |
 - Design values changed: none. Values used now that no screen used in v1: none. No longer used: `tokens.font.lineHeight.xs`, `tokens.font.size.body.xs`.
 - Building-block files in this kit that v1 didn't have: `bar-caption`, `entry-band`, `entry-panel`, `group`, `hint`, `lbl`, `lbl-row`, `link`, `pt-txt`, `srow`, `until`.
 - In v1 and gone (replaced or renamed, see the screen's file): `adjust`, `adjust-row`, `band`, `grp`, `head`, `header`, `header-actions`, `helper`, `intro`, `lk`, `login-logo`, `logo`, `panel`, `rx`, `sub`, `timer-label`, `timer-row`, `top`.
-- States added: none. Removed: `home_expired-pending`.
+- States added: `home_limit-reached`, `home_outside-shift`. Removed: `home_expired-pending`.

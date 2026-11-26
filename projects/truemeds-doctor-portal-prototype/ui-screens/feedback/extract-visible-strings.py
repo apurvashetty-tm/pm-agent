@@ -1,5 +1,5 @@
 """Writes ui-screens/feedback/visible-strings.json: every visible text node, aria-label, placeholder and title in the
-148 approved states at 390 px, deduplicated. Excludes the printed Rx paper (rx-* classes) and the dev demo bar.
+150 approved states at 390 px, deduplicated. Excludes the printed Rx paper (rx-* classes) and the dev demo bar.
 Used by check-sources.mjs (copy rules 4, 5, 11, 13, 14, 19, 21, 22, 23). Run: python3 extract-visible-strings.py"""
 import json, pathlib, importlib.util, datetime
 from playwright.sync_api import sync_playwright

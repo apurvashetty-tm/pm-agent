@@ -17,7 +17,7 @@ One dated line per firing that did something. Reviewed runs are listed so the ne
 ## NEEDS-APURVA
 From r2-build (`docs/renders/2026-11-11-r2-build/REPORT.md`):
 1. Approve the new entry + Home pictures (`all-screens.png`, `before-after/`)?
-2. Add time greyed when less than 15 min fits under the 10-hour cap, and no Add time on "Availability ended" — keep?
+2. ~~Add time greyed under 15 min~~ — answered 2026-11-26 (D-115): always tappable, the tap says why; shift hours when sent.
 From r3-rest-audit (`docs/renders/2026-11-11-r3-rest-audit/CONCLUSION.md` §2):
 3. ~~Q1 Duration~~ — answered 2026-11-25 (D-110): 1–12 for every unit; numbers first.
 4–10. Q2–Q4, Q6–Q9: built on the recommended answers overnight (D-111), **awaiting Apurva's OK**.
@@ -25,4 +25,4 @@ From r3-rest-audit (`docs/renders/2026-11-11-r3-rest-audit/CONCLUSION.md` §2):
 From the overnight build (2026-11-25, `docs/renders/2026-11-25-r4-rest-build/REPORT.md`):
 11. ~~"Time remaining 0:00"~~ — answered 2026-11-26 (D-113): hidden; ended notices reworded.
 12. Case loading: the old approved picture showed Back; the app hides it ("no actions until loaded"). Keep hidden?
-13. A backend duration above 12 (e.g. 15 days) shows as the value with no number selected. Fine?
+13. ~~Backend duration above 12~~ — closed 2026-11-26 (Apurva): cannot happen; without a valid prescription nothing is pre-filled, the doctor sets the duration in the 1–12 picker. No app change.

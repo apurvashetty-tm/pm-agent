@@ -84,6 +84,8 @@ export const STATE_GROUPS = [
     "home_added": "Home · time added",
     "home_end-confirmation": "Home · End availability?",
     "home_stop-pending": "Home · ending after the open request",
+    "home_limit-reached": "Home · Add time at the 10-hour limit",
+    "home_outside-shift": "Home · Set availability outside shift hours",
     "home_idle-expired": "Home · availability ran out (count row above the picker)",
     "home_manually-ended": "Home · availability ended",
     "home_profile": "Profile",

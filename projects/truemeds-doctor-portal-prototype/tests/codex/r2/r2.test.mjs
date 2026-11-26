@@ -215,7 +215,7 @@ try {
     assert.equal(await (await open('home_setup-wheel')).locator('#home-rx').count(), 0);
   });
   await test('R2-H9', 'every Home picture has the decided title and valid copy', async () => {
-    const setup = new Set(['home_setup-wheel', 'home_setting', 'home_setup-failed', 'home_idle-expired', 'home_manually-ended']);
+    const setup = new Set(['home_setup-wheel', 'home_setting', 'home_setup-failed', 'home_idle-expired', 'home_manually-ended', 'home_outside-shift']);
     const all = ids.filter(x => x.startsWith('home_') && !/profile|logout-confirm/.test(x)); assert.ok(all.length);
     const bad = [];
     for (const id of all) {

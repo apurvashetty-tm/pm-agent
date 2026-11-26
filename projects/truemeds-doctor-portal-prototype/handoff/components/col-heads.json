@@ -173,6 +173,7 @@
   "home_adding",
   "home_idle-expired",
   "home_manually-ended",
+  "home_outside-shift",
   "home_setting",
   "home_setup-failed",
   "home_setup-wheel"

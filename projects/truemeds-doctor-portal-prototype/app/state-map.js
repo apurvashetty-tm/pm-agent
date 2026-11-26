@@ -552,6 +552,17 @@ window.TM_STATE_MAP = {
    "notes": []
   },
   {
+   "id": "home_limit-reached",
+   "kind": "picture",
+   "picture": "home/home_limit-reached",
+   "step": 2,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": "home.limit-reached",
+   "notes": []
+  },
+  {
    "id": "home_logout-confirm",
    "kind": "picture",
    "picture": "home/home_logout-confirm",
@@ -604,6 +615,17 @@ window.TM_STATE_MAP = {
    "version": "B",
    "calling": [],
    "behaviour": "home.offline",
+   "notes": []
+  },
+  {
+   "id": "home_outside-shift",
+   "kind": "picture",
+   "picture": "home/home_outside-shift",
+   "step": 2,
+   "lookAhead": [],
+   "version": "B",
+   "calling": [],
+   "behaviour": "home.outside-shift",
    "notes": []
   },
   {

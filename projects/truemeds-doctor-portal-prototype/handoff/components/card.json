@@ -184,6 +184,7 @@
   "home_adding",
   "home_end-confirmation",
   "home_idle-expired",
+  "home_limit-reached",
   "home_logout-confirm",
   "home_manually-ended",
   "home_near-expiry",

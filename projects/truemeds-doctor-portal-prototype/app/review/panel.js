@@ -18,7 +18,7 @@ import { qrSvg } from "./qr.js";
 
 const LABELS = {
   start: "Story starts at", scenario: "Case", offline: "Connection", signIn: "Sign-in answer", otp: "OTP answer",
-  offer: "Faster sign-in offer", device: "Phone has", unlock: "Unlock answer", availability: "Availability",
+  offer: "Faster sign-in offer", device: "Phone has", unlock: "Unlock answer", availability: "Availability", shift: "Shift hours (from backend)",
   request: "Request a case", caseKind: "Case content", prescribe: "Prescribe / confirm",
 };
 const CALL_LABELS = {
@@ -29,7 +29,7 @@ const CALL_LABELS = {
 // Rows of the Review panel card. `fields` carry data-journey so the phone drawer shows only the current screen's controls.
 const ROWS = [
   { key: "entry", title: "Sign-in answers", fields: [["signIn", "signIn"], ["otp", "otp"], ["offer", "offer"], ["device", "offer unlock"], ["unlock", "unlock"]] },
-  { key: "work", title: "Home and case answers", fields: [["availability", "home"], ["request", "home"], ["caseKind", "caseView call"], ["prescribe", "prescribe caseView call"]] },
+  { key: "work", title: "Home and case answers", fields: [["availability", "home"], ["shift", "home"], ["request", "home"], ["caseKind", "caseView call"], ["prescribe", "prescribe caseView call"]] },
 ];
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 const opts = (field, options, value) => options.map((o) => `<option value="${esc(o)}"${String(o) === String(value) ? " selected" : ""}>${esc(valueLabel(field, o))}</option>`).join("");

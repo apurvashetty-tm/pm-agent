@@ -1098,6 +1098,12 @@ From an external (ChatGPT) review, each point verified before acting.
 - **Why:** the screen only covered the few seconds between Request a case and the answer, had no action for the doctor and read as stuck; the existing Requesting… loader already covers that moment.
 - Built: `app/screens/home.js` (loader kept, toast `home.noCasesEnded`), Home reference, copy registry (removed `home.expiredPending`, `home.titleEnded`), story option "Ended, request open" removed, state map 148 pictures; behaviour row `home.expired-pending` now opens Requesting…. Check: build-fast-a1 R03-e. Kit change H11.
 
+### D-115 · Add time always tappable; shift hours only when sent — 2026-11-26 · **Apurva**
+- **Decision (Apurva):** (1) **Add time** is always tappable while available (greyed only offline). If less than 15 minutes fit, the tap opens no sheet and the bar says why: "You can be available for up to 10 hours at a time." (2) **Shift hours** apply only when the backend sends them; none sent → no shift limit, 24×7. When sent, the most a doctor can pick (setup and Add time) is the smaller of the 10-hour total and what is left of the shift; Add time at the shift end says "Cases are assigned until {time}."; outside the shift, Set availability starts nothing and says "Cases are assigned from {time}." ("Available until" hidden). Shifts may cross midnight. No open questions: engineering consumes shift hours if the backend sends them, else no limit.
+- **Also closed (Apurva):** a pre-filled duration above 12 cannot happen — without a valid prescription nothing is pre-filled; the doctor sets durations in the 1–12 picker (CHECKIN 13).
+- **Why:** a greyed button with no reason is worse than a tap that explains; shift hours are a backend input, not a fixed rule.
+- Built: `app/core/session.js` `shiftNow()`; `app/screens/home.js` limits and messages; review panel "Shift hours (from backend)": not sent / 10 AM – 10 PM / 10 PM – 6 AM; copy `home.capReached`, `home.shiftEnds`, `home.shiftStarts`; pictures `home_limit-reached`, `home_outside-shift` (150 states). Checks in `tests/work-screens.mjs`. Kit rows H4, H12.
+
 ## Design system changes made for this work
 
 ### D-60 · Secondary button without drop shadow (design system) — 2026-10-24 · **REVERTED same day**

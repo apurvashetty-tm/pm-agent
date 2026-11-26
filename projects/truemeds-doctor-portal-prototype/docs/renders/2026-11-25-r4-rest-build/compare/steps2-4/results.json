@@ -1,7 +1,7 @@
 {
  "steps": "2-4",
  "thresholdPerChannel": 8,
- "pictures": 130,
+ "pictures": 134,
  "over1pct": 0,
  "rows": [
   {
@@ -117,6 +117,22 @@
    "flagged": false
   },
   {
+   "id": "home_limit-reached",
+   "w": 390,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "home_limit-reached",
+   "w": 360,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
    "id": "home_logout-confirm",
    "w": 390,
    "changedPx": 0,
@@ -190,6 +206,22 @@
   },
   {
    "id": "home_offline",
+   "w": 360,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "home_outside-shift",
+   "w": 390,
+   "changedPx": 0,
+   "changedPct": 0,
+   "errors": [],
+   "flagged": false
+  },
+  {
+   "id": "home_outside-shift",
    "w": 360,
    "changedPx": 0,
    "changedPct": 0,

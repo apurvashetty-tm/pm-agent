@@ -116,7 +116,7 @@ Current references: `../ui-screens/home/`; native `../ui-screens/native/HomeScre
 | home.setup | None | "Start taking cases" / "You can add time or stop anytime." · "Quick picks" → 32 → "Custom" (wheel 0–10 h; at 10 h minutes 0; at 0 h 15 / 30 / 45) · "Available until {time}" 8 above Set availability; no range text, no "Minimum 15 minutes" (D-106) | Re-rendered 2026-11-11 (r2-build) |
 | home.setting | L1 | Keep selected duration; only start after confirmation | Fixture |
 | home.setup-failed | F2 | Retain duration, retry known failure | R07 component + setup-layout QA |
-| home.active | None | "You can take cases" / "Request a case now, or whenever you’re ready." (D-107); one card: Time remaining (+ Add time always shown, greyed offline) · Prescriptions written today → Profile (D-106); Request a case | Re-rendered 2026-11-11 (r2-build) |
+| home.active | None | "You can take cases" / "Request a case now, or whenever you’re ready." (D-107); one card: Time remaining (+ Add time always shown and tappable, greyed only offline; nothing more fits → the bar says why, D-115) · Prescriptions written today → Profile (D-106); Request a case | Re-rendered 2026-11-11 (r2-build) |
 | home.requesting | L1 | One in-flight request; stable headline and CTA | Fixture |
 | home.no-cases | N1 | Check again; remain available until deadline | Existing draft needs later state approval; not an error |
 | home.request-failed | F2 | Retry confirmed failure; distinguish unknown result | R09 |
@@ -130,6 +130,8 @@ Current references: `../ui-screens/home/`; native `../ui-screens/native/HomeScre
 | home.stop-pending | N1 + L1 | Finish request/assigned case before stop. Subtitle "You won't get new cases." (not a repeat of the notice). **No "Time remaining" row**; quiet "Ending…" without spinner (D-47) | Fixture + later Home state review |
 | home.expired-pending | L1 + T1 | Time ran out while Requesting…: no screen of its own (D-114, replaces the "Availability ended" screen). The Requesting… loader stays until the answer; a case → it opens; no case (or the request failed) → toast "No cases right now." and the ended Home ("Your availability ended." / "Set it again to get new cases.") | Behaviour only; opens on Requesting… |
 | home.idle-expired / manually-ended | N1 + setup | Reuse setup; the notice at the top, 32 to the content; "Prescriptions written today" as one row above the picker when above 0 (D-106); no giant 0-minute error screen | Re-rendered 2026-11-11 (r2-build) |
+| home.limit-reached | N1 (bar) | Add time tapped when less than 15 min fits: no sheet; "You can be available for up to 10 hours at a time." (or "Cases are assigned until {time}." when the shift end comes first) (D-115) | `home_limit-reached` |
+| home.outside-shift | N1 (bar) | Set availability tapped outside the shift hours the backend sent: nothing starts; "Cases are assigned from {time}."; "Available until" hidden (D-115). No shift hours sent → never shown | `home_outside-shift` |
 | home.unknown-result | N1 + L1 | Reconcile operation ID before retry; do not invent failure or success | Fixture; backend integration required |
 
 ## Case page exits (D-48)

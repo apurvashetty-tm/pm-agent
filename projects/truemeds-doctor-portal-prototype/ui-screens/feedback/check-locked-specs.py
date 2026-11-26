@@ -187,7 +187,7 @@ def check_sign(page, state, errs):
 HOME = SCREENS / 'home' / 'home.html'
 HOME_STATES = ['setup-wheel', 'setting', 'setup-failed', 'active', 'requesting', 'no-cases', 'request-failed', 'offline',
                'near-expiry', 'add-wheel', 'adding', 'add-failed', 'added', 'end-confirmation', 'stop-pending',
-               'idle-expired', 'manually-ended', 'unknown-result',
+               'idle-expired', 'manually-ended', 'unknown-result', 'limit-reached', 'outside-shift',
                'profile', 'profile-case-open', 'logout-confirm']   # Round 3: Profile pages (D-70)
 
 WHEEL_JS = r"""() => {

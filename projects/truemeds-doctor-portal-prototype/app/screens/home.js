@@ -12,7 +12,7 @@ import { value } from "../core/settings.js";
 import { storageFor } from "../core/storage.js";
 import { promptAnswer, deviceOf } from "../core/unlock.js";
 import { fasterState, setEnabled } from "../core/faster-signin.js";
-import { work, saveWork, resetWork, availability, setAvailability, addTime, endAvailability, startRequest, clearRequest, openCase } from "../core/session.js";
+import { work, saveWork, resetWork, availability, setAvailability, addTime, endAvailability, startRequest, clearRequest, openCase, shiftNow } from "../core/session.js";
 import { SAMPLE_DOCTOR } from "../data/doctor.js";
 import { PICTURE_NUMBER } from "../data/test-numbers.js";
 import { icon, paint as paintIcons, btn, busyBtn, notice, statusLine, actionBar, sheet, toast, focusSheet } from "./parts.js";
@@ -42,6 +42,8 @@ const FIXTURES = {
   "idle-expired": { setup: true, ended: "idle" },
   "manually-ended": { setup: true, ended: "manual" },
   "unknown-result": { left: 30, request: true, unknown: true },
+  "limit-reached": { left: 590, bar: "limit", limit: { key: "home.capReached" } },   // D-115: Add time tapped at the 10-hour limit
+  "outside-shift": { setup: true, rx: 0, bar: "limit", limit: { key: "home.shiftStarts", shift: "10pm-6am" } },   // D-115: Set availability outside shift hours
   profile: { left: 30, page: "profile" },
   "profile-case-open": { left: 30, page: "profile", caseOpen: true },
   "logout-confirm": { left: 30, page: "profile", sheet: "logout" },
@@ -95,6 +97,8 @@ export function render(host, id, { mode, params = {} }) {
     sheet: live ? null : fx.sheet || null,
     busy: live ? (work().request ? "requesting" : null) : fx.busy || null,
     bar: live ? null : fx.bar || null,
+    fxShift: !live && fx.limit ? fx.limit.shift || null : null,
+    limit: !live && fx.limit ? { key: fx.limit.key, at: fx.limit.shift ? shiftNow(fx.limit.shift).startsAt : null } : null,
     unknown: !live && !!fx.unknown,
     offlineFx: !live && !!fx.offline,
     addFailed: !live && !!fx.addFailed,
@@ -114,15 +118,31 @@ export function render(host, id, { mode, params = {} }) {
     const busy = ui.busy === "setting" || ui.busy === "adding";
     return wheelColumn({ name, col, values, current, disabled: busy, onPick: (val, o) => pickWheel(col, val, o && o.focus) });
   }
-  // The top of the wheel (D-106): setup 10 h; Add time what is left of the 10 hours in total, on the 15-minute step.
-  function maxFor(target) {
-    if (target === "duration") return CAP;
-    return Math.max(0, Math.floor((CAP * MIN - availability().left) / (STEP * MIN)) * STEP);
+  // The top of the wheel (D-106, D-115), on the 15-minute step: the smaller of the 10 hours in total and, only when the backend
+  // sends shift hours, what is left of the shift (setup: from now; Add time: from the current end). Outside the shift: 0.
+  const shiftKey = () => ui.fxShift || story().shift;   // a picture moment names its shift; live: the backend's (story)
+  const pickMax = (t) => (maxFor(t) >= MIN_LEN ? maxFor(t) : capFor(t));   // outside the shift the wheel stays as usual; Set says why
+  const snap = (m) => Math.max(0, Math.floor(m / STEP) * STEP);
+  function capFor(target) { return target === "duration" ? CAP : snap(CAP - availability().left / MIN); }
+  function shiftLeft(target) {
+    const sh = shiftNow(shiftKey());
+    if (!sh) return Infinity;
+    if (!sh.inShift) return 0;
+    return snap((sh.endsAt - clock.now() - (target === "duration" ? 0 : availability().left)) / MIN);
   }
+  function maxFor(target) { return Math.min(capFor(target), shiftLeft(target)); }
+  // Nothing (more) fits (D-115): Add time / Set availability stay tappable and say why, in the bar (result of the action, A-19).
+  function limitNote(target) {
+    const sh = shiftNow(shiftKey());
+    if (sh && !sh.inShift) return { key: "home.shiftStarts", at: sh.startsAt };
+    if (sh && shiftLeft(target) < capFor(target)) return target === "duration" ? { key: "home.shiftStarts", at: sh.startsAt + 24 * 3600000 } : { key: "home.shiftEnds", at: sh.endsAt };
+    return { key: "home.capReached" };
+  }
+  function showLimit(target) { ui.limit = limitNote(target); ui.bar = "limit"; draw(); }
   // One duration picker (D-106, RULES "Entry and home screens"): "Quick picks" (6 chips) → 32 → "Custom" → column heads 4 → wheel.
   // No range text; the add-time sheet has the hint "Up to 10 hours in total" on the Custom line.
   function picker(target) {
-    const max = maxFor(target);
+    const max = pickMax(target);   // outside the shift the wheel still shows; Set availability says why (D-115)
     ui[target] = clampLen(ui[target], max);
     const d = ui[target], hours = Math.floor(d / 60), minutes = d % 60;
     const busy = ui.busy === "setting" || ui.busy === "adding";
@@ -142,7 +162,7 @@ export function render(host, id, { mode, params = {} }) {
   let pickTarget = "duration";
   function pickWheel(col, val, focus) {
     if (ui.busy === "setting" || ui.busy === "adding") return;
-    const max = maxFor(pickTarget);
+    const max = pickMax(pickTarget);
     const d = ui[pickTarget];
     let hh = Math.floor(d / 60), mm = d % 60;
     if (col === "h") hh = val; else mm = val;
@@ -156,6 +176,7 @@ export function render(host, id, { mode, params = {} }) {
     "setup-failed": () => notice("error", MSG("home.setupFailed"), { cls: "status" }),
     "request-failed": () => notice("error", MSG("home.requestFailed"), { cls: "status" }),
     "no-cases": () => notice("neutral", MSG("home.noCases"), { cls: "status" }),
+    limit: () => notice("neutral", MSG(ui.limit.key, ui.limit.at ? { time: clockTime(ui.limit.at) } : {}), { cls: "status" }),
   };
   // Bar notice (A-19, lane-request 7): offline and the result of the bar's own action sit in the bar; near expiry too.
   function barNotice(a) {
@@ -185,7 +206,8 @@ export function render(host, id, { mode, params = {} }) {
     else if (setup) primary = btn(MSG("home.setAvailability"), `tm-btn--primary ${lg}`, onSet, { "data-confirm": "" });
     else primary = btn(MSG("home.requestCase"), `tm-btn--primary ${lg}`, onRequest, { "data-confirm": "", disabled: offline() || a.state === "stopping" || a.state === "expired-pending" || !!ui.busy });
     // Setup: "Available until {time}", 8 above Set availability (D-106; bar caption, RULES "Entry and home screens").
-    const until = setup ? h("p", { class: "until", id: "home-until" }, parts("home.availableUntil", { time: h("b", { text: clockTime(clock.now() + ui.duration * MIN) }) }, MSG)) : null;
+    // Outside the shift nothing can start, so no "Available until" (D-115).
+    const until = setup && maxFor("duration") >= MIN_LEN ? h("p", { class: "until", id: "home-until" }, parts("home.availableUntil", { time: h("b", { text: clockTime(clock.now() + ui.duration * MIN) }) }, MSG)) : null;
     let secondary = null;
     if (!setup && !ui.sheet && a.state !== "expired-pending") {
       secondary = a.state === "stopping" ? btn(MSG("home.ending"), `tm-btn--quiet ${lg}`, null, { "data-secondary": "" })
@@ -207,8 +229,8 @@ export function render(host, id, { mode, params = {} }) {
   // (D-113, Apurva: no "0:00"; replaces D-53's 0:00) and no Add time (the window has ended; Request a case is off).
   function statusCard(a) {
     const timed = a.state === "active" || a.state === "near";
-    const canAdd = maxFor("addDuration") >= MIN_LEN;
-    const addBtn = a.state === "expired-pending" ? null : h("button", { id: "add", class: "tm-btn tm-btn--secondary add-time", type: "button", disabled: offline() || !canAdd, onclick: () => openSheet("add") },
+    // Add time always works while available (D-115; greyed only offline): if nothing more fits, the tap says why.
+    const addBtn = a.state === "expired-pending" ? null : h("button", { id: "add", class: "tm-btn tm-btn--secondary add-time", type: "button", disabled: offline(), onclick: () => (maxFor("addDuration") >= MIN_LEN ? openSheet("add") : showLimit("addDuration")) },
       icon("plus", "tm-icon--16"), MSG("home.addTime"));
     return h("div", { class: "tm-card home-card" },
       timed ? h("div", { class: "srow" }, icon("clock", "srow__icon"),
@@ -310,6 +332,7 @@ export function render(host, id, { mode, params = {} }) {
   const snapshot = () => ({ duration: ui.duration, addDuration: ui.addDuration, page: ui.page });
   function onSet() {
     if (ui.busy) return;
+    if (maxFor("duration") < MIN_LEN) { showLimit("duration"); return; }   // outside the shift (D-115): nothing starts
     commitWheels(root);   // tapped before the wheel came to rest: the value in the band is the one set
     ui.busy = "setting"; ui.bar = null; draw();
     life.later(() => {

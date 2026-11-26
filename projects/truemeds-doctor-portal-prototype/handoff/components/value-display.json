@@ -118,6 +118,7 @@
   "home_added",
   "home_adding",
   "home_end-confirmation",
+  "home_limit-reached",
   "home_logout-confirm",
   "home_near-expiry",
   "home_no-cases",

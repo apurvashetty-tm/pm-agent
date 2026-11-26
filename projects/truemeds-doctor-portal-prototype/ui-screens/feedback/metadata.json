@@ -281,6 +281,40 @@
     "copy": "approved (Apurva, D-114)",
     "placeholders": []
   },
+  "home.capReached": {
+    "pattern": "N1",
+    "trigger": "Add time tapped when less than 15 min fits under the 10 hours (D-115)",
+    "slot": "action bar, above the button",
+    "next": "pick less time, or wait for the shift",
+    "clear": "next action",
+    "retain": "selection",
+    "copy": "approved (Apurva, D-115)",
+    "placeholders": []
+  },
+  "home.shiftEnds": {
+    "pattern": "N1",
+    "trigger": "Add time tapped when less than 15 min fits before the shift end sent by the backend (D-115)",
+    "slot": "action bar, above the button",
+    "next": "pick less time, or wait for the shift",
+    "clear": "next action",
+    "retain": "selection",
+    "copy": "approved (Apurva, D-115)",
+    "placeholders": [
+      "time"
+    ]
+  },
+  "home.shiftStarts": {
+    "pattern": "N1",
+    "trigger": "Set availability tapped outside the shift hours sent by the backend (D-115)",
+    "slot": "action bar, above the button",
+    "next": "pick less time, or wait for the shift",
+    "clear": "next action",
+    "retain": "selection",
+    "copy": "approved (Apurva, D-115)",
+    "placeholders": [
+      "time"
+    ]
+  },
   "home.stopPending": {
     "pattern": "N1",
     "trigger": "stop requested with pending request",

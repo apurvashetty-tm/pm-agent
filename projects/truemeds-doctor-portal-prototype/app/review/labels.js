@@ -49,6 +49,7 @@ export const VALUE_LABEL = {
   offer: { enabled: "Turns on", cancelled: "Prompt cancelled", "enable-failed": "Couldn't turn on", unavailable: "Not available" },
   unlock: { success: "Unlocks", cancelled: "Prompt cancelled", failed: "Fails once", unavailable: "Not available" },
   availability: { normal: "Normal", "near-expiry": "Ending soon", ending: "Ending" },
+  shift: { none: "Not sent (24×7)", "10am-10pm": "10 AM – 10 PM", "10pm-6am": "10 PM – 6 AM (overnight)" },
   request: { accepted: "Case arrives", failed: "Request fails", "no-cases": "No cases" },
   caseKind: { normal: "Normal", "ten-medicines": "10 medicines", "long-names": "Long names", empty: "No medicines",
     "rx-failed": "Rx won't load", "release-refused": "Release refused" },

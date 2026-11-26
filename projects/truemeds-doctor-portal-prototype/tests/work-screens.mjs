@@ -59,4 +59,32 @@ for (const [w, h] of [[360, 640], [390, 844]]) {
   ok("new OTP sign-in opens a fresh Home (no old 'availability ended')", stale && home.setup && !home.t.includes("availability ended") && !home.t.includes("ended your availability"), JSON.stringify({ stale, setup: home.setup }));
   await ctx.close();
 }
+{ // D-115: Add time always works; nothing more fits → it says why. Shift hours only when sent (none → 24×7).
+  const ctx = await b.newContext({ viewport: { width: 390, height: 844 } }); const p = await ctx.newPage();
+  await p.goto(base + "?s=home_active"); await p.waitForTimeout(800);
+  const bar = () => p.evaluate(() => (document.querySelector("#screen .footer")?.innerText || "").replace(/\s+/g, " "));
+  const add = async (chip) => { await p.locator("#add").click(); await p.waitForTimeout(250);
+    await p.locator(".tm-sheet").getByRole("button", { name: chip, exact: true }).click();
+    await p.locator(".tm-sheet [data-confirm]").click(); await p.waitForTimeout(2500); };
+  for (const c of ["3 hours", "3 hours", "3 hours", "15 min", "15 min"]) await add(c);   // 30 min + 9 h 30 = 10 h
+  const enabled = await p.locator("#add").isEnabled();
+  await p.locator("#add").click(); await p.waitForTimeout(300);
+  const msg = await bar(); const sheetOpen = await p.locator(".tm-sheet").count();
+  ok("Add time stays tappable at the 10-hour limit and says why", enabled && !sheetOpen && msg.includes("You can be available for up to 10 hours at a time."), msg.slice(0, 120));
+  // shift hours: unit check (overnight crosses midnight) + a live tap outside the shift
+  const unit = await p.evaluate(async () => { const { shiftNow } = await import("./core/session.js");
+    const at = (h, m = 0) => new Date(2026, 10, 26, h, m).getTime(), H = 3600000;
+    const a = shiftNow("10pm-6am", at(23)), b = shiftNow("10pm-6am", at(3)), c = shiftNow("10pm-6am", at(12)), d = shiftNow("none", at(12)), e = shiftNow("10am-10pm", at(21, 30));
+    return a.inShift && a.endsAt === at(6) + 24 * H && b.inShift && b.endsAt === at(6) && !c.inShift && c.startsAt === at(22) && d === null && e.inShift && e.endsAt === at(22); });
+  ok("shift hours: overnight shift crosses midnight; none sent = no limit", unit);
+  await ctx.close();
+  const c2 = await b.newContext({ viewport: { width: 390, height: 844 } }); const q = await c2.newPage();
+  await q.goto(base + "?s=home_setup-wheel"); await q.waitForTimeout(800);
+  const hr = new Date().getHours(); const outside = hr >= 10 && hr < 22 ? "10pm-6am" : "10am-10pm";
+  await q.evaluate((x) => { const s = { ...window.__tm.store.get().story, shift: x }; window.__tm.store.set({ story: s }); }, outside);
+  await q.getByRole("button", { name: "Set availability" }).click(); await q.waitForTimeout(400);
+  const m2 = await q.evaluate(() => (document.querySelector("#screen .footer")?.innerText || "").replace(/\s+/g, " "));
+  ok("outside the shift, Set availability says when cases start and starts nothing", /Cases are assigned from \d{1,2}:00 (AM|PM)\./.test(m2) && !(await q.locator("#home-time").count()), m2.slice(0, 120));
+  await c2.close();
+}
 await b.close(); srv.close(); console.log(`${pass}/${n} passed`); process.exit(pass === n ? 0 : 1);

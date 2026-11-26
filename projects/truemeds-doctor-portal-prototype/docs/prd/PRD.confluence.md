@@ -197,7 +197,7 @@ Each screen opens with the job the doctor is trying to get done, then why it's b
 
 **Rules:**
 - Availability has a minimum and a **maximum in total**, set plus added time (§7), any start time. Add time tops out at what is left of the maximum, and the sheet says so; the button names the time it adds in hours and minutes.
-- Home shows one card: time remaining, with Add time always on its line (greyed offline), and prescriptions written today (a count only, no earnings), which opens Profile. A case counts once its prescription is confirmed. After availability ends, the count shows as one row above the picker when it is above 0.
+- Home shows one card: time remaining, with Add time always on its line and always tappable (greyed only offline; if nothing more fits, the tap says why — D-115), and prescriptions written today (a count only, no earnings), which opens Profile. A case counts once its prescription is confirmed. After availability ends, the count shows as one row above the picker when it is above 0.
 - A request made before availability ends is honoured even if the case arrives after.
 - Ending availability with a request pending stops new requests; the pending one is honoured and any case it brings is finished first.
 - Availability that ends during a case never interrupts it; the case's ending says "Your availability has ended." and offers only Back to Home.
@@ -217,6 +217,7 @@ Each screen opens with the job the doctor is trying to get done, then why it's b
 - Ending soon → "Availability ends soon. You can still request a case." (Add time is always there).
 - Adding time → "Adding…"; done → "Time added"; failed → "Couldn’t add time."
 - End availability → confirmation sheet ("You won’t get new cases after this…"); with a request pending → "Finishing your last request. Availability ends after that."
+- Limits (D-115): the doctor can pick at most the smaller of 10 hours in total and, only when the backend sends shift hours, what is left of the shift. No shift hours sent → no shift limit (24×7). Nothing more fits → Add time says "You can be available for up to 10 hours at a time." or "Cases are assigned until {time}."; outside the shift, Set availability says "Cases are assigned from {time}." and starts nothing. Shifts may cross midnight.
 - Time runs out during Requesting… → no screen of its own: the Requesting… loader stays until the answer; a case opens as normal; no case → toast "No cases right now." then the ended Home (D-114).
 - Ended while idle → "Your availability ended." / "Set it again to get new cases."; ended by the doctor → "You ended your availability." / "Set it again to get new cases." (one sentence per line, D-113).
 - Profile during an open case → "You can log out after this case is closed."

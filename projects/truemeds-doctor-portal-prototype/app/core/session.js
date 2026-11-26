@@ -41,6 +41,19 @@ function endNow(why) { saveWork({ avail: null, ended: why, stopping: false }); r
 // from an earlier session (closed app or expired sign-in, never logged out) are cleared; the backend ends that availability.
 // Prescriptions today stay (a real count); an open case is untouched (reopening goes back into it, OQ-025).
 export function freshSignIn() { saveWork({ avail: null, ended: null, stopping: false, request: null }); }
+// Shift hours (D-115): only when the backend sends them; none sent → no shift limit (24×7). "HH-HH" in 24 h; an end before the
+// start crosses midnight. Returns null (no shift) or { inShift, endsAt, startsAt } in app-clock ms (endsAt only while in shift).
+const SHIFTS = { "10am-10pm": [10, 22], "10pm-6am": [22, 6] };
+export function shiftNow(shift, now = clock.now()) {
+  const s = SHIFTS[shift]; if (!s) return null;
+  const [a, b] = s, d = new Date(now), day = new Date(d.getFullYear(), d.getMonth(), d.getDate()).getTime(), H = 3600000;
+  for (const off of [-1, 0, 1]) {   // the shift that started yesterday, today or tomorrow
+    const st = day + off * 24 * H + a * H, en = st + ((b - a + 24) % 24 || 24) * H;
+    if (now >= st && now < en) return { inShift: true, endsAt: en, startsAt: st };
+  }
+  let next = day + a * H; if (next <= now) next += 24 * H;
+  return { inShift: false, startsAt: next };
+}
 export function setAvailability(ms) { saveWork({ avail: { endsAt: clock.now() + ms }, ended: null, stopping: false }); }
 export function addTime(ms) { const w = work(); if (w.avail) saveWork({ avail: { endsAt: w.avail.endsAt + ms } }); }
 // End availability (sheet confirmed): with a request open it waits for that request (stop-pending), else it ends now.

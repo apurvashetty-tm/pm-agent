@@ -5,7 +5,7 @@ const $ = (s) => document.querySelector(s);
 const M = window.TMFeedback.msg;
 const STATES = ['setup-wheel', 'setting', 'setup-failed', 'active', 'requesting', 'no-cases', 'request-failed', 'offline',
   'near-expiry', 'add-wheel', 'adding', 'add-failed', 'added', 'end-confirmation', 'stop-pending',
-  'idle-expired', 'manually-ended', 'unknown-result', 'profile', 'profile-case-open', 'logout-confirm'];
+  'idle-expired', 'manually-ended', 'unknown-result', 'limit-reached', 'outside-shift', 'profile', 'profile-case-open', 'logout-confirm'];
 // The picture moments (app/screens/home.js FIXTURES). left: minutes remaining; rx: Prescriptions written today.
 const FIX = {
   'setup-wheel': { setup: true, rx: 0 }, setting: { setup: true, rx: 0, busy: 'setting' }, 'setup-failed': { setup: true, rx: 0, bar: 'setup-failed' },
@@ -14,7 +14,7 @@ const FIX = {
   'add-wheel': { left: 5, sheet: 'add' }, adding: { left: 5, sheet: 'add', busy: 'adding' }, 'add-failed': { left: 5, sheet: 'add', addFailed: true },
   added: { left: 35, toast: true }, 'end-confirmation': { left: 30, sheet: 'end' }, 'stop-pending': { left: 30, stopping: true },
   'idle-expired': { setup: true, ended: 'idle' }, 'manually-ended': { setup: true, ended: 'manual' },
-  'unknown-result': { left: 30, unknown: true }, profile: { left: 30, page: 'profile' }, 'profile-case-open': { left: 30, page: 'profile', caseOpen: true },
+  'unknown-result': { left: 30, unknown: true }, 'limit-reached': { left: 590, bar: 'limit' }, 'outside-shift': { setup: true, rx: 0, bar: 'limit', shift: true }, profile: { left: 30, page: 'profile' }, 'profile-case-open': { left: 30, page: 'profile', caseOpen: true },
   'logout-confirm': { left: 30, page: 'profile', sheet: 'logout' },
 };
 const capture = document.documentElement.classList.contains('capture');
@@ -66,8 +66,8 @@ function rxRow(rx, { link = true, inline = false } = {}) {
 // Available: one tm-card, two rows (Time remaining + Add time, always shown; Prescriptions written today → Profile).
 function statusCard() {
   const timed = kind() === 'active' || kind() === 'near';   // stop-pending: no time row (D-47); ran out with a request: no time row either (D-113, no 0:00)
-  const canAdd = maxFor('addDuration') >= MIN_LEN;
-  return `<div class="tm-card home-card">${timed ? `<div class="srow">${icon('clock', 'srow__icon')}<div class="srow__txt"><p class="srow__label">${M('home.timeRemaining')}</p><div class="srow__line"><p class="tm-value-display srow__value time" id="home-time" aria-live="off">${formatLeft(fx().left)}</p>${`<button id="add" class="tm-btn tm-btn--secondary add-time" type="button"${fx().offline || !canAdd ? ' disabled=""' : ''}>${icon('plus', 'tm-icon--16')}${M('home.addTime')}</button>`}</div></div></div>` : ''}${rxRow(3)}</div>`;
+  // Add time always works while available (D-115; greyed only offline).
+  return `<div class="tm-card home-card">${timed ? `<div class="srow">${icon('clock', 'srow__icon')}<div class="srow__txt"><p class="srow__label">${M('home.timeRemaining')}</p><div class="srow__line"><p class="tm-value-display srow__value time" id="home-time" aria-live="off">${formatLeft(fx().left)}</p>${`<button id="add" class="tm-btn tm-btn--secondary add-time" type="button"${fx().offline ? ' disabled=""' : ''}>${icon('plus', 'tm-icon--16')}${M('home.addTime')}</button>`}</div></div></div>` : ''}${rxRow(3)}</div>`;
 }
 function topNotice() {
   const f = fx();
@@ -82,6 +82,7 @@ function barNotice() {
   if (f.bar === 'setup-failed') return notice('error', M('home.setupFailed'), 'status');
   if (f.bar === 'request-failed') return notice('error', M('home.requestFailed'), 'status');
   if (f.bar === 'no-cases') return notice('neutral', M('home.noCases'), 'status');
+  if (f.bar === 'limit') return notice('neutral', f.shift ? M('home.shiftStarts', { time: '10:00 PM' }) : M('home.capReached'), 'status');   // D-115 (pictures: fixed clock 3 PM, shift 10 PM – 6 AM)
   if (kind() === 'near' && !f.sheet) return notice('warning', M('home.endingSoon'), 'status', 'clock');
   return '';
 }
@@ -95,7 +96,7 @@ function footer() {
     : setup ? btn(M('home.setAvailability'), `tm-btn--primary ${lg}`, ' data-confirm=""')
     : btn(M('home.requestCase'), `tm-btn--primary ${lg}`, ` data-confirm=""${f.offline || waiting || f.busy ? ' disabled=""' : ''}`);
   // Setup: "Available until {time}", 8 above Set availability (D-106).
-  const until = setup ? `<p class="until" id="home-until">${esc(M('home.availableUntil', { time: '\u0001' })).replace('\u0001', `<b>${clockTime(NOW + duration * 60000)}</b>`)}</p>` : '';
+  const until = setup && !f.shift ? `<p class="until" id="home-until">${esc(M('home.availableUntil', { time: '\u0001' })).replace('\u0001', `<b>${clockTime(NOW + duration * 60000)}</b>`)}</p>` : '';
   const secondary = !setup && !f.sheet && kind() !== 'expired-pending'
     ? (kind() === 'stopping' ? btn(M('home.ending'), `tm-btn--quiet ${lg}`, ' data-secondary=""') : btn(M('home.endAvailability'), `tm-btn--quiet ${lg}`, ` data-secondary=""${f.offline ? ' disabled=""' : ''}`)) : '';
   return `<div class="tm-actionbar footer">${barNotice()}${until}${primary}${secondary}${toast}</div>`;

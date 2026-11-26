@@ -32,6 +32,8 @@ export const STORY_FIELDS = {
   request:     ["accepted", "failed", "no-cases"],
   caseKind:    ["normal", "ten-medicines", "long-names", "empty", "rx-failed", "release-refused"],
   prescribe:   ["saved", "pending-blocks-confirm", "confirm-busy", "confirm-failed", "dose-error", "disabled"],
+  // shift hours sent by the backend (D-115); "none" = not sent → no shift limit (24×7). Test values for review.
+  shift:       ["none", "10am-10pm", "10pm-6am"],
 };
 
 // Call attempts: each attempt is one set of simulator choices (CALL_CHOICES). 1 to 3 attempts per story, played in order.
@@ -43,6 +45,6 @@ export const DEFAULT_STORY = {
   v: 2,
   start: "sign-in", scenario: "cat4", offline: "no",
   signIn: "sent", otp: "correct", device: "fingerprint", offer: "enabled", unlock: "success",
-  availability: "normal", request: "accepted", caseKind: "normal", prescribe: "saved",
+  availability: "normal", request: "accepted", caseKind: "normal", prescribe: "saved", shift: "none",
   calls: [defaultAttempt()],
 };
