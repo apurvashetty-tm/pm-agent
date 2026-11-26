@@ -1083,6 +1083,11 @@ From an external (ChatGPT) review, each point verified before acting.
   9. **Reference:** `ui-screens/case/case.html` is generated from the app (`scripts/build-case-reference.mjs`).
 - **Not changed:** "Time remaining 0:00" on Availability ended (D-53 stands; Apurva to say).
 
+### D-112 · A new OTP sign-in opens a fresh Home — 2026-11-26 · **Apurva**
+- **Decision (Apurva):** every new OTP sign-in lands on a fresh "Start taking cases" Home. Availability, its "ended" notice and any case request left from an earlier session that was never logged out (app closed, sign-in expired) are cleared; the backend ends that availability. Prescriptions written today stays; an open case still reopens first (OQ-025). Log out already ends availability and clears the session (B12). Returning unlock continues the same session (unchanged).
+- **Why:** Apurva signed in on the local prototype and landed on "Your availability ended." from an old test session. A fresh sign-in should not show an earlier session's notice.
+- Built: `app/core/session.js` `freshSignIn()`, called on OTP success (`app/screens/otp.js`). Check: `tests/work-screens.mjs` (18/18). Kit change H10.
+
 ## Design system changes made for this work
 
 ### D-60 · Secondary button without drop shadow (design system) — 2026-10-24 · **REVERTED same day**

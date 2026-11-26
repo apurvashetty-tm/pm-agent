@@ -13,6 +13,7 @@ import { OTP_LENGTH, PICTURE_NUMBER, PICTURE_CODE } from "../data/test-numbers.j
 import { PLACEHOLDER, TERMS_URL, PRIVACY_URL } from "../data/links.js";
 import { mockKeyboard, drawsKeyboard } from "../shell/mock-keyboard.js";
 import { afterSignIn } from "../core/faster-signin.js";
+import { freshSignIn } from "../core/session.js";
 import { authCtx, newLife } from "./entry-ctx.js";
 import { band } from "./band.js";
 import { revealAboveKeyboard } from "./parts.js";
@@ -202,6 +203,7 @@ export function render(host, id, { mode, params = {} }) {
   function verified(r) {
     if (r.outcome === "correct") {
       signIn(number, ctx());
+      freshSignIn();                                 // D-112: a new sign-in opens a fresh Home, never an old session
       store.set({ entryNumber: number });
       // Signed in: the entry journey leaves history (Back never returns to OTP). The faster sign-in offer at each OTP sign-in, at most
       // fasterOfferMax (3) times, on a phone with a screen lock and faster sign-in off; else Home (D-45, D-64, D-104).

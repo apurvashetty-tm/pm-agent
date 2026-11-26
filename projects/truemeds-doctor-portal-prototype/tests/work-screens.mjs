@@ -47,4 +47,16 @@ for (const [w, h] of [[360, 640], [390, 844]]) {
   ok("Other dose error is linked to its field", await q.evaluate(() => { const i = document.querySelector("#ps-other"); return i.getAttribute("aria-invalid") === "true" && !!document.getElementById(i.getAttribute("aria-describedby")); }));
   await q.close();
 }
+{ // D-112: a new OTP sign-in opens a fresh Home, never an old session's "availability ended"
+  const ctx = await b.newContext({ viewport: { width: 390, height: 844 } }); const p = await ctx.newPage();
+  await p.goto(base + "?s=home_idle-expired"); await p.waitForTimeout(700);
+  const stale = await p.evaluate(() => document.body.textContent.includes("Your availability ended"));
+  await p.goto(base); await p.waitForTimeout(700);
+  await p.fill("#tm-login-mobile", "9876543210"); await p.click(".login-submit"); await p.waitForTimeout(2500);
+  await p.focus("#c"); for (const d of "1234") await p.keyboard.press(d); await p.click("#b"); await p.waitForTimeout(2500);
+  const nn = p.getByRole("button", { name: "Not now" }); if (await nn.count()) { await nn.first().click(); await p.waitForTimeout(800); }
+  const home = await p.evaluate(() => { const t = document.querySelector("#screen").innerText; return { t, setup: t.includes("Start taking cases") }; });
+  ok("new OTP sign-in opens a fresh Home (no old 'availability ended')", stale && home.setup && !home.t.includes("availability ended") && !home.t.includes("ended your availability"), JSON.stringify({ stale, setup: home.setup }));
+  await ctx.close();
+}
 await b.close(); srv.close(); console.log(`${pass}/${n} passed`); process.exit(pass === n ? 0 : 1);

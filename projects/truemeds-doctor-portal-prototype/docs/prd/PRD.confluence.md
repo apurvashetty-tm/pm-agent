@@ -203,6 +203,7 @@ Each screen opens with the job the doctor is trying to get done, then why it's b
 - Availability that ends during a case never interrupts it; the case's ending says "Your availability has ended." and offers only Back to Home.
 - Help and the bell are on Home; the bell is never inside a case. In this release both open a blank placeholder (§9).
 - Profile is a page: name and role, prescriptions written today, today's earnings, User manual, Faster sign-in on/off, Log out. Log out asks first, and isn't available while a case is open.
+- A new OTP sign-in opens a fresh Home ("Start taking cases"): availability and any notice or request left from an earlier session that was never logged out are cleared, and the backend ends that availability. Prescriptions written today stays; an open case still reopens first (D-112).
 - One phone signed in at a time. The session stays valid through an open case; the doctor is never asked for an OTP over a live case.
 
 **Other states:**

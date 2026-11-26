@@ -37,6 +37,10 @@ export function availability() {
   return { state: left <= v("nearExpiryWarning") ? "near" : "active", left };
 }
 function endNow(why) { saveWork({ avail: null, ended: why, stopping: false }); return { state: "none", left: 0 }; }
+// A new OTP sign-in starts a fresh Home (Apurva 2026-11-26, D-112): availability, its "ended" notice and any case request left
+// from an earlier session (closed app or expired sign-in, never logged out) are cleared; the backend ends that availability.
+// Prescriptions today stay (a real count); an open case is untouched (reopening goes back into it, OQ-025).
+export function freshSignIn() { saveWork({ avail: null, ended: null, stopping: false, request: null }); }
 export function setAvailability(ms) { saveWork({ avail: { endsAt: clock.now() + ms }, ended: null, stopping: false }); }
 export function addTime(ms) { const w = work(); if (w.avail) saveWork({ avail: { endsAt: w.avail.endsAt + ms } }); }
 // End availability (sheet confirmed): with a request open it waits for that request (stop-pending), else it ends now.
