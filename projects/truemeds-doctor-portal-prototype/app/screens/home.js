@@ -204,10 +204,10 @@ export function render(host, id, { mode, params = {} }) {
   }
   // Available: one tm-card, two rows of one anatomy (grey icon · 16/24 label · L9 value) — Time remaining with + Add time on the
   // value line, always shown (greyed offline; also greyed when less than 15 minutes fit under the cap), and Prescriptions written
-  // today → Profile. Ending (stop-pending) shows no time row (D-47); ran out with a request open shows 0:00 (D-53) and no Add time
-  // (the window has ended; Request a case is off).
+  // today → Profile. Ending (stop-pending) shows no time row (D-47); ran out with a request open shows no time row either
+  // (D-113, Apurva: no "0:00"; replaces D-53's 0:00) and no Add time (the window has ended; Request a case is off).
   function statusCard(a) {
-    const timed = a.state === "active" || a.state === "near" || a.state === "expired-pending";
+    const timed = a.state === "active" || a.state === "near";
     const canAdd = maxFor("addDuration") >= MIN_LEN;
     const addBtn = a.state === "expired-pending" ? null : h("button", { id: "add", class: "tm-btn tm-btn--secondary add-time", type: "button", disabled: offline() || !canAdd, onclick: () => openSheet("add") },
       icon("plus", "tm-icon--16"), MSG("home.addTime"));

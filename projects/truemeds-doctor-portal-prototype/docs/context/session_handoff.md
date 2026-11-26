@@ -1041,4 +1041,5 @@ User identified missing HTML/native linkage. Inspected actual sign-in and OTP HT
 ## 2026-11-26 · Overnight build r4 (D-110, D-111)
 - Report: `docs/renders/2026-11-25-r4-rest-build/REPORT.md`. Built, rendered, audited; kit carries one diff against the 10 November kit; PRD file v0.7. Checks green (see the report for the two re-runs).
 - **2026-11-26 · D-112 (Apurva):** a new OTP sign-in opens a fresh Home (old availability / "ended" notice / request cleared). `session.js` `freshSignIn()`, `otp.js`; app-logic §3; kit row H10; work-screens 18/18, entry 61/61. Kept as is (Apurva): "Available until {time}" preview on ended Home.
+- **2026-11-26 · D-113 (Apurva):** no "0:00" row on Home expired-pending; ended notices "… / Set it again to get new cases." Kit H11; 6 Home pictures re-rendered.
 - **Next:** Apurva's sanity check (pictures, phone) and CHECKIN 1, 2, D-111, 11–13; then PR #41 + D-111's design-system edits (shared), project PR, release only when asked.

@@ -1088,6 +1088,11 @@ From an external (ChatGPT) review, each point verified before acting.
 - **Why:** Apurva signed in on the local prototype and landed on "Your availability ended." from an old test session. A fresh sign-in should not show an earlier session's notice.
 - Built: `app/core/session.js` `freshSignIn()`, called on OTP success (`app/screens/otp.js`). Check: `tests/work-screens.mjs` (18/18). Kit change H10.
 
+### D-113 · Ended Home: no "0:00", notices point to setting it again — 2026-11-26 · **Apurva**
+- **Decision (Apurva):** (1) Home "Availability ended" (ran out with a request still open) shows **no Time remaining row**: no "0:00" (replaces D-53's 0:00; CHECKIN 11). (2) The ended notices say what to do next, one sentence per line: "Your availability ended." / "You ended your availability." then "Set it again to get new cases." (was "You won’t get new cases."). The "Available until {time}" preview above Set availability stays as is (Apurva, same day).
+- **Why:** a 0:00 timer adds nothing once the window has ended; the notice should lead to the picker and Set availability below it.
+- Built: `app/screens/home.js`, `ui-screens/home/home-reference.js`, `app/screens/home.css` (line break), copy registry. Pictures `home_expired-pending`, `home_idle-expired`, `home_manually-ended` re-rendered (other Home pictures unchanged). Kit change H11.
+
 ## Design system changes made for this work
 
 ### D-60 · Secondary button without drop shadow (design system) — 2026-10-24 · **REVERTED same day**

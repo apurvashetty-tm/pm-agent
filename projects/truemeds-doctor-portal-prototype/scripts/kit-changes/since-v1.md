@@ -66,6 +66,7 @@
 | H7 | End sheet: "You won’t get new cases after this. A case already assigned to you stays with you."; title when time ran out with a request open: "Availability ended". | Must |
 | H8 | After availability ends: the count is one row above the picker, number on the label's line, so the whole wheel shows at 390 × 844. | Must |
 | H9 | Profile shows Prescriptions written today (read only). Cards to Log out 32. | Must |
+| H11 | Ended notices: "Your availability ended." / "You ended your availability." and, on its own line, **"Set it again to get new cases."** (was "You won’t get new cases."). Ran out with a request open: **no Time remaining row** (no "0:00"). | Must |
 | H10 | **A new OTP sign-in opens a fresh Home** ("Start taking cases", no old notice). Availability, its "ended" notice and any case request left from an earlier session that was never logged out (app closed, sign-in expired) are cleared, and the backend ends that availability. Prescriptions written today stays; an open case still reopens first. Log out already ends availability. v1: not covered. | Must |
 
 ## Case page and calling

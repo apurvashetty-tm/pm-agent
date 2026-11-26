@@ -31,8 +31,8 @@ add("R03-d", "End availability with a request open: honours that request, no new
   await d.click("Back"); await d.click("Release case"); await d.settle();
   await d.msg("home.manuallyEnded"); await d.buttons(["Set availability"], ["Request a case"]);
 });
-add("R03-e", "0:00 when availability ran out with a request still open", "home_expired-pending", "app-logic.md:66 (D-53)", async (d) => {
-  assert.equal(await time(d), "0:00"); await d.msg("home.expiredPending");
+add("R03-e", "no time row (no 0:00) when availability ran out with a request still open", "home_expired-pending", "app-logic.md:77 (D-113, was D-53)", async (d) => {
+  assert.equal(await d.root().locator("#home-time").count(), 0, "no Time remaining row"); await d.msg("home.expiredPending");
 });
 add("R04-a", "a confirmed prescription counts once; earnings = count × setting", "a-confirm-failed", "app-logic.md:71,279 (D-81 F10)", async (d) => {
   await d.choose("prescribe", "saved"); await d.click("Confirm prescription"); await d.settle(); await d.text("Prescription confirmed");

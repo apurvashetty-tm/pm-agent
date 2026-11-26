@@ -1099,49 +1099,50 @@ Decisions: D-78 (the approved screens and app logic)
 | [home-03](#home-03) | App rules | What is the rule for "Time added"? |
 | [home-04](#home-04) | App rules | What is the rule for "End availability"? |
 | [home-05](#home-05) | App rules | What is the rule for "Log out confirm"? |
-| [home-06](#home-06) | App rules | What is the rule for "A new OTP sign-in opens a fresh Home (D-112)"? |
-| [home-07](#home-07) | App rules | What is the rule for "Home answers "Am I taking cases right now, and"? |
-| [home-08](#home-08) | App rules | What is the rule for "Setup (D-106)"? |
-| [home-09](#home-09) | App rules | What is the rule for "10 hours in total (D-106, replaces D-36 "no maximum")"? |
-| [home-10](#home-10) | App rules | What is the rule for "Available (D-106, D-107)"? |
-| [home-11](#home-11) | App rules | What is the rule for "Time remaining"? |
-| [home-12](#home-12) | App rules | What is the rule for "Titles by state (D-107)"? |
-| [home-13](#home-13) | App rules | What is the rule for "Request a case"? |
-| [home-14](#home-14) | App rules | What is the rule for "Add time (D-106)"? |
-| [home-15](#home-15) | App rules | What is the rule for "End availability"? |
-| [home-16](#home-16) | App rules | What is the rule for "Window ends during a case"? |
-| [home-17](#home-17) | App rules | What is the rule for "Prescriptions written today"? |
-| [home-18](#home-18) | App rules | What is the rule for "Result notices on Home"? |
-| [home-19](#home-19) | App rules | What is the rule for "Checking…"? |
-| [home-20](#home-20) | App rules | What is the rule for "No cases"? |
-| [home-21](#home-21) | App rules | What is the rule for "Notifications bell, Help and Profile icons on Home; the"? |
-| [home-22](#home-22) | App rules | What is the rule for "Profile page"? |
-| [home-23](#home-23) | App rules | What is the rule for "Faster sign-in toggle (D-70)"? |
-| [home-24](#home-24) | App rules | What is the rule for "One phone active at a time"? |
-| [home-25](#home-25) | App rules | What is the rule for "Source"? |
-| [home-26](#home-26) | States and feedback | What does the app show in home.setup, and how does it recover? |
-| [home-27](#home-27) | States and feedback | What does the app show in home.setting, and how does it recover? |
-| [home-28](#home-28) | States and feedback | What does the app show in home.setup-failed, and how does it recover? |
-| [home-29](#home-29) | States and feedback | What does the app show in home.active, and how does it recover? |
-| [home-30](#home-30) | States and feedback | What does the app show in home.requesting, and how does it recover? |
-| [home-31](#home-31) | States and feedback | What does the app show in home.no-cases, and how does it recover? |
-| [home-32](#home-32) | States and feedback | What does the app show in home.request-failed, and how does it recover? |
-| [home-33](#home-33) | States and feedback | What does the app show in home.offline, and how does it recover? |
-| [home-34](#home-34) | States and feedback | What does the app show in home.near-expiry, and how does it recover? |
-| [home-35](#home-35) | States and feedback | What does the app show in home.add-open, and how does it recover? |
-| [home-36](#home-36) | States and feedback | What does the app show in home.adding, and how does it recover? |
-| [home-37](#home-37) | States and feedback | What does the app show in home.add-failed, and how does it recover? |
-| [home-38](#home-38) | States and feedback | What does the app show in home.added, and how does it recover? |
-| [home-39](#home-39) | States and feedback | What does the app show in home.end-confirmation, and how does it recover? |
-| [home-40](#home-40) | States and feedback | What does the app show in home.stop-pending, and how does it recover? |
-| [home-41](#home-41) | States and feedback | What does the app show in home.expired-pending, and how does it recover? |
-| [home-42](#home-42) | States and feedback | What does the app show in home.unknown-result, and how does it recover? |
-| [home-43](#home-43) | Limits and timings | What is the value of "nearExpiryWarning"? |
-| [home-44](#home-44) | Limits and timings | What is the value of "availabilityMinimum"? |
-| [home-45](#home-45) | Limits and timings | What is the value of "availabilityStep"? |
-| [home-46](#home-46) | Limits and timings | What is the value of "availabilityMaximum"? |
-| [home-47](#home-47) | Limits and timings | What is the value of "earningsPerConfirmedRx"? |
-| [home-48](#home-48) | Availability wheel | How does the availability wheel behave on the phone? |
+| [home-06](#home-06) | App rules | What is the rule for "Ended notices (D-113)"? |
+| [home-07](#home-07) | App rules | What is the rule for "A new OTP sign-in opens a fresh Home (D-112)"? |
+| [home-08](#home-08) | App rules | What is the rule for "Home answers "Am I taking cases right now, and"? |
+| [home-09](#home-09) | App rules | What is the rule for "Setup (D-106)"? |
+| [home-10](#home-10) | App rules | What is the rule for "10 hours in total (D-106, replaces D-36 "no maximum")"? |
+| [home-11](#home-11) | App rules | What is the rule for "Available (D-106, D-107)"? |
+| [home-12](#home-12) | App rules | What is the rule for "Time remaining"? |
+| [home-13](#home-13) | App rules | What is the rule for "Titles by state (D-107)"? |
+| [home-14](#home-14) | App rules | What is the rule for "Request a case"? |
+| [home-15](#home-15) | App rules | What is the rule for "Add time (D-106)"? |
+| [home-16](#home-16) | App rules | What is the rule for "End availability"? |
+| [home-17](#home-17) | App rules | What is the rule for "Window ends during a case"? |
+| [home-18](#home-18) | App rules | What is the rule for "Prescriptions written today"? |
+| [home-19](#home-19) | App rules | What is the rule for "Result notices on Home"? |
+| [home-20](#home-20) | App rules | What is the rule for "Checking…"? |
+| [home-21](#home-21) | App rules | What is the rule for "No cases"? |
+| [home-22](#home-22) | App rules | What is the rule for "Notifications bell, Help and Profile icons on Home; the"? |
+| [home-23](#home-23) | App rules | What is the rule for "Profile page"? |
+| [home-24](#home-24) | App rules | What is the rule for "Faster sign-in toggle (D-70)"? |
+| [home-25](#home-25) | App rules | What is the rule for "One phone active at a time"? |
+| [home-26](#home-26) | App rules | What is the rule for "Source"? |
+| [home-27](#home-27) | States and feedback | What does the app show in home.setup, and how does it recover? |
+| [home-28](#home-28) | States and feedback | What does the app show in home.setting, and how does it recover? |
+| [home-29](#home-29) | States and feedback | What does the app show in home.setup-failed, and how does it recover? |
+| [home-30](#home-30) | States and feedback | What does the app show in home.active, and how does it recover? |
+| [home-31](#home-31) | States and feedback | What does the app show in home.requesting, and how does it recover? |
+| [home-32](#home-32) | States and feedback | What does the app show in home.no-cases, and how does it recover? |
+| [home-33](#home-33) | States and feedback | What does the app show in home.request-failed, and how does it recover? |
+| [home-34](#home-34) | States and feedback | What does the app show in home.offline, and how does it recover? |
+| [home-35](#home-35) | States and feedback | What does the app show in home.near-expiry, and how does it recover? |
+| [home-36](#home-36) | States and feedback | What does the app show in home.add-open, and how does it recover? |
+| [home-37](#home-37) | States and feedback | What does the app show in home.adding, and how does it recover? |
+| [home-38](#home-38) | States and feedback | What does the app show in home.add-failed, and how does it recover? |
+| [home-39](#home-39) | States and feedback | What does the app show in home.added, and how does it recover? |
+| [home-40](#home-40) | States and feedback | What does the app show in home.end-confirmation, and how does it recover? |
+| [home-41](#home-41) | States and feedback | What does the app show in home.stop-pending, and how does it recover? |
+| [home-42](#home-42) | States and feedback | What does the app show in home.expired-pending, and how does it recover? |
+| [home-43](#home-43) | States and feedback | What does the app show in home.unknown-result, and how does it recover? |
+| [home-44](#home-44) | Limits and timings | What is the value of "nearExpiryWarning"? |
+| [home-45](#home-45) | Limits and timings | What is the value of "availabilityMinimum"? |
+| [home-46](#home-46) | Limits and timings | What is the value of "availabilityStep"? |
+| [home-47](#home-47) | Limits and timings | What is the value of "availabilityMaximum"? |
+| [home-48](#home-48) | Limits and timings | What is the value of "earningsPerConfirmedRx"? |
+| [home-49](#home-49) | Availability wheel | How does the availability wheel behave on the phone? |
 
 <a id="home-01"></a>
 ### home-01 · What is the rule for "While Setting… or Adding…"?
@@ -1179,301 +1180,308 @@ Decisions: D-81
 Decisions: D-81
 
 <a id="home-06"></a>
-### home-06 · What is the rule for "A new OTP sign-in opens a fresh Home (D-112)"?
+### home-06 · What is the rule for "Ended notices (D-113)"?
+
+- **Ended notices (D-113):** "Your availability ended." / "You ended your availability." then, on its own line, "Set it again to get new cases." — it points to the picker and Set availability below. — *Source: App logic §3.*
+
+Decisions: D-113
+
+<a id="home-07"></a>
+### home-07 · What is the rule for "A new OTP sign-in opens a fresh Home (D-112)"?
 
 - **A new OTP sign-in opens a fresh Home (D-112):** availability, its "ended" notice and any case request left from an earlier session that was never logged out (app closed, sign-in expired) are cleared, and the backend ends that availability; the doctor lands on "Start taking cases". Prescriptions written today stays (a real count). An open case still reopens first (OQ-025). Log out already ends availability and clears the session (B12). Returning unlock continues the same session and is unchanged. — *Source: App logic §3.*
 
 Decisions: D-112
 
-<a id="home-07"></a>
-### home-07 · What is the rule for "Home answers "Am I taking cases right now, and"?
+<a id="home-08"></a>
+### home-08 · What is the rule for "Home answers "Am I taking cases right now, and"?
 
 - Home answers "Am I taking cases right now, and what do I do next?" Nothing is pushed: the doctor **requests** a case (pull model). — *Source: App logic §3.*
 
 Decisions: D-78 (the approved screens and app logic)
 
-<a id="home-08"></a>
-### home-08 · What is the rule for "Setup (D-106)"?
+<a id="home-09"></a>
+### home-09 · What is the rule for "Setup (D-106)"?
 
 - **Setup (D-106):** title "Start taking cases" · subtitle "You can add time or stop anytime." · **"Quick picks"** (15 / 30 / 45 min, 1 / 2 / 3 hours) → 32 → **"Custom"** (the wheel, always shown: hours and minutes, 15-minute steps) · "Available until {time}" 8 above **Set availability**. No range text and no "Minimum 15 minutes": the wheel itself stops at 15 min and 10 h. The wheel behaves like a phone's own time wheel (F-04): swipe it, it carries on with momentum and snaps to one row; a tap on the row above or below moves one step; the value is set when the wheel comes to rest, and Set availability / Add tapped while it still moves use the value in the band. Confirm starts the countdown. — *Source: App logic §3.*
 
 Decisions: D-106
 
-<a id="home-09"></a>
-### home-09 · What is the rule for "10 hours in total (D-106, replaces D-36 "no maximum")"?
+<a id="home-10"></a>
+### home-10 · What is the rule for "10 hours in total (D-106, replaces D-36 "no maximum")"?
 
 - **10 hours in total (D-106, replaces D-36 "no maximum"):** the setup wheel goes 0–10 h (at 10 h minutes 0 only; at 0 h 15 / 30 / 45). Setting `availabilityMaximum`. — *Source: App logic §3.*
 
 Decisions: D-106, D-36
 
-<a id="home-10"></a>
-### home-10 · What is the rule for "Available (D-106, D-107)"?
+<a id="home-11"></a>
+### home-11 · What is the rule for "Available (D-106, D-107)"?
 
 - **Available (D-106, D-107):** title "You can take cases" · subtitle "Request a case now, or whenever you’re ready." · one card (as on the case page) with two rows of one anatomy (grey icon · 16/24 regular label · L9 value): **Time remaining** with **+ Add time always shown** (compact secondary, on the value line; greyed offline) and **Prescriptions written today**, which opens Profile (chevron; Back returns to Home). — *Source: App logic §3.*
 
 Decisions: D-106, D-107
 
-<a id="home-11"></a>
-### home-11 · What is the rule for "Time remaining"?
-
-- **Time remaining:** h:mm:ss from one hour up (1:00:00), m:ss below (9:42). Shows 0:00 when it ran out with a request still open (D-53; no Add time then, the window has ended). Ending availability (stop-pending) has no time row (D-47). — *Source: App logic §3.*
-
-Decisions: D-53, D-47
-
 <a id="home-12"></a>
-### home-12 · What is the rule for "Titles by state (D-107)"?
+### home-12 · What is the rule for "Time remaining"?
+
+- **Time remaining:** h:mm:ss from one hour up (1:00:00), m:ss below (9:42). When it ran out with a request still open there is **no time row** (D-113, replaces D-53's "0:00"; no Add time, the window has ended). Ending availability (stop-pending) has no time row (D-47). — *Source: App logic §3.*
+
+Decisions: D-113, D-53, D-47
+
+<a id="home-13"></a>
+### home-13 · What is the rule for "Titles by state (D-107)"?
 
 - **Titles by state (D-107):** setup, idle-expired and manually ended: "Start taking cases"; available (incl. requesting, no cases, failures, offline, near expiry, the sheets, unknown result): "You can take cases"; stop-pending: "Ending availability" / "You won’t get new cases."; ran out with a request open: **"Availability ended"** / "You won’t get new cases." — *Source: App logic §3.*
 
 Decisions: D-107
 
-<a id="home-13"></a>
-### home-13 · What is the rule for "Request a case"?
+<a id="home-14"></a>
+### home-14 · What is the rule for "Request a case"?
 
 - **Request a case** while time remains. A request made before the window ends is honoured even if the case arrives after. — *Source: App logic §3.*
 
 Decisions: D-78 (the approved screens and app logic)
 
-<a id="home-14"></a>
-### home-14 · What is the rule for "Add time (D-106)"?
+<a id="home-15"></a>
+### home-15 · What is the rule for "Add time (D-106)"?
 
 - **Add time (D-106):** always shown while available (greyed offline, and greyed when less than 15 minutes fit under the 10-hour total — `[MOCK ASSUMPTION]`, D-106 is silent). Sheet title "Add time", subtitle "Choose how much time to add." (8 under the title, inside the header, D-109); the same Quick picks / Custom picker; the wheel tops out at what is left of the 10 hours (rounded down to 15 minutes), hint "Up to 10 hours in total" on the Custom line; quick picks above that are greyed. Button "Add 30 min", "Add 1 h", "Add 9 h 45 min" (hours and minutes from 60 min up). "Time added" toast. The error ("Couldn’t add time.") sits **in the pinned actions, 16 above Add**, so it shows on arrival at 360 × 640. — *Source: App logic §3.*
 
 Decisions: D-106, D-109
 
-<a id="home-15"></a>
-### home-15 · What is the rule for "End availability"?
+<a id="home-16"></a>
+### home-16 · What is the rule for "End availability"?
 
 - **End availability:** confirmation sheet, "You won’t get new cases after this. A case already assigned to you stays with you." (D-109). If a request is pending: no new requests, the pending one is honoured, availability ends after it resolves and any assigned case closes ("Ending availability", no time row). — *Source: App logic §3.*
 
 Decisions: D-109
 
-<a id="home-16"></a>
-### home-16 · What is the rule for "Window ends during a case"?
+<a id="home-17"></a>
+### home-17 · What is the rule for "Window ends during a case"?
 
 - **Window ends during a case:** the case is never interrupted. The ending then says "Your availability has ended." in the bar (D-111) and offers only **Back to Home**; Home shows the ended state. — *Source: App logic §3.*
 
 Decisions: D-111
 
-<a id="home-17"></a>
-### home-17 · What is the rule for "Prescriptions written today"?
+<a id="home-18"></a>
+### home-18 · What is the rule for "Prescriptions written today"?
 
 - **Prescriptions written today:** a count only, no earnings. A case counts when its prescription is confirmed. On the available card it opens Profile (D-106). Not on fresh setup; on ended Home (idle-expired, manually ended) it shows as one row above the picker when the count is above 0 (D-106), the number on the label's line so the wheel stays above the bar (D-111). Profile shows the same count, read-only (D-111). — *Source: App logic §3.*
 
 Decisions: D-106, D-111
 
-<a id="home-18"></a>
-### home-18 · What is the rule for "Result notices on Home"?
+<a id="home-19"></a>
+### home-19 · What is the rule for "Result notices on Home"?
 
 - **Result notices on Home** ("Availability ends soon", setup / add / request failures) sit inside the action bar, above its button. "No cases right now" and offline are the bar's own action, so they sit inside the bar above the button. Screen-wide standing notices (idle-expired, manually ended, expired-pending, stop-pending) stay at the top of the panel, 32 above the content (D-108). — *Source: App logic §3.*
 
 Decisions: D-108
 
-<a id="home-19"></a>
-### home-19 · What is the rule for "Checking…"?
+<a id="home-20"></a>
+### home-20 · What is the rule for "Checking…"?
 
 - **Checking…** status line in the bar is centred in the button's slot. On the case page the B2 line sits 8 above Skip HA in the same slot (D-111). — *Source: App logic §3.*
 
 Decisions: D-111
 
-<a id="home-20"></a>
-### home-20 · What is the rule for "No cases"?
+<a id="home-21"></a>
+### home-21 · What is the rule for "No cases"?
 
 - **No cases:** neutral notice "No cases right now. Try again in a minute." Auto re-check `[OPEN OQ-019]`. — *Source: App logic §3.*
 
 Decisions: D-78 (the approved screens and app logic)
 
-<a id="home-21"></a>
-### home-21 · What is the rule for "Notifications bell, Help and Profile icons on Home; the"?
+<a id="home-22"></a>
+### home-22 · What is the rule for "Notifications bell, Help and Profile icons on Home; the"?
 
 - Notifications bell, Help and Profile icons on Home; the bell never inside a case. Help's content is not designed yet (backlog). — *Source: App logic §3.*
 
 Decisions: D-78 (the approved screens and app logic)
 
-<a id="home-22"></a>
-### home-22 · What is the rule for "Profile page"?
+<a id="home-23"></a>
+### home-23 · What is the rule for "Profile page"?
 
 - **Profile page** (D-70: a page, not a sheet — task header with Back, no logo; content ported from the current app with design-system fixes, D-69; full redesign later): doctor name and role · prescriptions written today (D-111) · today's earnings (earned, incentive) · User manual · **Faster sign-in on/off** · **Log out** (destructive). During an open case Log out is replaced by "You can log out after this case is closed." Log out is the last item in the content (not pinned). Cards are 16 apart and Log out is 32 below the last card (D-111). The group label "Today's earnings" is 16 semibold, like the other group labels. Log out asks first in a **sheet**: "Log out? — You'll stop getting cases until you sign in again." · Log out · Stay signed in. — *Source: App logic §3.*
 
 Decisions: D-70, D-69, D-111
 
-<a id="home-23"></a>
-### home-23 · What is the rule for "Faster sign-in toggle (D-70)"?
+<a id="home-24"></a>
+### home-24 · What is the rule for "Faster sign-in toggle (D-70)"?
 
 - **Faster sign-in toggle (D-70):** turning it **off** just switches it off (no prompt; OTP from the next sign-in). Turning it **on** opens the phone's prompt, as on the offer screen; if that fails, the toggle stays off and the page shows "Couldn't turn on faster sign-in."; cancelling leaves it off with no message. Hidden if the phone has no screen lock at all (D-64). — *Source: App logic §3.*
 
 Decisions: D-70, D-64
 
-<a id="home-24"></a>
-### home-24 · What is the rule for "One phone active at a time"?
+<a id="home-25"></a>
+### home-25 · What is the rule for "One phone active at a time"?
 
 - One phone active at a time. Session stays valid through an open case (no OTP over a live case). — *Source: App logic §3.*
 
 Decisions: D-78 (the approved screens and app logic)
 
-<a id="home-25"></a>
-### home-25 · What is the rule for "Source"?
+<a id="home-26"></a>
+### home-26 · What is the rule for "Source"?
 
 - **Source:** approved screens in; reference behaviour in. — *Source: App logic §3.*
 
 Decisions: D-78 (the approved screens and app logic)
 
-<a id="home-26"></a>
-### home-26 · What does the app show in home.setup, and how does it recover?
+<a id="home-27"></a>
+### home-27 · What does the app show in home.setup, and how does it recover?
 
 - home.setup: None — "Start taking cases" / "You can add time or stop anytime." · "Quick picks" → 32 → "Custom" (wheel 0–10 h; at 10 h minutes 0; at 0 h 15 / 30 / 45) · "Available until {time}" 8 above Set availability; no range text, no "Minimum 15 minutes" (D-106) — *Source: Feedback state map: home.setup*
 
 Decisions: D-106
 
-<a id="home-27"></a>
-### home-27 · What does the app show in home.setting, and how does it recover?
+<a id="home-28"></a>
+### home-28 · What does the app show in home.setting, and how does it recover?
 
 - home.setting: L1 — Keep selected duration; only start after confirmation — *Source: Feedback state map: home.setting*
 
 Decisions: D-78 (the approved screens and app logic)
 
-<a id="home-28"></a>
-### home-28 · What does the app show in home.setup-failed, and how does it recover?
+<a id="home-29"></a>
+### home-29 · What does the app show in home.setup-failed, and how does it recover?
 
 - home.setup-failed: F2 — Retain duration, retry known failure — *Source: Feedback state map: home.setup-failed*
 
 Decisions: D-78 (the approved screens and app logic)
 
-<a id="home-29"></a>
-### home-29 · What does the app show in home.active, and how does it recover?
+<a id="home-30"></a>
+### home-30 · What does the app show in home.active, and how does it recover?
 
 - home.active: None — "You can take cases" / "Request a case now, or whenever you’re ready." (D-107); one card: Time remaining (+ Add time always shown, greyed offline) · Prescriptions written today → Profile (D-106); Request a case — *Source: Feedback state map: home.active*
 
 Decisions: D-107, D-106
 
-<a id="home-30"></a>
-### home-30 · What does the app show in home.requesting, and how does it recover?
+<a id="home-31"></a>
+### home-31 · What does the app show in home.requesting, and how does it recover?
 
 - home.requesting: L1 — One in-flight request; stable headline and CTA — *Source: Feedback state map: home.requesting*
 
 Decisions: D-78 (the approved screens and app logic)
 
-<a id="home-31"></a>
-### home-31 · What does the app show in home.no-cases, and how does it recover?
+<a id="home-32"></a>
+### home-32 · What does the app show in home.no-cases, and how does it recover?
 
 - home.no-cases: N1 — Check again; remain available until deadline — *Source: Feedback state map: home.no-cases*
 
 Decisions: D-78 (the approved screens and app logic)
 
-<a id="home-32"></a>
-### home-32 · What does the app show in home.request-failed, and how does it recover?
+<a id="home-33"></a>
+### home-33 · What does the app show in home.request-failed, and how does it recover?
 
 - home.request-failed: F2 — Retry confirmed failure; distinguish unknown result — *Source: Feedback state map: home.request-failed*
 
 Decisions: D-78 (the approved screens and app logic)
 
-<a id="home-33"></a>
-### home-33 · What does the app show in home.offline, and how does it recover?
+<a id="home-34"></a>
+### home-34 · What does the app show in home.offline, and how does it recover?
 
 - home.offline: F2 or N1 — Preserve state; reconnect and reconcile pending request — *Source: Feedback state map: home.offline*
 
 Decisions: D-78 (the approved screens and app logic)
 
-<a id="home-34"></a>
-### home-34 · What does the app show in home.near-expiry, and how does it recover?
+<a id="home-35"></a>
+### home-35 · What does the app show in home.near-expiry, and how does it recover?
 
 - home.near-expiry: W1 — "Availability ends soon…" in the bar; Add time in its usual place (always shown, D-106); last-second requests valid — *Source: Feedback state map: home.near-expiry*
 
 Decisions: D-106
 
-<a id="home-35"></a>
-### home-35 · What does the app show in home.add-open, and how does it recover?
+<a id="home-36"></a>
+### home-36 · What does the app show in home.add-open, and how does it recover?
 
 - home.add-open: None — Sheet "Add time" (D-109) with the subtitle in the header; same Quick picks / Custom picker; the wheel tops out at what is left of 10 hours, hint "Up to 10 hours in total"; button "Add 30 min" / "Add 9 h 45 min" (D-106) — *Source: Feedback state map: home.add-open*
 
 Decisions: D-109, D-106
 
-<a id="home-36"></a>
-### home-36 · What does the app show in home.adding, and how does it recover?
+<a id="home-37"></a>
+### home-37 · What does the app show in home.adding, and how does it recover?
 
 - home.adding: L1 — Keep sheet/selection; prevent repeat addition — *Source: Feedback state map: home.adding*
 
 Decisions: D-78 (the approved screens and app logic)
 
-<a id="home-37"></a>
-### home-37 · What does the app show in home.add-failed, and how does it recover?
+<a id="home-38"></a>
+### home-38 · What does the app show in home.add-failed, and how does it recover?
 
 - home.add-failed: F2 — Keep sheet/selection and original deadline; retry confirmed failure. The error sits in the pinned actions, 16 above Add (D-106) — *Source: Feedback state map: home.add-failed*
 
 Decisions: D-106
 
-<a id="home-38"></a>
-### home-38 · What does the app show in home.added, and how does it recover?
+<a id="home-39"></a>
+### home-39 · What does the app show in home.added, and how does it recover?
 
 - home.added: T1 — Confirmed deadline update; dismiss sheet, preserve Home — *Source: Feedback state map: home.added*
 
 Decisions: D-78 (the approved screens and app logic)
 
-<a id="home-39"></a>
-### home-39 · What does the app show in home.end-confirmation, and how does it recover?
+<a id="home-40"></a>
+### home-40 · What does the app show in home.end-confirmation, and how does it recover?
 
 - home.end-confirmation: Confirmation, not error — Existing pending-request decision; no new error component — *Source: Feedback state map: home.end-confirmation*
 
 Decisions: D-78 (the approved screens and app logic)
 
-<a id="home-40"></a>
-### home-40 · What does the app show in home.stop-pending, and how does it recover?
+<a id="home-41"></a>
+### home-41 · What does the app show in home.stop-pending, and how does it recover?
 
 - home.stop-pending: N1 + L1 — Finish request/assigned case before stop. Subtitle "You won't get new cases." (not a repeat of the notice). **No "Time remaining" row**; quiet "Ending…" without spinner (D-47) — *Source: Feedback state map: home.stop-pending*
 
 Decisions: D-47
 
-<a id="home-41"></a>
-### home-41 · What does the app show in home.expired-pending, and how does it recover?
-
-- home.expired-pending: N1 + L1 — Honour request already submitted; do not interrupt case. Title "Availability ended" (D-107); time 0:00, no Add time — *Source: Feedback state map: home.expired-pending*
-
-Decisions: D-107
-
 <a id="home-42"></a>
-### home-42 · What does the app show in home.unknown-result, and how does it recover?
+### home-42 · What does the app show in home.expired-pending, and how does it recover?
+
+- home.expired-pending: N1 + L1 — Honour request already submitted; do not interrupt case. Title "Availability ended" (D-107); no time row (D-113, was 0:00), no Add time — *Source: Feedback state map: home.expired-pending*
+
+Decisions: D-107, D-113
+
+<a id="home-43"></a>
+### home-43 · What does the app show in home.unknown-result, and how does it recover?
 
 - home.unknown-result: N1 + L1 — Reconcile operation ID before retry; do not invent failure or success — *Source: Feedback state map: home.unknown-result*
 
 Decisions: D-78 (the approved screens and app logic)
 
-<a id="home-43"></a>
-### home-43 · What is the value of "nearExpiryWarning"?
+<a id="home-44"></a>
+### home-44 · What is the value of "nearExpiryWarning"?
 
 - [MOCK] 5 min in the prototype. Keep configurable (a server or config value, never typed into a screen); not a production promise. Note: app-logic §3 near-expiry. — *Source: Prototype setting [MOCK]*
 
 Decisions: D-78 (the approved screens and app logic)
 
-<a id="home-44"></a>
-### home-44 · What is the value of "availabilityMinimum"?
+<a id="home-45"></a>
+### home-45 · What is the value of "availabilityMinimum"?
 
 - 15 min. Agreed rule (app-logic §3). Read it from configuration; copy reads the value, never a typed number. — *Source: Setting (agreed rule)*
 
 Decisions: D-78 (the approved screens and app logic)
 
-<a id="home-45"></a>
-### home-45 · What is the value of "availabilityStep"?
+<a id="home-46"></a>
+### home-46 · What is the value of "availabilityStep"?
 
 - 15 min. Agreed rule (app-logic §3 (15-min wheel)). Read it from configuration; copy reads the value, never a typed number. — *Source: Setting (agreed rule)*
 
 Decisions: D-78 (the approved screens and app logic)
 
-<a id="home-46"></a>
-### home-46 · What is the value of "availabilityMaximum"?
+<a id="home-47"></a>
+### home-47 · What is the value of "availabilityMaximum"?
 
 - 10 * 60 min. Agreed rule (D-106: 10 hours in total (setup wheel 0–10 h; Add time tops out at what is left)). Read it from configuration; copy reads the value, never a typed number. — *Source: Setting (agreed rule)*
 
 Decisions: D-106
 
-<a id="home-47"></a>
-### home-47 · What is the value of "earningsPerConfirmedRx"?
+<a id="home-48"></a>
+### home-48 · What is the value of "earningsPerConfirmedRx"?
 
 - 20. Agreed rule (D-81 F10). Read it from configuration; copy reads the value, never a typed number. — *Source: Setting (agreed rule)*
 
 Decisions: D-81
 
-<a id="home-48"></a>
-### home-48 · How does the availability wheel behave on the phone?
+<a id="home-49"></a>
+### home-49 · How does the availability wheel behave on the phone?
 
 - A native-feel wheel. The doctor swipes each column (hours, minutes); it moves with momentum and snaps to one row, and the row in the centre band is the value. Three rows are visible. Minutes go in 15-minute steps and the minimum is 15 minutes. Tapping the row above or below moves one step. While Setting… or Adding… the wheel is locked. iOS has a native wheel picker; Android's picker is a dropdown, so use a wheel component there (the app team's choice of library). — *Source: Agreed fix (phone feedback, D-40)*
 

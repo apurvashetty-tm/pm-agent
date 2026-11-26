@@ -65,7 +65,7 @@ function rxRow(rx, { link = true, inline = false } = {}) {
 }
 // Available: one tm-card, two rows (Time remaining + Add time, always shown; Prescriptions written today → Profile).
 function statusCard() {
-  const timed = kind() === 'active' || kind() === 'near' || kind() === 'expired-pending';   // stop-pending: no time row (D-47); ran out with a request: 0:00, no Add time
+  const timed = kind() === 'active' || kind() === 'near';   // stop-pending: no time row (D-47); ran out with a request: no time row either (D-113, no 0:00)
   const canAdd = maxFor('addDuration') >= MIN_LEN;
   return `<div class="tm-card home-card">${timed ? `<div class="srow">${icon('clock', 'srow__icon')}<div class="srow__txt"><p class="srow__label">${M('home.timeRemaining')}</p><div class="srow__line"><p class="tm-value-display srow__value time" id="home-time" aria-live="off">${formatLeft(fx().left)}</p>${kind() === 'expired-pending' ? '' : `<button id="add" class="tm-btn tm-btn--secondary add-time" type="button"${fx().offline || !canAdd ? ' disabled=""' : ''}>${icon('plus', 'tm-icon--16')}${M('home.addTime')}</button>`}</div></div></div>` : ''}${rxRow(3)}</div>`;
 }

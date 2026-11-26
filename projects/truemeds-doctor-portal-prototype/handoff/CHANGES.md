@@ -66,6 +66,7 @@
 | H7 | End sheet: "You won’t get new cases after this. A case already assigned to you stays with you."; title when time ran out with a request open: "Availability ended". | Must |
 | H8 | After availability ends: the count is one row above the picker, number on the label's line, so the whole wheel shows at 390 × 844. | Must |
 | H9 | Profile shows Prescriptions written today (read only). Cards to Log out 32. | Must |
+| H11 | Ended notices: "Your availability ended." / "You ended your availability." and, on its own line, **"Set it again to get new cases."** (was "You won’t get new cases."). Ran out with a request open: **no Time remaining row** (no "0:00"). | Must |
 | H10 | **A new OTP sign-in opens a fresh Home** ("Start taking cases", no old notice). Availability, its "ended" notice and any case request left from an earlier session that was never logged out (app closed, sign-in expired) are cleared, and the backend ends that availability. Prescriptions written today stays; an open case still reopens first. Log out already ends availability. v1: not covered. | Must |
 
 ## Case page and calling
@@ -96,6 +97,10 @@
 | `signin.smsHelper` | We’ll send you a verification code by SMS. | We’ll send you an OTP by SMS. |
 | `signin.couldntSend` | Couldn’t send the code. | Couldn’t send the OTP. |
 | `otp.newSent` | New code sent | New code sent. |
+| `home.idleExpired` | Your availability ended. You won’t get new cases. | Your availability ended.
+Set it again to get new cases. |
+| `home.manuallyEnded` | You ended your availability. You won’t get new cases. | You ended your availability.
+Set it again to get new cases. |
 | `case.callbackFailed` | Couldn’t schedule the callback. Your time is kept. | Couldn’t schedule the callback. Your chosen time is kept. |
 | `offer.fingerprintPoint` | — (new) | Sign in with one touch |
 | `offer.faceIdPoint` | — (new) | Sign in with a glance |

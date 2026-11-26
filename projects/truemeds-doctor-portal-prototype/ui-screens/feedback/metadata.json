@@ -298,7 +298,7 @@
     "next": "set availability",
     "clear": "authoritative state",
     "retain": "selected duration",
-    "copy": "approved (Apurva, D-47, as drafted)",
+    "copy": "approved (Apurva, D-113: second line points to setting availability again)",
     "placeholders": []
   },
   "home.unknownResult": {
@@ -318,7 +318,7 @@
     "next": "set availability",
     "clear": "availability set again",
     "retain": "selected duration",
-    "copy": "approved (Apurva, D-47, as drafted)",
+    "copy": "approved (Apurva, D-113: second line points to setting availability again)",
     "placeholders": []
   },
   "case.loadFailed": {

@@ -79,3 +79,6 @@
 .profile-row-label { display: flex; align-items: center; gap: var(--tm-space-sm); font-size: var(--tm-font-size-body-lg); line-height: var(--tm-font-lineheight-md); }
 .profile-row .tm-toggle { flex: none; }
 .profile-logout { margin-top: 0; }
+
+/* D-113: the ended notices on Home keep one sentence per line (the copy carries the line break). */
+.tm-notice.status > span { white-space: pre-line; } /* raw-ok: keeps the copy line break, no size or colour value */

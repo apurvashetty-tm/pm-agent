@@ -23,6 +23,6 @@ From r3-rest-audit (`docs/renders/2026-11-11-r3-rest-audit/CONCLUSION.md` §2):
 4–10. Q2–Q4, Q6–Q9: built on the recommended answers overnight (D-111), **awaiting Apurva's OK**.
 
 From the overnight build (2026-11-25, `docs/renders/2026-11-25-r4-rest-build/REPORT.md`):
-11. "Availability ended" still shows "Time remaining 0:00" (D-53). Hide it?
+11. ~~"Time remaining 0:00"~~ — answered 2026-11-26 (D-113): hidden; ended notices reworded.
 12. Case loading: the old approved picture showed Back; the app hides it ("no actions until loaded"). Keep hidden?
 13. A backend duration above 12 (e.g. 15 days) shows as the value with no number selected. Fine?

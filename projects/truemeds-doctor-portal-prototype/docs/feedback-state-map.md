@@ -128,7 +128,7 @@ Current references: `../ui-screens/home/`; native `../ui-screens/native/HomeScre
 | home.added | T1 | Confirmed deadline update; dismiss sheet, preserve Home | R08 |
 | home.end-confirmation | Confirmation, not error | Existing pending-request decision; no new error component | Separate interaction coverage when reviewed |
 | home.stop-pending | N1 + L1 | Finish request/assigned case before stop. Subtitle "You won't get new cases." (not a repeat of the notice). **No "Time remaining" row**; quiet "Ending…" without spinner (D-47) | Fixture + later Home state review |
-| home.expired-pending | N1 + L1 | Honour request already submitted; do not interrupt case. Title "Availability ended" (D-107); time 0:00, no Add time | Same pending layout; fixture |
+| home.expired-pending | N1 + L1 | Honour request already submitted; do not interrupt case. Title "Availability ended" (D-107); no time row (D-113, was 0:00), no Add time | Same pending layout; fixture |
 | home.idle-expired / manually-ended | N1 + setup | Reuse setup; the notice at the top, 32 to the content; "Prescriptions written today" as one row above the picker when above 0 (D-106); no giant 0-minute error screen | Re-rendered 2026-11-11 (r2-build) |
 | home.unknown-result | N1 + L1 | Reconcile operation ID before retry; do not invent failure or success | Fixture; backend integration required |
 
