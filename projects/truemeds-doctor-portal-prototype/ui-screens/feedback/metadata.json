@@ -428,7 +428,7 @@
     "next": "Try again",
     "clear": "new attempt",
     "retain": "chosen day and time",
-    "copy": "recommended D-111 (2026-11-25), awaiting Apurva"
+    "copy": "approved (Apurva, D-111, 2026-11-26)"
   },
   "rx.loadFailed": {
     "pattern": "F2",
@@ -2145,7 +2145,7 @@
     "next": "—",
     "clear": "—",
     "retain": "—",
-    "copy": "recommended D-111 (2026-11-25), awaiting Apurva"
+    "copy": "approved (Apurva, D-111, 2026-11-26)"
   },
   "case.confirmedTitle": {
     "pattern": "none",
@@ -3388,7 +3388,7 @@
     "next": "—",
     "clear": "—",
     "retain": "—",
-    "copy": "recommended D-111 (2026-11-25), awaiting Apurva"
+    "copy": "approved (Apurva, D-111, 2026-11-26)"
   },
   "callback.scheduled": {
     "pattern": "none",

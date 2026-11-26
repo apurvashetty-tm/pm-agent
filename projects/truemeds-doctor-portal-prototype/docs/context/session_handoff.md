@@ -1044,4 +1044,5 @@ User identified missing HTML/native linkage. Inspected actual sign-in and OTP HT
 - **2026-11-26 · D-113 (Apurva):** no "0:00" row on Home expired-pending; ended notices "… / Set it again to get new cases." Kit H11; 6 Home pictures re-rendered.
 - **2026-11-26 · D-114 (Apurva):** "Availability ended" Home screen removed; Requesting… stays through expiry; no case → toast "No cases right now." → ended Home. 148 pictures; kit H11.
 - **2026-11-26 · D-115 (Apurva):** Add time always tappable (says why when nothing fits); shift hours only when the backend sends them (review panel switch). 2 new Home pictures, 150 states; kit H4, H12. CHECKIN 2 and 13 closed.
+- **2026-11-26 · D-111 approved (Apurva: "Approve all").** Kit draft line removed; case and Prescribe pictures approved. Still open: CHECKIN 1 (r2 sign-in/OTP/offer/unlock/Home pictures), 12 (loading Back).
 - **Next:** Apurva's sanity check (pictures, phone) and CHECKIN 1, 2, D-111, 11–13; then PR #41 + D-111's design-system edits (shared), project PR, release only when asked.

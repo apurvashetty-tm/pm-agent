@@ -20,7 +20,7 @@ From r2-build (`docs/renders/2026-11-11-r2-build/REPORT.md`):
 2. ~~Add time greyed under 15 min~~ — answered 2026-11-26 (D-115): always tappable, the tap says why; shift hours when sent.
 From r3-rest-audit (`docs/renders/2026-11-11-r3-rest-audit/CONCLUSION.md` §2):
 3. ~~Q1 Duration~~ — answered 2026-11-25 (D-110): 1–12 for every unit; numbers first.
-4–10. Q2–Q4, Q6–Q9: built on the recommended answers overnight (D-111), **awaiting Apurva's OK**.
+4–10. ~~Q2–Q4, Q6–Q9~~ — approved 2026-11-26 (D-111, "Approve all").
 
 From the overnight build (2026-11-25, `docs/renders/2026-11-25-r4-rest-build/REPORT.md`):
 11. ~~"Time remaining 0:00"~~ — answered 2026-11-26 (D-113): hidden; ended notices reworded.

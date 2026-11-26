@@ -4,9 +4,7 @@
 
 **How to read it.** **Must** = behaviour, rule or wording: build it. **Looks** = spacing or size only. **No work** = a file or part was renamed. Before / after pictures: [`changes/`](changes/). Exact wording differences are in the table at the end.
 
-**Status:** draft for product approval. Rows C1–C7, H8, H9, P2 and P3 are built and wait for the product owner's OK.
-
-**Same as v1:** the number and names of the states (149), every design value (no token added, removed or changed), and the calling flow.
+**States:** 150 (v1: 149). Removed: `home_expired-pending` (H11). Added: `home_limit-reached`, `home_outside-shift` (H12). **Same as v1:** every other state name, every design value (no token added, removed or changed), and the calling flow.
 
 **Using an AI coding tool?** Give it this file and say: "Apply every Must and Looks row to the screens we already built; use `screens/<screen>.json` in this kit for the values."
 

@@ -2415,7 +2415,7 @@ Decisions: D-53, D-81
 <a id="case-110"></a>
 ### case-110 · What does the app show in case.callback-failed, and how does it recover?
 
-- case.callback-failed: F2 — Error notice inside the sheet "Couldn't schedule the callback. Your chosen time is kept."; chosen date and time kept. — *Source: Feedback state map: case.callback-failed*
+- case.callback-failed: F2 — Error notice inside the sheet "Couldn't schedule the callback. Your chosen time is kept."; chosen date and time kept. *Copy approved (D-111).* — *Source: Feedback state map: case.callback-failed*
 
 Decisions: D-111
 

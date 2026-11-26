@@ -1070,8 +1070,8 @@ From an external (ChatGPT) review, each point verified before acting.
 - **Why:** the old list (1–7, 10, 14, 15) looked random; Apurva had asked for fewer, "only till 12". 14 days is 2 weeks.
 - **Rejected:** 15 for Days only (tried the same day, then dropped: it sat alone on a fourth row and needed a reset rule).
 
-### D-111 · Visible gaps on the work screens, and the r3 answers — 2026-11-25 · **[RECOMMENDED] — built overnight, awaiting Apurva**
-- **Built on Apurva's go-ahead to fix everything overnight; each item below is the recommended answer, not yet his approval.**
+### D-111 · Visible gaps on the work screens, and the r3 answers — 2026-11-25 · **Apurva (approved 2026-11-26: "Approve all")**
+- **Built on Apurva's go-ahead to fix everything overnight as recommended answers; Apurva approved all of them on 2026-11-26.**
   1. **Spacing (r3 drift fixes; the conclusion says 24, its rows list 21: P1–P6, C1–C7, S1–S5, F2–F3, R1):** D-108 applied to the case page, Prescribe, sheets, Profile and Rx viewer (`app/screens/task-gaps.css`).
   2. **Profile** shows "Prescriptions written today" (Home's row, no chevron).
   3. **Closed case, availability ended:** bar caption "Your availability has ended." above Back to Home.

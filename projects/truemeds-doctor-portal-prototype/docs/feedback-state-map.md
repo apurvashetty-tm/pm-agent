@@ -157,7 +157,7 @@ Applies to the case page (`ui-screens/case/case.html`; the old `index.html` is f
 | case.confirm-busy | L1 | Final CTA busy (L2), label **"Confirming…"**; every other action disabled; medicine rows and notes read-only and muted; View Rx stays the outlined button (D-81 F24–F25). No second submit. *Copy approved (Apurva, D-53).* |
 | case.confirm-failed | F2 | Error notice above the bar "Couldn't confirm. Nothing was lost."; CTA back to normal. An uncertain result is reconciled before retry (no duplicate confirm). *Copy approved (Apurva, D-53).* |
 | case.release-failed | F2 | Sheet closes over Ready; doctor stays on the case; error notice "Couldn't release this case. You're still on it."; Back works again. *Copy approved (Apurva, D-53).* (D-81 F22) |
-| case.callback-failed | F2 | Error notice inside the sheet "Couldn't schedule the callback. Your chosen time is kept."; chosen date and time kept. *Copy recommended (D-111), awaiting Apurva.* |
+| case.callback-failed | F2 | Error notice inside the sheet "Couldn't schedule the callback. Your chosen time is kept."; chosen date and time kept. *Copy approved (Apurva, D-111).* |
 | rx.load-failed | F2 | Inside the viewer: notice "Couldn't load the prescription." + **Try again**; ✕ still closes. *Copy approved (Apurva, D-53).* |
 | case.no-medicines | Standing state (top of the panel) | Amber notice "No medicines on this order. Our Ops team will check it." (`case.noMedicines`, D-84) above the medicines card, which shows no text; no Call patient; main button **Release case**, which releases directly (no sheet) and returns to Home; header Back does the same (D-80 pt 4, D-81 F23; D-83 CW-A6, K4). |
 | case.long-content | — | Long patient name (two lines in the header) and long medicine names, checked at 360. |
